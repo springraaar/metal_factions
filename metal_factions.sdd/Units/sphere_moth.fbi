@@ -1,0 +1,135 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Moth;
+	description=Fighter;
+	icontype=air;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE VTOL CTRL_V LEVEL1 WEAPON  NOTSUB  CTRL_P CTRL_J;
+	tedclass=VTOL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=sphere_moth;
+	unitnumber=10000;
+	objectname=sphere_moth.3do;
+	buildpic=sphere_moth.png;
+	soundcategory=aven_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=410;
+	healtime=30;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.7;
+	energyuse=0.7;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canfly=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnrate=580;
+	acceleration=0.05;
+	brakerate=2;
+	maxvelocity=5.5;
+	maxslope=10;
+	maxwaterdepth=3;
+	cruisealt=180;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=600;
+	radardistance=0;
+	sonardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=sphere_moth_missile;
+	badtargetcategory1=NOTAIR;
+	badtargetcategory1=NOTAIR;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=VTOL_standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bankscale=1;
+	bmcode=1;
+	designation=AFD-J9;
+	downloadable=1;
+	hoverattack=1;
+	maneuverleashlength=1280;
+	moverate1=8;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	collide=1;
+	minCollisionSpeed=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =27 15 27;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:rocketflaresml;
+	}
+
+	buildcostenergy=2882;//#AUTO#
+	buildcostmetal=288;//#AUTO#
+	buildtime=3699;//#AUTO#
+}

@@ -1,0 +1,142 @@
+
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Helix;
+	description=Amphibious Boat;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE SHIP LEVEL2 WEAPON NOTAIR NOTSUB CTRL_W;
+	tedclass=SHIP;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=sphere_helix;
+	unitnumber=10000;
+	objectname=sphere_helix.3do;
+	corpse=sphere_helix_dead;
+	buildpic=sphere_helix.png;
+	soundcategory=gear_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3000;
+	healtime=30;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=1.5;
+	energyuse=1.5;
+	energystorage=0;
+
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	floater=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKHOVER4;
+	turnrate=345;
+	acceleration=0.03;
+	brakerate=0.02;
+	maxvelocity=1.7;
+	maxwaterdepth=1000;
+	turninplace=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	sonardistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=SPHERE_HELIX_BLASTER;
+	nochasecategory=VTOL;
+	badtargetcategory1=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ASD-SC;
+	downloadable=1;
+	maneuverleashlength=640;
+	scale=0.5;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 40 60;
+	collisionVolumeOffsets = 0 -15 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	waterline=6;
+
+	[CustomParams]
+	{
+		tip=33% slower on land;
+	}
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:redflare;
+	explosiongenerator1=custom:UNITFIRE;
+	}
+
+	buildcostenergy=4952;//#AUTO#
+	buildcostmetal=990;//#AUTO#
+	buildtime=11804;//#AUTO#
+}

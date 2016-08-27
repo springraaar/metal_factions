@@ -1,0 +1,136 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Drakkar;
+	description=Ship Destroyer;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW SHIP LEVEL2 WEAPON ANTISUB NOTAIR NOTSUB CTRL_W;
+	tedclass=SHIP;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=claw_drakkar;
+	unitnumber=20000;
+	objectname=claw_drakkar.3do;
+	corpse=claw_drakkar_dead;
+	buildpic=claw_drakkar.png;
+	soundcategory=gear_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=7000;
+	healtime=30;
+	footprintx=6;
+	footprintz=6;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=0;
+	energystorage=0;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	floater=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=LARGEBOAT;
+	turnrate=92;
+	acceleration=0.015;
+	brakerate=0.006;
+	maxvelocity=1.35;
+	minwaterdepth=30;
+	waterline=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+	sonardistance=700;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_drakkar_railgun;
+	weapon2=claw_drakkar_depthcharge;
+	nochasecategory=WEAPON;
+	badtargetcategory2=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ASD-SB;
+	downloadable=1;
+	maneuverleashlength=640;
+	scale=0.6;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =50 45 90;
+	collisionVolumeOffsets = 0 -20 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	[customParams] 
+	{
+		evalfactor=0.85;//SHIP
+	}
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:railgunflare;
+	explosiongenerator2=custom:UNITFIRE;
+	}
+	buildcostenergy=25769;//#AUTO#
+	buildcostmetal=5153;//#AUTO#
+	buildtime=61416;//#AUTO#
+}

@@ -1,0 +1,134 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Scythe;
+	description=All-terrain Cloakable Assault Robot;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW KBOT LEVEL2 WEAPON NOTAIR NOTSUB CTRL_W;
+	tedclass=KBOT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=claw_scythe;
+	unitnumber=20000;
+	objectname=claw_scythe.3do;
+	corpse=claw_scythe_dead;
+	buildpic=claw_scythe.png;
+	soundcategory=Spider;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3000;
+	healtime=30;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTAT;
+	turnrate=620;
+	acceleration=0.52588;
+	brakerate=0.52588;
+	maxvelocity=1.5;
+	maxwaterdepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_scythe_laser;
+	nochasecategory=VTOL;
+	badtargetcategory1=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	// ------------------- stealth
+	cloakcost=75;
+	cloakcostmoving=150;
+	mincloakdistance=150;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ATAS;
+	downloadable=1;
+	maneuverleashlength=640;
+	noselfdamage=1;
+	paralyzetime=5;   
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=NanoDebree;
+	pieceTrailCEGRange = 1;
+	collisionVolumeType = box;
+	collisionVolumeScales =45 30 45;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:blueflaresml;
+	}
+
+	buildcostenergy=9532;//#AUTO#
+	buildcostmetal=1906;//#AUTO#
+	buildtime=22719;//#AUTO#
+}

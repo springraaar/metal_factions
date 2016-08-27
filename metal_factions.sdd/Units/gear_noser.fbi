@@ -1,0 +1,129 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Noser;
+	description=Heavy Attack Submarine;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CORE UNDERWATER LEVEL2 TORP WEAPON NOTAIR CTRL_W;
+	tedclass=SHIP;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_noser;
+	unitnumber=134;
+	objectname=gear_noser.3do;
+	corpse=gear_noser_dead;
+	buildpic=gear_noser.png;
+	soundcategory=gear_SUB;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1850;
+	healtime=10;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.5;
+	energyuse=0.5;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	floater=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=BOATSUB;
+	turnrate=353;
+	acceleration=0.04;
+	brakerate=0.02;
+	maxvelocity=2.2;
+	minwaterdepth=15;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	sonardistance=800;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_noser_torpedo;
+	badtargetcategory1=VTOL;
+	badtargetcategory1=NOTSUB;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
+   	WeaponMainDir1=0 0 1;
+   	MaxAngleDif1=120;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=SBS-T2;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	waterline=50;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 18 49;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildcostenergy=9396;//#AUTO#
+	buildcostmetal=1879;//#AUTO#
+	buildtime=22393;//#AUTO#
+}

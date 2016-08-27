@@ -1,0 +1,286 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 220
+
+piece  base, flare, wake1, turret, sleeve, barrel, hull,bottom, rmidsup,rmidwheel,rfrontsup,rfrontwheel,rbacksup,rbackwheel,lbacksup,lbackwheel,lmidsup,lmidwheel,lfrontsup,lfrontwheel, base2;
+
+static-var  bMoving, bAiming, bSwimming, restore_delay, terrainStatus, waterSpeed, landSpeed, wheelSpeed, wheelAcceleration;
+
+// Signal definitions
+#define SIG_MOVE			2
+#define SIG_AIM				4
+
+
+
+WheelSpeedControl(maxSpeed,currentSpeed)
+{
+	maxSpeed = get MAX_SPEED;
+	bMoving = FALSE;
+	while(TRUE)
+	{
+		currentSpeed = get CURRENT_SPEED;
+
+		wheelSpeed = (currentSpeed*SPEEDUP_FACTOR) / maxSpeed * 728;
+		wheelAcceleration = wheelSpeed / 2;
+
+		sleep 100;
+	}
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	var Func_Var_4;
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from hull;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+	return (0);
+}
+
+stopWheels()
+{
+	stop-spin rmidwheel around x-axis decelerate <10.000000>;
+	stop-spin rfrontwheel around x-axis decelerate <10.000000>;
+	stop-spin rbackwheel around x-axis decelerate <10.000000>;
+	stop-spin lmidwheel around x-axis decelerate <10.000000>;
+	stop-spin lfrontwheel around x-axis decelerate <10.000000>;
+	stop-spin lbackwheel around x-axis decelerate <10.000000>;
+	return (0);
+}
+
+walk()
+{
+	if( bMoving )
+	{
+		spin rmidwheel around x-axis speed wheelSpeed accelerate <20.000000>;
+		spin rfrontwheel around x-axis speed wheelSpeed accelerate <20.000000>;
+		spin rbackwheel around x-axis speed wheelSpeed accelerate <20.000000>;
+		spin lmidwheel around x-axis speed wheelSpeed accelerate <20.000000>;
+		spin lfrontwheel around x-axis speed wheelSpeed accelerate <20.000000>;
+		spin lbackwheel around x-axis speed wheelSpeed accelerate <20.000000>;
+		sleep 200;
+	}
+	return (0);
+}
+
+
+closelegs()
+{
+	call-script stopWheels();
+	sleep 100;
+	return (0);
+}
+
+openlegs()
+{
+	// nothing to do here
+	sleep 100;
+
+	return (0);
+}
+
+swim()
+{
+	sleep 500;
+	call-script closelegs();
+	return (0);
+}
+
+MotionControl(justMoved)
+{
+	justMoved = TRUE;
+	while( TRUE )
+	{
+		// over water
+		if( ( !bSwimming ) AND (terrainStatus == 2 OR terrainStatus == 1))
+		{
+			call-script closelegs();
+			bSwimming = TRUE;
+			justMoved = TRUE;
+		}
+		// over land
+		if( bSwimming AND terrainStatus == 4 )
+		{
+			call-script openlegs();
+			bSwimming = FALSE;
+			justMoved = TRUE;
+		}
+		if( bMoving )
+		{
+			if( bSwimming )
+			{
+				//set MAX_SPEED to waterSpeed; // REPLACED BY GADGET
+				set UPRIGHT to TRUE;
+				call-script swim();
+			}
+			if( !bSwimming )
+			{
+				//set MAX_SPEED to landSpeed; // REPLACED BY GADGET
+				set UPRIGHT to FALSE;
+				call-script walk();
+			}
+			justMoved = TRUE;
+		}
+		if( !bMoving )
+		{
+			if( justMoved AND ( !bSwimming ) )
+			{
+				call-script stopWheels();
+	
+				justMoved = FALSE;
+			}
+			sleep 100;
+		}
+	}
+	return (0);
+}
+
+Create()
+{
+	landSpeed = get MAX_SPEED;
+	waterSpeed = landSpeed * 100/150;
+	
+	bMoving = FALSE;
+	bAiming = FALSE;
+	bSwimming = FALSE;
+	restore_delay = 3000;
+	start-script WheelSpeedControl();
+	start-script MotionControl();
+	start-script SmokeUnit();
+	return (0);
+}
+
+StartMoving()
+{
+	bMoving = TRUE;
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while( TRUE )
+	{
+		if( terrainStatus == 2 )
+		{
+			emit-sfx 2 from wake1;
+		}
+		if( terrainStatus == 1 )
+		{
+			emit-sfx 2 from wake1;
+		}
+		sleep 250;
+	}
+	return (0);
+}
+
+StopMoving()
+{
+	bMoving = FALSE;
+	signal SIG_MOVE;
+	return (0);
+}
+
+setSFXoccupy(Func_Var_1)
+{
+	terrainStatus = Func_Var_1;
+	return (0);
+}
+
+SetMaxReloadTime(Func_Var_1)
+{
+	restore_delay = Func_Var_1 * 2;
+	return (0);
+}
+
+RestoreAfterDelay()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn turret to y-axis <0.000000> speed <100.000000>;
+	turn sleeve to x-axis <0.000000> speed <100.000000>;
+	return (0);
+}
+
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	turn turret to y-axis heading speed <180.000000>;
+	turn sleeve to x-axis <0.000000> - pitch speed <180.000000>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn sleeve around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+
+FirePrimary()
+{
+	move barrel to z-axis [-2.250000] now;
+	emit-sfx 1024 from flare;
+	sleep 100;
+	move barrel to z-axis [0.000000] speed [5.000000];
+	return (1);
+}
+
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+	return (0);
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare;
+	return (0);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = turret;
+	return (0);
+}
+
+
+
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		corpsetype = 1;
+		
+		explode sleeve type SHATTER;
+		explode turret type SHATTER;
+		return (0);
+	}
+	corpsetype = 3;
+
+	explode hull type SHATTER;
+	explode bottom type SHATTER;
+	explode turret type SHATTER;
+	explode sleeve type SHATTER;
+	explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	return (0);
+}

@@ -1,0 +1,146 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Gear;
+	name=Whirlpool;
+	description=Torpedo Bomber;
+	icontype=air;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CORE VTOL LEVEL2 WEAPON NOTSUB;
+	tedclass=VTOL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_whirlpool;
+	unitnumber=144;
+	objectname=gear_whirlpool.3do;
+	buildpic=gear_whirlpool.png;
+	soundcategory=gear_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=950;
+	healtime=30;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=2;
+	energyuse=2;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canfly=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnrate=345;
+	acceleration=0.175;
+	brakerate=0.15;
+	maxvelocity=7.3;
+	maxslope=10;
+	maxwaterdepth=3;
+	cruisealt=150;
+	hoverattack=1;
+	upright=1;
+
+	// flight behaviour
+	wingdrag=0.07;      //0.07
+	wingangle=0.08;	//0.08;
+	drag=0.08;		//0.08
+	fronttospeed=0.1;  //0.1
+	speedtofront=0.07; //0.07
+	mygravity=0.4; //0.4
+	maxbank=0.8;	//0.8
+	maxpitch=0.45;	//0.45
+	turnradius=350; //500
+	maxaileron=0.01;	//0.015
+	maxelevator=0.01;	//0.01
+	maxrudder=0.01;  //0.004
+	maxAcc=0.065; //0.065
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=600;
+	radardistance=0;
+	sonardistance=550;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_whirlpool_torpedo;
+	weaponmaindir1=0 -1 1;
+	maxangledif1=120;
+	badtargetcategory1=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=0;
+	standingmoveorder=1;
+	defaultmissiontype=VTOL_standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=AFD-J9;
+	downloadable=1;
+	maneuverleashlength=1280;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	
+	collide=1;
+	minCollisionSpeed=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =55 15 40;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildcostenergy=11359;//#AUTO#
+	buildcostmetal=1135;//#AUTO#
+	buildtime=14578;//#AUTO#
+}

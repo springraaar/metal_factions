@@ -1,0 +1,557 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 170
+
+piece  base, emit, rupleg1, rupleg2, rupleg3, lupleg1, lupleg2, lupleg3,
+       lleg3, lleg2, lleg1, rleg3, rleg2, rleg1, lbody, rbody,
+       launcher, lffoot, lrfoot, rffoot, rrfoot;
+
+static-var  Static_Var_1, Static_Var_2, bMoving, statechg_DesiredState, statechg_StateChanging, justMoved;
+
+// Signal definitions
+#define SIG_AIM				2
+
+
+walk()
+{
+	if( bMoving )
+	{
+		turn base to x-axis <2.109890> now;
+		turn base to x-axis <0.000000> speed <14.159341> * SPEEDUP_FACTOR / 100;
+		turn base to y-axis <1.054945> now;
+		turn base to y-axis <0.703297> speed <2.357143> * SPEEDUP_FACTOR / 100;
+		turn rupleg1 to y-axis <27.428571> now;
+		turn rupleg1 to y-axis <7.736264> speed <132.159341> * SPEEDUP_FACTOR / 100;
+		turn rupleg2 to y-axis <-13.362637> now;
+		turn rupleg2 to z-axis <0.000000> now;
+		turn rupleg2 to z-axis <27.428571> speed <184.082418> * SPEEDUP_FACTOR / 100;
+		turn rupleg3 to y-axis <27.780220> now;
+		turn rupleg3 to y-axis <7.384615> speed <136.879121> * SPEEDUP_FACTOR / 100;
+		turn lupleg1 to y-axis <21.445055> now;
+		turn lupleg1 to z-axis <0.000000> now;
+		turn lupleg1 to z-axis <-24.615385> speed <165.203297> * SPEEDUP_FACTOR / 100;
+		turn lupleg2 to y-axis <-14.417582> now;
+		turn lupleg2 to y-axis <-0.703297> speed <92.038462> * SPEEDUP_FACTOR / 100;
+		turn lupleg2 to z-axis <-7.384615> now;
+		turn lupleg2 to z-axis <0.000000> speed <49.560440> * SPEEDUP_FACTOR / 100;
+		turn lupleg3 to y-axis <13.362637> now;
+		turn lupleg3 to z-axis <0.000000> now;
+		turn lupleg3 to z-axis <-45.362637> speed <304.445055> * SPEEDUP_FACTOR / 100;
+		turn lleg3 to z-axis <0.000000> now;
+		turn lleg3 to z-axis <35.516484> speed <238.362637> * SPEEDUP_FACTOR / 100;
+		turn lleg2 to z-axis <0.000000> now;
+		turn lleg2 to z-axis <-11.956044> speed <80.241758> * SPEEDUP_FACTOR / 100;
+		turn lleg1 to z-axis <0.000000> now;
+		turn lleg1 to z-axis <11.604396> speed <77.879121> * SPEEDUP_FACTOR / 100;
+		turn rleg3 to z-axis <0.000000> now;
+		turn rleg3 to z-axis <8.439560> speed <56.637363> * SPEEDUP_FACTOR / 100;
+		turn rleg2 to z-axis <0.000000> now;
+		turn rleg2 to z-axis <-34.807692> speed <233.642857> * SPEEDUP_FACTOR / 100;
+		turn rleg1 to z-axis <0.000000> now;
+		turn rleg1 to z-axis <9.494505> speed <63.719780> * SPEEDUP_FACTOR / 100;
+		sleep 149 * 100 / SPEEDUP_FACTOR;
+	}
+	if( bMoving )
+	{
+		turn base to x-axis <-1.054945> speed <7.032967> * SPEEDUP_FACTOR / 100;
+		turn base to y-axis <-0.351648> speed <7.032967> * SPEEDUP_FACTOR / 100;
+		turn rupleg1 to y-axis <-13.010989> speed <138.313187> * SPEEDUP_FACTOR / 100;
+		turn rupleg2 to y-axis <8.791209> speed <147.692308> * SPEEDUP_FACTOR / 100;
+		turn rupleg2 to z-axis <54.153846> speed <178.164835> * SPEEDUP_FACTOR / 100;
+		turn rupleg3 to y-axis <-14.412088> speed <145.346154> * SPEEDUP_FACTOR / 100;
+		turn lupleg1 to y-axis <1.406593> speed <133.626374> * SPEEDUP_FACTOR / 100;
+		turn lupleg1 to z-axis <-64.703297> speed <267.252747> * SPEEDUP_FACTOR / 100;
+		turn lupleg2 to y-axis <20.747253> speed <143.000000> * SPEEDUP_FACTOR / 100;
+		turn lupleg3 to y-axis <-10.197802> speed <157.065934> * SPEEDUP_FACTOR / 100;
+		turn lupleg3 to z-axis <-75.956044> speed <203.956044> * SPEEDUP_FACTOR / 100;
+		turn lleg3 to z-axis <63.648352> speed <187.543956> * SPEEDUP_FACTOR / 100;
+		turn lleg2 to z-axis <0.000000> speed <79.703297> * SPEEDUP_FACTOR / 100;
+		turn lleg1 to z-axis <66.456044> speed <365.714286> * SPEEDUP_FACTOR / 100;
+		turn rleg3 to z-axis <0.000000> speed <56.263736> * SPEEDUP_FACTOR / 100;
+		turn rleg2 to z-axis <-63.648352> speed <192.230769> * SPEEDUP_FACTOR / 100;
+		turn rleg1 to z-axis <0.000000> speed <63.296703> * SPEEDUP_FACTOR / 100;
+		sleep 150 * 100 / SPEEDUP_FACTOR;
+	}
+	if( bMoving )
+	{
+		turn base to x-axis <-1.406593> speed <2.324176> * SPEEDUP_FACTOR / 100;
+		turn base to y-axis <-1.054945> speed <4.653846> * SPEEDUP_FACTOR / 100;
+		turn rupleg1 to y-axis <-20.043956> speed <46.571429> * SPEEDUP_FACTOR / 100;
+		turn rupleg2 to y-axis <17.225275> speed <55.890110> * SPEEDUP_FACTOR / 100;
+		turn rupleg2 to z-axis <8.439560> speed <302.741758> * SPEEDUP_FACTOR / 100;
+		turn rupleg3 to y-axis <-20.043956> speed <37.258242> * SPEEDUP_FACTOR / 100;
+		turn lupleg1 to y-axis <-10.549451> speed <79.175824> * SPEEDUP_FACTOR / 100;
+		turn lupleg1 to z-axis <-14.417582> speed <333.016484> * SPEEDUP_FACTOR / 100;
+		turn lupleg2 to y-axis <31.291209> speed <69.862637> * SPEEDUP_FACTOR / 100;
+		turn lupleg3 to y-axis <-15.824176> speed <37.258242> * SPEEDUP_FACTOR / 100;
+		turn lupleg3 to z-axis <-10.895604> speed <430.824176> * SPEEDUP_FACTOR / 100;
+		turn lleg3 to z-axis <17.934066> speed <302.741758> * SPEEDUP_FACTOR / 100;
+		turn lleg1 to z-axis <10.549451> speed <370.274725> * SPEEDUP_FACTOR / 100;
+		turn rleg2 to z-axis <-9.846154> speed <356.302198> * SPEEDUP_FACTOR / 100;
+		sleep 151 * 100 / SPEEDUP_FACTOR;
+	}
+	if( bMoving )
+	{
+		turn base to x-axis <-0.703297> speed <4.686813> * SPEEDUP_FACTOR / 100;
+		turn base to y-axis <0.000000> speed <7.032967> * SPEEDUP_FACTOR / 100;
+		turn rupleg1 to y-axis <-13.010989> speed <46.884615> * SPEEDUP_FACTOR / 100;
+		turn rupleg1 to z-axis <39.384615> speed <262.560440> * SPEEDUP_FACTOR / 100;
+		turn rupleg2 to y-axis <11.252747> speed <39.851648> * SPEEDUP_FACTOR / 100;
+		turn rupleg2 to z-axis <-2.109890> speed <70.329670> * SPEEDUP_FACTOR / 100;
+		turn rupleg3 to y-axis <-3.159341> speed <112.527473> * SPEEDUP_FACTOR / 100;
+		turn rupleg3 to z-axis <28.483516> speed <189.890110> * SPEEDUP_FACTOR / 100;
+		turn lupleg1 to y-axis <-0.351648> speed <67.983516> * SPEEDUP_FACTOR / 100;
+		turn lupleg1 to z-axis <2.109890> speed <110.181319> * SPEEDUP_FACTOR / 100;
+		turn lupleg2 to y-axis <19.692308> speed <77.362637> * SPEEDUP_FACTOR / 100;
+		turn lupleg2 to z-axis <-40.791209> speed <271.939560> * SPEEDUP_FACTOR / 100;
+		turn lupleg3 to y-axis <-7.379121> speed <56.263736> * SPEEDUP_FACTOR / 100;
+		turn lupleg3 to z-axis <4.219780> speed <100.802198> * SPEEDUP_FACTOR / 100;
+		turn lleg3 to z-axis <0.000000> speed <119.560440> * SPEEDUP_FACTOR / 100;
+		turn lleg2 to z-axis <32.703297> speed <218.021978> * SPEEDUP_FACTOR / 100;
+		turn lleg1 to z-axis <0.000000> speed <70.329670> * SPEEDUP_FACTOR / 100;
+		turn rleg3 to z-axis <-17.582418> speed <117.214286> * SPEEDUP_FACTOR / 100;
+		turn rleg2 to z-axis <0.000000> speed <65.637363> * SPEEDUP_FACTOR / 100;
+		turn rleg1 to z-axis <-19.692308> speed <131.280220> * SPEEDUP_FACTOR / 100;
+		sleep 150 * 100 / SPEEDUP_FACTOR;
+	}
+	if( bMoving )
+	{
+		turn base to x-axis <0.703297> speed <9.373626> * SPEEDUP_FACTOR / 100;
+		turn base to y-axis <1.406593> speed <9.373626> * SPEEDUP_FACTOR / 100;
+		turn rupleg1 to y-axis <8.087912> speed <140.659341> * SPEEDUP_FACTOR / 100;
+		turn rupleg1 to z-axis <52.747253> speed <89.082418> * SPEEDUP_FACTOR / 100;
+		turn rupleg2 to y-axis <0.000000> speed <75.016484> * SPEEDUP_FACTOR / 100;
+		turn rupleg3 to y-axis <15.824176> speed <126.593407> * SPEEDUP_FACTOR / 100;
+		turn rupleg3 to z-axis <48.175824> speed <131.280220> * SPEEDUP_FACTOR / 100;
+		turn lupleg1 to y-axis <9.489011> speed <65.637363> * SPEEDUP_FACTOR / 100;
+		turn lupleg2 to y-axis <3.862637> speed <105.494505> * SPEEDUP_FACTOR / 100;
+		turn lupleg2 to z-axis <-68.571429> speed <185.197802> * SPEEDUP_FACTOR / 100;
+		turn lupleg3 to y-axis <1.758242> speed <60.950549> * SPEEDUP_FACTOR / 100;
+		turn lleg3 to z-axis <-10.197802> speed <67.983516> * SPEEDUP_FACTOR / 100;
+		turn lleg2 to z-axis <64.351648> speed <210.989011> * SPEEDUP_FACTOR / 100;
+		turn lleg1 to z-axis <-5.978022> speed <39.851648> * SPEEDUP_FACTOR / 100;
+		turn rleg3 to z-axis <-52.390110> speed <232.087912> * SPEEDUP_FACTOR / 100;
+		turn rleg2 to z-axis <3.516484> speed <23.439560> * SPEEDUP_FACTOR / 100;
+		turn rleg1 to z-axis <-50.637363> speed <206.296703> * SPEEDUP_FACTOR / 100;
+		sleep 150 * 100 / SPEEDUP_FACTOR;
+	}
+	if( bMoving )
+	{
+		turn base to x-axis <1.406593> speed <4.686813> * SPEEDUP_FACTOR / 100;
+		turn base to y-axis <1.758242> speed <2.340659> * SPEEDUP_FACTOR / 100;
+		turn rupleg1 to y-axis <16.527473> speed <56.263736> * SPEEDUP_FACTOR / 100;
+		turn rupleg1 to z-axis <39.384615> speed <89.082418> * SPEEDUP_FACTOR / 100;
+		turn rupleg2 to y-axis <-11.252747> speed <75.016484> * SPEEDUP_FACTOR / 100;
+		turn rupleg3 to y-axis <24.615385> speed <58.604396> * SPEEDUP_FACTOR / 100;
+		turn rupleg3 to z-axis <28.483516> speed <131.280220> * SPEEDUP_FACTOR / 100;
+		turn lupleg1 to y-axis <20.038462> speed <70.329670> * SPEEDUP_FACTOR / 100;
+		turn lupleg2 to y-axis <-3.868132> speed <51.571429> * SPEEDUP_FACTOR / 100;
+		turn lupleg2 to z-axis <-40.791209> speed <185.197802> * SPEEDUP_FACTOR / 100;
+		turn lupleg3 to y-axis <18.285714> speed <110.181319> * SPEEDUP_FACTOR / 100;
+		turn lleg3 to z-axis <0.000000> speed <67.983516> * SPEEDUP_FACTOR / 100;
+		turn lleg2 to z-axis <37.620879> speed <178.164835> * SPEEDUP_FACTOR / 100;
+		turn lleg1 to z-axis <0.000000> speed <39.851648> * SPEEDUP_FACTOR / 100;
+		turn rleg3 to z-axis <-17.582418> speed <232.087912> * SPEEDUP_FACTOR / 100;
+		turn rleg2 to z-axis <0.000000> speed <23.439560> * SPEEDUP_FACTOR / 100;
+		turn rleg1 to z-axis <-23.912088> speed <178.164835> * SPEEDUP_FACTOR / 100;
+		sleep 150 * 100 / SPEEDUP_FACTOR;
+	}
+	sleep 150 * 100 / SPEEDUP_FACTOR;
+	return (0);
+}
+
+activatescr()
+{
+	if( TRUE )
+	{
+		sleep 240;
+	}
+	if( TRUE )
+	{
+		move lbody to x-axis [-4.375000] speed [7.415253];
+		move rbody to x-axis [4.000000] speed [6.779648];
+		sleep 590;
+	}
+	if( TRUE )
+	{
+		turn launcher to x-axis <39.736264> speed <137.016484>;
+		sleep 290;
+	}
+	if( TRUE )
+	{
+		turn launcher to x-axis <93.538462> speed <244.554945>;
+		sleep 220;
+	}
+	if( TRUE )
+	{
+		turn launcher to x-axis <105.494505> speed <54.340659>;
+		sleep 220;
+	}
+	if( TRUE )
+	{
+		turn launcher to x-axis <102.329670> speed <18.615385>;
+		sleep 170;
+	}
+	if( TRUE )
+	{
+		turn launcher to x-axis <98.461538> speed <22.752747>;
+		sleep 170;
+	}
+	sleep 170;
+	return (0);
+}
+
+deactivatescr()
+{
+	if( TRUE )
+	{
+		move lbody to x-axis [-4.375000] now;
+		move rbody to x-axis [4.000000] now;
+		turn launcher to x-axis <98.461538> now;
+		turn launcher to x-axis <92.131868> speed <31.648352>;
+		sleep 200;
+	}
+	if( TRUE )
+	{
+		turn launcher to x-axis <70.681319> speed <107.247253>;
+		sleep 200;
+	}
+	if( TRUE )
+	{
+		turn launcher to x-axis <17.230769> speed <267.252747>;
+		sleep 200;
+	}
+	if( TRUE )
+	{
+		turn launcher to x-axis <0.351648> speed <84.395604>;
+		sleep 200;
+	}
+	if( TRUE )
+	{
+		move lbody to x-axis [0.000000] speed [21.875000];
+		move rbody to x-axis [0.000000] speed [20.000000];
+		sleep 200;
+	}
+	sleep 200;
+	return (0);
+}
+
+stand()
+{
+	turn lupleg1 to z-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn lupleg1 to y-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn lupleg1 to x-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn lupleg2 to z-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn lupleg2 to y-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn lupleg2 to x-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn lupleg3 to z-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn lupleg3 to y-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn lupleg3 to x-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn lleg1 to z-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn lleg1 to y-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn lleg1 to x-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn lleg2 to z-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn lleg2 to y-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn lleg2 to x-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn lleg3 to z-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn lleg3 to y-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn lleg3 to x-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	
+	turn rupleg1 to z-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn rupleg1 to y-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn rupleg1 to x-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn rupleg2 to z-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn rupleg2 to y-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn rupleg2 to x-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn rupleg3 to z-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn rupleg3 to y-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn rupleg3 to x-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn rleg1 to z-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn rleg1 to y-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn rleg1 to x-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn rleg2 to z-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn rleg2 to y-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn rleg2 to x-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn rleg3 to z-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn rleg3 to y-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn rleg3 to x-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	
+	return (0);
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+	return (0);
+}
+
+HitByWeapon(Func_Var_1, Func_Var_2)
+{
+	turn base to z-axis Func_Var_2 speed <105.021978>;
+	turn base to x-axis Func_Var_1 speed <105.021978>;
+	wait-for-turn base around z-axis;
+	wait-for-turn base around x-axis;
+	turn base to z-axis <0.000000> speed <30.005495>;
+	turn base to x-axis <0.000000> speed <30.005495>;
+	return (0);
+}
+
+Go()
+{
+	call-script activatescr();
+	Static_Var_1 = 1;
+	return (0);
+}
+
+Stop()
+{
+	Static_Var_1 = 0;
+	call-script deactivatescr();
+	return (0);
+}
+
+InitState()
+{
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+	return (0);
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState == 0 )
+		{
+			call-script Go();
+			currentstate = 0;
+		}
+		if( statechg_DesiredState == 1 )
+		{
+			call-script Stop();
+			currentstate = 1;
+		}
+	}
+	statechg_StateChanging = FALSE;
+	return (0);
+}
+
+MotionControl(Func_Var_1)
+{
+	while( TRUE )
+	{
+		Func_Var_1 = bMoving;
+		if( Func_Var_1 )
+		{
+			call-script walk();
+		}
+		if (justMoved)
+		{
+			call-script stand();
+			justMoved = FALSE;
+		}
+		if( !Func_Var_1 )
+		{
+			sleep 100;
+		}
+	}
+	return (0);
+}
+
+Create()
+{
+	bMoving = FALSE;
+	justMoved = FALSE;
+	Static_Var_1 = 0;
+	Static_Var_2 = 10000;
+	start-script SmokeUnit();
+	call-script InitState();
+	start-script MotionControl();
+	return (0);
+}
+
+StartMoving()
+{
+	bMoving = TRUE;
+	return (0);
+}
+
+StopMoving()
+{
+	bMoving = FALSE;
+	justMoved = TRUE;
+	return (0);
+}
+
+RestoreAfterDelay()
+{
+	sleep Static_Var_2;
+	set-signal-mask 0;
+	start-script RequestState(1);
+	return (0);
+}
+
+AimPrimary(heading, pitch)
+{
+	start-script RequestState(0);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	while( !Static_Var_1 )
+	{
+		sleep 200;
+	}
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	sleep 3000;
+	return (0);
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = emit;
+	return (0);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+	return (0);
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP1;
+		explode launcher type BITMAPONLY | BITMAP2;
+		explode lbody type BITMAPONLY | BITMAP3;
+		explode lffoot type BITMAPONLY | BITMAP4;
+		explode lleg1 type BITMAPONLY | BITMAP5;
+		explode lleg2 type BITMAPONLY | BITMAP1;
+		explode lleg3 type BITMAPONLY | BITMAP2;
+		explode lrfoot type BITMAPONLY | BITMAP3;
+		explode lupleg1 type BITMAPONLY | BITMAP4;
+		explode lupleg2 type BITMAPONLY | BITMAP5;
+		explode lupleg3 type BITMAPONLY | BITMAP1;
+		explode rbody type BITMAPONLY | BITMAP2;
+		explode rffoot type BITMAPONLY | BITMAP3;
+		explode rleg1 type BITMAPONLY | BITMAP4;
+		explode rleg2 type BITMAPONLY | BITMAP5;
+		explode rleg3 type BITMAPONLY | BITMAP1;
+		explode rrfoot type BITMAPONLY | BITMAP2;
+		explode rupleg1 type BITMAPONLY | BITMAP3;
+		explode rupleg2 type BITMAPONLY | BITMAP4;
+		explode rupleg3 type BITMAPONLY | BITMAP5;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP1;
+		explode launcher type BITMAPONLY | BITMAP2;
+		explode lbody type BITMAPONLY | BITMAP3;
+		explode lffoot type FALL | BITMAP4;
+		explode lleg1 type FALL | BITMAP5;
+		explode lleg2 type FALL | BITMAP1;
+		explode lleg3 type FALL | BITMAP2;
+		explode lrfoot type FALL | BITMAP3;
+		explode lupleg1 type FALL | BITMAP4;
+		explode lupleg2 type FALL | BITMAP5;
+		explode lupleg3 type FALL | BITMAP1;
+		explode rbody type BITMAPONLY | BITMAP2;
+		explode rffoot type FALL | BITMAP3;
+		explode rleg1 type FALL | BITMAP4;
+		explode rleg2 type FALL | BITMAP5;
+		explode rleg3 type FALL | BITMAP1;
+		explode rrfoot type FALL | BITMAP2;
+		explode rupleg1 type FALL | BITMAP3;
+		explode rupleg2 type FALL | BITMAP4;
+		explode rupleg3 type FALL | BITMAP5;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type BITMAPONLY | BITMAP1;
+		explode launcher type BITMAPONLY | BITMAP2;
+		explode lbody type BITMAPONLY | BITMAP3;
+		explode lffoot type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP4;
+		explode lleg1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
+		explode lleg2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+		explode lleg3 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+		explode lrfoot type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP3;
+		explode lupleg1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP4;
+		explode lupleg2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
+		explode lupleg3 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+		explode rbody type BITMAPONLY | BITMAP2;
+		explode rffoot type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP3;
+		explode rleg1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP4;
+		explode rleg2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
+		explode rleg3 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+		explode rrfoot type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+		explode rupleg1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP3;
+		explode rupleg2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP4;
+		explode rupleg3 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP1;
+	explode launcher type BITMAPONLY | BITMAP2;
+	explode lbody type BITMAPONLY | BITMAP3;
+	explode lffoot type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP4;
+	explode lleg1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
+	explode lleg2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+	explode lleg3 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+	explode lrfoot type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP3;
+	explode lupleg1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP4;
+	explode lupleg2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
+	explode lupleg3 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+	explode rbody type BITMAPONLY | BITMAP2;
+	explode rffoot type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP3;
+	explode rleg1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP4;
+	explode rleg2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
+	explode rleg3 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP1;
+	explode rrfoot type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+	explode rupleg1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP3;
+	explode rupleg2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP4;
+	explode rupleg3 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
+	return (0);
+}

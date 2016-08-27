@@ -1,0 +1,136 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Barrager;
+	description=Fast-firing Artillery;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CORE TANK LEVEL2 WEAPON NOTAIR NOTSUB CTRL_W;
+	tedclass=TANK;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_mobile_artillery;
+	unitnumber=117;
+	objectname=gear_mobile_artillery.3do;
+	corpse=gear_mobile_artillery_dead;
+	buildpic=gear_mobile_artillery.png;
+	soundcategory=gear_TANK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=4100;
+	healtime=30;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.5;
+	energyuse=0.5;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKSH4;
+	turnrate=400;
+	acceleration=0.36;
+	brakerate=0.8;
+	maxvelocity=1;
+	maxslope=12;
+	maxwaterdepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_barrager_cannon;
+	nochasecategory=VTOL;
+	badtargetcategory1=VTOL;
+	explodeas=ATOMIC_BLASTPEN;
+	selfdestructas=ATOMIC_BLASTPEN;
+	onlytargetcategory1=NOTAIR;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=MB-PS15;
+	downloadable=1;
+	hightrajectory=2;
+	leavetracks=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	trackoffset=7;
+	trackstrength=6;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=42;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	scale=1.2;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:yellowflarebig;
+	}
+	[customParams] 
+	{
+    canAreaAttack=1;
+	}
+	buildcostenergy=11022;//#AUTO#
+	buildcostmetal=2204;//#AUTO#
+	buildtime=26269;//#AUTO#
+}

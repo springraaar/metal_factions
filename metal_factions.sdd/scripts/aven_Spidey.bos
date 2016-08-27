@@ -1,0 +1,255 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 400
+
+piece  base, body, leg1, leg2, leg3, leg4, leg5, leg6;
+
+static-var  bMoving, Static_Var_2, justMoved;
+
+
+HitByWeapon(Func_Var_1, Func_Var_2)
+{
+	turn base to z-axis Func_Var_2 speed <105.000000>;
+	turn base to x-axis Func_Var_1 speed <105.000000>;
+	wait-for-turn base around z-axis;
+	wait-for-turn base around x-axis;
+	turn base to z-axis <0.000000> speed <30.000000>;
+	turn base to x-axis <0.000000> speed <30.000000>;
+	return (0);
+}
+
+walk2()
+{
+	if( TRUE )
+	{
+		turn leg1 to y-axis <43.000000> now;
+		turn leg1 to y-axis <0.000000> speed <218.000000> * SPEEDUP_FACTOR / 100;
+		turn leg1 to z-axis <0.000000> now;
+		turn leg1 to z-axis <0.000000> speed <3.000000> * SPEEDUP_FACTOR / 100;
+		turn leg2 to z-axis <0.000000> now;
+		turn leg2 to z-axis <29.005495> speed <155.000000> * SPEEDUP_FACTOR / 100;
+		turn leg3 to y-axis <21.000000> now;
+		turn leg3 to y-axis <12.000000> speed <12.000000> * SPEEDUP_FACTOR / 100;
+		turn leg3 to x-axis <-25.005495> now;
+		turn leg3 to x-axis <0.000000> speed <185.000000> * SPEEDUP_FACTOR / 100;
+		turn leg4 to y-axis <-40.000000> now;
+		turn leg4 to y-axis <-39.000000> speed <1.000000> * SPEEDUP_FACTOR / 100;
+		turn leg4 to z-axis <-30.005495> now;
+		turn leg4 to z-axis <0.000000> speed <152.000000> * SPEEDUP_FACTOR / 100;
+		turn leg5 to y-axis <-39.000000> now;
+		turn leg5 to y-axis <5.000000> speed <185.000000> * SPEEDUP_FACTOR / 100;
+		turn leg5 to z-axis <0.000000> now;
+		turn leg5 to z-axis <0.000000> speed <1.000000> * SPEEDUP_FACTOR / 100;
+		turn leg6 to y-axis <0.000000> now;
+		turn leg6 to y-axis <-52.010989> speed <80.000000> * SPEEDUP_FACTOR / 100;
+		turn leg6 to x-axis <-30.005495> now;
+		sleep 200 * 100 / SPEEDUP_FACTOR;
+		turn leg1 to z-axis <31.005495> speed <158.000000> * SPEEDUP_FACTOR / 100;
+		turn leg2 to y-axis <13.000000> speed <198.000000> * SPEEDUP_FACTOR / 100;
+		turn leg2 to z-axis <31.005495> speed <1.000000> * SPEEDUP_FACTOR / 100;
+		turn leg3 to y-axis <0.000000> speed <246.000000> * SPEEDUP_FACTOR / 100;
+		turn leg3 to x-axis <0.000000> speed <3.000000> * SPEEDUP_FACTOR / 100;
+		turn leg4 to y-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+		turn leg5 to z-axis <-31.005495> speed <155.000000> * SPEEDUP_FACTOR / 100;
+		turn leg6 to x-axis <4.000000> speed <140.000000> * SPEEDUP_FACTOR / 100;
+		sleep 200 * 100 / SPEEDUP_FACTOR;
+		turn leg1 to y-axis <55.010989> speed <279.000000> * SPEEDUP_FACTOR / 100;
+		turn leg1 to z-axis <31.005495> speed <3.000000> * SPEEDUP_FACTOR / 100;
+		turn leg2 to y-axis <14.000000> speed <1.000000> * SPEEDUP_FACTOR / 100;
+		turn leg2 to z-axis <0.000000> speed <152.000000> * SPEEDUP_FACTOR / 100;
+		turn leg3 to x-axis <-25.005495> speed <185.000000> * SPEEDUP_FACTOR / 100;
+		turn leg4 to y-axis <0.000000> speed <3.000000> * SPEEDUP_FACTOR / 100;
+		turn leg4 to z-axis <-31.005495> speed <152.000000> * SPEEDUP_FACTOR / 100;
+		turn leg5 to y-axis <-34.000000> speed <158.000000> * SPEEDUP_FACTOR / 100;
+		turn leg5 to z-axis <-31.005495> speed <1.000000> * SPEEDUP_FACTOR / 100;
+		turn leg6 to y-axis <12.000000> speed <133.000000> * SPEEDUP_FACTOR / 100;
+		sleep 200 * 100 / SPEEDUP_FACTOR;
+	}
+	turn leg1 to y-axis <43.000000> speed <60.000000> * SPEEDUP_FACTOR / 100;
+	turn leg1 to z-axis <0.000000> speed <152.000000> * SPEEDUP_FACTOR / 100;
+	turn leg2 to y-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+	turn leg2 to z-axis <0.000000> speed <3.000000> * SPEEDUP_FACTOR / 100;
+	turn leg3 to y-axis <21.000000> speed <244.000000> * SPEEDUP_FACTOR / 100;
+	turn leg3 to x-axis <-25.005495> speed <0.000000> * SPEEDUP_FACTOR / 100;
+	turn leg4 to y-axis <-40.000000> speed <197.000000> * SPEEDUP_FACTOR / 100;
+	turn leg4 to z-axis <-31.005495> speed <0.000000> * SPEEDUP_FACTOR / 100;
+	turn leg5 to y-axis <-39.000000> speed <27.000000> * SPEEDUP_FACTOR / 100;
+	turn leg5 to z-axis <0.000000> speed <155.000000> * SPEEDUP_FACTOR / 100;
+	turn leg6 to y-axis <0.000000> speed <7.000000> * SPEEDUP_FACTOR / 100;
+	turn leg6 to x-axis <-30.005495> speed <160.000000> * SPEEDUP_FACTOR / 100;
+	sleep 200 * 100 / SPEEDUP_FACTOR;
+	return (0);
+}
+
+stand()
+{
+	turn leg1 to z-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+	turn leg1 to y-axis <-45.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+	turn leg1 to x-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+	
+	turn leg2 to z-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+	turn leg2 to y-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+	turn leg2 to x-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+	
+	turn leg3 to z-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+	turn leg3 to y-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+	turn leg3 to x-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+	
+	turn leg4 to z-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+	turn leg4 to y-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+	turn leg4 to x-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+	
+	turn leg5 to z-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+	turn leg5 to y-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+	turn leg5 to x-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+	
+	turn leg6 to z-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+	turn leg6 to y-axis <-45.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+	turn leg6 to x-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+	
+	return (0);
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+	return (0);
+}
+
+MotionControl(Func_Var_1, Func_Var_2)
+{
+	Func_Var_2 = 1;
+	while( TRUE )
+	{
+		Func_Var_1 = bMoving;
+		if( Func_Var_1 )
+		{
+			Func_Var_2 = 1;
+			call-script walk2();
+		}
+		if (justMoved)
+		{
+			call-script stand();			
+			justMoved = FALSE;
+		}
+		if( !Func_Var_1 )
+		{
+			sleep 200;
+			Func_Var_2 = 0;
+		}
+	}
+	return (0);
+}
+
+Create()
+{
+	bMoving = FALSE;
+	justMoved = FALSE;	
+	Static_Var_2 = 1000;
+	start-script MotionControl();
+	start-script SmokeUnit();
+	return (0);
+}
+
+StartMoving()
+{
+	bMoving = TRUE;
+	return (0);
+}
+
+StopMoving()
+{
+	bMoving = FALSE;
+	justMoved = TRUE;
+	return (0);
+}
+
+RestoreAfterDelay()
+{
+	sleep Static_Var_2;
+	return (0);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+	return (0);
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode leg6 type BITMAPONLY | BITMAP1;
+		explode leg1 type BITMAPONLY | BITMAP1;
+		explode leg2 type BITMAPONLY | BITMAP2;
+		explode base type BITMAPONLY | BITMAP3;
+		explode body type BITMAPONLY | BITMAP3;
+		explode leg3 type BITMAPONLY | BITMAP3;
+		explode leg4 type BITMAPONLY | BITMAP4;
+		explode leg5 type BITMAPONLY | BITMAP5;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode leg1 type FALL | BITMAP1;
+		explode leg6 type FALL | BITMAP1;
+		explode body type BITMAPONLY | BITMAP2;
+		explode leg2 type FALL | BITMAP2;
+		explode leg3 type FALL | BITMAP3;
+		explode base type BITMAPONLY | BITMAP3;
+		explode leg4 type FALL | BITMAP4;
+		explode leg5 type FALL | BITMAP5;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode leg1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode leg6 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode body type BITMAPONLY | BITMAP2;
+		explode leg2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode base type BITMAPONLY | BITMAP3;
+		explode leg3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode leg4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode leg5 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		return (0);
+	}
+	corpsetype = 3;
+	explode leg1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode leg6 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode leg2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode body type BITMAPONLY | BITMAP3;
+	explode base type BITMAPONLY | BITMAP3;
+	explode leg3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode leg4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode leg5 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	return (0);
+}

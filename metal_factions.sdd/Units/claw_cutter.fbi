@@ -1,0 +1,97 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	Side=Claw;
+	Name=Cutter;
+	Description=Amphibious Attack Robot;
+
+	// ------------------- categories
+	Category=CLAW KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
+	TEDClass=KBOT;
+
+	// ------------------- external specs
+	UnitName=claw_cutter;
+	UnitNumber=20000;
+	Objectname=claw_cutter.3do;
+	buildpic=claw_cutter.png;
+	SoundCategory=CORAK;
+	Corpse=claw_cutter_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=3;
+	FootprintZ=3;
+	MaxDamage=1600;
+
+
+	// ------------------- resources
+	EnergyUse=1;
+	EnergyStorage=0;
+	MetalStorage=0;
+	EnergyMake=1;
+
+	// ------------------- abilities
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canguard=1;
+	canattack=1;
+	Builder=0;
+
+	// ------------------- movement
+	MaxVelocity=1.5;
+	BrakeRate=0.35;
+	Acceleration=0.35;
+	TurnRate=550;
+	SteeringMode=2;
+	MovementClass=KBOTUW3;
+
+	// ------------------- scout
+	sightdistance=500;
+	RadarDistance=0;
+	SonarDistance=400;
+
+	// ------------------- weapons
+	Weapon1=claw_cutter_laser;
+	Weapon2=claw_cutter_torpedo;
+	badtargetcategory1=VTOL;
+	NoChaseCategory=VTOL;
+	ExplodeAs=BIG_UNITEX;
+	SelfDestructAs=BIG_UNIT;
+
+
+	// ------------------- orders
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+	activatewhenbuilt=1;
+
+	// ------------------- misc
+	Version=3.1;
+	Designation=CA_Ik;
+	BMcode=1;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	ShootMe=1;
+	DefaultMissionType=Standby;
+	maneuverleashlength=640;
+	Upright=0;
+	Downloadable=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 25 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:blueflaresml;
+		explosiongenerator1=custom:yellowflaremed;
+	}
+	buildcostenergy=3786;//#AUTO#
+	buildcostmetal=757;//#AUTO#
+	buildtime=9024;//#AUTO#
+}

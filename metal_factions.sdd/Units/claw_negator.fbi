@@ -1,0 +1,129 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Negator;
+	description=Radar Jammer Ship;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW SHIP NOWEAPON JAM LEVEL2 NOTAIR NOTSUB;
+	tedclass=SHIP;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=claw_negator;
+	unitnumber=20000;
+	objectname=claw_negator.3do;
+	corpse=claw_negator_dead;
+	buildpic=claw_negator.png;
+	soundcategory=aven_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1600;
+	healtime=30;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=25;
+	energystorage=0;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	floater=1;
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=Smallboat;
+	turnrate=375;
+	acceleration=0.08;
+	brakerate=0.01;
+	maxvelocity=2.3;
+	minwaterdepth=6;
+	waterline=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+	sonardistance=0;
+	radardistancejam=650; //was 1095//
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=BIG_UNITEX;
+	selfdestructas=MEDIUM_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	ai_limit=limit CORSJAM 2;
+	bmcode=1;
+	designation=SA-AR2;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 30 60;
+	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	[customParams] 
+	{
+		evalfactor=0.85;//SHIP
+	}
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:UNITFIRE;
+	}
+	buildcostenergy=2587;//#AUTO#
+	buildcostmetal=517;//#AUTO#
+	buildtime=6166;//#AUTO#
+}

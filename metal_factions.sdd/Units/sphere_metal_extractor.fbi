@@ -1,0 +1,106 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Metal Extractor;
+	description=Extracts Metal;
+	icontype=metal;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE METAL EXTRACTOR LEVEL1 NOWEAPON NOTAIR NOTSUB;
+	tedclass=METAL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=sphere_metal_extractor;
+	unitnumber=10003;
+	objectname=sphere_metal_extractor.3do;
+	corpse=sphere_metal_extractor_dead;
+	buildpic=sphere_metal_extractor.png;
+	soundcategory=aven_MEX;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=500;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=3;
+	energystorage=0;
+	extractsmetal=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=32768;
+	yardmap=ooooooooo;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=20;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDINGEX;
+	selfdestructcountdown=0;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AM-BME1;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	collisionVolumeType = cyly;
+	collisionVolumeScales =40 40 40;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildcostenergy=487;//#AUTO#
+	buildcostmetal=97;//#AUTO#
+	buildtime=1161;//#AUTO#
+}

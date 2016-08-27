@@ -1,0 +1,137 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Probe;
+	description=Air Scout;
+	icontype=air;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE VTOL CTRL_V LEVEL1 NOWEAPON NOTSUB;
+	tedclass=VTOL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=sphere_probe;
+	unitnumber=20000;
+	objectname=sphere_probe.3do;
+	buildpic=sphere_probe.png;
+	soundcategory=gear_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=90;
+	healtime=30;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.0;
+	energyuse=0.0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canfly=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	stealth=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnrate=800;
+	acceleration=0.5;
+	brakerate=0.09;
+	maxvelocity=9;
+	maxslope=10;
+	maxwaterdepth=255;
+	cruisealt=180;
+
+	// flight behaviour
+	wingdrag=0.07;      //0.07
+	wingangle=0.08;	//0.08;
+	drag=0.08;		//0.08
+	fronttospeed=0.1;  //0.1
+	speedtofront=0.07; //0.07
+	mygravity=0.4; //0.4
+	maxbank=0.8;	//0.8
+	maxpitch=0.45;	//0.45
+	turnradius=350; //500
+	maxaileron=0.01;	//0.015
+	maxelevator=0.01;	//0.01
+	maxrudder=0.01;  //0.004
+	maxAcc=0.065; //0.065
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=600;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=VTOL_standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bankscale=1;
+	bmcode=1;
+	designation=AFD-S1;
+	downloadable=1;
+	maneuverleashlength=1280;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collide=1;
+	minCollisionSpeed=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =17 10 17;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+   
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildcostenergy=887;//#AUTO#
+	buildcostmetal=88;//#AUTO#
+	buildtime=1138;//#AUTO#
+}

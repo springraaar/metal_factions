@@ -1,0 +1,908 @@
+2016/08/24 ------------------ NOTES v0.961 ----------------------
+
+--- UI / widgets
+
+- the tooltip now shows a label with the number of upgrades of each type (red - weapon, green - armor, blue - speed/utility)
+(this way it's easier for players to get a rough idea of the kind of upgrades enemies have)
+
+
+2016/08/21 ------------------ NOTES v0.96 ----------------------
+
+--- new units
+
+- added upgrade centers : these can build upgrade modules that significantly improve commanders or slightly improve all units
+- added drone upgrades : drones of certain types will automatically spawn above commanders and perform useful actions
+
+
+- added AVEN "Zeta Form" commander upgrade : greatly increased speed but reduced builder/combat attributes
+- added GEAR "Infernal Form" commander upgrade : slow heavily armored form with AOE attacks
+- added CLAW "Grinder Form" commander upgrade : greatly increased firepower but slower movement
+- added SPHERE "Gazer Form" commander upgrade : slow heavily armored sniper
+
+
+--- balance / mechanics
+
+- modified construction frame decay delay from 7s to 60s
+- fix collision volumes commander respawners
+- slightly increased collision volumes for level 1 aircraft fighters
+- all construction units can now build fortification walls (also updated build pictures)
+- made GEAR "Grenado" significantly bigger and stronger but much more expensive
+
+--- UI / widgets
+
+- tooltip for upgrade center shows status of current upgrades and the effects they have on relevant unit types
+- values of damage, range, speed, etc. on tooltips are affected by upgrades (build menu still shows base values, though)
+- made radar icons scale with unit size and added separate icons for some of the major building types
+
+--- AI
+
+- uses the new commander morph options
+- builds upgrade center and upgrade modules which differ depending on the faction (unless it's on easy mode)
+- takes into account the global allied vs enemy force advantage when deciding if it should attack
+- fixed an issue which could make AI delay building energy generators when low on energy
+- added "Onslaught" mode : very agressive AI with a built-in resource advantage (HARD!)
+
+
+
+
+2016/03/12 ------------------ NOTES v0.951 ----------------------
+
+--- balance / mechanics
+
+- starting 1500M and 4000E storage is no longer attached to commanders
+
+
+
+
+2016/03/02 ------------------ NOTES v0.95 ----------------------
+
+--- new units
+
+- added SPHERE "Magnetar" : Riot Sphere (level 2)
+
+- added "Exploiter" level 2 hazardous metal extractors for all factions
+(provide almost as much metal as moho mines for less than half the cost, but are vulnerable, drain more energy and explode violently when killed)
+
+
+--- balance / mechanics
+
+- made GEAR "Titan" a bit slower but about 10% cheaper
+- made units with slow non-tracking projectiles about 5% cheaper
+- reduced cost of radars, sonars and radar jammers by about 15%
+- reduced energy output and cost of advanced fusion reactors by about 30%
+- reduced cost of geothermal power plants by about 15%
+- reduced cost of level 1 scouts by about 10-15%
+- increased HP for SPHERE "Bit" by about 10% and reduced cost by about 5%
+- fixed some units not regenerating HP even after not taking damage for 25s 
+- paralyzed aircraft progressively lose altitude
+- reduced energy cost for movement for SPHERE "Chroma" from 1000 to 600 E/s and increased HP from 18000 to 22000
+- reduced cost of SPHERE's flying spheres by about 20%, except "Chroma"
+- increased GEAR "Tremor"'s HP from 10000 to 11000
+
+
+--- UI
+
+- added widget to show outline on units to make them more noticeable (by jK)
+(it's disabled by default, but can be enabled through widgets menu using F11 )
+
+- builders have a priority button : "normal" or "high"
+"normal" priority builders pause construction if resources fall below a certain threshold (near zero), while "high" priority builders keep trying to build at their max rate.
+
+- modified the energy and metal bars
+
+- made players' names above each commander more visible, especially when zooming out
+
+
+2016/01/17 ------------------ NOTES v0.94 ----------------------
+
+--- balance / mechanics
+
+- air transports can no longer load enemy units
+- air transports can dive to load/unload units on water
+
+- greatly increased terrain slope tolerance for buildings
+- standardize idle time for units at 25s and idle HP regeneration at 2 + (0.3% of maximum base HP) per second
+
+
+--- UI
+
+- added background to chat box and made text brighter to make it easier to read (avoiding the white outline)
+
+
+
+2016/01/15 ------------------ NOTES v0.93 ----------------------
+
+--- new units
+
+- added AVEN "Raptor" : Heavy Fast Attack Robot (level 2)
+
+--- balance / mechanics
+
+- slightly increased GEAR "Crasher"'s HP and cost
+- slightly increased AVEN "Eraser"'s speed and cost
+
+--- UI
+
+- changed nano-towers from the "OTHER" build menu section to "PLANT"
+
+--- other
+
+- improved models of SPHERE 4-legged and 6-legged robots, including commanders
+
+
+2016/01/02 ------------------ NOTES v0.92 ----------------------
+
+--- balance / mechanics
+
+- increased HP regen on commanders from 4/8 to 8/12 HP/s
+- made very long range artillery not miss immobile targets, but still miss moving ones
+- units now also gain experience from being damaged by enemies
+- SPHERE Commander can now be lifted by level 1 air transports
+
+--- AI
+
+- "MFAI : easy" builders will waste less time idle but the AI is more likely to hopelessly send smaller attack waves against stronger clusters
+
+
+2015/12/27 ------------------ NOTES v0.91 ----------------------
+
+--- new units
+
+- added AVEN "Zephyr" : Airborne Radar/Area Support (level 2)
+(provides 2000 range radar and a 600 radius aura that gives 25% speed boost and 4 HP/s regeneration. Doesn't Stack)
+- added SPHERE "Banger" : Shielded Rocket Turret (level 2)
+- added GEAR "Flareon" : Heavy Tank (level 2)
+
+--- balance / mechanics
+
+- increased cost of long-ranged units in general and units with both range and AOE (about 5-10%)
+- decreased cost of SPHERE's flying spheres by about 10%
+- decreased cost of very long range artillery by about 20%, but reduced range by 10%
+
+- changed CLAW "Longhorn" armor type from H to M 
+- reduced range of CLAW "Bishop" missiles from 1200 to 1100
+- decreased cost of GEAR "Grenado" by about 20%. It can now be carried by level 1 air transports
+- reduced SPHERE "Bulk"'s range from 550 to 500 but made it about 7% cheaper
+- replaced SPHERE "Gazer" weapon with a beam laser with lower reload time (same dmg/s)
+
+- reduced dmg/s scaling for veteran units from up to +40% to +35%
+- limit stacked fire area damage to a maximum of 200 per second
+
+
+
+
+2015/12/05 ------------------ NOTES v0.901 ----------------------
+
+- prevent lua errors on metal extractor upgrader gadget when processing fallback and builder is no longer registered
+
+
+2015/11/29 ------------------ NOTES v0.90 ----------------------
+
+--- balance / mechanics
+
+- slightly reduced AVEN "Stalker"'s HP and missile range and made it slightly cheaper
+- Increased nano towers' build range from 250 to 300 and slightly increased cost
+- slightly increased terrain slope tolerance for most robots and vehicles but made them lose a bit more speed when climbing steep slopes
+
+--- UI
+
+- commanders no longer have HP hidden from enemy players
+- fix issue with the nano auto-patrol widget introduced in the previous patch
+- make sure F4 key toggles metal map view, which highlights metal zones
+- added widget to also highlight geothermal spots when in metal map view (by Niobium)
+
+
+2015/11/28 ------------------ NOTES v0.89 ----------------------
+
+--- new units
+
+- added CLAW "Havoc" : Heavy Bomber (level 2)
+
+
+--- balance / mechanics
+
+- SPHERE "Spitfire" stronger but more expensive
+- AVEN "Gryphon" slightly slower but increased HP and cost
+- level 2 heavy ground attack aircraft are a bit stronger and more expensive
+- SPHERE "Meteor" and AVEN "Icarus" drop bombs instead of rockets and are now labelled as "Heavy Bombers"
+- CLAW "Boomer" rockets no longer collide with friendly units
+- GEAR "Voodoo" can now target air units
+
+- increased base energy income from 30 E/s to 60 E/s
+- changed starting resources and storage from 1000M + 1000E to 1500M + 4000E to speed up early game
+- fix wind generator income (boost given on v0.8 wasn't being applied), and added a bonus of up to 20% more income on higher ground
+- increased durability and slightly increased cost of wind generators, solar collectors and tidal generators
+- "alive" enemy units can no longer be reclaimed
+- friendly units are now progressively reclaimed
+
+- fixed GEAR "Canister" and "Eruptor" setting ground on fire when canceled or reclaimed
+- reduced fire burn damage to 180(M) over 6s (still 30 dmg/s but lowered duration from 10s)
+- increased fire area damage per second from 5(H) and 10(H) flat damage to 10-20(M) and 30-60(M) for small and big fireballs, respectively
+(note that fireball damage stacks, unlike the burn damage)
+- increased cost of GEAR "Eruptor" by 30%
+
+- increased the dmg/s of AVEN "Omega Form" commander's weapons by about 15% on the EMG and 40% on the disruptor
+- commanders wreckage metal is halved if killed by friendly fire more than 20s since last damaged by an enemy to prevent free metal exploit
+
+- reduced paralyze max stun time from 10 to 6s but scale paralyze damage with target's missing health % (up to 200%, but doesn't affect the normal damage fraction)
+
+
+
+--- AI : MFAI
+
+- fixed metal spot detection (the previous algorithm could ignore spots in some cases!)
+- improved AI compatibility with metal maps
+- map data is only loaded once and shared by all MFAI instances
+- AVEN uses "Kodiak" vehicles properly now
+- avoids building level 2 plants if low on energy
+- fix a situation where all AI's builders would be all be assigned to specific tasks and skip the standard queue
+(this could lead to situations where it delayed building several plants, including level2 for too long or not build them at all)
+- fixed some issues with AI not morphing its commander
+- fixed AI builders getting stuck trying to build structures on places they can't reach
+
+
+--- UI
+
+- tooltip shows energy income for all energy generators when navigating the build menu
+- nano-tower auto-patrol widget only queues patrol after 1 second idle to avoid overriding shift-queued commands given while being built
+
+--- other
+
+- changed the "on-fire" sound effect and burn animation slightly
+- fix a bug in the gadget that manages air transports' speed
+- added tip text to the AVEN advanced vehicle plant to remind players that it can build mobile fusion reactors
+- changed aircraft bomb trails
+- modified light cannon explosion sounds to be less annoying
+
+
+2015/10/18 ------------------ NOTES v0.88 ----------------------
+
+--- new units
+
+- added GEAR "Eruptor" : Mobile Incendiary Mortar (level 2)
+- added SPHERE "Hermit" : Area Shield Robot (level 2)									
+
+
+--- balance / mechanics
+
+- changed weapons on fighter aircraft to fire longer bursts to make them more effective. Also increased dmg/s and HP for level 2 fighters
+(they're somewhat more expensive, but more cost-effective now)
+
+- reduced cost by 15% for non-amphibious surface ships to balance the fact that most maps favour land
+- reduced slightly reduced speed and HP for expensive ships (further reduces cost)						
+- reduced cost of GEAR "Canister" 
+- changed GEAR "Dominator Form" commander to have two heavy cannons (better at bombarding but no longer effective vs aircraft)
+- removed the option to morph commanders back to basic form (was missing from previous versions)
+
+--- AI
+
+- modified MFAI to use the new units
+
+--- other
+
+- changed SPHERE "Gaunt" model to differentiate it more from Bit and to raise the firing position
+- slightly improved GEAR heat ray effects
+
+
+
+2015/10/04 ------------------ NOTES v0.87 ----------------------
+
+--- new units
+
+- added GEAR "Canister" : Incendiary Robot (level 1)
+- added GEAR "Firestorm" : Incendiary Ground Attack Aircraft (level 2)
+
+Set the ground on fire! 
+
+(doesn't work on water)
+
+--- balance / mechanics
+
+- changed GEAR flamethrowers to burn units for 300 M damage over 10s (doesn't stack)
+- raised sight and radar emit heights to fix nearby opposing units not being able to see each other
+- changed GEAR "Destroyer form" commander : less hp, faster, and updated model and animations
+- increased damage of AVEN and GEAR level 2 fighter aircraft and slightly reduced speed
+- increased AVEN "Dazer" range and cost
+- adjusted SPHERE "Chroma" weapon ranges so all three beams fire when at max range
+- fixed GEAR "Moho mine" not being buildable underwater
+- air transports drop the unit they are carrying when destroyed
+- made GEAR light laser tower weapon cost energy to fire and slightly reduce cost
+- SPHERE flying spheres will no longer try to use air repair pads
+
+
+--- AI : MFAI
+
+- AVEN AI now uses "Stalker" and "Magnum"
+- GEAR AI uses "Canister" and "Firestorm"
+- SPHERE AI uses "Shielder" and makes "Pulsar" a bit more often
+- fix AI not using units that have been shared to it by other players
+- put a bit less priority on making geothermals to avoid some issues
+- spread out army more when attacking with large numbers
+- commanders no longer move around to try and place radars or light defenses to avoid wasting time early game
+- added easy mode : AI wastes time, underestimates enemy defenses and performs worse in combat
+
+--- other
+
+- adjusted tip text for several units
+- fixed wrong faction logo sometimes appearing in the player list 
+- updated build pictures for some units
+- changed SPHERE shields to become red when drained (to make them more noticeable)
+
+
+
+
+2015/09/20 ------------------ NOTES v0.86 ----------------------
+
+--- gameplay/balance changes
+
+- drastically reduce cloak energy cost of AVEN, GEAR and CLAW commanders from 400 to 150 E/s when moving
+- made AVEN, GEAR and CLAW robot radar jammers cloakable
+- reduced cloak energy cost on cloakable units in general (to about 30-60 E/s when moving)
+- made GEAR "Cloakable Cube" a bit faster and a bit more expensive
+
+(all this means that groups of units can now sneak into the enemy base undetected!)
+
+--- UI / widgets
+
+- toggling cloaked state also toggles hold-fire/fire-at-will state for all armed cloakable units
+- CTRL-C now also focuses camera on the selected commander
+- enforce shift-ESC combination opening the menu 
+(in case it was disabled after playing other spring games that tamper with key configs...)
+
+
+2015/09/13 ------------------ NOTES v0.85 ----------------------
+
+--- gameplay/balance changes
+
+- bombers no longer target other air units
+- reduced flight altitude of level 1 bombers from 250 to 210
+- reduced tolerance on CLAW "Boomer" weapon to improve accuracy
+- SPHERE "Chroma" no longer produces energy
+- drastically reduced cost of SPHERE armored flying spheres
+- slightly reduced energy cost of SPHERE commanders' weapons
+- made air transports slightly faster
+- fixed nano towers to properly leave wreckage when killed
+- fixed GEAR metal extractor not being buildable underwater
+- metal extractors have increased slope tolerance and are more likely to leave wreckage
+- fixed metal extractors and metal storages not leaving wreckage
+- increased the HP of moho mines and adjusted costs (depending on faction)
+
+--- other
+
+- added missing icon for GEAR fusion reactor
+
+
+
+2015/09/12 ------------------ NOTES v0.84 ----------------------
+
+--- gameplay/balance changes
+
+- made paralyzer weapons a bit more expensive
+- reduced energy cost and slightly reduced dmg/s of SPHERE "Obsidian Form" commander's weapon
+- slightly reduced dmg/s of SPHERE "Opal Form"  commander's weapon
+- slightly reduced CLAW "Assassin Form" commander's movement speed
+- changed height of wreckages relative to original units' from 90% to 60% and from 25% to 10% on heaps
+- made geothermals have M armor instead of L
+- torpedo launchers no longer automatically target land units
+- reduced cost and E/s required on SPHERE "Opal" and "Obsidian" sphere towers
+
+-- UI
+
+- chat widget no longer scrolls back to first message when viewport is resized (ex: alt-tab)
+- fixed chat widget to split long messages over several lines instead of cutting
+- build options start on "ENERGY/METAL" instead of "PLANT"
+- made "b" key cycle through build filter options
+- added black outline on build queue numbers to make them visible over bright backgrounds
+- changed number of build option rows from 2 to 3
+- added sound volume control widget (uses +/- keys, made by Jools)
+
+--- visuals
+
+- improved textures some SPHERE medium armored ships
+- fixed SPHERE "Ark" wreckage
+
+--- other
+
+- changed "immobile builders" widget to restore patrol order whenever nano-towers become idle for more than a second
+
+
+
+2015/09/06 ------------------ NOTES v0.83 ----------------------
+
+--- new units
+
+- added CLAW "Hazard" : Disguised Pop-Up Rocket Launcher
+
+
+--- gameplay/balance changes
+
+- fixed CLAW geothermal powerplant death blast and cost
+- slightly decreased cost of GEAR "Grenado"
+- slightly increased dmg/s on AVEN commander's weapons
+- slightly increased fighter aircraft dmg/s
+- slightly reduced cost of GEAR "Blaze" and "Solaris"
+- increased dmg/s and cost of CLAW "Thumper"
+- slightly decreased cost of static defenses compared to mobile units
+- fixed short-range pop-up weapons not popping-up to fire when ground below them has been deformed
+- slightly reduced cost of level 2 factories
+- fixed SPHERE "Slammer" and "Lancer" rockets flying slightly above the target
+
+--- AI (MFAI)
+
+- checks if exit is clear when placing factories to avoid units getting stuck 
+- fixed a lua error when retrying build orders that got interrupted
+- GEAR builds more Big Bobs, Pyros, Psychos and Titans and less Cubes
+
+--- other
+
+- fixed some wreckages
+- made SPHERE area shields a bit less transparent
+- fixed some death animations where the whole body of the unit would fly weirdly intact
+
+
+
+2015/09/01 ------------------ NOTES v0.82 ----------------------
+
+--- gameplay/balance changes
+- made AVEN and CLAW level 1 scout robots cheaper but slightly weaker
+
+--- other
+- fix some build menu pictures
+- minor adjustments to a few 3d models
+
+
+2015/08/29 ------------------ NOTES v0.81 ----------------------
+
+--- gameplay/balance changes
+- reduced the build times for all level 1 units and buildings by about 25% and 50% on level 1 plants specifically
+(energy/metal costs were kept, but this should speed up early game considerably)
+- converted SPHERE small fusion reactor to a cheaper fission reactor, which consumes 0.5M/s
+- CLAW "Sinker" to be tougher but more expensive
+- fixed AVEN floating "Defender" cost and HP to be similar to the land version
+- reduced brakerate on light scout aircraft
+- reduce submarines' radius to prevent unwanted targeting from cannons, etc.
+- reduce turret rotation speed on long range plasma cannons
+
+--- AI
+- MFAI's commander is automatically repositioned to make it compatible with "choose in game" start positions and team start zones
+- fixed MFAI lua error that could occur when aircraft went outside the edges of the map
+- removed debug messages
+- fixed MFAI labels on player list widget
+
+--- other
+- removed the old self-damage prevention gadget that missed the cleanup on v0.8 (wasn't working)
+- repositioned claw mono-wheel robot models a bit higher and adjusted their acceleration and wheel speeds
+
+
+
+2015/08/24 ------------------ NOTES v0.8 ----------------------
+
+
+--- major move away from TA IP : replaced TA factions with original ones (they mix familiar units with new ones, all models were remade though)
+- replaced ARM with AVEN
+- replaced CORE with GEAR
+
+--- new units
+
+- (all the 200+ units for AVEN and GEAR)
+
+- added long range AA missile turrets for all factions (previously only CLAW had)
+- replaced SPHERE "Drum" with SPHERE "Chub" : Armored Missile Robot  
+- added SPHERE "Stresser" : Shielded Missile Cruiser
+- added SPHERE "Screener" : Amphibious Mobile Area Shield Generator
+- added SPHERE "Aegis" : Area Shield Generator
+- added SPHERE "Shielder" : Mobile Area Shield Generator
+- added SPHERE "Crustle" : Light Tank
+- added SPHERE "Stark" : Advanced Missile Launcher
+- added SPHERE Advanced Sphere Plant, which builds slow, heavily armored flying spheres with shields and that require lots of energy to move
+- added SPHERE "Construction Sphere"
+- added SPHERE "Gazer" : Sniper Sphere
+- added SPHERE "Astra" : Missile Sphere
+- added SPHERE "Chroma" : Very Heavy Assault Sphere
+- added SPHERE "Gaunt" : Infantry Robot
+
+- added CLAW "Flail" : Hard-hitting Infantry Robot
+- added CLAW "Tempest" : Amphibious Missile Robot
+- added CLAW "Scythe" : Heavy Cloakable All-Terrain Robot
+
+- added a "Builder Form" upgrade for all commanders, which trades some weapon power for 2x build speed and increased build range
+
+
+--- gameplay/balance changes
+
+- changed SPHERE white beam lasers to red medium lasers
+- changed most laser cannons to instant-hit beam lasers
+- increased the cost premium associated to having longer ranged weapons
+- increased the cost premium associated to having faster, tracking or instant-hit projectile weapons
+- increased the accuracy of long range plasma cannons (they're now considerably more expensive though)
+- all paralyzer weapons deal an extra 33% damage to HP
+
+- reduced metal generated by commanders from 4M/s to 2M/s
+- added free base income for all players : +6M/s and +30E/s
+- commander respawn costs 500 metal and commander appears fully upgraded
+- upgraded commanders can no longer morph back to their original forms
+- increased energy output of wind generators by 30%
+- geothermal generators also give +3M/s and are a bit more expensive, but now explode violently when killed
+- added commander wreckages
+
+- changed attributes of some units to emphasize their roles : toughness oriented units are tougher, namely the level1 ones, damage oriented units deal more damage
+- radar, sonar and jammer units are tougher but no longer produce energy and drain more E/s. They are also more expensive
+- fixed the automatic disabling/enabling of radars,etc. when player runs out of energy
+
+- changed bombers to hover instead of strafing and deal higher damage per bomb, but with a high cooldown. Players can opt to leave them hovering while they reload or temporarily retreat to avoid enemy fire
+- level1 fighter aircraft are now slower but cheaper
+- improved acceleration for fighter aircraft
+- fighter aircraft abort their dive mid-way to avoid enemy fire and collisions with ground units
+- fixed two aircraft being able to land on the same repair pad
+- air repair pads are tougher and repair twice as fast
+- made air transports tougher, more expensive, and lose up to half their max speed depending on load
+
+- standardized build options : commanders and level1 builders can build all level1 units and structures, level2 builders can build everything
+- construction units are tougher in general and some have perks like being faster, tougher, all-terrain or amphibious
+- nano towers can now build all level1 units and structures
+- factories are a bit more expensive now, especially the level 2 ones
+
+- prevented dragons teeth from being crushed by some units
+- doubled the height and cost of fortification walls
+- set wreck resource metal to 40% of original unit
+
+
+--- visuals
+
+- commander respawn has a new animation with smoke and glowy particles
+- commander explosion animation leaves a lasting nano effect
+- remade most of the walking scripts used by all factions
+- nearly all tanks and vehicles have animated wheels and threads
+- replaced most of the TA textures with original ones
+- improved most CLAW and SPHERE unit models and animations
+
+
+
+--- user interface
+
+- changed the build/order menu appearance (now based on Red UI)
+- added button to change building orientation
+- added button to change building spacing
+- added build options filter with the following options : ENERGY/METAL, PLANT, OTHER
+- changed the user interface backgrounds
+- show tip for units with unique properties, ex: "33% slower on water", "50% dmg resistance when closed"
+- show build times taking into account the combined build power of selected units
+
+--- AI
+
+- modified AI to work with the new factions
+
+--- cleanup
+
+- removed some unused widgets and gadgets
+
+--- license
+
+- changed license for original content and artwork to CC-BY-ND. Unit scripts, lua widgets and gadgets have their own licences though, which is usually PD (the default) and GPL for some
+(check LICENSE.txt for more information)
+
+
+
+2014/01/15 ------------------ NOTES v0.7 ----------------------
+
+game has been renamed "TA : Factions" ---> "Metal Factions"
+
+--- AI
+
+- added MFAI : it should play decently on mostly land maps with a land path between base positions
+
+--- unit balance/fixes
+
+- ARM Construction Kbot couldn't build respawner
+- slightly increased the damage done by anti air hovercraft
+- CORE "Marauder" : increased hitpoints but reduced firepower a bit
+- ARM "Phalanx" made faster but with less HP and damage per second
+- increased hitpoints of ARM "Flakker" and CORE "Cobra"
+- increased speed of long range plasma shots
+- buildings no longer have different line of sight for ground and air units
+- override maps' unit movement speed modifiers
+- prevent aircraft collision damage
+- some units with rockets no longer target aircraft
+- SPHERE "Concealer" became sturdier and looks different
+- made wreckages 50% harder to kill
+- reduced the height and metal content of wreckage heaps
+- made air repair pads tougher but more expensive
+- slightly increased the relative cost of weapons with large area of effect and/or tracking shots
+- slightly increased the range and cost of CLAW "Hyper" and CLAW "Piercer"
+- increased the range and cost of SPHERE "Bastion"
+- CLAW "Bishop" increased hitpoints, firepower and cost
+- slightly increased the slope tolerance for vehicles
+- SPHERE Ark and Stalwart's missiles track their target
+- CLAW "Mega" significantly increased hitpoints and cost
+- ARM "Sniper" : slightly increased speed, hitpoints and cost
+- disabled custom strafing behavior for heavy aircraft (was still inconsistant and broken)
+
+--- visuals
+
+- fixed some build pictures
+- medium and light emg should be called just emg (dmg is always light)
+- fixed some wreckages
+- improved ARM "Sniper"'s model and animations
+- slightly improved ARM "Knight"'s movement animation
+- slightly improved CLAW "Bishop"'s model and animations
+- slightly improved model on several SPHERE kbots
+- fix size occupation % for air transports tooltip
+- improved CORE Wind Generator's model
+- fixed death blasts on some aircraft
+- slightly improved ARM "Samson"'s and "Hammer"'s model and animations
+- loading pictures : changed the logo and added one with info about the line formation command
+
+--- widgets / gadgets
+
+- added message separator widget (by Kloot and Brain Damage)
+- fixed gadget errors that appeared on spring 95.0 and 96.0 with the previous version
+
+
+
+2013/07/28 ------------------ NOTES v0.6 ----------------------
+
+
+--- balance/fixes
+
+- made ARM "Maverick" a bit faster but reduced HP by about 20%
+- changed CLAW commander's damage type to medium and slightly reduced DPS slightly to compensate
+- changed CLAW "Drakkar"'s twin railgun to a 4 barrelled fast-firing railgun : higher dmg per second but shorter range, made it move slower but with more HP
+- changed CLAW "Blizzard"'s side lasers dmg type from to medium
+- made heavy gunships a bit tougher and a bit slower and adjusted the price
+- reduced SPHERE commanders' HP regeneration from 8/12 HP/s to 4/8 HP/s (same as the other commanders)
+- changed CLAW "Roller"'s damage type to heavy and improved its range (it's bigger and more expensive)
+- vehicle's terrain slope tolerance slightly increased
+- CLAW and SPHERE's economy buildings can now be built underwater (they should have been before..ooops)
+- torpedoes can no longer shoot out of the water and strike land targets
+- fixed unit maneuverability: they no longer lose so much speed when turning
+- fixed build menu for CLAW construction ship
+- fixed floating laser towers
+- CLAW "Striker" changed to a stronger and slower attack ship
+- removed radar error and removed targeting supercomputers from the game
+- commander upgrades' metal cost reduced from 1500 to 1000 and some have been improved
+- made ARM and CORE flak cannons stronger but more expensive
+- ARM "Conqueror" and CORE "Executioner" are more affordable
+- made Corvettes better at fighting light ships and aircraft
+- shields now take full damage from all weapons
+- ARM paralyzer weapons stun the target for 30s instead of 10 and are bit cheaper
+- small changes to many sea units
+
+--- new units
+
+- added ARM "Knight" : Level 2 Heavy Infantry Kbot (Maverick's better armoured cousin)
+- added SPHERE "Helix" : Level 2 Amphibious Boat
+- added SPHERE "Clam" : Level 1 Underwater Torpedo Launcher
+- added SPHERE "Oyster" : Level 2 Underwater Energy Torpedo Launcher
+- added ARM "Icarus" : Level 2 Heavy Gunship
+- added CORE "Stratos" : Level 2 Heavy Gunship
+- added ARM "Catfish" : Level 2 Amphibious Boat (replaces Plesiossaur)
+- added CORE "Proteus" : Level 2 Amphibious Boat (replaces Zulu)
+- added SPHERE Advanced construction Sub
+- added SPHERE "Pluto" Armored Assault Sub
+- added CLAW and SPHERE advanced sonar stations
+- added CLAW "Predator" : Level 2 Amphibious Assault Robot
+- added CLAW "Sinker" : Level 1 Depthcharge Launcher
+- added Level 2 Radar/Sonar ships for all factions
+- added Level 2 Radar Jamming ships for CLAW and SPHERE
+- added CLAW "Speeder" : Level 1 Scout ship
+- added Floating versions of radar towers and several CLAW and SPHERE level 2 static defenses
+
+
+--- animations/effects
+
+- slightly reduced sound volume of SPHERE lightning beams
+- slightly improved 3d models for many units, mostly CLAW and some SPHERE
+- improved walk animations for SPHERE's 6 legged kbots and commander
+- CLAW light lasers look thinner and darker to set them apart from the medium and heavy ones
+- improved commander explosions a bit
+- changed the models of small rockets to set them apart from the faster but less powerful light missiles
+- CLAW and SPHERE metal extractors and moho mines have alternative animations/model when built underwater
+
+
+
+2013/03/17 ------------------ NOTES v0.51 ----------------------
+
+- fixed some bombers that were dropping two bombs instead of one
+- fixed torpedo fall speed for torpedo bombers
+- improved accuracy for artillery cannons in general
+
+
+
+2013/03/17 ------------------ NOTES v0.5 ----------------------
+
+
+--- balance
+ 
+- CLAW construction units can now build wind generators like they should
+- made level1 units in general a bit more cost-effective compared to level 2 and 3
+- made bigger (more expensive) resource generators a bit more cost-effective than smaller ones of the same level (ex: level3 big fusion vs level3 small fusion)
+- made CLAW "knife" a cheaper/faster scout kbot
+- made SPHERE "Rock" a bit tougher
+- made SPHERE "Bit" a bit tougher, faster and cheaper, but has less range
+- units that have both high mobility, durability and destructive potential had their costs increased
+
+--- new units
+
+- added CLAW "Grunt" : level 1 Infantry kbot
+- added CLAW "Gemini" : level 2 Medium Missile Turret
+- added ARM "Duster" : level 1 Light Artillery vehicle
+- added SPHERE "Slicer" : level 1 Medium Assault kbot
+- added SPHERE "Pulsar" : level 2 Shielded Heavy Support Tank
+- added CORE "Heater" : level 2 Heavy Assault Tank
+
+--- animations / effects
+
+- improved loading/unloading animation for transport ships and hovercraft (looks less buggy, although a bit slower)
+(sadly, there seems to be a spring 93.1/2 engine bug : ship transports can't load units)
+- improved animations for SPHERE "Bit"
+- improved death animations for some aircraft (more flying debris, yay!)
+- fixed weapon blast sounds for some units (Viper and some SPHERE units)
+- fixed wreckages for some units
+
+--- other
+
+- some compatibility fixes for the new spring version 93.x
+- updated tooltip to show transport capacity usage ( size% / mass% )
+- adjusted collision volumes for many units
+
+
+2013/01/17 ------------------ NOTES v0.4 ----------------------
+
+--- fixed bugs
+- fixed air units getting stuck on factories and air repair pads
+- fixed flak cannon shots not exploding at target range when they missed
+- fixed units ignoring bad target categories (some missile units were prioritizing ground instead of air)
+- fixed target point for aircraft plants, shipyards and commander pads
+- fixed opal sphere not being targeted by units that don't attack aircraft
+- ajusted collision volumes for many units
+
+--- visuals
+- slightly improved models and animations for ARM "Jeffy" and CORE "Weasel" and restored its build menu picture
+- slightly improved models for CORE commanders
+- slightly improved model and animations for CORE "Krogoth"
+- improved some wreckages
+- removed excessive sideways tilting from hovercraft
+- decreased water splash particle emissions for hovercraft
+
+--- balance
+- reduced acceleration on hovertanks
+- aven_jeffy and gear_harasser are more durable, but have reduced firepower
+- combat aircraft are less cost-effective except for bombers
+- air transports and radar aircraft are cheaper
+- increased range of radar units in general (except advanced radar kbots and vehicles)
+- commanders cannot be captured nor reclaimed
+- most upgraded commanders are a bit stronger and more durable (except the heavy ones)
+- fixed cost of arm and core lev2 spy kbots
+- reduced cost of fusion power plants
+- shifted power and range from CORE "Krogoth"'s head laser to the arm cannons 
+- increased durability and adjusted costs for transport ships and hovercraft
+- air repair pads now float when built on water
+- fixed build speed and cost for claw_adv_vehicle_plant e claw_adv_shipyard
+
+--- new units
+- added SPHERE "Probe" : level 1 Scout Aircraft
+- added CLAW "Spotter" : level 1 Scout Aircraft
+- added SPHERE "Meteor" : level 2 Shielded Heavy Gunship
+- added CLAW "Massacre" : level 3 Heavy Plasma Mortar
+- added CLAW "Nucleus" : level 2 Heavy Riot Kbot
+- added CLAW "Mega" : level 2 Heavy Riot Tank
+
+
+
+--- interface
+- restored widget to change metal extractor construction spots to positions that maximize output (by Niobium)
+- added widget to display metal extractor output before deployment (by Evil4Zerggin)
+- fixed tooltip widget to hide unused weapon slots instead of showing "No Weapon" and to display energy cost of weapons
+
+--- license
+added a LICENSE.txt, which basically says other modders are free to use everything except CLAW and SPHERE units
+
+
+
+
+
+
+2012/12/30 ------------------ NOTES v0.3 ----------------------
+
+
+--- unit changes
+- several changes to unit costs and attributes, made combat aircraft in general a bit less cost-effective
+(i'll be more detailed about these kinds of changes when the game becomes more stable)
+- fixed claw_ravager and aven_bolter's build picture
+- fixed sphere_adv_vehicle_factory's wreckage
+- fixed description on several units and weapons
+
+--- builder's operations cost energy
+- reclaiming features and wreckage works gradually instead of when it ends, and costs 10% of their metal content
+- repairing units costs 20% of their energy cost (was 0%)
+- ressurecting units costs 100% of their energy cost (was 50%)
+- capturing units costs 100% of their energy cost (was 0%)
+- reclaiming units costs 50% of their energy cost (was 0%)
+
+--- visuals
+- glowy particle effects are shown when reclaiming ends (gadget by Beherith, tweaked by Jools)
+- added load pictures with useful information
+
+--- widgets
+- added widget to make units hold fire when ordered to cloak (by Quantum, Jools and Niobium)
+- removed unused or not working widgets
+gui_team_platter.lua
+gui_xray_shader.lua
+gui_selbuttons.lua
+gui_comm_ends.lua
+unit_stockile_dynamic_alt.lua
+gui_nuke_button.lua
+unit_only_fighters_patrol.lua
+cmd_mex_snap.lua
+unit_dgun_stall_assist.lua
+gui_xta_defenserange.lua
+gui_hlight_unit.lua
+unit_stockpile.lua
+unit_z_selector.lua
+gui_greensquares_v3.lua
+camera_smooth_move.lua
+
+
+
+------------------ NOTES v0.2 ----------------------
+
+
+--- unit changes
+- miscellaneous tweaks to several units
+- units that explode violently on death are now cheaper overall (for example SPHERE's level1 small fusion reactor)
+- replaced ARM "Raven" with "Bolter" : level 2 Heavy Rocket Kbot
+- added ARM "Stasis" : level 3 EMP Cannon
+- added SPHERE "Stout" : level 2 Armored Gun Turret
+- added SPHERE "Rain Maker" : level 2 Shielded All-terrain Radar Jammer/Missile Kbot
+- added SPHERE "Tick" : level 2 All-terrain Assault Kbot
+
+
+--- widgets / GUI
+- added simple and advanced player list widgets
+- updated commanders name tags widget (names were missing)
+- added commander selection widget (ctrl+c wasn't working)
+
+
+
+
+
+
+------------------ NOTES v0.1 ----------------------
+
+- it has most land, air and some sea units for CLAW and SPHERE
+
+- each commander has 3 distinct upgrade paths, depending on whether you want to improve mobility, durability or range (does not improve resource generation or build power).
+
+- has new units for arm and core as well, some of the existing units were reworked, some (maverick, annihilator, doomsday, etc.) were given new 3do models
+
+- metal makers have been disabled, but all commanders give +4 M/s
+
+- economy scales smoothly, moho mines provide about 3 times as much metal as mexes, for 60 E/s
+
+- commanders can be respawned in commander respawners (which can be built by any constructor). Respawning costs 1000M and 10000E and takes about 30s (can't be assisted). Experience is saved, but not upgrades (need another 30s and +1500M, 10000E to upgrade)
+
+- for now, it has no mine-layers, no nukes, and no vulcans (does have berthas though)
+
+- all ground units have 600 LOS and aircraft have 720 LOS (there is no distinct radar and sonar LOS) (has LOS widget)
+
+- not compatible with any AI, for now
+
+- it has a special tooltip widget that shows the armor type and hitpower types of the unit's weapons
+
+- has team color widget that makes the player blue, allies teal, enemies red
+
+--- ARMOR vs HITPOWER
+- Light (L)       (takes full dmg from all sources)
+- Medium (M)    (takes half dmg from light hitpower weapons)
+- Heavy (H)    (takes half dmg from medium hitpower weapons and quarter dmg from light hitpower weapons)
+
+(throwing a mass of flashes or scout ships against medium and heavy armored units should fail miserably)
+
+- SPHERE's unit shields protect only the owner, take 2x dmg from paralyzer weapons, and regenerate 2%hp/s at the cost of 4%hp E/s
+(they take dmg according to the unit's armor type, for now)
+
+
+
+
+
+

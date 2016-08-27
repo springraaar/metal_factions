@@ -1,0 +1,108 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Gear;
+	name=Big Fusion Power Plant;
+	description=Produces 900 E/s;
+	icontype=energy;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CORE ENERGY LEVEL3 NOWEAPON NOTAIR NOTSUB;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_fusion_power_plant;
+	unitnumber=106;
+	objectname=gear_fusion_power_plant.3do;
+	corpse=gear_fusion_power_plant_dead;
+	buildpic=gear_fusion_power_plant.png;
+	soundcategory=gear_FUS;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=4300;
+	footprintx=7;
+	footprintz=7;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=900;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	yardmap=ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=99999;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=FUSION_BUILDING_BIG;
+	selfdestructas=FUSION_BUILDING_BIG;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=EF-5;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	collisionVolumeType = box;
+	collisionVolumeScales =110 100 110;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	}
+
+	buildcostenergy=14647;//#AUTO#
+	buildcostmetal=2929;//#AUTO#
+	buildtime=25388;//#AUTO#
+}

@@ -1,0 +1,111 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Aven;
+	name=Big Fusion Reactor;
+	description=Produces 800 E/s;
+	icontype=energy;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM ENERGY LEVEL3 NOWEAPON NOTAIR NOTSUB;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=aven_fusion_reactor;
+	unitnumber=33;
+	objectname=aven_fusion_reactor.3do;
+	corpse=aven_fusion_reactor_dead;
+	buildpic=aven_fusion_reactor.png;
+	soundcategory=aven_FUS;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=4100;
+	footprintx=8;
+	footprintz=8;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=800;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	yardmap=oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo;
+	activatewhenbuilt=1;
+	collisionVolumeType=Box;
+	collisionVolumeScales=90 74 90;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=99999;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=FUSION_BUILDING_BIG;
+	selfdestructas=FUSION_BUILDING_BIG;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AE-FPF;
+	downloadable=1;
+	leavetracks=1;
+	threed=1;
+	trackoffset=9;
+	trackstrength=12;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=50;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildcostenergy=13309;//#AUTO#
+	buildcostmetal=2661;//#AUTO#
+	buildtime=23068;//#AUTO#
+}

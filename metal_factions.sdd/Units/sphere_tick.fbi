@@ -1,0 +1,131 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Tick;
+	description=All-terrain Assault Robot;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
+	tedclass=KBOT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=sphere_tick;
+	unitnumber=10000;
+	objectname=sphere_tick.3do;
+	corpse=sphere_tick_dead;
+	buildpic=sphere_tick.png;
+	soundcategory=CORAK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1200;
+	healtime=33;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=0;
+	metalstorage=0;
+	energymake=1;
+	energyuse=1;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canattack=1;
+	onoffable=1;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTAT;
+	turnrate=980;
+	acceleration=1.1;
+	brakerate=1;
+	maxvelocity=1.6;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+	sonardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	Weapon1=sphere_tick_laser;
+	badtargetcategory1=VTOL;
+	NoChaseCategory=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+	defaultmissiontype=Standby;
+
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=SPHERE-AT2;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+
+	collisionVolumeType = box;
+	collisionVolumeScales =25 18 25;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=NanoDebree;
+	pieceTrailCEGRange = 2;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:redflare;
+	}
+
+	buildcostenergy=1635;//#AUTO#
+	buildcostmetal=327;//#AUTO#
+	buildtime=3897;//#AUTO#
+}

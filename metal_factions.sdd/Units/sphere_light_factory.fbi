@@ -1,0 +1,88 @@
+[UNITINFO]
+	{
+
+	// ------------------- description
+	Side=Sphere;
+	Name=Light Plant;
+	Description=Builds level1 Robots and Vehicles;
+	icontype=plant;
+
+	// ------------------- categories
+	Category=SPHERE PLANT LEVEL1 NOWEAPON NOTAIR NOTSUB CTRL_F;
+	TEDClass=PLANT;
+
+	// ------------------- external specs
+	UnitName=sphere_light_factory;
+	UnitNumber=10006;
+	Objectname=sphere_light_factory.3do;
+	buildpic=sphere_light_factory.png;
+	SoundCategory=gear_HOVER_PLANT;
+	Corpse=sphere_light_factory_dead;
+
+	// ------------------- health/cost/size
+	MaxDamage=2500;
+	FootprintX=7;
+	FootprintZ=6;
+	idleautoheal=5;
+
+
+	// ------------------- resources
+	EnergyStorage=100;
+	MetalStorage=100;
+	EnergyUse=0;
+
+
+	// ------------------- constructor
+	Builder=1;
+	WorkerTime=200;
+
+
+
+	// ------------------- abilities
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	
+	// ------------------- movement
+	buildangle=1024;
+	YardMap=ooooooo ooooooo ooooooo oocccoo oocccoo oocccoo; 
+	MaxWaterDepth=0;
+	MaxSlope=14;
+	collisionVolumeType = box;
+	collisionVolumeScales =100 35 100;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	// ------------------- scout
+	sightdistance=500;
+	RadarDistance=0;
+
+	// ------------------- weapons
+	ExplodeAs=LARGE_BUILDINGEX;
+	SelfDestructAs=LARGE_BUILDING;
+
+	// ------------------- orders
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+
+
+	// ------------------- misc
+	Version=3.1;
+	Designation=CA-lFCT;
+	BMcode=0;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	downloadable=1;
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:Nano;
+	}
+
+	buildcostenergy=4009;//#AUTO#
+	buildcostmetal=801;//#AUTO#
+	buildtime=6307;//#AUTO#
+}

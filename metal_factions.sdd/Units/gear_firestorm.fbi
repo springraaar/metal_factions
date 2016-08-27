@@ -1,0 +1,143 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Gear;
+	name=Firestorm;
+	description=Incendiary Ground Attack Aircraft;
+	icontype=air;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CORE VTOL CTRL_V LEVEL2 WEAPON NOTSUB;
+	tedclass=VTOL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_firestorm;
+	unitnumber=4000;
+	objectname=gear_firestorm.3do;
+	buildpic=gear_firestorm.png;
+	soundcategory=gear_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1750;
+	healtime=30;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	energymake=0;
+	energyuse=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	candropflare=0;
+	canfly=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	stealth=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	acceleration=0.1;
+	brakerate=0.1;
+	maxvelocity=5.5;
+	cruisealt=160;
+	turnrate=400;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=600;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_firestorm_fireball;
+	onlytargetcategory1=NOTAIR;
+	explodeas=BIG_UNIT;
+	selfdestructas=BIG_UNIT;
+	WeaponMainDir1=0 -1 1;
+	MaxAngleDif1=110;       
+
+	//************************************************************
+	//  Orders
+	//**********
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=VTOL_standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bankscale=1;
+	bmcode=1;
+	designation=AFD-J9;
+	downloadable=1;
+	hoverattack=1;
+	airstrafe=1;
+//	isbomber=1;
+
+	airhoverfactor=-1;
+//	maneuverleashlength=180;
+	bankingAllowed=0;
+
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	CanLoopbackAttack=0;
+
+
+	//************************************************************
+	//  Out of Category
+	//*******************
+	collide=1;
+	minCollisionSpeed=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =55 15 50;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	[CustomParams]
+	{
+		tip=Burns ground for 20s, dealing up to 20(M) dmg/s. Affected units burn for 210(M) dmg over 7s;
+	}
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:GLOWSML;
+		explosiongenerator1=custom:rocketflaresml;
+	}
+	buildcostenergy=12016;//#AUTO#
+	buildcostmetal=1201;//#AUTO#
+	buildtime=15421;//#AUTO#
+}

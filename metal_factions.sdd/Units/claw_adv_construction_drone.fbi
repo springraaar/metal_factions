@@ -1,0 +1,130 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Claw;
+	name=Adv. Construction Drone;
+	description=Tech Level 2;
+	icontype=air;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW VTOL LEVEL2 CONSTR NOWEAPON NOTSUB;
+	tedclass=CNSTR;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=claw_adv_construction_drone;
+	unitnumber=2;
+	objectname=claw_adv_construction_drone.3do;
+	buildpic=claw_adv_construction_drone.png;
+	soundcategory=aven_CVTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=360;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=0.0;
+	metalstorage=0;
+	energymake=5;
+	energyuse=0.0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	builddistance=200;
+	workertime=120;
+        RepairSpeed=120;
+        ReclaimSpeed=120;
+        TerraformSpeed=240;//speed up terraforming
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canfly=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canreclamate=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnrate=620;
+	acceleration=0.18;
+	brakerate=1.5;
+	maxvelocity=3.6;
+	maxslope=10;
+	maxwaterdepth=255;
+	cruisealt=80;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=600;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=NANO_UNITEX;
+	selfdestructas=NANO_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=VTOL_standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	maneuverleashlength=1280;
+	shootme=1;
+	steeringmode=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=NanoDebree;
+	pieceTrailCEGRange = 2;
+	airhoverfactor=0.2;	
+	collide=1;
+	minCollisionSpeed=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 13 25;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=0;
+	capturable=0;
+	airhoverfactor=0.2;
+	
+	[CustomParams]
+	{
+		isDrone=1;
+	}
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildcostenergy=3661;//#AUTO#
+	buildcostmetal=366;//#AUTO#
+	buildtime=4698;//#AUTO#
+}

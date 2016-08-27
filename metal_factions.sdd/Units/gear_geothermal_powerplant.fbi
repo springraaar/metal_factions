@@ -1,0 +1,106 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Gear;
+	name=Geothermal Powerplant;
+	description=Produces 250 E/s and 3 M/s;
+	icontype=energy;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CORE ENERGY GEOTHERMAL LEVEL2 NOWEAPON NOTAIR NOTSUB;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_geothermal_powerplant;
+	unitnumber=109;
+	objectname=gear_geothermal_powerplant.3do;
+	corpse=gear_geothermal_powerplant_dead;
+	buildpic=gear_geothermal_powerplant.png;
+	soundcategory=gear_GEO;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1600;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=250;
+	metalmake=3;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=32768;
+	yardmap=GGGGG GGGGG GGGGG GGGGG GGGGG;
+	activatewhenbuilt=1;
+	collisionVolumeType=Box;
+	collisionVolumeScales=65 45 60;
+	collisionVolumeOffsets=0 -3 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=30;
+	maxwaterdepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=GEO_BLAST;
+	selfdestructas=GEO_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=EG-9;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildcostenergy=4420;//#AUTO#
+	buildcostmetal=884;//#AUTO#
+	buildtime=10535;//#AUTO#
+}

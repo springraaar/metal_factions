@@ -1,0 +1,145 @@
+#define TAK			// This is a TAK script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 	100
+
+piece  base, turret, sleeves, barrel1, barrel2, flare1, flare2, t1,t2,t1cover,t2cover,body,left,right,b2, tur2;
+
+static-var  Static_Var_1, Static_Var_2, Static_Var_3, Static_Var_4;
+
+#include "tankthreads.h"
+
+RestoreAfterDelay(Func_Var_1)
+{
+	sleep Func_Var_1;
+	turn turret to y-axis <0.000000> speed <90.021978>;
+	turn sleeves to x-axis <0.000000> speed <50.010989>;
+	return;
+}
+
+DamageControl(Func_Var_1)
+{
+	while( TRUE )
+	{
+		Func_Var_1 = get HEALTH;
+		if( Func_Var_1 < 50 )
+		{
+			emit-sfx 256 | 1 from sleeves;
+			if( Func_Var_1 < 25 )
+			{
+				emit-sfx 256 | 2 from turret;
+			}
+		}
+		sleep 1000;
+	}
+	return;
+}
+
+
+AimFromWeapon1(Func_Var_1)
+{
+	Func_Var_1 = turret;
+	return;
+}
+
+QueryWeapon1(piecenum)
+{
+	if( Static_Var_4 )
+	{
+		piecenum = flare1;
+	}
+	else
+	{
+		piecenum = flare2;
+	}
+	return;
+}
+
+AimWeapon1(heading, pitch)
+{
+	signal 1;
+	set-signal-mask 1;
+	turn turret to y-axis heading speed <100.021978>;
+	turn sleeves to x-axis <0.000000> - pitch speed <100.010989>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn sleeves around x-axis;
+	start-script RestoreAfterDelay(5000);
+	return (1);
+}
+
+Shot1()
+{
+	if( Static_Var_4 )
+	{
+		move barrel1 to z-axis [-5.000000] now;
+		emit-sfx 1024 from flare1;
+		sleep 150;
+		move barrel1 to z-axis [0.000000] speed [10.000000];
+		Static_Var_4 = !Static_Var_4;
+	}
+	else
+	{
+		move barrel2 to z-axis [-5.000000] now;
+		emit-sfx 1024 from flare2;
+		sleep 150;
+		move barrel2 to z-axis [0.000000] speed [10.000000];
+		Static_Var_4 = !Static_Var_4;
+	}
+	return;
+}
+
+Killed(Func_Var_1, Func_Var_2)
+{
+	if( Func_Var_1 >= 0 AND Func_Var_1 < 25 )
+	{
+		Func_Var_2 = 1;
+		explode barrel1 type BITMAPONLY | 10000001;
+		explode barrel2 type BITMAPONLY | 10000001;
+		explode sleeves type BITMAPONLY | 10000001;
+		explode base type BITMAPONLY | 10000001;
+		explode turret type BITMAPONLY | 10000001;
+	}
+	else if( Func_Var_1 >= 25 AND Func_Var_1 < 50 )
+	{
+		Func_Var_2 = 2;
+		explode barrel1 type FALL | 10000001;
+		explode barrel2 type FALL | 10000001;
+		explode sleeves type 1 | 10000001;
+		explode base type BITMAPONLY | 10000001;
+		explode turret type 1 | 10000001;
+	}
+	else if( Func_Var_1 >= 50 AND Func_Var_1 < 100 )
+	{
+		Func_Var_2 = 3;
+		explode barrel1 type FALL | 8 | 16 | 2 | 10000001;
+		explode barrel2 type FALL | 8 | 16 | 2 | 10000001;
+		explode sleeves type FALL | 8 | 16 | 2 | 10000001;
+		explode base type BITMAPONLY | 10000001;
+		explode turret type 1 | 10000001;
+	}
+	else if( Func_Var_1 >= 100 )
+	{
+		Func_Var_2 = 3;
+		explode barrel1 type FALL | 8 | 16 | 2 | 10000001;
+		explode barrel2 type FALL | 8 | 16 | 2 | 10000001;
+		explode sleeves type FALL | 8 | 16 | 2 | 10000001;
+		explode base type 1 | 10000001;
+		explode turret type FALL | 8 | 16 | 2 | 10000001;
+	}
+	return;
+}
+
+Create()
+{
+	Static_Var_1 = 0;
+	Static_Var_4 = 0;
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 250;
+	}
+	start-script DamageControl();
+	start-script AnimateTracks();
+	return;
+}

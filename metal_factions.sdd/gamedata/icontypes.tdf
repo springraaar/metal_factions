@@ -1,0 +1,114 @@
+[icontypes]
+{
+	[default]
+	{
+		// Missing parameters get evaluated to the following by Spring:
+		// bitmap=standard radar dot
+		// size=1;
+		// radiusadjust=0;
+		// distance=1;
+
+		size=1.0;
+		radiusadjust=1;
+		distance=1;
+	}
+
+	[aven_commander]
+	{
+		bitmap=icons/aven_commander.tga;
+		radiusadjust=0;
+		distance=1;
+		size=3;
+	}
+
+	[gear_commander]
+	{
+		bitmap=icons/gear_commander.tga;
+		radiusadjust=0;
+		distance=1;
+		size=3;
+	}
+	[claw_commander]
+	{
+		bitmap=icons/claw_commander.tga;
+		radiusadjust=0;
+		distance=1;
+		size=3;
+	}
+	[sphere_commander]
+	{
+		bitmap=icons/sphere_commander.tga;
+		radiusadjust=0;
+		distance=1;
+		size=3;
+	}
+
+	[air]
+	{
+		bitmap=icons/triangle.tga;
+		radiusadjust=1;
+		distance=1;
+		size=1.6;
+	}
+	[sea]
+	{
+		bitmap=icons/semi-circle.tga;
+		radiusadjust=1;
+		distance=1;
+		size=1.1;
+	}
+
+	[building]
+	{
+		bitmap=icons/square.tga;
+		radiusadjust=1;
+		distance=1;
+		size=0.8;
+	}
+
+	[nuke]
+	{
+		bitmap=icons/nuke.tga;
+		radiusadjust=0;
+		distance=1;
+		size=2;
+	}
+
+	[plant]
+	{
+		bitmap=icons/plant.tga;
+		radiusadjust=1;
+		distance=1;
+		size=0.9;
+	}
+
+	[energy]
+	{
+		bitmap=icons/energy.tga;
+		radiusadjust=1;
+		distance=1;
+		size=0.65;
+	}	
+	[metal]
+	{
+		bitmap=icons/metal.tga;
+		radiusadjust=1;
+		distance=1;
+		size=1;
+	}
+	[upgrade_center]
+	{
+		bitmap=icons/upgrade_center.tga;
+		radiusadjust=1;
+		distance=1;
+		size=0.9;
+	}
+	[respawner]
+	{
+		bitmap=icons/respawner.tga;
+		radiusadjust=1;
+		distance=1;
+		size=0.6;
+	}
+}
+

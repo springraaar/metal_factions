@@ -1,0 +1,134 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Aven;
+	name=Tornado;
+	description=Light Gunship;
+	icontype=air;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM VTOL CTRL_V LEVEL1 WEAPON  NOTSUB  CTRL_P CTRL_G;
+	tedclass=VTOL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=aven_tornado;
+	unitnumber=299;
+	objectname=aven_tornado.3do;
+	buildpic=aven_tornado.png;
+	soundcategory=aven_SEAPLN;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=450;
+	healtime=30;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.7;
+	energyuse=0.7;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canfly=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnrate=768;
+	acceleration=0.4;
+	brakerate=4;
+	maxvelocity=5.56;
+	maxslope=10;
+	maxwaterdepth=255;
+	cruisealt=120;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=600;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_tornado_emg;
+	nochasecategory=VTOL;
+	badtargetcategory1=VTOL;
+	badtargetcategory1=VTOL;
+	onlytargetcategory1=NOTAIR;
+	explodeas=BIG_UNITEX;
+	selfdestructas=MEDIUM_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=VTOL_standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ARM-SGB;
+	downloadable=1;
+	hoverattack=1;
+	maneuverleashlength=1280;
+	moverate1=8;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	collide=1;
+	minCollisionSpeed=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =20 10 25;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:EMGFLAREFAST;
+	}
+	buildcostenergy=2231;//#AUTO#
+	buildcostmetal=223;//#AUTO#
+	buildtime=2863;//#AUTO#
+}

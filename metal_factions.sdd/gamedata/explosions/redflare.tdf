@@ -1,0 +1,266 @@
+[REDLIGHTBOMB]
+{
+	usedefaultexplosions=0;	
+	[RealFlare]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.0;
+			sizeMod=1.0;
+			pos=0, 0, 0;
+			emitVector=dir;
+			gravity=0, 0, 0;
+			colorMap=1.0 0.2 0.2 0.01 1.0 0.2 0.2 0.00;
+			Texture=light;
+			airdrag=0.8;
+			particleLife=2;
+			particleLifeSpread=0;
+			numParticles=1;
+			particleSpeed=0;
+			particleSpeedSpread=0;
+			particleSize=1;
+			particleSizeSpread=10;
+			emitRot=0;
+			emitRotSpread=10;
+			directional=0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+}
+
+[REDFLARE_OLD]
+{
+	usedefaultexplosions=1;	
+
+   [LARGEFLASH]
+   {
+	class = CBitmapMuzzleFlame;
+      
+	[properties]
+      	{
+         	dir = dir;
+         	colorMap=1.0 0.2 0.2 0.01 1.0 0.2 0.2 0.01 1.0 0.2 0.2 0.01; 
+          	size=11;
+          	length=28;
+          	sizeGrowth=-0.65;
+          	ttl=8;
+          	frontOffset=0;
+          	sideTexture=muzzleside;
+          	frontTexture=muzzlefront;
+      	}
+   water=1;
+   air=1;
+   underwater=1;
+   ground=1;
+   count=1;
+   }
+	[RealFlare]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.0;
+			sizeMod=1.0;
+			pos=0, 0, 0;
+			emitVector=dir;
+			gravity=0, 0, 0;
+			colorMap=1.0 0.2 0.2 0.01 1.0 0.2 0.2 0.00;
+			Texture=light;
+			airdrag=0.8;
+			particleLife=15;
+			particleLifeSpread=5;
+			numParticles=1;
+			particleSpeed=0;
+			particleSpeedSpread=0;
+			particleSize=25;
+			particleSizeSpread=25;
+			emitRot=0;
+			emitRotSpread=10;
+			directional=0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+
+	[groundflash]
+	{
+		flashSize = 40;
+		flashAlpha = 0.25;
+		circleGrowth = 0;
+		circleAlpha = 0.1;
+		ttl = 15;
+		color = 1.0,0.1,0.1;
+
+	}
+}
+[REDFLASH]
+{
+	usedefaultexplosions=1;	
+	[groundflash]
+	{
+		flashSize = 40;
+		flashAlpha = 0.25;
+		circleGrowth = 0;
+		circleAlpha = 0.1;
+		ttl = 15;
+		color = 1.0,0.1,0.1;
+
+	}
+}
+[DGUNREADYFLARE]
+{
+	usedefaultexplosions=0;	
+
+   [LARGEFLASH]
+   {
+	class = CBitmapMuzzleFlame;
+      
+	[properties]
+      	{
+         	dir = dir;
+         	colorMap=1.0 0.2 0.2 0.01 1.0 0.2 0.2 0.01 1.0 0.2 0.2 0.01; 
+          	size=3;
+          	length=5;
+          	sizeGrowth=-0.65;
+          	ttl=1;
+          	frontOffset=0;
+          	sideTexture=muzzleside;
+          	frontTexture=muzzlefront;
+      	}
+   water=1;
+   air=1;
+   underwater=1;
+   ground=1;
+   count=1;
+   }
+	[RealFlare]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.0;
+			sizeMod=1.0;
+			pos=0, 0, 0;
+			emitVector=dir;
+			gravity=0, 0, 0;
+			colorMap=1.0 0.2 0.2 0.01 1.0 0.2 0.2 0.00;
+			Texture=light;
+			airdrag=0.8;
+			particleLife=3;
+			particleLifeSpread=5;
+			numParticles=1;
+			particleSpeed=0;
+			particleSpeedSpread=0;
+			particleSize=6;
+			particleSizeSpread=0;
+			emitRot=0;
+			emitRotSpread=10;
+			directional=0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+
+	[groundflash]
+	{
+		flashSize = 40;
+		flashAlpha = 0.25;
+		circleGrowth = 0;
+		circleAlpha = 0.1;
+		ttl = 5;
+		color = 1.0,0.1,0.1;
+
+	}
+}
+[FireFLARE]
+{
+	usedefaultexplosions=0;	
+
+   [LARGEFLASH]
+   {
+	class = CBitmapMuzzleFlame;
+      
+	[properties]
+      	{
+         	dir = dir;
+         	colorMap=1.0 0.6 0.2 0.01 1.0 0.6 0.2 0.01 1.0 0.4 0.2 0.01; 
+          	size=4;
+          	length=7;
+          	sizeGrowth=-0.0;
+          	ttl=5;
+          	frontOffset=0;
+          	sideTexture=muzzleside;
+          	frontTexture=muzzlefront;
+      	}
+   water=1;
+   air=1;
+   underwater=1;
+   ground=1;
+   count=1;
+   }
+	[RealFlare]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.0;
+			sizeMod=1.0;
+			pos=0, 0, 0;
+			emitVector=dir;
+			gravity=0, 0, 0;
+			colorMap=0.7 0.7 1.0 0.01 0.8 0.8 0.9 0.00;
+			Texture=light;
+			airdrag=0.8;
+			particleLife=1;
+			particleLifeSpread=5;
+			numParticles=1;
+			particleSpeed=0;
+			particleSpeedSpread=0;
+			particleSize=16;
+			particleSizeSpread=0;
+			emitRot=0;
+			emitRotSpread=10;
+			directional=0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-0.5 r1,-0.5 r1,-0.5 r1;
+			width=32;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.7;
+			color=0.5, 0.5, 1.0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=1; 
+	}
+	[groundflash]
+	{
+		flashSize = 40;
+		flashAlpha = 0.25;
+		circleGrowth = 0;
+		circleAlpha = 0.1;
+		ttl = 1;
+		color = 0.5,0.5,0.9;
+	}
+}

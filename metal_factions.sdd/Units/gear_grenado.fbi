@@ -1,0 +1,135 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Grenado;
+	description=Self-destructable Assault Robot;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
+	tedclass=KBOT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_grenado;
+	unitnumber=91;
+	objectname=gear_grenado.3do;
+	buildpic=gear_grenado.png;
+	soundcategory=COR_KBOT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=4500;
+	healtime=30;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.0;
+	energyuse=0.0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	upright=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTSF2;
+	turnrate=840;
+	acceleration=0.1;
+	brakerate=0.15;
+	maxvelocity=1.7;
+	maxslope=14;
+	maxwaterdepth=21;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_grenado_cannon;
+	nochasecategory=VTOL;
+	badtargetcategory1=VTOL;
+	explodeas=GRENADO_BLAST;
+	selfdestructas=GRENADO_BLAST;
+	selfDestructCountdown=0.5;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=KA-L8;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=2;
+	upright=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 40 35;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	[CustomParams]
+	{
+		tip=use CTRL-D to self-destruct for 3200 damage in a wide area;
+		evalfactor=0.85;//GRENADO
+	}
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:yellowflaremed;
+	}
+	buildcostenergy=9267;//#AUTO#
+	buildcostmetal=1853;//#AUTO#
+	buildtime=22088;//#AUTO#
+}

@@ -1,0 +1,105 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	Side=Sphere;
+	Name=Trike;
+	Description=Light Scout Vehicle;
+
+	// ------------------- categories
+	Category=SPHERE TANK LEVEL1 WEAPON NOTAIR NOTSUB;
+	TEDClass=TANK;
+
+	// ------------------- external specs
+	UnitName=sphere_trike;
+	UnitNumber=10011;
+	Objectname=sphere_trike.3do;
+	buildpic=sphere_trike.png;
+	SoundCategory=CORAK;
+	Corpse=sphere_trike_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=2;
+	FootprintZ=2;
+	MaxDamage=380;
+
+
+	// ------------------- resources
+	EnergyUse=0;
+	EnergyStorage=0;
+	MetalStorage=0;
+	EnergyMake=0;
+
+	// ------------------- abilities
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canguard=1;
+	canattack=1;
+	Builder=0;
+
+	// ------------------- movement
+	MaxWaterDepth=12;
+	MaxSlope=17;
+	MaxVelocity=3.1;
+	BrakeRate=0.06;
+	Acceleration=0.08;
+	TurnRate=500;
+	SteeringMode=1;
+	turninplace=0;
+	MovementClass=TANKSH2;
+
+	// ------------------- scout
+	sightdistance=500;
+	RadarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_trike_laser;
+	badtargetcategory1=VTOL;
+	NoChaseCategory=VTOL;
+	ExplodeAs=SMALL_UNITEX;
+	SelfDestructAs=SMALL_UNIT;
+
+
+	// ------------------- orders
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+
+	// ------------------- misc
+	Version=3.1;
+	Designation=CA_Ik;
+	BMcode=1;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	ShootMe=1;
+	DefaultMissionType=Standby;
+	maneuverleashlength=640;
+	Downloadable=1;
+
+	leavetracks=1;
+	trackoffset=8;
+	trackstrength=5;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=35;
+
+	collisionVolumeType = box;
+	collisionVolumeScales =20 15 25;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:GLOWSML;
+	}
+	[CustomParams]
+	{
+		evalfactor=0.9;
+	}
+	buildcostenergy=450;//#AUTO#
+	buildcostmetal=90;//#AUTO#
+	buildtime=1072;//#AUTO#
+}

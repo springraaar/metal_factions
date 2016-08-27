@@ -1,0 +1,111 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Solar Collector;
+	description=Produces 20 E/s;
+	icontype=energy;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW ENERGY LEVEL1 NOWEAPON  NOTAIR NOTSUB;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=claw_solar_collector;
+	unitnumber=20000;
+	objectname=claw_solar_collector.3do;
+	corpse=claw_solar_collector_dead;
+	buildpic=claw_solar_collector.png;
+	soundcategory=gear_SOLAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=700;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=-20;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=32768;
+	yardmap=ccccc coooc coooc coooc ccccc;
+	activatewhenbuilt=1;
+	collisionvolumetype=box;
+	collisionVolumeScales=70 28 70;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=11;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	damagemodifier=0.50;
+	designation=ES-22;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=NanoDebree;
+	pieceTrailCEGRange = 1;
+
+
+	[CustomParams]
+	{
+		tip=Gains 50% dmg resistance when closed;
+	}
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildcostenergy=835;//#AUTO#
+	buildcostmetal=167;//#AUTO#
+	buildtime=1992;//#AUTO#
+}

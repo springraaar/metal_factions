@@ -1,0 +1,183 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+
+piece ground, hips,torso,turret1,sleeve1,flare1,turret2,sleeve2,flare2,turret3,sleeve3,flare3, sphere, shieldpt;
+
+	
+static-var bMoving,bAiming, normalSpeed, slowSpeed, isReloading, reloadTime;
+
+// Signal definitions
+#define SIG_AIM					2
+#define SIG_AIM2				4
+#define SIG_AIM3				8
+
+
+lua_checkEnergy() { return 0; }
+
+
+MotionControl(hasEnergy)
+{
+	hasEnergy = 1;
+	while (TRUE)
+	{
+		bMoving = (get CURRENT_SPEED) > 10000;
+
+		// lua check for energy availability		
+		call-script lua_checkEnergy(500);
+		hasEnergy = get LUA1;
+		
+		// update speed and activation state
+		if (bMoving && hasEnergy)
+		{
+			set ACTIVATION to TRUE;
+			//set MAX_SPEED to normalSpeed;  // DONE BY GADGET
+		}
+		if (!bMoving || !hasEnergy)
+		{
+			set ACTIVATION to FALSE;
+			//set MAX_SPEED to slowSpeed;  // DONE BY GADGET
+		}
+
+		sleep 60;
+	}
+}
+
+SetMaxReloadTime(Func_Var_1)
+{
+	reloadTime = Func_Var_1;
+	return (0);
+}
+
+ShowEffect()
+{
+	while (TRUE)
+	{
+		if ( !isReloading )
+		{
+			emit-sfx 1024+0 from flare1;
+		}
+		sleep 20;
+	}
+}
+
+Create()
+{
+	normalSpeed = get MAX_SPEED;
+	slowSpeed = normalSpeed / 4;
+
+	reloadTime = 12000;
+	isReloading = FALSE;
+	bMoving = FALSE;
+	bAiming = FALSE;
+	start-script MotionControl();
+	start-script ShowEffect();
+}
+
+
+
+SweetSpot(piecenum)
+{
+	piecenum = sphere;
+}
+
+RestoreAfterDelayWeapon1()
+{
+	sleep 5000;
+	turn turret1 to y-axis <0.000000> speed <65.016484>;
+	turn sleeve1 to x-axis <0.000000> speed <65.005495>;
+}
+RestoreAfterDelayWeapon3()
+{
+	sleep 5000;
+	turn turret2 to y-axis <0.000000> speed <65.016484>;
+	turn sleeve2 to x-axis <0.000000> speed <65.005495>;
+}
+RestoreAfterDelayWeapon4()
+{
+	sleep 5000;
+	turn turret3 to y-axis <0.000000> speed <65.016484>;
+	turn sleeve3 to x-axis <0.000000> speed <65.005495>;
+}
+
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret1;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare1;
+}
+
+FirePrimary()
+{
+	isReloading = TRUE;
+	sleep reloadTime;
+	isReloading = FALSE;
+	return 1;
+}
+
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	
+	return (1);
+}
+
+
+
+QuerySecondary(piecenum)
+{
+	piecenum = shieldpt;
+	return (0);
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = shieldpt;
+	return (0);
+}
+
+AimSecondary(heading, pitch)
+{
+	return (1);
+}
+
+
+
+Killed(severity, corpsetype)
+{
+	
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode sphere type SHATTER | BITMAP4;
+		explode sphere type SHATTER | BITMAP4;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode sphere type SHATTER | BITMAP4;
+		explode sphere type SHATTER | BITMAP4;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode sphere type SHATTER | BITMAP4;
+		explode sphere type SHATTER | BITMAP4;
+		return (0);
+	}
+	corpsetype = 3;
+	explode sphere type SHATTER | BITMAP4;
+	explode sphere type SHATTER | BITMAP4;
+		
+}
+

@@ -1,0 +1,170 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Gear;
+	name=Commander;
+	description=Devastator Form;
+	icontype=gear_commander;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CORE commander LEVEL10 WEAPON NOTAIR NOTSUB CTRL_C;
+	tedclass=COMMANDER;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_u3commander;
+	unitnumber=94;
+	objectname=gear_u3commander.3do;
+	buildpic=gear_u3commander.png;
+	soundcategory=gear_COM;
+	corpse=gear_ucommander_dead;
+	script=gear_u3commander.cob;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=4500;
+	healtime=100;
+	buildcostmetal=2000;
+	buildcostenergy=20000;
+	buildtime=20000;
+	footprintx=3;
+	footprintz=3;
+	mass=2000;
+	reclaimable=0;
+	capturable=0;
+		
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=2;
+	energymake=50;
+	energyuse=0;
+	metalStorage=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	builddistance=200;
+	workertime=300;
+        RepairSpeed=300;
+        ReclaimSpeed=300;
+        TerraformSpeed=600;
+        capturespeed=600;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	cancapture=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canreclamate=1;
+	canstop=1;
+	upright=1;
+	autoheal=12;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTDS2;
+	turnrate=1030;
+	acceleration=0.26;
+	brakerate=0.32;
+	maxvelocity=0.9;
+	maxslope=20;
+	maxwaterdepth=35;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=800;
+	sonardistance=800;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_u3commander_laser;
+	weapon2=gear_u3commander_torpedo;
+	weapon3=gear_u3commander_laser2;
+	slaveto1=3;
+	nochasecategory=WEAPON;
+	badtargetcategory1=VTOL;
+	badtargetcategory1=VTOL;
+	badtargetcategory3=VTOL;
+	explodeas=gear_commander_nanoblast;
+	selfdestructas=gear_commander_nanoblast;
+
+	//************************************************************
+	//  Orders
+	//**********
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=0;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	cloakcost=50;
+	cloakcostmoving=150;
+	commander=1;
+	designation=CX-D3;
+	downloadable=1;
+	hidedamage=0;
+	immunetoparalyzer=1;
+	maneuverleashlength=640;
+	mincloakdistance=100;
+	norestrict=1;
+	shootme=1;
+	showplayername=1;
+	smoothanim=0;
+	steeringmode=2;
+	threed=1;
+
+	leavetracks=1;
+	trackoffset=0;
+	trackstrength=8;
+	trackstretch=1;
+	tracktype=ComTrack;
+	trackwidth=22;
+
+	version=1.2;
+	zbuffer=1;
+	MinCollisionSpeed=2.5;//weight
+	collisionVolumeType = box;
+	collisionVolumeScales =38 35 32;
+	collisionVolumeOffsets = 0 1 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		isCommander=1;
+	}
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:purpleflare;
+	explosiongenerator1=custom:Nano;
+	explosiongenerator2=custom:greenflare;
+	explosiongenerator3=custom:DGUNREADYFLARE;
+	}
+}

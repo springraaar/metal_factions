@@ -1,0 +1,142 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Aven;
+	name=Zephyr;
+	description=Airborne Radar/Area Support;
+	icontype=air;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM VTOL CTRL_V LEVEL2 WEAPON NOTSUB;
+	tedclass=VTOL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=aven_zephyr;
+	unitnumber=3000;
+	objectname=aven_zephyr.3do;
+	buildpic=aven_zephyr.png;
+	soundcategory=aven_MAKER;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1800;
+	healtime=30;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	energymake=0;
+	energyuse=150;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	candropflare=0;
+	canfly=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	stealth=0;
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	acceleration=0.1;
+	brakerate=0.08;
+	maxvelocity=5.3;
+	maxwaterdepth=5;
+	cruisealt=200;
+	turnrate=400;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=600;
+	radardistance=2000;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=ESTOR_BUILDING;
+	selfdestructas=ESTOR_BUILDING;
+
+
+	//************************************************************
+	//  Orders
+	//**********
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=VTOL_standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bankscale=1;
+	bmcode=1;
+	designation=AFD-J9;
+	downloadable=1;
+	hoverattack=1;
+	bankingAllowed=0;
+	airhoverfactor=2.4;
+	upright=1;
+	activatewhenbuilt=1;
+
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	CanLoopbackAttack=0;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	//************************************************************
+	//  Out of Category
+	//*******************
+
+
+	collide=1;
+	minCollisionSpeed=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =55 15 50;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	[CustomParams]
+	{
+		tip=Boosts friendly units within 600 range : +25% movement speed and +4 HP/s regeneration. Doesn't stack.;
+	}
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:zephyr;
+	}
+	buildcostenergy=18000;
+	buildcostmetal=1800;
+	buildtime=24000;
+}

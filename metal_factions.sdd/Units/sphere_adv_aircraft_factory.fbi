@@ -1,0 +1,87 @@
+[UNITINFO]
+	{
+
+	// ------------------- description
+	Side=Sphere;
+	Name=Advanced Aircraft Plant;
+	Description=Builds Level 2 Aircraft;
+	icontype=plant;
+
+	// ------------------- categories
+	Category=SPHERE PLANT LEVEL2 NOWEAPON NOTAIR NOTSUB CTRL_F;
+	TEDClass=PLANT;
+
+	// ------------------- external specs
+	UnitName=sphere_adv_aircraft_factory;
+	UnitNumber=10000;
+	Objectname=sphere_adv_aircraft_factory.3do;
+	buildpic=sphere_adv_aircraft_factory.png;
+	SoundCategory=gear_HOVER_PLANT;
+	Corpse=sphere_adv_aircraft_factory_dead;
+
+	// ------------------- health/cost/size
+	MaxDamage=3200;
+	FootprintX=10;
+	FootprintZ=10;
+	idleautoheal=5;
+
+
+	// ------------------- resources
+	EnergyStorage=100;
+	MetalStorage=100;
+	EnergyUse=0;
+
+
+	// ------------------- constructor
+	Builder=1;
+	WorkerTime=300;
+
+
+
+	// ------------------- abilities
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	
+	// ------------------- movement
+	buildangle=1024;
+	YardMap=ccoooooocc ccoooooocc ooccccccoo ooccccccoo ooccccccoo ooccccccoo ooccccccoo ooccccccoo ccoooooocc ccoooooocc ; 
+	MaxWaterDepth=0;
+	MaxSlope=14;
+	collisionVolumeType = box;
+	collisionVolumeScales =150 35 150;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	// ------------------- scout
+	sightdistance=500;
+	RadarDistance=0;
+
+	// ------------------- weapons
+	ExplodeAs=LARGE_BUILDINGEX;
+	SelfDestructAs=LARGE_BUILDING;
+
+	// ------------------- orders
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+
+
+	// ------------------- misc
+	Version=3.1;
+	Designation=CA-lFCT;
+	BMcode=0;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	downloadable=1;
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:Nano;
+	}
+	buildcostenergy=9055;//#AUTO#
+	buildcostmetal=1811;//#AUTO#
+	buildtime=21581;//#AUTO#
+}

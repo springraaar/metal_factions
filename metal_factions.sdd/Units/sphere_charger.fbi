@@ -1,0 +1,102 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	Side=Sphere;
+	Name=Charger;
+	Description=Heavy Attack Robot;
+
+	// ------------------- categories
+	Category=SPHERE KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
+	TEDClass=KBOT;
+
+	// ------------------- external specs
+	UnitName=sphere_charger;
+	UnitNumber=10015;
+	Objectname=sphere_charger.3do;
+	buildpic=sphere_charger.png;
+	SoundCategory=CORAK;
+	Corpse=sphere_charger_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=3;
+	FootprintZ=3;
+	MaxDamage=2600;
+
+
+	// ------------------- resources
+	EnergyUse=2;
+	EnergyStorage=0;
+	MetalStorage=0;
+	EnergyMake=2;
+
+	// ------------------- abilities
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canguard=1;
+	canattack=1;
+	Builder=0;
+
+	// ------------------- movement
+	MaxWaterDepth=12;
+	MaxSlope=17;
+	MaxVelocity=1.75;
+	BrakeRate=0.35;
+	Acceleration=0.15;
+	TurnRate=950;
+	SteeringMode=2;
+	MovementClass=KBOTHT2;
+
+	// ------------------- scout
+	sightdistance=500;
+	RadarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_charger_cannon;
+	badtargetcategory1=VTOL;
+	Weapon2=sphere_charger_blaster;
+	badtargetcategory2=VTOL;
+	slaveto2=1;
+	Weapon3=sphere_charger_shield;
+	badtargetcategory1=VTOL;
+	NoChaseCategory=VTOL;
+	ExplodeAs=BIG_UNITEX;
+	SelfDestructAs=BIG_UNIT;
+
+
+	// ------------------- orders
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+
+	// ------------------- misc
+	Version=3.1;
+	Designation=CA_Ik;
+	BMcode=1;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	ShootMe=1;
+	DefaultMissionType=Standby;
+	maneuverleashlength=640;
+	Upright=0;
+	Downloadable=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	collisionVolumeType= box;
+	collisionVolumeScales=30 30 30;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest=0;
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:redflare;
+		explosiongenerator1=custom:redflarebig;
+	}
+	buildcostenergy=6390;//#AUTO#
+	buildcostmetal=1278;//#AUTO#
+	buildtime=15230;//#AUTO#
+}

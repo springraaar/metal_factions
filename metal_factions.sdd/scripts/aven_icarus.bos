@@ -1,0 +1,183 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, misltur, f1, f2, base2, wing1, b1, jacto, firept, weapon, wing2;
+
+static-var  gun_1, bAiming;
+
+// Signal definitions
+#define SIG_AIM				4
+#define SIG_AIM_2			8
+
+
+lua_HeavyGunshipStrafe() { return 0; }
+
+HeavyGunshipStrafe()
+{
+	while (TRUE)
+	{
+		if( bAiming )
+		{
+			//call-script lua_HeavyGunshipStrafe();
+		}
+		sleep 200;
+	}
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+Create()
+{
+	gun_1 = [0];
+	bAiming = FALSE;
+	start-script SmokeUnit();
+	start-script HeavyGunshipStrafe();
+}
+
+Activate()
+{
+}
+
+Deactivate()
+{
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+RestoreAfterDelay()
+{
+	sleep 3000;
+	turn misltur to y-axis <0.000000> speed <80.000000>;
+	bAiming = FALSE;
+	//call-script lua_HeavyGunshipStrafe();
+	//turn base to x-axis <0.000000> speed <45.000000>;
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = misltur;
+}
+
+QuerySecondary(piecenum)
+{
+	if( gun_1 == [0] )
+	{
+		piecenum = f1;
+		return 0 ;
+	}
+	if( gun_1 == [1] )
+	{
+		piecenum = f2;
+		return 0;
+	}
+}
+
+AimSecondary(Func_Var_1)
+{
+	signal SIG_AIM_2;
+	set-signal-mask SIG_AIM_2;
+	bAiming = TRUE;
+	//turn base to x-axis <-45.000000> speed <45.000000>;
+	turn misltur to y-axis Func_Var_1 speed <300.000000>;
+	wait-for-turn misltur around y-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FireSecondary()
+{
+	if( gun_1 == [0] )
+	{
+		emit-sfx 1024+0 from f1;
+		sleep 100;
+		gun_1 = [1];
+		return 0 ;
+	}
+	if( gun_1 == [1] )
+	{
+		emit-sfx 1024+0 from f2;
+		sleep 100;
+		gun_1 = [0];
+		return 0 ;
+	}
+
+}
+
+
+
+QueryPrimary(piecenum)
+{
+	piecenum = firept;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = firept;
+}
+
+
+FirePrimary()
+{
+}
+
+AimPrimary()
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	
+	bAiming = TRUE;
+	//call-script lua_HeavyGunshipStrafe();
+	//turn base to x-axis <-45.000000> speed <45.000000>;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+
+QueryTertiary(piecenum)
+{
+	piecenum = firept;
+}
+
+
+Killed(severity, corpsetype)
+{
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP1;
+	explode b1 type SHATTER | BITMAP5;
+	explode misltur type SHATTER | BITMAP1;
+	explode jacto type SHATTER | BITMAP1;		
+	explode base2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode wing1 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode wing2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode weapon type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+}

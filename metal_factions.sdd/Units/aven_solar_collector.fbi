@@ -1,0 +1,105 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Aven;
+	name=Solar Collector;
+	description=Produces 20 E/s;
+	icontype=energy;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM ENERGY LEVEL1 NOWEAPON NOTAIR NOTSUB;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=aven_solar_collector;
+	unitnumber=63;
+	objectname=aven_solar_collector.3do;
+	corpse=aven_solar_collector_dead;
+	buildpic=aven_solar_collector.png;
+	soundcategory=aven_SOLAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=560;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=-20;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	yardmap=ooooo ooooo ooooo ooooo ooooo;
+	activatewhenbuilt=1;
+	collisionvolumetype=box;
+	collisionVolumeScales=70 12 70;
+	collisionVolumeOffsets=0 0 1;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=2;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AE-SC;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=NanoDebree;
+	pieceTrailCEGRange = 1;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildcostenergy=699;//#AUTO#
+	buildcostmetal=139;//#AUTO#
+	buildtime=1666;//#AUTO#
+}

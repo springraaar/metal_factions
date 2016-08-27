@@ -1,0 +1,102 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	Side=Sphere;
+	Name=Quad;
+	Description=Medium Fast Attack Vehicle;
+
+	// ------------------- categories
+	Category=SPHERE TANK LEVEL2 WEAPON NOTAIR NOTSUB;
+	TEDClass=TANK;
+
+	// ------------------- external specs
+	UnitName=sphere_quad;
+	UnitNumber=10000;
+	Objectname=sphere_quad.3do;
+	buildpic=sphere_quad.png;
+	SoundCategory=CORAK;
+	Corpse=sphere_quad_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=3;
+	FootprintZ=3;
+	MaxDamage=1000;
+
+
+	// ------------------- resources
+	EnergyUse=1;
+	EnergyStorage=0;
+	MetalStorage=0;
+	EnergyMake=1;
+
+	// ------------------- abilities
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canguard=1;
+	canattack=1;
+	Builder=0;
+
+	// ------------------- movement
+	MaxWaterDepth=12;
+	MaxSlope=17;
+	MaxVelocity=3.0;
+	BrakeRate=0.1;
+	Acceleration=0.1;
+	TurnRate=450;
+	SteeringMode=1;
+	turninplace=0;
+	MovementClass=TANKSH2;
+
+	// ------------------- scout
+	sightdistance=500;
+	RadarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_quad_laser;
+	badtargetcategory1=VTOL;
+	badtargetcategory1=VTOL;
+	NoChaseCategory=VTOL;
+	ExplodeAs=SMALL_UNITEX;
+	SelfDestructAs=SMALL_UNIT;
+
+
+	// ------------------- orders
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+
+	// ------------------- misc
+	Version=3.1;
+	Designation=CA_Ik;
+	BMcode=1;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	ShootMe=1;
+	DefaultMissionType=Standby;
+	maneuverleashlength=640;
+
+	leavetracks=1;
+	trackoffset=8;
+	trackstrength=5;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=35;
+
+	Downloadable=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 20 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:GLOWSML;
+	}
+	buildcostenergy=1639;//#AUTO#
+	buildcostmetal=327;//#AUTO#
+	buildtime=3906;//#AUTO#
+}

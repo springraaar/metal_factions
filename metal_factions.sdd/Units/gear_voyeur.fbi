@@ -1,0 +1,122 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Gear;
+	name=Voyeur;
+	description=Mobile Radar Robot;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CORE KBOT NOWEAPON LEVEL2 NOTAIR NOTSUB CTRL_R;
+	tedclass=KBOT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_voyeur;
+	unitnumber=171;
+	objectname=gear_voyeur.3do;
+	corpse=gear_voyeur_dead;
+	buildpic=gear_voyeur.png;
+	soundcategory=COR_KBOT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=850;
+	healtime=30;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=16;
+	energyuse=16;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	onoffable=1;
+	upright=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTHT2;
+	turnrate=1060;
+	acceleration=0.41;
+	brakerate=0.12;
+	maxvelocity=1.3;
+	maxslope=32;
+	maxwaterdepth=10;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=2000;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	ai_limit=limit CORVOYR 2;
+	bmcode=1;
+	designation=KB-MR4;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 22 25;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildcostenergy=1648;//#AUTO#
+	buildcostmetal=329;//#AUTO#
+	buildtime=3927;//#AUTO#
+}

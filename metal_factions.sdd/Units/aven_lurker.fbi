@@ -1,0 +1,129 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Aven;
+	name=Lurker;
+	description=Attack Sub;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM UNDERWATER LEVEL1 TORP WEAPON NOTAIR CTRL_W;
+	tedclass=WATER;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=aven_lurker;
+	unitnumber=67;
+	objectname=aven_lurker.3do;
+	corpse=aven_lurker_dead;
+	buildpic=aven_lurker.png;
+	soundcategory=aven_SUB;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=800;
+	healtime=10;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.4;
+	energyuse=0.4;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	floater=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=BOATSUB;
+	turnrate=512;
+	acceleration=0.06;
+	brakerate=0.01;
+	maxvelocity=1.575;
+	minwaterdepth=20;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+	sonardistance=600;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_lurker_torpedo;
+	onlytargetcategory1=NOTAIR;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
+  	WeaponMainDir1=0 0 1;
+   	MaxAngleDif1=120;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=0;
+	mobilestandorders=1;
+	standingfireorder=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ASD-SM;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	waterline=40;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 18 38;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildcostenergy=1736;//#AUTO#
+	buildcostmetal=347;//#AUTO#
+	buildtime=4138;//#AUTO#
+}

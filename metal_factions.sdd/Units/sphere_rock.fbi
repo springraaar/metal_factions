@@ -1,0 +1,95 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	Side=Sphere;
+	Name=Rock;
+	Description=Armored Artillery Robot;
+
+	// ------------------- categories
+	Category=SPHERE KBOT LEVEL1 WEAPON NOTAIR NOTSUB;
+	TEDClass=KBOT;
+
+	// ------------------- external specs
+	UnitName=sphere_rock;
+	UnitNumber=10009;
+	Objectname=sphere_rock.3do;
+	buildpic=sphere_rock.png;
+	SoundCategory=CORAK;
+	Corpse=sphere_rock_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=3;
+	FootprintZ=3;
+	MaxDamage=1850;
+
+
+	// ------------------- resources
+	EnergyUse=1;
+	EnergyStorage=0;
+	MetalStorage=0;
+	EnergyMake=1;
+
+	// ------------------- abilities
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canguard=1;
+	canattack=1;
+	Builder=0;
+
+	// ------------------- movement
+	MaxWaterDepth=12;
+	MaxSlope=17;
+	MaxVelocity=1.10;
+	BrakeRate=0.35;
+	Acceleration=0.15;
+	TurnRate=950;
+	SteeringMode=2;
+	MovementClass=KBOTHT2;
+
+	// ------------------- scout
+	sightdistance=500;
+	RadarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_rock_cannon;
+	nochasecategory=VTOL;
+	badtargetcategory1=VTOL;
+	ExplodeAs=SMALL_UNITEX;
+	SelfDestructAs=SMALL_UNIT;
+	hightrajectory=2;
+
+	// ------------------- orders
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+
+	// ------------------- misc
+	Version=3.1;
+	Designation=CA_Ik;
+	BMcode=1;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	ShootMe=1;
+	DefaultMissionType=Standby;
+	maneuverleashlength=640;
+	Upright=0;
+	Downloadable=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 20 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	TransportByEnemy=0;
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:YELLOWFLARESML;
+	}
+
+	buildcostenergy=1456;//#AUTO#
+	buildcostmetal=291;//#AUTO#
+	buildtime=3471;//#AUTO#
+}

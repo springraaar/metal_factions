@@ -1,0 +1,297 @@
+[aven_dragons_teeth_dead]
+{
+	world=allworld;
+	description=Dragon's Teeth;
+	category=dragonteeth;
+	object=aven_dragons_teeth;
+	footprintx=2;
+	footprintz=2;
+	height=40;
+	blocking=1;
+	hitdensity=100;
+	metal=8;
+	damage=1400;
+	crushResistance=500;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 30 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=0;
+	featuredead=rock_teeth;
+	seqnamereclamate=tree1reclamate;
+}
+[gear_dragons_teeth_dead]
+{
+	world=allworld;
+	description=Dragon's Teeth;
+	category=dragonteeth;
+	object=gear_dragons_teeth;
+	footprintx=2;
+	footprintz=2;
+	height=40;
+	blocking=1;
+	hitdensity=100;
+	metal=9;
+	damage=1550;
+	crushResistance=500;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 30 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=0;
+	featuredead=rock_teeth;
+	seqnamereclamate=tree1reclamate;
+}
+[claw_dragons_teeth_dead]
+{
+	world=allworld;
+	description=Dragon's Teeth;
+	category=dragonteeth;
+	object=claw_dragons_teeth;
+	footprintx=2;
+	footprintz=2;
+	height=40;
+	blocking=1;
+	hitdensity=100;
+	crushResistance=500;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 30 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	metal=8;
+	damage=1400;
+	reclaimable=1;
+	autoreclaimable=0;
+	featuredead=rock_teeth;
+	seqnamereclamate=tree1reclamate;
+}
+[sphere_dragons_teeth_dead]
+{
+	world=allworld;
+	description=Dragon's Teeth;
+	category=dragonteeth;
+	object=sphere_dragons_teeth;
+	footprintx=2;
+	footprintz=2;
+	height=40;
+	blocking=1;
+	hitdensity=100;
+	crushResistance=500;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 30 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	metal=8;
+	damage=1400;
+	reclaimable=1;
+	autoreclaimable=0;
+	featuredead=rock_teeth;
+	seqnamereclamate=tree1reclamate;
+}
+[rock_teeth]
+{
+	world=allworld;
+	description=Rubble;
+	category=rocks;
+	object=rock_teeth;
+	footprintx=2;
+	footprintz=2;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=5;
+	damage=800;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 15 25;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=0;
+	featuredead=rock_teeth_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[rock_teeth_heap]
+{
+	world=All Worlds;
+	description=Rubble;
+	category=heaps;
+	object=2x2f;
+	footprintx=2;
+	footprintz=2;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	metal=3;
+	energy=0;
+	damage=500;
+	collisionVolumeType=box;
+	collisionVolumeScales=25 6 25;
+	collisionVolumeOffsets=0 0 0;
+}
+[aven_floating_dragons_teeth_dead]
+{
+	world=allworld;
+	description=Floating Dragon's Teeth;
+	category=dragonteeth;
+	object=aven_floating_dragons_teeth;
+	footprintx=2;
+	footprintz=2;
+	height=80;
+	blocking=1;
+	hitdensity=100;
+	metal=20;
+	damage=1500;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 30 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=0;
+	nodrawundergray=1;
+}
+[gear_floating_dragons_teeth_dead]
+{
+	world=allworld;
+	description=Floating Dragon's Teeth;
+	category=dragonteeth;
+	object=gear_floating_dragons_teeth;
+	footprintx=2;
+	footprintz=2;
+	height=80;
+	blocking=1;
+	hitdensity=100;
+	metal=18;
+	damage=1500;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 30 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=0;
+	nodrawundergray=1;
+}
+[aven_fortification_wall_dead]
+{
+	world=allworld;
+	description=Fortification Wall;
+	category=dragonteeth;
+	object=aven_fortification_wall;
+	footprintx=2;
+	footprintz=2;
+	height=65;
+	blocking=1;
+	hitdensity=100;
+	metal=50;
+	damage=4800;
+	crushResistance=1500;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 100 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=0;
+	featuredead=rock_fort;
+	seqnamereclamate=tree1reclamate;
+	reclaimTime=500;
+}
+[gear_fortification_wall_dead]
+{
+	world=allworld;
+	description=Fortification Wall;
+	category=dragonteeth;
+	object=gear_fortification_wall;
+	footprintx=2;
+	footprintz=2;
+	height=65;
+	blocking=1;
+	hitdensity=100;
+	metal=50;
+	damage=4813;
+	crushResistance=1500;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 100 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=0;
+	featuredead=rock_fort;
+	seqnamereclamate=tree1reclamate;
+	reclaimTime=600;
+}
+[claw_fortification_wall_dead]
+{
+	world=allworld;
+	description=Fortification Wall;
+	category=dragonteeth;
+	object=claw_fortification_wall;
+	footprintx=2;
+	footprintz=2;
+	height=65;
+	blocking=1;
+	hitdensity=100;
+	metal=50;
+	damage=4813;
+	crushResistance=1500;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 100 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=0;
+	featuredead=rock_fort;
+	seqnamereclamate=tree1reclamate;
+	reclaimTime=600;
+}
+[sphere_fortification_wall_dead]
+{
+	world=allworld;
+	description=Fortification Wall;
+	category=dragonteeth;
+	object=sphere_fortification_wall;
+	footprintx=2;
+	footprintz=2;
+	height=65;
+	blocking=1;
+	hitdensity=100;
+	metal=50;
+	damage=4800;
+	crushResistance=1500;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 100 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=0;
+	featuredead=rock_fort;
+	seqnamereclamate=tree1reclamate;
+	reclaimTime=500;
+}
+[rock_fort]
+{
+	world=allworld;
+	description=Rubble;
+	category=dragonteeth;
+	object=rock_fort;
+	footprintx=2;
+	footprintz=2;
+	height=30;
+	blocking=1;
+	hitdensity=100;
+	metal=27;
+	damage=2400;
+	crushResistance=500;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 60 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=0;
+	featuredead=rock_teeth;
+	seqnamereclamate=tree1reclamate;
+	reclaimTime=500;
+}

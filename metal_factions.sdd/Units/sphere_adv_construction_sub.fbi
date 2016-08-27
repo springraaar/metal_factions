@@ -1,0 +1,132 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Adv. Construction Sub;
+	description=Tech Level 2;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE UNDERWATER LEVEL2 CONSTR NOWEAPON NOTAIR CTRL_B;
+	tedclass=SHIP;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=sphere_adv_construction_sub;
+	unitnumber=10000;
+	objectname=sphere_adv_construction_sub.3do;
+	corpse=sphere_adv_construction_sub_dead;
+	buildpic=sphere_adv_construction_sub.png;
+	soundcategory=gear_CSUB;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1250;
+	healtime=75;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=0.2;
+	metalstorage=100;
+	energymake=17;
+	energyuse=1.6;
+	energystorage=100;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	builddistance=200;
+	workertime=300;
+        RepairSpeed=300;
+        ReclaimSpeed=300;
+        TerraformSpeed=600;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canreclamate=1;
+	canstop=1;
+	floater=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=BOATSUB;
+	turnrate=256;
+	acceleration=0.05;
+	brakerate=0.02;
+	maxvelocity=1.9;
+	minwaterdepth=20;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+	sonardistance=600;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=NANO_UNITEX;
+	selfdestructas=NANO_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=CW-SA;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	waterline=40;
+	zbuffer=1;
+	pieceTrailCEGTag=NanoDebree;
+	pieceTrailCEGRange = 2;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 18 52;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:Nano;
+		explosiongenerator1=custom:UNITFIRE;
+	}
+
+	buildcostenergy=3908;//#AUTO#
+	buildcostmetal=781;//#AUTO#
+	buildtime=9316;//#AUTO#
+}

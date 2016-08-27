@@ -1,0 +1,144 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Blizzard;
+	description=Heavy Laser Aircraft;
+	icontype=air;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW VTOL CTRL_V LEVEL2 WEAPON NOTSUB  CTRL_P CTRL_J;
+	tedclass=VTOL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=claw_blizzard;
+	unitnumber=20000;
+	objectname=claw_blizzard.3do;
+	buildpic=claw_blizzard.png;
+	soundcategory=aven_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1550;
+	healtime=30;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	energymake=10;
+	energyuse=10;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	candropflare=0;
+	canfly=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	stealth=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	acceleration=0.1;
+	brakerate=1;
+	maxvelocity=5.2;
+	maxwaterdepth=255;
+	cruisealt=130;
+	turnrate=700;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=600;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_blizzard_laser1;
+	weapon2=claw_blizzard_laser2;
+	badtargetcategory2=NOTAIR;
+	explodeas=BIG_UNIT;
+	selfdestructas=BIG_UNIT;
+	WeaponMainDir1=0 0 1;  //x:0 y:0 z:1 => that's forward!
+	MaxAngleDif1=80;       //60deg from side to side, or 30deg from center to each direction
+	WeaponMainDir2=0 0 1;  //x:0 y:0 z:1 => that's forward!
+	MaxAngleDif2=80;       //60deg from side to side, or 30deg from center to each direction
+
+
+	//************************************************************
+	//  Orders
+	//**********
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=VTOL_standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bankscale=1;
+	bmcode=1;
+	designation=AFD-J9;
+	downloadable=1;
+	hoverattack=1;
+	airstrafe=1;
+	bankingAllowed=0;
+	airhoverfactor=-1;
+	upright=0;
+	maneuverleashlength=1280;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	CanLoopbackAttack=0;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	//************************************************************
+	//  Out of Category
+	//*******************
+
+
+	collide=1;
+	minCollisionSpeed=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =55 15 50;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:emgflarefast;
+	}
+	buildcostenergy=17421;//#AUTO#
+	buildcostmetal=1742;//#AUTO#
+	buildtime=22357;//#AUTO#
+}

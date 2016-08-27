@@ -1,0 +1,114 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Gear;
+	name=Air Repair Pad;
+	description=Automatically repairs aircraft;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CORE REPAIRPAD LEVEL2 NOWEAPON NOTAIR NOTSUB;
+	tedclass=SPECIAL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_air_repair_pad;
+	unitnumber=155;
+	objectname=gear_air_repair_pad.3do;
+	corpse=gear_air_repair_pad_dead;
+	buildpic=gear_air_repair_pad.png;
+	soundcategory=AIRPLANT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=2800;
+	footprintx=7;
+	footprintz=7;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=1024;
+	yardmap=ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo;
+	activatewhenbuilt=1;
+	collisionVolumeType=Box;
+	collisionVolumeScales=72 28 72;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	builddistance=200;
+	workertime=600;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	isairbase=1;
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=255;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=ARM-SP1;
+	downloadable=1;
+	sortbias=0;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	waterline=0;
+	floater=1;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Nano;
+	}
+
+	buildcostenergy=2981;//#AUTO#
+	buildcostmetal=596;//#AUTO#
+	buildtime=7106;//#AUTO#
+}

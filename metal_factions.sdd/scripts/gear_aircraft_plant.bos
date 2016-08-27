@@ -1,0 +1,228 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, pad, beam1, platform1, a1, x, nano1, b2, b3;
+
+static-var  statechg_DesiredState, statechg_StateChanging, isBuilding;
+
+// Signal definitions
+#define SIG_ACTIVATE			2
+
+Build()
+{
+	while (TRUE)
+	{
+		if( isBuilding == 1 )
+		{
+			emit-sfx 1024 + 0 from beam1;
+			sleep 60;
+		}
+		sleep 40;
+	}
+	return (0);
+}
+
+activatescr()
+{
+	move platform1 to y-axis [10.000000] speed [20.000000];
+	wait-for-move platform1 along y-axis;
+	
+	move nano1 to z-axis [4.400000] speed [8.000000];
+	wait-for-move nano1 along z-axis;
+	sleep 100;
+}
+
+deactivatescr()
+{
+	move nano1 to z-axis [0.000000] speed [8.000000];
+	wait-for-move nano1 along z-axis;
+
+	move platform1 to y-axis [0.000000] speed [16.000000];
+	wait-for-move platform1 along y-axis;
+	
+	sleep 100;
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from nano1;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+OpenYard()
+{
+	set YARD_OPEN to 1;
+	while( !get YARD_OPEN )
+	{
+		set BUGGER_OFF to 1;
+		sleep 1500;
+		set YARD_OPEN to 1;
+	}
+	set BUGGER_OFF to 0;
+}
+
+CloseYard()
+{
+	set YARD_OPEN to 0;
+	while( get YARD_OPEN )
+	{
+		set BUGGER_OFF to 1;
+		sleep 1500;
+		set YARD_OPEN to 0;
+	}
+	set BUGGER_OFF to 0;
+}
+
+Go()
+{
+	call-script activatescr();
+	call-script OpenYard();
+	set INBUILDSTANCE to 1;
+}
+
+Stop()
+{
+	set INBUILDSTANCE to 0;
+	call-script CloseYard();
+	call-script deactivatescr();
+}
+
+InitState()
+{
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState == 0 )
+		{
+			call-script Go();
+			currentstate = 0;
+		}
+		if( statechg_DesiredState == 1 )
+		{
+			call-script Stop();
+			currentstate = 1;
+		}
+	}
+	statechg_StateChanging = FALSE;
+}
+
+Create()
+{
+	call-script InitState();
+	start-script SmokeUnit();
+	start-script Build();
+}
+
+QueryNanoPiece(piecenum)
+{
+	piecenum = beam1;
+}
+
+
+Activate()
+{
+	signal SIG_ACTIVATE;
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	signal SIG_ACTIVATE;
+	set-signal-mask SIG_ACTIVATE;
+	sleep 5000;
+	set-signal-mask 0;
+	start-script RequestState(1);
+}
+
+StartBuilding()
+{
+	isBuilding = 1;
+}
+
+StopBuilding()
+{
+	isBuilding = 0;
+}
+
+QueryBuildInfo(piecenum)
+{
+	piecenum = pad;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode b3 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+		explode platform1 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode pad type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+		explode x type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+		explode b2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+		explode b3 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+		explode platform1 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode pad type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+		explode x type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+		explode b2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+		explode b3 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+		explode platform1 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+		return (0);
+	}
+	corpsetype = 3;
+	explode pad type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode x type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode b2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode b3 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode platform1 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+}

@@ -1,0 +1,94 @@
+[BlueAfterBurner]
+{
+	[fire]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=1.1;
+		sizeMod=0.7;
+		pos=-1 r2, -1 r2, -1 r2;
+		emitVector=dir;
+		gravity=0, 0.001, 0;
+		colorMap=0.05 1 1 0.01      0.08 1 1 0.01		1 1 1 0.01;
+		Texture=splash;
+		airdrag=0.6;
+		particleLife=5 r1;
+		particleLifeSpread=0;
+		numParticles=1;
+		particleSpeed=2;
+		particleSpeedSpread=0.2;
+		particleSize=0.5;
+		particleSizeSpread=0.3;
+		emitRot=0;
+		emitRotSpread=10;
+		directional=0;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+
+	[fire2]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=1.1;
+		sizeMod=0.7;
+		pos=-1 r2, -1 r2, -1 r2;
+		emitVector=dir;
+		gravity=0, 0.001, 0;
+		colorMap=0.05 1 1 0.01      0.08 1 1 0.01		1 1 1 0.01;	
+		Texture=firecloud2;
+		airdrag=0.6;
+		particleLife=5 r1;
+		particleLifeSpread=0;
+		numParticles=1;
+		particleSpeed=2;
+		particleSpeedSpread=0.2;
+		particleSize=0.5;
+		particleSizeSpread=0.3;
+		emitRot=0;
+		emitRotSpread=10;
+		directional=0;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+
+	[fire3]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=1.1;
+		sizeMod=0.7;
+		pos=-1 r2, -1 r2, -1 r2;
+		emitVector=dir;
+		gravity=0, 0.001, 0;
+		colorMap=0.05 1 1 0.01      0.08 1 1 0.01		1 1 1 0.01;	
+		Texture=firecloud1;
+		airdrag=0.6;
+		particleLife=5 r1;
+		particleLifeSpread=0;
+		numParticles=1;
+		particleSpeed=2;
+		particleSpeedSpread=0.2;
+		particleSize=0.5;
+		particleSizeSpread=0.3;
+		emitRot=0;
+		emitRotSpread=10;
+		directional=0;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+
+
+}

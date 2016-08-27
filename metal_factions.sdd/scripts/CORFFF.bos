@@ -1,0 +1,382 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, b1, b2, b3, b4, ng1, ng2, ng3,
+       ng4, sng1, sng2, sng3, sng4, spray1, spray2, spray3,
+       spray4, np, conductor;
+
+static-var  Static_Var_1, Static_Var_2, Static_Var_3;
+
+
+Close()
+{
+	signal 4;
+	turn ng1 to z-axis <0.000000> speed <50.000000>;
+	turn ng2 to x-axis <0.000000> speed <50.000000>;
+	turn ng3 to z-axis <0.000000> speed <50.000000>;
+	turn ng4 to x-axis <0.000000> speed <50.000000>;
+	wait-for-turn ng1 around z-axis;
+	move sng1 to y-axis [0.000000] speed [2.000000];
+	move sng2 to y-axis [0.000000] speed [2.000000];
+	move sng3 to y-axis [0.000000] speed [2.000000];
+	move sng4 to y-axis [0.000000] speed [2.000000];
+	wait-for-move sng1 along y-axis;
+	move b1 to x-axis [6.000000] speed [5.000000];
+	move b1 to z-axis [-6.000000] speed [5.000000];
+	move b2 to x-axis [6.000000] speed [5.000000];
+	move b2 to z-axis [6.000000] speed [5.000000];
+	move b3 to x-axis [-6.000000] speed [5.000000];
+	move b3 to z-axis [6.000000] speed [5.000000];
+	move b4 to x-axis [-6.000000] speed [5.000000];
+	move b4 to z-axis [-6.000000] speed [5.000000];
+	wait-for-move b1 along x-axis;
+	move b1 to x-axis [3.000000] speed [5.000000];
+	move b1 to z-axis [-3.000000] speed [5.000000];
+	move b2 to x-axis [3.000000] speed [5.000000];
+	move b2 to z-axis [3.000000] speed [5.000000];
+	move b3 to x-axis [-3.000000] speed [5.000000];
+	move b3 to z-axis [3.000000] speed [5.000000];
+	move b4 to x-axis [-3.000000] speed [5.000000];
+	move b4 to z-axis [-3.000000] speed [5.000000];
+	wait-for-move b1 along x-axis;
+	move b1 to x-axis [1.000000] speed [1.500000];
+	move b1 to z-axis [-1.000000] speed [1.500000];
+	move b2 to x-axis [1.000000] speed [1.500000];
+	move b2 to z-axis [1.000000] speed [1.500000];
+	move b3 to x-axis [-1.000000] speed [1.500000];
+	move b3 to z-axis [1.000000] speed [1.500000];
+	move b4 to x-axis [-1.000000] speed [1.500000];
+	move b4 to z-axis [-1.000000] speed [1.500000];
+	wait-for-move b1 along x-axis;
+	move b1 to x-axis [0.000000] speed [0.500000];
+	move b1 to z-axis [0.000000] speed [0.500000];
+	move b2 to x-axis [0.000000] speed [0.500000];
+	move b2 to z-axis [1.000000] speed [0.500000];
+	move b3 to x-axis [0.000000] speed [0.500000];
+	move b3 to z-axis [0.000000] speed [0.500000];
+	move b4 to x-axis [0.000000] speed [0.500000];
+	move b4 to z-axis [0.000000] speed [0.500000];
+	wait-for-move b1 along x-axis;
+	turn ng1 to y-axis <0.000000> speed <50.000000>;
+	turn ng2 to y-axis <0.000000> speed <50.000000>;
+	turn ng3 to y-axis <0.000000> speed <50.000000>;
+	turn ng4 to y-axis <0.000000> speed <50.000000>;
+	wait-for-turn ng1 around y-axis;
+}
+
+Open()
+{
+	move b1 to x-axis [1.000000] speed [2.500000];
+	move b1 to z-axis [-1.000000] speed [2.500000];
+	move b2 to x-axis [1.000000] speed [2.500000];
+	move b2 to z-axis [1.000000] speed [2.500000];
+	move b3 to x-axis [-1.000000] speed [2.500000];
+	move b3 to z-axis [1.000000] speed [2.500000];
+	move b4 to x-axis [-1.000000] speed [2.500000];
+	move b4 to z-axis [-1.000000] speed [2.500000];
+	turn ng1 to y-axis <-45.000000> speed <50.000000>;
+	turn ng2 to y-axis <-45.000000> speed <50.000000>;
+	turn ng3 to y-axis <-45.000000> speed <50.000000>;
+	turn ng4 to y-axis <-45.000000> speed <50.000000>;
+	wait-for-move b1 along x-axis;
+	move b1 to x-axis [18.000000] speed [5.000000];
+	move b1 to z-axis [-18.000000] speed [5.000000];
+	move b2 to x-axis [18.000000] speed [5.000000];
+	move b2 to z-axis [18.000000] speed [5.000000];
+	move b3 to x-axis [-18.000000] speed [5.000000];
+	move b3 to z-axis [18.000000] speed [5.000000];
+	move b4 to x-axis [-18.000000] speed [5.000000];
+	move b4 to z-axis [-18.000000] speed [5.000000];
+	wait-for-move b1 along x-axis;
+	move b1 to x-axis [20.000000] speed [2.000000];
+	move b1 to z-axis [-20.000000] speed [2.000000];
+	move b2 to x-axis [20.000000] speed [2.000000];
+	move b2 to z-axis [20.000000] speed [2.000000];
+	move b3 to x-axis [-20.000000] speed [2.000000];
+	move b3 to z-axis [20.000000] speed [2.000000];
+	move b4 to x-axis [-20.000000] speed [2.000000];
+	move b4 to z-axis [-20.000000] speed [2.000000];
+	wait-for-move b1 along x-axis;
+	move b1 to x-axis [22.000000] speed [1.500000];
+	move b1 to z-axis [-22.000000] speed [1.500000];
+	move b2 to x-axis [22.000000] speed [1.500000];
+	move b2 to z-axis [22.000000] speed [1.500000];
+	move b3 to x-axis [-22.000000] speed [1.500000];
+	move b3 to z-axis [22.000000] speed [1.500000];
+	move b4 to x-axis [-22.000000] speed [1.500000];
+	move b4 to z-axis [-22.000000] speed [1.500000];
+	wait-for-move b1 along x-axis;
+	move b1 to x-axis [23.000000] speed [0.500000];
+	move b1 to z-axis [-23.000000] speed [0.500000];
+	move b2 to x-axis [23.000000] speed [0.500000];
+	move b2 to z-axis [23.000000] speed [0.500000];
+	move b3 to x-axis [-23.000000] speed [0.500000];
+	move b3 to z-axis [23.000000] speed [0.500000];
+	move b4 to x-axis [-23.000000] speed [0.500000];
+	move b4 to z-axis [-23.000000] speed [0.500000];
+	wait-for-move b1 along x-axis;
+	move sng1 to y-axis [5.000000] speed [2.000000];
+	move sng2 to y-axis [5.000000] speed [2.000000];
+	move sng3 to y-axis [5.000000] speed [2.000000];
+	move sng4 to y-axis [5.000000] speed [2.000000];
+	wait-for-move sng1 along y-axis;
+	sleep 500;
+	wait-for-turn ng1 around y-axis;
+	turn ng1 to z-axis <90.000000> speed <50.000000>;
+	turn ng2 to x-axis <-90.000000> speed <50.000000>;
+	turn ng3 to z-axis <-90.000000> speed <50.000000>;
+	turn ng4 to x-axis <90.000000> speed <50.000000>;
+	wait-for-turn ng1 around z-axis;
+	sleep 2500;
+	signal 4;
+	set-signal-mask 4;
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from b1;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+Bla()
+{
+	set YARD_OPEN to 1;
+	while( !get YARD_OPEN )
+	{
+		set BUGGER_OFF to 1;
+		sleep 1500;
+		set YARD_OPEN to 1;
+	}
+	set BUGGER_OFF to 0;
+}
+
+Blabla()
+{
+	set YARD_OPEN to 0;
+	while( get YARD_OPEN )
+	{
+		set BUGGER_OFF to 1;
+		sleep 1500;
+		set YARD_OPEN to 0;
+	}
+	set BUGGER_OFF to 0;
+}
+
+Activate()
+{
+	while( Static_Var_2 )
+	{
+		sleep 200;
+	}
+	signal 2;
+	Static_Var_2 = 1;
+	if( !Static_Var_3 )
+	{
+		call-script Open();
+		Static_Var_3 = 1;
+	}
+	call-script Bla();
+	set INBUILDSTANCE to 1;
+	Static_Var_2 = 0;
+}
+
+Deactivate()
+{
+	while( Static_Var_2 )
+	{
+		sleep 200;
+	}
+	signal 2;
+	set-signal-mask 2;
+	set INBUILDSTANCE to 0;
+	sleep 2500;
+	Static_Var_2 = 1;
+	call-script Blabla();
+	if( Static_Var_3 )
+	{
+		call-script Close();
+		Static_Var_3 = 0;
+	}
+	Static_Var_2 = 0;
+}
+
+Create()
+{
+	dont-shade base;
+	dont-shade b1;
+	dont-shade b2;
+	dont-shade b3;
+	dont-shade b4;
+	dont-shade ng1;
+	dont-shade ng2;
+	dont-shade ng3;
+	dont-shade ng4;
+	dont-shade sng1;
+	dont-shade sng2;
+	dont-shade sng3;
+	dont-shade sng4;
+	dont-shade spray1;
+	dont-shade spray2;
+	dont-shade spray3;
+	dont-shade spray4;
+	dont-shade np;
+	Static_Var_2 = 0;
+	Static_Var_3 = 0;
+	Static_Var_1 = 1;
+	start-script SmokeUnit();
+}
+
+QueryNanoPiece(piecenum)
+{
+	if( Static_Var_1 == 1 )
+	{
+		piecenum = spray1;
+	}
+	if( Static_Var_1 == 2 )
+	{
+		piecenum = spray2;
+	}
+	if( Static_Var_1 == 3 )
+	{
+		piecenum = spray3;
+	}
+	if( Static_Var_1 == 4 )
+	{
+		piecenum = spray4;
+	}
+	++Static_Var_1;
+	if( Static_Var_1 > 4 )
+	{
+		Static_Var_1 = 1;
+	}
+}
+
+StartBuilding()
+{
+	dont-shade base;
+	dont-shade conductor;
+	dont-shade b1;
+	dont-shade b2;
+	dont-shade b3;
+	dont-shade b4;
+	dont-shade ng1;
+	dont-shade ng2;
+	dont-shade ng3;
+	dont-shade ng4;
+	dont-shade sng1;
+	dont-shade sng2;
+	dont-shade sng3;
+	dont-shade sng4;
+	dont-shade spray1;
+	dont-shade spray2;
+	dont-shade spray3;
+	dont-shade spray4;
+	dont-shade np;
+	dont-cache ng1;
+	dont-cache ng2;
+	dont-cache ng3;
+	dont-cache ng4;
+	dont-cache conductor;
+	cache base;
+}
+
+StopBuilding()
+{
+	dont-shade base;
+	dont-shade b1;
+	dont-shade b2;
+	dont-shade b3;
+	dont-shade b4;
+	dont-shade ng1;
+	dont-shade ng2;
+	dont-shade ng3;
+	dont-shade ng4;
+	dont-shade sng1;
+	dont-shade sng2;
+	dont-shade sng3;
+	dont-shade sng4;
+	dont-shade spray1;
+	dont-shade spray2;
+	dont-shade spray3;
+	dont-shade spray4;
+	dont-shade np;
+	cache ng1;
+	cache ng2;
+	cache ng3;
+	cache ng4;
+	cache base;
+	cache conductor;
+}
+
+QueryBuildInfo(piecenum)
+{
+	piecenum = np;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP1;
+		explode b1 type BITMAPONLY | BITMAP2;
+		explode b2 type SHATTER | BITMAP4;
+		explode b3 type BITMAPONLY | BITMAP1;
+		explode b4 type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP1;
+		explode b1 type BITMAPONLY | BITMAP2;
+		explode b2 type SHATTER | BITMAP4;
+		explode b3 type BITMAPONLY | BITMAP1;
+		explode b4 type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type BITMAPONLY | BITMAP1;
+		explode b1 type BITMAPONLY | BITMAP2;
+		explode b2 type SHATTER | BITMAP4;
+		explode b3 type BITMAPONLY | BITMAP1;
+		explode b4 type BITMAPONLY | BITMAP2;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP1;
+	explode b1 type BITMAPONLY | BITMAP2;
+	explode b2 type SHATTER | BITMAP4;
+	explode b3 type BITMAPONLY | BITMAP1;
+	explode b4 type BITMAPONLY | BITMAP2;
+}

@@ -1,0 +1,129 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Mist;
+	description=Radar Jammer Ship;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE SHIP NOWEAPON JAM LEVEL2 NOTAIR NOTSUB CTRL_R;
+	tedclass=SHIP;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=sphere_mist;
+	unitnumber=10000;
+	objectname=sphere_mist.3do;
+	corpse=sphere_mist_dead;
+	buildpic=sphere_mist.png;
+	soundcategory=gear_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=2250;
+	healtime=30;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=25;
+	energystorage=0;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	floater=1;
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=Smallboat;
+	turnrate=345;
+	acceleration=0.04;
+	brakerate=0.005;
+	maxvelocity=2.0;
+	minwaterdepth=6;
+	waterline=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+	sonardistance=0;
+	radardistancejam=650;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=BIG_UNITEX;
+	selfdestructas=MEDIUM_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	ai_limit=limit CORSJAM 2;
+	bmcode=1;
+	designation=SA-AR2;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 30 60;
+	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	[customParams] 
+	{
+		evalfactor=0.85;//SHIP
+	}
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:UNITFIRE;
+	}
+	buildcostenergy=2966;//#AUTO#
+	buildcostmetal=593;//#AUTO#
+	buildtime=7069;//#AUTO#
+}

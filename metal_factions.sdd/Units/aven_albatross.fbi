@@ -1,0 +1,136 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Aven;
+	name=Albatross;
+	description=Anti-Sub Gunship;
+	icontype=air;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM VTOL CTRL_V LEVEL2 WEAPON  NOTSUB  CTRL_P CTRL_T;
+	tedclass=VTOL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=aven_albatross;
+	unitnumber=182;
+	objectname=aven_albatross.3do;
+	buildpic=aven_albatross.png;
+	soundcategory=aven_SEAPLN;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1000;
+	healtime=30;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.7;
+	energyuse=0.7;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	amphibious=1;
+	canattack=1;
+	canfly=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnrate=678;
+	acceleration=0.27;
+	brakerate=0.1;
+	maxvelocity=5.5;
+	maxslope=10;
+	maxwaterdepth=2;
+	cruisealt=120;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=600;
+	radardistance=0;
+	sonardistance=550;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_albatross_laser;
+	weapon2=aven_albatross_torpedo;
+	nochasecategory=VTOL;
+	badtargetcategory1=VTOL;
+	onlytargetcategory2=NOTAIR;
+	explodeas=BIG_UNITEX;
+	selfdestructas=MEDIUM_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=VTOL_standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	attackrunlength=100;
+	bankscale=1;
+	bmcode=1;
+	designation=ARM-SGB;
+	downloadable=1;
+	hoverattack=1;
+	maneuverleashlength=1280;
+	moverate1=8;
+  	canSubmerge=1;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	collide=1;
+	minCollisionSpeed=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 18 40;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildcostenergy=11339;//#AUTO#
+	buildcostmetal=1133;//#AUTO#
+	buildtime=14551;//#AUTO#
+}

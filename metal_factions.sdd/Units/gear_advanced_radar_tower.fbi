@@ -1,0 +1,102 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Gear;
+	name=Advanced Radar Tower;
+	description=Long Range Radar;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CORE SPECIAL LEVEL3 NOWEAPON NOTAIR NOTSUB CTRL_R;
+	tedclass=SPECIAL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_advanced_radar_tower;
+	unitnumber=86;
+	objectname=gear_advanced_radar_tower.3do;
+	corpse=gear_advanced_radar_tower_dead;
+	buildpic=gear_advanced_radar_tower.png;
+	soundcategory=gear_ADVRADAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1000;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=40;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	yardmap=oooo oooo oooo oooo;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=3200;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AS-EWDL2;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildcostenergy=2240;//#AUTO#
+	buildcostmetal=448;//#AUTO#
+	buildtime=3883;//#AUTO#
+}

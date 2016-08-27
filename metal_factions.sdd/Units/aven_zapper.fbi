@@ -1,0 +1,118 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Aven;
+	name=Zapper;
+	description=Heavy Energy Weapon;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM SPECIAL WEAPON LEVEL3 NOTAIR NOTSUB;
+	tedclass=FORT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=aven_zapper;
+	unitnumber=7;
+	objectname=aven_zapper.3do;
+	corpse=aven_zapper_dead;
+	buildpic=aven_zapper.png;
+	soundcategory=aven_ANNI;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=4000;
+	healtime=11;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=40000;
+	yardmap=ooooo ooooo ooooo ooooo ooooo;
+	activatewhenbuilt=0;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=10;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_zapper_laser;
+	badtargetcategory1=VTOL;
+	explodeas=ATOMIC_BLASTPEN;
+	selfdestructas=ATOMIC_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=GUARD_NOMOVE;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=ARM-ANN1;
+	downloadable=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =55 55 55;
+	collisionVolumeOffsets = 0 4 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:snipeflare;
+	}
+
+	buildcostenergy=17618;//#AUTO#
+	buildcostmetal=3523;//#AUTO#
+	buildtime=30538;//#AUTO#
+}

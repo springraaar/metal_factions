@@ -1,0 +1,448 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 100
+
+piece  gp, hips, torso, head, sphere2, eye, luparm,l1, larm, larm2, lflare,larm3, ruparm, r1, rarm, rarm2, rflare, rarm3, b1, t2, lmisbox, lhole, lemit, rmisbox, rhole, remit, leg1,bleg,leg2,bleg2,leg3,bleg3,leg4,bleg4,shieldpt, ljoint, rjoint, t3;
+
+static-var  bMoving, bAiming, restoreDelay, isUnderWater, misPoint, firePoint;
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_AIM_2			4
+#define SIG_MOVE			8
+
+
+walk()
+{
+	if( bMoving )
+	{
+		/* X */
+		turn hips to x-axis <-3.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+			
+		/* Y */
+		turn leg4 to y-axis <-80.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+
+		turn leg2 to y-axis <-35.000000> speed <120.000000> * SPEEDUP_FACTOR / 100;
+
+		turn leg3 to y-axis <5.000000> speed <140.000000> * SPEEDUP_FACTOR / 100;
+		
+		turn leg1 to y-axis <25.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+
+		/* Z */
+		turn bleg4 to z-axis <-20.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		turn bleg to z-axis <-20.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		turn hips to z-axis <3.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+
+		/* move */
+		move hips to x-axis [-0.2500000] speed [2.000000] * SPEEDUP_FACTOR / 100;
+		move hips to z-axis [-0.2500000] speed [2.000000] * SPEEDUP_FACTOR / 100;
+		
+		
+		turn leg4 to z-axis <-20.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+		sleep 100 * 100 / SPEEDUP_FACTOR;
+		turn leg4 to z-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+		sleep 100 * 100 / SPEEDUP_FACTOR;
+
+	}
+	if( bMoving )
+	{
+		/* X */
+		turn hips to x-axis <3.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+		
+		/* Y */
+		turn leg4 to y-axis <-35.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+
+		turn leg2 to y-axis <-90.000000> speed <180.000000> * SPEEDUP_FACTOR / 100;
+
+		turn leg3 to y-axis <15.000000> speed <140.000000> * SPEEDUP_FACTOR / 100;
+		
+		turn leg1 to y-axis <-5.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+
+		/* Z */
+		turn bleg4 to z-axis <0.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		turn bleg to z-axis <0.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		turn hips to z-axis <3.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+		
+		/* move */
+		move hips to x-axis [0.000000] speed [2.000000] * SPEEDUP_FACTOR / 100;
+		move hips to z-axis [0.000000] speed [2.000000] * SPEEDUP_FACTOR / 100;
+		
+		turn leg1 to z-axis <-20.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+		sleep 100 * 100 / SPEEDUP_FACTOR;
+		turn leg1 to z-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+		sleep 100 * 100 / SPEEDUP_FACTOR;
+
+	}
+	if( bMoving )
+	{
+		/* X */
+		turn hips to x-axis <-3.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+
+		/* Y */
+		turn leg4 to y-axis <-5.000000> speed <140.000000> * SPEEDUP_FACTOR / 100;
+
+		turn leg2 to y-axis <-25.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+
+		turn leg3 to y-axis <80.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		
+		turn leg1 to y-axis <35.000000> speed <120.000000> * SPEEDUP_FACTOR / 100;
+
+		/* Z */
+		turn bleg2 to z-axis <20.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		turn bleg3 to z-axis <20.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		turn hips to z-axis <-3.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+
+
+		/* move */
+		move hips to x-axis [0.2500000] speed [2.000000] * SPEEDUP_FACTOR / 100;
+		move hips to z-axis [-0.2500000] speed [2.000000] * SPEEDUP_FACTOR / 100;
+		
+		turn leg3 to z-axis <20.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+		sleep 100 * 100 / SPEEDUP_FACTOR;
+		turn leg3 to z-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+		sleep 100 * 100 / SPEEDUP_FACTOR;
+
+	}
+	if( bMoving )
+	{
+		turn hips to x-axis <3.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+
+		/* Y */
+		turn leg4 to y-axis <-15.000000> speed <140.000000> * SPEEDUP_FACTOR / 100;
+
+		turn leg2 to y-axis <5.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+
+		turn leg3 to y-axis <35.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+
+		turn leg1 to y-axis <90.000000> speed <180.000000> * SPEEDUP_FACTOR / 100;			
+
+		/* Z */
+		turn bleg3 to z-axis <0.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		turn bleg2 to z-axis <0.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		turn hips to z-axis <3.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+
+		/* move */
+		move hips to x-axis [0.000000] speed [2.000000] * SPEEDUP_FACTOR / 100;
+		move hips to z-axis [0.000000] speed [2.000000] * SPEEDUP_FACTOR / 100;
+
+		turn leg2 to z-axis <20.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+		sleep 100 * 100 / SPEEDUP_FACTOR;
+		turn leg2 to z-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+		sleep 100 * 100 / SPEEDUP_FACTOR;
+	}
+}
+
+
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from torso;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+MotionControl(moving, aiming, justmoved)
+{
+	while( TRUE )
+	{
+		moving = bMoving;
+		aiming = bAiming;
+		if( moving )
+		{
+			justmoved = TRUE;
+			call-script walk();
+		}
+		if( !moving )
+		{
+			if( justmoved )
+			{
+				turn leg1 to x-axis <0.000000> speed <260.000000>;
+				turn leg2 to x-axis <0.000000> speed <260.000000>;
+				turn leg3 to x-axis <0.000000> speed <260.000000>;
+				turn leg4 to x-axis <0.000000> speed <260.000000>;
+				turn leg1 to y-axis <45.000000> speed <260.000000>;
+				turn leg2 to y-axis <-45.000000> speed <260.000000>;
+				turn leg3 to y-axis <45.000000> speed <260.000000>;
+				turn leg4 to y-axis <-45.000000> speed <260.000000>;
+			
+				turn leg1 to z-axis <0.000000> speed <260.000000>;
+				turn leg2 to z-axis <0.000000> speed <260.000000>;
+				turn leg3 to z-axis <0.000000> speed <260.000000>;
+				turn leg4 to z-axis <0.000000> speed <260.000000>;
+				turn hips to z-axis <0.000000> speed <260.000000>;
+				turn hips to x-axis <0.000000> speed <260.000000>;
+	
+				move hips to x-axis [0.000000] speed [3.000000];
+				move hips to z-axis [0.000000] speed [3.000000];
+
+				turn bleg2 to z-axis <0.000000> speed <160.000000>;
+				turn bleg4 to z-axis <0.000000> speed <160.000000>;
+				turn bleg3 to z-axis <0.000000> speed <160.000000>;
+				turn bleg to z-axis <0.000000> speed <160.000000>;
+
+				justmoved = FALSE;
+			}
+			sleep 100;
+		}
+	}
+}
+
+Create()
+{
+	bMoving = FALSE;
+	bAiming = FALSE;
+	isUnderWater = FALSE;
+	restoreDelay = 6000;
+	misPoint = [0];
+	firePoint = [0];
+	turn ruparm to y-axis <4.000000> speed <1000.000000>;
+	start-script MotionControl();
+	start-script SmokeUnit();
+}
+
+
+StartMoving()
+{
+	bMoving = TRUE;
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while( bMoving )
+	{
+		if( isUnderWater == TRUE )
+		{
+			emit-sfx 256 | 3 from leg1;
+			emit-sfx 256 | 3 from leg2;
+			emit-sfx 256 | 3 from leg3;
+			emit-sfx 256 | 3 from leg4;			
+		}
+		sleep 250;
+	}
+}
+
+StopMoving()
+{
+	bMoving = FALSE;
+	signal SIG_MOVE;
+}
+
+
+setSFXoccupy()
+{
+	isUnderWater = bMoving;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = torso;
+}
+
+RestoreAfterDelay()
+{
+	sleep restoreDelay;
+	turn torso to y-axis <0.000000> speed <100.016484>;
+	turn ruparm to x-axis <0.000000> speed <145.005495>;
+	turn luparm to x-axis <0.000000> speed <145.005495>;
+	bAiming = FALSE;
+}
+
+
+
+AimFromSecondary(piecenum)
+{
+	if (misPoint==[0])
+	{
+		piecenum = lmisbox;
+	}
+	if (misPoint==[1])
+	{
+		piecenum = rmisbox;
+	}
+}
+
+QuerySecondary(piecenum)
+{
+	if (misPoint==[0])
+	{
+		piecenum = lemit;
+	}
+	if (misPoint==[1])
+	{
+		piecenum = remit;
+	}
+}
+
+FireSecondary()
+{
+	if (misPoint==[0])
+	{
+		emit-sfx 1024+1 from lemit;
+		sleep 100;
+		misPoint=[1];
+		return (1);
+	}
+	if (misPoint==[1])
+	{
+		emit-sfx 1024+1 from remit;
+		sleep 100;
+		misPoint=[0];
+		return (1);
+	}
+}
+
+AimSecondary(heading, pitch)
+{
+	signal SIG_AIM_2;
+	set-signal-mask SIG_AIM_2;
+	bAiming = TRUE;
+
+	return (1);
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = torso;
+}
+
+QueryPrimary(piecenum)
+{
+	if (firePoint==[0])
+	{
+		piecenum = lflare;
+	}
+	if (firePoint==[1])
+	{
+		piecenum = rflare;
+	}
+}
+
+FirePrimary()
+{
+	if(firePoint == [0])
+	{
+		turn l1 to x-axis <20.000000> now;
+		turn larm to x-axis <-20.000000> now;
+		emit-sfx 1024 from lflare;	
+		sleep 250;
+		turn l1 to x-axis <0.000000> speed <130.038462>;
+		turn larm to x-axis <0.000000> speed <130.038462>;
+		firePoint = [1];
+		return 0;
+	}
+	if(firePoint == [1])
+	{
+		turn r1 to x-axis <20.000000> now;
+		turn rarm to x-axis <-20.000000> now;
+		emit-sfx 1024 from rflare;	
+		sleep 250;
+		turn r1 to x-axis <0.000000> speed <130.038462>;
+		turn rarm to x-axis <0.000000> speed <130.038462>;
+		firePoint = [0];
+		return 0;
+	}
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	
+	turn torso to y-axis heading speed <220.027473>;
+	turn ruparm to x-axis <0.000000> - pitch speed <270.038462>;
+	turn luparm to x-axis <0.000000> - pitch speed <270.038462>;
+	wait-for-turn torso around y-axis;
+	wait-for-turn ruparm around x-axis;
+	wait-for-turn luparm around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+
+QueryTertiary(piecenum)
+{
+	piecenum = shieldpt;
+	return (0);
+}
+
+AimFromTertiary(piecenum)
+{
+	piecenum = shieldpt;
+	return (0);
+}
+
+AimTertiary(heading, pitch)
+{
+	return (1);
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode larm2 type BITMAPONLY | BITMAP2;
+		explode larm type BITMAPONLY | BITMAP5;
+		explode luparm type BITMAPONLY | BITMAP2;
+		explode torso type BITMAPONLY | BITMAP5;
+		explode rarm type BITMAPONLY | BITMAP2;
+		explode ruparm type BITMAPONLY | BITMAP4;
+		explode torso type BITMAPONLY | BITMAP5;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode larm2 type FALL | BITMAP2;
+		explode larm type FALL | BITMAP5;
+		explode luparm type FALL | BITMAP2;
+		explode torso type BITMAPONLY | BITMAP5;
+		explode rarm type FALL | BITMAP2;
+		explode ruparm type FALL | BITMAP4;
+		explode torso type SHATTER | BITMAP5;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode larm2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode larm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode luparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode torso type BITMAPONLY | BITMAP5;
+		explode rarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode ruparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode torso type SHATTER | BITMAP5;
+		return (0);
+	}
+	corpsetype = 3;
+	explode larm2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode larm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode luparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode torso type BITMAPONLY | BITMAP5;
+	explode rarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode ruparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode torso type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+}

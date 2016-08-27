@@ -1,0 +1,456 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, base1, base2, wake1, wake2,  stand, logo1, logo2, ldoor, rdoor, turret, slholder,sleeve, barrel, flare1, tlogo, s2,s3,left,right, stand2, logo12, logo22, ldoor2, rdoor2, turret2, slholder2,sleeve2, barrel21, flare21, barrel22, flare22, tlogo2, s22,s32,left2,right2, llauncher, lm1,lm2,lm3,lf1,lf2,lf3,rlauncher, rm1,rm2,rm3,rf1,rf2,rf3, hull, bottom, h3, h4;
+ 
+
+static-var  gun_2, isOpen, gun_3, gun_4;
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_AIM_2			4
+#define SIG_MOVE			16
+
+
+open()
+{
+	if(!isOpen)
+	{
+		set ARMORED to 0;
+		
+		turn rdoor to z-axis <-90.000000> speed <180.000000>;
+		turn ldoor to z-axis <90.000000> speed <180.000000>;
+		turn rdoor2 to z-axis <-90.000000> speed <180.000000>;
+		turn ldoor2 to z-axis <90.000000> speed <180.000000>;
+		wait-for-turn ldoor around z-axis;
+		move rdoor to y-axis  [-15.000000] speed [30.000000];
+		move ldoor to y-axis  [-15.000000] speed [30.000000];
+		move rdoor2 to y-axis  [-10.000000] speed [30.000000];
+		move ldoor2 to y-axis  [-10.000000] speed [30.000000];
+		wait-for-move ldoor along y-axis;
+
+		move stand to y-axis [12.000000] speed [80.000000];
+		move slholder to y-axis [0.000000] speed [38.000000];
+		move stand2 to y-axis [10.000000] speed [80.000000];
+		move slholder2 to y-axis [0.000000] speed [38.000000];
+
+		wait-for-move stand along y-axis;
+		wait-for-move slholder along y-axis;
+
+
+		move llauncher to x-axis [-5.000000] speed [10.000000];
+		move rlauncher to x-axis [5.000000] speed [10.000000];
+
+		turn slholder to x-axis <0.000000> speed <300.000000>;
+		turn slholder2 to x-axis <0.000000> speed <300.000000>;
+		wait-for-turn slholder around x-axis;
+
+		//move barrel to z-axis [0.000000] speed [16.000000];
+		//move barrel2 to z-axis [0.000000] speed [16.000000];
+		//wait-for-move barrel along z-axis;
+
+		wait-for-move llauncher along x-axis;
+
+		isOpen = TRUE;
+	}
+	return (0);
+}
+
+close()
+{
+	if (isOpen) 
+	{
+		isOpen = FALSE;
+		turn turret to y-axis <0.000000> speed <300.000000>;
+		//move barrel to z-axis [-11.000000] speed [24.000000];
+		turn turret2 to y-axis <0.000000> speed <300.000000>;
+		//move barrel2 to z-axis [-8.000000] speed [24.000000];
+
+		wait-for-turn turret around y-axis;
+		//wait-for-move barrel along z-axis;
+
+		move llauncher to x-axis [0.000000] speed [10.000000];
+		move rlauncher to x-axis [0.000000] speed [10.000000];
+
+		turn slholder to x-axis <90> speed <300.000000>;
+		turn slholder2 to x-axis <90> speed <300.000000>;
+		wait-for-turn slholder around x-axis;
+
+		move stand to y-axis [0.000000] speed [38.000000];
+		move slholder to y-axis [-5.000000] speed [38.000000];
+		move stand2 to y-axis [0.000000] speed [38.000000];
+		move slholder2 to y-axis [-5.000000] speed [38.000000];
+
+
+		wait-for-move stand along y-axis;
+		wait-for-move slholder along y-axis;
+		wait-for-move llauncher along x-axis;
+		
+		move rdoor to y-axis  [0.000000] speed [40.000000];
+		move ldoor to y-axis  [0.000000] speed [40.000000];
+		move rdoor2 to y-axis  [0.000000] speed [40.000000];
+		move ldoor2 to y-axis  [0.000000] speed [40.000000];
+
+		wait-for-move ldoor along y-axis;
+	
+		turn rdoor to z-axis <0.000000> speed <180.000000>;
+		turn ldoor to z-axis <0.000000> speed <180.000000>;
+		turn rdoor2 to z-axis <0.000000> speed <180.000000>;
+		turn ldoor2 to z-axis <0.000000> speed <180.000000>;
+		wait-for-turn ldoor around z-axis;
+		
+		set ARMORED to 1;
+	}
+	return (0);
+}
+
+
+Activate()
+{
+	call-script open();
+}
+
+Deactivate()
+{
+	call-script close();
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+Create()
+{
+	move slholder to y-axis [-5.000000] now;
+	turn slholder to x-axis <90.000000> now;
+	//move barrel to z-axis [-11.000000] now;
+	move slholder2 to y-axis [-5.000000] now;
+	turn slholder2 to x-axis <90.000000> now;
+	//move barrel2 to z-axis [-8.000000] now;
+	isOpen = FALSE;
+	gun_2 = [0];
+	gun_3 = [0];
+	gun_4 = [0];
+	start-script SmokeUnit();
+}
+
+RestoreAfterDelay()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn turret to y-axis <0.000000> speed <80.000000>;
+	turn sleeve to x-axis <0.000000> speed <80.000000>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn sleeve around x-axis;
+	return (0);
+}
+
+RestoreAfterDelay2()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn turret2 to y-axis <0.000000> speed <80.000000>;
+	turn sleeve2 to x-axis <0.000000> speed <80.000000>;
+	wait-for-turn turret2 around y-axis;
+	wait-for-turn sleeve2 around x-axis;
+	return (0);
+}
+
+StartMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while( TRUE )
+	{
+		emit-sfx 2 from wake1;
+		emit-sfx 2 from wake2;
+		sleep 300;
+	}
+}
+
+StopMoving()
+{
+	signal SIG_MOVE;
+}
+
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	if(!isOpen)
+	{
+		return (0);
+	}
+	
+	turn turret to y-axis heading speed <150.071429>;
+	turn sleeve to x-axis <0.000000> - pitch speed <150.038462>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn sleeve around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	emit-sfx 1024 + 0 from flare1;
+	return (0);
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+	return (0);
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare1;
+	return (0);	
+}
+
+
+AimSecondary(heading, pitch)
+{
+	signal SIG_AIM_2;
+	set-signal-mask SIG_AIM_2;
+	if(!isOpen)
+	{
+		return (0);
+	}
+
+	turn turret2 to y-axis heading speed <180.071429>;
+	turn sleeve2 to x-axis <0.000000> - pitch speed <180.038462>;
+	wait-for-turn turret2 around y-axis;
+	wait-for-turn sleeve2 around x-axis;
+	start-script RestoreAfterDelay2();
+	return (1);
+}
+
+FireSecondary()
+{
+	if (gun_2 == [0])
+	{
+		emit-sfx 1024 + 2 from flare21;
+		sleep 100;
+		gun_2 = [1]; 
+		return (0);
+	}
+	if (gun_2 == [1])
+	{
+		emit-sfx 1024 + 2 from flare22;
+		sleep 100;
+		gun_2 = [0]; 
+		return (0);
+	}
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = turret2;
+	return (0);
+}
+
+QuerySecondary(piecenum)
+{
+	if(gun_2 == [0])
+	{
+		piecenum = flare21;
+		return (0);	
+	}
+	if(gun_2 == [1])
+	{
+		piecenum = flare22;
+		return (0);	
+	}
+}
+
+
+
+AimWeapon3(heading, pitch)
+{
+	if(!isOpen)
+	{
+		return (0);
+	}
+	return (1);
+}
+
+FireWeapon3()
+{
+	if(gun_3 == [0])
+	{
+		emit-sfx 1024 + 3 from rf1;
+		sleep 100;
+		gun_3 = [1];
+		return (0);
+	}
+	if(gun_3 == [1])
+	{
+		emit-sfx 1024 + 3 from rf2;
+		sleep 100;
+		gun_3 = [2];
+		return (0);
+	}
+	if(gun_3 == [2])
+	{
+		emit-sfx 1024 + 3 from rf3;
+		sleep 100;
+		gun_3 = [0];
+		return (0);
+	}
+}
+
+AimFromWeapon3(piecenum)
+{
+	piecenum = rlauncher;
+	return (0);
+}
+
+QueryWeapon3(piecenum)
+{
+	if (gun_3 == [0])
+	{
+		piecenum = rf1;
+		return (0);
+	}
+	if (gun_3 == [1])
+	{
+		piecenum = rf2;
+		return (0);
+	}
+	if (gun_3 == [2])
+	{
+		piecenum = rf3;
+		return (0);
+	}	
+}
+
+
+AimWeapon4(heading, pitch)
+{
+	if(!isOpen)
+	{
+		return (0);
+	}
+	return (1);
+}
+
+FireWeapon4()
+{
+	if(gun_4 == [0])
+	{
+		emit-sfx 1024 + 3 from lf1;
+		sleep 100;
+		gun_4 = [1];
+		return (0);
+	}
+	if(gun_4 == [1])
+	{
+		emit-sfx 1024 + 3 from lf2;
+		sleep 100;
+		gun_4 = [2];
+		return (0);
+	}
+	if(gun_4 == [2])
+	{
+		emit-sfx 1024 + 3 from lf3;
+		sleep 100;
+		gun_4 = [0];
+		return (0);
+	}
+}
+
+AimFromWeapon4(piecenum)
+{
+	piecenum = llauncher;
+	return (0);
+}
+
+QueryWeapon4(piecenum)
+{
+	if (gun_4 == [0])
+	{
+		piecenum = lf1;
+		return (0);
+	}
+	if (gun_4 == [1])
+	{
+		piecenum = lf2;
+		return (0);
+	}
+	if (gun_4 == [2])
+	{
+		piecenum = lf3;
+		return (0);
+	}	
+}
+
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode sleeve type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode sleeve2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode sleeve type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode sleeve2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode hull type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode bottom type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode h3 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode h4 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode sleeve type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode sleeve2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode hull type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode bottom type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode h3 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		explode h4 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+		return (0);
+	}
+	corpsetype = 3;
+	explode sleeve type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode sleeve2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode hull type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode bottom type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode h3 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode h4 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+}

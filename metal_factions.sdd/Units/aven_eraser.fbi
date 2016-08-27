@@ -1,0 +1,129 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Aven;
+	name=Eraser;
+	description=Cloakable Radar Jammer;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM KBOT NOWEAPON JAM LEVEL2 NOTAIR NOTSUB CTRL_R;
+	tedclass=KBOT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=aven_eraser;
+	unitnumber=10;
+	objectname=aven_eraser.3do;
+	corpse=aven_eraser_dead;
+	buildpic=aven_eraser.png;
+	soundcategory=aven_JAM;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=750;
+	healtime=30;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=20;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	onoffable=1;
+	cancloak=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTHT2;
+	turnrate=950;
+	acceleration=1;
+	brakerate=1.0;
+	maxvelocity=2.2;
+	maxslope=32;
+	maxwaterdepth=10;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+	radardistancejam=600;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+	canattack=0;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	cloakcost=30;
+	cloakcostmoving=75;
+	mincloakdistance=150;
+	bmcode=1;
+	designation=ARM-CB;
+	downloadable=1;
+	maneuverleashlength=100; //640//
+	ovradjust=1;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	upright=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 30 25;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildcostenergy=1805;//#AUTO#
+	buildcostmetal=361;//#AUTO#
+	buildtime=4304;//#AUTO#
+}

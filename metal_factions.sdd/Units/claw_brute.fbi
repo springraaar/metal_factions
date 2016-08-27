@@ -1,0 +1,101 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	Side=Claw;
+	Name=Brute;
+	Description=Heavy Assault Robot;
+
+	// ------------------- categories
+	Category=CLAW KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
+	TEDClass=KBOT;
+
+	// ------------------- external specs
+	UnitName=claw_brute;
+	UnitNumber=20000;
+	Objectname=claw_brute.3do;
+	buildpic=claw_brute.png;
+	SoundCategory=CORAK;
+	Corpse=claw_brute_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=3;
+	FootprintZ=3;
+	MaxDamage=4500;
+
+
+	// ------------------- resources
+	EnergyUse=4;
+	EnergyStorage=0;
+	MetalStorage=0;
+	EnergyMake=4;
+
+	// ------------------- abilities
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canguard=1;
+	canattack=1;
+	Builder=0;
+
+	// ------------------- movement
+	MaxWaterDepth=12;
+	MaxSlope=17;
+	MaxVelocity=1.0;
+	BrakeRate=0.25;
+	Acceleration=0.15;
+	TurnRate=650;
+	SteeringMode=2;
+	MovementClass=KBOTHT2;
+
+	// ------------------- scout
+	sightdistance=500;
+	RadarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=claw_brute_cannon;
+	badtargetcategory1=VTOL;
+	Weapon2=claw_brute_gun;
+	badtargetcategory2=VTOL;
+	badtargetcategory1=VTOL;
+	NoChaseCategory=VTOL;
+	ExplodeAs=BIG_UNITEX;
+	SelfDestructAs=BIG_UNIT;
+
+
+	// ------------------- orders
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+
+	// ------------------- misc
+	Version=3.1;
+	Designation=CA_Ik;
+	BMcode=1;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	ShootMe=1;
+	DefaultMissionType=Standby;
+	maneuverleashlength=640;
+	Upright=1;
+	Downloadable=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 30 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:yellowflarebig;
+		explosiongenerator1=custom:railgunflaresml;
+		
+	}
+	buildcostenergy=6467;//#AUTO#
+	buildcostmetal=1293;//#AUTO#
+	buildtime=15414;//#AUTO#
+}

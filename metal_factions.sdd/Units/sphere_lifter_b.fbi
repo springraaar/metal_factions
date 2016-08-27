@@ -1,0 +1,126 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Lifter B;
+	description=Big Air Transport;
+	icontype=air;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE VTOL CTRL_V TPORT LEVEL2 NOWEAPON NOTSUB;
+	tedclass=VTOL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=sphere_lifter_b;
+	unitnumber=10000;
+	objectname=sphere_lifter_b.3do;
+	buildpic=sphere_lifter_b.png;
+	soundcategory=gear_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=2000;
+	buildcostmetal=1000;
+	buildcostenergy=10000;
+	buildtime=10000;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=3;
+	energyuse=3;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canfly=1;
+	canguard=1;
+	canload=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnrate=580;
+	acceleration=0.2;
+	brakerate=4;
+	maxvelocity=6.5;
+	maxslope=10;
+	cruisealt=90;
+	cansubmerge=1;
+	
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=600;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=0;
+	mobilestandorders=0;
+	standingmoveorder=1;
+	defaultmissiontype=VTOL_standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bankscale=1;
+	bmcode=1;
+	designation=VA-14-T;
+	downloadable=1;
+	maneuverleashlength=1280;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	transportcapacity=1;
+	transportmass=3000;
+	transportsize=4;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	releaseHeld=1;	
+	collide=1;
+	minCollisionSpeed=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 15 40;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+		
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:TRANSPORTTRAIL4;
+	}
+}

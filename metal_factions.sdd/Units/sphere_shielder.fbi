@@ -1,0 +1,96 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	Side=Sphere;
+	Name=Shielder;
+	Description=Mobile Shield Generator;
+
+	// ------------------- categories
+	Category=SPHERE TANK LEVEL2 WEAPON NOTAIR NOTSUB;
+	TEDClass=TANK;
+
+	// ------------------- external specs
+	UnitName=sphere_shielder;
+	UnitNumber=10025;
+	Objectname=sphere_shielder.3do;
+	buildpic=sphere_shielder.png;
+	SoundCategory=CORAK;
+	Corpse=sphere_shielder_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=4;
+	FootprintZ=4;
+	MaxDamage=3800;
+
+
+	// ------------------- resources
+	EnergyUse=1;
+	EnergyStorage=0;
+	MetalStorage=0;
+	EnergyMake=1;
+
+	// ------------------- abilities
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canguard=1;
+	Builder=0;
+
+	// ------------------- movement
+	MaxWaterDepth=12;
+	MaxSlope=17;
+	MaxVelocity=1.45;
+	BrakeRate=0.04;
+	Acceleration=0.05;
+	TurnRate=350;
+	SteeringMode=1;
+	MovementClass=TANKBH3;
+
+	// ------------------- scout
+	sightdistance=500;
+	RadarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_shielder_shield;
+	NoChaseCategory=VTOL;
+	ExplodeAs=BIG_UNITEX;
+	SelfDestructAs=BIG_UNIT;
+
+
+	// ------------------- orders
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+
+	// ------------------- misc
+	Version=3.1;
+	Designation=CA_Ik;
+	BMcode=1;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	ShootMe=1;
+	leavetracks=1;
+	trackoffset=8;
+	trackstrength=5;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=50;
+	DefaultMissionType=Standby;
+	maneuverleashlength=640;
+	Downloadable=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =45 35 45;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:emgflarefast;
+	}
+	buildcostenergy=7814;//#AUTO#
+	buildcostmetal=1562;//#AUTO#
+	buildtime=18625;//#AUTO#
+}

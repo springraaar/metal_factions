@@ -1,0 +1,123 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Missilator;
+	description=Advanced Pop-up Missile Battery;
+	icontype=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
+	tedclass=FORT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_missilator;
+	unitnumber=20000;
+	objectname=gear_missilator.3do;
+	corpse=gear_missilator_dead;
+	buildpic=gear_missilator.png;
+	soundcategory=GUARD;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=2400;
+	healtime=11;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=8192;
+	yardmap=oooo oooo oooo oooo;
+	collisionVolumeType=Box;
+	collisionVolumeScales=60 40 60;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=20;
+	maxwaterdepth=5;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_missilator_missile;
+	badtargetcategory1=NOTAIR;
+	explodeas=LARGE_BUILDINGEX;
+	selfdestructas=LARGE_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=GUARD_NOMOVE;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	damagemodifier=0.5;
+	designation=ARM-GUARD;
+	digger=1;
+	downloadable=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	[CustomParams]
+	{
+		tip=Gains 50% dmg resistance when closed;
+	}
+	//************************************************************
+	//  To be removed
+	//*****************
+
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:ROCKETFLAREMED;
+	}
+	buildcostenergy=11284;//#AUTO#
+	buildcostmetal=2256;//#AUTO#
+	buildtime=26894;//#AUTO#
+}

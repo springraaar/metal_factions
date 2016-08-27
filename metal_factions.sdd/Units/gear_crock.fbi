@@ -1,0 +1,143 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Gear;
+	name=Crock;
+	description=Amphibious Tank;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CORE TANK LEVEL2 WEAPON PHIB NOTAIR NOTSUB CTRL_W;
+	tedclass=TANK;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_crock;
+	unitnumber=132;
+	objectname=gear_crock.3do;
+	corpse=gear_crock_dead;
+	buildpic=gear_crock.png;
+	soundcategory=gear_TANK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3500;
+	healtime=30;
+	footprintx=3;
+	footprintz=3;
+	flankingBonusMode=3;
+	flankingBonusMax=1.2;
+	flankingBonusMin=0.8;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.5;
+	energyuse=0.5;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKDH3;
+	turnrate=320;
+	acceleration=0.24;
+	brakerate=0.08;
+	maxvelocity=1.85;
+	maxslope=12;
+	maxwaterdepth=255;
+	maxreversevelocity=1.2;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+	sonardistance=200;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_crock_cannon;
+	nochasecategory=VTOL;
+	badtargetcategory1=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=TBA-PS9;
+	downloadable=1;
+	leavetracks=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	trackoffset=8;
+	trackstrength=6;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=38;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	collisionVolumeType=Box;
+	collisionVolumeScales=42 25 42;
+	collisionVolumeOffsets=0 -1 0;
+	collisionVolumeTest = 1;
+	
+	[CustomParams]
+	{
+		tip=+20% dmg resistance on front, -20% when hit from behind;
+	}
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:yellowflaresml;
+	}
+
+	buildcostenergy=3709;//#AUTO#
+	buildcostmetal=741;//#AUTO#
+	buildtime=8841;//#AUTO#
+}

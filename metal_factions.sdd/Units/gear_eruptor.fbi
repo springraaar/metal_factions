@@ -1,0 +1,138 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Eruptor;
+	description=Mobile Incendiary Mortar;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR TANK LEVEL2 WEAPON NOTAIR NOTSUB;
+	tedclass=TANK;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_eruptor;
+	unitnumber=117;
+	objectname=gear_eruptor.3do;
+	corpse=gear_eruptor_dead;
+	buildpic=gear_eruptor.png;
+	soundcategory=gear_TANK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3600;
+	healtime=30;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.5;
+	energyuse=0.5;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKSH4;
+	turnrate=400;
+	acceleration=0.36;
+	brakerate=0.8;
+	maxvelocity=1.1;
+	maxslope=12;
+	maxwaterdepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_eruptor_fireball;
+	nochasecategory=VTOL;
+	badtargetcategory1=VTOL;
+	highTrajectory=1;
+	explodeas=GEAR_ERUPTOR;
+	selfdestructas=GEAR_ERUPTOR;
+	onlytargetcategory1=NOTAIR;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=MB-PS15;
+	downloadable=1;
+	leavetracks=1;
+	maneuverleashlength=640;
+	mass=1800;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	trackoffset=7;
+	trackstrength=6;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=42;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:yellowflarebig;
+	}
+
+	[customParams] 
+	{
+		tip=Burns ground for 20s, dealing up to 60(M) dmg/s. Affected units burn for 180(M) dmg over 6s;
+		canAreaAttack=1;
+	}
+	buildcostenergy=15612;//#AUTO#
+	buildcostmetal=3122;//#AUTO#
+	buildtime=37210;//#AUTO#
+}

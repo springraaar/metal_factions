@@ -1,0 +1,132 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Flail;
+	description=Hard-Hitting Infantry Robot;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW KBOT LEVEL1 WEAPON NOTAIR NOTSUB CTRL_W;
+	tedclass=KBOT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=claw_flail;
+	unitnumber=20000;
+	objectname=claw_flail.3do;
+	corpse=claw_flail_dead;
+	buildpic=claw_flail.png;
+	soundcategory=CORAK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1750;
+	healtime=30;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.3;
+	energyuse=0.3;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTHT2;
+	turnrate=910;
+	acceleration=0.4;
+	brakerate=0.2;
+	maxvelocity=1.6;
+	maxslope=17;
+	maxwaterdepth=25;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_flail_shotgun;
+	weapon2=claw_flail_cannon;
+	nochasecategory=VTOL;
+	badtargetcategory1=VTOL;
+	badtargetcategory2=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=KA-L4;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=2;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 40 25;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:yellowflaremed;
+		explosiongenerator1=custom:yellowflaremed;
+	}
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildcostenergy=3477;//#AUTO#
+	buildcostmetal=695;//#AUTO#
+	buildtime=8289;//#AUTO#
+}

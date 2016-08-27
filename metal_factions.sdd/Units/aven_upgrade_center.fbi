@@ -1,0 +1,82 @@
+[UNITINFO]
+	{
+
+	// ------------------- description
+	Side=Aven;
+	Name=Upgrade Center;
+	Description=Builds Upgrade Modules;
+	icontype=upgrade_center;
+
+	// ------------------- categories
+	Category=AVEN PLANT LEVEL1 NOWEAPON NOTAIR NOTSUB;
+	TEDClass=PLANT;
+
+	// ------------------- external specs
+	UnitName=aven_upgrade_center;
+	UnitNumber=10000;
+	Objectname=aven_upgrade_center.3do;
+	buildpic=aven_upgrade_center.png;
+	SoundCategory=aven_HOVER_PLANT;
+	Corpse=aven_upgrade_center_dead;
+
+	// ------------------- health/cost/size
+	MaxDamage=2250;
+	BuildCostEnergy=3750;
+	BuildCostMetal=750;
+	BuildTime=9000;
+	FootprintX=6;
+	FootprintZ=6;
+	idleautoheal=5;
+
+
+	// ------------------- resources
+	EnergyStorage=0;
+	MetalStorage=0;
+	EnergyUse=0;
+
+
+	// ------------------- constructor
+	Builder=1;
+	WorkerTime=150;
+	canBeAssisted=0;
+
+
+	// ------------------- abilities
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	
+	// ------------------- movement
+	buildangle=1024;
+	YardMap=oooooo ooccoo ooccoo ooccoo ooccoo oooooo; 
+	MaxWaterDepth=255;
+	MaxSlope=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =80 60 80;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	modelCenterOffset=0 0 0;
+
+	// ------------------- scout
+	sightdistance=500;
+	RadarDistance=0;
+
+	// ------------------- weapons
+	ExplodeAs=SMALL_BUILDINGEX;
+	SelfDestructAs=SMALL_BUILDING;
+
+	// ------------------- orders
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+
+
+	// ------------------- misc
+	Version=3.1;
+	BMcode=0;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	downloadable=1;
+}

@@ -1,0 +1,131 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Skiff;
+	description=Scout Ship;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE SHIP LEVEL1 WEAPON NOTAIR NOTSUB CTRL_W;
+	tedclass=SHIP;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=sphere_skiff;
+	unitnumber=10000;
+	objectname=sphere_skiff.3do;
+	corpse=sphere_skiff_dead;
+	buildpic=sphere_skiff.png;
+	soundcategory=gear_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=550;
+	healtime=30;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.23;
+	energyuse=0.23;
+	energystorage=0;
+
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	floater=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=smallboat;
+	turnrate=549;
+	acceleration=0.2;
+	brakerate=0.01;
+	maxvelocity=3;
+	minwaterdepth=6;
+	waterline=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+	sonardistance=250;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=sphere_skiff_laser;
+	badtargetcategory2=VTOL;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ASD-SS;
+	downloadable=1;
+	maneuverleashlength=1280;
+	ovradjust=1;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =15 25 30;
+	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	[customParams] 
+	{
+		evalfactor=0.85;//SHIP
+	}
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:GLOWSML;
+	}
+	buildcostenergy=603;//#AUTO#
+	buildcostmetal=120;//#AUTO#
+	buildtime=1437;//#AUTO#
+}

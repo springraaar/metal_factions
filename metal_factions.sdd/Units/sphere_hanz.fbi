@@ -1,0 +1,98 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	Side=Sphere;
+	Name=Hanz;
+	Description=Armored Assault Robot;
+
+	// ------------------- categories
+	Category=SPHERE KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
+	TEDClass=KBOT;
+
+	// ------------------- external specs
+	UnitName=sphere_hanz;
+	UnitNumber=10013;
+	Objectname=sphere_hanz.3do;
+	buildpic=sphere_hanz.png;
+	SoundCategory=CORAK;
+	Corpse=sphere_hanz_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=3;
+	FootprintZ=3;
+	MaxDamage=3300;
+
+
+	// ------------------- resources
+	EnergyUse=2;
+	EnergyStorage=0;
+	MetalStorage=0;
+	EnergyMake=2;
+
+	// ------------------- abilities
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canguard=1;
+	canattack=1;
+	Builder=0;
+
+	// ------------------- movement
+	MaxWaterDepth=12;
+	MaxSlope=17;
+	MaxVelocity=1.35;
+	BrakeRate=0.35;
+	Acceleration=0.15;
+	TurnRate=950;
+	SteeringMode=2;
+	MovementClass=KBOTHT2;
+
+	// ------------------- scout
+	sightdistance=500;
+	RadarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_hanz_blaster;
+	badtargetcategory1=VTOL;
+	badtargetcategory1=VTOL;
+	NoChaseCategory=VTOL;
+	ExplodeAs=BIG_UNITEX;
+	SelfDestructAs=BIG_UNIT;
+
+
+	// ------------------- orders
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+
+	// ------------------- misc
+	Version=3.1;
+	Designation=CA_Ik;
+	BMcode=1;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	ShootMe=1;
+	DefaultMissionType=Standby;
+	maneuverleashlength=640;
+	Upright=0;
+	Downloadable=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 25 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:redflare;
+	}
+
+	buildcostenergy=3472;//#AUTO#
+	buildcostmetal=694;//#AUTO#
+	buildtime=8277;//#AUTO#
+}

@@ -1,0 +1,100 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	Side=Sphere;
+	Name=Golem;
+	Description=Amphibious Shielded Armored Assault Robot;
+
+	// ------------------- categories
+	Category=SPHERE KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
+	TEDClass=KBOT;
+
+	// ------------------- external specs
+	UnitName=sphere_golem;
+	UnitNumber=10020;
+	Objectname=sphere_golem.3do;
+	buildpic=sphere_golem.png;
+	SoundCategory=CORAK;
+	Corpse=sphere_golem_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=3;
+	FootprintZ=3;
+	MaxDamage=6000;
+
+
+	// ------------------- resources
+	EnergyUse=4;
+	EnergyStorage=0;
+	MetalStorage=0;
+	EnergyMake=4;
+
+	// ------------------- abilities
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canguard=1;
+	canattack=1;
+	Builder=0;
+
+	// ------------------- movement
+	MaxWaterDepth=12;
+	MaxSlope=17;
+	MaxVelocity=1.0;
+	BrakeRate=0.25;
+	Acceleration=0.15;
+	TurnRate=650;
+	SteeringMode=2;
+	MovementClass=KBOTUW3;
+
+	// ------------------- scout
+	sightdistance=500;
+	RadarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_golem_cannon;
+	badtargetcategory1=VTOL;
+	Weapon2=sphere_golem_missile;
+	NoChaseCategory=VTOL;
+	Weapon3=sphere_golem_shield;
+	ExplodeAs=BIG_UNITEX;
+	SelfDestructAs=BIG_UNIT;
+
+
+	// ------------------- orders
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+
+	// ------------------- misc
+	Version=3.1;
+	Designation=CA_Ik;
+	BMcode=1;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	ShootMe=1;
+	DefaultMissionType=Standby;
+	maneuverleashlength=640;
+	Upright=0;
+	Downloadable=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 30 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:REDFLAREBIG;
+		explosiongenerator1=custom:yellowflaresml;
+		
+	}
+	buildcostenergy=11528;//#AUTO#
+	buildcostmetal=2305;//#AUTO#
+	buildtime=27475;//#AUTO#
+}

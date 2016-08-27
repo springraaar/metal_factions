@@ -1,0 +1,92 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base,base2, base3, base4, center, coff, con, wing1, wing2, ljet, rjet, left, right, emitpt;
+
+
+
+
+
+Effect()
+{
+	while (TRUE)
+	{
+		if( get ACTIVATION )
+		{
+			emit-sfx 1024+0 from emitpt;
+			show con;
+			hide coff;
+		}
+		else
+		{
+			show coff;
+			hide con;		
+		}
+		sleep 10; // 1 frame
+	}
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+Create()
+{
+	hide con;
+	start-script SmokeUnit();
+	start-script Effect();
+}
+
+Activate()
+{
+}
+
+Deactivate()
+{
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+
+Killed(severity, corpsetype)
+{
+	corpsetype = 3;
+
+	explode base2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode base3 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode base4 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode left type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode right type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode wing1 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode wing2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode center type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode coff type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+}

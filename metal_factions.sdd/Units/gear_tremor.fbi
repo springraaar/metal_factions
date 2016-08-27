@@ -1,0 +1,138 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Gear;
+	name=Tremor;
+	description=Very Heavy Assault Tank;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CORE TANK LEVEL2 WEAPON NOTAIR NOTSUB CTRL_W;
+	tedclass=TANK;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_tremor;
+	unitnumber=110;
+	objectname=gear_tremor.3do;
+	corpse=gear_tremor_dead;
+	buildpic=gear_tremor.png;
+	soundcategory=gear_TANK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=11000;
+	healtime=30;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.5;
+	energyuse=15;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKDTCRUSH; //TANKSH4//
+	turnrate=249;
+	acceleration=0.2;
+	brakerate=0.3;
+	maxvelocity=1;
+	maxslope=16;
+	maxwaterdepth=20;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_tremor_cannon;
+	nochasecategory=VTOL;
+	badtargetcategory1=VTOL;
+	badtargetcategory1=VTOL;
+	explodeas=ATOMIC_BLASTPEN;
+	selfdestructas=ATOMIC_BLASTSML;
+	onlytargetcategory1=NOTAIR;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=PS20;
+	downloadable=1;
+	leavetracks=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	trackoffset=8;
+	trackstrength=10;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=48;
+	version=1.2;
+	zbuffer=1;
+	mass=75000;
+	collisionVolumeType = box;
+	collisionVolumeScales =66 33 66;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:yellowflarebig;
+	explosiongenerator1=custom:redflare;
+	explosiongenerator2=custom:UnitFire;
+	}
+	buildcostenergy=15546;//#AUTO#
+	buildcostmetal=3109;//#AUTO#
+	buildtime=37052;//#AUTO#
+}

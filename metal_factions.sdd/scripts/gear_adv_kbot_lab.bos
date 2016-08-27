@@ -1,0 +1,299 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, pad, beam1, beam2, beam3, beam4, platform1, platform2, platform3, platform4, a1, a2,xl,xr, nano1, nano2, nano3, nano4, ldoorsup, ldoor1, ldoor2, rdoorsup, rdoor1, rdoor2;
+
+static-var  Static_Var_1, unitviewer, statechg_DesiredState, statechg_StateChanging, isBuilding;
+
+// Signal definitions
+#define SIG_ACTIVATE			2
+
+Build()
+{
+	while (TRUE)
+	{
+		if( isBuilding == 1 )
+		{
+			emit-sfx 1024 + 0 from beam1;
+			emit-sfx 1024 + 0 from beam2;
+			emit-sfx 1024 + 0 from beam3;
+			emit-sfx 1024 + 0 from beam4;
+			sleep 60;
+		}
+		sleep 40;
+	}
+	return (0);
+}
+
+activatescr()
+{
+	move ldoor1 to z-axis [-8.000000] speed [20.000000];
+	move ldoor2 to z-axis [8.000000] speed [20.000000];
+	move rdoor1 to z-axis [-8.000000] speed [20.000000];
+	move rdoor2 to z-axis [8.000000] speed [20.000000];
+	wait-for-move ldoor1 along z-axis;
+	
+	move nano1 to x-axis [-5.000000] speed [10.000000];
+	move nano2 to x-axis [5.000000] speed [10.000000];
+	move nano3 to x-axis [-5.000000] speed [10.000000];
+	move nano4 to x-axis [5.000000] speed [10.000000];
+	wait-for-move nano1 along x-axis;
+	sleep 100;
+}
+
+deactivatescr()
+{
+	move nano1 to x-axis [0.000000] speed [8.000000];
+	move nano2 to x-axis [0.000000] speed [8.000000];
+	move nano3 to x-axis [0.000000] speed [8.000000];
+	move nano4 to x-axis [0.000000] speed [8.000000];
+	wait-for-move nano1 along x-axis;
+
+	move ldoor1 to z-axis [0.000000] speed [20.000000];
+	move ldoor2 to z-axis [0.000000] speed [20.000000];
+	move rdoor1 to z-axis [0.000000] speed [20.000000];
+	move rdoor2 to z-axis [0.000000] speed [20.000000];
+	wait-for-move ldoor1 along z-axis;
+
+	sleep 100;
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from nano1;
+		}
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from nano2;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+OpenYard()
+{
+	set YARD_OPEN to 1;
+	while( !get YARD_OPEN )
+	{
+		set BUGGER_OFF to 1;
+		sleep 1500;
+		set YARD_OPEN to 1;
+	}
+	set BUGGER_OFF to 0;
+}
+
+CloseYard()
+{
+	set YARD_OPEN to 0;
+	while( get YARD_OPEN )
+	{
+		set BUGGER_OFF to 1;
+		sleep 1500;
+		set YARD_OPEN to 0;
+	}
+	set BUGGER_OFF to 0;
+}
+
+Go()
+{
+	call-script activatescr();
+	call-script OpenYard();
+	set INBUILDSTANCE to 1;
+}
+
+Stop()
+{
+	set INBUILDSTANCE to 0;
+	call-script CloseYard();
+	call-script deactivatescr();
+}
+
+InitState()
+{
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState == 0 )
+		{
+			call-script Go();
+			currentstate = 0;
+		}
+		if( statechg_DesiredState == 1 )
+		{
+			call-script Stop();
+			currentstate = 1;
+		}
+	}
+	statechg_StateChanging = FALSE;
+}
+
+Create()
+{
+	Static_Var_1 = 111;
+	call-script InitState();
+	start-script SmokeUnit();
+	start-script Build();
+}
+
+QueryNanoPiece(piecenum)
+{
+	if( Static_Var_1 == 111 )
+	{
+		piecenum = beam1;
+		Static_Var_1 = 222;
+		return (0);
+	}
+	if( Static_Var_1 == 222 )
+	{
+		piecenum = beam2;
+		Static_Var_1 = 333;
+		return (0);
+	}
+	if( Static_Var_1 == 333 )
+	{
+		piecenum = beam3;
+		Static_Var_1 = 444;
+		return (0);
+	}
+	if( Static_Var_1 == 444 )
+	{
+		piecenum = beam4;
+		Static_Var_1 = 111;
+		return (0);
+	}
+
+}
+
+Demo()
+{
+	unitviewer = TRUE;
+}
+
+Activate()
+{
+	signal SIG_ACTIVATE;
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	signal SIG_ACTIVATE;
+	set-signal-mask SIG_ACTIVATE;
+	if( !unitviewer )
+	{
+		sleep 5000;
+	}
+	set-signal-mask 0;
+	start-script RequestState(1);
+}
+
+StartBuilding()
+{
+	isBuilding = 1;
+}
+
+StopBuilding()
+{
+	isBuilding = 0;
+}
+
+QueryBuildInfo(piecenum)
+{
+	piecenum = pad;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP1;
+		explode beam1 type BITMAPONLY | BITMAP2;
+		explode beam2 type BITMAPONLY | BITMAP3;
+		explode pad type BITMAPONLY | BITMAP1;
+		explode xr type BITMAPONLY | BITMAP2;
+		explode xl type BITMAPONLY | BITMAP3;
+		explode platform1 type BITMAPONLY | BITMAP4;
+		explode platform2 type BITMAPONLY | BITMAP5;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP1;
+		explode beam1 type FALL | BITMAP2;
+		explode beam2 type FALL | BITMAP3;
+		explode pad type BITMAPONLY | BITMAP1;
+		explode xr type FALL | BITMAP2;
+		explode xl type FALL | BITMAP3;
+		explode platform1 type FALL | BITMAP4;
+		explode platform2 type SHATTER | BITMAP5;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type BITMAPONLY | BITMAP1;
+		explode beam1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+		explode beam2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP3;
+		explode pad type BITMAPONLY | BITMAP1;
+		explode xr type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+		explode xl type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP3;
+		explode platform1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP4;
+		explode platform2 type SHATTER | BITMAP5;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP1;
+	explode beam1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+	explode beam2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP3;
+	explode pad type BITMAPONLY | BITMAP1;
+	explode xr type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP2;
+	explode xl type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP3;
+	explode platform1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP4;
+	explode platform2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+}

@@ -1,0 +1,177 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, base2,turret,holder, sleeve, barrels, flash, right, rinnercover,routercover,left,linnercover,loutercover, barrel1,barrel2,barrel3,barrel4,barrel5,barrel6;
+
+static-var  gun_1;
+
+// Signal definitions
+#define SIG_AIM				2
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+
+
+Create()
+{
+	hide flash;
+	gun_1=[0];
+	start-script SmokeUnit();
+}
+
+
+RestoreAfterDelay()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn turret to y-axis <0.000000> speed <90.016484>;
+	turn sleeve to x-axis <0.000000> speed <50.005495>;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn turret to y-axis heading speed <200.038462>;
+	turn sleeve to x-axis <0.000000> - pitch speed <200.000000>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn sleeve around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+Shot1()
+{
+	emit-sfx 1024 + 0 from flash;
+	
+	// turn barrel to next position
+	if( gun_1 == [0] )
+	{
+		move barrel1 to z-axis [-2.500000] now;
+		sleep 50;
+		turn barrels to z-axis <60.000000> speed <720.000000>;
+		gun_1 = [1];
+		sleep 100;
+		move barrel1 to z-axis [0.000000] speed [8.000000];
+		return (0);
+	}
+	if( gun_1 == [1] )
+	{
+		move barrel2 to z-axis [-2.500000] now;
+		sleep 50;
+		turn barrels to z-axis <120.000000> speed <720.000000>;
+		gun_1 = [2];
+		sleep 100;
+		move barrel2 to z-axis [0.000000] speed [8.000000];
+		return (0);
+	}
+	if( gun_1 == [2] )
+	{
+		move barrel3 to z-axis [-2.500000] now;
+		sleep 50;
+		turn barrels to z-axis <180.000000> speed <720.000000>;
+		gun_1 = [3];
+		sleep 100;
+		move barrel3 to z-axis [0.000000] speed [8.000000];
+
+		return (0);
+	}
+	if( gun_1 == [3] )
+	{
+		move barrel4 to z-axis [-2.500000] now;
+		sleep 50;
+		turn barrels to z-axis <240.000000> speed <720.000000>;
+		gun_1 = [4];
+		sleep 100;
+		move barrel4 to z-axis [0.000000] speed [8.000000];
+
+		return (0);
+	}
+	if( gun_1 == [4] )
+	{
+		move barrel5 to z-axis [-2.500000] now;
+		sleep 50;
+		turn barrels to z-axis <300.000000> speed <720.000000>;
+		gun_1 = [5];
+		sleep 100;
+		move barrel5 to z-axis [0.000000] speed [8.000000];
+		
+		return (0);
+	}
+		if( gun_1 == [5] )
+	{
+		move barrel6 to z-axis [-2.500000] now;
+		sleep 50;
+		turn barrels to z-axis <361.000000> speed <720.000000>;
+		gun_1 = [0];
+		sleep 100;
+		move barrel6 to z-axis [0.000000] speed [8.000000];
+		return (0);
+	}
+			
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flash;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	hide flash;
+	if( severity <= 50 )
+	{
+		corpsetype = 1;
+		explode left type SHATTER;		
+		explode right type SHATTER;		
+		explode routercover type SHATTER;
+		explode loutercover type SHATTER;
+		explode turret type SHATTER | EXPLODE_ON_HIT;
+		return (0);
+	}
+	corpsetype = 3;
+	explode holder type SHATTER;		
+	explode sleeve type SHATTER;		
+	explode left type SHATTER;		
+	explode right type SHATTER;		
+	explode routercover type SHATTER;
+	explode loutercover type SHATTER;
+	explode turret type SHATTER | EXPLODE_ON_HIT;
+}

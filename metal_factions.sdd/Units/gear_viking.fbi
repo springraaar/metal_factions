@@ -1,0 +1,83 @@
+[UNITINFO]
+	{
+	UnitName=gear_viking;
+	Version=1;
+	Side=Gear;
+	Objectname=gear_viking;
+	Designation=gear_viking;
+	Name=Viking;
+	Description=Multi-Purpose Patrol Frigate;
+	buildpic=gear_viking.png;
+	FootprintX=3;
+	FootprintZ=3;
+	MaxDamage=1581;
+	EnergyUse=.9;
+	WorkerTime=0;
+	BMcode=1;
+	Builder=0;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	sightdistance=500;
+	sonardistance=400; 
+	RadarDistance=0;
+	SoundCategory=gear_SHIP;
+	EnergyStorage=0;
+	MetalStorage=0;
+	ExplodeAs=SMALL_UNITEX;
+	SelfDestructAs=SMALL_UNIT;
+	Category=CORE SHIP LEVEL1 WEAPON NOTAIR NOTSUB ;
+	TEDClass=SHIP;
+	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
+	UnitNumber=7544334;
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canguard=1;
+	MaxVelocity=2.4;
+	BrakeRate=0.022;
+	Acceleration=0.05;
+	TurnRate=456;
+	SteeringMode=1;
+	ShootMe=1;
+	Scale=0.5;
+	EnergyMake=.9;
+	DefaultMissionType=Standby;
+	maneuverleashlength=640;
+	MovementClass=smallboat;
+	icontype=sea;
+	buildangle=16384;
+	Weapon1=gear_viking_laser;
+	Weapon2=gear_viking_missile;
+	Weapon3=gear_viking_depthcharge;
+	canattack=1;
+	ActivateWhenBuilt=1;
+	MinWaterDepth=12;
+	Floater=1;
+	waterline=1;
+	windgenerator=0.001;
+	Corpse=gear_viking_dead;
+	[customParams] 
+	{
+		evalfactor=0.85;//SHIP
+	}
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 30 50;
+	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeTest = 1;
+
+		[SFXTypes]
+		{
+			explosiongenerator0=custom:GLOWSML;
+			explosiongenerator1=custom:rocketflaresml;
+		}
+	buildcostenergy=2466;//#AUTO#
+	buildcostmetal=493;//#AUTO#
+	buildtime=5878;//#AUTO#
+	}

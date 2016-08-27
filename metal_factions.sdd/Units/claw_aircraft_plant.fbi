@@ -1,0 +1,82 @@
+[UNITINFO]
+	{
+
+	// ------------------- description
+	Side=Claw;
+	Name=Aircraft Plant;
+	Description=Builds level1 aircraft;
+	icontype=plant;
+
+	// ------------------- categories
+	Category=CLAW PLANT LEVEL1 NOWEAPON NOTAIR NOTSUB CTRL_F;
+	TEDClass=PLANT;
+
+	// ------------------- external specs
+	UnitName=claw_aircraft_plant;
+	UnitNumber=20000;
+	Objectname=claw_aircraft_plant.3do;
+	buildpic=claw_aircraft_plant.png;
+	SoundCategory=gear_HOVER_PLANT;
+	Corpse=claw_aircraft_plant_dead;
+
+	// ------------------- health/cost/size
+	MaxDamage=2500;
+	FootprintX=8;
+	FootprintZ=6;
+	idleautoheal=5;
+
+
+	// ------------------- resources
+	EnergyStorage=100;
+	MetalStorage=100;
+	EnergyUse=0;
+
+
+	// ------------------- constructor
+	Builder=1;
+	WorkerTime=200;
+
+
+
+	// ------------------- abilities
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	
+	// ------------------- movement
+	buildangle=1024;
+	YardMap=ooccccoo ooccccoo ooccccoo ooccccoo ooccccoo ooccccoo; 
+	MaxWaterDepth=0;
+	MaxSlope=14;
+	collisionVolumeType = box;
+	collisionVolumeScales =130 35 100;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	// ------------------- scout
+	sightdistance=500;
+	RadarDistance=0;
+
+	// ------------------- weapons
+	ExplodeAs=LARGE_BUILDINGEX;
+	SelfDestructAs=LARGE_BUILDING;
+
+	// ------------------- orders
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+
+
+	// ------------------- misc
+	Version=3.1;
+	Designation=CA-lFCT;
+	BMcode=0;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	downloadable=1;
+	buildcostenergy=4009;//#AUTO#
+	buildcostmetal=801;//#AUTO#
+	buildtime=6307;//#AUTO#
+}

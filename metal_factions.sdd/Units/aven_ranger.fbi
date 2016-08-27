@@ -1,0 +1,144 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Aven;
+	name=Ranger;
+	description=Rocket Launcher Ship;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM SHIP LEVEL2 WEAPON NOTAIR NOTSUB CTRL_W;
+	tedclass=SHIP;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=aven_ranger;
+	unitnumber=50;
+	objectname=aven_ranger.3do;
+	corpse=aven_ranger_dead;
+	buildpic=aven_ranger.png;
+	soundcategory=aven_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3500;
+	healtime=30;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.8;
+	energyuse=0.8;
+	energystorage=0;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	floater=1;
+	activatewhenbuilt=1;
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=MEDIUMBOAT;
+	turnrate=202;
+	acceleration=0.0101;
+	brakerate=0.0105;
+	maxvelocity=1.7;
+	minwaterdepth=12;
+	waterline=1;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=ARMMSHIP_ROCKET;
+	weapon2=aven_ranger_emg;
+	nochasecategory=VTOL;
+	onlytargetcategory1=NOTAIR;
+	badtargetcategory2=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ASD-SM;
+	downloadable=1;
+	maneuverleashlength=640;
+	scale=1.5;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 50 84;
+	collisionVolumeOffsets = 0 -15 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:UNITFIRE;
+		explosiongenerator1=custom:ROCKETFLAREMED;
+		explosiongenerator2=custom:EMGFLARE;
+	}
+	[customParams] 
+	{
+		canAreaAttack=1;
+		evalfactor=0.85;//SHIP
+	
+	}
+
+	buildcostenergy=12349;//#AUTO#
+	buildcostmetal=2469;//#AUTO#
+	buildtime=29432;//#AUTO#
+}

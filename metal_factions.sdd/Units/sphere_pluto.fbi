@@ -1,0 +1,135 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Pluto;
+	description=Armored Assault Sub;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE UNDERWATER LEVEL2 TORP WEAPON NOTAIR  CTRL_W;
+	tedclass=SHIP;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=sphere_pluto;
+	unitnumber=10000;
+	objectname=sphere_pluto.3do;
+	corpse=sphere_pluto_dead;
+	buildpic=sphere_pluto.png;
+	soundcategory=gear_SUB;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=5000;
+	healtime=10;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=10;
+	energyuse=10;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	floater=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=BOATSUB;
+	turnrate=270;
+	acceleration=0.07;
+	brakerate=0.01;
+	maxvelocity=1.525;
+	minwaterdepth=40;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	sonardistance=1000;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=sphere_pluto_torpedo;
+	//weapon2=sphere_ark_missile;
+	nochasecategory=VTOL;
+	badtargetcategory1=VTOL;
+	badtargetcategory1=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+   	WeaponMainDir1=0 0 1;
+   	MaxAngleDif1=120;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ASD-SK;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	onoffable=0;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	waterline=60;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =45 38 65;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:ROCKETFLAREMED;
+	}
+	buildcostenergy=12683;//#AUTO#
+	buildcostmetal=2536;//#AUTO#
+	buildtime=30228;//#AUTO#
+}

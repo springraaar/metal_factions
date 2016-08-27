@@ -1,0 +1,131 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Monster;
+	description=Heavy Attack Sub;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW UNDERWATER LEVEL2 TORP WEAPON NOTAIR CTRL_W;
+	tedclass=WATER;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=claw_monster;
+	unitnumber=20000;
+	objectname=claw_monster.3do;
+	corpse=claw_monster_dead;
+	buildpic=claw_monster.png;
+	soundcategory=aven_SUB;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1450;
+	healtime=10;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=5;
+	energyuse=5;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	floater=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=BOATSUB;
+	turnrate=400;
+	acceleration=0.06;
+	brakerate=0.01;
+	maxvelocity=1.5;
+	minwaterdepth=20;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+	sonardistance=600;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_monster_torpedo;
+	nochasecategory=VTOL;
+	badtargetcategory1=VTOL;
+	badtargetcategory1=VTOL;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
+   	WeaponMainDir1=0 0 1;
+   	MaxAngleDif1=120;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=0;
+	mobilestandorders=1;
+	standingfireorder=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ASD-SM;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	waterline=55;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =45 22 45;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildcostenergy=8881;//#AUTO#
+	buildcostmetal=1776;//#AUTO#
+	buildtime=21167;//#AUTO#
+}

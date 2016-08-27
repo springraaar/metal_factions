@@ -1,0 +1,129 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Gear;
+	name=Construction Robot;
+	description=Tech Level 1;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CORE KBOT LEVEL1 CONSTR NOWEAPON NOTAIR NOTSUB CTRL_B;
+	tedclass=CNSTR;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_construction_kbot;
+	unitnumber=93;
+	objectname=gear_construction_kbot.3do;
+	corpse=gear_construction_kbot_dead;
+	buildpic=gear_construction_kbot.png;
+	soundcategory=COR_CKBOT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=500;
+	healtime=27;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=0.125;
+	metalstorage=50;
+	energymake=4.25;
+	energyuse=0.2;
+	energystorage=50;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	builddistance=200;
+	workertime=150;
+        RepairSpeed=150;
+        ReclaimSpeed=150;
+        TerraformSpeed=300;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canreclamate=1;
+	canstop=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=KBOTHT2;
+	turnrate=965;
+	acceleration=1.07;
+	brakerate=13.5;
+	maxvelocity=1.35;
+	maxslope=20;
+	maxwaterdepth=25;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=NANO_UNITEX;
+	selfdestructas=NANO_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=CKA-23;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=NanoDebree;
+	pieceTrailCEGRange = 2;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 22 25;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Nano;
+	}
+
+	buildcostenergy=1641;//#AUTO#
+	buildcostmetal=328;//#AUTO#
+	buildtime=3912;//#AUTO#
+}

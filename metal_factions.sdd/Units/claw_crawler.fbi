@@ -1,0 +1,95 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	Side=Claw;
+	Name=Crawler;
+	Description=Amphibious Artillery Robot;
+
+	// ------------------- categories
+	Category=CLAW KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
+	TEDClass=KBOT;
+
+	// ------------------- external specs
+	UnitName=claw_crawler;
+	UnitNumber=20000;
+	Objectname=claw_crawler.3do;
+	buildpic=claw_crawler.png;
+	SoundCategory=CORAK;
+	Corpse=claw_crawler_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=3;
+	FootprintZ=3;
+	MaxDamage=2800;
+
+
+	// ------------------- resources
+	EnergyUse=4;
+	EnergyStorage=0;
+	MetalStorage=0;
+	EnergyMake=4;
+
+	// ------------------- abilities
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canguard=1;
+	canattack=1;
+	Builder=0;
+
+	// ------------------- movement
+	MaxVelocity=1.1;
+	BrakeRate=0.25;
+	Acceleration=0.25;
+	TurnRate=450;
+	SteeringMode=2;
+	MovementClass=KBOTUW3;
+
+	// ------------------- scout
+	sightdistance=500;
+	RadarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=claw_crawler_cannon;
+	badtargetcategory1=VTOL;
+	NoChaseCategory=VTOL;
+	hightrajectory=2;	
+	ExplodeAs=BIG_UNITEX;
+	SelfDestructAs=BIG_UNIT;
+
+
+	// ------------------- orders
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+
+	// ------------------- misc
+	Version=3.1;
+	Designation=CA_Ik;
+	BMcode=1;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	ShootMe=1;
+	DefaultMissionType=Standby;
+	maneuverleashlength=640;
+	Upright=0;
+	Downloadable=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 30 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:yellowflaremed;
+	}
+	buildcostenergy=4504;//#AUTO#
+	buildcostmetal=900;//#AUTO#
+	buildtime=10736;//#AUTO#
+}

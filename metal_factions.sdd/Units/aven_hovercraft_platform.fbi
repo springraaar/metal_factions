@@ -1,0 +1,119 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Aven;
+	name=Hovercraft Platform;
+	description=Builds Level 2 Hovercraft;
+	icontype=plant;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM PLANT LEVEL2 NOWEAPON NOTAIR NOTSUB CTRL_F;
+	tedclass=PLANT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=aven_hovercraft_platform;
+	unitnumber=179;
+	objectname=aven_hovercraft_platform.3do;
+	corpse=aven_hovercraft_platform_dead;
+	buildpic=aven_hovercraft_platform.png;
+	soundcategory=aven_HOVER_PLANT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3842;
+	healtime=30;
+	footprintx=8;
+	footprintz=7;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=100;
+	energyuse=0;
+	energystorage=100;
+	windgenerator=0.001;
+
+	//************************************************************
+	//  Building
+	//************
+	yardmap=ooccccoo ooccccoo ooccccoo ooccccoo ooccccoo ooccccoo ooccccoo;
+	collisionVolumeType=Box;
+	collisionVolumeScales=118 28 106;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	workertime=300;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	//maxslope=10;
+	//maxwaterdepth=6;
+	maxslope=10;
+	//maxwaterdepth=0;
+	waterline=4.9;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=LARGE_BUILDINGEX;
+	selfdestructas=LARGE_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=2;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=ARM-H;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Nano;
+	explosiongenerator1=custom:UNITFIRE;
+	}
+	buildcostenergy=9932;//#AUTO#
+	buildcostmetal=1986;//#AUTO#
+	buildtime=23672;//#AUTO#
+}

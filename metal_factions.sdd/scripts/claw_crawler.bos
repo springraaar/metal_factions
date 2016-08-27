@@ -1,0 +1,329 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 100
+
+piece  gp, hips, l1, l2,l3, base2, front, back, leg1,bleg,leg2,bleg2,leg3,bleg3,leg4,bleg4, turret, holder, sleeve, barrel, flare;
+
+static-var  bMoving, bAiming, restoreDelay, isUnderWater;
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_MOVE			8
+
+
+walk()
+{
+	if( bMoving )
+	{
+		/* X */
+		turn hips to x-axis <-3.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+			
+		/* Y */
+		turn leg4 to y-axis <-80.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+
+		turn leg2 to y-axis <-35.000000> speed <120.000000> * SPEEDUP_FACTOR / 100;
+
+		turn leg3 to y-axis <5.000000> speed <140.000000> * SPEEDUP_FACTOR / 100;
+		
+		turn leg1 to y-axis <25.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+
+		/* Z */
+		turn bleg4 to z-axis <-20.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		turn bleg to z-axis <-20.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		turn hips to z-axis <3.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+
+		/* move */
+		move hips to x-axis [-0.2500000] speed [2.000000] * SPEEDUP_FACTOR / 100;
+		move hips to z-axis [-0.2500000] speed [2.000000] * SPEEDUP_FACTOR / 100;
+		
+		
+		turn leg4 to z-axis <-20.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+		sleep 100 * 100 / SPEEDUP_FACTOR;
+		turn leg4 to z-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+		sleep 100 * 100 / SPEEDUP_FACTOR;
+
+	}
+	if( bMoving )
+	{
+		/* X */
+		turn hips to x-axis <3.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+		
+		/* Y */
+		turn leg4 to y-axis <-35.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+
+		turn leg2 to y-axis <-90.000000> speed <180.000000> * SPEEDUP_FACTOR / 100;
+
+		turn leg3 to y-axis <15.000000> speed <140.000000> * SPEEDUP_FACTOR / 100;
+		
+		turn leg1 to y-axis <-5.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+
+		/* Z */
+		turn bleg4 to z-axis <0.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		turn bleg to z-axis <0.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		turn hips to z-axis <3.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+		
+		/* move */
+		move hips to x-axis [0.000000] speed [2.000000] * SPEEDUP_FACTOR / 100;
+		move hips to z-axis [0.000000] speed [2.000000] * SPEEDUP_FACTOR / 100;
+		
+		turn leg1 to z-axis <-20.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+		sleep 100 * 100 / SPEEDUP_FACTOR;
+		turn leg1 to z-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+		sleep 100 * 100 / SPEEDUP_FACTOR;
+
+	}
+	if( bMoving )
+	{
+		/* X */
+		turn hips to x-axis <-3.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+
+		/* Y */
+		turn leg4 to y-axis <-5.000000> speed <140.000000> * SPEEDUP_FACTOR / 100;
+
+		turn leg2 to y-axis <-25.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+
+		turn leg3 to y-axis <80.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		
+		turn leg1 to y-axis <35.000000> speed <120.000000> * SPEEDUP_FACTOR / 100;
+
+		/* Z */
+		turn bleg2 to z-axis <20.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		turn bleg3 to z-axis <20.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		turn hips to z-axis <-3.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+
+
+		/* move */
+		move hips to x-axis [0.2500000] speed [2.000000] * SPEEDUP_FACTOR / 100;
+		move hips to z-axis [-0.2500000] speed [2.000000] * SPEEDUP_FACTOR / 100;
+		
+		turn leg3 to z-axis <20.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+		sleep 100 * 100 / SPEEDUP_FACTOR;
+		turn leg3 to z-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+		sleep 100 * 100 / SPEEDUP_FACTOR;
+
+	}
+	if( bMoving )
+	{
+		turn hips to x-axis <3.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+
+		/* Y */
+		turn leg4 to y-axis <-15.000000> speed <140.000000> * SPEEDUP_FACTOR / 100;
+
+		turn leg2 to y-axis <5.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+
+		turn leg3 to y-axis <35.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+
+		turn leg1 to y-axis <90.000000> speed <180.000000> * SPEEDUP_FACTOR / 100;			
+
+		/* Z */
+		turn bleg3 to z-axis <0.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		turn bleg2 to z-axis <0.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		turn hips to z-axis <3.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+
+		/* move */
+		move hips to x-axis [0.000000] speed [2.000000] * SPEEDUP_FACTOR / 100;
+		move hips to z-axis [0.000000] speed [2.000000] * SPEEDUP_FACTOR / 100;
+
+		turn leg2 to z-axis <20.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+		sleep 100 * 100 / SPEEDUP_FACTOR;
+		turn leg2 to z-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+		sleep 100 * 100 / SPEEDUP_FACTOR;
+	}
+}
+
+
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from turret;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+MotionControl(moving, aiming, justmoved)
+{
+	while( TRUE )
+	{
+		moving = bMoving;
+		aiming = bAiming;
+		if( moving )
+		{
+			justmoved = TRUE;
+			call-script walk();
+		}
+		if( !moving )
+		{
+			if( justmoved )
+			{
+				turn leg1 to x-axis <0.000000> speed <260.000000>;
+				turn leg2 to x-axis <0.000000> speed <260.000000>;
+				turn leg3 to x-axis <0.000000> speed <260.000000>;
+				turn leg4 to x-axis <0.000000> speed <260.000000>;
+				turn leg1 to y-axis <45.000000> speed <260.000000>;
+				turn leg2 to y-axis <-45.000000> speed <260.000000>;
+				turn leg3 to y-axis <45.000000> speed <260.000000>;
+				turn leg4 to y-axis <-45.000000> speed <260.000000>;
+			
+				turn leg1 to z-axis <0.000000> speed <260.000000>;
+				turn leg2 to z-axis <0.000000> speed <260.000000>;
+				turn leg3 to z-axis <0.000000> speed <260.000000>;
+				turn leg4 to z-axis <0.000000> speed <260.000000>;
+				turn hips to z-axis <0.000000> speed <260.000000>;
+				turn hips to x-axis <0.000000> speed <260.000000>;
+	
+				move hips to x-axis [0.000000] speed [3.000000];
+				move hips to z-axis [0.000000] speed [3.000000];
+
+				turn bleg2 to z-axis <0.000000> speed <160.000000>;
+				turn bleg4 to z-axis <0.000000> speed <160.000000>;
+				turn bleg3 to z-axis <0.000000> speed <160.000000>;
+				turn bleg to z-axis <0.000000> speed <160.000000>;
+
+				justmoved = FALSE;
+			}
+			sleep 100;
+		}
+	}
+}
+
+Create()
+{
+	bMoving = FALSE;
+	bAiming = FALSE;
+	isUnderWater = FALSE;
+	restoreDelay = 6000;
+	start-script MotionControl();
+	start-script SmokeUnit();
+}
+
+
+StartMoving()
+{
+	bMoving = TRUE;
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while( bMoving )
+	{
+		if( isUnderWater == TRUE )
+		{
+			//emit-sfx 256 | 3 from bleg;
+			//emit-sfx 256 | 3 from bleg2;
+			//emit-sfx 256 | 3 from bleg3;
+			//emit-sfx 256 | 3 from bleg4;			
+		}
+		sleep 250;
+	}
+}
+
+StopMoving()
+{
+	bMoving = FALSE;
+	signal SIG_MOVE;
+}
+
+
+setSFXoccupy()
+{
+	isUnderWater = bMoving;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = turret;
+}
+
+RestoreAfterDelay()
+{
+	sleep restoreDelay;
+	turn turret to y-axis <0.000000> speed <100.016484>;
+	turn sleeve to x-axis <0.000000> speed <145.005495>;
+	bAiming = FALSE;
+}
+
+
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare;
+}
+
+FirePrimary()
+{
+	move barrel to z-axis [-2.500000] now;
+	emit-sfx 1024 + 0 from flare;
+	sleep 150;
+	move barrel to z-axis [0.000000] speed [1.500000];
+
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	
+	turn turret to y-axis heading speed <120.027473>;
+	turn sleeve to x-axis <0.000000> - pitch speed <120.038462>;
+	
+	wait-for-turn turret around y-axis;
+	wait-for-turn sleeve around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+
+		explode base2 type SHATTER;
+		explode holder type SHATTER;
+		explode sleeve type SHATTER;
+		explode front type SHATTER;
+		
+		return (0);
+	}
+	corpsetype = 3;
+	explode base2 type SHATTER;
+	explode holder type SHATTER;
+	explode sleeve type SHATTER;
+	explode front type SHATTER;
+	explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT;
+	explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT;
+	explode leg1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT;
+	explode leg2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT;
+	explode leg3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT;
+	explode leg4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT;
+}

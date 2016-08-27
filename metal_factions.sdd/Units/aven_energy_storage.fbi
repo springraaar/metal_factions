@@ -1,0 +1,105 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Aven;
+	name=Energy Storage;
+	description=Increases Energy Storage by 15000;
+	icontype=energy;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM ENERGY LEVEL1 NOWEAPON  NOTAIR NOTSUB STORAGE;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=aven_energy_storage;
+	unitnumber=27;
+	objectname=aven_energy_storage.3do;
+	corpse=aven_energy_storage_dead;
+	buildpic=aven_energy_storage.png;
+	soundcategory=aven_ESTOR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1000;
+	footprintx=4;
+	footprintz=4;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=58 44 58;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=15000;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=65535;
+	yardmap=yooy oooo oooo yooy;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=ESTOR_BUILDINGEX;
+	selfdestructas=ESTOR_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AE-ESF;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Glow;
+	}
+	buildcostenergy=2969;//#AUTO#
+	buildcostmetal=593;//#AUTO#
+	buildtime=7076;//#AUTO#
+}

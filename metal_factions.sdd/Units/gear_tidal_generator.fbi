@@ -1,0 +1,109 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Gear;
+	name=Tidal Generator;
+	description=Produces Energy;
+	icontype=energy;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CORE ENERGY LEVEL1 NOWEAPON NOTAIR NOTSUB;
+	tedclass=WATER;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_tidal_generator;
+	unitnumber=143;
+	objectname=gear_tidal_generator.3do;
+	corpse=gear_tidal_generator_dead;
+	buildpic=gear_tidal_generator.png;
+	soundcategory=gear_TIDE;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=520;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=0;
+	windgenerator=0.001;
+	tidalgenerator=1;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=4096;
+	yardmap=wwww wwww wwww wwww;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	minwaterdepth=20;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+	sonardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	downloadable=1;
+	noshadow=1;
+	scale=0.5;
+	threed=1;
+	version=1.2;
+	waterline=14;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	collisionVolumeType=box;
+	collisionVolumeScales=43 31 43;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+	
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildcostenergy=639;//#AUTO#
+	buildcostmetal=127;//#AUTO#
+	buildtime=1524;//#AUTO#
+}

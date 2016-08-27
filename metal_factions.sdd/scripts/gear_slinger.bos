@@ -1,0 +1,362 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, pole, turret, arms, launcher, launcher2, emit1, emit2,
+       emit3, wake1, wake2, wake3, wake4, wake5, wake6, wake7,
+       exhaust, wake8;
+
+static-var  gun_1, restore_delay, Static_Var_3, bAiming, Static_Var_5,
+            Static_Var_6;
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_MOVE			4
+
+
+BankClerck(Func_Var_1, Func_Var_2, Func_Var_3)
+{
+	while( TRUE )
+	{
+		Func_Var_1 = get PIECE_XZ(base);
+		Func_Var_3 = 0;
+		if( get XZ_HYPOT(Func_Var_1 - Func_Var_2) >= [2.500000] )
+		{
+			Func_Var_3 = 0 - get XZ_ATAN(Func_Var_2 - Func_Var_1) * 60 / 30;
+		}
+		turn base to z-axis Func_Var_3 speed <45.000000>;
+		Func_Var_2 = Func_Var_1;
+		sleep 300;
+	}
+	return (0);
+}
+
+WobbleUnit()
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		if( Static_Var_6 == 1 )
+		{
+			move base to y-axis [2.000000] speed [2.500000];
+		}
+		if( Static_Var_6 == 0 )
+		{
+			move base to y-axis [4.500000] speed [2.500000];
+		}
+		Static_Var_6 = !Static_Var_6;
+		sleep 750;
+	}
+	return (0);
+}
+
+RockUnit(anglex, anglez)
+{
+	turn base to x-axis <0.010989> * anglex speed <50.005495>;
+	turn base to z-axis <0.010989> * anglez speed <50.005495>;
+	wait-for-turn base around z-axis;
+	wait-for-turn base around x-axis;
+	turn base to z-axis <0.000000> speed <20.000000>;
+	turn base to x-axis <0.000000> speed <20.000000>;
+	return (0);
+}
+
+HitByWeapon(Func_Var_1, Func_Var_2)
+{
+	turn base to z-axis <0.010989> * Func_Var_2 speed <105.016484>;
+	turn base to x-axis <0.010989> * Func_Var_1 speed <105.016484>;
+	wait-for-turn base around z-axis;
+	wait-for-turn base around x-axis;
+	turn base to z-axis <0.000000> speed <30.005495>;
+	turn base to x-axis <0.000000> speed <30.005495>;
+	return (0);
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+	return (0);
+}
+
+TurretManager()
+{
+	while( TRUE )
+	{
+		if( bAiming != Static_Var_3 )
+		{
+			if( bAiming == 0 )
+			{
+				Static_Var_3 = 2;
+				hide launcher2;
+				show launcher;
+				move pole to y-axis [2.500000] now;
+				move turret to y-axis [2.500000] now;
+				move arms to y-axis [0.000000] now;
+				move launcher to y-axis [0.000000] now;
+				turn base to x-axis <0.000000> now;
+				turn base to x-axis <-4.000000> speed <16.000000>;
+				turn turret to y-axis <0.000000> now;
+				turn arms to x-axis <0.000000> now;
+				turn arms to x-axis <-4.000000> speed <156.000000>;
+				turn launcher to x-axis <0.000000> now;
+				turn launcher to x-axis <41.000000> speed <15.000000>;
+				sleep 266;
+				move pole to y-axis [0.000000] speed [10.000000];
+				move turret to y-axis [0.000000] speed [10.000000];
+				turn base to x-axis <2.000000> speed <23.000000>;
+				turn arms to x-axis <0.000000> speed <13.000000>;
+				turn launcher to x-axis <20.000000> speed <79.000000>;
+				sleep 266;
+				move base to y-axis [0.000000] speed [7.500000];
+				turn base to x-axis <3.000000> speed <1.000000>;
+				turn launcher to x-axis <0.000000> speed <75.000000>;
+				sleep 266;
+				move base to y-axis [0.000000] speed [7.500000];
+				turn base to x-axis <0.000000> speed <9.000000>;
+				sleep 266;
+				sleep 36;
+				Static_Var_3 = 0;
+			}
+			if( bAiming == 1 )
+			{
+				Static_Var_3 = 2;
+				move pole to y-axis [0.000000] now;
+				move pole to y-axis [2.500000] speed [15.000000];
+				move turret to y-axis [0.000000] now;
+				move turret to y-axis [2.500000] speed [17.500000];
+				move arms to y-axis [0.000000] now;
+				move launcher to y-axis [0.000000] now;
+				sleep 177;
+				turn base to x-axis <3.000000> speed <18.000000>;
+				turn turret to y-axis <0.000000> speed <0.000000>;
+				turn arms to x-axis <-19.000000> speed <107.000000>;
+				turn launcher to x-axis <34.000000> speed <188.000000>;
+				sleep 181;
+				turn base to x-axis <-5.000000> speed <43.000000>;
+				turn arms to x-axis <-45.000000> speed <143.000000>;
+				turn launcher to x-axis <45.000000> speed <61.000000>;
+				sleep 179;
+				turn base to x-axis <0.000000> speed <27.000000>;
+				sleep 183;
+				sleep 12;
+				hide launcher;
+				show launcher2;
+				Static_Var_3 = 1;
+			}
+		}
+		sleep 200;
+	}
+	return (0);
+}
+
+StartMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while( TRUE )
+	{
+		if( Static_Var_5 <= 2 )
+		{
+			//emit-sfx 5 from wake1;
+			emit-sfx 5 from wake2;
+			//emit-sfx 5 from wake3;
+			emit-sfx 5 from wake4;
+			//emit-sfx 5 from wake5;
+			emit-sfx 5 from wake6;
+			//emit-sfx 3 from wake7;
+			emit-sfx 5 from wake8;
+		}
+		sleep 300;
+	}
+	return (0);
+}
+
+StopMoving(Func_Var_1)
+{
+	return (0);
+}
+
+setSFXoccupy(Func_Var_1)
+{
+	Static_Var_5 = Func_Var_1;
+	return (0);
+}
+
+Create()
+{
+	restore_delay = 3000;
+	gun_1 = pole;
+	Static_Var_3 = 0;
+	bAiming = FALSE;
+	hide launcher2;
+	hide exhaust;
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 1000;
+	}
+	start-script SmokeUnit();
+	start-script TurretManager();
+	start-script WobbleUnit();
+	//start-script BankClerck();
+	return (0);
+}
+
+SetMaxReloadTime(Func_Var_1)
+{
+	restore_delay = Func_Var_1 * 2;
+	return (0);
+}
+
+RestoreAfterDelay()
+{
+	sleep restore_delay;
+	turn launcher2 to y-axis <0.000000> speed <250.000000>;
+	turn launcher2 to x-axis <0.000000> speed <150.000000>;
+	wait-for-turn launcher2 around y-axis;
+	wait-for-turn launcher2 around x-axis;
+	bAiming = FALSE;
+	return (0);
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	while( Static_Var_3 != 1 )
+	{
+		sleep 200;
+	}
+	turn launcher2 to y-axis heading speed <250.000000>;
+	turn launcher2 to x-axis <0.000000> - pitch speed <150.000000>;
+	wait-for-turn launcher2 around y-axis;
+	wait-for-turn launcher2 around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	emit-sfx 1024 + 0 from exhaust;
+	++gun_1;
+	if( gun_1 == 4 )
+	{
+		gun_1 = pole;
+	}
+	return (0);
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = launcher;
+	return (0);
+}
+
+QueryPrimary(piecenum)
+{
+	if( gun_1 == 1 )
+	{
+		piecenum = emit1;
+	}
+	if( gun_1 == 2 )
+	{
+		piecenum = emit2;
+	}
+	if( gun_1 == 3 )
+	{
+		piecenum = emit3;
+	}
+	return (0);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+	return (0);
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		if( Static_Var_5 <= 2 )
+		{
+			corpsetype = 1;
+		}
+		if( Static_Var_5 > 2 )
+		{
+			corpsetype = 2;
+		}
+		explode arms type BITMAPONLY | BITMAP1;
+		explode base type BITMAPONLY | BITMAP2;
+		explode emit1 type BITMAPONLY | BITMAP2;
+		explode emit1 type BITMAPONLY | BITMAP3;
+		explode emit1 type BITMAPONLY | BITMAP4;
+		explode launcher type BITMAPONLY | BITMAP5;
+		explode pole type BITMAPONLY | BITMAP1;
+		explode turret type BITMAPONLY | BITMAP2;
+		return;
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 3;
+		explode arms type SHATTER | BITMAP1;
+		explode base type BITMAPONLY | BITMAP2;
+		explode emit1 type FALL | BITMAP2;
+		explode emit1 type FALL | BITMAP3;
+		explode emit1 type FALL | BITMAP4;
+		explode launcher type BITMAPONLY | BITMAP5;
+		explode pole type FALL | BITMAP1;
+		explode turret type FALL | BITMAP2;
+		return;
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 4;
+		explode arms type SHATTER | BITMAP1;
+		explode base type BITMAPONLY | BITMAP2;
+		explode emit1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode emit1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode emit1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode launcher type BITMAPONLY | BITMAP5;
+		explode pole type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		return;
+	}
+	corpsetype = 4;
+	explode arms type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode base type BITMAPONLY | BITMAP2;
+	explode emit1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode emit1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode emit1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode launcher type BITMAPONLY | BITMAP5;
+	explode pole type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	return (0);
+}

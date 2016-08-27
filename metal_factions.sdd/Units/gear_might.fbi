@@ -1,0 +1,147 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Gear;
+	name=Might;
+	description=Mobile Fortress;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CORE TANK LEVEL2 WEAPON NOTAIR NOTSUB CTRL_W;
+	tedclass=TANK;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_might;
+	unitnumber=128;
+	objectname=gear_might.3do;
+	corpse=gear_might_dead;
+	buildpic=gear_might.png;
+	soundcategory=gear_TANK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=11500;
+	healtime=30;
+	footprintx=6;
+	footprintz=6;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=5;
+	energyuse=5;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKDTCRUSH; //TANKSH3//
+	turnrate=149;
+	acceleration=0.06125;
+	brakerate=0.04;
+	maxvelocity=0.9;
+	maxslope=12;
+	maxwaterdepth=100;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_might_cannon;
+	nochasecategory=VTOL;
+	badtargetcategory1=VTOL;
+	weapon2=gear_might_laser;
+	weaponmaindir2=-0.6 0 1;
+	maxangledif2=220;
+	weapon3=gear_might_laser;
+	weaponmaindir3=0.6 0 1;
+	maxangledif3=220;
+	weapon4=gear_might_laser;
+	weaponmaindir4=0.6 0 -1;
+	maxangledif4=220;
+	weapon5=gear_might_laser;
+	weaponmaindir5=-0.6 0 -1;
+	maxangledif5=220;
+
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=TB-PS4;
+	downloadable=1;
+	leavetracks=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	trackoffset=8;
+	trackstrength=8;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=40;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =60 40 80;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:yellowflarebig;
+		explosiongenerator1=custom:redflare;
+	}
+	buildcostenergy=35857;//#AUTO#
+	buildcostmetal=7171;//#AUTO#
+	buildtime=85461;//#AUTO#
+}

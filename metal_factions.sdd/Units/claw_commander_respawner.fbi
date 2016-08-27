@@ -1,0 +1,82 @@
+[UNITINFO]
+	{
+
+	// ------------------- description
+	Side=Claw;
+	Name=Commander Pad;
+	Description=Respawns dead commanders;
+	icontype=respawner;
+
+	// ------------------- categories
+	Category=CLAW PLANT LEVEL1 NOWEAPON NOTAIR NOTSUB CTRL_F;
+	TEDClass=PLANT;
+
+	// ------------------- external specs
+	UnitName=claw_commander_respawner;
+	UnitNumber=10000;
+	Objectname=claw_commander_respawner.3do;
+	buildpic=claw_commander_respawner.png;
+	SoundCategory=gear_HOVER_PLANT;
+	Corpse=claw_commander_respawner_dead;
+
+	// ------------------- health/cost/size
+	MaxDamage=1500;
+	BuildCostEnergy=1500;
+	BuildCostMetal=200;
+	BuildTime=5000;
+	FootprintX=5;
+	FootprintZ=5;
+	idleautoheal=5;
+
+
+	// ------------------- resources
+	EnergyStorage=100;
+	MetalStorage=100;
+	EnergyUse=0;
+
+
+	// ------------------- constructor
+	Builder=1;
+	WorkerTime=600;
+	canBeAssisted=0;
+
+
+	// ------------------- abilities
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	
+	// ------------------- movement
+	buildangle=1024;
+	YardMap=ccccc ccccc ccccc ccccc ccccc; 
+	MaxWaterDepth=255;
+	MaxSlope=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =80 10 80;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	// ------------------- scout
+	sightdistance=500;
+	RadarDistance=0;
+
+	// ------------------- weapons
+	ExplodeAs=SMALL_BUILDINGEX;
+	SelfDestructAs=SMALL_BUILDING;
+
+	// ------------------- orders
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+
+
+	// ------------------- misc
+	Version=3.1;
+	Designation=CLAW-respawner;
+	BMcode=0;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	downloadable=1;
+}

@@ -1,0 +1,103 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Gear;
+	name=Metal Storage;
+	description=Increases Metal Storage by 4000;
+	icontype=metal;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CORE METAL LEVEL1 NOWEAPON  NOTAIR NOTSUB STORAGE;
+	tedclass=METAL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_metal_storage;
+	unitnumber=122;
+	objectname=gear_metal_storage.3do;
+	corpse=gear_metal_storage_dead;
+	buildpic=gear_metal_storage.png;
+	soundcategory=gear_MSTOR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3000;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=4000;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardmap=ooooo ooooo  ooooo ooooo ooooo;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=999;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=LARGE_BUILDINGEX;
+	selfdestructas=LARGE_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=MS-4;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	collisionVolumeType=Box;
+	collisionVolumeScales=70 50 60;
+	collisionVolumeOffsets=0 -1 0;
+	collisionVolumeTest = 1;
+	
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildcostenergy=2977;//#AUTO#
+	buildcostmetal=595;//#AUTO#
+	buildtime=7095;//#AUTO#
+}

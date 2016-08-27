@@ -1,0 +1,228 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+
+piece ground, hips,torso,turret1,sleeve1,flare1,turret2,sleeve2,flare2,turret3,sleeve3,flare3, sphere, shieldpt;
+
+	
+static-var bMoving,bAiming, normalSpeed, slowSpeed;
+
+// Signal definitions
+#define SIG_AIM					2
+#define SIG_AIM2				4
+#define SIG_AIM3				8
+
+
+lua_checkEnergy() { return 0; }
+
+
+MotionControl(hasEnergy)
+{
+	hasEnergy = 1;
+	while (TRUE)
+	{
+		bMoving = (get CURRENT_SPEED) > 10000;
+
+		// lua check for energy availability		
+		call-script lua_checkEnergy(500);
+		hasEnergy = get LUA1;
+		
+		// update speed and activation state
+		if (bMoving && hasEnergy)
+		{
+			set ACTIVATION to TRUE;
+			//set MAX_SPEED to normalSpeed;  // DONE BY GADGET
+		}
+		if (!bMoving || !hasEnergy)
+		{
+			set ACTIVATION to FALSE;
+			//set MAX_SPEED to slowSpeed;  // DONE BY GADGET
+		}
+
+		sleep 60;
+	}
+}
+
+
+
+Create()
+{
+	normalSpeed = get MAX_SPEED;
+	slowSpeed = normalSpeed / 4;
+
+	bMoving=FALSE;
+	bAiming=FALSE;
+	start-script MotionControl();
+}
+
+
+
+SweetSpot(piecenum)
+{
+	piecenum = sphere;
+}
+
+RestoreAfterDelayWeapon1()
+{
+	sleep 5000;
+	turn turret1 to y-axis <0.000000> speed <65.016484>;
+	turn sleeve1 to x-axis <0.000000> speed <65.005495>;
+}
+RestoreAfterDelayWeapon3()
+{
+	sleep 5000;
+	turn turret2 to y-axis <0.000000> speed <65.016484>;
+	turn sleeve2 to x-axis <0.000000> speed <65.005495>;
+}
+RestoreAfterDelayWeapon4()
+{
+	sleep 5000;
+	turn turret3 to y-axis <0.000000> speed <65.016484>;
+	turn sleeve3 to x-axis <0.000000> speed <65.005495>;
+}
+
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret1;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare1;
+}
+
+FirePrimary()
+{
+	emit-sfx 1024 + 0 from flare1;
+	return 1;
+}
+
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+		
+	turn turret1 to y-axis heading speed <200.027473>;
+	turn sleeve1 to x-axis <0.000000> - pitch speed <200.038462>;
+	wait-for-turn turret1 around y-axis;
+	wait-for-turn sleeve1 around x-axis;
+	start-script RestoreAfterDelayWeapon1();
+	return (1);
+}
+
+
+
+QuerySecondary(piecenum)
+{
+	piecenum = shieldpt;
+	return (0);
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = shieldpt;
+	return (0);
+}
+
+AimSecondary(heading, pitch)
+{
+	return (1);
+}
+
+
+AimFromWeapon3(piecenum)
+{
+	piecenum = turret2;
+}
+
+QueryWeapon3(piecenum)
+{
+	piecenum = flare2;
+}
+
+FireWeapon3()
+{
+	emit-sfx 1024 + 1 from flare2;
+	return 1;
+}
+
+
+AimWeapon3(heading, pitch)
+{
+	signal SIG_AIM2;
+	set-signal-mask SIG_AIM2;
+		
+	turn turret2 to y-axis heading speed <400.027473>;
+	turn sleeve2 to x-axis <0.000000> - pitch speed <400.038462>;
+	wait-for-turn turret2 around y-axis;
+	wait-for-turn sleeve2 around x-axis;
+	start-script RestoreAfterDelayWeapon3();
+	return (1);
+}
+
+AimFromWeapon4(piecenum)
+{
+	piecenum = turret3;
+}
+
+QueryWeapon4(piecenum)
+{
+	piecenum = flare3;
+}
+
+FireWeapon4()
+{
+	emit-sfx 1024 + 2 from flare3;
+	return 1;
+}
+
+
+AimWeapon4(heading, pitch)
+{
+	signal SIG_AIM3;
+	set-signal-mask SIG_AIM3;
+		
+	turn turret3 to y-axis heading speed <600.027473>;
+	turn sleeve3 to x-axis <0.000000> - pitch speed <600.038462>;
+	wait-for-turn turret3 around y-axis;
+	wait-for-turn sleeve3 around x-axis;
+	start-script RestoreAfterDelayWeapon4();
+	return (1);
+}
+
+
+
+Killed(severity, corpsetype)
+{
+	
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode sphere type SHATTER | BITMAP4;
+		explode sphere type SHATTER | BITMAP4;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode sphere type SHATTER | BITMAP4;
+		explode sphere type SHATTER | BITMAP4;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode sphere type SHATTER | BITMAP4;
+		explode sphere type SHATTER | BITMAP4;
+		return (0);
+	}
+	corpsetype = 3;
+	explode sphere type SHATTER | BITMAP4;
+	explode sphere type SHATTER | BITMAP4;
+		
+}
+

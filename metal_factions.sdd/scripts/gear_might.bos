@@ -1,0 +1,285 @@
+#define TAK			// This is a TAK script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 	80
+
+piece  base, turret, sleeve, lbarrel, rbarrel, lflare, rflare, tur2,tur3,logo2, t1,t2,t1cover,t2cover,body,left,right,b2, sup1, turret2, sleeve2, flare2, sup2, turret3, sleeve3, flare3, sup3, turret4, sleeve4, flare4, sup4, turret5,sleeve5,flare5;
+
+static-var  Static_Var_1, Static_Var_2, Static_Var_3, gun_1;
+
+#include "tankthreads.h"
+
+#define SIG_AIM 1
+#define SIG_AIM2 2
+#define SIG_AIM3 4
+#define SIG_AIM4 8
+#define SIG_AIM5 16
+
+RestoreAfterDelay1()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn turret to y-axis <0.000000> speed <90.021978>;
+	turn sleeve to x-axis <0.000000> speed <50.010989>;
+	return;
+}
+
+RestoreAfterDelay2()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn turret2 to y-axis <0.000000> speed <190.021978>;
+	turn sleeve2 to x-axis <0.000000> speed <150.010989>;
+	return;
+}
+RestoreAfterDelay3()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn turret3 to y-axis <0.000000> speed <190.021978>;
+	turn sleeve3 to x-axis <0.000000> speed <150.010989>;
+	return;
+}
+RestoreAfterDelay4()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn turret4 to y-axis <180.000000> speed <190.021978>;
+	turn sleeve4 to x-axis <0.000000> speed <150.010989>;
+	return;
+}
+RestoreAfterDelay5()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn turret5 to y-axis <180.000000> speed <190.021978>;
+	turn sleeve5 to x-axis <0.000000> speed <150.010989>;
+	return;
+}
+DamageControl(Func_Var_1)
+{
+	while( TRUE )
+	{
+		Func_Var_1 = get HEALTH;
+		if( Func_Var_1 < 50 )
+		{
+			emit-sfx 256 | 1 from sleeve;
+			if( Func_Var_1 < 25 )
+			{
+				emit-sfx 256 | 2 from turret;
+			}
+		}
+		sleep 1000;
+	}
+	return;
+}
+
+
+AimFromWeapon1(piecenum)
+{
+	piecenum = turret;
+	return;
+}
+
+QueryWeapon1(piecenum)
+{
+	if( gun_1 == [0])
+	{
+		piecenum = lflare;
+		return (0);
+	}
+	if ( gun_1 == [1])
+	{
+		piecenum = rflare;
+		return (0);
+	}
+}
+
+AimWeapon1(heading, pitch)
+{
+	signal 1;
+	set-signal-mask 1;
+	turn turret to y-axis heading speed <80.021978>;
+	turn sleeve to x-axis <0.000000> - pitch speed <80.010989>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn sleeve around x-axis;
+	start-script RestoreAfterDelay1();
+	return (1);
+}
+
+FireWeapon1()
+{
+	if( gun_1 == [0] )
+	{
+		move lbarrel to z-axis [-8.000000] now;
+		emit-sfx 1024 from lflare;
+		sleep 150;
+		move lbarrel to z-axis [0.000000] speed [10.000000];
+		gun_1 = [1];
+		return (0);
+	}
+	if ( gun_1 == [1] )
+	{
+		move rbarrel to z-axis [-8.000000] now;
+		emit-sfx 1024 from rflare;
+		sleep 150;
+		move rbarrel to z-axis [0.000000] speed [10.000000];
+		gun_1 = [0];
+		return (0);
+	}
+	return;
+}
+
+
+AimFromWeapon2(piecenum)
+{
+	piecenum = turret2;
+	return;
+}
+
+QueryWeapon2(piecenum)
+{
+	piecenum = flare2;
+	return (0);
+}
+
+AimWeapon2(heading, pitch)
+{
+	signal SIG_AIM2;
+	set-signal-mask SIG_AIM2;
+	turn turret2 to y-axis heading speed <180.021978>;
+	turn sleeve2 to x-axis <0.000000> - pitch speed <180.010989>;
+	wait-for-turn turret2 around y-axis;
+	wait-for-turn sleeve2 around x-axis;
+	start-script RestoreAfterDelay2();
+	return (1);
+}
+
+FireWeapon2()
+{
+	emit-sfx 1024+1 from flare2;
+	return;
+}
+
+AimFromWeapon3(piecenum)
+{
+	piecenum = turret3;
+	return;
+}
+
+QueryWeapon3(piecenum)
+{
+	piecenum = flare3;
+	return (0);
+}
+
+AimWeapon3(heading, pitch)
+{
+	signal SIG_AIM3;
+	set-signal-mask SIG_AIM3;
+	turn turret3 to y-axis heading speed <180.021978>;
+	turn sleeve3 to x-axis <0.000000> - pitch speed <180.010989>;
+	wait-for-turn turret3 around y-axis;
+	wait-for-turn sleeve3 around x-axis;
+	start-script RestoreAfterDelay3();
+	return (1);
+}
+
+FireWeapon3()
+{
+	emit-sfx 1024+1 from flare3;
+	return;
+}
+
+AimFromWeapon4(piecenum)
+{
+	piecenum = turret4;
+	return;
+}
+
+QueryWeapon4(piecenum)
+{
+	piecenum = flare4;
+	return (0);
+}
+
+AimWeapon4(heading, pitch)
+{
+	signal SIG_AIM4;
+	set-signal-mask SIG_AIM4;
+	turn turret4 to y-axis heading speed <180.021978>;
+	turn sleeve4 to x-axis <0.000000> - pitch speed <180.010989>;
+	wait-for-turn turret4 around y-axis;
+	wait-for-turn sleeve4 around x-axis;
+	start-script RestoreAfterDelay4();
+	return (1);
+}
+
+FireWeapon4()
+{
+	emit-sfx 1024+1 from flare4;
+	return;
+}
+
+AimFromWeapon5(piecenum)
+{
+	piecenum = turret5;
+	return;
+}
+
+QueryWeapon5(piecenum)
+{
+	piecenum = flare5;
+	return (0);
+}
+
+AimWeapon5(heading, pitch)
+{
+	signal SIG_AIM5;
+	set-signal-mask SIG_AIM5;
+	turn turret5 to y-axis heading speed <180.021978>;
+	turn sleeve5 to x-axis <0.000000> - pitch speed <180.010989>;
+	wait-for-turn turret5 around y-axis;
+	wait-for-turn sleeve5 around x-axis;
+	start-script RestoreAfterDelay5();
+	return (1);
+}
+
+FireWeapon5()
+{
+	emit-sfx 1024+1 from flare5;
+	return;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity >= 0 AND severity < 25 )
+	{
+		corpsetype = 1;
+	}
+	else if( severity >= 25 AND severity < 50 )
+	{
+		corpsetype = 2;
+	}
+	else if( severity >= 50 AND severity < 100 )
+	{
+		corpsetype = 3;
+	}
+	else if( severity >= 100 )
+	{
+		corpsetype = 3;
+	}
+	return;
+}
+
+Create()
+{
+	Static_Var_1 = 0;
+	gun_1 = [0];
+	turn turret4 to y-axis <180.000000> now;
+	turn turret5 to y-axis <180.000000> now;
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 250;
+	}
+	start-script DamageControl();
+	start-script AnimateTracks();
+	return;
+}

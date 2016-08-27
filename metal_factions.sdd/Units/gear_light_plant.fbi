@@ -1,0 +1,116 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Light Plant;
+	description=Produces level1 Robots and Vehicles;
+	icontype=plant;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR PLANT CTRL_F LEVEL1 NOWEAPON NOTAIR NOTSUB;
+	tedclass=PLANT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_light_plant;
+	unitnumber=150;
+	objectname=gear_light_plant_.3do;
+	corpse=gear_light_plant_dead;
+	buildpic=gear_light_plant.png;
+	soundcategory=TANKPLANT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=2550;
+	healtime=30;
+	footprintx=7;
+	footprintz=7;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=100;
+	energyuse=0;
+	energystorage=100;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=2048;
+	yardmap=oocccoo oocccoo oocccoo oocccoo oocccoo oocccoo oocccoo;
+	collisionVolumeType=Box;
+	collisionVolumeScales=106 32 96;
+	collisionVolumeOffsets=0 11 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	workertime=200;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=11;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=LARGE_BUILDINGEX;
+	selfdestructas=LARGE_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=2;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=PAMT;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:Nano;
+	explosiongenerator1=custom:WhiteLight;
+	}
+
+	buildcostenergy=4075;//#AUTO#
+	buildcostmetal=815;//#AUTO#
+	buildtime=6410;//#AUTO#
+}

@@ -1,0 +1,137 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Aven;
+	name=Turbulence;
+	description=Heavy Assault Hovercraft;
+	icontype=hover;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=ARM HOVER WEAPON LEVEL2 NOTAIR NOTSUB CTRL_W;
+	tedclass=TANK;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=aven_turbulence;
+	unitnumber=174;
+	objectname=aven_turbulence.3do;
+	corpse=aven_turbulence_dead;
+	buildpic=aven_turbulence.png;
+	soundcategory=aven_HOVER_MID;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=6000;
+	healtime=30;
+	footprintx=6;
+	footprintz=6;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=15;
+	energyuse=15;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canhover=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKHOVER3;
+	turnrate=200;
+	acceleration=0.01;
+	brakerate=0.01;
+	maxvelocity=1.9;
+	maxslope=16;
+	maxwaterdepth=0;
+	turnInPlace=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_turbulence_missile;
+	weapon2=aven_turbulence_laser;
+	weapon3=aven_turbulence_laser;
+	weaponmaindir2=1.2 0 1;
+	maxangledif2=260;
+	weaponmaindir3=-1.2 0 1;
+	maxangledif3=260;
+	nochasecategory=VTOL;
+	badtargetcategory1=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ARM-HG;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 40 50;
+	collisionVolumeOffsets = 0 5 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	explosiongenerator0=custom:rocketflaremed;
+	explosiongenerator1=custom:redflare;
+	}
+
+	buildcostenergy=16041;//#AUTO#
+	buildcostmetal=3208;//#AUTO#
+	buildtime=38231;//#AUTO#
+}

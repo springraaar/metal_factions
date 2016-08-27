@@ -1,0 +1,121 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Clam;
+	description=Underwater Torpedo Launcher;
+	icontype=sea;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE SPECIAL WEAPON TORP LEVEL1 NOTAIR;
+	tedclass=WATER;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=sphere_clam;
+	unitnumber=10000;
+	objectname=sphere_clam.3do;
+	corpse=sphere_clam_dead;
+	buildpic=sphere_clam.png;
+	soundcategory=aven_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1100;
+	healtime=30;
+	footprintx=3;
+	footprintz=3;
+	damagemodifier=0.5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.1;
+	energyuse=0.1;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=32768;
+	yardmap=wwwwwwwww;
+	activatewhenbuilt=1;
+	collisionvolumetype=cyly;
+	collisionVolumeScales=40 30 40;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	minwaterdepth=25;
+	maxslope=15;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+	sonardistance=600;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=sphere_clam_torpedo;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=GUARD_NOMOVE;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AS-TDS;
+	downloadable=1;
+	noshadow=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	[CustomParams]
+	{
+		tip=Gains 50% dmg resistance when closed;
+	}
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildcostenergy=1416;//#AUTO#
+	buildcostmetal=283;//#AUTO#
+	buildtime=3375;//#AUTO#
+}
