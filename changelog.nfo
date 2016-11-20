@@ -1,3 +1,74 @@
+2016/11/19 ------------------ NOTES v0.97 ----------------------
+
+--- new features
+
+- added option to select a random faction
+
+--- new units
+
+- added CLAW "Trident" : Ground/Sea Attack Aircraft. Can attack underwater units (level 2)
+- added SPHERE "Neptune" : Shielded Anti-Sub Aircraft (level 2)
+
+
+--- balance / mechanics
+
+- changed the way energy drain from weapons is factored into the unit costs
+(some of the cheaper energy-intensive units are slightly more expensive, others with energy intensive beams are a bit cheaper)
+
+- units with high spike damage are now slightly more expensive (up to about 10% in general, with 20% more on AVEN and GEAR level 2 bombers)
+
+- very long range plasma cannons and railgun energy drain raised from about 200 to 300 E/s
+
+- increased cost of AVEN's disruptor units by about 25%
+
+- paralyze damage scales up to +200% based on target's missing HP percentage, up from +100%
+
+- fixed an exploit where upgrades could stack after giving units to other player with different types of upgrades
+
+- fixed collision volume size and position for some units and many buildings (some were slightly floating above ground)
+
+- fixed dynamic collision size adjustment and aim position for pop-up defense turrets
+
+- teams are automatically marked as defeated if they have less than about 4% (8% for AI) of the strongest team's strength 
+(this means players can now end the game without having to search and kill EVERY enemy unit, as some may be hard to reach)
+
+- Air Repair Pads have been removed (they may be added with new mechanics on a later date)
+
+- dragons teeth and fortification walls can now be built underwater
+
+--- effects / visuals
+
+- fix magnetar effect being visible while it's still under construction
+- show green glow effect and particles when morphing commanders
+- improved CLAW "Grinder" Form's weapon model
+- added unique wreckage models for all commanders
+
+--- UI / widgets
+
+- fixed an issue where upgrade status for enemy units would not be shown on the tooltip
+- added widget that sets some bombers to HOLD FIRE when built (regardless of the plant's fire state)
+- added a custom taskbar icon
+- player list changes
+  . merged resource bars and information for allies into the player list on the bottom right
+  . shows relative resource income % for all players : highest known income shown as 100%
+  . shows TrueSkill value when available instead of rank
+
+- show circles under selected units instead of the default selection squares (based on widget by Trepan)
+
+--- AI
+
+- fixed "easy mode" MFAI wasting much more time than intended (difficulty is slighly increased)
+- "onslaught mode" MFAI resource income bonus grows by 2M/s and 20E/s with every passing minute
+- "onslaught mode" MFAI resource income bonus no longer grows with estimated team disadvantage
+- CLAW and SPHERE AI may build anti-sub L2 aircraft (their air squad's no longer completely helpless against underwater targets)
+
+--- other
+
+- changed recommended springRTS engine version from 100.0 to 103.0
+
+
+
+
 2016/08/24 ------------------ NOTES v0.961 ----------------------
 
 --- UI / widgets

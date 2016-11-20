@@ -22,7 +22,7 @@
 	objectname=gear_u2commander.3do;
 	buildpic=gear_u2commander.png;
 	soundcategory=gear_COM;
-	corpse=gear_ucommander_dead;
+	corpse=gear_u2commander_dead;
 	script=gear_u2commander.cob;
 
 	//************************************************************
@@ -145,9 +145,8 @@
 
 	version=1.2;
 	zbuffer=1;
-	MinCollisionSpeed=2.5;//weight
 	collisionVolumeType = box;
-	collisionVolumeScales =34 35 25;
+	collisionVolumeScales =36 42 32;
 	collisionVolumeOffsets = 0 1 0;
 	collisionVolumeTest = 1;
 

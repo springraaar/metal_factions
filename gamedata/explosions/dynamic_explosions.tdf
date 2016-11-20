@@ -937,9 +937,45 @@
 		}
 		water=1;
 		ground=1;
-		underwater=1;
+		underwater=0;
 		air=1;
 		count=1;
+	}
+	// underwater puffs
+	[puffs]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.3;
+			sizeMod=1.0;
+			pos=0, 1, 0; 
+			gravity=0, 0, 0;
+		
+
+			Texture=smoke;
+			airdrag=0.77;
+			colorMap=0.7 0.5 0.4 0.01    0.6 0.5 0.4 0.2  0.4 0.4 0.6 0.4   0.1 0.2 0.3 0.8;
+
+			particleLifeSpread=d0.01 1; 
+			particleSpeedSpread=d0.01 0.5;  
+			particleSizeSpread=d0.01 1;
+		
+			particleLife=d0.08 7;
+			numParticles=d0.03 3; 
+			particleSpeed=d0.02 1; 
+			particleSize=d0.04 6;
+		
+			emitVector=0, 1, 0; 
+			emitRot=60;
+			emitRotSpread=5; 
+			directional=0; 
+		}
+		air=0;
+		water=0;
+		underwater=1;
+		ground=0;
+		count=3;
 	}
 }
 

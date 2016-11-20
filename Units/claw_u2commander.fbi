@@ -22,7 +22,7 @@
 	objectname=claw_u2commander.3do;
 	buildpic=claw_u2commander.png;
 	soundcategory=gear_COM;
-	corpse=claw_ucommander_dead;
+	corpse=claw_u2commander_dead;
 	script=claw_u2commander.cob;
 
 	//************************************************************
@@ -147,9 +147,8 @@
 
 	version=1.2;
 	zbuffer=1;
-	MinCollisionSpeed=2.5;//weight
 	collisionVolumeType = box;
-	collisionVolumeScales =33 40 25;
+	collisionVolumeScales =35 42 28;
 	collisionVolumeOffsets = 0 1 0;
 	collisionVolumeTest = 1;
 

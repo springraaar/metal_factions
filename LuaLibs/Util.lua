@@ -1,4 +1,5 @@
 
+-------------------------------------------- FUNCTION ALIASES
 
 sqrt = math.sqrt
 max = math.max
@@ -26,6 +27,20 @@ spGetCommandQueue = Spring.GetCommandQueue
 spGetFeatureDefID = Spring.GetFeatureDefID
 spGetFeaturePosition = Spring.GetFeaturePosition
 spGetUnitMoveTypeData = Spring.GetUnitMoveTypeData
+spGetAllUnits = Spring.GetAllUnits
+spGetTeamInfo = Spring.GetTeamInfo
+spGetTeamList = Spring.GetTeamList
+
+-------------------------------------------- CONSTANTS
+ENERGY_METAL_VALUE = 60
+
+
+
+
+-------------------------------------------- GENERIC
+-- sets, tables, string manipulation, etc. 
+
+
 
 function addToSet(set, key)
 	set[key] = true
@@ -98,6 +113,10 @@ function printTable(table)
 	end
 end
 
+
+-------------------------------------------- OTHER
+
+
 function log(inStr, ai)
 	if DEBUG then
 		if( ai ~= nil ) then
@@ -124,3 +143,18 @@ function sqDistance(x1,x2,z1,z2)
 	return sqDist
 end
 
+function getWeightedCost(ud)
+	if (ud ~= nil) then
+		return ud.metalCost + ud.energyCost * ENERGY_METAL_VALUE
+	end
+
+	return 0
+end
+
+-- checks if unit is a commander
+function isCommander(ud)
+	if (ud.customParams.iscommander) then
+		return true
+	end
+	return false
+end

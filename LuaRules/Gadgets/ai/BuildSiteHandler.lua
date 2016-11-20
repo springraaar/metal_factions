@@ -149,11 +149,14 @@ function BuildSiteHandler:FindClosestBuildSite(ud, searchPos, searchRadius, minD
 								-- check if unit violates minimum distance from nearby own buildings
 								for uId,_ in pairs(ownCell.buildingIdSet) do
 									uDef = UnitDefs[spGetUnitDefID(uId)]
-									uRadius = spGetUnitDefDimensions(uDef.id).radius
-									uPos = newPosition(spGetUnitPosition(uId,false,false))
-									if (checkWithinDistance(testPos,uPos,testRadius+uRadius)) then
-										valid = false
-										break
+									
+									if (uDef) then
+										uRadius = spGetUnitDefDimensions(uDef.id).radius
+										uPos = newPosition(spGetUnitPosition(uId,false,false))
+										if (checkWithinDistance(testPos,uPos,testRadius+uRadius)) then
+											valid = false
+											break
+										end
 									end
 								end
 							end

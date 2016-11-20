@@ -105,9 +105,10 @@ Create()
 	move slholder to y-axis [-5.000000] now;
 	turn slholder to x-axis <90.000000> now;
 	move barrel to z-axis [-14.000000] now;
+	isOpen = FALSE;
+	set ARMORED to 1;
 	start-script SmokeUnit();
 	start-script close();
-	isOpen = FALSE;
 	return (0);
 }
 

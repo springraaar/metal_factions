@@ -25,41 +25,51 @@ Spring.SetUnitCollisionVolumeData ( number unitID, number scaleX, number scaleY,
      COLVOL_AXIS_Z = 2
 ]]--
 
---Collision volume definitions, ones entered here are for XTA, for other mods modify apropriatly
+--Collision volume definitions
+-- sizeX,sizeY,sizeZ,offsetX,offsetY,offsetZ,volumeType,testType,primaryAxis
 
 local unitCollisionVolume = {}
 
-	unitCollisionVolume["aven_advanced_sonar_station"] = {
-		on={63,70,63,0,-7,0,0,1,0},
-		off={24,40,24,0,-5,0,0,1,0},
-	}
-	unitCollisionVolume["aven_seaplane_platform"] = {
-		on={105,66,105,0,33,0,2,1,0},
-		off={105,44,105,0,0,0,2,1,0},
-	}
-	unitCollisionVolume["aven_targeting_facility"] = {
-		on={62,34,62,0,0,0,2,1,0},
-		off={55,78,55,0,-19.5,0,0,1,0},
-	}
-	unitCollisionVolume["gear_doomsday_machine"] = {
-		on={55,112,55,0,-3,0,2,1,0},
-		off={48,86,48,0,-15,0,2,1,0},
-	}
-	unitCollisionVolume["gear_moho_metal_maker"] = {
-		on={60,60,60,0,0,0,1,1,1},
-		off={50,92,50,0,-22.5,0,0,1,0},
-	}
-	unitCollisionVolume["gear_targeting_facility"] = {
-		on={64,20,64,0,0,0,1,1,1},
-		off={38,20,38,0,0,0,1,1,1},
-	}
---	unitCollisionVolume["gear_toaster"] = {
---		on={44,23,44,0,0,0,2,1,0},
---		off={44,8,44,0,-9,0,2,1,0},
---	}
-	unitCollisionVolume["gear_viper"] = {
-		on={67,136,67,0,-21,0,0,1,0},
-		off={51,20,53,0,-12,0,2,1,0},
-	}
+--------------------------------------------- AVEN
+
+--------------------------------------------- GEAR
+unitCollisionVolume["gear_toaster"] = {
+	on={44,30,44,0,0,0,2,1,0},
+	off={44,15,44,0,0,0,2,1,0},
+}
+
+unitCollisionVolume["gear_missilator"] = {
+	on={60,60,60,0,0,0,2,1,0},
+	off={60,22,60,0,0,0,2,1,0},
+}
+
+unitCollisionVolume["gear_light_laser_tower"] = {
+	on={30,60,30,0,0,0,2,1,0},
+	off={30,15,30,0,0,0,2,1,0},
+}
+
+unitCollisionVolume["gear_pulverizer"] = {
+	on={30,60,30,0,0,0,2,1,0},
+	off={30,15,30,0,0,0,2,1,0},
+}
+
+unitCollisionVolume["gear_burner"] = {
+	on={50,40,50,0,0,0,1,1,1},
+	off={50,20,50,0,0,0,1,1,1},
+}
+
+--------------------------------------------- CLAW
+
+unitCollisionVolume["claw_hyper"] = {
+	on={60,30,60,0,0,0,2,1,0},
+	off={60,15,60,0,0,0,2,1,0},
+}
+
+unitCollisionVolume["claw_hazard"] = {
+	on={30,60,30,0,0,0,2,1,0},
+	off={30,15,30,0,0,0,2,1,0},
+}
+
+--------------------------------------------- SPHERE
 
 return unitCollisionVolume

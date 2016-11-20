@@ -34,7 +34,8 @@ local echo  = Spring.Echo
 --      commented out the preservation of cmd queue and unit lineage at lines 536 and 559
 -- Changes by raaar (12/2013): 
 --      commented out turning unit off at lines 396 and 425, was giving errors in spring 95.0
-
+-- Changes by raaar (12/2016):
+--      added some checks to prevent errors when players resign while commander is being morphed
   
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -150,6 +151,10 @@ local morphCmdDesc = {
 --// will be replaced in Initialize()
 local RankToXp    = function() return 0 end
 local GetUnitRank = function() return 0 end
+
+local spGetUnitPosition = Spring.GetUnitPosition
+local spSpawnCEG = Spring.SpawnCEG
+local morphCEG = "morph"
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -390,7 +395,7 @@ end
 
 local function StartMorph(unitID, unitDefID, teamID, morphDef)
 
-  -- do not allow morph for unfinsihed units
+  -- do not allow morph for unfinished units
   if not isFinished(unitID) then return true end
 
   Spring.SetUnitHealth(unitID, { paralyze = 1.0e9 })    --// turns mexes and mm off (paralyze the unit)
@@ -476,96 +481,105 @@ local function FinishMorph(unitID, morphData)
 	  z = z+8
 	end	
 	newUnit = Spring.CreateUnit(defName, x, y, z, face, unitTeam)
-	Spring.SetUnitPosition(newUnit, x, y, z)
+	if newUnit then
+	  Spring.SetUnitPosition(newUnit, x, y, z)
+	end
   else
 	newUnit = Spring.CreateUnit(defName, px, py, pz, face, unitTeam)
-	--Spring.SetUnitRotation(newUnit, 0, -h * math.pi / 32768, 0)
-	Spring.SetUnitPosition(newUnit, px, py, pz)
+	if newUnit then
+	  --Spring.SetUnitRotation(newUnit, 0, -h * math.pi / 32768, 0)
+	  Spring.SetUnitPosition(newUnit, px, py, pz)
+	end
   end  
   
-  if (extraUnitMorphDefs[unitID] ~= nil) then
-    -- nothing here for now
-  end
-  if (hostName ~= nil) and PWUnits[unitID] then
-    -- send planetwars deployment message
-    PWUnit = PWUnits[unitID]
-    PWUnit.currentDef=udDst
-	local data = PWUnit.owner..","..defName..","..math.floor(px)..","..math.floor(pz)..",".."S" -- todo determine and apply smart orientation of the structure
-	Spring.SendCommands("w "..hostName.." pwmorph:"..data)
-	extraUnitMorphDefs[unitID] = nil
-	GG.PlanetWars.units[unitID] = nil
-	GG.PlanetWars.units[newUnit] = PWUnit
-	SendToUnsynced('PWCreate', unitTeam, newUnit)
-  elseif (not morphData.def.facing) then  -- set rotation only if unit is not planetwars and facing is not true
-    --Spring.Echo(morphData.def.facing)
-    --Spring.SetUnitRotation(newUnit, 0, -h * math.pi / 32768, 0)
-  end
-
-
-  --//copy experience
-  local newXp = Spring.GetUnitExperience(unitID)*XpScale
-  local nextMorph = morphDefs[morphData.def.into]
-  if nextMorph~= nil and nextMorph.into ~= nil then nextMorph = {morphDefs[morphData.def.into]} end
-  if (nextMorph) then --//determine the lowest xp req. of all next possible morphs
-    local maxXp = math.huge
-    for _, nm in pairs(nextMorph) do
-      local rankXpInto = RankToXp(nm.into,nm.rank)
-      if (rankXpInto>0)and(rankXpInto<maxXp) then
-        maxXp=rankXpInto
-      end
-      local xpInto     = nm.xp
-      if (xpInto>0)and(xpInto<maxXp) then
-        maxXp=xpInto
-      end
-    end
-    newXp = math.min( newXp, maxXp*0.9)
-  end
-  Spring.SetUnitExperience(newUnit, newXp)
-
-  --//copy some state
-  local states = Spring.GetUnitStates(unitID)
-  Spring.GiveOrderArrayToUnitArray({ newUnit }, {
-    { CMD.FIRE_STATE, { states.firestate },             { } },
-    { CMD.MOVE_STATE, { states.movestate },             { } },
-    { CMD.REPEAT,     { states["repeat"] and 1 or 0 },  { } },
-    { CMD.CLOAK,      { states.cloak     and 1 or udDst.initCloaked },  { } },
-    { CMD.ONOFF,      { 1 },                            { } },
-    { CMD.TRAJECTORY, { states.trajectory and 1 or 0 }, { } },
-  })
-
-  --//copy command queue        FIX : removed 04/2012, caused erros
-  --local cmds = Spring.GetUnitCommands(unitID)
-  --for i = 2, cmds.n do  -- skip the first command (CMD_MORPH)
-    --local cmd = cmds[i]
-    --Spring.GiveOrderToUnit(newUnit, cmd.id, cmd.params, cmd.options.coded)
-  --end
-
-  --//reassign assist commands to new unit
-  ReAssignAssists(newUnit,unitID)
-
-  --// copy health
-  local oldHealth,oldMaxHealth,_,_,buildProgress = Spring.GetUnitHealth(unitID)
-  local _,newMaxHealth         = Spring.GetUnitHealth(newUnit)
-  local newHealth = (oldHealth / oldMaxHealth) * newMaxHealth
-  if newHealth<=1 then newHealth = 1 end
-  Spring.SetUnitHealth(newUnit, {health = newHealth, build = buildProgress})
-  
-  --// copy shield power
-  local enabled,oldShieldState = Spring.GetUnitShieldState(unitID) 
-  if oldShieldState and Spring.GetUnitShieldState(newUnit) then
-    Spring.SetUnitShieldState(newUnit, enabled,oldShieldState)
-  end
-
-  -- FIX : unit lineage was disabled in 84.0
-  --local lineage = Spring.GetUnitLineage(unitID)
-  --Spring.SetUnitLineage(newUnit,lineage,true)
-
-  --// FIXME: - re-attach to current transport?
-  --// update selection
-  SendToUnsynced("unit_morph_finished", unitID, newUnit)
-
-  Spring.SetUnitBlocking(newUnit, true)
-  Spring.DestroyUnit(unitID, false, true) -- selfd = false, reclaim = true
+  if newUnit then
+	  
+	  if (extraUnitMorphDefs[unitID] ~= nil) then
+	    -- nothing here for now
+	  end
+	  
+	  --------------------TODO ZK leftover? needs cleanup
+	  if (hostName ~= nil) and PWUnits[unitID] then
+	    -- send planetwars deployment message
+	    PWUnit = PWUnits[unitID]
+	    PWUnit.currentDef=udDst
+		local data = PWUnit.owner..","..defName..","..math.floor(px)..","..math.floor(pz)..",".."S" -- todo determine and apply smart orientation of the structure
+		Spring.SendCommands("w "..hostName.." pwmorph:"..data)
+		extraUnitMorphDefs[unitID] = nil
+		GG.PlanetWars.units[unitID] = nil
+		GG.PlanetWars.units[newUnit] = PWUnit
+		SendToUnsynced('PWCreate', unitTeam, newUnit)
+	  elseif (not morphData.def.facing) then  -- set rotation only if unit is not planetwars and facing is not true
+	    --Spring.Echo(morphData.def.facing)
+	    --Spring.SetUnitRotation(newUnit, 0, -h * math.pi / 32768, 0)
+	  end
+	
+	
+	  --//copy experience
+	  local newXp = Spring.GetUnitExperience(unitID)*XpScale
+	  local nextMorph = morphDefs[morphData.def.into]
+	  if nextMorph~= nil and nextMorph.into ~= nil then nextMorph = {morphDefs[morphData.def.into]} end
+	  if (nextMorph) then --//determine the lowest xp req. of all next possible morphs
+	    local maxXp = math.huge
+	    for _, nm in pairs(nextMorph) do
+	      local rankXpInto = RankToXp(nm.into,nm.rank)
+	      if (rankXpInto>0)and(rankXpInto<maxXp) then
+	        maxXp=rankXpInto
+	      end
+	      local xpInto     = nm.xp
+	      if (xpInto>0)and(xpInto<maxXp) then
+	        maxXp=xpInto
+	      end
+	    end
+	    newXp = math.min( newXp, maxXp*0.9)
+	  end
+	  Spring.SetUnitExperience(newUnit, newXp)
+	
+	  --//copy some state
+	  local states = Spring.GetUnitStates(unitID)
+	  Spring.GiveOrderArrayToUnitArray({ newUnit }, {
+	    { CMD.FIRE_STATE, { states.firestate },             { } },
+	    { CMD.MOVE_STATE, { states.movestate },             { } },
+	    { CMD.REPEAT,     { states["repeat"] and 1 or 0 },  { } },
+	    { CMD.CLOAK,      { states.cloak     and 1 or udDst.initCloaked },  { } },
+	    { CMD.ONOFF,      { 1 },                            { } },
+	    { CMD.TRAJECTORY, { states.trajectory and 1 or 0 }, { } },
+	  })
+	
+	  --//copy command queue        FIX : removed 04/2012, caused erros
+	  --local cmds = Spring.GetUnitCommands(unitID)
+	  --for i = 2, cmds.n do  -- skip the first command (CMD_MORPH)
+	    --local cmd = cmds[i]
+	    --Spring.GiveOrderToUnit(newUnit, cmd.id, cmd.params, cmd.options.coded)
+	  --end
+	
+	  --//reassign assist commands to new unit
+	  ReAssignAssists(newUnit,unitID)
+	
+	  --// copy health
+	  local oldHealth,oldMaxHealth,_,_,buildProgress = Spring.GetUnitHealth(unitID)
+	  local _,newMaxHealth         = Spring.GetUnitHealth(newUnit)
+	  local newHealth = (oldHealth / oldMaxHealth) * newMaxHealth
+	  if newHealth<=1 then newHealth = 1 end
+	  Spring.SetUnitHealth(newUnit, {health = newHealth, build = buildProgress})
+	  
+	  --// copy shield power
+	  local enabled,oldShieldState = Spring.GetUnitShieldState(unitID) 
+	  if oldShieldState and Spring.GetUnitShieldState(newUnit) then
+	    Spring.SetUnitShieldState(newUnit, enabled,oldShieldState)
+	  end
+	
+	  -- FIX : unit lineage was disabled in 84.0
+	  --local lineage = Spring.GetUnitLineage(unitID)
+	  --Spring.SetUnitLineage(newUnit,lineage,true)
+	
+	  --// FIXME: - re-attach to current transport?
+	  --// update selection
+	  SendToUnsynced("unit_morph_finished", unitID, newUnit)
+	
+	  Spring.SetUnitBlocking(newUnit, true)
+	  Spring.DestroyUnit(unitID, false, true) -- selfd = false, reclaim = true
+	end
 end
 
 
@@ -893,9 +907,18 @@ function gadget:GameFrame(n)
     end
   end
 
+  local ox,oy,oz
   for unitID, morphData in pairs(morphUnits) do
     if (not UpdateMorph(unitID, morphData)) then
       morphUnits[unitID] = nil
+    else
+      -- display morph effect
+      ox, oy, oz = spGetUnitPosition(unitID)
+      if ox then
+        if math.fmod(n,2) == 0 then
+          spSpawnCEG(morphCEG, ox,oy+15,oz)
+        end
+      end
     end
   end
 end

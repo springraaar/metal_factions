@@ -13,15 +13,16 @@
 function widget:GetInfo()
   return {
     name      = "HealthBars",
-    desc      = "Gives various informations about units in form of bars.",
-    author    = "jK",
+    desc      = "Gives various informations about units in form of bars and overlays.",
+    author    = "jK. (modified by raaar)",
     date      = "2009",
     license   = "GNU GPL, v2 or later",
     layer     = -10,
-    enabled   = true  --  loaded by default?
+    enabled   = true
   }
 end
 
+-- nov 2016 : added green glow overlay for morphing units
 -- may 2015 : make sure reload bar is presented to highest reload time weapon (not primary weapon, as that was unreliable)
 
 --------------------------------------------------------------------------------
@@ -49,8 +50,9 @@ local infoDistance = 700000
 local minReloadTime = 4 --// in seconds
 
 local drawStunnedOverlay = true
-local drawUnitsOnFire    = Spring.GetGameRulesParam("unitsOnFire")
+local drawUnitsOnFire    = true
 local drawJumpJet        = Spring.GetGameRulesParam("jumpJets")
+local drawMorphOverlay   = true
 
 --// this table is used to shows the hp of perimeter defence, and filter it for default wreckages
 local walls = {dragonsteeth=true,dragonsteeth_core=true,
@@ -114,6 +116,7 @@ local barFeatureDList;
 local glColor         = gl.Color
 local glMyText        = gl.FogCoord
 local floor           = math.floor
+local spGetGameFrame = Spring.GetGameFrame 
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -740,6 +743,7 @@ do
   local abs                    = math.abs
 
   function DrawOverlays()
+    local uId
     --// draw an overlay for stunned units
     if (drawStunnedOverlay)and(#paraUnits>0) then
       glDepthTest(true)
@@ -748,8 +752,12 @@ do
 
       local alpha = ((5.5 * widgetHandler:GetHourTimer()) % 2) - 0.7
       glColor(0,0.7,1,alpha/4)
+       
       for i=1,#paraUnits do
-        glUnit(paraUnits[i],true)
+        uId = paraUnits[i]
+        if not (UnitMorphs[uId]) then
+          glUnit(uId,true)
+        end
       end
       local shift = widgetHandler:GetHourTimer() / 20
 
@@ -784,8 +792,8 @@ do
       glPolygonOffset(-2, -2)
       glBlending(GL_SRC_ALPHA, GL_ONE)
 
-      local alpha = abs((widgetHandler:GetHourTimer() % 2)-1)
-      glColor(1,0.3,0,alpha/4)
+      local alpha = (spGetGameFrame() % 5) / 5
+      glColor(1,0.3,0,alpha/5)
       for i=1,#onFireUnits do
         glUnit(onFireUnits[i],true)
       end
@@ -795,6 +803,25 @@ do
       glDepthTest(false)
 
       onFireUnits = {}
+    end
+
+    --// overlay for units morphing
+    if (drawMorphOverlay)and(UnitMorphs) then
+      glDepthTest(true)
+      glPolygonOffset(-2, -2)
+      glBlending(GL_SRC_ALPHA, GL_ONE)
+
+      local alpha = abs((widgetHandler:GetHourTimer() % 2)-1)
+      glColor(0,1,0,alpha/4)
+      for uId,_ in pairs(UnitMorphs) do
+        glUnit(uId,true)
+      end
+
+      glBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+      glPolygonOffset(false)
+      glDepthTest(false)
+
+      --UnitMorphs = {}
     end
   end
 

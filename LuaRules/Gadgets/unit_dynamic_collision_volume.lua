@@ -6,7 +6,7 @@ function gadget:GetInfo()
     date      = "Dec 10, 2010",
     license   = "GNU GPL, v2 or later",
     layer     = 2,
-    enabled   = true  --  loaded by default?
+    enabled   = true
   }
 end
 
@@ -31,6 +31,13 @@ local submarines = {
 	sphere_adv_construction_sub = true
 }
 
+local respawners = {
+	aven_commander_respawner = true,
+	gear_commander_respawner = true,
+	claw_commander_respawner = true,
+	sphere_commander_respawner = true
+}
+
 if (gadgetHandler:IsSyncedCode()) then
 
 	--Reduces the diameter of default (unspecified) collision volume for 3DO models,
@@ -42,6 +49,12 @@ if (gadgetHandler:IsSyncedCode()) then
 			-- added radius reduction for submarines
 			if (submarines[UnitDefs[unitDefID].name]) then 
 				Spring.SetUnitRadiusAndHeight(unitID, (xs+zs)*0.6/2, ys*0.6)
+				return
+			end
+
+			-- added radius reduction for commander respawners
+			if (respawners[UnitDefs[unitDefID].name]) then 
+				Spring.SetUnitRadiusAndHeight(unitID, (xs+zs)*0.25, ys*0.5)
 				return
 			end
 
@@ -96,6 +109,7 @@ if (gadgetHandler:IsSyncedCode()) then
 
 			end
 			Spring.SetUnitCollisionVolumeData(unitID, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
+			Spring.SetUnitMidAndAimPos(unitID,0, p[2]*0.5, 0,0, p[2]*0.5,0,true)
 		end
 	end
 end

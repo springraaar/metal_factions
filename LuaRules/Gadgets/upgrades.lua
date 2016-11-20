@@ -30,6 +30,8 @@ local COLOR_BLUE = "\255\180\180\255"
 local COLOR_DEFAULT = "\255\255\255\255" 
 local COLOR_DARK = "\255\130\130\130"
 
+local modifierTypes = {"damage","range","hp","speed","hp","regen","php_regen","light_drones","medium_drone","stealth_drone","builder_drone"}
+
 local modifiersByUpgrade = {
 -- weapon / red
 	
@@ -268,14 +270,14 @@ function updatePlayerModifiers(teamId)
 
 
 	-- player upgrade status
-	spSetTeamRulesParam(teamId,"upgrade_label", playerUpgradesLabelStr,{inlos = true})
-	spSetTeamRulesParam(teamId,"upgrade_status", playerUpgradesStr,{inlos = true})
-	spSetTeamRulesParam(teamId,"upgrade_list",playerUpgradesList,{inlos = true})
-	spSetTeamRulesParam(teamId,"upgrade_modifiers",playerUpgradesModifiers,{inlos = true})
+	spSetTeamRulesParam(teamId,"upgrade_label", playerUpgradesLabelStr,{public = true})
+	spSetTeamRulesParam(teamId,"upgrade_status", playerUpgradesStr,{public = true})
+	spSetTeamRulesParam(teamId,"upgrade_list",playerUpgradesList,{public = true})
+	spSetTeamRulesParam(teamId,"upgrade_modifiers",playerUpgradesModifiers,{public = true})
 	-- for AI
-	spSetTeamRulesParam(teamId,"upgrade_allowed_minor", (limitsByType[TYPE_MINOR]-minorCount),{inlos = true})
-	spSetTeamRulesParam(teamId,"upgrade_allowed_commander", (limitsByType[TYPE_COMMANDER]-commanderCount),{inlos = true})
-	spSetTeamRulesParam(teamId,"upgrade_allowed_major", (limitsByType[TYPE_MAJOR]-majorCount),{inlos = true})
+	spSetTeamRulesParam(teamId,"upgrade_allowed_minor", (limitsByType[TYPE_MINOR]-minorCount),{public = true})
+	spSetTeamRulesParam(teamId,"upgrade_allowed_commander", (limitsByType[TYPE_COMMANDER]-commanderCount),{public = true})
+	spSetTeamRulesParam(teamId,"upgrade_allowed_major", (limitsByType[TYPE_MAJOR]-majorCount),{public = true})
 	
 	modifiersByPlayerId[teamId] = playerMods
 end
@@ -310,11 +312,16 @@ function updateUnitModifiers(unitId, unitDefId, teamId)
 
 	modifiersByUnitId[unitId] = unitMods
 	
+	-- clear existing modifiers
+	for _,modName in pairs(modifierTypes) do
+		spSetUnitRulesParam(unitId,"upgrade_"..modName,"",{public = true})
+	end
+	
 	if unitMods then
 		local hasRange = false
 		-- set unit rules parameters for use by other gadgets
 		for modName,modValue in pairs(unitMods) do
-			spSetUnitRulesParam(unitId,"upgrade_"..modName,modValue,{inlos = true})
+			spSetUnitRulesParam(unitId,"upgrade_"..modName,modValue,{public = true})
 			
 			if (modName == "range") then
 				hasRange = true
@@ -394,10 +401,9 @@ function gadget:Initialize()
 		upgradeBuildOrdersByPlayerId[teamId] = {}
 		modifiersByPlayerId[teamId] = {}
 		
-		
 		-- player upgrade status string, for tooltip
 		local playerUpgradesStr = "UPGRADES        minor: 0/"..limitsByType[TYPE_MINOR].."       commander: 0/"..limitsByType[TYPE_COMMANDER].."      major: 0/"..limitsByType[TYPE_MAJOR]
-		spSetTeamRulesParam(teamId,"upgrade_status", playerUpgradesStr,{inlos = true})
+		spSetTeamRulesParam(teamId,"upgrade_status", playerUpgradesStr,{public = true})
 	end
 end
 

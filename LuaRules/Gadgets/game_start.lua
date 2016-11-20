@@ -25,7 +25,7 @@ end
 --------------------------------------------------------------------------------
 
 local modOptions = Spring.GetModOptions()
-
+local commanders = {"aven_commander","gear_commander","claw_commander","sphere_commander"}
 
 local function GetStartUnit(teamID)
     local side = select(5, Spring.GetTeamInfo(teamID))
@@ -42,6 +42,10 @@ end
 
 local function SpawnStartUnit(teamID)
     local startUnit = GetStartUnit(teamID)
+    if startUnit == "random" then
+    	startUnit = commanders[ math.random(1,#commanders) ]
+    end
+    
     if (startUnit and startUnit ~= "") then
         -- spawn the specified start unit
         local x,y,z = Spring.GetTeamStartPosition(teamID)

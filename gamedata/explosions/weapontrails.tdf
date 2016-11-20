@@ -1014,6 +1014,99 @@ usedefaultexplosions=0;
 	}
 
 }
+[AMPROCKETTRAIL]
+{
+	usedefaultexplosions=0;	
+
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos = 0, 0, 0;
+			dir= -1 r2, -1 r2, -1 r2;
+			width=10;
+			length=10;
+			alpha=0.1;
+			alphadecay=0.015;
+			color=1.0, 1.0, 0.9;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=2; 
+	}
+
+	[exhale]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.2;
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, 0, 0;
+		
+
+		Texture=smoke;
+		airdrag=0.77;
+		colorMap=0.4 0.4 0.4 0.01 0.1 0.1 0.1 0.2 0.0 0.0 0.0 0.01;
+
+		particleLifeSpread=3; 
+		particleSpeedSpread=2;  
+		particleSizeSpread=1;   
+		
+		particleLife=10;
+		numParticles=0; 
+		particleSpeed=-1; 
+		particleSize=3;
+		
+		
+		emitVector=0, 1, 0; 
+		emitRot=80;
+		emitRotSpread=5; 
+		directional=0; 
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+	[bubbles]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.1;
+		sizeMod=1.0;
+		pos=0, 0, 0; 
+		emitVector=0, 1, 0;
+	      gravity=0, -0.0, 0;  
+		//colorMap=1 0.8 0.5 0.01   0.9 0.4 0.2 0.01   0.8 0.2 0 0.01;
+		colorMap=1 1 1 0.8   0.8 0.8 1 0.6   0.3 0.3 1 0.0;
+		Texture=Bubble;
+		airdrag=0.91;
+		particleLife=10;
+		particleLifeSpread=4;
+		numParticles=1;
+		particleSpeed=1;
+		particleSpeedSpread=1;
+		particleSize=1;
+		particleSizeSpread=0.5;
+		emitRot=25;
+		emitRotSpread=45;
+		directional=0;
+		alwaysVisible=1;
+		}
+	air=0;
+	water=1;
+	underwater=1;
+	ground=0;
+	count=1;
+	}
+}
 [SMLROCKETTRAIL]
 {
 	usedefaultexplosions=0;	

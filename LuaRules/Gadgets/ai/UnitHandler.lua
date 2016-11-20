@@ -113,6 +113,8 @@ function UnitHandler:Init(ai)
 	self.attackPatrollerCountTarget = 1
 	self.commanderMorphing = false
 	self.perceivedTeamAdvantageFactor = 1
+
+	
 	
 	-- initialize own building cells
 	local cellCountX = math.ceil(Game.mapSizeX / CELL_SIZE)
@@ -783,10 +785,16 @@ function UnitHandler:Update()
 	-- TODO move this elsewhere
 	if (self.isOnslaughtMode) then
 		if fmod(f,15) == 0 then
-			spAddTeamResource(self.ai.id,"metal",ONSLAUGHT_BASE_INCOME_METAL * (1+1/(self.perceivedTeamAdvantageFactor+0.2))  )
-			spAddTeamResource(self.ai.id,"energy",ONSLAUGHT_BASE_INCOME_ENERGY * (1+1/(self.perceivedTeamAdvantageFactor+0.2)) )	
+			-- spAddTeamResource(self.ai.id,"metal",ONSLAUGHT_BASE_INCOME_METAL * (1+1/(self.perceivedTeamAdvantageFactor+0.2))  )
+			-- spAddTeamResource(self.ai.id,"energy",ONSLAUGHT_BASE_INCOME_ENERGY * (1+1/(self.perceivedTeamAdvantageFactor+0.2)) )
+
+			local minutesPassed = floor(f/FRAMES_PER_MIN)
+			spAddTeamResource(self.ai.id,"metal",ONSLAUGHT_BASE_INCOME_METAL + minutesPassed * ONSLAUGHT_BASE_INCOME_METAL_PER_MIN  )
+			spAddTeamResource(self.ai.id,"energy",ONSLAUGHT_BASE_INCOME_ENERGY + minutesPassed * ONSLAUGHT_BASE_INCOME_ENERGY_PER_MIN )
 		end
 	end
+	
+
 end
 
 function UnitHandler:GameEnd()

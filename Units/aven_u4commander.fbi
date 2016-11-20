@@ -21,7 +21,7 @@
 	unitnumber=21;
 	objectname=aven_u4commander.3do;
 	buildpic=aven_u4commander.png;
-	corpse=aven_ucommander_dead;
+	corpse=aven_u4commander_dead;
 	soundcategory=aven_COM;
 
 	//************************************************************
@@ -143,9 +143,8 @@
 	trackwidth=22;
 	version=1.2;
 	zbuffer=1;
-	MinCollisionSpeed=2.5;//weight
 	collisionVolumeType = box;
-	collisionVolumeScales =33 35 23;
+	collisionVolumeScales =33 42 26;
 	collisionVolumeOffsets = 0 1 0;
 	collisionVolumeTest = 0;
 

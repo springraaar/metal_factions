@@ -13,17 +13,23 @@ function widget:GetInfo()
 	return {
 		name      = "AdvPlayersList",
 		desc      = "Players list with useful information / shortcuts. Use tweakmode (ctrl+F11) to customize.",
-		author    = "Marmoth. Updated by Jools to work with commander changes.",
+		author    = "Marmoth. (Modified by raaar)",
 		date      = "June 1, 2012",
-		version   = "8.1",
+		version   = "8.2",
 		license   = "GNU GPL, v2 or later",
 		layer     = -4,
-		enabled   = true,  --  loaded by default?
+		enabled   = true, 
 		handler   = true,
 	}
 end
 
+-- modified by raaar, oct 2016
+--	. remade buttons
+--	. added resource information and bars
+--	. replaced rank with trueskill information
+--  . removed tip draw check code as it wasn't working properly 
 -- modified by raaar, aug 2015 : fixed MFAI label 
+
 
 --------------------------------------------------------------------------------
 -- SPEED UPS
@@ -59,6 +65,10 @@ local gl_Rect             = gl.Rect
 local gl_TexRect          = gl.TexRect
 local gl_Color            = gl.Color
 
+local floor = math.floor
+local ceil = math.ceil
+local modf = math.modf
+
 --------------------------------------------------------------------------------
 -- IMAGES
 --------------------------------------------------------------------------------
@@ -73,6 +83,9 @@ local cpuPic          = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/cpu.png"
 local specPic         = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/spec.png"
 local selectPic       = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/select.png"
 local barPic          = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/bar.png"
+local hBarPic         = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/hbar.png"
+local energyBarPic    = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/energybar.png"
+local metalBarPic     = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/metalbar.png"
 local amountPic       = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/amount.png"
 local cpuPingPic      = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/cpuping.png"
 local sharePic        = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/share.png"
@@ -91,16 +104,8 @@ local crossPic        = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/cross.png"
 local pointbPic       = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/pointb.png"
 local takebPic        = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/takeb.png"
 local seespecPic      = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/seespec.png"
-
-local rank0      = "LuaUI/Images/advplayerslist/Ranks/rank0.png"
-local rank1      = "LuaUI/Images/advplayerslist/Ranks/rank1.png"
-local rank2      = "LuaUI/Images/advplayerslist/Ranks/rank2.png"
-local rank3      = "LuaUI/Images/advplayerslist/Ranks/rank3.png"
-local rank4      = "LuaUI/Images/advplayerslist/Ranks/rank4.png"
-local rank5      = "LuaUI/Images/advplayerslist/Ranks/rank5.png"
-local rank6      = "LuaUI/Images/advplayerslist/Ranks/rank6.png"
-local rank7      = "LuaUI/Images/advplayerslist/Ranks/rank7.png"
-local rank8      = "LuaUI/Images/advplayerslist/Ranks/rank_unknown.png"
+local resourcesPic      = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/resources.png"
+local positionPic      = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/position.png"
 
 local sidePics        = {}  -- loaded in Sem_sidePics function
 local sidePicsWO      = {}  -- loaded in Sem_sidePics function
@@ -135,9 +140,7 @@ local now             = 0
 -- Tooltip
 --------------------------------------------------------------------------------
 
-local tipIdleTime = 1000     -- last time mouse moved (for tip)
 local tipText                -- text of the tip
-local oldMouseX,oldMouseY    -- used to determine idle status (mouse moved or not)
 
 --------------------------------------------------------------------------------
 -- Players counts and info
@@ -151,8 +154,40 @@ local mySpecStatus = false
 
 --General players/spectator count and tables
 local player = {}
+local teamResources = {}
 
 
+function formatNbr(x,digits)
+	if x then
+		local _,fractional = modf(x)
+		if fractional==0 then
+			return x
+		elseif fractional<0.01 then
+			return floor(x)
+		elseif fractional>0.99 then
+			return ceil(x)
+		else
+			local ret=string.format("%."..(digits or 0).."f",x)
+			if digits and digits>0 then
+				while true do
+					local last = string.sub(ret,string.len(ret))
+					if last=="0" or last=="." then
+						ret = string.sub(ret,1,string.len(ret)-1)
+					end
+					if last~="0" then
+						break
+					end
+				end
+			end
+			return ret
+		end
+	end
+end
+
+function round(num, idp)
+  local mult = 10^(idp or 0)
+  return math.floor(num * mult + 0.5) / mult
+end
 
 --------------------------------------------------------------------------------
 -- Button check variable
@@ -213,10 +248,13 @@ local m_side;     modulesCount = modulesCount + 1
 local m_ID;       modulesCount = modulesCount + 1
 local m_name;     modulesCount = modulesCount + 1
 local m_share;    modulesCount = modulesCount + 1
+local m_resources;     modulesCount = modulesCount + 1
+local m_position;     modulesCount = modulesCount + 1
 local m_chat;     modulesCount = modulesCount + 1
 local m_cpuping;  modulesCount = modulesCount + 1
 local m_diplo;    modulesCount = modulesCount + 1
 local m_spec;     modulesCount = modulesCount + 1
+
 
 local m_point;    modulesCount = modulesCount + 1  -- those 3 are not considered as normal module since they dont take any place and wont affect other's position
 local m_take;     modulesCount = modulesCount + 1
@@ -227,7 +265,7 @@ m_rank = {
 	spec      = true,
 	play      = true,
 	active    = true,
-	width     = 18,
+	width     = 30,
 	position  = 2,
 	posX      = 0,
 	pic       = rank8,
@@ -237,7 +275,7 @@ m_side = {
 	spec      = true,
 	play      = true,
 	active    = true,
-	width     = 18,
+	width     = 19,
 	position  = 3,
 	posX      = 0,
 	pic       = sidePic,
@@ -267,7 +305,7 @@ m_cpuping = {
 	spec      = true,
 	play      = true,
 	active    = true,
-	width     = 24,
+	width     = 25,
 	position  = 6,
 	posX      = 0,
 	pic       = cpuPingPic,
@@ -277,18 +315,29 @@ m_share = {
 	spec      = false,
 	play      = true,
 	active    = true,
-	width     = 50,
+	width     = 56,
 	position  = 7,
 	posX      = 0,
 	pic       = sharePic,
 }
-	
+
+
+m_resources = {
+	spec      = true,
+	play      = true,
+	active    = true,
+	width     = 50,
+	position  = 8,
+	posX      = 0,
+	pic       = resourcesPic,
+}
+
 m_chat = {
 	spec      = false,
 	play      = true,
-  active    = true,
-	width     = 18,
-	position  = 8,
+	active    = true,
+	width     = 19,
+	position  = 10,
 	posX      = 0,
 	pic       = chatPic,
 }
@@ -297,18 +346,29 @@ m_spec = {
 	spec      = true,
 	play      = false,
 	active    = true,
-	width     = 18,
-	position  = 9,
+	width     = 19,
+	position  = 11,
 	posX      = 0,
 	pic       = specPic,
+}
+
+
+m_position = {
+	spec      = true,
+	play      = true,
+	active    = true,
+	width     = 40,
+	position  = 9,
+	posX      = 0,
+	pic       = positionPic,
 }
 
 --[[m_diplo = {
 	spec      = false,
 	play      = true,
 	active    = false,
-	width     = 18,
-	position  = 10,
+	width     = 19,
+	position  = 11,
 	posX      = 0,
 	pic       = diplomacyPic,		
 }]]
@@ -320,8 +380,10 @@ modules = {
 	m_name,
 	m_cpuping,
 	m_share,
+	m_resources,
 	m_spec,
 	m_chat,
+	m_position,
 --	m_diplo,
 }
 
@@ -466,6 +528,8 @@ function CreatePlayer(playerID)
 	local tname,_, tspec, tteam, tallyteam, tping, tcpu, tcountry, trank = Spring_GetPlayerInfo(playerID)
 	local _,_,_,_, tside, tallyteam                                      = Spring_GetTeamInfo(tteam)
 	local tred, tgreen, tblue                                            = Spring_GetTeamColor(tteam)
+	local tskill = GetSkill(playerID)
+	
 
 	tpingLvl = GetPingLvl(tping)
 	tcpuLvl  = GetCpuLvl(tcpu)
@@ -474,6 +538,7 @@ function CreatePlayer(playerID)
 	
 	return {
 		rank             = trank,
+		skill            = tskill, 
 		name             = tname,
 		team             = tteam,
 		allyteam         = tallyteam,
@@ -488,6 +553,11 @@ function CreatePlayer(playerID)
 		cpu              = tcpu,
 		tdead            = false,
 		spec             = tspec,
+		storageM     = nil,
+		storageE     = nil,
+		currentM     = nil,
+		currentE     = nil,
+		position     = nil
 	}
 	
 end
@@ -497,6 +567,7 @@ function CreatePlayerFromTeam(teamID)
 	local _,_, isDead, isAI, tside, tallyteam = Spring_GetTeamInfo(teamID)
 	local tred, tgreen, tblue                 = Spring_GetTeamColor(teamID)
 	local tname, ttotake, tdead
+	local tskill = GetSkill(teamID)
 	
 	if isAI then
 	
@@ -539,9 +610,10 @@ function CreatePlayerFromTeam(teamID)
 		
 		end
 	end
-	
-	return{
+
+	return {
 		rank             = 8, -- "don't know which" value
+		skill             = tskill,
 		name             = tname,
 		team             = teamID,
 		allyteam         = tallyteam,
@@ -553,6 +625,11 @@ function CreatePlayerFromTeam(teamID)
 		totake           = ttotake,
 		dead             = tdead,
 		spec             = false,
+		storageM     = nil,
+		storageE     = nil,
+		currentM     = nil,
+		currentE     = nil,
+		position     = nil	
 	}
 	
 end
@@ -619,7 +696,7 @@ function SortAllyTeams(vOffset)
 	-- (labels and separators are drawn)
 	local allyTeamID
 	local allyTeamList = Spring_GetAllyTeamList()
-	local firstEnnemy = true
+	local firstEnemy = true
 	allyTeamsCount = table.maxn(allyTeamList)-1
 	
 	-- find own ally team
@@ -636,15 +713,15 @@ function SortAllyTeams(vOffset)
 	-- add the others
 	for allyTeamID = 0, allyTeamsCount-1 do
 		if allyTeamID ~= myAllyTeamID then
-			if firstEnnemy == true then
+			if firstEnemy == true then
 				vOffset = vOffset + labelOffset
 				table.insert(drawListOffset, vOffset)
-				table.insert(drawList, -3) -- "Ennemies" label
-				firstEnnemy = false
+				table.insert(drawList, -3) -- "Enemies" label
+				firstEnemy = false
 			else
 				vOffset = vOffset + separatorOffset
 				table.insert(drawListOffset, vOffset)
-				table.insert(drawList, -4) -- Ennemy teams separator
+				table.insert(drawList, -4) -- Enemy teams separator
 			end
 			vOffset = SortTeams(allyTeamID, vOffset) -- Add the teams from the allyTeam 
 		end
@@ -773,14 +850,13 @@ function widget:DrawScreen()
 
 	local vOffset                 = 0         -- position of the next object to draw
 	local firstDrawnPlayer, firstEnemy, previousAllyTeam = true, true, nil
-	local tip                     = GetTipIdle()
 	local mouseX,mouseY           = Spring_GetMouseState()
 
 	-- sets font
 	UseFont(font)
 	
-	-- updates ressources for the sharing
-	UpdateRessources()
+	-- updates resources for the sharing
+	UpdateResources()
 	CheckTime()
 	
 	-- cancels the drawing if GUI is hidden
@@ -798,7 +874,7 @@ function widget:DrawScreen()
 	DrawShareSlider()
 end
 
-function UpdateRessources()
+function UpdateResources()
 	if energyPlayer ~= nil then
 		if energyPlayer.team == myTeamID then
 			local current,storage = Spring_GetTeamResources(myTeamID,"energy")
@@ -867,45 +943,27 @@ function DrawBackground()
 end
 
 function DrawList()
-
 	local mouseX,mouseY = Spring_GetMouseState()
 	local leader
 
-	if tip == false then
-		for i, drawObject in ipairs(drawList) do
-			if drawObject == -5 then
-				DrawLabel("SPECS", drawListOffset[i])
-			elseif drawObject == -4 then
-				DrawSeparator(drawListOffset[i])
-			elseif drawObject == -3 then
-				DrawLabel("ENEMIES", drawListOffset[i])
-			elseif drawObject == -2 then
-				DrawLabel("ALLIES", drawListOffset[i])
-			elseif drawObject == -1 then
-				leader = true
-			else
-				DrawPlayer(drawObject, leader, drawListOffset[i])
-			end
+	for i, drawObject in ipairs(drawList) do
+		if drawObject == -5 then
+			DrawLabel("SPECS", drawListOffset[i])
+		elseif drawObject == -4 then
+			DrawSeparator(drawListOffset[i])
+		elseif drawObject == -3 then
+			DrawLabel("ENEMIES", drawListOffset[i])
+		elseif drawObject == -2 then
+			DrawLabel("ALLIES", drawListOffset[i])
+		elseif drawObject == -1 then
+			leader = true
+		else
+			DrawPlayer(drawObject, leader, drawListOffset[i], mouseX, mouseY)
+			leader = false
 		end
-	else
-		for i, drawObject in ipairs(drawList) do
-			if drawObject == -5 then
-				DrawLabel("SPECS", drawListOffset[i])
-			elseif drawObject == -4 then
-				DrawSeparator(drawListOffset[i])
-			elseif drawObject == -3 then
-				DrawLabel("ENEMIES", drawListOffset[i])
-			elseif drawObject == -2 then
-				DrawLabel("ALLIES", drawListOffset[i])
-			elseif drawObject == -1 then
-				leader = true
-			else
-				DrawPlayerTip(drawObject, leader, drawListOffset[i], mouseX, mouseY)
-				leader = false
-			end
-		end
-		DrawTip(mouseX, mouseY)
 	end
+
+	DrawTip(mouseX, mouseY)
 end
 
 function DrawLabel(text, vOffset)
@@ -927,91 +985,10 @@ function DrawSeparator(vOffset)
 	gl_Color(1,1,1)
 end
 
-function DrawPlayer(playerID, leader, vOffset)
-	local rank     = player[playerID].rank
-	local name     = player[playerID].name
-	local team     = player[playerID].team
-	local allyteam = player[playerID].allyteam
-	local side     = player[playerID].side
-	local red      = player[playerID].red
-	local green    = player[playerID].green
-	local blue     = player[playerID].blue
-	local dark     = player[playerID].dark
-	local pingLvl  = player[playerID].pingLvl
-	local cpuLvl   = player[playerID].cpuLvl
-	local spec     = player[playerID].spec
-	local totake   = player[playerID].totake
-	local needm    = player[playerID].needm
-	local neede    = player[playerID].neede
-	local dead     = player[playerID].dead
-	local posY     = widgetPosY + widgetHeight - vOffset
-
-	if spec == false then
-		if leader == true then -- take / share buttons
-			if mySpecStatus == false then
-				if allyteam == myAllyTeamID then
-					if totake == true then
-						DrawTakeSignal(posY)
-					end
-					if m_share.active == true and dead ~= true then
-						DrawShareButtons(posY, needm, neede)
-					end
-				end
-			else
-				if m_spec.active == true then
-					DrawSpecButton(team,posY)                           -- spec button
-				end
-			end
-			gl_Color(red,green,blue,1)
-			if m_ID.active == true then
-				--if playerID < 32 then
-					DrawID(team, posY, dark)
-				--end
-			end
-		end
-		gl_Color(red,green,blue,1)
-		if m_side.active == true then
-			DrawSidePic(team, posY, leader, dark)   
-		end
-		gl_Color(red,green,blue,1)
-		if m_rank.active == true then
-			DrawRank(rank, posY, dark)
-		end
-	else
-		gl_Color(1,1,1,1)	
-		if m_name.active == true then
-			DrawName(name, posY, false)
-		end		
-	end
-	if m_cpuping.active == true then
-		if cpuLvl ~= nil then                              -- draws CPU usage and ping icons (except AI and ghost teams)
-			DrawCpuPing(pingLvl,cpuLvl,posY)
-		end
-	end
-	gl_Color(1,1,1,1)
-	if playerID < 32 then
-		if m_chat.active == true and mySpecStatus == false then
-			if playerID ~= myPlayerID then
-				DrawChatButton(posY)
-			end
-		end
-		if m_point.active == true then
-			if player[playerID].pointTime ~= nil then
-				if player[playerID].allyteam == myAllyTeamID or mySpecStatus == true then
-					if blink == true then
-						DrawPoint(posY)
-					end
-				end
-			end
-		end
-	end
-	leader = false
-	gl_Texture(false)
-end
-
-function DrawPlayerTip(playerID, leader, vOffset, mouseX, mouseY)
+function DrawPlayer(playerID, leader, vOffset, mouseX, mouseY)
 	tipY           = nil
 	local rank     = player[playerID].rank
+	local skill     = player[playerID].skill
 	local name     = player[playerID].name
 	local team     = player[playerID].team
 	local allyteam = player[playerID].allyteam
@@ -1030,7 +1007,15 @@ function DrawPlayerTip(playerID, leader, vOffset, mouseX, mouseY)
 	local neede    = player[playerID].neede
 	local dead     = player[playerID].dead
 	local posY     = widgetPosY + widgetHeight - vOffset
-	
+	local hasResourceInfo = nil
+	local energyLevel, metalLevel, position
+	if (teamResources[team] ~= nil) then
+		hasResourceInfo = true
+		energyLevel   = teamResources[team].currentE / teamResources[team].storageE
+		metalLevel   = teamResources[team].currentM / teamResources[team].storageM
+		position = teamResources[team].position
+	end
+
 	if mouseY >= posY and mouseY <= posY + 16 then tipY = true end
 	
 	if spec == false then
@@ -1057,7 +1042,7 @@ function DrawPlayerTip(playerID, leader, vOffset, mouseX, mouseY)
 			gl_Color(red,green,blue,1)	
 			if m_rank.active == true then
 			--	if playerID < 32 then
-					DrawRank(rank, posY, dark)
+					DrawRank(skill, posY, dark)
 			--	end
 			end
 			if m_ID.active == true then
@@ -1066,10 +1051,7 @@ function DrawPlayerTip(playerID, leader, vOffset, mouseX, mouseY)
 			--	end
 			end
 		end
-		gl_Color(red,green,blue,1)
-		if m_rank.active == true then                        
-			DrawRank(rank, posY, leader, dark)   
-		end
+
 		gl_Color(red,green,blue,1)
 		if m_side.active == true then                        
 			DrawSidePic(team, posY, leader, dark)   
@@ -1078,6 +1060,14 @@ function DrawPlayerTip(playerID, leader, vOffset, mouseX, mouseY)
 		if m_name.active == true then
 			DrawName(name, posY, dark)
 		end
+		if m_resources.active == true and hasResourceInfo then
+			DrawResourceBars(posY, energyLevel, metalLevel)
+			if tipY == true then resourcesTip(mouseX, teamResources[team]) end
+		end
+		if m_position.active == true and position ~= nil then
+			DrawPosition(posY, position)
+		end
+			
 	else
 		gl_Color(1,1,1,1)	
 		if m_name.active == true then
@@ -1091,7 +1081,7 @@ function DrawPlayerTip(playerID, leader, vOffset, mouseX, mouseY)
 			if tipY == true then PingCpuTip(mouseX, ping, cpu) end
 		end
 	end
-	
+
 	gl_Color(1,1,1,1)
 	if playerID < 32 then
 	
@@ -1142,15 +1132,15 @@ function DrawShareButtons(posY, needm, neede)
 	gl_Texture(unitsPic)                       -- Share UNIT BUTTON
 	gl_TexRect(m_share.posX + widgetPosX  + 1, posY, m_share.posX + widgetPosX  + 17, posY + 16)
 	gl_Texture(energyPic)                      -- share ENERGY BUTTON
-	gl_TexRect(m_share.posX + widgetPosX  + 17, posY, m_share.posX + widgetPosX  + 33, posY + 16)
+	gl_TexRect(m_share.posX + widgetPosX  + 19, posY, m_share.posX + widgetPosX  + 35, posY + 16)
 	gl_Texture(metalPic)                       -- share METAL BUTTON
-	gl_TexRect(m_share.posX + widgetPosX  + 33, posY, m_share.posX + widgetPosX  + 49, posY + 16)
+	gl_TexRect(m_share.posX + widgetPosX  + 37, posY, m_share.posX + widgetPosX  + 54, posY + 16)
 	gl_Texture(lowPic)
 	if needm == true then
-		gl_TexRect(m_share.posX + widgetPosX  + 33, posY, m_share.posX + widgetPosX  + 49, posY + 16)
+		gl_TexRect(m_share.posX + widgetPosX  + 37, posY, m_share.posX + widgetPosX  + 54, posY + 16)
 	end
 	if neede == true then
-		gl_TexRect(m_share.posX + widgetPosX  + 17, posY, m_share.posX + widgetPosX  + 33, posY + 16)	
+		gl_TexRect(m_share.posX + widgetPosX  + 19, posY, m_share.posX + widgetPosX  + 35, posY + 16)	
 	end
 	gl_Texture(false)
 end
@@ -1190,27 +1180,21 @@ function DrawSidePic(team, posY, leader, dark)
 	gl_Texture(false)	
 end
 
-function DrawRank(rank, posY, dark)
-	if rank == 0 then
-		DrawRankImage(rank0, posY)
-	elseif rank == 1 then
-		DrawRankImage(rank1, posY)
-	elseif rank == 2 then
-		DrawRankImage(rank2, posY)
-	elseif rank == 3 then
-		DrawRankImage(rank3, posY)
-	elseif rank == 4 then
-		DrawRankImage(rank4, posY)
-	elseif rank == 5 then
-		DrawRankImage(rank5, posY)
-	elseif rank == 6 then
-		DrawRankImage(rank6, posY)
-	elseif rank == 7 then
-		DrawRankImage(rank7, posY)
-	else
-		DrawRankImage(rank8, posY)
-	end
+function DrawRank(skill, posY, dark)
+
+--  rank
+--	if rank < 8 then
+--		DrawRankImage("LuaUI/Images/advplayerslist/Ranks/rank"..rank..".png", posY)
+--	else
+--		DrawRankImage("LuaUI/Images/advplayerslist/Ranks/rank_unknown.png", posY)
+--	end
+	
+	--  show TS skill value instead, if available
 	gl_Color(1,1,1,1)
+	UseFont(font)
+	TextDraw(skill, m_rank.posX + widgetPosX + 3, posY + 3)
+	gl_Color(1,1,1,1)
+	
 end
 
 function DrawRankImage(rankImage, posY)
@@ -1317,6 +1301,13 @@ function PingCpuTip(mouseX, pingLvl, cpuLvl)
 	end
 end
 
+function resourcesTip(mouseX, res)
+	if mouseX >= m_resources.posX + widgetPosX  + 13 and mouseX <=  m_resources.posX + widgetPosX  + 50 then
+		tipText = " \255\230\230\230M: "..floor(res.currentM).."/"..floor(res.storageM).." (+"..formatNbr(res.incomeM,1)..")"
+		tipText = tipText.."  \255\255\255\0E: "..floor(res.currentE).."/"..floor(res.storageE).." (+"..floor(res.incomeE)..")\255\255\255\255"
+	end
+end
+
 function PointTip(mouseX)
 	if right == true then
 		if mouseX >= widgetPosX - 28 and mouseX <= widgetPosX - 1 then
@@ -1326,7 +1317,7 @@ function PointTip(mouseX)
 		local leftPosX = widgetPosX + widgetWidth
 		if mouseX >= leftPosX + 1 and mouseX <= leftPosX + 28 then
 			tipText = "Click to reach the last point set by the player"
-		end		
+		end
 	end
 end
 
@@ -1346,27 +1337,14 @@ function DrawTip(mouseX, mouseY)
 		tipText        = nil
 end
 
-function GetTipIdle()
-	local mouseX,mouseY = Spring_GetMouseState()
-	if mouseX ~= oldMouseX or mouseY ~= oldMouseY then
-		tipIdleTime = now
-	end
-	oldMouseX,oldMouseY = mouseX,mouseY
-	if tipIdleTime + 0.5 > now then
-		return false
-	else
-		return true
-	end
-end
-
 function DrawShareSlider()
 	local posY
 	if energyPlayer ~= nil then
 		posY = widgetPosY + widgetHeight - energyPlayer.posY
 		gl_Texture(barPic)
-		gl_TexRect(m_share.posX + widgetPosX  + 16,posY-3,m_share.posX + widgetPosX  + 34,posY+58)
+		gl_TexRect(m_share.posX + widgetPosX  + 18,posY-3,m_share.posX + widgetPosX  + 36,posY+58)
 		gl_Texture(energyPic)
-		gl_TexRect(m_share.posX + widgetPosX  + 17,posY+sliderPosition,m_share.posX + widgetPosX  + 33,posY+16+sliderPosition)
+		gl_TexRect(m_share.posX + widgetPosX  + 19,posY+sliderPosition,m_share.posX + widgetPosX  + 35,posY+16+sliderPosition)
 		gl_Texture(amountPic)
 		if right == true then
 			gl_TexRect(m_share.posX + widgetPosX  - 28,posY-1+sliderPosition, m_share.posX + widgetPosX  + 19,posY+17+sliderPosition)
@@ -1380,9 +1358,9 @@ function DrawShareSlider()
 	elseif metalPlayer ~= nil then
 		posY = widgetPosY + widgetHeight - metalPlayer.posY
 		gl_Texture(barPic)
-		gl_TexRect(m_share.posX + widgetPosX  + 32,posY-3,m_share.posX + widgetPosX  + 50,posY+58)
+		gl_TexRect(m_share.posX + widgetPosX  + 36,posY-3,m_share.posX + widgetPosX  + 54,posY+58)
 		gl_Texture(metalPic)
-		gl_TexRect(m_share.posX + widgetPosX  + 33, posY+sliderPosition,m_share.posX + widgetPosX  + 49,posY+16+sliderPosition)
+		gl_TexRect(m_share.posX + widgetPosX  + 37, posY+sliderPosition,m_share.posX + widgetPosX  + 53,posY+16+sliderPosition)
 		gl_Texture(amountPic)
 		if right == true then
 			gl_TexRect(m_share.posX + widgetPosX  - 12,posY-1+sliderPosition, m_share.posX + widgetPosX  + 35,posY+17+sliderPosition)
@@ -1395,6 +1373,49 @@ function DrawShareSlider()
 		end
 	end
 end
+
+
+function DrawResourceBars(posY, energyLevel, metalLevel)
+
+	if (energyLevel ~= nil and metalLevel ~= nil) then
+		energyLevel = math.max(energyLevel,0)
+		metalLevel = math.max(metalLevel,0)
+		
+		gl_Color(1,1,1)
+		gl_Texture(hBarPic)
+		gl_TexRect(m_resources.posX + widgetPosX + 0, posY, m_resources.posX + widgetPosX + 50, posY + 18)
+	
+		gl_Color(1,1,1)
+		gl_Texture(metalBarPic)
+		gl_TexRect(m_resources.posX + widgetPosX + 2, posY + 3 , m_resources.posX + widgetPosX + metalLevel * 48 , posY + 7)
+	
+		gl_Color(1,1,1)
+		gl_Texture(energyBarPic)
+		gl_TexRect(m_resources.posX + widgetPosX + 2, posY + 11, m_resources.posX + widgetPosX + energyLevel * 48, posY + 15)
+		
+	
+		gl_Texture(false)
+		
+	end
+end
+
+function DrawPosition(posY, position)
+	if position ~= nil then
+		local level = 1	
+		if position < 0 then
+			position = 0
+		end
+		if position < 100 then
+			level = position / 100
+		end
+		gl_Color(1,math.max(1,2*level),level)
+
+		TextDrawCentered(position.."%", m_position.posX + widgetPosX + 20, posY + 3)
+		--gl_Rect(m_position.posX + widgetPosX + 0, posY + 0, m_position.posX + widgetPosX + 40, posY + 18)
+		gl_Color(1,1,1)
+	end
+end
+
 
 function GetCpuLvl(cpuUsage)
 
@@ -1457,9 +1478,15 @@ function SetSidePics()
 		_,_,_,_,teamside = Spring_GetTeamInfo(team)
 		if newSide[team] and newSide[team] > 0 then
 			if newSide[team] == 1 then
-				teamside = "arm"
+				teamside = "aven"
 			elseif newSide[team] == 2 then
-				teamside = "core"
+				teamside = "gear"
+			elseif newSide[team] == 3 then
+				teamside = "claw"
+			elseif newSide[team] == 4 then
+				teamside = "sphere"
+			elseif newSide[team] == 5 then
+				teamside = "random"
 			end
 		end
 		
@@ -1798,9 +1825,6 @@ function widget:TweakDrawScreen()
 
 end
 
-
-
-
 local function checkButton(module, x, y)
 		if IsOnRect(x, y, localLeft + localOffset, localBottom + 11, localLeft + localOffset + 16, localBottom + 27) then
 			module.active = not module.active
@@ -1838,7 +1862,6 @@ function widget:TweakMousePress(x,y,button)
 			clickToMove = true
 			return true
 		end
-		
 	end
 end
 
@@ -1906,6 +1929,8 @@ function widget:GetConfigData(data)      -- send
 		m_takeActive       = m_take.active,
 		m_seespecActive    = m_seespec.active,
 		m_chatActive       = m_chat.active,
+		m_resourcesActive       = m_resources.active,
+		m_positionActive       = m_position.active,
 	}
 	end
 end
@@ -1950,6 +1975,8 @@ function widget:SetConfigData(data)      -- load
 	m_take.active         = SetDefault(data.m_takeActive, true)
 	m_seespec.active      = SetDefault(data.m_seespecActive, true)
 	m_chat.active         = SetDefault(data.m_chatActive, false)
+	m_resources.active         = SetDefault(data.m_resourcesActive, true)
+	m_position.active         = SetDefault(data.m_positionActive, true)
 end
 
 function SetDefault(value, default)
@@ -1960,20 +1987,114 @@ function SetDefault(value, default)
 	end
 end
 
+function weightedIncome(metal, energy)
+	return metal + energy/60
+end
+
+
+function GetSkill(playerID)
+	local customtable = select(10,Spring_GetPlayerInfo(playerID)) -- player custom table
+	local unknown = "\255"..string.char(160)..string.char(160)..string.char(160) .. "?"
+	
+	if (customtable) then
+		local tsMu = customtable.skill
+		local tsSigma = customtable.skilluncertainty
+		local tskill = ""
+		if tsMu then
+			tskill = tsMu and tonumber(tsMu:match("%d+%.?%d*")) or 0
+			tskill = round(tskill,0)
+			if string.find(tsMu, ")") then
+				tskill = "\255"..string.char(190)..string.char(140)..string.char(140) .. tskill -- ')' means inferred from lobby rank
+			else
+			
+				-- show privacy mode
+				local priv = ""
+				if string.find(tsMu, "~") then -- '~' means privacy mode is on
+					priv = "\255"..string.char(200)..string.char(200)..string.char(200) .. "*" 		
+				end
+				
+				--show sigma
+				if tsSigma then -- 0 is low sigma, 3 is high sigma
+					tsSigma=tonumber(tsSigma)
+					local tsRed, tsGreen, tsBlue 
+					if tsSigma > 2 then
+						tsRed, tsGreen, tsBlue = 190, 130, 130
+					elseif tsSigma == 2 then
+						tsRed, tsGreen, tsBlue = 140, 140, 140
+					elseif tsSigma == 1 then
+						tsRed, tsGreen, tsBlue = 195, 195, 195
+					elseif tsSigma < 1 then
+						tsRed, tsGreen, tsBlue = 250, 250, 250
+					end
+					tskill = priv .. "\255"..string.char(tsRed)..string.char(tsGreen)..string.char(tsBlue) .. tskill
+				else
+					tskill = priv .. "\255"..string.char(195)..string.char(195)..string.char(195) .. tskill --should never happen
+				end
+			end
+		else
+			tskill = unknown
+		end
+		return tskill
+	end
+	
+	return unknown
+end
+
 function CheckPlayersChange()
 	local sorting = false
+
+	-- track resources for all teams, if allowed
+	local maxIncome = 0
+	for _,teamId in ipairs(Spring.GetTeamList()) do
+	
+		-- track resource income and usage
+		local currentE,storageE,_,incomeE,_,_,_,_ = Spring_GetTeamResources(teamId,"energy")
+		local currentM,storageM,_,incomeM,_,_,_,_ = Spring_GetTeamResources(teamId,"metal")
+
+		if currentE ~= nil then
+			local income = weightedIncome(incomeM,incomeE)
+			local position = 0
+			
+			teamResources[teamId] = {
+				currentE = currentE,
+				storageE = storageE,
+				currentM = currentM,
+				storageM = storageM,
+				incomeE = incomeE,
+				incomeM = incomeM,
+				income = income,
+				position = 0
+			}
+			
+			income = weightedIncome(incomeM,incomeE)
+			if income > maxIncome then
+				maxIncome = income
+			end
+		end
+	end
+	-- set relative resource position
+	for _,teamId in ipairs(Spring.GetTeamList()) do
+		if (teamResources[teamId]) then
+			if maxIncome > 0 then
+				teamResources[teamId].position = math.floor(teamResources[teamId].income * 100 / maxIncome)
+			end
+		end
+	end
+	
 	for i = 0,31 do
 		local name,active,spec,teamID,allyTeamID,pingTime,cpuUsage, country, rank = Spring_GetPlayerInfo(i)
 		if active == false then
-			if player[i].name ~= nil then                                             -- NON SPEC PLAYER LEAVING
+			if player[i].name ~= nil then                -- NON SPEC PLAYER LEAVING
 				if player[i].spec==false then
 					if table.maxn(Spring_GetPlayerList(player[i].team,true)) == 0 then
 						player[player[i].team + 32] = CreatePlayerFromTeam(player[i].team)
 						sorting = true
 					end
 				end
+				
 				player[i].name = nil
 				player[i] = {}
+				
 				sorting = true
 			end
 		elseif active == true and name ~= nil then
@@ -1994,6 +2115,7 @@ function CheckPlayersChange()
 				player[i].team = teamID
 				player[i].red, player[i].green, player[i].blue = Spring_GetTeamColor(teamID)
 				player[i].dark = GetDark(player[i].red, player[i].green, player[i].blue)
+				player[i].skill = GetSkill(i) 
 				sorting = true
 			end
 			if player[i].name == nil then
@@ -2004,8 +2126,9 @@ function CheckPlayersChange()
 				updateTake(allyTeamID)
 				sorting = true
 			end
--------------------------------------------------------------------------------------- Update stall / cpu / ping info for each player
-
+			
+			-- Update stall / cpu / ping info / resources for each player
+			
 			if player[i].spec == false then
 				player[i].needm   = GetNeed("metal",player[i].team)
 				player[i].neede   = GetNeed("energy",player[i].team)
@@ -2014,11 +2137,14 @@ function CheckPlayersChange()
 				player[i].needm   = false
 				player[i].neede   = false
 			end
+
 			player[i].pingLvl = GetPingLvl(pingTime)
 			player[i].cpuLvl  = GetCpuLvl(cpuUsage)
 			player[i].ping    = pingTime*1000-((pingTime*1000)%1)
 			player[i].cpu     = cpuUsage*100-((cpuUsage*100)%1)
 		end
+		
+
 	end
 	if sorting == true then    -- sorts the list again if change needs it
 		SortList()

@@ -310,7 +310,7 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 	local baseUnderAttack = self.ai.unitHandler.baseUnderAttack
 	
 	-- on easy mode, randomly waste time
-	if(self.isEasyMode) then
+	if(self.isEasyMode and value ~= nil and type(value) ~= "table" and value ~= SKIP_THIS_TASK) then
 		if (random() < EASY_RANDOM_TIME_WASTE_PROBABILITY) then
 			self:Retry()
 			value = {action = "wait", frames = EASY_RANDOM_TIME_WASTE_FRAMES}

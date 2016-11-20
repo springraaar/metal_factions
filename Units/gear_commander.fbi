@@ -76,7 +76,7 @@
 	canreclamate=1;
 	canstop=1;
 	upright=1;
-	autoheal=8;//just like ota
+	autoheal=8;
 
 	//************************************************************
 	//  Movement
@@ -148,9 +148,8 @@
 
 	version=1.2;
 	zbuffer=1;
-	MinCollisionSpeed=2.5;//weight
 	collisionVolumeType = box;
-	collisionVolumeScales =28 35 20;
+	collisionVolumeScales =34 38 26;
 	collisionVolumeOffsets = 0 1 0;
 	collisionVolumeTest = 1;
 

@@ -40,6 +40,11 @@ EASY_RANDOM_TIME_WASTE_FRAMES = 90
 ONSLAUGHT_BASE_INCOME_METAL = 25
 ONSLAUGHT_BASE_INCOME_ENERGY = 500
 ONSLAUGHT_FORCE_SIZE_MOD_FAILURE = 0.3 
+ONSLAUGHT_BASE_INCOME_METAL_PER_MIN = 1
+ONSLAUGHT_BASE_INCOME_ENERGY_PER_MIN = 10
+ONSLAUGHT_FORCE_SIZE_MOD_FAILURE = 0.3 
+
+FRAMES_PER_MIN = 30 * 60
 
 BUILDER_UNIT_LIMIT = 7
 
@@ -857,13 +862,15 @@ airAttackerList =
       "claw_x",
       "claw_blizzard",
       "claw_havoc",
+      "claw_trident",
 ------------------------------------------------ SPHERE
 ----------- l1
       "sphere_moth",
-      "sphere_spitfire",
 ----------- l2
       "sphere_meteor",
-      "sphere_twilight"
+      "sphere_twilight",
+      "sphere_spitfire",      
+      "sphere_neptune"
 }
 
 

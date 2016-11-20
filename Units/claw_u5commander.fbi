@@ -22,7 +22,7 @@
 	objectname=claw_u5commander.3do;
 	buildpic=claw_u5commander.png;
 	soundcategory=gear_COM;
-	corpse=claw_ucommander_dead;
+	corpse=claw_u5commander_dead;
 	script=claw_u5commander.cob;
 
 	//************************************************************
@@ -146,9 +146,8 @@
 
 	version=1.2;
 	zbuffer=1;
-	MinCollisionSpeed=2.5;//weight
 	collisionVolumeType = box;
-	collisionVolumeScales =30 40 25;
+	collisionVolumeScales =40 42 35;
 	collisionVolumeOffsets = 0 1 0;
 	collisionVolumeTest = 1;
 

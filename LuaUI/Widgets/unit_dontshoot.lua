@@ -9,7 +9,7 @@ function widget:GetInfo()
     date      = "June 2, 2012",
     license   = "GNU GPL, v2 or later",
     layer     = -1,
-    enabled   = true  --  loaded by default?
+    enabled   = true
   }
 end
 
@@ -60,7 +60,6 @@ function widget:CommandNotify(commandID, params, options)
         else
           GiveOrderToUnit(unitID, CMD.FIRE_STATE, {0}, {}) 
         end
-        
       end
     end
   end   

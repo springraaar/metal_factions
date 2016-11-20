@@ -21,7 +21,7 @@
 	unitnumber=10000;
 	objectname=aven_u2commander.3do;
 	buildpic=aven_u2commander.png;
-	corpse=aven_ucommander_dead;
+	corpse=aven_u2commander_dead;
 	soundcategory=aven_COM;
 
 	//************************************************************
@@ -143,9 +143,8 @@
 	trackwidth=22;
 	version=1.2;
 	zbuffer=1;
-	MinCollisionSpeed=2.5;//weight
 	collisionVolumeType = box;
-	collisionVolumeScales =33 35 23;
+	collisionVolumeScales =35 42 28;
 	collisionVolumeOffsets = 0 1 0;
 	collisionVolumeTest = 0;
 

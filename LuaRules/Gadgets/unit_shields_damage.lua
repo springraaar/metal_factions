@@ -31,6 +31,7 @@ end
 local COLVOL_SHIELD = 0
 local COLVOL_BASE = 1
 local PARALYZE_DAMAGE_FACTOR = 0.33 -- paralyze damage adds this fraction as normal damage
+local PARALYZE_MISSING_HP_FACTOR = 2.0 -- how much paralyze damage is amplified by target's missing HP %
 
 --local projectileHitShield = {}
 local weaponDefIdByNameTable = {}
@@ -61,7 +62,9 @@ local spSetUnitVelocity = Spring.SetUnitVelocity
 local spGetUnitIsStunned = Spring.GetUnitIsStunned
 local spAreTeamsAllied = Spring.AreTeamsAllied
 local spSetUnitDirection = Spring.SetUnitDirection
+local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spGetAllUnits = Spring.GetAllUnits
 local max = math.max
 
 local STEP_DELAY = 6 		-- process steps every N frames
@@ -199,6 +202,15 @@ function gadget:GameFrame(n)
 			dx,dy,dz = spGetUnitDirection(unitId)
 			spSetUnitVelocity(unitId,0,0,0)
 			spSetUnitDirection(unitId,dx,0,dz)
+		end
+	end
+
+	-- update "on fire" label for all units
+	for _,unitID in ipairs(spGetAllUnits()) do
+		if(unitBurningTable[unitID]) then
+			spSetUnitRulesParam(unitID,"on_fire","1",{public = true})
+		else
+			spSetUnitRulesParam(unitID,"on_fire","0",{public = true})
 		end
 	end
 
@@ -478,7 +490,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 
 		-- amplify paralyzer damage for lower hp units
 		local health,maxHealth,_,_,_ = spGetUnitHealth(unitID)
-		local factor = 1 + (1 - max(health,0)/maxHealth)
+		local factor = 1 + (1 - max(health,0)/maxHealth) * PARALYZE_MISSING_HP_FACTOR
 		return damage * factor
 	end
 	

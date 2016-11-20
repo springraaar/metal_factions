@@ -240,20 +240,32 @@ function gadget:GameFrame(n)
 			local set = {} 
 			
 			hasLight = spGetUnitRulesParam(unitId, "upgrade_light_drones")
-			hasMedium = spGetUnitRulesParam(unitId, "upgrade_medium_drone")
-			hasBuilder = spGetUnitRulesParam(unitId, "upgrade_builder_drone")
-			hasStealth = spGetUnitRulesParam(unitId, "upgrade_stealth_drone")
-			
 			if hasLight then
+				hasLight = tonumber(hasLight)
+			end
+			hasMedium = spGetUnitRulesParam(unitId, "upgrade_medium_drone")
+			if hasMedium then
+				hasMedium = tonumber(hasMedium)
+			end
+			hasBuilder = spGetUnitRulesParam(unitId, "upgrade_builder_drone")
+			if hasBuilder then
+				hasBuilder = tonumber(hasBuilder)
+			end
+			hasStealth = spGetUnitRulesParam(unitId, "upgrade_stealth_drone")
+			if hasStealth then
+				hasStealth = tonumber(hasStealth)
+			end
+						
+			if hasLight and hasLight > 0 then
 				set[droneNamesForUnitDefName[uName]["light_drones"]] = 2
 			end
-			if hasMedium then
+			if hasMedium and hasMedium > 0 then
 				set[droneNamesForUnitDefName[uName]["medium_drone"]] = 1
 			end
-			if hasBuilder then
+			if hasBuilder and hasBuilder > 0 then
 				set[droneNamesForUnitDefName[uName]["builder_drone"]] = 1
 			end
-			if hasStealth then
+			if hasStealth and hasStealth > 0 then
 				set[droneNamesForUnitDefName[uName]["stealth_drone"]] = 1
 			end
 
@@ -319,7 +331,7 @@ function gadget:GameFrame(n)
 							pz = z + up[3] * DRONE_CONSTRUCTION_Y
 							local droneId = spCreateUnit(uName,px,py,pz,0,teamId,true)
 							
-							if droneId > 0 then
+							if droneId and droneId > 0 then
 								spSetUnitDirection(droneId, dx, dy, dz)
 								-- add to drone owner's set
 								droneOwnersDrones[ownerId][uName][#(droneOwnersDrones[ownerId][uName]) + 1] = droneId
@@ -458,7 +470,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 				end 
 			end
 		end
-	elseif ud.customParams and ud.customParams.iscommander then
+	elseif isCommander(ud) then
 		if droneOwnersDrones[unitID] then
 
 			-- kill all drones owned by the dying commander

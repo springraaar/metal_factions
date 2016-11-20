@@ -1232,7 +1232,8 @@ end
 
 local function airRepairPadIfNeeded(self)
 	-- only make air pads if the team has air units
-	if countOwnUnits(self,nil, 3, TYPE_AIR_ATTACKER) > 2 then
+	-- TODO: air repair pads have been disabled
+	if false and countOwnUnits(self,nil, 3, TYPE_AIR_ATTACKER) > 2 then
 		return buildWithLimitedNumber(self,airRepairPadByFaction[self.unitSide], 5)
 	end
 	
@@ -2085,7 +2086,7 @@ local gearAdvShipPlant = {
 local function clawL1LandChoice(self) return choiceByType(self,"claw_jester",{"claw_grunt","claw_piston","claw_roller"},{"claw_grunt","claw_boar","claw_piston","claw_roller"}) end
 local function clawL2KbotChoice(self) return choiceByType(self,"claw_bishop",{"claw_shrieker","claw_brute","claw_crawler"},{"claw_centaur","claw_brute"}) end
 local function clawL2VehicleChoice(self) return choiceByType(self,"claw_ravager",{"claw_pounder","claw_armadon"},{"claw_halberd","claw_ravager","claw_mega"}) end
-local function clawL2AirChoice(self) return choiceByType(self,"claw_x","claw_blizzard",{"claw_x","claw_blizzard"}) end
+local function clawL2AirChoice(self) return choiceByType(self,"claw_x","claw_blizzard",{"claw_x","claw_blizzard"},"claw_trident") end
 local function clawL2KbotRadar(self) return buildWithLimitedNumber(self,"claw_revealer",1) end
 local function clawL2KbotRadarJammer(self) return buildWithLimitedNumber(self,"claw_shade",1) end
 local function clawL2VehicleRadar(self) return buildWithLimitedNumber(self,"claw_seer",1) end
@@ -2435,7 +2436,7 @@ local clawAdvShipPlant = {
 local function sphereL1LandChoice(self) return choiceByType(self,"sphere_needles","sphere_rock",{"sphere_bit","sphere_rock"}) end
 local function sphereL2KbotChoice(self) return choiceByType(self,{"sphere_chub","sphere_chub","sphere_hermit"},{"sphere_ark","sphere_hanz"},{"sphere_hanz","sphere_chub"}) end
 local function sphereL2VehicleChoice(self) return choiceByType(self,"sphere_pulsar",{"sphere_slammer","sphere_bulk"},{"sphere_pulsar","sphere_trax","sphere_bulk"}) end
-local function sphereL2AirChoice(self) return choiceByType(self,"sphere_twilight","sphere_meteor",{"sphere_meteor","sphere_spitfire","sphere_twilight"}) end
+local function sphereL2AirChoice(self) return choiceByType(self,"sphere_twilight","sphere_meteor",{"sphere_meteor","sphere_spitfire","sphere_twilight"},"sphere_neptune") end
 local function sphereL2KbotRadar(self) return buildWithLimitedNumber(self,"sphere_sensor",1) end
 local function sphereL2KbotRadarJammer(self) return buildWithLimitedNumber(self,"sphere_rain",2) end
 local function sphereL2VehicleRadar(self) return buildWithLimitedNumber(self,"sphere_scanner",1) end

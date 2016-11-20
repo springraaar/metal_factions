@@ -26,7 +26,9 @@ local damagedByEnemyByUnitIdFrame = {}
 local FRIENDLY_FIRE_EXPLOIT_THRESHOLD_FRAMES = 600 -- 20s
 local WRECK_FIX_DELAY_FRAMES = 2
 
-local replacementFeatureID = FeatureDefNames['aven_commander_dead'].id
+local replacementFeature = "aven_ucommander_heap"
+-- TODO: hacky, needs replacement
+local ADV_COM_WRECK_METAL = 1000
 
 local advCommanderDefIds = {
 	[UnitDefNames['aven_u1commander'].id] = true,
@@ -208,10 +210,10 @@ function gadget:GameFrame(n)
 				if not replaced then
 					-- if it is an adv commander wreckage, replace it 
 					local m,_,_,_,_ = Spring.GetFeatureResources(wId)
-					if m == 1000 then
+					if m == ADV_COM_WRECK_METAL then
 						local x,y,z = Spring.GetFeaturePosition(wId)
 						Spring.DestroyFeature(wId)			
-						Spring.CreateFeature("aven_commander_dead",x,y,z)
+						Spring.CreateFeature(replacementFeature,x,y,z)
 						replaced = true
 					end
 				end

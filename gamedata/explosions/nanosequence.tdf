@@ -414,6 +414,44 @@
 }
 
 
+[MORPH]
+{
+	[nanoparticles] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=-30 r60,-12,-30 r60;
+			//delay=i4 p1.2;
+			explosionGenerator=custom:DRONEBUILDNANO;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		underwater=1;
+		count=1;
+	}
+	[glow1] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=0,0,0;
+			//pos=-15 r30,0,-15 r30;
+			//delay=i4 p1.2;
+			explosionGenerator=custom:BUILDGLOW;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		underwater=1;
+		count=1;
+		unit=1;
+	}
+}
+
+
+
 [UPGRADENANOSTREAM]
 {
 	[nanoparticles]
