@@ -131,6 +131,193 @@
 	ground=0;
 	count=1;
 	}
+	[waterpuffscenter]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.3;
+			sizeMod=1.0;
+			pos=0, 1, 0; 
+			gravity=0, -0.3, 0;
+
+			Texture=smoke;
+			airdrag=0.77;
+			colorMap=0.4 0.5 0.7 0.5  0.1 0.1 0.2 0.2     0.0 0.0 0.0 0.01;
+
+			particleLifeSpread=7; 
+			particleSpeedSpread=0.0;  
+			particleSizeSpread=d0.03 1.5;
+		
+			particleLife=d0.09 6;
+			numParticles=2; 
+			particleSpeed=0; 
+			particleSize=d0.12 4;
+		
+			emitVector=0, 1, 0; 
+			emitRot=10;
+			emitRotSpread=5; 
+			directional=0; 
+		}
+		air=0;
+		water=1;
+		underwater=1;
+		ground=0;
+		count=1;
+	}
+	[waterpuffs]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.3;
+			sizeMod=1.0;
+			pos=0, 1, 0; 
+			gravity=0, -0.3, 0;
+
+			Texture=smoke;
+			airdrag=0.77;
+			colorMap=0.4 0.5 0.7 0.5  0.1 0.1 0.2 0.2     0.0 0.0 0.0 0.01;
+
+			particleLifeSpread=7; 
+			particleSpeedSpread=d0.01;  
+			particleSizeSpread=d0.03 1.5;
+		
+			particleLife=d0.09 6;
+			numParticles=d0.02; 
+			particleSpeed=d0.02; 
+			particleSize=d0.06 2;
+		
+			emitVector=0, 1, 0; 
+			emitRot=80;
+			emitRotSpread=50; 
+			directional=0; 
+		}
+		air=0;
+		water=1;
+		underwater=1;
+		ground=0;
+		count=1;
+	}
+}
+
+[DYNCOLLISION]               // for ground and water collisions
+{
+	[dust]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.7;
+		sizeMod=1.0;
+		pos=0, 0, 0; 
+		emitVector=0, 1, 0;
+	      gravity=0, -0.1, 0;  
+		//colorMap=1 0.8 0.5 0.01   0.9 0.4 0.2 0.01   0.8 0.2 0 0.01;
+		colorMap=1 1 1 0.9   1 1 1 0.5   0 0 0 0.0;
+		Texture=dustcloud;
+		airdrag=0.91;
+		particleLife=d0.12 4;
+		particleLifeSpread=2;
+		numParticles=d0.04 1;
+		particleSpeed=d0.009 2;
+		particleSpeedSpread=d0.005 1;
+		particleSize=d0.03 2;
+		particleSizeSpread=d0.03 1.5;
+		emitRot=55;
+		emitRotSpread=45;
+		directional=0;
+		alwaysVisible=1;
+		}
+	air=1;
+	unit=1;
+	water=0;
+	ground=1;
+	count=1;
+	}
+	[water_sparks]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0;
+		sizeMod=1.0;
+		pos=0, 0, 0; 
+		emitVector=0, 1, 0;
+	      gravity=0, -0.2, 0;
+		colorMap=0.7 0.8 0.9 0.01   0.4 0.6 0.8 0.01   0.0 0.4 0.8 0.01;
+		//colorMap=d0.008 d0.008 d0.008 0.01   d0.004 d0.005 d0.006 0.01   d0.001 d0.002 d0.003 0.01;
+		Texture=flamespark;
+		airdrag=0.91;
+		particleLife=d0.07 4;
+		particleLifeSpread=d0.03 1.5;
+		numParticles=d0.02 2;
+		particleSpeed=d0.04 2;
+		particleSpeedSpread=d0.012 1.5;
+		particleSize=d0.015 1.5;
+		particleSizeSpread=d0.01 1;
+		emitRot=45;
+		emitRotSpread=45;
+		directional=1;
+		alwaysVisible=1;
+		}
+	air=0;
+	water=1;
+	underwater=0;
+	ground=0;
+	count=1;
+	}
+	[water_drops]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.7;
+		sizeMod=1.0;
+		pos=0, 0, 0; 
+		emitVector=0, 1, 0;
+	      gravity=0, -0.2, 0;  
+		//colorMap=1 0.8 0.5 0.01   0.9 0.4 0.2 0.01   0.8 0.2 0 0.01;
+		colorMap=1 1 1 0.8   0.8 0.8 1 0.6   0.3 0.3 1 0.0;
+		Texture=waterdropcloud;
+		airdrag=0.91;
+		particleLife=d0.09 6;
+		particleLifeSpread=2;
+		numParticles=d0.02 2;
+		particleSpeed=d0.008 2;
+		particleSpeedSpread=d0.005 1;
+		particleSize=d0.06 4;
+		particleSizeSpread=d0.03 1.5;
+		emitRot=55;
+		emitRotSpread=45;
+		directional=0;
+		alwaysVisible=1;
+		}
+	air=0;
+	water=1;
+	underwater=0;
+	ground=0;
+	count=1;
+	}
+	[smoke]
+	{
+		[properties]
+		{
+       			color = 0.5 r0.5;
+	       		startSize = d0.2 3 r2;
+	       		sizeExpansion = d0.005;
+	       		ageSpeed=0.03;
+	       		//size = d0.1 3;
+	       		//sizeGrowth = -1.5;
+	       		pos = 0, 0, 0;
+	       		speed=0, 0.1, 0;
+		}
+		air=1;
+      		water=1;
+		underwater=0;
+	      	ground=1;
+      		count=1;
+   	}
 }
 
 
@@ -1421,5 +1608,15 @@
 	usedefaultexplosions=0;
 	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d1 p0.6 x0;explosionGenerator=custom:BLUELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
+
+
+
+[COLLISION]			// collision "blast"
+{
+	usedefaultexplosions=0;
+	[_dust]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=d2;explosionGenerator=custom:DYNCOLLISION;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	//[_flash]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=d1.5;explosionGenerator=custom:DYNGROUNDFLASH;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+
 
 

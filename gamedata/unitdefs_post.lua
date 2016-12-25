@@ -108,60 +108,60 @@ end
 
 -- unitdef tweaking
 if (true) then
-	for name in pairs(UnitDefs) do
+	for name,unitDef in pairs(UnitDefs) do
 
-		local mv = UnitDefs[name].maxvelocity
-		local ac = UnitDefs[name].acceleration
-		local sd = UnitDefs[name].sightdistance
+		local mv = unitDef.maxvelocity
+		local ac = unitDef.acceleration
+		local sd = unitDef.sightdistance
 
 		if (sd) then
 
 			-- airlos = los, and increase los 20%
 			sd = sd * 1.2
-			UnitDefs[name].losemitheight = 80
-			UnitDefs[name].radaremitheight = 120
-			UnitDefs[name].sightdistance = sd
-			UnitDefs[name].airsightdistance = sd
+			unitDef.losemitheight = 80
+			unitDef.radaremitheight = 120
+			unitDef.sightdistance = sd
+			unitDef.airsightdistance = sd
 
 			-- level ground beneath structures
-			UnitDefs[name].levelground = true
+			unitDef.levelground = true
 
 			-- disable radar inaccuracy
-			UnitDefs[name].istargetingupgrade = true
+			unitDef.istargetingupgrade = true
 		end
 
 		-- increase slope tolerance for buildings
-		UnitDefs[name].maxslope = 30
+		unitDef.maxslope = 30
 	
 		-- standardize idleautoheal and idletime
 		-- set to 0, done through gadget now
-		UnitDefs[name].idletime = 0
-		UnitDefs[name].idleautoheal = 0
+		unitDef.idletime = 0
+		unitDef.idleautoheal = 0
 		
 		
 		if (mv) then
 			-- disable transporting enemy units
-			UnitDefs[name].transportbyenemy = 0
+			unitDef.transportbyenemy = 0
 			
 			-- disable unit tracks
-			UnitDefs[name].leavetracks = 0
+			unitDef.leavetracks = 0
   
 			-- disable speed penalty when turning
-			UnitDefs[name].turninplaceanglelimit = 90.0
-			UnitDefs[name].turninplacespeedlimit = mv
+			unitDef.turninplaceanglelimit = 90.0
+			unitDef.turninplacespeedlimit = mv
 
 			-- make sure low acceleration units are able to beat drag
 			local minAcceleration = mv / 80
 			if ( tonumber(ac) < minAcceleration ) then
-				UnitDefs[name].acceleration = minAcceleration
+				unitDef.acceleration = minAcceleration
 			end
 			
 			-- remove excessive brakerate from aircraft
-			local canFly = UnitDefs[name].canfly
-			local br = tonumber(UnitDefs[name].brakerate)
+			local canFly = unitDef.canfly
+			local br = tonumber(unitDef.brakerate)
 			if (canFly) then
 				if (br > 0.5) then
-					UnitDefs[name].brakerate = br / 5
+					unitDef.brakerate = br / 5
 				end
 			end
 		end

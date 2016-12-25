@@ -1662,7 +1662,7 @@ local avenAircraftPlant = {
 	"aven_swift",
 	"aven_tornado",
 	"aven_swift",
-	"aven_tornado",
+	"aven_twister",
 	"aven_swift",
 	{action = "wait", frames = 128}
 }
@@ -1736,7 +1736,7 @@ local avenAdvShipPlant = {
 
 -- choices by threat type : AIR, DEFENSES, NORMAL[, UNDERWATER]
 
-local function gearL2KbotChoice(self) return choiceByType(self,{"gear_big_bob","gear_titan"},{"gear_big_bob","gear_moe"},{"gear_big_bob","gear_pyro","gear_moe","gear_psycho","gear_titan"}) end
+local function gearL2KbotChoice(self) return choiceByType(self,{"gear_titan","gear_barrel"},{"gear_big_bob","gear_moe"},{"gear_big_bob","gear_pyro","gear_moe","gear_psycho","gear_titan","gear_barrel"}) end
 local function gearL1LightChoice(self) return choiceByType(self,"gear_crasher",{"gear_raider","gear_kano","gear_thud"},{"gear_crasher","gear_kano","gear_box","gear_instigator","gear_aggressor"}) end
 local function gearL2VehicleChoice(self) return choiceByType(self,"gear_marauder",{"gear_mobile_artillery","gear_reaper","gear_eruptor"},{"gear_reaper","gear_marauder","gear_crock","gear_flareon"}) end
 local function gearL2AirChoice(self) return choiceByType(self,"gear_vector",{"gear_stratos","gear_firestorm"},{"gear_vector","gear_stratos","gear_firestorm"},"gear_whirlpool") end
@@ -2010,9 +2010,9 @@ local gearAircraftPlant = {
 	"gear_construction_aircraft",
 	{action = "randomness", probability = 0.3, value = "gear_construction_aircraft"},	
 	"gear_dash",
-	"gear_voodoo",
+	"gear_zipper",
 	"gear_dash",
-	"gear_voodoo",
+	"gear_knocker",
 	"gear_dash",
 	{action = "wait", frames = 128}
 }
@@ -2360,7 +2360,7 @@ local clawAircraftPlant = {
 	"claw_hornet",
 	"claw_boomer",
 	"claw_hornet",
-	"claw_boomer",
+	"claw_boomer_m",
 	"claw_hornet",
 	{action = "wait", frames = 128}
 }
@@ -2697,7 +2697,7 @@ local sphereAircraftPlant = {
 	"sphere_moth",
 	"sphere_moth",
 	"sphere_moth",
-	"sphere_moth",
+	"sphere_tycho",
 	{action = "wait", frames = 128}
 }
 

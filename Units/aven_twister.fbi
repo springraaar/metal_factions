@@ -3,25 +3,25 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
-	name=Voodoo;
-	description=Light Attack Aircraft;
+	Side=Aven;
+	name=Twister;
+	description=Light Gunship;
 	icontype=air;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CORE VTOL CTRL_V LEVEL1 WEAPON  NOTSUB;
+	category=ARM VTOL LEVEL1 WEAPON NOTSUB;
 	tedclass=VTOL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_voodoo;
-	unitnumber=295;
-	objectname=gear_voodoo.3do;
-	buildpic=gear_voodoo.png;
-	soundcategory=COR_SEAPLN;
+	unitname=aven_twister;
+	unitnumber=299;
+	objectname=aven_twister.3do;
+	buildpic=aven_twister.png;
+	soundcategory=aven_SEAPLN;
 
 	//************************************************************
 	//  Health/Cost/Size
@@ -35,8 +35,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.7;
-	energyuse=0.7;
+	energymake=0.0;
+	energyuse=0.0;
 	energystorage=0;
 
 	//************************************************************
@@ -63,12 +63,12 @@
 	//  Movement
 	//************
 	turnrate=768;
-	acceleration=0.38;
-	brakerate=0.3;
-	maxvelocity=5.58;
+	acceleration=0.4;
+	brakerate=4;
+	maxvelocity=5.86;
 	maxslope=10;
-	maxwaterdepth=2;
-	cruisealt=120;
+	maxwaterdepth=255;
+	cruisealt=110;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -79,7 +79,11 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=CORSFIG_WEAPON;
+	weapon1=aven_twister_laser;
+	weapon2=aven_twister_rocket;
+	nochasecategory=VTOL;
+	badtargetcategory1=VTOL;
+	onlytargetcategory2=NOTAIR;
 	explodeas=BIG_UNITEX;
 	selfdestructas=MEDIUM_UNIT;
 
@@ -97,7 +101,7 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
-	designation=SB-BR4;
+	designation=ARM-SGB;
 	downloadable=1;
 	hoverattack=1;
 	maneuverleashlength=1280;
@@ -113,15 +117,18 @@
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
-	collisionVolumeScales =25 10 20;
+	collisionVolumeScales =23 10 30;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	
+
 	//************************************************************
 	//  To be removed
 	//*****************
-
-	buildcostenergy=2666;//#AUTO#
-	buildcostmetal=266;//#AUTO#
-	buildtime=3421;//#AUTO#
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:GLOWSML;
+	}
+	buildcostenergy=3293;//#AUTO#
+	buildcostmetal=329;//#AUTO#
+	buildtime=4226;//#AUTO#
 }

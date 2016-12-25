@@ -45,7 +45,7 @@ local drawFeatureHealth  = true
 local featureTitlesAlpha = featureBarAlpha * titlesAlpha/barAlpha
 local featureHpThreshold = 0.85
 
-local infoDistance = 700000
+local infoDistance = 1000000
 
 local minReloadTime = 4 --// in seconds
 
@@ -104,6 +104,8 @@ local cx, cy, cz = 0,0,0;  --// camera pos
 local paraUnits   = {};
 local onFireUnits = {};
 local UnitMorphs  = {};
+local magnetars   = {};
+local MAGNETAR_DEF_ID = UnitDefNames["sphere_magnetar"].id
 
 local barShader;
 local barDList;
@@ -506,13 +508,13 @@ do
       }
     end
     ci = customInfo[unitDefID]
-
+	
     fullText = true
     ux, uy, uz = GetUnitViewPosition(unitID)
     dx, dy, dz = ux-cx, uy-cy, uz-cz
     dist = dx*dx + dy*dy + dz*dz
     if (dist > infoDistance) then
-      if (dist > 9000000) then
+      if (ud.id ~= MAGNETAR_DEF_ID and dist > 9000000) then
         return
       end
       fullText = false
@@ -531,7 +533,16 @@ do
     if (drawUnitsOnFire)and(GetUnitRulesParam(unitID,"on_fire")==1) then
       onFireUnits[#onFireUnits+1]=unitID
     end
-
+	
+	if (ud.id == MAGNETAR_DEF_ID) then
+      magnetarPower = GetUnitRulesParam(unitID,"magnetar_power")
+      if magnetarPower and magnetarPower > 0 then
+        magnetars[unitID] = magnetarPower / 100
+      else
+        magnetarPower = 0
+      end
+    end
+    
     --// BARS //-----------------------------------------------------------------------------
       --// Shield
       if (ci.maxShield>0) then
@@ -822,6 +833,33 @@ do
       glDepthTest(false)
 
       --UnitMorphs = {}
+    end
+    
+    --// overlay for magnetars
+    if magnetars then
+      glDepthTest(true)
+      glPolygonOffset(-2, -2)
+      glBlending(GL_SRC_ALPHA, GL_ONE)
+
+      local blueGlow = (gameFrame % 2) == 0 
+      for uId,power in pairs(magnetars) do
+        if (power < 0.8) then
+          glColor(1,1,1,0.4*power)
+        else
+            if ( blueGlow ) then
+        	  glColor(0.7,0.85,1,0.6*power)
+        	else
+        	  glColor(1,1,1,0.4*power)
+        	end
+        end
+        glUnit(uId,true)
+      end
+
+      glBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+      glPolygonOffset(false)
+      glDepthTest(false)
+
+      magnetars = {}
     end
   end
 

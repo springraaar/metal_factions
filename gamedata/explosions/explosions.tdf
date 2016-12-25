@@ -623,6 +623,40 @@
 		unit=1;
 	      	count=2;
    	}
+	[waterpuffs]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.3;
+			sizeMod=1.0;
+			pos=0, 0, 0; 
+			gravity=0, -0.2, 0;
+
+			Texture=smoke;
+			airdrag=0.77;
+			colorMap=0.4 0.5 0.7 0.5  0.1 0.1 0.2 0.2     0.0 0.0 0.0 0.01;
+
+			particleLifeSpread=6; 
+			particleSpeedSpread=0;  
+			particleSizeSpread=3;
+		
+			particleLife=10;
+			numParticles=2; 
+			particleSpeed=0; 
+			particleSize=10;
+		
+			emitVector=0, 1, 0; 
+			emitRot=10;
+			emitRotSpread=5; 
+			directional=0; 
+		}
+		air=0;
+		water=1;
+		underwater=1;
+		ground=0;
+		count=1;
+	}
 	[spikes]
 	{
 		class=explspike;
@@ -1166,6 +1200,8 @@
 		air=1;
 		water=1;
 		ground=1;
+		underwater=1;
+		unit=1;
   		count=1; 
 	}
 	[groundflash]
@@ -1179,6 +1215,8 @@
 		air=1;
 	     	ground=1;
 	      	water=1;
+		underwater=1;
+		unit=1;
 	}
 	[smoke]
 	{
@@ -1198,6 +1236,40 @@
 		unit=1;
 	      	count=1;
    	}
+	[waterpuffs]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.3;
+			sizeMod=1.0;
+			pos=0, 1, 0; 
+			gravity=0, -0.2, 0;
+
+			Texture=smoke;
+			airdrag=0.77;
+			colorMap=0.4 0.5 0.7 0.5  0.1 0.1 0.2 0.2     0.0 0.0 0.0 0.01;
+
+			particleLifeSpread=7; 
+			particleSpeedSpread=0.0;  
+			particleSizeSpread=3;
+		
+			particleLife=14;
+			numParticles=2; 
+			particleSpeed=0; 
+			particleSize=13;
+		
+			emitVector=0, 1, 0; 
+			emitRot=10;
+			emitRotSpread=5; 
+			directional=0; 
+		}
+		air=0;
+		water=1;
+		underwater=1;
+		ground=0;
+		count=1;
+	}
 	[spikes]
 	{
 		class=explspike;
@@ -1213,6 +1285,7 @@
 		air=1;
 		water=1;
 		ground=1;
+		underwater=1;
 		unit=1;
   		count=3; 
 	}	

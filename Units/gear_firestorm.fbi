@@ -64,7 +64,7 @@
 	brakerate=0.1;
 	maxvelocity=5.5;
 	cruisealt=160;
-	turnrate=400;
+	turnrate=600;
 
 
 	//************************************************************
@@ -81,7 +81,7 @@
 	explodeas=BIG_UNIT;
 	selfdestructas=BIG_UNIT;
 	WeaponMainDir1=0 -1 1;
-	MaxAngleDif1=110;       
+	MaxAngleDif1=90;       
 
 	//************************************************************
 	//  Orders
@@ -129,7 +129,7 @@
 
 	[CustomParams]
 	{
-		tip=Burns ground for 20s, dealing up to 20(M) dmg/s. Affected units burn for 210(M) dmg over 7s;
+		tip=Burns ground for 20s, dealing up to 20(M) dmg/s. Affected units burn for 180(M) dmg over 6s;
 	}
 
 	[SFXTypes]
@@ -137,7 +137,7 @@
 		explosiongenerator0=custom:GLOWSML;
 		explosiongenerator1=custom:rocketflaresml;
 	}
-	buildcostenergy=12010;//#AUTO#
-	buildcostmetal=1201;//#AUTO#
-	buildtime=15413;//#AUTO#
+	buildcostenergy=12184;//#AUTO#
+	buildcostmetal=1218;//#AUTO#
+	buildtime=15636;//#AUTO#
 }

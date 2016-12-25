@@ -617,6 +617,7 @@ airFacList = {
 
 -- these units will be used to raid weakly defended spots
 -- this is different from attacking in that raiders use Move, not MoveAndFire (and so will not delay to fight occasional enemy units encountered on the way)
+-- TODO : make raiding parties work
 raiderList = {
 	"gear_psycho",
 	"aven_zipper",
@@ -694,6 +695,7 @@ attackerList =
 
 	"aven_swift",
 	"aven_tornado",
+	"aven_twister",
 ----------- l2
 	"aven_magnum",
 	"aven_shooter",
@@ -735,7 +737,8 @@ attackerList =
 	"gear_raider",
 
 	"gear_dash",
-	"gear_voodoo",
+	"gear_zipper",
+	"gear_knocker",
 
 ----------- l2
 
@@ -745,6 +748,7 @@ attackerList =
 	"gear_psycho",
 	"gear_titan",
 	"gear_big_bob",
+	"gear_barrel",
 	"gear_pyro",
 
 	"gear_marauder",
@@ -795,6 +799,7 @@ attackerList =
       "claw_monster",
       "claw_hornet",
       "claw_boomer",
+      "claw_boomer_m",
       "claw_x",
       "claw_blizzard",
       "claw_havoc",
@@ -820,6 +825,7 @@ attackerList =
       "sphere_endeavour",
       "sphere_needles",
       "sphere_moth",
+      "sphere_tycho",
       "sphere_spitfire",
       "sphere_meteor",
       "sphere_twilight",
@@ -845,7 +851,8 @@ airAttackerList =
 ------------------------------------------------ GEAR
 ----------- l1
 	"gear_dash",
-	"gear_voodoo",
+	"gear_zipper",
+	"gear_knocker",
 
 ----------- l2
 
@@ -858,6 +865,7 @@ airAttackerList =
 ----------- l1
       "claw_hornet",
       "claw_boomer",
+      "claw_boomer_m",
 ----------- l2
       "claw_x",
       "claw_blizzard",
@@ -866,6 +874,7 @@ airAttackerList =
 ------------------------------------------------ SPHERE
 ----------- l1
       "sphere_moth",
+      "sphere_tycho",
 ----------- l2
       "sphere_meteor",
       "sphere_twilight",

@@ -43,7 +43,7 @@ end
 -- units on the "bombers" set are forced to hold fire when created
 function widget:UnitCreated(unitId, unitDefId, teamId)
 	if bombers[unitDefId] then
-		Spring.Echo("ID="..unitDefId)
+		--Spring.Echo("ID="..unitDefId)
 		spGiveOrderToUnit(unitId, CMD.FIRE_STATE, {0}, {})
 	end
 end

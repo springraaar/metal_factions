@@ -1,4 +1,4 @@
-[SmallNano]//In works of experiemtsn
+[SmallNano]
 {
 	[groundflash]
 	{
@@ -25,22 +25,8 @@
 	ground=1;
 	count=5;
 	}
-	[SpewFire] 
-	{
-	    class=CExpGenSpawner;
-		[properties]
-		{
-		pos=2 r-4, 2 r-2, 2 r-4;  
-		delay=0 r1;				  
-		explosionGenerator=custom:raven;
-		}
-	air=1;
-	water=1;
-	ground=1;
-	count=1;
-	}
 }
-[LongNano]//In works of experiemtsn
+[LongNano]
 {
 	[groundflash]
 	{
@@ -97,7 +83,7 @@
 			emitRot=0;
 			emitRotSpread=45;
 			directional=1;
-			alwaysVisible=1;
+			alwaysVisible=0;
 		}
 		air=1;
 		water=1;
@@ -132,7 +118,7 @@
 			emitRot=0;
 			emitRotSpread=45;
 			directional=1;
-			alwaysVisible=1;
+			alwaysVisible=0;
 		}
 		air=1;
 		water=1;
@@ -333,7 +319,7 @@
 			emitRot=45;
 			emitRotSpread=90;
 			directional=1;
-			alwaysVisible=1;
+			alwaysVisible=0;
 		}
 		air=1;
 		water=1;
@@ -370,7 +356,7 @@
 			emitRot=0;
 			emitRotSpread=15;
 			directional=1;
-			alwaysVisible=1;
+			alwaysVisible=0;
 		}
 		air=1;
 		water=1;
@@ -477,7 +463,7 @@
 			emitRot=60;
 			emitRotSpread=45;
 			directional=1;
-			alwaysVisible=1;
+			alwaysVisible=0;
 		}
 		air=1;
 		water=1;

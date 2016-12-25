@@ -1,3 +1,51 @@
+2016/12/25 ------------------ NOTES v0.971 ----------------------
+
+--- new units
+
+- added AVEN "Twister" : Light Gunship (level 1)
+- added GEAR "Knocker" : Flying Cannon (level 1)			
+- added CLAW "Boomer (M)" : variant with M damage type rockets but higher DPS  (level 1)
+- added SPHERE "Tycho" : Ground Attack Aircraft (level 1)
+
+- added GEAR "Barrel" : Amphibious Missile Robot (level 2)
+
+--- balance / mechanics
+
+- increased the total repair cost from 20% to 66% of the unit's energy cost
+- units with lasers and cannons will shoot farther at targets above or below them (range sphere became an ellipsoid stretched vertically about 2x)
+(this means lasers are more effective near cliffs and against air targets and high trajectory cannons can shoot farther uphill)
+- slightly reduced how much extra range cannons get when shooting at targets below them (affects EMG on aircraft as well)
+- fixed AVEN "Runner" not shooting at aircraft within range
+- reduced GEAR "Firestorm"'s aiming tolerance but increased the turn rate
+- made GEAR "Canister" more able to shoot at targets on top of tall terrain formations or behind them
+- SPHERE "Magnetar" blasts no longer generate craters
+- CLAW "Grinder Form" commander can no longer be carried by level 1 air transports
+- removed passive HP regeneration from units with less than 90% build completion
+
+--- effects / visuals
+
+- fixed an issue that could make ground units move along the ground without displaying their "walking" animation
+- fixed some effects being visible to enemies across the map when they shouldn't
+(namely commander morph particles, Magnetar and Zephyr effects)
+- updated the sounds of several energized plasma cannons, namely AVEN commanders'
+- improved wreckages for SPHERE "Trike" and "Quad" and GEAR "Marauder"
+- show effects when units hit the ground or water surface after falling	from destroyed transport aircraft
+- slightly improved some water explosions
+- SPHERE "Magnetar" glows brighter as its weapon charges
+
+--- UI / widgets
+
+- added "MENU" button on the top right corner
+(same as shift-esc key combination)
+
+--- other
+
+- renamed GEAR "Voodoo" to "Zipper"
+
+
+
+
+
 2016/11/19 ------------------ NOTES v0.97 ----------------------
 
 --- new features

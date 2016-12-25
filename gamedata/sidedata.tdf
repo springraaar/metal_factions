@@ -350,9 +350,10 @@
 		canbuild1=aven_construction_aircraft;
 		canbuild2=aven_peeper;
 		canbuild3=aven_swift;
-		canbuild5=aven_thunder;
-		canbuild6=aven_atlas;
-		canbuild7=aven_tornado;
+		canbuild4=aven_tornado;
+		canbuild5=aven_twister;
+		canbuild6=aven_thunder;
+		canbuild7=aven_atlas;
 	}
 	[aven_adv_shipyard]
 	{
@@ -1142,11 +1143,10 @@
 		canbuild5=gear_spectre;
 		canbuild6=gear_psycho;
 		canbuild7=gear_moe;
-		canbuild8=gear_big_bob;
+		canbuild8=gear_barrel;
+		canbuild9=gear_big_bob;
 		canbuild10=gear_voyeur;
 		canbuild11=gear_titan;
-		//canbuild12=gear_gimp;
-		//canbuild13=gear_parasite;
 		canbuild17=gear_cloakable_cube;
 	}
 	[gear_aircraft_plant]
@@ -1154,9 +1154,10 @@
 		canbuild1=gear_construction_aircraft;
 		canbuild2=gear_fink;
 		canbuild3=gear_dash;
+		canbuild4=gear_zipper;
 		canbuild5=gear_shadow;
-		canbuild6=gear_valkyrie;
-		canbuild7=gear_voodoo;
+		canbuild6=gear_knocker;
+		canbuild7=gear_valkyrie;
 	}
 	[gear_adv_shipyard]
 	{
@@ -2293,7 +2294,8 @@
 		canbuild2=claw_spotter;
 		canbuild3=claw_hornet;
 		canbuild4=claw_boomer;
-		canbuild5=claw_mover;
+		canbuild5=claw_boomer_m;
+		canbuild6=claw_mover;
 	}
 	[claw_adv_aircraft_plant]
 	{
@@ -2733,7 +2735,8 @@
 		canbuild2=sphere_probe;
 		canbuild3=sphere_moth;
 		canbuild4=sphere_manta;
-		canbuild5=sphere_lifter;
+		canbuild5=sphere_tycho;
+		canbuild6=sphere_lifter;
 	}
 	[sphere_adv_aircraft_factory]
 	{

@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=ARM VTOL CTRL_V LEVEL1 WEAPON  NOTSUB  CTRL_P CTRL_G;
+	category=ARM VTOL LEVEL1 WEAPON  NOTSUB;
 	tedclass=VTOL;
 
 	//************************************************************
@@ -35,8 +35,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.7;
-	energyuse=0.7;
+	energymake=0.0;
+	energyuse=0.0;
 	energystorage=0;
 
 	//************************************************************
@@ -126,7 +126,7 @@
 	//*****************
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:EMGFLAREFAST;
+		explosiongenerator0=custom:GLOWSML;
 	}
 	buildcostenergy=2228;//#AUTO#
 	buildcostmetal=222;//#AUTO#

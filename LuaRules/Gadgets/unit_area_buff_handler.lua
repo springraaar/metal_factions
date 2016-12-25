@@ -27,9 +27,7 @@ local ZEPHYR_RADIUS = 600
 local ZEPHYR_MASS_COST_FACTOR = 1/100 -- applied twice per second
 local WATER_HEIGHT_THRESHOLD = -5
 
-local spGetUnitHealth = Spring.GetUnitHealth
 local spAddUnitDamage = Spring.AddUnitDamage
-local spGetUnitHealth = Spring.GetUnitHealth
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitRadius = Spring.GetUnitRadius
 local spGetUnitStates = Spring.GetUnitStates
@@ -51,8 +49,10 @@ local spGetCommandQueue = Spring.GetCommandQueue
 local spGetGameFrame = Spring.GetGameFrame
 local spGetUnitIsActive = Spring.GetUnitIsActive
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spSetUnitRulesParam = Spring.SetUnitRulesParam
+local spGetUnitWeaponState = Spring.GetUnitWeaponState
 local max = math.max
-
+local floor = math.floor
 
 local AREA_CHECK_DELAY = 6
 local COST_DELAY = 15
@@ -77,7 +77,8 @@ local waterSlowerDefIds = {
 	[UnitDefNames["aven_wheeler"].id] = true,
 	[UnitDefNames["claw_predator"].id] = true,
 	[UnitDefNames["claw_tempest"].id] = true,
-	[UnitDefNames["aven_u5commander"].id] = true
+	[UnitDefNames["aven_u5commander"].id] = true,
+	[UnitDefNames["gear_barrel"].id] = true
 }
 
 local flyingSphereDefIds = {
@@ -93,9 +94,13 @@ local flyingSphereDefIds = {
 local zephyrDefIds = {
 	[UnitDefNames["aven_zephyr"].id] = true
 }
-
 local zephyrIds = {}
 local zephyrAffectedUnitIds = {}  -- (unitId,zephyrId)
+
+local magnetarDefIds = {
+	[UnitDefNames["sphere_magnetar"].id] = true
+}
+local magnetarIds = {}
 
 local speedModifierUnitIds = {} -- (unitId,modifier)
 
@@ -104,7 +109,6 @@ local waterSlowerUnitIds = {}
 local lastDamageFrameUnitIds = {}
 local flyingSphereUnitIds = {}
 local allUnitIds = {}
-
 
 -- mark unit as zephyr or unit with terrain speed modifiers
 function gadget:UnitCreated(unitId, unitDefId, unitTeam)
@@ -116,6 +120,10 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 		waterSlowerUnitIds[unitId] = true
 	elseif (flyingSphereDefIds[unitDefId]) then
 		flyingSphereUnitIds[unitId] = true
+		
+		if (magnetarDefIds[unitDefId]) then
+			magnetarIds[unitId] = true
+		end
 	end	
 	
 	allUnitIds[unitId] = true
@@ -203,6 +211,21 @@ function gadget:GameFrame(n)
 				end
 				newSpeedModifierUnitIds[unitId] = m * FLYING_SPHERE_SLOW_MOD
 			end
+			
+			-- set magnetar power level according to weapon reload status
+			if (magnetarIds[unitId]) then
+		        local _,loaded,reloadFrame = spGetUnitWeaponState(unitId,1)
+		        local reloadTime = spGetUnitWeaponState(unitId,1,"reloadTime")
+		        local reloadPercent = 100
+		        local _,_,_,_,bp = spGetUnitHealth(unitId)
+		        if bp < 1 then
+		        	reloadPercent = 0
+		        elseif (loaded==false) then
+					reloadPercent = floor((1 - ((reloadFrame-n)/30) / reloadTime)*100);
+		        end
+
+				spSetUnitRulesParam(unitId,"magnetar_power",reloadPercent,{public = true})
+			end
 		end		
 		
 		-- apply speed modifiers
@@ -226,12 +249,15 @@ function gadget:GameFrame(n)
 	
 		-- zephyr aura regeneration 
 		for unitId,_ in pairs(zephyrAffectedUnitIds) do
-			local health,maxHealth,_,_,_ = spGetUnitHealth(unitId)
-			if (health < maxHealth) then
-				if maxHealth - health < ZEPHYR_REGEN_PER_SECOND then
-					spSetUnitHealth(unitId,maxHealth)
-				else
-					spSetUnitHealth(unitId,health + ZEPHYR_REGEN_PER_SECOND)
+			local health,maxHealth,_,_,bp = spGetUnitHealth(unitId)
+
+			if (bp and bp > 0.9) then
+				if (health < maxHealth) then
+					if maxHealth - health < ZEPHYR_REGEN_PER_SECOND then
+						spSetUnitHealth(unitId,maxHealth)
+					else
+						spSetUnitHealth(unitId,health + ZEPHYR_REGEN_PER_SECOND)
+					end
 				end
 			end
 		end
@@ -248,14 +274,16 @@ function gadget:GameFrame(n)
 				phpR = 0
 			end
 			if (r > 0 or phpR > 0) then
-				local health,maxHealth,_,_,_ = spGetUnitHealth(unitId)
+				local health,maxHealth,_,_,bp = spGetUnitHealth(unitId)
 				
-				regen = r + phpR * maxHealth
-				if (health < maxHealth) then
-					if maxHealth - health < regen then
-						spSetUnitHealth(unitId,maxHealth)
-					else
-						spSetUnitHealth(unitId,health + regen)
+				if (bp and bp > 0.9) then
+					regen = r + phpR * maxHealth
+					if (health < maxHealth) then
+						if maxHealth - health < regen then
+							spSetUnitHealth(unitId,maxHealth)
+						else
+							spSetUnitHealth(unitId,health + regen)
+						end
 					end
 				end
 				--Spring.Echo(unitId.." : upgraded regen : "..regen)
@@ -265,14 +293,16 @@ function gadget:GameFrame(n)
 		-- idle regeneration
 		for _,unitId in ipairs(spGetAllUnits()) do
 			if (not lastDamageFrameUnitIds[unitId] or (n - lastDamageFrameUnitIds[unitId] > IDLE_REGEN_FRAMES) ) then
-				local health,maxHealth,_,_,_ = spGetUnitHealth(unitId)
+				local health,maxHealth,_,_,bp = spGetUnitHealth(unitId)
 				
-				regen = IDLE_REGEN_FLAT + IDLE_REGEN_FRACTION * maxHealth
-				if (health < maxHealth) then
-					if maxHealth - health < regen then
-						spSetUnitHealth(unitId,maxHealth)
-					else
-						spSetUnitHealth(unitId,health + regen)
+				if (bp and bp > 0.9) then
+					regen = IDLE_REGEN_FLAT + IDLE_REGEN_FRACTION * maxHealth
+					if (health < maxHealth) then
+						if maxHealth - health < regen then
+							spSetUnitHealth(unitId,maxHealth)
+						else
+							spSetUnitHealth(unitId,health + regen)
+						end
 					end
 				end
 			end
@@ -321,7 +351,10 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam)
 	if lastDamageFrameUnitIds[unitId] then
 		lastDamageFrameUnitIds[unitId] = nil
 	end	
-
+	if (magnetarIds[unitId]) then
+		magnetarIds[unitId] = nil
+	end
+	
 	allUnitIds[unitId] = nil
 end
 

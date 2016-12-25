@@ -48,8 +48,8 @@
 	energypershot=100;
 	accuracy=150;
 	areaofeffect=80;
-	soundstart=rhinofire;
-	soundhit=rockxpl3;
+	soundstart=chargedshot;
+	soundhit=xplochargedshot;
 	soundtrigger=1;
 	tolerance=2000;
 	InterceptedByShieldType=1;
@@ -89,8 +89,8 @@
 	energypershot=150;
 	accuracy=150;
 	areaofeffect=90;
-	soundstart=rhinofire;
-	soundhit=rockxpl3;
+	soundstart=chargedshot;
+	soundhit=xplochargedshot;
 	soundtrigger=1;
 	tolerance=2000;
 	InterceptedByShieldType=1;
@@ -202,8 +202,8 @@
 	energypershot=80;
 	accuracy=150;
 	areaofeffect=70;
-	soundstart=rhinofire;
-	soundhit=rockxpl3;
+	soundstart=chargedshot;
+	soundhit=xplochargedshot;
 	soundtrigger=1;
 	tolerance=2000;
 	InterceptedByShieldType=1;
@@ -431,8 +431,8 @@
 	energypershot=250;
 	accuracy=150;
 	areaofeffect=90;
-	soundstart=rhinofire;
-	soundhit=rockxpl3;
+	soundstart=chargedshot;
+	soundhit=xplochargedshot;
 	soundtrigger=1;
 	tolerance=2000;
 	InterceptedByShieldType=1;
@@ -3348,7 +3348,7 @@
 	weapontimer=2;
 	flighttime=10;
 	fixedlauncher=1;
-	weaponvelocity=800;
+	weaponvelocity=700;
 	weaponAcceleration=160;
 	startvelocity=30;
 	turnrate=20000;
@@ -5937,6 +5937,47 @@
 		armor_light=80;//#AUTO#
 	}
 }
+[gear_barrel_missile]
+{
+	name=Missiles;
+	explosiongenerator=custom:ROCKETBLASTWRAPPER;
+	rendertype=1;
+	lineofsight=1;
+	vlaunch=1;
+	model=weapon_smlmsl2.3do;
+	cegTag=SMLROCKETTRAIL;
+	range=650;
+	reloadtime=0.7;
+	weapontimer=0.5;
+	flighttime=8;
+	weaponvelocity=700;
+	startvelocity=150;
+	weaponAcceleration=150;
+	turnrate=33000;
+	areaofeffect=48;
+	metalpershot=0;
+	soundstart=misfire1;
+	soundhit=mishit1;
+	firestarter=70;
+	tracks=1;
+	fixedlauncher=1;
+	smoketrail=1;
+	Texture1=null;
+	tolerance=9000;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=1;
+	}
+	[DAMAGE]
+	{
+		default=70;
+		armor_heavy=17;//#AUTO#
+		armor_medium=35;//#AUTO#
+		armor_light=70;//#AUTO#
+	}
+}
 [gear_missilator_missile]
 {
 	name=Large Missiles;
@@ -7525,6 +7566,42 @@
 		armor_light=100;//#AUTO#
 	}
 }
+[gear_knocker_cannon]
+{
+	name=Plasma Cannon;
+	rendertype=4;
+	ballistic=1;
+	turret=1;
+	range=550;
+	reloadtime=2.3;
+	explosiongenerator=custom:STDBLASTWRAPPER;
+	weaponvelocity=338;
+	areaofeffect=48;
+	soundstart=cannon2;
+	soundhit=xplomed4;
+	tolerance=4000;
+	accuracy=1000;
+	movingaccuracy=1000;
+	size=3.2;
+	rgbcolor=0.7 0.6 0.3;
+	stages=3;
+  	separation=0.5;
+  	alphadecay=0.3;
+  	sizedecay=-0.1;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=2;
+	}
+	[DAMAGE]
+	{
+		default=150;
+		armor_heavy=75;//#AUTO#
+		armor_medium=150;//#AUTO#
+		armor_light=150;//#AUTO#
+	}
+}
 [gear_snake_torpedo]
 {
 	ID=11;
@@ -8813,7 +8890,7 @@
 	}
 	[DAMAGE]
 	{
-		default=42; //53;
+		default=42;
 		group_invincible=1;
 		armor_heavy=10;//#AUTO#
 		armor_medium=21;//#AUTO#
@@ -9238,7 +9315,7 @@
 	rendertype=1;
 	lineofsight=1;
 	vlaunch=1;
-	model=weapon_missile.3do;
+	model=weapon_smlmsl2.3do;
 	cegTag=SMLROCKETTRAIL;
 	range=700;
 	reloadtime=1;
@@ -10409,6 +10486,7 @@
 	tolerance=4000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
+	avoidGround=0;
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
@@ -10499,7 +10577,7 @@
   	separation=0.0;
   	alphadecay=0.8;
   	sizedecay=-0.11;
-	tolerance=6000;
+	tolerance=5000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -11475,6 +11553,50 @@ largebeamlaser=01;
 		armor_light=140;//#AUTO#
 	}
 }
+[aven_twister_rocket]
+{
+	name=Rockets;
+	rendertype=1;
+	lineofsight=1;
+	model=weapon_rocket2.3do;
+	Weapontype=MissileLauncher;
+	range=390;
+	reloadtime=3;
+	weapontimer=5;
+	weaponvelocity=350;
+	startvelocity=350;
+	weaponAcceleration=131;
+	metalpershot=0;
+	turnrate=3680;
+	areaofeffect=48;
+	explosiongenerator=custom:ROCKETBLASTWRAPPER;
+	cegTag=KBOTROCKETTRAIL;
+	Texture1=null; //flare//
+	Texture2=null;//first segment of missiletrail//
+	Texture3=null;//flame//
+	Texture4=null;//unknown//
+	soundstart=rocklit1;
+	soundhit=xplomed2;
+	firestarter=70;
+	smoketrail=0;
+	tolerance=2000;
+	CollideFriendly=0;
+	tracks=0;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=2;
+	}
+	[DAMAGE]
+	{
+		default=140;
+		group_invincible=1;
+		armor_heavy=70;//#AUTO#
+		armor_medium=140;//#AUTO#
+		armor_light=140;//#AUTO#
+	}
+}
 [aven_tornado_emg]
 {
 	name=E.M.G.;
@@ -11513,6 +11635,50 @@ largebeamlaser=01;
 		armor_heavy=6;//#AUTO#
 		armor_medium=12;//#AUTO#
 		armor_light=25;//#AUTO#
+	}
+}
+[aven_twister_laser]
+{
+	ID=76;
+	name=Light Laser;
+	rendertype=0;
+	explosiongenerator=custom:REDLASERBLASTWRAPPER;
+	beamlaser=1;
+	beamtime=0.05;
+	thickness=1.31;
+	corethickness=0.55;
+	lineofsight=1;
+	range=390;
+	minintensity=1.0;
+	reloadtime=2;
+	weaponvelocity=1533;
+	energypershot=0;
+	areaofeffect=8;
+	soundtrigger=1;
+	weapontimer=1;
+	soundstart=lasrfir3;
+	soundhit=lasrhit2;
+	firestarter=30;
+	beamweapon=1;
+	largebeamlaser=0;
+	scrollspeed=0;
+	pulsespeed=0;
+	rgbcolor=0.51 0.0 0.0;
+	rgbcolor2=1.0 0.4 0.4;
+	tolerance=12000;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=1;
+	}
+	[DAMAGE]
+	{
+		default=42;
+		group_invincible=1;
+		armor_heavy=10;//#AUTO#
+		armor_medium=21;//#AUTO#
+		armor_light=42;//#AUTO#
 	}
 }
 [VTOL_ROCKET]
@@ -14170,6 +14336,50 @@ largebeamlaser=01;
 		armor_heavy=200;//#AUTO#
 		armor_medium=200;//#AUTO#
 		armor_light=200;//#AUTO#
+	}
+}
+[claw_boomer_m_rocket]
+{
+	name=Rockets;
+	explosiongenerator=custom:ROCKETBLASTWRAPPER;
+	Weapontype=MissileLauncher;
+	cegTag=KBOTROCKETTRAIL;
+	rendertype=1;
+	lineofsight=1;
+	turret=0;
+	model=weapon_rocket2.3do;
+	range=420;
+	reloadtime=1.9;
+	flighttime=1.9;
+	weaponvelocity=300;
+	startvelocity=300;
+	projectiles=1;
+	weaponAcceleration=30;
+	areaofeffect=48;
+	metalpershot=0;
+	sprayangle=300;
+	soundstart=rocklit1;
+	soundhit=xplosml2;
+	firestarter=70;
+	smoketrail=0;
+	tolerance=4500;
+	InterceptedByShieldType=1;
+	collidefriendly=0;
+	avoidfeature=0;
+	tracks=0;
+	turnrate=6000;
+	wobble=500;
+	[CUSTOMPARAMS]
+	{
+		hitpower=2;
+	}
+	[DAMAGE]
+	{
+		default=140;
+		group_invincible=1;
+		armor_heavy=70;//#AUTO#
+		armor_medium=140;//#AUTO#
+		armor_light=140;//#AUTO#
 	}
 }
 [claw_trident_rocket]
@@ -18348,7 +18558,7 @@ largebeamlaser=01;
 	accuracy=300;
 	areaofeffect=140;
 	soundstart=phofir00;
-	soundhit=rockxpl3;
+	soundhit=xplochargedshot;
 	soundtrigger=1;
 	tolerance=1000;
 	InterceptedByShieldType=1;
@@ -18522,7 +18732,7 @@ largebeamlaser=01;
 	accuracy=150;
 	areaofeffect=80;
 	soundstart=phofir00;
-	soundhit=rockxpl3;
+	soundhit=xplochargedshot;
 	soundtrigger=1;
 	tolerance=2000;
 	InterceptedByShieldType=1;
@@ -18790,6 +19000,52 @@ largebeamlaser=01;
 		armor_heavy=400;//#AUTO#
 		armor_medium=400;//#AUTO#
 		armor_light=400;//#AUTO#
+	}
+}
+[sphere_tycho_rocket]
+{
+	name=Rockets;
+	explosiongenerator=custom:ROCKETBLASTWRAPPER;
+	Weapontype=MissileLauncher;
+	cegTag=KBOTROCKETTRAIL;
+	rendertype=1;
+	lineofsight=1;
+	turret=0;
+	model=weapon_rocket2.3do;
+	range=420;
+	reloadtime=4.5;
+	flighttime=1.9;
+	fixedlauncher=1;
+	weaponvelocity=360;
+	startvelocity=360;
+	weaponAcceleration=30;
+	burst=3;
+	burstrate=0.2;
+	areaofeffect=48;
+	metalpershot=0;
+	sprayangle=300;
+	soundstart=rocklit1;
+	soundhit=xplosml2;
+	firestarter=70;
+	smoketrail=0;
+	tolerance=24500;
+	InterceptedByShieldType=1;
+	collidefriendly=0;
+	avoidfeature=0;
+	tracks=0;
+	turnrate=35000;
+	wobble=5500;
+	[CUSTOMPARAMS]
+	{
+		hitpower=2;
+	}
+	[DAMAGE]
+	{
+		default=120;
+		group_invincible=1;
+		armor_heavy=60;//#AUTO#
+		armor_medium=120;//#AUTO#
+		armor_light=120;//#AUTO#
 	}
 }
 [sphere_trax_cannon]
@@ -20742,6 +20998,7 @@ largebeamlaser=01;
 	avoidground=0;
 	collideFriendly=1;
 	avoidFriendly=0;
+	cratermult=0;
 	impulsefactor=0.3;
 	paralyzer=1;
 	paralyzetime=15;
