@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=680;
+	maxdamage=700;
 	healtime=30;
 	footprintx=3;
 	footprintz=3;
@@ -34,8 +34,8 @@
 	//************************************************************
 	//  Resources
 	//*************
-	energymake=3;
-	energyuse=3;
+	energymake=0;
+	energyuse=0;
 
 	//************************************************************
 	//  Building
@@ -62,7 +62,7 @@
 	//************
 	acceleration=1.0;
 	brakerate=0.08;
-	maxvelocity=12;
+	maxvelocity=11;
 	maxwaterdepth=5;
 	cruisealt=200;
 
@@ -150,7 +150,7 @@
 	[SFXTypes]
 	{
 	}
-	buildcostenergy=8806;//#AUTO#
-	buildcostmetal=880;//#AUTO#
-	buildtime=11302;//#AUTO#
+	buildcostenergy=9026;//#AUTO#
+	buildcostmetal=902;//#AUTO#
+	buildtime=11583;//#AUTO#
 }

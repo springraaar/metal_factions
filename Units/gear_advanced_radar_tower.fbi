@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=CORE SPECIAL LEVEL3 NOWEAPON NOTAIR NOTSUB CTRL_R;
+	category=CORE SPECIAL LEVEL3 NOWEAPON NOTAIR NOTSUB;
 	tedclass=SPECIAL;
 
 	//************************************************************
@@ -44,6 +44,11 @@
 	//************
 	buildangle=8192;
 	yardmap=oooo oooo oooo oooo;
+	collisionvolumetype=cyly;
+	collisionVolumeScales=50 70 50;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
 	activatewhenbuilt=1;
 
 	//************************************************************

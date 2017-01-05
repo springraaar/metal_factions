@@ -3,13 +3,13 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define SPEEDUP_FACTOR 130
+#define SPEEDUP_FACTOR 150
 
 piece  turret, front,back,ruparm, luparm, pelvis, lthigh,
        rthigh, rleg, rfoot, lleg, lfoot, lloarm, lhand, rloarm,turbase,faxis,baxis,
        rhand, ground, luparm2,ruparm2,larm,rarm,lgun,rgun,lg,rg,lflare,rflare,lspike,rspike, backhead;
 
-static-var  restore_delay, firePt;
+static-var  restore_delay, firePt, bMoving, bAiming, mAVertFactor, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mADelay1, legAngle1, legAngle2, legAngle3, legAngle4;;
 
 // Signal definitions
 #define SIG_MOVE			2
@@ -17,194 +17,281 @@ static-var  restore_delay, firePt;
 
 
 
+MotionSpeedControl(maxSpeed,currentSpeed)
+{
+	maxSpeed = get MAX_SPEED;
+	currentSpeed = 0;
+	mASpdFactor = SPEEDUP_FACTOR;
+	
+	while(TRUE)
+	{
+		currentSpeed = get CURRENT_SPEED;
+		mASpdFactor = SPEEDUP_FACTOR * currentSpeed / maxSpeed;
+
+		//call-script lua_cobDebug(mASpdFactor);
+		if ( mASpdFactor < 40 )
+		{
+			mASpdFactor = 40;
+		}
+		
+		
+		mAMoveSpd1 = [20.000000] * mASpdFactor / 100;
+		mATurnSpd1 = <615.000000> * (100 + mASpdFactor) / 200;
+		mATurnSpd2 = <300.000000> * (100 + mASpdFactor) / 200;
+		mATurnSpd3 = <150.000000> * (100 + mASpdFactor) / 200;
+
+		mAVertFactor = [0.000000]-[3.000000] * mASpdFactor / SPEEDUP_FACTOR;
+		legAngle1 = <55.000000>;
+		legAngle2 = <35.000000>;
+		legAngle3 = <15.000000>;
+		legAngle4 = <0.000000>;
+		if ( mASpdFactor < SPEEDUP_FACTOR )
+		{
+			legAngle1 = legAngle1 * (SPEEDUP_FACTOR + mASpdFactor) / (2*SPEEDUP_FACTOR);
+			legAngle2 = legAngle2 * (SPEEDUP_FACTOR + mASpdFactor) / (2*SPEEDUP_FACTOR);
+			legAngle3 = legAngle3 * (SPEEDUP_FACTOR + mASpdFactor) / (2*SPEEDUP_FACTOR);
+			legAngle4 = legAngle4 * (SPEEDUP_FACTOR + mASpdFactor) / (2*SPEEDUP_FACTOR);
+		}
+	
+		sleep 30;
+	}
+}
+
+
 walk()
 {
-	while( TRUE )
+	var slowTurnSpd, slowTurnSpd2;
+
+	slowTurnSpd = mATurnSpd2 / 4;
+	slowTurnSpd2 = mATurnSpd2 / 6;
+	
+	
+	// back contact point : right foot behind, left foot forward
+	if( bMoving )
 	{
-		if( TRUE )
+		turn lthigh to x-axis <0.000000>-legAngle4 speed mATurnSpd1;
+		turn lleg to x-axis <0> speed mATurnSpd2;
+		turn lfoot to x-axis <0> speed mATurnSpd1;
+		//turn lthigh to x-axis <0.000000>-legAngle1 speed mATurnSpd1;
+		//turn lleg to x-axis legAngle2 speed mATurnSpd2;
+		//turn lfoot to x-axis legAngle3 speed mATurnSpd1;
+
+		turn rthigh to x-axis legAngle1 speed mATurnSpd2;
+		//turn rthigh to x-axis legAngle2 speed mATurnSpd2;
+		turn rleg to x-axis legAngle3 speed mATurnSpd2;
+		turn rfoot to x-axis <0.000000>-legAngle2 speed mATurnSpd1;
+
+		// front legs, opposite
+		turn ruparm to x-axis <0.000000>-legAngle1 speed mATurnSpd1;
+		turn rloarm to x-axis legAngle2 speed mATurnSpd2;
+		turn rhand to x-axis legAngle3 speed mATurnSpd1;
+
+		turn luparm to x-axis legAngle2 speed mATurnSpd2;
+		turn lloarm to x-axis legAngle3 speed mATurnSpd2;
+		turn lhand to x-axis <0.000000>-legAngle2 speed mATurnSpd1;
+		
+		//move pelvis to y-axis mAVertFactor speed mAMoveSpd1;
+		//move pelvis to y-axis [0.000000] speed mAMoveSpd1;
+		move pelvis to z-axis [2.000000] speed mAMoveSpd1;
+		turn pelvis to x-axis <4.000000> speed slowTurnSpd2;
+
+		if(!bAiming)
 		{
-			move front to y-axis [0.000000] now;
-			move ruparm to y-axis [0.000000] now;
-			move ruparm to z-axis [0.000000] now;
-			move luparm to y-axis [-0.750000] now;
-			move luparm to z-axis [0.750000] now;
-			turn pelvis to z-axis <-3.582418> speed <95.000000> * SPEEDUP_FACTOR / 100;
-			turn front to z-axis <5.390110> speed <95.000000> * SPEEDUP_FACTOR / 100;
-			turn lthigh to x-axis <33.758242> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rthigh to x-axis <0.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rleg to x-axis <42.747253> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rfoot to x-axis <-31.945055> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lleg to x-axis <7.181319> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lfoot to x-axis <-11.692308> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn ruparm to x-axis <22.945055> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn luparm to x-axis <-51.302198> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lloarm to x-axis <21.137363> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lhand to x-axis <36.445055> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rloarm to x-axis <0.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rhand to x-axis <-5.835165> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			sleep 80 * 100 / SPEEDUP_FACTOR;
+			// turn turret right, left arm forward
+			turn turret to y-axis <-5.000000> speed slowTurnSpd2;
 		}
-		if( TRUE )
-		{
-			move front to y-axis [0.375000] now;
-			move ruparm to y-axis [1.500000] now;
-			move ruparm to z-axis [-0.875000] now;
-			move luparm to y-axis [0.000000] now;
-			move luparm to z-axis [0.500000] now;
-			turn pelvis to z-axis <-2.236264> speed <95.000000> * SPEEDUP_FACTOR / 100;
-			turn front to z-axis <2.236264> speed <95.000000> * SPEEDUP_FACTOR / 100;
-			turn lthigh to x-axis <47.247253> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rthigh to x-axis <6.736264> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rleg to x-axis <-28.791209> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rfoot to x-axis <16.637363> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lleg to x-axis <-5.835165> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lfoot to x-axis <0.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn ruparm to x-axis <7.181319> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn luparm to x-axis <-29.236264> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lloarm to x-axis <13.489011> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lhand to x-axis <16.192308> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rloarm to x-axis <3.582418> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rhand to x-axis <106.214286> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			sleep 80 * 100 / SPEEDUP_FACTOR;
-		}
-		if( TRUE )
-		{
-			move front to y-axis [0.875000] now;
-			move ruparm to z-axis [-0.250000] now;
-			move luparm to z-axis [0.000000] now;
-			turn pelvis to z-axis <-0.890110> speed <95.000000> * SPEEDUP_FACTOR / 100;
-			turn front to z-axis <-1.335165> speed <95.000000> * SPEEDUP_FACTOR / 100;
-			turn lthigh to x-axis <51.302198> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rthigh to x-axis <9.434066> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rleg to x-axis <10.791209> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rfoot to x-axis <-10.335165> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lleg to x-axis <0.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lfoot to x-axis <21.137363> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn luparm to x-axis <0.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lloarm to x-axis <0.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lhand to x-axis <0.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rloarm to x-axis <-40.945055> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rhand to x-axis <143.115385> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			sleep 80 * 100 / SPEEDUP_FACTOR;
-		}
-		if( TRUE )
-		{
-			move front to y-axis [0.500000] now;
-			move ruparm to z-axis [0.250000] now;
-			turn pelvis to z-axis <2.236264> speed <95.000000> * SPEEDUP_FACTOR / 100;
-			turn front to z-axis <-4.934066> speed <95.000000> * SPEEDUP_FACTOR / 100;
-			turn lthigh to x-axis <0.890110> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rthigh to x-axis <20.692308> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rleg to x-axis <3.582418> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rfoot to x-axis <-14.835165> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lleg to x-axis <55.802198> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lfoot to x-axis <0.890110> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn ruparm to x-axis <-17.978022> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn luparm to x-axis <17.978022> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lloarm to x-axis <-3.137363> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lhand to x-axis <-5.390110> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			sleep 80 * 100 / SPEEDUP_FACTOR;
-		}
-		if( TRUE )
-		{
-			move front to y-axis [0.000000] now;
-			move ruparm to y-axis [-0.375000] now;
-			move ruparm to z-axis [0.500000] now;
-			turn pelvis to z-axis <3.582418> speed <95.000000> * SPEEDUP_FACTOR / 100;
-			turn front to z-axis <-4.489011> speed <95.000000> * SPEEDUP_FACTOR / 100;
-			turn lthigh to x-axis <-16.192308> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rthigh to x-axis <35.538462> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rfoot to x-axis <-8.989011> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lleg to x-axis <54.901099> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lfoot to x-axis <-21.593407> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn ruparm to x-axis <-48.593407> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn luparm to x-axis <20.225275> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lloarm to x-axis <8.989011> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lhand to x-axis <-17.093407> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rloarm to x-axis <14.390110> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rhand to x-axis <46.346154> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			sleep 80 * 100 / SPEEDUP_FACTOR;
-		}
-		if( TRUE )
-		{
-			move front to y-axis [0.375000] now;
-			move ruparm to z-axis [0.500000] now;
-			move luparm to y-axis [1.500000] now;
-			turn pelvis to z-axis <2.236264> speed <95.000000> * SPEEDUP_FACTOR / 100;
-			turn front to z-axis <-2.236264> speed <95.000000> * SPEEDUP_FACTOR / 100;
-			turn lthigh to x-axis <0.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rthigh to x-axis <46.346154> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rfoot to x-axis <5.835165> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lleg to x-axis <0.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lfoot to x-axis <0.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn ruparm to x-axis <-33.758242> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn luparm to x-axis <11.247253> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lloarm to x-axis <0.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lhand to x-axis <116.560440> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rhand to x-axis <20.225275> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			sleep 80 * 100 / SPEEDUP_FACTOR;
-		}
-		if( TRUE )
-		{
-			move front to y-axis [0.875000] now;
-			move ruparm to z-axis [0.250000] now;
-			move luparm to y-axis [1.500000] now;
-			turn pelvis to z-axis <0.890110> speed <95.000000> * SPEEDUP_FACTOR / 100;
-			turn front to z-axis <1.335165> speed <95.000000> * SPEEDUP_FACTOR / 100;
-			turn lthigh to x-axis <11.247253> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rthigh to x-axis <60.302198> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rfoot to x-axis <10.791209> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lleg to x-axis <13.038462> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lfoot to x-axis <-14.835165> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn ruparm to x-axis <5.390110> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn luparm to x-axis <-8.989011> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lloarm to x-axis <-28.791209> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn lhand to x-axis <148.967033> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rloarm to x-axis <-5.835165> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			turn rhand to x-axis <6.736264> speed <360.000000> * SPEEDUP_FACTOR / 100;
-			sleep 80 * 100 / SPEEDUP_FACTOR;
-		}
-		move front to y-axis [0.500000] now;
-		move ruparm to z-axis [0.000000] now;
-		move luparm to y-axis [0.000000] now;
-		turn pelvis to z-axis <-1.780220> speed <95.000000> * SPEEDUP_FACTOR / 100;
-		turn front to z-axis <5.390110> speed <95.000000> * SPEEDUP_FACTOR / 100;
-		turn lthigh to x-axis <36.890110> speed <360.000000> * SPEEDUP_FACTOR / 100;
-		turn rthigh to x-axis <26.989011> speed <360.000000> * SPEEDUP_FACTOR / 100;
-		turn rleg to x-axis <39.148352> speed <360.000000> * SPEEDUP_FACTOR / 100;
-		turn lleg to x-axis <-0.434066> speed <360.000000> * SPEEDUP_FACTOR / 100;
-		turn lfoot to x-axis <-17.093407> speed <360.000000> * SPEEDUP_FACTOR / 100;
-		turn luparm to x-axis <-21.137363> speed <360.000000> * SPEEDUP_FACTOR / 100;
-		turn lloarm to x-axis <-40.489011> speed <360.000000> * SPEEDUP_FACTOR / 100;
-		turn lhand to x-axis <90.016484> speed <360.000000> * SPEEDUP_FACTOR / 100;
-		turn rloarm to x-axis <4.038462> speed <360.000000> * SPEEDUP_FACTOR / 100;
-		turn rhand to x-axis <-9.890110> speed <360.000000> * SPEEDUP_FACTOR / 100;
-		sleep 80 * 100 / SPEEDUP_FACTOR;
+		
+		wait-for-turn lthigh around x-axis;
+		wait-for-turn rthigh around x-axis;
+		wait-for-turn lleg around x-axis;
+		wait-for-turn rleg around x-axis;
 	}
-	return (0);
+
+	// passing pose 2 : right foot raising, left foot on the ground
+	if( bMoving )
+	{
+		turn lthigh to x-axis <0.000000> speed mATurnSpd2;
+		turn lleg to x-axis <0.000000> speed mATurnSpd2;
+		turn lfoot to x-axis <10.000000> speed mATurnSpd3;
+
+		turn rthigh to x-axis <40.000000> speed mATurnSpd1;
+		turn rleg to x-axis <-40.000000> speed mATurnSpd1;
+		turn rfoot to x-axis <10.000000> speed mATurnSpd1;
+
+		// front legs, opposite
+		turn ruparm to x-axis <0.000000> speed mATurnSpd2;
+		turn rloarm to x-axis <0.000000> speed mATurnSpd2;
+		turn rhand to x-axis <10.000000> speed mATurnSpd3;
+
+		turn luparm to x-axis <40.000000> speed mATurnSpd1;
+		turn lloarm to x-axis <-40.000000> speed mATurnSpd1;
+		turn lhand to x-axis <10.000000> speed mATurnSpd1;
+		
+				
+		if(!bAiming)
+		{
+			// restore position
+			turn turret to y-axis <0.000000> speed slowTurnSpd2;
+		}
+
+		sleep mADelay1;
+		//move pelvis to y-axis [2.000000] speed mAMoveSpd1;
+		move pelvis to z-axis [0.000000] speed mAMoveSpd1;
+		turn pelvis to x-axis <0.000000> speed slowTurnSpd2;
+		
+		wait-for-turn lthigh around x-axis;
+		wait-for-turn rthigh around x-axis;
+		wait-for-turn lleg around x-axis;
+		wait-for-turn rleg around x-axis;
+	}
+	
+	// forward contact point : right foot forward, left foot behind
+	if( bMoving )
+	{
+		turn lthigh to x-axis legAngle1 speed mATurnSpd2;
+		//turn lthigh to x-axis legAngle2 speed mATurnSpd2;
+		turn lleg to x-axis legAngle3 speed mATurnSpd2;
+		turn lfoot to x-axis <0>-legAngle2 speed mATurnSpd1;
+
+		turn rthigh to x-axis <0>-legAngle4 speed mATurnSpd1;
+		turn rleg to x-axis <0> speed mATurnSpd2;
+		turn rfoot to x-axis <0> speed mATurnSpd1;
+		//turn rthigh to x-axis <0>-legAngle1 speed mATurnSpd1;
+		//turn rleg to x-axis legAngle2 speed mATurnSpd2;
+		//turn rfoot to x-axis legAngle3 speed mATurnSpd1;
+		
+		
+		// front legs, opposite
+		turn ruparm to x-axis legAngle2 speed mATurnSpd2;
+		turn rloarm to x-axis legAngle3 speed mATurnSpd2;
+		turn rhand to x-axis <0>-legAngle2 speed mATurnSpd1;
+
+		turn luparm to x-axis <0>-legAngle1 speed mATurnSpd1;
+		turn lloarm to x-axis legAngle2 speed mATurnSpd2;
+		turn lhand to x-axis legAngle3 speed mATurnSpd1;
+				
+		
+		move pelvis to y-axis [0.000000] speed mAMoveSpd1;
+		move pelvis to z-axis [2.000000] speed mAMoveSpd1;
+		turn pelvis to x-axis <4.000000> speed slowTurnSpd2;
+		
+		if(!bAiming)
+		{
+			// turn turret left, right arm forward
+			turn turret to y-axis <5.000000> speed slowTurnSpd2;
+		}
+
+		sleep mADelay1;
+		wait-for-turn lthigh around x-axis;
+		wait-for-turn rthigh around x-axis;
+		wait-for-turn lleg around x-axis;
+		wait-for-turn rleg around x-axis;
+	}
+
+	// passing pose 1 : right foot on ground, left foot raising
+	if( bMoving )
+	{
+		turn lthigh to x-axis <40.000000> speed mATurnSpd1;
+		turn lleg to x-axis <-40.000000> speed mATurnSpd1;
+		turn lfoot to x-axis <10.000000> speed mATurnSpd1;
+		
+		turn rthigh to x-axis <0.000000> speed mATurnSpd2;
+		turn rleg to x-axis <0.000000> speed mATurnSpd2;
+		turn rfoot to x-axis <10.000000> speed mATurnSpd3;
+
+		// front legs, opposite
+		turn ruparm to x-axis <40.000000> speed mATurnSpd1;
+		turn rloarm to x-axis <-40.000000> speed mATurnSpd1;
+		turn rhand to x-axis <10.000000> speed mATurnSpd1;
+		
+		turn luparm to x-axis <0.000000> speed mATurnSpd2;
+		turn lloarm to x-axis <0.000000> speed mATurnSpd2;
+		turn lhand to x-axis <10.000000> speed mATurnSpd3;
+		
+		if(!bAiming)
+		{
+			// restore position
+			turn turret to y-axis <0.000000> speed slowTurnSpd2;
+		}
+		
+		sleep mADelay1;
+		//move pelvis to y-axis [2.000000] speed mAMoveSpd1;
+		move pelvis to z-axis [0.000000] speed mAMoveSpd1;
+		turn pelvis to x-axis <0.000000> speed slowTurnSpd2;
+		
+		wait-for-turn lthigh around x-axis;
+		wait-for-turn rthigh around x-axis;
+		wait-for-turn lleg around x-axis;
+		wait-for-turn rleg around x-axis;
+	}
+	
+	return;
 }
+
 
 stand()
 {
+	move pelvis to y-axis [0.000000] speed [10.000000];
 	turn pelvis to z-axis <0.000000> speed <95.000000> * SPEEDUP_FACTOR / 100;
+	turn pelvis to x-axis <0.000000> speed <95.000000> * SPEEDUP_FACTOR / 100;
 	turn front to z-axis <0.000000> speed <95.000000> * SPEEDUP_FACTOR / 100;
 	
-	turn rthigh to x-axis <30.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
+	turn rthigh to x-axis <10.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
 	turn rleg to x-axis <0.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
-	turn rfoot to x-axis <-20.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
+	turn rfoot to x-axis <-10.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
 	
-	turn lthigh to x-axis <30.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
+	turn lthigh to x-axis <10.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
 	turn lleg to x-axis <0.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
-	turn lfoot to x-axis <-20.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
+	turn lfoot to x-axis <-10.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
 	
-	turn luparm to x-axis <-20.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
+	turn luparm to x-axis <-10.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
 	turn lloarm to x-axis <0.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
-	turn lhand to x-axis <15.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
+	turn lhand to x-axis <10.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
 	
-	turn ruparm to x-axis <-20.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
+	turn ruparm to x-axis <-10.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
 	turn rloarm to x-axis <0.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
-	turn rhand to x-axis <15.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
-	sleep 100;
+	turn rhand to x-axis <10.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
+	sleep 50;
+}
+
+
+
+MotionControl(moving, aiming, justmoved)
+{
+	justmoved = TRUE;
+	while( TRUE )
+	{
+		moving = bMoving;
+		aiming = bAiming;
+		if( moving )
+		{
+			if( aiming )
+			{
+				call-script walk();
+			}
+			if( !aiming )
+			{
+				call-script walk();
+			}
+			justmoved = TRUE;
+		}
+		if( !moving )
+		{
+			if( justMoved )
+			{
+				call-script stand();
+				
+				if( !aiming )
+				{
+					turn turret to y-axis <0.000000> speed <200.000000>;
+				}
+
+				justMoved = FALSE;
+			}
+			sleep 100;
+		}
+	}
+	return (0);
 }
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
@@ -237,28 +324,30 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 
 
-
 Create()
 {
+	hide lflare;
+	hide rflare;
+	bMoving = FALSE;
+	bAiming = FALSE;
 	restore_delay = 5000;
 	firePt = [0];
+	start-script MotionControl();
 	start-script SmokeUnit();
+	start-script MotionSpeedControl();
 	return (0);
 }
 
 
 StartMoving()
 {
-	signal SIG_MOVE;
-	set-signal-mask SIG_MOVE;
-	start-script walk();
+	bMoving = TRUE;
 	return (0);
 }
 
 StopMoving()
 {
-	signal SIG_MOVE;
-	start-script stand();
+	bMoving = FALSE;
 	return (0);
 }
 
@@ -277,6 +366,7 @@ RestoreAfterDelay()
 	wait-for-turn turret around y-axis;
 	wait-for-turn luparm2 around x-axis;
 	wait-for-turn ruparm2 around x-axis;
+	bAiming = FALSE;
 	return (0);
 }
 
@@ -284,7 +374,7 @@ AimPrimary(heading, pitch)
 {
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-
+	bAiming = TRUE;
 	turn turret to y-axis heading speed <300.000000>;
 	turn luparm2 to x-axis <0.000000> - pitch speed <300.000000>;
 	turn ruparm2 to x-axis <0.000000> - pitch speed <300.000000>;

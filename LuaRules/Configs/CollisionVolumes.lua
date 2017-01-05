@@ -53,6 +53,11 @@ unitCollisionVolume["gear_pulverizer"] = {
 	off={30,15,30,0,0,0,2,1,0},
 }
 
+unitCollisionVolume["gear_beamer"] = {
+	on={38,60,38,0,0,0,2,1,0},
+	off={38,15,38,0,0,0,2,1,0},
+}
+
 unitCollisionVolume["gear_burner"] = {
 	on={50,40,50,0,0,0,1,1,1},
 	off={50,20,50,0,0,0,1,1,1},

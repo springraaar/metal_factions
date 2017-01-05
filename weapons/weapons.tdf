@@ -585,8 +585,8 @@
   	sizedecay=-0.2;
 	lineofsight=1;
 	turret=1;
-	range=420;
-	reloadtime=0.2;
+	range=450;
+	reloadtime=0.17;
 	weapontimer=0.6;
 	weaponvelocity=600;
 	sprayangle=600;
@@ -616,8 +616,8 @@
 	lineofsight=1;
     CollideFriendly=1;
 	model=weapon_torpedo;
-	range=500;
-	reloadtime=4;
+	range=480;
+	reloadtime=5;
 	turret=1;
 	weapontimer=10;
 	FlightTime=1.5;
@@ -654,9 +654,9 @@
 	rendertype=0;
 	lineofsight=1;
 	turret=1;
-	range=500;
+	range=450;
 	minintensity=1.0;
-	reloadtime=0.65;
+	reloadtime=0.7;
 	weaponvelocity=1533;
 	explosiongenerator=custom:REDLASERBLASTWRAPPER;
 	tolerance=2000;
@@ -687,11 +687,11 @@
 	}
 	[DAMAGE]
 	{
-		default=60;
+		default=70;
 		group_invincible=1;
-		armor_heavy=15;//#AUTO#
-		armor_medium=30;//#AUTO#
-		armor_light=60;//#AUTO#
+		armor_heavy=17;//#AUTO#
+		armor_medium=35;//#AUTO#
+		armor_light=70;//#AUTO#
 	}
 }
 [aven_dazer_disruptor]
@@ -4078,9 +4078,9 @@
 	rendertype=0; //laser
 	lineofsight=1;
 	turret=1;
-	range=500;
+	range=450;
 	minintensity=1.0;
-	reloadtime=2;
+	reloadtime=1.7;
 	energypershot=75;
 	weaponvelocity=1533;
 	areaofeffect=8;
@@ -5037,9 +5037,9 @@
 	Intensity=0.9; 
 	lineofsight=1;
 	turret=1;
-	range=470;
+	range=500;
 	minintensity=1.0;
-	reloadtime=0.9;
+	reloadtime=0.8;
 	weaponvelocity=1533; 
 	areaofeffect=16;
 	soundtrigger=1;
@@ -5076,8 +5076,8 @@
 	lineofsight=1;
 	CollideFriendly=1;
 	model=weapon_torpedo;
-	range=520;
-	reloadtime=4;
+	range=500;
+	reloadtime=5;
 	turret=1;
 	weapontimer=10;
 	FlightTime=1.5;
@@ -5161,7 +5161,7 @@
 	CollideFriendly=1;
 	model=weapon_torpedo;
 	range=450;
-	reloadtime=4;
+	reloadtime=3.5;
 	turret=1;
 	weapontimer=4;
 	FlightTime=2.5;
@@ -5445,7 +5445,7 @@
 	ballistic=1;
 	turret=1;
 	range=800;
-	reloadtime=5;
+	reloadtime=4.5;
 	weaponvelocity=480;
 	areaofeffect=90;
 	projectiles=2;
@@ -5613,7 +5613,7 @@
 	CollideFriendly=1;
 	model=weapon_torpedo;
 	range=500;
-	reloadtime=4;
+	reloadtime=3.5;
 	turret=1;
 	weapontimer=4;
 	FlightTime=2.5;
@@ -5653,9 +5653,9 @@
 	ballistic=1;
 	turret=1;
 	range=500;
-	reloadtime=3;
-	weaponvelocity=480;
-	areaofeffect=90;
+	reloadtime=2.25;
+	weaponvelocity=400;
+	areaofeffect=75;
 	projectiles=1;
 	sprayangle=500;
 	soundstart=cannhvy2;
@@ -5949,7 +5949,7 @@
 	range=650;
 	reloadtime=0.7;
 	weapontimer=0.5;
-	flighttime=8;
+	flighttime=6;
 	weaponvelocity=700;
 	startvelocity=150;
 	weaponAcceleration=150;
@@ -7005,6 +7005,53 @@
 		armor_heavy=60;//#AUTO#
 		armor_medium=120;//#AUTO#
 		armor_light=120;//#AUTO#
+	}
+}
+[gear_beamer_laser]
+{
+	name=Medium Laser;
+	rendertype=0;
+	lineofsight=1;
+	turret=1;
+	range=780;
+	minintensity=1.0;
+	reloadtime=0.75;
+	weaponvelocity=1533;
+	explosiongenerator=custom:REDLASERBLASTWRAPPER;
+	tolerance=2000;
+	beamlaser=1;
+	beamtime=0.1;
+	thickness=2.01;
+	corethickness=0.6;
+	Intensity=0.88; 
+	energypershot=25;
+	areaofeffect=8;
+	soundtrigger=1;
+	soundstart=lasrfir3;
+	soundhit=lasrhit2;
+	firestarter=30;
+	beamweapon=1;
+	largebeamlaser=0;
+	scrollspeed=0;
+	pulsespeed=0;
+	rgbcolor=0.51 0.0 0.0;
+	rgbcolor2=1.0 0.4 0.4;
+	tolerance=2000;
+	impulsefactor=0.322;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	avoidGround=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=2;
+	}
+	[DAMAGE]
+	{
+		default=110;
+		group_invincible=1;
+		armor_heavy=55;//#AUTO#
+		armor_medium=110;//#AUTO#
+		armor_light=110;//#AUTO#
 	}
 }
 [gear_edge_laser]
@@ -9320,7 +9367,7 @@
 	range=700;
 	reloadtime=1;
 	weapontimer=0.5;
-	flighttime=10;
+	flighttime=7;
 	weaponvelocity=600;
 	startvelocity=250;
 	weaponAcceleration=80;
@@ -13748,9 +13795,9 @@ largebeamlaser=01;
 	corethickness=0.6;
 	lineofsight=1;
 	turret=1;
-	range=470;
+	range=480;
 	minintensity=1.0;
-	reloadtime=0.6;
+	reloadtime=0.45;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundtrigger=1;
@@ -13831,8 +13878,8 @@ largebeamlaser=01;
 	lineofsight=1;
 	CollideFriendly=1;
 	model=weapon_smltorpedo;
-	range=450;
-	reloadtime=1.5;
+	range=440;
+	reloadtime=1.6;
 	turret=1;
 	FlightTime=1.5;
 	submissile=1;
@@ -13911,7 +13958,7 @@ largebeamlaser=01;
 	lineofsight=1;
 	CollideFriendly=1;
 	model=weapon_smltorpedo;
-	range=400;
+	range=440;
 	reloadtime=1.5;
 	turret=1;
 	weapontimer=10;
@@ -15655,7 +15702,7 @@ largebeamlaser=01;
 	ballistic=1;
 	turret=1;
 	range=400;
-	reloadtime=3;
+	reloadtime=2.5;
 	burst=2;
 	burstrate=0.2;
 	weaponvelocity=400;
@@ -16816,7 +16863,7 @@ largebeamlaser=01;
 	weaponvelocity=350;
 	energypershot=350;
 	areaofeffect=150;
-	soundstart=largegun;
+	soundstart=largegun2;
 	soundhit=xplonuk1;
 	firestarter=50;
 	accuracy=500;
@@ -16858,7 +16905,7 @@ largebeamlaser=01;
 	weaponvelocity=550;
 	energypershot=500;
 	areaofeffect=150;
-	soundstart=largegun;
+	soundstart=largegun2;
 	soundhit=xplonuk1;
 	firestarter=50;
 	accuracy=400;
@@ -16958,9 +17005,9 @@ largebeamlaser=01;
 	pulseSpeed=4.0;
 	thickness=8;
 	beamtime=0.1;
-	range=450; 
+	range=500; 
 	reloadtime=0.1;
-	energypershot=5;
+	energypershot=6.5;
 	weaponvelocity=4000;
   	texture1=testlightning;
   	laserflaresize=2;
@@ -16982,10 +17029,10 @@ largebeamlaser=01;
 	}
 	[DAMAGE]
 	{
-		default=14;
-		armor_heavy=7;//#AUTO#
-		armor_medium=14;//#AUTO#
-		armor_light=14;//#AUTO#
+		default=17;
+		armor_heavy=8;//#AUTO#
+		armor_medium=17;//#AUTO#
+		armor_light=17;//#AUTO#
 	}
 }
 [sphere_u1commander_beam]
@@ -17125,7 +17172,7 @@ largebeamlaser=01;
 	turret=1;
 	range=780;
 	minintensity=1.0;
-	reloadtime=5;
+	reloadtime=4.2;
 	energypershot=500;
 	weaponvelocity=1533;
 	areaofeffect=8;
@@ -17199,7 +17246,7 @@ largebeamlaser=01;
 	CollideFriendly=1;
 	model=weapon_torpedo;
 	range=500;
-	reloadtime=4;
+	reloadtime=5;
 	turret=1;
 	FlightTime=1.5;
 	submissile=1;
@@ -17274,7 +17321,7 @@ largebeamlaser=01;
     CollideFriendly=1;
 	model=weapon_torpedo;
 	range=520;
-	reloadtime=3.5;
+	reloadtime=3.2;
 	turret=1;
 	weapontimer=10;
 	FlightTime=2.5;
@@ -17312,7 +17359,7 @@ largebeamlaser=01;
     CollideFriendly=1;
 	model=weapon_torpedo;
 	range=550;
-	reloadtime=3.5;
+	reloadtime=3.0;
 	turret=1;
 	weapontimer=10;
 	FlightTime=2.5;
@@ -17349,7 +17396,7 @@ largebeamlaser=01;
 	lineofsight=1;
     CollideFriendly=1;
 	model=weapon_torpedo;
-	range=650;
+	range=600;
 	reloadtime=4.5;
 	turret=1;
 	weapontimer=10;
@@ -18762,7 +18809,7 @@ largebeamlaser=01;
 	range=600;
 	reloadtime=1.5;
 	weapontimer=0.5;
-	flighttime=10;
+	flighttime=6;
 	weaponvelocity=600;
 	startvelocity=250;
 	weaponAcceleration=80;
@@ -18803,7 +18850,7 @@ largebeamlaser=01;
 	range=600;
 	reloadtime=0.45;
 	weapontimer=0.5;
-	flighttime=8;
+	flighttime=6;
 	weaponvelocity=600;
 	startvelocity=250;
 	weaponAcceleration=80;

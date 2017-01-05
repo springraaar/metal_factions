@@ -114,6 +114,21 @@ local upgradeFinishedDefIds = {
 	[WeaponDefNames["upgrade_blue"].id] = true
 }
 
+local continuousBeamWeaponDefIds = {
+	[WeaponDefNames["sphere_commander_beam"].id] = true,
+	[WeaponDefNames["sphere_u1commander_beam"].id] = true,
+	[WeaponDefNames["sphere_u2commander_beam"].id] = true,
+	[WeaponDefNames["sphere_u3commander_beam"].id] = true,
+	[WeaponDefNames["sphere_u4commander_beam"].id] = true,
+	[WeaponDefNames["sphere_opal_sphere_beam"].id] = true,
+	[WeaponDefNames["sphere_ruby_sphere_beam"].id] = true,
+	[WeaponDefNames["sphere_obsidian_sphere_beam"].id] = true,
+	[WeaponDefNames["sphere_chroma_beam1"].id] = true,
+	[WeaponDefNames["sphere_chroma_beam2"].id] = true,
+	[WeaponDefNames["sphere_chroma_beam3"].id] = true
+}
+
+
 -- set unit collision volume data
 function SetColvol(unitID, colvolType)
 	local d = nil
@@ -367,10 +382,23 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	if (weaponDefID == -3) then
 		return 0
 	end
-	-- Spring.Echo("time="..Spring.GetGameSeconds() .. " health="..Spring.GetUnitHealth(unitID)) 
+	 
+	-- increase damage due to veteran status for continuous beam weapons
+	-- to compensate for not getting reload time reduction
+	local dmgMod = 0 
+	if (continuousBeamWeaponDefIds[weaponDefID]) then
+		if attackerID and attackerID > 0 then
+			local xp = spGetUnitExperience(attackerID)
+			local xpMod = 1
+            if xp and xp > 0 then
+        		xpMod = 1+0.35*(xp/(xp+1))
+            end		 
+        	damage = damage	* xpMod
+		end
+	end
 
 	-- increase damage based on attacker's damage modifiers, if any
-	local dmgMod = 0
+	dmgMod = 0
 	if attackerID and attackerID > 0 then 
 		if dmgModDeadUnits[attackerID] then
 			dmgMod = dmgModDeadUnits[attackerID]

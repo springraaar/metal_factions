@@ -11,10 +11,13 @@ static-var  gun_1;
 #define SIG_MOVE			2
 #define SIG_AIM				4
 
+
+
 Create()
 {
 	gun_1 = [0];
 	return (0);
+	
 }
 
 StartMoving()
@@ -60,6 +63,9 @@ FirePrimary()
 
 AimPrimary(heading, pitch)
 {
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+
 	// heading and pitch check
 	if(heading > <60.000000> || heading < <-60.000000>)
 	{
@@ -69,9 +75,6 @@ AimPrimary(heading, pitch)
 	{
 		return (0);
 	}
-
-	signal SIG_AIM;
-	set-signal-mask SIG_AIM;
 
 	turn aimh to y-axis heading speed <80.000000>;
 	turn aimv to x-axis <0.000000>-pitch speed <80.000000>;

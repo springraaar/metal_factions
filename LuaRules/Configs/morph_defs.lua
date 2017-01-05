@@ -57,7 +57,7 @@ local morphDefs = {
 			cmdname = 'Builder Form',
 			energy = 10000,
 			metal = 1000,
-			text = 'Morph to Builder Form : Greatly increased build speed and build range. Reduced firepower.'
+			text = 'Morph to Builder Form : Greatly increased build speed and build range.'
 		},
 		{
 			into = 'aven_u5commander',
@@ -100,7 +100,7 @@ local morphDefs = {
 			cmdname = 'Builder Form',
 			energy = 10000,
 			metal = 1000,
-			text = 'Morph to Builder Form : Greatly increased build speed and build range. Reduced firepower.'
+			text = 'Morph to Builder Form : Greatly increased build speed and build range.'
 		},
 		{
 			into = 'gear_u5commander',
@@ -144,7 +144,7 @@ local morphDefs = {
 			cmdname = 'Builder Form',
 			energy = 10000,
 			metal = 1000,
-			text = 'Morph to Builder Form : Greatly increased build speed and build range. Reduced firepower.'
+			text = 'Morph to Builder Form : Greatly increased build speed and build range.'
 		},
 		{
 			into = 'claw_u5commander',
@@ -187,7 +187,7 @@ local morphDefs = {
 			cmdname = 'Builder Form',
 			energy = 10000,
 			metal = 1000,
-			text = 'Morph to Builder Form : Greatly increased build speed and build range. Reduced firepower.'
+			text = 'Morph to Builder Form : Greatly increased build speed and build range.'
 		},
 		{
 			into = 'sphere_u5commander',

@@ -28,15 +28,15 @@
 	//********************
 	maxdamage=1500;
 	healtime=30;
-	footprintx=2;
-	footprintz=2;
+	footprintx=3;
+	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.3;
-	energyuse=0.3;
+	energymake=0.0;
+	energyuse=0.0;
 	energystorage=0;
 
 	//************************************************************
@@ -64,8 +64,8 @@
 	//************
 	movementclass=KBOTHT2;
 	turnrate=890;
-	acceleration=1.3;
-	brakerate=1.4105;
+	acceleration=0.5;
+	brakerate=0.4;
 	maxvelocity=2.7;
 	maxslope=17;
 	maxwaterdepth=25;

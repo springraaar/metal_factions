@@ -296,15 +296,17 @@ function gadget:ProjectileDestroyed(proID)
 	end
 end
 
--- torpedo weapon weapon target check
-function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attackerWeaponDefID, defaultPriority)
 
+-- torpedo weapon target check
+-- TODO this should work, but doesn't: engine bug
+function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attackerWeaponDefID, defaultPriority)
 	if torpedoWeaponIds[attackerWeaponDefID] then
 		-- if target is on land, return false
 		local x,y,z = Spring.GetUnitPosition(targetID)
 		local h = Spring.GetGroundHeight(x,z)
+		
 		if (h > 0 or y > 30) then
-			return false,-99999999
+			return false,99999999
 		end
 	end
 	return true,defaultPriority
