@@ -114,6 +114,8 @@ function UnitHandler:Init(ai)
 	self.commanderMorphing = false
 	self.perceivedTeamAdvantageFactor = 1
 
+	-- when on all-in mode, avoid retreating units
+	self.allIn = false
 	
 	
 	-- initialize own building cells
@@ -601,6 +603,13 @@ function UnitHandler:Update()
 		-- calculate overall force advantage factor
 		self.perceivedTeamAdvantageFactor = (ownArmedMobilesWeightedCost + friendlyArmedMobilesWeightedCost ) / enemyArmedWeightedCost
 		--log("perceived adv factor : "..self.perceivedTeamAdvantageFactor, self.ai)
+		if self.perceivedTeamAdvantageFactor > ALL_IN_ADVANTAGE_THRESHOLD then 
+			self.allIn = true
+			--Spring.Echo("team "..self.ai.id.." is going ALL IN! ("..self.perceivedTeamAdvantageFactor..")")
+		else
+			self.allIn = false
+			--Spring.Echo("team "..self.ai.id.." is being careful... ("..self.perceivedTeamAdvantageFactor..")")		
+		end
 		
 		-- load cell vulnerability
 		-- detect most and least vulnerable own cells
@@ -1040,7 +1049,7 @@ function UnitHandler:DoTargetting(group)
 				-- else, attack the cell
 				if not recruit:AttackRegroupCenterIfNeeded(group.centerPos, radius) then
 					if (not recruit.isSeriouslyDamaged ) then
-						evade = (not self.isEasyMode) and #group.recruits < 100 and not recruit.unitDef.canFly
+						evade = (not self.allIn) and (not self.isEasyMode) and #group.recruits < 100 and not recruit.unitDef.canFly
 						if not (evade and recruit:EvadeIfNeeded()) then
 							recruit:AttackCell(group.centerPos, bestCell)
 						end

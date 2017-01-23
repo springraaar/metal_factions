@@ -5923,7 +5923,7 @@
 	tolerance=20000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
-	avoidGround=0;
+	avoidGround=1;
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
@@ -7040,7 +7040,7 @@
 	impulsefactor=0.322;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
-	avoidGround=0;
+	avoidGround=1;
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
@@ -7766,7 +7766,7 @@
 	impulsefactor=0.322;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
-	avoidGround=0;
+	avoidGround=1;
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
@@ -7812,7 +7812,6 @@
 	impulsefactor=0.322;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
-	avoidGround=0;
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
@@ -9275,7 +9274,7 @@
 		armor_light=220;//#AUTO#
 	}
 }
-[CORTOAST_GUN]
+[gear_toaster_cannon]
 {
 	ID=44;
 	name=Plasma Cannon;
@@ -10624,7 +10623,7 @@
   	separation=0.0;
   	alphadecay=0.8;
   	sizedecay=-0.11;
-	tolerance=5000;
+	tolerance=4000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -14327,7 +14326,7 @@ largebeamlaser=01;
 	tolerance=1000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
-	avoidGround=0;
+	avoidGround=1;
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
@@ -19075,7 +19074,7 @@ largebeamlaser=01;
 	soundhit=xplosml2;
 	firestarter=70;
 	smoketrail=0;
-	tolerance=24500;
+	tolerance=9000;
 	InterceptedByShieldType=1;
 	collidefriendly=0;
 	avoidfeature=0;

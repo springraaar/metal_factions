@@ -35,8 +35,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.5;
-	energyuse=0.5;
+	energymake=0.0;
+	energyuse=0.0;
 	energystorage=0;
 
 	//************************************************************
@@ -113,7 +113,10 @@
 	tracktype=StdTank;
 	trackwidth=42;
 	version=1.2;
-	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =50 40 45;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 	scale=1.2;
@@ -124,7 +127,7 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:yellowflarebig;
+	explosiongenerator0=custom:yellowflare;
 	}
 	[customParams] 
 	{

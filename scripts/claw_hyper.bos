@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, turbase, turret, sleeve, llauncher, lflare,rlauncher,rflare,r1,r2,r3,l1,l2,l3, b1,b2,b3,b4,ldoor,rdoor,bottom;
+piece  base, turbase, turret, sleeve, llauncher, lflare,rlauncher,rflare,r1,r2,r3,l1,l2,l3, b1,b2,b3,b4,ldoor,rdoor,bottom,aimpt;
 
 static-var  restore_delay, unitviewer, gun_1,canAim;
 
@@ -86,7 +86,7 @@ Create()
 {
 	hide lflare;
 	hide rflare;
-
+	move aimpt to y-axis [40.000000] now;
 	gun_1=[0];
 	canAim = FALSE;
 	restore_delay = 4000;
@@ -119,7 +119,7 @@ SweetSpot(piecenum)
 
 AimFromPrimary(piecenum)
 {
-	piecenum = turret;
+	piecenum = aimpt;
 }
 
 AimPrimary(heading, pitch)

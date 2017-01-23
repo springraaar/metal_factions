@@ -1,3 +1,29 @@
+2017/01/22 ------------------ NOTES v0.973 ----------------------
+
+--- balance / mechanics
+
+- increased SPHERE "Magnetar" HP from 10000 to 13000
+- fixed an error that could happen when commanders with drone upgrades are destroyed while drone is under construction
+- improved collision volume for GEAR "Barrager"
+- fixed an issue where pop-up defense turrets would try to fire through terrain
+- reduced weapon aim tolerance on SPHERE "Tycho" so it can no longer fire when moving away
+
+--- effects / visuals
+
+- improved SPHERE "Golem"'s wreckage
+
+--- UI / widgets
+
+- show an opaque grid covering the map surface outside of the playable area (widget by Pako)
+
+--- AI
+
+- MFAI avoids retreating mobile ground units that are lightly damaged if its team has a big enough mobile army compared to enemy mobile units + defenses
+- MFAI won't build more than 3 energy storage and 2 metal storage buildings per player
+- MFAI is less likely to build energy generators unless it's actually using the energy
+
+
+
 2017/01/05 ------------------ NOTES v0.972 ----------------------
 
 --- new units

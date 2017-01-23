@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, stand, logo1, logo2, ldoor, rdoor, turret, left, right, slholder, sleeve, barrel1, flare1, barrel2, flare2, tlogo, s22,s32;
+piece  base, stand, logo1, logo2, ldoor, rdoor, turret, left, right, slholder, sleeve, barrel1, flare1, barrel2, flare2, tlogo, s22,s32, aimpt;
 
 static-var gun_1, isOpen;
 
@@ -81,6 +81,7 @@ close()
 
 Create()
 {
+	move aimpt to y-axis [45.000000] now;
 	turn turret to y-axis <45.000000> now;
 	start-script SmokeUnit();
 	start-script close();
@@ -137,7 +138,7 @@ FirePrimary()
 
 AimFromPrimary(piecenum)
 {
-	piecenum = turret;
+	piecenum = aimpt;
 	return (0);
 }
 

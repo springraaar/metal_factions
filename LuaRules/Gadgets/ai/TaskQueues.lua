@@ -305,7 +305,7 @@ function buildEnergyIfNeeded(self,unitName)
 	local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
 	local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
 
-	local threshold = max(max(1.2 * expenseE + 100, 15 * incomeM + 50),350)
+	local threshold = max(max(1.2 * expenseE + 100, 8 * incomeM + 50),350)
 	if incomeE < threshold then
 		-- log("buildEnergyIfNeeded: income "..incomeE..", usage "..expenseE..", building more energy",self.ai)
 		return unitName
@@ -617,14 +617,14 @@ function storageIfNeeded(self)
 		local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
 
 		if currentLevelE >= 0.9 * storageE then
-			unitName = buildWithLimitedNumber(self, energyStorageByFaction[self.unitSide], 1+math.floor(incomeE/500)) 
+			unitName = buildWithLimitedNumber(self, energyStorageByFaction[self.unitSide], math.floor(1+math.floor(incomeE/700),ENERGY_STORAGE_LIMIT)) 
 		end
 	end
 	if unitName == SKIP_THIS_TASK then
 		local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
 
 		if currentLevelM >= 0.9 * storageM then
-			unitName = buildWithLimitedNumber(self, metalStorageByFaction[self.unitSide],1+math.floor(incomeM/25))		
+			unitName = buildWithLimitedNumber(self, metalStorageByFaction[self.unitSide],math.floor(1+math.floor(incomeM/25),METAL_STORAGE_LIMIT))		
 		end
 	end
 

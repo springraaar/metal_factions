@@ -228,8 +228,9 @@ function gadget:GameFrame(n)
 	-- when commander is morphed
 	for uId,ownerId in pairs(markedForDestruction) do
 		spDestroyUnit(uId)
-		-- markedForDestruction table is cleaned up ahead
+		droneUnderConstruction[uId] = nil
 	end
+	markedForDestruction = {}
 	
 	if fmod(n,DRONE_CHECK_DELAY) == 0 then
 		
@@ -312,9 +313,6 @@ function gadget:GameFrame(n)
 					teamId = spGetUnitTeam(ownerId)
 				
 					local uName = table.remove(droneOwnersQueues[ownerId])
-					--droneOwnersQueues[ownerId][#droneOwnersQueues[ownerId]]
-					--droneOwnersQueues[ownerId][#droneOwnersQueues[ownerId]] = nil
-
 					if (not droneOwnersDrones[ownerId][uName]) then
 						droneOwnersDrones[ownerId][uName] = {}
 					end
@@ -360,61 +358,54 @@ function gadget:GameFrame(n)
 					local newBp = bp
 					local newHp = hp
 					local drainE = 0
-					if not bp or markedForDestruction[uId] then
-						--Spring.Echo("uName "..uName.." : "..uId.." is dead!")
-						table.remove(uIdSet,i)
-						
-						droneUnderConstruction[uId] = nil
-					else
-						if bp < 1 then
-							if lightDrones[uName] then
-								newBp = bp + 1 / LIGHT_DRONE_BUILD_STEPS
-								newHp = hp + (1 / LIGHT_DRONE_BUILD_STEPS)*maxHp
-								ud = UnitDefNames[uName]								
-								drainE = ud.energyCost * DRONE_BUILD_ENERGY_FACTOR / LIGHT_DRONE_BUILD_STEPS
-							else
-								newBp = bp + 1 / MEDIUM_DRONE_BUILD_STEPS
-								newHp = hp + (1 / MEDIUM_DRONE_BUILD_STEPS)*maxHp
-								ud = UnitDefNames[uName]								
-								drainE = ud.energyCost * DRONE_BUILD_ENERGY_FACTOR / MEDIUM_DRONE_BUILD_STEPS
-							end
-							if newBp > 1 then
-								newBp = 1
-							end
-							if newHp > maxHp then
-								newHp = maxHp
-							end
-							
-							--Spring.Echo("drone hp="..hp.." newHp="..newHp)
-							
-							-- check resources
-							if drainEnergyIfAvailable(uId,ownerId,DRONE_BUILD_ENERGY_MIN, drainE ) then
-								spSetUnitHealth(uId, {health = newHp, build = newBp})
-								droneBuildStalled[uId] = nil
-							else
-								droneBuildStalled[uId] = bp
-							end
-							
-							droneOwnersLastBuildStepFrameNumber[ownerId] = n
-							droneUnderConstruction[uId] = ownerId
+					if bp and bp < 1 then
+						if lightDrones[uName] then
+							newBp = bp + 1 / LIGHT_DRONE_BUILD_STEPS
+							newHp = hp + (1 / LIGHT_DRONE_BUILD_STEPS)*maxHp
+							ud = UnitDefNames[uName]								
+							drainE = ud.energyCost * DRONE_BUILD_ENERGY_FACTOR / LIGHT_DRONE_BUILD_STEPS
 						else
-							droneUnderConstruction[uId] = nil
+							newBp = bp + 1 / MEDIUM_DRONE_BUILD_STEPS
+							newHp = hp + (1 / MEDIUM_DRONE_BUILD_STEPS)*maxHp
+							ud = UnitDefNames[uName]								
+							drainE = ud.energyCost * DRONE_BUILD_ENERGY_FACTOR / MEDIUM_DRONE_BUILD_STEPS
+						end
+						if newBp > 1 then
+							newBp = 1
+						end
+						if newHp > maxHp then
+							newHp = maxHp
+						end
+						
+						--Spring.Echo("drone hp="..hp.." newHp="..newHp)
+						
+						-- check resources
+						if drainEnergyIfAvailable(uId,ownerId,DRONE_BUILD_ENERGY_MIN, drainE ) then
+							spSetUnitHealth(uId, {health = newHp, build = newBp})
 							droneBuildStalled[uId] = nil
-							
-							-- if too far from owner, move closer
-							x,_,z = spGetUnitPosition(uId)
-							if ox and oz and (sqDistance(x,ox,z,oz) > droneLeashSQDistances[uName]) then
-								spGiveOrderToUnit(uId, CMD.MOVE, { (x+ox)/2, 0, (z+oz)/2 }, {})
-							else
-								-- if idle, fight or patrol nearby position
-								local cmds = spGetUnitCommands(uId)
-			      				if (cmds and (#cmds <= 0)) then
-			      					if stealthDrones[uName] then
-										spGiveOrderToUnit(uId, CMD.MOVE, { ox + random(-200,200) , 0, oz + random(-200,200) }, {})
-			      					else
-			        					spGiveOrderToUnit(uId, CMD.FIGHT, { ox + random(-200,200) , 0, oz + random(-200,200) }, {})
-			        				end
-								end
+						else
+							droneBuildStalled[uId] = bp
+						end
+						
+						droneOwnersLastBuildStepFrameNumber[ownerId] = n
+						droneUnderConstruction[uId] = ownerId
+					else
+						droneUnderConstruction[uId] = nil
+						droneBuildStalled[uId] = nil
+						
+						-- if too far from owner, move closer
+						x,_,z = spGetUnitPosition(uId)
+						if ox and oz and (sqDistance(x,ox,z,oz) > droneLeashSQDistances[uName]) then
+							spGiveOrderToUnit(uId, CMD.MOVE, { (x+ox)/2, 0, (z+oz)/2 }, {})
+						else
+							-- if idle, fight or patrol nearby position
+							local cmds = spGetUnitCommands(uId)
+		      				if ox and oz and (cmds and (#cmds <= 0)) then
+		      					if stealthDrones[uName] then
+									spGiveOrderToUnit(uId, CMD.MOVE, { ox + random(-200,200) , 0, oz + random(-200,200) }, {})
+		      					else
+		        					spGiveOrderToUnit(uId, CMD.FIGHT, { ox + random(-200,200) , 0, oz + random(-200,200) }, {})
+		        				end
 							end
 						end
 					end

@@ -6778,6 +6778,9 @@
 	metal=879;//#AUTO#
 	energy=0;//#AUTO#
 	damage=6150;//#AUTO#
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=50 24 45;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
 [gear_mobile_artillery_heap]
 {
@@ -6796,6 +6799,9 @@
 	metal=219;//#AUTO#
 	energy=0;//#AUTO#
 	damage=6150;//#AUTO#
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=50 4 45;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
 [gear_eruptor_dead]
 {
@@ -7595,7 +7601,7 @@
 	energy=0;//#AUTO#
 	damage=3150;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
-	collisionVolumeScales=23 10 35;//#AUTO#
+	collisionVolumeScales=30 13 40;//#AUTO#
 	collisionVolumeOffsets=0 -1 0;//#AUTO#
 }
 [gear_marauder_heap]
@@ -7616,7 +7622,7 @@
 	energy=0;//#AUTO#
 	damage=3150;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
-	collisionVolumeScales=23 2 35;//#AUTO#
+	collisionVolumeScales=30 2 40;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
 [gear_reaper_dead]
@@ -7724,7 +7730,7 @@
 	energy=0;//#AUTO#
 	damage=6000;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
-	collisionVolumeScales=40 15 40;//#AUTO#
+	collisionVolumeScales=40 18 40;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
 [gear_heater_heap]
@@ -12426,7 +12432,7 @@
 	seqnamereclamate=tree1reclamate;
 	metal=1600;//#AUTO#
 	energy=0;//#AUTO#
-	damage=15000;//#AUTO#
+	damage=19500;//#AUTO#
 	collisionVolumeType=sphere;//#AUTO#
 	collisionVolumeScales=80 48 80;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
@@ -12447,7 +12453,7 @@
 	seqnamereclamate=tree1reclamate;
 	metal=400;//#AUTO#
 	energy=0;//#AUTO#
-	damage=15000;//#AUTO#
+	damage=19500;//#AUTO#
 	collisionVolumeType=sphere;//#AUTO#
 	collisionVolumeScales=80 8 80;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
