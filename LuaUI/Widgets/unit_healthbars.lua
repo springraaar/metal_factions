@@ -111,6 +111,8 @@ local barShader;
 local barDList;
 local barFeatureDList;
 
+local unitArmorTypeTable = {}
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -160,6 +162,17 @@ function widget:Initialize()
     end
     local shieldDefID = ud.shieldWeaponDef
     ud.shieldPower = ((shieldDefID)and(WeaponDefs[shieldDefID].shieldPower))or(-1)
+
+
+	-- find units armor types and large shield unit def ids
+	local armorTypeStr = "L"
+    if ( Game.armorTypes[ud.armorType] == "armor_heavy" ) then
+    	armorTypeStr = "H"
+    elseif ( Game.armorTypes[ud.armorType] == "armor_medium" ) then 
+    	armorTypeStr = "M" 
+    end
+	unitArmorTypeTable[ud.id] = armorTypeStr
+
   end
 
   --// link morph callins
@@ -468,7 +481,7 @@ do
   local GetUnitViewPosition  = Spring.GetUnitViewPosition
   local GetUnitStockpile     = Spring.GetUnitStockpile
   local GetUnitRulesParam    = Spring.GetUnitRulesParam
-
+  
   local fullText
   local ux, uy, uz
   local dx, dy, dz, dist

@@ -1,6 +1,6 @@
 function widget:GetInfo()
   return {
-    name      = "SelectionCicles",
+    name      = "SelectionCircles",
     desc      = "Shows circles below selected units",
     author    = "raaar, based on team platter widget by Trepan",
     date      = "2016",

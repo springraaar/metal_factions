@@ -56,7 +56,7 @@ local modifiersByUpgrade = {
 
 -- utility / blue
 
-	upgrade_blue_1_speed = { speed = 0.04, limit = 3, type = TYPE_MINOR },
+	upgrade_blue_1_speed = { speed = 0.05, limit = 3, type = TYPE_MINOR },
 	
 	upgrade_blue_2_commander_speed = { speed = 0.15, restrictions = "commander", limit = 1, type = TYPE_COMMANDER },
 	upgrade_blue_2_commander_light_drones = { light_drones = 1, restrictions = "commander", limit = 1, type = TYPE_COMMANDER },	
@@ -65,7 +65,7 @@ local modifiersByUpgrade = {
 	upgrade_blue_3_commander_builder_drone = { builder_drone = 1, restrictions = "commander", limit = 1, type = TYPE_COMMANDER },
 	upgrade_blue_3_commander_medium_drone = { medium_drone = 1, restrictions = "commander", limit = 1, type = TYPE_COMMANDER },
 	
-	upgrade_blue_3_speed = { speed=0.08, limit = 1, type = TYPE_MAJOR }
+	upgrade_blue_3_speed = { speed=0.10, limit = 1, type = TYPE_MAJOR }
 }
 
 

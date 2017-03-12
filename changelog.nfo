@@ -1,3 +1,38 @@
+2017/03/12 ------------------ NOTES v0.974 ----------------------
+
+--- balance / mechanics
+
+- morphed commanders take 50% longer to repair
+- increased the total repair cost from 66% to 90% of the unit's energy cost
+- increased commanders' power rating by 50%, this means that when commanders fight normal units:
+a) they take 50% longer to get the same amount of experience
+b) the normal units gain experience 50% faster
+(this won't change commander vs commander interactions)
+
+- changed minor speed upgrade bonus from 4% to 5%
+- changed major speed upgrade bonus from 8% to 10%
+
+- level 2 robot, vehicle, aircraft and ship factories can now build some of the level 1 units of the corresponding type
+
+- made collision volumes grow vertically as the unit gets built (prevents an exploit where "nearly empty" build frames could block projectiles)
+
+- updated the fortification wall build tooltips to correctly show that they have 4800 HP
+- reduced fortification wall height slightly
+- increased cost of wall sections from 50 to 65 metal
+
+--- effects / visuals
+
+- increased model size and improved the trails of advanced missiles
+
+--- UI / widgets
+
+- updated sort order on factories' build menu : start with construction units, then from cheapest to most expensive (roughly)
+- added N hotkey for build menu pages
+- added gadget to prevent players from getting stuck in FPS mode
+- modified clock and fps indicator
+
+
+
 2017/01/22 ------------------ NOTES v0.973 ----------------------
 
 --- balance / mechanics

@@ -36,6 +36,7 @@ local sGetActiveCmdDescs = Spring.GetActiveCmdDescs
 local ssub = string.sub
 
 local FILTER_KEY = KEYSYMS.B
+local PAGE_KEY = KEYSYMS.N
 local FILTER_ECO = 1
 local FILTER_PLANT = 2
 local FILTER_OTHER = 3
@@ -46,6 +47,7 @@ local filterLabel = {"ENERGY / METAL","PLANT","OTHER","WEAPON","DEFENSE","UTILIT
 local filter = FILTER_ECO
 local hasOptions = {}
 local buildOptionsTable = {}
+local latestBuildCmds = {}
 
 local ICON_SML_HEIGHT = 32
 local ICON_NORMAL_HEIGHT = 48
@@ -335,7 +337,7 @@ local function CreateGrid(r)
 	backward.tooltip = "Show Previous Page"
 	backward.texture = ":n:"..LUAUI_DIRNAME.."Images/buildMenu/prev.png"
 	local forward = New(Copy(iconFlat,true))
-	forward.tooltip = "Show Next Page"
+	forward.tooltip = "Show Next Page (hotkey \"N\" on build orders menu)"
 	forward.texture = ":n:"..LUAUI_DIRNAME.."Images/buildMenu/next.png"
 	local tspacing = New(Copy(icon,true))
 	--tspacing.texture = ":n:"..LUAUI_DIRNAME.."Images/buildMenu/spacing"..GetSpacingIndex()..".png"
@@ -470,6 +472,8 @@ function updateFilter(next)
 		end	
 	end
 end
+
+
 
 local function UpdateGrid(g,cmds,orderType)
 	if (#cmds==0) then
@@ -613,7 +617,7 @@ local function UpdateGrid(g,cmds,orderType)
 		g.backward.active = nil --activate
 		g.forward.active = nil
 		g.indicator.active = nil
-		g.indicator.caption = "    "..curpage.."    "
+		g.indicator.caption = "    "..curpage.." / "..g.pageCount.."    "
 	else
 		g.backward.active = false
 		g.forward.active = false
@@ -666,6 +670,17 @@ local function UpdateGrid(g,cmds,orderType)
 	end	
 end
 
+-- used to jump to next build options page, if available
+function nextBuildOptionsPage()
+	local g = buildMenu
+	if (g and #latestBuildCmds > 0) then
+		g.page = g.page + 1
+		if (g.page > g.pageCount) then
+			g.page = 1
+		end
+		UpdateGrid(g,latestBuildCmds,1)
+	end				
+end
 
 function widget:Initialize()
 	
@@ -725,8 +740,10 @@ local function onNewCommands(buildCmds,otherCmds)
 		orderMenu.page = 1
 	end
 
+	
 	UpdateGrid(buildMenu,buildCmds,1)
 	UpdateGrid(orderMenu,otherCmds,2)
+	latestBuildCmds = buildCmds
 end
 
 local function onWidgetUpdate() --function widget:Update()
@@ -899,6 +916,10 @@ end
 function widget:KeyPress(key, modifier, isRepeat)
 	if key == FILTER_KEY  then
 		updateFilter(true)
+		updateHax = true
+	end
+	if key == PAGE_KEY  then
+		nextBuildOptionsPage()
 		updateHax = true
 	end
 end

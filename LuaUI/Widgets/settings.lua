@@ -1,7 +1,7 @@
 function widget:GetInfo()
 	return {
 		name	= "Settings",
-		desc	= "Overrides some Spring settings: grass, camera and maxParticles",
+		desc	= "Overrides some Spring settings: grass, camera, maxParticles, clock and fps indicator",
 		author	= "raaar",
 		date	= "2015-07-20",
 		license	= "PD",
@@ -22,5 +22,9 @@ function widget:Initialize()
 	
 	-- set max particles to 20000
 	Spring.SetConfigInt("MaxParticles",20000)
+	
+	-- disable clock and fps (widget is used instead)
+	Spring.SendCommands("clock 0")
+	Spring.SendCommands("fps 0")
 end
 

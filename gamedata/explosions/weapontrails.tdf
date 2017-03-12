@@ -1107,6 +1107,78 @@ usedefaultexplosions=0;
 	count=1;
 	}
 }
+[FASTROCKETTRAIL]
+{
+	usedefaultexplosions=0;	
+
+	[groundflash]
+   	{
+      		flashSize = 20;
+	      	flashAlpha = 0.2;
+	      	circleGrowth = 0;
+	      	circleAlpha = 0;
+	      	ttl = 1;
+	      	color = 0.9, 0.7, 0.2;
+		air=1;
+	     	ground=1;
+	      	water=1;
+	}
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos = 0, 0, 0;
+			dir= dir;
+			width=10;
+			length=30;
+			alpha=0.7;
+			alphadecay=0.25;
+			color=1.0, 0.7, 0.3;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=1; 
+	}
+	[exhale]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.3;
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, 0, 0;
+		
+
+		Texture=smoke;
+		airdrag=0.77;
+		colorMap=0.4 0.4 0.4 0.01 0.1 0.1 0.1 0.2 0.0 0.0 0.0 0.01;
+
+		particleLifeSpread=3; 
+		particleSpeedSpread=2;  
+		particleSizeSpread=1;   
+		
+		particleLife=20;
+		numParticles=0; 
+		particleSpeed=-1; 
+		particleSize=8;
+		
+		
+		emitVector=0, 1, 0; 
+		emitRot=80;
+		emitRotSpread=5; 
+		directional=0; 
+
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+}
 [SMLROCKETTRAIL]
 {
 	usedefaultexplosions=0;	
@@ -1143,6 +1215,7 @@ usedefaultexplosions=0;
   		count=1; 
 	}
 }
+
 [SMLROCKETTRAIL_OLD]			// NOT USED
 {
 	usedefaultexplosions=0;	
