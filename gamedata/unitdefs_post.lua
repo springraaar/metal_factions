@@ -106,6 +106,12 @@ local function disableunits(unitlist)
   end
 end
 
+local reducedDecalSizeUnits = {
+	aven_wind_generator = true,
+	gear_wind_generator = true,
+	claw_wind_generator = true
+}
+
 -- unitdef tweaking
 if (true) then
 	for name,unitDef in pairs(UnitDefs) do
@@ -139,7 +145,7 @@ if (true) then
 		unitDef.idleautoheal = 0
 		
 		
-		if (mv) then
+		if (mv and mv > 0) then
 			-- disable transporting enemy units
 			unitDef.transportbyenemy = 0
 			
@@ -163,6 +169,32 @@ if (true) then
 				if (br > 0.5) then
 					unitDef.brakerate = br / 5
 				end
+			end
+		else
+			local factionBuilding = false
+			
+			if string.sub(name,1,5) == "aven_" then
+				unitDef.buildinggrounddecaltype = "building_aven.dds"
+				factionBuilding = true
+			elseif string.sub(name,1,5) == "gear_" then  
+				unitDef.buildinggrounddecaltype = "building_gear.dds"
+				factionBuilding = true
+			elseif string.sub(name,1,5) == "claw_" then
+				unitDef.buildinggrounddecaltype = "building_claw.dds"
+				factionBuilding = true
+			elseif string.sub(name,1,7) == "sphere_" then
+				unitDef.buildinggrounddecaltype = "building_sphere.dds"
+				factionBuilding = true
+			end
+			local fpMod = 1.5
+			if (factionBuilding == true and not (unitDef.floater or unitDef.waterline)) then
+				unitDef.usebuildinggrounddecal = true
+				if (reducedDecalSizeUnits[name] ) then
+					fpMod = 0.85
+				end
+				unitDef.buildinggrounddecalsizex = unitDef.footprintx * fpMod
+				unitDef.buildinggrounddecalsizey = unitDef.footprintz * fpMod
+				unitDef.buildinggrounddecaldecayspeed = 0.01
 			end
 		end
 	end

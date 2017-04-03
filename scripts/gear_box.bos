@@ -33,14 +33,16 @@ walk()
 		turn l_thigh to x-axis <20.214286> speed <46.637363> * SPEEDUP_FACTOR / 100;
 		turn r_thigh to x-axis <-37.978022> now;
 		turn r_thigh to x-axis <-33.923077> speed <82.527473> * SPEEDUP_FACTOR / 100;
-		turn torso to y-axis <-9.137363> now;
-		turn torso to y-axis <-7.379121> speed <35.879121> * SPEEDUP_FACTOR / 100;
-		//turn head to y-axis <9.846154> now;
-		//turn head to y-axis <7.736264> speed <43.049451> * SPEEDUP_FACTOR / 100;
-		turn luparm to x-axis <-19.692308> now;
-		turn luparm to x-axis <-14.593407> speed <104.049451> * SPEEDUP_FACTOR / 100;
-		turn ruparm to x-axis <21.802198> now;
-		turn ruparm to x-axis <26.192308> speed <89.703297> * SPEEDUP_FACTOR / 100;
+		if (!bAiming) {
+			turn torso to y-axis <-9.137363> now;
+			turn torso to y-axis <-7.379121> speed <35.879121> * SPEEDUP_FACTOR / 100;
+			//turn head to y-axis <9.846154> now;
+			//turn head to y-axis <7.736264> speed <43.049451> * SPEEDUP_FACTOR / 100;
+			turn luparm to x-axis <-19.692308> now;
+			turn luparm to x-axis <-14.593407> speed <104.049451> * SPEEDUP_FACTOR / 100;
+			turn ruparm to x-axis <21.802198> now;
+			turn ruparm to x-axis <26.192308> speed <89.703297> * SPEEDUP_FACTOR / 100;
+		}
 		turn rleg to x-axis <17.225275> now;
 		turn rleg to x-axis <13.357143> speed <78.934066> * SPEEDUP_FACTOR / 100;
 		turn rfoot to x-axis <-22.505495> now;
@@ -60,10 +62,12 @@ walk()
 		turn hips to x-axis <11.956044> speed <50.225275> * SPEEDUP_FACTOR / 100;
 		turn l_thigh to x-axis <22.505495> speed <46.637363> * SPEEDUP_FACTOR / 100;
 		turn r_thigh to x-axis <-29.890110> speed <82.527473> * SPEEDUP_FACTOR / 100;
-		turn torso to y-axis <-5.626374> speed <35.879121> * SPEEDUP_FACTOR / 100;
-		//turn head to y-axis <5.626374> speed <43.049451> * SPEEDUP_FACTOR / 100;
-		turn luparm to x-axis <-9.489011> speed <104.049451> * SPEEDUP_FACTOR / 100;
-		turn ruparm to x-axis <30.582418> speed <89.703297> * SPEEDUP_FACTOR / 100;
+		if (!bAiming) {
+			turn torso to y-axis <-5.626374> speed <35.879121> * SPEEDUP_FACTOR / 100;
+			//turn head to y-axis <5.626374> speed <43.049451> * SPEEDUP_FACTOR / 100;
+			turn luparm to x-axis <-9.489011> speed <104.049451> * SPEEDUP_FACTOR / 100;
+			turn ruparm to x-axis <30.582418> speed <89.703297> * SPEEDUP_FACTOR / 100;
+		}
 		turn rleg to x-axis <9.489011> speed <78.934066> * SPEEDUP_FACTOR / 100;
 		turn rfoot to x-axis <8.780220> speed <462.879121> * SPEEDUP_FACTOR / 100;
 		turn lleg to x-axis <21.093407> speed <215.291209> * SPEEDUP_FACTOR / 100;
@@ -79,10 +83,12 @@ walk()
 		turn hips to x-axis <9.313187> speed <62.791209> * SPEEDUP_FACTOR / 100;
 		turn l_thigh to x-axis <7.736264> speed <351.648352> * SPEEDUP_FACTOR / 100;
 		turn r_thigh to x-axis <-20.560440> speed <221.868132> * SPEEDUP_FACTOR / 100;
-		turn torso to y-axis <-3.681319> speed <46.038462> * SPEEDUP_FACTOR / 100;
-		//turn head to y-axis <3.335165> speed <54.412088> * SPEEDUP_FACTOR / 100;
-		turn luparm to x-axis <-0.703297> speed <209.313187> * SPEEDUP_FACTOR / 100;
-		turn ruparm to x-axis <16.879121> speed <326.527473> * SPEEDUP_FACTOR / 100;
+		if (!bAiming) {
+			turn torso to y-axis <-3.681319> speed <46.038462> * SPEEDUP_FACTOR / 100;
+			//turn head to y-axis <3.335165> speed <54.412088> * SPEEDUP_FACTOR / 100;
+			turn luparm to x-axis <-0.703297> speed <209.313187> * SPEEDUP_FACTOR / 100;
+			turn ruparm to x-axis <16.879121> speed <326.527473> * SPEEDUP_FACTOR / 100;
+		}
 		turn rleg to x-axis <7.203297> speed <54.412088> * SPEEDUP_FACTOR / 100;
 		turn rfoot to x-axis <4.390110> speed <104.648352> * SPEEDUP_FACTOR / 100;
 		turn lleg to x-axis <27.956044> speed <163.258242> * SPEEDUP_FACTOR / 100;
@@ -98,10 +104,12 @@ walk()
 		turn hips to x-axis <6.670330> speed <58.604396> * SPEEDUP_FACTOR / 100;
 		turn l_thigh to x-axis <-7.027473> speed <328.203297> * SPEEDUP_FACTOR / 100;
 		turn r_thigh to x-axis <-11.247253> speed <207.071429> * SPEEDUP_FACTOR / 100;
-		turn torso to y-axis <-1.758242> speed <42.978022> * SPEEDUP_FACTOR / 100;
-		//turn head to y-axis <1.049451> speed <50.791209> * SPEEDUP_FACTOR / 100;
-		turn luparm to x-axis <8.082418> speed <195.357143> * SPEEDUP_FACTOR / 100;
-		turn ruparm to x-axis <3.159341> speed <304.758242> * SPEEDUP_FACTOR / 100;
+		if (!bAiming) {
+			turn torso to y-axis <-1.758242> speed <42.978022> * SPEEDUP_FACTOR / 100;
+			//turn head to y-axis <1.049451> speed <50.791209> * SPEEDUP_FACTOR / 100;
+			turn luparm to x-axis <8.082418> speed <195.357143> * SPEEDUP_FACTOR / 100;
+			turn ruparm to x-axis <3.159341> speed <304.758242> * SPEEDUP_FACTOR / 100;
+		}
 		turn rleg to x-axis <4.923077> speed <50.791209> * SPEEDUP_FACTOR / 100;
 		turn rfoot to x-axis <0.000000> speed <97.670330> * SPEEDUP_FACTOR / 100;
 		turn lleg to x-axis <34.813187> speed <152.379121> * SPEEDUP_FACTOR / 100;
@@ -115,10 +123,12 @@ walk()
 		turn hips to x-axis <5.093407> speed <22.280220> * SPEEDUP_FACTOR / 100;
 		turn l_thigh to x-axis <-13.527473> speed <91.626374> * SPEEDUP_FACTOR / 100;
 		turn r_thigh to x-axis <0.527473> speed <165.912088> * SPEEDUP_FACTOR / 100;
-		turn torso to y-axis <2.104396> speed <54.478022> * SPEEDUP_FACTOR / 100;
-		//turn head to y-axis <-2.104396> speed <44.571429> * SPEEDUP_FACTOR / 100;
-		turn luparm to x-axis <12.659341> speed <64.379121> * SPEEDUP_FACTOR / 100;
-		turn ruparm to x-axis <-1.934066> speed <71.813187> * SPEEDUP_FACTOR / 100;
+		if (!bAiming) {
+			turn torso to y-axis <2.104396> speed <54.478022> * SPEEDUP_FACTOR / 100;
+			//turn head to y-axis <-2.104396> speed <44.571429> * SPEEDUP_FACTOR / 100;
+			turn luparm to x-axis <12.659341> speed <64.379121> * SPEEDUP_FACTOR / 100;
+			turn ruparm to x-axis <-1.934066> speed <71.813187> * SPEEDUP_FACTOR / 100;
+		}
 		turn rfoot to x-axis <-8.082418> speed <113.912088> * SPEEDUP_FACTOR / 100;
 		turn lleg to x-axis <23.560440> speed <158.489011> * SPEEDUP_FACTOR / 100;
 		turn lfoot to x-axis <-12.302198> speed <69.335165> * SPEEDUP_FACTOR / 100;
@@ -131,10 +141,12 @@ walk()
 		turn hips to x-axis <3.516484> speed <21.967033> * SPEEDUP_FACTOR / 100;
 		turn l_thigh to x-axis <-20.038462> speed <90.346154> * SPEEDUP_FACTOR / 100;
 		turn r_thigh to x-axis <12.302198> speed <163.604396> * SPEEDUP_FACTOR / 100;
-		turn torso to y-axis <5.978022> speed <53.714286> * SPEEDUP_FACTOR / 100;
-		//turn head to y-axis <-5.269231> speed <43.945055> * SPEEDUP_FACTOR / 100;
-		turn luparm to x-axis <17.225275> speed <63.489011> * SPEEDUP_FACTOR / 100;
-		turn ruparm to x-axis <-7.027473> speed <70.813187> * SPEEDUP_FACTOR / 100;
+		if (!bAiming) {
+			turn torso to y-axis <5.978022> speed <53.714286> * SPEEDUP_FACTOR / 100;
+			//turn head to y-axis <-5.269231> speed <43.945055> * SPEEDUP_FACTOR / 100;
+			turn luparm to x-axis <17.225275> speed <63.489011> * SPEEDUP_FACTOR / 100;
+			turn ruparm to x-axis <-7.027473> speed <70.813187> * SPEEDUP_FACTOR / 100;
+		}
 		turn rfoot to x-axis <-16.170330> speed <112.324176> * SPEEDUP_FACTOR / 100;
 		turn lleg to x-axis <12.302198> speed <156.280220> * SPEEDUP_FACTOR / 100;
 		turn lfoot to x-axis <-7.379121> speed <68.368132> * SPEEDUP_FACTOR / 100;
@@ -146,10 +158,12 @@ walk()
 		turn hips to x-axis <5.269231> speed <18.901099> * SPEEDUP_FACTOR / 100;
 		turn l_thigh to x-axis <-28.659341> speed <92.637363> * SPEEDUP_FACTOR / 100;
 		turn r_thigh to x-axis <14.769231> speed <26.467033> * SPEEDUP_FACTOR / 100;
-		turn torso to y-axis <7.736264> speed <18.901099> * SPEEDUP_FACTOR / 100;
-		//turn head to y-axis <-7.379121> speed <22.681319> * SPEEDUP_FACTOR / 100;
-		turn luparm to x-axis <19.335165> speed <22.681319> * SPEEDUP_FACTOR / 100;
-		turn ruparm to x-axis <-13.357143> speed <68.060440> * SPEEDUP_FACTOR / 100;
+		if (!bAiming) {
+			turn torso to y-axis <7.736264> speed <18.901099> * SPEEDUP_FACTOR / 100;
+			//turn head to y-axis <-7.379121> speed <22.681319> * SPEEDUP_FACTOR / 100;
+			turn luparm to x-axis <19.335165> speed <22.681319> * SPEEDUP_FACTOR / 100;
+			turn ruparm to x-axis <-13.357143> speed <68.060440> * SPEEDUP_FACTOR / 100;
+		}
 		turn rleg to x-axis <2.456044> speed <26.467033> * SPEEDUP_FACTOR / 100;
 		turn rfoot to x-axis <-16.170330> speed <0.000000> * SPEEDUP_FACTOR / 100;
 		turn lleg to x-axis <14.769231> speed <26.467033> * SPEEDUP_FACTOR / 100;
@@ -162,10 +176,12 @@ walk()
 		turn hips to x-axis <7.027473> speed <18.505495> * SPEEDUP_FACTOR / 100;
 		turn l_thigh to x-axis <-37.269231> speed <90.681319> * SPEEDUP_FACTOR / 100;
 		turn r_thigh to x-axis <17.225275> speed <25.901099> * SPEEDUP_FACTOR / 100;
-		turn torso to y-axis <9.489011> speed <18.505495> * SPEEDUP_FACTOR / 100;
-		//turn head to y-axis <-9.489011> speed <22.203297> * SPEEDUP_FACTOR / 100;
-		turn luparm to x-axis <21.445055> speed <22.203297> * SPEEDUP_FACTOR / 100;
-		turn ruparm to x-axis <-19.692308> speed <66.626374> * SPEEDUP_FACTOR / 100;
+		if (!bAiming) {
+			turn torso to y-axis <9.489011> speed <18.505495> * SPEEDUP_FACTOR / 100;
+			//turn head to y-axis <-9.489011> speed <22.203297> * SPEEDUP_FACTOR / 100;
+			turn luparm to x-axis <21.445055> speed <22.203297> * SPEEDUP_FACTOR / 100;
+			turn ruparm to x-axis <-19.692308> speed <66.626374> * SPEEDUP_FACTOR / 100;
+		}
 		turn rleg to x-axis <0.000000> speed <25.901099> * SPEEDUP_FACTOR / 100;
 		turn rfoot to x-axis <-16.170330> speed <0.000000> * SPEEDUP_FACTOR / 100;
 		turn lleg to x-axis <17.225275> speed <25.901099> * SPEEDUP_FACTOR / 100;
@@ -181,10 +197,12 @@ walk()
 		turn hips to x-axis <9.489011> speed <50.225275> * SPEEDUP_FACTOR / 100;
 		turn l_thigh to x-axis <-33.401099> speed <78.934066> * SPEEDUP_FACTOR / 100;
 		turn r_thigh to x-axis <19.857143> speed <53.813187> * SPEEDUP_FACTOR / 100;
-		turn torso to y-axis <7.560440> speed <39.467033> * SPEEDUP_FACTOR / 100;
-		//turn head to y-axis <-7.736264> speed <35.879121> * SPEEDUP_FACTOR / 100;
-		turn luparm to x-axis <25.846154> speed <89.703297> * SPEEDUP_FACTOR / 100;
-		turn ruparm to x-axis <-14.593407> speed <104.049451> * SPEEDUP_FACTOR / 100;
+		if (!bAiming) {
+			turn torso to y-axis <7.560440> speed <39.467033> * SPEEDUP_FACTOR / 100;
+			//turn head to y-axis <-7.736264> speed <35.879121> * SPEEDUP_FACTOR / 100;
+			turn luparm to x-axis <25.846154> speed <89.703297> * SPEEDUP_FACTOR / 100;
+			turn ruparm to x-axis <-14.593407> speed <104.049451> * SPEEDUP_FACTOR / 100;
+		}
 		turn rleg to x-axis <10.714286> speed <218.879121> * SPEEDUP_FACTOR / 100;
 		turn rfoot to x-axis <-8.258242> speed <161.467033> * SPEEDUP_FACTOR / 100;
 		turn lleg to x-axis <13.357143> speed <78.934066> * SPEEDUP_FACTOR / 100;
@@ -200,10 +218,12 @@ walk()
 		turn hips to x-axis <11.956044> speed <50.225275> * SPEEDUP_FACTOR / 100;
 		turn l_thigh to x-axis <-29.538462> speed <78.934066> * SPEEDUP_FACTOR / 100;
 		turn r_thigh to x-axis <22.505495> speed <53.813187> * SPEEDUP_FACTOR / 100;
-		turn torso to y-axis <5.626374> speed <39.467033> * SPEEDUP_FACTOR / 100;
-		//turn head to y-axis <-5.978022> speed <35.879121> * SPEEDUP_FACTOR / 100;
-		turn luparm to x-axis <30.236264> speed <89.703297> * SPEEDUP_FACTOR / 100;
-		turn ruparm to x-axis <-9.489011> speed <104.049451> * SPEEDUP_FACTOR / 100;
+		if (!bAiming) {
+			turn torso to y-axis <5.626374> speed <39.467033> * SPEEDUP_FACTOR / 100;
+			//turn head to y-axis <-5.978022> speed <35.879121> * SPEEDUP_FACTOR / 100;
+			turn luparm to x-axis <30.236264> speed <89.703297> * SPEEDUP_FACTOR / 100;
+			turn ruparm to x-axis <-9.489011> speed <104.049451> * SPEEDUP_FACTOR / 100;
+		}
 		turn rleg to x-axis <21.445055> speed <218.879121> * SPEEDUP_FACTOR / 100;
 		turn rfoot to x-axis <-0.346154> speed <161.467033> * SPEEDUP_FACTOR / 100;
 		turn lleg to x-axis <9.489011> speed <78.934066> * SPEEDUP_FACTOR / 100;
@@ -219,10 +239,12 @@ walk()
 		turn hips to x-axis <9.313187> speed <56.104396> * SPEEDUP_FACTOR / 100;
 		turn l_thigh to x-axis <-20.390110> speed <194.527473> * SPEEDUP_FACTOR / 100;
 		turn r_thigh to x-axis <7.736264> speed <314.236264> * SPEEDUP_FACTOR / 100;
-		turn torso to y-axis <3.868132> speed <37.401099> * SPEEDUP_FACTOR / 100;
-		//turn head to y-axis <-4.038462> speed <41.148352> * SPEEDUP_FACTOR / 100;
-		turn luparm to x-axis <16.703297> speed <288.049451> * SPEEDUP_FACTOR / 100;
-		turn ruparm to x-axis <-0.703297> speed <187.038462> * SPEEDUP_FACTOR / 100;
+		if (!bAiming) {
+			turn torso to y-axis <3.868132> speed <37.401099> * SPEEDUP_FACTOR / 100;
+			//turn head to y-axis <-4.038462> speed <41.148352> * SPEEDUP_FACTOR / 100;
+			turn luparm to x-axis <16.703297> speed <288.049451> * SPEEDUP_FACTOR / 100;
+			turn ruparm to x-axis <-0.703297> speed <187.038462> * SPEEDUP_FACTOR / 100;
+		}
 		turn rleg to x-axis <36.912088> speed <329.192308> * SPEEDUP_FACTOR / 100;
 		turn rfoot to x-axis <-5.269231> speed <104.736264> * SPEEDUP_FACTOR / 100;
 		turn lleg to x-axis <7.027473> speed <52.368132> * SPEEDUP_FACTOR / 100;
@@ -238,10 +260,12 @@ walk()
 		turn hips to x-axis <6.670330> speed <54.945055> * SPEEDUP_FACTOR / 100;
 		turn l_thigh to x-axis <-11.247253> speed <190.467033> * SPEEDUP_FACTOR / 100;
 		turn r_thigh to x-axis <-7.027473> speed <307.681319> * SPEEDUP_FACTOR / 100;
-		turn torso to y-axis <2.104396> speed <36.626374> * SPEEDUP_FACTOR / 100;
-		//turn head to y-axis <-2.104396> speed <40.291209> * SPEEDUP_FACTOR / 100;
-		turn luparm to x-axis <3.159341> speed <282.049451> * SPEEDUP_FACTOR / 100;
-		turn ruparm to x-axis <8.082418> speed <183.148352> * SPEEDUP_FACTOR / 100;
+		if (!bAiming) {
+			turn torso to y-axis <2.104396> speed <36.626374> * SPEEDUP_FACTOR / 100;
+			//turn head to y-axis <-2.104396> speed <40.291209> * SPEEDUP_FACTOR / 100;
+			turn luparm to x-axis <3.159341> speed <282.049451> * SPEEDUP_FACTOR / 100;
+			turn ruparm to x-axis <8.082418> speed <183.148352> * SPEEDUP_FACTOR / 100;
+		}
 		turn rleg to x-axis <52.390110> speed <322.335165> * SPEEDUP_FACTOR / 100;
 		turn rfoot to x-axis <-10.192308> speed <102.560440> * SPEEDUP_FACTOR / 100;
 		turn lleg to x-axis <4.571429> speed <51.280220> * SPEEDUP_FACTOR / 100;
@@ -256,10 +280,12 @@ walk()
 		turn hips to x-axis <5.093407> speed <21.379121> * SPEEDUP_FACTOR / 100;
 		turn l_thigh to x-axis <0.703297> speed <161.560440> * SPEEDUP_FACTOR / 100;
 		turn r_thigh to x-axis <-13.714286> speed <90.280220> * SPEEDUP_FACTOR / 100;
-		turn torso to y-axis <-1.747253> speed <52.269231> * SPEEDUP_FACTOR / 100;
-		//turn head to y-axis <1.747253> speed <52.269231> * SPEEDUP_FACTOR / 100;
-		turn luparm to x-axis <-2.104396> speed <71.269231> * SPEEDUP_FACTOR / 100;
-		turn ruparm to x-axis <13.005495> speed <66.527473> * SPEEDUP_FACTOR / 100;
+		if (!bAiming) {
+			turn torso to y-axis <-1.747253> speed <52.269231> * SPEEDUP_FACTOR / 100;
+			//turn head to y-axis <1.747253> speed <52.269231> * SPEEDUP_FACTOR / 100;
+			turn luparm to x-axis <-2.104396> speed <71.269231> * SPEEDUP_FACTOR / 100;
+			turn ruparm to x-axis <13.005495> speed <66.527473> * SPEEDUP_FACTOR / 100;
+		}
 		turn rleg to x-axis <39.027473> speed <180.571429> * SPEEDUP_FACTOR / 100;
 		turn rfoot to x-axis <-7.203297> speed <40.390110> * SPEEDUP_FACTOR / 100;
 		turn lleg to x-axis <4.390110> speed <2.368132> * SPEEDUP_FACTOR / 100;
@@ -274,10 +300,12 @@ walk()
 		turn hips to x-axis <3.516484> speed <20.813187> * SPEEDUP_FACTOR / 100;
 		turn l_thigh to x-axis <12.659341> speed <157.313187> * SPEEDUP_FACTOR / 100;
 		turn r_thigh to x-axis <-20.390110> speed <87.912088> * SPEEDUP_FACTOR / 100;
-		turn torso to y-axis <-5.626374> speed <50.890110> * SPEEDUP_FACTOR / 100;
-		//turn head to y-axis <5.626374> speed <50.890110> * SPEEDUP_FACTOR / 100;
-		turn luparm to x-axis <-7.379121> speed <69.401099> * SPEEDUP_FACTOR / 100;
-		turn ruparm to x-axis <17.923077> speed <64.769231> * SPEEDUP_FACTOR / 100;
+		if (!bAiming) {
+			turn torso to y-axis <-5.626374> speed <50.890110> * SPEEDUP_FACTOR / 100;
+			//turn head to y-axis <5.626374> speed <50.890110> * SPEEDUP_FACTOR / 100;
+			turn luparm to x-axis <-7.379121> speed <69.401099> * SPEEDUP_FACTOR / 100;
+			turn ruparm to x-axis <17.923077> speed <64.769231> * SPEEDUP_FACTOR / 100;
+		}
 		turn rleg to x-axis <25.659341> speed <175.824176> * SPEEDUP_FACTOR / 100;
 		turn rfoot to x-axis <-4.214286> speed <39.324176> * SPEEDUP_FACTOR / 100;
 		turn lleg to x-axis <4.214286> speed <2.313187> * SPEEDUP_FACTOR / 100;
@@ -291,10 +319,12 @@ walk()
 		turn hips to x-axis <5.269231> speed <18.703297> * SPEEDUP_FACTOR / 100;
 		turn l_thigh to x-axis <15.291209> speed <28.049451> * SPEEDUP_FACTOR / 100;
 		turn r_thigh to x-axis <-29.181319> speed <93.516484> * SPEEDUP_FACTOR / 100;
-		turn torso to y-axis <-7.379121> speed <18.703297> * SPEEDUP_FACTOR / 100;
-		//turn head to y-axis <7.736264> speed <22.445055> * SPEEDUP_FACTOR / 100;
-		turn luparm to x-axis <-13.527473> speed <65.456044> * SPEEDUP_FACTOR / 100;
-		turn ruparm to x-axis <19.857143> speed <20.571429> * SPEEDUP_FACTOR / 100;
+		if (!bAiming) {
+			turn torso to y-axis <-7.379121> speed <18.703297> * SPEEDUP_FACTOR / 100;
+			//turn head to y-axis <7.736264> speed <22.445055> * SPEEDUP_FACTOR / 100;
+			turn luparm to x-axis <-13.527473> speed <65.456044> * SPEEDUP_FACTOR / 100;
+			turn ruparm to x-axis <19.857143> speed <20.571429> * SPEEDUP_FACTOR / 100;
+		}
 		turn rleg to x-axis <21.445055> speed <44.890110> * SPEEDUP_FACTOR / 100;
 		turn rfoot to x-axis <-12.302198> speed <86.038462> * SPEEDUP_FACTOR / 100;
 		turn lleg to x-axis <2.104396> speed <22.445055> * SPEEDUP_FACTOR / 100;

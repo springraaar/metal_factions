@@ -843,16 +843,16 @@ local function lvl2WaterPlantIfNeeded(self)
 end
 
 
-local function onslaughtPlant(self)
-	if self.isOnslaughtMode then
+local function brutalPlant(self)
+	if self.isBrutalMode then
 		return lvl1PlantIfNeeded(self)
 	end
 	
 	return SKIP_THIS_TASK
 end
 
-local function onslaughtAirPlant(self)
-	if self.isOnslaughtMode then
+local function brutalAirPlant(self)
+	if self.isBrutalMode then
 		if (countOwnUnits(self, nil,4,TYPE_L1_PLANT) < 3) then
 			return lev1PlantByFaction[self.unitSide][ tableLength(lev1PlantByFaction[self.unitSide]) ]		
 		end
@@ -862,8 +862,8 @@ local function onslaughtAirPlant(self)
 end
 
 
-local function onslaughtLightDefense(self)
-	if self.isOnslaughtMode then
+local function brutalLightDefense(self)
+	if self.isBrutalMode then
 		return lltByFaction[self.unitSide]
 		--return areaLimit_Llt(self)
 	end
@@ -871,8 +871,8 @@ local function onslaughtLightDefense(self)
 	return SKIP_THIS_TASK
 end
 
-local function onslaughtAADefense(self)
-	if self.isOnslaughtMode then
+local function brutalAADefense(self)
+	if self.isBrutalMode then
 		if lightAAByFaction[self.unitSide] then
 			return lightAAByFaction[self.unitSide]
 		end
@@ -883,8 +883,8 @@ local function onslaughtAADefense(self)
 	return SKIP_THIS_TASK
 end
 
-local function onslaughtHeavyDefense(self)
-	if self.isOnslaughtMode then
+local function brutalHeavyDefense(self)
+	if self.isBrutalMode then
 		return lev2HeavyDefenseByFaction[self.unitSide][ random( 1, tableLength(lev2HeavyDefenseByFaction[self.unitSide]) ) ]
 		--return areaLimit_L2HeavyDefense(self)
 	end
@@ -944,8 +944,8 @@ local function fusionIfNeeded(self)
 	return unitName
 end
 
-local function onslaughtFusion(self)
-	if self.isOnslaughtMode then
+local function brutalFusion(self)
+	if self.isBrutalMode then
 		return fusionIfNeeded(self)
 	end
 	
@@ -1408,11 +1408,11 @@ local function avenL2ShipChoice(self) return choiceByType(self,"aven_fletcher",{
 
 
 local avenCommander = {
-	onslaughtPlant,
-	onslaughtAirPlant,
-	onslaughtLightDefense,
-	onslaughtAADefense,
-	onslaughtHeavyDefense,
+	brutalPlant,
+	brutalAirPlant,
+	brutalLightDefense,
+	brutalAADefense,
+	brutalHeavyDefense,
 	changeQueueToCommanderAttackerIfNeeded,
 	moveBaseCenter,
 	checkMorph,
@@ -1597,7 +1597,7 @@ local avenLev1DefenseBuilder = {
 
 local avenLev2Con = {
 	exitPlant,
-	onslaughtFusion,
+	brutalFusion,
 	airRepairPadIfNeeded,
 	changeQueueToMexUpgraderIfNeeded,
 	changeQueueToAdvancedDefenseBuilderIfNeeded,
@@ -1749,11 +1749,11 @@ local function gearL2ShipChoice(self) return choiceByType(self,"gear_shredder",{
 
 
 local gearCommander = {
-	onslaughtPlant,
-	onslaughtAirPlant,	
-	onslaughtLightDefense,
-	onslaughtAADefense,
-	onslaughtHeavyDefense,
+	brutalPlant,
+	brutalAirPlant,	
+	brutalLightDefense,
+	brutalAADefense,
+	brutalHeavyDefense,
 	changeQueueToCommanderAttackerIfNeeded,
 	moveBaseCenter,
 	checkMorph,
@@ -1948,7 +1948,7 @@ local gearLev1DefenseBuilder = {
 
 local gearLev2Con = {
 	exitPlant,
-	onslaughtFusion,
+	brutalFusion,
 	airRepairPadIfNeeded,
 	changeQueueToMexUpgraderIfNeeded,
 	changeQueueToAdvancedDefenseBuilderIfNeeded,
@@ -2096,11 +2096,11 @@ local function clawL2ShipChoice(self) return choiceByType(self,"claw_predator",{
 
 
 local clawCommander = {
-	onslaughtPlant,
-	onslaughtAirPlant,	
-	onslaughtLightDefense,
-	onslaughtAADefense,
-	onslaughtHeavyDefense,
+	brutalPlant,
+	brutalAirPlant,	
+	brutalLightDefense,
+	brutalAADefense,
+	brutalHeavyDefense,
 	changeQueueToCommanderAttackerIfNeeded,
 	moveBaseCenter,
 	checkMorph,
@@ -2296,7 +2296,7 @@ local clawLev1DefenseBuilder = {
 
 local clawLev2Con = {
 	exitPlant,
-	onslaughtFusion,
+	brutalFusion,
 	airRepairPadIfNeeded,
 	changeQueueToMexUpgraderIfNeeded,
 	changeQueueToAdvancedDefenseBuilderIfNeeded,
@@ -2446,11 +2446,11 @@ local function sphereL2ShipChoice(self) return choiceByType(self,"sphere_stalwar
 
 
 local sphereCommander = {
-	onslaughtPlant,
-	onslaughtAirPlant,	
-	onslaughtLightDefense,
-	onslaughtAADefense,
-	onslaughtHeavyDefense,
+	brutalPlant,
+	brutalAirPlant,	
+	brutalLightDefense,
+	brutalAADefense,
+	brutalHeavyDefense,
 	changeQueueToCommanderAttackerIfNeeded,
 	moveBaseCenter,
 	checkMorph,
@@ -2632,7 +2632,7 @@ local sphereLev1DefenseBuilder = {
 
 local sphereLev2Con = {
 	exitPlant,
-	onslaughtFusion,
+	brutalFusion,
 	airRepairPadIfNeeded,
 	changeQueueToMexUpgraderIfNeeded,
 	changeQueueToAdvancedDefenseBuilderIfNeeded,

@@ -44,7 +44,7 @@ end
 function UnitHandler:Init(ai)
 	self.ai = ai
 	self.isEasyMode = (self.ai.mode == "easy")
-	self.isOnslaughtMode = (self.ai.mode == "onslaught")
+	self.isBrutalMode = (self.ai.mode == "brutal")
 	
 	self.sizeMult = 1
 	self.atkFailureCost = 0
@@ -216,7 +216,7 @@ function UnitHandler:Update()
 			self.advancedDefenseBuilderCountTarget = 0
 			self.attackPatrollerCountTarget = 0
 		end
-		if self.isOnslaughtMode then
+		if self.isBrutalMode then
 			self.basePatrollerCountTarget = max(self.basePatrollerCountTarget-1,0)
 			self.mexUpgraderCountTarget = max(self.mexUpgraderCountTarget-1,0)
 			self.defenseBuilderCountTarget = max(self.defenseBuilderCountTarget-1,0)
@@ -704,8 +704,8 @@ function UnitHandler:Update()
 		-- TODO absolute force size irrelevant? 
 		-- update attack force size multiplier
 		self.sizeMult = 1 + incomeM*FORCE_SIZE_MOD_METAL -- + (self.atkFailureCost/FORCE_COST_REFERENCE)*FORCE_SIZE_MOD_FAILURE
-		if self.isOnslaughtMode then
-			self.sizeMult = 1 + incomeM*FORCE_SIZE_MOD_METAL + (self.atkFailureCost/FORCE_COST_REFERENCE)*ONSLAUGHT_FORCE_SIZE_MOD_FAILURE
+		if self.isBrutalMode then
+			self.sizeMult = 1 + incomeM*FORCE_SIZE_MOD_METAL + (self.atkFailureCost/FORCE_COST_REFERENCE)*BRUTAL_FORCE_SIZE_MOD_FAILURE
 		end
 		
 		self.refForceCost = FORCE_COST_REFERENCE * self.sizeMult -- target force size
@@ -790,16 +790,16 @@ function UnitHandler:Update()
 	--	self:GetHumanTask()
 	--end	
 	
-	-- resource compensation for onslaught mode
+	-- resource compensation for brutal mode
 	-- TODO move this elsewhere
-	if (self.isOnslaughtMode) then
+	if (self.isBrutalMode) then
 		if fmod(f,15) == 0 then
-			-- spAddTeamResource(self.ai.id,"metal",ONSLAUGHT_BASE_INCOME_METAL * (1+1/(self.perceivedTeamAdvantageFactor+0.2))  )
-			-- spAddTeamResource(self.ai.id,"energy",ONSLAUGHT_BASE_INCOME_ENERGY * (1+1/(self.perceivedTeamAdvantageFactor+0.2)) )
+			-- spAddTeamResource(self.ai.id,"metal",BRUTAL_BASE_INCOME_METAL * (1+1/(self.perceivedTeamAdvantageFactor+0.2))  )
+			-- spAddTeamResource(self.ai.id,"energy",BRUTAL_BASE_INCOME_ENERGY * (1+1/(self.perceivedTeamAdvantageFactor+0.2)) )
 
 			local minutesPassed = floor(f/FRAMES_PER_MIN)
-			spAddTeamResource(self.ai.id,"metal",ONSLAUGHT_BASE_INCOME_METAL + minutesPassed * ONSLAUGHT_BASE_INCOME_METAL_PER_MIN  )
-			spAddTeamResource(self.ai.id,"energy",ONSLAUGHT_BASE_INCOME_ENERGY + minutesPassed * ONSLAUGHT_BASE_INCOME_ENERGY_PER_MIN )
+			spAddTeamResource(self.ai.id,"metal",BRUTAL_BASE_INCOME_METAL + minutesPassed * BRUTAL_BASE_INCOME_METAL_PER_MIN  )
+			spAddTeamResource(self.ai.id,"energy",BRUTAL_BASE_INCOME_ENERGY + minutesPassed * BRUTAL_BASE_INCOME_ENERGY_PER_MIN )
 		end
 	end
 	
@@ -967,8 +967,8 @@ function UnitHandler:getCellAttackValue(group, cell)
 	if (self.isEasyMode) then
 		threatEvaluationFactor = threatEvaluationFactor * ATTACK_ENEMY_THREAT_EVALUATION_EASY_FACTOR
 	end
-	if (self.isOnslaughtMode) then
-		threatEvaluationFactor = threatEvaluationFactor * ATTACK_ENEMY_THREAT_EVALUATION_ONSLAUGHT_FACTOR
+	if (self.isBrutalMode) then
+		threatEvaluationFactor = threatEvaluationFactor * ATTACK_ENEMY_THREAT_EVALUATION_BRUTAL_FACTOR
 	end
 
 	threatEvaluationFactor = threatEvaluationFactor * (group.task == TASK_ATTACK and ATTACK_PERSISTENCE_THREAT_EVALUATION_FACTOR or 1) 

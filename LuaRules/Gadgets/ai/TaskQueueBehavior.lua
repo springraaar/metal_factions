@@ -20,7 +20,7 @@ end
 function TaskQueueBehavior:Init(ai, uId)
 	self.ai = ai
 	self.isEasyMode = (self.ai.mode == "easy")
-	self.isOnslaughtMode = (self.ai.mode == "onslaught")
+	self.isBrutalMode = (self.ai.mode == "brutal")
 	
 	-- unit properties
 	self.unitId = uId

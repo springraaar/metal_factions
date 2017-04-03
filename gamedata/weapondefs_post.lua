@@ -73,6 +73,10 @@ for wdName, wd in pairs(WeaponDefs) do
 		end
 	end
 
+	-- reduce cratering
+	if (not wd.cratermult) then
+		wd.cratermult = 0.1
+	end
 	if (wd.weapontype == "BeamLaser" ) then
 		wd.heightmod = 0.5		-- default was 1.0
 	end
