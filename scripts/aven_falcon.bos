@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, rwing, lwing, tail, ljet, rjet, lweapon,lbarrel,lflare, rweapon, rbarrel, rflare, base2, base3;
+piece  base, rwing, lwing, tail, ljet, rjet, ljp, rjp, lweapon,lbarrel,lflare, rweapon, rbarrel, rflare, base2, base3;
 
 static-var  Static_Var_3, Static_Var_4, Static_Var_5, isFlying;
 
@@ -165,8 +165,12 @@ Killed(severity, corpsetype)
 	//start-script Crashing();
 
 	corpsetype = 3;
-	explode base2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-	explode lwing type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-	explode rwing type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-	explode base3 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode base2 type SHATTER;
+	explode lwing type SHATTER;
+	explode rwing type SHATTER;
+	explode base3 type SHATTER;
+	explode tail type SHATTER;
+	explode lweapon type SHATTER;
+	explode rweapon type SHATTER;
+	explode ljet type SHATTER;
 }

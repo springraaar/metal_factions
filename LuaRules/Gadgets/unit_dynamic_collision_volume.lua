@@ -3,16 +3,13 @@ function gadget:GetInfo()
     name      = "Dynamic collision volume & Hitsphere Scaledown",
     desc      = "Adjusts collision volume for pop-up style units & Reduces the diameter of default sphere collision volume for 3DO models",
     author    = "Deadnight Warrior (tweaked by raaar)",
-    date      = "Dec 10, 2010",
+    date      = "April 2017",
     license   = "GNU GPL, v2 or later",
-    layer     = 2,
+    layer     = -1,
     enabled   = true
   }
 end
 
-
--- 2015 : reduce radius and height for submarines to prevent unwanted targeting from cannons, etc.
--- 2013 : ??
 
 local spGetAllUnits = Spring.GetAllUnits
 local spSetUnitCollisionVolumeData = Spring.SetUnitCollisionVolumeData

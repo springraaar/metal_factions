@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base,hull,bwingl,bwingr,fwingl,fwingr, weapon1, front,flare1, ljet,rjet,cjet,l2,r2,bl2,br2;
+piece  base,hull,bwingl,bwingr,fwingl,fwingr, weapon1, front,flare1, ljet,rjet,cjet,l2,r2,bl2,br2,ljp,rjp,cjp,jp1,jp2,jp3,jp4;
 
 static-var  Static_Var_2, statechg_DesiredState, statechg_StateChanging,canaim;
 
@@ -85,6 +85,10 @@ Create()
 {
 	canaim = TRUE;
 	turn flare1 to x-axis <90.000000> now;
+	turn jp1 to x-axis <-90.000000> now;
+	turn jp2 to x-axis <-90.000000> now;
+	turn jp3 to x-axis <-90.000000> now;	
+	turn jp4 to x-axis <-90.000000> now;
 	Static_Var_2 = 0;
 	call-script InitState();
 	start-script SmokeUnit();

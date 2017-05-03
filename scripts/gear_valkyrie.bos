@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, link, magnet, arm1, arm2, arm3, arm4, thrust1,thrust2,thrust3,thrust4, b2, base2, lbody, rbody;
+piece  base, link, magnet, arm1, arm2, arm3, arm4, thrust1,thrust2,thrust3,thrust4, b2, base2, lbody, rbody, ljp, rjp,tp1,tp2,tp3,tp4;
 
 static-var  bMoving, unitviewer, statechg_DesiredState, statechg_StateChanging, bTransporting;
 
@@ -115,6 +115,10 @@ Create()
 	turn thrust2 to x-axis <90.000000> now;
 	turn thrust3 to x-axis <90.000000> now;
 	turn thrust4 to x-axis <90.000000> now;
+	turn tp1 to x-axis <-90.000000> now;
+	turn tp2 to x-axis <-90.000000> now;
+	turn tp3 to x-axis <-90.000000> now;
+	turn tp4 to x-axis <-90.000000> now;	
 	bMoving = FALSE;
 	bTransporting = FALSE;
 	call-script InitState();

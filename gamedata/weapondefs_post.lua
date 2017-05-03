@@ -84,4 +84,10 @@ for wdName, wd in pairs(WeaponDefs) do
 		wd.heightmod = 0.5			-- default was 0.8
 		wd.heightboostfactor = 1.1		-- default was -1.0
 	end
+	
+	-- change intensity for EMG cannons, change weaponType
+	if wd.weapontype == "EmgCannon" then
+		wd.intensity = 0.1
+		wd.weapontype = "Cannon"
+	end
 end

@@ -12,7 +12,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW SHIP LEVEL2 WEAPON NOTAIR NOTSUB CTRL_W;
+	category=CLAW SHIP LEVEL2 WEAPON NOTAIR NOTSUB;
 	tedclass=SHIP;
 
 	//************************************************************
@@ -115,7 +115,7 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =40 50 40;
+	collisionVolumeScales =40 60 40;
 	collisionVolumeOffsets = 0 -15 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;

@@ -399,7 +399,7 @@ function gadget:GameFrame(n)
 							spGiveOrderToUnit(uId, CMD.MOVE, { (x+ox)/2, 0, (z+oz)/2 }, {})
 						else
 							-- if idle, fight or patrol nearby position
-							local cmds = spGetUnitCommands(uId)
+							local cmds = spGetUnitCommands(uId,3)
 		      				if ox and oz and (cmds and (#cmds <= 0)) then
 		      					if stealthDrones[uName] then
 									spGiveOrderToUnit(uId, CMD.MOVE, { ox + random(-200,200) , 0, oz + random(-200,200) }, {})

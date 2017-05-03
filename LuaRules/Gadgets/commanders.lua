@@ -61,7 +61,7 @@ function isCommander(unitDefId)
 	return false
 end
 
--- checks if unit is a commander
+-- checks if unit is a commander token
 function isCommanderToken(unitDefId)
 	if (UnitDefs[unitDefId].customParams.iscommandertoken) then
 		return true

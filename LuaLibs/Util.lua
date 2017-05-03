@@ -30,6 +30,9 @@ spGetUnitMoveTypeData = Spring.GetUnitMoveTypeData
 spGetAllUnits = Spring.GetAllUnits
 spGetTeamInfo = Spring.GetTeamInfo
 spGetTeamList = Spring.GetTeamList
+spGetPlayerList = Spring.GetPlayerList
+spGetPlayerInfo = Spring.GetPlayerInfo
+spDestroyUnit = Spring.DestroyUnit
 
 -------------------------------------------- CONSTANTS
 ENERGY_METAL_VALUE = 60

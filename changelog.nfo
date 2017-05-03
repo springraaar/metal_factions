@@ -1,3 +1,50 @@
+2017/05/03 ------------------ NOTES v0.976 ----------------------
+
+
+--- balance / mechanics
+
+- slightly increased CLAW "Maul"'s damage per second and cost
+- reduced inaccuracy of GEAR "Dominator Form" commander's cannons
+
+- fixed collision volumes for many units, mainly for robots which had volumes shorter than their actual height
+- fixed a serious issue introduced in 0.974 that made SPHERE shielded units' collision volume flat when shields were down
+- fixed GEAR "Toaster"'s collision volume and aim point inconsistency when under construction
+
+- teams with all players disconnected are automatically resigned unless they have at least 40% as much value in units as the strongest team
+(requirement is doubled if all their commanders are dead)
+- when a player resigns their commander explodes
+
+- GEAR Heatray towers no longer try to turn their turret while firing
+
+
+--- effects / visuals
+
+- added thruster exhaust effects for all aircraft (added LUPS system by jK)
+
+- made the ground decal below metal extractors fade faster after they're destroyed
+
+- reduced the transparency on projectiles from some weapons, namely EMG
+- AVEN Dervish, Magnum and Racer had their "Plasma Cannon" weapons changed to "Plasma Bolt", with different impact sound and projectile
+- added trail for long range plasma cannon shots
+- modified rocket trails for better consistency, and to make smaller rockets less expensive in terms of performance
+- made fire area effects simpler to make them less expensive in terms of performance
+
+
+--- UI / widgets
+
+- system messages are no longer shown on a separate message box (to avoid wasting space)
+- improved handling of multiline messages
+
+- added bloom shader widget (by Kloot) : maybe makes game look better (adds blur/glow) but comes with a performance cost
+(experimental : it's disabled by default, can be enabled through the widgets menu - F11 key)
+
+
+--- other
+
+- cleanup of deprecated weapon definition tags and categories that caused warnings on the infolog.txt
+
+
+
 2017/04/02 ------------------ NOTES v0.975 ----------------------
 
 - drastically reduced cratering effect on most weapons

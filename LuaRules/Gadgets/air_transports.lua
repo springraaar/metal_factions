@@ -16,7 +16,8 @@ local FRAMES_PER_SECOND = 30
 local airTransports = {}
 local airTransportMaxSpeeds = {}
 local unloadedUnits = {}
-	
+local spSetUnitRulesParam  = Spring.SetUnitRulesParam	
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 if (gadgetHandler:IsSyncedCode()) then
@@ -42,6 +43,9 @@ function updateAllowedSpeed(transportId, transportUnitDef)
 	--Spring.Echo("unit "..transportUnitDef.name.." is air transport at  "..(massUsageFraction*100).."%".." load, curSpeed="..vw.." allowedSpeed="..allowedSpeed)
 
 	airTransportMaxSpeeds[transportId] = allowedSpeed
+	
+	-- load factor used for thruster effect
+	spSetUnitRulesParam(transportId,"transport_load_factor",tostring(massUsageFraction),{public = true})
 end
 
 
@@ -98,6 +102,7 @@ function gadget:GameFrame(n)
 			Spring.SetUnitVelocity(unitId,vx * factor,vy * factor,vz * factor)
 		end
 	end
+	
 end
 
 
@@ -116,6 +121,8 @@ function gadget:UnitUnloaded(unitId, unitDefId, teamId, transportId)
 		-- transport is empty, cleanup tables
 		airTransports[transportId] = nil
 		airTransportMaxSpeeds[transportId] = nil
+		
+		spSetUnitRulesParam(unitId,"transport_load_factor","0",{public = true})
 	else
 		-- update allowed speed
 		updateAllowedSpeed(transportId, airTransports[transportId])

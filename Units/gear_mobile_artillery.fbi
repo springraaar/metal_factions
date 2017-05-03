@@ -10,7 +10,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=CORE TANK LEVEL2 WEAPON NOTAIR NOTSUB CTRL_W;
+	category=GEAR TANK LEVEL2 WEAPON NOTAIR NOTSUB;
 	tedclass=TANK;
 
 	//************************************************************
@@ -127,11 +127,11 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:yellowflare;
+		explosiongenerator0=custom:yellowflaremed;
 	}
 	[customParams] 
 	{
-    canAreaAttack=1;
+	    canAreaAttack=1;
 	}
 	buildcostenergy=10994;//#AUTO#
 	buildcostmetal=2198;//#AUTO#

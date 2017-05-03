@@ -27,6 +27,7 @@ end
 -- sep 2015 : scroll to latest message when viewport resizes
 -- mar 2015 : fix lua error and add time prefix to messages
 
+local SEPARATE_MESSAGES			= 0	-- separate player and system mesages ?
 local BOX_BORDER_SIZE				= 1
 local PLAYER_MSG_BOX_MIN_W		= BOX_BORDER_SIZE * 4
 local PLAYER_MSG_BOX_MIN_H		= BOX_BORDER_SIZE * 4
@@ -76,7 +77,7 @@ local LAST_SYSTEM_MSG_CLEAR_FRAME	= 0
 -- table mapping names to colors
 local PLAYER_COLOR_TABLE			= {}
 -- message patterns our filter should match
-local MESSAGE_FILTERS				= {"Can't reach destination", "Build pos blocked", "Delayed response", "Sync error"}
+local MESSAGE_FILTERS				= {"Can't reach destination", "Build pos blocked", "Delayed response", "Sync error", "be given"}
 -- are we currently dragging or resizing a message box?
 local DRAGGING_PLAYER_BOX			= false
 local DRAGGING_SYSTEM_BOX			= false
@@ -647,12 +648,19 @@ end
 -- process console line
 function processConsoleLine(line, playerName, playerColor, playerFontStyle)
 
-	if (string.len(playerName) > 0) then
+	if (SEPARATE_MESSAGES == 0 or string.len(playerName) > 0) then
 		-- autoscroll if bottom of message
 		-- frame is equal to last message
 		if (MESSAGE_FRAME_MAX == NUM_PLAYER_MESSAGES) then
 			MESSAGE_FRAME_MIN = MESSAGE_FRAME_MIN + 1
 			MESSAGE_FRAME_MAX = MESSAGE_FRAME_MAX + 1
+		end
+
+		-- check if it's a system message, and use its style instead
+		if string.len(playerName) == 0 then
+			playerName = "SYSTEM"
+			playerColor = SYSTEM_TEXT_COLOR
+			playerFontStyle = FONT_RENDER_STYLES[2]
 		end
 
 		DRAW_PLAYER_MESSAGES = true
@@ -703,16 +711,23 @@ function widget:AddConsoleLine(line)
 	
 		if (string.len(playerName) > 0) then
 			prefix = string.sub(line,1,string.find(line, " "))
-			lineSep = "..."
+			lineSep = "" 
+			
+			-- lineSep was "...", "-" might be an option but maybe it's best to leave it empty
 		end
 		
-		if(string.len(line) < MAX_LINE_STRING_LENGTH) then
+		if(string.len(line) < MAX_LINE_STRING_LENGTH and string.find(line,'\n',1,true) ==nil) then
 			processConsoleLine(line,playerName,playerColor,playerFontStyle)
 		else
 			local nextStr = line
 			local currentStr = ""
 			while (string.len(nextStr) > 0) do
-				if (string.len(nextStr) > MAX_LINE_STRING_LENGTH) then
+				local idx,_ = string.find(nextStr,'\n',1,true)
+
+				if idx ~= nil and idx <= MAX_LINE_STRING_LENGTH then
+					currentStr = string.sub(nextStr, 1 , idx-1)
+					nextStr = prefix..string.sub(nextStr, idx + 1)
+				elseif (string.len(nextStr) > MAX_LINE_STRING_LENGTH) then
 					currentStr = string.sub(nextStr, 1 , MAX_LINE_STRING_LENGTH)..lineSep
 					nextStr = prefix..lineSep..string.sub(nextStr, MAX_LINE_STRING_LENGTH + 1)
 				else 

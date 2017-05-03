@@ -5,12 +5,12 @@
 	//********************
 	Side=Gear;
 	name=Instigator;
-	description=Assault Tank;
+	description=Light Tank;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CORE TANK LEVEL1 WEAPON NOTAIR  NOTSUB CTRL_W;
+	category=GEAR TANK LEVEL1 WEAPON NOTAIR  NOTSUB;
 	tedclass=TANK;
 
 	//************************************************************
@@ -35,8 +35,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.5;
-	energyuse=0.5;
+	energymake=0.0;
+	energyuse=0.0;
 	energystorage=0;
 
 	//************************************************************
@@ -63,9 +63,9 @@
 	//************
 	movementclass=TANKSH2;
 	turnrate=600;//475
-	acceleration=0.3; // was 0.04
+	acceleration=0.3;
 	brakerate=0.0976563;
-	maxvelocity=2.05; // was 1.9
+	maxvelocity=2.05;
 	maxslope=10;
 	maxwaterdepth=12;
 
@@ -114,7 +114,7 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =20 17 30;
+	collisionVolumeScales =23 17 30;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;

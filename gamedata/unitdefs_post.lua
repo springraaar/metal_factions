@@ -112,6 +112,22 @@ local reducedDecalSizeUnits = {
 	claw_wind_generator = true
 }
 
+
+local reducedDecalDurationUnits = {
+	aven_metal_extractor = true,
+	gear_metal_extractor = true,
+	claw_metal_extractor = true,
+	sphere_metal_extractor = true,
+	aven_exploiter = true,
+	gear_exploiter = true,
+	claw_exploiter = true,
+	sphere_exploiter = true,
+	aven_moho_mine = true,
+	gear_moho_mine = true,
+	claw_moho_mine = true,
+	sphere_moho_mine = true
+}
+
 -- unitdef tweaking
 if (true) then
 	for name,unitDef in pairs(UnitDefs) do
@@ -194,7 +210,12 @@ if (true) then
 				end
 				unitDef.buildinggrounddecalsizex = unitDef.footprintx * fpMod
 				unitDef.buildinggrounddecalsizey = unitDef.footprintz * fpMod
-				unitDef.buildinggrounddecaldecayspeed = 0.01
+				
+				if (reducedDecalDurationUnits[name]) then
+					unitDef.buildinggrounddecaldecayspeed = 0.5
+				else
+					unitDef.buildinggrounddecaldecayspeed = 0.01
+				end
 			end
 		end
 	end

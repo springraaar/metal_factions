@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, h1,h2,h3, wingsup, wing1, wing2, shieldpt, wsup, emg, emgflare, emgcover, r1, rotor;
+piece  base, h1,h2,h3, wingsup, wing1, wing2, shieldpt, wsup, emg, emgflare, emgcover, r1, rotor,ljp,rjp;
 
 static-var  statechg_DesiredState, statechg_StateChanging;
 #define SIG_AIM		2

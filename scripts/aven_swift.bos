@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, rwing, lwing, tail, jet, weapon,barrel,flare, base2, base3;
+piece  base, rwing, lwing, tail, jet, weapon,barrel,flare, base2, base3,jp1;
 
 static-var  Static_Var_3, Static_Var_4, Static_Var_5, isFlying;
 
@@ -110,6 +110,7 @@ Create()
 {
 	isFlying = FALSE;
 	call-script InitState();
+	
 	start-script SmokeUnit();
 	start-script Crashing();
 }

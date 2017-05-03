@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=CORE commander LEVEL10 WEAPON NOTAIR NOTSUB CTRL_C;
+	category=GEAR commander LEVEL1 WEAPON NOTAIR NOTSUB;
 	tedclass=COMMANDER;
 
 	//************************************************************
@@ -149,7 +149,7 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =40 42 32;
+	collisionVolumeScales =40 45 32;
 	collisionVolumeOffsets = 0 1 0;
 	collisionVolumeTest = 1;
 

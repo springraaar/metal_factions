@@ -15,6 +15,7 @@ include("LuaLibs/Util.lua")
 local SURRENDER_THRESHOLD = 0.040 -- 4% of the "strength" of the strongest team
 local AI_SURRENDER_FACTOR = 0.5
 local NO_COMMANDER_SURRENDER_FACTOR = 0.5
+local DISCONNECT_SURRENDER_FACTOR = 0.1
 local CHECK_DELAY_FRAMES = 120
 
 local unitCostPerAllyTeam = {}
@@ -31,7 +32,7 @@ end
 -- surrender teams that are very weak compared to the strongest opponent
 function gadget:GameFrame(n)
 	if n > 300 and math.fmod(n,CHECK_DELAY_FRAMES) == 5 then
-		
+		local teamCommanderIds = {}
 		local allyTeamList = Spring.GetAllyTeamList()
 		local allUnits = spGetAllUnits()
 		local maxAllyTeamCost = 0
@@ -50,12 +51,14 @@ function gadget:GameFrame(n)
 			progress = progress or 0
 	    
 	    	if progress > 0.85 then
+		    	teamId = Spring.GetUnitTeam(uId)
 		    	allyId = Spring.GetUnitAllyTeam(uId)
 		    	ud = UnitDefs[Spring.GetUnitDefID(uId)]
 		    	cost = getWeightedCost(ud)
 		    	
 		    	unitCostPerAllyTeam[allyId] = unitCostPerAllyTeam[allyId] + cost
 		    	if (isCommander(ud)) then
+		    		teamCommanderIds[teamId] = uId
 		    		aliveCommandersPerAllyTeam[allyId] = aliveCommandersPerAllyTeam[allyId] + 1 
 		    	end
 	    	end
@@ -73,10 +76,35 @@ function gadget:GameFrame(n)
 			local id = teamList[i]
 			
 			if id ~= Spring.GetGaiaTeamID() then
-				local _,_,isDead,isAI,side,allyId = spGetTeamInfo(id)
+				local _,leaderId,isDead,isAI,side,allyId = spGetTeamInfo(id)
+		        
+		        local playersDisconnected = true
+		        if isAI then
+		        	playersDisconnected = false
+		        else
+			        local playerList = spGetPlayerList(id)
+					if playerList then
+						for j = 1, #playerList do
+							local name,active,spec = spGetPlayerInfo(playerList[j])
+							if not spec then
+								if active then
+									playersDisconnected = false
+								end
+							end
+						end
+					end
+		        end
+		        --Spring.Echo('team '..tostring(id).. ' has leader '..tostring(leaderId))
+		        -- when a player resigns, explode its commander
+		        if (leaderId < 0 and teamCommanderIds[id] and teamCommanderIds[id] > 0) then
+		        	spDestroyUnit(teamCommanderIds[id])
+		        end
 		        
 		        local teamValueMod = aliveCommandersPerAllyTeam[allyId] > 0 and 1 or NO_COMMANDER_SURRENDER_FACTOR
 		        teamValueMod = teamValueMod * (isAI and AI_SURRENDER_FACTOR or 1)   
+		        if playersDisconnected then
+		        	teamValueMod = teamValueMod * DISCONNECT_SURRENDER_FACTOR
+		        end
 		        
 		        if maxAllyTeamCost > 0 and not isDead then 
 			        teamValueMod = teamValueMod * unitCostPerAllyTeam[allyId] / maxAllyTeamCost
@@ -95,3 +123,9 @@ function gadget:GameFrame(n)
 	end
 end
 
+
+function gadget:PlayerChanged(playerId)
+	pInfo = Spring.GetPlayerInfo(playerId)
+	Spring.Echo('player '..tostring(playerId)..' changed : active='..tostring(pInfo.active)..' spectator='..tostring(pInfo.spectator))
+	
+end

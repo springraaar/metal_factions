@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base,hull,bottom,wingsup,wing1,wing2, flare1, turret, shieldpt, jet1, jet2, jet3;
+piece  base,hull,bottom,wingsup,wing1,wing2, flare1, turret, shieldpt, jet1, jet2, jet3,j1,j2,j3,ljsup,rjsup,cjsup,ljet,rjet,cjet,ljp,rjp,cjp;
 
 static-var  Static_Var_2, statechg_DesiredState, statechg_StateChanging,canaim, gun_1, bAiming;
 
@@ -107,6 +107,9 @@ Create()
 	hide flare1;
 	Static_Var_2 = 0;
 	turn flare1 to x-axis <90.000000> now;
+	turn j1 to x-axis <-90.000000> now;
+	turn j2 to x-axis <-90.000000> now;
+	turn j3 to x-axis <-90.000000> now;	
 	gun_1 = [0];
 	bAiming = FALSE;
 	call-script InitState();
