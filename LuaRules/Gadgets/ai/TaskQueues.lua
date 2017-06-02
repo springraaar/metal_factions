@@ -2784,6 +2784,7 @@ taskqueues = {
 	aven_u3commander = avenUCommander,
 	aven_u4commander = avenUCommander,
 	aven_u5commander = avenUCommander,
+	aven_u6commander = avenUCommander,
 	aven_construction_vehicle = avenLev1Con,
 	aven_construction_kbot = avenLev1Con,
 	aven_construction_aircraft = avenLev1Con,

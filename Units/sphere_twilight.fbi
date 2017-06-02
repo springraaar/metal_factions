@@ -34,8 +34,8 @@
 	//************************************************************
 	//  Resources
 	//*************
-	energymake=4;
-	energyuse=4;
+	energymake=0;
+	energyuse=0;
 
 	//************************************************************
 	//  Building
@@ -62,7 +62,7 @@
 	//************
 	acceleration=1;
 	brakerate=0.09;
-	maxvelocity=9;
+	maxvelocity=8.0;
 	maxwaterdepth=255;
 	cruisealt=150;
 	turnrate=500;
@@ -158,7 +158,7 @@
 	{
 		explosiongenerator0=custom:emgflarefast;
 	}
-	buildcostenergy=11757;//#AUTO#
-	buildcostmetal=1175;//#AUTO#
-	buildtime=15088;//#AUTO#
+	buildcostenergy=12466;//#AUTO#
+	buildcostmetal=1246;//#AUTO#
+	buildtime=15999;//#AUTO#
 }

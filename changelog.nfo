@@ -1,3 +1,42 @@
+2017/06/02 ------------------ NOTES v0.977 ----------------------
+
+- added AVEN "Gamma Form" commander : Laser skirmisher with increased range and firepower against heavy units
+
+--- balance / mechanics
+
+- Changed CLAW "Knife"'s weapon to a 100 dps short ranged laser cutter but increased its cost by about 10%
+
+large sweep through the costs of nearly all units:
+- up to 5% relative cost reduction on units with tracking projectiles
+- up to 10% relative cost reduction on units with slow-moving projectiles (some plasma cannons, rockets, bombs...)
+- up to 10% relative cost reduction on cheap short-ranged or very low dps units
+- up to 10% relative cost increase on units with very fast non-tracking projectiles (high energy bolts, railguns...)
+- up to 10% relative cost increase on aircraft, especially those with relatively high HP
+- up to 10% relative cost increase on flamethrower units (compensates for the buff due to slow moving projectiles)
+- up to 10% relative cost increase on units with extremely energy intensive weapons like SPHERE's lightning beams
+
+- fix movement speed modifiers from upgrades not being applied to the order queue that the unit got when under construction
+
+- slightly reduced speed of advanced fighters and air scouts and adjusted the costs
+- fixed SPHERE "Magnetar" not firing, increased its HP from 13000 to 15000 and energy cost to move from 225 to 280 per second
+- reduced CLAW "Flail" shotgun range, reduced the spread and adjusted the cost
+- increased CLAW "Centaur"'s damage output by about 12% and adjusted the cost
+- reduced CLAW "Grunt"'s speed by about 10% and adjusted the cost
+- reduced CLAW "Grinder"'s HP and weapon effectiveness by about 10% and adjusted the cost
+
+--- effects / visuals
+
+- fixed GEAR "Pyro"'s wreckage
+- changed CLAW "Knife" and "Centaur"'s movement animations (again)
+- changed CLAW "Flail" weapon sound (was too loud)
+- minor adjustments to the scale of some of the models
+
+--- UI / widgets
+
+- changed the Economy build menu page to always show metal extractors on the first position
+- changed the builder towers build menu section to "Plant" instead of "Other"
+
+
 2017/05/03 ------------------ NOTES v0.976 ----------------------
 
 
@@ -38,6 +77,7 @@
 - added bloom shader widget (by Kloot) : maybe makes game look better (adds blur/glow) but comes with a performance cost
 (experimental : it's disabled by default, can be enabled through the widgets menu - F11 key)
 
+- show awards for players when the game ends
 
 --- other
 

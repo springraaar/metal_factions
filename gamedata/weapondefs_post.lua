@@ -77,17 +77,19 @@ for wdName, wd in pairs(WeaponDefs) do
 	if (not wd.cratermult) then
 		wd.cratermult = 0.1
 	end
-	if (wd.weapontype == "BeamLaser" ) then
-		wd.heightmod = 0.5		-- default was 1.0
-	end
-	if (wd.weapontype == "Cannon" or wd.weapontype == "EmgCannon") then
-		wd.heightmod = 0.5			-- default was 0.8
-		wd.heightboostfactor = 1.1		-- default was -1.0
-	end
-	
-	-- change intensity for EMG cannons, change weaponType
-	if wd.weapontype == "EmgCannon" then
-		wd.intensity = 0.1
-		wd.weapontype = "Cannon"
+	if (wdName ~= "sphere_magnetar_blast") then
+		if (wd.weapontype == "BeamLaser" ) then
+			wd.heightmod = 0.5		-- default was 1.0
+		end
+		if (wd.weapontype == "Cannon" or wd.weapontype == "EmgCannon" ) then
+			wd.heightmod = 0.5			-- default was 0.8
+			wd.heightboostfactor = 1.1		-- default was -1.0
+		end
+		
+		-- change intensity for EMG cannons, change weaponType
+		if wd.weapontype == "EmgCannon" then
+			wd.intensity = 0.1
+			wd.weapontype = "Cannon"
+		end
 	end
 end

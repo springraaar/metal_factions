@@ -66,7 +66,15 @@ local morphDefs = {
 			energy = 10000,
 			metal = 1000,
 			text = 'Morph to Zeta Form : Greatly increased speed. Reduced build speed and combat attributes.'
-		}		
+		},
+		{
+			into = 'aven_u6commander',
+			time = 30,
+			cmdname = 'Gamma Form',
+			energy = 10000,
+			metal = 1000,
+			text = 'Morph to Gamma Form : Laser skirmisher with increased range and firepower against heavy units.'
+		}
 	},
 ------------------------------------------------ GEAR
 	gear_commander = 	{

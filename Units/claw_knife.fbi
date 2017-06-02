@@ -5,7 +5,7 @@
 	//********************
 	side=Claw;
 	name=Knife;
-	description=Scout Robot;
+	description=Scout/Raider Robot;
 
 	//************************************************************
 	//  Categories
@@ -64,8 +64,8 @@
 	//************
 	movementclass=KBOTHT2;
 	turnrate=910;
-	acceleration=0.5;
-	brakerate=0.5;
+	acceleration=0.15;
+	brakerate=0.3;
 	maxvelocity=2.7;
 	maxslope=17;
 	maxwaterdepth=25;
@@ -119,13 +119,14 @@
 
 	[CustomParams]
 	{
-		evalfactor=0.9;
+		evalfactor=1;
+		tip=Loses up to 30% weapon damage over its range;
 	}
 	//************************************************************
 	//  To be removed
 	//*****************
 
-	buildcostenergy=490;//#AUTO#
-	buildcostmetal=98;//#AUTO#
-	buildtime=1169;//#AUTO#
+	buildcostenergy=541;//#AUTO#
+	buildcostmetal=108;//#AUTO#
+	buildtime=1290;//#AUTO#
 }

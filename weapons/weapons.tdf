@@ -139,6 +139,76 @@
 		armor_light=400;//#AUTO#
 	}
 }
+[aven_u2commander_torpedo]
+{
+	name=Guided Torpedoes;
+	weapontype=TorpedoLauncher;
+	model=weapon_torpedo;
+	range=550;
+	reloadtime=4;
+	turret=1;
+	FlightTime=2.5;
+	submissile=1;
+	weaponvelocity=250;
+	startvelocity=250;
+	weaponAcceleration=33;
+	areaofeffect=60;
+	soundstart=torpedo2;
+	soundhit=xplodep3;
+	tracks=1;
+	turnrate=16000;
+	waterweapon=1;
+	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=400;
+		group_invincible=1;
+		armor_heavy=400;//#AUTO#
+		armor_medium=400;//#AUTO#
+		armor_light=400;//#AUTO#
+	}
+}
+[aven_u6commander_torpedo]
+{
+	name=Guided Torpedoes;
+	weapontype=TorpedoLauncher;
+	model=weapon_torpedo;
+	range=520;
+	reloadtime=4;
+	turret=1;
+	FlightTime=2.5;
+	submissile=1;
+	weaponvelocity=250;
+	startvelocity=250;
+	weaponAcceleration=33;
+	areaofeffect=60;
+	soundstart=torpedo2;
+	soundhit=xplodep3;
+	tracks=1;
+	turnrate=16000;
+	waterweapon=1;
+	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=400;
+		group_invincible=1;
+		armor_heavy=400;//#AUTO#
+		armor_medium=400;//#AUTO#
+		armor_light=400;//#AUTO#
+	}
+}
 [aven_u5commander_torpedo]
 {
 	name=Guided Torpedoes;
@@ -669,6 +739,46 @@
 		armor_heavy=17;//#AUTO#
 		armor_medium=35;//#AUTO#
 		armor_light=70;//#AUTO#
+	}
+}
+[aven_u6commander_laser]
+{
+	name=High Energy Laser;
+	weapontype=BeamLaser;
+	explosiongenerator=custom:GREENLASERBLASTWRAPPER;
+	beamtime=0.15;
+	thickness=2.71;
+	corethickness=0.8;
+	scrollspeed=0;
+	pulsespeed=0;
+	rgbcolor=0.0 0.61 0.0;   
+	rgbcolor2=0.5 1.0 0.5;
+	intensity=1.0;
+	turret=1;
+	range=640;
+	minintensity=1.0;
+	reloadtime=2.4;
+	energypershot=150;
+	weaponvelocity=1533;
+	areaofeffect=8;
+	soundstart=lasrhvy3;
+	soundhit=lasrhit1;
+	firestarter=90;
+	tolerance=8000;
+	impulsefactor=0.222;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=350;
+		group_invincible=1;
+		armor_heavy=350;//#AUTO#
+		armor_medium=350;//#AUTO#
+		armor_light=350;//#AUTO#
 	}
 }
 [aven_dazer_disruptor]
@@ -12281,12 +12391,12 @@
 	cegTag=RAILGUNTRAIL;
 	energypershot=70;
 	turret=1;
-	range=1000;
+	range=940;
 	reloadtime=0.2;
 	weapontimer=1;
 	weaponvelocity=1532;
 	accuracy=200;
-	areaofeffect=24;
+	areaofeffect=18;
 	soundstart=railgunsml;
 	soundhit=railgunhitsml;
 	soundtrigger=1;
@@ -12299,10 +12409,10 @@
 	}
 	[DAMAGE]
 	{
-		default=150;
-		armor_heavy=150;//#AUTO#
-		armor_medium=150;//#AUTO#
-		armor_light=150;//#AUTO#
+		default=140;
+		armor_heavy=140;//#AUTO#
+		armor_medium=140;//#AUTO#
+		armor_light=140;//#AUTO#
 	}
 }
 [claw_wrecker_railgun]
@@ -12586,7 +12696,7 @@
 [claw_flail_shotgun]
 {
 	name=Shotgun;
-	weapontype=EmgCannon;
+	weapontype=Cannon;
 	explosiongenerator=custom:railgunblastsml;
   	nogap=0;
 	intensity=1;
@@ -12598,18 +12708,17 @@
   	sizedecay=-0.2;
 	energypershot=7;
 	turret=1;
-	range=450;
+	range=400;
 	reloadtime=3.0;
 	accuracy=0;
-	sprayangle=1200;
+	sprayangle=900;
 	projectiles=15;
 	weapontimer=0.7;
-	weaponvelocity=1532;
+	weaponvelocity=1032;
 	areaofeffect=8;
-	soundstart=krogun1;
+	soundstart=shotgun;
 	soundtrigger=0;
 	soundhit=comfire1;
-	soundtrigger=1;
 	tolerance=1500;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -12697,29 +12806,31 @@
 }
 [claw_knife_laser]
 {
-	name=Light Laser;
+	name=Laser Cutter;
 	weapontype=BeamLaser;
 	explosiongenerator=custom:BLUELASERBLASTWRAPPER;
 	intensity=0.85;
-	beamtime=0.05;
-	thickness=1.31;
-	corethickness=0.55;
+	beamtime=0.1;
+	thickness=2.31;
+	corethickness=0.25;
 	turret=1;
-	range=250;
-	minintensity=1.0;
-	reloadtime=1.1;
+	range=180;
+	accuracy=100;
+	energypershot=2;
+	minintensity=0.7;
+	reloadtime=0.1;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundtrigger=1;
-	soundstart=lasrlit2;
+	soundstart=lasercutter;
 	soundhit=lasrhit2;
 	firestarter=50;
 	scrollspeed=0;
 	pulsespeed=0;
-	rgbcolor=0.1 0.1 0.71;
-	rgbcolor2=0.51 0.51 1.0;
-	tolerance=1000;
-	impulsefactor=0.222;
+	rgbcolor=0.1 0.1 0.5;
+	rgbcolor2=0.8 0.8 1.0;
+	tolerance=10000;
+	impulsefactor=0.0222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -12728,10 +12839,10 @@
 	}
 	[DAMAGE]
 	{
-		default=40;
-		armor_heavy=10;//#AUTO#
-		armor_medium=20;//#AUTO#
-		armor_light=40;//#AUTO#
+		default=10;
+		armor_heavy=2;//#AUTO#
+		armor_medium=5;//#AUTO#
+		armor_light=10;//#AUTO#
 	}
 }
 [claw_grunt_laser]
@@ -13725,7 +13836,7 @@
 	turret=1;
 	range=450;
 	minintensity=1.0;
-	reloadtime=0.9;
+	reloadtime=0.8;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundtrigger=1;
@@ -17707,7 +17818,7 @@
 	weapontype=EmgCannon;
 	turret=1;
 	range=250;
-	cylindertargeting=0;
+	cylindertargeting=1;
 	NoSelfDamage=0;
 	Texture1=null;
 	Texture2=null;

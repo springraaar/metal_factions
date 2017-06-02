@@ -129,6 +129,17 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 	allUnitIds[unitId] = true
 end
 
+-- apply speed modifier when the unit finishes construction
+-- workaround to make it work with inherited move orders
+function gadget:UnitFinished(unitId, unitDefId, unitTeam)
+	if speedModifierUnitIds then
+		modifier = speedModifierUnitIds[unitId]
+		if modifier and modifier ~= 1 then
+			--Spring.Echo("updated speed : modifier "..tostring(modifier))
+			updateUnitSpeedModifier(unitId,modifier)
+		end
+	end
+end
 
 function gadget:GameFrame(n)
 
@@ -393,6 +404,9 @@ function enforceSpeedChange(unitId,speed)
 		end
 		local params = {-1, CMD.SET_WANTED_MAX_SPEED, 0, speed}
 		spGiveOrderToUnit(unitId, CMD.INSERT, params, {"alt"})
+		--Spring.Echo("order given to set speed="..speed.." for unit "..unitId)
+	else
+		spGiveOrderToUnit(unitId, CMD.STOP, {}, {})
 	end
 end
 

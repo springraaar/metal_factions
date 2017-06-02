@@ -19,7 +19,7 @@
 	SoundCategory=COR_DOOM;
 
 	// ------------------- health/cost/size
-	MaxDamage=13000;
+	MaxDamage=15000;
 	FootprintX=4;
 	FootprintZ=4;
 	mass=5000;
@@ -29,7 +29,7 @@
 	MetalMake=0;
 	EnergyStorage=0;
 	MetalStorage=0;
-	EnergyUse=225;
+	EnergyUse=280;
 
 	// ------------------- constructor
 	builder=0;
@@ -101,7 +101,7 @@
 
 	[CustomParams]
 	{
-		tip=Requires 225E/s to move. Deals up to 8000(L) disruptor dmg within 450 range and drains shields; 
+		tip=Requires 280E/s to move. Deals up to 8000(L) disruptor dmg within 450 range and drains shields; 
 	}
 	[SFXTypes]
 	{
