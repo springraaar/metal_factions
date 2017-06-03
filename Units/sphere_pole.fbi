@@ -2,7 +2,7 @@
 {
 	name=Pole;
 	unitname=sphere_pole;
-	category=SPHERE LEVEL2 PLANT NOTAIR NOTSUB;
+	category=SPHERE LEVEL1 PLANT NOTAIR NOTSUB;
 	description=Tech Level 1;
 	footprintx=3;
 	footprintz=3;
@@ -17,7 +17,7 @@
 	acceleration=0;
 	canmove=0;
 	maxvelocity=0;
-	maxslope=10;
+	maxslope=40;
 	turnrate=1;
 	builddistance=300;
 	builder=1;
@@ -25,7 +25,7 @@
 	repairspeed=300;
 	reclaimspeed=300;
 	energystorage=100;
-	energyuse=10;
+	energyuse=0;
 	metalstorage=100;
 	canstop=1;
 	idletime=1800;
@@ -61,7 +61,7 @@
 	{
 		explosiongenerator0=custom:buildglow;
 	}
-	buildcostenergy=8955;//#AUTO#
-	buildcostmetal=1791;//#AUTO#
-	buildtime=21344;//#AUTO#
+	buildcostenergy=1750;//#AUTO#
+	buildcostmetal=350;//#AUTO#
+	buildtime=4171;//#AUTO#
 }
