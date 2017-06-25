@@ -32,6 +32,7 @@ local COLVOL_SHIELD = 0
 local COLVOL_BASE = 1
 local PARALYZE_DAMAGE_FACTOR = 0.33 -- paralyze damage adds this fraction as normal damage
 local PARALYZE_MISSING_HP_FACTOR = 2.0 -- how much paralyze damage is amplified by target's missing HP %
+local DAMAGE_REPAIR_DISRUPT_FRAMES = 60 
 
 --local projectileHitShield = {}
 local weaponDefIdByNameTable = {}
@@ -45,6 +46,8 @@ local stunnedAircraftTable = {}
 local unitBurningTable = {}
 local unitBurningDPStepTable = {}
 local unitXPTable = {}
+local damagedUnitFrameTable = {}
+
 local spGetUnitHealth = Spring.GetUnitHealth
 local spSetUnitCollisionVolumeData = Spring.SetUnitCollisionVolumeData
 local spGetUnitCollisionVolumeData = Spring.GetUnitCollisionVolumeData
@@ -65,6 +68,7 @@ local spSetUnitDirection = Spring.SetUnitDirection
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetAllUnits = Spring.GetAllUnits
+local spGetGameFrame = Spring.GetGameFrame
 local max = math.max
 
 local STEP_DELAY = 6 		-- process steps every N frames
@@ -330,7 +334,10 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 	if unitXPTable[unitID] ~= nil then
 		unitXPTable[unitID] = nil
 	end
-
+	if damagedUnitFrameTable[unitID] ~= nil then
+		damagedUnitFrameTable[unitID] = nil
+	end
+	
 	-- spawn a fireball when canister dies
 	if UnitDefs[unitDefID].name == "gear_canister" then
 		local x,y,z = spGetUnitPosition(unitID)
@@ -537,4 +544,21 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 		local frac = damage / maxHealth
 		unitXPTable[unitID] = unitXPTable[unitID] + frac * UNIT_DAMAGE_XP
 	end
+	if (damage > 0 ) then
+		damagedUnitFrameTable[unitID] = spGetGameFrame()
+		--Spring.Echo("UNIT DAMAGED unitId="..unitID.." f="..spGetGameFrame())
+	end 
+end
+
+function gadget:AllowUnitBuildStep(builderID, builderTeam, unitID, unitDefID, part)
+	--Spring.Echo("STEP builderId="..builderID.." unitId="..unitID.." part="..part)
+	
+	-- if unit got damaged recently, deny half of the build steps
+	local f = spGetGameFrame()
+	if damagedUnitFrameTable[unitID] and (f - damagedUnitFrameTable[unitID] < DAMAGE_REPAIR_DISRUPT_FRAMES) then
+		if f%2 == 0 then
+			return false
+		end
+	end
+	return true
 end

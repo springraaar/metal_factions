@@ -162,8 +162,16 @@ function GetTooltipWeaponData(ud, xpMod, rangeMod, dmgMod)
                 local weapon_action="Dmg/s"
                 local reloadTime = weap.reload / xpMod
                 local isBeamLaser = weap.type == "BeamLaser"
-                local dps = dmgMod * (weap.damages[Game.armorTypes.default] * (weap.projectiles*weap.salvoSize)) / reloadTime
+                local damage = dmgMod * (weap.damages[Game.armorTypes.default] * (weap.projectiles*weap.salvoSize)) 
+                local dps = damage / reloadTime
                 local energyPerSecond = (weap.energyCost * (weap.projectiles*weap.salvoSize)) / reloadTime
+				local actionStr = ""
+				
+				if (reloadTime > 5) then
+					actionStr = weapon_action..": \255\255\255\255"..FormatNbr(damage,0).."/"..FormatNbr(reloadTime,2).."s"
+				else 
+					actionStr = weapon_action..": \255\255\255\255"..FormatNbr(dps,1)
+				end
 
                 local range = weap.range * rangeMod
                 local hitpower = "L"
@@ -177,8 +185,7 @@ function GetTooltipWeaponData(ud, xpMod, rangeMod, dmgMod)
                 if weap.damages and weap.damages.paralyzeDamageTime and weap.damages.paralyzeDamageTime>0 then
                    weapon_action="Paralyze/s"
                 end
-                NewTooltip = NewTooltip.."\n\255\255\255\255"..weap.description.."    "..weapon_action..": \255\255\255\255"..
-                FormatNbr(dps,1).."("..hitpower..")     Range: "..FormatNbr(range,2)
+                NewTooltip = NewTooltip.."\n\255\255\255\255"..weap.description.."    "..actionStr.."("..hitpower..")     Range: "..FormatNbr(range,2)
 
                 if energyPerSecond  > 0 then
                    NewTooltip = NewTooltip.."     \255\255\255\0E/s: "..FormatNbr(energyPerSecond,1)
