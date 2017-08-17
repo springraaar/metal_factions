@@ -12,7 +12,7 @@ static-var  bMoving, bBuilding, Static_Var_3, bAiming, Static_Var_5, Static_Var_
 
 // signal definition
 #define SIG_AIM		2
-
+#define SIG_AIM2	4
 
 MotionSpeedControl(maxSpeed,currentSpeed)
 {
@@ -409,7 +409,9 @@ QueryNanoPiece(piecenum)
 
 RestorePosition()
 {
-	bDgunning = 0;
+	set-signal-mask SIG_AIM;
+	set-signal-mask SIG_AIM2;
+	bDgunning = FALSE;
 	sleep RESTORE_DELAY;
 	turn torso to y-axis <0.000000> speed <290.000000>;
 	turn ruparm to x-axis <0.000000> speed <245.000000>;
@@ -520,8 +522,8 @@ QueryTertiary(piecenum)
 
 AimTertiary(heading, pitch)
 {
-	//signal SIG_AIM;
-	set-signal-mask SIG_AIM;
+	signal SIG_AIM2;
+	set-signal-mask SIG_AIM2;
 	bAiming = TRUE;
 	//bDgunning = TRUE;
 

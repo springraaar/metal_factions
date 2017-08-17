@@ -3,31 +3,33 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Claw;
 	name=Commander;
-	description=Omega Form;
-	icontype=aven_commander;
+	description=Slayer Form;
+	icontype=claw_commander;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN commander LEVEL1 WEAPON NOTAIR NOTSUB;
+	category=CLAW commander LEVEL1 WEAPON NOTAIR NOTSUB;
 	tedclass=COMMANDER;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_u3commander;
-	unitnumber=10000;
-	objectname=aven_u3commander.3do;
-	buildpic=aven_u3commander.png;
-	corpse=aven_u3commander_dead;
-	soundcategory=aven_COM;
+	unitname=claw_u6commander;
+	unitnumber=20000;
+	objectname=claw_u6commander.3do;
+	buildpic=claw_u6commander.png;
+	soundcategory=gear_COM;
+	corpse=claw_u6commander_dead;
+	script=claw_u6commander.cob;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=4500;
+	maxdamage=3800;
+	healtime=100;
 	buildcostmetal=2000;
 	buildcostenergy=20000;
 	buildtime=30000;
@@ -42,10 +44,11 @@
 	//  Resources
 	//*************
 	metalmake=2;
-	metalStorage=0;
 	energymake=50;
 	energyuse=0;
+	metalStorage=0;
 	energyStorage=0;
+
 
 	//************************************************************
 	//  Building
@@ -60,7 +63,6 @@
 	workertime=300;
         RepairSpeed=300;
         ReclaimSpeed=300;
-        ResurrectSpeed=0;
         TerraformSpeed=600;
         capturespeed=600;
 
@@ -68,7 +70,6 @@
 	//  Abilities
 	//*************
 	canattack=1;
-	canResurrect=0;
 	cancapture=1;
 	candgun=0;
 	canguard=1;
@@ -83,10 +84,10 @@
 	//  Movement
 	//************
 	movementclass=KBOTDS2;
-	turnrate=1044;
-	acceleration=0.3;
-	brakerate=0.4;
-	maxvelocity=1.8;
+	turnrate=1030;
+	acceleration=0.46;
+	brakerate=0.32;
+	maxvelocity=2.0;
 	maxslope=20;
 	maxwaterdepth=35;
 
@@ -94,22 +95,22 @@
 	//  Sight/Radar/Sonar
 	//*********************
 	sightdistance=500;
-	radardistance=1000;
-	sonardistance=1000;
+	radardistance=800;
+	sonardistance=800;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=aven_u3commander_emg;
-	weapon2=aven_u1commander_torpedo;
-	weapon3=aven_u3commander_disruptor;
-	slaveto1=3;
+	weapon1=claw_u6commander_laser;
+	weapon2=claw_u6commander_torpedo;
+	//weapon3=claw_u6commander_shotgun;
+	//slaveto1=3;
 	nochasecategory=WEAPON;
 	badtargetcategory1=VTOL;
-	badtargetcategory1=VTOL;
+	badtargetcategory2=VTOL;
 	badtargetcategory3=VTOL;
-	explodeas=aven_commander_nanoblast;
-	selfdestructas=aven_commander_nanoblast;
+	explodeas=claw_commander_nanoblast;
+	selfdestructas=claw_commander_nanoblast;
 
 	//************************************************************
 	//  Orders
@@ -127,11 +128,10 @@
 	cloakcost=50;
 	cloakcostmoving=150;
 	commander=1;
-	designation=ARM-WM;
+	designation=CX-D3;
 	downloadable=1;
 	hidedamage=0;
 	immunetoparalyzer=1;
-	leavetracks=1;
 	maneuverleashlength=640;
 	mincloakdistance=100;
 	norestrict=1;
@@ -140,31 +140,36 @@
 	smoothanim=1;
 	steeringmode=2;
 	threed=1;
+
+	leavetracks=1;
 	trackoffset=0;
 	trackstrength=8;
 	trackstretch=1;
 	tracktype=ComTrack;
 	trackwidth=22;
+
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =37 45 28;
+	collisionVolumeScales =36 45 30;
 	collisionVolumeOffsets = 0 1 0;
-	collisionVolumeTest = 0;
+	collisionVolumeTest = 1;
+
 
 	[CustomParams]
 	{
-		isCommander=1;		
+		isCommander=1;
+		tip=Laser Cutter loses up to 30% damage over its range;
 	}
+
 	//************************************************************
 	//  To be removed
 	//*****************
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:BLUEFLAREBIG;
+	explosiongenerator0=custom:rocketflaresml;
 	explosiongenerator1=custom:Nano;
-	explosiongenerator2=custom:EMGFLAREMED;
-	explosiongenerator3=custom:DGUNREADYFLARE;
+	explosiongenerator2=custom:yellowflaremed;
 	}
 
 }

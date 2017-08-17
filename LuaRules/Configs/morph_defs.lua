@@ -161,6 +161,14 @@ local morphDefs = {
 			energy = 10000,
 			metal = 1000,
 			text = 'Morph to Grinder Form : Greatly increased firepower. Slower speed.'
+		},
+		{
+			into = 'claw_u6commander',
+			time = 30,
+			cmdname = 'Slayer Form',
+			energy = 10000,
+			metal = 1000,
+			text = 'Morph to Slayer Form : Greatly increased speed and firepower. Reduced range.'
 		}
 	},	
 ------------------------------------------------ SPHERE

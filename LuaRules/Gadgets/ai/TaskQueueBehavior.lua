@@ -420,7 +420,7 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 				ud = nil
 				value = "nil"
 			end
-	
+			--log("building "..value)
 			success = false
 			if ud ~= nil then
 				if true then  -- assume unit can build target
@@ -481,10 +481,10 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 					end
 				else
 					self.progress = true
-					-- log("WARNING: bad task: "..self.unitName.." cannot build "..value, self.ai)
+					 --log("WARNING: bad task: "..self.unitName.." cannot build "..value, self.ai)
 				end
 			else
-				-- log("Cannot build:"..value..", couldn't grab the unit type from the engine", self.ai)
+				--log("Cannot build:"..value..", couldn't grab the unit type from the engine", self.ai)
 				self.progress = true
 			end
 			if success then

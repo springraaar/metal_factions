@@ -504,6 +504,28 @@
 	featuredead=claw_ucommander_heap;
 	seqnamereclamate=tree1reclamate;
 }
+[claw_u6commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=claw_u6commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=1000;
+	damage=5000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=claw_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
 [claw_commander_heap]
 {
 	world=All Worlds;

@@ -11,7 +11,7 @@ static-var  bMoving, bAiming, restore_delay, gun_1, gun_2,  canAim;
 
 // Signal definitions
 #define SIG_AIM				2
-#define SIG_AIM_2			4
+#define SIG_AIM2			4
 
 
 walklegs()
@@ -330,6 +330,7 @@ StopMoving()
 
 RestoreAfterDelay()
 {
+	set-signal-mask SIG_AIM2;
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
 	turn torso to y-axis <0.000000> speed <90.016484>;
 	turn ruparm to x-axis <0.000000> speed <45.005495>;
@@ -356,7 +357,7 @@ AimPrimary(heading, pitch)
 
 AimSecondary(heading, pitch)
 {
-	//signal SIG_AIM;
+	signal SIG_AIM2;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 	turn torso to y-axis heading speed <160.027473>;

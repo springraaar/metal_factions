@@ -49,7 +49,7 @@
 	soundstart=chargedshot;
 	soundhit=xplochargedshot;
 	soundtrigger=1;
-	tolerance=2000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -89,7 +89,7 @@
 	soundstart=chargedshot;
 	soundhit=xplochargedshot;
 	soundtrigger=1;
-	tolerance=2000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -106,7 +106,7 @@
 }
 [aven_u1commander_torpedo]
 {
-	name=Guided Torpedoes;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	model=weapon_torpedo;
 	range=450;
@@ -141,7 +141,7 @@
 }
 [aven_u2commander_torpedo]
 {
-	name=Guided Torpedoes;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	model=weapon_torpedo;
 	range=550;
@@ -176,7 +176,7 @@
 }
 [aven_u6commander_torpedo]
 {
-	name=Guided Torpedoes;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	model=weapon_torpedo;
 	range=520;
@@ -211,7 +211,7 @@
 }
 [aven_u5commander_torpedo]
 {
-	name=Guided Torpedoes;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	model=weapon_torpedo;
 	range=450;
@@ -269,7 +269,7 @@
 	soundstart=chargedshot;
 	soundhit=xplochargedshot;
 	soundtrigger=1;
-	tolerance=2000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -306,7 +306,7 @@
 	soundstart=armsml3;
 	soundhit=emghit;
 	soundtrigger=1;
-	tolerance=3000;
+	tolerance=4000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -343,7 +343,7 @@
 	soundstart=armsml3;
 	soundhit=emghit;
 	soundtrigger=1;
-	tolerance=3000;
+	tolerance=4000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -380,7 +380,7 @@
 	soundstart=armsml3;
 	soundhit=emghit;
 	soundtrigger=1;
-	tolerance=3000;
+	tolerance=4500;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -417,7 +417,7 @@
 	soundstart=armsml3;
 	soundhit=emghit;
 	soundtrigger=1;
-	tolerance=3000;
+	tolerance=4500;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -492,7 +492,7 @@
 	soundstart=chargedshot;
 	soundhit=xplochargedshot;
 	soundtrigger=1;
-	tolerance=2000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -570,7 +570,7 @@
 	soundstart=armsml3;
 	soundhit=emghit;
 	soundtrigger=1;
-	tolerance=3000;
+	tolerance=4500;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -647,7 +647,7 @@
 	soundstart=armsml3;
 	soundhit=emghit;
 	soundtrigger=1;
-	tolerance=3000;
+	tolerance=4500;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -709,7 +709,7 @@
 	reloadtime=0.7;
 	weaponvelocity=1533;
 	explosiongenerator=custom:REDLASERBLASTWRAPPER;
-	tolerance=2000;
+	tolerance=3000;
 	beamtime=0.05;
 	thickness=1.31;
 	corethickness=0.55;
@@ -764,7 +764,7 @@
 	soundstart=lasrhvy3;
 	soundhit=lasrhit1;
 	firestarter=90;
-	tolerance=8000;
+	tolerance=6000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -956,7 +956,7 @@
 	weaponvelocity=999;
 	areaofeffect=80;
 	soundhit=disrwavehit;
-	tolerance=2000;
+	tolerance=3000;
 	burnblow=1;
 	explosiongenerator=custom:EMPEFFECT;
 	size=2;
@@ -1010,7 +1010,7 @@
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
 	impulsefactor=0.222;
-	tolerance=2000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -1049,7 +1049,7 @@
 	pulsespeed=0;
 	rgbcolor=0.8 0.6 0.2;
 	rgbcolor2=1 0.8 0.4;
-	tolerance=1000;
+	tolerance=4000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -1126,7 +1126,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=2000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -1576,7 +1576,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=2000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -1645,7 +1645,7 @@
 	areaofeffect=64;
 	soundstart=cannon3;
 	soundhit=xplomed2;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -1688,7 +1688,7 @@
 	soundhit=xplodep1;
 	tracks=1;
 	waterweapon=1;
-	tolerance=2167;
+	tolerance=3000;
 	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -1866,7 +1866,7 @@
 	soundhit=xplodep2;
 	tracks=1;
 	waterweapon=1;
-	tolerance=1000;
+	tolerance=4000;
 	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -1901,7 +1901,7 @@
 	soundhit=xplodep2;
 	tracks=1;
 	waterweapon=1;
-	tolerance=1000;
+	tolerance=4000;
 	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -1936,7 +1936,7 @@
 	soundhit=xplodep2;
 	tracks=1;
 	waterweapon=1;
-	tolerance=1000;
+	tolerance=4000;
 	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -2055,7 +2055,7 @@
 	pulsespeed=0;
 	rgbcolor=0.0 0.61 0.0;
 	rgbcolor2=0.5 1.0 0.5;
-	tolerance=800;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -2119,7 +2119,7 @@
 	areaofeffect=130;
 	soundstart=canlite2;
 	soundhit=xploflak1;
-	tolerance=2000;
+	tolerance=3000;
 	burnblow=1;
 	explosiongenerator=custom:FLAKBLASTWRAPPER;
 	size=2;
@@ -2168,7 +2168,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=2000;
+	tolerance=4000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -2277,7 +2277,7 @@
 	areaofeffect=20;
 	soundstart=Mavgun2;
 	soundhit=xplomed5;
-	tolerance=2000;
+	tolerance=3000;
 	weapontimer=1.5;
 	size=2;
 	rgbcolor=0.9 0.66 0.6;
@@ -2312,7 +2312,7 @@
 	areaofeffect=20;
 	soundstart=Mavgun2;
 	soundhit=xplomed5;
-	tolerance=2000;
+	tolerance=3000;
 	weapontimer=1.5;
 	size=2;
 	rgbcolor=0.9 0.66 0.6;
@@ -2347,7 +2347,7 @@
 	areaofeffect=20;
 	soundstart=Mavgun2;
 	soundhit=xplomed5;
-	tolerance=2000;
+	tolerance=3500;
 	weapontimer=1.5;
 	size=2;
 	rgbcolor=0.9 0.66 0.6;
@@ -2778,7 +2778,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=2000;
+	tolerance=4000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -3006,7 +3006,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=2000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -3404,7 +3404,7 @@
 	areaofeffect=48;
 	soundstart=canlite3;
 	soundhit=xplomed3;
-	tolerance=768;
+	tolerance=4000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	size=2.5;
@@ -3498,45 +3498,6 @@
 		armor_light=300;//#AUTO#
 	}
 }
-[aven_BATS]
-{
-	name=Energized Plasma Cannon;
-	weapontype=Cannon;
-	size=5.1;
-	rgbcolor=1.0 0.8 0.5;
-	stages=5;
-  	separation=0.25;
-  	alphadecay=0.2;
-  	sizedecay=-0.1;
-	turret=1;
-	explosiongenerator=custom:STDBLASTWRAPPER;
-	range=2850;
-	reloadtime=3.5;
-	weaponvelocity=800;
-	energypershot=1000;
-	areaofeffect=120;
-	soundstart=xplonuk4;
-	soundhit=xplonuk1;
-	firestarter=50;
-	accuracy=900;
-	movingaccuracy=1200;
-	tolerance=2000;
-	edgeeffectiveness=0.25;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=3;
-	}
-	[DAMAGE]
-	{
-		default=1120;
-		group_invincible=1;
-		armor_heavy=1120;//#AUTO#
-		armor_medium=1120;//#AUTO#
-		armor_light=1120;//#AUTO#
-	}
-}
 [aven_standoff_cannon]
 {
 	name=Energized Plasma Cannon;
@@ -3560,7 +3521,7 @@
 	soundstart=xplonuk4;
 	soundhit=xplonuk1;
 	firestarter=50;
-	tolerance=2000;
+	tolerance=3000;
 	edgeeffectiveness=0.09;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -3589,7 +3550,7 @@
 	areaofeffect=64;
 	soundstart=cannon3;
 	soundhit=xplomed2;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -3623,7 +3584,7 @@
 	areaofeffect=64;
 	soundstart=cannon3;
 	soundhit=xplomed2;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -3657,7 +3618,7 @@
 	areaofeffect=64;
 	soundstart=cannon3;
 	soundhit=xplomed2;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -3725,7 +3686,7 @@
 	reloadtime=0.8;
 	weaponvelocity=1533;
 	explosiongenerator=custom:REDLASERBLASTWRAPPER;
-	tolerance=2000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	beamtime=0.1;
 	thickness=2.01;
@@ -3809,7 +3770,7 @@
 	areaofeffect=48;
 	soundstart=cannon1;
 	soundhit=xplomed3;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -3853,7 +3814,7 @@
 	scrollspeed=0;
 	pulsespeed=0;
 	rgbcolor=1 0.8 0.4;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -4002,7 +3963,7 @@
 	areaofeffect=48;
 	soundstart=canlite3;
 	soundhit=xplomed3;
-	tolerance=2000;
+	tolerance=3000;
 	size=2.5;
 	rgbcolor=0.7 0.5 0.2;
 	stages=3;
@@ -4036,7 +3997,7 @@
 	areaofeffect=48;
 	soundstart=canlite3;
 	soundhit=xplomed3;
-	tolerance=2000;
+	tolerance=3000;
 	size=2.5;
 	rgbcolor=0.7 0.5 0.2;
 	stages=3;
@@ -4070,7 +4031,7 @@
 	areaofeffect=48;
 	soundstart=canlite3;
 	soundhit=xplomed3;
-	tolerance=2000;
+	tolerance=3000;
 	size=2.5;
 	rgbcolor=0.7 0.5 0.2;
 	stages=3;
@@ -4104,7 +4065,7 @@
 	areaofeffect=48;
 	soundstart=canlite3;
 	soundhit=xplomed3;
-	tolerance=2000;
+	tolerance=3000;
 	accuracy=200;
 	movingaccuracy=400;
 	size=2.5;
@@ -4138,7 +4099,7 @@
 	reloadtime=0.5;
 	weaponvelocity=1533;
 	explosiongenerator=custom:REDLASERBLASTWRAPPER;
-	tolerance=2000;
+	tolerance=3000;
 	beamtime=0.05;
 	thickness=1.31;
 	corethickness=0.55;
@@ -4153,7 +4114,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=2000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -4182,7 +4143,7 @@
 	areaofeffect=48;
 	soundstart=cannon2;
 	soundhit=xplomed4;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -4215,7 +4176,7 @@
 	areaofeffect=64;
 	soundstart=cannon3;
 	soundhit=xplomed2;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -4251,7 +4212,7 @@
 	areaofeffect=64;
 	soundstart=cannon3;
 	soundhit=xplomed2;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -4546,7 +4507,7 @@
 	soundhit=xplodep2;
 	tracks=1;
 	waterweapon=1;
-	tolerance=1000;
+	tolerance=3000;
 	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -4575,7 +4536,7 @@
 	areaofeffect=64;
 	soundstart=cannon3;
 	soundhit=xplomed2;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -4619,7 +4580,7 @@
 	scrollspeed=0;
 	pulsespeed=0;
 	rgbcolor=1 0.8 0.4;
-	tolerance=1000;
+	tolerance=4000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -4685,7 +4646,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=2000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -4704,7 +4665,7 @@
 }
 [gear_commander_torpedo]
 {
-	name=Unguided Torpedo;
+	name=Unguided Torpedoes;
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_torpedo;
@@ -4762,7 +4723,7 @@
   	separation=0.0;
   	alphadecay=0.8;
   	sizedecay=-0.11;
-	tolerance=2000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -4839,7 +4800,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=2000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -4858,7 +4819,7 @@
 }
 [gear_u4commander_torpedo]
 {
-	name=Torpedo;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_torpedo;
@@ -4940,7 +4901,7 @@
 }
 [gear_u1commander_torpedo]
 {
-	name=Guided Torpedo;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_torpedo;
@@ -4957,6 +4918,7 @@
 	soundstart=torpedo2;
 	soundhit=xplodep3;
 	tracks=1;
+	turnrate=16000;
 	waterweapon=1;
 	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
 	InterceptedByShieldType=1;
@@ -5002,7 +4964,7 @@
   	separation=0.0;
   	alphadecay=0.8;
   	sizedecay=-0.11;
-	tolerance=2000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -5035,7 +4997,7 @@
 	soundstart=canlite3;
 	soundhit=xplomed2;
 	commandfire=1;
-	tolerance=2000;
+	tolerance=3000;
 	startvelocity=300;
 	weaponAcceleration=50;
 	turnrate=32000;
@@ -5094,7 +5056,7 @@
 }
 [gear_u2commander_torpedo]
 {
-	name=Guided Torpedo;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_torpedo;
@@ -5111,6 +5073,7 @@
 	soundstart=torpedo2;
 	soundhit=xplodep3;
 	tracks=1;
+	turnrate=16000;
 	waterweapon=1;
 	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
 	InterceptedByShieldType=1;
@@ -5139,7 +5102,7 @@
 	areaofeffect=100;
 	soundstart=canlite2;
 	soundhit=xploflak1;
-	tolerance=2000;
+	tolerance=3000;
 	burnblow=1;
 	explosiongenerator=custom:FLAKBLASTWRAPPER;
 	size=2;
@@ -5225,7 +5188,7 @@
 	pulsespeed=0;
 	rgbcolor=0.0 0.61 0.0;
 	rgbcolor2=0.5 1.0 0.5;
-	tolerance=2000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -5282,7 +5245,7 @@
 }
 [gear_u3commander_torpedo]
 {
-	name=Guided Torpedo;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_torpedo;
@@ -5299,6 +5262,7 @@
 	soundstart=torpedo2;
 	soundhit=xplodep3;
 	tracks=1;
+	turnrate=16000;
 	waterweapon=1;
 	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
 	InterceptedByShieldType=1;
@@ -5413,7 +5377,7 @@
 	movingaccuracy=1200;
 	soundstart=cannon3;
 	soundhit=xplomed2;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -5742,7 +5706,7 @@
 	soundhit=xplodep2;
 	tracks=1;
 	waterweapon=1;
-	tolerance=1000;
+	tolerance=4000;
 	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
 	WaterBounce=0;
 	InterceptedByShieldType=1;
@@ -5814,7 +5778,7 @@
 	soundhit=xplodep2;
 	tracks=1;
 	waterweapon=1;
-	tolerance=1000;
+	tolerance=4000;
 	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -5854,7 +5818,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=1000;
+	tolerance=4000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -6080,7 +6044,7 @@
 	firestarter=50;
 	accuracy=40;
 	targetmoveerror=0.2;
-	tolerance=2000;
+	tolerance=3000;
 	edgeeffectiveness=0.1;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -6139,7 +6103,7 @@
 	reloadtime=1.2;
 	weaponvelocity=1533;
 	explosiongenerator=custom:REDLASERBLASTWRAPPER;
-	tolerance=2000;
+	tolerance=3000;
 	beamtime=0.1;
 	thickness=2.01;
 	corethickness=0.6;
@@ -6154,7 +6118,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=2000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -6181,7 +6145,7 @@
 	reloadtime=0.75;
 	weaponvelocity=1533;
 	explosiongenerator=custom:REDLASERBLASTWRAPPER;
-	tolerance=2000;
+	tolerance=3000;
 	beamtime=0.1;
 	thickness=2.01;
 	corethickness=0.6;
@@ -6196,7 +6160,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=2000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -6224,7 +6188,7 @@
 	reloadtime=1.8;
 	weaponvelocity=1533;
 	explosiongenerator=custom:REDLASERBLASTWRAPPER;
-	tolerance=2000;
+	tolerance=3000;
 	beamtime=0.1;
 	thickness=2.01;
 	corethickness=0.6;
@@ -6239,7 +6203,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=2000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -6266,7 +6230,7 @@
 	reloadtime=2;
 	weaponvelocity=1533;
 	explosiongenerator=custom:REDLASERBLASTWRAPPER;
-	tolerance=2000;
+	tolerance=3000;
 	beamtime=0.1;
 	thickness=2.01;
 	corethickness=0.6;
@@ -6281,7 +6245,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=2000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -6308,7 +6272,7 @@
 	reloadtime=1.3;
 	weaponvelocity=1533;
 	explosiongenerator=custom:REDLASERBLASTWRAPPER;
-	tolerance=2000;
+	tolerance=3000;
 	beamtime=0.1;
 	thickness=2.01;
 	corethickness=0.6;
@@ -6323,7 +6287,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=2000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -6350,7 +6314,7 @@
 	reloadtime=1;
 	weaponvelocity=1533;
 	explosiongenerator=custom:REDLASERBLASTWRAPPER;
-	tolerance=2000;
+	tolerance=3000;
 	beamtime=0.1;
 	thickness=2.01;
 	corethickness=0.6;
@@ -6365,7 +6329,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=2000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -6392,7 +6356,7 @@
 	reloadtime=1.2;
 	weaponvelocity=1533;
 	explosiongenerator=custom:REDLASERBLASTWRAPPER;
-	tolerance=2000;
+	tolerance=3000;
 	beamtime=0.1;
 	thickness=2.01;
 	corethickness=0.6;
@@ -6436,7 +6400,7 @@
 	areaofeffect=64;
 	soundstart=cannon3;
 	soundhit=xplomed2;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -6476,7 +6440,7 @@
   	sizedecay=-0.1;
 	soundstart=cannon3;
 	soundhit=xplomed2;
-	tolerance=2000;
+	tolerance=3000;
 	accuracy=500;
 	movingaccuracy=1000;
 	InterceptedByShieldType=1;
@@ -6611,7 +6575,7 @@
 	areaofeffect=64;
 	soundstart=cannon3;
 	soundhit=xplomed2;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -6647,7 +6611,7 @@
 	soundhit=xplomed2;
 	accuracy=400;
 	movingaccuracy=800;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.4;
 	rgbcolor=0.9 0.7 0.3;
 	stages=4;
@@ -6683,7 +6647,7 @@
 	areaofeffect=48;
 	soundstart=cannon1;
 	soundhit=xplomed3;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -6914,7 +6878,7 @@
 	areaofeffect=95;
 	soundstart=cannhvy5;
 	soundhit=xplomed2;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.4;
 	rgbcolor=0.9 0.7 0.3;
 	stages=4;
@@ -6948,7 +6912,7 @@
 	areaofeffect=155;
 	soundstart=canlite2;
 	soundhit=xploflak1;
-	tolerance=2000;
+	tolerance=3000;
 	burnblow=1;
 	explosiongenerator=custom:FLAKBLASTWRAPPER;
 	size=2;
@@ -7278,7 +7242,7 @@
 	areaofeffect=140;
 	soundstart=canlite2;
 	soundhit=xploflak1;
-	tolerance=2000;
+	tolerance=3000;
 	burnblow=1;
 	explosiongenerator=custom:FLAKBLASTWRAPPER;
 	size=2;
@@ -7314,7 +7278,7 @@
 	areaofeffect=140;
 	soundstart=canlite2;
 	soundhit=xploflak1;
-	tolerance=2000;
+	tolerance=3000;
 	burnblow=1;
 	explosiongenerator=custom:FLAKBLASTWRAPPER;
 	size=2;
@@ -7350,7 +7314,7 @@
 	areaofeffect=120;
 	soundstart=canlite2;
 	soundhit=xploflak1;
-	tolerance=2000;
+	tolerance=3000;
 	burnblow=1;
 	explosiongenerator=custom:FLAKBLASTWRAPPER;
 	size=2;
@@ -7480,7 +7444,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=2000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -7545,7 +7509,7 @@
 	areaofeffect=48;
 	soundstart=cannon2;
 	soundhit=xplomed4;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -7627,7 +7591,7 @@
 	pulsespeed=0;
 	rgbcolor=0.0 0.61 0.0;
 	rgbcolor2=0.5 1.0 0.5;
-	tolerance=2000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -7666,7 +7630,7 @@
 	pulsespeed=0;
 	rgbcolor=0.0 0.61 0.0;
 	rgbcolor2=0.5 1.0 0.5;
-	tolerance=2000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -8569,7 +8533,7 @@
 	weaponvelocity=999;
 	areaofeffect=120;
 	soundhit=burn1;
-	tolerance=2000;
+	tolerance=3000;
 	burnblow=1;
 	explosiongenerator=custom:fireaoe;
 	size=2;
@@ -8612,7 +8576,7 @@
 	weaponvelocity=999;
 	areaofeffect=240;
 	soundhit=burn1;
-	tolerance=2000;
+	tolerance=3000;
 	burnblow=1;
 	explosiongenerator=custom:fireaoebig;
 	size=2;
@@ -8853,7 +8817,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -8892,7 +8856,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -8932,7 +8896,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -8973,7 +8937,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -9019,7 +8983,7 @@
 	soundhit=xplosml2;
 	firestarter=70;
 	smoketrail=0;
-	tolerance=1000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -9631,7 +9595,7 @@
 	soundhit=xplomed2;
 	firestarter=70;
 	smoketrail=0;
-	tolerance=2000;
+	tolerance=3000;
 	CollideFriendly=0;
 	tracks=1;
 	InterceptedByShieldType=1;
@@ -9673,7 +9637,7 @@
 	soundhit=xplomed2;
 	firestarter=70;
 	smoketrail=0;
-	tolerance=2000;
+	tolerance=3000;
 	CollideFriendly=0;
 	tracks=0;
 	InterceptedByShieldType=1;
@@ -10516,7 +10480,7 @@
 	areaofeffect=85;
 	soundstart=CANNHVY1;
 	soundhit=xplomed2;
-	tolerance=2000;
+	tolerance=3000;
 	accuracy=400;
 	movingaccuracy=800;
 	size=3.4;
@@ -10651,7 +10615,7 @@
 	soundhit=xplosml2;
 	firestarter=70;
 	smoketrail=0;
-	tolerance=1000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -10692,7 +10656,7 @@
 	soundhit=xplosml2;
 	firestarter=70;
 	smoketrail=0;
-	tolerance=1000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -11140,7 +11104,7 @@
 	pulsespeed=0;
 	rgbcolor=0.4 0.3 1.0;
 	rgbcolor2=0.1 0.3 1.0;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -11183,7 +11147,7 @@
 	pulsespeed=0;
 	rgbcolor=0.6 0.8 1.0;
 	rgbcolor2=0.1 0.3 1.0;
-	tolerance=1000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -11223,7 +11187,7 @@
 	commandfire=1;
 	rgbcolor=0.0 0.0 0.0;
 	rgbcolor2=0.0 0.0 0.0;
-	tolerance=1000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -11240,7 +11204,7 @@
 }
 [claw_commander_torpedo]
 {
-	name=Unguided Torpedo;
+	name=Unguided Torpedoes;
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_smltorpedo;
@@ -11295,7 +11259,7 @@
 	pulsespeed=0;
 	rgbcolor=0.4 0.3 1.0;
 	rgbcolor2=0.1 0.3 1.0;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -11335,7 +11299,7 @@
 	pulsespeed=0;
 	rgbcolor=0.5 0.4 1.0;
 	rgbcolor2=0.1 0.3 1.0;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -11353,7 +11317,7 @@
 }
 [claw_u4commander_torpedo]
 {
-	name=Torpedo;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_smltorpedo;
@@ -11412,7 +11376,7 @@
 	commandfire=1;
 	rgbcolor=0.0 0.0 0.0;
 	rgbcolor2=0.0 0.0 0.0;
-	tolerance=1000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -11429,7 +11393,7 @@
 }
 [claw_u1commander_torpedo]
 {
-	name=Unguided Torpedo;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_smltorpedo;
@@ -11439,9 +11403,12 @@
 	weapontimer=10;
 	FlightTime=1.5;
 	submissile=1;
+	tracks=1;
+	turnrate=12000;
 	weaponvelocity=250;
 	startvelocity=250;
 	weaponAcceleration=33;
+	areaofeffect=40;
 	soundstart=torpedo2;
 	soundhit=xplodep3;
 	waterweapon=1;
@@ -11459,6 +11426,43 @@
 		armor_heavy=270;//#AUTO#
 		armor_medium=270;//#AUTO#
 		armor_light=270;//#AUTO#
+	}
+}
+[claw_u6commander_torpedo]
+{
+	name=Torpedoes;
+	weapontype=TorpedoLauncher;
+	CollideFriendly=1;
+	model=weapon_torpedo;
+	range=400;
+	reloadtime=2.5;
+	turret=1;
+	weapontimer=10;
+	FlightTime=1.5;
+	submissile=1;
+	tracks=1;
+	turnrate=12000;
+	weaponvelocity=250;
+	startvelocity=250;
+	weaponAcceleration=33;
+	areaofeffect=64;
+	soundstart=torpedo2;
+	soundhit=xplodep3;
+	waterweapon=1;
+	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=400;
+		group_invincible=1;
+		armor_heavy=400;//#AUTO#
+		armor_medium=400;//#AUTO#
+		armor_light=400;//#AUTO#
 	}
 }
 [claw_u2commander_missile]
@@ -11526,7 +11530,7 @@
 	areaofeffect=50;
 	soundstart=MISLHVY3;
 	soundhit=xplomed2;
-	tolerance=2000;
+	tolerance=3000;
 	startvelocity=300;
 	weaponAcceleration=50;
 	InterceptedByShieldType=1;
@@ -11545,7 +11549,7 @@
 }
 [claw_u2commander_torpedo]
 {
-	name=Unguided Torpedo;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_smltorpedo;
@@ -11554,9 +11558,12 @@
 	turret=1;
 	FlightTime=1.5;
 	submissile=1;
+	tracks=1;
+	turnrate=12000;
 	weaponvelocity=250;
 	startvelocity=250;
 	weaponAcceleration=33;
+	areaofeffect=40;
 	soundstart=torpedo2;
 	soundhit=xplodep3;
 	waterweapon=1;
@@ -11601,7 +11608,7 @@
 	soundstart=krogun1;
 	soundhit=xplolrg2;
 	soundtrigger=1;
-	tolerance=2000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -11641,7 +11648,7 @@
 	commandfire=1;
 	rgbcolor=0.0 0.0 0.0;
 	rgbcolor2=0.0 0.0 0.0;
-	tolerance=1000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -11658,10 +11665,12 @@
 }
 [claw_u3commander_torpedo]
 {
-	name=Fast Torpedo;
+	name=Fast Torpedoes;
 	weapontype=TorpedoLauncher;
 	model=weapon_fasttorpedo;
 	range=600;
+	tracks=1;
+	turnrate=16000;
 	reloadtime=4;
 	turret=1;
 	weapontimer=2;
@@ -11692,10 +11701,12 @@
 }
 [claw_u5commander_torpedo]
 {
-	name=Fast Torpedo;
+	name=Fast Torpedoes;
 	weapontype=TorpedoLauncher;
 	model=weapon_fasttorpedo;
 	range=620;
+	tracks=1;
+	turnrate=16000;
 	reloadtime=4;
 	turret=1;
 	weapontimer=2;
@@ -11745,7 +11756,7 @@
 	firestarter=70;
 	trajectoryheight=0.1;
 	smoketrail=0;
-	tolerance=1000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -11786,7 +11797,7 @@
 	firestarter=70;
 	trajectoryheight=0.1;
 	smoketrail=0;
-	tolerance=1000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	avoidGround=1;
@@ -12073,7 +12084,7 @@
 	soundstart=krogun1;
 	soundhit=xplolrg2;
 	soundtrigger=1;
-	tolerance=2000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -12360,7 +12371,7 @@
 	soundstart=krogun1;
 	soundhit=xplolrg2;
 	soundtrigger=1;
-	tolerance=2000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -12400,7 +12411,7 @@
 	soundstart=railgunsml;
 	soundhit=railgunhitsml;
 	soundtrigger=1;
-	tolerance=2000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -12440,7 +12451,7 @@
 	soundstart=krogun1;
 	soundhit=xplolrg2;
 	soundtrigger=1;
-	tolerance=2000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -12480,7 +12491,7 @@
 	soundstart=railgunsml;
 	soundhit=railgunhitsml;
 	soundtrigger=1;
-	tolerance=2000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -12520,7 +12531,7 @@
 	soundstart=railgunsml;
 	soundhit=railgunhitsml;
 	soundtrigger=1;
-	tolerance=2000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -12561,7 +12572,7 @@
 	soundstart=railgunbig;
 	soundhit=xplonuk1;
 	soundtrigger=1;
-	tolerance=2000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -12734,6 +12745,47 @@
 		armor_light=30;//#AUTO#
 	}
 }
+[claw_u6commander_shotgun]
+{
+	name=Shotgun;
+	weapontype=Cannon;
+	explosiongenerator=custom:railgunblastsml;
+  	nogap=0;
+	intensity=1;
+	size=1.0;
+	rgbcolor=0.1 0.1 0.1;
+	stages=2;
+  	separation=0.5;
+  	alphadecay=0.0;
+  	sizedecay=-0.2;
+	energypershot=7;
+	turret=1;
+	range=430;
+	reloadtime=2.7;
+	accuracy=0;
+	sprayangle=900;
+	projectiles=15;
+	weapontimer=0.7;
+	weaponvelocity=1032;
+	areaofeffect=8;
+	soundstart=shotgun;
+	soundtrigger=0;
+	soundhit=comfire1;
+	tolerance=1500;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=1;
+	}
+	[DAMAGE]
+	{
+		default=30;
+		armor_heavy=7;//#AUTO#
+		armor_medium=15;//#AUTO#
+		armor_light=30;//#AUTO#
+	}
+}
 [claw_sinker_depthcharge]
 {
 	name=Depth Charge;
@@ -12752,7 +12804,7 @@
 	soundhit=xplodep2;
 	tracks=1;
 	waterweapon=1;
-	tolerance=1000;
+	tolerance=3000;
 	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -12823,7 +12875,7 @@
 	areaofeffect=8;
 	soundtrigger=1;
 	soundstart=lasercutter;
-	soundhit=lasrhit2;
+	soundhit=lasrhit2_short;
 	firestarter=50;
 	scrollspeed=0;
 	pulsespeed=0;
@@ -12843,6 +12895,47 @@
 		armor_heavy=2;//#AUTO#
 		armor_medium=5;//#AUTO#
 		armor_light=10;//#AUTO#
+	}
+}
+[claw_u6commander_laser]
+{
+	name=Laser Cutter;
+	weapontype=BeamLaser;
+	explosiongenerator=custom:BLUELASERBLASTWRAPPER;
+	intensity=0.85;
+	beamtime=0.3;
+	thickness=3.31;
+	corethickness=0.5;
+	turret=1;
+	range=320;
+	accuracy=100;
+	energypershot=150;
+	minintensity=0.7;
+	reloadtime=0.6;
+	weaponvelocity=1533;
+	areaofeffect=8;
+	soundtrigger=1;
+	soundstart=lasercutter2;
+	soundhit=lasrhit2;
+	firestarter=50;
+	scrollspeed=0;
+	pulsespeed=0;
+	rgbcolor=0.5 0.5 0.5;
+	rgbcolor2=1.0 0.8 1.0;
+	tolerance=10000;
+	impulsefactor=0.0222;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=2;
+	}
+	[DAMAGE]
+	{
+		default=340;
+		armor_heavy=170;//#AUTO#
+		armor_medium=340;//#AUTO#
+		armor_light=340;//#AUTO#
 	}
 }
 [claw_grunt_laser]
@@ -12868,7 +12961,7 @@
 	pulsespeed=0;
 	rgbcolor=0.1 0.1 0.71;
 	rgbcolor2=0.51 0.51 1.0;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -12946,7 +13039,7 @@
 	pulsespeed=0;
 	rgbcolor=0.1 0.1 0.71;
 	rgbcolor2=0.51 0.51 1.0;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -13136,7 +13229,7 @@
 	areaofeffect=48;
 	soundstart=cannon1;
 	soundhit=xplomed3;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -13171,7 +13264,7 @@
 	areaofeffect=48;
 	soundstart=cannon1;
 	soundhit=xplomed3;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -13206,7 +13299,7 @@
 	movingaccuracy=600;
 	soundstart=cannon3;
 	soundhit=xplomed2;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -13240,7 +13333,7 @@
 	areaofeffect=48;
 	soundstart=canlite3;
 	soundhit=xplomed3;
-	tolerance=2000;
+	tolerance=3000;
 	size=2.5;
 	rgbcolor=0.7 0.5 0.2;
 	stages=3;
@@ -13275,7 +13368,7 @@
 	areaofeffect=48;
 	soundstart=cannon1;
 	soundhit=xplomed3;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -13309,7 +13402,7 @@
 	areaofeffect=48;
 	soundstart=cannon1;
 	soundhit=xplomed3;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -13499,7 +13592,7 @@
 	pulsespeed=0;
 	rgbcolor=0.5 0.4 1.0;
 	rgbcolor2=0.1 0.3 1.0;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -13539,7 +13632,7 @@
 	pulsespeed=0;
 	rgbcolor=0.5 0.4 1.0;
 	rgbcolor2=0.1 0.3 1.0;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -13579,7 +13672,7 @@
 	pulsespeed=0;
 	rgbcolor=0.5 0.4 1.0;
 	rgbcolor2=0.1 0.3 1.0;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -13619,7 +13712,7 @@
 	pulsespeed=0;
 	rgbcolor=0.5 0.4 1.0;
 	rgbcolor2=0.1 0.3 1.0;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -13659,7 +13752,7 @@
 	pulsespeed=0;
 	rgbcolor=0.5 0.4 1.0;
 	rgbcolor2=0.1 0.3 1.0;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -13771,7 +13864,7 @@
 	soundhit=xplodep2;
 	tracks=1;
 	waterweapon=1;
-	tolerance=1000;
+	tolerance=3000;
 	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -13847,7 +13940,7 @@
 	pulsespeed=0;
 	rgbcolor=0.5 0.4 1.0;
 	rgbcolor2=0.1 0.3 1.0;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -13888,7 +13981,7 @@
 	soundstart=krogun1;
 	soundhit=xplolrg2;
 	soundtrigger=1;
-	tolerance=2000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -13958,7 +14051,7 @@
 	soundhit=xplomed2;
 	accuracy=600;
 	movingaccuracy=1200;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -14080,7 +14173,7 @@
 	soundhit=xplonuk1;
 	firestarter=50;
 	accuracy=250;
-	tolerance=2000;
+	tolerance=3000;
 	edgeeffectiveness=0.1;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -14120,7 +14213,7 @@
 	soundhit=xplonuk1;
 	firestarter=50;
 	accuracy=500;
-	tolerance=2000;
+	tolerance=3000;
 	edgeeffectiveness=0.1;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -14160,7 +14253,7 @@
 	soundhit=xplonuk1;
 	firestarter=50;
 	accuracy=400;
-	tolerance=2000;
+	tolerance=3000;
 	edgeeffectiveness=0.1;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -14417,7 +14510,7 @@
 	pulsespeed=0;
 	rgbcolor=1.0 1.0 1.0;
 	rgbcolor2=1.0 0.0 0.0;
-	tolerance=2000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -14436,7 +14529,7 @@
 }
 [sphere_commander_torpedo]
 {
-	name=Unguided Torpedo;
+	name=Unguided Torpedoes;
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_torpedo;
@@ -14470,7 +14563,7 @@
 }
 [sphere_u4commander_torpedo]
 {
-	name=Torpedo;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_torpedo;
@@ -14506,7 +14599,7 @@
 }
 [sphere_u1commander_torpedo]
 {
-	name=Torpedo;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_torpedo;
@@ -14543,7 +14636,7 @@
 }
 [sphere_u2commander_torpedo]
 {
-	name=Torpedo;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_torpedo;
@@ -14580,7 +14673,7 @@
 }
 [sphere_u3commander_torpedo]
 {
-	name=Torpedo;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_torpedo;
@@ -14617,7 +14710,7 @@
 }
 [sphere_u5commander_torpedo]
 {
-	name=Torpedo;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_torpedo;
@@ -14666,7 +14759,7 @@
 	soundhit=xplomed2;
 	accuracy=400;
 	movingaccuracy=800;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -14706,7 +14799,7 @@
 	soundhit=xplodep2;
 	tracks=1;
 	waterweapon=1;
-	tolerance=1000;
+	tolerance=3000;
 	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -14748,7 +14841,7 @@
 	soundstart=engcannon;
 	soundhit=xplomed5;
 	soundtrigger=1;
-	tolerance=2000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -14986,7 +15079,7 @@
 	soundhit=xplodep1;
 	tracks=1;
 	waterweapon=1;
-	tolerance=1000;
+	tolerance=3000;
 	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
 	WaterBounce=0;
 	InterceptedByShieldType=1;
@@ -15018,7 +15111,7 @@
 	areaofeffect=48;
 	soundstart=cannon1;
 	soundhit=xplomed3;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -15053,7 +15146,7 @@
 	areaofeffect=48;
 	soundstart=cannon1;
 	soundhit=xplomed3;
-	tolerance=2000;
+	tolerance=3000;
 	size=2;
 	rgbcolor=0.8 0.4 0.2;
 	stages=5;
@@ -15097,7 +15190,7 @@
 	pulsespeed=0;
 	rgbcolor=0.8 0.6 0.2;
 	rgbcolor2=1 0.8 0.4;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -15136,7 +15229,7 @@
 	pulsespeed=0;
 	rgbcolor=0.8 0.6 0.2;
 	rgbcolor2=1 0.8 0.4;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -15214,7 +15307,7 @@
 	pulsespeed=0;
 	rgbcolor=0.8 0.6 0.2;
 	rgbcolor2=1 0.8 0.4;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -15330,7 +15423,7 @@
 	soundstart=engcannon;
 	soundhit=xplomed5;
 	soundtrigger=1;
-	tolerance=2000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -15585,7 +15678,7 @@
 	soundstart=engcannon;
 	soundhit=xplomed5;
 	soundtrigger=1;
-	tolerance=2000;
+	tolerance=3000;
 	energypershot=15;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -15625,7 +15718,7 @@
 	soundstart=engcannon;
 	soundhit=xplomed5;
 	soundtrigger=1;
-	tolerance=2000;
+	tolerance=3000;
 	energypershot=15;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -15707,7 +15800,7 @@
 	soundstart=phofir00;
 	soundhit=xplochargedshot;
 	soundtrigger=1;
-	tolerance=1000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -15831,7 +15924,7 @@
 	soundstart=phofir00;
 	soundhit=xplochargedshot;
 	soundtrigger=1;
-	tolerance=2000;
+	tolerance=3000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -15946,7 +16039,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=2000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -15985,7 +16078,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=2000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -16024,7 +16117,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=2000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -16063,7 +16156,7 @@
 	areaofeffect=90;
 	soundstart=MISLHVY3;
 	soundhit=xplomed2;
-	tolerance=2000;
+	tolerance=3000;
 	startvelocity=300;
 	weaponAcceleration=50;
 	InterceptedByShieldType=1;
@@ -16136,7 +16229,7 @@
 	areaofeffect=48;
 	soundstart=cannon2;
 	soundhit=xplomed4;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -16169,7 +16262,7 @@
 	areaofeffect=64;
 	soundstart=cannon3;
 	soundhit=xplomed2;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -16202,7 +16295,7 @@
 	areaofeffect=64;
 	soundstart=cannon3;
 	soundhit=xplomed2;
-	tolerance=2000;
+	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -16403,7 +16496,7 @@
 	pulsespeed=0;
 	rgbcolor=0.8 0.6 0.2;
 	rgbcolor2=1 0.8 0.4;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -16443,7 +16536,7 @@
 	pulsespeed=0;
 	rgbcolor=0.8 0.6 0.2;
 	rgbcolor2=1 0.8 0.4;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -16483,7 +16576,7 @@
 	pulsespeed=0;
 	rgbcolor=0.8 0.6 0.2;
 	rgbcolor2=1 0.8 0.4;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -16523,7 +16616,7 @@
 	pulsespeed=0;
 	rgbcolor=0.8 0.6 0.2;
 	rgbcolor2=1 0.8 0.4;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -16612,7 +16705,7 @@
 	areaofeffect=90;
 	soundstart=MISLHVY3;
 	soundhit=xplomed2;
-	tolerance=2000;
+	tolerance=3000;
 	startvelocity=300;
 	weaponAcceleration=50;
 	InterceptedByShieldType=1;
@@ -16650,7 +16743,7 @@
 	areaofeffect=90;
 	soundstart=MISLHVY3;
 	soundhit=xplomed2;
-	tolerance=2000;
+	tolerance=3000;
 	startvelocity=300;
 	weaponAcceleration=50;
 	InterceptedByShieldType=1;
@@ -16775,7 +16868,7 @@
 	pulsespeed=0;
 	rgbcolor=0.8 0.6 0.2;
 	rgbcolor2=1 0.8 0.4;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -16815,7 +16908,7 @@
 	pulsespeed=0;
 	rgbcolor=0.8 0.6 0.2;
 	rgbcolor2=1 0.8 0.4;
-	tolerance=1000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -16854,7 +16947,7 @@
 	pulsespeed=0;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
-	tolerance=2000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -17271,7 +17364,7 @@
 	firestarter=50;
 	accuracy=30;
 	targetmoveerror=0.2;
-	tolerance=2000;
+	tolerance=3000;
 	edgeeffectiveness=0.1;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -17755,7 +17848,7 @@
 	pulsespeed=0;
 	rgbcolor=1.0 1.0 1.0;
 	rgbcolor2=1.0 0.0 0.0;
-	tolerance=2000;
+	tolerance=3000;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;

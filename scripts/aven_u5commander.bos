@@ -12,6 +12,7 @@ static-var  bMoving, bBuilding, bDgunning,bAiming, Static_Var_6, bUnderwater, ca
 
 // signal definition
 #define SIG_AIM		2
+#define SIG_AIM2	4
 
 lua_cobDebug() { return 0; }
 
@@ -1121,7 +1122,9 @@ QueryNanoPiece(piecenum)
 
 RestorePosition()
 {
-	bDgunning = 0;
+	set-signal-mask SIG_AIM;
+	set-signal-mask SIG_AIM2;
+	bDgunning = FALSE;
 	sleep RESTORE_DELAY;
 	turn torso to y-axis <0.000000> speed <290.000000>;
 	turn ruparm to x-axis <0.000000> speed <245.000000>;
@@ -1231,8 +1234,8 @@ QueryTertiary(piecenum)
 
 AimTertiary(heading, pitch)
 {
-	//signal SIG_AIM;
-	set-signal-mask SIG_AIM;
+	signal SIG_AIM2;
+	set-signal-mask SIG_AIM2;
 	bAiming = TRUE;
 	//bDgunning = TRUE;
 	turn torso to y-axis heading speed <500.093407>;

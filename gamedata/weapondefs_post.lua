@@ -92,4 +92,11 @@ for wdName, wd in pairs(WeaponDefs) do
 			wd.weapontype = "Cannon"
 		end
 	end
+	
+	-- force unit to retry the aim animation more often 
+	-- without this it would only run twice per second (?)
+	--wd.allownonblockingaim = true
+	if (wd.tolerance ~= nil and wd.range ~= nil) then
+		wd.firetolerance = wd.tolerance
+	end
 end

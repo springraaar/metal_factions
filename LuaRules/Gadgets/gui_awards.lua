@@ -29,7 +29,7 @@ local AWARD_TEXT = {
 
 local AWARD_OTHERS = AWARD_OFFSET+7
 
-local COMMANDER_XP_AWARD_THRESHOLD = 0.5 -- between III and IV on the converted scale
+local COMMANDER_XP_AWARD_THRESHOLD = 0.4 -- between III and IV on the converted scale
 local EFFICIENCY_AWARD_THRESHOLD = 1.0
 
 -------------------------------------------------- SYNCED CODE
@@ -278,7 +278,6 @@ function gadget:GameOver(winningAllyTeams)
 		--Spring.Echo('team '..tostring(teamID)..' killed '..teamInfo[teamID].killValue)
 	end
 	
-	
 	--award awards
 	local ecoKillAward, ecoKillAwardSec, ecoKillAwardThi, ecoKillScore, ecoKillScoreSec, ecoKillScoreThi = -1,-1,-1,0,0,0
 	local fightKillAward, fightKillAwardSec, fightKillAwardThi, fightKillScore, fightKillScoreSec, fightKillScoreThi = -1,-1,-1,0,0,0
@@ -381,6 +380,7 @@ function gadget:GameOver(winningAllyTeams)
 	end	
 
 
+	local winnersUndetermined = (next(winningAllyTeams) == nil)
 	
 	--tell unsynced
 	SendToUnsynced("ReceiveAwards", ecoKillAward, ecoKillAwardSec, ecoKillAwardThi, ecoKillScore, ecoKillScoreSec, ecoKillScoreThi, 
@@ -389,7 +389,7 @@ function gadget:GameOver(winningAllyTeams)
 									comAward, comAwardSec, comAwardThi, comScore, comScoreSec, comScoreThi,
 									ecoAward, ecoScore, 
 									dmgRecAward, dmgRecScore, 
-									sleepAward, sleepScore)
+									sleepAward, sleepScore, winnersUndetermined)
 	
 	--Spring.Echo("awards sent to unsynced")
 end
@@ -550,7 +550,7 @@ function formatForParser(num)
 end
 
 -- message with the status for each team and player to show in chat logs
-function generateEndGameMessage(ecoKillAward,ecoKillScore,fightKillAward,fightKillScore,effKillAward,effKillScore,comAward,comScore)
+function generateEndGameMessage(ecoKillAward,ecoKillScore,fightKillAward,fightKillScore,effKillAward,effKillScore,comAward,comScore,winnersUndetermined)
 
 	local statusMsg = '-------------------------------------------\n'
 	for _,allyId in pairs(Spring.GetAllyTeamList()) do
@@ -566,12 +566,15 @@ function generateEndGameMessage(ecoKillAward,ecoKillScore,fightKillAward,fightKi
 					winStatus = Spring.GetTeamRulesParam(teamId,'victory_status')
 				end
 				
-				local endType = ''
-				if teamId >= 0 and winStatus and winStatus == 1 then
-					endType = 'WIN'
-				elseif teamId >= 0 then
-				 	endType = 'LOSE'
+				local endType = 'undetermined'
+				if (not winnersUndetermined) then
+					if teamId >= 0 and winStatus and winStatus == 1 then
+						endType = 'WIN'
+					elseif teamId >= 0 then
+					 	endType = 'LOSE'
+					end
 				end
+				
 				statusMsg = statusMsg..' | '..endType
 				local gotAward = false
 				
@@ -619,13 +622,92 @@ function generateEndGameMessage(ecoKillAward,ecoKillScore,fightKillAward,fightKi
 	return statusMsg
 end
 
+
+-- message with the status for each team and player for replay analyzer
+-- TEAMN;AI;RESULT;FACTION;AWARDLIST (format is <AWARD1>!<SCORE1>:<AWARD2>!<SCORE2>:...)
+local PARSER_DELIMITER = "05.-P-097;05.-P-097;"
+local PARSER_SEPARATOR = ";"
+local PARSER_AWARD_SEPARATOR = ":"
+local PARSER_AWARD_SCORE_SEPARATOR = "!"
+function generateMFParserEndGameMessage(ecoKillAward,ecoKillScore,fightKillAward,fightKillScore,effKillAward,effKillScore,comAward,comScore,winnersUndetermined)
+	local message = '\n'..PARSER_DELIMITER..'\n'
+	for _,allyId in pairs(Spring.GetAllyTeamList()) do
+		local teams = Spring.GetTeamList(allyId)
+		
+		if #teams > 0 and teams[1] ~= Spring.GetGaiaTeamID() then
+			for _,teamId in pairs(teams) do
+				message = message..teamId
+				local winStatus = ''
+				local faction = ''
+				if (teamId >= 0) then
+					winStatus = Spring.GetTeamRulesParam(teamId,'victory_status')
+					faction = Spring.GetTeamRulesParam(teamId,'faction')
+				end
+
+				local endType = 'undetermined'
+				if (not winnersUndetermined and teamId >= 0) then
+					if winStatus and winStatus == 1 then
+						endType = 'win'
+					else
+					 	endType = 'lose'
+					end
+				end
+
+				local _,_, _, isAI, _,_ = Spring.GetTeamInfo(teamId)
+				message = message..PARSER_SEPARATOR..(isAI and 1 or 0)..PARSER_SEPARATOR..endType..PARSER_SEPARATOR..faction
+				local gotAward = false
+				
+				-- check if player won any of the awards
+				if ecoKillAward == teamId then
+					message = message..PARSER_SEPARATOR
+					message = message..'RAIDER'..PARSER_AWARD_SCORE_SEPARATOR..math.floor(ecoKillScore)
+					gotAward = true
+				end
+				if fightKillAward == teamId then
+					if gotAward then
+						message = message..PARSER_AWARD_SEPARATOR
+					else 
+						message = message..PARSER_SEPARATOR
+					end
+					gotAward = true
+					message = message..'DESTROYER'..PARSER_AWARD_SCORE_SEPARATOR..math.floor(fightKillScore)
+				end
+				if effKillAward == teamId and effKillScore > EFFICIENCY_AWARD_THRESHOLD then
+					if gotAward then
+						message = message..PARSER_AWARD_SEPARATOR
+					else
+						message = message..PARSER_SEPARATOR
+					end
+					gotAward = true
+					message = message..'EFFICIENCY'..PARSER_AWARD_SCORE_SEPARATOR..getEffStr(round(effKillScore,2))
+				end
+				if comAward == teamId and comScore > COMMANDER_XP_AWARD_THRESHOLD then
+					if gotAward then
+						message = message..PARSER_AWARD_SEPARATOR
+					else
+						message = message..PARSER_SEPARATOR
+					end
+					gotAward = true
+					message = message..'COMMANDER'..PARSER_AWARD_SCORE_SEPARATOR..getXPStr(comScore,true)
+				end
+				--Spring.Echo("winner team "..teamId)
+				
+				message = message..'\n'
+			end		
+		end
+	end
+	message = message..PARSER_DELIMITER
+	
+	return message
+end
+
 function ProcessAwards(_,ecoKillAward, ecoKillAwardSec, ecoKillAwardThi, ecoKillScore, ecoKillScoreSec, ecoKillScoreThi, 
 						fightKillAward, fightKillAwardSec, fightKillAwardThi, fightKillScore, fightKillScoreSec, fightKillScoreThi, 
 						effKillAward, effKillAwardSec, effKillAwardThi, effKillScore, effKillScoreSec, effKillScoreThi,
 						comAward, comAwardSec, comAwardThi, comScore, comScoreSec, comScoreThi, 
 						ecoAward, ecoScore, 
 						dmgRecAward, dmgRecScore, 
-						sleepAward, sleepScore)
+						sleepAward, sleepScore,winnersUndetermined)
 
 	--fix geometry
 	vsx,vsy = Spring.GetViewGeometry()
@@ -642,7 +724,7 @@ function ProcessAwards(_,ecoKillAward, ecoKillAwardSec, ecoKillAwardThi, ecoKill
 	local commanderLine    = ''
   
 	-- create awards
-	CreateBackground()
+	CreateBackground(winnersUndetermined)
 	local awardOffset = 100
 	if ecoKillAward > -1 then
 		table.insert(awardList,CreateAward('award_ecodmg',0,AWARD_TEXT[AWARD_ECODMG], white, ecoKillAward, ecoKillAwardSec, ecoKillAwardThi, ecoKillScore, ecoKillScoreSec, ecoKillScoreThi, awardOffset))
@@ -672,9 +754,12 @@ function ProcessAwards(_,ecoKillAward, ecoKillAwardSec, ecoKillAwardThi, ecoKill
 	Spring.SendLuaRulesMsg(awardsMsg)
 	
 	-- message with the status for each team and player to show in chat logs
-	local statusMsg = generateEndGameMessage(ecoKillAward,ecoKillScore,fightKillAward,fightKillScore,effKillAward,effKillScore,comAward,comScore)
+	local statusMsg = generateEndGameMessage(ecoKillAward,ecoKillScore,fightKillAward,fightKillScore,effKillAward,effKillScore,comAward,comScore,winnersUndetermined)
 	Spring.SendMessage(statusMsg)
 	Spring.SendLuaRulesMsg(statusMsg)
+
+	local mfParserMsg = generateMFParserEndGameMessage(ecoKillAward,ecoKillScore,fightKillAward,fightKillScore,effKillAward,effKillScore,comAward,comScore,winnersUndetermined)
+	Spring.SendLuaRulesMsg(mfParserMsg)
 	
 	drawAwards = true
 	
@@ -684,7 +769,7 @@ end
 
 
 
-function CreateBackground()	
+function CreateBackground(winnersUndetermined)	
 	if Background then
 		glDeleteList(Background)
 	end
@@ -693,16 +778,20 @@ function CreateBackground()
 		WG['guishader_api'].InsertRect(math.floor(bx), math.floor(by), math.floor(bx + w), math.floor(by + h),'awards')
 	end
 	
+	local victoryStatus = 0
+	local endType = ''
 	if (myTeamId >= 0) then
 		victoryStatus = Spring.GetTeamRulesParam(myTeamId,'victory_status')
 	end
-	
-	local endType = ''
 	--Spring.Echo('player team was '..myTeamId)
-	if myTeamId >= 0 and victoryStatus and victoryStatus == 1 then
-		endType = 'victory'
-	elseif myTeamId >= 0 then
-	 	endType = 'defeat'
+	if winnersUndetermined then
+		endType = 'undetermined'
+	else
+		if myTeamId >= 0 and victoryStatus and victoryStatus == 1 then
+			endType = 'victory'
+		elseif myTeamId >= 0 then
+		 	endType = 'defeat'
+		end
 	end
 	
 	Background = glCreateList(function()
@@ -753,6 +842,7 @@ function colourNames(teamID)
         end
 	return "\255"..string.char(R255)..string.char(G255)..string.char(B255) --works thanks to zwzsg
 end 
+
 
 
 function FindPlayerName(teamID)

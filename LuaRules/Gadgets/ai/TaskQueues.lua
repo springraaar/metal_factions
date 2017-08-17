@@ -2842,6 +2842,7 @@ taskqueues = {
 	claw_u3commander = clawUCommander,
 	claw_u4commander = clawUCommander,
 	claw_u5commander = clawUCommander,
+	claw_u6commander = clawUCommander,
 	claw_construction_kbot = clawLev1Con,
 	claw_construction_aircraft = clawLev1Con,
 	claw_construction_ship = clawLev1WaterCon,

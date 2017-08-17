@@ -3,14 +3,13 @@
         name      = "Reclaim flash",
         desc      = "Nice tree reclaim effect",
         author    = "Jools, based on gadget with same name by beherith, modified by raaar",
-        date      = "January 2012",
+        date      = "Aug 2017",
         license   = "PD",
         layer     = 3,
         enabled   = true,
       }
     end
 
--- modified by raaar in july 2013 to also display an effect when features are destroyed
      
 if (not gadgetHandler:IsSyncedCode()) then
   return
@@ -26,10 +25,12 @@ function gadget:FeatureDestroyed(featureID,allyteam)
 		rm, mm, re, me, rl = Spring.GetFeatureResources(featureID)
 		if (rm ~= nil) then
 			if me > mm and rl == 0 then
-				Spring.SpawnCEG(eceg, fx, fy, fz)
+				local radius = tonumber(Spring.GetFeatureRadius(featureID))
+				Spring.SpawnCEG(eceg, fx, fy, fz,0,1,0,radius,radius)
 				Spring.PlaySoundFile('Sounds/RECLAIM1.wav', 1, fx, fy, fz)
 			elseif mm >= me and rl == 0 then
-				Spring.SpawnCEG(mceg, fx, fy, fz)
+				local radius = tonumber(Spring.GetFeatureRadius(featureID))
+				Spring.SpawnCEG(mceg, fx, fy, fz,0,1,0,radius,radius)
 				Spring.PlaySoundFile('Sounds/RECLAIM1.wav', 1, fx, fy, fz)
 			else
 				local radius = tonumber(Spring.GetFeatureRadius(featureID))
