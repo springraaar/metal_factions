@@ -15,3 +15,4 @@ You're not allowed to redistribute modified versions of the game itself (CC-BY-N
 
 To learn more about the structure of the game package, consult the engine wiki: https://springrts.com/wiki/Gamedev:Structure.
 
+ 
