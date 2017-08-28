@@ -140,7 +140,7 @@ function gadget:UnitDestroyed(unitId, unitDefId, teamId)
 			-- check if commander was fully built, to prevent morph triggering this
 			local _,_,_,_,bp = Spring.GetUnitHealth(unitId)
 			
-			if bp > 0.99 then
+			if bp > 0.999 then
 				local bpx,bpy,bpz = Spring.GetUnitPosition(unitId)
 				markedWreckPositions[unitId] = {x=bpx,y=bpy,z=bpz,frame=GetGameFrame()}
 			end

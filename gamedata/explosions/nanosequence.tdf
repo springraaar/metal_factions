@@ -93,6 +93,42 @@
 	}
 }
 
+
+[NANOFRAMEBLASTPARTICLES]
+{
+	[nanoparticles]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0;
+			sizeMod=1.0;
+			pos=0, 6, 0;
+			emitVector=-0, 1, 0;
+			gravity=0, -0.015, 0;
+			colorMap=0.5 0.8 0.6 0.9    0.5 0.8 0.7 0.1    0.2 0.4 0.5 0.1   0.1 0.2 0.3 0.1   0.0 0.0 0.0 0.000;
+			Texture=diamondstar;
+			airdrag=0.9;
+			particleLife=45;
+			particleLifeSpread=25;
+			numParticles=1 d0.05;
+			particleSpeed=4 d0.03;
+			particleSpeedSpread=2 d0.02;
+			particleSize=2;
+			particleSizeSpread=1;
+			emitRot=0;
+			emitRotSpread=45;
+			directional=1;
+			alwaysVisible=0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		underwater=1;
+		unit=1;
+	}
+}
+
 [COMNANOSTREAM]
 {
 	[nanoparticles]
@@ -647,6 +683,66 @@
 			alpha=0.4;
 			alphadecay=0.006;
 			color=0.5, 0.5, 1.0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=10;
+		unit=1;
+	}
+}
+
+
+[NANOFRAMEBLAST]
+{
+	[_smoke]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=d3;explosionGenerator=custom:DYNSMOKE;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	
+	[nanoparticles] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=-1 r2 y0 d0.8 x0,0,-1 r2 y0 d0.8 x0;
+			//delay=i4 p1.2;
+			explosionGenerator=custom:NANOFRAMEBLASTPARTICLES;
+			damage=d1;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		underwater=1;
+		count=30;
+	}
+	[innerflash]
+	{
+		class=CSimpleGroundFlash;
+		[properties]
+		{
+			size = 10 d1;
+			sizeGrowth = 0.08;
+			texture=groundflash;
+	     		ttl = 40 d0.5;
+     			colormap = 0.5 1.0 0.5 0.5   0 0 0 0;
+		}
+		air=1;
+     		ground=1;
+	      	water=0;
+		underwater=1;
+		count=1;
+	}
+	[GLOW1]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 00, 0;
+			dir=-1 r2,-1 r2,-1 r2;
+			width=10 d1;
+			length=10 d1;
+			alpha=0.3 d0.002;
+			alphadecay=0.012;
+			color=0.5, 1.0, 0.5;
 
 		}
 		air=1;

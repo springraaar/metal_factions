@@ -29,7 +29,7 @@ local AWARD_TEXT = {
 
 local AWARD_OTHERS = AWARD_OFFSET+7
 
-local COMMANDER_XP_AWARD_THRESHOLD = 0.4 -- between III and IV on the converted scale
+local COMMANDER_XP_AWARD_THRESHOLD = 0.3 -- about II on the converted scale
 local EFFICIENCY_AWARD_THRESHOLD = 1.0
 
 -------------------------------------------------- SYNCED CODE
@@ -176,9 +176,10 @@ end
 function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDefID, attackerTeamID)
 	if (not unitDefID) or (not teamID) then return end
 
+	--Spring.Echo("attackerID="..tostring(attackerID).." attackerTeamID="..tostring(attackerTeamID))
 	local ud = UnitDefs[unitDefID]
 	local cost = getWeightedCost(ud.metalCost,ud.energyCost)
-	if (teamInfo[teamID]) then
+	if (teamInfo[teamID] and attackerID and attackerTeamID) then
 		teamInfo[teamID].lossValue = (teamInfo[teamID].lossValue or 0) + cost
 	end
 	if not attackerTeamID then return end
@@ -212,9 +213,8 @@ function gadget:UnitCreated(unitID, unitDefID, teamID, builderID)
     local ud = UnitDefs[unitDefID]
 	local cost = getWeightedCost(ud.metalCost,ud.energyCost)
     
-    if #(ud.weapons) > 0 and not ud.customParams.iscommander then
-        teamInfo[teamID].unitsCost = teamInfo[teamID].unitsCost + cost   
-    end
+    teamInfo[teamID].unitsCost = teamInfo[teamID].unitsCost + cost
+    
     --Spring.Echo(teamID, teamInfo[teamID].unitsCost)
 end
 
@@ -228,24 +228,19 @@ function gadget:UnitTaken(unitID, unitDefID, teamID, newTeam)
 	local ud = UnitDefs[unitDefID]
 	local cost = getWeightedCost(ud.metalCost,ud.energyCost)
 
-	teamInfo[newTeam].ecoUsed = teamInfo[newTeam].ecoUsed + cost 
-    if #(ud.weapons) > 0 then
-        teamInfo[teamID].unitsCost = teamInfo[teamID].unitsCost + cost   
-    end
+	teamInfo[newTeam].unitsCost = teamInfo[newTeam].unitsCost + cost 
 end
 
 
 function gadget:GameOver(winningAllyTeams)
 	--calculate average damage dealt
-	local avgTeamDmg = 0 
+	local avgKillValue = 0 
 	local numTeams = 0
 	for teamID,_ in pairs(teamInfo) do
-		local cur_max = Spring.GetTeamStatsHistory(teamID)
-		local stats = Spring.GetTeamStatsHistory(teamID, 0, cur_max)
-		avgTeamDmg = avgTeamDmg + stats[cur_max].damageDealt / coopInfo[teamID].players
+		avgKillValue = avgKillValue + teamInfo[teamID].killValue
 		numTeams = numTeams + 1
 	end
-	avgTeamDmg = avgTeamDmg / (math.max(1,numTeams))
+	avgKillValue = avgKillValue / (math.max(1,numTeams))
 	
 	--get other stuff from engine stats
 	for teamID,_ in pairs(teamInfo) do
@@ -254,7 +249,8 @@ function gadget:GameOver(winningAllyTeams)
 		teamInfo[teamID].dmgDealt = teamInfo[teamID].dmgDealt + stats[cur_max].damageDealt	
 		teamInfo[teamID].dmgRec = stats[cur_max].damageReceived
 		teamInfo[teamID].ecoUsed = teamInfo[teamID].ecoUsed + getWeightedCost(stats[cur_max].metalUsed,stats[cur_max].energyUsed)
-		if teamInfo[teamID].unitsCost > 1000 and teamInfo[teamID].dmgDealt >= 0.25 * avgTeamDmg then 
+		--Spring.Echo("TEAM"..teamID.." unitsCost="..teamInfo[teamID].unitsCost.." killValue="..teamInfo[teamID].killValue.." avgKillValue="..avgKillValue.." lossValue="..teamInfo[teamID].lossValue)
+		if teamID ~= gaiaTeamID and teamInfo[teamID].killValue >= 0.25 * avgKillValue then 
 			if teamInfo[teamID].lossValue > 0 then
 				teamInfo[teamID].dmgRatio = teamInfo[teamID].killValue / teamInfo[teamID].lossValue
 			else 
@@ -642,6 +638,9 @@ function generateMFParserEndGameMessage(ecoKillAward,ecoKillScore,fightKillAward
 				if (teamId >= 0) then
 					winStatus = Spring.GetTeamRulesParam(teamId,'victory_status')
 					faction = Spring.GetTeamRulesParam(teamId,'faction')
+					if (not faction) then
+						faction = select(5, Spring.GetTeamInfo(teamId))
+					end
 				end
 
 				local endType = 'undetermined'
@@ -688,7 +687,7 @@ function generateMFParserEndGameMessage(ecoKillAward,ecoKillScore,fightKillAward
 						message = message..PARSER_SEPARATOR
 					end
 					gotAward = true
-					message = message..'COMMANDER'..PARSER_AWARD_SCORE_SEPARATOR..getXPStr(comScore,true)
+					message = message..'COMMANDER'..PARSER_AWARD_SCORE_SEPARATOR..tostring(round(comScore,2))
 				end
 				--Spring.Echo("winner team "..teamId)
 				

@@ -19,9 +19,7 @@ if (not gadgetHandler:IsSyncedCode()) then
 end
 
 
-local spGetUnitHealth = Spring.GetUnitHealth
 local spAddUnitDamage = Spring.AddUnitDamage
-local spGetUnitHealth = Spring.GetUnitHealth
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitRadius = Spring.GetUnitRadius
 local spGetUnitDefID = Spring.GetUnitDefID
@@ -63,6 +61,8 @@ local waterCollisionCEG = "COLLISION"
 local groundCollisionSound = "Sounds/XPLOSML2.wav"
 local waterCollisionSound = "Sounds/SPLSLRG.wav"
 
+local nanoExplosionCEG = "NANOFRAMEBLAST"
+local nanoExplosionSound = "Sounds/NECRNAN2.wav"
 
 local MOVING_CHECK_DELAY = 10
 local COLLISION_SPEED_THRESHOLD = 3
@@ -238,53 +238,73 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam)
 		moveAnimationUnitIds[unitId] = nil
 	end
 
+	local _,_,_,_,bp = spGetUnitHealth(unitId)
+
 	-- if unit is an aircraft which leaves no wreckage, spawn some debris
 	local ud = UnitDefs[unitDefId]
 	--Spring.Echo("unit destroyed")
 	if ud and ud.canFly == true and not isDrone(ud) and tostring(ud.wreckName) == '' then
-		--Spring.Echo("aircraft destroyed "..tostring(ud.wreckName))
-		local physics = unitPhysicsById[unitId]
-		if (physics ~= nil) then
-			--Spring.Echo("aircraft destroyed had physics!")
-			local metalAmount = ud.metalCost * AIRCRAFT_DEBRIS_METAL_FACTOR
-			local fId = nil
-			local radius = ud.xsize*2
-			local spawnName = nil
-			local smallPieceV = 2
-			local largePieceV = 1
-			
-			--Spring.Echo("radius="..tostring(radius).." metalAmount="..tostring(metalAmount).." vx="..physics[4].." vy="..physics[5].." vz="..physics[6])
-			if metalAmount < 300 then
-				-- spawn small debris only
-				for i=0,metalAmount,50 do
-					spawnName = "debris"..tostring(random(3))
-					--Spring.Echo("spawning "..spawnName)
-					fId = spCreateFeature(spawnName,physics[1],physics[2],physics[3],random(4)-1)
-					if (fId) then
-						setFeaturePhysics(fId,physics[1] + random(radius),physics[2],physics[3] + random(radius),randomNegative(smallPieceV)+physics[4],randomNegative(smallPieceV)+physics[5],randomNegative(smallPieceV)+physics[6])
+		if bp > 0.999 then
+			--Spring.Echo("aircraft destroyed "..tostring(ud.wreckName))
+			local physics = unitPhysicsById[unitId]
+			if (physics ~= nil) then
+				--Spring.Echo("aircraft destroyed had physics!")
+				local metalAmount = ud.metalCost * AIRCRAFT_DEBRIS_METAL_FACTOR
+				local fId = nil
+				local radius = ud.xsize*2
+				local spawnName = nil
+				local smallPieceV = 2
+				local largePieceV = 1
+				
+				--Spring.Echo("radius="..tostring(radius).." metalAmount="..tostring(metalAmount).." vx="..physics[4].." vy="..physics[5].." vz="..physics[6])
+				if metalAmount < 300 then
+					-- spawn small debris only
+					for i=0,metalAmount,50 do
+						spawnName = "debris"..tostring(random(3))
+						--Spring.Echo("spawning "..spawnName)
+						fId = spCreateFeature(spawnName,physics[1],physics[2],physics[3],random(4)-1)
+						if (fId) then
+							setFeaturePhysics(fId,physics[1] + random(radius),physics[2],physics[3] + random(radius),randomNegative(smallPieceV)+physics[4],randomNegative(smallPieceV)+physics[5],randomNegative(smallPieceV)+physics[6])
+						end
 					end
-				end
-			else 
-				-- spawn small debris
-				for i=0,floor(metalAmount/2),50 do
-					spawnName = "debris"..tostring(random(3))
-					--Spring.Echo("spawning "..spawnName)
-					fId = spCreateFeature(spawnName,physics[1],physics[2],physics[3],random(4)-1)	
-					if (fId) then
-						setFeaturePhysics(fId,physics[1] + random(radius),physics[2],physics[3] + random(radius),randomNegative(smallPieceV)+physics[4],randomNegative(smallPieceV)+physics[5],randomNegative(smallPieceV)+physics[6])
+				else 
+					-- spawn small debris
+					for i=0,floor(metalAmount/2),50 do
+						spawnName = "debris"..tostring(random(3))
+						--Spring.Echo("spawning "..spawnName)
+						fId = spCreateFeature(spawnName,physics[1],physics[2],physics[3],random(4)-1)	
+						if (fId) then
+							setFeaturePhysics(fId,physics[1] + random(radius),physics[2],physics[3] + random(radius),randomNegative(smallPieceV)+physics[4],randomNegative(smallPieceV)+physics[5],randomNegative(smallPieceV)+physics[6])
+						end
 					end
-				end
-				-- spawn large debris
-				for i=0,floor(metalAmount/2),100 do
-					spawnName = "debris"..tostring(random(4,6))
-					--Spring.Echo("spawning "..spawnName)
-					fId = spCreateFeature(spawnName,physics[1],physics[2],physics[3],math.random(4)-1)
-					if (fId) then
-						setFeaturePhysics(fId,physics[1] + random(radius),physics[2],physics[3] + random(radius),randomNegative(largePieceV)+physics[4],randomNegative(largePieceV)+physics[5],randomNegative(largePieceV)+physics[6])
+					-- spawn large debris
+					for i=0,floor(metalAmount/2),100 do
+						spawnName = "debris"..tostring(random(4,6))
+						--Spring.Echo("spawning "..spawnName)
+						fId = spCreateFeature(spawnName,physics[1],physics[2],physics[3],math.random(4)-1)
+						if (fId) then
+							setFeaturePhysics(fId,physics[1] + random(radius),physics[2],physics[3] + random(radius),randomNegative(largePieceV)+physics[4],randomNegative(largePieceV)+physics[5],randomNegative(largePieceV)+physics[6])
+						end
 					end
 				end
 			end
-		end	
+		end
+	end
+
+
+	-- if nano frame, spawn effects
+	if bp < 1 and bp > 0.35 then
+		local physics = unitPhysicsById[unitId]
+		
+		if (physics ~= nil) then
+			local radius = spGetUnitRadius(unitId)
+			
+			-- bigger effect for expensive units
+			radius = radius + ud.metalCost / 100 
+			
+			spSpawnCEG(nanoExplosionCEG, physics[1],physics[2],physics[3],0,1,0,radius,radius)
+			spPlaySoundFile(nanoExplosionSound, math.min(1,math.max(0.2,radius/50)), physics[1], physics[2], physics[3])
+		end
 	end
 
 	unitPhysicsById[unitId] = nil

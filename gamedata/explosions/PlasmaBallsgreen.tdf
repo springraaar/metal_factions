@@ -1,13 +1,21 @@
 [gplasmaballbloom]
 {
-	[groundflash]
+	[innerflash]
 	{
-		flashSize = 30 d1;
-		flashAlpha = 0.16;
-		circleGrowth = 0.5;
-		circleAlpha = 0.1;
-		ttl = 35;
-		color = 0.2,1,0.0;
+		class=CSimpleGroundFlash;
+		[properties]
+		{
+			size = 10 d1;
+			sizeGrowth = 0.08;
+			texture=groundflash;
+	     		ttl = 40 d0.5;
+     			colormap = 0.5 1.0 0.5 0.5   0 0 0 0;
+		}
+		air=1;
+     		ground=1;
+	      	water=1;
+		underwater=1;
+		count=1;
 	}
 	usedefaultexplosions=0;	
 	[spikes]
@@ -36,26 +44,26 @@
 		sizeGrowth=0.00;
 		sizeMod=1.0;
 		pos=0, 2, 0; 
-		gravity=0, 0.05, 0;
+		gravity=0, 0.01, 0;
 		
 
 		Texture=lesslag;
-		airdrag=0.9;
+		airdrag=0.91;
 		colorMap=0.2 1 0.0 0.2 0.5 0.9 0.1 0.1 0.0 0.0 0.0 0.01;
 
-		particleLifeSpread=25 d0.5; 
+		particleLifeSpread=15 d0.5; 
 		particleSpeedSpread=2;  
 		particleSizeSpread=1;   
 		
-		particleLife=45 d1;
+		particleLife=35 d0.5;
 		numParticles=23 d1; 
-		particleSpeed=4; 
+		particleSpeed=5 d0.03; 
 		particleSize=1.5;
 		
 		
-		emitVector=0.1, -1, 0.3; 
-		emitRot=90;
-		emitRotSpread=90; 
+		emitVector=0, 1, 0; 
+		emitRot=0;
+		emitRotSpread=60; 
 		directional=1; 
 		alwaysVisible=1;
 
@@ -69,14 +77,22 @@
 
 [bplasmaballbloom]
 {
-	[groundflash]
+	[innerflash]
 	{
-		flashSize = 30 d1;
-		flashAlpha = 0.16;
-		circleGrowth = 0.5;
-		circleAlpha = 0.1;
-		ttl = 35;
-		color = 0.5,0.7,1;
+		class=CSimpleGroundFlash;
+		[properties]
+		{
+			size = 10 d1;
+			sizeGrowth = 0.08;
+			texture=groundflash;
+	     		ttl = 40 d0.5;
+     			colormap = 0.5 1.0 0.5 0.5   0 0 0 0;
+		}
+		air=1;
+     		ground=1;
+	      	water=1;
+		underwater=1;
+		count=1;
 	}
 	usedefaultexplosions=0;	
 	[spikes]
@@ -106,26 +122,26 @@
 		sizeGrowth=0.00;
 		sizeMod=1.0;
 		pos=0, 2, 0;  
-		gravity=0, 0.1, 0;
+		gravity=0, 0.01, 0;
 		
 
 		Texture=lesslag;
-		airdrag=0.9;
+		airdrag=0.91;
 		colorMap=0.3 1 1 0.4 0.4 0.8 0.8 0.3 0.1 0.2 0.4 0.01;
 
-		particleLifeSpread=25 d0.5; 
+		particleLifeSpread=15 d0.5; 
 		particleSpeedSpread=2;  
 		particleSizeSpread=1.5;   
 		
-		particleLife=45 d1;
+		particleLife=25 d0.5;
 		numParticles=23 d1; 
-		particleSpeed=4; 
+		particleSpeed=5 d0.03; 
 		particleSize=1.5;
 		
 		
-		emitVector=0.1, -1, 0.3; 
-		emitRot=90;
-		emitRotSpread=90; 
+		emitVector=0, 1, 0; 
+		emitRot=0;
+		emitRotSpread=60; 
 		directional=1; 
 		alwaysVisible=1;
 

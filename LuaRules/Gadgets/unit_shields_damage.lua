@@ -54,7 +54,6 @@ local spGetUnitCollisionVolumeData = Spring.GetUnitCollisionVolumeData
 local spSetUnitShieldState = Spring.SetUnitShieldState
 local spGetUnitShieldState = Spring.GetUnitShieldState
 local spAddUnitDamage = Spring.AddUnitDamage
-local spGetUnitHealth = Spring.GetUnitHealth
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitRadius = Spring.GetUnitRadius
 local spGetUnitExperience = Spring.GetUnitExperience
@@ -343,7 +342,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 		local x,y,z = spGetUnitPosition(unitID)
 		local _,_,_,_,bp = spGetUnitHealth(unitID)
 
-		if bp > 0.99 then
+		if bp > 0.999 then
 			local createdId = Spring.SpawnProjectile(WeaponDefNames["gear_canister_fireball"].id,{
 				["pos"] = {x,y,z},
 				["end"] = {x,0,z},
@@ -356,7 +355,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 		local x,y,z = spGetUnitPosition(unitID)
 		local _,_,_,_,bp = spGetUnitHealth(unitID)
 
-		if bp > 0.99 then
+		if bp > 0.999 then
 			local createdId = Spring.SpawnProjectile(WeaponDefNames["gear_eruptor_fireball"].id,{
 				["pos"] = {x,y,z},
 				["end"] = {x,0,z},
