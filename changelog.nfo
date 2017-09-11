@@ -1,3 +1,47 @@
+2017/09/11 ------------------ NOTES v0.983 ----------------------
+
+--- balance / mechanics
+
+- modified GEAR "Infernal Form" commander : now has two fireball launchers instead of a fireball/cannon combination and moves about 15% faster
+
+- reduced range on GEAR "Destroyer Form" commander's energy bolt weapon by about 15%
+
+- improved AVEN "Gamma Form" commander's weapon DPS by about 10%
+
+- reduced CLAW "Slayer Form" commander's laser cutter energy consumption by 15%
+
+- fixed error when drone upgrades where used with the latest AVEN and CLAW commander forms
+
+- reduced speed and cost of most commander drones
+
+- reduced slope tolerance for factories (this indirectly helps MFAI not to place them on slopes too steep for some of the units to exit)
+
+- reduced speed and cost by about 10-20% and increased HP by about 15% for level 2 fighter aircraft
+
+- increased acceleration and turnrate for AVEN "Runner" scout robot
+
+- increased reload time and damage per shot by about 20% for most light and medium plasma cannons
+
+- reduced cannon range and cost for GEAR "Might" and various level 2 Ships by about 10%
+
+- increased GEAR "Kano" DPS by 10%
+
+--- AI
+
+- MFAI will now reclaim wreckages and other features much more effectively
+- MFAI mobile unit evasion range reduced and uses half as many waypoints
+- MFAI global awareness and tasks updates about every 6 seconds instead of 2
+(these changes should boost performance on games against MFAI)
+
+--- UI / widgets
+
+- F10 key takes screenshot on png mode (F12 is for lower quality jpg)
+- fixed issue with selection circles tilting to match the slope below the water line for ships near the shore
+
+
+
+
+
 2017/08/28 ------------------ NOTES v0.982 ----------------------
 
 --- balance / mechanics

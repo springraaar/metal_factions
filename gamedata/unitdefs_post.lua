@@ -153,7 +153,13 @@ if (true) then
 		end
 
 		-- increase slope tolerance for buildings
-		unitDef.maxslope = 30
+		if (unitDef.builder and tonumber(unitDef.builder) == 1 and unitDef.footprintx and tonumber(unitDef.footprintx) > 4) then
+			-- probably a factory, be more strict about it to avoid some units getting stuck
+			unitDef.maxslope = 16
+			--Spring.Echo(unitDef.name.." FACTORY")
+		else
+			unitDef.maxslope = 30
+		end
 	
 		-- standardize idleautoheal and idletime
 		-- set to 0, done through gadget now

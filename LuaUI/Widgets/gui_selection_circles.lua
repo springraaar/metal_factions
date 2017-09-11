@@ -177,7 +177,7 @@ function widget:DrawWorldPreUnit()
     local udid = spGetUnitDefID(unitID)
     local radius = GetUnitDefRealRadius(udid)
     if (radius) then
-      if (trackSlope and (not UnitDefs[udid].canFly)) then
+      if (trackSlope and (not UnitDefs[udid].canFly) and (not UnitDefs[udid].floatOnWater)) then
         local x, y, z = spGetUnitBasePosition(unitID)
         local gx, gy, gz = spGetGroundNormal(x, z)
         local degrot = math.acos(gy) * 180 / math.pi

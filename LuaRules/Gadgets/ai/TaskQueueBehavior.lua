@@ -51,7 +51,9 @@ function TaskQueueBehavior:Init(ai, uId)
 	self.noDelay = false
 	self.lastRetreatOrderFrame = -ORDER_DELAY_FRAMES - 1
 	self.underAttackFrame = -UNDER_ATTACK_FRAMES - 1
-	self.idleFrame = -INFINITY
+	self.idleFrame = -INFINITY -- last frame where UnitIdle was called (may be unreliable)
+	self.idleFrames = 0 -- count of consecutive frames where wait is 0, progress is false
+						-- but unit has been with idle command queue
 	self.isSeriouslyDamaged = false
 	self.isFullHealth = true
 	self.isAttackMode = false
@@ -61,7 +63,9 @@ function TaskQueueBehavior:Init(ai, uId)
 	self.isWaterMode = false
 	self.assistUnitId = 0
 	self.pFType = getUnitPFType(self.unitDef)
-		
+	self.cleanupMaxFeatures = 10
+	self.isFullyBuilt = false
+	
 	-- load queue
 	if self:HasQueues() then
 		self.queue = self:GetQueue()
@@ -81,6 +85,7 @@ function TaskQueueBehavior:UnitFinished(uId)
 		return
 	end
 	if uId == self.unitId then
+		self.isFullyBuilt = true
 		self.progress = true
 	end
 end
@@ -201,7 +206,8 @@ function TaskQueueBehavior:Update()
 	local f = spGetGameFrame()
 	self.pos = newPosition(spGetUnitPosition(self.unitId,false,false))
 	
-	local health,maxHealth,_,_,_ = spGetUnitHealth(self.unitId)
+	local health,maxHealth,_,_,bp = spGetUnitHealth(self.unitId)
+	self.isFullyBuilt = (bp > 0.999)
 	if (health/maxHealth < UNIT_RETREAT_HEALTH) then
 		self.isSeriouslyDamaged = true
 		self.isFullHealth = false
@@ -244,14 +250,30 @@ function TaskQueueBehavior:Update()
 	end
 	
 	if fmod(f,10) == 9 then
-		if self.progress == true then
-			if (self.waitLeft == 0) then
+		if (self.waitLeft == 0) then
+			-- progress queue if unit is idle
+			if not self.progress and self.isFullyBuilt and self.currentProject == nil then
+				local cmds = spGetUnitCommands(self.unitId,0)
+				if (cmds <= 0) then
+					self.idleFrames = self.idleFrames +10 
+				
+					if (self.idleFrames > IDLE_FRAMES_PROGRESS_LIMIT) then
+						log(self.unitName.." was weirdly idle, progressing queue",self.ai)
+						self.progress = true
+					end
+				else
+					self.idleFrames = 0
+				end
+			end
+		
+			if self.progress == true then
 				self.currentProject = nil
+				self.idleFrames = 0
 				-- log(self.unitName.." progressing queue",self.ai)
 				self:ProgressQueue()
 				return
 			end
-		end
+		end		
 	end
 end
 
@@ -401,15 +423,16 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 			self.progress = true
 			return
 		end
-		-- reclaim 1 wreck - the one which happens to be the first
+		-- reclaim up to N features
 		if action == "cleanup" then
-			wrecks = spGetFeaturesInSphere(selfPos.x,selfPos.y,selfPos.z, 900)
+			wrecks = spGetFeaturesInSphere(selfPos.x,selfPos.y,selfPos.z, 500)
 			-- we only want to reclaim the first one
 			self.waitLeft = value.frames
-			for _, featureId in pairs(wrecks) do
-				spGiveOrderToUnit(self.unitId,CMD.RECLAIM,{featureId},{})
-				break
-			end
+			--Spring.Echo(self.unitName.." CLEANUP "..value.frames.." frames ".." found="..tostring(#wrecks))
+			if (#wrecks > 0) then
+				spGiveOrderToUnit( self.unitId, CMD.RECLAIM, { self.pos.x, self.pos.y, self.pos.z, 500 }, {} )
+			end	
+				
 			self.progress = true
 		end
 	else

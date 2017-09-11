@@ -757,7 +757,7 @@
 	turret=1;
 	range=640;
 	minintensity=1.0;
-	reloadtime=2.4;
+	reloadtime=2.2;
 	energypershot=150;
 	weaponvelocity=1533;
 	areaofeffect=8;
@@ -1640,7 +1640,7 @@
 	turret=1;
 	range=500;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	reloadtime=2.5;
+	reloadtime=3;
 	weaponvelocity=355;
 	areaofeffect=64;
 	soundstart=cannon3;
@@ -1660,11 +1660,11 @@
 	}
 	[DAMAGE]
 	{
-		default=200;
+		default=250;
 		group_invincible=1;
-		armor_heavy=200;//#AUTO#
-		armor_medium=200;//#AUTO#
-		armor_light=200;//#AUTO#
+		armor_heavy=250;//#AUTO#
+		armor_medium=250;//#AUTO#
+		armor_light=250;//#AUTO#
 	}
 }
 [ARMATL_TORPEDO]
@@ -1781,7 +1781,7 @@
 	cegTag=ROCKETTRAIL1;
 	range=500;
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	reloadtime=8;
+	reloadtime=9;
 	flighttime=2.75;
 	weaponvelocity=460;
 	startvelocity=200;
@@ -1803,11 +1803,11 @@
 	}
 	[DAMAGE]
 	{
-		default=300;
+		default=350;
     		group_invincible=1;
-		armor_heavy=300;//#AUTO#
-		armor_medium=300;//#AUTO#
-		armor_light=300;//#AUTO#
+		armor_heavy=350;//#AUTO#
+		armor_medium=350;//#AUTO#
+		armor_light=350;//#AUTO#
 	}
 }
 [aven_ace_bomb]
@@ -3399,7 +3399,7 @@
 	turret=1;
 	range=340;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	reloadtime=1.7;
+	reloadtime=2.4;
 	weaponvelocity=330;
 	areaofeffect=48;
 	soundstart=canlite3;
@@ -3419,11 +3419,11 @@
 	}
 	[DAMAGE]
 	{
-		default=70;
+		default=100;
 		group_invincible=1;
-		armor_heavy=35;//#AUTO#
-		armor_medium=70;//#AUTO#
-		armor_light=70;//#AUTO#
+		armor_heavy=50;//#AUTO#
+		armor_medium=100;//#AUTO#
+		armor_light=100;//#AUTO#
 	}
 }
 [ARMyork_GUN]
@@ -3545,7 +3545,7 @@
 	turret=1;
 	range=500;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	reloadtime=1.5;
+	reloadtime=2;
 	weaponvelocity=355;
 	areaofeffect=64;
 	soundstart=cannon3;
@@ -3565,45 +3565,11 @@
 	}
 	[DAMAGE]
 	{
-		default=200;
+		default=265;
 		group_invincible=1;
-		armor_heavy=200;//#AUTO#
-		armor_medium=200;//#AUTO#
-		armor_light=200;//#AUTO#
-	}
-}
-[aven_daybreak_cannon]
-{
-	name=Plasma Cannon;
-	weapontype=Cannon;
-	turret=1;
-	range=670;
-	explosiongenerator=custom:STDBLASTWRAPPER;
-	reloadtime=2;
-	weaponvelocity=405;
-	areaofeffect=64;
-	soundstart=cannon3;
-	soundhit=xplomed2;
-	tolerance=3000;
-	size=3.2;
-	rgbcolor=0.7 0.6 0.3;
-	stages=3;
-  	separation=0.5;
-  	alphadecay=0.3;
-  	sizedecay=-0.1;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=3;
-	}
-	[DAMAGE]
-	{
-		default=200;
-		group_invincible=1;
-		armor_heavy=200;//#AUTO#
-		armor_medium=200;//#AUTO#
-		armor_light=200;//#AUTO#
+		armor_heavy=265;//#AUTO#
+		armor_medium=265;//#AUTO#
+		armor_light=265;//#AUTO#
 	}
 }
 [aven_knight_cannon]
@@ -3613,7 +3579,7 @@
 	turret=1;
 	range=600;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	reloadtime=2.5;
+	reloadtime=3;
 	weaponvelocity=455;
 	areaofeffect=64;
 	soundstart=cannon3;
@@ -3633,11 +3599,11 @@
 	}
 	[DAMAGE]
 	{
-		default=250;
+		default=300;
 		group_invincible=1;
-		armor_heavy=250;//#AUTO#
-		armor_medium=250;//#AUTO#
-		armor_light=250;//#AUTO#
+		armor_heavy=300;//#AUTO#
+		armor_medium=300;//#AUTO#
+		armor_light=300;//#AUTO#
 	}
 }
 [aven_catfish_cannon]
@@ -3647,7 +3613,7 @@
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	energypershot=0;
 	turret=1;
-	range=1300;
+	range=1200;
 	reloadtime=5;
 	weaponvelocity=450;
 	areaofeffect=80;
@@ -3754,42 +3720,6 @@
 		armor_heavy=10;//#AUTO#
 		armor_medium=20;//#AUTO#
 		armor_light=40;//#AUTO#
-	}
-}
-[aven_HAM]
-{
-	name=Plasma Cannon;
-	weapontype=Cannon;
-	turret=1;
-	explosiongenerator=custom:STDBLASTWRAPPER;
-	Range=470;
-	accuracy=920;
-	movingaccuracy=1620;
-	reloadtime=2.0;
-	weaponvelocity=260;
-	areaofeffect=48;
-	soundstart=cannon1;
-	soundhit=xplomed3;
-	tolerance=3000;
-	size=3.2;
-	rgbcolor=0.7 0.6 0.3;
-	stages=3;
-  	separation=0.5;
-  	alphadecay=0.3;
-  	sizedecay=-0.1;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=2;
-	}
-	[DAMAGE]
-	{
-		default=95;
-    	group_invincible=1;
-		armor_heavy=47;//#AUTO#
-		armor_medium=95;//#AUTO#
-		armor_light=95;//#AUTO#
 	}
 }
 [aven_LASER]
@@ -3958,7 +3888,7 @@
 	turret=1;
 	range=385;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	reloadtime=1.53;
+	reloadtime=2;
 	weaponvelocity=328;
 	areaofeffect=48;
 	soundstart=canlite3;
@@ -3978,11 +3908,11 @@
 	}
 	[DAMAGE]
 	{
-		default=70;
+		default=90;
 		group_invincible=1;
-		armor_heavy=35;//#AUTO#
-		armor_medium=70;//#AUTO#
-		armor_light=70;//#AUTO#
+		armor_heavy=45;//#AUTO#
+		armor_medium=90;//#AUTO#
+		armor_light=90;//#AUTO#
 	}
 }
 [aven_kodiak_cannon]
@@ -3992,7 +3922,7 @@
 	turret=1;
 	range=400;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	reloadtime=1.15;
+	reloadtime=1.3;
 	weaponvelocity=328;
 	areaofeffect=48;
 	soundstart=canlite3;
@@ -4012,11 +3942,11 @@
 	}
 	[DAMAGE]
 	{
-		default=80;
+		default=100;
 		group_invincible=1;
-		armor_heavy=40;//#AUTO#
-		armor_medium=80;//#AUTO#
-		armor_light=80;//#AUTO#
+		armor_heavy=50;//#AUTO#
+		armor_medium=100;//#AUTO#
+		armor_light=100;//#AUTO#
 	}
 }
 [aven_wheeler_cannon]
@@ -4026,7 +3956,7 @@
 	turret=1;
 	range=320;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	reloadtime=1.7;
+	reloadtime=2;
 	weaponvelocity=288;
 	areaofeffect=48;
 	soundstart=canlite3;
@@ -4046,11 +3976,11 @@
 	}
 	[DAMAGE]
 	{
-		default=70;
+		default=90;
 		group_invincible=1;
-		armor_heavy=35;//#AUTO#
-		armor_medium=70;//#AUTO#
-		armor_light=70;//#AUTO#
+		armor_heavy=45;//#AUTO#
+		armor_medium=90;//#AUTO#
+		armor_light=90;//#AUTO#
 	}
 }
 [aven_duster_cannon]
@@ -4060,7 +3990,7 @@
 	turret=1;
 	range=700;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	reloadtime=2.1;
+	reloadtime=2.5;
 	weaponvelocity=328;
 	areaofeffect=48;
 	soundstart=canlite3;
@@ -4082,11 +4012,11 @@
 	}
 	[DAMAGE]
 	{
-		default=75;
+		default=90;
 		group_invincible=1;
-		armor_heavy=37;//#AUTO#
-		armor_medium=75;//#AUTO#
-		armor_light=75;//#AUTO#
+		armor_heavy=45;//#AUTO#
+		armor_medium=90;//#AUTO#
+		armor_light=90;//#AUTO#
 	}
 }
 [aven_LIGHTLASER]
@@ -4131,47 +4061,13 @@
 		armor_light=60;//#AUTO#
 	}
 }
-[aven_MEDIUMCANNON]
-{
-	name=Plasma Cannon;
-	weapontype=Cannon;
-	turret=1;
-	range=500;
-	reloadtime=1.8;
-	explosiongenerator=custom:STDBLASTWRAPPER;
-	weaponvelocity=378;
-	areaofeffect=48;
-	soundstart=cannon2;
-	soundhit=xplomed4;
-	tolerance=3000;
-	size=3.2;
-	rgbcolor=0.7 0.6 0.3;
-	stages=3;
-  	separation=0.5;
-  	alphadecay=0.3;
-  	sizedecay=-0.1;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=2;
-	}
-	[DAMAGE]
-	{
-		default=142;
-		group_invincible=1;
-		armor_heavy=71;//#AUTO#
-		armor_medium=142;//#AUTO#
-		armor_light=142;//#AUTO#
-	}
-}
 [aven_ROY]
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	turret=1;
 	range=660;
-	reloadtime=2.4;
+	reloadtime=2.7;
 	weaponvelocity=400;
 	areaofeffect=64;
 	soundstart=cannon3;
@@ -4194,11 +4090,11 @@
 	}
 	[DAMAGE]
 	{
-		default=180;
+		default=210;
 		group_invincible=1;
-		armor_heavy=180;//#AUTO#
-		armor_medium=180;//#AUTO#
-		armor_light=180;//#AUTO#
+		armor_heavy=210;//#AUTO#
+		armor_medium=210;//#AUTO#
+		armor_light=210;//#AUTO#
 	}
 }
 [aven_emperor_cannon2]
@@ -4206,7 +4102,7 @@
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	turret=1;
-	range=960;
+	range=920;
 	reloadtime=2.4;
 	weaponvelocity=400;
 	areaofeffect=64;
@@ -4522,40 +4418,6 @@
 		armor_heavy=62;//#AUTO#
 		armor_medium=125;//#AUTO#
 		armor_light=125;//#AUTO#
-	}
-}
-[gear_nightfall_cannon]
-{
-	name=Plasma Cannon;
-	weapontype=Cannon;
-	turret=1;
-	range=680;
-	explosiongenerator=custom:STDBLASTWRAPPER;
-	reloadtime=2;
-	weaponvelocity=390;
-	areaofeffect=64;
-	soundstart=cannon3;
-	soundhit=xplomed2;
-	tolerance=3000;
-	size=3.2;
-	rgbcolor=0.7 0.6 0.3;
-	stages=3;
-  	separation=0.5;
-  	alphadecay=0.3;
-  	sizedecay=-0.1;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=3;
-	}
-	[DAMAGE]
-	{
-		default=210;
-		group_invincible=1;
-		armor_heavy=210;//#AUTO#
-		armor_medium=210;//#AUTO#
-		armor_light=210;//#AUTO#
 	}
 }
 [gear_harasser_laser]
@@ -5021,7 +4883,7 @@
 	name=High Energy Bolt;
 	weapontype=LaserCannon;
 	turret=1;
-	range=550;
+	range=480;
 	duration=0.10;
 	reloadtime=8;
 	energypershot=500;
@@ -5280,29 +5142,28 @@
 		armor_light=500;//#AUTO#
 	}
 }
-[gear_u5commander_cannon]
+[gear_u5commander_torpedo]
 {
-	name=Plasma Cannon;
-	weapontype=Cannon;
-	explosiongenerator=custom:STDBLASTWRAPPER;
-	energypershot=0;
-	accuracy=500;
-	movingaccuracy=1000;
+	name=Torpedoes;
+	weapontype=TorpedoLauncher;
+	CollideFriendly=1;
+	model=weapon_torpedo;
+	range=430;
+	reloadtime=2.5;
 	turret=1;
-	range=500;
-	reloadtime=2.25;
-	weaponvelocity=400;
-	areaofeffect=75;
-	projectiles=1;
-	sprayangle=500;
-	soundstart=cannhvy2;
-	soundhit=xplomed2;
-	size=3.4;
-	rgbcolor=0.9 0.7 0.3;
-	stages=4;
-  	separation=0.4;
-  	alphadecay=0.24;
-  	sizedecay=-0.1;
+	weapontimer=4;
+	FlightTime=2.5;
+	submissile=1;
+	weaponvelocity=200;
+	startvelocity=200;
+	weaponAcceleration=33;
+	areaofeffect=60;
+	soundstart=torpedo2;
+	soundhit=xplodep3;
+	tracks=1;
+	turnrate=8000;
+	waterweapon=1;
+	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -5311,10 +5172,11 @@
 	}
 	[DAMAGE]
 	{
-		default=400;
-		armor_heavy=400;//#AUTO#
-		armor_medium=400;//#AUTO#
-		armor_light=400;//#AUTO#
+		default=500;
+		group_invincible=1;
+		armor_heavy=500;//#AUTO#
+		armor_medium=500;//#AUTO#
+		armor_light=500;//#AUTO#
 	}
 }
 [gear_u5commander_fireball]
@@ -5322,19 +5184,19 @@
 	name=Fireball Cannon;
 	weapontype=Cannon;	
 	turret=1;
-	range=400;
-	reloadtime=8;
+	range=440;
+	reloadtime=2.8;
 	weapontimer=4;
 	energypershot=0;
 	weaponvelocity=320;
 	gravityaffected=0;
 	collisionSize=10;
-	areaofeffect=240;
+	areaofeffect=200;
 	edgeeffectiveness=0;
 	impulsefactor=0.1;
 	accuracy=500;
 	movingaccuracy=1000;
-	soundstart=flamlit1;
+	soundstart=fireballfire1;
 	soundhit=cannhvy4;
 	firestarter=70;
 	explosiongenerator=custom:fireballboombig;
@@ -5361,6 +5223,53 @@
 		armor_heavy=200;//#AUTO#
 		armor_medium=400;//#AUTO#
 		armor_light=800;//#AUTO#
+	}
+}
+[gear_u5commander_fireball2]
+{
+	name=Fireball Cannon;
+	weapontype=Cannon;	
+	turret=1;
+	range=450;
+	reloadtime=3;
+	weapontimer=4;
+	energypershot=0;
+	weaponvelocity=300;
+	gravityaffected=0;
+	collisionSize=10;
+	areaofeffect=120;
+	edgeeffectiveness=0;
+	impulsefactor=0.1;
+	accuracy=500;
+	movingaccuracy=1000;
+	soundstart=canlite2;
+	soundhit=flamlit2;
+	firestarter=70;
+	explosiongenerator=custom:fireballboommed;
+	cegTag=fireballtrail3;
+	rgbcolor=0.7 0.3 0.0;
+	size=4.00;
+	stages=7;
+  	separation=0.0;
+  	alphadecay=0.8;
+  	sizedecay=-0.11;
+	tolerance=4000;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	avoidGround=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=1;
+		burn=1;
+		burnaoe=1;
+	}
+	[DAMAGE]
+	{
+		default=200;
+		group_invincible=1;
+		armor_heavy=50;//#AUTO#
+		armor_medium=100;//#AUTO#
+		armor_light=200;//#AUTO#
 	}
 }
 [gear_kano_cannon]
@@ -5392,11 +5301,11 @@
 	}
 	[DAMAGE]
 	{
-		default=200;
+		default=220;
 		group_invincible=1;
-		armor_heavy=200;//#AUTO#
-		armor_medium=200;//#AUTO#
-		armor_light=200;//#AUTO#
+		armor_heavy=220;//#AUTO#
+		armor_medium=220;//#AUTO#
+		armor_light=220;//#AUTO#
 	}
 }
 [CORADVBOMB]
@@ -5992,7 +5901,7 @@
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	energypershot=0;
 	turret=1;
-	range=1250;
+	range=1180;
 	reloadtime=3;
 	weaponvelocity=450;
 	areaofeffect=80;
@@ -6067,7 +5976,7 @@
 	weapontype=Cannon;
 	turret=1;
 	range=240;
-	reloadtime=1.53;
+	reloadtime=2;
 	weaponvelocity=170;
 	areaofeffect=32;
 	size=2.5;
@@ -6086,11 +5995,11 @@
 	}
 	[DAMAGE]
 	{
-		default=75;
+		default=90;
 		group_invincible=1;
-		armor_heavy=37;//#AUTO#
-		armor_medium=75;//#AUTO#
-		armor_light=75;//#AUTO#
+		armor_heavy=45;//#AUTO#
+		armor_medium=90;//#AUTO#
+		armor_light=90;//#AUTO#
 	}
 }
 [gear_marauder_laser]
@@ -6150,7 +6059,7 @@
 	thickness=2.01;
 	corethickness=0.6;
 	Intensity=0.88; 
-	energypershot=25;
+	energypershot=35;
 	areaofeffect=8;
 	soundtrigger=1;
 	soundstart=lasrfir3;
@@ -6395,7 +6304,7 @@
 	turret=1;
 	range=500;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	reloadtime=2.5;
+	reloadtime=2.7;
 	weaponvelocity=355;
 	areaofeffect=64;
 	soundstart=cannon3;
@@ -6415,11 +6324,11 @@
 	}
 	[DAMAGE]
 	{
-		default=200;
+		default=220;
 		group_invincible=1;
-		armor_heavy=200;//#AUTO#
-		armor_medium=200;//#AUTO#
-		armor_light=200;//#AUTO#
+		armor_heavy=220;//#AUTO#
+		armor_medium=220;//#AUTO#
+		armor_light=220;//#AUTO#
 	}
 }
 [gear_grenado_cannon]
@@ -6428,7 +6337,7 @@
 	weapontype=Cannon;
 	turret=1;
 	range=400;
-	reloadtime=1.1;
+	reloadtime=1.15;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	weaponvelocity=380;
 	areaofeffect=48;
@@ -6451,11 +6360,11 @@
 	}
 	[DAMAGE]
 	{
-		default=200;
+		default=210;
 		group_invincible=1;
-		armor_heavy=200;//#AUTO#
-		armor_medium=200;//#AUTO#
-		armor_light=200;//#AUTO#
+		armor_heavy=210;//#AUTO#
+		armor_medium=210;//#AUTO#
+		armor_light=210;//#AUTO#
 	}
 }
 [gear_moe_cannon]
@@ -6467,7 +6376,7 @@
 	accuracy=400;
 	movingaccuracy=800;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	reloadtime=1.2;
+	reloadtime=1.32;
 	weaponvelocity=412;
 	areaofeffect=54;
 	soundstart=cannon3;
@@ -6486,11 +6395,11 @@
 	}
 	[DAMAGE]
 	{
-		default=170;
+		default=187;
 		group_invincible=1;
-		armor_heavy=170;//#AUTO#
-		armor_medium=170;//#AUTO#
-		armor_light=170;//#AUTO#
+		armor_heavy=187;//#AUTO#
+		armor_medium=187;//#AUTO#
+		armor_light=187;//#AUTO#
 	}
 }
 [gear_barrager_cannon]
@@ -6502,7 +6411,7 @@
 	accuracy=400;
 	movingaccuracy=800;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	reloadtime=1;
+	reloadtime=1.1;
 	weaponvelocity=462;
 	areaofeffect=74;
 	soundstart=cannon3;
@@ -6521,11 +6430,11 @@
 	}
 	[DAMAGE]
 	{
-		default=200;
+		default=220;
 		group_invincible=1;
-		armor_heavy=200;//#AUTO#
-		armor_medium=200;//#AUTO#
-		armor_light=200;//#AUTO#
+		armor_heavy=220;//#AUTO#
+		armor_medium=220;//#AUTO#
+		armor_light=220;//#AUTO#
 	}
 }
 [gear_big_bob_cannon]
@@ -6534,10 +6443,10 @@
 	weapontype=Cannon;
 	turret=1;
 	range=650;
-	accuracy=400;
-	movingaccuracy=800;
+	accuracy=300;
+	movingaccuracy=700;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	reloadtime=1.6;
+	reloadtime=1.76;
 	weaponvelocity=412;
 	areaofeffect=64;
 	soundstart=cannon3;
@@ -6556,11 +6465,11 @@
 	}
 	[DAMAGE]
 	{
-		default=275;
+		default=300;
 		group_invincible=1;
-		armor_heavy=275;//#AUTO#
-		armor_medium=275;//#AUTO#
-		armor_light=275;//#AUTO#
+		armor_heavy=300;//#AUTO#
+		armor_medium=300;//#AUTO#
+		armor_light=300;//#AUTO#
 	}
 }
 [gear_REAP]
@@ -6569,7 +6478,7 @@
 	weapontype=Cannon;
 	turret=1;
 	range=500;
-	reloadtime=1.5;
+	reloadtime=1.8;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	weaponvelocity=365;
 	areaofeffect=64;
@@ -6590,11 +6499,11 @@
 	}
 	[DAMAGE]
 	{
-		default=216;
+		default=260;
 		group_invincible=1;
-		armor_heavy=216;//#AUTO#
-		armor_medium=216;//#AUTO#
-		armor_light=216;//#AUTO#
+		armor_heavy=260;//#AUTO#
+		armor_medium=260;//#AUTO#
+		armor_light=260;//#AUTO#
 	}
 }
 [gear_ROY]
@@ -6641,7 +6550,7 @@
 	range=500; 
 	accuracy=920;
 	movingaccuracy=1620;
-	reloadtime=2;
+	reloadtime=2.4;
 	weaponvelocity=265;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	areaofeffect=48;
@@ -6662,11 +6571,11 @@
 	}
 	[DAMAGE]
 	{
-		default=100;
+		default=120;
 		group_invincible=1;
-		armor_heavy=50;//#AUTO#
-		armor_medium=100;//#AUTO#
-		armor_light=100;//#AUTO#
+		armor_heavy=60;//#AUTO#
+		armor_medium=120;//#AUTO#
+		armor_light=120;//#AUTO#
 	}
 }
 [gear_knocker_cannon]
@@ -7497,40 +7406,6 @@
 		armor_light=350;//#AUTO#
 	}
 }
-[CORSNAP_WEAPON]
-{
-	name=Plasma Cannon;
-	weapontype=Cannon;
-	turret=1;
-	explosiongenerator=custom:STDBLASTWRAPPER;
-	range=550;
-	reloadtime=1.5;
-	weaponvelocity=350;
-	areaofeffect=48;
-	soundstart=cannon2;
-	soundhit=xplomed4;
-	tolerance=3000;
-	size=3.2;
-	rgbcolor=0.7 0.6 0.3;
-	stages=3;
-  	separation=0.5;
-  	alphadecay=0.3;
-  	sizedecay=-0.1;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=2;
-	}
-	[DAMAGE]
-	{
-		default=160;
-		group_invincible=1;
-		armor_heavy=80;//#AUTO#
-		armor_medium=160;//#AUTO#
-		armor_light=160;//#AUTO#
-	}
-}
 [CORSSUB_WEAPON]
 {
 	name=Unguided Torpedo;
@@ -7865,7 +7740,7 @@
 	energypershot=0;
 	rgbcolor=1 0.33 0.0;
 	turret=1;
-	range=1600;
+	range=1500;
 	reloadtime=2.6;
 	weaponvelocity=650;
 	areaofeffect=80;
@@ -7902,7 +7777,7 @@
 	energypershot=0;
 	rgbcolor=1 0.33 0.0;
 	turret=1;
-	range=1450;
+	range=1250;
 	reloadtime=2.7;
 	weaponvelocity=650;
 	areaofeffect=80;
@@ -10191,41 +10066,6 @@
 		armor_light=800;//#AUTO#
 	}
 }
-[gear_MORT_HIGH]
-{
-	name=Plasma Cannon;
-	weapontype=Cannon;
-	turret=1;
-	range=875;
-	reloadtime=2.2;
-	weaponvelocity=412;
-	areaofeffect=82;
-	soundstart=cannon1;
-	explosiongenerator=custom:STDBLASTWRAPPER;
-	soundhit=xplomed3;
-	accuracy=300;
-	movingaccuracy=600;
-	size=3.2;
-	rgbcolor=0.7 0.6 0.3;
-	stages=3;
-  	separation=0.5;
-  	alphadecay=0.3;
-  	sizedecay=-0.1;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=2;
-	}
-	[DAMAGE]
-	{
-		default=115;
-		group_invincible=1;
-		armor_heavy=57;//#AUTO#
-		armor_medium=115;//#AUTO#
-		armor_light=115;//#AUTO#
-	}
-}
 [aven_trooper_emg]
 {
 	name=E.M.G.;
@@ -10402,7 +10242,7 @@
 	energypershot=0;
 	rgbcolor=1 0.33 0.0;
 	turret=1;
-	range=1600;
+	range=1500;
 	reloadtime=2.0;
 	weaponvelocity=650;
 	areaofeffect=80;
@@ -10438,7 +10278,7 @@
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	energypershot=0;
 	turret=1;
-	range=1300;
+	range=1200;
 	reloadtime=3;
 	weaponvelocity=450;
 	areaofeffect=80;
@@ -10474,7 +10314,7 @@
 	energypershot=0;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	turret=1;
-	range=1320;
+	range=1220;
 	reloadtime=2.9;
 	weaponvelocity=450;
 	areaofeffect=85;
@@ -12834,7 +12674,7 @@
   	alphadecay=0.24;
   	sizedecay=-0.1;
 	turret=1;
-	range=1600;
+	range=1500;
 	reloadtime=2;
 	weaponvelocity=550;
 	areaofeffect=100;
@@ -12909,7 +12749,7 @@
 	turret=1;
 	range=320;
 	accuracy=100;
-	energypershot=150;
+	energypershot=130;
 	minintensity=0.7;
 	reloadtime=0.6;
 	weaponvelocity=1533;
@@ -13192,7 +13032,7 @@
   	sizedecay=-0.1;
 	turret=1;
 	range=400;
-	reloadtime=2.5;
+	reloadtime=2.75;
 	burst=2;
 	burstrate=0.2;
 	weaponvelocity=400;
@@ -13208,11 +13048,11 @@
 	}
 	[DAMAGE]
 	{
-		default=190;
+		default=210;
 		group_invincible=1;
-		armor_heavy=190;//#AUTO#
-		armor_medium=190;//#AUTO#
-		armor_light=190;//#AUTO#
+		armor_heavy=210;//#AUTO#
+		armor_medium=210;//#AUTO#
+		armor_light=210;//#AUTO#
 	}
 }
 [claw_boar_cannon]
@@ -13258,7 +13098,7 @@
 	range=300;
 	accuracy=800;
 	movingaccuracy=1600;
-	reloadtime=2.5;
+	reloadtime=2.8;
 	weaponvelocity=300;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	areaofeffect=48;
@@ -13279,10 +13119,10 @@
 	}
 	[DAMAGE]
 	{
-		default=70;
-		armor_heavy=35;//#AUTO#
-		armor_medium=70;//#AUTO#
-		armor_light=70;//#AUTO#
+		default=80;
+		armor_heavy=40;//#AUTO#
+		armor_medium=80;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [claw_armadon_cannon]
@@ -13292,7 +13132,7 @@
 	turret=1;
 	range=500;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	reloadtime=0.9;
+	reloadtime=1;
 	weaponvelocity=355;
 	areaofeffect=64;
 	accuracy=300;
@@ -13314,11 +13154,11 @@
 	}
 	[DAMAGE]
 	{
-		default=190;
+		default=210;
 		group_invincible=1;
-		armor_heavy=190;//#AUTO#
-		armor_medium=190;//#AUTO#
-		armor_light=190;//#AUTO#
+		armor_heavy=210;//#AUTO#
+		armor_medium=210;//#AUTO#
+		armor_light=210;//#AUTO#
 	}
 }
 [claw_piston_cannon]
@@ -13328,7 +13168,7 @@
 	turret=1;
 	range=425;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	reloadtime=1.7;
+	reloadtime=2;
 	weaponvelocity=400;
 	areaofeffect=48;
 	soundstart=canlite3;
@@ -13348,11 +13188,11 @@
 	}
 	[DAMAGE]
 	{
-		default=90;
+		default=105;
 		group_invincible=1;
-		armor_heavy=45;//#AUTO#
-		armor_medium=90;//#AUTO#
-		armor_light=90;//#AUTO#
+		armor_heavy=52;//#AUTO#
+		armor_medium=105;//#AUTO#
+		armor_light=105;//#AUTO#
 	}
 }
 [claw_thumper_cannon]
@@ -13362,7 +13202,7 @@
 	turret=1;
 	range=850;
 	accuracy=120;
-	reloadtime=1.5;
+	reloadtime=1.8;
 	weaponvelocity=350;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	areaofeffect=48;
@@ -13383,10 +13223,10 @@
 	}
 	[DAMAGE]
 	{
-		default=120;
-		armor_heavy=60;//#AUTO#
-		armor_medium=120;//#AUTO#
-		armor_light=120;//#AUTO#
+		default=140;
+		armor_heavy=70;//#AUTO#
+		armor_medium=140;//#AUTO#
+		armor_light=140;//#AUTO#
 	}
 }
 [claw_thumper_cannon_high]
@@ -13396,7 +13236,7 @@
 	turret=1;
 	range=850;
 	accuracy=140;
-	reloadtime=2.0;
+	reloadtime=1.8;
 	weaponvelocity=350;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	areaofeffect=48;
@@ -13417,10 +13257,10 @@
 	}
 	[DAMAGE]
 	{
-		default=120;
-		armor_heavy=60;//#AUTO#
-		armor_medium=120;//#AUTO#
-		armor_light=120;//#AUTO#
+		default=140;
+		armor_heavy=70;//#AUTO#
+		armor_medium=140;//#AUTO#
+		armor_light=140;//#AUTO#
 	}
 }
 [claw_pounder_cannon]
@@ -13464,7 +13304,7 @@
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	turret=1;
-	range=1600;
+	range=1540;
 	size=3.4;
 	rgbcolor=0.9 0.7 0.3;
 	stages=4;
@@ -13508,7 +13348,7 @@
   	alphadecay=0.24;
   	sizedecay=-0.1;
 	energypershot=0;
-	reloadtime=3;
+	reloadtime=3.45;
 	weaponvelocity=500;
 	areaofeffect=80;
 	explosiongenerator=custom:STDBLASTWRAPPER;
@@ -13524,11 +13364,11 @@
 	}
 	[DAMAGE]
 	{
-		default=250;
+		default=290;
 		group_invincible=1;
-		armor_heavy=250;//#AUTO#
-		armor_medium=250;//#AUTO#
-		armor_light=250;//#AUTO#
+		armor_heavy=290;//#AUTO#
+		armor_medium=290;//#AUTO#
+		armor_light=290;//#AUTO#
 	}
 }
 [claw_flail_cannon]
@@ -14751,7 +14591,7 @@
 	weapontype=Cannon;
 	turret=1;
 	range=650;
-	reloadtime=3;
+	reloadtime=3.3;
 	weaponvelocity=400;
 	areaofeffect=64;
 	explosiongenerator=custom:STDBLASTWRAPPER;
@@ -14774,11 +14614,11 @@
 	}
 	[DAMAGE]
 	{
-		default=220;
+		default=240;
 		group_invincible=1;
-		armor_heavy=220;//#AUTO#
-		armor_medium=220;//#AUTO#
-		armor_light=220;//#AUTO#
+		armor_heavy=240;//#AUTO#
+		armor_medium=240;//#AUTO#
+		armor_light=240;//#AUTO#
 	}
 }
 [sphere_endeavour_depthcharge]
@@ -15105,7 +14945,7 @@
 	range=500;
 	accuracy=500;
 	movingaccuracy=800;
-	reloadtime=2;
+	reloadtime=2.35;
 	weaponvelocity=300;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	areaofeffect=48;
@@ -15126,10 +14966,10 @@
 	}
 	[DAMAGE]
 	{
-		default=90;
-		armor_heavy=45;//#AUTO#
-		armor_medium=90;//#AUTO#
-		armor_light=90;//#AUTO#
+		default=110;
+		armor_heavy=55;//#AUTO#
+		armor_medium=110;//#AUTO#
+		armor_light=110;//#AUTO#
 	}
 }
 [sphere_rock_cannon_high]
@@ -15140,7 +14980,7 @@
 	range=500;
 	accuracy=240;
 	movingaccuracy=420;
-	reloadtime=2.0;
+	reloadtime=2.35;
 	weaponvelocity=300;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	areaofeffect=48;
@@ -15161,10 +15001,10 @@
 	}
 	[DAMAGE]
 	{
-		default=90;
-		armor_heavy=45;//#AUTO#
-		armor_medium=90;//#AUTO#
-		armor_light=90;//#AUTO#
+		default=110;
+		armor_heavy=55;//#AUTO#
+		armor_medium=110;//#AUTO#
+		armor_light=110;//#AUTO#
 	}
 }
 [sphere_trike_laser]
@@ -15451,7 +15291,7 @@
   	alphadecay=0.24;
   	sizedecay=-0.1;
 	turret=1;
-	range=1800;
+	range=1650;
 	reloadtime=3;
 	weaponvelocity=550;
 	areaofeffect=100;
@@ -16256,7 +16096,7 @@
 	weapontype=Cannon;
 	turret=1;
 	range=650;
-	reloadtime=1.5;
+	reloadtime=1.8;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	weaponvelocity=400;
 	areaofeffect=64;
@@ -16277,10 +16117,10 @@
 	}
 	[DAMAGE]
 	{
-		default=200;
-		armor_heavy=200;//#AUTO#
-		armor_medium=200;//#AUTO#
-		armor_light=200;//#AUTO#
+		default=240;
+		armor_heavy=240;//#AUTO#
+		armor_medium=240;//#AUTO#
+		armor_light=240;//#AUTO#
 	}
 }
 [sphere_bulk_cannon]
@@ -16289,7 +16129,7 @@
 	weapontype=Cannon;
 	turret=1;
 	range=500;
-	reloadtime=1.5;
+	reloadtime=1.8;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	weaponvelocity=400;
 	areaofeffect=64;
@@ -16310,10 +16150,10 @@
 	}
 	[DAMAGE]
 	{
-		default=200;
-		armor_heavy=200;//#AUTO#
-		armor_medium=200;//#AUTO#
-		armor_light=200;//#AUTO#
+		default=240;
+		armor_heavy=240;//#AUTO#
+		armor_medium=240;//#AUTO#
+		armor_light=240;//#AUTO#
 	}
 }
 [sphere_golem_shield]

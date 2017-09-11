@@ -151,7 +151,7 @@ function UnitHandler:Update()
 		end		
 	end
 	-- load game status : own cells, friendly cells, enemy cells
-	if fmod(f,60) == 0 then
+	if fmod(f,199) == 0 then
 		
 		local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
 		local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
@@ -644,7 +644,7 @@ function UnitHandler:Update()
 		self.collectedData = true
 	end
 	-- define task for each group
-	if fmod(f,60) == 2 then
+	if fmod(f,199) == 52 then
 		local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
 		local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
 	

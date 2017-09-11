@@ -84,7 +84,7 @@
 	turnrate=1030;
 	acceleration=0.26;
 	brakerate=0.32;
-	maxvelocity=0.9;
+	maxvelocity=1.05;
 	maxslope=20;
 	maxwaterdepth=999;
 
@@ -98,13 +98,10 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=gear_u5commander_cannon;
-	weapon2=gear_u3commander_torpedo;
-	weapon3=gear_u5commander_fireball;
-	slaveto1=3;
+	weapon1=gear_u5commander_fireball;
+	weapon2=gear_u5commander_torpedo;
 	onlytargetcategory1=NOTAIR;
 	onlytargetcategory2=NOTAIR;
-	onlytargetcategory3=NOTAIR;
 	explodeas=gear_commander_nanoblast;
 	selfdestructas=gear_commander_nanoblast;
 
@@ -162,9 +159,7 @@
 	//*****************
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:yellowflaremed;
-	explosiongenerator1=custom:Nano;
-	explosiongenerator2=custom:yellowflaremed;
-	explosiongenerator3=custom:DGUNREADYFLARE;
+		explosiongenerator0=custom:yellowflaremed;
+		explosiongenerator1=custom:Nano;
 	}
 }

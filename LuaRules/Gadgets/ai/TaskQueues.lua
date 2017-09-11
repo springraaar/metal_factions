@@ -1292,6 +1292,7 @@ local atkSupporter = {
 
 local atkPatroller = {
 	patrolAtkCenter,
+	{action = "cleanup", frames = 900},
 	{action = "wait", frames = 32}
 }
 
@@ -1481,11 +1482,13 @@ local avenWaterCommander = {
 local avenUCommander = {
 	checkMorph,
 	changeQueueToCommanderBaseBuilderIfNeeded,
+	{action = "cleanup", frames = 900},
 	metalExtractorNearbyIfSafe,
 	patrolAtkCenter
 }
 
 local avenLev1Con = {
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	metalExtractorNearbyIfSafe,
 	windSolarIfNeeded,
@@ -1528,6 +1531,7 @@ local avenLev1Con = {
 
 
 local avenLev1WaterCon = {
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	setWaterMode,
 	metalExtractorNearbyIfSafe,
@@ -1572,7 +1576,7 @@ local avenWaterMexBuilder = {
 	"aven_underwater_metal_extractor",
 	"aven_underwater_metal_extractor",
 	areaLimit_WaterLightAA,
-	{action = "cleanup", frames = 128},
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	"aven_underwater_metal_extractor",
 	areaLimit_WaterLightAA,
 	"aven_underwater_metal_extractor",
@@ -1585,10 +1589,12 @@ local avenWaterMexBuilder = {
 
 local avenLev1DefenseBuilder = {
 	moveVulnerablePos,
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	areaLimit_LightAA,
 	areaLimit_Radar,
 	areaLimit_L2HeavyDefense,
 	areaLimit_LightAA,
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	windSolarIfNeeded,
 	areaLimit_L2ArtilleryDefense,
 	restoreQueue
@@ -1596,6 +1602,7 @@ local avenLev1DefenseBuilder = {
 
 
 local avenLev2Con = {
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	brutalFusion,
 	airRepairPadIfNeeded,
@@ -1612,7 +1619,7 @@ local avenLev2Con = {
 	moveVulnerablePos,
 	areaLimit_L3LongRangeArtillery,
 	airRepairPadIfNeeded,
-	{action = "cleanup", frames = 128},
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	moveBaseCenter	
 }
 
@@ -1822,11 +1829,13 @@ local coreWaterCommander = {
 local gearUCommander = {
 	checkMorph,
 	changeQueueToCommanderBaseBuilderIfNeeded,
+	{action = "cleanup", frames = 900},
 	metalExtractorNearbyIfSafe,
 	patrolAtkCenter
 }
 
 local gearLev1Con = {
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	metalExtractorNearbyIfSafe,
 	windSolarIfNeeded,
@@ -1869,6 +1878,7 @@ local gearLev1Con = {
 
 
 local gearLev1WaterCon = {
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	setWaterMode,
 	metalExtractorNearbyIfSafe,
@@ -1909,6 +1919,7 @@ local coreMexBuilder = {
 	"gear_metal_extractor",
 	areaLimit_LightAA,
 	"gear_metal_extractor",
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	areaLimit_LightAA,
 	"gear_metal_extractor",
 	"gear_metal_extractor",
@@ -1925,6 +1936,7 @@ local coreWaterMexBuilder = {
 	"gear_underwater_metal_extractor",
 	areaLimit_WaterLightAA,
 	"gear_underwater_metal_extractor",
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	areaLimit_WaterLightAA,
 	"gear_underwater_metal_extractor",
 	areaLimit_WaterLightAA,
@@ -1940,6 +1952,7 @@ local gearLev1DefenseBuilder = {
 	areaLimit_Radar,
 	areaLimit_L2HeavyDefense,
 	areaLimit_LightAA,
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	windSolarIfNeeded,
 	areaLimit_L2ArtilleryDefense,
 	restoreQueue
@@ -1947,6 +1960,7 @@ local gearLev1DefenseBuilder = {
 
 
 local gearLev2Con = {
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	brutalFusion,
 	airRepairPadIfNeeded,
@@ -1986,6 +2000,7 @@ local gearLev2DefenseBuilder = {
 	areaLimit_AdvRadar,	
 	areaLimit_L3HeavyAA,
 	areaLimit_L3ArtilleryDefense,
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	areaLimit_L3HeavyAA,
 	areaLimit_L3LongRangeArtillery,
 	restoreQueue	
@@ -2168,6 +2183,7 @@ local clawWaterCommander = {
 local clawUCommander = {
 	checkMorph,
 	changeQueueToCommanderBaseBuilderIfNeeded,
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	metalExtractorNearbyIfSafe,
 	patrolAtkCenter
 }
@@ -2178,6 +2194,7 @@ local atkSupporter = {
 }
 
 local clawLev1Con = {
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	metalExtractorNearbyIfSafe,
 	windSolarIfNeeded,
@@ -2220,6 +2237,7 @@ local clawLev1Con = {
 
 
 local clawLev1WaterCon = {
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	setWaterMode,
 	metalExtractorNearbyIfSafe,
@@ -2254,6 +2272,7 @@ local clawMexBuilder = {
 	"claw_metal_extractor",
 	"claw_metal_extractor",
 	"claw_metal_extractor",
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	areaLimit_MediumAA,
 	"claw_metal_extractor",
 	"claw_metal_extractor",
@@ -2270,6 +2289,7 @@ local clawWaterMexBuilder = {
 	"claw_metal_extractor",
 	"claw_metal_extractor",
 	"claw_metal_extractor",
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	areaLimit_WaterMediumAA,
 	"claw_metal_extractor",
 	"claw_metal_extractor",
@@ -2288,6 +2308,7 @@ local clawLev1DefenseBuilder = {
 	areaLimit_MediumAA,
 	areaLimit_L2ArtilleryDefense,
 	areaLimit_L2HeavyDefense,
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	areaLimit_MediumAA,
 	windSolarIfNeeded,
 	restoreQueue
@@ -2295,6 +2316,7 @@ local clawLev1DefenseBuilder = {
 
 
 local clawLev2Con = {
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	brutalFusion,
 	airRepairPadIfNeeded,
@@ -2311,7 +2333,7 @@ local clawLev2Con = {
 	moveVulnerablePos,
 	areaLimit_L3LongRangeArtillery,
 	airRepairPadIfNeeded,
-	{action = "cleanup", frames = 128},
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	moveBaseCenter
 }
 
@@ -2334,6 +2356,7 @@ local clawLev2DefenseBuilder = {
 	areaLimit_AdvRadar,
 	areaLimit_L3HeavyAA,
 	areaLimit_L3ArtilleryDefense,
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	areaLimit_L3HeavyAA,
 	areaLimit_L3LongRangeArtillery,
 	restoreQueue	
@@ -2512,6 +2535,7 @@ local sphereWaterCommander = {
 local sphereUCommander = {
 	checkMorph,
 	changeQueueToCommanderBaseBuilderIfNeeded,
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	metalExtractorNearbyIfSafe,
 	patrolAtkCenter
 }
@@ -2522,6 +2546,7 @@ local atkSupporter = {
 }
 
 local sphereLev1Con = {
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	metalExtractorNearbyIfSafe,
 	moveBaseCenter,
@@ -2558,6 +2583,7 @@ local sphereLev1Con = {
 
 
 local sphereLev1WaterCon = {
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	setWaterMode,
 	metalExtractorNearbyIfSafe,
@@ -2592,11 +2618,13 @@ local sphereMexBuilder = {
 	"sphere_metal_extractor",
 	"sphere_metal_extractor",
 	areaLimit_MediumAA,
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	"sphere_metal_extractor",
 	"sphere_metal_extractor",
 	"sphere_metal_extractor",
 	"sphere_metal_extractor",
 	areaLimit_MediumAA,
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	areaLimit_Radar,
 	restoreQueue
 }
@@ -2608,11 +2636,13 @@ local sphereWaterMexBuilder = {
 	"sphere_metal_extractor",
 	"sphere_metal_extractor",	
 	areaLimit_WaterMediumAA,
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	"sphere_metal_extractor",
 	"sphere_metal_extractor",
 	"sphere_metal_extractor",
 	"sphere_metal_extractor",
 	areaLimit_WaterMediumAA,
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	areaLimit_WaterRadar,
 	tidalIfNeeded,
 	restoreQueue
@@ -2625,12 +2655,14 @@ local sphereLev1DefenseBuilder = {
 	areaLimit_MediumAA,
 	areaLimit_L2ArtilleryDefense,
 	areaLimit_L2HeavyDefense,
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	areaLimit_MediumAA,
 	restoreQueue
 }
 
 
 local sphereLev2Con = {
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	brutalFusion,
 	airRepairPadIfNeeded,
@@ -2671,6 +2703,7 @@ local sphereLev2DefenseBuilder = {
 	areaLimit_L3HeavyAA,
 	--areaLimit_L3ArtilleryDefense,
 	-- areaLimit_L3HeavyAA,
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	areaLimit_L3LongRangeArtillery,
 	restoreQueue	
 }
