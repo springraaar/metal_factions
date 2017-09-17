@@ -21,6 +21,7 @@ end
 
 local spAddUnitDamage = Spring.AddUnitDamage
 local spGetUnitPosition = Spring.GetUnitPosition
+local spGetUnitDirection = Spring.GetUnitDirection
 local spGetUnitRadius = Spring.GetUnitRadius
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetAllUnits = Spring.GetAllUnits
@@ -41,6 +42,8 @@ local spGetFeaturePosition = Spring.GetFeaturePosition
 local spGetFeatureRadius = Spring.GetFeatureRadius
 local spPlaySoundFile = Spring.PlaySoundFile
 local spSpawnCEG = Spring.SpawnCEG
+local spSetProjectileCollision = Spring.SetProjectileCollision
+local spSpawnProjectile = Spring.SpawnProjectile
 
 local spSetFeatureVelocity = Spring.SetFeatureVelocity
 local spSetFeaturePosition = Spring.SetFeaturePosition
@@ -53,6 +56,7 @@ local spCreateFeature = Spring.CreateFeature
 local random = math.random
 local floor = math.floor
 local min = math.min
+local abs = math.abs
 
 
 local groundCollisionCEG = "COLLISION"
@@ -132,8 +136,8 @@ function gadget:GameFrame(n)
 		-- workaround for engine not calling StartMoving when it should in some situations
 		if moveAnimationUnitIds[unitId] then
 			if (n%MOVING_CHECK_DELAY == 0) then
-				if math.abs(vx) > 0.1 or math.abs(vz) > 0.1 then
-					if math.abs(h) < 3 then
+				if abs(vx) > 0.1 or abs(vz) > 0.1 then
+					if abs(h) < 3 then
 						spCallCOBScript(unitId,"StartMoving",0)
 					end
 				else
@@ -147,8 +151,8 @@ function gadget:GameFrame(n)
 			if oldPhysics[7] > 0 and h <= 0 and enableGC == true then
 				
 				-- only trigger this if moving fast
-				if math.abs(oldPhysics[5]) > COLLISION_SPEED_THRESHOLD then
-					local radius = spGetUnitRadius(unitId) * 2 * (1 + COLLISION_SPEED_MOD * math.abs(oldPhysics[5]))
+				if abs(oldPhysics[5]) > COLLISION_SPEED_THRESHOLD then
+					local radius = spGetUnitRadius(unitId) * 2 * (1 + COLLISION_SPEED_MOD * abs(oldPhysics[5]))
 					--Spring.Echo("unit "..unitId.." ground collision at frame "..n.." radius="..radius)
 					spSpawnCEG(groundCollisionCEG, x,groundHeight+5,z,0,1,0,radius,radius)
 					spPlaySoundFile(groundCollisionSound, math.min(1,math.max(0.2,radius/50)), x, y, z)
@@ -158,8 +162,8 @@ function gadget:GameFrame(n)
 		else
 			-- check for high speed water impact
 			if oldPhysics[2] > 0 and y <= 0 then
-				if math.abs(oldPhysics[5]) > COLLISION_SPEED_THRESHOLD then
-					local radius = spGetUnitRadius(unitId) * 2 * (1 + COLLISION_SPEED_MOD * math.abs(oldPhysics[5]))
+				if abs(oldPhysics[5]) > COLLISION_SPEED_THRESHOLD then
+					local radius = spGetUnitRadius(unitId) * 2 * (1 + COLLISION_SPEED_MOD * abs(oldPhysics[5]))
 					--Spring.Echo("unit "..unitId.." water collision at frame "..n.." radius="..radius)
 					spSpawnCEG(waterCollisionCEG, x,3,z,0,1,0,radius,radius)
 					spPlaySoundFile(waterCollisionSound, math.min(1,math.max(0.2,radius/50)), x, y, z)
@@ -199,8 +203,8 @@ function gadget:GameFrame(n)
 			if oldPhysics[7] > 0 and h <= 0 and enableGC == true then
 				
 				-- only trigger this if moving fast
-				if math.abs(oldPhysics[5]) > COLLISION_SPEED_THRESHOLD then
-					local radius = spGetFeatureRadius(featureId) * 2 * (1 + COLLISION_SPEED_MOD * math.abs(oldPhysics[5]))
+				if abs(oldPhysics[5]) > COLLISION_SPEED_THRESHOLD then
+					local radius = spGetFeatureRadius(featureId) * 2 * (1 + COLLISION_SPEED_MOD * abs(oldPhysics[5]))
 					--Spring.Echo("feature "..featureId.." ground collision at frame "..n.." radius="..radius)
 					spSpawnCEG(groundCollisionCEG, x,groundHeight+5,z,0,1,0,radius,radius)
 					spPlaySoundFile(groundCollisionSound, math.min(1,math.max(0.2,radius/50)), x, y, z)
@@ -210,8 +214,8 @@ function gadget:GameFrame(n)
 		else
 			-- check for high speed water impact
 			if oldPhysics[2] > 0 and y <= 0 then
-				if math.abs(oldPhysics[5]) > COLLISION_SPEED_THRESHOLD then
-					local radius = spGetFeatureRadius(featureId) * 2 * (1 + COLLISION_SPEED_MOD * math.abs(oldPhysics[5]))
+				if abs(oldPhysics[5]) > COLLISION_SPEED_THRESHOLD then
+					local radius = spGetFeatureRadius(featureId) * 2 * (1 + COLLISION_SPEED_MOD * abs(oldPhysics[5]))
 					--Spring.Echo("feature "..featureId.." water collision at frame "..n.." radius="..radius)
 					spSpawnCEG(waterCollisionCEG, x,3,z,0,1,0,radius,radius)
 					spPlaySoundFile(waterCollisionSound, math.min(1,math.max(0.2,radius/50)), x, y, z)
@@ -233,7 +237,7 @@ function gadget:GameFrame(n)
 end
 
 -- cleanup when some units are destroyed
-function gadget:UnitDestroyed(unitId, unitDefId, unitTeam)
+function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDefId, attackerTeamId)
 	if (moveAnimationUnitIds[unitId]) then
 		moveAnimationUnitIds[unitId] = nil
 	end
@@ -244,7 +248,7 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam)
 	local ud = UnitDefs[unitDefId]
 	--Spring.Echo("unit destroyed")
 	if ud and ud.canFly == true and not isDrone(ud) and tostring(ud.wreckName) == '' then
-		if bp > 0.999 then
+		if bp > 0.999 or (attackerId ~= nil and bp > 0.5) then
 			--Spring.Echo("aircraft destroyed "..tostring(ud.wreckName))
 			local physics = unitPhysicsById[unitId]
 			if (physics ~= nil) then
@@ -289,6 +293,54 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam)
 				end
 			end
 		end
+	-- unit was not fully built but leaves wreckage		
+	elseif (ud and (not isDrone(ud)) and (tostring(ud.wreckName) ~= '') and bp > 0.5 and bp < 1 and attackerId ~= nil) then
+		--Spring.Echo("attackerId="..tostring(attackerId).." attackerDefId="..tostring(attackerDefId).." attackerTeamId="..tostring(attackerTeamId))
+		
+		local physics = unitPhysicsById[unitId]
+		
+		if (physics ~= nil) then
+			local radius = spGetUnitRadius(unitId)
+			local dx,dy,dz = spGetUnitDirection(unitId)
+			--Spring.Echo("dx="..tostring(dx).." dz="..tostring(dz))
+			
+			-- bigger effect for expensive units
+			radius = radius + ud.metalCost / 100 
+			
+			spSpawnCEG(nanoExplosionCEG, physics[1],physics[2],physics[3],0,1,0,radius,radius)
+			spPlaySoundFile(nanoExplosionSound, math.min(1,math.max(0.2,radius/50)), physics[1], physics[2], physics[3])
+			
+			
+			local dir = 0
+			if abs(dx) > abs(dz) then
+				if dx > 0 then
+					dir = 1
+				else 
+					dir = 3
+				end
+			else
+				if dz > 0 then
+					dir = 0
+				else 
+					dir = 2
+				end
+			end
+			--Spring.Echo("dir="..dir)
+			
+			-- create actual explosion
+			local createdId = spSpawnProjectile(WeaponDefNames[ud.deathExplosion].id,{
+				["pos"] = {physics[1],physics[2]+radius/3,physics[3]},
+				["end"] = {physics[1],physics[2]+radius/3,physics[3]},
+				["speed"] = {0,1,0},
+				["owner"] = unitTeam
+			})
+			if (createdId) then
+				spSetProjectileCollision(createdId)
+			end
+			
+			-- create feature
+			fId = spCreateFeature(ud.wreckName,physics[1],physics[2],physics[3],dir)
+		end		
 	end
 
 
@@ -321,3 +373,14 @@ function gadget:FeatureDestroyed(featureId, allyTeam)
 	featurePhysicsById[featureId] = nil
 end
 
+
+-- prevent nano frames from using self-D
+function gadget:AllowCommand(unitId, unitDefId, unitTeam, cmdId, cmdParams, cmdOptions, cmdTag, synced)
+	if cmdId == CMD.SELFD then
+		local _,_,_,_,bp = spGetUnitHealth(unitId)
+		if bp < 1 then
+			return false
+		end
+	end 
+	return true
+end

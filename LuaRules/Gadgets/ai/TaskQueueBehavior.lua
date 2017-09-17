@@ -423,7 +423,7 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 			self.progress = true
 			return
 		end
-		-- reclaim up to N features
+		-- reclaim features within 500 range until the wait timer ends
 		if action == "cleanup" then
 			wrecks = spGetFeaturesInSphere(selfPos.x,selfPos.y,selfPos.z, 500)
 			-- we only want to reclaim the first one

@@ -84,7 +84,10 @@ local spGetGameFrame = Spring.GetGameFrame
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spSetTeamRulesParam = Spring.SetTeamRulesParam
 local spGetTeamList = Spring.GetTeamList
+local spSendMessageToTeam = Spring.SendMessageToTeam
 local spSetUnitWeaponState = Spring.SetUnitWeaponState
+local spGetTeamInfo = Spring.GetTeamInfo
+
 local min = math.min
 local floor = math.floor
 local ceil = math.ceil
@@ -380,6 +383,10 @@ function checkLimit(name, teamId)
 		return true
 	end
 	
+	local _,_,_,isAI,_,_ = spGetTeamInfo(teamId)
+	if (not isAI) then
+		spSendMessageToTeam( teamId, "\""..UnitDefNames[name].humanName.."\" : own limit or type limit reached : construction aborted")
+	end
 	return false
 end
 

@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=600;
+	maxdamage=500;
 	footprintx=2;
 	footprintz=2;
 
@@ -35,7 +35,7 @@
 	metalmake=0.0;
 	metalstorage=0;
 	energymake=0;
-	energyuse=90.0;
+	energyuse=75.0;
 	energystorage=0;
 
 	//************************************************************
@@ -84,9 +84,9 @@
 	//  Sight/Radar/Sonar
 	//*********************
 	sightdistance=600;
-	radardistance=1300;
+	radardistance=1100;
 	radardistancejam=500;
-	sonardistance=1100;
+	sonardistance=900;
 
 
 	//************************************************************
@@ -129,13 +129,14 @@
 	[CustomParams]
 	{
 		isDrone=1;
+		evalfactor=0.7;
 	}
 
 	//************************************************************
 	//  To be removed
 	//*****************
 
-	buildcostenergy=7579;//#AUTO#
-	buildcostmetal=757;//#AUTO#
-	buildtime=9726;//#AUTO#
+	buildcostenergy=4111;//#AUTO#
+	buildcostmetal=411;//#AUTO#
+	buildtime=5275;//#AUTO#
 }

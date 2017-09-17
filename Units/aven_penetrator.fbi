@@ -5,7 +5,7 @@
 	//********************
 	Side=Aven;
 	name=Penetrator;
-	description=Mobile Energy Weapon;
+	description=Anti-Armor Sniper Vehicle;
 
 	//************************************************************
 	//  Categories
@@ -81,8 +81,8 @@
 	weapon1=aven_penetrator_laser;
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
-	explodeas=BIG_UNIT;
-	selfdestructas=BIG_UNIT;
+	explodeas=PENETRATOR_BLAST;
+	selfdestructas=PENETRATOR_BLAST;
 
 	//************************************************************
 	//  Orders
@@ -128,7 +128,7 @@
 	}
 
 
-	buildcostenergy=10858;//#AUTO#
-	buildcostmetal=2171;//#AUTO#
-	buildtime=25879;//#AUTO#
+	buildcostenergy=10699;//#AUTO#
+	buildcostmetal=2139;//#AUTO#
+	buildtime=25500;//#AUTO#
 }

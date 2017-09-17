@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=280;
+	maxdamage=260;
 	healtime=30;
 	footprintx=2;
 	footprintz=2;
@@ -65,7 +65,7 @@
 	turnrate=768;
 	acceleration=0.3;
 	brakerate=3;
-	maxvelocity=3.0;
+	maxvelocity=3.5;
 	maxslope=10;
 	maxwaterdepth=255;
 	cruisealt=120;
@@ -123,6 +123,7 @@
 	[CustomParams]
 	{
 		isDrone=1;
+		evalfactor=0.7;
 	}
 
 	//************************************************************
@@ -132,7 +133,7 @@
 	{
 		explosiongenerator0=custom:GLOWSML;
 	}
-	buildcostenergy=1531;//#AUTO#
-	buildcostmetal=153;//#AUTO#
-	buildtime=1965;//#AUTO#
+	buildcostenergy=1282;//#AUTO#
+	buildcostmetal=128;//#AUTO#
+	buildtime=1645;//#AUTO#
 }

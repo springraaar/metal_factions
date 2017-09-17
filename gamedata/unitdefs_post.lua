@@ -166,6 +166,15 @@ if (true) then
 		unitDef.idletime = 0
 		unitDef.idleautoheal = 0
 		
+		-- if unit generates or drains less than 3E/s, ignore it
+		if (unitDef.energymake and math.abs(tonumber(unitDef.energymake)) < 3) then
+			Spring.Echo(unitDef.name.." produces less than 3 energy")
+			unitDef.energymake = 0
+		end
+		if (unitDef.energymake and math.abs(tonumber(unitDef.energyuse)) < 3) then
+			Spring.Echo(unitDef.name.." consumes less than 3 energy")
+			unitDef.energyuse = 0
+		end
 		
 		if (mv and mv > 0) then
 			-- disable transporting enemy units

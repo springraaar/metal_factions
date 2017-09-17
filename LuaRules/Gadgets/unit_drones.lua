@@ -79,12 +79,13 @@ local LIGHT_DRONE_LEASH_DISTANCE = 600
 local BUILDER_DRONE_LEASH_DISTANCE = 600
 local MEDIUM_DRONE_LEASH_DISTANCE = 600
 local STEALTH_DRONE_LEASH_DISTANCE = 600
+local DRONE_EXPLODE_DISTANCE = 1200
 
 local SQ_LIGHT_DRONE_LEASH_DISTANCE = LIGHT_DRONE_LEASH_DISTANCE*LIGHT_DRONE_LEASH_DISTANCE
 local SQ_BUILDER_DRONE_LEASH_DISTANCE = BUILDER_DRONE_LEASH_DISTANCE*BUILDER_DRONE_LEASH_DISTANCE
 local SQ_MEDIUM_DRONE_LEASH_DISTANCE = MEDIUM_DRONE_LEASH_DISTANCE*MEDIUM_DRONE_LEASH_DISTANCE
 local SQ_STEALTH_DRONE_LEASH_DISTANCE = STEALTH_DRONE_LEASH_DISTANCE*STEALTH_DRONE_LEASH_DISTANCE
-
+local SQ_DRONE_EXPLODE_DISTANCE = DRONE_EXPLODE_DISTANCE * DRONE_EXPLODE_DISTANCE
 
 droneLeashSQDistances = {
 	aven_light_drone = SQ_LIGHT_DRONE_LEASH_DISTANCE, 
@@ -397,17 +398,24 @@ function gadget:GameFrame(n)
 						
 						-- if too far from owner, move closer
 						x,_,z = spGetUnitPosition(uId)
-						if ox and oz and (sqDistance(x,ox,z,oz) > droneLeashSQDistances[uName]) then
-							spGiveOrderToUnit(uId, CMD.MOVE, { (x+ox)/2, 0, (z+oz)/2 }, {})
-						else
-							-- if idle, fight or patrol nearby position
-							local cmds = spGetUnitCommands(uId,3)
-		      				if ox and oz and (cmds and (#cmds <= 0)) then
-		      					if stealthDrones[uName] then
-									spGiveOrderToUnit(uId, CMD.MOVE, { ox + random(-200,200) , 0, oz + random(-200,200) }, {})
-		      					else
-		        					spGiveOrderToUnit(uId, CMD.FIGHT, { ox + random(-200,200) , 0, oz + random(-200,200) }, {})
-		        				end
+						if (ox and oz ) then
+							local dist = sqDistance(x,ox,z,oz)
+							if ( dist > SQ_DRONE_EXPLODE_DISTANCE ) then
+								--Spring.Echo("drone wandered too far and exploded...")
+								spDestroyUnit(uId)
+								droneUnderConstruction[uId] = nil
+							elseif ( dist > droneLeashSQDistances[uName]) then
+								spGiveOrderToUnit(uId, CMD.MOVE, { (x+ox)/2, 0, (z+oz)/2 }, {})
+							else
+								-- if idle, fight or patrol nearby position
+								local cmds = spGetUnitCommands(uId,3)
+			      				if (cmds and (#cmds <= 0)) then
+			      					if stealthDrones[uName] then
+										spGiveOrderToUnit(uId, CMD.MOVE, { ox + random(-200,200) , 0, oz + random(-200,200) }, {})
+			      					else
+			        					spGiveOrderToUnit(uId, CMD.FIGHT, { ox + random(-200,200) , 0, oz + random(-200,200) }, {})
+			        				end
+								end
 							end
 						end
 					end

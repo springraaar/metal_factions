@@ -517,7 +517,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=700;
-	reloadtime=0.75;
+	reloadtime=0.86;
 	flighttime=4;
 	trajectoryheight=0.2;
 	weaponvelocity=660;
@@ -542,10 +542,10 @@
 	}
 	[DAMAGE]
 	{
-		default=70;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
+		default=80;
+		armor_heavy=20;//#AUTO#
+		armor_medium=40;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [aven_u3commander_emg]
@@ -1073,9 +1073,9 @@
 	beamtime=0.05;
 	thickness=1.31;
 	corethickness=0.55;
-	range=380;
+	range=370;
 	minintensity=1.0;
-	reloadtime=1.2;
+	reloadtime=1;
 	weaponvelocity=1533;
 	energypershot=0;
 	areaofeffect=8;
@@ -1097,11 +1097,11 @@
 	}
 	[DAMAGE]
 	{
-		default=42;
+		default=50;
 		group_invincible=1;
-		armor_heavy=10;//#AUTO#
-		armor_medium=21;//#AUTO#
-		armor_light=42;//#AUTO#
+		armor_heavy=12;//#AUTO#
+		armor_medium=25;//#AUTO#
+		armor_light=50;//#AUTO#
 	}
 }
 [aven_stalker_laser]
@@ -1153,9 +1153,9 @@
 	corethickness=0.6;
 	intensity=0.9;
 	turret=0;
-	range=460;
+	range=420;
 	minintensity=1.0;
-	reloadtime=0.9;
+	reloadtime=0.8;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundstart=lasrfir3;
@@ -1190,7 +1190,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=660;
-	reloadtime=4.5;
+	reloadtime=5.1;
 	flighttime=3.75;
 	weaponvelocity=745;
 	startvelocity=550;
@@ -1218,11 +1218,11 @@
 	}
 	[DAMAGE]
 	{
-		default=70;
+		default=80;
 		group_invincible=1;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
+		armor_heavy=20;//#AUTO#
+		armor_medium=40;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [aven_kodiak_missile]
@@ -1233,7 +1233,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=700;
-	reloadtime=5;
+	reloadtime=5.7;
 	flighttime=3.75;
 	weaponvelocity=745;
 	startvelocity=550;
@@ -1261,11 +1261,11 @@
 	}
 	[DAMAGE]
 	{
-		default=70;
+		default=80;
 		group_invincible=1;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
+		armor_heavy=20;//#AUTO#
+		armor_medium=40;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [aven_javelin_missile]
@@ -1397,91 +1397,6 @@
 		armor_light=500;//#AUTO#
 	}
 }
-[ARMAAS_WEAPON1]
-{
-	name=Missiles;
-	weapontype=MissileLauncher;
-	turret=1;
-	explosiongenerator=custom:STDBLASTWRAPPER;
-	model=weapon_missile.3do;
-	Texture1=null; //flare//
-	Texture2=null;//first segment of missiletrail//
-	Texture3=null;//flame//
-	Texture4=null;//unknown//
-	range=850;
-	reloadtime=2;
-	flighttime=3.75;
-	weaponvelocity=650;
-	startvelocity=530;
-	weaponAcceleration=121;
-	turnrate=60000;
-	areaofeffect=48;
-	metalpershot=0;
-	soundstart=misfire1;
-	soundhit=mishit1;
-	firestarter=70;
-	tracks=1;
-	smoketrail=1;
-	tolerance=8000;
-	trajectoryheight=0.1;
-	cegTag=SMLROCKETTRAIL;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=70;
-		group_landair=100;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
-	}
-}
-[ARMAH_WEAPON]
-{
-	name=Missiles;
-	weapontype=MissileLauncher;
-	cegTag=SMLROCKETTRAIL;
-	turret=1;
-	model=weapon_missile.3do;
-	Texture1=null; //flare//
-	explosiongenerator=custom:STDBLASTWRAPPER;
-	range=650;
-	reloadtime=1.7;
-	flighttime=4;
-	weaponvelocity=690;
-	startvelocity=420;
-	weaponAcceleration=164;
-	turnrate=50000;
-	areaofeffect=48;
-	trajectoryheight=0.1;
-	metalpershot=0;
-	soundstart=misfire1;
-	soundhit=mishit1;
-	firestarter=70;
-	tracks=1;
-	smoketrail=1;
-	tolerance=10000;
-	WaterBounce=0;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=60;
-    group_invincible=1;
-		group_landair=142;
-		armor_heavy=15;//#AUTO#
-		armor_medium=30;//#AUTO#
-		armor_light=60;//#AUTO#
-	}
-}
 [ARMAIR_TORPEDO]
 {
 	name=Torpedoes;
@@ -1591,46 +1506,6 @@
 		armor_heavy=40;//#AUTO#
 		armor_medium=80;//#AUTO#
 		armor_light=80;//#AUTO#
-	}
-}
-[ARMAMPH_WEAPON2]
-{
-	name=Missiles;
-	weapontype=MissileLauncher;
-	explosiongenerator=custom:STDBLASTWRAPPER;
-	cegTag=SMLROCKETTRAIL;
-	turret=1;
-	model=weapon_missile.3do;
-	Texture1=null; //flare//
-	range=700;
-	reloadtime=2;
-	flighttime=4;
-	weaponvelocity=660;
-	startvelocity=470;
-	weaponAcceleration=154;
-	turnrate=50000;
-	areaofeffect=48;
-	metalpershot=0;
-	soundstart=misfire1;
-	soundhit=mishit1;
-	firestarter=70;
-	tracks=1;
-	smoketrail=1;
-	tolerance=10000;
-	trajectoryheight=0.1;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=60;
-		group_invincible=1;
-		armor_heavy=15;//#AUTO#
-		armor_medium=30;//#AUTO#
-		armor_light=60;//#AUTO#
 	}
 }
 [aven_slider_cannon]
@@ -2185,86 +2060,6 @@
 		armor_light=57;//#AUTO#
 	}
 }
-[ARMFRT_MISSILE]
-{
-	name=Missiles;
-	weapontype=MissileLauncher;
-	turret=1;
-	model=weapon_missile.3do;
-	Texture1=null; //flare//
-	explosiongenerator=custom:STDBLASTWRAPPER;
-	cegTag=SMLROCKETTRAIL;
-	range=700;
-	reloadtime=2;
-	flighttime=3.75;
-	weaponvelocity=660;
-	startvelocity=470;
-	weaponAcceleration=154;
-	trajectoryheight=0.1;
-	turnrate=50000;
-	areaofeffect=48;
-	metalpershot=0;
-	soundstart=misfire1;
-	soundhit=mishit1;
-	firestarter=70;
-	tracks=1;
-	smoketrail=1;
-	tolerance=10000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=60;
-		group_invincible=1;
-		armor_heavy=15;//#AUTO#
-		armor_medium=30;//#AUTO#
-		armor_light=60;//#AUTO#
-	}
-}
-[ARMKBOT_MISSILE]
-{
-	name=Missiles;
-	weapontype=MissileLauncher;
-	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	cegTag=SMLROCKETTRAIL;
-	turret=1;
-	model=weapon_missile.3do;
-	Texture1=null; //flare//
-	range=704;
-	reloadtime=2;
-	flighttime=3.75;
-	weaponvelocity=750;
-	startvelocity=550;
-	weaponAcceleration=101;
-	turnrate=50000;
-	areaofeffect=48;
-	trajectoryheight=0.1;
-	metalpershot=0;
-	soundstart=misfire1;
-	soundhit=mishit1;
-	firestarter=70;
-	tracks=1;
-	smoketrail=1;
-	tolerance=9000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=50;
-		group_invincible=1;
-		armor_heavy=12;//#AUTO#
-		armor_medium=25;//#AUTO#
-		armor_light=50;//#AUTO#
-	}
-}
 [aven_dervish_pistols]
 {
 	name=Plasma Bolt;
@@ -2368,96 +2163,6 @@
 		armor_heavy=55;//#AUTO#
 		armor_medium=110;//#AUTO#
 		armor_light=110;//#AUTO#
-	}
-}
-[ARMMH_WEAPON]
-{
-	name=Rocket;
-	weapontype=StarburstLauncher;
-	model=weapon_armmhmsl;
-  	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	cegTag=ROCKETTRAIL3;
-	Texture1=null; //flare//
-	Texture2=null;//first segment of missiletrail//
-	Texture3=null;//flame//
-	Texture4=null;//unknown//
-	range=1300;
-	reloadtime=8;
-	weapontimer=2;
-	flighttime=10;
-	weaponvelocity=700;
-	weaponAcceleration=160;
-	turnrate=48768;
-	startvelocity=30;
-	areaofeffect=80;
-	metalpershot=0;
-	soundstart=Rockhvy1;
-	soundhit=xplomed4;
-	firestarter=100;
-	smoketrail=0;
-	tolerance=4000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=3;
-	}
-	[DAMAGE]
-	{
-		default=522;
-    		group_invincible=1;
-		armor_heavy=522;//#AUTO#
-		armor_medium=522;//#AUTO#
-		armor_light=522;//#AUTO#
-	}
-}
-[ARMMH_WEAPON2]
-{
-	name=Heavy Multi-Launch Rockets;
-	weapontype=MissileLauncher;
-  	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	cegTag=ROCKETTRAIL3;
-	Texture1=null; //testing//
-	Texture2=null;
-	Texture3=null;
-	Texture4=null;
-	CollideFriendly=1; 
-	impulsefactor=0.6; //by Peet//
-	turret=1;
-	model=weapon_exphvyrock;
-	range=1300;
-	Trajectoryheight=1;
-	flighttime=2;
-	reloadtime=8;
-	weapontimer=6;
-	weaponvelocity=700;
-	startvelocity=400;
-	weaponAcceleration=100;
-	areaofeffect=80;
-	metalpershot=0;
-	Burst=1;
-	Burstrate=0.1;
-	Wobble=8000;
-	turnrate=1200;
-	edgeeffectiveness=0.75;
-	soundstart=Rockhvy1;
-	soundhit=xplomed4;
-	firestarter=70;
-	smoketrail=0;
- 	tolerance=10000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=3;
-	}
-	[DAMAGE]
-	{
-		default=700;
-		group_invincible=1;
-		armor_heavy=700;//#AUTO#
-		armor_medium=700;//#AUTO#
-		armor_light=700;//#AUTO#
 	}
 }
 [armmine1]
@@ -2670,46 +2375,6 @@
 		armor_light=700;//#AUTO#
 	}
 }
-[aven_pelican_missile]
-{
-	name=Missiles;
-	weapontype=MissileLauncher;
-	explosiongenerator=custom:STDBLASTWRAPPER;
-	cegTag=SMLROCKETTRAIL;
-	turret=1;
-	model=weapon_missile.3do;
-	Texture1=null; //flare//
-	range=650;
-	reloadtime=4;
-	flighttime=3.75;
-	weaponvelocity=660;
-	startvelocity=470;
-	weaponAcceleration=154;
-	turnrate=41660;
-	areaofeffect=48;
-	trajectoryheight=0.1;
-	metalpershot=0;
-	soundstart=misfire1;
-	soundhit=mishit1;
-	firestarter=70;
-	tracks=1;
-	smoketrail=1;
-	tolerance=10000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=60;
-		group_invincible=1;
-		armor_heavy=15;//#AUTO#
-		armor_medium=30;//#AUTO#
-		armor_light=60;//#AUTO#
-	}
-}
 [ARMSCAB_WEAPON]
 {
 	name=Rocket;
@@ -2862,122 +2527,6 @@
 		armor_heavy=400;//#AUTO#
 		armor_medium=400;//#AUTO#
 		armor_light=400;//#AUTO#
-	}
-}
-[ARMSEAP_WEAPON3]
-{
-	name=Missiles;
-	weapontype=MissileLauncher;
-	model=weapon_missile.3do;
-	Texture1=null; //flare//
-	explosiongenerator=custom:STDBLASTWRAPPER;
-	cegTag=SMLROCKETTRAIL;
-	range=510;
-	reloadtime=5;
-	flighttime=3.75;
-	weaponvelocity=480;
-	startvelocity=420;
-	weaponAcceleration=146;
-	turnrate=16384;
-	areaofeffect=48;
-	metalpershot=0;
-	soundstart=Rocklit3;
-	soundhit=xplosml2;
-	firestarter=70;
-	tracks=1;
-	smoketrail=1;
-	tolerance=8000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=60;
-		group_invincible=1;
-		armor_heavy=15;//#AUTO#
-		armor_medium=30;//#AUTO#
-		armor_light=60;//#AUTO#
-	}
-}
-[ARMSFIG_WEAPON2]
-{
-	name=Missiles;
-	weapontype=MissileLauncher;
-	model=weapon_missile.3do;
-	Texture1=null; //flare//
-	explosiongenerator=custom:STDBLASTWRAPPER;
-	range=510;
-	reloadtime=5;
-	flighttime=6;
-	weaponvelocity=522;
-	startvelocity=420;
-	weaponAcceleration=146;
-	turnrate=19384;
-	areaofeffect=48;
-	metalpershot=0;
-	soundstart=Rocklit3;
-	soundhit=xplosml2;
-	firestarter=70;
-	tracks=1;
-	smoketrail=1;
-	cegTag=SMLROCKETTRAIL;
-	tolerance=8000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=50;
-		group_invincible=1;
-		armor_heavy=12;//#AUTO#
-		armor_medium=25;//#AUTO#
-		armor_light=50;//#AUTO#
-	}
-}
-[ARMSHIP_MISSILE]
-{
-	name=Missiles;
-	weapontype=MissileLauncher;
-	turret=1;
-	model=weapon_missile.3do;
-	Texture1=null; //flare//
-	explosiongenerator=custom:STDBLASTWRAPPER;
-	range=880;
-	reloadtime=2;
-	flighttime=3.75;
-	weaponvelocity=650;
-	startvelocity=530;
-	weaponAcceleration=121;
-	turnrate=60000;
-	areaofeffect=48;
-	metalpershot=0;
-	trajectoryheight=0.1;
-	soundstart=misfire1;
-	soundhit=mishit1;
-	firestarter=70;
-	tracks=1;
-	smoketrail=1;
-	cegTag=SMLROCKETTRAIL;
-	tolerance=8000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=70;
-		group_invincible=1;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
 	}
 }
 [ARMSH_WEAPON]
@@ -3234,7 +2783,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=660;
-	reloadtime=2.4;
+	reloadtime=2.95;
 	flighttime=3.75;
 	weaponvelocity=740;
 	startvelocity=550;
@@ -3258,11 +2807,11 @@
 	}
 	[DAMAGE]
 	{
-		default=65;
+		default=80;
 		group_invincible=1;
-		armor_heavy=16;//#AUTO#
-		armor_medium=32;//#AUTO#
-		armor_light=65;//#AUTO#
+		armor_heavy=20;//#AUTO#
+		armor_medium=40;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [ARMTRUCK_ROCKET]
@@ -4265,45 +3814,18 @@
 		armor_light=1400;//#AUTO#
 	}
 }
-[ATOMIC_BLASTPEN]
+[PENETRATOR_BLAST]
 {
-	name=Atomic Blast Weapon;
-	weapontype=Cannon;
-	turret=1;
-	range=360;
-	reloadtime=3.6;
-	weaponvelocity=250;
-	areaofeffect=180;
-	soundstart=largegun;
-	soundhit=xplonuk3;
-	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=3;
-	}
-	[DAMAGE]
-	{
-		default=800;
-		group_invincible=1;
-		armor_heavy=800;//#AUTO#
-		armor_medium=800;//#AUTO#
-		armor_light=800;//#AUTO#
-	}
-}
-[BIG_UNIT]
-{
-	name=Big Unit Explosion;
+	name=Penetrator Blast;
 	weapontype=Cannon;
 	turret=1;
 	range=480;
 	reloadtime=3.6;
 	weaponvelocity=250;
-	areaofeffect=110;
+	areaofeffect=300;
 	soundstart=largegun;
-	soundhit=xplolrg3;
-	explosiongenerator=custom:DEBRISBLASTWRAPPER;
+	soundhit=xplonuk1;
+	explosiongenerator=custom:LARGEBLASTWRAPPER1;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -4312,14 +3834,68 @@
 	}
 	[DAMAGE]
 	{
-		default=350;
+		default=1100;
 		group_invincible=1;
-		armor_heavy=350;//#AUTO#
-		armor_medium=350;//#AUTO#
-		armor_light=350;//#AUTO#
+		armor_heavy=1100;//#AUTO#
+		armor_medium=1100;//#AUTO#
+		armor_light=1100;//#AUTO#
 	}
 }
-[BIG_UNITEX]
+[ZAPPER_BLAST]
+{
+	name=Zapper Blast;
+	weapontype=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=385;
+	soundstart=largegun;
+	soundhit=xplonuk1;
+	explosiongenerator=custom:LARGEBLASTWRAPPER1;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=1400;
+		group_invincible=1;
+		armor_heavy=1400;//#AUTO#
+		armor_medium=1400;//#AUTO#
+		armor_light=1400;//#AUTO#
+	}
+}
+[HUGE_UNIT]
+{
+	name=Huge Unit Blast;
+	weapontype=Cannon;
+	turret=1;
+	range=360;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=220;
+	soundstart=largegun;
+	soundhit=xplonuk3;
+	explosiongenerator=custom:DEBRISBLASTWRAPPER;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=2;
+	}
+	[DAMAGE]
+	{
+		default=400;
+		group_invincible=1;
+		armor_heavy=200;//#AUTO#
+		armor_medium=400;//#AUTO#
+		armor_light=400;//#AUTO#
+	}
+}
+[BIG_UNIT]
 {
 	name=Big Unit Explosion;
 	weapontype=Cannon;
@@ -4339,10 +3915,37 @@
 	}
 	[DAMAGE]
 	{
+		default=350;
+		group_invincible=1;
+		armor_heavy=175;//#AUTO#
+		armor_medium=350;//#AUTO#
+		armor_light=350;//#AUTO#
+	}
+}
+[BIG_UNITEX]
+{
+	name=Big Unit Explosion (smaller version);
+	weapontype=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=110;
+	soundstart=largegun;
+	soundhit=xplolrg3;
+	explosiongenerator=custom:DEBRISBLASTWRAPPER;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=1;
+	}
+	[DAMAGE]
+	{
 		default=100;
 		group_invincible=1;
-		armor_heavy=50;//#AUTO#
-		armor_medium=100;//#AUTO#
+		armor_heavy=25;//#AUTO#
+		armor_medium=50;//#AUTO#
 		armor_light=100;//#AUTO#
 	}
 }
@@ -5354,7 +4957,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=670;
-	reloadtime=2.5;
+	reloadtime=3.3;
 	flighttime=3.75;
 	weaponvelocity=660;
 	startvelocity=470;
@@ -5377,11 +4980,11 @@
 	}
 	[DAMAGE]
 	{
-		default=60;
+		default=80;
 		group_invincible=1;
-		armor_heavy=15;//#AUTO#
-		armor_medium=30;//#AUTO#
-		armor_light=60;//#AUTO#
+		armor_heavy=20;//#AUTO#
+		armor_medium=40;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [gear_big_bob_missile]
@@ -5481,7 +5084,7 @@
 	model=weapon_smlmsl2.3do;
 	cegTag=SMLROCKETTRAIL;
 	range=650;
-	reloadtime=0.7;
+	reloadtime=0.9;
 	weapontimer=0.5;
 	flighttime=6;
 	weaponvelocity=700;
@@ -5506,10 +5109,10 @@
 	}
 	[DAMAGE]
 	{
-		default=70;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
+		default=90;
+		armor_heavy=22;//#AUTO#
+		armor_medium=45;//#AUTO#
+		armor_light=90;//#AUTO#
 	}
 }
 [gear_missilator_missile]
@@ -5552,46 +5155,6 @@
 		armor_heavy=300;//#AUTO#
 		armor_medium=600;//#AUTO#
 		armor_light=600;//#AUTO#
-	}
-}
-[CORAH_WEAPON]
-{
-	name=Missiles;
-	weapontype=MissileLauncher;
-	turret=1;
-	model=weapon_missile.3do;
-	Texture1=null;
-	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	range=660;
-	reloadtime=1.7;
-	flighttime=3.75;
-	weaponvelocity=660;
-	startvelocity=470;
-	weaponAcceleration=154;
-	turnrate=50000;
-	areaofeffect=48;
-	metalpershot=0;
-	trajectoryheight=0.1;
-	soundstart=misfire1;
-	soundhit=mishit1;
-	firestarter=70;
-	tracks=1;
-	smoketrail=1;
-	cegTag=SMLROCKETTRAIL;
-	tolerance=10000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=60;
-		group_invincible=1;
-		armor_heavy=15;//#AUTO#
-		armor_medium=30;//#AUTO#
-		armor_light=60;//#AUTO#
 	}
 }
 [gear_whirlpool_torpedo]
@@ -5752,9 +5315,9 @@
 	beamtime=0.05;
 	thickness=1.31;
 	corethickness=0.55;
-	range=380;
+	range=370;
 	minintensity=1.0;
-	reloadtime=1.2;
+	reloadtime=1;
 	weaponvelocity=1533;
 	energypershot=0;
 	areaofeffect=8;
@@ -5776,11 +5339,11 @@
 	}
 	[DAMAGE]
 	{
-		default=42;
+		default=50;
 		group_invincible=1;
-		armor_heavy=10;//#AUTO#
-		armor_medium=21;//#AUTO#
-		armor_light=42;//#AUTO#
+		armor_heavy=12;//#AUTO#
+		armor_medium=25;//#AUTO#
+		armor_light=50;//#AUTO#
 	}
 }
 [gear_cascade_bomb]
@@ -5863,7 +5426,7 @@
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
 	model=weapon_missile.3do;
 	range=800;
-	reloadtime=0.6;
+	reloadtime=0.83;
 	flighttime=3.75;
 	weaponvelocity=650;
 	startvelocity=530;
@@ -5887,11 +5450,11 @@
 	}
 	[DAMAGE]
 	{
-		default=65;
+		default=90;
 		group_invincible=1;
-		armor_heavy=16;//#AUTO#
-		armor_medium=32;//#AUTO#
-		armor_light=65;//#AUTO#
+		armor_heavy=22;//#AUTO#
+		armor_medium=45;//#AUTO#
+		armor_light=90;//#AUTO#
 	}
 }
 [gear_proteus_cannon]
@@ -6846,84 +6409,6 @@
 		armor_light=220;//#AUTO#
 	}
 }
-[CORFRT_MISSILE]
-{
-	name=Missiles;
-	weapontype=MissileLauncher;
-	turret=1;
-	model=weapon_missile.3do;
-	Texture1=null; //flare//
-	range=700;
-	explosiongenerator=custom:STDBLASTWRAPPER;
-	reloadtime=2;
-	flighttime=3.75;
-	weaponvelocity=660;
-	startvelocity=460;
-	weaponAcceleration=152;
-	turnrate=50000;
-	areaofeffect=48;
-	metalpershot=0;
-	soundstart=misfire1;
-	soundhit=mishit1;
-	firestarter=70;
-	tracks=1;
-	smoketrail=1;
-	cegTag=SMLROCKETTRAIL;
-	tolerance=10000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=70;
-		group_invincible=1;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
-	}
-}
-[CORKBOT_MISSILE]
-{
-	name=Missiles;
-	weapontype=MissileLauncher;
-	turret=1;
-	model=weapon_missile.3do;
-	Texture1=null; //flare//
-	range=690;
-	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	reloadtime=1.9;
-	flighttime=3.75;
-	weaponvelocity=750;
-	startvelocity=550;
-	weaponAcceleration=104;
-	turnrate=50000;
-	areaofeffect=48;
-	metalpershot=0;
-	soundstart=rocklit1;
-	soundhit=xplosml2;
-	firestarter=70;
-	tracks=1;
-	smoketrail=1;
-	cegTag=SMLROCKETTRAIL;
-	tolerance=9000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=60;
-		group_invincible=1;
-		armor_heavy=15;//#AUTO#
-		armor_medium=30;//#AUTO#
-		armor_light=60;//#AUTO#
-	}
-}
 [CORMABM_WEAPON]
 {
 	name=Rocket;
@@ -7100,46 +6585,6 @@
 		armor_light=800;//#AUTO#
 	}
 }
-[CORRL_MISSILE]
-{
-	name=Missiles;
-	weapontype=MissileLauncher;
-	turret=1;
-	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	model=weapon_missile.3do;
-	Texture1=null; //flare//
-	range=700;
-	reloadtime=2;
-	flighttime=3.75;
-	weaponvelocity=650;
-	startvelocity=460;
-	weaponAcceleration=152;
-	turnrate=41660;
-	areaofeffect=48;
-	metalpershot=0;
-	trajectoryheight=0.1;
-	soundstart=misfire1;
-	soundhit=mishit1;
-	firestarter=70;
-	tracks=1;
-	smoketrail=1;
-	cegTag=SMLROCKETTRAIL;
-	tolerance=10000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=65;
-		group_invincible=1;
-		armor_heavy=16;//#AUTO#
-		armor_medium=32;//#AUTO#
-		armor_light=65;//#AUTO#
-	}
-}
 [gear_copperhead_flak]
 {
 	name=Flak Cannon;
@@ -7285,88 +6730,6 @@
 		armor_heavy=10;//#AUTO#
 		armor_medium=21;//#AUTO#
 		armor_light=42;//#AUTO#
-	}
-}
-[CORSHIP_MISSILE]
-{
-	name=Missiles;
-	weapontype=MissileLauncher;
-	turret=1;
-	model=weapon_missile.3do;
-	Texture1=null; //flare//
-	range=880;
-	reloadtime=2;
-	flighttime=3.75;
-	weaponvelocity=750;
-	startvelocity=550;
-	weaponAcceleration=121;
-	turnrate=60000;
-	areaofeffect=48;
-	metalpershot=0;
-	trajectoryheight=0.1;
-	soundstart=misfire1;
-	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	soundhit=mishit1;
-	firestarter=70;
-	tracks=1;
-	smoketrail=1;
-	cegTag=SMLROCKETTRAIL;
-	tolerance=8000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=70;
-		group_invincible=1;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
-	}
-}
-[CORSH_WEAPON]
-{
-	name=Laser;
-	weapontype=BeamLaser;
-	turret=1;
-	range=325;
-	minintensity=1.0;
-	beamtime=0.05;
-	thickness=1.31;
-	corethickness=0.55;
-	intensity=0.85;
-	reloadtime=1;
-	weaponvelocity=1533;
-	areaofeffect=8;
-	Texture2=null;
-	Texture3=null;
-	Texture4=null;
-	soundtrigger=1;
-	soundstart=lasrfast;
-	explosiongenerator=custom:REDLASERBLASTWRAPPER;
-	soundhit=lashit;
-	firestarter=50;
-	scrollspeed=0;
-	pulsespeed=0;
-	rgbcolor=0.51 0.0 0.0;
-	rgbcolor2=1.0 0.4 0.4;
-	tolerance=3000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=60;
-		group_invincible=1;
-		armor_heavy=15;//#AUTO#
-		armor_medium=30;//#AUTO#
-		armor_light=60;//#AUTO#
 	}
 }
 [gear_noser_torpedo]
@@ -7565,7 +6928,7 @@
 	model=weapon_smlmsl2.3do;
 	cegTag=SMLROCKETTRAIL;
 	range=700;
-	reloadtime=1;
+	reloadtime=1.28;
 	weapontimer=0.5;
 	flighttime=7;
 	weaponvelocity=600;
@@ -7592,10 +6955,10 @@
 	}
 	[DAMAGE]
 	{
-		default=70;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
+		default=90;
+		armor_heavy=22;//#AUTO#
+		armor_medium=45;//#AUTO#
+		armor_light=90;//#AUTO#
 	}
 }
 [CORVTOL_ADVMISSILE]
@@ -7690,46 +7053,6 @@
 		armor_heavy=21;//#AUTO#
 		armor_medium=42;//#AUTO#
 		armor_light=85;//#AUTO#
-	}
-}
-[CORVTOL_MISSILE]
-{
-	name=Guided Missiles;
-	weapontype=MissileLauncher;
-	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	model=weapon_missile.3do;
-	Texture1=null; //flare//
-	range=600;
-	reloadtime=3;
-	flighttime=3.75;
-	weaponvelocity=470;
-	startvelocity=225;
-	weaponAcceleration=149;
-	turnrate=16384;
-	areaofeffect=48;
-	metalpershot=0;
-	soundstart=Rocklit3;
-	soundhit=xplosml2;
-	firestarter=70;
-	tracks=1;
-	smoketrail=1;
-	cegTag=SMLROCKETTRAIL;
-	tolerance=8000;
-	collidefriendly=0;
-	avoidfriendly=0;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=70;
-		group_invincible=1;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
 	}
 }
 [gear_edge_cannon]
@@ -8144,7 +7467,7 @@
 	areaofeffect=325;
 	soundstart=largegun;
 	soundhit=xplonuk1;
-	explosiongenerator=custom:LARGEBLASTWRAPPER2;
+	explosiongenerator=custom:LARGEBLASTWRAPPER1;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -8934,15 +8257,15 @@
 	avoidfeature=0;
 	[CUSTOMPARAMS]
 	{
-		hitpower=3;
+		hitpower=2;
 	}
 	[DAMAGE]
 	{
-		default=1800;
+		default=1300;
 		group_invincible=1;
-		armor_heavy=1800;//#AUTO#
-		armor_medium=1800;//#AUTO#
-		armor_light=1800;//#AUTO#
+		armor_heavy=650;//#AUTO#
+		armor_medium=1300;//#AUTO#
+		armor_light=1300;//#AUTO#
 	}
 }
 [LARGE_BUILDINGEX]
@@ -8961,13 +8284,13 @@
 	avoidfeature=0;
 	[CUSTOMPARAMS]
 	{
-		hitpower=3;
+		hitpower=2;
 	}
 	[DAMAGE]
 	{
 		default=500;
 		group_invincible=1;
-		armor_heavy=500;//#AUTO#
+		armor_heavy=250;//#AUTO#
 		armor_medium=500;//#AUTO#
 		armor_light=500;//#AUTO#
 	}
@@ -8988,15 +8311,15 @@
 	avoidfeature=0;
 	[CUSTOMPARAMS]
 	{
-		hitpower=3;
+		hitpower=2;
 	}
 	[DAMAGE]
 	{
-		default=1400;
+		default=1000;
 		group_invincible=1;
-		armor_heavy=1400;//#AUTO#
-		armor_medium=1400;//#AUTO#
-		armor_light=1400;//#AUTO#
+		armor_heavy=500;//#AUTO#
+		armor_medium=1000;//#AUTO#
+		armor_light=1000;//#AUTO#
 	}
 }
 [MEDIUM_BUILDINGEX]
@@ -9015,14 +8338,14 @@
 	avoidfeature=0;
 	[CUSTOMPARAMS]
 	{
-		hitpower=2;
+		hitpower=1;
 	}
 	[DAMAGE]
 	{
 		default=200;
 		group_invincible=1;
-		armor_heavy=100;//#AUTO#
-		armor_medium=200;//#AUTO#
+		armor_heavy=50;//#AUTO#
+		armor_medium=100;//#AUTO#
 		armor_light=200;//#AUTO#
 	}
 }
@@ -9042,14 +8365,14 @@
 	avoidfeature=0;
 	[CUSTOMPARAMS]
 	{
-		hitpower=2;
+		hitpower=1;
 	}
 	[DAMAGE]
 	{
 		default=250;
 		group_invincible=1;
-		armor_heavy=125;//#AUTO#
-		armor_medium=250;//#AUTO#
+		armor_heavy=62;//#AUTO#
+		armor_medium=125;//#AUTO#
 		armor_light=250;//#AUTO#
 	}
 }
@@ -9121,7 +8444,7 @@
 	range=480;
 	reloadtime=3.6;
 	weaponvelocity=250;
-	areaofeffect=205;
+	areaofeffect=255;
 	soundstart=largegun;
 	soundhit=xplosml3;
 	explosiongenerator=custom:DEBRISBLASTWRAPPER;
@@ -9129,15 +8452,15 @@
 	avoidfeature=0;
 	[CUSTOMPARAMS]
 	{
-		hitpower=3;
+		hitpower=2;
 	}
 	[DAMAGE]
 	{
-		default=900;
+		default=400;
 		group_invincible=1;
-		armor_heavy=900;//#AUTO#
-		armor_medium=900;//#AUTO#
-		armor_light=900;//#AUTO#
+		armor_heavy=200;//#AUTO#
+		armor_medium=400;//#AUTO#
+		armor_light=400;//#AUTO#
 	}
 }
 [SMALL_BUILDINGEX]
@@ -9169,7 +8492,7 @@
 }
 [SMALL_UNIT]
 {
-	name=Small tank;
+	name=Small unit;
 	weapontype=Cannon;
 	turret=1;
 	range=480;
@@ -9183,20 +8506,20 @@
 	avoidfeature=0;
 	[CUSTOMPARAMS]
 	{
-		hitpower=2;
+		hitpower=1;
 	}
 	[DAMAGE]
 	{
 		default=200;
 		group_invincible=1;
-		armor_heavy=100;//#AUTO#
-		armor_medium=200;//#AUTO#
+		armor_heavy=50;//#AUTO#
+		armor_medium=100;//#AUTO#
 		armor_light=200;//#AUTO#
 	}
 }
 [SMALL_UNITEX]
 {
-	name=Small tank;
+	name=Small unit;
 	weapontype=Cannon;
 	turret=1;
 	range=480;
@@ -9237,14 +8560,14 @@
 	avoidfeature=0;
 	[CUSTOMPARAMS]
 	{
-		hitpower=3;
+		hitpower=1;
 	}
 	[DAMAGE]
 	{
 		default=300;
 		group_invincible=1;
-		armor_heavy=300;//#AUTO#
-		armor_medium=300;//#AUTO#
+		armor_heavy=75;//#AUTO#
+		armor_medium=150;//#AUTO#
 		armor_light=300;//#AUTO#
 	}
 }
@@ -9264,14 +8587,14 @@
 	avoidfeature=0;
 	[CUSTOMPARAMS]
 	{
-		hitpower=2;
+		hitpower=1;
 	}
 	[DAMAGE]
 	{
 		default=90;
 		group_invincible=1;
-		armor_heavy=45;//#AUTO#
-		armor_medium=90;//#AUTO#
+		armor_heavy=22;//#AUTO#
+		armor_medium=45;//#AUTO#
 		armor_light=90;//#AUTO#
 	}
 }
@@ -9608,89 +8931,6 @@
 		armor_light=42;//#AUTO#
 	}
 }
-[VTOL_ROCKET]
-{
-	name=Rockets;
-	weapontype=MissileLauncher;
-	model=weapon_rocket2.3do;
-	range=450;
-	reloadtime=2.5;
-	burst=2;
-	burstrate=0.1;
-	weapontimer=5;
-	weaponvelocity=450;
-	startvelocity=350;
-	weaponAcceleration=131;
-	metalpershot=0;
-	turnrate=13680;
-	areaofeffect=48;
-	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	cegTag=ROCKETTRAIL1;
-	Texture1=null; //flare//
-	Texture2=null;//first segment of missiletrail//
-	Texture3=null;//flame//
-	Texture4=null;//unknown//
-	soundstart=rocklit3;
-	soundhit=xplomed2;
-	firestarter=70;
-	smoketrail=0;
-	tolerance=8000;
-	CollideFriendly=0;
-	tracks=1;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=2;
-	}
-	[DAMAGE]
-	{
-		default=107;
-		group_invincible=1;
-		armor_heavy=53;//#AUTO#
-		armor_medium=107;//#AUTO#
-		armor_light=107;//#AUTO#
-	}
-}
-[VTOL_ROCKET2]
-{
-	name=Rockets;
-	weapontype=MissileLauncher;
-	model=weapon_rocket2.3do;
-	cegTag=ROCKETTRAIL1;
-	Texture1=null; //flare//
-	Texture2=null;//first segment of missiletrail//
-	Texture3=null;//flame//
-	Texture4=null;//unknown//
-	range=450;
-	reloadtime=2;
-	weapontimer=5;
-	weaponvelocity=350;
-	startvelocity=250;
-	weaponAcceleration=131;
-	metalpershot=0;
-	turnrate=7680;
-	areaofeffect=48;
-	soundstart=rocklit3;
-	soundhit=xplomed2;
-	firestarter=70;
-	smoketrail=0;
-	tolerance=8000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=2;
-	}
-	[DAMAGE]
-	{
-		default=125;
-		group_invincible=1;
-		armor_heavy=62;//#AUTO#
-		armor_medium=125;//#AUTO#
-		armor_light=125;//#AUTO#
-	}
-}
 [aven_defender_missile]
 {
 	name=Missiles;
@@ -9781,7 +9021,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=700;
-	reloadtime=2.5;
+	reloadtime=3.3;
 	flighttime=3.75;
 	weaponvelocity=745;
 	startvelocity=550;
@@ -9808,11 +9048,11 @@
 	}
 	[DAMAGE]
 	{
-		default=60;
+		default=80;
 		group_invincible=1;
-		armor_heavy=15;//#AUTO#
-		armor_medium=30;//#AUTO#
-		armor_light=60;//#AUTO#
+		armor_heavy=20;//#AUTO#
+		armor_medium=40;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [aven_fletcher_missile]
@@ -9823,7 +9063,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=700;
-	reloadtime=2.5;
+	reloadtime=2.8;
 	flighttime=3.75;
 	weaponvelocity=745;
 	startvelocity=550;
@@ -9850,11 +9090,11 @@
 	}
 	[DAMAGE]
 	{
-		default=70;
+		default=80;
 		group_invincible=1;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
+		armor_heavy=20;//#AUTO#
+		armor_medium=40;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [aven_swatter_missile]
@@ -9865,7 +9105,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=700;
-	reloadtime=2.5;
+	reloadtime=2.86;
 	flighttime=3.75;
 	weaponvelocity=745;
 	startvelocity=550;
@@ -9892,11 +9132,11 @@
 	}
 	[DAMAGE]
 	{
-		default=70;
+		default=80;
 		group_invincible=1;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
+		armor_heavy=20;//#AUTO#
+		armor_medium=40;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [aven_vanguard_missile]
@@ -9909,7 +9149,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=660;
-	reloadtime=2.5;
+	reloadtime=4;
 	burst=2;
 	burstrate=0.2;
 	flighttime=3.75;
@@ -9936,10 +9176,10 @@
 	}
 	[DAMAGE]
 	{
-		default=50;
-		armor_heavy=12;//#AUTO#
-		armor_medium=25;//#AUTO#
-		armor_light=50;//#AUTO#
+		default=80;
+		armor_heavy=20;//#AUTO#
+		armor_medium=40;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [aven_icarus_missile]
@@ -10354,7 +9594,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=600;
-	reloadtime=5.0;
+	reloadtime=8.0;
 	flighttime=3.75;
 	trajectoryheight=0.1;
 	weaponvelocity=660;
@@ -10379,174 +9619,10 @@
 	}
 	[DAMAGE]
 	{
-		default=50;
-		armor_heavy=12;//#AUTO#
-		armor_medium=25;//#AUTO#
-		armor_light=50;//#AUTO#
-	}
-}
-[LANDBOAT_MISSILE]
-{
-	name=Missiles;
-	weapontype=MissileLauncher;
-	turret=1;
-	model=weapon_missile.3do;
-	Texture1=null; //flare//
-	range=710;
-	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	reloadtime=0.5;
-	weapontimer=6;
-	flighttime=3.75;
-	weaponvelocity=750;
-	startvelocity=250;
-	weaponAcceleration=300;
-	turnrate=50000;
-	areaofeffect=24;
-	metalpershot=0;
-	soundstart=bluemis;
-	soundhit=bluemishit;
-	Wobble=50000;
-	dance=60;
-	firestarter=70;
-	tracks=1;
-	smoketrail=1;
-	cegTag=SMLROCKETTRAIL;
-	tolerance=9000;
-	Trajectoryheight=0.1;
-	collidefriendly=0;
-	avoidfriendly=1;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=60;
-		group_invincible=1;
-		armor_heavy=15;//#AUTO#
-		armor_medium=30;//#AUTO#
-		armor_light=60;//#AUTO#
-	}
-}
-[BOAT_ROCKET1]
-{
-	name=Rockets;
-	weapontype=MissileLauncher;
-	dance=0;
-	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	cegTag=ROCKETTRAIL1;
-	Texture1=null; //flare//
-	Texture2=null;//first segment of missiletrail//
-	Texture3=null;//flame//
-	Texture4=null;//unknown//
-	turret=1;
-	model=weapon_missile.3do;
-	range=400;
-	reloadtime=4.25;
-	weapontimer=2;
-	weaponvelocity=300;
-	startvelocity=300;
-	weaponAcceleration=0;
-	areaofeffect=48;
-	metalpershot=0;
-	soundstart=rocklit1;
-	soundhit=xplosml2;
-	firestarter=70;
-	smoketrail=0;
-	tolerance=3000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=2;
-	}
-	[DAMAGE]
-	{
-		default=138;
-		group_invincible=1;
-		armor_heavy=69;//#AUTO#
-		armor_medium=138;//#AUTO#
-		armor_light=138;//#AUTO#
-	}
-}
-[BOAT_ROCKET2]
-{
-	name=Rockets;
-	weapontype=MissileLauncher;
-	dance=0;
-	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	cegTag=ROCKETTRAIL1;
-	Texture1=null; //flare//
-	Texture2=null;//first segment of missiletrail//
-	Texture3=null;//flame//
-	Texture4=null;//unknown//
-	turret=1;
-	model=weapon_missile.3do;
-	range=400;
-	reloadtime=3.75;
-	weapontimer=2;
-	weaponvelocity=300;
-	startvelocity=300;
-	weaponAcceleration=0;
-	areaofeffect=48;
-	metalpershot=0;
-	soundstart=rocklit1;
-	soundhit=xplosml2;
-	firestarter=70;
-	smoketrail=0;
-	tolerance=3000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=2;
-	}
-	[DAMAGE]
-	{
-		default=138;
-		group_invincible=1;
-		armor_heavy=69;//#AUTO#
-		armor_medium=138;//#AUTO#
-		armor_light=138;//#AUTO#
-	}
-}
-[BOAT_TORPEDO]
-{
-	name=Unguided Torpedo;
-	weapontype=TorpedoLauncher;
-	turret=0;
-	CollideFriendly=1;
-	model=weapon_torpedo;
-	range=450;
-	reloadtime=8;
-	weapontimer=10;
-	weaponvelocity=400;
-	startvelocity=100;
-	weaponAcceleration=50;
-	submissile=1;
-	turnrate=4750;
-	areaofeffect=16;
-	soundstart=torpedo1;
-	soundhit=xplodep1;
-	tracks=1;
-	waterweapon=1;
-	tolerance=32767;
-	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=3;
-	}
-	[DAMAGE]
-	{
-		default=300;
-    	group_invincible=1;
-		armor_heavy=300;//#AUTO#
-		armor_medium=300;//#AUTO#
-		armor_light=300;//#AUTO#
+		default=80;
+		armor_heavy=20;//#AUTO#
+		armor_medium=40;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [gear_viking_missile]
@@ -10559,7 +9635,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=650;
-	reloadtime=2.5;
+	reloadtime=4;
 	flighttime=3.75;
 	trajectoryheight=0.1;
 	weaponvelocity=660;
@@ -10584,10 +9660,10 @@
 	}
 	[DAMAGE]
 	{
-		default=50;
-		armor_heavy=12;//#AUTO#
-		armor_medium=25;//#AUTO#
-		armor_light=50;//#AUTO#
+		default=80;
+		armor_heavy=20;//#AUTO#
+		armor_medium=40;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [gear_blaze_heatray]
@@ -11315,7 +10391,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=700;
-	reloadtime=0.60;
+	reloadtime=0.68;
 	flighttime=3.75;
 	projectiles=2;
 	trajectoryheight=0.1;
@@ -11341,10 +10417,10 @@
 	}
 	[DAMAGE]
 	{
-		default=70;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
+		default=80;
+		armor_heavy=20;//#AUTO#
+		armor_medium=40;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [claw_u2commander_rocket]
@@ -11831,7 +10907,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=650;
-	reloadtime=2.5;
+	reloadtime=3.3;
 	flighttime=3.75;
 	trajectoryheight=0.1;
 	weaponvelocity=660;
@@ -11854,10 +10930,10 @@
 	}
 	[DAMAGE]
 	{
-		default=60;
-		armor_heavy=15;//#AUTO#
-		armor_medium=30;//#AUTO#
-		armor_light=60;//#AUTO#
+		default=80;
+		armor_heavy=20;//#AUTO#
+		armor_medium=40;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [claw_speeder_missile]
@@ -11870,7 +10946,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=600;
-	reloadtime=4;
+	reloadtime=5.3;
 	flighttime=3.75;
 	trajectoryheight=0.1;
 	weaponvelocity=660;
@@ -11893,10 +10969,10 @@
 	}
 	[DAMAGE]
 	{
-		default=60;
-		armor_heavy=15;//#AUTO#
-		armor_medium=30;//#AUTO#
-		armor_light=60;//#AUTO#
+		default=80;
+		armor_heavy=20;//#AUTO#
+		armor_medium=40;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [claw_shrieker_railgun]
@@ -11949,7 +11025,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=800;
-	reloadtime=0.70;
+	reloadtime=0.9;
 	flighttime=3.75;
 	projectiles=2;
 	trajectoryheight=0.1;
@@ -11975,10 +11051,10 @@
 	}
 	[DAMAGE]
 	{
-		default=70;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
+		default=90;
+		armor_heavy=22;//#AUTO#
+		armor_medium=45;//#AUTO#
+		armor_light=90;//#AUTO#
 	}
 }
 [claw_tempest_missile]
@@ -11991,7 +11067,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=800;
-	reloadtime=0.40;
+	reloadtime=0.51;
 	flighttime=3.75;
 	fixedlauncher=1;
 	trajectoryheight=0.2;
@@ -12017,10 +11093,10 @@
 	}
 	[DAMAGE]
 	{
-		default=70;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
+		default=90;
+		armor_heavy=22;//#AUTO#
+		armor_medium=45;//#AUTO#
+		armor_light=90;//#AUTO#
 	}
 }
 [claw_blizzard_laser1]
@@ -12827,9 +11903,9 @@
 	thickness=1.31;
 	corethickness=0.55;
 	turret=0;
-	range=390;
+	range=370;
 	minintensity=1.0;
-	reloadtime=0.9;
+	reloadtime=1;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundtrigger=1;
@@ -12850,10 +11926,10 @@
 	}
 	[DAMAGE]
 	{
-		default=40;
-		armor_heavy=10;//#AUTO#
-		armor_medium=20;//#AUTO#
-		armor_light=40;//#AUTO#
+		default=50;
+		armor_heavy=12;//#AUTO#
+		armor_medium=25;//#AUTO#
+		armor_light=50;//#AUTO#
 	}
 }
 [claw_striker_laser]
@@ -13844,7 +12920,7 @@
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
 	model=weapon_missile.3do;
 	range=750;
-	reloadtime=3;
+	reloadtime=4.2;
 	flighttime=3.75;
 	weaponvelocity=650;
 	startvelocity=530;
@@ -13860,7 +12936,7 @@
 	firestarter=70;
 	tracks=1;
 	smoketrail=1;
-	tolerance=8000;
+	tolerance=15000;
 	cegTag=SMLROCKETTRAIL;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -13870,11 +12946,11 @@
 	}
 	[DAMAGE]
 	{
-		default=70;
+		default=100;
 		group_invincible=1;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
+		armor_heavy=25;//#AUTO#
+		armor_medium=50;//#AUTO#
+		armor_light=100;//#AUTO#
 	}
 }
 [claw_sword_cannon]
@@ -14706,7 +13782,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=650;
-	reloadtime=2.5;
+	reloadtime=3.3;
 	flighttime=3.75;
 	trajectoryheight=0.1;
 	weaponvelocity=660;
@@ -14731,10 +13807,10 @@
 	}
 	[DAMAGE]
 	{
-		default=60;
-		armor_heavy=15;//#AUTO#
-		armor_medium=30;//#AUTO#
-		armor_light=60;//#AUTO#
+		default=80;
+		armor_heavy=20;//#AUTO#
+		armor_medium=40;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [sphere_aster_missile]
@@ -14747,7 +13823,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=800;
-	reloadtime=0.85;
+	reloadtime=1.09;
 	flighttime=3.75;
 	projectiles=2;
 	fixedlauncher=1;
@@ -14773,10 +13849,10 @@
 	}
 	[DAMAGE]
 	{
-		default=70;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
+		default=90;
+		armor_heavy=22;//#AUTO#
+		armor_medium=45;//#AUTO#
+		armor_light=90;//#AUTO#
 	}
 }
 [sphere_reacher_missile]
@@ -14789,7 +13865,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=660;
-	reloadtime=1.5;
+	reloadtime=2;
 	flighttime=3.75;
 	trajectoryheight=0.1;
 	weaponvelocity=660;
@@ -14814,10 +13890,10 @@
 	}
 	[DAMAGE]
 	{
-		default=60;
-		armor_heavy=15;//#AUTO#
-		armor_medium=30;//#AUTO#
-		armor_light=60;//#AUTO#
+		default=80;
+		armor_heavy=20;//#AUTO#
+		armor_medium=40;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [sphere_clam_torpedo]
@@ -15095,9 +14171,9 @@
 	thickness=1.31;
 	corethickness=0.55;
 	turret=0;
-	range=380;
+	range=370;
 	minintensity=1.0;
-	reloadtime=1.15;
+	reloadtime=1;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundtrigger=1;
@@ -15118,10 +14194,10 @@
 	}
 	[DAMAGE]
 	{
-		default=40;
-		armor_heavy=10;//#AUTO#
-		armor_medium=20;//#AUTO#
-		armor_light=40;//#AUTO#
+		default=50;
+		armor_heavy=12;//#AUTO#
+		armor_medium=25;//#AUTO#
+		armor_light=50;//#AUTO#
 	}
 }
 [sphere_skiff_laser]
@@ -15383,7 +14459,7 @@
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
 	model=weapon_missile.3do;
 	range=800;
-	reloadtime=0.95;
+	reloadtime=1.22;
 	flighttime=3.75;
 	weaponvelocity=650;
 	startvelocity=530;
@@ -15407,11 +14483,11 @@
 	}
 	[DAMAGE]
 	{
-		default=70;
+		default=90;
 		group_invincible=1;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
+		armor_heavy=22;//#AUTO#
+		armor_medium=45;//#AUTO#
+		armor_light=90;//#AUTO#
 	}
 }
 [sphere_stresser_missile2]
@@ -15422,7 +14498,7 @@
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
 	model=weapon_missile.3do;
 	range=800;
-	reloadtime=0.85;
+	reloadtime=1.09;
 	flighttime=3.75;
 	weaponvelocity=650;
 	startvelocity=530;
@@ -15446,52 +14522,11 @@
 	}
 	[DAMAGE]
 	{
-		default=70;
+		default=90;
 		group_invincible=1;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
-	}
-}
-[sphere_spitfire_missile]
-{
-	name=Missiles;
-	weapontype=MissileLauncher;
-	turret=0;
-	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	model=weapon_missile.3do;
-	range=650;
-	reloadtime=3;
-	flighttime=3.75;
-	weaponvelocity=650;
-	startvelocity=530;
-	weaponAcceleration=121;
-	turnrate=60000;
-	areaofeffect=48;
-	metalpershot=0;
-	trajectoryheight=0.1;
-	burst=3;
-	burstrate=0.1;
-	soundstart=rocklit1;
-	soundhit=xplomed2;
-	firestarter=70;
-	tracks=1;
-	smoketrail=1;
-	tolerance=8000;
-	cegTag=SMLROCKETTRAIL;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=70;
-		group_invincible=1;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
+		armor_heavy=22;//#AUTO#
+		armor_medium=45;//#AUTO#
+		armor_light=90;//#AUTO#
 	}
 }
 [sphere_charger_blaster]
@@ -15782,12 +14817,12 @@
 [sphere_golem_missile]
 {
 	name=Missiles;
-	weapontype=MissileLauncher;
+	weapontype=StarburstLauncher;
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
 	model=weapon_smlmsl.3do;
 	cegTag=SMLROCKETTRAIL;
 	range=600;
-	reloadtime=1.5;
+	reloadtime=1.9;
 	weapontimer=0.5;
 	flighttime=6;
 	weaponvelocity=600;
@@ -15812,10 +14847,10 @@
 	}
 	[DAMAGE]
 	{
-		default=70;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
+		default=90;
+		armor_heavy=22;//#AUTO#
+		armor_medium=45;//#AUTO#
+		armor_light=90;//#AUTO#
 	}
 }
 [sphere_rain_missile]
@@ -15826,7 +14861,7 @@
 	model=weapon_smlmsl.3do;
 	cegTag=SMLROCKETTRAIL;
 	range=600;
-	reloadtime=0.45;
+	reloadtime=0.57;
 	weapontimer=0.5;
 	flighttime=6;
 	weaponvelocity=600;
@@ -15851,10 +14886,10 @@
 	}
 	[DAMAGE]
 	{
-		default=70;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=70;//#AUTO#
+		default=90;
+		armor_heavy=22;//#AUTO#
+		armor_medium=45;//#AUTO#
+		armor_light=90;//#AUTO#
 	}
 }
 [sphere_tick_laser]
@@ -17390,7 +16425,7 @@
 	corethickness=0.6;
 	intensity=0.9;
 	turret=0;
-	range=480;
+	range=470;
 	minintensity=1.0;
 	reloadtime=1.1;
 	weaponvelocity=1533;

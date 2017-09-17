@@ -321,8 +321,7 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=4, length=25, piece="jp1", onActive=true}}
   },
   sphere_medium_drone = {
-    {class='AirJet',options={color={0.3,0.1,0}, width=4, length=20, piece="ljp", onActive=true}},
-    {class='AirJet',options={color={0.3,0.1,0}, width=4, length=20, piece="rjp", onActive=true}}
+    {class='AirJet',options={color={0.3,0.1,0}, width=4, length=20, piece="jp1", onActive=true}}
   },   
   sphere_moth = {
     {class='AirJet',options={color={0.3,0.1,0}, width=4, length=25, piece="jp1", onActive=true}}

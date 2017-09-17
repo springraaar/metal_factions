@@ -1,3 +1,47 @@
+2017/09/17 ------------------ NOTES v0.984 ----------------------
+
+--- new units
+
+- added scout pads for all factions : cheap level 1 buildings that build air scouts
+(this is to discourage some rushes and early blind rock-paper-scissors gameplay)
+
+--- balance / mechanics
+
+- significantly increased acceleration of SPHERE "Bit" robots
+- fixed SPHERE "Golem" missiles being launcher horizontally
+- increased damage per shot and reload time by about 20% for most missiles (damage per second is the same)
+
+COMMANDER DRONES
+- reduced the cost of commander drones by 30%
+- commander drones are now automatically destroyed if they somehow stray too far from the commander (twice as far as the retreat range, or about 1200)
+- intelligence drones got even cheaper and drain 75 instead of 90 E/s but radar/sonar range was reduced from 1300/1100 to 1100/900
+- light drones evened out across factions, weapon's base DPS was set to 50 (up from 35 and 44 DPS)
+- medium drones changed: AVEN's a bit faster and deals more damage at shorter range, SPHERE's tougher but slower and got its weapon range slightly reduced
+
+RESOURCES
+- reduced relative metal extraction multiplier for moho mines and exploiters from x3 to x2.5
+- metal extractors and moho mines are now about 20% more expensive
+- made metal extractors a bit tougher (from 300-500HP to 450-580HP)
+- exploiters extract the same amount of metal as moho mines (was 93%) but increased energy drain from 80/s to 90/s
+(this is meant to increase the payback times of rushing resource production, make exploiters more attractive and reward raiding more)
+- removed energy income/cost from units that produce or drain less than 3 metal/s when moving
+
+WRECKAGES
+- units with build percentage greater than 50% explode normally and leave wreckage when destroyed
+- prevent nano-frames from using self-destruct
+- death explosions for most non-hazardous units and buildings deal L, M damage type instead of M, H
+- AVEN "Zapper", "Penetrator" and "Excalibur" explode more violently when destroyed
+
+
+--- UI / widgets
+
+- updated upgrades' description to display their MINOR, COMMANDER or MAJOR type
+- show message when construction orders for upgrades are denied because either own or type limit was reached
+- removed white outline from the shield values on the tooltip
+
+
+
+
 2017/09/11 ------------------ NOTES v0.983 ----------------------
 
 --- balance / mechanics

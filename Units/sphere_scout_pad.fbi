@@ -1,0 +1,76 @@
+[UNITINFO]
+	{
+
+	// ------------------- description
+	Side=Sphere;
+	Name=Scout Pad;
+	Description=Builds Air Scouts;
+	icontype=plant;
+
+	// ------------------- categories
+	Category=SPHERE PLANT LEVEL1 NOTAIR NOTSUB;
+	TEDClass=PLANT;
+
+	// ------------------- external specs
+	UnitName=sphere_scout_pad;
+	UnitNumber=10000;
+	Objectname=sphere_scout_pad.3do;
+	buildpic=sphere_scout_pad.png;
+	SoundCategory=gear_HOVER_PLANT;
+	Corpse=sphere_scout_pad_dead;
+
+	// ------------------- health/cost/size
+	MaxDamage=700;
+	FootprintX=4;
+	FootprintZ=4;
+	idleautoheal=5;
+
+
+	// ------------------- resources
+	EnergyStorage=0;
+	MetalStorage=0;
+	EnergyUse=0;
+
+
+	// ------------------- constructor
+	Builder=1;
+	WorkerTime=80;
+	canBeAssisted=1;
+
+
+	// ------------------- abilities
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	
+	// ------------------- movement
+	buildangle=1024;
+	YardMap=cccc cccc cccc cccc; 
+	MaxWaterDepth=255;
+	MaxSlope=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =60 10 60;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	modelCenterOffset=0 0 0;
+
+	// ------------------- scout
+	sightdistance=500;
+	RadarDistance=0;
+
+	// ------------------- weapons
+	ExplodeAs=SMALL_BUILDINGEX;
+	SelfDestructAs=SMALL_BUILDING;
+
+	// ------------------- orders
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+
+	// ------------------- misc
+	NoAutoFire=0;
+	buildcostenergy=957;//#AUTO#
+	buildcostmetal=191;//#AUTO#
+	buildtime=1505;//#AUTO#
+}

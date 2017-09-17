@@ -35,7 +35,7 @@
 	metalmake=0.0;
 	metalstorage=0;
 	energymake=0;
-	energyuse=90.0;
+	energyuse=75.0;
 	energystorage=0;
 
 	//************************************************************
@@ -84,9 +84,9 @@
 	//  Sight/Radar/Sonar
 	//*********************
 	sightdistance=600;
-	radardistance=1300;
+	radardistance=1100;
 	radardistancejam=500;
-	sonardistance=1100;
+	sonardistance=900;
 
 
 	//************************************************************
@@ -129,13 +129,14 @@
 	[CustomParams]
 	{
 		isDrone=1;
+		evalfactor=0.7;
 	}
 
 	//************************************************************
 	//  To be removed
 	//*****************
 
-	buildcostenergy=7437;//#AUTO#
-	buildcostmetal=743;//#AUTO#
-	buildtime=9544;//#AUTO#
+	buildcostenergy=4389;//#AUTO#
+	buildcostmetal=438;//#AUTO#
+	buildtime=5633;//#AUTO#
 }

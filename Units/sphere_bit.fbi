@@ -25,10 +25,10 @@
 
 
 	// ------------------- resources
-	EnergyUse=1;
+	EnergyUse=0;
 	EnergyStorage=0;
 	MetalStorage=0;
-	EnergyMake=1;
+	EnergyMake=0;
 
 	// ------------------- abilities
 	canmove=1;
@@ -42,8 +42,8 @@
 	MaxWaterDepth=12;
 	MaxSlope=17;
 	MaxVelocity=1.75;
-	BrakeRate=0.35;
-	Acceleration=0.15;
+	BrakeRate=0.45;
+	Acceleration=0.85;
 	TurnRate=950;
 	SteeringMode=2;
 	MovementClass=KBOTHT2;
@@ -88,7 +88,7 @@
 	{
 		explosiongenerator0=custom:redflare;
 	}
-	buildcostenergy=432;//#AUTO#
-	buildcostmetal=86;//#AUTO#
-	buildtime=1031;//#AUTO#
+	buildcostenergy=446;//#AUTO#
+	buildcostmetal=89;//#AUTO#
+	buildtime=1063;//#AUTO#
 }

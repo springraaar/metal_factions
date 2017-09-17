@@ -81,8 +81,8 @@
 	weapon1=gear_barrager_cannon;
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
-	explodeas=ATOMIC_BLASTPEN;
-	selfdestructas=ATOMIC_BLASTPEN;
+	explodeas=HUGE_UNIT;
+	selfdestructas=HUGE_UNIT;
 	onlytargetcategory1=NOTAIR;
 
 	//************************************************************
@@ -133,7 +133,7 @@
 	{
 	    canAreaAttack=1;
 	}
-	buildcostenergy=10961;//#AUTO#
-	buildcostmetal=2192;//#AUTO#
-	buildtime=26124;//#AUTO#
+	buildcostenergy=10973;//#AUTO#
+	buildcostmetal=2194;//#AUTO#
+	buildtime=26153;//#AUTO#
 }

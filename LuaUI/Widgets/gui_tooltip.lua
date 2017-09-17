@@ -319,7 +319,7 @@ function GenerateNewTooltip()
                         "\255\213\213\255".."    Build time: ".."\255\170\170\255"..
                         floor((29+floor(31+fud.buildTime/(buildpower/32)))/30).."s\n"..
                         "\255\200\200\200Health: ".."\255\200\200\200"..fud.health.."("..armorTypeStr..")"
-                        if fud.shieldPower > 0 then NewTooltip=NewTooltip.."\255\64\64\255     Shield: "..FormatNbr(fud.shieldPower) end
+                        if fud.shieldPower > 0 then NewTooltip=NewTooltip.."\255\135\135\255     Shield: "..FormatNbr(fud.shieldPower) end
 						
 				-- weapons
                 if fud.weapons and fud.weapons[1] and fud.weapons[1].weaponDef then
@@ -422,7 +422,7 @@ function GenerateNewTooltip()
 					
 					-- health totals					
                     NewTooltip = NewTooltip.."\255\200\200\200Health: ".."\255\200\200\200"..floor(totalHealth).."\255\200\200\200/\255\200\200\200"..floor(totalMaxHealth)
-                    if anyShield then NewTooltip=NewTooltip.."\255\64\64\255      Shield: "..FormatNbr(math.min(totalShieldPower,totalMaxShieldPower)).."/"..FormatNbr(totalMaxShieldPower) end
+                    if anyShield then NewTooltip=NewTooltip.."\255\135\135\255      Shield: "..FormatNbr(math.min(totalShieldPower,totalMaxShieldPower)).."/"..FormatNbr(totalMaxShieldPower) end
 
                     -- energy and metal upkeep totals
                     if true then
@@ -504,7 +504,7 @@ function GenerateNewTooltip()
 						local maxShieldPower = ud.shieldPower
 						if (health ~= nil) then
                         	NewTooltip = NewTooltip.."\255\200\200\200Health: ".."\255\200\200\200"..floor(health).."\255\200\200\200/\255\200\200\200"..floor(maxHealth).."("..armorTypeStr..")"
-                        	if hasShield then NewTooltip=NewTooltip.."\255\64\64\255      Shield: "..FormatNbr(math.min(ShieldPower,maxShieldPower)).."/"..FormatNbr(maxShieldPower) end
+                        	if hasShield then NewTooltip=NewTooltip.."\255\135\135\255      Shield: "..FormatNbr(math.min(ShieldPower,maxShieldPower)).."/"..FormatNbr(maxShieldPower) end
                         end
                         
                         -- energy and metal upkeep

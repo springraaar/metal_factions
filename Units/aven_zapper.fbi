@@ -5,7 +5,7 @@
 	//********************
 	Side=Aven;
 	name=Zapper;
-	description=Heavy Energy Weapon;
+	description=Anti-Armor Sniper Tower;
 	icontype=building;
 
 	//************************************************************
@@ -77,8 +77,8 @@
 	//***********
 	weapon1=aven_zapper_laser;
 	badtargetcategory1=VTOL;
-	explodeas=ATOMIC_BLASTPEN;
-	selfdestructas=ATOMIC_BLAST;
+	explodeas=ZAPPER_BLAST;
+	selfdestructas=ZAPPER_BLAST;
 
 	//************************************************************
 	//  Orders
@@ -112,7 +112,7 @@
 	explosiongenerator0=custom:snipeflare;
 	}
 
-	buildcostenergy=19889;//#AUTO#
-	buildcostmetal=3977;//#AUTO#
-	buildtime=34474;//#AUTO#
+	buildcostenergy=19592;//#AUTO#
+	buildcostmetal=3918;//#AUTO#
+	buildtime=33959;//#AUTO#
 }

@@ -5,7 +5,7 @@
 	//********************
 	Side=Aven;
 	name=Excalibur;
-	description=Sniper Hovercraft;
+	description=Anti-Armor Sniper Hovercraft;
 	icontype=hover;
 
 	//************************************************************
@@ -84,8 +84,8 @@
 	weapon1=aven_excalibur_laser;
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=PENETRATOR_BLAST;
+	selfdestructas=PENETRATOR_BLAST;
 
 	//************************************************************
 	//  Orders
@@ -124,7 +124,7 @@
 	explosiongenerator0=custom:snipeflare;
 	}
 
-	buildcostenergy=13361;//#AUTO#
-	buildcostmetal=2672;//#AUTO#
-	buildtime=31844;//#AUTO#
+	buildcostenergy=13196;//#AUTO#
+	buildcostmetal=2639;//#AUTO#
+	buildtime=31452;//#AUTO#
 }

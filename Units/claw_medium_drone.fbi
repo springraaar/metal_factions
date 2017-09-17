@@ -65,7 +65,7 @@
 	turnrate=500;
 	acceleration=0.32;
 	brakerate=0.3;
-	maxvelocity=3.0;
+	maxvelocity=2.4;
 	maxslope=10;
 	maxwaterdepth=255;
 	cruisealt=120;
@@ -127,6 +127,7 @@
 	[CustomParams]
 	{
 		isDrone=1;
+		evalfactor=0.7;
 	}
 
 	//************************************************************
@@ -136,7 +137,7 @@
 	{
 		explosiongenerator0=custom:glowsml;
 	}
-	buildcostenergy=5386;//#AUTO#
-	buildcostmetal=538;//#AUTO#
-	buildtime=6912;//#AUTO#
+	buildcostenergy=3430;//#AUTO#
+	buildcostmetal=343;//#AUTO#
+	buildtime=4403;//#AUTO#
 }
