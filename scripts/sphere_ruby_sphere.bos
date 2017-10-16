@@ -11,6 +11,9 @@ static-var  currentHeading1, currentPitch1,currentHeading2, currentPitch2;
 #define SIG_AIM				2
 #define SIG_AIM2			4
 
+#define HEADING_TOLERANCE	<40.000000>
+#define PITCH_TOLERANCE		<40.000000>
+
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
@@ -44,6 +47,10 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 Create()
 {
 	hide flare;
+	currentHeading1 = <0>;
+	currentPitch1 = <0>;
+	currentHeading2 = <0>;
+	currentPitch2 = <0>;
 	//spin weapon around z-axis speed<200.000000>;
 	start-script SmokeUnit();
 }
@@ -52,6 +59,8 @@ Create()
 RestoreAfterDelay1()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	currentHeading1 = <0>;
+	currentPitch1 = <0>;
 	turn turret to y-axis <0.000000> speed <90.016484>;
 	turn sleeve to x-axis <0.000000> speed <50.005495>;
 }
@@ -59,6 +68,8 @@ RestoreAfterDelay1()
 RestoreAfterDelay2()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	currentHeading2 = <0>;
+	currentPitch2 = <0>;	
 	turn turret2 to y-axis <0.000000> speed <90.016484>;
 	turn sleeve2 to x-axis <0.000000> speed <50.005495>;
 }
@@ -69,13 +80,14 @@ AimPrimary(heading, pitch)
 	set-signal-mask SIG_AIM;
 	turn turret to y-axis heading speed <200.038462>;
 	turn sleeve to x-axis <0.000000> - pitch speed <200.000000>;
-	if (heading != currentHeading1 || pitch != currentPitch1) 
+	if ( get ABS(heading - currentHeading1)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch1) > PITCH_TOLERANCE )
 	{
 		wait-for-turn turret around y-axis;
 		wait-for-turn sleeve around x-axis;
 		currentHeading1 = heading;
 		currentPitch1 = pitch;
 	}
+
 	start-script RestoreAfterDelay1();
 	return (1);
 }
@@ -102,13 +114,14 @@ AimWeapon3(heading, pitch)
 	set-signal-mask SIG_AIM2;
 	turn turret2 to y-axis heading speed <220.038462>;
 	turn sleeve2 to x-axis <0.000000> - pitch speed <250.000000>;
-	if (heading != currentHeading2 || pitch != currentPitch2) 
+	if ( get ABS(heading - currentHeading2)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch2) > PITCH_TOLERANCE )
 	{
 		wait-for-turn turret2 around y-axis;
 		wait-for-turn sleeve2 around x-axis;
 		currentHeading2 = heading;
 		currentPitch2 = pitch;
 	}
+
 	start-script RestoreAfterDelay2();
 	return (1);
 }

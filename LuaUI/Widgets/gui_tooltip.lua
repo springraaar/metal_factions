@@ -201,6 +201,20 @@ function GetTooltipWeaponData(ud, xpMod, rangeMod, dmgMod)
     return NewTooltip
 end
  
+-- generates build power string in m/s as a function of build speed
+function GetTooltipBuildPower(buildSpeed)
+	
+	-- time is 11 * weighted_cost_metal
+	-- time = 11 * (m + e/60) / spd
+	-- m + e/60 = time * spd / 11
+	-- non-aircraft have 5x e cost as metal, so
+	-- m + 5m/60 = time * spd / 11
+	-- 13m/12 = time * spd / 11
+	-- m/time = 12*spd / (11*13) 
+	
+	return "\255\255\255\150Build Power: ".. FormatNbr(12 * buildSpeed / (11*13),1).." metal/s"
+end
+
 -- generates new tooltip 
 function GenerateNewTooltip()
         local CurrentTooltip = Spring.GetCurrentTooltip()
@@ -324,6 +338,11 @@ function GenerateNewTooltip()
 				-- weapons
                 if fud.weapons and fud.weapons[1] and fud.weapons[1].weaponDef then
 					NewTooltip = NewTooltip..GetTooltipWeaponData(fud,1)
+                end
+
+				-- build power
+                if fud.buildSpeed and fud.buildSpeed > 0 then
+					NewTooltip = NewTooltip.."\n"..GetTooltipBuildPower(fud.buildSpeed).."\255\255\255\255\n"
                 end
                 
                 -- speed
@@ -516,6 +535,11 @@ function GenerateNewTooltip()
 
                         -- weapons
                         NewTooltip = NewTooltip..GetTooltipWeaponData(ud,xpMod,rangeMod,dmgMod).."\n"
+                      
+                		-- build power
+		                if ud.buildSpeed and ud.buildSpeed > 0 then
+							NewTooltip = NewTooltip.."\n"..GetTooltipBuildPower(ud.buildSpeed)..  "\255\255\255\255\n"
+		                end
                         
                         -- upgrades (upgrade centers only)
                         local isUpgradeCenter = string.find(ud.name, "upgrade_center")
@@ -617,21 +641,11 @@ function widget:DrawScreenEffects(vsx,vsy)
                 FontSize = math.max(8,4+vsy/100)
         end
  
-        local TextWidthFixHack = 1
-        if tonumber(string.sub(Game.version,1,4))<=0.785 and string.sub(Game.version,1,5)~="0.78+" then
-                TextWidthFixHack = (vsx/vsy)*(4/3)
-        end
-        xTooltipSize = FontSize*(1+maxWidth*TextWidthFixHack)
+        xTooltipSize = FontSize*(1+maxWidth)
         yTooltipSize = FontSize*(1+#nttList)
  
         -- Bottom left position by default
         local x1,y1,x2,y2=0,0,xTooltipSize,yTooltipSize
- 
-        -- if there's a KP_OnsHelpTip, and if it is on bottom left corner, then place KP_ToolTip above
-        if WG.KP_OnsHelpTip and WG.KP_OnsHelpTip.x1 and WG.KP_OnsHelpTip.y1 and WG.KP_OnsHelpTip.x1==0 and WG.KP_OnsHelpTip.y1==0 then
-                y1=WG.KP_OnsHelpTip.y2 or 0
-                y2=y1+yTooltipSize
-        end
  
         -- Note: this line is done even if the KP_ToolTip is devoid of text
         -- The only case where KP_ToolTip is nil are when the widget is off or the GUI is hidden

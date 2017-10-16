@@ -104,7 +104,7 @@
 	weapon2=claw_u5commander_torpedo;
 	nochasecategory=WEAPON;
 	badtargetcategory1=VTOL;
-	badtargetcategory1=VTOL;
+	onlytargetcategory2=NOTAIR;
 	badtargetcategory3=VTOL;
 	explodeas=claw_commander_nanoblast;
 	selfdestructas=claw_commander_nanoblast;
@@ -161,7 +161,7 @@
 	//*****************
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:railgunflare;
+	explosiongenerator0=custom:emgflarefast;
 	explosiongenerator1=custom:Nano;
 	explosiongenerator2=custom:emgflarefast;
 	explosiongenerator3=custom:DGUNREADYFLARE;

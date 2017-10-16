@@ -1,3 +1,60 @@
+2017/10/16 ------------------ NOTES v0.987 ----------------------
+
+--- engine
+
+- changed SpringRTS engine version compatiblity and requirement from 103.0 to 104.0
+
+--- new units
+
+- added SPHERE hardened fission reactors
+(this adds a choice between the previous cheaper but vulnerable economy clusters or sturdy ones)
+
+--- balance / mechanics
+
+MOVEMENT
+- enabled "raw movement" (requires springRTS engine 104.0)
+(this means units are more likely to travel in a straight line over short distances if they can)
+
+COMMANDERS
+- improved overall combat attributes of most AVEN, GEAR and CLAW commanders by about 10-15%
+(they're no longer being overvalued relative to SPHERE commanders due to their cloaking ability)
+- improved the relative balance between the underwater and surface weapons (underwater weapon is generally worth half as much on all commanders)
+- reduced range by 6%, increased DPS by 12% but doubled the energy consumption for the unmorphed SPHERE commander's beam
+- fixed issues when trying to aim the torpedo weapon while underwater (affected several AVEN and GEAR commanders)
+
+CLOAKABLE UNITS
+- made cloakable units about 8% cheaper
+
+CONSTRUCTION UNITS
+- removed 0.1m/s and 0.2m/s and 50/100 resource storage from construction units and reduced the costs by roughly 10%
+- construction aircraft build at the same rate as other builders of the same tech level instead of half, but costs increased by about 30%
+- reduced construction aircraft movement speed by 20% but increased their HP by about 20%
+(they're still fragile)
+- increased build power of construction drones by 25%
+- increased the build time for most level 2 buildings by 37% to have the resource drain consistent with the other buildings
+
+OTHER
+- fixed aiming delays that made most fast firing weapons (emg, miniguns, continuous beams) deal 10-20% less damage per second than expected
+(this happened while maneuvering or against mobile targets even if they were still within tolerance)
+- fixed units with torpedoes trying to target enemy aircraft
+
+- reduced CLAW "Grinder" dps and range by about 10% and cost by about 25%
+- made CLAW "Mega" significantly bigger and stronger and adjusted the cost
+- made GEAR "Cascade" bigger and increased the damage per pass, but now it deals M damage instead of H and is slightly slower and adjusted the cost
+(a single bomber is now much more likely to be able to destroy a single factory or small cluster in one pass and survive) 
+- increased GEAR "Instigator" HP from 850 to 1000 and cost slightly and changed the armor type from L to M
+- increased SPHERE "Crustle" HP from 1100 to 1200 and adjusted the cost (+6%)
+
+- "Advanced Plating" upgrade changed from +8% to +10% HP
+
+--- UI
+
+- prevent sharing units to enemies
+- tooltip shows build power for construction units in metal per second
+(note that level1 factories are built 50% faster and aircraft have a builtin cost modifier of 7% less metal but 100% more energy to build/repair)
+
+
+
 2017/09/17 ------------------ NOTES v0.986 ----------------------
 
 - fixed bug where GEAR's scout pad couldn't build air scouts (oops)

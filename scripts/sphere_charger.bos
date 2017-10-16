@@ -8,7 +8,10 @@
 piece  groundx2, torso, gunflare, emgflare, hips, head,sphere2,eye, luparm, leg1,bleg,leg2,bleg2,leg3,bleg3,leg4,bleg4, ruparm, rarm, larm, lemg, rgun, l1,
        r1, t2, t3, a1, a3, rotor, shieldpt;
 
-static-var  bMoving, bAiming, Static_Var_4, restore_delay;
+static-var  bMoving, bAiming, Static_Var_4, restore_delay, currentHeading, currentPitch;
+
+#define HEADING_TOLERANCE	<15.000000>
+#define PITCH_TOLERANCE		<25.000000>
 
 // Signal definitions
 #define SIG_AIM				2
@@ -218,6 +221,8 @@ Create()
 	bAiming = FALSE;
 	Static_Var_4 = 0;
 	restore_delay = 5000;
+	currentHeading = <0>;
+	currentPitch = <0>;
 	start-script MotionControl();
 	start-script SmokeUnit();
 }
@@ -239,9 +244,10 @@ StopMoving()
 
 RestoreAfterDelay()
 {
-	set-signal-mask SIG_AIM;
-	set-signal-mask SIG_AIM_2;
 	sleep restore_delay;
+	currentHeading = <0>;
+	currentPitch = <0>;
+
 	turn torso to y-axis <0.000000> speed <190.016484>;
 	turn ruparm to x-axis <0.000000> speed <145.005495>;
 	turn rarm to y-axis <0.000000> speed <145.005495>;
@@ -271,8 +277,13 @@ AimSecondary(heading, pitch)
 	spin rotor around z-axis speed <300.000000>;
 	turn torso to y-axis heading speed <230.027473>;
 	turn luparm to x-axis <0.000000> - pitch speed <230.038462>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn luparm around x-axis;
+	if ( get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE )
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn luparm around x-axis;
+		currentHeading = heading;
+		currentPitch = pitch;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

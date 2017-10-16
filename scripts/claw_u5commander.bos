@@ -8,10 +8,13 @@
 
 piece  torso, luparm, larm, lgun, lnanospray, lhand,lh1,lh2, l1,l2,l3, ruparm, rarm, rgun, rnanospray, rg1, rflare1, r1,r2,r3, pelvis, head, lthigh, rthigh, rleg, lleg, lfoot, rfoot, rtorpgun,rtorpflare, emit3, tbase, barrelbase,barrel1,barrel2,barrel3,barrel4,bcover;
 
-static-var  bMoving, bBuilding, Static_Var_3, bAiming, Static_Var_5, Static_Var_6, bDgunning, bUnderwater, canAim1, canAim2, firept2, firept3, nanopt1, stanceActivated, gun_1, mASpdFactor, moveSpd1, turnSpd1, turnSpd2, turnSpd3;
+static-var  bMoving, bBuilding, Static_Var_3, bAiming, Static_Var_5, Static_Var_6, bDgunning, bUnderwater, canAim1, canAim2, firept2, firept3, nanopt1, stanceActivated, gun_1, mASpdFactor, moveSpd1, turnSpd1, turnSpd2, turnSpd3, currentHeading, currentPitch;
 
 // signal definition
 #define SIG_AIM		2
+
+#define HEADING_TOLERANCE	<15.000000>
+#define PITCH_TOLERANCE		<25.000000>
 
 
 MotionSpeedControl(maxSpeed,currentSpeed)
@@ -441,6 +444,9 @@ Create()
 	firept2 = [0];
 	firept3 = [0];
 	nanopt1 = [0];
+	currentHeading = <0>;
+	currentPitch = <0>;
+
 	start-script MotionSpeedControl();
 	start-script MotionControl();
 	start-script Build();
@@ -486,6 +492,8 @@ RestorePosition()
 {
 	bDgunning = 0;
 	sleep RESTORE_DELAY;
+	currentHeading = <0>;
+	currentPitch = <0>;
 	turn torso to y-axis <0.000000> speed <290.000000>;
 	turn ruparm to x-axis <0.000000> speed <245.000000>;
 	turn luparm to x-axis <0.000000> speed <245.000000>;
@@ -532,10 +540,16 @@ AimPrimary(heading, pitch)
 	turn ruparm to x-axis <0.000000> - pitch speed <245.000000>;
 	turn rgun to x-axis <0.000000> speed <245.000000>;
 	turn rarm to y-axis <0.000000> speed <300.000000>;
-	wait-for-turn rarm around y-axis;
-	wait-for-turn torso around y-axis;
-	wait-for-turn ruparm around x-axis;
-	wait-for-turn rgun around x-axis;
+	if ( get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE )
+	{
+		wait-for-turn rarm around y-axis;
+		wait-for-turn torso around y-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn rgun around x-axis;
+		currentHeading = heading;
+		currentPitch = pitch;
+	}
+
 	start-script RestorePosition();
 	return (1);
 }
@@ -618,6 +632,9 @@ AimSecondary(heading, pitch)
 	wait-for-turn torso around y-axis;
 	wait-for-turn ruparm around x-axis;
 	wait-for-turn rgun around x-axis;
+	currentHeading = heading;
+	currentPitch = pitch;
+
 	start-script RestorePosition();
 	return (1);
 }

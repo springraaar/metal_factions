@@ -5,7 +5,7 @@
 	//********************
 	Side=Gear;
 	name=Cascade;
-	description=Carpet Bomber;
+	description=Heavy Carpet Bomber;
 	icontype=air;
 
 	//************************************************************
@@ -26,10 +26,10 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1800;
+	maxdamage=3000;
 	healtime=30;
-	footprintx=5;
-	footprintz=5;
+	footprintx=6;
+	footprintz=6;
 
 	//************************************************************
 	//  Resources
@@ -65,8 +65,8 @@
 	//************
 	turnrate=256;
 	acceleration=0.1;
-	brakerate=3;
-	maxvelocity=9.1;
+	brakerate=0.03;
+	maxvelocity=8.1;
 	maxslope=10;
 	maxwaterdepth=255;
 	cruisealt=230;
@@ -135,7 +135,7 @@
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
-	collisionVolumeScales =60 15 45;
+	collisionVolumeScales =70 15 55;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	
@@ -146,7 +146,7 @@
 	[SFXTypes]
 	{
 	}
-	buildcostenergy=20034;//#AUTO#
-	buildcostmetal=2003;//#AUTO#
-	buildtime=25711;//#AUTO#
+	buildcostenergy=24299;//#AUTO#
+	buildcostmetal=2429;//#AUTO#
+	buildtime=31184;//#AUTO#
 }

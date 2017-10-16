@@ -21,14 +21,14 @@
 	// ------------------- health/cost/size
 	FootprintX=3;
 	FootprintZ=3;
-	MaxDamage=1100;
+	MaxDamage=1200;
 
 
 	// ------------------- resources
-	EnergyUse=1;
+	EnergyUse=0;
 	EnergyStorage=0;
 	MetalStorage=0;
-	EnergyMake=1;
+	EnergyMake=0;
 
 	// ------------------- abilities
 	canmove=1;
@@ -94,7 +94,7 @@
 	{
 		explosiongenerator0=custom:GLOWSML;
 	}
-	buildcostenergy=949;//#AUTO#
-	buildcostmetal=189;//#AUTO#
-	buildtime=2264;//#AUTO#
+	buildcostenergy=1006;//#AUTO#
+	buildcostmetal=201;//#AUTO#
+	buildtime=2397;//#AUTO#
 }

@@ -1,0 +1,109 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Small Hardened Fission Reactor;
+	description=Produces 100 E/s but consumes 0.5 M/s;
+	icontype=energy;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE ENERGY LEVEL1 NOTAIR NOTSUB;
+	tedclass=ENERGY;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=sphere_hardened_fission_reactor;
+	unitnumber=10005;
+	objectname=sphere_hardened_fission_reactor.3do;
+	corpse=sphere_hardened_fission_reactor_dead;
+	buildpic=sphere_hardened_fission_reactor.png;
+	soundcategory=gear_FUS;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=4500;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=100;
+	metaluse=0.5;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	yardmap=ooooo ooooo ooooo ooooo ooooo;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+	maxwaterdepth=255;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=FUSION_BUILDING_MED;
+	selfdestructas=FUSION_BUILDING_MED;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=EF-5;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	collisionVolumeType = cyly;
+	collisionVolumeScales = 70 45 70;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+	}
+
+	buildcostenergy=4581;//#AUTO#
+	buildcostmetal=916;//#AUTO#
+	buildtime=10920;//#AUTO#
+}

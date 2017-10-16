@@ -10,6 +10,9 @@ static-var  currentHeading, currentPitch;
 // Signal definitions
 #define SIG_AIM				2
 
+#define HEADING_TOLERANCE	<40.000000>
+#define PITCH_TOLERANCE		<40.000000>
+
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
@@ -43,6 +46,8 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 Create()
 {
 	hide flare;
+	currentHeading = <0>;
+	currentPitch = <0>;
 	start-script SmokeUnit();
 }
 
@@ -50,6 +55,8 @@ Create()
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	currentHeading = <0>;
+	currentPitch = <0>;
 	turn turret to y-axis <0.000000> speed <90.016484>;
 	turn sleeve to x-axis <0.000000> speed <50.005495>;
 }
@@ -60,13 +67,14 @@ AimPrimary(heading, pitch)
 	set-signal-mask SIG_AIM;
 	turn turret to y-axis heading speed <120.038462>;
 	turn sleeve to x-axis <0.000000> - pitch speed <150.000000>;
-	if (heading != currentHeading || pitch != currentPitch) 
+	if ( get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE )
 	{
 		wait-for-turn turret around y-axis;
 		wait-for-turn sleeve around x-axis;
 		currentHeading = heading;
 		currentPitch = pitch;
 	}
+	
 	start-script RestoreAfterDelay();
 	return (1);
 }

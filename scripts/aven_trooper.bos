@@ -8,7 +8,11 @@
 piece  torso, ruparm, luparm, rfire, rarm, larm, rloarm, lloarm,hand, pelvis,
        rthigh, lthigh, lleg, rleg, rfoot, lfoot, ground, head, r2;
 
-static-var  bMoving, bAiming, Static_Var_3, restore_delay, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
+static-var  bMoving, bAiming, Static_Var_3, restore_delay, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3, currentHeading, currentPitch, aimReady;
+
+
+#define HEADING_TOLERANCE	<15.000000>
+#define PITCH_TOLERANCE		<25.000000>
 
 // Signal definitions
 #define SIG_AIM				4
@@ -68,8 +72,14 @@ aimPose(heading, pitch)
 
 		turn torso to y-axis <-30>+heading speed <280.000000>;
 		turn ruparm to x-axis <-90.000000> - pitch speed <400.000000>;
-		wait-for-turn torso around y-axis;
-		wait-for-turn ruparm around x-axis;
+		if ( !aimReady || (get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE ))
+		{
+			wait-for-turn torso around y-axis;
+			wait-for-turn ruparm around x-axis;
+			aimReady = TRUE;
+			currentHeading = heading;
+			currentPitch = pitch;
+		}
 	}
 	if( pitch < <-30>)
 	{
@@ -82,9 +92,14 @@ aimPose(heading, pitch)
 
 		turn torso to y-axis heading speed <280.000000>;
 		turn ruparm to x-axis <-90.000000> - pitch speed <400.000000>;
-		wait-for-turn torso around y-axis;
-		wait-for-turn ruparm around x-axis;
-
+		if (!aimReady || ( get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE ))
+		{
+			wait-for-turn torso around y-axis;
+			wait-for-turn ruparm around x-axis;
+			aimReady = TRUE;
+			currentHeading = heading;
+			currentPitch = pitch;
+		}
 	}
 }
 
@@ -323,8 +338,11 @@ Create()
 	hide rfire;
 	bMoving = FALSE;
 	bAiming = FALSE;
+	aimReady = FALSE;
 	Static_Var_3 = 1;
 	restore_delay = 12000;
+	currentHeading = <0>;
+	currentPitch = <0>;
 	start-script MotionSpeedControl();
 	start-script MotionControl();
 	start-script SmokeUnit();
@@ -358,6 +376,9 @@ SweetSpot(piecenum)
 RestoreAfterDelay()
 {
 	sleep 5000;
+	currentHeading = <0>;
+	currentPitch = <0>;
+	aimReady = FALSE;
 	turn torso to y-axis <0.000000> speed <290.000000>;
 	turn ruparm to x-axis <0.000000> speed <245.000000>;
 	

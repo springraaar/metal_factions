@@ -5,7 +5,11 @@
 
 piece  base, stand, turret, sleeve, barrels, lb1,lb2,lb3, flare1, tlogo;
 
-static-var gun_1;
+static-var gun_1, currentHeading, currentPitch;
+
+
+#define HEADING_TOLERANCE	<15.000000>
+#define PITCH_TOLERANCE		<25.000000>
 
 // Signal definitions
 #define SIG_AIM				2
@@ -45,12 +49,16 @@ Create()
 {
 	start-script SmokeUnit();
 	gun_1 = [0];
+	currentHeading = <0>;
+	currentPitch = <0>;
 	return (0);
 }
 
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	currentHeading = <0>;
+	currentPitch = <0>;
 	turn turret to y-axis <0.000000> speed <300.000000>;
 	turn sleeve to x-axis <0.000000> speed <300.000000>;
 	return (0);
@@ -63,8 +71,13 @@ AimPrimary(heading, pitch)
 	
 	turn turret to y-axis heading speed <300.071429>;
 	turn sleeve to x-axis <0.000000> - pitch speed <200.038462>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn sleeve around x-axis;
+	if ( get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE )
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+		currentHeading = heading;
+		currentPitch = pitch;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

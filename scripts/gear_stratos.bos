@@ -5,7 +5,11 @@
 
 piece  base, b2, weapon1, weapon2, weapon3, weapon4, firept1, firept2, firept3, firept4, turret, sleeve, barrel, flare, lwing, rwing, center,c2, lweapon,rweapon,ljet,rjet,ljet2,rjet2,tbase, lbody,rbody, rw2,lw2,ljp,rjp,ljp2,rjp2;
 
-static-var  gun_1, gun_2, bAiming;
+static-var  gun_1, gun_2, bAiming, currentHeading, currentPitch;
+
+
+#define HEADING_TOLERANCE	<20.000000>
+#define PITCH_TOLERANCE		<25.000000>
 
 // Signal definitions
 #define SIG_AIM				4
@@ -58,6 +62,8 @@ Create()
 	gun_1 = [0];
 	gun_2 = [0];
 	bAiming = FALSE;
+	currentHeading = <0>;
+	currentPitch = <0>;
 	start-script SmokeUnit();
 	start-script HeavyGunshipStrafe();
 }
@@ -78,6 +84,8 @@ SweetSpot(piecenum)
 RestoreAfterDelay()
 {
 	sleep 3000;
+	currentHeading = <0>;
+	currentPitch = <0>;
 	turn turret to y-axis <0.000000> speed <80.000000>;
 	turn sleeve to y-axis <0.000000> speed <80.000000>;
 	bAiming = FALSE;
@@ -103,8 +111,13 @@ AimSecondary(heading, pitch)
 	//turn base to x-axis <-45.000000> speed <45.000000>;
 	turn turret to y-axis heading speed <300.000000>;
 	turn sleeve to x-axis <0.000000>-pitch speed <300.000000>;
-	wait-for-turn sleeve around x-axis;
-	wait-for-turn turret around y-axis;
+	if ( get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE )
+	{
+		wait-for-turn sleeve around x-axis;
+		wait-for-turn turret around y-axis;
+		currentHeading = heading;
+		currentPitch = pitch;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

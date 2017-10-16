@@ -34,8 +34,8 @@ function gadget:Initialize()
 		end
 	end
 
-
-	
+	-- set ambient lighting for units
+	Spring.SetSunLighting({unitAmbientColor = {0.7, 0.7, 0.7}, unitDiffuseColor = {0.5, 0.5, 0.5}, unitSpecularColor = {0.5,0.5,0.5}})
 end
 
 

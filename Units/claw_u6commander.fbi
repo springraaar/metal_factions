@@ -87,7 +87,7 @@
 	turnrate=1030;
 	acceleration=0.46;
 	brakerate=0.32;
-	maxvelocity=2.0;
+	maxvelocity=2.1;
 	maxslope=20;
 	maxwaterdepth=35;
 
@@ -103,11 +103,9 @@
 	//***********
 	weapon1=claw_u6commander_laser;
 	weapon2=claw_u6commander_torpedo;
-	//weapon3=claw_u6commander_shotgun;
-	//slaveto1=3;
 	nochasecategory=WEAPON;
 	badtargetcategory1=VTOL;
-	badtargetcategory2=VTOL;
+	onlytargetcategory2=NOTAIR;
 	badtargetcategory3=VTOL;
 	explodeas=claw_commander_nanoblast;
 	selfdestructas=claw_commander_nanoblast;

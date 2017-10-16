@@ -28,7 +28,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3800;
+	maxdamage=3900;
 	healtime=100;
 	buildcostmetal=2000;
 	buildcostenergy=20000;
@@ -102,9 +102,9 @@
 	//***********
 	weapon1=gear_u2commander_cannon;
 	weapon2=gear_u2commander_torpedo;
-	nochasecategory=VTOL;
+	nochasecategory=WEAPON;
+	onlytargetcategory2=NOTAIR;
 	badtargetcategory1=VTOL;
-	badtargetcategory2=VTOL;
 	explodeas=gear_commander_nanoblast;
 	selfdestructas=gear_commander_nanoblast;
 

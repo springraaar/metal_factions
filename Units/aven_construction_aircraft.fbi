@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=308;
+	maxdamage=480;
 	healtime=17;
 	footprintx=2;
 	footprintz=2;
@@ -34,11 +34,11 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalmake=0.1;
-	metalstorage=50;
+	metalmake=0.0;
+	metalstorage=0;
 	energymake=5.5;
 	energyuse=0.1;
-	energystorage=50;
+	energystorage=0;
 
 	//************************************************************
 	//  Building
@@ -49,10 +49,10 @@
 	//***************
 	builder=1;
 	builddistance=200;
-	workertime=75;
-        RepairSpeed=75;
-        ReclaimSpeed=75;
-        TerraformSpeed=150;
+	workertime=150;
+	RepairSpeed=150;
+	ReclaimSpeed=150;
+	TerraformSpeed=150;
 
 	//************************************************************
 	//  Abilities
@@ -70,10 +70,10 @@
 	turnrate=450;
 	acceleration=0.18;
 	brakerate=1.5;
-	maxvelocity=6.9;
+	maxvelocity=5.3;
 	maxslope=10;
 	maxwaterdepth=0;
-	cruisealt=140;
+	cruisealt=90;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -123,7 +123,7 @@
 	//  To be removed
 	//*****************
 
-	buildcostenergy=5454;//#AUTO#
-	buildcostmetal=545;//#AUTO#
-	buildtime=7000;//#AUTO#
+	buildcostenergy=5952;//#AUTO#
+	buildcostmetal=595;//#AUTO#
+	buildtime=7638;//#AUTO#
 }

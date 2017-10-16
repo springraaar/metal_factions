@@ -9,7 +9,10 @@ piece  torso, flare, Hip, RLLeg, LLLeg, LULeg, RULeg, LUArm,
 static-var  bMoving, bAiming, Static_Var_3, restore_delay, statechg_DesiredState,
             statechg_StateChanging;
 
-static-var  gun_1;
+static-var  gun_1, currentHeading, currentPitch, aimReady;
+
+#define HEADING_TOLERANCE	<20.000000>
+#define PITCH_TOLERANCE		<25.000000>
 
 // Signal definitions
 #define SIG_AIM				2
@@ -786,8 +789,11 @@ Create()
 	hide flare;
 	bMoving = FALSE;
 	bAiming = FALSE;
+	aimReady = FALSE;
 	Static_Var_3 = 1;
 	restore_delay = 3000;
+	currentHeading = <0>;
+	currentPitch = <0>;
 	start-script MotionControl();
 	start-script SmokeUnit();
 	return (0);
@@ -820,6 +826,9 @@ SweetSpot(piecenum)
 RestoreAfterDelay()
 {
 	sleep restore_delay;
+	currentHeading = <0>;
+	currentPitch = <0>;
+	aimReady = FALSE;
 	//start-script RequestState(1);
 	turn torso to y-axis <0.000000> speed <150.027473>;
 	turn luarm to x-axis <0.000000> speed <150.027473>;
@@ -849,9 +858,15 @@ AimPrimary(heading, pitch)
 	turn torso to y-axis heading speed <350.060440>;
 	turn luArm to x-axis <-90.000000> - pitch speed <350.060440>;
 	turn llArm to x-axis <0.000000> speed <350.060440>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn luarm around x-axis;
-	wait-for-turn llarm around x-axis;
+	if (!aimReady || (get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE ))
+	{	
+		wait-for-turn torso around y-axis;
+		wait-for-turn luarm around x-axis;
+		wait-for-turn llarm around x-axis;
+		aimReady = TRUE;
+		currentHeading = heading;
+		currentPitch = pitch;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

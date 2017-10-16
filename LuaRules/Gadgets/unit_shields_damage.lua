@@ -131,6 +131,8 @@ local continuousBeamWeaponDefIds = {
 	[WeaponDefNames["sphere_chroma_beam3"].id] = true
 }
 
+local targetDefId = UnitDefNames["target"].id
+local targetDamage = 0
 
 -- set unit collision volume data
 function SetColvol(unitID, colvolType)
@@ -229,6 +231,14 @@ function gadget:GameFrame(n)
 			spSetUnitRulesParam(unitID,"on_fire","1",{public = true})
 		else
 			spSetUnitRulesParam(unitID,"on_fire","0",{public = true})
+		end
+	end
+
+	-- handle target damage, for test purposes
+	if (n%1800 == 0) then
+		if targetDamage > 0 then
+			Spring.Echo(n.." dps="..(targetDamage / 60))
+			targetDamage = 0
 		end
 	end
 
@@ -533,6 +543,10 @@ end
 
 -- handle XP modifier when units take damage from enemies
 function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
+	if (unitDefID == targetDefId) then
+		targetDamage = targetDamage + damage
+		return
+	end
 	if (attackerTeam and (not spAreTeamsAllied(unitTeam,attackerTeam))) then
 		-- add entry to table
 		if unitXPTable[unitID] == nil then

@@ -12,8 +12,12 @@ end
 
 include("keysym.h.lua")
 
+menuFrame = -1
+menuShown = false
+
 function widget:Initialize()
    Spring.SendCommands("unbindaction showmetalmap")
+   Spring.SendCommands("unbindaction quitmenu")
 end
 
 function widget:KeyPress(key, mods, isRepeat)
@@ -35,12 +39,25 @@ function widget:KeyPress(key, mods, isRepeat)
 				return false
 			end
 		end
-	elseif (key == KEYSYMS.ESCAPE) and mods.shift then
-		Spring.SendCommands("quitmenu")
+	elseif (key == KEYSYMS.ESCAPE) then
+		n = Spring.GetGameFrame()
+		if (n > menuFrame and not menuShown) then
+			menuFrame = n + 15
+		else 
+			menuShown = false
+		end
 	elseif (key == KEYSYMS.F4) then
 		Spring.SendCommands("showmetalmap")
 	elseif (key == KEYSYMS.F10) then
 		Spring.SendCommands("screenshot png")
+	end
+end
+
+-- workaround for menu not showing up
+function widget:GameFrame(n)
+	if (n == menuFrame) then
+		Spring.SendCommands("quitmenu")
+		menuShown = true
 	end
 end
 

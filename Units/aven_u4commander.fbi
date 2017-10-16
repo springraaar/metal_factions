@@ -27,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3500;
+	maxdamage=3820;
 	buildcostmetal=2000;
 	buildcostenergy=20000;
 	buildtime=30000;
@@ -103,7 +103,7 @@
 	weapon1=aven_u4commander_emg;
 	weapon2=aven_u4commander_torpedo;
 	nochasecategory=WEAPON;
-	badtargetcategory1=VTOL;
+	onlytargetcategory2=NOTAIR;
 	badtargetcategory1=VTOL;
 	explodeas=aven_commander_nanoblast;
 	selfdestructas=aven_commander_nanoblast;

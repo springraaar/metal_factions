@@ -39,8 +39,8 @@
   	separation=0.1;
   	alphadecay=0.9;
   	sizedecay=-0.2;
-	range=450;
-	reloadtime=4.5;
+	range=460;
+	reloadtime=3.5;
 	weapontimer=1;
 	weaponvelocity=500;
 	energypershot=100;
@@ -109,7 +109,7 @@
 	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	model=weapon_torpedo;
-	range=450;
+	range=460;
 	reloadtime=4;
 	turret=1;
 	FlightTime=2.5;
@@ -144,7 +144,7 @@
 	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	model=weapon_torpedo;
-	range=550;
+	range=600;
 	reloadtime=4;
 	turret=1;
 	FlightTime=2.5;
@@ -179,7 +179,7 @@
 	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	model=weapon_torpedo;
-	range=520;
+	range=600;
 	reloadtime=4;
 	turret=1;
 	FlightTime=2.5;
@@ -371,7 +371,7 @@
   	alphadecay=0.5;
   	sizedecay=-0.2;
 	turret=1;
-	range=400;
+	range=420;
 	reloadtime=0.17;
 	weapontimer=0.6;
 	weaponvelocity=500;
@@ -408,7 +408,7 @@
   	alphadecay=0.5;
   	sizedecay=-0.2;
 	turret=1;
-	range=420;
+	range=440;
 	reloadtime=0.2;
 	weapontimer=0.6;
 	weaponvelocity=600;
@@ -482,8 +482,8 @@
   	separation=0.1;
   	alphadecay=0.9;
   	sizedecay=-0.2;
-	range=750;
-	reloadtime=5;
+	range=720;
+	reloadtime=4.2;
 	weapontimer=1;
 	weaponvelocity=500;
 	energypershot=250;
@@ -579,10 +579,10 @@
 	}
 	[DAMAGE]
 	{
-		default=33;
+		default=35;
 		armor_heavy=8;//#AUTO#
-		armor_medium=16;//#AUTO#
-		armor_light=33;//#AUTO#
+		armor_medium=17;//#AUTO#
+		armor_light=35;//#AUTO#
 	}
 }
 [aven_u3commander_disruptor]
@@ -595,7 +595,7 @@
 	accuracy=250;
 	turret=1;
 	range=400;
-	reloadtime=1.05;
+	reloadtime=1.0;
 	weaponvelocity=530;
 	areaofeffect=64;
 	edgeeffectiveness=0.5;
@@ -638,8 +638,8 @@
   	alphadecay=0.5;
   	sizedecay=-0.2;
 	turret=1;
-	range=450;
-	reloadtime=0.17;
+	range=475;
+	reloadtime=0.13;
 	weapontimer=0.6;
 	weaponvelocity=600;
 	sprayangle=600;
@@ -668,7 +668,7 @@
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_torpedo;
-	range=480;
+	range=430;
 	reloadtime=5;
 	turret=1;
 	weapontimer=10;
@@ -4109,6 +4109,7 @@
 	firestarter=70;
 	scrollspeed=0;
 	pulsespeed=0;
+	energypershot=20;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
 	tolerance=3000;
@@ -4134,8 +4135,8 @@
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_torpedo;
-	range=450;
-	reloadtime=4;
+	range=480;
+	reloadtime=3.8;
 	turret=1;
 	weapontimer=10;
 	FlightTime=1.5;
@@ -4254,7 +4255,7 @@
 	turret=1;
 	range=500;
 	minintensity=1.0;
-	reloadtime=0.8;
+	reloadtime=0.63;
 	weaponvelocity=1533; 
 	areaofeffect=16;
 	soundtrigger=1;
@@ -4263,6 +4264,7 @@
 	firestarter=70;
 	scrollspeed=0;
 	pulsespeed=0;
+	energypershot=15;
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
 	tolerance=3000;
@@ -4525,7 +4527,7 @@
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_torpedo;
-	range=550;
+	range=650;
 	reloadtime=3.5;
 	turret=1;
 	weapontimer=4;
@@ -4603,8 +4605,8 @@
 	movingaccuracy=700;
 	turret=1;
 	range=800;
-	reloadtime=4.5;
-	weaponvelocity=480;
+	reloadtime=4.0;
+	weaponvelocity=440;
 	areaofeffect=90;
 	projectiles=2;
 	sprayangle=500;
@@ -4624,10 +4626,10 @@
 	}
 	[DAMAGE]
 	{
-		default=400;
-		armor_heavy=400;//#AUTO#
-		armor_medium=400;//#AUTO#
-		armor_light=400;//#AUTO#
+		default=440;
+		armor_heavy=440;//#AUTO#
+		armor_medium=440;//#AUTO#
+		armor_light=440;//#AUTO#
 	}
 }
 [gear_u3commander_laser]
@@ -4714,8 +4716,8 @@
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_torpedo;
-	range=500;
-	reloadtime=3.5;
+	range=550;
+	reloadtime=3.3;
 	turret=1;
 	weapontimer=4;
 	FlightTime=2.5;
@@ -4751,8 +4753,8 @@
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_torpedo;
-	range=430;
-	reloadtime=2.5;
+	range=440;
+	reloadtime=2.3;
 	turret=1;
 	weapontimer=4;
 	FlightTime=2.5;
@@ -5352,29 +5354,29 @@
 	weapontype=AircraftBomb;
 	model=weapon_bomb;
 	cegTag=REDLIGHTBOMB;
-	range=800;
+	range=400;
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	reloadtime=30;
-	areaofeffect=160;
-	burst=10;
-	burstrate=0.1;
-	sprayangle=8000;
+	reloadtime=50;
+	areaofeffect=210;
+	burst=20;
+	burstrate=0.035;
+	sprayangle=16000;
 	soundstart=bombrel;
-	soundhit=xplolrg4;
-	myGravity=0.25;
+	soundhit=xplomed3;
+	myGravity=0.3;
 	collidefriendly=0;
 	avoidfriendly=0;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
 	{
-		hitpower=3;
+		hitpower=2;
 	}
 	[DAMAGE]
 	{
 		default=300;
     		group_invincible=1;
-		armor_heavy=300;//#AUTO#
+		armor_heavy=150;//#AUTO#
 		armor_medium=300;//#AUTO#
 		armor_light=300;//#AUTO#
 	}
@@ -10018,6 +10020,7 @@
 	firestarter=50;
 	scrollspeed=0;
 	pulsespeed=0;
+	energypershot=15;
 	rgbcolor=0.4 0.3 1.0;
 	rgbcolor2=0.1 0.3 1.0;
 	tolerance=3000;
@@ -10124,8 +10127,8 @@
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_smltorpedo;
-	range=440;
-	reloadtime=1.5;
+	range=450;
+	reloadtime=1.4;
 	turret=1;
 	FlightTime=1.5;
 	submissile=1;
@@ -10145,11 +10148,11 @@
 	}
 	[DAMAGE]
 	{
-		default=180;
+		default=200;
 		group_invincible=1;
-		armor_heavy=90;//#AUTO#
-		armor_medium=180;//#AUTO#
-		armor_light=180;//#AUTO#
+		armor_heavy=100;//#AUTO#
+		armor_medium=200;//#AUTO#
+		armor_light=200;//#AUTO#
 	}
 }
 [claw_u4commander_laser]
@@ -10164,7 +10167,7 @@
 	turret=1;
 	range=480;
 	minintensity=1.0;
-	reloadtime=0.45;
+	reloadtime=0.40;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundtrigger=1;
@@ -10185,10 +10188,10 @@
 	}
 	[DAMAGE]
 	{
-		default=75;
-		armor_heavy=37;//#AUTO#
-		armor_medium=75;//#AUTO#
-		armor_light=75;//#AUTO#
+		default=80;
+		armor_heavy=40;//#AUTO#
+		armor_medium=80;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [claw_u1commander_laser]
@@ -10237,8 +10240,8 @@
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_smltorpedo;
-	range=440;
-	reloadtime=1.6;
+	range=460;
+	reloadtime=1.4;
 	turret=1;
 	FlightTime=1.5;
 	submissile=1;
@@ -10260,11 +10263,11 @@
 	}
 	[DAMAGE]
 	{
-		default=180;
+		default=220;
 		group_invincible=1;
-		armor_heavy=90;//#AUTO#
-		armor_medium=180;//#AUTO#
-		armor_light=180;//#AUTO#
+		armor_heavy=110;//#AUTO#
+		armor_medium=220;//#AUTO#
+		armor_light=220;//#AUTO#
 	}
 }
 [claw_u1commander_aeroblast]
@@ -10417,10 +10420,10 @@
 	}
 	[DAMAGE]
 	{
-		default=80;
-		armor_heavy=20;//#AUTO#
-		armor_medium=40;//#AUTO#
-		armor_light=80;//#AUTO#
+		default=90;
+		armor_heavy=22;//#AUTO#
+		armor_medium=45;//#AUTO#
+		armor_light=90;//#AUTO#
 	}
 }
 [claw_u2commander_rocket]
@@ -10469,8 +10472,8 @@
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_smltorpedo;
-	range=450;
-	reloadtime=1.5;
+	range=600;
+	reloadtime=2;
 	turret=1;
 	FlightTime=1.5;
 	submissile=1;
@@ -10501,7 +10504,7 @@
 }
 [claw_u3commander_railgun]
 {
-	name=Heavy Railgun;
+	name=Railgun;
 	weapontype=Cannon;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
   	nogap=0;
@@ -10977,7 +10980,7 @@
 }
 [claw_shrieker_railgun]
 {
-	name=Heavy Railgun;
+	name=Railgun;
 	weapontype=Cannon;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
   	nogap=0;
@@ -11264,7 +11267,7 @@
 }
 [claw_piercer_railgun]
 {
-	name=Heavy Railgun;
+	name=Railgun;
 	weapontype=Cannon;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
   	nogap=0;
@@ -11318,8 +11321,8 @@
 	cegTag=RAILGUNTRAIL;
 	energypershot=70;
 	turret=1;
-	range=940;
-	reloadtime=0.2;
+	range=850;
+	reloadtime=0.23;
 	weapontimer=1;
 	weaponvelocity=1532;
 	accuracy=200;
@@ -11327,7 +11330,7 @@
 	soundstart=railgunsml;
 	soundhit=railgunhitsml;
 	soundtrigger=1;
-	tolerance=3000;
+	tolerance=4000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -11344,7 +11347,7 @@
 }
 [claw_wrecker_railgun]
 {
-	name=Heavy Railgun;
+	name=Railgun;
 	weapontype=Cannon;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
   	nogap=0;
@@ -11464,7 +11467,7 @@
 }
 [claw_longhorn_railgun]
 {
-	name=Long Range Heavy Railgun;
+	name=Long Range Railgun;
 	weapontype=Cannon;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
   	nogap=0;
@@ -11823,7 +11826,7 @@
 	thickness=3.31;
 	corethickness=0.5;
 	turret=1;
-	range=320;
+	range=330;
 	accuracy=100;
 	energypershot=130;
 	minintensity=0.7;
@@ -12874,7 +12877,7 @@
 }
 [claw_halberd_railgun]
 {
-	name=Heavy Railgun;
+	name=Railgun;
 	weapontype=Cannon;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
   	nogap=0;
@@ -13160,11 +13163,11 @@
 	GroundBounce=0;
 	WaterBounce=0;
 	turret=1;
-	range=600;
-	reloadtime=4.0;
+	range=650;
+	reloadtime=3.8;
 	weaponvelocity=550;
-	energypershot=500;
-	areaofeffect=150;
+	energypershot=800;
+	areaofeffect=170;
 	soundstart=largegun2;
 	soundhit=xplonuk1;
 	firestarter=50;
@@ -13179,11 +13182,11 @@
 	}
 	[DAMAGE]
 	{
-		default=950;
+		default=1150;
 		group_invincible=1;
-		armor_heavy=950;//#AUTO#
-		armor_medium=950;//#AUTO#
-		armor_light=950;//#AUTO#
+		armor_heavy=1150;//#AUTO#
+		armor_medium=1150;//#AUTO#
+		armor_light=1150;//#AUTO#
 	}
 }
 [sphere_commander_nanoblast]
@@ -13221,9 +13224,9 @@
 	pulseSpeed=4.0;
 	thickness=8;
 	beamtime=0.1;
-	range=500; 
+	range=470; 
 	reloadtime=0.1;
-	energypershot=5;
+	energypershot=8;
 	weaponvelocity=4000;
   	texture1=testlightning;
   	laserflaresize=2;
@@ -13233,21 +13236,22 @@
 	firestarter=90;
 	rgbcolor=1.0 0.5 0.3;
 	rgbcolor2=0.0 0.5 0.3;
-	tolerance=5000;
+	tolerance=6000;
 	explosiongenerator=custom:ORANGEBEAMBLAST;
 	minintensity=1.0; 
 	InterceptedByShieldType=1;
 	avoidfeature=0;
+	allowNonBlockingAim=0;
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
 	}
 	[DAMAGE]
 	{
-		default=15;
-		armor_heavy=7;//#AUTO#
-		armor_medium=15;//#AUTO#
-		armor_light=15;//#AUTO#
+		default=17;
+		armor_heavy=8;//#AUTO#
+		armor_medium=17;//#AUTO#
+		armor_light=17;//#AUTO#
 	}
 }
 [sphere_u4commander_beam]
@@ -13261,7 +13265,7 @@
 	beamtime=0.1;
 	range=500; 
 	reloadtime=0.1;
-	energypershot=6.5;
+	energypershot=9;
 	weaponvelocity=4000;
   	texture1=testlightning;
   	laserflaresize=2;
@@ -13282,10 +13286,10 @@
 	}
 	[DAMAGE]
 	{
-		default=17;
-		armor_heavy=8;//#AUTO#
-		armor_medium=17;//#AUTO#
-		armor_light=17;//#AUTO#
+		default=18;
+		armor_heavy=9;//#AUTO#
+		armor_medium=18;//#AUTO#
+		armor_light=18;//#AUTO#
 	}
 }
 [sphere_u1commander_beam]
@@ -13450,7 +13454,7 @@
 	CollideFriendly=1;
 	model=weapon_torpedo;
 	range=480;
-	reloadtime=4;
+	reloadtime=5;
 	turret=1;
 	FlightTime=1.5;
 	submissile=1;
@@ -15208,8 +15212,8 @@
 	ShieldPowerRegen=30;
 	ShieldPowerRegenEnergy=60;
 	ShieldInterceptType=2;
-	ShieldGoodColor=0.9 0.9 1.0;
-	ShieldBadColor=0.6 0.2 0.2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
 	ShieldAlpha=0.5;
 	visibleShieldHitFrames=5;
 	[DAMAGE]
@@ -15234,8 +15238,8 @@
 	ShieldPowerRegen=30;
 	ShieldPowerRegenEnergy=60;
 	ShieldInterceptType=2;
-	ShieldGoodColor=0.9 0.9 1.0;
-	ShieldBadColor=0.6 0.2 0.2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
 	ShieldAlpha=0.5;
 	visibleShieldHitFrames=5;
 	[DAMAGE]
@@ -15260,8 +15264,8 @@
 	ShieldPowerRegen=30;
 	ShieldPowerRegenEnergy=60;
 	ShieldInterceptType=2;
-	ShieldGoodColor=0.9 0.9 1.0;
-	ShieldBadColor=0.6 0.2 0.2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
 	ShieldAlpha=0.5;
 	visibleShieldHitFrames=5;
 	[DAMAGE]
@@ -15286,8 +15290,8 @@
 	ShieldPowerRegen=30;
 	ShieldPowerRegenEnergy=60;
 	ShieldInterceptType=2;
-	ShieldGoodColor=0.9 0.9 1.0;
-	ShieldBadColor=0.6 0.2 0.2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
 	ShieldAlpha=0.5;
 	visibleShieldHitFrames=5;
 	[DAMAGE]
@@ -15312,8 +15316,8 @@
 	ShieldPowerRegen=16;
 	ShieldPowerRegenEnergy=32;
 	ShieldInterceptType=2;
-	ShieldGoodColor=0.9 0.9 1.0;
-	ShieldBadColor=0.6 0.2 0.2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
 	ShieldAlpha=0.5;
 	visibleShieldHitFrames=5;
 	[DAMAGE]
@@ -15338,8 +15342,8 @@
 	ShieldPowerRegen=16;
 	ShieldPowerRegenEnergy=32;
 	ShieldInterceptType=2;
-	ShieldGoodColor=0.9 0.9 1.0;
-	ShieldBadColor=0.6 0.2 0.2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
 	ShieldAlpha=0.5;
 	visibleShieldHitFrames=5;
 	[DAMAGE]
@@ -15524,8 +15528,8 @@
 	ShieldPowerRegen=20;
 	ShieldPowerRegenEnergy=40;
 	ShieldInterceptType=2;
-	ShieldGoodColor=0.9 0.9 1.0;
-	ShieldBadColor=0.6 0.2 0.2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
 	ShieldAlpha=0.5;
 	visibleShieldHitFrames=5;
 	[DAMAGE]
@@ -15550,8 +15554,8 @@
 	ShieldPowerRegen=20;
 	ShieldPowerRegenEnergy=40;
 	ShieldInterceptType=2;
-	ShieldGoodColor=0.9 0.9 1.0;
-	ShieldBadColor=0.6 0.2 0.2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
 	ShieldAlpha=0.5;
 	visibleShieldHitFrames=5;
 	[DAMAGE]
@@ -15897,8 +15901,8 @@
 	ShieldPowerRegen=30;
 	ShieldPowerRegenEnergy=60;
 	ShieldInterceptType=2;
-	ShieldGoodColor=0.9 0.9 1.0;
-	ShieldBadColor=0.6 0.2 0.2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
 	ShieldAlpha=0.5;
 	visibleShieldHitFrames=5;
 	[DAMAGE]
@@ -15923,8 +15927,8 @@
 	ShieldPowerRegen=30;
 	ShieldPowerRegenEnergy=60;
 	ShieldInterceptType=2;
-	ShieldGoodColor=0.9 0.9 1.0;
-	ShieldBadColor=0.6 0.2 0.2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
 	ShieldAlpha=0.5;
 	visibleShieldHitFrames=5;
 	[DAMAGE]
@@ -15949,8 +15953,8 @@
 	ShieldPowerRegen=30;
 	ShieldPowerRegenEnergy=60;
 	ShieldInterceptType=2;
-	ShieldGoodColor=0.9 0.9 1.0;
-	ShieldBadColor=0.6 0.2 0.2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
 	ShieldAlpha=0.5;
 	visibleShieldHitFrames=5;
 	[DAMAGE]
@@ -15975,8 +15979,8 @@
 	ShieldPowerRegen=30;
 	ShieldPowerRegenEnergy=60;
 	ShieldInterceptType=2;
-	ShieldGoodColor=0.9 0.9 1.0;
-	ShieldBadColor=0.6 0.2 0.2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
 	ShieldAlpha=0.5;
 	visibleShieldHitFrames=5;
 	[DAMAGE]
@@ -16313,8 +16317,8 @@
 	ShieldPowerRegen=16;
 	ShieldPowerRegenEnergy=32;
 	ShieldInterceptType=2;
-	ShieldGoodColor=0.9 0.9 1.0;
-	ShieldBadColor=0.6 0.2 0.2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
 	ShieldAlpha=0.5;
 	visibleShieldHitFrames=5;
 	[DAMAGE]
@@ -16339,8 +16343,8 @@
 	ShieldPowerRegen=16;
 	ShieldPowerRegenEnergy=32;
 	ShieldInterceptType=2;
-	ShieldGoodColor=0.9 0.9 1.0;
-	ShieldBadColor=0.6 0.2 0.2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
 	ShieldAlpha=0.5;
 	visibleShieldHitFrames=5;
 	[DAMAGE]
@@ -16365,8 +16369,8 @@
 	ShieldPowerRegen=20;
 	ShieldPowerRegenEnergy=40;
 	ShieldInterceptType=2;
-	ShieldGoodColor=0.9 0.9 1.0;
-	ShieldBadColor=0.6 0.2 0.2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
 	ShieldAlpha=0.5;
 	visibleShieldHitFrames=5;
 	[DAMAGE]
@@ -16473,8 +16477,8 @@
 	ShieldPowerRegen=12;
 	ShieldPowerRegenEnergy=24;
 	ShieldInterceptType=2;
-	ShieldGoodColor=0.9 0.9 1.0;
-	ShieldBadColor=0.6 0.2 0.2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
 	ShieldAlpha=0.5;
 	visibleShieldHitFrames=5;
 	[DAMAGE]
@@ -16499,8 +16503,8 @@
 	ShieldPowerRegen=10;
 	ShieldPowerRegenEnergy=20;
 	ShieldInterceptType=2;
-	ShieldGoodColor=0.9 0.9 1.0;
-	ShieldBadColor=0.6 0.2 0.2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
 	ShieldAlpha=0.5;
 	visibleShieldHitFrames=5;
 	[DAMAGE]
@@ -16526,8 +16530,8 @@
 	ShieldPowerRegen=120;
 	ShieldPowerRegenEnergy=480;
 	ShieldInterceptType=1;
-	ShieldGoodColor=0.9 0.9 1.0;
-	ShieldBadColor=0.6 0.2 0.2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
 	ShieldAlpha=0.5;
 	visibleShieldHitFrames=5;
 	[DAMAGE]
@@ -16553,8 +16557,8 @@
 	ShieldPowerRegen=60;
 	ShieldPowerRegenEnergy=240;
 	ShieldInterceptType=1;
-	ShieldGoodColor=0.9 0.9 1.0;
-	ShieldBadColor=0.6 0.2 0.2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
 	ShieldAlpha=0.5;
 	visibleShieldHitFrames=5;
 	[DAMAGE]
@@ -16580,8 +16584,8 @@
 	ShieldPowerRegen=60;
 	ShieldPowerRegenEnergy=240;
 	ShieldInterceptType=1;
-	ShieldGoodColor=0.9 0.9 1.0;
-	ShieldBadColor=0.6 0.2 0.2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
 	ShieldAlpha=0.5;
 	visibleShieldHitFrames=5;
 	[DAMAGE]
@@ -16607,8 +16611,8 @@
 	ShieldPowerRegen=60;
 	ShieldPowerRegenEnergy=240;
 	ShieldInterceptType=1;
-	ShieldGoodColor=0.9 0.9 1.0;
-	ShieldBadColor=0.6 0.2 0.2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
 	ShieldAlpha=0.5;
 	visibleShieldHitFrames=5;
 	[DAMAGE]

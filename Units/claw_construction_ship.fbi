@@ -35,11 +35,11 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalmake=0.1;
-	metalstorage=50;
+	metalmake=0.0;
+	metalstorage=0;
 	energymake=6;
 	energyuse=0.1;
-	energystorage=50;
+	energystorage=0;
 
 	//************************************************************
 	//  Building
@@ -51,9 +51,9 @@
 	builder=1;
 	builddistance=200;
 	workertime=150;
-        RepairSpeed=150;
-        ReclaimSpeed=150;
-        TerraformSpeed=300;//speed up terraforming
+	RepairSpeed=150;
+	ReclaimSpeed=150;
+	TerraformSpeed=300;//speed up terraforming
 
 	//************************************************************
 	//  Abilities
@@ -126,7 +126,7 @@
 	explosiongenerator1=custom:UNITFIRE;
 	}
 
-	buildcostenergy=1926;//#AUTO#
-	buildcostmetal=385;//#AUTO#
-	buildtime=4591;//#AUTO#
+	buildcostenergy=1658;//#AUTO#
+	buildcostmetal=331;//#AUTO#
+	buildtime=3952;//#AUTO#
 }

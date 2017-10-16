@@ -28,7 +28,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3900;
+	maxdamage=4150;
 	healtime=100;
 	buildcostmetal=2000;
 	buildcostenergy=20000;
@@ -86,7 +86,7 @@
 	turnrate=1030;
 	acceleration=0.36;
 	brakerate=0.32;
-	maxvelocity=1.45;
+	maxvelocity=1.5;
 	maxslope=20;
 	maxwaterdepth=35;
 
@@ -102,9 +102,10 @@
 	//***********
 	weapon1=gear_u4commander_laser;
 	weapon2=gear_u4commander_torpedo;
+	onlytargetcategory2=NOTAIR;
 	nochasecategory=WEAPON;
 	badtargetcategory1=VTOL;
-	badtargetcategory2=VTOL;
+	onlytargetcategory2=NOTAIR;
 	explodeas=gear_commander_nanoblast;
 	selfdestructas=gear_commander_nanoblast;
 

@@ -106,7 +106,7 @@
 	slaveto1=3;
 	nochasecategory=WEAPON;
 	badtargetcategory1=VTOL;
-	badtargetcategory1=VTOL;
+	onlytargetcategory2=NOTAIR;
 	badtargetcategory3=VTOL;
 	explodeas=aven_commander_nanoblast;
 	selfdestructas=aven_commander_nanoblast;
@@ -161,7 +161,7 @@
 	//*****************
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:BLUEFLAREBIG;
+	explosiongenerator0=custom:ElectricFlare;
 	explosiongenerator1=custom:Nano;
 	explosiongenerator2=custom:EMGFLAREMED;
 	explosiongenerator3=custom:DGUNREADYFLARE;

@@ -6,7 +6,12 @@
 piece  base, flare, turret, sleeve, barrel, wake1, wake2, wake3, wake4, wake5,
        wake6, wake7, wake8;
 
-static-var  Static_Var_1, restore_delay, Static_Var_3, Static_Var_4;
+static-var  Static_Var_1, restore_delay, Static_Var_3, Static_Var_4, currentHeading, currentPitch;
+
+
+#define HEADING_TOLERANCE	<15.000000>
+#define PITCH_TOLERANCE		<25.000000>
+
 
 // Signal definitions
 #define SIG_AIM				2
@@ -128,6 +133,9 @@ Create()
 	Static_Var_3 = 1;
 	hide flare;
 	restore_delay = 3000;
+	currentHeading = <0>;
+	currentPitch = <0>;
+	
 	start-script SmokeUnit();
 	start-script WobbleUnit();
 	//start-script BankClerck();
@@ -143,6 +151,8 @@ SetMaxReloadTime(Func_Var_1)
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	currentHeading = <0>;
+	currentPitch = <0>;
 	turn turret to y-axis <0.000000> speed <100.000000>;
 	turn sleeve to x-axis <0.000000> speed <100.000000>;
 	return (0);
@@ -154,8 +164,13 @@ AimPrimary(heading, pitch)
 	set-signal-mask SIG_AIM;
 	turn turret to y-axis heading speed <200.000000>;
 	turn sleeve to x-axis <0.000000> - pitch speed <200.000000>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn sleeve around x-axis;
+	if ( get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE )
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+		currentHeading = heading;
+		currentPitch = pitch;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

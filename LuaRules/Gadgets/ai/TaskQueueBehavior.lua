@@ -609,11 +609,11 @@ function TaskQueueBehavior:Evade(threatPos, moveDistance)
 	-- change movement vector if near edge of map
 	local nearEdge = false
 	local aux = pos.x + vx * moveDistance
-	if (aux > Game.mapSizeX or aux < 0) then
+	if (aux > Game.mapSizeX - EVADE_EDGE_MARGIN or aux < EVADE_EDGE_MARGIN) then
 		nearEdge = true
 	end
 	aux = pos.z + vz * moveDistance
-	if not nearEdge and (aux > Game.mapSizeZ or aux < 0) then
+	if not nearEdge and (aux > Game.mapSizeZ - EVADE_EDGE_MARGIN or aux < EVADE_EDGE_MARGIN) then
 		 nearEdge = true
 	end
 	-- move towards least vulnerable cell

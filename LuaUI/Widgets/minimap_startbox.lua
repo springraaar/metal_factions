@@ -23,6 +23,9 @@ function widget:GetInfo()
   }
 end
 
+
+-- 2017 : removed gl.smoothing call on line 389, it no longer works on spring 104.0
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -386,7 +389,6 @@ function widget:DrawInMiniMap(sx, sz)
   end
 
   gl.PushAttrib(GL_HINT_BIT)
-  gl.Smoothing(true) --enable point smoothing
 
   -- show the team start positions
   for _, teamID in ipairs(Spring.GetTeamList()) do

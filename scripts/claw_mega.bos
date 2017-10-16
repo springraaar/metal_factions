@@ -72,12 +72,12 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	move barrel to z-axis [-2.500000] now;
-	move s2 to z-axis [-2.500000] now;
+	move barrel to z-axis [-4.000000] now;
+	move s2 to z-axis [-4.000000] now;
 	emit-sfx 1024 + 0 from flash;
 	sleep 150;
-	move barrel to z-axis [0.000000] speed [2.000000];
-	move s2 to z-axis [0.000000] speed [2.000000];
+	move barrel to z-axis [0.000000] speed [4.000000];
+	move s2 to z-axis [0.000000] speed [4.000000];
 			
 }
 

@@ -27,9 +27,9 @@
 	
 	// ------------------- resources
 	EnergyMake=20;
-	MetalMake=0.2;
-	EnergyStorage=100;
-	MetalStorage=100;
+	metalmake=0.0;
+	EnergyStorage=0;
+	MetalStorage=0;
 	EnergyUse=150;
 
 	// ------------------- constructor
@@ -114,7 +114,7 @@
 	{
 		explosiongenerator0=custom:buildglow;
 	}
-	buildcostenergy=13320;//#AUTO#
-	buildcostmetal=1332;//#AUTO#
-	buildtime=17095;//#AUTO#
+	buildcostenergy=13205;//#AUTO#
+	buildcostmetal=1320;//#AUTO#
+	buildtime=16946;//#AUTO#
 }

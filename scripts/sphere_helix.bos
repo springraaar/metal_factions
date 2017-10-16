@@ -7,8 +7,11 @@
 
 piece  base, flare, wake1, wake2, turret, sleeve, support, s2, rotor, hull,h2,bottom, rmidsup,rmidleg,rmid2,rfrontsup,rfrontleg,rfront2,rbacksup,rbackleg,rback2,lbacksup,lbackleg,lback2,lmidsup,lmidleg,lmid2,lfrontsup,lfrontleg,lfront2, barrel, s3, h3;
 
-static-var  bMoving, bAiming, Static_Var_3, bSwimming, gun_3,
-            restore_delay, terrainStatus, Static_Var_8, waterSpeed, landSpeed;
+static-var  bMoving, bAiming, Static_Var_3, bSwimming, gun_3, restore_delay, terrainStatus, Static_Var_8, waterSpeed, landSpeed, currentHeading, currentPitch;
+
+#define HEADING_TOLERANCE	<15.000000>
+#define PITCH_TOLERANCE		<25.000000>
+
 
 // Signal definitions
 #define SIG_MOVE			2
@@ -327,6 +330,8 @@ Create()
 	bSwimming = TRUE;
 	Static_Var_8 = 1;
 	restore_delay = 3000;
+	currentHeading = <0>;
+	currentPitch = <0>;
 	start-script MotionControl();
 	start-script SmokeUnit();
 	return (0);
@@ -376,6 +381,8 @@ SetMaxReloadTime(Func_Var_1)
 RestoreAfterDelay()
 {
 	sleep restore_delay;
+	currentHeading = <0>;
+	currentPitch = <0>;
 	turn turret to y-axis <0.000000> speed <100.000000>;
 	turn sleeve to x-axis <0.000000> speed <80.000000>;
 	spin rotor around z-axis speed <150.000000>;
@@ -391,8 +398,13 @@ AimPrimary(heading, pitch)
 	spin rotor around z-axis speed <650.000000>;
 	turn turret to y-axis heading speed <150.000000>;
 	turn sleeve to x-axis <0.000000> - pitch speed <150.000000>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn sleeve around x-axis;
+	if ( get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE )
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+		currentHeading = heading;
+		currentPitch = pitch;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

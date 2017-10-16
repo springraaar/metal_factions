@@ -196,10 +196,10 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=4, length=30, piece="rjp2", onActive=true}}
   },
   gear_cascade = {
-    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="ljp", onActive=true}},
-    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="rjp", onActive=true}},
-    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="ljp2", onActive=true}},
-    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="rjp2", onActive=true}}
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=50, piece="ljp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=50, piece="rjp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=50, piece="ljp2", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=50, piece="rjp2", onActive=true}}
   },
   gear_whirlpool = {
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=30, piece="ljp", onActive=true}},

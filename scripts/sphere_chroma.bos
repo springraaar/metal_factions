@@ -7,7 +7,10 @@
 piece ground, hips,torso,turret1,sleeve1,flare1,turret2,sleeve2,flare2,turret3,sleeve3,flare3, sphere, shieldpt;
 
 	
-static-var bMoving,bAiming, normalSpeed, slowSpeed;
+static-var bMoving,bAiming, normalSpeed, slowSpeed, currentHeading1, currentPitch1, currentHeading2, currentPitch2, currentHeading3, currentPitch3;
+
+#define HEADING_TOLERANCE	<40.000000>
+#define PITCH_TOLERANCE		<40.000000>
 
 // Signal definitions
 #define SIG_AIM					2
@@ -52,6 +55,13 @@ Create()
 	normalSpeed = get MAX_SPEED;
 	slowSpeed = normalSpeed / 4;
 
+
+	currentHeading1 = <0>;
+	currentPitch1 = <0>;
+	currentHeading2 = <0>;
+	currentPitch2 = <0>;
+	currentHeading3 = <0>;
+	currentPitch3 = <0>;	
 	bMoving=FALSE;
 	bAiming=FALSE;
 	start-script MotionControl();
@@ -67,18 +77,24 @@ SweetSpot(piecenum)
 RestoreAfterDelayWeapon1()
 {
 	sleep 5000;
+	currentHeading1 = <0>;
+	currentPitch1 = <0>;
 	turn turret1 to y-axis <0.000000> speed <65.016484>;
 	turn sleeve1 to x-axis <0.000000> speed <65.005495>;
 }
 RestoreAfterDelayWeapon3()
 {
 	sleep 5000;
+	currentHeading2 = <0>;
+	currentPitch2 = <0>;
 	turn turret2 to y-axis <0.000000> speed <65.016484>;
 	turn sleeve2 to x-axis <0.000000> speed <65.005495>;
 }
 RestoreAfterDelayWeapon4()
 {
 	sleep 5000;
+	currentHeading3 = <0>;
+	currentPitch3 = <0>;	
 	turn turret3 to y-axis <0.000000> speed <65.016484>;
 	turn sleeve3 to x-axis <0.000000> speed <65.005495>;
 }
@@ -106,10 +122,16 @@ AimPrimary(heading, pitch)
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 		
-	turn turret1 to y-axis heading speed <200.027473>;
-	turn sleeve1 to x-axis <0.000000> - pitch speed <200.038462>;
-	wait-for-turn turret1 around y-axis;
-	wait-for-turn sleeve1 around x-axis;
+	turn turret1 to y-axis heading speed <300.027473>;
+	turn sleeve1 to x-axis <0.000000> - pitch speed <300.038462>;
+	if ( get ABS(heading - currentHeading1)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch1) > PITCH_TOLERANCE )
+	{
+		wait-for-turn turret1 around y-axis;
+		wait-for-turn sleeve1 around x-axis;
+		currentHeading1 = heading;
+		currentPitch1 = pitch;
+	}
+	
 	start-script RestoreAfterDelayWeapon1();
 	return (1);
 }
@@ -158,8 +180,14 @@ AimWeapon3(heading, pitch)
 		
 	turn turret2 to y-axis heading speed <400.027473>;
 	turn sleeve2 to x-axis <0.000000> - pitch speed <400.038462>;
-	wait-for-turn turret2 around y-axis;
-	wait-for-turn sleeve2 around x-axis;
+	if ( get ABS(heading - currentHeading2)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch2) > PITCH_TOLERANCE )
+	{
+		wait-for-turn turret2 around y-axis;
+		wait-for-turn sleeve2 around x-axis;
+		currentHeading2 = heading;
+		currentPitch2 = pitch;
+	}
+
 	start-script RestoreAfterDelayWeapon3();
 	return (1);
 }
@@ -188,8 +216,15 @@ AimWeapon4(heading, pitch)
 		
 	turn turret3 to y-axis heading speed <600.027473>;
 	turn sleeve3 to x-axis <0.000000> - pitch speed <600.038462>;
-	wait-for-turn turret3 around y-axis;
-	wait-for-turn sleeve3 around x-axis;
+	if ( get ABS(heading - currentHeading3)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch3) > PITCH_TOLERANCE )
+	{
+		wait-for-turn turret3 around y-axis;
+		wait-for-turn sleeve3 around x-axis;
+		currentHeading3 = heading;
+		currentPitch3 = pitch;
+	}
+
+
 	start-script RestoreAfterDelayWeapon4();
 	return (1);
 }

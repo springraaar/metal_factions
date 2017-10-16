@@ -287,25 +287,24 @@ local function UpdateSelection()
   aoeUnitID = nil
   
   for unitDefID, unitIDs in pairs(sel) do
-	if unitDefID == "n" then
-	  break
-	end
-    if (dgunInfo[unitDefID]) then 
-      dgunUnitDefID = unitDefID
-      dgunUnitID = unitIDs[1]
-    end
-  
-    if (aoeDefInfo[unitDefID]) then
-      local currCost = UnitDefs[unitDefID].cost * #unitIDs
-      if (currCost > maxCost) then
-        maxCost = currCost
-        aoeUnitDefID = unitDefID
-        aoeUnitID = GetRepUnitID(unitIDs)
-      end
-    end
-	extraDrawRange = UnitDefs[unitDefID] and UnitDefs[unitDefID].customParams and UnitDefs[unitDefID].customParams.extradrawrange
-	if extraDrawRange then
-		selUnitID = GetRepUnitID(unitIDs)
+	if unitDefID ~= "n" then
+	    if (dgunInfo[unitDefID]) then 
+	      dgunUnitDefID = unitDefID
+	      dgunUnitID = unitIDs[1]
+	    end
+	
+	    if (aoeDefInfo[unitDefID]) then
+	      local currCost = UnitDefs[unitDefID].cost * #unitIDs
+	      if (currCost > maxCost) then
+	        maxCost = currCost
+	        aoeUnitDefID = unitDefID
+	        aoeUnitID = GetRepUnitID(unitIDs)
+	      end
+	    end
+		extraDrawRange = UnitDefs[unitDefID] and UnitDefs[unitDefID].customParams and UnitDefs[unitDefID].customParams.extradrawrange
+		if extraDrawRange then
+			selUnitID = GetRepUnitID(unitIDs)
+		end
 	end
  end
 end
@@ -643,7 +642,7 @@ function widget:DrawWorld()
   if (not info.waterWeapon) then ty = max(0, ty) end
   
   local weaponType = info.type
-  
+  	
   if (weaponType == "noexplode") then
     DrawNoExplode(info.aoe, fx, fy, fz, tx, ty, tz, info.range)
   elseif (weaponType == "ballistic") then

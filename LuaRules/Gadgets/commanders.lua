@@ -151,9 +151,13 @@ function gadget:UnitDestroyed(unitId, unitDefId, teamId)
 end
 
 -- blocks commander transfers between players
+-- also prevents transferring units to enemies in general
 function gadget:AllowUnitTransfer(unitId, unitDefId, oldTeam, newTeam, capture)
 	if( isCommander(unitDefId) or isCommanderToken(unitDefId)) then
- 		Spring.Echo("Commanders can't be given!")
+ 		Spring.SendMessageToTeam(oldTeam,"Commanders can't be given!")
+ 		return false
+	elseif (not AreTeamsAllied(oldTeam, newTeam)) then
+ 		Spring.SendMessageToTeam(oldTeam,"Can't give units to enemies!")
  		return false
 	end  
 	return true

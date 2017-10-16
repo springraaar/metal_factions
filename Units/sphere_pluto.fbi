@@ -82,10 +82,8 @@
 	//  Weapons
 	//***********
 	weapon1=sphere_pluto_torpedo;
-	//weapon2=sphere_ark_missile;
 	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
-	badtargetcategory1=VTOL;
+	onlytargetcategory1=NOTAIR;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
    	WeaponMainDir1=0 0 1;

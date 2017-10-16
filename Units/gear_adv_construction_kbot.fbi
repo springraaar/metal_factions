@@ -27,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=713;
+	maxdamage=800;
 	healtime=53;
 	footprintx=2;
 	footprintz=2;
@@ -35,11 +35,11 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalmake=0.2;
-	metalstorage=100;
+	metalmake=0.0;
+	metalstorage=0;
 	energymake=15;
-	energyuse=0.2;
-	energystorage=100;
+	energyuse=0.1;
+	energystorage=0;
 
 	//************************************************************
 	//  Building
@@ -51,9 +51,9 @@
 	builder=1;
 	builddistance=200;
 	workertime=300;
-        RepairSpeed=300;
-        ReclaimSpeed=300;
-        TerraformSpeed=600;
+	RepairSpeed=300;
+	ReclaimSpeed=300;
+	TerraformSpeed=600;
 
 	//************************************************************
 	//  Abilities
@@ -124,7 +124,7 @@
 	explosiongenerator0=custom:Nano;
 	}
 
-	buildcostenergy=3083;//#AUTO#
-	buildcostmetal=616;//#AUTO#
-	buildtime=7348;//#AUTO#
+	buildcostenergy=2697;//#AUTO#
+	buildcostmetal=539;//#AUTO#
+	buildtime=6429;//#AUTO#
 }

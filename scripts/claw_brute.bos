@@ -7,11 +7,14 @@
 
 piece  torso, hips, l_thigh, r_thigh, head, h2, luparm, larm, lgun, sleeve, barrels, flash, l1, l2, l3, ruparm, rarm, rgun, launcher, barrelcover, barrelcover2, barrel, firept, barrel2, firept2, r1,r2,r3, rleg, rfoot, lleg, lfoot, innercover,outercover,r1a,r2a,r3a;
 
-static-var  bMoving, bAiming, restore_delay, gun_1, gun_2,  canAim;
+static-var  bMoving, bAiming, restore_delay, gun_1, gun_2,  canAim, currentHeading, currentPitch;
 
 // Signal definitions
 #define SIG_AIM				2
 #define SIG_AIM2			4
+
+#define HEADING_TOLERANCE	<15.000000>
+#define PITCH_TOLERANCE		<25.000000>
 
 
 walklegs()
@@ -309,6 +312,9 @@ Create()
 	gun_1=[0];
 	gun_2=[0];
 	restore_delay = 9000;
+	currentHeading = <0>;
+	currentPitch = <0>;
+
 	start-script MotionControl();
 	start-script SmokeUnit();
 }
@@ -332,6 +338,8 @@ RestoreAfterDelay()
 {
 	set-signal-mask SIG_AIM2;
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	currentHeading = <0>;
+	currentPitch = <0>;
 	turn torso to y-axis <0.000000> speed <90.016484>;
 	turn ruparm to x-axis <0.000000> speed <45.005495>;
 	turn luparm to x-axis <0.000000> speed <45.005495>;
@@ -351,6 +359,9 @@ AimPrimary(heading, pitch)
 	turn ruparm to x-axis <0.000000> - pitch speed <160.038462>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn ruparm around x-axis;
+	currentHeading = heading;
+	currentPitch = pitch;
+
 	start-script RestoreAfterDelay();
 	return (1);
 }
@@ -362,8 +373,14 @@ AimSecondary(heading, pitch)
 	bAiming = TRUE;
 	turn torso to y-axis heading speed <160.027473>;
 	turn luparm to x-axis <0.000000> - pitch speed <160.038462>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn luparm around x-axis;
+	if ( get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE )
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn luparm around x-axis;
+		currentHeading = heading;
+		currentPitch = pitch;
+	}
+
 	start-script RestoreAfterDelay();
 	return (1);
 }

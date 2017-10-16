@@ -35,11 +35,11 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalmake=0.1;
-	metalstorage=50;
+	metalmake=0.0;
+	metalstorage=0;
 	energymake=4;
 	energyuse=0.1;
-	energystorage=50;
+	energystorage=0;
 
 	//************************************************************
 	//  Building
@@ -51,9 +51,9 @@
 	builder=1;
 	builddistance=200;
 	workertime=150;
-        RepairSpeed=150;
-        ReclaimSpeed=150;
-        TerraformSpeed=300;
+	RepairSpeed=150;
+	ReclaimSpeed=150;
+	TerraformSpeed=300;
 
 	//************************************************************
 	//  Abilities
@@ -124,7 +124,7 @@
 	{
 	explosiongenerator0=custom:Nano;
 	}
-	buildcostenergy=1729;//#AUTO#
-	buildcostmetal=345;//#AUTO#
-	buildtime=4121;//#AUTO#
+	buildcostenergy=1421;//#AUTO#
+	buildcostmetal=284;//#AUTO#
+	buildtime=3386;//#AUTO#
 }

@@ -35,12 +35,12 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalmake=0.1;
-	metalstorage=50;
+	metalmake=0.0;
+	metalstorage=0;
 	energymake=6;
 	energyuse=0.1;
-	energystorage=50;
-	windgenerator=0.001;
+	energystorage=0;
+	
 
 	//************************************************************
 	//  Building
@@ -126,7 +126,7 @@
 	explosiongenerator1=custom:UNITFIRE;
 	}
 
-	buildcostenergy=1987;//#AUTO#
-	buildcostmetal=397;//#AUTO#
-	buildtime=4736;//#AUTO#
+	buildcostenergy=1713;//#AUTO#
+	buildcostmetal=342;//#AUTO#
+	buildtime=4082;//#AUTO#
 }

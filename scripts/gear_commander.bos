@@ -408,8 +408,6 @@ QueryNanoPiece(piecenum)
 
 RestorePosition()
 {
-	set-signal-mask SIG_AIM;
-	set-signal-mask SIG_AIM2;
 	bDgunning = FALSE;
 	sleep RESTORE_DELAY;
 	turn torso to y-axis <0.000000> speed <290.000000>;

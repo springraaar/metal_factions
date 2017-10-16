@@ -15,6 +15,10 @@ static-var bMoving,bAiming,bUnderwater, canAim1, canAim2, bBuilding, nanoPt, cur
 #define SIG_BUILD			4
 #define SIG_AIM2			8
 
+#define HEADING_TOLERANCE	<40.000000>
+#define PITCH_TOLERANCE		<40.000000>
+
+
 MotionSpeedControl(minSpeed, maxSpeed,currentSpeed)
 {
 	maxSpeed = get MAX_SPEED;
@@ -303,7 +307,9 @@ Create()
 	canAim1 = TRUE;
 	canAim2 = FALSE;
 	nanoPt = [0];	
-
+	currentHeading = <0>;
+	currentPitch = <0>;
+	
 	start-script MotionSpeedControl();
 	start-script MotionControl();
 	start-script checkUnderwater();
@@ -323,6 +329,8 @@ RestoreAfterDelayWeapon()
 {
 	//aim1=FALSE;
 	sleep 5000;
+	currentHeading = <0>;
+	currentPitch = <0>;
 	turn turret1 to y-axis <0.000000> speed <65.016484>;
 	turn sleeve1 to x-axis <0.000000> speed <65.005495>;
 	turn turret2 to y-axis <0.000000> speed <65.016484>;
@@ -374,13 +382,14 @@ AimPrimary(heading, pitch)
 	//aim1=TRUE;
 	turn turret1 to y-axis heading speed <400.027473>;
 	turn sleeve1 to x-axis <0.000000> - pitch speed <400.038462>;
-	if (heading != currentHeading || pitch != currentPitch) 
+	if ( get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE )
 	{
 		wait-for-turn turret1 around y-axis;
 		wait-for-turn sleeve1 around x-axis;
 		currentHeading = heading;
 		currentPitch = pitch;
 	}
+
 	start-script RestoreAfterDelayWeapon();
 	return (1);
 }

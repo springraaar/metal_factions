@@ -28,7 +28,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3000;
+	maxdamage=3100;
 	healtime=100;
 	buildcostmetal=1000;
 	buildcostenergy=10000;
@@ -86,7 +86,7 @@
 	turnrate=1030;
 	acceleration=0.26;
 	brakerate=0.32;
-	maxvelocity=1.4;
+	maxvelocity=1.45;
 	maxslope=20;
 	maxwaterdepth=35;
 
@@ -105,7 +105,7 @@
 	//weapon3=claw_commander_aeroblast;
 	nochasecategory=WEAPON;
 	badtargetcategory1=VTOL;
-	badtargetcategory1=VTOL;
+	onlytargetcategory2=NOTAIR;
 	badtargetcategory3=VTOL;
 	explodeas=claw_commander_nanoblast;
 	selfdestructas=claw_commander_nanoblast;

@@ -7,7 +7,10 @@
 
 piece  base, turret,slpt, sleeve, barrel, flash,sleeve2,barrel2,flash2,t1,wheel1 ,t2,wheel2,t3, wheel3,t4,wheel4,bb, front, back;
 
-static-var  gun_1;
+static-var  gun_1, currentHeading, currentPitch;
+
+#define HEADING_TOLERANCE	<15.000000>
+#define PITCH_TOLERANCE		<25.000000>
 
 // Signal definitions
 #define SIG_AIM				2
@@ -88,6 +91,8 @@ Create()
 	hide flash;
 	hide flash2;
 	gun_1=111;
+	currentHeading = <0>;
+	currentPitch = <0>;
 	start-script SmokeUnit();
 	start-script WheelSpeedControl();
 	start-script SpinWheels();
@@ -97,6 +102,8 @@ Create()
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	currentHeading = <0>;
+	currentPitch = <0>;
 	turn turret to y-axis <0.000000> speed <90.016484>;
 	turn slpt to x-axis <0.000000> speed <50.005495>;
 }
@@ -107,8 +114,13 @@ AimPrimary(heading, pitch)
 	set-signal-mask SIG_AIM;
 	turn turret to y-axis heading speed <320.038462>;
 	turn slpt to x-axis <0.000000> - pitch speed <350.000000>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn slpt around x-axis;
+	if ( get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE )
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn slpt around x-axis;
+		currentHeading = heading;
+		currentPitch = pitch;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }
