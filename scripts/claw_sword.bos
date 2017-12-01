@@ -93,10 +93,8 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	move barrel to z-axis [-3.000000] now;
 	emit-sfx 1024+0 from flash;
 	sleep 100;
-	move barrel to z-axis [0.000000] speed [2.000000];
 }
 
 AimFromPrimary(piecenum)

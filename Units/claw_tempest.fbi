@@ -6,8 +6,7 @@
 	//********************
 	side=Claw;
 	name=Tempest;
-	description=Amphibious Missile Robot;
-	icontype=sea;
+	description=Heavy Missile Skirmisher Spinbot;
 
 	//************************************************************
 	//  Categories
@@ -23,7 +22,7 @@
 	objectname=claw_tempest.3do;
 	corpse=claw_tempest_dead;
 	buildpic=claw_tempest.png;
-	soundcategory=aven_SHIP;
+	soundcategory=armpw;
 
 	//************************************************************
 	//  Health/Cost/Size
@@ -37,8 +36,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=3;
-	energyuse=3;
+	energymake=0;
+	energyuse=0;
 	energystorage=0;
 
 
@@ -78,7 +77,7 @@
 	//  Sight/Radar/Sonar
 	//*********************
 	sightdistance=500;
-	sonardistance=400;
+	sonardistance=300;
 	radardistance=0;
 
 	//************************************************************
@@ -116,16 +115,12 @@
 	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =50 60 40;
-	collisionVolumeOffsets = 0 -15 0;
+	collisionVolumeOffsets = 0 -5 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 	waterline=8;
 	
-	[CustomParams]
-	{
-		tip=33% slower on water;
-	}
 
 	//************************************************************
 	//  To be removed
@@ -137,7 +132,7 @@
 		explosiongenerator1=custom:UNITFIRE;
 	}
 
-	buildcostenergy=10253;//#AUTO#
-	buildcostmetal=2050;//#AUTO#
-	buildtime=24437;//#AUTO#
+	buildcostenergy=11438;//#AUTO#
+	buildcostmetal=2287;//#AUTO#
+	buildtime=27260;//#AUTO#
 }

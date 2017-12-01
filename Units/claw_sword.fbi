@@ -83,7 +83,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=claw_sword_cannon;
+	weapon1=claw_sword_laser;
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
 	explodeas=BIG_UNITEX;
@@ -121,13 +121,14 @@
 
 	[customParams] 
 	{
+		tip=Laser Cutter loses up to 30% damage over its range;
 		evalfactor=0.85;//SHIP
 	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:yellowflaremed;
 	}
-	buildcostenergy=2275;//#AUTO#
-	buildcostmetal=455;//#AUTO#
-	buildtime=5423;//#AUTO#
+	buildcostenergy=2423;//#AUTO#
+	buildcostmetal=484;//#AUTO#
+	buildtime=5776;//#AUTO#
 }

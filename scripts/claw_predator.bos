@@ -3,17 +3,19 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define SPEEDUP_FACTOR 170
+#define SPEEDUP_FACTOR 100
 
-piece  base, wake1, wake2, turret, luparm, larm, l1,l2,l3,lgun,lg,lg2,lflare,lflare2, ruparm, r1,r2,r3,rgun,rg,rflare,head,eye1,eye2, rmidsup,rfrontsup,rbacksup,lbacksup,lmidsup,midwheel,lfrontsup, base1, base2, rs1,rs2,rs3,ls1,ls2,ls3, cover;
+piece  base, pivot, wake1, wake2, turret, luparm, larm, l1,l2,l3,lgun,lg,lg2,lflare,lflare2, ruparm, r1,r2,r3,rgun,rg,rflare,head,eye1,eye2, spinner, bottom, b2, d2, s1, s2,s3,d3, base1, base2,base3;
 
-static-var  bMoving, bAiming, Static_Var_3, bSwimming, gun_2,
-            restore_delay, terrainStatus, Static_Var_8, waterSpeed, landSpeed;
+static-var  bAiming, bSwimming, gun_2, restore_delay, terrainStatus, waterSpeed, landSpeed;
 
 // Signal definitions
 #define SIG_MOVE			2
 #define SIG_AIM				4
 #define SIG_AIM_2			8
+
+#include "spinbot.h"
+
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
@@ -46,19 +48,28 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 stopWheels()
 {
-	stop-spin midwheel around x-axis decelerate <10.000000>;
+	spin spinner around y-axis speed <200.000000>;
 	return (0);
 }
 
-walk()
+
+walk(last)
 {
-	if( bMoving )
+	last = 0;
+	while ( TRUE )
 	{
-		spin midwheel around x-axis speed <360.000000> accelerate <20.000000>;
-		sleep 200;
+		
+		if ( last != (wheelSpeed / 8) )
+		{
+			spin spinner around y-axis speed <200.000000> + wheelSpeed; // accelerate wheelAcceleration;
+			last = wheelSpeed / 8;
+		}
+		turn pivot to x-axis pivotAngle speed <30.000000>;
+		sleep 100;
 	}
 	return (0);
 }
+
 
 
 closelegs()
@@ -105,12 +116,11 @@ MotionControl(justMoved)
 		}
 		if( bMoving )
 		{
-			Static_Var_3 = 1;
 			if( bSwimming )
 			{
 				//set MAX_SPEED to waterSpeed; // REPLACED BY GADGET
 				//set UPRIGHT to TRUE;
-				call-script swim();
+				call-script walk();
 			}
 			if( !bSwimming )
 			{
@@ -122,7 +132,6 @@ MotionControl(justMoved)
 		}
 		if( !bMoving )
 		{
-			Static_Var_3 = 1;
 			if( justMoved AND ( !bSwimming ) )
 			{
 				call-script stopWheels();
@@ -143,11 +152,10 @@ Create()
 	
 	bMoving = FALSE;
 	bAiming = FALSE;
-	Static_Var_3 = 1;
 	bSwimming = FALSE;
-	Static_Var_8 = 1;
 	restore_delay = 3000;
 	start-script MotionControl();
+	start-script WheelSpeedControl();
 	start-script SmokeUnit();
 	return (0);
 }
@@ -195,8 +203,6 @@ SetMaxReloadTime(Func_Var_1)
 
 RestoreAfterDelay()
 {
-	set-signal-mask SIG_AIM;
-	set-signal-mask SIG_AIM_2;
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
 	turn turret to y-axis <0.000000> speed <60.000000>;
 	turn luparm to x-axis <0.000000> speed <60.000000>;
@@ -210,8 +216,8 @@ AimPrimary(heading, pitch)
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
-	turn turret to y-axis heading speed <120.000000>;
-	turn ruparm to x-axis <0.000000> - pitch speed <120.000000>;
+	turn turret to y-axis heading speed <240.000000>;
+	turn ruparm to x-axis <0.000000> - pitch speed <240.000000>;
 	wait-for-turn turret around y-axis;
 	wait-for-turn ruparm around x-axis;
 	start-script RestoreAfterDelay();
@@ -251,8 +257,8 @@ AimSecondary(heading, pitch)
 	signal SIG_AIM_2;
 	set-signal-mask SIG_AIM_2;
 	bAiming = TRUE;
-	turn turret to y-axis heading speed <120.000000>;
-	turn luparm to x-axis <0.000000> - pitch speed <120.000000>;
+	turn turret to y-axis heading speed <240.000000>;
+	turn luparm to x-axis <0.000000> - pitch speed <240.000000>;
 	wait-for-turn turret around y-axis;
 	wait-for-turn luparm around x-axis;
 	start-script RestoreAfterDelay();
@@ -311,22 +317,7 @@ Killed(severity, corpsetype)
 		explode base2 type SHATTER;
 		return (0);
 	}
-	if( severity <= 75 )
-	{
-		corpsetype = 2;
-		explode base2 type SHATTER;
-		explode base1 type SHATTER;
-		explode turret type SHATTER;
-		explode head type SHATTER;
-		explode luparm type SHATTER;
-		explode ruparm type SHATTER;
-		explode cover type SHATTER;
-		explode lg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-		explode lg2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-		explode rg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-		return (0);
-	}
-	corpsetype = 3;
+	corpsetype = 2;
 
 	explode base2 type SHATTER;
 	explode base1 type SHATTER;
@@ -334,7 +325,7 @@ Killed(severity, corpsetype)
 	explode head type SHATTER;
 	explode luparm type SHATTER;
 	explode ruparm type SHATTER;
-	explode cover type SHATTER;
+	explode spinner type SHATTER;
 	explode lg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
 	explode lg2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
 	explode rg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;

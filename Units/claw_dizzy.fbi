@@ -1,0 +1,135 @@
+
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Dizzy;
+	description=Infantry Spinbot;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW SHIP LEVEL2 WEAPON NOTAIR NOTSUB;
+	tedclass=SHIP;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=claw_dizzy;
+	unitnumber=20000;
+	objectname=claw_dizzy.3do;
+	corpse=claw_dizzy_dead;
+	buildpic=claw_dizzy.png;
+	soundcategory=armpw;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1100;
+	healtime=30;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=0;
+	energystorage=0;
+
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	activatewhenbuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	floater=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKHOVER3;
+	turnrate=1155;
+	acceleration=0.12;
+	brakerate=0.05;
+	maxvelocity=1.6;
+	turninplace=1;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	sonardistance=250;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_dizzy_laser;
+	nochasecategory=VTOL;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ASD-SC;
+	downloadable=1;
+	maneuverleashlength=640;
+	scale=0.5;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 40 25;
+	collisionVolumeOffsets = 0 -3 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	waterline=6;
+	
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:glowsml;
+	}
+
+	buildcostenergy=1510;//#AUTO#
+	buildcostmetal=302;//#AUTO#
+	buildtime=3600;//#AUTO#
+}

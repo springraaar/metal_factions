@@ -7,10 +7,13 @@
 
 piece  groundx2, hips, torso,tl,tr,sleeve,barrel,flare,sleeve2,barrel2,flare2,slpt, leg1, bleg, leg2, bleg2, leg3, bleg3, leg4, bleg4,tc,tl2,tr2;
 
-static-var  bMoving, bAiming, justmoved, restore_delay, gun_1;
+static-var  bMoving, bAiming, justmoved, restore_delay, gun_1, currentHeading, currentPitch;
 
 // Signal definitions
 #define SIG_AIM				2
+
+#define HEADING_TOLERANCE	<15.000000>
+#define PITCH_TOLERANCE		<25.000000>
 
 
 walk()
@@ -215,6 +218,8 @@ Create()
 	justmoved=FALSE;
 	restore_delay = 6000;
 	gun_1=[0];
+	currentHeading = <0>;
+	currentPitch = <0>;
 	start-script MotionControl();
 	start-script SmokeUnit();
 }
@@ -237,6 +242,8 @@ StopMoving()
 RestoreAfterDelay()
 {
 	sleep restore_delay;
+	currentHeading = <0>;
+	currentPitch = <0>;
 	turn torso to y-axis <0.000000> speed <80.016484>;
 	turn slpt to x-axis <0.000000> speed <90.005495>;
 	bAiming = FALSE;
@@ -250,9 +257,14 @@ AimPrimary(heading, pitch)
 	bAiming = TRUE;
 	turn torso to y-axis heading speed <150.027473>;
 	turn slpt to x-axis <0.000000> - pitch speed <150.038462>;
-	
-	wait-for-turn torso around y-axis;
-	wait-for-turn slpt around x-axis;
+	if ( (get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE ))
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn slpt around x-axis;
+		currentHeading = heading;
+		currentPitch = pitch;
+	}
+
 	start-script RestoreAfterDelay();
 	return (1);
 }

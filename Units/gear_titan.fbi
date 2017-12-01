@@ -5,7 +5,7 @@
 	//********************
 	Side=Gear;
 	name=Titan;
-	description=Barely Mobile Armored Assault Robot;
+	description=Barely Mobile Amphibious Armored Assault Robot;
 
 	//************************************************************
 	//  Categories
@@ -62,7 +62,7 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTSf3;
+	movementclass=KBOTUW3;
 	turnrate=350;
 	acceleration=1.2;
 	brakerate=1.0;
@@ -76,6 +76,7 @@
 	//*********************
 	sightdistance=500;
 	radardistance=0;
+	sonardistance=250;
 
 	//************************************************************
 	//  Weapons
@@ -126,7 +127,7 @@
 	explosiongenerator0=custom:greenflare;
 	explosiongenerator1=custom:unitfire;
 	}
-	buildcostenergy=13754;//#AUTO#
-	buildcostmetal=2750;//#AUTO#
-	buildtime=32780;//#AUTO#
+	buildcostenergy=14363;//#AUTO#
+	buildcostmetal=2872;//#AUTO#
+	buildtime=34232;//#AUTO#
 }

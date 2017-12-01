@@ -225,12 +225,12 @@ openlegs()
 	wait-for-turn lmidleg around z-axis;
 	wait-for-turn lbackleg around z-axis;
 		
-	move rfrontleg to x-axis [5.000000] speed [8.000000];
-	move rmidleg to x-axis [5.000000] speed [8.000000];
-	move rbackleg to x-axis [5.000000] speed [8.000000];
-	move lfrontleg to x-axis [-5.000000] speed [8.000000];
-	move lmidleg to x-axis [-5.000000] speed [8.000000];
-	move lbackleg to x-axis [-5.000000] speed [8.000000];
+	move rfrontleg to x-axis [5.300000] speed [8.000000];
+	move rmidleg to x-axis [5.300000] speed [8.000000];
+	move rbackleg to x-axis [5.300000] speed [8.000000];
+	move lfrontleg to x-axis [-5.300000] speed [8.000000];
+	move lmidleg to x-axis [-5.300000] speed [8.000000];
+	move lbackleg to x-axis [-5.300000] speed [8.000000];
 
 	wait-for-move rfrontleg along x-axis;
 	wait-for-move rmidleg along x-axis;

@@ -29,7 +29,7 @@
 	MetalMake=0;
 	EnergyStorage=0;
 	MetalStorage=0;
-	EnergyUse=150;
+	EnergyUse=0;
 
 	// ------------------- constructor
 	builder=0;
@@ -67,7 +67,7 @@
 	// ------------------- weapons
 	Weapon1=sphere_aster_missile;
 	Weapon2=sphere_aster_shield;
-	badtargetcategory1=VTOL;
+	badtargetcategory1=NOTAIR;
 	NoChaseCategory=VTOL;
 	ExplodeAs=big_unit;
 	SelfDestructAs=big_unit;
@@ -101,14 +101,14 @@
 
 	[CustomParams]
 	{
-		tip=Requires 150E/s to move;
-		evalfactor=0.9;
+		energyCostMoving=120;
+		tip=Requires 120E/s to move;
 	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:rocketflaresml;
 	}
-	buildcostenergy=18493;//#AUTO#
-	buildcostmetal=1849;//#AUTO#
-	buildtime=23733;//#AUTO#
+	buildcostenergy=11505;//#AUTO#
+	buildcostmetal=2301;//#AUTO#
+	buildtime=27422;//#AUTO#
 }

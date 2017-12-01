@@ -77,7 +77,7 @@
 	//  Sight/Radar/Sonar
 	//*********************
 	sightdistance=500;
-	sonardistance=300;
+	sonardistance=250;
 	radardistance=0;
 
 	//************************************************************
@@ -116,10 +116,6 @@
 	pieceTrailCEGRange = 4;
 	waterline=15;
 
-	[CustomParams]
-	{
-		tip=33% slower on water;
-	}
 	//************************************************************
 	//  To be removed
 	//*****************
@@ -130,7 +126,7 @@
 	explosiongenerator1=custom:UNITFIRE;
 	}
 
-	buildcostenergy=3808;//#AUTO#
-	buildcostmetal=761;//#AUTO#
-	buildtime=9075;//#AUTO#
+	buildcostenergy=3874;//#AUTO#
+	buildcostmetal=774;//#AUTO#
+	buildtime=9234;//#AUTO#
 }

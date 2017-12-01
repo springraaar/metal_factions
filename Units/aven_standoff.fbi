@@ -29,8 +29,8 @@
 	//********************
 	maxdamage=4950;
 	healtime=11;
-	footprintx=5;
-	footprintz=5;
+	footprintx=6;
+	footprintz=6;
 
 	//************************************************************
 	//  Resources
@@ -44,10 +44,10 @@
 	//  Building
 	//************
 	buildangle=4096;
-	yardmap=ooooo ooooo ooooo ooooo ooooo;
+	yardmap=cooooc oooooo oooooo oooooo oooooo cooooc;
 	collisionVolumeType=CylY;
-	collisionVolumeScales=70 70 70;
-	collisionVolumeOffsets=0 0 0;
+	collisionVolumeScales=85 70 85;
+	collisionVolumeOffsets=0 0 -15;
 	collisionVolumeTest = 1;
 	
 	//************************************************************
@@ -116,7 +116,7 @@
 	{
     canAreaAttack=1;
 	}
-	buildcostenergy=47048;//#AUTO#
-	buildcostmetal=9409;//#AUTO#
-	buildtime=112131;//#AUTO#
+	buildcostenergy=42687;//#AUTO#
+	buildcostmetal=8537;//#AUTO#
+	buildtime=101739;//#AUTO#
 }

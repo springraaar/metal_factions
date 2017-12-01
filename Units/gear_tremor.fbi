@@ -5,7 +5,7 @@
 	//********************
 	Side=Gear;
 	name=Tremor;
-	description=Very Heavy Assault Tank;
+	description=Amphibious Very Heavy Assault Tank;
 
 	//************************************************************
 	//  Categories
@@ -35,8 +35,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.5;
-	energyuse=15;
+	energymake=0;
+	energyuse=0;
 	energystorage=0;
 
 	//************************************************************
@@ -67,7 +67,7 @@
 	brakerate=0.3;
 	maxvelocity=1;
 	maxslope=16;
-	maxwaterdepth=20;
+
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -80,7 +80,6 @@
 	//***********
 	weapon1=gear_tremor_cannon;
 	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
 	badtargetcategory1=VTOL;
 	explodeas=HUGE_UNIT;
 	selfdestructas=ATOMIC_BLASTSML;
@@ -132,7 +131,7 @@
 	explosiongenerator1=custom:redflare;
 	explosiongenerator2=custom:UnitFire;
 	}
-	buildcostenergy=15572;//#AUTO#
-	buildcostmetal=3114;//#AUTO#
-	buildtime=37115;//#AUTO#
+	buildcostenergy=17709;//#AUTO#
+	buildcostmetal=3541;//#AUTO#
+	buildtime=42207;//#AUTO#
 }

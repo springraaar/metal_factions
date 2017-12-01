@@ -27,10 +27,10 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=10000;
+	maxdamage=12000;
 	healtime=30;
-	footprintx=6;
-	footprintz=6;
+	footprintx=8;
+	footprintz=8;
 
 	//************************************************************
 	//  Resources
@@ -69,7 +69,7 @@
 	turnrate=102;
 	acceleration=0.01;
 	brakerate=0.003;
-	maxvelocity=1.35;
+	maxvelocity=0.9;
 	minwaterdepth=15;
 	waterline=0;
 
@@ -84,8 +84,11 @@
 	//***********
 	weapon1=claw_wrecker_cannon;
 	weapon2=claw_wrecker_railgun;
+	weaponmaindir2=0 0 1;
+	maxangledif2=310;
 	nochasecategory=WEAPON;
 	badtargetcategory1=VTOL;
+	badtargetcategory2=VTOL;
 	explodeas=HUGE_UNIT;
 	selfdestructas=ATOMIC_BLASTSML;
 
@@ -113,7 +116,7 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =60 65 120;
+	collisionVolumeScales =70 65 135;
 	collisionVolumeOffsets = 0 -20 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
@@ -130,7 +133,7 @@
 		canAreaAttack=1;
 		evalfactor=0.85;//SHIP
 	}
-	buildcostenergy=57011;//#AUTO#
-	buildcostmetal=11402;//#AUTO#
-	buildtime=135876;//#AUTO#
+	buildcostenergy=60454;//#AUTO#
+	buildcostmetal=12090;//#AUTO#
+	buildtime=144082;//#AUTO#
 }

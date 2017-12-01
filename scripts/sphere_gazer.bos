@@ -7,53 +7,18 @@
 piece ground, hips,torso,turret,sleeve,front, front2, front3, fb,flare, sphere,shieldpt;
 
 	
-static-var bMoving,bAiming, normalSpeed, slowSpeed;
+static-var bMoving,bAiming;
 
 // Signal definitions
 #define SIG_AIM				2
 
 
-lua_checkEnergy() { return 0; }
-
-
-MotionControl(hasEnergy)
-{
-	hasEnergy = 1;
-	while (TRUE)
-	{
-		bMoving = (get CURRENT_SPEED) > 10000;
-
-		// lua check for energy availability		
-		call-script lua_checkEnergy(500);
-		hasEnergy = get LUA1;
-		
-		// update speed and activation state
-		if (bMoving && hasEnergy)
-		{
-			set ACTIVATION to TRUE;
-			//set MAX_SPEED to normalSpeed;  // DONE BY GADGET
-		}
-		if (!bMoving || !hasEnergy)
-		{
-			set ACTIVATION to FALSE;
-			//set MAX_SPEED to slowSpeed;  // DONE BY GADGET
-		}
-
-		sleep 60;
-	}
-}
-
-
 
 Create()
 {
-	normalSpeed = get MAX_SPEED;
-	slowSpeed = normalSpeed / 4;
-
 	spin front2 around z-axis speed <240.000000>;
 	bMoving=FALSE;
 	bAiming=FALSE;
-	start-script MotionControl();
 }
 
 

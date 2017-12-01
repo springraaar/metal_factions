@@ -19,16 +19,16 @@
 
 
 	// ------------------- health/cost/size
-	FootprintX=3;
-	FootprintZ=3;
-	MaxDamage=2800;
+	FootprintX=4;
+	FootprintZ=4;
+	MaxDamage=3800;
 
 
 	// ------------------- resources
-	EnergyUse=4;
+	EnergyUse=0;
 	EnergyStorage=0;
 	MetalStorage=0;
-	EnergyMake=4;
+	EnergyMake=0;
 
 	// ------------------- abilities
 	canmove=1;
@@ -49,6 +49,7 @@
 	// ------------------- scout
 	sightdistance=500;
 	RadarDistance=0;
+	SonarDistance=250;
 
 
 	// ------------------- weapons
@@ -81,7 +82,7 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 	collisionVolumeType = box;
-	collisionVolumeScales =35 30 35;
+	collisionVolumeScales =45 40 45;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
@@ -89,7 +90,7 @@
 	{
 		explosiongenerator0=custom:yellowflaremed;
 	}
-	buildcostenergy=4788;//#AUTO#
-	buildcostmetal=957;//#AUTO#
-	buildtime=11413;//#AUTO#
+	buildcostenergy=10188;//#AUTO#
+	buildcostmetal=2037;//#AUTO#
+	buildtime=24281;//#AUTO#
 }

@@ -79,12 +79,18 @@ local FIRE_AOE_DMG_MAX_PER_STEP = 40 --- 200 dps
 local BURNING_CEG = "burneffect"
 local BURNING_SOUND = "Sounds/BURN1.wav"
 
+local EMP_CEG = "ElectricSequenceSML2"
+
 local UNIT_DAMAGE_XP = 0.05     -- 100% damage taken is converted to experience using this factor
 								-- currently set to half as much as fully damaging and enemy unit of equal power
 
 local disruptorWaveEffectWeaponDefId = WeaponDefNames["aven_bass_disruptor_effect"].id
 local disruptorWaveUnitDefId = UnitDefNames["aven_bass"].id
 local magnetarWeaponDefId = WeaponDefNames["sphere_magnetar_blast"].id
+local magnetarAuraWeaponDefId = WeaponDefNames["sphere_magnetar_aura_blast"].id
+
+
+
 
 local burningEffectWeaponDefIds = {
 	[WeaponDefNames["gear_pyro_flamethrower"].id] = true,
@@ -397,6 +403,26 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	-- disables unit collision damage
 	if (weaponDefID == -3) then
 		return 0
+	end
+	
+	-- show animation for AOE damage from disruptor weapons 
+	if (weaponDefID == disruptorWaveEffectWeaponDefId or weaponDefID == magnetarWeaponDefId or weaponDefID == magnetarAuraWeaponDefId) then
+		local showEffect = false
+		if weaponDefID == magnetarAuraWeaponDefId then
+			if math.random() < 0.2 then
+				showEffect = true
+			end
+		else 
+			showEffect = true
+		end
+		
+		if (showEffect) then
+			local _,_,_,x,y,z = spGetUnitPosition(unitID,true)
+			if x ~= nil then
+				Spring.SpawnCEG(EMP_CEG, x - 10 + math.random(20), y, z - 10 + math.random(20), 0, 1, 0,30 ,30)
+				--Spring.PlaySoundFile(EMP_SOUND, 4, x, y+h, z)
+			end
+		end
 	end
 	 
 	-- increase damage due to veteran status for continuous beam weapons

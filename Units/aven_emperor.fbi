@@ -27,10 +27,10 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=9500;
+	maxdamage=11500;
 	healtime=30;
-	footprintx=6;
-	footprintz=6;
+	footprintx=8;
+	footprintz=8;
 
 	//************************************************************
 	//  Resources
@@ -68,7 +68,7 @@
 	turnrate=152;
 	acceleration=0.01;
 	brakerate=0.003;
-	maxvelocity=1.40;
+	maxvelocity=0.95;
 	minwaterdepth=10;
 	waterline=5;
 
@@ -81,7 +81,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=aven_BAT2;
+	weapon1=aven_emperor_cannon;
 	weapon2=aven_emperor_cannon2;
 	weapon3=aven_emperor_cannon2;
 	weaponmaindir2=1.2 0 1;
@@ -119,7 +119,7 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =60 65 120;
+	collisionVolumeScales = 70 65 135;
 	collisionVolumeOffsets = 0 -20 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
@@ -140,7 +140,7 @@
 		canAreaAttack=1;
 		evalfactor=0.85;//SHIP
 	}
-	buildcostenergy=39560;//#AUTO#
-	buildcostmetal=7912;//#AUTO#
-	buildtime=94284;//#AUTO#
+	buildcostenergy=43079;//#AUTO#
+	buildcostmetal=8615;//#AUTO#
+	buildtime=102671;//#AUTO#
 }

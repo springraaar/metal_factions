@@ -37,8 +37,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=1.5;
-	energyuse=1.5;
+	energymake=0;
+	energyuse=0;
 	energystorage=0;
 
 
@@ -79,7 +79,7 @@
 	//  Sight/Radar/Sonar
 	//*********************
 	sightdistance=500;
-	sonardistance=500;
+	sonardistance=400;
 	radardistance=0;
 
 	//************************************************************
@@ -124,6 +124,7 @@
 
 	[CustomParams]
 	{
+		evalfactor=0.85;//SHIP
 		tip=33% slower on land;
 	}
 	//************************************************************
@@ -136,7 +137,7 @@
 	explosiongenerator1=custom:UNITFIRE;
 	}
 
-	buildcostenergy=5436;//#AUTO#
-	buildcostmetal=1087;//#AUTO#
-	buildtime=12957;//#AUTO#
+	buildcostenergy=5281;//#AUTO#
+	buildcostmetal=1056;//#AUTO#
+	buildtime=12586;//#AUTO#
 }

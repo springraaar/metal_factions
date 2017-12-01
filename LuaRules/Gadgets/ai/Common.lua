@@ -688,15 +688,15 @@ attackerList =
 {
 ------------------------------------------------ AVEN
 ----------- l1
+	"aven_runner",
 	"aven_trooper",
-	"aven_hammer",
+	"aven_wheeler",
 	"aven_kit",
 	"aven_warrior",
 	"aven_jethro",
 
 	"aven_bold",
 	"aven_jeffy",
-	"aven_flash",
 	"aven_samson",
 	"aven_duster",
 
@@ -718,10 +718,13 @@ attackerList =
 	
 	"aven_racer",
 	"aven_centurion",
-	"aven_luger",
 	"aven_javelin",
 	"aven_slider",
+	"aven_slider_s",	
 	"aven_swatter",
+	"aven_skimmer",
+	"aven_excalibur",
+	"aven_turbulence",		
 	"aven_penetrator",
 	"aven_merl",
 	"aven_kodiak",
@@ -797,6 +800,7 @@ attackerList =
       "claw_crawler",
       "claw_cutter",
       "claw_flail",
+      "claw_scythe",
       "claw_speeder",
       "claw_striker",
       "claw_sword",
@@ -810,6 +814,11 @@ attackerList =
       "claw_x",
       "claw_blizzard",
       "claw_havoc",
+      "claw_predator",
+      "claw_tempest",
+      "claw_dizzy",
+      "claw_gyro",
+      "claw_mace",               
 ------------------------------------------------ SPHERE
       "sphere_bit",
       "sphere_slicer",
@@ -836,7 +845,12 @@ attackerList =
       "sphere_spitfire",
       "sphere_meteor",
       "sphere_twilight",
-      "sphere_hermit"
+      "sphere_hermit",
+      "sphere_nimbus",
+      "sphere_aster",
+      "sphere_gazer",
+      "sphere_comet",
+      "sphere_chroma"      
 }
 
 
@@ -949,19 +963,17 @@ amphibiousAttackerList =
 ------------------------------------------------ AVEN
 ----------- l1
 
-	"aven_crabe",
+	"aven_wheeler",
 ----------- l2
-	"aven_pelican",
 	"aven_catfish",
 	"aven_kodiak",
 
------------------------------------------------- CORE
+------------------------------------------------ GEAR
 ----------- l1
 	"gear_garpike",
 
 ----------- l2
 
-	"gear_gimp",
 	"gear_crock",
 	"gear_proteus",
 
@@ -969,6 +981,9 @@ amphibiousAttackerList =
 ----------- l1
 ----------- l2
       "claw_predator",
+      "claw_tempest",
+      "claw_dizzy",
+      "claw_gyro",      
       "claw_crawler",
       "claw_cutter",
 ------------------------------------------------ SPHERE
@@ -984,7 +999,7 @@ l1ConstructorList =
 	"aven_construction_vehicle",
 	"aven_construction_aircraft",
 	"aven_construction_ship",
------------------------------------------------- CORE
+------------------------------------------------ GEAR
 	"gear_construction_kbot",
 	"gear_construction_vehicle",
 	"gear_construction_aircraft",
@@ -1008,7 +1023,8 @@ l2ConstructorList =
 	"aven_adv_construction_vehicle",
 	"aven_adv_construction_aircraft",
 	"aven_adv_construction_sub",
------------------------------------------------- CORE
+	"aven_construction_hovercraft",	
+------------------------------------------------ GEAR
 	"gear_adv_construction_kbot",
 	"gear_adv_construction_vehicle",
 	"gear_adv_construction_aircraft",
@@ -1018,6 +1034,7 @@ l2ConstructorList =
 	"claw_adv_construction_vehicle",
 	"claw_adv_construction_aircraft",
 	"claw_adv_construction_ship",
+	"claw_adv_construction_spinbot",	
 
 ------------------------------------------------ SPHERE
 	"sphere_adv_construction_kbot",
@@ -1036,7 +1053,7 @@ supporterList =
 	"aven_seer",
 	"aven_jammer",
 	"aven_zephyr",
------------------------------------------------- CORE
+------------------------------------------------ GEAR
 	"gear_informer",
 	"gear_deleter",
 	"gear_voyeur",
@@ -1046,11 +1063,13 @@ supporterList =
 	"claw_shade",
 	"claw_seer",
 	"claw_jammer",
+	"claw_haze",	
 ------------------------------------------------ SPHERE
 	"sphere_rain",
 	"sphere_sensor",
 	"sphere_scanner",
 	"sphere_concealer",
+	"sphere_orb",
 	"sphere_screener",
 	"sphere_shielder"
 }
@@ -1066,7 +1085,7 @@ lev3ArtilleryDefenseByFaction = {[side1Name] = {"aven_guardian"}, [side2Name] = 
 lev3LongRangeArtilleryByFaction = {[side1Name] = {"aven_standoff"}, [side2Name] = {"gear_intimidator"}, [side3Name] = {"claw_longhorn"}, [side4Name] = {"sphere_bastion"}}
 respawnerByFaction = {[side1Name] = "aven_commander_respawner", [side2Name] = "gear_commander_respawner", [side3Name] = "claw_commander_respawner", [side4Name] = "sphere_commander_respawner"}
 lev1PlantByFaction = {[side1Name] = {"aven_light_plant","aven_aircraft_plant"}, [side2Name] = {"gear_light_plant","gear_aircraft_plant"}, [side3Name] = {"claw_light_plant","claw_aircraft_plant"}, [side4Name] = {"sphere_light_factory","sphere_aircraft_factory"}}
-lev2PlantByFaction = {[side1Name] = {"aven_adv_kbot_lab","aven_adv_vehicle_plant","aven_adv_aircraft_plant"}, [side2Name] = {"gear_adv_kbot_lab","gear_adv_vehicle_plant","gear_adv_aircraft_plant"}, [side3Name] = {"claw_adv_kbot_plant","claw_adv_aircraft_plant","claw_adv_vehicle_plant"}, [side4Name] = {"sphere_adv_vehicle_factory","sphere_adv_kbot_factory","sphere_adv_aircraft_factory"}}
+lev2PlantByFaction = {[side1Name] = {"aven_adv_kbot_lab","aven_adv_vehicle_plant","aven_hovercraft_platform","aven_adv_aircraft_plant"}, [side2Name] = {"gear_adv_kbot_lab","gear_adv_vehicle_plant","gear_adv_aircraft_plant"}, [side3Name] = {"claw_adv_kbot_plant","claw_adv_vehicle_plant","claw_spinbot_plant","claw_adv_aircraft_plant"}, [side4Name] = {"sphere_adv_vehicle_factory","sphere_adv_kbot_factory","sphere_sphere_factory","sphere_adv_aircraft_factory"}}
 solarByFaction = { [side1Name] = "aven_solar_collector", [side2Name] = "gear_solar_collector", [side3Name] = "claw_solar_collector"}
 windByFaction = { [side1Name] = "aven_wind_generator", [side2Name] = "gear_wind_generator", [side3Name] = "claw_wind_generator"}
 geoByFaction = { [side1Name] = "aven_geothermal_powerplant", [side2Name] = "gear_geothermal_powerplant", [side3Name] = "claw_geothermal_powerplant", [side4Name] = "sphere_geothermal_powerplant"}
@@ -1106,8 +1125,8 @@ unitTypeSets = {
 	[TYPE_MEX] = tableToSet({mexByFaction,UWMexByFaction}),
 	[TYPE_MOHO] = tableToSet({mohoMineByFaction,UWMohoMineByFaction}),
 	[TYPE_EXTRACTOR] = tableToSet({mexByFaction,UWMexByFaction,mohoMineByFaction,UWMohoMineByFaction}),
-	[TYPE_ENERGYGENERATOR] = tableToSet({solarByFaction,windByFaction,geoByFaction,fusionByFaction,tidalByFaction,{"sphere_fusion_reactor"}}),
-	[TYPE_ECONOMY] = tableToSet({mexByFaction,mohoMineByFaction,solarByFaction,windByFaction,geoByFaction,fusionByFaction,energyStorageByFaction,metalStorageByFaction,{"sphere_fusion_reactor"}}),
+	[TYPE_ENERGYGENERATOR] = tableToSet({solarByFaction,windByFaction,geoByFaction,fusionByFaction,tidalByFaction,{"sphere_fusion_reactor","sphere_hardened_fission_reactor"}}),
+	[TYPE_ECONOMY] = tableToSet({mexByFaction,mohoMineByFaction,solarByFaction,windByFaction,geoByFaction,fusionByFaction,energyStorageByFaction,metalStorageByFaction,{"sphere_fusion_reactor","sphere_hardened_fission_reactor"}}),
 	[TYPE_PLANT] = tableToSet({lev1PlantByFaction,lev2PlantByFaction}),	
 	[TYPE_ATTACKER] = listToSet(attackerList),
 	[TYPE_AIR_ATTACKER] = listToSet(airAttackerList),

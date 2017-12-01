@@ -195,3 +195,37 @@
 	count=7;
 	}
 }
+
+[ElectricSequenceSML2]
+{
+	[ElectricalStrike] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=0, 0, 0;  
+		delay=0 r1;				  
+		explosionGenerator=custom:LIGHTNINGSML;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	}
+
+	[ElectricalWebINNER] 
+	{
+	    class=CExpGenSpawner;
+		[properties]
+		{
+		pos=25 r-50, 10 r-20, 25 r-50;  
+		delay=15 r15;				  
+		explosionGenerator=custom:Sparks;
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=2;
+	}
+
+}

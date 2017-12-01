@@ -16,6 +16,7 @@ static-var  bMoving, bBuilding, Static_Var_3, bAiming, Static_Var_5, Static_Var_
 #define HEADING_TOLERANCE	<15.000000>
 #define PITCH_TOLERANCE		<25.000000>
 
+lua_delayReload() { return 0; }
 
 MotionSpeedControl(maxSpeed,currentSpeed)
 {
@@ -88,6 +89,7 @@ Build()
 		{
 			emit-sfx 1024 + 1 from lnanospray;
 			emit-sfx 1024 + 1 from rnanospray;
+			call-script lua_delayReload(3);
 		}
 		sleep 100;
 	}

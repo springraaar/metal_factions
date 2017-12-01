@@ -4088,3 +4088,27 @@
 
 	//[_dust]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=d130;explosionGenerator=custom:DYNDUSTBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
+
+
+
+[MAGNETARAURABLAST]
+{
+	usedefaultexplosions=0;
+	[windsphere]
+	{
+		class=CSpherePartSpawner;
+		[properties]
+		{
+			ttl=10;
+			alpha=0.05;
+			expansionSpeed=30;
+			color=1.0, 1, 1;
+		}
+		ground=1;
+		air=1;
+		count=1;
+		unit=1;
+   		water=1;
+		alwaysVisible=1;
+	}
+}

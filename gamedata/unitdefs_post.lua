@@ -175,6 +175,7 @@ if (true) then
 		end
 		
 		if (mv and tonumber(mv) > 0) then
+			mv = tonumber(mv)
 			-- disable transporting enemy units
 			unitDef.transportbyenemy = 0
 			
@@ -199,6 +200,28 @@ if (true) then
 					unitDef.brakerate = br / 5
 				end
 			end
+			
+			-- override unit mass
+			if (canFly and mv > 1.5 and (not string.find(name,"comet")) ) then
+				unitDef.mass = tonumber(unitDef.buildcostmetal) / 4 + tonumber(unitDef.maxdamage) / 4
+			else
+				if string.find(name,"commander") then
+					local massMod = 1
+					if (mv < 1.1) then
+						massMod = 1 + 0.5 / mv
+					end
+					
+					unitDef.mass = (tonumber(unitDef.buildcostmetal) / 8 + tonumber(unitDef.maxdamage) / 4.05) * massMod
+				else
+					unitDef.mass = tonumber(unitDef.buildcostmetal) / 2 + tonumber(unitDef.maxdamage) / 4
+				end
+			end
+			
+			-- make heavy units push resistant
+			 if tonumber(unitDef.buildcostmetal) > 3000 or unitDef.mass > 2000 then
+			 	--Spring.Echo(name.." is push resistant")
+			 	unitDef.pushresistant = 1
+			 end
 		else
 			local factionBuilding = false
 			
@@ -216,7 +239,7 @@ if (true) then
 				factionBuilding = true
 			end
 			local fpMod = 1.5
-			if (factionBuilding == true and not (unitDef.floater or unitDef.waterline)) then
+			if (factionBuilding == true and (not (unitDef.floater or unitDef.waterline) or (not unitDef.minwaterdepth or tonumber(unitDef.minwaterdepth) < 0) )) then
 				unitDef.usebuildinggrounddecal = true
 				if (reducedDecalSizeUnits[name] ) then
 					fpMod = 0.85

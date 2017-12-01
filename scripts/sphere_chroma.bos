@@ -7,7 +7,7 @@
 piece ground, hips,torso,turret1,sleeve1,flare1,turret2,sleeve2,flare2,turret3,sleeve3,flare3, sphere, shieldpt;
 
 	
-static-var bMoving,bAiming, normalSpeed, slowSpeed, currentHeading1, currentPitch1, currentHeading2, currentPitch2, currentHeading3, currentPitch3;
+static-var bMoving,bAiming, currentHeading1, currentPitch1, currentHeading2, currentPitch2, currentHeading3, currentPitch3;
 
 #define HEADING_TOLERANCE	<40.000000>
 #define PITCH_TOLERANCE		<40.000000>
@@ -18,44 +18,11 @@ static-var bMoving,bAiming, normalSpeed, slowSpeed, currentHeading1, currentPitc
 #define SIG_AIM3				8
 
 
-lua_checkEnergy() { return 0; }
-
-
-MotionControl(hasEnergy)
-{
-	hasEnergy = 1;
-	while (TRUE)
-	{
-		bMoving = (get CURRENT_SPEED) > 10000;
-
-		// lua check for energy availability		
-		call-script lua_checkEnergy(500);
-		hasEnergy = get LUA1;
-		
-		// update speed and activation state
-		if (bMoving && hasEnergy)
-		{
-			set ACTIVATION to TRUE;
-			//set MAX_SPEED to normalSpeed;  // DONE BY GADGET
-		}
-		if (!bMoving || !hasEnergy)
-		{
-			set ACTIVATION to FALSE;
-			//set MAX_SPEED to slowSpeed;  // DONE BY GADGET
-		}
-
-		sleep 60;
-	}
-}
 
 
 
 Create()
 {
-	normalSpeed = get MAX_SPEED;
-	slowSpeed = normalSpeed / 4;
-
-
 	currentHeading1 = <0>;
 	currentPitch1 = <0>;
 	currentHeading2 = <0>;
@@ -64,7 +31,6 @@ Create()
 	currentPitch3 = <0>;	
 	bMoving=FALSE;
 	bAiming=FALSE;
-	start-script MotionControl();
 }
 
 

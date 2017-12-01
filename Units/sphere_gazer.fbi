@@ -29,7 +29,7 @@
 	MetalMake=0;
 	EnergyStorage=0;
 	MetalStorage=0;
-	EnergyUse=150;
+	EnergyUse=0;
 
 	// ------------------- constructor
 	builder=0;
@@ -101,14 +101,14 @@
 
 	[CustomParams]
 	{
-		tip=Requires 150E/s to move;
-		evalfactor=0.9;
+		energyCostMoving=120;
+		tip=Requires 120E/s to move;
 	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:redflare;
 	}
-	buildcostenergy=23479;//#AUTO#
-	buildcostmetal=2347;//#AUTO#
-	buildtime=30131;//#AUTO#
+	buildcostenergy=14566;//#AUTO#
+	buildcostmetal=2913;//#AUTO#
+	buildtime=34716;//#AUTO#
 }

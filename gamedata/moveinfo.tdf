@@ -66,9 +66,8 @@
 	Name=KBOTUW3;
 	FootprintX=3;
 	FootprintZ=3;
-	MaxWaterDepth=255;
 	Submarine=1;
-	MaxWaterSlope=72;
+	MaxWaterSlope=40;
 	MaxSlope=36;
 	CrushStrength=30;
 	depthmod=0;
@@ -103,9 +102,8 @@
 	Name=TANKDH3;
 	FootprintX=3;
 	FootprintZ=3;
-	MaxWaterDepth=255;
 	Submarine=1;
-	MaxWaterSlope=60;
+	MaxWaterSlope=40;
 	MaxSlope=31;
 	CrushStrength=30;
 	depthmod=0;
@@ -209,7 +207,6 @@
 	Name=TANKDTCRUSH;
 	FootprintX=4;
 	FootprintZ=4;
-	MaxWaterDepth=35;
 	MaxSlope=32;
 	CrushStrength=400;
 	depthmod=0;
@@ -227,53 +224,41 @@
 	depthmod=0;
 	allowRawMovement=1;
 }
+
+
 [CLASS19]
-{
-	Name=Krogoth; //KROGOTH
-	FootprintX=5;
-	FootprintZ=5;
-	MaxWaterDepth=90;
-	MaxSlope=32;
-	CrushStrength=400;
-	depthmod=0;
-	slopemod=6;
-	allowRawMovement=1;
-}
-//fleabowl
-
-[CLASS20]
-{
-	Name=TANKHOVER9;
-	FootprintX=1;
-	FootprintZ=1;
-	MaxWaterDepth=255;
-	//MaxWaterSlope=720;
-	MaxSlope=9999;
-	CrushStrength=30;
-	depthmod=0;
-	allowRawMovement=1;
-}
-
-[CLASS21]
-{
-	Name=TANKHOVER10;
-	FootprintX=3;
-	FootprintZ=3;
-	MaxWaterDepth=255;
-	//MaxWaterSlope=720;
-	MaxSlope=35;
-	CrushStrength=3000;
-	depthmod=0;
-	allowRawMovement=1;
-}
-
-[CLASS22]
 {
 	Name=KBOTATUW;
 	FootprintX=3;
 	FootprintZ=3;
 	MaxWaterDepth=255;
 	Submarine=1;
+	depthmod=0;
+	slopemod=6;
+	allowRawMovement=1;
+}
+[CLASS20]
+{
+	Name=TANKDH5;
+	FootprintX=5;
+	FootprintZ=5;
+	Submarine=1;
+	MaxWaterSlope=40;
+	MaxSlope=31;
+	CrushStrength=30;
+	depthmod=0;
+	slopemod=6;
+	allowRawMovement=1;
+}
+[CLASS21]
+{
+	Name=TANKDH6;
+	FootprintX=6;
+	FootprintZ=6;
+	Submarine=1;
+	MaxWaterSlope=40;
+	MaxSlope=31;
+	CrushStrength=30;
 	depthmod=0;
 	slopemod=6;
 	allowRawMovement=1;

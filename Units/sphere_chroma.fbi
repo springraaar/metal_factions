@@ -29,7 +29,7 @@
 	MetalMake=0;
 	EnergyStorage=0;
 	MetalStorage=0;
-	EnergyUse=600;
+	EnergyUse=0;
 
 	// ------------------- constructor
 	builder=0;
@@ -98,8 +98,8 @@
 
 	[CustomParams]
 	{
+		energyCostMoving=600;
 		tip=Requires 600E/s to move;
-		evalfactor=0.9;
 	}
 	[SFXTypes]
 	{
@@ -107,7 +107,7 @@
 		explosiongenerator1=custom:rubyglow;
 		explosiongenerator2=custom:opalglow;
 	}
-	buildcostenergy=103082;//#AUTO#
-	buildcostmetal=10308;//#AUTO#
-	buildtime=132289;//#AUTO#
+	buildcostenergy=54411;//#AUTO#
+	buildcostmetal=10882;//#AUTO#
+	buildtime=129680;//#AUTO#
 }

@@ -747,52 +747,52 @@
 		class=CExploSpikeProjectile;
 		[properties]
 		{
-			dir=dir;
+			dir=-0.7 r1.4, -0.7 r1.4, -0.7 r1.4;
 			width=45;
 			length=36;
-			alpha=0.6;
-			alphadecay=0.06;
+			alpha=0.2;
+			alphadecay=0.02;
 			color=0.9, 0.8, 0.6;
 		}
 		air=1;
 		water=1;
 		ground=1;
-  		count=1; 
+  		count=3; 
 	}
 	[GLOWCENTER2]
 	{
 		class=CExploSpikeProjectile;
 		[properties]
 		{
-			dir=dir;
+			dir=-0.7 r1.4, -0.7 r1.4, -0.7 r1.4;
 			width=24;
 			length=18;
-			alpha=0.9;
-			alphadecay=0.9;
+			alpha=0.3;
+			alphadecay=0.3;
 			color=0.9, 0.8, 0.6;
 		}
 		air=1;
 		water=1;
 		ground=1;
-  		count=1; 
+  		count=3; 
 	}
 	[GLOW]
 	{
 		class=CExploSpikeProjectile;
 		[properties]
 		{
-			dir=dir;
+			dir=-0.7 r1.4, -0.7 r1.4, -0.7 r1.4;
 			width=60;
 			length=45;
-			alpha=0.3;
-			alphadecay=0.03;
+			alpha=0.1;
+			alphadecay=0.01;
 			color=0.9, 0.8, 0.6;
 
 		}
 		air=1;
 		water=1;
 		ground=1;
-  		count=1; 
+  		count=3; 
 	}
 	[GROUNDFLASH]
 	{

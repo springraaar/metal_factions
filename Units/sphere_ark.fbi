@@ -3,7 +3,7 @@
 	// ------------------- description
 	Side=Sphere;
 	Name=Ark;
-	Description=Armored Rocket Robot;
+	Description=Amphibious Armored Rocket Robot;
 
 	// ------------------- categories
 	Category=SPHERE KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
@@ -25,10 +25,10 @@
 
 
 	// ------------------- resources
-	EnergyUse=2;
+	EnergyUse=0;
 	EnergyStorage=0;
 	MetalStorage=0;
-	EnergyMake=2;
+	EnergyMake=0;
 
 	// ------------------- abilities
 	canmove=1;
@@ -46,15 +46,15 @@
 	Acceleration=0.15;
 	TurnRate=950;
 	SteeringMode=2;
-	MovementClass=KBOTHT2;
+	MovementClass=KBOTUW3;
 
 	// ------------------- scout
 	sightdistance=500;
 	RadarDistance=0;
+	SonarDistance=250;
 
 	// ------------------- weapons
 	Weapon1=sphere_ark_missile;
-	badtargetcategory1=VTOL;
 	badtargetcategory1=VTOL;
 	NoChaseCategory=VTOL;
 	ExplodeAs=BIG_UNITEX;
@@ -90,7 +90,7 @@
 		explosiongenerator0=custom:yellowflaresml;
 	}
 
-	buildcostenergy=8407;//#AUTO#
-	buildcostmetal=1681;//#AUTO#
-	buildtime=20036;//#AUTO#
+	buildcostenergy=9122;//#AUTO#
+	buildcostmetal=1824;//#AUTO#
+	buildtime=21741;//#AUTO#
 }

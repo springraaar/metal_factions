@@ -37,8 +37,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=3;
-	energyuse=3;
+	energymake=0;
+	energyuse=0;
 	energystorage=0;
 
 
@@ -127,6 +127,7 @@
 	[CustomParams]
 	{
 		tip=33% slower on land;
+		evalfactor=0.85;//SHIP
 	}
 
 	//************************************************************
@@ -140,7 +141,7 @@
 		explosiongenerator2=custom:redflare;
 	}
 
-	buildcostenergy=14632;//#AUTO#
-	buildcostmetal=2926;//#AUTO#
-	buildtime=34874;//#AUTO#
+	buildcostenergy=16102;//#AUTO#
+	buildcostmetal=3220;//#AUTO#
+	buildtime=38377;//#AUTO#
 }

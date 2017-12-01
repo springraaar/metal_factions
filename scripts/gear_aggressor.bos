@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define SPEEDUP_FACTOR	320
+#define SPEEDUP_FACTOR	350
 
 piece  torso, ruparm, luparm, rfire, lfire, rloarm, lloarm, pelvis,
        rleg, rfoot, lleg, lfoot, head, lthigh, rthigh, ground;
@@ -34,7 +34,7 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 		
 		mAMoveSpd1 = [20.000000] * mASpdFactor / 100;
 		mATurnSpd1 = <315.000000> * (100 + mASpdFactor) / 200;
-		mATurnSpd2 = <200.000000> * (100 + mASpdFactor) / 200;
+		mATurnSpd2 = <250.000000> * (100 + mASpdFactor) / 200;
 		mATurnSpd3 = <50.000000> * (100 + mASpdFactor) / 200;
 
 		mAVertFactor = [0.000000]-[1.000000] * mASpdFactor / SPEEDUP_FACTOR;
@@ -108,9 +108,6 @@ walk()
 		{
 			// turn torso left, right arm forward
 			turn torso to y-axis <10.000000> speed slowTurnSpd2;
-			turn luparm to x-axis <5.000000> speed slowTurnSpd;
-			turn ruparm to x-axis <-20.000000> speed slowTurnSpd;
-			//turn rloarm to x-axis <-20.000000> speed slowTurnSpd2;
 		}
 		
 		wait-for-turn lthigh around x-axis;
@@ -141,10 +138,6 @@ walk()
 		{
 			// restore position
 			turn torso to y-axis <0.000000> speed slowTurnSpd2;
-			turn luparm to x-axis <-10.000000> speed slowTurnSpd;
-			turn ruparm to x-axis <-10.000000> speed slowTurnSpd;
-			//turn rloarm to x-axis <-15.000000> speed slowTurnSpd2;
-
 		}
 
 		move pelvis to y-axis [0.000000] speed mAMoveSpd1;
@@ -175,9 +168,6 @@ walk()
 		{
 			// turn torso right, left arm forward
 			turn torso to y-axis <-10.000000> speed slowTurnSpd2;
-			turn luparm to x-axis <-20.000000> speed slowTurnSpd;
-			turn ruparm to x-axis <5.000000> speed slowTurnSpd;
-			//turn rloarm to x-axis <-10.000000> speed slowTurnSpd2;
 		}
 
 		wait-for-turn lthigh around x-axis;
@@ -209,9 +199,6 @@ walk()
 		{
 			// restore position
 			turn torso to y-axis <0.000000> speed slowTurnSpd2;
-			turn luparm to x-axis <-10.000000> speed slowTurnSpd;
-			turn ruparm to x-axis <-10.000000> speed slowTurnSpd;
-			//turn rloarm to x-axis <-15.000000> speed slowTurnSpd2;
 		}
 		
 		move pelvis to y-axis [0.000000] speed mAMoveSpd1;

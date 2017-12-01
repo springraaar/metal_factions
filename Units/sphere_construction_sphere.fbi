@@ -24,13 +24,14 @@
 	FootprintX=4;
 	FootprintZ=4;
 	mass=2500;
+	autoheal=30;
 	
 	// ------------------- resources
-	EnergyMake=20;
+	EnergyMake=10;
 	metalmake=0.0;
 	EnergyStorage=0;
 	MetalStorage=0;
-	EnergyUse=150;
+	EnergyUse=0;
 
 	// ------------------- constructor
 	builder=1;
@@ -106,15 +107,15 @@
 
 	[CustomParams]
 	{
-		tip=Requires 150E/s to move;
-		evalfactor=0.9;
+		energyCostMoving=120;
+		tip=Requires 120E/s to move. Regenerates 30 HP/s;
 	}
 
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:buildglow;
 	}
-	buildcostenergy=13205;//#AUTO#
-	buildcostmetal=1320;//#AUTO#
-	buildtime=16946;//#AUTO#
+	buildcostenergy=10110;//#AUTO#
+	buildcostmetal=2022;//#AUTO#
+	buildtime=24097;//#AUTO#
 }

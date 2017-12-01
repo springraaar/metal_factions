@@ -86,6 +86,7 @@ local radarDefs = {
   [ UnitDefNames['claw_floating_radar_tower'].id ] = true,
   [ UnitDefNames['claw_explorer'].id ] = true,
   [ UnitDefNames['claw_negator'].id ] = true,
+  [ UnitDefNames['claw_haze'].id ] = true,
 
   [ UnitDefNames['sphere_adv_radar_tower'].id ] = true,
   [ UnitDefNames['sphere_radar_tower'].id ] = true,
@@ -98,6 +99,7 @@ local radarDefs = {
   [ UnitDefNames['sphere_sonar_station'].id ] = true,
   [ UnitDefNames['sphere_floating_radar_tower'].id ] = true,
   [ UnitDefNames['sphere_echo'].id ] = true,
+  [ UnitDefNames['sphere_orb'].id ] = true,
   [ UnitDefNames['sphere_mist'].id ] = true
 }
 

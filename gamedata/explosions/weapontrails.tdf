@@ -222,37 +222,19 @@
   		count=3; 
 	}
 }
-[PEEWEESHINE]
+[EMGTRAIL]
 {
 	usedefaultexplosions=0;	
 	[groundflash]
 	{
 		flashSize = 20;
-		flashAlpha = 0.25;
+		flashAlpha = 0.1;
 		circleGrowth = 0;
 		circleAlpha = 0.1;
-		ttl = 2;
+		ttl = 1;
 		color = 1.0, 0.7, 0.2;
 
 	}
-	//[spikes]
-	//{
-	//	class=explspike;
-	//	[properties]
-	//	{
-	//		dir=-1 r2,-1 r2,-1 r2;
-	//		width=4;
-	//		length=4; //60;
-	//		alpha=1;
-	//		alphadecay=0.5;
-	//		color=1.0, 0.7, 0.2;
-//
-//		}
-//		air=1;
-//		water=1;
-//		ground=1;
-//		count=4; 
-//	}
 }
 
 [PURPLEAFTERGLOW]
@@ -1924,6 +1906,57 @@ usedefaultexplosions=0;
   		count=1; 
 	}
 }
+[REDPLASMATRAIL]
+{
+	usedefaultexplosions=0;	
+	[groundflash]
+	{
+		flashSize = 45;
+		flashAlpha = 0.20;
+		circleGrowth = 0;
+		circleAlpha = 0.1;
+		ttl = 4;
+		color = 1.0, 0.5, 0.5;
+
+	}
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-1 r2, -1 r2,-1 r2;
+			width=16;
+			length=16;
+			alpha=0.06;
+			alphadecay=0.005;
+			color=1.0, 0.8, 0.8;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=3; 
+	}
+	[center]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-0.6 r1.2, -0.6 r1.2,-0.6 r1.2;
+			width=4;
+			length=4;
+			alpha=2.0;
+			alphadecay=1.0;
+			color=1.0, 0.0, 0.0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=6; 
+	}
+
+}
 [BLUEGLOWSML]
 {
 	usedefaultexplosions=0;	
@@ -2760,4 +2793,175 @@ usedefaultexplosions=0;
 	alwaysvisible=1;
 	}
 
+}
+
+
+[RINGCHARGE1]
+{
+	usedefaultexplosions=0;	
+
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos = 0, 0, 0;
+			dir= -1 r2, -1 r2, -1 r2;
+			width=24;
+			length=24;
+			alpha=0.05;
+			alphadecay=0.01;
+			color=1.0, 0.8, 0.8;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=3; 
+	}
+}
+
+
+[RINGCHARGE2]
+{
+	usedefaultexplosions=0;	
+
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos = 0, 0, 0;
+			dir= -1 r2, -1 r2, -1 r2;
+			width=24;
+			length=24;
+			alpha=0.06;
+			alphadecay=0.01;
+			color=1.0, 0.9, 0.9;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=3; 
+	}
+}
+
+[RINGCHARGE3]
+{
+	usedefaultexplosions=0;	
+
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos = 0, 0, 0;
+			dir= -1 r2, -1 r2, -1 r2;
+			width=24;
+			length=24;
+			alpha=0.06;
+			alphadecay=0.01;
+			color=1.0, 1.0, 1.0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=3; 
+	}
+}
+
+[RINGCHARGE4]
+{
+	usedefaultexplosions=0;	
+
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos = 0, 0, 0;
+			dir= -1 r2, -1 r2, -1 r2;
+			width=24;
+			length=24;
+			alpha=0.07;
+			alphadecay=0.01;
+			color=1.0, 1.0, 1.0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=3; 
+	}
+}
+[RINGTRAIL]
+{
+	usedefaultexplosions=0;	
+
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos = 0, 0, 0;
+			dir= -1 r2, -1 r2, -1 r2;
+			width=24;
+			length=24;
+			alpha=0.14;
+			alphadecay=0.02;
+			color=1.0, 1.0, 1.0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=3; 
+	}
+}
+
+[PLASMATRAIL1]
+{
+	usedefaultexplosions=0;	
+	[groundflash]
+	{
+		flashSize = 26;
+		flashAlpha = 0.13;
+		circleGrowth = 0;
+		circleAlpha = 0.1;
+		ttl = 2;
+		color = 1.0, 0.7, 0.2;
+
+	}
+}
+
+[PLASMATRAIL2]
+{
+	usedefaultexplosions=0;	
+	[groundflash]
+	{
+		flashSize = 36;
+		flashAlpha = 0.16;
+		circleGrowth = 0;
+		circleAlpha = 0.1;
+		ttl = 2;
+		color = 1.0, 0.7, 0.2;
+
+	}
+}
+
+[PLASMATRAIL3]
+{
+	usedefaultexplosions=0;	
+	[groundflash]
+	{
+		flashSize = 46;
+		flashAlpha = 0.2;
+		circleGrowth = 0;
+		circleAlpha = 0.1;
+		ttl = 2;
+		color = 1.0, 0.7, 0.2;
+
+	}
 }

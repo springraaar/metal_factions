@@ -5,13 +5,16 @@ function widget:GetInfo()
 		desc      = "Allows you to draw your own formation line.",
 		author    = "Niobium", -- Based on 'Custom Formations' by jK and gunblob
 		version   = "v3.3",
-		date      = "Mar, 2010",
+		date      = "Mar, 2010", 
 		license   = "GNU GPL, v2 or later",
 		layer     = 10000,
 		enabled   = true,
 		handler   = true,
 	}
 end
+
+-- raaar 2017 : when groups are given point targets, assume a short line instead as the previous formations weren't working properly
+
 
 --------------------------------------------------------------------------------
 -- User Configurable Constants
@@ -133,6 +136,7 @@ local floor = math.floor
 local ceil = math.ceil
 local sqrt = math.sqrt
 local huge = math.huge
+local random = math.random
 
 local CMD_INSERT = CMD.INSERT
 local CMD_MOVE = CMD.MOVE
@@ -519,13 +523,23 @@ function widget:MouseRelease(mx, my, mButton)
 		-- Get command options
 		local cmdOpts = GetCmdOpts(alt, ctrl, meta, shift, usingRMB)
 		
+		local mUnits = GetExecutingUnits(usingCmd)
+			
 		-- Single click ? (no line drawn)
 		--if (#fNodes == 1) then
-		if fDists[#fNodes] < minFormationLength then
+		if #mUnits == 1 and fDists[#fNodes] < minFormationLength then
 			-- We should check if any units are able to execute it,
 			-- but the order is small enough network-wise that the tiny bug potential isn't worth it.
+			
 			GiveNotifyingOrder(usingCmd, fNodes[1], cmdOpts)
 		else
+			-- convert single clicks into a set of nodes around the target
+			if (#fNodes == 1) then
+				for i = 1,4, #mUnits do
+					AddFNode({fNodes[1][1]+random(40),fNodes[1][2],fNodes[1][3]+random(40)})
+				end
+			end
+		
 			-- Order is a formation
 			-- Are any units able to execute it?
 			local mUnits = GetExecutingUnits(usingCmd)

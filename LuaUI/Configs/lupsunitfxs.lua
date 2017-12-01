@@ -219,7 +219,7 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=30, piece="ljp2", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=30, piece="rjp2", onActive=true}}
   },
-  gear_valkyrie = {
+  gear_carrier = {
     {class='AirJet',options={color={0.3,0.1,0}, width=7, length=25, piece="tp1", onActive=true, down=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=7, length=25, piece="tp2", onActive=true, down=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=7, length=25, piece="tp3", onActive=true, down=true}},
@@ -227,7 +227,7 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=4, length=30, piece="ljp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=4, length=30, piece="rjp", onActive=true}}
   },   
-  gear_valkyrie_b = {
+  gear_carrier_b = {
     {class='AirJet',options={color={0.3,0.1,0}, width=9, length=25, piece="tp1", onActive=true, down=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=9, length=25, piece="tp2", onActive=true, down=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=9, length=25, piece="tp3", onActive=true, down=true}},

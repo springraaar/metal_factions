@@ -42,6 +42,9 @@ local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetTeamRulesParam = Spring.GetTeamRulesParam
 local spGetUnitTeam = Spring.GetUnitTeam
 
+local TRANSPORT_MASS_LIMIT_LIGHT = 1200
+local TRANSPORT_MASS_LIMIT_HEAVY = 3000  
+
 function widget:Initialize()
 	Spring.SendCommands({"tooltip 0"})
 	
@@ -215,6 +218,25 @@ function GetTooltipBuildPower(buildSpeed)
 	return "\255\255\255\150Build Power: ".. FormatNbr(12 * buildSpeed / (11*13),1).." metal/s"
 end
 
+-- get tooltip mass/transportability label
+function GetTooltipTransportability(ud)
+	if ud.speed > 0 then
+		local transpStr = ""
+		if ud.mass < TRANSPORT_MASS_LIMIT_LIGHT then
+			transpStr = "light"
+		elseif ud.mass < TRANSPORT_MASS_LIMIT_HEAVY then
+			transpStr = "heavy"
+		else 
+			transpStr = "no transport"
+		end
+	
+		return "     \255\200\200\200Mass: ".. FormatNbr(ud.mass,0).." ("..transpStr..")"
+	else
+		return ""
+	end	
+end
+	
+	
 -- generates new tooltip 
 function GenerateNewTooltip()
         local CurrentTooltip = Spring.GetCurrentTooltip()
@@ -331,7 +353,7 @@ function GenerateNewTooltip()
                 NewTooltip = NewTooltip.."\n"..unitpre.."\n"..fud.humanName.." ("..fud.tooltip..")\n"..
 						"\255\200\200\200Metal: "..unitmetalcost.."    \255\255\255\0Energy: "..unitenergycost..""..
                         "\255\213\213\255".."    Build time: ".."\255\170\170\255"..
-                        floor((29+floor(31+fud.buildTime/(buildpower/32)))/30).."s\n"..
+                        floor((29+floor(31+fud.buildTime/(buildpower/32)))/30).."s".."    "..GetTooltipTransportability(fud).."\n"..
                         "\255\200\200\200Health: ".."\255\200\200\200"..fud.health.."("..armorTypeStr..")"
                         if fud.shieldPower > 0 then NewTooltip=NewTooltip.."\255\135\135\255     Shield: "..FormatNbr(fud.shieldPower) end
 						
@@ -512,7 +534,7 @@ function GenerateNewTooltip()
                         end
 
 						-- cost
-						NewTooltip = NewTooltip.."\255\200\200\200Metal: "..ud.metalCost.."    \255\255\255\0Energy: "..ud.energyCost.."\n"
+						NewTooltip = NewTooltip.."\255\200\200\200Metal: "..ud.metalCost.."    \255\255\255\0Energy: "..ud.energyCost.."    "..GetTooltipTransportability(ud).."\n"
 
 
                 		local armorTypeStr= "L"

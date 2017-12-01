@@ -27,8 +27,8 @@
 	//  Health/Cost/Size
 	//********************
 	maxdamage=4000;
-	footprintx=5;
-	footprintz=5;
+	footprintx=6;
+	footprintz=6;
 
 	//************************************************************
 	//  Resources
@@ -41,10 +41,10 @@
 	//  Building
 	//************
 	buildangle=2048;
-	yardmap=coooc ooooo ooooo ooooo coooc;
+	yardmap=cooooc oooooo oooooo oooooo oooooo cooooc;
 	collisionVolumeType=CylY;
-	collisionVolumeScales=80 60 80;
-	collisionVolumeOffsets=0 0 0;
+	collisionVolumeScales=90 70 90;
+	collisionVolumeOffsets=0 0 -30;
 	collisionVolumeTest = 1;
 
 	//************************************************************
@@ -110,7 +110,7 @@
 	{
 		explosiongenerator0=custom:railgunflarebig;
 	}
-	buildcostenergy=54594;//#AUTO#
-	buildcostmetal=10918;//#AUTO#
-	buildtime=130117;//#AUTO#
+	buildcostenergy=46862;//#AUTO#
+	buildcostmetal=9372;//#AUTO#
+	buildtime=111689;//#AUTO#
 }

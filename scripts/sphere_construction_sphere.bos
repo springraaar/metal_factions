@@ -7,42 +7,12 @@
 piece ground, hips,torso,sphere, nanospinner,p1,p2,p3,p4,p5,p6,shieldpt;
 
 	
-static-var bMoving,bBuilding, normalSpeed, slowSpeed, nanoPt;
+static-var bMoving,bBuilding, nanoPt;
 
 // Signal definitions
 #define SIG_BUILD				2
 
 
-lua_checkEnergy() { return 0; }
-lua_cobDebug() { return 0; }
-
-
-MotionControl(hasEnergy)
-{
-	hasEnergy = 1;
-	while (TRUE)
-	{
-		bMoving = (get CURRENT_SPEED) > 10000;
-
-		// lua check for energy availability		
-		call-script lua_checkEnergy(500);
-		hasEnergy = get LUA1;
-		
-		// update speed and activation state
-		if (bMoving && hasEnergy)
-		{
-			set ACTIVATION to TRUE;
-			//set MAX_SPEED to normalSpeed; // DONE BY GADGET
-		}
-		if (!bMoving || !hasEnergy)
-		{
-			set ACTIVATION to FALSE;
-			//set MAX_SPEED to slowSpeed;  // DONE BY GADGET
-		}
-
-		sleep 60;
-	}
-}
 
 
 Build()
@@ -59,12 +29,10 @@ Build()
 
 Create()
 {
-	normalSpeed = get MAX_SPEED;
-	slowSpeed = normalSpeed / 4;
+
 	bMoving=FALSE;
 	bBuilding=FALSE;
 	nanoPt = [0];	
-	start-script MotionControl();
 	start-script Build();
 	spin nanospinner around y-axis speed <720.000000>;
 }

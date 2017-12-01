@@ -6,8 +6,7 @@
 	//********************
 	side=Claw;
 	name=Predator;
-	description=Amphibious Assault Robot;
-	icontype=sea;
+	description=Heavy Infantry Spinbot;
 
 	//************************************************************
 	//  Categories
@@ -23,12 +22,12 @@
 	objectname=claw_predator.3do;
 	corpse=claw_predator_dead;
 	buildpic=claw_predator.png;
-	soundcategory=aven_SHIP;
+	soundcategory=armpw;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3200;
+	maxdamage=2800;
 	healtime=30;
 	footprintx=4;
 	footprintz=4;
@@ -37,8 +36,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=3;
-	energyuse=3;
+	energymake=0;
+	energyuse=0;
 	energystorage=0;
 
 
@@ -68,17 +67,17 @@
 	//  Movement
 	//************
 	movementclass=TANKHOVER4;
-	turnrate=445;
+	turnrate=945;
 	acceleration=0.09;
-	brakerate=0.05;
+	brakerate=0.03;
 	maxvelocity=1.4;
-	turninplace=0;
+	turninplace=1;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
 	sightdistance=500;
-	sonardistance=400;
+	sonardistance=250;
 	radardistance=0;
 
 	//************************************************************
@@ -116,16 +115,12 @@
 	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =40 60 40;
-	collisionVolumeOffsets = 0 -15 0;
+	collisionVolumeOffsets = 0 -5 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 	waterline=8;
 	
-	[CustomParams]
-	{
-		tip=33% slower on water;
-	}
 
 	//************************************************************
 	//  To be removed
@@ -137,7 +132,7 @@
 		explosiongenerator1=custom:UNITFIRE;
 	}
 
-	buildcostenergy=7307;//#AUTO#
-	buildcostmetal=1461;//#AUTO#
-	buildtime=17415;//#AUTO#
+	buildcostenergy=7281;//#AUTO#
+	buildcostmetal=1456;//#AUTO#
+	buildtime=17355;//#AUTO#
 }

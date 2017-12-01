@@ -36,8 +36,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=2.5;
-	energyuse=2.5;
+	energymake=0;
+	energyuse=0;
 	energystorage=0;
 	windgenerator=0.001;
 
@@ -85,10 +85,10 @@
 	//  Weapons
 	//***********
 	weapon1=CONQ_GUN;
-	weapon3=COREDEPTHCHARGE;
+	weapon2=COREDEPTHCHARGE;
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
-	onlytargetcategory3=NOTAIR;
+	onlytargetcategory2=NOTAIR;
 	explodeas=HUGE_UNIT;
 	selfdestructas=CRAWL_BLASTSML;
 
@@ -136,7 +136,7 @@
 		evalfactor=0.85;//SHIP
 		canAreaAttack=1;
 	}
-	buildcostenergy=13949;//#AUTO#
-	buildcostmetal=2789;//#AUTO#
-	buildtime=33245;//#AUTO#
+	buildcostenergy=18892;//#AUTO#
+	buildcostmetal=3778;//#AUTO#
+	buildtime=45027;//#AUTO#
 }

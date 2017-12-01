@@ -35,7 +35,7 @@
 	//*************
 	metalstorage=0;
 	energyuse=0;
-	energystorage=200;
+	energystorage=0;
 
 	//************************************************************
 	//  Building
@@ -44,7 +44,7 @@
 	yardmap=ooo ooo ooo;
 	collisionVolumeType=CylY;
 	collisionVolumeScales=40 50 40;
-	collisionVolumeOffsets=0 0 0;
+	collisionVolumeOffsets=0 0 -15;
 	collisionVolumeTest = 1;
 
 	//************************************************************
@@ -110,7 +110,7 @@
 	{
 		explosiongenerator0=custom:railgunflare;
 	}
-	buildcostenergy=8472;//#AUTO#
-	buildcostmetal=1694;//#AUTO#
-	buildtime=20193;//#AUTO#
+	buildcostenergy=8141;//#AUTO#
+	buildcostmetal=1628;//#AUTO#
+	buildtime=19403;//#AUTO#
 }

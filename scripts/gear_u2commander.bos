@@ -13,6 +13,8 @@ static-var  bMoving, firePoint, firePoint2, nanoPt, bBuilding, Static_Var_3, bAi
 // signal definition
 #define SIG_AIM		2
 
+lua_delayReload() { return 0; }
+
 
 MotionSpeedControl(maxSpeed,currentSpeed)
 {
@@ -97,6 +99,7 @@ Build()
 		{
 			emit-sfx 1024 + 1 from lnanospray;
 			emit-sfx 1024 + 1 from rnanospray;
+			call-script lua_delayReload(3);
 		}
 		sleep 100;
 	}

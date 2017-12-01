@@ -1,0 +1,205 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+
+piece ground, hips,torso,left,right,lflare1,lflare2,rflare1,sphere,shieldpt,mis;
+
+	
+static-var bMoving,bAiming, firept2, isOpen;
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_AIM2			4
+
+
+Open()
+{
+	set ARMORED to FALSE;
+	move left to x-axis [-3.500000] speed [10.000000];
+	move right to x-axis [3.500000] speed [10.000000];
+	wait-for-move left along x-axis;
+
+	move mis to z-axis [0.000000] speed [8.000000];
+	isOpen = TRUE;
+	return (0);
+}
+
+Close()
+{
+	isOpen = FALSE;
+	move mis to z-axis [-3.500000] speed [8.000000];
+	wait-for-move mis along z-axis;
+	
+	move left to x-axis [0.000000] speed [20.000000];
+	move right to x-axis [0.000000] speed [20.000000];
+	wait-for-move left along x-axis;
+
+	set ARMORED to TRUE;
+	return (0); 
+}
+
+
+Create()
+{
+	move mis to z-axis [-5.500000] now;
+
+	isOpen = FALSE;
+	firept2 = [0];
+	bMoving=FALSE;
+	bAiming=FALSE;
+
+}
+
+
+
+SweetSpot(piecenum)
+{
+	piecenum = sphere;
+}
+
+RestoreAfterDelayWeapon()
+{
+	sleep 5000;
+	turn torso to y-axis <0.000000> speed <65.016484>;
+	bAiming = FALSE;
+	call-script Close();
+}
+
+
+
+
+AimFromPrimary(piecenum)
+{
+	piecenum = torso;
+}
+
+
+QueryPrimary(piecenum)
+{
+	piecenum = rflare1;
+	return;
+}
+
+
+FirePrimary()
+{
+	emit-sfx 1024 + 0 from rflare1;
+	move mis to z-axis [-3.50000] now;
+	sleep 2000;
+	move mis to z-axis [0.000000] speed [8.000000];
+	return (0);
+}
+
+
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	
+	if( ! isOpen)
+	{
+		call-script Open();
+	}
+	turn torso to y-axis heading speed <100.027473>;
+	wait-for-turn torso around y-axis;
+	start-script RestoreAfterDelayWeapon();
+	return (1);
+}
+
+
+
+AimFromSecondary(piecenum)
+{
+	piecenum = torso;
+}
+
+
+QuerySecondary(piecenum)
+{
+	if(firept2 == [0])
+	{
+		piecenum = lflare1;
+		return;
+	}
+	if(firept2 == [1])
+	{
+		piecenum = lflare2;
+		return;
+	}
+}
+
+
+FireSecondary()
+{
+
+	if( firept2==[0] )
+	{
+		emit-sfx 1024 + 0 from lflare1;
+		sleep 50;
+		firept2=[1];
+		return (0);
+	}
+	if( firept2==[1] )
+	{
+		emit-sfx 1024 + 0 from lflare2;
+		firept2=[0];
+		return (0);
+	}
+}
+
+
+
+AimSecondary(heading, pitch)
+{
+	signal SIG_AIM2;
+	set-signal-mask SIG_AIM2;
+	bAiming = TRUE;
+	
+	if( ! isOpen)
+	{
+		call-script Open();
+	}
+	
+	turn torso to y-axis heading speed <100.027473>;
+	wait-for-turn torso around y-axis;
+	start-script RestoreAfterDelayWeapon();
+	return (1);
+}
+
+
+
+
+Killed(severity, corpsetype)
+{
+	
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode sphere type SHATTER | BITMAP4;
+		explode sphere type SHATTER | BITMAP4;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode sphere type SHATTER | BITMAP4;
+		explode sphere type SHATTER | BITMAP4;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode sphere type SHATTER | BITMAP4;
+		explode sphere type SHATTER | BITMAP4;
+		return (0);
+	}
+	corpsetype = 3;
+	explode sphere type SHATTER | BITMAP4;
+	explode sphere type SHATTER | BITMAP4;
+		
+}
+

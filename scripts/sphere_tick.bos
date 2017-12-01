@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define SPEEDUP_FACTOR 210
+#define SPEEDUP_FACTOR 270
 
 piece  GP, base, legs,lfrontleg, lmidleg,rmidleg, rfrontleg,lbackleg,rbackleg, rmid2, rback2, lback2,rfront2,lmid2,lfront2,body,sphere,sphere2, turret, sleeve, barrel, flash, front, turbase;
 static-var  bMoving,bAiming, restore_delay, nanopiece, justmoved;

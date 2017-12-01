@@ -5,7 +5,7 @@
 	//********************
 	Side=Gear;
 	name=Might;
-	description=Mobile Fortress;
+	description=Amphibious Barely Mobile Fortress;
 
 	//************************************************************
 	//  Categories
@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=11500;
+	maxdamage=14000;
 	healtime=30;
 	footprintx=6;
 	footprintz=6;
@@ -35,8 +35,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=5;
-	energyuse=5;
+	energymake=0;
+	energyuse=0;
 	energystorage=0;
 
 	//************************************************************
@@ -61,19 +61,19 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKDTCRUSH; //TANKSH3//
+	movementclass=TANKDH6;
 	turnrate=149;
 	acceleration=0.06125;
 	brakerate=0.04;
-	maxvelocity=0.9;
-	maxslope=12;
-	maxwaterdepth=100;
+	maxvelocity=0.7;
+
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
 	sightdistance=500;
 	radardistance=0;
+	sonardistance=250;
 
 	//************************************************************
 	//  Weapons
@@ -126,8 +126,8 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =60 40 80;
-	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeScales =80 55 90;
+	collisionVolumeOffsets = 0 -5 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
@@ -141,7 +141,7 @@
 		explosiongenerator0=custom:yellowflarebig;
 		explosiongenerator1=custom:redflare;
 	}
-	buildcostenergy=34191;//#AUTO#
-	buildcostmetal=6838;//#AUTO#
-	buildtime=81490;//#AUTO#
+	buildcostenergy=42120;//#AUTO#
+	buildcostmetal=8424;//#AUTO#
+	buildtime=100386;//#AUTO#
 }

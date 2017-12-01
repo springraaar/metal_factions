@@ -953,7 +953,14 @@ local function brutalFusion(self)
 end
 
 local function roughFusionIfNeeded(self)
-	local unitName = buildEnergyIfNeeded(self,"sphere_fusion_reactor")
+	local _,_,_,incomeE,_,_,_,_ = spGetTeamResources(self.ai.id,"energy")
+
+	local unitName = SKIP_THIS_TASK
+	if incomeE > 400 then
+		unitName = buildEnergyIfNeeded(self,"sphere_hardened_fission_reactor")
+	else
+		unitName = buildEnergyIfNeeded(self,"sphere_fusion_reactor")
+	end
 
 	-- if unit is far away from base center, move to center and then retry
 	if unitName ~= SKIP_THIS_TASK and farFromBaseCenter(self)  then
@@ -1400,6 +1407,7 @@ local function avenL2KbotChoice(self) return choiceByType(self,"aven_weaver",{"a
 local function avenL1LightChoice(self) return choiceByType(self,"aven_samson",{"aven_bold","aven_duster"},{"aven_samson","aven_trooper","aven_warrior"}) end
 local function avenL2VehicleChoice(self) return choiceByType(self,{"aven_javelin","aven_kodiak"},{"aven_merl","aven_centurion"},{"aven_centurion","aven_kodiak"}) end
 local function avenL2AirChoice(self) return choiceByType(self,"aven_falcon",{"aven_gryphon", "aven_talon"},{"aven_gryphon","aven_falcon","aven_icarus"},"aven_albatross") end
+local function avenL2HoverChoice(self) return choiceByType(self,"aven_swatter",{"aven_turbulence", "aven_excalibur"},{"aven_slider","aven_swatter","aven_skimmer"},"aven_slider_s") end
 local function avenL2KbotRadar(self) return buildWithLimitedNumber(self,"aven_marky",1) end
 local function avenL2KbotRadarJammer(self) return buildWithLimitedNumber(self,"aven_eraser",1) end
 local function avenL2VehicleRadar(self) return buildWithLimitedNumber(self,"aven_seer",1) end
@@ -1737,7 +1745,18 @@ local avenAdvShipPlant = {
 }
 
 
-
+local avenHovercraftPlant = {
+	"aven_skimmer",
+	"aven_construction_hovercraft",
+	"aven_swatter",
+	avenL2HoverChoice,	
+	avenL2HoverChoice,
+	avenL2HoverChoice,
+	"aven_slider",
+	"aven_excalibur",
+	{action = "randomness", probability = 0.5, value = "aven_turbulence"},
+	{action = "wait", frames = 128}
+}
 
 ------------------------------- GEAR
 
@@ -2080,6 +2099,7 @@ local gearAdvVehiclePlant = {
 	"gear_eruptor",
 	gearL2VehicleRadarJammer,
 	"gear_tremor",	
+	{action = "randomness", probability = 0.2, value = "gear_might"},
 	{action = "wait", frames = 128}
 }
 
@@ -2102,13 +2122,14 @@ local function clawL1LandChoice(self) return choiceByType(self,"claw_jester",{"c
 local function clawL2KbotChoice(self) return choiceByType(self,"claw_bishop",{"claw_shrieker","claw_brute","claw_crawler"},{"claw_centaur","claw_brute"}) end
 local function clawL2VehicleChoice(self) return choiceByType(self,"claw_ravager",{"claw_pounder","claw_armadon"},{"claw_halberd","claw_ravager","claw_mega"}) end
 local function clawL2AirChoice(self) return choiceByType(self,"claw_x","claw_blizzard",{"claw_x","claw_blizzard"},"claw_trident") end
+local function clawL2SpinbotChoice(self) return choiceByType(self,{"claw_dizzy","claw_tempest"},"claw_gyro",{"claw_mace","claw_predator","claw_gyro","claw_dizzy"}) end
 local function clawL2KbotRadar(self) return buildWithLimitedNumber(self,"claw_revealer",1) end
 local function clawL2KbotRadarJammer(self) return buildWithLimitedNumber(self,"claw_shade",1) end
 local function clawL2VehicleRadar(self) return buildWithLimitedNumber(self,"claw_seer",1) end
 local function clawL2VehicleRadarJammer(self) return buildWithLimitedNumber(self,"claw_jammer",1) end
 local function clawL1ShipChoice(self) return choiceByType(self,{"claw_speeder","claw_striker"},"claw_sword",{"claw_speeder","claw_striker"},"claw_spine") end
 local function clawL2ShipChoice(self) return choiceByType(self,"claw_predator",{"claw_maul","claw_wrecker"},{"claw_drakkar","claw_monster"},"claw_monster") end
-
+local function clawL2SpinbotRadar(self) return buildWithLimitedNumber(self,"claw_haze",1) end
 
 local clawCommander = {
 	brutalPlant,
@@ -2449,6 +2470,19 @@ local clawAdvShipPlant = {
 	{action = "wait", frames = 128}
 }
 
+local clawSpinbotPlant = {
+	"claw_dizzy",
+	"claw_adv_construction_spinbot",
+	"claw_gyro",
+	clawL2SpinbotChoice,
+	clawL2SpinbotChoice,
+	clawL2SpinbotChoice,
+	"claw_gyro",
+	clawL2SpinbotRadar,
+	"claw_tempest",
+	{action = "randomness", probability = 0.3, value = "claw_tempest"},
+	{action = "wait", frames = 128}
+}
 
 
 ------------------------------- SPHERE
@@ -2460,12 +2494,15 @@ local function sphereL1LandChoice(self) return choiceByType(self,"sphere_needles
 local function sphereL2KbotChoice(self) return choiceByType(self,{"sphere_chub","sphere_chub","sphere_hermit"},{"sphere_ark","sphere_hanz"},{"sphere_hanz","sphere_chub"}) end
 local function sphereL2VehicleChoice(self) return choiceByType(self,"sphere_pulsar",{"sphere_slammer","sphere_bulk"},{"sphere_pulsar","sphere_trax","sphere_bulk"}) end
 local function sphereL2AirChoice(self) return choiceByType(self,"sphere_twilight","sphere_meteor",{"sphere_meteor","sphere_spitfire","sphere_twilight"},"sphere_neptune") end
+local function sphereL2SphereChoice(self) return choiceByType(self,"sphere_aster","sphere_gazer",{"sphere_nimbus","sphere_gazer"}) end
 local function sphereL2KbotRadar(self) return buildWithLimitedNumber(self,"sphere_sensor",1) end
 local function sphereL2KbotRadarJammer(self) return buildWithLimitedNumber(self,"sphere_rain",2) end
 local function sphereL2VehicleRadar(self) return buildWithLimitedNumber(self,"sphere_scanner",1) end
 local function sphereL2VehicleRadarJammer(self) return buildWithLimitedNumber(self,"sphere_concealer",2) end
 local function sphereL1ShipChoice(self) return choiceByType(self,"sphere_reacher","sphere_endeavour",{"sphere_skiff","sphere_endeavour"},"sphere_carp") end
 local function sphereL2ShipChoice(self) return choiceByType(self,"sphere_stalwart",{"sphere_stalwart"},{"sphere_helix","sphere_pluto"},"sphere_pluto") end
+local function sphereL2SphereIntelligence(self) return buildWithLimitedNumber(self,"sphere_orb",1) end
+
 
 
 local sphereCommander = {
@@ -2784,6 +2821,19 @@ local sphereAdvVehiclePlant = {
 	{action = "wait", frames = 128}
 }
 
+local sphereSpherePlant = {
+	"sphere_nimbus",
+	"sphere_nimbus",
+	"sphere_construction_sphere",
+	sphereL2SphereChoice,
+	sphereL2SphereChoice,
+	sphereL2SphereChoice,
+	"sphere_gazer",
+	sphereL2SphereIntelligence,
+	{action = "randomness", probability = 0.2, value = "sphere_chroma"},
+	{action = "wait", frames = 128}
+}
+
 local sphereAdvShipPlant = {
 	"sphere_monster",
 	"sphere_adv_construction_ship",
@@ -2824,6 +2874,7 @@ taskqueues = {
 	aven_construction_ship = avenLev1WaterCon,
 	aven_adv_construction_vehicle = avenLev2Con,
 	aven_adv_construction_kbot = avenLev2Con,
+	aven_construction_hovercraft = avenLev2Con,
 	aven_adv_construction_aircraft = avenLev2Con,	
 	aven_adv_construction_sub = avenLev2WaterCon,
 	aven_light_plant = avenLightPlant,
@@ -2832,6 +2883,7 @@ taskqueues = {
 	aven_adv_kbot_lab = avenAdvKbotLab,
 	aven_adv_vehicle_plant = avenAdvVehiclePlant,
 	aven_adv_aircraft_plant = avenAdvAircraftPlant,
+	aven_hovercraft_platform = avenHovercraftPlant,
 	aven_adv_shipyard = avenAdvShipPlant,
 	aven_upgrade_center = upgradeCenter,
 	aven_marky = atkSupporter,
@@ -2882,6 +2934,7 @@ taskqueues = {
 	claw_adv_construction_vehicle = clawLev2Con,
 	claw_adv_construction_kbot = clawLev2Con,
 	claw_adv_construction_aircraft = clawLev2Con,	
+	claw_adv_construction_spinbot = clawLev2Con,
 	claw_adv_construction_ship = clawLev2WaterCon,
 	claw_light_plant = clawPlant,
 	claw_aircraft_plant = clawAircraftPlant,
@@ -2890,11 +2943,13 @@ taskqueues = {
 	claw_adv_vehicle_plant = clawAdvVehiclePlant,
 	claw_adv_aircraft_plant = clawAdvAircraftPlant,
 	claw_adv_shipyard = clawAdvShipPlant,
+	claw_spinbot_plant = clawSpinbotPlant,
 	claw_upgrade_center = upgradeCenter,
 	claw_revealer = atkSupporter,
 	claw_shade = atkSupporter,
 	claw_seer = atkSupporter,
-	claw_jammer = atkSupporter,	
+	claw_jammer = atkSupporter,
+	claw_haze = atkSupporter,	
 ------------------- SPHERE
 	sphere_commander_respawner = respawner,
 	sphere_commander = sphereCommander,
@@ -2908,6 +2963,7 @@ taskqueues = {
 	sphere_construction_ship = sphereLev1WaterCon,
 	sphere_adv_construction_vehicle = sphereLev2Con,
 	sphere_adv_construction_kbot = sphereLev2Con,
+	sphere_construction_sphere = sphereLev2Con,
 	sphere_adv_construction_aircraft = sphereLev2Con,	
 	sphere_adv_construction_sub = sphereLev2WaterCon,
 	sphere_light_factory = spherePlant,
@@ -2916,12 +2972,14 @@ taskqueues = {
 	sphere_adv_kbot_factory = sphereAdvKbotLab,
 	sphere_adv_vehicle_factory = sphereAdvVehiclePlant,
 	sphere_adv_aircraft_factory = sphereAdvAircraftPlant,
+	sphere_sphere_factory = sphereSpherePlant,
 	sphere_adv_shipyard = sphereAdvShipPlant,
 	sphere_upgrade_center = upgradeCenter,
 	sphere_sensor = atkSupporter,
 	sphere_rain = atkSupporter,
 	sphere_scanner = atkSupporter,
 	sphere_concealer = atkSupporter,
+	sphere_orb = atkSupporter,
 	sphere_shielder = atkSupporter,
 	sphere_screener = atkSupporter
 }

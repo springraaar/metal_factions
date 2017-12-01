@@ -3,7 +3,7 @@
 	// ------------------- description
 	Side=Sphere;
 	Name=Magnetar;
-	Description=Riot Sphere;
+	Description=Area-denial / Radar Jammer Sphere;
 
 	// ------------------- categories
 	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
@@ -23,13 +23,14 @@
 	FootprintX=4;
 	FootprintZ=4;
 	mass=5000;
+	autoheal=100;
 	
 	// ------------------- resources
 	EnergyMake=0;
 	MetalMake=0;
 	EnergyStorage=0;
 	MetalStorage=0;
-	EnergyUse=280;
+	EnergyUse=50;
 
 	// ------------------- constructor
 	builder=0;
@@ -41,7 +42,7 @@
 	canstop=1;
 	canguard=1;
 	canattack=1;
-	onoffable=0;
+	onoffable=1;
 
 
 	// ------------------- movement
@@ -62,7 +63,9 @@
 	// ------------------- scout
 	sightdistance=600;
 	RadarDistance=0;
+	RadarDistanceJam=500;
 	SonarDistance=0;
+
 
 	// ------------------- weapons
 	Weapon1=sphere_magnetar_blast;
@@ -85,7 +88,7 @@
 	//mincloakdistance=100;
 
 	// ------------------- misc
-	Designation=gazer;
+	Designation=magnetar;
 	BMcode=1;
 	ThreeD=1;
 	ZBuffer=1;
@@ -93,7 +96,7 @@
 	maneuverleashlength=640;
 	Version=1;
 	minAirbasePower=99999;
-	activatewhenbuilt=0;
+	activatewhenbuilt=1;
 	collisionVolumeType = sphere;
 	collisionVolumeScales =80 80 80;
 	collisionVolumeOffsets = 0 0 0;
@@ -101,13 +104,15 @@
 
 	[CustomParams]
 	{
-		tip=Requires 280E/s to move. Deals up to 8000(L) disruptor dmg within 450 range and drains shields; 
+		energyCostMoving=280;
+		tip=Requires 280E/s to move. Regenerates 100HP/s. If charged, 300 range aura pulls and deals 150(L) disruptor dmg/s; 
 	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:magnetar;
+		explosiongenerator1=custom:magnetaraura;
 	}
-	buildcostenergy=40000;//#AUTO#
-	buildcostmetal=4000;//#AUTO#
-	buildtime=52000;//#AUTO#
+	buildcostenergy=25000;//#AUTO#
+	buildcostmetal=5000;//#AUTO#
+	buildtime=60000;//#AUTO#
 }

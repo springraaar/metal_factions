@@ -13,6 +13,7 @@ static-var  bMoving, bBuilding, Static_Var_3, bAiming, Static_Var_5, Static_Var_
 // signal definition
 #define SIG_AIM		2
 
+lua_delayReload() { return 0; }
 
 MotionSpeedControl(maxSpeed,currentSpeed)
 {
@@ -96,6 +97,7 @@ Build()
 		if( bBuilding )
 		{
 			emit-sfx 1024 + 1 from nanospray;
+			call-script lua_delayReload(3);
 		}
 		sleep 100;
 	}

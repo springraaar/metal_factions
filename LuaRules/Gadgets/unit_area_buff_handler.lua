@@ -35,6 +35,7 @@ local spSetAirMoveTypeData = Spring.MoveCtrl.SetAirMoveTypeData
 local spSetGroundMoveTypeData = Spring.MoveCtrl.SetGroundMoveTypeData
 local spSetGunshipMoveTypeData = Spring.MoveCtrl.SetGunshipMoveTypeData
 local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
+local spGetUnitTeam = Spring.GetUnitTeam
 local spGetUnitsInCylinder = Spring.GetUnitsInCylinder
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetAllUnits = Spring.GetAllUnits
@@ -51,6 +52,8 @@ local spGetUnitIsActive = Spring.GetUnitIsActive
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spGetUnitWeaponState = Spring.GetUnitWeaponState
+local spGetTeamResources = Spring.GetTeamResources
+
 local max = math.max
 local floor = math.floor
 
@@ -60,36 +63,40 @@ local REGEN_DELAY = 30		-- once per second
 -- idle here means not taking damage for a while
 local IDLE_REGEN_FRAMES = 30 * 25	-- 25 seconds
 local IDLE_REGEN_FLAT = 2
-local IDLE_REGEN_FRACTION = 0.003
+local IDLE_REGEN_FRACTION = 0.002
 
+local SPHERE_ENERGY_CHECK_THRESHOLD = 2000
  
 
 local landSlowerDefIds = {
 	[UnitDefNames["aven_catfish"].id] = true,
 	[UnitDefNames["gear_proteus"].id] = true,
 	[UnitDefNames["sphere_helix"].id] = true,
-	[UnitDefNames["sphere_screener"].id] = true
+	[UnitDefNames["sphere_screener"].id] = true,
+	[UnitDefNames["claw_bullfrog"].id] = true
 }
 
 local waterSlowerDefIds = {
 	[UnitDefNames["aven_adv_construction_vehicle"].id] = true,
 	[UnitDefNames["aven_kodiak"].id] = true,
 	[UnitDefNames["aven_wheeler"].id] = true,
-	[UnitDefNames["claw_predator"].id] = true,
-	[UnitDefNames["claw_tempest"].id] = true,
-	[UnitDefNames["aven_u5commander"].id] = true,
-	[UnitDefNames["gear_barrel"].id] = true
+	[UnitDefNames["aven_u5commander"].id] = true
 }
 
 local flyingSphereDefIds = {
 	[UnitDefNames["sphere_construction_sphere"].id] = true,
+	[UnitDefNames["sphere_nimbus"].id] = true,
 	[UnitDefNames["sphere_aster"].id] = true,
 	[UnitDefNames["sphere_gazer"].id] = true,
 	[UnitDefNames["sphere_magnetar"].id] = true,
-	[UnitDefNames["sphere_chroma"].id] = true
-
+	[UnitDefNames["sphere_chroma"].id] = true,
+	[UnitDefNames["sphere_orb"].id] = true,
+	[UnitDefNames["sphere_comet"].id] = true
 }
 
+local cometDefIds = {
+	[UnitDefNames["sphere_comet"].id] = true
+}
 
 local zephyrDefIds = {
 	[UnitDefNames["aven_zephyr"].id] = true
@@ -101,6 +108,8 @@ local magnetarDefIds = {
 	[UnitDefNames["sphere_magnetar"].id] = true
 }
 local magnetarIds = {}
+local magnetarAuraWeaponId = WeaponDefNames["sphere_magnetar_aura_blast"].id
+
 
 local speedModifierUnitIds = {} -- (unitId,modifier)
 
@@ -213,29 +222,59 @@ function gadget:GameFrame(n)
 		end
 		-- check modifier for flying spheres
 		local isActive = false
+		local allowEnergyBoostedMovement = false
+		local currentLevelE = 0
+		local teamId = nil
 		for unitId,_ in pairs(flyingSphereUnitIds) do
-			isActive = spGetUnitIsActive(unitId)
-			if ( not isActive ) then
-				m = newSpeedModifierUnitIds[unitId]
-				if (m == nil) then
-					m = 1
+			teamId = spGetUnitTeam(unitId)
+			if teamId ~= nil then
+				currentLevelE,_,_,_,_,_,_,_ = spGetTeamResources(teamId,"energy");
+	
+				allowEnergyBoostedMovement = currentLevelE > SPHERE_ENERGY_CHECK_THRESHOLD
+				if ( not allowEnergyBoostedMovement ) then
+					m = newSpeedModifierUnitIds[unitId]
+					if (m == nil) then
+						m = 1
+					end
+					
+					-- if it's the fast attack sphere, apply the debuff twice
+					if (cometDefIds[spGetUnitDefID(unitId)]) then
+						newSpeedModifierUnitIds[unitId] = m * FLYING_SPHERE_SLOW_MOD * FLYING_SPHERE_SLOW_MOD
+					else
+						newSpeedModifierUnitIds[unitId] = m * FLYING_SPHERE_SLOW_MOD 
+					end
 				end
-				newSpeedModifierUnitIds[unitId] = m * FLYING_SPHERE_SLOW_MOD
-			end
-			
-			-- set magnetar power level according to weapon reload status
-			if (magnetarIds[unitId]) then
-		        local _,loaded,reloadFrame = spGetUnitWeaponState(unitId,1)
-		        local reloadTime = spGetUnitWeaponState(unitId,1,"reloadTime")
-		        local reloadPercent = 100
-		        local _,_,_,_,bp = spGetUnitHealth(unitId)
-		        if bp < 1 then
-		        	reloadPercent = 0
-		        elseif (loaded==false) then
-					reloadPercent = floor((1 - ((reloadFrame-n)/30) / reloadTime)*100);
-		        end
-
-				spSetUnitRulesParam(unitId,"magnetar_power",reloadPercent,{public = true})
+				
+				isActive = spGetUnitIsActive(unitId)
+				-- set magnetar power level according to weapon reload status
+				if (magnetarIds[unitId]) then
+			        local _,loaded,reloadFrame = spGetUnitWeaponState(unitId,1)
+			        local reloadTime = spGetUnitWeaponState(unitId,1,"reloadTime")
+			        local reloadPercent = 100
+			        local _,_,_,_,bp = spGetUnitHealth(unitId)
+			        if bp < 1 then
+			        	reloadPercent = 0
+			        elseif (loaded==false) then
+						reloadPercent = floor((1 - ((reloadFrame-n)/30) / reloadTime)*100);
+			        end
+	
+					spSetUnitRulesParam(unitId,"magnetar_power",reloadPercent,{public = true})
+	
+					-- trigger magnetar "aura" when active	
+					if (isActive and reloadPercent > 99) then
+						_,_,_,x,y,z = spGetUnitPosition(unitId,true)
+						local createdId = Spring.SpawnProjectile(magnetarAuraWeaponId,{
+							["pos"] = {x,y,z},
+							["end"] = {x,y+5,z},
+							["speed"] = {100,100,100},
+							["owner"] = unitId
+						})
+						if (createdId) then
+							Spring.SetProjectileCollision(createdId)
+						end
+						Spring.PlaySoundFile('Sounds/MAGNETARAURAFIRE.wav', 1, x, y, z)
+					end
+				end
 			end
 		end		
 		
@@ -332,6 +371,17 @@ function gadget:GameFrame(n)
 					cost = cost * 0.5
 				end
 				spUseUnitResource(zId, "e", cost)
+			end
+		end
+		
+		-- currently only spheres have E drain associated with movement
+		-- TODO : make it generic
+		for unitId,_ in pairs(flyingSphereUnitIds) do
+			ud = UnitDefs[spGetUnitDefID(unitId)]
+			_,_,_,v = spGetUnitVelocity(unitId)
+			if (v ~= nil and v > 0.5) then
+				cost = ud.customParams.energycostmoving * COST_DELAY / 30
+				spUseUnitResource(unitId, "e", cost)
 			end
 		end		
 	end

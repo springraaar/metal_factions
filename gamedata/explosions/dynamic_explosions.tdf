@@ -337,7 +337,7 @@
 		}
 		air=0;
      		ground=1;
-	      	water=1;
+	      	water=0;
 		underwater=1;
 		count=1;
 	}
@@ -423,7 +423,7 @@
 		}
 		air=1;
 		water=1;
-		underwater=1;
+		underwater=0;
 		ground=1;
 		count=1;
 	}
@@ -503,6 +503,7 @@
 		air=0;
      		ground=1;
 	      	water=0;
+		underwater=1;
 		count=1;
 	}
 
@@ -523,6 +524,7 @@
 		air=1;
 		water=0;
 		ground=1;
+		underwater=0;
   		count=6;
 	}
 	// main explosion spikes (water)
@@ -540,7 +542,7 @@
 		}
 		air=0;
 		water=1;
-		underwater=1;
+		underwater=0;
 		ground=0;
   		count=6;
 	}
@@ -584,6 +586,7 @@
 		air=0;
      		ground=1;
 	      	water=0;
+		underwater=1;
 		count=1;
 	}
 
@@ -604,6 +607,7 @@
 		air=1;
 		water=0;
 		ground=1;
+		underwater=0;
   		count=6;
 	}
 	// main explosion spikes (water)
@@ -664,6 +668,7 @@
 		air=0;
      		ground=1;
 	      	water=0;
+		underwater=1;
 		count=1;
 	}
 
@@ -701,7 +706,7 @@
 		}
 		air=0;
 		water=1;
-		underwater=1;
+		underwater=0;
 		ground=0;
   		count=4;
 	}
@@ -774,6 +779,7 @@
 		air=0;
      		ground=1;
 	      	water=0;
+		underwater=1;
 		count=1;
 	}
 
@@ -794,6 +800,7 @@
 		air=1;
 		water=0;
 		ground=1;
+		underwater=0;
   		count=4;
 	}
 	// main explosion spikes (water)
@@ -811,7 +818,7 @@
 		}
 		air=0;
 		water=1;
-		underwater=1;
+		underwater=0;
 		ground=0;
   		count=4;
 	}
@@ -998,6 +1005,7 @@
 		air=0;
      		ground=1;
 	      	water=0;
+		underwater=1;
 		count=1;
 	}
 
@@ -1017,6 +1025,7 @@
 		}
 		air=1;
 		water=0;
+		underwater=0;
 		ground=1;
   		count=6;
 	}
@@ -1088,6 +1097,7 @@
 		air=0;
      		ground=1;
 	      	water=0;
+		underwater=1;
 		count=1;
 	}
 
@@ -1107,7 +1117,7 @@
 		}
 		air=1;
 		water=1;
-		underwater=1;
+		underwater=0;
 		ground=1;
   		count=6;
 	}
@@ -1197,6 +1207,7 @@
 		air=0;
      		ground=1;
 	      	water=0;
+		underwater=1;
 		count=1;
 	}
 
@@ -1216,7 +1227,7 @@
 		}
 		air=1;
 		water=1;
-		underwater=1;
+		underwater=0;
 		ground=1;
   		count=6;
 	}
@@ -1266,6 +1277,7 @@
 		air=0;
      		ground=1;
 	      	water=0;
+		underwater=1;
 		count=1;
 	}
 
@@ -1303,7 +1315,7 @@
 		}
 		air=0;
 		water=1;
-		underwater=1;
+		underwater=0;
 		ground=1;
   		count=3;
 	}
@@ -1322,7 +1334,7 @@
 		}
 		air=1;
 		water=1;
-		underwater=1;
+		underwater=0;
 		ground=1;
   		count=6;
 	}
@@ -1358,6 +1370,7 @@
 		air=0;
      		ground=1;
 	      	water=0;
+		underwater=1;
 		count=1;
 	}
 
@@ -1378,6 +1391,7 @@
 		air=1;
 		water=0;
 		ground=1;
+		underwater=0;
   		count=3;
 	}
 	// main explosion spikes (water)
@@ -1395,7 +1409,7 @@
 		}
 		air=0;
 		water=1;
-		underwater=1;
+		underwater=0;
 		ground=1;
   		count=3;
 	}
@@ -1414,7 +1428,7 @@
 		}
 		air=1;
 		water=1;
-		underwater=1;
+		underwater=0;
 		ground=1;
   		count=6;
 	}
@@ -1449,6 +1463,7 @@
 		air=0;
      		ground=1;
 	      	water=0;
+		underwater=1;
 		count=1;
 	}
 
@@ -1469,6 +1484,7 @@
 		air=1;
 		water=0;
 		ground=1;
+		underwater=0;
   		count=3;
 	}
 	// main explosion spikes (water)
@@ -1486,7 +1502,7 @@
 		}
 		air=0;
 		water=1;
-		underwater=1;
+		underwater=0;
 		ground=1;
   		count=3;
 	}
@@ -1505,7 +1521,7 @@
 		}
 		air=1;
 		water=1;
-		underwater=1;
+		underwater=0;
 		ground=1;
   		count=6;
 	}
@@ -1540,6 +1556,7 @@
 		air=0;
      		ground=1;
 	      	water=0;
+		underwater=1;
 		count=1;
 	}
 
@@ -1560,6 +1577,7 @@
 		air=1;
 		water=0;
 		ground=1;
+		underwater=0;
   		count=3;
 	}
 	// main explosion spikes (water)
@@ -1577,7 +1595,7 @@
 		}
 		air=0;
 		water=1;
-		underwater=1;
+		underwater=0;
 		ground=1;
   		count=3;
 	}
@@ -1596,7 +1614,7 @@
 		}
 		air=1;
 		water=1;
-		underwater=1;
+		underwater=0;
 		ground=1;
   		count=6;
 	}
@@ -1609,6 +1627,13 @@
 	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d1 p0.6 x0;explosionGenerator=custom:BLUELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
 
+[RINGBLASTWRAPPER]			// blue laser blast wrapper
+{
+	usedefaultexplosions=0;
+	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d0.5 p0.6 x0;explosionGenerator=custom:BLUELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=5;damage=6 y0 d0.4 p0.6 x0;explosionGenerator=custom:BLUELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast3]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=10;damage=6 y0 d0.3 p0.6 x0;explosionGenerator=custom:BLUELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
 
 
 [COLLISION]			// collision "blast"

@@ -5,7 +5,7 @@
 	//********************
 	Side=Aven;
 	name=Skimmer;
-	description=Scout Hovercraft;
+	description=Scout/Raider Hovercraft;
 	icontype=hover;
 
 	//************************************************************
@@ -110,7 +110,7 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =25 15 35;
+	collisionVolumeScales =25 15 40;
 	collisionVolumeOffsets = 0 3 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
@@ -124,7 +124,7 @@
 		explosiongenerator0=custom:emgflare;
 	}
 
-	buildcostenergy=920;//#AUTO#
-	buildcostmetal=184;//#AUTO#
-	buildtime=2193;//#AUTO#
+	buildcostenergy=1261;//#AUTO#
+	buildcostmetal=252;//#AUTO#
+	buildtime=3006;//#AUTO#
 }

@@ -17,7 +17,7 @@ static-var  bMoving, bBuilding, bDgunning,bAiming, Static_Var_6, bUnderwater, ca
 #define SIG_AIM		2
 
 lua_cobDebug() { return 0; }
-
+lua_delayReload() { return 0; }
 
 MotionSpeedControl(maxSpeed,currentSpeed)
 {
@@ -97,6 +97,7 @@ Build()
 		if( bBuilding )
 		{
 			emit-sfx 1024 + 1 from nanospray;
+			call-script lua_delayReload(3);
 		}
 		sleep 100;
 	}

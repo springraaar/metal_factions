@@ -39,10 +39,10 @@
   	separation=0.1;
   	alphadecay=0.9;
   	sizedecay=-0.2;
-	range=460;
-	reloadtime=3.5;
+	range=450;
+	reloadtime=3.7;
 	weapontimer=1;
-	weaponvelocity=500;
+	weaponvelocity=450;
 	energypershot=100;
 	accuracy=150;
 	areaofeffect=80;
@@ -82,7 +82,7 @@
 	range=500;
 	reloadtime=4;
 	weapontimer=1;
-	weaponvelocity=600;
+	weaponvelocity=500;
 	energypershot=150;
 	accuracy=150;
 	areaofeffect=90;
@@ -262,7 +262,7 @@
 	range=410;
 	reloadtime=1.6;
 	weapontimer=1;
-	weaponvelocity=500;
+	weaponvelocity=450;
 	energypershot=80;
 	accuracy=150;
 	areaofeffect=70;
@@ -289,7 +289,7 @@
 	name=E.M.G.;
 	weapontype=EmgCannon;
 	explosiongenerator=custom:EMGFLASHMED;
-	cegTag=PEEWEESHINE;
+	cegTag=EMGTRAIL;
 	size=1.8;
 	rgbcolor=0.8 0.9 1.0;
 	stages=2;
@@ -326,7 +326,7 @@
 	name=E.M.G.;
 	weapontype=EmgCannon;
 	explosiongenerator=custom:EMGFLASHMED;
-	cegTag=PEEWEESHINE;
+	cegTag=EMGTRAIL;
 	size=1.8;
 	rgbcolor=0.8 0.9 1.0;
 	stages=2;
@@ -363,7 +363,7 @@
 	name=E.M.G.;
 	weapontype=EmgCannon;
 	explosiongenerator=custom:EMGFLASHMED;
-	cegTag=PEEWEESHINE;
+	cegTag=EMGTRAIL;
 	size=1.8;
 	rgbcolor=0.8 0.9 1.0;
 	stages=2;
@@ -372,7 +372,7 @@
   	sizedecay=-0.2;
 	turret=1;
 	range=420;
-	reloadtime=0.17;
+	reloadtime=0.18;
 	weapontimer=0.6;
 	weaponvelocity=500;
 	sprayangle=500;
@@ -400,7 +400,7 @@
 	name=E.M.G.;
 	weapontype=EmgCannon;
 	explosiongenerator=custom:EMGFLASHMED;
-	cegTag=PEEWEESHINE;
+	cegTag=EMGTRAIL;
 	size=1.8;
 	rgbcolor=0.8 0.9 1.0;
 	stages=2;
@@ -438,8 +438,8 @@
 	weapontype=TorpedoLauncher;
     CollideFriendly=1;
 	model=weapon_torpedo;
-	range=425;
-	reloadtime=4.2;
+	range=450;
+	reloadtime=4.0;
 	turret=1;
 	weapontimer=10;
 	FlightTime=1.5;
@@ -485,7 +485,7 @@
 	range=720;
 	reloadtime=4.2;
 	weapontimer=1;
-	weaponvelocity=500;
+	weaponvelocity=450;
 	energypershot=250;
 	accuracy=150;
 	areaofeffect=90;
@@ -553,7 +553,7 @@
 	name=E.M.G.;
 	weapontype=EmgCannon;
 	explosiongenerator=custom:EMGFLASHMED;
-	cegTag=PEEWEESHINE;
+	cegTag=EMGTRAIL;
 	size=1.8;
 	rgbcolor=0.8 0.9 1.0;
 	stages=2;
@@ -596,7 +596,7 @@
 	turret=1;
 	range=400;
 	reloadtime=1.0;
-	weaponvelocity=530;
+	weaponvelocity=500;
 	areaofeffect=64;
 	edgeeffectiveness=0.5;
 	soundstart=lasfirerb;
@@ -630,7 +630,7 @@
 	name=E.M.G.;
 	weapontype=EmgCannon;
 	explosiongenerator=custom:EMGFLASHMED;
-	cegTag=PEEWEESHINE;
+	cegTag=EMGTRAIL;
 	size=1.8;
 	rgbcolor=0.8 0.9 1.0;
 	stages=2;
@@ -792,7 +792,7 @@
 	turret=1;
 	range=480;
 	reloadtime=0.5;
-	weaponvelocity=430;
+	weaponvelocity=500;
 	areaofeffect=48;
 	edgeeffectiveness=0.0;
 	soundstart=lasfirerb;
@@ -832,7 +832,7 @@
 	turret=1;
 	range=370;
 	reloadtime=0.9;
-	weaponvelocity=430;
+	weaponvelocity=500;
 	areaofeffect=48;
 	edgeeffectiveness=0.0;
 	soundstart=lasfirerb;
@@ -997,9 +997,9 @@
 	corethickness=0.6;
 	intensity=0.9;
 	turret=1;
-	range=500;
+	range=450;
 	minintensity=1.0;
-	reloadtime=1.2;
+	reloadtime=1.5;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundstart=lasrfir3;
@@ -1019,11 +1019,11 @@
 	}
 	[DAMAGE]
 	{
-		default=100;
+		default=80;
 		group_invincible=1;
-		armor_heavy=50;//#AUTO#
-		armor_medium=100;//#AUTO#
-		armor_light=100;//#AUTO#
+		armor_heavy=40;//#AUTO#
+		armor_medium=80;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [aven_runner_laser]
@@ -1038,7 +1038,7 @@
 	turret=1;
 	range=290;
 	minintensity=1.0;
-	reloadtime=1.5;
+	reloadtime=1.3;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundtrigger=1;
@@ -1059,10 +1059,10 @@
 	}
 	[DAMAGE]
 	{
-		default=40;
-		armor_heavy=10;//#AUTO#
-		armor_medium=20;//#AUTO#
-		armor_light=40;//#AUTO#
+		default=45;
+		armor_heavy=11;//#AUTO#
+		armor_medium=22;//#AUTO#
+		armor_light=45;//#AUTO#
 	}
 }
 [aven_light_drone_laser]
@@ -1317,7 +1317,7 @@
 	model=weapon_medmsl2.3do;
 	Texture1=null; //flare//
 	range=950;
-	reloadtime=1.4;
+	reloadtime=1;
 	flighttime=4;
 	weaponvelocity=550;
 	startvelocity=450;
@@ -1343,11 +1343,11 @@
 	}
 	[DAMAGE]
 	{
-		default=140;
+		default=150;
 		group_invincible=1;
-		armor_heavy=70;//#AUTO#
-		armor_medium=140;//#AUTO#
-		armor_light=140;//#AUTO#
+		armor_heavy=75;//#AUTO#
+		armor_medium=150;//#AUTO#
+		armor_light=150;//#AUTO#
 	}
 }
 [AMD_ROCKET]
@@ -1444,7 +1444,7 @@
 	turret=1;
 	range=1330;
 	reloadtime=3.1;
-	weaponvelocity=440;
+	weaponvelocity=400;
 	areaofeffect=85;
 	soundstart=cannhvy5;
 	soundhit=xplomed2;
@@ -1515,6 +1515,7 @@
 	turret=1;
 	range=500;
 	explosiongenerator=custom:STDBLASTWRAPPER;
+	cegTag=PLASMATRAIL2;
 	reloadtime=3;
 	weaponvelocity=355;
 	areaofeffect=64;
@@ -1962,7 +1963,7 @@
 	turret=1;
 	range=1950;
 	reloadtime=3;
-	weaponvelocity=550;
+	weaponvelocity=480;
 	areaofeffect=100;
 	soundstart=cannhvy5;
 	soundhit=xplomed2;
@@ -2099,6 +2100,7 @@
 {
 	name=Plasma Bolt;
 	weapontype=EmgCannon;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
 	turret=1;
 	range=600;
@@ -2134,6 +2136,7 @@
 {
 	name=Plasma Bolt;
 	weapontype=EmgCannon;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
 	turret=1;
 	range=430;
@@ -2831,7 +2834,7 @@
 	weapontimer=2;
 	flighttime=10;
 	fixedlauncher=1;
-	weaponvelocity=700;
+	weaponvelocity=550;
 	weaponAcceleration=160;
 	startvelocity=30;
 	turnrate=20000;
@@ -2947,6 +2950,7 @@
 	weapontype=Cannon;
 	turret=1;
 	range=340;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=2.4;
 	weaponvelocity=330;
@@ -3025,7 +3029,7 @@
   	sizedecay=-0.1;
 	energypershot=0;
 	reloadtime=3;
-	weaponvelocity=600;
+	weaponvelocity=450;
 	areaofeffect=80;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	soundstart=cannhvy2;
@@ -3127,6 +3131,7 @@
 	weapontype=Cannon;
 	turret=1;
 	range=600;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=3;
 	weaponvelocity=455;
@@ -3159,6 +3164,7 @@
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	energypershot=0;
 	turret=1;
@@ -3310,7 +3316,7 @@
 		armor_light=26;//#AUTO#
 	}
 }
-[aven_LASERH1]
+[aven_sentinel_laser]
 {
 	name=High Energy Laser;
 	weapontype=BeamLaser;
@@ -3327,7 +3333,7 @@
 	range=840;
 	minintensity=1.0;
 	reloadtime=1;
-	energypershot=75;
+	energypershot=100;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundstart=lasrhvy3;
@@ -3436,6 +3442,7 @@
 	weapontype=Cannon;
 	turret=1;
 	range=385;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=2;
 	weaponvelocity=328;
@@ -3470,9 +3477,10 @@
 	weapontype=Cannon;
 	turret=1;
 	range=400;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=1.3;
-	weaponvelocity=328;
+	weaponvelocity=380;
 	areaofeffect=48;
 	soundstart=canlite3;
 	soundhit=xplomed3;
@@ -3504,9 +3512,10 @@
 	weapontype=Cannon;
 	turret=1;
 	range=320;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=2;
-	weaponvelocity=288;
+	weaponvelocity=300;
 	areaofeffect=48;
 	soundstart=canlite3;
 	soundhit=xplomed3;
@@ -3538,6 +3547,7 @@
 	weapontype=Cannon;
 	turret=1;
 	range=700;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=2.5;
 	weaponvelocity=328;
@@ -3617,7 +3627,7 @@
 	turret=1;
 	range=660;
 	reloadtime=2.7;
-	weaponvelocity=400;
+	weaponvelocity=380;
 	areaofeffect=64;
 	soundstart=cannon3;
 	soundhit=xplomed2;
@@ -3664,6 +3674,7 @@
   	separation=0.5;
   	alphadecay=0.3;
   	sizedecay=-0.1;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	accuracy=400;
 	movingaccuracy=700;
@@ -4055,11 +4066,11 @@
 	}
 	[DAMAGE]
 	{
-		default=30;
+		default=40;
 		group_invincible=1;
-		armor_heavy=7;//#AUTO#
-		armor_medium=15;//#AUTO#
-		armor_light=30;//#AUTO#
+		armor_heavy=10;//#AUTO#
+		armor_medium=20;//#AUTO#
+		armor_light=40;//#AUTO#
 	}
 }
 [gear_commander_nanoblast]
@@ -4098,7 +4109,7 @@
 	corethickness=0.6;
 	Intensity=0.9; 
 	turret=1;
-	range=420;
+	range=440;
 	minintensity=1.0;
 	reloadtime=1;
 	weaponvelocity=1533; 
@@ -4136,7 +4147,7 @@
 	CollideFriendly=1;
 	model=weapon_torpedo;
 	range=480;
-	reloadtime=3.8;
+	reloadtime=3.6;
 	turret=1;
 	weapontimer=10;
 	FlightTime=1.5;
@@ -4210,7 +4221,7 @@
 	name=High Energy Bolt;
 	weapontype=LaserCannon;
 	turret=1;
-	range=500;
+	range=480;
 	duration=0.10;
 	reloadtime=10;
 	energypershot=500;
@@ -4599,6 +4610,7 @@
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	energypershot=0;
 	accuracy=350;
@@ -4606,7 +4618,7 @@
 	turret=1;
 	range=800;
 	reloadtime=4.0;
-	weaponvelocity=440;
+	weaponvelocity=400;
 	areaofeffect=90;
 	projectiles=2;
 	sprayangle=500;
@@ -4883,9 +4895,10 @@
 	weapontype=Cannon;
 	turret=1;
 	range=445;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=3;
-	weaponvelocity=400;
+	weaponvelocity=390;
 	areaofeffect=80;
 	accuracy=600;
 	movingaccuracy=1200;
@@ -5463,6 +5476,7 @@
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	energypershot=0;
 	turret=1;
@@ -5533,38 +5547,6 @@
 		armor_heavy=1500;//#AUTO#
 		armor_medium=1500;//#AUTO#
 		armor_light=1500;//#AUTO#
-	}
-}
-[gear_LIGHTCANNON]
-{
-	name=Plasma Cannon;
-	weapontype=Cannon;
-	turret=1;
-	range=240;
-	reloadtime=2;
-	weaponvelocity=170;
-	areaofeffect=32;
-	size=2.5;
-	rgbcolor=0.7 0.5 0.2;
-	stages=3;
-  	separation=0.5;
-  	alphadecay=0.3;
-  	sizedecay=-0.1;
-	soundstart=canlite3;
-	soundhit=xplomed3;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=2;
-	}
-	[DAMAGE]
-	{
-		default=90;
-		group_invincible=1;
-		armor_heavy=45;//#AUTO#
-		armor_medium=90;//#AUTO#
-		armor_light=90;//#AUTO#
 	}
 }
 [gear_marauder_laser]
@@ -5868,9 +5850,10 @@
 	weapontype=Cannon;
 	turret=1;
 	range=500;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=2.7;
-	weaponvelocity=355;
+	weaponvelocity=380;
 	areaofeffect=64;
 	soundstart=cannon3;
 	soundhit=xplomed2;
@@ -5903,8 +5886,9 @@
 	turret=1;
 	range=400;
 	reloadtime=1.15;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	weaponvelocity=380;
+	weaponvelocity=300;
 	areaofeffect=48;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
@@ -5940,9 +5924,10 @@
 	range=900;
 	accuracy=400;
 	movingaccuracy=800;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=1.32;
-	weaponvelocity=412;
+	weaponvelocity=400;
 	areaofeffect=54;
 	soundstart=cannon3;
 	soundhit=xplomed2;
@@ -5975,9 +5960,10 @@
 	range=1150;
 	accuracy=400;
 	movingaccuracy=800;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=1.1;
-	weaponvelocity=462;
+	weaponvelocity=400;
 	areaofeffect=74;
 	soundstart=cannon3;
 	soundhit=xplomed2;
@@ -6010,9 +5996,10 @@
 	range=650;
 	accuracy=300;
 	movingaccuracy=700;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=1.76;
-	weaponvelocity=412;
+	weaponvelocity=400;
 	areaofeffect=64;
 	soundstart=cannon3;
 	soundhit=xplomed2;
@@ -6078,7 +6065,7 @@
 	turret=1;
 	range=700;
 	reloadtime=3;
-	weaponvelocity=500;
+	weaponvelocity=400;
 	areaofeffect=64;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	soundstart=cannhvy1;
@@ -6116,7 +6103,8 @@
 	accuracy=920;
 	movingaccuracy=1620;
 	reloadtime=2.4;
-	weaponvelocity=265;
+	weaponvelocity=280;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	areaofeffect=48;
 	soundstart=cannon1;
@@ -6150,10 +6138,11 @@
 	turret=1;
 	range=550;
 	reloadtime=2.3;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	weaponvelocity=338;
 	areaofeffect=48;
-	soundstart=cannon2;
+	soundstart=cannon1;
 	soundhit=xplomed4;
 	tolerance=4000;
 	accuracy=1000;
@@ -6348,7 +6337,7 @@
 	turret=1;
 	range=1900;
 	reloadtime=2.8;
-	weaponvelocity=550;
+	weaponvelocity=450;
 	areaofeffect=95;
 	soundstart=cannhvy5;
 	soundhit=xplomed2;
@@ -6821,7 +6810,7 @@
 	range=700;
 	minintensity=1.0;
 	reloadtime=1.1;
-	energypershot=100;
+	energypershot=110;
 	weaponvelocity=1533;
 	areaofeffect=12;
 	soundstart=lasrhvy3;
@@ -6891,13 +6880,14 @@
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	energypershot=0;
 	accuracy=375;
 	turret=1;
 	range=1330;
 	reloadtime=3;
-	weaponvelocity=430;
+	weaponvelocity=400;
 	areaofeffect=85;
 	soundstart=cannhvy5;
 	soundhit=xplomed2;
@@ -7061,13 +7051,14 @@
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
+	cegTag=PLASMATRAIL3;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	energypershot=0;
 	rgbcolor=1 0.33 0.0;
 	turret=1;
-	range=1500;
-	reloadtime=2.6;
-	weaponvelocity=650;
+	range=1450;
+	reloadtime=2.25;
+	weaponvelocity=480;
 	areaofeffect=80;
 	soundstart=CANNHVY1;
 	soundhit=xplomed2;
@@ -7087,24 +7078,25 @@
 	}
 	[DAMAGE]
 	{
-		default=400;
+		default=450;
 		group_invincible=1;
-		armor_heavy=400;//#AUTO#
-		armor_medium=400;//#AUTO#
-		armor_light=400;//#AUTO#
+		armor_heavy=450;//#AUTO#
+		armor_medium=450;//#AUTO#
+		armor_light=450;//#AUTO#
 	}
 }
 [gear_might_cannon]
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
+	cegTag=PLASMATRAIL3;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	energypershot=0;
 	rgbcolor=1 0.33 0.0;
 	turret=1;
-	range=1250;
-	reloadtime=2.7;
-	weaponvelocity=650;
+	range=1300;
+	reloadtime=2.5;
+	weaponvelocity=480;
 	areaofeffect=80;
 	soundstart=CANNHVY1;
 	soundhit=xplomed2;
@@ -7124,11 +7116,11 @@
 	}
 	[DAMAGE]
 	{
-		default=400;
+		default=500;
 		group_invincible=1;
-		armor_heavy=400;//#AUTO#
-		armor_medium=400;//#AUTO#
-		armor_light=400;//#AUTO#
+		armor_heavy=500;//#AUTO#
+		armor_medium=500;//#AUTO#
+		armor_light=500;//#AUTO#
 	}
 }
 [gear_tremor_cannon]
@@ -7136,11 +7128,12 @@
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	energypershot=0;
+	cegTag=PLASMATRAIL3;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	turret=1;
 	range=600;
 	reloadtime=1.8;
-	weaponvelocity=450;
+	weaponvelocity=390;
 	areaofeffect=95;
 	soundstart=cannhvy2;
 	soundhit=xplomed2;
@@ -7306,7 +7299,7 @@
 	name=E.M.G.;
 	weapontype=EmgCannon;
 	explosiongenerator=custom:EMGFLASH;
-	cegTag=PEEWEESHINE;
+	cegTag=EMGTRAIL;
 	size=1.6;
 	rgbcolor=1.0 0.7 0.1;
 	stages=2;
@@ -8735,7 +8728,7 @@
 	name=E.M.G.;
 	weapontype=EmgCannon;
 	CollideFriendly=0; //added V9//
-	cegTag=PEEWEESHINE;
+	cegTag=EMGTRAIL;
 	size=1.8;
 	rgbcolor=0.8 0.9 1.0;
 	stages=2;
@@ -8797,7 +8790,7 @@
 	smoketrail=0;
 	tolerance=3000;
 	CollideFriendly=0;
-	tracks=1;
+	tracks=0;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -8860,7 +8853,7 @@
 	name=E.M.G.;
 	weapontype=EmgCannon;
 	CollideFriendly=0;
-	cegTag=PEEWEESHINE;
+	cegTag=EMGTRAIL;
 	size=1.8;
 	rgbcolor=0.8 0.9 1.0;
 	stages=2;
@@ -9313,7 +9306,7 @@
 	name=E.M.G.;
 	weapontype=EmgCannon;
 	explosiongenerator=custom:EMGFLASH;
-	cegTag=PEEWEESHINE;
+	cegTag=EMGTRAIL;
 	size=1.6;
 	rgbcolor=1.0 0.7 0.1;
 	stages=2;
@@ -9350,7 +9343,7 @@
 	name=E.M.G.;
 	weapontype=EmgCannon;
 	explosiongenerator=custom:EMGFLASH;
-	cegTag=PEEWEESHINE;
+	cegTag=EMGTRAIL;
 	size=1.6;
 	rgbcolor=1.0 0.7 0.1;
 	stages=2;
@@ -9387,7 +9380,7 @@
 	name=E.M.G.;
 	weapontype=EmgCannon;
 	explosiongenerator=custom:EMGFLASH;
-	cegTag=PEEWEESHINE;
+	cegTag=EMGTRAIL;
 	size=1.6;
 	rgbcolor=1.0 0.7 0.1;
 	stages=2;
@@ -9395,8 +9388,8 @@
   	alphadecay=0.3;
   	sizedecay=-0.1;
 	turret=1;
-	range=320;
-	reloadtime=0.16;
+	range=340;
+	reloadtime=0.13;
 	weapontimer=0.6;
 	weaponvelocity=500;
 	accuracy=700;
@@ -9413,10 +9406,10 @@
 	}
 	[DAMAGE]
 	{
-		default=10;
-		armor_heavy=2;//#AUTO#
-		armor_medium=5;//#AUTO#
-		armor_light=10;//#AUTO#
+		default=14;
+		armor_heavy=3;//#AUTO#
+		armor_medium=7;//#AUTO#
+		armor_light=14;//#AUTO#
 	}
 }
 [TRANSPORT_UNIT]
@@ -9476,17 +9469,18 @@
 		armor_light=350;//#AUTO#
 	}
 }
-[aven_BAT2]
+[aven_emperor_cannon]
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
+	cegTag=PLASMATRAIL3;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	energypershot=0;
 	rgbcolor=1 0.33 0.0;
 	turret=1;
-	range=1500;
+	range=1450;
 	reloadtime=2.0;
-	weaponvelocity=650;
+	weaponvelocity=500;
 	areaofeffect=80;
 	soundstart=CANNHVY1;
 	soundhit=xplomed2;
@@ -9506,17 +9500,18 @@
 	}
 	[DAMAGE]
 	{
-		default=366;
+		default=400;
 		group_invincible=1;
-		armor_heavy=366;//#AUTO#
-		armor_medium=366;//#AUTO#
-		armor_light=366;//#AUTO#
+		armor_heavy=400;//#AUTO#
+		armor_medium=400;//#AUTO#
+		armor_light=400;//#AUTO#
 	}
 }
 [CONQ_GUN]
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
+	cegTag=PLASMATRAIL3;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	energypershot=0;
 	turret=1;
@@ -10033,10 +10028,10 @@
 	}
 	[DAMAGE]
 	{
-		default=75;
-		armor_heavy=37;//#AUTO#
-		armor_medium=75;//#AUTO#
-		armor_light=75;//#AUTO#
+		default=80;
+		armor_heavy=40;//#AUTO#
+		armor_medium=80;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [claw_commander_quadlaser]
@@ -10128,7 +10123,7 @@
 	CollideFriendly=1;
 	model=weapon_smltorpedo;
 	range=450;
-	reloadtime=1.4;
+	reloadtime=1.2;
 	turret=1;
 	FlightTime=1.5;
 	submissile=1;
@@ -10821,18 +10816,18 @@
 {
 	name=Amphibious Rockets;
 	weapontype=MissileLauncher;
-	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
+	explosiongenerator=custom:ROCKETBLASTWRAPPER;
 	cegTag=AMPROCKETTRAIL;
 	turret=0;
 	model=weapon_amprocket.3do;
 	range=450;
-	reloadtime=3;
+	reloadtime=4;
 	flighttime=2;
-	weaponvelocity=500;
+	weaponvelocity=380;
 	startvelocity=300;
 	projectiles=3;
 	weaponAcceleration=30;
-	areaofeffect=40;
+	areaofeffect=60;
 	metalpershot=0;
 	sprayangle=6000;
 	soundstart=amprockfire;
@@ -10846,7 +10841,7 @@
 	collidefriendly=0;
 	avoidfeature=0;
 	tracks=0;
-	turnrate=6000;
+	turnrate=8000;
 	dance=20;
 	wobble=2500;
 	[CUSTOMPARAMS]
@@ -10855,11 +10850,54 @@
 	}
 	[DAMAGE]
 	{
-		default=150;
+		default=200;
 		group_invincible=1;
-		armor_heavy=150;//#AUTO#
-		armor_medium=150;//#AUTO#
-		armor_light=150;//#AUTO#
+		armor_heavy=200;//#AUTO#
+		armor_medium=200;//#AUTO#
+		armor_light=200;//#AUTO#
+	}
+}
+[claw_cutter_rocket]
+{
+	name=Amphibious Rockets;
+	weapontype=MissileLauncher;
+	explosiongenerator=custom:ROCKETBLASTWRAPPER;
+	cegTag=AMPROCKETTRAIL;
+	turret=1;
+	model=weapon_amprocket.3do;
+	range=420;
+	reloadtime=2.8;
+	flighttime=2;
+	weaponvelocity=380;
+	startvelocity=300;
+	projectiles=1;
+	weaponAcceleration=30;
+	areaofeffect=60;
+	metalpershot=0;
+	soundstart=amprockfire;
+	soundhit=xplomed5;
+	firestarter=70;
+	trajectoryheight=0.2;
+	waterweapon=1;
+	submissile=1;
+	smoketrail=0;
+	tolerance=5000;
+	InterceptedByShieldType=1;
+	collidefriendly=0;
+	avoidfeature=0;
+	tracks=0;
+	turnrate=8000;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=200;
+		group_invincible=1;
+		armor_heavy=200;//#AUTO#
+		armor_medium=200;//#AUTO#
+		armor_light=200;//#AUTO#
 	}
 }
 [claw_havoc_bomb]
@@ -11031,6 +11069,47 @@
 	reloadtime=0.9;
 	flighttime=3.75;
 	projectiles=2;
+	trajectoryheight=0.1;
+	weaponvelocity=660;
+	startvelocity=470;
+	weaponAcceleration=154;
+	turnrate=41660;
+	areaofeffect=48;
+	metalpershot=0;
+	soundstart=misfire1;
+	soundhit=mishit1;
+	firestarter=70;
+	tracks=1;
+	smoketrail=1;
+	tolerance=10000;
+	WaterBounce=0;
+	NumBounce=0;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=1;
+	}
+	[DAMAGE]
+	{
+		default=90;
+		armor_heavy=22;//#AUTO#
+		armor_medium=45;//#AUTO#
+		armor_light=90;//#AUTO#
+	}
+}
+[claw_bullfrog_missile]
+{
+	name=Missiles;
+	weapontype=MissileLauncher;
+	explosiongenerator=custom:ROCKETBLASTWRAPPER;
+	cegTag=SMLROCKETTRAIL;
+	turret=1;
+	model=weapon_missile.3do;
+	Texture1=null; //flare//
+	range=750;
+	reloadtime=1;
+	flighttime=3.75;
 	trajectoryheight=0.1;
 	weaponvelocity=660;
 	startvelocity=470;
@@ -11744,6 +11823,7 @@
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
+	cegTag=PLASMATRAIL3;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	energypershot=0;
 	size=3.4;
@@ -11755,7 +11835,7 @@
 	turret=1;
 	range=1500;
 	reloadtime=2;
-	weaponvelocity=550;
+	weaponvelocity=500;
 	areaofeffect=100;
 	soundstart=cannhvy5;
 	soundhit=xplomed2;
@@ -11857,6 +11937,47 @@
 		armor_light=340;//#AUTO#
 	}
 }
+[claw_sword_laser]
+{
+	name=Laser Cutter;
+	weapontype=BeamLaser;
+	explosiongenerator=custom:BLUELASERBLASTWRAPPER;
+	intensity=0.85;
+	beamtime=0.3;
+	thickness=3.31;
+	corethickness=0.5;
+	turret=1;
+	range=330;
+	accuracy=100;
+	energypershot=130;
+	minintensity=0.7;
+	reloadtime=1.6;
+	weaponvelocity=1533;
+	areaofeffect=8;
+	soundtrigger=1;
+	soundstart=lasercutter2;
+	soundhit=lasrhit2;
+	firestarter=50;
+	scrollspeed=0;
+	pulsespeed=0;
+	rgbcolor=0.5 0.5 0.5;
+	rgbcolor2=1.0 0.8 1.0;
+	tolerance=10000;
+	impulsefactor=0.0222;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=2;
+	}
+	[DAMAGE]
+	{
+		default=340;
+		armor_heavy=170;//#AUTO#
+		armor_medium=340;//#AUTO#
+		armor_light=340;//#AUTO#
+	}
+}
 [claw_grunt_laser]
 {
 	name=Light Laser;
@@ -11894,6 +12015,45 @@
 		armor_heavy=12;//#AUTO#
 		armor_medium=25;//#AUTO#
 		armor_light=50;//#AUTO#
+	}
+}
+[claw_dizzy_laser]
+{
+	name=Light Laser;
+	weapontype=BeamLaser;
+	explosiongenerator=custom:BLUELASERBLASTWRAPPER;
+	intensity=0.85;
+	beamtime=0.05;
+	thickness=1.31;
+	corethickness=0.55;
+	turret=1;
+	range=400;
+	minintensity=1.0;
+	reloadtime=0.4;
+	weaponvelocity=1533;
+	areaofeffect=8;
+	soundtrigger=1;
+	soundstart=lasrlit2;
+	soundhit=lasrhit2;
+	firestarter=50;
+	scrollspeed=0;
+	pulsespeed=0;
+	rgbcolor=0.1 0.1 0.71;
+	rgbcolor2=0.51 0.51 1.0;
+	tolerance=5000;
+	impulsefactor=0.222;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=1;
+	}
+	[DAMAGE]
+	{
+		default=40;
+		armor_heavy=10;//#AUTO#
+		armor_medium=20;//#AUTO#
+		armor_light=40;//#AUTO#
 	}
 }
 [claw_light_drone_laser]
@@ -12101,6 +12261,7 @@
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	energypershot=0;
 	size=3.2;
@@ -12114,7 +12275,7 @@
 	reloadtime=2.75;
 	burst=2;
 	burstrate=0.2;
-	weaponvelocity=400;
+	weaponvelocity=340;
 	areaofeffect=64;
 	soundstart=cannhvy5;
 	soundhit=xplomed2;
@@ -12143,7 +12304,8 @@
 	accuracy=800;
 	movingaccuracy=1600;
 	reloadtime=0.8;
-	weaponvelocity=300;
+	weaponvelocity=290;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	areaofeffect=48;
 	soundstart=cannon1;
@@ -12178,7 +12340,8 @@
 	accuracy=800;
 	movingaccuracy=1600;
 	reloadtime=2.8;
-	weaponvelocity=300;
+	weaponvelocity=280;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	areaofeffect=48;
 	soundstart=cannon1;
@@ -12210,6 +12373,7 @@
 	weapontype=Cannon;
 	turret=1;
 	range=500;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=1;
 	weaponvelocity=355;
@@ -12246,6 +12410,7 @@
 	weapontype=Cannon;
 	turret=1;
 	range=425;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=2;
 	weaponvelocity=400;
@@ -12283,6 +12448,7 @@
 	accuracy=120;
 	reloadtime=1.8;
 	weaponvelocity=350;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	areaofeffect=48;
 	soundstart=cannon1;
@@ -12316,7 +12482,8 @@
 	range=850;
 	accuracy=140;
 	reloadtime=1.8;
-	weaponvelocity=350;
+	weaponvelocity=300;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	areaofeffect=48;
 	soundstart=cannon1;
@@ -12356,8 +12523,9 @@
   	sizedecay=-0.1;
 	energypershot=0;
 	reloadtime=3.2;
-	weaponvelocity=500;
+	weaponvelocity=450;
 	areaofeffect=80;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	soundstart=cannhvy2;
 	soundhit=xplomed4;
@@ -12394,6 +12562,7 @@
 	reloadtime=3.5;
 	weaponvelocity=450;
 	areaofeffect=80;
+	cegTag=PLASMATRAIL3;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	soundstart=cannhvy2;
 	soundhit=xplomed4;
@@ -12419,7 +12588,7 @@
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	turret=1;
-	range=900;
+	range=1050;
 	size=3.4;
 	rgbcolor=0.9 0.7 0.3;
 	stages=4;
@@ -12427,12 +12596,13 @@
   	alphadecay=0.24;
   	sizedecay=-0.1;
 	energypershot=0;
-	reloadtime=3.45;
-	weaponvelocity=500;
+	reloadtime=2.9;
+	weaponvelocity=450;
 	areaofeffect=80;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	soundstart=cannhvy2;
-	soundhit=xplomed4;
+	soundhit=xplomed2;
 	accuracy=350;
 	movingaccuracy=650;
 	InterceptedByShieldType=1;
@@ -12443,11 +12613,11 @@
 	}
 	[DAMAGE]
 	{
-		default=290;
+		default=350;
 		group_invincible=1;
-		armor_heavy=290;//#AUTO#
-		armor_medium=290;//#AUTO#
-		armor_light=290;//#AUTO#
+		armor_heavy=350;//#AUTO#
+		armor_medium=350;//#AUTO#
+		armor_light=350;//#AUTO#
 	}
 }
 [claw_flail_cannon]
@@ -12455,11 +12625,12 @@
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	energypershot=0;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	turret=1;
 	range=400;
 	reloadtime=3.5;
-	weaponvelocity=450;
+	weaponvelocity=390;
 	areaofeffect=95;
 	soundstart=cannhvy2;
 	soundhit=xplomed2;
@@ -12485,6 +12656,44 @@
 		armor_heavy=350;//#AUTO#
 		armor_medium=350;//#AUTO#
 		armor_light=350;//#AUTO#
+	}
+}
+[claw_mace_cannon]
+{
+	name=Plasma Cannon;
+	weapontype=Cannon;
+	energypershot=0;
+	cegTag=PLASMATRAIL2;
+	explosiongenerator=custom:STDBLASTWRAPPER;
+	turret=1;
+	range=440;
+	reloadtime=3;
+	weaponvelocity=380;
+	areaofeffect=80;
+	soundstart=cannhvy2;
+	soundhit=xplomed2;
+	tolerance=3000;
+	size=3.4;
+	rgbcolor=0.9 0.7 0.3;
+	stages=4;
+  	separation=0.4;
+  	alphadecay=0.24;
+  	sizedecay=-0.1;
+	accuracy=600;
+	movingaccuracy=1200;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=300;
+		group_invincible=1;
+		armor_heavy=300;//#AUTO#
+		armor_medium=300;//#AUTO#
+		armor_light=300;//#AUTO#
 	}
 }
 [claw_sickle_laser]
@@ -12647,7 +12856,7 @@
 		armor_light=100;//#AUTO#
 	}
 }
-[claw_cutter_laser]
+[claw_cutter_laser_old]
 {
 	name=High Energy Laser;
 	weapontype=BeamLaser;
@@ -12660,7 +12869,7 @@
 	turret=1;
 	range=420;
 	minintensity=1.0;
-	reloadtime=1.5;
+	reloadtime=2;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundtrigger=1;
@@ -12875,6 +13084,46 @@
 		armor_light=100;//#AUTO#
 	}
 }
+[claw_cutter_laser]
+{
+	name=Medium Laser;
+	weapontype=BeamLaser;
+	explosiongenerator=custom:BLUELASERBLASTWRAPPER;
+	intensity=0.85;
+	beamtime=0.1;
+	thickness=2.01;
+	corethickness=0.6;
+	energypershot=20;
+	turret=1;
+	range=420;
+	minintensity=1.0;
+	reloadtime=1;
+	weaponvelocity=1533;
+	areaofeffect=8;
+	soundtrigger=1;
+	soundstart=lasrlit2;
+	soundhit=lasrhit2;
+	firestarter=50;
+	scrollspeed=0;
+	pulsespeed=0;
+	rgbcolor=0.5 0.4 1.0;
+	rgbcolor2=0.1 0.3 1.0;
+	tolerance=3000;
+	impulsefactor=0.222;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=2;
+	}
+	[DAMAGE]
+	{
+		default=100;
+		armor_heavy=50;//#AUTO#
+		armor_medium=100;//#AUTO#
+		armor_light=100;//#AUTO#
+	}
+}
 [claw_halberd_railgun]
 {
 	name=Railgun;
@@ -12956,20 +13205,21 @@
 		armor_light=100;//#AUTO#
 	}
 }
-[claw_sword_cannon]
+[claw_bullfrog_cannon]
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	turret=1;
-	range=550;
+	range=600;
 	reloadtime=3;
-	weaponvelocity=400;
+	weaponvelocity=390;
 	areaofeffect=64;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	soundstart=cannon3;
 	soundhit=xplomed2;
-	accuracy=600;
-	movingaccuracy=1200;
+	accuracy=400;
+	movingaccuracy=800;
 	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
@@ -12985,11 +13235,11 @@
 	}
 	[DAMAGE]
 	{
-		default=250;
+		default=320;
 		group_invincible=1;
-		armor_heavy=250;//#AUTO#
-		armor_medium=250;//#AUTO#
-		armor_light=250;//#AUTO#
+		armor_heavy=320;//#AUTO#
+		armor_medium=320;//#AUTO#
+		armor_light=320;//#AUTO#
 	}
 }
 [claw_spine_torpedo]
@@ -13079,13 +13329,14 @@
   	separation=0.25;
   	alphadecay=0.2;
   	sizedecay=-0.1;
+	cegTag=PLASMATRAIL3;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	GroundBounce=0;
 	WaterBounce=0;
 	turret=1;
 	range=1600;
 	reloadtime=4.5;
-	weaponvelocity=450;
+	weaponvelocity=400;
 	energypershot=700;
 	areaofeffect=150;
 	soundstart=largegun;
@@ -13119,6 +13370,7 @@
   	separation=0.25;
   	alphadecay=0.2;
   	sizedecay=-0.1;
+	cegTag=PLASMATRAIL3;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	GroundBounce=0;
 	WaterBounce=0;
@@ -13159,13 +13411,14 @@
   	separation=0.25;
   	alphadecay=0.2;
   	sizedecay=-0.1;
+	cegTag=PLASMATRAIL3;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	GroundBounce=0;
 	WaterBounce=0;
 	turret=1;
 	range=650;
 	reloadtime=3.8;
-	weaponvelocity=550;
+	weaponvelocity=490;
 	energypershot=800;
 	areaofeffect=170;
 	soundstart=largegun2;
@@ -13187,6 +13440,47 @@
 		armor_heavy=1150;//#AUTO#
 		armor_medium=1150;//#AUTO#
 		armor_light=1150;//#AUTO#
+	}
+}
+[claw_gyro_ring]
+{
+	name=High Energy Ring Launcher;
+	weapontype=MissileLauncher;
+	trajectoryheight=0.4;
+	turret=1;
+	model=weapon_ring.3do;
+	range=1000;
+	accuracy=100;
+	movingaccuracy=200;
+	reloadtime=10;
+	flighttime=7.75;
+	Texture1=null; //flare//
+	burnblow=1;
+	wobble=100;
+	turnrate=6000;
+	weaponvelocity=400;
+	cegTag=RINGTRAIL;
+	explosiongenerator=custom:RINGBLASTWRAPPER;
+	areaofeffect=48;
+	soundstart=ringfire;
+	soundhit=ringhit;
+	energyPerShot=400;
+	tolerance=3000;
+	startvelocity=300;
+	weaponAcceleration=50;
+	InterceptedByShieldType=1;
+	impulsefactor=0.4;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=800;
+		armor_heavy=800;//#AUTO#
+		armor_medium=800;//#AUTO#
+		armor_light=800;//#AUTO#
 	}
 }
 [sphere_commander_nanoblast]
@@ -13674,6 +13968,7 @@
 	reloadtime=3.3;
 	weaponvelocity=400;
 	areaofeffect=64;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	soundstart=cannon3;
 	soundhit=xplomed2;
@@ -13752,10 +14047,10 @@
   	sizedecay=-0.2;
 	turret=1;
 	range=350;
-	reloadtime=1.7;
+	reloadtime=1.65;
 	energypershot=10;
 	weapontimer=1;
-	weaponvelocity=450;
+	weaponvelocity=390;
 	accuracy=200;
 	areaofeffect=24;
 	soundstart=engcannon;
@@ -13770,10 +14065,10 @@
 	}
 	[DAMAGE]
 	{
-		default=65;
-		armor_heavy=32;//#AUTO#
-		armor_medium=65;//#AUTO#
-		armor_light=65;//#AUTO#
+		default=70;
+		armor_heavy=35;//#AUTO#
+		armor_medium=70;//#AUTO#
+		armor_light=70;//#AUTO#
 	}
 }
 [sphere_needles_missile]
@@ -13837,8 +14132,8 @@
 	turnrate=41660;
 	areaofeffect=48;
 	metalpershot=0;
-	soundstart=rocklit1;
-	soundhit=xplomed2;
+	soundstart=misfire1;
+	soundhit=mishit1;
 	firestarter=70;
 	tracks=1;
 	smoketrail=1;
@@ -13857,6 +14152,49 @@
 		armor_heavy=22;//#AUTO#
 		armor_medium=45;//#AUTO#
 		armor_light=90;//#AUTO#
+	}
+}
+[sphere_nimbus_missile]
+{
+	name=Missiles;
+	weapontype=MissileLauncher;
+	explosiongenerator=custom:ROCKETBLASTWRAPPER;
+	cegTag=SMLROCKETTRAIL;
+	turret=1;
+	model=weapon_missile.3do;
+	Texture1=null; //flare//
+	range=680;
+	reloadtime=3.5;
+	flighttime=3.75;
+	fixedlauncher=1;
+	burst=2;
+	burstrate=0.2;
+	weaponvelocity=660;
+	startvelocity=470;
+	weaponAcceleration=154;
+	turnrate=41660;
+	areaofeffect=48;
+	metalpershot=0;
+	soundstart=misfire1;
+	soundhit=mishit1;
+	firestarter=70;
+	tracks=1;
+	smoketrail=1;
+	tolerance=10000;
+	WaterBounce=0;
+	NumBounce=0;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=1;
+	}
+	[DAMAGE]
+	{
+		default=80;
+		armor_heavy=20;//#AUTO#
+		armor_medium=40;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [sphere_reacher_missile]
@@ -14027,6 +14365,7 @@
 	movingaccuracy=800;
 	reloadtime=2.35;
 	weaponvelocity=300;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	areaofeffect=48;
 	soundstart=cannon1;
@@ -14062,6 +14401,7 @@
 	movingaccuracy=420;
 	reloadtime=2.35;
 	weaponvelocity=300;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	areaofeffect=48;
 	soundstart=cannon1;
@@ -14120,10 +14460,10 @@
 	}
 	[DAMAGE]
 	{
-		default=40;
-		armor_heavy=10;//#AUTO#
-		armor_medium=20;//#AUTO#
-		armor_light=40;//#AUTO#
+		default=50;
+		armor_heavy=12;//#AUTO#
+		armor_medium=25;//#AUTO#
+		armor_light=50;//#AUTO#
 	}
 }
 [sphere_crustle_laser]
@@ -14362,6 +14702,7 @@
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
+	cegTag=PLASMATRAIL3;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	energypershot=0;
 	size=3.4;
@@ -14371,9 +14712,9 @@
   	alphadecay=0.24;
   	sizedecay=-0.1;
 	turret=1;
-	range=1650;
+	range=1600;
 	reloadtime=3;
-	weaponvelocity=550;
+	weaponvelocity=500;
 	areaofeffect=100;
 	soundstart=cannhvy5;
 	soundhit=xplomed2;
@@ -14386,11 +14727,11 @@
 	}
 	[DAMAGE]
 	{
-		default=500;
+		default=600;
 		group_invincible=1;
-		armor_heavy=500;//#AUTO#
-		armor_medium=500;//#AUTO#
-		armor_light=500;//#AUTO#
+		armor_heavy=600;//#AUTO#
+		armor_medium=600;//#AUTO#
+		armor_light=600;//#AUTO#
 	}
 }
 [sphere_manta_bomb]
@@ -14472,8 +14813,8 @@
 	areaofeffect=48;
 	metalpershot=0;
 	trajectoryheight=0.1;
-	soundstart=rocklit1;
-	soundhit=xplomed2;
+	soundstart=misfire1;
+	soundhit=mishit1;
 	firestarter=70;
 	tracks=1;
 	smoketrail=1;
@@ -14511,8 +14852,8 @@
 	areaofeffect=48;
 	metalpershot=0;
 	trajectoryheight=0.1;
-	soundstart=rocklit1;
-	soundhit=xplomed2;
+	soundstart=misfire1;
+	soundhit=mishit1;
 	firestarter=70;
 	tracks=1;
 	smoketrail=1;
@@ -15029,7 +15370,7 @@
 	flighttime=3.75;
 	wobble=500;
 	turnrate=6000;
-	weaponvelocity=500;
+	weaponvelocity=450;
 	cegTag=ROCKETTRAIL2;
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
 	areaofeffect=90;
@@ -15096,6 +15437,90 @@
 		armor_light=120;//#AUTO#
 	}
 }
+[sphere_comet_cannon]
+{
+	name=Heavy Plasma Discharge;
+	weapontype=MissileLauncher;
+	explosiongenerator=custom:REDBLASTWRAPPER;
+	cegTag=REDPLASMATRAIL;
+	turret=1;
+	model=weapon_redplasma.3do;
+	range=420;
+	reloadtime=1.0;
+	flighttime=1.9;
+	fixedlauncher=1;
+	weaponvelocity=340;
+	startvelocity=340;
+	weaponAcceleration=30;
+	areaofeffect=76;
+	energypershot=200;
+	metalpershot=0;
+	burnblow=1;
+	soundstart=slowplasma;
+	soundhit=xplochargedshot;
+	firestarter=70;
+	smoketrail=0;
+	tolerance=12000;
+	InterceptedByShieldType=1;
+	collidefriendly=0;
+	avoidfeature=0;
+	tracks=0;
+	turnrate=35000;
+	wobble=5500;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=320;
+		group_invincible=1;
+		armor_heavy=320;//#AUTO#
+		armor_medium=320;//#AUTO#
+		armor_light=320;//#AUTO#
+	}
+}
+[sphere_nimbus_rocket]
+{
+	name=Rockets;
+	weapontype=MissileLauncher;
+	explosiongenerator=custom:ROCKETBLASTWRAPPER;
+	cegTag=ROCKETTRAIL1;
+	turret=1;
+	model=weapon_redrocket3.3do;
+	range=500;
+	reloadtime=4.0;
+	flighttime=1.9;
+	fixedlauncher=1;
+	weaponvelocity=360;
+	startvelocity=360;
+	weaponAcceleration=30;
+	areaofeffect=64;
+	metalpershot=0;
+	soundstart=rocklit1;
+	soundhit=xplomed2;
+	firestarter=70;
+	smoketrail=0;
+	tolerance=12000;
+	InterceptedByShieldType=1;
+	collidefriendly=0;
+	avoidfeature=0;
+	tracks=0;
+	turnrate=35000;
+	wobble=5500;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=260;
+		group_invincible=1;
+		armor_heavy=260;//#AUTO#
+		armor_medium=260;//#AUTO#
+		armor_light=260;//#AUTO#
+	}
+}
 [sphere_trax_cannon]
 {
 	name=Plasma Cannon;
@@ -15103,10 +15528,11 @@
 	turret=1;
 	range=500;
 	reloadtime=2;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	weaponvelocity=338;
+	weaponvelocity=340;
 	areaofeffect=48;
-	soundstart=cannon2;
+	soundstart=cannon1;
 	soundhit=xplomed4;
 	tolerance=3000;
 	size=3.2;
@@ -15136,8 +15562,9 @@
 	turret=1;
 	range=650;
 	reloadtime=1.8;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	weaponvelocity=400;
+	weaponvelocity=380;
 	areaofeffect=64;
 	soundstart=cannon3;
 	soundhit=xplomed2;
@@ -15169,8 +15596,9 @@
 	turret=1;
 	range=500;
 	reloadtime=1.8;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	weaponvelocity=400;
+	weaponvelocity=380;
 	areaofeffect=64;
 	soundstart=cannon3;
 	soundhit=xplomed2;
@@ -15274,6 +15702,32 @@
 	}
 }
 [sphere_aster_shield]
+{
+	name=Energy shield;
+	weapontype=Shield;
+	SmartShield=1;
+	ExteriorShield=0;
+	VisibleShield=1;
+	VisibleShieldRepulse=0;
+	ShieldEnergyUse=0;
+	ShieldForce=3000;
+	ShieldRadius=40;
+	ShieldMaxSpeed=2000;
+	ShieldPower=1500;
+	ShieldStartingPower=1500;
+	ShieldPowerRegen=30;
+	ShieldPowerRegenEnergy=60;
+	ShieldInterceptType=2;
+	ShieldGoodColor=0.9 0.9 1.0 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
+	ShieldAlpha=0.5;
+	visibleShieldHitFrames=5;
+	[DAMAGE]
+	{
+		default=10;
+	}
+}
+[sphere_comet_shield]
 {
 	name=Energy shield;
 	weapontype=Shield;
@@ -15578,7 +16032,7 @@
 	flighttime=3.75;
 	turnrate=6000;
 	wobble=500;
-	weaponvelocity=500;
+	weaponvelocity=450;
 	cegTag=ROCKETTRAIL2;
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
 	areaofeffect=90;
@@ -16796,7 +17250,7 @@
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
-	reloadtime=40;
+	reloadtime=80;
 	weaponvelocity=30;
 	explosionSpeed=14;
 	areaofeffect=900;
@@ -16865,5 +17319,53 @@
 		armor_heavy=1;//#AUTO#
 		armor_medium=1;//#AUTO#
 		armor_light=1;//#AUTO#
+	}
+}
+[sphere_magnetar_aura_blast]
+{
+	name=Disruptor Blast;
+	weapontype=Cannon;
+	energypershot=0;
+	weapontype=EmgCannon;
+	turret=1;
+	range=250;
+	cylindertargeting=1;
+	NoSelfDamage=1;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	reloadtime=40;
+	weaponvelocity=30;
+	explosionSpeed=14;
+	areaofeffect=600;
+	edgeeffectiveness=0.5;
+	tolerance=30000;
+	explosionscar=0;
+	collisionsize=70;
+	size=1.0;	
+	SizeGrowth=1.0;
+	colorMap=0 1 1 0.0  0.0 0.1 0.1 0.0;
+	explosiongenerator=custom:MAGNETARAURABLAST;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	avoidground=0;
+	collideFriendly=1;
+	avoidFriendly=0;
+	cratermult=0;
+	impulseboost=2;
+	impulsefactor=-12;
+	paralyzer=1;
+	paralyzetime=15;
+	[CUSTOMPARAMS]
+	{
+		hitpower=1;
+	}
+	[DAMAGE]
+	{
+		default=30;
+		armor_heavy=7;//#AUTO#
+		armor_medium=15;//#AUTO#
+		armor_light=30;//#AUTO#
 	}
 }

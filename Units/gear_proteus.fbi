@@ -86,6 +86,8 @@
 	//***********
 	weapon1=gear_proteus_cannon;
 	weapon2=gear_proteus_missile;
+	weaponmaindir2=0 0 1;
+	maxangledif2=320;
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
 	badtargetcategory2=NOTAIR;
@@ -125,6 +127,7 @@
 	[CustomParams]
 	{
 		tip=33% slower on land;
+		evalfactor=0.85;//SHIP
 	}
 	//************************************************************
 	//  To be removed
@@ -137,7 +140,7 @@
 		explosiongenerator2=custom:rocketflaresml;
 	}
 
-	buildcostenergy=21887;//#AUTO#
-	buildcostmetal=4377;//#AUTO#
-	buildtime=52164;//#AUTO#
+	buildcostenergy=23064;//#AUTO#
+	buildcostmetal=4612;//#AUTO#
+	buildtime=54970;//#AUTO#
 }

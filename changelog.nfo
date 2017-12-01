@@ -1,3 +1,126 @@
+2017/12/01 ------------------ NOTES v0.988 ----------------------
+
+
+--- new units
+
+- added SPHERE "Comet" : Energy-intensive Fast Assault Sphere (requires 1000 E/s to move)
+- added SPHERE "Nimbus" : Small Skirmisher Sphere
+- added SPHERE "Orb" : Intelligence Sphere
+
+- added CLAW "Bullfrog" : level 2 Amphibious Boat
+
+- added CLAW "Spinbot Plant" : Produces level 2 Amphibious Spinbots
+- added CLAW Advanced Construction Spinbot
+- added CLAW "Dizzy" : Infantry Spinbot
+- added CLAW "Gyro" : Anti-Armor Ring Launcher Spinbot
+- added CLAW "Mace" : Assault Spinbot
+- added CLAW "Predator" : Heavy Infantry Spinbot   (reworked unit from the adv. shipyard)
+- added CLAW "Tempest" : Heavy Missile Skirmisher Spinbot   (reworked unit from the adv. shipyard)
+- added CLAW "Haze" : Intelligence Spinbot
+
+
+
+--- balance / mechanics
+
+
+GENERAL BALANCE
+
+- increased repair energy cost from 90% to 100% of the unit's energy cost
+
+- removed aircraft-specific cost modifiers : they now cost about 7% more metal but about half as much energy
+(they now have their energy cost set to 5x the amount of their metal cost instead of x10, like ground units and buildings)
+
+- increased the efficiency assumption for relatively fast non-tracking projectiles, which makes some units with cannons relatively more expensive
+
+- slightly reduced projectile velocities (10-20%) for many plasma cannons
+ 
+- made lower weight units about 5% cheaper than bigger more expensive ones
+- made units with very low HP about 5% relatively cheaper
+- made units with below average range up to about 5% cheaper than longer ranged units
+- made slower units and static defenses up to about 5% cheaper than faster units
+- reduced cost of units which cost more 3k metal (they may still be more expensive due to the previous nerfs)
+(these make most level1 units cheaper relative to level2 units, which get 5 to 25% more expensive than in the previous version)
+
+- increased cost of level 2 air transports by about 10%
+
+- reduced idle HP regeneration per second from 2+0.3%HP to 2+0.2%HP
+
+- fixed collision volumes for static long range plasma cannons
+
+- the reload rate on commanders' weapons is reduced to 25% while building
+(this is to reduce the advantage commanders with high reload time weapons have when building and fighting near the front line)
+
+- made most heavy tanks amphibious 
+
+- reduced cost of amphibious boats by 15%
+ (they get the same "discount" as other ships as they still have the 33% speed penalty on land)
+
+- unit mass now calculated to also scale with unit hp instead of metal cost, and air units are lighter
+(this affects transportability and impulse from being hit)
+
+- changed mass limit for level1 air transports from 1000 to 1200
+
+- made heavy units push-resistant
+
+
+SPECIFIC UNIT CHANGES
+
+- increased the DPS level 1 land scout units by about 20%
+
+- increased the size, HP of battleships and main gun DPS by about 20%, but reduced their speed by about 40%
+
+- added angle restriction on secondary weapon on GEAR "Proteus" and CLAW "Wrecker" so the front turrets don't shoot "through" the larger back turret
+
+- AVEN "Gryphon" rockets no longer track their targets
+- reduced speed of AVEN "Excalibur" by 10%
+- doubled AVEN "Skimmer" DPS
+- increased AVEN "Turbulence" DPS on missile launcher by 50% but slightly reduced range and dps on the secondary lasers
+
+- increased HP of GEAR "Cube" robots by 400
+- GEAR "Might" is now about 20% slower but 20% stronger in HP and DPS
+- GEAR Cube and Titan robots are now amphibious
+- GEAR "Barrel" no longer slows down on water
+
+- made CLAW "Crawler" bigger and stronger (+20% DPS, +30% HP + 15% range)
+- changed CLAW "Cutter"'s torpedo to an amphibious rocket and the laser gets +10% range but deals M damage instead of H
+- changed CLAW "Trident"'s amphibious rockets : they hit a bit harder and stray less, but with longer reload time and slower speed
+- changed CLAW "Sword"'s weapon from cannon to a short range high DPS laser cutter
+
+- SPHERE "Magnetar" now regenerates 100HP/s and has radar jammer and a toggleable aura that pulls deals up to 150(L) disruptor dmg/s within 300 range, but doubled the reload time on the disruptor blast and increased cost by 20%
+- reduced speed of SPHERE "Chub" by 10%
+- SHPERE construction sphere regenerates 30 HP/s
+- reduced E cost to move for SPHERE construction sphere, Astra and Gazer from 150 to 120 E/s
+- SPHERE sphere factory can build level 1 construction aircraft
+
+
+--- MAPS
+
+- added preliminary support for some maps which have no hard-coded ground metal values but have lua metal spot configuration 
+
+--- AI
+
+- MFAI will use AVEN Hovercraft, CLAW Spinbots and SPHERE flying spheres
+- SPHERE MFAI now builds hardened fission reactors
+
+--- UI
+
+- tooltip shows mass and transportability "light", "heavy" or "no transport" status for mobile units
+- groups of units will try to converge near the point when given non-unit point targets as the auto-formation wasn't working properly
+(it's generally recommended to click-drag when giving orders so units spread out along the lines)
+
+
+--- effects / visuals
+
+- fully charged magnetars light up the grow below, slightly
+- renamed GEAR air transports from "Valkyrie" to "Carrier" to match their more "industrial" flavour
+- fixed glowy effects from underwater explosions being drawn above the water surface (workaround for Spring 104.0 engine bug)
+- slightly improved models of amphibious ships and CLAW amphibious robots
+- slightly improved AVEN "Merl" model
+- plasma cannon projectiles light up the ground below, slightly
+
+
+
+
 2017/10/16 ------------------ NOTES v0.987 ----------------------
 
 --- engine

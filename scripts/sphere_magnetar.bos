@@ -14,36 +14,7 @@ static-var bMoving,bAiming, normalSpeed, slowSpeed, isReloading, reloadTime;
 #define SIG_AIM2				4
 #define SIG_AIM3				8
 
-
-lua_checkEnergy() { return 0; }
-
-
-MotionControl(hasEnergy)
-{
-	hasEnergy = 1;
-	while (TRUE)
-	{
-		bMoving = (get CURRENT_SPEED) > 10000;
-
-		// lua check for energy availability		
-		call-script lua_checkEnergy(500);
-		hasEnergy = get LUA1;
-		
-		// update speed and activation state
-		if (bMoving && hasEnergy)
-		{
-			set ACTIVATION to TRUE;
-			//set MAX_SPEED to normalSpeed;  // DONE BY GADGET
-		}
-		if (!bMoving || !hasEnergy)
-		{
-			set ACTIVATION to FALSE;
-			//set MAX_SPEED to slowSpeed;  // DONE BY GADGET
-		}
-
-		sleep 60;
-	}
-}
+lua_delayReload() { return 0; }
 
 SetMaxReloadTime(Func_Var_1)
 {
@@ -87,28 +58,41 @@ ShowEffect()
 	{
 		sleep 400;
 	}
+	sleep 400 * 30;
 	while (TRUE)
 	{
 		if ( !isReloading )
 		{
 			emit-sfx 1024+0 from flare1;
+		
+			// show aura effect too
+			if (get ACTIVATION) {
+				emit-sfx 1024+1 from flare1;
+			}
 		}
 		sleep 20;
 	}
 }
 
+
+delayReload() {
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 30;
+	}
+	call-script lua_delayReload(450); // delay activation for 15 seconds
+}
+
 Create()
 {
-	normalSpeed = get MAX_SPEED;
-	slowSpeed = normalSpeed / 4;
-
-	reloadTime = 12000;
+	reloadTime = 80000;
+	
 	isReloading = FALSE;
 	bMoving = FALSE;
 	bAiming = FALSE;
-	start-script MotionControl();
 	start-script ShowEffect();
 	start-script SmokeUnit();
+	start-script delayReload();
 }
 
 
@@ -118,23 +102,11 @@ SweetSpot(piecenum)
 	piecenum = sphere;
 }
 
-RestoreAfterDelayWeapon1()
+RestoreAfterDelayWeapon()
 {
 	sleep 5000;
 	turn turret1 to y-axis <0.000000> speed <65.016484>;
 	turn sleeve1 to x-axis <0.000000> speed <65.005495>;
-}
-RestoreAfterDelayWeapon3()
-{
-	sleep 5000;
-	turn turret2 to y-axis <0.000000> speed <65.016484>;
-	turn sleeve2 to x-axis <0.000000> speed <65.005495>;
-}
-RestoreAfterDelayWeapon4()
-{
-	sleep 5000;
-	turn turret3 to y-axis <0.000000> speed <65.016484>;
-	turn sleeve3 to x-axis <0.000000> speed <65.005495>;
 }
 
 
@@ -183,7 +155,6 @@ AimSecondary(heading, pitch)
 {
 	return (1);
 }
-
 
 
 Killed(severity, corpsetype)

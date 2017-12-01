@@ -18,6 +18,8 @@ static-var bMoving,bAiming,bUnderwater, canAim1, canAim2, bBuilding, nanoPt, cur
 #define HEADING_TOLERANCE	<40.000000>
 #define PITCH_TOLERANCE		<40.000000>
 
+lua_delayReload() { return 0; }
+
 MotionSpeedControl(minSpeed, maxSpeed,currentSpeed)
 {
 	maxSpeed = get MAX_SPEED;
@@ -286,6 +288,7 @@ Build()
 		if(bBuilding == TRUE)
 		{
 			emit-sfx 1024 + 1 from nanospinner;	
+			call-script lua_delayReload(3);
 		}
 		sleep 100;
 	}

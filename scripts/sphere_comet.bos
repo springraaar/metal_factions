@@ -1,0 +1,239 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+
+piece ground, hips,torso,support,flare1,flare2,flare3,sphere,shieldpt,m1on,m1off,m2on,m2off,m3on,m3off,m4on,m4off,m5on,m5off,m6on,m6off,m7on,m7off;
+
+	
+static-var bMoving,bAiming, firept1, energyBoostedMovement;
+
+// Signal definitions
+#define SIG_AIM				2
+
+
+lua_checkEnergy() { return 0; }
+
+
+MotionControl(hasEnergy)
+{
+	hasEnergy = 1;
+	while (TRUE)
+	{
+		bMoving = (get CURRENT_SPEED) * 50 / (get MAX_SPEED);
+
+		// lua check for energy availability		
+		call-script lua_checkEnergy(2000);
+		hasEnergy = get LUA1;
+		
+		// update speed and activation state
+		if (bMoving && hasEnergy)
+		{
+			energyBoostedMovement = TRUE;
+			hide m1off;
+			hide m2off;
+			hide m3off;
+			hide m4off;
+			hide m5off;
+			hide m6off;
+			hide m7off;
+			show m1on;
+			show m2on;
+			show m3on;
+			show m4on;
+			show m5on;
+			show m6on;
+			show m7on;
+		}
+		if (!bMoving || !hasEnergy)
+		{
+			energyBoostedMovement = FALSE;
+			show m1off;
+			show m2off;
+			show m3off;
+			show m4off;
+			show m5off;
+			show m6off;
+			show m7off;
+			hide m1on;
+			hide m2on;
+			hide m3on;
+			hide m4on;
+			hide m5on;
+			hide m6on;
+			hide m7on;
+			
+		}
+
+		sleep 60;
+	}
+}
+
+Effect()
+{
+	while (TRUE)
+	{
+		if (energyBoostedMovement)
+		{
+			emit-sfx 1024+1 from shieldpt;
+		}
+
+		sleep 90;
+	}
+}
+
+
+Create()
+{
+
+	energyBoostedMovement = FALSE;
+	firept1 = [0];
+	bMoving=FALSE;
+	bAiming=FALSE;
+	start-script MotionControl();
+	start-script Effect();
+}
+
+
+
+SweetSpot(piecenum)
+{
+	piecenum = sphere;
+}
+
+RestoreAfterDelayWeapon()
+{
+	//aim1=FALSE;
+	sleep 5000;
+	turn torso to y-axis <0.000000> speed <65.016484>;
+	bAiming = FALSE;
+}
+
+
+AimFromPrimary(piecenum)
+{
+	piecenum = torso;
+}
+
+
+QueryPrimary(piecenum)
+{
+	if(firept1 == [0])
+	{
+		piecenum = flare1;
+		return;
+	}
+	if(firept1 == [1])
+	{
+		piecenum = flare2;
+		return;
+	}
+	if(firept1 == [2])
+	{
+		piecenum = flare3;
+		return;
+	}
+}
+
+
+FirePrimary()
+{
+	if( firept1==[0] )
+	{
+		emit-sfx 1024 + 0 from flare1;
+		//move mis1 to z-axis [-5.000000] now;
+		sleep 100;
+		firept1=[1];
+		sleep 1000;
+		//move mis1 to z-axis [0.000000] speed [6.000000];
+		return (0);
+	}
+	if( firept1==[1] )
+	{
+		emit-sfx 1024 + 0 from flare2;
+		//move mis2 to z-axis [-5.000000] now;
+		sleep 100;
+		firept1=[2];
+		sleep 1000;
+		//move mis2 to z-axis [0.000000] speed [6.000000];
+		return (0);
+	}
+	if( firept1==[2] )
+	{
+		emit-sfx 1024 + 0 from flare3;
+		//move mis3 to z-axis [-5.000000] now;
+		sleep 100;
+		firept1=[0];
+		sleep 1000;
+		//move mis3 to z-axis [0.000000] speed [6.000000];
+		return (0);
+	}
+}
+
+
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	
+	//aim1=TRUE;
+	turn torso to y-axis heading speed <100.027473>;
+	wait-for-turn torso around y-axis;
+	start-script RestoreAfterDelayWeapon();
+	return (1);
+}
+
+
+
+QuerySecondary(piecenum)
+{
+	piecenum = shieldpt;
+	return (0);
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = shieldpt;
+	return (0);
+}
+
+AimSecondary(heading, pitch)
+{
+	return (1);
+}
+
+
+
+Killed(severity, corpsetype)
+{
+	
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode sphere type SHATTER | BITMAP4;
+		explode sphere type SHATTER | BITMAP4;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode sphere type SHATTER | BITMAP4;
+		explode sphere type SHATTER | BITMAP4;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode sphere type SHATTER | BITMAP4;
+		explode sphere type SHATTER | BITMAP4;
+		return (0);
+	}
+	corpsetype = 3;
+	explode sphere type SHATTER | BITMAP4;
+	explode sphere type SHATTER | BITMAP4;
+		
+}
+

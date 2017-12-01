@@ -3,7 +3,7 @@
 	// ------------------- description
 	Side=Sphere;
 	Name=Bulk;
-	Description=Heavy Siege Tank;
+	Description=Amphibious Heavy Siege Tank;
 
 	// ------------------- categories
 	Category=SPHERE TANK LEVEL2 WEAPON NOTAIR NOTSUB;
@@ -25,10 +25,10 @@
 
 
 	// ------------------- resources
-	EnergyUse=1;
+	EnergyUse=0;
 	EnergyStorage=0;
 	MetalStorage=0;
-	EnergyMake=1;
+	EnergyMake=0;
 
 	// ------------------- abilities
 	canmove=1;
@@ -46,16 +46,15 @@
 	Acceleration=0.05;
 	TurnRate=350;
 	SteeringMode=1;
-	MovementClass=TANKBH3;
+	MovementClass=TANKDH3;
 
 	// ------------------- scout
 	sightdistance=500;
 	RadarDistance=0;
-
+	sonarDistance=250;
 
 	// ------------------- weapons
 	Weapon1=sphere_bulk_cannon;
-	badtargetcategory1=VTOL;
 	badtargetcategory1=VTOL;
 	NoChaseCategory=VTOL;
 	ExplodeAs=BIG_UNITEX;
@@ -93,7 +92,7 @@
 	{
 		explosiongenerator0=custom:yellowflaresml;
 	}
-	buildcostenergy=6423;//#AUTO#
-	buildcostmetal=1284;//#AUTO#
-	buildtime=15310;//#AUTO#
+	buildcostenergy=7681;//#AUTO#
+	buildcostmetal=1536;//#AUTO#
+	buildtime=18308;//#AUTO#
 }

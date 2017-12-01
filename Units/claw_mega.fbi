@@ -5,7 +5,7 @@
 	//********************
 	side=Claw;
 	name=Mega;
-	description=Very Heavy Riot Tank;
+	description=Amphibious Very Heavy Riot Tank;
 
 	//************************************************************
 	//  Categories
@@ -61,7 +61,7 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKDH3;
+	movementclass=TANKDH5;
 	turnrate=210;
 	acceleration=0.2;
 	brakerate=0.06;
@@ -72,7 +72,7 @@
 	//*********************
 	sightdistance=500;
 	radardistance=0;
-	sonardistance=0;
+	sonardistance=250;
 
 	//************************************************************
 	//  Weapons
@@ -128,7 +128,7 @@
 	{
 		explosiongenerator0=custom:yellowflarebig;
 	}
-	buildcostenergy=21298;//#AUTO#
-	buildcostmetal=4259;//#AUTO#
-	buildtime=50762;//#AUTO#
+	buildcostenergy=24770;//#AUTO#
+	buildcostmetal=4954;//#AUTO#
+	buildtime=59037;//#AUTO#
 }

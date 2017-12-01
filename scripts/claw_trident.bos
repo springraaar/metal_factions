@@ -114,7 +114,7 @@ Shot1()
 {
 	if (gun_1 == [0])
 	{
-		move mis1 to z-axis [-3.000000] now;
+		move mis1 to z-axis [-4.000000] now;
 		emit-sfx 1024+0 from flare1;
 		//sleep 100;
 		gun_1 = [1];
@@ -124,7 +124,7 @@ Shot1()
 	}
 	if (gun_1 == [1])
 	{
-		move mis2 to z-axis [-3.000000] now;
+		move mis2 to z-axis [-4.000000] now;
 		emit-sfx 1024+0 from flare2;
 		//sleep 100;
 		gun_1 = [2];
@@ -134,7 +134,7 @@ Shot1()
 	}
 	if (gun_1 == [2])
 	{
-		move mis3 to z-axis [-3.000000] now;
+		move mis3 to z-axis [-4.000000] now;
 		emit-sfx 1024+0 from flare3;
 		//sleep 100;
 		gun_1 = [0];

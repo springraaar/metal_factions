@@ -18,6 +18,7 @@ static-var bMoving,bAiming,bUnderwater, canAim1, canAim2, bBuilding, nanoPt, cur
 #define PITCH_TOLERANCE		<40.000000>
 
 lua_cobDebug() { return 0; }
+lua_delayReload() { return 0; }
 
 StartMoving()
 {
@@ -287,6 +288,7 @@ Build()
 		if(bBuilding == TRUE)
 		{
 			emit-sfx 1024 + 1 from nanospinner;	
+			call-script lua_delayReload(3);
 		}
 		sleep 100;
 	}

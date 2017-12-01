@@ -5,7 +5,7 @@
 	//********************
 	side=Gear;
 	name=Cube;
-	description=Armored Assault Robot;
+	description=Amphibious Armored Assault Robot;
 
 	//************************************************************
 	//  Categories
@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3500;
+	maxdamage=3900;
 	healtime=30;
 	footprintx=3;
 	footprintz=3;
@@ -35,8 +35,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.8;
-	energyuse=0.8;
+	energymake=0.0;
+	energyuse=0.0;
 	energystorage=0;
 
 	//************************************************************
@@ -62,7 +62,7 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTSF2;
+	movementclass=KBOTUW3;
 	turnrate=940;
 	acceleration=0.1;
 	brakerate=0.15;
@@ -75,6 +75,7 @@
 	//*********************
 	sightdistance=500;
 	radardistance=0;
+	sonardistance=200;
 
 	//************************************************************
 	//  Weapons
@@ -130,7 +131,7 @@
 	{
 		explosiongenerator0=custom:rocketflaresml;
 	}
-	buildcostenergy=3362;//#AUTO#
-	buildcostmetal=672;//#AUTO#
-	buildtime=8013;//#AUTO#
+	buildcostenergy=3713;//#AUTO#
+	buildcostmetal=742;//#AUTO#
+	buildtime=8851;//#AUTO#
 }
