@@ -58,17 +58,29 @@ function resetReload(unitID, unitDefID, teamID, data)
 	return 0
 end
 
-
--- delays the reload timer for a unit's weapons (data = delay frames)
-function delayReload(unitID, unitDefID, teamID, data)
-	if data and data > 0 then
+-- delays the reload timer for a unit's weapons
+-- if delay <= 10 frames, delay is relative to previous reload frame
+-- (so it only affects weapons still reloading)
+-- else, delay is relative to current frame
+function delayReload(unitID, unitDefID, teamID, delay)
+	if delay and delay > 0 then
 		local ud = UnitDefs[unitDefID]
 		if ud.weapons and ud.weapons[1] and ud.weapons[1].weaponDef then
 			for wNum,w in pairs(ud.weapons) do
 				local weap=WeaponDefs[w.weaponDef]
 			    if weap.isShield == false and weap.description ~= "No Weapon" then
+			    	local reloadFrame = spGetUnitWeaponState(unitID,wNum,"reloadFrame")
+					
+					if delay > 10 then
+						-- force weapon into reload after at least delay frames 
+						reloadFrame = math.max(reloadFrame,spGetGameFrame()) + delay
+					else
+			    	  -- adds delay frames to weapon's reload frame (which may be in the past)
+			    		reloadFrame = reloadFrame + delay
+			    	end
+			    	
 			    	--Spring.Echo(ud.name.." reset reload cycle for weapon "..wNum)
-			    	spSetUnitWeaponState(unitID,wNum,"reloadFrame",math.max(spGetUnitWeaponState(unitID,wNum,"reloadFrame"),spGetGameFrame()) + data)
+			    	spSetUnitWeaponState(unitID,wNum,"reloadFrame",reloadFrame)
 			    end
 			end
 	    end
