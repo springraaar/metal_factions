@@ -44,7 +44,7 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 		}
 		
 		
-		mAMoveSpd1 = [20.000000] * mASpdFactor / 100;
+		mAMoveSpd1 = [3.000000] * mASpdFactor / 100;
 		mATurnSpd1 = <315.000000> * (100 + mASpdFactor) / 200;
 		mATurnSpd2 = <200.000000> * (100 + mASpdFactor) / 200;
 		mATurnSpd3 = <50.000000> * (100 + mASpdFactor) / 200;
@@ -92,7 +92,7 @@ walk()
 		turn rleg to x-axis legAngle3 speed mATurnSpd2;
 		turn rfoot to x-axis <0.000000>-legAngle2 speed mATurnSpd1;
 
-		move hips to y-axis [-1.000000] speed mAMoveSpd1;
+		move hips to y-axis [-0.500000] speed mAMoveSpd1;
 		move hips to z-axis [1.000000] speed mAMoveSpd1;
 		turn hips to x-axis <4.000000> speed slowTurnSpd2;
 
@@ -148,7 +148,7 @@ walk()
 		turn rleg to x-axis legAngle2 speed mATurnSpd2;
 		turn rfoot to x-axis legAngle3 speed mATurnSpd1;
 		
-		move hips to y-axis [-1.000000] speed mAMoveSpd1;
+		move hips to y-axis [-0.500000] speed mAMoveSpd1;
 		move hips to z-axis [1.000000] speed mAMoveSpd1;
 		turn hips to x-axis <4.000000> speed slowTurnSpd2;
 		

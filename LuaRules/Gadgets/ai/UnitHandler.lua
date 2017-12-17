@@ -661,6 +661,7 @@ function UnitHandler:Update()
 			local groupCost = 0
 			local groupNearCenterCost = 0
 			local groupNearCenterCount = 0
+			local forceInclusionRadius = gId == UNIT_GROUP_AIR_ATTACKERS and FORCE_INCLUSION_RADIUS_AIR or FORCE_INCLUSION_RADIUS
 			
 			for _,behavior in ipairs(recruits) do
 				local upos = newPosition(spGetUnitPosition(behavior.unitId,false,false))
@@ -673,7 +674,7 @@ function UnitHandler:Update()
 
 				-- check center
 				-- ignore units too far from center
-				if (  (#recruits < 4 or oldGroupNearCenterCount < 3) or distance(oldGroupPos, upos) < FORCE_INCLUSION_RADIUS)  then
+				if (  (#recruits < 4 or oldGroupNearCenterCount < 3) or distance(oldGroupPos, upos) < forceInclusionRadius)  then
 					groupX = groupX + upos.x
 					groupZ = groupZ + upos.z
 					groupNearCenterCost = groupNearCenterCost + cost 
@@ -997,7 +998,7 @@ function UnitHandler:DoTargetting(group)
 	
 	-- air units are allowed to stray farther away from center
 	if (group.id == UNIT_GROUP_AIR_ATTACKERS) then
-		radius = FORCE_RADIUS * (2 + sqrt(#group.recruits/8))
+		radius = FORCE_RADIUS_AIR * (1 + sqrt(#group.recruits/4))
 	else
 		radius = FORCE_RADIUS * (1 + sqrt(#group.recruits/8))
 	end

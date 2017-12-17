@@ -18,6 +18,8 @@ end
 -- Config
 ------------------------------------------------------------
 local MAPSIDE_METALMAP = "mapconfig/map_metal_layout.lua"
+local MAPSIDE_MAPINFO = "mapinfo.lua"
+
 
 local METAL_MAP_SQUARE_SIZE = 16
 local MEX_RADIUS = Game.extractorRadius
@@ -27,15 +29,21 @@ local MAP_SIZE_Z = Game.mapSizeZ
 local MAP_SIZE_Z_SCALED = MAP_SIZE_Z / METAL_MAP_SQUARE_SIZE
 
 local mapConfig = VFS.FileExists(MAPSIDE_METALMAP) and VFS.Include(MAPSIDE_METALMAP) or false
+local mapInfo = VFS.FileExists(MAPSIDE_MAPINFO) and VFS.Include(MAPSIDE_MAPINFO) or false
 
 local spGetGroundHeight = Spring.GetGroundHeight
 
 
 -- assigns metal to the defined metal spots when the gadget loads
 function gadget:Initialize()
-	if mapConfig then
-		Spring.Log(gadget:GetInfo().name, LOG.INFO, "Loading mapside lua metal spot configuration...")
+	if mapConfig and mapInfo then
+		for key,value in pairs(mapInfo) do
+			Spring.Echo("HERE "..key.."="..tostring(value))
+		end
+	
+		Spring.Log(gadget:GetInfo().name, LOG.INFO, "Loading map-side lua metal spot configuration...")
 		spots = mapConfig.spots
+		metalFactor = 0.44
 
 		local gaiaTeamId = Spring.GetGaiaTeamID()
 		local features = nil
@@ -47,7 +55,7 @@ function gadget:Initialize()
 
 				px = spot.x
 				pz = spot.z
-				metal = spot.metal * 0.87 -- this together with the following produces accurate results
+				metal = spot.metal
 
 				-- place metal for spot
 				if (px and pz and metal) then
@@ -64,7 +72,7 @@ function gadget:Initialize()
 								zi = zIndex + dzi
 	
 								if (xi > 0 and xi < MAP_SIZE_X_SCALED and zi > 0 and zi < MAP_SIZE_Z_SCALED ) then							
-									Spring.SetMetalAmount(xi,zi,metal*255)
+									Spring.SetMetalAmount(xi,zi,metal * metalFactor *255)
 								end
 							end
 						end

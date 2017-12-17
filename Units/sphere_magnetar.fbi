@@ -23,7 +23,8 @@
 	FootprintX=4;
 	FootprintZ=4;
 	mass=5000;
-	autoheal=100;
+	autoheal=160;
+	pushResistant=1;
 	
 	// ------------------- resources
 	EnergyMake=0;
@@ -69,7 +70,7 @@
 
 	// ------------------- weapons
 	Weapon1=sphere_magnetar_blast;
-	Weapon2=sphere_magnetar_shield;
+	//Weapon2=sphere_magnetar_shield;
 	badtargetcategory1=VTOL;
 	NoChaseCategory=VTOL;
 	ExplodeAs=MAGNETAR_DEATH;
@@ -105,7 +106,7 @@
 	[CustomParams]
 	{
 		energyCostMoving=280;
-		tip=Requires 280E/s to move. Regenerates 100HP/s. If charged, 300 range aura pulls and deals 150(L) disruptor dmg/s; 
+		tip=Requires 280E/s to move. Regenerates 160HP/s. If charged, 300 range aura pulls and deals 150(L) disruptor dmg/s; 
 	}
 	[SFXTypes]
 	{

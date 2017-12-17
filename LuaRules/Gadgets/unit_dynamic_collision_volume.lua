@@ -39,6 +39,17 @@ local submarines = {
 	sphere_adv_construction_sub = true
 }
 
+local flyingSpheres = {
+	sphere_construction_sphere = true,
+	sphere_nimbus = true,
+	sphere_orb = true,
+	sphere_aster = true,
+	sphere_gazer = true,
+	sphere_comet = true,
+	sphere_magnetar = true,
+	sphere_chroma = true
+}
+
 local respawners = {
 	aven_commander_respawner = true,
 	gear_commander_respawner = true,
@@ -51,38 +62,39 @@ if (gadgetHandler:IsSyncedCode()) then
 	--Reduces the diameter of default (unspecified) collision volume for 3DO models,
 	--for S3O models it's not needed and will in fact result in wrong collision volume
 	function gadget:UnitCreated(unitID, unitDefID, unitTeam)
-		if UnitDefs[unitDefID].model.type=="3do" then
-			local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetUnitCollisionVolumeData(unitID)
+		local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetUnitCollisionVolumeData(unitID)
 
-			-- added radius reduction for submarines
-			if (submarines[UnitDefs[unitDefID].name]) then 
+		-- added radius reduction for submarines
+		if (submarines[UnitDefs[unitDefID].name]) then 
+			spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.6/2, ys*0.6)
+		-- added radius reduction for commander respawners
+		elseif (respawners[UnitDefs[unitDefID].name]) then 
+			spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.25, ys*0.5)
+		-- added radius reduction for aircraft
+		elseif (UnitDefs[unitDefID].canFly) then 
+			if (UnitDefs[unitDefID].transportCapacity>0) then
 				spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.6/2, ys*0.6)
-			
-			-- added radius reduction for commander respawners
-			elseif (respawners[UnitDefs[unitDefID].name]) then 
-				spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.25, ys*0.5)
-			-- added radius reduction for aircraft
-			elseif (UnitDefs[unitDefID].canFly) then 
-				if (UnitDefs[unitDefID].transportCapacity>0) then
-					spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.6/2, ys*0.6)
+			else
+				if (flyingSpheres[UnitDefs[unitDefID].name]) then
+					spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.8/2, ys*0.8)
 				else
-    				spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.6/2, ys*0.6)
+					spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.6/2, ys*0.6)
 				end
 			end
-			
-			unitYSizeOffset[unitID] = {ys,yo}
-			
-			-- reduce size of unit under construction
-			local _,_,_,_,bp = spGetUnitHealth(unitID)
-			local val  = 1
-			-- only affect units under construction
-			if (bp < BP_SIZE_LIMIT) then
-				val = math.max(bp*BP_SIZE_MULTIPLIER,0.1)
-				ys = ys * val
-				yo = yo * val
-				spSetUnitCollisionVolumeData(unitID, xs, ys, zs, xo, yo, zo, vtype, htype, axis)
-				spSetUnitMidAndAimPos(unitID,0, ys*0.5, 0,0, ys*0.5,0,true)
-			end
+		end
+		
+		unitYSizeOffset[unitID] = {ys,yo}
+		
+		-- reduce size of unit under construction
+		local _,_,_,_,bp = spGetUnitHealth(unitID)
+		local val  = 1
+		-- only affect units under construction
+		if (bp < BP_SIZE_LIMIT) then
+			val = math.max(bp*BP_SIZE_MULTIPLIER,0.1)
+			ys = ys * val
+			yo = yo * val
+			spSetUnitCollisionVolumeData(unitID, xs, ys, zs, xo, yo, zo, vtype, htype, axis)
+			spSetUnitMidAndAimPos(unitID,0, ys*0.5, 0,0, ys*0.5,0,true)
 		end
 	end
 

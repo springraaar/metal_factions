@@ -390,7 +390,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	end
 	-- disable magnetar self-damage, but drain shield
 	if (weaponDefID == magnetarWeaponDefId) then
-		spSetUnitShieldState(unitID, 0)
+		--spSetUnitShieldState(unitID, 0) -- magnetar no longer has shield
 		if (unitID == attackerID) then
 			return 0	
 		end

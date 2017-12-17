@@ -31,6 +31,7 @@ local spSetUnitHealth = Spring.SetUnitHealth
 local spUseUnitResource = Spring.UseUnitResource
 local spGetUnitVelocity = Spring.GetUnitVelocity
 local spSetRelativeVelocity = Spring.MoveCtrl.SetRelativeVelocity
+local spSetUnitVelocity = Spring.SetUnitVelocity
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
 local spGetCommandQueue = Spring.GetCommandQueue
 local spGetGameFrame = Spring.GetGameFrame
@@ -79,11 +80,22 @@ local moveAnimationUnitIds = {}
 local unitPhysicsById = {}
 local featureIds = {}
 local featurePhysicsById = {}
+local magnetarUnitIds = {}
 
-local x,y,z,vx,vy,vz, h, enableGC
+local x,y,z,vx,vy,vz,v,h, enableGC
 local function updateUnitPhysics(unitId)
 	x,y,z = spGetUnitPosition(unitId)
-	vx,vy,vz = spGetUnitVelocity(unitId)
+	vx,vy,vz,v = spGetUnitVelocity(unitId)
+	
+	-- force physics for magnetar to prevent it from being pushed away 
+	if magnetarUnitIds[unitId] == true then
+		local groundHeight = spGetGroundHeight(x,z)
+		h = y - groundHeight
+		if (h > 150 and vy > 0) or v > 1.5 then
+			--Spring.Echo("enforced vy for magnetar vy="..vy.." v="..v)
+			spSetUnitVelocity(unitId,vx * 0.8/v,0,vz * 0.8/v)
+		end
+	end  
 end
 
 local function updateFeaturePhysics(featureId)
@@ -112,6 +124,10 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 		moveAnimationUnitIds[unitId] = true
 	end
 	
+	if UnitDefs[unitDefId].name == "sphere_magnetar" then
+		magnetarUnitIds[unitId] = true
+	end
+		
 	unitPhysicsById[unitId] = {0,0,0,0,0,0,0,false}
 end
 
@@ -240,6 +256,10 @@ end
 function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDefId, attackerTeamId)
 	if (moveAnimationUnitIds[unitId]) then
 		moveAnimationUnitIds[unitId] = nil
+	end
+
+	if magnetarUnitIds[unitId] then
+		magnetarUnitIds[unitId] = nil
 	end
 
 	local _,_,_,_,bp = spGetUnitHealth(unitId)
