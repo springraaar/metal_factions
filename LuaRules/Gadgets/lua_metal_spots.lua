@@ -37,9 +37,9 @@ local spGetGroundHeight = Spring.GetGroundHeight
 -- assigns metal to the defined metal spots when the gadget loads
 function gadget:Initialize()
 	if mapConfig and mapInfo then
-		for key,value in pairs(mapInfo) do
-			Spring.Echo("HERE "..key.."="..tostring(value))
-		end
+		--for key,value in pairs(mapInfo) do
+		--	Spring.Echo("HERE "..key.."="..tostring(value))
+		--end
 	
 		Spring.Log(gadget:GetInfo().name, LOG.INFO, "Loading map-side lua metal spot configuration...")
 		spots = mapConfig.spots

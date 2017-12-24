@@ -5,7 +5,7 @@
 	//********************
 	side=Gear;
 	name=Big Bob;
-	description=Heavy Support Robot;
+	description=Heavy Skirmisher Robot;
 
 	//************************************************************
 	//  Categories
@@ -35,8 +35,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=5;
-	energyuse=5;
+	energymake=0;
+	energyuse=0;
 	energystorage=0;
 
 	//************************************************************
@@ -62,7 +62,7 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTHT2;
+	movementclass=KBOTHT4;
 	turnrate=999;
 	acceleration=1.1;
 	brakerate=1.23105;

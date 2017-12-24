@@ -33,7 +33,7 @@ local morphDefs = {
 			cmdname = 'Alpha Form',
 			energy = 10000,
 			metal = 1000,
-			text = 'Morph to Alpha Form : Increased speed, durability and firepower.'
+			text = 'Morph to Alpha Form : Increased speed, HP and firepower.'
 		},
 		{
 			into = 'aven_u2commander',
@@ -41,7 +41,7 @@ local morphDefs = {
 			cmdname = 'Delta Form',
 			energy = 10000,
 			metal = 1000,
-			text = 'Morph to Delta Form : Greatly increased range and anti-air capability.'
+			text = 'Morph to Delta Form : Missile/Cannon skirmisher with greatly increased range.'
 		},
 		{
 			into = 'aven_u3commander',
@@ -49,7 +49,7 @@ local morphDefs = {
 			cmdname = 'Omega Form',
 			energy = 10000,
 			metal = 1000,
-			text = 'Morph to Omega Form : Increased speed, greatly increased durability and firepower against light units, but slightly shorter range.'
+			text = 'Morph to Omega Form : Increased speed and greatly increased HP, but shorter range. Disruptor weapon stuns light units.'
 		},
 		{
 			into = 'aven_u4commander',
@@ -100,7 +100,7 @@ local morphDefs = {
 			cmdname = 'Devastator Form',
 			energy = 10000,
 			metal = 1000,
-			text = 'Morph to Devastator Form : Greatly increased durability and firepower. Heavy armor. Slower speed.'
+			text = 'Morph to Devastator Form : Greatly increased HP and firepower. Heavy armor. Slower speed.'
 		},
 		{
 			into = 'gear_u4commander',
@@ -116,7 +116,7 @@ local morphDefs = {
 			cmdname = 'Infernal Form',
 			energy = 10000,
 			metal = 1000,
-			text = 'Morph to Infernal Form : Greatly increased durability and weapon area of effect. Heavy armor. Slower speed.'
+			text = 'Morph to Infernal Form : Greatly increased HP and weapon area of effect. Heavy armor. Slower speed.'
 		}
 
 	},	
@@ -128,7 +128,7 @@ local morphDefs = {
 			cmdname = 'Breaker Form',
 			energy = 10000,
 			metal = 1000,
-			text = 'Morph to Breaker Form : Increased durability and greatly increased firepower against heavy units. Slightly slower speed.'
+			text = 'Morph to Breaker Form : Increased HP and greatly increased firepower against heavy units. Slightly slower speed.'
 		},
 		{
 			into = 'claw_u2commander',
@@ -187,7 +187,7 @@ local morphDefs = {
 			cmdname = 'Ruby Form',
 			energy = 10000,
 			metal = 1000,
-			text = 'Morph to Ruby Form : Increased durability and firepower.'
+			text = 'Morph to Ruby Form : Increased HP and firepower.'
 		},
 		{
 			into = 'sphere_u3commander',
@@ -195,7 +195,7 @@ local morphDefs = {
 			cmdname = 'Obsidian Form',
 			energy = 10000,
 			metal = 1000,
-			text = 'Morph to Obsidian Form : Greatly increased durability and firepower. Heavy armor. Slower speed.'
+			text = 'Morph to Obsidian Form : Greatly increased HP and firepower. Heavy armor. Slower speed.'
 		},
 		{
 			into = 'sphere_u4commander',

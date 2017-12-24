@@ -80,7 +80,9 @@ PF_MOVEDEF_CONVERSION = {
 	["kbotsf2"] = PF_UNIT_LAND,
 	["kbotsf3"] = PF_UNIT_LAND,
 	["kbotht2"] = PF_UNIT_LAND,
+	["kbotht4"] = PF_UNIT_LAND,
 	["kbotuw3"] = PF_UNIT_AMPHIBIOUS,
+	["kbotuw4"] = PF_UNIT_AMPHIBIOUS,
 	["kbotat"] = PF_UNIT_LAND_AT,
 	["tankbh3"] = PF_UNIT_LAND,
 	["tankdh3"] = PF_UNIT_AMPHIBIOUS,
@@ -88,11 +90,14 @@ PF_MOVEDEF_CONVERSION = {
 	
 	["tankhover2"] = PF_UNIT_AMPHIBIOUS_FLOATER,
 	["tankhover3"] = PF_UNIT_AMPHIBIOUS_FLOATER,
+	["tankhover4"] = PF_UNIT_AMPHIBIOUS_FLOATER,
 	["tankhover5"] = PF_UNIT_AMPHIBIOUS_FLOATER,
 	["tanksh2"] = PF_UNIT_LAND,
 	["tanksh3"] = PF_UNIT_LAND,
 	["tanksh4"] = PF_UNIT_LAND,
 	["tankbh4"] = PF_UNIT_AMPHIBIOUS,
+	["tankdh5"] = PF_UNIT_AMPHIBIOUS,
+	["tankdh6"] = PF_UNIT_AMPHIBIOUS,
 	["boatsub"] = PF_UNIT_WATER_DEEP,
 	["kbotatuw"] = PF_UNIT_AMPHIBIOUS_AT
 }

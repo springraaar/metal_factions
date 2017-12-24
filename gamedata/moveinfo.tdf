@@ -19,8 +19,8 @@
 [CLASS2]
 {
 	Name=LARGEBOAT;
-	FootprintX=6;
-	FootprintZ=6;
+	FootprintX=7;
+	FootprintZ=7;
 	MinWaterDepth=50;
 	CrushStrength=1600;
 	allowRawMovement=1;
@@ -154,6 +154,20 @@
 }
 [CLASS13]
 {
+	Name=TANKHOVER4;
+	FootprintX=4;
+	FootprintZ=4;
+	MaxSlope=26;
+	BadSlope=26;
+	MaxWaterSlope=255;
+	BadWaterSlope=255;
+	CrushStrength=50;
+	depthmod=0;
+	slopemod=6;
+	allowRawMovement=1;
+}
+[CLASS14]
+{
 	Name=TANKHOVER5;
 	FootprintX=5;
 	FootprintZ=5;
@@ -166,7 +180,7 @@
 	slopemod=6;
 	allowRawMovement=1;
 }
-[CLASS14]
+[CLASS15]
 {
 	Name=TANKSH2;
 	FootprintX=2;
@@ -178,7 +192,7 @@
 	slopemod=6;
 	allowRawMovement=1;
 }
-[CLASS15]
+[CLASS16]
 {
 	Name=TANKSH3;
 	FootprintX=3;
@@ -190,7 +204,7 @@
 	slopemod=6;
 	allowRawMovement=1;
 }
-[CLASS16]
+[CLASS17]
 {
 	Name=TANKSH4;
 	FootprintX=4;
@@ -202,7 +216,7 @@
 	slopemod=6;
 	allowRawMovement=1;
 }
-[CLASS17]
+[CLASS18]
 {
 	Name=TANKBH4;
 	FootprintX=4;
@@ -213,7 +227,7 @@
 	slopemod=6;
 	allowRawMovement=1;
 }
-[CLASS18]
+[CLASS19]
 {
 	Name=BOATSUB;
 	FootprintX=3;
@@ -226,7 +240,7 @@
 }
 
 
-[CLASS19]
+[CLASS20]
 {
 	Name=KBOTATUW;
 	FootprintX=3;
@@ -237,7 +251,7 @@
 	slopemod=6;
 	allowRawMovement=1;
 }
-[CLASS20]
+[CLASS21]
 {
 	Name=TANKDH5;
 	FootprintX=5;
@@ -250,7 +264,7 @@
 	slopemod=6;
 	allowRawMovement=1;
 }
-[CLASS21]
+[CLASS22]
 {
 	Name=TANKDH6;
 	FootprintX=6;
@@ -258,6 +272,31 @@
 	Submarine=1;
 	MaxWaterSlope=40;
 	MaxSlope=31;
+	CrushStrength=30;
+	depthmod=0;
+	slopemod=6;
+	allowRawMovement=1;
+}
+[CLASS23]
+{
+	Name=KBOTHT4;
+	FootprintX=4;
+	FootprintZ=4;
+	MaxWaterDepth=25;
+	MaxSlope=36;
+	CrushStrength=200;
+	depthmod=0;
+	slopemod=6;
+	allowRawMovement=1;
+}
+[CLASS24]
+{
+	Name=KBOTUW4;
+	FootprintX=4;
+	FootprintZ=4;
+	Submarine=1;
+	MaxWaterSlope=40;
+	MaxSlope=36;
 	CrushStrength=30;
 	depthmod=0;
 	slopemod=6;
