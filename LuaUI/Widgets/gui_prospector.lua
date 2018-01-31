@@ -1,10 +1,10 @@
-local versionNumber = "v1.9c"
+local versionNumber = "v1.9d"
 
 function widget:GetInfo()
 	return {
-		name = "Prospector - XTA",
+		name = "Prospector",
 		desc = versionNumber .. " Tooltip for amount of metal extracted when placing metal extractors.",
-		author = "Evil4Zerggin",
+		author = "Evil4Zerggin, modified by raaar",
 		date = "9 January 2009",
 		license = "GNU LGPL, v2.1 or later",
 		layer = 1,
@@ -12,7 +12,7 @@ function widget:GetInfo()
 	}
 end
 
-local textSize = 16
+local textSize = 15
 
 -- EDIT 2013/03/17 by raaar: no longer loads info from unitDef.extractSquare as it was removed in spring 93.1
 
@@ -70,20 +70,38 @@ local MAP_SIZE_X_SCALED = MAP_SIZE_X / METAL_MAP_SQUARE_SIZE
 local MAP_SIZE_Z = Game.mapSizeZ
 local MAP_SIZE_Z_SCALED = MAP_SIZE_Z / METAL_MAP_SQUARE_SIZE
 
+local ADVANCED_EXTRACTOR_RADIUS_FACTOR = 1.3 
+local MIN_EXTRACTOR_RADIUS = 32
+local ADV_MEX_RADIUS = MEX_RADIUS >= MIN_EXTRACTOR_RADIUS and (MEX_RADIUS*ADVANCED_EXTRACTOR_RADIUS_FACTOR) or (MIN_EXTRACTOR_RADIUS*ADVANCED_EXTRACTOR_RADIUS_FACTOR) 
+
+
+local advMexDefIds = {
+	[UnitDefNames['aven_moho_mine'].id] = true,
+	[UnitDefNames['gear_moho_mine'].id] = true,
+	[UnitDefNames['claw_moho_mine'].id] = true,
+	[UnitDefNames['sphere_moho_mine'].id] = true,
+	[UnitDefNames['aven_exploiter'].id] = true,
+	[UnitDefNames['gear_exploiter'].id] = true,
+	[UnitDefNames['claw_exploiter'].id] = true,
+	[UnitDefNames['sphere_exploiter'].id] = true
+}
+
+
 ------------------------------------------------
 --H4X
 ------------------------------------------------
-local once
+local once		   -- used to get the view sizes only once, because of reasons
 
 ------------------------------------------------
 --helpers
 ------------------------------------------------
 
+-- draw the info panel
 local function DrawTextWithBackground(text, x, y, size, opt)
 	local width = (glGetTextWidth(text) * size) + 8
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL)
 	
-	glColor(0.25, 0.25, 0.25, 0.75)
+	glColor(0.0, 0.0, 0.0, 0.75)
 	if (opt) then
 		if (strFind(opt, "r")) then
 			glRect(x, y, x - width, y + size * TEXT_CORRECT_Y)
@@ -102,15 +120,11 @@ local function DrawTextWithBackground(text, x, y, size, opt)
 	
 end
 
+-- figure out which units are metal extractors
 local function SetupMexDefInfos() 
-	local minExtractsMetal
+	local minExtractsMetal = 0
 	
-	local armMexDef = UnitDefNames["armmex"]
-	
-	if armMexDef and armMexDef.extractsMetal > 0 then
-		defaultDefID = UnitDefNames["armmex"].id
-		minExtractsMetal = 0
-	end
+	defaultDefID = UnitDefNames["aven_metal_extractor"].id
 	
 	for unitDefID = 1,#UnitDefs do
 		local unitDef = UnitDefs[unitDefID]
@@ -118,7 +132,7 @@ local function SetupMexDefInfos()
 		if (extractsMetal > 0) then
 			mexDefInfos[unitDefID] = {}
 			mexDefInfos[unitDefID][1] = extractsMetal
-			-- mexDefInfos[unitDefID][2] = unitDef.extractSquare
+			mexDefInfos[unitDefID][2] = advMexDefIds[unitDefID]
 			if (unitDef.xsize % 4 == 2) then
 				mexDefInfos[unitDefID][3] = true
 			end
@@ -134,6 +148,7 @@ local function SetupMexDefInfos()
 	
 end
 
+-- compute metal income per second for a given extractor and position
 local function IntegrateMetal(mexDefInfo, x, z, forceUpdate)
 	local newCenterX, newCenterZ
 	
@@ -162,34 +177,25 @@ local function IntegrateMetal(mexDefInfo, x, z, forceUpdate)
 	endX, endZ = min(endX, MAP_SIZE_X_SCALED - 1), min(endZ, MAP_SIZE_Z_SCALED - 1)
 	
 	local mult = mexDefInfo[1]
-	local square = mexDefInfo[2]
+	local radius = mexDefInfo[2] and ADV_MEX_RADIUS or MEX_RADIUS
 	local result = 0
 	
-	if (square) then
-		for i = startX, endX do
-			for j = startZ, endZ do
-				local cx, cz = (i + 0.5) * METAL_MAP_SQUARE_SIZE, (j + 0.5) * METAL_MAP_SQUARE_SIZE
+	for i = startX, endX do
+		for j = startZ, endZ do
+			local cx, cz = (i + 0.5) * METAL_MAP_SQUARE_SIZE, (j + 0.5) * METAL_MAP_SQUARE_SIZE
+			local dx, dz = cx - centerX, cz - centerZ
+			local dist = sqrt(dx * dx + dz * dz)
+			
+			if (dist < radius) then
 				local _, metal = GetGroundInfo(cx, cz)
 				result = result + metal
-			end
-		end
-	else
-		for i = startX, endX do
-			for j = startZ, endZ do
-				local cx, cz = (i + 0.5) * METAL_MAP_SQUARE_SIZE, (j + 0.5) * METAL_MAP_SQUARE_SIZE
-				local dx, dz = cx - centerX, cz - centerZ
-				local dist = sqrt(dx * dx + dz * dz)
-				
-				if (dist < MEX_RADIUS) then
-					local _, metal = GetGroundInfo(cx, cz)
-					result = result + metal
-				end
 			end
 		end
 	end
 	
 	extraction = result * mult
 end
+
 
 ------------------------------------------------
 --callins
@@ -198,31 +204,7 @@ end
 function widget:Initialize()
 	SetupMexDefInfos() 
 	myTeamID = Spring.GetMyTeamID()
-  once = true
-end
-
-function widget:DrawWorld()
-	local drawMode = GetMapDrawMode()
-	if GetGameFrame() < 1 and defaultDefID and drawMode == "metal" then
-		local mx, my = GetMouseState()
-		local _, coords = TraceScreenRay(mx, my, true, true)
-		
-		if not coords then return end
-		
-		IntegrateMetal(mexDefInfos[defaultDefID], coords[1], coords[3], false)
-		
-		glLineWidth(1)
-		glColor(1, 0, 0, 0.5)
-		glDrawGroundCircle(centerX, 0, centerZ, MEX_RADIUS, 32)
-		if defaultDefID then
-			glPushMatrix()
-				glColor(1, 1, 1, 0.25)
-				glTranslate(centerX, coords[2], centerZ)
-				glUnitShape(defaultDefID, myTeamID)
-			glPopMatrix()
-		end
-		glColor(1, 1, 1, 1)
-	end
+	once = true
 end
 
 function widget:DrawScreen()
@@ -256,8 +238,10 @@ function widget:DrawScreen()
 	local _, coords = TraceScreenRay(mx, my, true, true)
 	
 	if (not coords) then return end
-	
+
 	IntegrateMetal(mexDefInfo, coords[1], coords[3], forceUpdate)
+
+	-- draw info panel
 	DrawTextWithBackground("\255\255\255\255Metal extraction: " .. strFormat("%.2f", extraction), mx, my, textSize)
 	glColor(1, 1, 1, 1)
 end

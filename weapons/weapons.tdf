@@ -7879,6 +7879,7 @@
 	tolerance=4000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
+	avoidground=0;
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
@@ -8696,6 +8697,51 @@
 	{
 		default=0;
 		group_invincible=0;
+		armor_heavy=0;//#AUTO#
+		armor_medium=0;//#AUTO#
+		armor_light=0;//#AUTO#
+	}
+}
+[comsat_beacon]
+{
+	name=COMSAT Beacon;
+	weapontype=MissileLauncher;
+	trajectoryheight=3;
+	turret=1;
+	flighttime=10.75;
+	turnrate=260000;
+	GroundBounce=0;
+	WaterBounce=0;
+	Texture1=null; //flare//
+	Texture2=null;//first segment of missiletrail//
+	Texture3=null;//flame//
+	Texture4=null;//unknown//
+	turret=1;
+	range=99999;
+	reloadtime=180;
+	weaponvelocity=8000;
+	startvelocity=8000;
+	weaponAcceleration=50;
+	energypershot=1000;
+	areaofeffect=8;
+	tracks=1;
+	soundstart=comsatfire;
+	firestarter=0;
+	tolerance=3000;
+	avoidfeature=0;
+	avoidground=0;
+	avoidfriendly=0;
+	collideEnemy=0;
+	commandFire=1;
+	InterceptedByShieldType=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=1;
+	}
+	[DAMAGE]
+	{
+		default=0;
+		group_invincible=1;
 		armor_heavy=0;//#AUTO#
 		armor_medium=0;//#AUTO#
 		armor_light=0;//#AUTO#
@@ -13347,6 +13393,7 @@
 	edgeeffectiveness=0.1;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
+	avoidground=0;
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;

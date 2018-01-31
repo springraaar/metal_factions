@@ -1,7 +1,7 @@
 function widget:GetInfo()
 	return {
 		name	= "Settings",
-		desc	= "Overrides some Spring settings: grass, camera, maxParticles, clock and fps indicator",
+		desc	= "Overrides some Spring settings: grass, camera, maxParticles, clock, fps, speed indicator",
 		author	= "raaar",
 		date	= "2015-07-20",
 		license	= "PD",
@@ -26,5 +26,8 @@ function widget:Initialize()
 	-- disable clock and fps (widget is used instead)
 	Spring.SendCommands("clock 0")
 	Spring.SendCommands("fps 0")
+	
+	-- disable game speed indicator
+	Spring.SendCommands("speed 0")
 end
 

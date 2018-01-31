@@ -1,3 +1,41 @@
+2018/01/31 ------------------ NOTES v0.992 ----------------------
+
+
+--- new units
+
+- added COMSAT station for all factions : a somewhat expensive building that can reveal an area of the map for 15s every three minutes
+(these are an alternative investment to having to recurrently suicide swarms of air scouts to reveal areas behind enemy defenses)
+
+
+--- balance / mechanics
+
+- when a unit is ordered to attack a target and then ordered to move, it should keep attacking the previous target while in range
+
+- improved the lua metal spot handler so that the metal decals are perfectly centered and more visible when resource highlight view is enabled
+
+- removed global resource multipliers and other game options as some weren't processed properly
+(they may be changed/restored at a later date)
+
+- fixed a bug which prevented commanders from capturing enemy units, but sharply reduced the capture speed to 2/3 of the normal build speed
+- "Builder Form" commanders have their capture speeds and terraform speeds set to 2x the normal amounts (same as their build speed)
+
+- slightly increased the extraction radius of advanced metal extractors to ensure that no metal income is lost if they're built beside an existing basic extractors
+
+
+--- UI
+
+- updated the name and descriptions of metal extractors, now extraction rate multiplier and energy drain is shown on the tooltip
+
+- added buttons that allow building the various metal extractor forms in an area : basic (level1), safe and hazardous (level2)
+. these replaced the metal extractor area-upgrade and upgrade state buttons
+. constructors will build the level2 forms beside existing level1 forms instead of reclaiming them first
+
+- disable game speed indicator when the game starts to avoid overlapping clock/fps indicator 
+
+
+
+
+
 2017/12/24 ------------------ NOTES v0.991 ----------------------
 
 - fixed MAJOR bug introduced on the previous version which caused some units to become stuck on factories and others to not be buildable at all!

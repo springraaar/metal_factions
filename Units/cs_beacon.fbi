@@ -1,0 +1,122 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=All;
+	name=CS Beacon;
+	description=Air Scout;
+	icontype=invisible;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=VTOL LEVEL2 NOTSUB;
+	tedclass=VTOL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=cs_beacon;
+	objectname=cs_beacon.3do;
+	buildpic=cs_beacon.png;
+	soundcategory=aven_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=9999999;
+	healtime=30;
+	footprintx=1;
+	footprintz=1;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.0;
+	energyuse=0.0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canfly=1;
+	canguard=0;
+	canmove=1;
+	canpatrol=0;
+	canstop=1;
+	cloakable=1;
+	initCloaked=1;
+	cloakcost=0;
+	cloakcostmoving=0;
+	stealth=1;
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnrate=800;
+	acceleration=0.5;
+	brakerate=0.09;
+	maxvelocity=0;
+	maxslope=10;
+	maxwaterdepth=255;
+	cruisealt=500;
+	verticalSpeed=0;
+	myGravity=0;
+
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=600;
+
+	//************************************************************
+	//  Weapons
+	//***********
+
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	mobilestandorders=1;
+	standingmoveorder=1;
+	defaultmissiontype=VTOL_standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	maneuverleashlength=1280;
+	collide=0;
+	minCollisionSpeed=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =0 0 0;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 0;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	hoverAttack=1;
+	airHoverFactor=0.01;
+	   
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildcostenergy=1;//#AUTO#
+	buildcostmetal=1;//#AUTO#
+	buildtime=1;//#AUTO#
+}

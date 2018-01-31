@@ -5,15 +5,16 @@ function widget:GetInfo()
     author    = "raaar",
     date      = "2015",
     license   = "PD",
-    layer     = 1,
+    layer     = 1000,
     enabled   = true
   }
 end
 
 include("keysym.h.lua")
 
-menuFrame = -1
-menuShown = false
+menuSecond = -1
+WG.menuShown = false
+shouldShowMenu = false
 
 function widget:Initialize()
    Spring.SendCommands("unbindaction showmetalmap")
@@ -40,11 +41,10 @@ function widget:KeyPress(key, mods, isRepeat)
 			end
 		end
 	elseif (key == KEYSYMS.ESCAPE) then
-		n = Spring.GetGameFrame()
-		if (n > menuFrame and not menuShown) then
-			menuFrame = n + 15
+		if (not WG.menuShown) then
+			shouldShowMenu = true
 		else 
-			menuShown = false
+			WG.menuShown = false
 		end
 	elseif (key == KEYSYMS.F4) then
 		Spring.SendCommands("showmetalmap")
@@ -54,10 +54,11 @@ function widget:KeyPress(key, mods, isRepeat)
 end
 
 -- workaround for menu not showing up
-function widget:GameFrame(n)
-	if (n == menuFrame) then
+function widget:KeyRelease()
+	if (shouldShowMenu) then
 		Spring.SendCommands("quitmenu")
-		menuShown = true
+		WG.menuShown = true
+		shouldShowMenu = false
 	end
 end
 

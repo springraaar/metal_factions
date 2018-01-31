@@ -45,6 +45,7 @@ local spPlaySoundFile = Spring.PlaySoundFile
 local spSpawnCEG = Spring.SpawnCEG
 local spSetProjectileCollision = Spring.SetProjectileCollision
 local spSpawnProjectile = Spring.SpawnProjectile
+local spDestroyUnit = Spring.DestroyUnit
 
 local spSetFeatureVelocity = Spring.SetFeatureVelocity
 local spSetFeaturePosition = Spring.SetFeaturePosition
@@ -76,17 +77,24 @@ local GROUND_COLLISION_H_THRESHOLD = 30
 
 local AIRCRAFT_DEBRIS_METAL_FACTOR = 0.4
 
+local COMSAT_SCAN_DURATION_FRAMES = 450
+
 local moveAnimationUnitIds = {}
 local unitPhysicsById = {}
 local featureIds = {}
 local featurePhysicsById = {}
 local magnetarUnitIds = {}
+local comsatBeacons = {}
+local comsatBeaconDefId = UnitDefNames["cs_beacon"].id
 
 local x,y,z,vx,vy,vz,v,h, enableGC
 local function updateUnitPhysics(unitId)
 	x,y,z = spGetUnitPosition(unitId)
 	vx,vy,vz,v = spGetUnitVelocity(unitId)
 	
+	if comsatBeacons[unitId] then
+		spSetUnitVelocity(unitId,0,0,0)
+	end
 	-- force physics for magnetar to prevent it from being pushed away 
 	if magnetarUnitIds[unitId] == true then
 		local groundHeight = spGetGroundHeight(x,z)
@@ -127,12 +135,25 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 	if UnitDefs[unitDefId].name == "sphere_magnetar" then
 		magnetarUnitIds[unitId] = true
 	end
+
+	if (unitDefId == comsatBeaconDefId) then
+		comsatBeacons[unitId] = 1
+	end
 		
 	unitPhysicsById[unitId] = {0,0,0,0,0,0,0,false}
 end
 
 
 function gadget:GameFrame(n)
+	
+	-- increment counter for comsat beacons, remove the ones that expired
+	for uId,frames in pairs(comsatBeacons) do
+		comsatBeacons[uId] = comsatBeacons[uId] + 1
+		
+		if (comsatBeacons[uId] > COMSAT_SCAN_DURATION_FRAMES) then
+			spDestroyUnit(uId,false,true)
+		end
+	end
 	
 	-- check unit physics
 	for unitId,oldPhysics in pairs(unitPhysicsById) do
@@ -262,12 +283,17 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 		magnetarUnitIds[unitId] = nil
 	end
 
+	-- remove entries from tables when unit is destroyed
+	if comsatBeacons[unitId] then
+		comsatBeacons[unitId] = nil
+	end
+
 	local _,_,_,_,bp = spGetUnitHealth(unitId)
 
 	-- if unit is an aircraft which leaves no wreckage, spawn some debris
 	local ud = UnitDefs[unitDefId]
 	--Spring.Echo("unit destroyed")
-	if ud and ud.canFly == true and not isDrone(ud) and tostring(ud.wreckName) == '' then
+	if ud and ud.canFly == true and (unitDefId ~= comsatBeaconDefId) and not isDrone(ud) and tostring(ud.wreckName) == '' then
 		if bp > 0.999 or (attackerId ~= nil and bp > 0.5) then
 			--Spring.Echo("aircraft destroyed "..tostring(ud.wreckName))
 			local physics = unitPhysicsById[unitId]

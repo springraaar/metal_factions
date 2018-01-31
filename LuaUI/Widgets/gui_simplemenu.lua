@@ -5,7 +5,7 @@ function widget:GetInfo()
 		author  = "raaar",
 		date    = "2016",
 		license = "PD",
-		layer   = 0,
+		layer   = 1001,
 		enabled = true
 	}
 end
@@ -77,7 +77,10 @@ end
 function widget:MousePress(mx, my, mButton)
 	if not Spring.IsGUIHidden() then
 		if ButtonMenu.above then		
-			Spring.SendCommands("quitmenu")
+			if not WG.menuShown then
+				Spring.SendCommands("quitmenu")
+				WG.menuShown = true
+			end
 		end
 	end
 	

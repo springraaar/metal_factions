@@ -156,7 +156,7 @@ function gadget:AllowUnitTransfer(unitId, unitDefId, oldTeam, newTeam, capture)
 	if( isCommander(unitDefId) or isCommanderToken(unitDefId)) then
  		Spring.SendMessageToTeam(oldTeam,"Commanders can't be given!")
  		return false
-	elseif (not AreTeamsAllied(oldTeam, newTeam)) then
+	elseif (not AreTeamsAllied(oldTeam, newTeam) and not capture) then
  		Spring.SendMessageToTeam(oldTeam,"Can't give units to enemies!")
  		return false
 	end  

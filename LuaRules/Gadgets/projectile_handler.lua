@@ -10,6 +10,7 @@ function gadget:GetInfo()
    }
 end
 
+-- jan 2018 : handles comsat projectiles
 -- feb 2016 : handles magnetar projectiles
 -- sep 2015 : handles area fire effects
 -- sep 2015 : torpedos no longer target land targets and fixed explosion when over land or above threshold
@@ -24,11 +25,13 @@ local GetProjectileName = Spring.GetProjectileName
 local GetProjectilePosition = Spring.GetProjectilePosition
 local SetProjectileCollision = Spring.SetProjectileCollision
 local GetProjectilesInRectangle = Spring.GetProjectilesInRectangle
+local spCreateUnit = Spring.CreateUnit
+local spGetUnitTeam = Spring.GetUnitTeam
+local spDestroyUnit = Spring.DestroyUnit
 local max = math.max
 
 local STEP_DELAY = 6 		-- process steps every N frames
 local FIRE_AOE_STEPS = 100	-- 20 seconds
-
 
 local projectileWasUnderwater = {}
 
@@ -38,6 +41,7 @@ local fireAOEWeaponEffectId = WeaponDefNames["gear_fire_effect"].id
 local fireAOEWeaponEffectId2 = WeaponDefNames["gear_fire_effect2"].id
 local magnetarWeaponId = WeaponDefNames["sphere_magnetar_blast"].id
 local magnetarWeaponEffectId = WeaponDefNames["sphere_magnetar_blast_effect"].id
+local comsatWeaponId = WeaponDefNames["comsat_beacon"].id
 
 local fireAOEWeaponIds = {
 	-- GEAR
@@ -94,14 +98,16 @@ local fireAOEProjectiles = {}
 local fireAOEEffectProjectiles = {}
 local fireAOEPositions = {}
 local magnetarProjectiles = {}
+local comsatProjectiles = {}
+local comsatBeaconDefId = UnitDefNames["cs_beacon"].id
 
 -------------------------- SYNCED CODE ONLY
 if (not gadgetHandler:IsSyncedCode()) then
 	return false
 end
 
-function gadget:Initialize()
 
+function gadget:Initialize()
 	-- track disruptor wave projectiles
 	Script.SetWatchWeapon(disruptorWeaponId,true)
 	
@@ -117,12 +123,14 @@ function gadget:Initialize()
 	for id,_ in pairs(fireAOEWeaponIds) do
 		Script.SetWatchWeapon(id,true)
 	end
+	
+	-- track comsat projectiles
+	Script.SetWatchWeapon(comsatWeaponId,true)
 end
 
 
 -- execute action every frame for tracked projectiles, as necessary
 function gadget:GameFrame(n)
-
 	-- explode disruptor wave effect projectiles
 	for id,ownerId in pairs(disruptorEffectProjectiles) do
 		-- explode projectile
@@ -267,6 +275,10 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		fireAOEProjectiles[proID] = proOwnerID
 		return
 	end
+	if weaponDefID == comsatWeaponId then
+		comsatProjectiles[proID] = proOwnerID
+		return
+	end	
 end
 
 -- remove tracked projectiles from table on destruction or trigger other effects
@@ -293,9 +305,19 @@ function gadget:ProjectileDestroyed(proID)
 			fireAOEPositions[proID]={px=px,py=h+5,pz=pz,steps=FIRE_AOE_STEPS,ownerId=fireAOEProjectiles[proID],effect=effect}
 		end
 		fireAOEProjectiles[proID] = nil
+	elseif comsatProjectiles[proID] then
+		-- spawn unit to provide LOS
+		local ownerId = comsatProjectiles[proID]
+		if ownerId then
+			local teamId = spGetUnitTeam(ownerId)
+			local px,py,pz = GetProjectilePosition(proID)
+			if px then
+				spCreateUnit("cs_beacon",px,py+500,pz,0,teamId,false)
+			end
+		end
+		comsatProjectiles[proID] = nil
 	end
 end
-
 
 -- torpedo weapon target check
 -- TODO this should work, but doesn't: engine bug
@@ -309,5 +331,6 @@ function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attac
 			return false,99999999
 		end
 	end
+
 	return true,defaultPriority
 end

@@ -627,6 +627,7 @@ function TaskQueueBehavior:Evade(threatPos, moveDistance)
 		vz = vz / norm
 	end
 	
+	--Spring.Echo(self.unitName.." EVADE self=("..selfPos.x..","..selfPos.z..")".." threat=("..threatPos.x..","..threatPos.z..")".." escape=("..vx..","..vz..")")
 	vxNormal = vz
 	vzNormal = -vx
 			
@@ -635,6 +636,7 @@ function TaskQueueBehavior:Evade(threatPos, moveDistance)
 	local strafeSign = 1 
 	local strafeDistance = 0
 	
+	local ordersGiven = 0
 	for i=1,UNIT_EVADE_WAYPOINTS do
 		strafeSign = random(1,10) > 5 and 1 or -1
 		strafeDistance = strafeSign * random(1,UNIT_EVADE_STRAFE_DISTANCE)
@@ -643,10 +645,15 @@ function TaskQueueBehavior:Evade(threatPos, moveDistance)
 		pos.z = pos.z + vz * increment + vzNormal * strafeDistance
 		-- Echo(pos.x.." ; "..pos.z)
 		if  spTestMoveOrder(self.unitDef.id,pos.x,0,pos.z,0,0,0,true,true) then
+			ordersGiven = ordersGiven + 1 
 			spGiveOrderToUnit(self.unitId,CMD.MOVE,{pos.x,0,pos.z},i > 1 and CMD.OPT_SHIFT or {})
 		end
 	end
 	
+	if (ordersGiven == 0) then
+		--Spring.Echo(self.unitName.." RUN TO BASE!")
+		spGiveOrderToUnit(self.unitId,CMD.MOVE,{self.ai.unitHandler.basePos.x - BIG_RADIUS/2 + random( 1, BIG_RADIUS),0,self.ai.unitHandler.basePos.z - BIG_RADIUS/2 + random( 1, BIG_RADIUS)},{})
+	end
 end
 
 

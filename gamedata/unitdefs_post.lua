@@ -26,7 +26,7 @@ end
 -- Metal Bonus
 --
 
-if (modOptions and modOptions.metalmult) then
+if (modOptions and modOptions.metalmult and tonumber(modOptions.metalmult) ~= nil) then
   for name in pairs(UnitDefs) do
     local em = UnitDefs[name].extractsmetal
     if (em) then
@@ -38,7 +38,7 @@ end
 -- Hitpoint Bonus
 --
 
-if (modOptions and modOptions.hitmult) then
+if (modOptions and modOptions.hitmult and tonumber(modOptions.hitmult) ~= nil) then
   for name in pairs(UnitDefs) do
     local em = UnitDefs[name].maxdamage
     if (em) then
@@ -50,11 +50,11 @@ end
 -- Velocity Bonus
 --
 
-if (modOptions and modOptions.velocitymult) then
+if (modOptions and modOptions.velocitymult and tonumber(modOptions.velocitymult) ~= nil) then
   for name in pairs(UnitDefs) do
     local em = UnitDefs[name].maxvelocity
     if (em) then
-      UnitDefs[name].maxvelocity = em * modOptions.velocitymult
+      --UnitDefs[name].maxvelocity = em * modOptions.velocitymult
     end
   end
 end
@@ -62,7 +62,7 @@ end
 -- Build Bonus
 --
 
-if (modOptions and modOptions.workermult) then
+if (modOptions and modOptions.workermult and tonumber(modOptions.workermult) ~= nil) then
   for name in pairs(UnitDefs) do
     local em = UnitDefs[name].workertime
     if (em) then
@@ -74,20 +74,11 @@ end
 -- Energy Bonus
 --
 
-if (modOptions and modOptions.energymult) then
+if (modOptions and modOptions.energymult and tonumber(modOptions.energymult) ~= nil) then
   for name in pairs(UnitDefs) do
     local em = UnitDefs[name].energymake
     if (em) then
       UnitDefs[name].energymake = em * modOptions.energymult
-    end
-  end
-end
-
-if (modOptions and modOptions.energymult) then
-  for name in pairs(UnitDefs) do
-    local em = UnitDefs[name].totalEnergyOut
-    if (em) then
-      UnitDefs[name].totalEnergyOut = em * modOptions.energymult
     end
   end
 end
