@@ -49,7 +49,7 @@ local fireAOEWeaponIds = {
 	[WeaponDefNames["gear_eruptor"].id]=true,
 	[WeaponDefNames["gear_canister_fireball"].id]=true,
 	[WeaponDefNames["gear_eruptor_fireball"].id]=true,
-	[WeaponDefNames["gear_firestorm_fireball"].id]=true,
+	[WeaponDefNames["gear_firestorm_rocket"].id]=true,
 	[WeaponDefNames["gear_u5commander_fireball"].id]=true
 }
 

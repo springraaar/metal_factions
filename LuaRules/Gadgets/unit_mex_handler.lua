@@ -324,43 +324,9 @@ function updateCommand(unitID, insertID, cmd)
 	end 
 end 
 
+-- process command
+function processCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
 
------------------------------------------------- SYNCED
-if (gadgetHandler:IsSyncedCode()) then 
-
-
-function gadget:Initialize()  
-	determine()
-	registerUnits()  
-end 
-
-
-function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam) 
-	unregisterUnit(unitID, unitDefID, unitTeam, true) 
-end 
-
-
-function gadget:UnitTaken(unitID, unitDefID, unitTeam, newTeam) 
-	unregisterUnit(unitID, unitDefID, unitTeam, false) 
-end 
-
-
--- register builders
-function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID) 
-  registerUnit(unitID, unitDefID, unitTeam) 
-end 
-
-function gadget:UnitGiven(unitID, unitDefID, unitTeam, oldTeam) 
-  registerUnit(unitID, unitDefID, unitTeam) 
-end 
-
--- handle commands
-function gadget:CommandFallback(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions) 
-
-	if cmdID ~= CMD_UPGRADEMEX and cmdID ~= CMD_UPGRADEMEX2 and cmdID ~= CMD_AREAMEX then 
-		return false 
-	end 
-  
 	local builder = builders[teamID][unitID]
 	local x, y, z, radius 
 	if not cmdParams[2] then
@@ -383,7 +349,6 @@ function gadget:CommandFallback(unitID, unitDefID, teamID, cmdID, cmdParams, cmd
 
 	local spots = GG.metalSpots
 	local spotsInRange = {}
-
 	if builder then
 		local ux,_,uz = spGetUnitPosition(unitID) 
 		local replacementDefId = nil
@@ -460,6 +425,55 @@ function gadget:CommandFallback(unitID, unitDefID, teamID, cmdID, cmdParams, cmd
 	 
 	end
 	return false
+end
+
+------------------------------------------------ SYNCED
+if (gadgetHandler:IsSyncedCode()) then 
+
+
+function gadget:Initialize()  
+	determine()
+	registerUnits()  
+end 
+
+
+function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerDefID, attackerTeam) 
+	unregisterUnit(unitID, unitDefID, unitTeam, true) 
+end 
+
+
+function gadget:UnitTaken(unitID, unitDefID, unitTeam, newTeam) 
+	unregisterUnit(unitID, unitDefID, unitTeam, false) 
+end 
+
+
+-- register builders
+function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID) 
+  registerUnit(unitID, unitDefID, unitTeam) 
+end 
+
+function gadget:UnitGiven(unitID, unitDefID, unitTeam, oldTeam) 
+  registerUnit(unitID, unitDefID, unitTeam) 
+end 
+
+
+
+-- handle commands
+function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions, cmdTag, synced)
+	if cmdID == CMD_UPGRADEMEX or cmdID == CMD_UPGRADEMEX2 or cmdID == CMD_AREAMEX then 
+		return processCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
+	else
+		return true
+	end
+end
+
+function gadget:CommandFallback(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions) 
+	
+	if cmdID ~= CMD_UPGRADEMEX and cmdID ~= CMD_UPGRADEMEX2 and cmdID ~= CMD_AREAMEX then 
+		return false 
+	end 
+  
+	return processCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
 end 
 
 ------------------------------------------------ UNSYNCED

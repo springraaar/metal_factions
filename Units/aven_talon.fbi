@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=880;
+	maxdamage=980;
 	healtime=30;
 	footprintx=3;
 	footprintz=3;
@@ -79,8 +79,8 @@
 	maxaileron=0.02;	//0.01
 	maxelevator=0.02;	//0.01
 	maxrudder=0.02;  //0.01
-	maxAcc=0.60; //0.065
-	attackSafetyDistance=500;
+	maxAcc=1.20; //0.065
+	attackSafetyDistance=400;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -154,7 +154,7 @@
 		explosiongenerator0=custom:rocketflaresml;
 		explosiongenerator1=custom:rocketflaresml;
 	}
-	buildcostenergy=6272;//#AUTO#
-	buildcostmetal=1254;//#AUTO#
-	buildtime=14949;//#AUTO#
+	buildcostenergy=6206;//#AUTO#
+	buildcostmetal=1241;//#AUTO#
+	buildtime=14792;//#AUTO#
 }

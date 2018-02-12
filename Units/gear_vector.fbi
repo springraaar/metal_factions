@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=920;
+	maxdamage=1000;
 	healtime=30;
 	footprintx=3;
 	footprintz=3;
@@ -34,8 +34,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=3;
-	energyuse=3;
+	energymake=0;
+	energyuse=0;
 	energystorage=0;
 
 	//************************************************************
@@ -79,8 +79,8 @@
 	maxaileron=0.02;	//0.01
 	maxelevator=0.02;	//0.01
 	maxrudder=0.02;  //0.01
-	maxAcc=0.60; //0.065
-	attackSafetyDistance=300;
+	maxAcc=1.20; //0.065
+	attackSafetyDistance=400;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -150,7 +150,7 @@
 	[SFXTypes]
 	{
 	}
-	buildcostenergy=4388;//#AUTO#
-	buildcostmetal=877;//#AUTO#
-	buildtime=10458;//#AUTO#
+	buildcostenergy=4202;//#AUTO#
+	buildcostmetal=840;//#AUTO#
+	buildtime=10015;//#AUTO#
 }

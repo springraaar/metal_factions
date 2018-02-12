@@ -63,7 +63,7 @@
 	acceleration=0.1;
 	brakerate=0.1;
 	maxvelocity=5.5;
-	cruisealt=160;
+	cruisealt=120;
 	turnrate=600;
 
 
@@ -76,12 +76,13 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=gear_firestorm_fireball;
+	weapon1=gear_firestorm_rocket;
 	onlytargetcategory1=NOTAIR;
 	explodeas=BIG_UNIT;
 	selfdestructas=BIG_UNIT;
-	WeaponMainDir1=0 -1 1;
-	MaxAngleDif1=90;       
+	weaponmaindir1=0 -1 0.2;
+	maxangledif1=140;
+
 
 	//************************************************************
 	//  Orders
@@ -102,7 +103,7 @@
 	hoverattack=1;
 	airstrafe=1;
 //	isbomber=1;
-
+	upright=1;
 	airhoverfactor=-1;
 //	maneuverleashlength=180;
 	bankingAllowed=0;
@@ -137,7 +138,7 @@
 		explosiongenerator0=custom:GLOWSML;
 		explosiongenerator1=custom:rocketflaresml;
 	}
-	buildcostenergy=7065;//#AUTO#
-	buildcostmetal=1413;//#AUTO#
-	buildtime=16838;//#AUTO#
+	buildcostenergy=7369;//#AUTO#
+	buildcostmetal=1473;//#AUTO#
+	buildtime=17564;//#AUTO#
 }

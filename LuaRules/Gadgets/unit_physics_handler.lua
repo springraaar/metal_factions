@@ -21,6 +21,7 @@ end
 
 local spAddUnitDamage = Spring.AddUnitDamage
 local spGetUnitPosition = Spring.GetUnitPosition
+local spGetUnitRotation = Spring.GetUnitRotation
 local spGetUnitDirection = Spring.GetUnitDirection
 local spGetUnitRadius = Spring.GetUnitRadius
 local spGetUnitDefID = Spring.GetUnitDefID
@@ -32,6 +33,8 @@ local spUseUnitResource = Spring.UseUnitResource
 local spGetUnitVelocity = Spring.GetUnitVelocity
 local spSetRelativeVelocity = Spring.MoveCtrl.SetRelativeVelocity
 local spSetUnitVelocity = Spring.SetUnitVelocity
+local spSetUnitPhysics = Spring.SetUnitPhysics
+local spSetUnitRotation = Spring.SetUnitRotation
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
 local spGetCommandQueue = Spring.GetCommandQueue
 local spGetGameFrame = Spring.GetGameFrame
@@ -87,10 +90,25 @@ local magnetarUnitIds = {}
 local comsatBeacons = {}
 local comsatBeaconDefId = UnitDefNames["cs_beacon"].id
 
-local x,y,z,vx,vy,vz,v,h, enableGC
+local aircraftMovementFixDefIds = {
+	[UnitDefNames["aven_swift"].id] = true,
+	[UnitDefNames["aven_falcon"].id] = true,
+	[UnitDefNames["aven_talon"].id] = true,
+	[UnitDefNames["gear_dash"].id] = true,
+	[UnitDefNames["gear_vector"].id] = true,
+	[UnitDefNames["claw_hornet"].id] = true,
+	[UnitDefNames["claw_x"].id] = true,
+	[UnitDefNames["sphere_twilight"].id] = true
+}
+
+local aircraftMovementFixUnitIds = {}
+
+local x,y,z,vx,vy,vz,v,h,rx,ry,rz, enableGC
+local physics
 local function updateUnitPhysics(unitId)
 	x,y,z = spGetUnitPosition(unitId)
 	vx,vy,vz,v = spGetUnitVelocity(unitId)
+	rx,ry,rz = spGetUnitRotation(unitId)
 	
 	if comsatBeacons[unitId] then
 		spSetUnitVelocity(unitId,0,0,0)
@@ -103,7 +121,29 @@ local function updateUnitPhysics(unitId)
 			--Spring.Echo("enforced vy for magnetar vy="..vy.." v="..v)
 			spSetUnitVelocity(unitId,vx * 0.8/v,0,vz * 0.8/v)
 		end
-	end  
+	end
+	
+	-- force physics for aircraft movement to prevent shaking in some cases
+	-- TODO disabled for now, needs fixing
+	if aircraftMovementFixUnitIds[unitId] == true then
+		local groundHeight = spGetGroundHeight(x,z)
+		h = y - groundHeight
+		if (h > 50) and v > 0.2 then
+			
+			-- average old rotation physics with the latest
+			physics = unitPhysicsById[unitId]
+			if physics and physics[9] then
+			
+				--rx = (physics[9] + rx) / 2
+				--ry = (physics[10] + ry) / 2
+				--rz = (physics[11] + rz) / 2
+
+				--Spring.Echo("enforced physics for aircraft "..unitId.." : orx="..physics[9].." ory="..physics[10].." orz="..physics[11])		
+				--Spring.Echo("enforced physics for aircraft "..unitId.." : orx="..physics[9].." ory="..physics[10].." orz="..physics[11].." rx="..rx.." ry="..ry.." rz="..rz)
+				--spSetUnitRotation(unitId,rx,ry,rz)	
+			end
+		end
+	end  	
 end
 
 local function updateFeaturePhysics(featureId)
@@ -139,6 +179,11 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 	if (unitDefId == comsatBeaconDefId) then
 		comsatBeacons[unitId] = 1
 	end
+
+	-- TODO this is disabled for now
+	--if aircraftMovementFixDefIds[unitDefId] then
+		--aircraftMovementFixUnitIds[unitId] = true
+	--end
 		
 	unitPhysicsById[unitId] = {0,0,0,0,0,0,0,false}
 end
@@ -208,7 +253,7 @@ function gadget:GameFrame(n)
 				end
 			end
 		end
-		
+	
 		-- update physics
 		oldPhysics[1] = x
 		oldPhysics[2] = y
@@ -218,6 +263,9 @@ function gadget:GameFrame(n)
 		oldPhysics[6] = vz
 		oldPhysics[7] = h
 		oldPhysics[8] = enableGC
+		oldPhysics[9] = rx
+		oldPhysics[10] = ry
+		oldPhysics[11] = rz
 	end
 	
 	-- feature physics
@@ -275,6 +323,7 @@ end
 
 -- cleanup when some units are destroyed
 function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDefId, attackerTeamId)
+	-- remove entries from tables when unit is destroyed
 	if (moveAnimationUnitIds[unitId]) then
 		moveAnimationUnitIds[unitId] = nil
 	end
@@ -283,9 +332,12 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 		magnetarUnitIds[unitId] = nil
 	end
 
-	-- remove entries from tables when unit is destroyed
 	if comsatBeacons[unitId] then
 		comsatBeacons[unitId] = nil
+	end
+	
+	if aircraftMovementFixUnitIds[unitId] then
+		aircraftMovementFixUnitIds[unitId] = nil
 	end
 
 	local _,_,_,_,bp = spGetUnitHealth(unitId)
