@@ -7,15 +7,18 @@
 
 piece  base, turret, sleeve, barrel, flare, t1,t2,t1cover,t2cover,body,left,right,l1,r1,b2, tur2, tur3, turret2, sleeves2, barrel21, barrel22, flare21, flare22, front;
 
-static-var  Static_Var_1, Static_Var_2, Static_Var_3, gun_2, bAiming2, canAim;
+static-var  gun_2, bAiming2, isFiring, unitFireHeading, fireHeading;
 
 #define SIG_AIM		2
 #define SIG_AIM2	4
 
 #include "tankthreads.h"
 
-RestoreAfterDelay1()
+RestoreAfterDelay1(setMask)
 {
+	if (setMask) {
+		set-signal-mask SIG_AIM;
+	}
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
 	turn turret to y-axis <0.000000> speed <90.021978>;
 	turn sleeve to x-axis <0.000000> speed <50.010989>;
@@ -53,6 +56,21 @@ DamageControl(Func_Var_1)
 }
 
 
+AimLock() 
+{
+	var heading;
+	while(TRUE) {
+		// override aim when firing to compensate for the body orientation if the unit turns
+		if (isFiring) {
+			heading = (get HEADING);
+			if (heading != unitFireHeading) {
+				turn turret to y-axis (fireHeading - heading + unitFireHeading) speed <360.000000>;
+				start-script RestoreAfterDelay1(TRUE);
+			}
+		}
+		sleep 30;
+	}
+}
 AimFromWeapon1(piecenum)
 {
 	piecenum = turret;
@@ -70,9 +88,9 @@ AimWeapon1(heading, pitch)
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	
-	while (!canAim)
+	if(isFiring)
 	{
-		sleep 100;
+		return (0);
 	}
 	turn turret to y-axis heading speed <100.021978>;
 	turn sleeve to x-axis <0.000000> - pitch speed <100.010989>;
@@ -82,16 +100,18 @@ AimWeapon1(heading, pitch)
 	}
 	wait-for-turn turret around y-axis;
 	wait-for-turn sleeve around x-axis;
+	fireHeading = heading;
 	start-script RestoreAfterDelay1();
 	return (1);
 }
 
-Shot1()
+FirePrimary()
 {
-	canAim = FALSE;
 	emit-sfx 1024 from flare;
-	sleep 1400;
-	canAim = TRUE;
+	unitFireHeading = get HEADING;
+	isFiring = TRUE;
+	sleep 1700;
+	isFiring = FALSE;
 	return;
 }
 
@@ -183,13 +203,16 @@ Create()
 {
 	gun_2 = [0];
 	bAiming2 = FALSE;
-	canAim = TRUE;
-	Static_Var_1 = 0;
+	isFiring = FALSE;
+	fireHeading = <0>;
+	unitFireHeading = <0>;
+	
 	while( get BUILD_PERCENT_LEFT )
 	{
 		sleep 250;
 	}
 	start-script DamageControl();
 	start-script AnimateTracks();
+	start-script AimLock();
 	return;
 }

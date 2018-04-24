@@ -1,52 +1,82 @@
-local versionNumber = "1.2c"
-
 function widget:GetInfo()
   return {
-    name      = "Commander Name Tags" .. versionNumber,
-    desc      = "Displays a name tag above each commander.",
-    author    = "Evil4Zerggin, Jools (tweaked by raaar)",
-    date      = "6 Jan 2012",
+    name      = "Commander Name Tags",
+    desc      = "Displays name tags above commanders.",
+    author    = "Bluestone, Floris, tweaked by raaar",
+    date      = "20 february 2015",
     license   = "GNU GPL, v2 or later",
-    layer     = -10,
-    enabled   = true  --  loaded by default?
+    layer     = 2,
+    enabled   = true,
   }
 end
 
--- Changelog: 1.2: Modified commander detection due to change in spring 85.0. Decoys also get the tag to avoid detection.
--- Changelog: 1.2a: Increased font size and heightoffset.
--- Changelog: 1.2b: Increased font size a bit more.
--- Changelog: 1.2b: Increased font size a bit more.
-
 --------------------------------------------------------------------------------
--- constants
---------------------------------------------------------------------------------
-local heightOffset = 32
-local fontSize = 8
-local addedBrightness = 0.2
---------------------------------------------------------------------------------
--- speed-ups
+-- config
 --------------------------------------------------------------------------------
 
-local spGetUnitTeam         = Spring.GetUnitTeam
-local spGetTeamInfo         = Spring.GetTeamInfo
-local spGetPlayerInfo       = Spring.GetPlayerInfo
-local spGetTeamColor        = Spring.GetTeamColor
-local spGetUnitViewPosition = Spring.GetUnitViewPosition
-local spGetVisibleUnits     = Spring.GetVisibleUnits
-local spGetUnitDefID        = Spring.GetUnitDefID
-local spGetCameraPosition   = Spring.GetCameraPosition
-local glColor             = gl.Color
-local glText              = gl.Text
-local glPushMatrix        = gl.PushMatrix
-local glTranslate         = gl.Translate
-local glBillboard         = gl.Billboard
-local glPopMatrix         = gl.PopMatrix
-local ceil = math.ceil
-local max = math.max
-local min = math.min
+local nameScaling			= true
+local useThickLeterring		= true
+local heightOffset			= 50
+local fontSize				= 15		-- not real fontsize, it will be scaled
+local scaleFontAmount		= 120
+local fontShadow			= true		-- only shows if font has a white outline
+local shadowOpacity			= 0.35
+local addedBrightness 		= 0.2
+
+local font = gl.LoadFont("LuaUI/Fonts/FreeSansBold.otf", 55, 10, 10)
+local shadowFont = gl.LoadFont("LuaUI/Fonts/FreeSansBold.otf", 55, 38, 1.6)
+
+local vsx, vsy = Spring.GetViewGeometry()
+
+local singleTeams = false
+if #Spring.GetTeamList()-1  ==  #Spring.GetAllyTeamList()-1 then
+    singleTeams = true
+end
 
 --------------------------------------------------------------------------------
--- helper functions
+--------------------------------------------------------------------------------
+
+local GetUnitTeam        		= Spring.GetUnitTeam
+local GetPlayerInfo      		= Spring.GetPlayerInfo
+local GetPlayerList    		    = Spring.GetPlayerList
+local GetTeamColor       		= Spring.GetTeamColor
+local GetUnitDefID       		= Spring.GetUnitDefID
+local GetAllUnits        		= Spring.GetAllUnits
+local IsUnitInView	 	 		= Spring.IsUnitInView
+local GetCameraPosition  		= Spring.GetCameraPosition
+local GetUnitPosition    		= Spring.GetUnitPosition
+local GetSpectatingState		= Spring.GetSpectatingState
+
+local glDepthTest        		= gl.DepthTest
+local glAlphaTest        		= gl.AlphaTest
+local glColor            		= gl.Color
+local glTranslate        		= gl.Translate
+local glBillboard        		= gl.Billboard
+local glDrawFuncAtUnit   		= gl.DrawFuncAtUnit
+local GL_GREATER     	 		= GL.GREATER
+local GL_SRC_ALPHA				= GL.SRC_ALPHA	
+local GL_ONE_MINUS_SRC_ALPHA	= GL.ONE_MINUS_SRC_ALPHA
+local glBlending          		= gl.Blending
+local glScale          			= gl.Scale
+local max						= math.max
+local min						= math.min
+local glCallList				= gl.CallList
+
+local diag						= math.diag
+
+--------------------------------------------------------------------------------
+
+local comms = {}
+local comnameList = {}
+local CheckedForSpec = false
+local myTeamID = Spring.GetMyTeamID()
+local myPlayerID = Spring.GetMyPlayerID()
+
+local sameTeamColors = false
+if WG['playercolorpalette'] ~= nil and WG['playercolorpalette'].getSameTeamColors ~= nil then
+    sameTeamColors = WG['playercolorpalette'].getSameTeamColors()
+end
+
 --------------------------------------------------------------------------------
 
 -- make text brighter
@@ -63,57 +93,208 @@ local function convertColor(r,g,b,a)
 	return red,green,blue,a
 end
 
--- get player name and team color
-local function getUnitPlayerName(unitID)
-	local team = spGetUnitTeam(unitID)
-	local player,isAI,side,name
-	_,player,_,isAI,side,_,_,_ = spGetTeamInfo(team)
-	if isAI then
-		name = side
-	else
-		name = spGetPlayerInfo(player)
-	end
-	local r, g, b, a = convertColor(spGetTeamColor(team))
-
-	if name == nil or #name < 1 then name = ("Team " .. team) end
-	--name = string.upper(name)
-	return name, {r, g, b, a,}
-end
-
--- draw player name at commander's position
-local function DrawUnitPlayerName(unitID, height, scale)
-	local ux, uy, uz = spGetUnitViewPosition(unitID)
-	local name, color = getUnitPlayerName(unitID)
-	glPushMatrix()
-	glTranslate(ux, uy + height, uz )
-	glBillboard()
+--gets the name, color, and height of the commander
+local function GetCommAttributes(unitID, unitDefID)
+  local team = GetUnitTeam(unitID)
+  if team == nil then
+    return nil
+  end
+  local players = GetPlayerList(team)
+  local name = (#players>0) and GetPlayerInfo(players[1]) or 'Robert Paulson'
+  for _,pID in ipairs(players) do
+    local pname,active,spec = GetPlayerInfo(pID)
+    if active and not spec then
+      name = pname
+      break
+    end
+  end
+  local r, g, b, a = convertColor(GetTeamColor(team))
+  local bgColor = {0,0,0,1}
+  if (r + g*1.2 + b*0.4) < 0.8 then
+		bgColor = {1,1,1,1}
+  end
   
-	glColor(color)
-	glText(name, 0, 0, fontSize * scale, "cns")
-	glText(name, 0, 0, fontSize * scale, "cn")
-	glPopMatrix()
+  local height = UnitDefs[unitDefID].height + heightOffset
+  return {name, {r, g, b, a}, height, bgColor}
 end
 
+local function RemoveLists()
+    for name, list in pairs(comnameList) do
+        gl.DeleteList(comnameList[name])
+    end
+    comnameList = {}
+end
 
---------------------------------------------------------------------------------
--- callins
---------------------------------------------------------------------------------
+local function createComnameList(attributes)
+    if comnameList[attributes[1]] ~= nil then
+        gl.DeleteList(comnameList[attributes[1]])
+    end
+	comnameList[attributes[1]] = gl.CreateList( function()
+		local outlineColor = {0,0,0,1}
+		if (attributes[2][1] + attributes[2][2]*1.2 + attributes[2][3]*0.4) < 0.8 then  -- try to keep these values the same as the playerlist
+			outlineColor = {1,1,1,1}
+		end
+		if useThickLeterring then
+			if outlineColor[1] == 1 and fontShadow then
+			  glTranslate(0, -(fontSize/44), 0)
+			  shadowFont:Begin()
+			  shadowFont:SetTextColor({0,0,0,shadowOpacity})
+			  shadowFont:SetOutlineColor({0,0,0,shadowOpacity})
+			  shadowFont:Print(attributes[1], 0, 0, fontSize, "con")
+			  shadowFont:End()
+			  glTranslate(0, (fontSize/44), 0)
+			end
+			font:SetTextColor(outlineColor)
+			font:SetOutlineColor(outlineColor)
+			
+			font:Print(attributes[1], -(fontSize/38), -(fontSize/33), fontSize, "con")
+			font:Print(attributes[1], (fontSize/38), -(fontSize/33), fontSize, "con")
+		end
+		font:Begin()
+		font:SetTextColor(attributes[2])
+		font:SetOutlineColor(outlineColor)
+		font:Print(attributes[1], 0, 0, fontSize, "con")
+		font:End()
+	end)
+end
+
+function widget:Update(dt)
+    if WG['playercolorpalette'] ~= nil then
+        if WG['playercolorpalette'].getSameTeamColors and sameTeamColors ~= WG['playercolorpalette'].getSameTeamColors() then
+            sameTeamColors = WG['playercolorpalette'].getSameTeamColors()
+            RemoveLists()
+            CheckAllComs()
+        end
+    elseif sameTeamColors == true then
+        sameTeamColors = false
+        RemoveLists()
+        CheckAllComs()
+    end
+    if not singleTeams and WG['playercolorpalette'] ~= nil and WG['playercolorpalette'].getSameTeamColors() then
+        if myTeamID ~= Spring.GetMyTeamID() then
+            -- old
+            local name = GetPlayerInfo(select(2,Spring.GetTeamInfo(myTeamID)))
+            if comnameList[name] ~= nil then
+                gl.DeleteList(comnameList[name])
+                comnameList[name] = nil
+            end
+            -- new
+            myTeamID = Spring.GetMyTeamID()
+            myPlayerID = Spring.GetMyPlayerID()
+            name = GetPlayerInfo(select(2,Spring.GetTeamInfo(myTeamID)))
+            if comnameList[name] ~= nil then
+                gl.DeleteList(comnameList[name])
+                comnameList[name] = nil
+            end
+            CheckAllComs()
+        end
+    end
+end
+
+local function DrawName(attributes)
+	if comnameList[attributes[1]] == nil then
+		createComnameList(attributes)
+	end
+	glTranslate(0, attributes[3], 0)
+	glBillboard()
+	if nameScaling then
+		glScale(usedFontSize/fontSize,usedFontSize/fontSize,usedFontSize/fontSize)
+	end
+	glCallList(comnameList[attributes[1]])
+
+	if nameScaling then
+		glScale(1,1,1)
+	end
+end
+
+function widget:ViewResize()
+  vsx,vsy = Spring.GetViewGeometry()
+end
 
 function widget:DrawWorld()
-	local visibleUnits = spGetVisibleUnits(ALL_UNITS,nil,true)
+  if Spring.IsGUIHidden() then return end
+  -- untested fix: when you resign, to also show enemy com playernames  (because widget:PlayerChanged() isnt called anymore)
+  if not CheckedForSpec and Spring.GetGameFrame() > 1 then
+	  if GetSpectatingState() then
+		CheckedForSpec = true
+		CheckAllComs()
+	  end
+  end
   
-	local _,y,_ = spGetCameraPosition()
+  glDepthTest(true)
+  glAlphaTest(GL_GREATER, 0)
+  glBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+   
+  local camX, camY, camZ = GetCameraPosition()
   
-	local scale = 1 + y / 1100
-	for i=1,#visibleUnits do
-    	local unitID    = visibleUnits[i]
-    	local unitDefID = spGetUnitDefID(unitID)
-    	local unitDef   = UnitDefs[unitDefID or -1]
-		local cp 		= unitDef.customParams or nil
-
-		if unitDef and cp and cp.iscommander then
-			local height    = unitDef.height+heightOffset
-			DrawUnitPlayerName(unitID, height, scale)
-		end
+  for unitID, attributes in pairs(comms) do
+    
+    -- calc opacity
+	if IsUnitInView(unitID) then
+		local x,y,z = GetUnitPosition(unitID)
+		camDistance = diag(camX-x, camY-y, camZ-z) 
+		
+	    usedFontSize = (fontSize*0.7) + (camDistance/scaleFontAmount)
+	    
+		glDrawFuncAtUnit(unitID, false, DrawName, attributes)
 	end
+  end
+  
+  glAlphaTest(false)
+  glColor(1,1,1,1)
+  glDepthTest(false)
 end
+
+--------------------------------------------------------------------------------
+
+function CheckCom(unitID, unitDefID, unitTeam)
+  if (unitDefID and UnitDefs[unitDefID] and UnitDefs[unitDefID].customParams.iscommander) then
+      comms[unitID] = GetCommAttributes(unitID, unitDefID)
+  end
+end
+
+function CheckAllComs()
+  local allUnits = GetAllUnits()
+  for _, unitID in pairs(allUnits) do
+    local unitDefID = GetUnitDefID(unitID)
+    if (unitDefID and UnitDefs[unitDefID].customParams.iscommander) then
+      comms[unitID] = GetCommAttributes(unitID, unitDefID)
+    end
+  end
+end
+
+function widget:Initialize()
+    CheckAllComs()
+end
+
+function widget:Shutdown()
+    RemoveLists()
+end
+
+function widget:PlayerChanged(playerID)
+  local name,_ = GetPlayerInfo(playerID)
+  comnameList[name] = nil
+  CheckAllComs() -- handle substitutions, etc
+end
+    
+function widget:UnitCreated(unitID, unitDefID, unitTeam)
+  CheckCom(unitID, unitDefID, unitTeam)
+end
+
+function widget:UnitDestroyed(unitID, unitDefID, unitTeam)
+  comms[unitID] = nil
+end
+
+function widget:UnitGiven(unitID, unitDefID, unitTeam, oldTeam)
+  CheckCom(unitID, unitDefID, unitTeam)
+end
+
+function widget:UnitTaken(unitID, unitDefID, unitTeam, newTeam)
+  CheckCom(unitID, unitDefID, unitTeam)
+end
+
+function widget:UnitEnteredLos(unitID, unitDefID, unitTeam)
+  CheckCom(unitID, unitDefID, unitTeam)
+end
+
+

@@ -81,7 +81,7 @@ FirePrimary()
 		emit-sfx 1024 from flash;
 		sleep 100;
 		gun_1 = [1];
-		move barrel to z-axis [0.000000] speed [2.000000];
+		move barrel to z-axis [0.000000] speed [9.000000];
 		return (0);
 	}
 	if(gun_1 == [1])
@@ -90,7 +90,7 @@ FirePrimary()
 		emit-sfx 1024 from flash2;
 		sleep 100;
 		gun_1 = [2];
-		move barrel2 to z-axis [0.000000] speed [2.000000];
+		move barrel2 to z-axis [0.000000] speed [9.000000];
 		return (0);
 	}
 	if(gun_1 == [2])
@@ -99,7 +99,7 @@ FirePrimary()
 		emit-sfx 1024 from flash3;
 		sleep 100;
 		gun_1 = [0];
-		move barrel3 to z-axis [0.000000] speed [2.000000];
+		move barrel3 to z-axis [0.000000] speed [9.000000];
 		return (0);
 	}		
 }

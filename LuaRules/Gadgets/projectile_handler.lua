@@ -25,10 +25,17 @@ local GetProjectileName = Spring.GetProjectileName
 local GetProjectilePosition = Spring.GetProjectilePosition
 local SetProjectileCollision = Spring.SetProjectileCollision
 local GetProjectilesInRectangle = Spring.GetProjectilesInRectangle
+local GetProjectileVelocity = Spring.GetProjectileVelocity
 local spCreateUnit = Spring.CreateUnit
 local spGetUnitTeam = Spring.GetUnitTeam
 local spDestroyUnit = Spring.DestroyUnit
+local spDeleteProjectile = Spring.DeleteProjectile
+local spGetUnitHealth = Spring.GetUnitHealth
+local spGetFeatureHealth = Spring.GetFeatureHealth
+local spGetProjectileDamages = Spring.GetProjectileDamages
+local spSetProjectileDamages = Spring.SetProjectileDamages
 local max = math.max
+local min = math.min
 
 local STEP_DELAY = 6 		-- process steps every N frames
 local FIRE_AOE_STEPS = 100	-- 20 seconds
@@ -42,6 +49,14 @@ local fireAOEWeaponEffectId2 = WeaponDefNames["gear_fire_effect2"].id
 local magnetarWeaponId = WeaponDefNames["sphere_magnetar_blast"].id
 local magnetarWeaponEffectId = WeaponDefNames["sphere_magnetar_blast_effect"].id
 local comsatWeaponId = WeaponDefNames["comsat_beacon"].id
+local dynamoWeaponId = WeaponDefNames["claw_dynamo_ring"].id
+
+local DYNAMO_RING_MAX_DAMAGE = 5000
+local DYNAMO_RING_BASE_DAMAGE = 3000
+local DYNAMO_RING_GROUND_DAMAGE = 1500
+local DYNAMO_RING_GROUND_HP = 800
+
+local DYNAMO_RING_FEATURE_DISCOUNT = 0.25
 
 local fireAOEWeaponIds = {
 	-- GEAR
@@ -100,6 +115,7 @@ local fireAOEPositions = {}
 local magnetarProjectiles = {}
 local comsatProjectiles = {}
 local comsatBeaconDefId = UnitDefNames["cs_beacon"].id
+local dynamoProjectiles = {}
 
 -------------------------- SYNCED CODE ONLY
 if (not gadgetHandler:IsSyncedCode()) then
@@ -126,6 +142,9 @@ function gadget:Initialize()
 	
 	-- track comsat projectiles
 	Script.SetWatchWeapon(comsatWeaponId,true)
+	
+	-- track dynamo projectiles
+	Script.SetWatchWeapon(dynamoWeaponId,true)
 end
 
 
@@ -224,10 +243,12 @@ function gadget:GameFrame(n)
 		py = py - 15 + math.random(30)
 		pz = pz - 15 + math.random(30)
 		
+		local vx,vy,vz = GetProjectileVelocity(id)
+		
 		local createdId = Spring.SpawnProjectile(disruptorWeaponEffectId,{
 			["pos"] = {px,py,pz},
 			["end"] = {px,py+3,pz},
-			["speed"] = {0,1,0},
+			["speed"] = {vx,vy,vz},
 			["owner"] = ownerId
 		})
 		
@@ -278,6 +299,10 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	if weaponDefID == comsatWeaponId then
 		comsatProjectiles[proID] = proOwnerID
 		return
+	end
+	if weaponDefID == dynamoWeaponId then
+		dynamoProjectiles[proID] = DYNAMO_RING_MAX_DAMAGE
+		return
 	end	
 end
 
@@ -316,6 +341,8 @@ function gadget:ProjectileDestroyed(proID)
 			end
 		end
 		comsatProjectiles[proID] = nil
+	elseif dynamoProjectiles[proID] then
+		dynamoProjectiles[proID] = nil
 	end
 end
 
@@ -333,4 +360,60 @@ function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attac
 	end
 
 	return true,defaultPriority
+end
+
+-- handle ring damage
+function handleRingDamage(projId, damage, unitHp)
+	local remainingDamage = dynamoProjectiles[projId] - min(damage,unitHp)
+	local expired = false
+	--Spring.Echo("ring! "..projId.." / dmg="..damage.." remDmg="..remainingDamage)
+	
+	-- already hit for enough damage
+	if (remainingDamage < 0) then
+		expired = true
+	-- hit a tough object
+	elseif unitHp > 0 and (unitHp > remainingDamage) then
+		expired = true
+	end
+	
+	-- remove ring, or update the damage
+	if (expired) then
+		spDeleteProjectile(projId)
+		-- spawn a bigger explosion
+		px,py,pz = GetProjectilePosition(projId)
+		Spring.SpawnCEG("ringblastwrapper", px, py, pz,0,1,0,3000,3000)
+		Spring.PlaySoundFile('Sounds/ringhit.wav', 1, px, py, pz)
+	else
+		dynamoProjectiles[projId] = remainingDamage
+	end
+end
+
+-- dynamo ring damage tracking
+function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
+	if (dynamoProjectiles[projectileID]) then
+		local hp,_,_,_,_ = spGetUnitHealth(unitID)
+		handleRingDamage(projectileID, damage,hp)
+	end
+end
+
+-- TODO changing this to featureDamaged fixes the issue with the features jumping when hit
+-- currently set impulse to 0, so features can no longer be pushed around
+function gadget:FeaturePreDamaged(featureID, featureDefID, featureTeam, damage, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
+	if (dynamoProjectiles[projectileID]) then
+		local hp,_,_ = spGetFeatureHealth(featureID)
+		handleRingDamage(projectileID, damage * DYNAMO_RING_FEATURE_DISCOUNT,hp * DYNAMO_RING_FEATURE_DISCOUNT)
+	end
+	
+	return damage,0
+end
+
+-- ground explosions for rings are limited 
+function gadget:Explosion(weaponDefID, px, py, pz, attackerID, projectileID)
+	if (dynamoProjectiles[projectileID]) then
+		h = Spring.GetGroundHeight(px,pz)
+		if (py < h + 3 or py < 3) then
+			--Spring.Echo("dynamo projectile GROUND impact at frame="..GetGameFrame())
+			handleRingDamage(projectileID, DYNAMO_RING_GROUND_DAMAGE,DYNAMO_RING_GROUND_HP)
+		end
+	end
 end

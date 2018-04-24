@@ -37,10 +37,10 @@ local spGetMetalAmount = Spring.GetMetalAmount
 -- assigns metal to the defined metal spots when the gadget loads
 function gadget:Initialize()
 	if mapConfig and mapInfo then
-		--for key,value in pairs(mapInfo) do
+		--for key,value in pairs(mapInfo.custom) do
 		--	Spring.Echo("HERE "..key.."="..tostring(value))
 		--end
-		
+	
 		-- if there's already any metal value set, skip this
 		local xIndex, zIndex, xi, zi
 		for xi = 0, MAP_SIZE_X_SCALED do

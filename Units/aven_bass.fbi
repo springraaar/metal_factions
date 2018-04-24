@@ -5,7 +5,7 @@
 	//********************
 	Side=Aven;
 	name=Bass;
-	description=Mobile Mass Disruptor Tank;
+	description=Mobile Mass Disruptor;
 
 	//************************************************************
 	//  Categories
@@ -121,7 +121,7 @@
 
 	[CustomParams]
 	{
-		tip=weapon deals 500-2500(L) disruptor damage to each enemy in a line;
+		tip=weapon deals 250-1250(L) disruptor damage to each enemy in a line;
 	}
 	//************************************************************
 	//  To be removed
@@ -129,7 +129,7 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:rocketflaremed;
+	explosiongenerator0=custom:disrwavefire;
 	}
 	buildcostenergy=12500;//#AUTO#
 	buildcostmetal=2500;//#AUTO#

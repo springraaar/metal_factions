@@ -1076,6 +1076,14 @@
 }
 
 
+[TSUNAMIBLASTWRAPPER]			// tsunami blast wrapper
+{
+	usedefaultexplosions=0;
+	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d0.5 p0.6 x0;explosionGenerator=custom:FLAKBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_dust]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d2 p0.6 x0;explosionGenerator=custom:DYNDUSTBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_windsphere]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d2 p0.6 x0;explosionGenerator=custom:DYNWINDSPHERE;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+
 [REDBLAST]			// red blast
 {
 	usedefaultexplosions=0;
@@ -1635,6 +1643,14 @@
 	[_stdblast3]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=10;damage=6 y0 d0.3 p0.6 x0;explosionGenerator=custom:BLUELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
 
+[RINGBIGBLASTWRAPPER]			// blue laser blast wrapper
+{
+	usedefaultexplosions=0;
+	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d0.15 p0.6 x0;explosionGenerator=custom:BLUELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=6;damage=6 y0 d0.12 p0.6 x0;explosionGenerator=custom:BLUELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast3]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=12;damage=6 y0 d0.1 p0.6 x0;explosionGenerator=custom:BLUELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast4]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=18;damage=6 y0 d0.08 p0.6 x0;explosionGenerator=custom:BLUELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
 
 [COLLISION]			// collision "blast"
 {

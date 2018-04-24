@@ -306,9 +306,10 @@ SweetSpot(piecenum)
 
 RestoreAfterDelay()
 {
-	sleep 2750;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
 	turn torso to y-axis <0.000000> speed <90.000000>;
 	turn ruparm to x-axis <0.000000> speed <45.000000>;
+	turn luparm to x-axis <0.000000> speed <45.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn ruparm around x-axis;
 	bAiming = FALSE;

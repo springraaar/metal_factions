@@ -237,7 +237,7 @@
 }
 [E400]
 {
-	usedefaultexplosions=1;	
+	usedefaultexplosions=0;	
 	[groundflash]
 	{
 		flashSize = 80;
@@ -355,7 +355,7 @@
 }
 [E800]
 {
-	usedefaultexplosions=1;
+	usedefaultexplosions=0;
 	[groundflash]
 	{
 		flashSize = 200;
@@ -473,7 +473,7 @@
 }
 [E1600]
 {
-	usedefaultexplosions=1;	
+	usedefaultexplosions=0;	
 	[groundflash]
 	{
 		flashSize = 400;
@@ -680,7 +680,7 @@
 
 [FLAMETHROWER]
 {
-	usedefaultexplosions=1;
+	usedefaultexplosions=0;
 	[heatcloud]
    	{
 	      	[properties]
@@ -872,7 +872,7 @@
 
 [LIGHTNING]
 {
-	usedefaultexplosions=1;	
+	usedefaultexplosions=0;	
 	[groundflash]
 	{
 		flashSize = 60.0;
@@ -992,7 +992,7 @@
 }
 [LIGHTNINGSML]
 {
-	usedefaultexplosions=1;	
+	usedefaultexplosions=0;	
 	[groundflash]
 	{
 		flashSize = 40.0;
@@ -2155,7 +2155,7 @@
 
 [OPALBLAST]
 {
-	usedefaultexplosions=1;	
+	usedefaultexplosions=0;	
 	[groundflash]
 	{
       		flashSize = 43;
@@ -2491,6 +2491,13 @@
 	[_sparks]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;explosionGenerator=custom:sparks;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
 
+[EMPEFFECT2]
+{
+	usedefaultexplosions=0;
+	// do nothing
+}
+
+
 [DEATHORBBLAST]
 {
 	usedefaultexplosions=0;
@@ -2573,7 +2580,7 @@
 {
 	[groundflash]
 	{
-		flashSize = 35;
+		flashSize = 25;
 		flashAlpha = 0.22;
 		circleGrowth = 1;
 		circleAlpha = 0.2;
@@ -2586,7 +2593,7 @@
 		class=explspike;
 		[properties]
 		{
-			dir=-10 r20,-10 r20,-10 r20;
+			dir=-7 r14,-7 r14,-7 r14;
 			width=15;
 			length=1; //60;
 			alpha=1;
@@ -2605,7 +2612,7 @@
 		class=explspike;
 		[properties]
 		{
-			dir=-10 r20,-10 r20,-10 r20;
+			dir=-7 r14,-7 r14,-7 r14;
 			width=15;
 			length=1; //60;
 			alpha=1;
@@ -2665,7 +2672,7 @@
 		flashAlpha = 0.22;
 		circleGrowth = 1;
 		circleAlpha = 0.2;
-		ttl = 40;
+		ttl = 70;
 		color = 0.9,0.3,0.1;
 	}
 	usedefaultexplosions=0;	
@@ -2747,7 +2754,7 @@
 }
 [RAILGUNBLAST]
 {
-	usedefaultexplosions=1;	
+	usedefaultexplosions=0;	
 	[groundflash]
 	{
       		flashSize = 43;
@@ -2820,7 +2827,7 @@
 
 [RAILGUNBLASTSML]
 {
-	usedefaultexplosions=1;	
+	usedefaultexplosions=0;	
 	[groundflash]
 	{
       		flashSize = 15;
@@ -2886,7 +2893,7 @@
 
 [BLUELASERSML]
 {
-	usedefaultexplosions=1;	
+	usedefaultexplosions=0;	
 	[groundflash]
 	{
       		flashSize = 33;
@@ -2972,7 +2979,7 @@
 }
 [BLUELASER]
 {
-	usedefaultexplosions=1;	
+	usedefaultexplosions=0;	
 	[groundflash]
 	{
       		flashSize = 53;

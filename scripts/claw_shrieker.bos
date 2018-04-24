@@ -163,7 +163,7 @@ FirePrimary()
 		move lbarrel to z-axis [-7.000000] now;
 		emit-sfx 1024 + 0 from lflare;
 		sleep 100;
-		move lbarrel to z-axis [0.000000] speed [3.000000];
+		move lbarrel to z-axis [0.000000] speed [12.000000];
 		gun_1=[1];
 		return 0;
 	}
@@ -172,7 +172,7 @@ FirePrimary()
 		move rbarrel to z-axis [-7.000000] now;
 		emit-sfx 1024 + 0 from rflare;
 		sleep 100;
-		move rbarrel to z-axis [0.000000] speed [3.000000];
+		move rbarrel to z-axis [0.000000] speed [12.000000];
 		gun_1=[0];
 		return 0;
 	}

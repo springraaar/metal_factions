@@ -180,11 +180,15 @@ ChargeControl(healthPercent, oldHealthPercent)
 	}
 }
 
-ChargeDisruptionControl(healthPercent, oldHealthPercent,oldHealthPercent2,oldHealthPercent3)
+ChargeDisruptionControl(healthPercent, oldHealthPercent,oldHealthPercent2,oldHealthPercent3,oldHealthPercent4,oldHealthPercent5,oldHealthPercent6)
 {
 	oldHealthPercent = 100;
 	oldHealthPercent2 = 100;
 	oldHealthPercent3 = 100;
+	oldHealthPercent4 = 100;
+	oldHealthPercent5 = 100;
+	oldHealthPercent6 = 100;
+	
 	
 	while(TRUE) {
 		while( get BUILD_PERCENT_LEFT )
@@ -192,10 +196,10 @@ ChargeDisruptionControl(healthPercent, oldHealthPercent,oldHealthPercent2,oldHea
 			sleep 100;
 		}
 
-		// taking 25% HP in damage or more within one second resets the charging process
+		// taking 25% HP in damage or more within 3 seconds resets the charging process
 		healthPercent = get HEALTH;
 		
-		if( (oldHealthPercent3 - healthpercent) > 25 )
+		if( (oldHealthPercent6 - healthpercent) > 25 )
 		{
 			if (chargeState > [0] ) {
 				signal SIG_RESET; // kill charge updater
@@ -213,10 +217,13 @@ ChargeDisruptionControl(healthPercent, oldHealthPercent,oldHealthPercent2,oldHea
 			}
 		}
 		
+		oldHealthPercent6 = oldHealthPercent5;
+		oldHealthPercent5 = oldHealthPercent4;
+		oldHealthPercent4 = oldHealthPercent3;
 		oldHealthPercent3 = oldHealthPercent2;
 		oldHealthPercent2 = oldHealthPercent;
 		oldHealthPercent = healthPercent;
-		sleep 330;
+		sleep 500;
 	}
 }
 

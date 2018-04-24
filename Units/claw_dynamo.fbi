@@ -1,0 +1,151 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Dynamo;
+	description=Mobile Anti-Armor Energy Ring Launcher;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW TANK LEVEL2 WEAPON NOTAIR NOTSUB;
+	tedclass=TANK;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=claw_dynamo;
+	unitnumber=20000;
+	objectname=claw_dynamo.3do;
+	corpse=claw_dynamo_dead;
+	buildpic=claw_dynamo.png;
+	soundcategory=aven_TANK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=2400;
+	healtime=30;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0.0;
+	energyuse=0.0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKSH4;
+	turnrate=400;
+	acceleration=0.2;
+	brakerate=0.5;
+	maxvelocity=1.35;
+	maxslope=12;
+	maxwaterdepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_dynamo_ring;
+	nochasecategory=VTOL;
+	badtargetcategory1=VTOL;
+	explodeas=PENETRATOR_BLAST;
+	selfdestructas=PENETRATOR_BLAST;
+	onlytargetcategory1=NOTAIR;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ARM-MRA;
+	downloadable=1;
+	leavetracks=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	trackoffset=5;
+	trackstrength=6;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=33;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =60 45 60;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[CustomParams]
+	{
+		evalFactor=0.9;
+		tip=Ring charging resets if dealt 15%+ HP in damage within 3 seconds. Penetrates wreckages and low HP targets;
+	}
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:ringchargebig1;
+		explosiongenerator1=custom:ringchargebig2;
+		explosiongenerator2=custom:ringchargebig3;
+		explosiongenerator3=custom:ringchargebig4;
+		explosiongenerator4=custom:rocketflarebig;
+		explosiongenerator5=custom:nanoframeblast;
+	}
+
+	buildcostenergy=14476;//#AUTO#
+	buildcostmetal=2895;//#AUTO#
+	buildtime=34501;//#AUTO#
+}

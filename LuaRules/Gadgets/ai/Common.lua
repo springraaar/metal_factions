@@ -735,6 +735,7 @@ attackerList =
 	"aven_penetrator",
 	"aven_merl",
 	"aven_kodiak",
+	"aven_tsunami",
 
 	"aven_icarus",
 	"aven_gryphon",
@@ -780,6 +781,7 @@ attackerList =
 	"gear_mobile_artillery",
 	"gear_eruptor",
 	"gear_flareon",
+	"gear_luminator",
 
 	"gear_vector",
 	"gear_stratos",
@@ -825,7 +827,8 @@ attackerList =
       "claw_tempest",
       "claw_dizzy",
       "claw_gyro",
-      "claw_mace",               
+      "claw_mace",
+      "claw_dynamo",     
 ------------------------------------------------ SPHERE
       "sphere_bit",
       "sphere_slicer",

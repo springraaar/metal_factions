@@ -262,7 +262,7 @@ FirePrimary()
 	move barrel to z-axis [-2.5] now;
 	emit-sfx 1024 + 0 from flare;
 	sleep 130;
-	move barrel to z-axis [0] speed [1.5];	
+	move barrel to z-axis [0] speed [5.0];	
 }
 
 QueryPrimary(piecenum)

@@ -1,0 +1,330 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 	100
+
+piece  gp, base, turret,base2,t1,t2,t1cover,t2cover, flare, ringholder,ring1,ring2,ring3,ring4, tbase2, tbase3, ringfx,ringfx2;
+
+static-var  restore_delay, reloadTime, isReady, chargeState;
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_RESET			8
+
+
+#include "tankthreads.h"
+
+lua_resetReload() { return 0; }
+
+
+
+ChargeControl(healthPercent, oldHealthPercent)
+{
+	set-signal-mask SIG_RESET;
+	while(TRUE) {
+		while( get BUILD_PERCENT_LEFT )
+		{
+			chargeState = [0];
+			sleep 100;
+		}
+		
+		if (isReady == FALSE) {
+			chargeState = [0];
+			sleep reloadTime / 5;
+			chargeState = [1];
+			sleep reloadTime / 5;
+			chargeState = [2];
+			sleep reloadTime / 5;
+			chargeState = [3];
+			sleep reloadTime / 5;
+			chargeState = [4];
+			sleep reloadTime / 5;
+			isReady = TRUE;
+		}
+		sleep 100;
+	}
+}
+
+ChargeDisruptionControl(healthPercent, oldHealthPercent,oldHealthPercent2,oldHealthPercent3,oldHealthPercent4,oldHealthPercent5,oldHealthPercent6)
+{
+	oldHealthPercent = 100;
+	oldHealthPercent2 = 100;
+	oldHealthPercent3 = 100;
+	oldHealthPercent4 = 100;
+	oldHealthPercent5 = 100;
+	oldHealthPercent6 = 100;
+		
+	while(TRUE) {
+		while( get BUILD_PERCENT_LEFT )
+		{
+			sleep 100;
+		}
+
+		// taking 15% HP in damage or more within 3 seconds resets the charging process
+		healthPercent = get HEALTH;
+		
+		if( (oldHealthPercent3 - healthpercent) > 15 )
+		{
+			if (chargeState > [0] ) {
+				signal SIG_RESET; // kill charge updater
+				chargeState = [0];
+				isReady = FALSE;
+				set CEG_DAMAGE to 20;
+				emit-sfx 1024+5 from flare;
+				stop-spin ringholder around y-axis;
+				hide ring1;
+				hide ring2;
+				hide ring3;
+				hide ring4;
+				call-script lua_resetReload();
+				start-script ChargeControl(); // restore charge updater
+			}
+		}
+		
+		oldHealthPercent6 = oldHealthPercent5;
+		oldHealthPercent5 = oldHealthPercent4;
+		oldHealthPercent4 = oldHealthPercent3;
+		oldHealthPercent3 = oldHealthPercent2;
+		oldHealthPercent2 = oldHealthPercent;
+		oldHealthPercent = healthPercent;
+		sleep 500;
+	}
+}
+
+
+ChargeFX(previousState) {
+
+	while(TRUE) {
+		
+		if (chargeState == [0]) {
+			if (previousState != chargeState) {
+				stop-spin ringholder around y-axis;
+				hide ring1;
+				hide ring2;
+				hide ring3;
+				hide ring4;
+			}
+		}
+		if (chargeState == [1]) {
+			if (previousState != chargeState) {
+				emit-sfx 1024+4 from flare;
+				emit-sfx 1024+4 from ring1;
+				emit-sfx 1024+4 from ring2;
+				emit-sfx 1024+4 from ring3;
+				emit-sfx 1024+4 from ring4;
+				sleep 100;
+				spin ringholder around y-axis speed <200>;
+				show ring1;
+				hide ring2;
+				hide ring3;
+				hide ring4;
+				spin ring1 around y-axis speed <200>;
+			}
+			emit-sfx 1024 + 0 from ringfx;
+			emit-sfx 1024 + 0 from ringfx2;
+		}
+		if (chargeState == [2]) {
+			if (previousState != chargeState) {
+				spin ringholder around y-axis speed <400>;
+				hide ring1;
+				show ring2;
+				hide ring3;
+				hide ring4;
+				spin ring2 around y-axis speed <400>;
+			}
+			emit-sfx 1024 + 1 from ringfx;
+			emit-sfx 1024 + 1 from ringfx2;
+		}		
+		if (chargeState == [3]) {
+			if (previousState != chargeState) {
+				spin ringholder around y-axis speed <600>;
+				hide ring1;
+				hide ring2;
+				show ring3;
+				hide ring4;
+				spin ring3 around y-axis speed <600>;
+			}
+			emit-sfx 1024 + 2 from ringfx;
+			emit-sfx 1024 + 2 from ringfx2;
+		}
+		if (chargeState == [4]) {~
+			if (previousState != chargeState) {
+				spin ringholder around y-axis speed <800>;
+				hide ring1;
+				hide ring2;
+				hide ring3;
+				show ring4;
+				spin ring4 around y-axis speed <800>;
+			}
+			emit-sfx 1024 + 3 from ringfx;
+			emit-sfx 1024 + 3 from ringfx2;
+		}
+		previousState = chargeState;
+		sleep 30;
+	}
+
+}
+
+resetReload() {
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 30;
+	}
+	call-script lua_resetReload();
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+RockUnit(anglex, anglez)
+{
+	turn base to x-axis anglex speed <50.005495>;
+	turn base to z-axis anglez speed <50.005495>;
+	wait-for-turn base around z-axis;
+	wait-for-turn base around x-axis;
+	turn base to z-axis <0.000000> speed <20.000000>;
+	turn base to x-axis <0.000000> speed <20.000000>;
+}
+
+HitByWeapon(Func_Var_1, Func_Var_2)
+{
+	turn base to z-axis Func_Var_2 speed <105.016484>;
+	turn base to x-axis Func_Var_1 speed <105.016484>;
+	wait-for-turn base around z-axis;
+	wait-for-turn base around x-axis;
+	turn base to z-axis <0.000000> speed <30.005495>;
+	turn base to x-axis <0.000000> speed <30.005495>;
+}
+
+Create()
+{
+	hide ring1;
+	hide ring2;
+	hide ring3;
+	hide ring4;
+	restore_delay = 5000;
+	
+	
+	
+	bMoving = FALSE;
+	isReady = FALSE;
+	chargeState = [0];
+	reloadTime = 15000;
+	
+	start-script ChargeDisruptionControl();
+	start-script ChargeControl();
+	start-script ChargeFX();
+
+	start-script SmokeUnit();
+	start-script AnimateTracks();
+	start-script resetReload();
+}
+
+
+SetMaxReloadTime(time)
+{
+	reloadTime = time;
+	return (0);
+}
+
+RestoreAfterDelay()
+{
+	sleep restore_delay;
+	turn turret to y-axis <0.000000> speed <300.016484>;
+	turn flare to x-axis <0.000000> speed <150.005495>;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	
+	while (!isReady) {
+		sleep 100;
+	}
+	turn turret to y-axis heading speed <940.000000>;
+	turn flare to x-axis <0.000000> - pitch now;
+	wait-for-turn turret around y-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	chargeState = [0];
+	hide ring1;
+	hide ring2;
+	hide ring3;
+	hide ring4;
+	isReady = FALSE;
+	stop-spin ring1 around y-axis;
+	stop-spin ring2 around y-axis;
+	stop-spin ring3 around y-axis;
+	stop-spin ring4 around y-axis;
+	stop-spin ringholder around y-axis;
+	turn ringholder to y-axis <0> now;
+	emit-sfx 1024+4 from flare;
+	return (1);
+}
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		corpsetype = 1;
+		
+		explode ringholder type SHATTER;
+		explode turret type SHATTER;
+		explode base2 type SHATTER;
+		return (0);
+	}
+	corpsetype = 2;
+
+	explode base2 type SHATTER;
+	explode base type SHATTER;
+	explode turret type SHATTER;
+	explode ringholder type SHATTER;
+	explode tbase2 type SHATTER;
+	
+	return (0);
+}

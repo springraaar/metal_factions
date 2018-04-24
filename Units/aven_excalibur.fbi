@@ -27,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2400;
+	maxdamage=1800;
 	healtime=30;
 	footprintx=4;
 	footprintz=4;
@@ -110,7 +110,7 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =40 40 50;
+	collisionVolumeScales =40 40 70;
 	collisionVolumeOffsets = 0 5 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
@@ -124,7 +124,7 @@
 	explosiongenerator0=custom:snipeflare;
 	}
 
-	buildcostenergy=15541;//#AUTO#
-	buildcostmetal=3108;//#AUTO#
-	buildtime=37040;//#AUTO#
+	buildcostenergy=13734;//#AUTO#
+	buildcostmetal=2746;//#AUTO#
+	buildtime=32733;//#AUTO#
 }

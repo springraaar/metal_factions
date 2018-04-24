@@ -460,7 +460,7 @@
 
 [YELLOWFLAREBIG]
 {
-	usedefaultexplosions=1;	
+	usedefaultexplosions=0;	
 
 	[LARGEFLASH]
 	{
@@ -602,7 +602,7 @@
 
 [ROCKETFLARESML]
 {
-	usedefaultexplosions=1;	
+	usedefaultexplosions=0;	
 
 	[GLOWCENTER]
 	{
@@ -671,7 +671,7 @@
 
 [ROCKETFLAREMED]
 {
-	usedefaultexplosions=1;	
+	usedefaultexplosions=0;	
 
 	[GLOWCENTER]
 	{
@@ -740,7 +740,7 @@
 
 [ROCKETFLAREBIG]
 {
-	usedefaultexplosions=1;	
+	usedefaultexplosions=0;	
 
 	[GLOWCENTER]
 	{
@@ -806,6 +806,57 @@
 	}
 }
 
+
+[DISRWAVEFIRE]
+{
+	usedefaultexplosions=0;	
+
+	[GLOWCENTER]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=-0.7 r1.4, -0.7 r1.4, -0.7 r1.4;
+			width=45;
+			length=36;
+			alpha=0.2;
+			alphadecay=0.015;
+			color=0.9, 0.8, 0.6;
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=3; 
+	}
+	[GLOW]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=-0.7 r1.4, -0.7 r1.4, -0.7 r1.4;
+			width=60;
+			length=45;
+			alpha=0.2;
+			alphadecay=0.01;
+			color = 0.7,0.8,1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=6; 
+	}
+	[GROUNDFLASH]
+	{
+		flashSize = 100;
+		flashAlpha = 0.15;
+		circleGrowth = 0;
+		circleAlpha = 0.1;
+		ttl = 10;
+		color = 0.7,0.8,1;
+
+	}
+}
 
 
 

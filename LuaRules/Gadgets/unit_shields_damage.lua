@@ -80,6 +80,7 @@ local BURNING_CEG = "burneffect"
 local BURNING_SOUND = "Sounds/BURN1.wav"
 
 local EMP_CEG = "ElectricSequenceSML2"
+local EMP_SOUND = 'Sounds/Lashit.wav'
 
 local UNIT_DAMAGE_XP = 0.05     -- 100% damage taken is converted to experience using this factor
 								-- currently set to half as much as fully damaging and enemy unit of equal power
@@ -420,7 +421,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 			local _,_,_,x,y,z = spGetUnitPosition(unitID,true)
 			if x ~= nil then
 				Spring.SpawnCEG(EMP_CEG, x - 10 + math.random(20), y, z - 10 + math.random(20), 0, 1, 0,30 ,30)
-				--Spring.PlaySoundFile(EMP_SOUND, 4, x, y+h, z)
+				Spring.PlaySoundFile(EMP_SOUND, 4, x, y, z)
 			end
 		end
 	end

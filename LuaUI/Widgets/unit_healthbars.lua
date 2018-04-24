@@ -28,16 +28,16 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-local barHeight = 3
+local barHeight = 4
 local barWidth  = 14  --// (barWidth)x2 total width!!!
 local barAlpha  = 0.9
 
-local featureBarHeight = 3
+local featureBarHeight = 4
 local featureBarWidth  = 10
 local featureBarAlpha  = 0.6
 
 local drawBarTitles = true
-local titlesAlpha   = 0.3*barAlpha
+local titlesAlpha   = 0.9*barAlpha
 
 local drawFullHealthBars = false
 
@@ -426,10 +426,10 @@ do
       if (fullText) then
         if (barShader) then glMyText(1) end
         glColor(1,1,1,barAlpha)
-        glText(barInfo.text,barStart,yoffset,4,"r")
+        glText(barInfo.text,barStart,yoffset-1,5,"r")
         if (drawBarTitles) then
           glColor(1,1,1,titlesAlpha)
-          glText(barInfo.title,0,yoffset,2.5,"cd")
+          glText(barInfo.title,0,yoffset,3,"c")
         end
         if (barShader) then glMyText(0) end
       end
@@ -447,10 +447,10 @@ do
       if (fullText) then
         if (barShader) then glMyText(1) end
         glColor(1,1,1,featureBarAlpha)
-        glText(barInfo.text,fBarStart,yoffset,4,"r")
+        glText(barInfo.text,fBarStart,yoffset-1,5,"r")
         if (drawBarTitles) then
           glColor(1,1,1,featureTitlesAlpha)
-          glText(barInfo.title,0,yoffset,2.5,"cd")
+          glText(barInfo.title,0,yoffset,3,"c")
         end
         if (barShader) then glMyText(0) end
       end

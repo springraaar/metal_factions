@@ -1,0 +1,120 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=GEAR;
+	name=Land mine;
+	description=Perimeter defense;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR NOTAIR NOTSUB;
+	tedclass=MINE;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_mine;
+	unitnumber=223;
+	objectname=gear_mine.3do;
+	buildpic=gear_mine.png;
+	soundcategory=MINE;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=100;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	YardMap=y;
+	levelground=0;
+	upright=0;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=15 8 15;
+	collisionVolumeOffsets=0 -2 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=0;
+	canmove=0;
+	canpatrol=0;
+	canstop=0;
+	kamikaze=1;
+	stealth=1;
+	canguard=0;
+	sonarStealth=1;
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=30;
+	maxwaterdepth=100;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=250;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=gear_mine_blast;
+	selfdestructas=gear_mine_blast;
+	selfdestructcountdown=0;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=Standby_Mine;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	cancloak=1;
+	cloakcost=5;
+	initcloaked=1;
+	kamikazedistance=50;
+	mincloakdistance=20;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[customParams]
+	{
+
+	}
+
+
+	buildcostenergy=350;//#AUTO#
+	buildcostmetal=70;//#AUTO#
+	buildtime=840;//#AUTO#
+}

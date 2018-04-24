@@ -1,0 +1,136 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Aven;
+	name=Tsunami;
+	description=Heavy Riot Hovercraft;
+	icontype=hover;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN HOVER WEAPON LEVEL2 NOTAIR NOTSUB;
+	tedclass=TANK;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=aven_tsunami;
+	unitnumber=174;
+	objectname=aven_tsunami.3do;
+	corpse=aven_tsunami_dead;
+	buildpic=aven_tsunami.png;
+	soundcategory=aven_HOVER_MID;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=7000;
+	healtime=30;
+	footprintx=6;
+	footprintz=6;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canhover=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKHOVER5;
+	turnrate=200;
+	acceleration=0.01;
+	brakerate=0.01;
+	maxvelocity=1.9;
+	maxslope=16;
+	maxwaterdepth=0;
+	turnInPlace=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_tsunami_cannon;
+	nochasecategory=VTOL;
+	badtargetcategory1=VTOL;
+	explodeas=PENETRATOR_BLAST;
+	selfdestructas=PENETRATOR_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ARM-HG;
+	downloadable=1;
+	maneuverleashlength=640;
+	damagemodifier=0.75;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =60 40 70;
+	collisionVolumeOffsets = 0 5 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	[CustomParams]
+	{
+		tip=Gains 20% damage resistance when closed. Projectile explosions push enemy units.;
+	}
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:blueflaresml;
+	}
+
+	buildcostenergy=20422;//#AUTO#
+	buildcostmetal=4084;//#AUTO#
+	buildtime=48674;//#AUTO#
+}

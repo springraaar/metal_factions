@@ -6,7 +6,7 @@
 #define SPEEDUP_FACTOR	90
 #define RESTORE_DELAY	3000
 
-piece  torso, ruparm, luparm, rbigflash, nanospray, pelvis, lf1, lf2, head, lthigh, rthigh, lloarm, rloarm, rleg, lleg, rfoot,lfoot, torpgun,torpedo, lfirept2, h2, nano, lemg, rgun, t2,t3,t4,lshoulder,rshoulder;
+piece  torso, ruparm, luparm, rbigflash, nanospray, pelvis, lf1, lf2, head, lthigh, rthigh, lloarm, rloarm, rleg, lleg, rfoot,lfoot, torpgun,torpedo, lfirept2, h2, nano, launcher, launcher2, rgun, t2,t3,t4,lshoulder,rshoulder;
 
 static-var  bMoving, bBuilding, bDgunning,bAiming, Static_Var_6, bUnderwater, canAim1, canAim2, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, gun_1, legAngle1, legAngle2, legAngle3;
 
@@ -129,7 +129,8 @@ checkUnderwater()
 			if(bUnderwater)
 			{
 				//hide emg stuff
-				hide lemg;
+				hide launcher;
+				hide launcher2;
  				
 				//TODO show weapon morph stuff
 				sleep 10;
@@ -156,7 +157,8 @@ checkUnderwater()
 				sleep 10;
 
 				//show emg stuff 			
- 				show lemg;
+ 				show launcher;
+ 				show launcher2;
  		
  				sleep 200;	
  				canAim1 = TRUE;

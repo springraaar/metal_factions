@@ -230,7 +230,7 @@ if (true) then
 				factionBuilding = true
 			end
 			local fpMod = 1.5
-			if (factionBuilding == true and (not (unitDef.floater or unitDef.waterline) or (not unitDef.minwaterdepth or tonumber(unitDef.minwaterdepth) < 0) )) then
+			if (factionBuilding == true and name ~= "gear_mine" and (not (unitDef.floater or unitDef.waterline) or (not unitDef.minwaterdepth or tonumber(unitDef.minwaterdepth) < 0) )) then
 				unitDef.usebuildinggrounddecal = true
 				if (reducedDecalSizeUnits[name] ) then
 					fpMod = 0.85

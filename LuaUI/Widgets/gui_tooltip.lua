@@ -162,18 +162,23 @@ function GetTooltipWeaponData(ud, xpMod, rangeMod, dmgMod)
 		for _,w in pairs(ud.weapons) do
 			local weap=WeaponDefs[w.weaponDef]
 		    if weap.isShield == false and weap.description ~= "No Weapon" then
-                local weapon_action="Dmg/s"
-                local reloadTime = weap.reload / xpMod
-                local isBeamLaser = weap.type == "BeamLaser"
-                local damage = dmgMod * (weap.damages[Game.armorTypes.default] * (weap.projectiles*weap.salvoSize)) 
-                local dps = damage / reloadTime
-                local energyPerSecond = (weap.energyCost * (weap.projectiles*weap.salvoSize)) / reloadTime
+				local weapon_action="Dmg/s"
+				local reloadTime = weap.reload / xpMod
+				local isBeamLaser = weap.type == "BeamLaser"
+				local damage = dmgMod * (weap.damages[Game.armorTypes.default] * (weap.projectiles*weap.salvoSize)) 
+				local dps = damage / reloadTime
+				local energyPerSecond = (weap.energyCost * (weap.projectiles*weap.salvoSize)) / reloadTime
+				local isDisruptor = false
 				local actionStr = ""
-				
+
+				if weap.damages and weap.damages.paralyzeDamageTime and weap.damages.paralyzeDamageTime>0 then
+                   weapon_action="Paralyze/s"
+                   isDisruptor = true
+                end
 				if (reloadTime > 5) then
-					actionStr = weapon_action..": \255\255\255\255"..FormatNbr(damage,0).."/"..FormatNbr(reloadTime,2).."s"
+					actionStr = weapon_action..": \255\255\255\255"..(isDisruptor and "\255\100\255\255" or "")..FormatNbr(damage,0).."\255\255\255\255/"..FormatNbr(reloadTime,2).."s"
 				else 
-					actionStr = weapon_action..": \255\255\255\255"..FormatNbr(dps,1)
+					actionStr = weapon_action..": \255\255\255\255"..(isDisruptor and "\255\100\255\255" or "")..FormatNbr(dps,1).."\255\255\255\255"
 				end
 
                 local range = weap.range * rangeMod
@@ -185,9 +190,7 @@ function GetTooltipWeaponData(ud, xpMod, rangeMod, dmgMod)
                 	hitpower = "M"
                 end
                 
-                if weap.damages and weap.damages.paralyzeDamageTime and weap.damages.paralyzeDamageTime>0 then
-                   weapon_action="Paralyze/s"
-                end
+       
                 NewTooltip = NewTooltip.."\n\255\255\255\255"..weap.description.."    "..actionStr.."("..hitpower..")     Range: "..FormatNbr(range,2)
 
                 if energyPerSecond  > 0 then

@@ -1755,6 +1755,7 @@ local avenHovercraftPlant = {
 	"aven_slider",
 	"aven_excalibur",
 	{action = "randomness", probability = 0.5, value = "aven_turbulence"},
+	{action = "randomness", probability = 0.3, value = "aven_tsunami"},
 	{action = "wait", frames = 128}
 }
 
@@ -1762,7 +1763,7 @@ local avenHovercraftPlant = {
 
 -- choices by threat type : AIR, DEFENSES, NORMAL[, UNDERWATER]
 
-local function gearL2KbotChoice(self) return choiceByType(self,{"gear_titan","gear_barrel"},{"gear_big_bob","gear_moe"},{"gear_big_bob","gear_pyro","gear_moe","gear_psycho","gear_titan","gear_barrel"}) end
+local function gearL2KbotChoice(self) return choiceByType(self,{"gear_titan","gear_barrel"},{"gear_big_bob","gear_moe","gear_moe","gear_luminator"},{"gear_big_bob","gear_pyro","gear_moe","gear_psycho","gear_titan","gear_barrel"}) end
 local function gearL1LightChoice(self) return choiceByType(self,"gear_crasher",{"gear_raider","gear_kano","gear_thud"},{"gear_crasher","gear_kano","gear_box","gear_instigator","gear_aggressor"}) end
 local function gearL2VehicleChoice(self) return choiceByType(self,"gear_marauder",{"gear_mobile_artillery","gear_reaper","gear_eruptor"},{"gear_reaper","gear_marauder","gear_crock","gear_flareon"}) end
 local function gearL2AirChoice(self) return choiceByType(self,"gear_vector",{"gear_stratos","gear_firestorm"},{"gear_vector","gear_stratos","gear_firestorm"},"gear_whirlpool") end
@@ -1933,7 +1934,7 @@ local gearLev1WaterCon = {
 	moveBaseCenter
 }
 
-local coreMexBuilder = {
+local gearMexBuilder = {
 	"gear_metal_extractor",
 	"gear_metal_extractor",
 	areaLimit_LightAA,
@@ -2084,6 +2085,7 @@ local gearAdvKbotLab = {
 	gearL2KbotRadar,
 	gearL2KbotRadarJammer,
 	"gear_titan",
+	{action = "randomness", probability = 0.3, value = "gear_luminator"},
 	{action = "wait", frames = 128}
 }
 
@@ -2120,7 +2122,7 @@ local gearAdvShipPlant = {
 
 local function clawL1LandChoice(self) return choiceByType(self,"claw_jester",{"claw_grunt","claw_piston","claw_roller"},{"claw_grunt","claw_boar","claw_piston","claw_roller"}) end
 local function clawL2KbotChoice(self) return choiceByType(self,"claw_bishop",{"claw_shrieker","claw_brute","claw_crawler"},{"claw_centaur","claw_brute"}) end
-local function clawL2VehicleChoice(self) return choiceByType(self,"claw_ravager",{"claw_pounder","claw_armadon"},{"claw_halberd","claw_ravager","claw_mega"}) end
+local function clawL2VehicleChoice(self) return choiceByType(self,"claw_ravager",{"claw_pounder","claw_armadon"},{"claw_halberd","claw_ravager","claw_mega","claw_dynamo"}) end
 local function clawL2AirChoice(self) return choiceByType(self,"claw_x","claw_blizzard",{"claw_x","claw_blizzard"},"claw_trident") end
 local function clawL2SpinbotChoice(self) return choiceByType(self,{"claw_dizzy","claw_tempest"},"claw_gyro",{"claw_mace","claw_predator","claw_gyro","claw_dizzy"}) end
 local function clawL2KbotRadar(self) return buildWithLimitedNumber(self,"claw_revealer",1) end
@@ -2449,12 +2451,12 @@ local clawAdvKbotLab = {
 local clawAdvVehiclePlant = {
 	"claw_ravager",
 	"claw_adv_construction_vehicle",
-	"claw_ravager",
 	clawL2VehicleChoice,
 	clawL2VehicleChoice,
 	clawL2VehicleChoice,
 	"claw_halberd",
 	"claw_pounder",	
+	"claw_dynamo",
 	clawL2VehicleRadar,
 	clawL2VehicleRadarJammer,
 	"claw_armadon",	
@@ -2847,7 +2849,7 @@ local sphereAdvShipPlant = {
 ------------------------------- unit-queue table
 
 mexUpgraderQueueByFaction = { [side1Name] = avenMexUpgrader, [side2Name] = coreMexUpgrader, [side3Name] = clawMexUpgrader, [side4Name] = sphereMexUpgrader}
-mexBuilderQueueByFaction = { [side1Name] = avenMexBuilder, [side2Name] = coreMexBuilder, [side3Name] = clawMexBuilder, [side4Name] = sphereMexBuilder}
+mexBuilderQueueByFaction = { [side1Name] = avenMexBuilder, [side2Name] = gearMexBuilder, [side3Name] = clawMexBuilder, [side4Name] = sphereMexBuilder}
 commanderBaseBuilderQueueByFaction = { [side1Name] = avenCommander, [side2Name] = gearCommander, [side3Name] = clawCommander, [side4Name] = sphereCommander}
 commanderAtkQueueByFaction = { [side1Name] = avenUCommander, [side2Name] = gearUCommander, [side3Name] = clawUCommander, [side4Name] = sphereUCommander}
 commanderWaterQueueByFaction = { [side1Name] = avenWaterCommander, [side2Name] = coreWaterCommander, [side3Name] = clawWaterCommander, [side4Name] = sphereWaterCommander}
