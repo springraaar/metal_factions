@@ -57,6 +57,18 @@ local respawners = {
 	sphere_commander_respawner = true
 }
 
+local airFactories = {
+	aven_aircraft_plant = true,
+	aven_adv_aircraft_plant = true,
+	gear_aircraft_plant = true,
+	gear_adv_aircraft_plant = true,
+	claw_aircraft_plant = true,
+	claw_adv_aircraft_plant = true,
+	sphere_aircraft_factory = true,
+	sphere_adv_aircraft_factory = true,
+	sphere_sphere_factory = true
+}
+
 if (gadgetHandler:IsSyncedCode()) then
 
 	--Reduces the diameter of default (unspecified) collision volume for 3DO models,
@@ -76,7 +88,7 @@ if (gadgetHandler:IsSyncedCode()) then
 				spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.6/2, ys*0.6)
 			else
 				if (flyingSpheres[UnitDefs[unitDefID].name]) then
-					spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.8/2, ys*0.8)
+					spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.6/2, ys*0.6)
 				else
 					spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.6/2, ys*0.6)
 				end
@@ -84,6 +96,12 @@ if (gadgetHandler:IsSyncedCode()) then
 		end
 		
 		unitYSizeOffset[unitID] = {ys,yo}
+
+		-- reduce size of aircraft factories
+		if (airFactories[UnitDefs[unitDefID].name]) then 
+			spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.5/2, ys*0.5)
+		end
+
 		
 		-- reduce size of unit under construction
 		local _,_,_,_,bp = spGetUnitHealth(unitID)
@@ -96,6 +114,7 @@ if (gadgetHandler:IsSyncedCode()) then
 			spSetUnitCollisionVolumeData(unitID, xs, ys, zs, xo, yo, zo, vtype, htype, axis)
 			spSetUnitMidAndAimPos(unitID,0, ys*0.5, 0,0, ys*0.5,0,true)
 		end
+		
 	end
 
 

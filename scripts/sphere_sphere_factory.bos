@@ -3,10 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, pad, beam1, beam2, platform1, platform2,
-       nano2, nano1, a1, a2,x1,x1bottom, a1bottom,a2bottom;
+piece  base, pad, beam1, beam2, platform1, platform2, nano2, nano1, a1, a2,x1,x1bottom, a1bottom,a2bottom, buildpt;
 
-static-var  Static_Var_1, unitviewer, statechg_DesiredState, statechg_StateChanging;
+static-var  Static_Var_1, statechg_DesiredState, statechg_StateChanging;
 
 // Signal definitions
 #define SIG_ACTIVATE			2
@@ -144,23 +143,7 @@ RequestState(requestedstate, currentstate)
 
 Create()
 {
-	dont-shade beam1;
-	dont-cache base;
-	dont-shade base;
-	dont-shade beam2;
-	dont-shade platform1;
-	dont-shade platform2;
-
-	dont-cache nano1;
-	dont-cache nano2;
-
-	dont-shade nano1;
-	dont-shade nano2;
-
-	dont-shade pad;
-	dont-cache pad;
-
-	unitviewer = FALSE;
+	move buildpt to y-axis [30.000000] now;
 	Static_Var_1 = 111;
 	call-script InitState();
 	start-script SmokeUnit();
@@ -183,11 +166,6 @@ QueryNanoPiece(piecenum)
 
 }
 
-Demo()
-{
-	unitviewer = TRUE;
-}
-
 Activate()
 {
 	signal SIG_ACTIVATE;
@@ -198,10 +176,7 @@ Deactivate()
 {
 	signal SIG_ACTIVATE;
 	set-signal-mask SIG_ACTIVATE;
-	if( !unitviewer )
-	{
-		sleep 5000;
-	}
+	sleep 5000;
 	set-signal-mask 0;
 	start-script RequestState(1);
 }
@@ -216,7 +191,7 @@ StopBuilding()
 
 QueryBuildInfo(piecenum)
 {
-	piecenum = pad;
+	piecenum = buildpt;
 }
 
 SweetSpot(piecenum)

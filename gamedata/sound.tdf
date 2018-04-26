@@ -1806,9 +1806,9 @@
 
 [CLAW_COM]
 {
-	select1=kcarmsel;
+	select1=clawcom;
 	unitcomplete=kcarmmov;
-	ok1=kcarmmov;
+	ok1=clawcom;
 	arrived1=kcarmstp;
 	cant1=cantdo4;
 	underattack=warning2;
@@ -1927,9 +1927,9 @@
 
 [SPHERE_COM]
 {
-	select1=kcarmsel;
+	select1=spherecom;
 	unitcomplete=kcarmmov;
-	ok1=kcarmmov;
+	ok1=spherecom;
 	arrived1=kcarmstp;
 	cant1=cantdo4;
 	underattack=warning2;

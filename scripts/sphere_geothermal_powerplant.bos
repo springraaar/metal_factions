@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, b2,b3,smoke, explode1, explode2, pipes1, pipes2, connector1, connector2, connector3, connector4;
+piece  base, b2,b3,smoke, explode1, explode2, connector1, connector2, connector3, connector4;
 
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
@@ -55,8 +55,8 @@ Killed(severity, corpsetype)
 		explode b2 type SHATTER | BITMAP1;
 		explode connector1 type SHATTER | BITMAP1;
 		explode connector3 type SHATTER | BITMAP1;
-		explode pipes1 type SHATTER | BITMAP2;
-		explode pipes2 type SHATTER | BITMAP2;
+		explode connector2 type SHATTER | BITMAP2;
+		explode connector4 type SHATTER | BITMAP2;
 	}
 	if( severity <= 50 )
 	{
@@ -65,8 +65,8 @@ Killed(severity, corpsetype)
 		explode b2 type SHATTER | BITMAP1;
 		explode connector1 type SHATTER | BITMAP1;
 		explode connector3 type SHATTER | BITMAP1;
-		explode pipes1 type SHATTER | BITMAP2;
-		explode pipes2 type SHATTER | BITMAP2;
+		explode connector2 type SHATTER | BITMAP2;
+		explode connector4 type SHATTER | BITMAP2;
 		return (0);
 	}
 	if( severity <= 99 )
@@ -74,10 +74,10 @@ Killed(severity, corpsetype)
 		corpsetype = 3;
 		explode base type SHATTER | BITMAP1;
 		explode b2 type SHATTER | BITMAP1;
-		explode connector1 type SHATTER | BITMAP1;
+		explode connector2 type SHATTER | BITMAP1;
 		explode connector3 type SHATTER | BITMAP1;
-		explode pipes1 type SHATTER | BITMAP2;
-		explode pipes2 type SHATTER | BITMAP2;
+		explode connector1 type SHATTER | BITMAP2;
+		explode connector4 type SHATTER | BITMAP2;
 		return (0);
 	}
 	corpsetype = 3;
@@ -85,7 +85,7 @@ Killed(severity, corpsetype)
 	explode b2 type SHATTER | BITMAP1;
 	explode connector1 type SHATTER | BITMAP1;
 	explode connector3 type SHATTER | BITMAP1;
-	explode pipes1 type SHATTER | BITMAP2;
-	explode pipes2 type SHATTER | BITMAP2;
+	explode connector2 type SHATTER | BITMAP2;
+	explode connector4 type SHATTER | BITMAP2;
 	return (0);
 }

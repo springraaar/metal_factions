@@ -3,9 +3,9 @@ function widget:GetInfo()
     name      = "Commander Name Tags",
     desc      = "Displays name tags above commanders.",
     author    = "Bluestone, Floris, tweaked by raaar",
-    date      = "20 february 2015",
+    date      = "26 april 2018",
     license   = "GNU GPL, v2 or later",
-    layer     = 2,
+    layer     = -10,
     enabled   = true,
   }
 end
@@ -28,16 +28,12 @@ local shadowFont = gl.LoadFont("LuaUI/Fonts/FreeSansBold.otf", 55, 38, 1.6)
 
 local vsx, vsy = Spring.GetViewGeometry()
 
-local singleTeams = false
-if #Spring.GetTeamList()-1  ==  #Spring.GetAllyTeamList()-1 then
-    singleTeams = true
-end
-
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
 local GetUnitTeam        		= Spring.GetUnitTeam
 local GetPlayerInfo      		= Spring.GetPlayerInfo
+local GetTeamInfo      			= Spring.GetTeamInfo
 local GetPlayerList    		    = Spring.GetPlayerList
 local GetTeamColor       		= Spring.GetTeamColor
 local GetUnitDefID       		= Spring.GetUnitDefID
@@ -46,6 +42,8 @@ local IsUnitInView	 	 		= Spring.IsUnitInView
 local GetCameraPosition  		= Spring.GetCameraPosition
 local GetUnitPosition    		= Spring.GetUnitPosition
 local GetSpectatingState		= Spring.GetSpectatingState
+local GetAIInfo 				= Spring.GetAIInfo 
+local GetTeamLuaAI 				= Spring.GetTeamLuaAI
 
 local glDepthTest        		= gl.DepthTest
 local glAlphaTest        		= gl.AlphaTest
@@ -67,15 +65,10 @@ local diag						= math.diag
 --------------------------------------------------------------------------------
 
 local comms = {}
-local comnameList = {}
+local glListByCommanderId = {}
 local CheckedForSpec = false
 local myTeamID = Spring.GetMyTeamID()
 local myPlayerID = Spring.GetMyPlayerID()
-
-local sameTeamColors = false
-if WG['playercolorpalette'] ~= nil and WG['playercolorpalette'].getSameTeamColors ~= nil then
-    sameTeamColors = WG['playercolorpalette'].getSameTeamColors()
-end
 
 --------------------------------------------------------------------------------
 
@@ -100,36 +93,57 @@ local function GetCommAttributes(unitID, unitDefID)
     return nil
   end
   local players = GetPlayerList(team)
-  local name = (#players>0) and GetPlayerInfo(players[1]) or 'Robert Paulson'
-  for _,pID in ipairs(players) do
-    local pname,active,spec = GetPlayerInfo(pID)
-    if active and not spec then
-      name = pname
-      break
+  local isAI,side
+  local name = "????"
+  
+  _,_,_,isAI,side,_,_,_ = GetTeamInfo(team)
+  if isAI then
+    local version
+    _,_,_,_, name, version = GetAIInfo(team)
+
+    local aiInfo = GetTeamLuaAI(team)
+    if (string.sub(aiInfo,1,4) == "MFAI") then
+	  name = aiInfo
+    else
+      if type(version) == "string" then
+        name = "AI:" .. name .. "-" .. version
+      else
+        name = "AI:" .. name
+      end
+    end	  
+  else
+    if (#players>0) then
+      for _,pID in ipairs(players) do
+        local pname,active,spec = GetPlayerInfo(pID)
+        if active and not spec then
+          name = pname
+          break
+        end
+      end
     end
   end
+
   local r, g, b, a = convertColor(GetTeamColor(team))
   local bgColor = {0,0,0,1}
   if (r + g*1.2 + b*0.4) < 0.8 then
 		bgColor = {1,1,1,1}
   end
-  
   local height = UnitDefs[unitDefID].height + heightOffset
-  return {name, {r, g, b, a}, height, bgColor}
+  return {name, {r, g, b, a}, height, bgColor, unitID}
 end
 
 local function RemoveLists()
-    for name, list in pairs(comnameList) do
-        gl.DeleteList(comnameList[name])
+    for id, list in pairs(glListByCommanderId) do
+        gl.DeleteList(glListByCommanderId[id])
     end
-    comnameList = {}
+    glListByCommanderId = {}
 end
 
-local function createComnameList(attributes)
-    if comnameList[attributes[1]] ~= nil then
-        gl.DeleteList(comnameList[attributes[1]])
+local function createGlListForCommanderId(attributes)
+    if glListByCommanderId[attributes[5]] ~= nil then
+        gl.DeleteList(glListByCommanderId[attributes[5]])
     end
-	comnameList[attributes[1]] = gl.CreateList( function()
+	glListByCommanderId[attributes[5]] = gl.CreateList( function()
 		local outlineColor = {0,0,0,1}
 		if (attributes[2][1] + attributes[2][2]*1.2 + attributes[2][3]*0.4) < 0.8 then  -- try to keep these values the same as the playerlist
 			outlineColor = {1,1,1,1}
@@ -158,49 +172,16 @@ local function createComnameList(attributes)
 	end)
 end
 
-function widget:Update(dt)
-    if WG['playercolorpalette'] ~= nil then
-        if WG['playercolorpalette'].getSameTeamColors and sameTeamColors ~= WG['playercolorpalette'].getSameTeamColors() then
-            sameTeamColors = WG['playercolorpalette'].getSameTeamColors()
-            RemoveLists()
-            CheckAllComs()
-        end
-    elseif sameTeamColors == true then
-        sameTeamColors = false
-        RemoveLists()
-        CheckAllComs()
-    end
-    if not singleTeams and WG['playercolorpalette'] ~= nil and WG['playercolorpalette'].getSameTeamColors() then
-        if myTeamID ~= Spring.GetMyTeamID() then
-            -- old
-            local name = GetPlayerInfo(select(2,Spring.GetTeamInfo(myTeamID)))
-            if comnameList[name] ~= nil then
-                gl.DeleteList(comnameList[name])
-                comnameList[name] = nil
-            end
-            -- new
-            myTeamID = Spring.GetMyTeamID()
-            myPlayerID = Spring.GetMyPlayerID()
-            name = GetPlayerInfo(select(2,Spring.GetTeamInfo(myTeamID)))
-            if comnameList[name] ~= nil then
-                gl.DeleteList(comnameList[name])
-                comnameList[name] = nil
-            end
-            CheckAllComs()
-        end
-    end
-end
-
 local function DrawName(attributes)
-	if comnameList[attributes[1]] == nil then
-		createComnameList(attributes)
+	if glListByCommanderId[attributes[5]] == nil then
+		createGlListForCommanderId(attributes)
 	end
 	glTranslate(0, attributes[3], 0)
 	glBillboard()
 	if nameScaling then
 		glScale(usedFontSize/fontSize,usedFontSize/fontSize,usedFontSize/fontSize)
 	end
-	glCallList(comnameList[attributes[1]])
+	glCallList(glListByCommanderId[attributes[5]])
 
 	if nameScaling then
 		glScale(1,1,1)
@@ -272,8 +253,7 @@ function widget:Shutdown()
 end
 
 function widget:PlayerChanged(playerID)
-  local name,_ = GetPlayerInfo(playerID)
-  comnameList[name] = nil
+  RemoveLists()
   CheckAllComs() -- handle substitutions, etc
 end
     
@@ -293,8 +273,8 @@ function widget:UnitTaken(unitID, unitDefID, unitTeam, newTeam)
   CheckCom(unitID, unitDefID, unitTeam)
 end
 
-function widget:UnitEnteredLos(unitID, unitDefID, unitTeam)
-  CheckCom(unitID, unitDefID, unitTeam)
+function widget:UnitEnteredLos(unitID, unitTeam)
+  CheckCom(unitID, GetUnitDefID(unitID), unitTeam)
 end
 
 

@@ -580,11 +580,12 @@ function CreatePlayerFromTeam(teamID)
 			tname = aiInfo
 		else
 			if type(version) == "string" then
-				tname = "AI:" .. tname .. "-" .. version
+				tname = "AI:" .. tname .. "-" .. version 
 			else
 				tname = "AI:" .. tname
 			end
 		end
+
 		ttotake = false
 		tdead = false
 		
