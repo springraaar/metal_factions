@@ -1,3 +1,35 @@
+2018/05/27 ------------------ NOTES v0.996 ----------------------
+
+--- balance / mechanics
+
+- units with weapons with an AOE edge effectiveness boosts got a bit cheaper 
+(5-10% cost reduction on GEAR Grenado, CLAW Nucleus, Massacre and Mega, and AVEN Stasis and Tsunami)
+ 
+
+ECONOMY
+- increased the base economy from 6 M/s and 60 E/s to 8 M/s and 80 E/s
+(this is meant to give a bit more slack for players who want to do something other than rushing expansion)
+
+- reduced energy cost of repairing damage from 100% to 75% of the unit's energy cost
+
+
+AIRCRAFT
+- air transports fly higher and change altitude faster
+
+- SPHERE flying spheres now use the smoothed air mesh to avoid bumping into cliffs
+
+- air mesh should follow the ground height profile more closely
+(this means on maps with high hills aircraft will not climb so high unless they're closer to the cliffs)
+
+- aircraft no longer try to fly below the altitude of the lowest metal spot 
+(relevant for maps where disputed ground is on high plateaus delimited by steep cliffs)
+
+--- UI / visuals
+
+- tooltip over empty ground shows altitude instead of ground speed modifier (was always x1)
+
+
+
 2018/04/26 ------------------ NOTES v0.995 ----------------------
 
 

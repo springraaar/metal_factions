@@ -10,6 +10,7 @@ function gadget:GetInfo()
    }
 end
 
+-- may 2018 : increased income from 6 / 60 to 8 / 80
 -- nov 2015 : fixed energy income frames to match engine change and increased E income
 
 -- localization
@@ -22,8 +23,8 @@ local spGetGameFrame = Spring.GetGameFrame
 local spAddTeamResource = Spring.AddTeamResource
 
 -- base metal and energy income every 15 frames
-local BASE_METAL_INCOME = 3
-local BASE_ENERGY_INCOME = 30
+local BASE_METAL_INCOME = 4
+local BASE_ENERGY_INCOME = 40
 
 --SYNCED CODE
 if (gadgetHandler:IsSyncedCode()) then

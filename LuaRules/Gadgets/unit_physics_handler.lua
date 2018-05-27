@@ -27,6 +27,7 @@ local spGetUnitRadius = Spring.GetUnitRadius
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetAllUnits = Spring.GetAllUnits
 local spGetGroundHeight = Spring.GetGroundHeight
+local spGetSmoothMeshHeight = Spring.GetSmoothMeshHeight
 local spGetUnitHealth = Spring.GetUnitHealth
 local spSetUnitHealth = Spring.SetUnitHealth
 local spUseUnitResource = Spring.UseUnitResource
@@ -115,9 +116,9 @@ local function updateUnitPhysics(unitId)
 	end
 	-- force physics for magnetar to prevent it from being pushed away 
 	if magnetarUnitIds[unitId] == true then
-		local groundHeight = spGetGroundHeight(x,z)
-		h = y - groundHeight
-		if (h > 150 and vy > 0) or v > 1.5 then
+		local smHeight = spGetSmoothMeshHeight(x,z)
+		h = y - smHeight
+		if (h > 100 and vy > 0) or v > 1.5 then
 			--Spring.Echo("enforced vy for magnetar vy="..vy.." v="..v)
 			spSetUnitVelocity(unitId,vx * 0.8/v,0,vz * 0.8/v)
 		end
