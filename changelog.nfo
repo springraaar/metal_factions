@@ -1,3 +1,85 @@
+2018/08/19 ------------------ NOTES v0.997 ----------------------
+
+
+--- balance / mechanics
+
+GENERAL
+- roughly doubled the speed of blast waves from explosions
+- self-damage in general is reduced to 33% of the original value
+- Large Fusion reactors explosion radius increased from 275 to 325 and damage from 2000 to 2500 and get a 5% cost reduction
+- increased the cost of GEAR "Big Bob" by about 50% and removed the high-trajectory mode
+(was unusually low due an error on the balancing algorithm related to having high trajectory option and two weapons - oops)
+- fixed an issue with aircraft debris "shaking" on the ground
+- fixed heat-rays not having the stated 30% damage drop over range
+(the auto-balancer wasn't fooled so now the units get about 10% cheaper as a result)
+
+SHIELDS
+- large area shields regenerate faster by draining up to 10% (1% from small shields) of maximum shield charge per second from shields within its radius
+- shields are only shared above half the maximum charge
+
+WALLS
+- increased the cost slightly and build/repair time by about 10% for fortification wall sections
+- changed the armor type from L to M but reduced the hit points from 4800 to 2500
+- walls no longer change to "features" when built, so they can be repaired
+(this also makes it easier for your units to use own walls as cover as they won't attempt to fire through)
+
+COMMANDERS
+- added Sphere "Nova Form" commander : slow but heavily armored. Weapon has huge area of effect and can shoot in high-trajectory mode.
+- GEAR "Infernal Form" commander has high-trajectory mode
+(it can shoot its fireballs uphill and over walls)
+
+AIRCRAFT / SPHERES
+- AVEN "Twister" now has "L" damage emg/laser combo (better vs light units and air)
+- AVEN "Tornado" made a bit slower, tougher and has "M" damage rockets
+- SPHERE sphere factory can build air transports
+- SPHERE flying spheres are generally set to hold position to avoid wasting energy
+- modified way that energy cost when moving is calculated for the flying spheres to avoid draining the full amount when repositioning vertically while idle
+- advanced construction drones are now automatically set to "high priority"
+- doubled maneuverability of scout aircraft
+- aircraft flying way off the map are "teleported" back to a spot on the nearest corner
+(workaround for a Spring engine bug)
+
+UPGRADES
+- increased the general limit of commander upgrades from 2 to 3
+- increased the cost of hp, range, damage and speed commander upgrades from 500 M to 750 M, but increased own limits from 1 to 2
+- increased own limits on commander regen and drone upgrades from 1 to 3
+
+
+--- UI
+
+- changed the default side from "AVEN" to "RANDOM"
+
+- moving mouse over chat box position if it's no longer visible shows it and scrolls to latest message
+- 15s after the latest "scroll up", automatically scrolls down to the latest message
+
+- show a warning message if the Spring engine version is different from the recommended (currently 104.0)
+- show a warning message if game starts without any opponent and disable victory conditions
+- show a warning message if game starts with unsupported AI players instead of MFAI
+
+- show a warning overlay whenever the commander is damaged while out of view of the player
+
+- fixed an issue with resource drain wrongly rounded to integer on the tooltip
+- moving mouse over orders menu buttons shows default hotkey information in most cases
+- do not assign "perfect" efficiency award when players resign early before any units are killed
+
+
+--- AI / MFAI
+
+- builds scout pad and uses air scouts
+- improved targetting for attacking forces to be more sensitive to the direction of threats and allied units
+- added ability to detach a ground raiding party which will try to sneak around enemy defenses and hit vulnerable targets
+(fast ground units are assigned to it by default)
+- the attack aircraft group also behaves like a raiding party and will try to sneak around defended areas
+- more likely to target metal extractors and construction units in general
+- set long range units to hold position to avoid them chasing fleeing targets into range of enemy fire
+- construction units are less likely to run into enemies when trying to build metal extractors
+- use offsets when processing game state,etc. for multiple AI instances to spread the load across multiple frames and avoid "hickups"
+- reduced the amount of free metal and energy income the brutal AI gets (50 to 35 M/s) and the scaling over time
+- attack aircraft group takes into account enemies which are bad anti-air when considering where to attack
+- normal MFAI builds the first factory earlier so it grows faster
+- avoids building factories on places which do not have a soft-sloped land connection to the base center
+
+
 2018/05/27 ------------------ NOTES v0.996 ----------------------
 
 --- balance / mechanics
@@ -388,7 +470,7 @@ OTHER
 --- balance / mechanics
 
 - significantly increased acceleration of SPHERE "Bit" robots
-- fixed SPHERE "Golem" missiles being launcher horizontally
+- fixed SPHERE "Golem" missiles being launched horizontally
 - increased damage per shot and reload time by about 20% for most missiles (damage per second is the same)
 
 COMMANDER DRONES

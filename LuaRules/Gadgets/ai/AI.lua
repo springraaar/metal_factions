@@ -11,6 +11,7 @@ function AI.create(id, mode)
    setmetatable(obj,AI)  -- make AI handle lookup
    obj.id = id      -- initialize our object
    obj.mode = mode
+   obj.frameShift = 7*tonumber(id)	-- used to spread out processing from different AIs across multiple frames
    obj.needStartPosAdjustment = true
    return obj
 end
@@ -259,12 +260,12 @@ function AI:UnitDamaged(unitId, unitDefId, unitTeamId, damage, paralyzer, weapon
 	if (unitTeamId == self.id) then
 		for i,m in ipairs(self.modules) do
 			if (m.UnitDamaged ~= nil) then
-				m:UnitDamaged(unitId)
+				m:UnitDamaged(unitId, unitDefId, unitTeamId, damage, paralyzer, weaponDefId, projectileId, attackerId, attackerDefId, attackerTeamId)
 			end
 		end
 		
 		if (self.unitBehaviors[unitId] ~= nil and self.unitBehaviors[unitId].UnitDamaged ~= nil) then
-			self.unitBehaviors[unitId]:UnitDamaged(unitId)
+			self.unitBehaviors[unitId]:UnitDamaged(unitId, unitDefId, unitTeamId, damage, paralyzer, weaponDefId, projectileId, attackerId, attackerDefId, attackerTeamId)
 		end		
 	end
 end

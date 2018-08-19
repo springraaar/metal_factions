@@ -1,27 +1,27 @@
 [SIDE0]
 {
+	Name=Random;
+	commander=random;
+}
+[SIDE1]
+{
 	Name=Aven;
 	commander=aven_commander;
 }
-[SIDE1]
+[SIDE2]
 {
 	Name=Gear;
 	commander=gear_commander;
 }
-[SIDE2]
+[SIDE3]
 {
 	Name=Claw;
 	commander=claw_commander;
 }
-[SIDE3]
+[SIDE4]
 {
 	Name=Sphere;
 	commander=sphere_commander;
-}
-[SIDE4]
-{
-	Name=Random;
-	commander=random;
 }
 [CANBUILD]
 {
@@ -2924,6 +2924,42 @@
 		canbuild32=sphere_upgrade_center;
 		canbuild33=sphere_pole;
 	}
+	[sphere_u6commander]
+	{
+		canbuild1=sphere_metal_extractor;
+		canbuild2=sphere_fusion_reactor;
+		canbuild3=sphere_hardened_fission_reactor;
+		canbuild4=sphere_energy_storage;
+		canbuild5=sphere_metal_storage;
+		canbuild6=sphere_scout_pad;
+		canbuild7=sphere_light_factory;
+		canbuild8=sphere_aircraft_factory;
+		canbuild9=sphere_shipyard;
+		canbuild10=sphere_stir;
+		canbuild11=sphere_radar_tower;
+		canbuild12=sphere_adv_kbot_factory;
+		canbuild13=sphere_geothermal_powerplant;
+		canbuild14=sphere_shine;
+		canbuild15=sphere_lancer;
+		canbuild16=sphere_dragons_teeth;
+		canbuild17=sphere_fortification_wall;
+		canbuild18=sphere_stout;
+		canbuild19=sphere_comsat_station;
+		canbuild20=sphere_sonar_station;
+		canbuild21=sphere_floating_radar_tower;
+		canbuild22=sphere_tidal_generator;
+		canbuild23=sphere_floating_shine;
+		canbuild24=sphere_floating_lancer;
+		canbuild25=sphere_clam;
+		canbuild26=sphere_floating_stir;
+		canbuild27=sphere_adv_vehicle_factory;
+		canbuild28=sphere_adv_aircraft_factory;
+		canbuild29=sphere_adv_shipyard;
+		canbuild30=sphere_sphere_factory;
+		canbuild31=sphere_commander_respawner;
+		canbuild32=sphere_upgrade_center;
+		canbuild33=sphere_pole;
+	}
 	[sphere_pole]
 	{
 		canbuild1=sphere_metal_extractor;
@@ -3177,6 +3213,8 @@
 		canbuild7=sphere_comet;
 		canbuild8=sphere_magnetar;
 		canbuild9=sphere_chroma;
+		canbuild10=sphere_lifter;
+		canbuild11=sphere_lifter_b;
 	}
 	[sphere_adv_construction_kbot]
 	{

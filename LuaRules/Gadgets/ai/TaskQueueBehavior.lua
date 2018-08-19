@@ -1,4 +1,5 @@
 include("LuaRules/Gadgets/ai/TaskQueues.lua")
+include("LuaRules/Gadgets/ai/CommonUnitBehavior.lua")
  
 TaskQueueBehavior = {}
 TaskQueueBehavior.__index = TaskQueueBehavior
@@ -9,6 +10,9 @@ function TaskQueueBehavior.create()
    return obj
 end
 
+-- set up inheritance
+setmetatable(TaskQueueBehavior,{__index = CommonUnitBehavior})
+
 function TaskQueueBehavior:Name()
 	return "TaskQueueBehavior"
 end
@@ -18,29 +22,11 @@ function TaskQueueBehavior:internalName()
 end
 
 function TaskQueueBehavior:Init(ai, uId)
-	self.ai = ai
-	self.isEasyMode = (self.ai.mode == "easy")
-	self.isBrutalMode = (self.ai.mode == "brutal")
+	self:CommonInit(ai, uId)
 	
 	-- unit properties
-	self.unitId = uId
-	self.unitDef = UnitDefs[spGetUnitDefID(uId)]
-	self.unitDefId = self.unitDef.id
-	self.unitName = self.unitDef.name
-	self.unitSide = side1Name
-	if string.find(self.unitName,"aven_") then
-		self.unitSide = side1Name
-	elseif string.find(self.unitName,"gear_") then
-		self.unitSide = side2Name
-	elseif string.find(self.unitName,"claw_")then
-		self.unitSide = side3Name
-	elseif string.find(self.unitName,"sphere_") then
-		self.unitSide = side4Name
-	end
 	self.isCommander = setContains(unitTypeSets[TYPE_COMMANDER],self.unitName)
-	self.isArmed = #self.unitDef.weapons > 0
-	self.unitCost = getWeightedCostByName(self.unitName) 
-	self.isMobileBuilder = not self.isCommander and self.unitDef.isMobileBuilder
+	self.isUpgradedCommander = setContains(unitTypeSets[TYPE_UPGRADED_COMMANDER],self.unitName)
 	
 	-- state properties
 	self.active = false
@@ -54,17 +40,13 @@ function TaskQueueBehavior:Init(ai, uId)
 	self.idleFrame = -INFINITY -- last frame where UnitIdle was called (may be unreliable)
 	self.idleFrames = 0 -- count of consecutive frames where wait is 0, progress is false
 						-- but unit has been with idle command queue
-	self.isSeriouslyDamaged = false
-	self.isFullHealth = true
 	self.isAttackMode = false
 	self.delayCounter = 0
-	self.pos = newPosition(spGetUnitPosition(uId,false,false))			
 	self.specialRole = 0
 	self.isWaterMode = false
 	self.assistUnitId = 0
-	self.pFType = getUnitPFType(self.unitDef)
 	self.cleanupMaxFeatures = 10
-	self.isFullyBuilt = false
+
 	
 	-- load queue
 	if self:HasQueues() then
@@ -204,6 +186,12 @@ end
 
 function TaskQueueBehavior:Update()
 	local f = spGetGameFrame()
+	
+	-- don't do anything until there has been one data collection
+	if not self.ai.unitHandler.collectedData then
+		return
+	end
+	
 	self.pos = newPosition(spGetUnitPosition(self.unitId,false,false))
 	
 	local health,maxHealth,_,_,bp = spGetUnitHealth(self.unitId)
@@ -249,13 +237,13 @@ function TaskQueueBehavior:Update()
 		end
 	end
 	
-	if fmod(f,10) == 9 then
+	if self.isCommander or (fmod(f,10) == 9) then
 		if (self.waitLeft == 0) then
 			-- progress queue if unit is idle
 			if not self.progress and self.isFullyBuilt and self.currentProject == nil then
 				local cmds = spGetUnitCommands(self.unitId,0)
 				if (cmds <= 0) then
-					self.idleFrames = self.idleFrames +10 
+					self.idleFrames = self.idleFrames + (self.isCommander and 1 or 10) 
 				
 					if (self.idleFrames > IDLE_FRAMES_PROGRESS_LIMIT) then
 						log(self.unitName.." was weirdly idle, progressing queue",self.ai)
@@ -280,10 +268,6 @@ end
 
 function TaskQueueBehavior:ProgressQueue()
 	self.progress = false
-	
-	-- log("plants="..countOwnUnits(self,nil,5,TYPE_PLANT),self.ai)
-	-- log("l1plants="..countOwnUnits(self,nil,5,TYPE_L1_PLANT),self.ai)
-	-- log("l2plants="..countOwnUnits(self,nil,2,TYPE_L2_PLANT),self.ai)
 	
 	if self.queue ~= nil then
 		local idx, val = next(self.queue,self.idx)
@@ -310,7 +294,11 @@ function TaskQueueBehavior:ProgressQueue()
 				end
 			end
 		end
-
+	
+		--if (self.isCommander) then
+		--	log(idx.." : "..tostring(value),self.ai)
+		--end
+		
 		-- process queue item, check for low resources or nearby similar units being built
 		self:ProcessItem(value, DELAY_BUILDING_IF_LOW_RESOURCES, ASSIST_EXPENSIVE_BASE_UNITS)
 	end
@@ -328,7 +316,7 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 	while type(value) == "function" do
 		value = value(self)
 	end
-	
+		
 	local baseUnderAttack = self.ai.unitHandler.baseUnderAttack
 	
 	-- on easy mode, randomly waste time
@@ -426,9 +414,8 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 		-- reclaim features within 500 range until the wait timer ends
 		if action == "cleanup" then
 			wrecks = spGetFeaturesInSphere(selfPos.x,selfPos.y,selfPos.z, 500)
-			-- we only want to reclaim the first one
 			self.waitLeft = value.frames
-			--Spring.Echo(self.unitName.." CLEANUP "..value.frames.." frames ".." found="..tostring(#wrecks))
+			--log(self.unitName.." CLEANUP "..value.frames.." frames ".." found="..tostring(#wrecks),self.ai)
 			if (#wrecks > 0) then
 				spGiveOrderToUnit( self.unitId, CMD.RECLAIM, { self.pos.x, self.pos.y, self.pos.z, 500 }, {} )
 			end	
@@ -527,12 +514,12 @@ function TaskQueueBehavior:Retreat()
 	local tmpFrame = spGetGameFrame()
 	
 	if (self.lastRetreatOrderFrame or 0) + ORDER_DELAY_FRAMES < tmpFrame then
-		local selfPos = newPosition(spGetUnitPosition(self.unitId,false,false))
+		local selfPos = self.pos
 	
 		if not self.isCommander and ( abs(selfPos.x - self.ai.unitHandler.basePos.x) > RETREAT_RADIUS or abs(selfPos.z - self.ai.unitHandler.basePos.z) > RETREAT_RADIUS  ) then
 			spGiveOrderToUnit(self.unitId,CMD.MOVE,{self.ai.unitHandler.basePos.x - BIG_RADIUS/2 + random( 1, BIG_RADIUS),0,self.ai.unitHandler.basePos.z - BIG_RADIUS/2 + random( 1, BIG_RADIUS)},{})
 		else
-			self:EvadeIfNeeded(selfPos)
+			self:EvadeIfNeeded()
 		end
 
 		self.lastRetreatOrderFrame = tmpFrame
@@ -541,121 +528,6 @@ function TaskQueueBehavior:Retreat()
 		self.waitLeft = 200			
 	end	
 end
-
-function TaskQueueBehavior:EvadeIfNeeded(selfPos)
-	local tmpFrame = spGetGameFrame()
-	
-	-- only evade if under attack
-	if( tmpFrame - self.underAttackFrame < UNDER_ATTACK_FRAMES) then
-	
-		local threatPos = nil
-		local threatCost = nil
-		local biggestThreatPos = nil
-		local biggestThreatCost = 0
-		local closestCell = nil
-		local xIndex,zIndex = getCellXZIndexesForPosition(selfPos)
-		
-		-- find most threatening nearby enemy cell
-		local xi,zi = 0
-		local enemyCell = nil
-		-- check nearby cells
-		for dxi = -2, 2 do
-			for dzi = -2, 2 do
-				xi = xIndex + dxi
-				zi = zIndex + dzi
-				if (xi >=0) and (zi >= 0) then
-					if self.ai.unitHandler.enemyCells[xi] then
-						enemyCell = self.ai.unitHandler.enemyCells[xi][zi]
-						if enemyCell ~= nil then
-							threatCost = enemyCell.combinedThreatCost
-							if (threatCost > biggestThreatCost ) then
-								biggestThreatPos = enemyCell.p
-								biggestThreatCost = threatCost
-							end
-						end													
-					end
-				end
-			end
-		end
-		-- if none nearby, run from biggest enemy cluster
-		for _,enemyCell in ipairs(self.ai.unitHandler.enemyCellList) do
-			threatCost = enemyCell.combinedThreatCost
-			if (threatCost > biggestThreatCost ) then
-				biggestThreatPos = enemyCell.p
-				biggestThreatCost = threatCost
-			end		
-		end
-
-		if biggestThreatPos ~= nil then
-			-- if the threat is cheaper than armed unit, strafe only without backing				
-			self:Evade(biggestThreatPos, (biggestThreatCost > self.unitCost or (not self.isArmed) ) and UNIT_EVADE_DISTANCE or 100)
-			
-			return true
-		end
-	end
-	return false
-end
-
-function TaskQueueBehavior:Evade(threatPos, moveDistance)
-	local selfPos = self.pos
-
-	local vx = selfPos.x - threatPos.x
-	local vz = selfPos.z - threatPos.z
-	
-	local norm = sqrt(vx*vx + vz*vz)		
-	vx = vx / norm  
-	vz = vz / norm
-	
-	-- change movement vector if near edge of map
-	local nearEdge = false
-	local aux = pos.x + vx * moveDistance
-	if (aux > Game.mapSizeX - EVADE_EDGE_MARGIN or aux < EVADE_EDGE_MARGIN) then
-		nearEdge = true
-	end
-	aux = pos.z + vz * moveDistance
-	if not nearEdge and (aux > Game.mapSizeZ - EVADE_EDGE_MARGIN or aux < EVADE_EDGE_MARGIN) then
-		 nearEdge = true
-	end
-	-- move towards least vulnerable cell
-	if (nearEdge) then
-		local safePos = self.ai.unitHandler.leastVulnerableCell.p			
-		vx = safePos.x - selfPos.x
-		vz = safePos.z - selfPos.z
-
-		norm = sqrt(vx*vx + vz*vz)		
-		vx = vx / norm  
-		vz = vz / norm
-	end
-	
-	--Spring.Echo(self.unitName.." EVADE self=("..selfPos.x..","..selfPos.z..")".." threat=("..threatPos.x..","..threatPos.z..")".." escape=("..vx..","..vz..")")
-	vxNormal = vz
-	vzNormal = -vx
-			
-	local pos = newPosition(selfPos.x,0,selfPos.z)
-	local increment = moveDistance / UNIT_EVADE_WAYPOINTS
-	local strafeSign = 1 
-	local strafeDistance = 0
-	
-	local ordersGiven = 0
-	for i=1,UNIT_EVADE_WAYPOINTS do
-		strafeSign = random(1,10) > 5 and 1 or -1
-		strafeDistance = strafeSign * random(1,UNIT_EVADE_STRAFE_DISTANCE)
-		
-		pos.x = pos.x + vx * increment + vxNormal * strafeDistance
-		pos.z = pos.z + vz * increment + vzNormal * strafeDistance
-		-- Echo(pos.x.." ; "..pos.z)
-		if  spTestMoveOrder(self.unitDef.id,pos.x,0,pos.z,0,0,0,true,true) then
-			ordersGiven = ordersGiven + 1 
-			spGiveOrderToUnit(self.unitId,CMD.MOVE,{pos.x,0,pos.z},i > 1 and CMD.OPT_SHIFT or {})
-		end
-	end
-	
-	if (ordersGiven == 0) then
-		--Spring.Echo(self.unitName.." RUN TO BASE!")
-		spGiveOrderToUnit(self.unitId,CMD.MOVE,{self.ai.unitHandler.basePos.x - BIG_RADIUS/2 + random( 1, BIG_RADIUS),0,self.ai.unitHandler.basePos.z - BIG_RADIUS/2 + random( 1, BIG_RADIUS)},{})
-	end
-end
-
 
 
 function TaskQueueBehavior:Activate()

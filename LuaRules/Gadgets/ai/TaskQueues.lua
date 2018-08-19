@@ -33,7 +33,7 @@ local function checkMorph(self)
 			local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
 			
 			-- morph only if income is decent
-			if incomeM > 35 and incomeE > 300 then
+			if incomeM > 30 and incomeE > 300 then
 				-- if enemies are nearby, skip morph
 				if areEnemiesNearby(self, self.pos, MORPH_CHECK_RADIUS) then
 					--log("enemies nearby")
@@ -208,6 +208,18 @@ function changeQueueToCommanderBaseBuilderIfNeeded(self)
 	return SKIP_THIS_TASK
 end
 
+function changeQueueToRoamingCommanderIfNeeded(self)
+
+	-- TODO roaming commanders are ineffective, make them work
+	--if(self.isUpgradedCommander ) and naturallyRoamingCommanders[self.unitName]) then
+	--	self:ChangeQueue(commanderRoamingQueueByFaction[self.unitSide])
+	--	self.isAttackMode = true
+	--	-- log("changed to roaming commander!",self.ai)
+	--end
+
+	return SKIP_THIS_TASK
+end
+
 
 function changeQueueToCommanderAttackerIfNeeded(self)
 	local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
@@ -215,9 +227,14 @@ function changeQueueToCommanderAttackerIfNeeded(self)
 
 	-- if has decent resource income and factories, go support the attackers
 	if (incomeM > 10 and incomeE > 130 and countOwnUnits(self,nil,2,TYPE_PLANT) > 0 ) then
-		self:ChangeQueue(commanderAtkQueueByFaction[self.unitSide])
+		
+		if(self.isUpgradedCommander) then
+			self:ChangeQueue(taskqueues[self.unitName])
+		else
+			self:ChangeQueue(commanderAtkQueueByFaction[self.unitSide])
+		end
 		self.isAttackMode = true
-		-- log("changed to attack commander!",self.ai)
+		--log("changed to attack commander!",self.ai)
 	end
 
 	return SKIP_THIS_TASK
@@ -501,7 +518,6 @@ function moveAtkCenter(self)
 	return {action="wait", frames=120}
 end
 
-
 function patrolAtkCenter(self)
 	local radius = MED_RADIUS
 	local atkPos = self.ai.unitHandler.unitGroups[UNIT_GROUP_ATTACKERS].centerPos
@@ -536,6 +552,76 @@ function patrolAtkCenter(self)
 	return {action="wait", frames=120}
 end
 
+
+function commanderRoam(self)
+	--local atkPos = self.ai.unitHandler.unitGroups[UNIT_GROUP_RAIDERS].centerPos
+	local basePos = self.ai.unitHandler.basePos
+
+	-- if far away, move there first
+	if (distance(self.pos,basePos) < HUGE_RADIUS) then
+		self:OrderToClosestCellAlongPath(self.ai.unitHandler.raiderPath[PF_UNIT_LAND], {CMD.MOVE,CMD.MOVE}, false, true)
+	else
+		self:OrderToClosestCellAlongPath(self.ai.unitHandler.raiderPath[PF_UNIT_LAND], {CMD.FIGHT,CMD.MOVE}, false, true)
+	end
+	
+	return {action="wait", frames=450}
+end
+
+
+
+function scoutRandomly(self)
+	local basePos = self.ai.unitHandler.basePos
+	if (not basePos) then
+		basePos = self.pos
+	end
+	
+	-- select two random cells away from the base position
+	local cells = self.ai.mapHandler.mapCells
+	local cellCountX = math.ceil(Game.mapSizeX / CELL_SIZE)
+	local cellCountZ = math.ceil(Game.mapSizeZ / CELL_SIZE)
+	local p1 = nil
+	local p2 = nil
+	local sqMinRadius = HUGE_RADIUS * HUGE_RADIUS  
+	local tries = 0
+	local c1 = nil
+	local c2 = nil
+	
+	while tries < 10 and (p1 == nil or p2 == nil) do
+		c1 = cells[math.random(2,cellCountX-1)][math.random(2,cellCountZ-1)]		
+		c2 = cells[math.random(2,cellCountX-1)][math.random(2,cellCountZ-1)]
+		
+		-- check min distance between cells and base and each other
+		if (sqDistance(c1.p.x,c2.p.x,c1.p.z,c2.p.z) > sqMinRadius) and (sqDistance(basePos.x,c1.p.x,basePos.z,c1.p.z) > sqMinRadius) and (sqDistance(basePos.x,c2.p.x,basePos.z,c2.p.z) > sqMinRadius) then
+			p1 = c1.p
+			p2 = c2.p		
+		end 
+		
+		tries = tries +1
+	end
+	
+	if (p1 ~= nil and p2 ~= nil) then 	
+		p1 = newPosition(p1.x,p1.y,p1.z)
+		p2 = newPosition(p2.x,p2.y,p2.z)
+	
+		local f = spGetGameFrame()
+		
+		-- do not give the orders if already there
+		if (distance(self.pos,p1) > BIG_RADIUS) then
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{p1.x,p1.y,p1.z},{})			
+			spGiveOrderToUnit(self.unitId,CMD.PATROL,{p2.x,0,p2.z},CMD.OPT_SHIFT)
+		else
+			spGiveOrderToUnit(self.unitId,CMD.PATROL,{p1.x,p1.y,p1.z},{})			
+			spGiveOrderToUnit(self.unitId,CMD.PATROL,{p2.x,0,p2.z},CMD.OPT_SHIFT)
+		end
+
+	else
+		--log("could not find scout cells!",self.ai)
+		-- do nothing
+		return SKIP_THIS_TASK
+	end
+	
+	return {action="wait", frames=3000}
+end
 
 function moveBaseCenter(self)
 	local radius = BIG_RADIUS
@@ -720,6 +806,29 @@ function buildWithExtraMetalIncome(self,unitName, minNumber)
 	end
 end
 
+
+local function scoutPadIfNeeded(self)
+	local unitName = scoutPadByFaction[self.unitSide] 
+	unitName = buildWithLimitedNumber(self, unitName, 1) 
+	
+	-- if unit is far away from base center, move to center and then retry
+	if unitName ~= SKIP_THIS_TASK and farFromBaseCenter(self)  then
+		self:Retry()
+		return moveBaseCenter(self)
+	end	
+	
+	return unitName
+end
+
+local function airScoutIfNeeded(self)
+	local unitName = airScoutByFaction[self.unitSide] 
+	local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
+
+	unitName = buildWithLimitedNumber(self, unitName, 1 + math.floor(incomeM/30)) 
+	return unitName
+end
+
+
 local function lvl1PlantIfNeeded(self)
 	-- exclude aircraft factories at first
 	local excludeAir = 0 	
@@ -844,16 +953,21 @@ end
 
 
 local function brutalPlant(self)
-	if self.isBrutalMode then
+	if self.isBrutalMode and not self.ai.unitHandler.brutalPlantDone then
+		self.ai.unitHandler.brutalPlantDone = true
 		return lvl1PlantIfNeeded(self)
 	end
 	
 	return SKIP_THIS_TASK
 end
 
+
+
+
 local function brutalAirPlant(self)
-	if self.isBrutalMode then
+	if self.isBrutalMode and not self.ai.unitHandler.brutalAirPlantDone then
 		if (countOwnUnits(self, nil,4,TYPE_L1_PLANT) < 3) then
+			self.ai.unitHandler.brutalAirPlantDone = true
 			return lev1PlantByFaction[self.unitSide][ tableLength(lev1PlantByFaction[self.unitSide]) ]		
 		end
 	end
@@ -863,7 +977,8 @@ end
 
 
 local function brutalLightDefense(self)
-	if self.isBrutalMode then
+	if self.isBrutalMode and not self.ai.unitHandler.brutalLightDefenseDone then
+		self.ai.unitHandler.brutalLightDefenseDone = true
 		return lltByFaction[self.unitSide]
 		--return areaLimit_Llt(self)
 	end
@@ -872,7 +987,8 @@ local function brutalLightDefense(self)
 end
 
 local function brutalAADefense(self)
-	if self.isBrutalMode then
+	if self.isBrutalMode and not self.ai.unitHandler.brutalAADefenseDone then
+		self.ai.unitHandler.brutalAADefenseDone = true
 		if lightAAByFaction[self.unitSide] then
 			return lightAAByFaction[self.unitSide]
 		end
@@ -884,7 +1000,8 @@ local function brutalAADefense(self)
 end
 
 local function brutalHeavyDefense(self)
-	if self.isBrutalMode then
+	if self.isBrutalMode and not self.ai.unitHandler.brutalHeavyDefenseDone then
+		self.ai.unitHandler.brutalHeavyDefenseDone = true
 		return lev2HeavyDefenseByFaction[self.unitSide][ random( 1, tableLength(lev2HeavyDefenseByFaction[self.unitSide]) ) ]
 		--return areaLimit_L2HeavyDefense(self)
 	end
@@ -1291,6 +1408,12 @@ end
 ------------------------------- COMMON
 
 
+
+local airScout = {
+	scoutRandomly,
+	{action = "wait", frames = 32}
+}
+
 local atkSupporter = {
 	moveAtkCenter,
 	{action = "wait", frames = 32}
@@ -1299,7 +1422,7 @@ local atkSupporter = {
 
 local atkPatroller = {
 	patrolAtkCenter,
-	{action = "cleanup", frames = 900},
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	{action = "wait", frames = 32}
 }
 
@@ -1307,6 +1430,12 @@ local atkPatroller = {
 local respawner = {
 	respawnIfNeeded,
 	{action = "wait", frames = 38}
+}
+
+
+local scoutPad = {
+	airScoutIfNeeded,
+	{action = "wait", frames = 600}
 }
 
 
@@ -1323,6 +1452,7 @@ local upgradeOffensive = {
 	"upgrade_red_1_range",
 	"upgrade_red_2_commander_damage",
 	"upgrade_red_2_commander_range",
+	"upgrade_red_2_commander_range",
 	"upgrade_red_3_damage",
 	{action = "wait", frames = 38}
 }
@@ -1334,6 +1464,7 @@ local upgradeDefensive = {
 	"upgrade_green_1_hp",
 	"upgrade_green_1_regen",
 	"upgrade_green_2_commander_hp",
+	"upgrade_green_2_commander_regen",
 	"upgrade_green_2_commander_regen",
 	"upgrade_green_3_hp",
 	{action = "wait", frames = 38}
@@ -1347,6 +1478,7 @@ local upgradeDefensiveRegen = {
 	"upgrade_green_1_hp",
 	"upgrade_green_2_commander_hp",
 	"upgrade_green_2_commander_regen",
+	"upgrade_green_2_commander_regen",
 	"upgrade_green_3_regen",
 	{action = "wait", frames = 38}
 }
@@ -1357,6 +1489,7 @@ local upgradeSpeed = {
 	"upgrade_blue_1_speed",
 	"upgrade_green_1_regen",
 	"upgrade_green_1_regen",
+	"upgrade_blue_2_commander_speed",
 	"upgrade_blue_2_commander_speed",
 	"upgrade_green_2_commander_regen",
 	"upgrade_blue_3_speed",
@@ -1369,6 +1502,7 @@ local upgradeMixed = {
 	"upgrade_blue_1_speed",
 	"upgrade_blue_1_speed",
 	"upgrade_green_1_hp",
+	"upgrade_green_2_commander_regen",
 	"upgrade_red_2_commander_damage",
 	"upgrade_green_2_commander_hp",
 	"upgrade_red_3_damage",
@@ -1383,6 +1517,7 @@ local upgradeMixedDronesUtility = {
 	"upgrade_green_1_hp",
 	"upgrade_blue_3_commander_stealth_drone",
 	"upgrade_blue_3_commander_builder_drone",
+	"upgrade_blue_3_commander_builder_drone",
 	"upgrade_red_3_damage",
 	{action = "wait", frames = 38}
 }
@@ -1394,6 +1529,7 @@ local upgradeMixedDronesCombat = {
 	"upgrade_blue_1_speed",
 	"upgrade_green_1_hp",
 	"upgrade_blue_2_commander_light_drones",
+	"upgrade_blue_3_commander_medium_drone",
 	"upgrade_blue_3_commander_medium_drone",
 	"upgrade_red_3_damage",
 	{action = "wait", frames = 38}
@@ -1427,6 +1563,7 @@ local avenCommander = {
 	checkMorph,
 	changeQueueToWaterCommanderIfNeeded,
 	metalExtractorNearbyIfSafe,
+	lvl1PlantIfNeeded,
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
 	windSolarIfNeeded,
@@ -1434,8 +1571,9 @@ local avenCommander = {
 	windSolarIfNeeded,
 	windSolarIfNeeded,
 	windSolarIfNeeded,
-	lvl1PlantIfNeeded,
+	moveBaseCenter,
 	areaLimit_Respawner,
+	scoutPadIfNeeded,
 	areaLimit_Llt,
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
@@ -1490,10 +1628,24 @@ local avenWaterCommander = {
 local avenUCommander = {
 	checkMorph,
 	changeQueueToCommanderBaseBuilderIfNeeded,
-	{action = "cleanup", frames = 900},
+	changeQueueToRoamingCommanderIfNeeded,
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	metalExtractorNearbyIfSafe,
 	patrolAtkCenter
 }
+
+local avenURoamingCommander = {
+	checkMorph,
+	changeQueueToCommanderBaseBuilderIfNeeded,
+	{action = "cleanup", frames = CLEANUP_FRAMES},
+	metalExtractorNearbyIfSafe,
+	commanderRoam,
+	metalExtractorNearbyIfSafe,
+	areaLimit_LightAA,
+	areaLimit_Radar,
+	commanderRoam
+}
+
 
 local avenLev1Con = {
 	{action = "cleanup", frames = CLEANUP_FRAMES},
@@ -1502,6 +1654,7 @@ local avenLev1Con = {
 	windSolarIfNeeded,
 	moveBaseCenter,
 	areaLimit_Respawner,
+	scoutPadIfNeeded,
 	changeQueueToMexBuilderIfNeeded,
 	basePatrolIfNeeded,
 	changeQueueToDefenseBuilderIfNeeded,
@@ -1656,6 +1809,7 @@ local avenLev2DefenseBuilder = {
 }
 
 local avenLightPlant = {
+	"aven_runner",
 	"aven_samson",
 	"aven_construction_kbot",
 	{action = "randomness", probability = 0.5, value = "aven_construction_kbot"},
@@ -1706,6 +1860,8 @@ local avenAdvAircraftPlant = {
 
 local avenAdvKbotLab = {
 	"aven_stalker",
+	{action = "randomness", probability = 0.5, value = "aven_stalker"},
+	{action = "randomness", probability = 0.5, value = "aven_stalker"},
 	"aven_adv_construction_kbot",
 	"aven_knight",
 	avenL2KbotChoice,
@@ -1720,6 +1876,9 @@ local avenAdvKbotLab = {
 }
 
 local avenAdvVehiclePlant = {
+	"aven_racer",
+	{action = "randomness", probability = 0.5, value = "aven_racer"},
+	{action = "randomness", probability = 0.5, value = "aven_racer"},
 	"aven_javelin",
 	"aven_adv_construction_vehicle",
 	"aven_kodiak",
@@ -1786,6 +1945,7 @@ local gearCommander = {
 	checkMorph,
 	changeQueueToWaterCommanderIfNeeded,
 	metalExtractorNearbyIfSafe,
+	lvl1PlantIfNeeded,
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
 	windSolarIfNeeded,
@@ -1793,8 +1953,9 @@ local gearCommander = {
 	windSolarIfNeeded,
 	windSolarIfNeeded,	
 	windSolarIfNeeded,	
-	lvl1PlantIfNeeded,
+	moveBaseCenter,
 	areaLimit_Respawner,
+	scoutPadIfNeeded,
 	areaLimit_Llt,
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
@@ -1811,7 +1972,7 @@ local gearCommander = {
 }
 
 
-local coreWaterCommander = {
+local gearWaterCommander = {
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
@@ -1849,10 +2010,24 @@ local coreWaterCommander = {
 local gearUCommander = {
 	checkMorph,
 	changeQueueToCommanderBaseBuilderIfNeeded,
-	{action = "cleanup", frames = 900},
+	changeQueueToRoamingCommanderIfNeeded,
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	metalExtractorNearbyIfSafe,
 	patrolAtkCenter
 }
+
+local gearURoamingCommander = {
+	checkMorph,
+	changeQueueToCommanderBaseBuilderIfNeeded,
+	{action = "cleanup", frames = CLEANUP_FRAMES},
+	metalExtractorNearbyIfSafe,
+	commanderRoam,
+	metalExtractorNearbyIfSafe,
+	areaLimit_LightAA,
+	areaLimit_Radar,
+	commanderRoam
+}
+
 
 local gearLev1Con = {
 	{action = "cleanup", frames = CLEANUP_FRAMES},
@@ -1861,6 +2036,7 @@ local gearLev1Con = {
 	windSolarIfNeeded,
 	moveBaseCenter,
 	areaLimit_Respawner,	
+	scoutPadIfNeeded,
 	changeQueueToMexBuilderIfNeeded,
 	basePatrolIfNeeded,
 	changeQueueToDefenseBuilderIfNeeded,
@@ -1950,7 +2126,7 @@ local gearMexBuilder = {
 	restoreQueue
 }
 
-local coreWaterMexBuilder = {
+local gearWaterMexBuilder = {
 	setWaterMode,
 	"gear_underwater_metal_extractor",
 	"gear_underwater_metal_extractor",
@@ -1997,11 +2173,11 @@ local gearLev2Con = {
 	moveVulnerablePos,
 	areaLimit_L3LongRangeArtillery,
 	airRepairPadIfNeeded,
-	{action = "cleanup", frames = 128},
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	moveBaseCenter
 }
 
-local coreMexUpgrader = {
+local gearMexUpgrader = {
 	moveSafePos,
 	reclaimNearestMexIfNeeded,
 	mohoIfMexReclaimed,
@@ -2027,6 +2203,8 @@ local gearLev2DefenseBuilder = {
 }
 
 local gearLightPlant = {
+	"gear_harasser",
+	{action = "randomness", probability = 0.5, value = "gear_harasser"},
 	"gear_aggressor",
 	"gear_construction_kbot",
 	{action = "randomness", probability = 0.5, value = "gear_construction_kbot"},	
@@ -2074,6 +2252,9 @@ local gearAdvAircraftPlant = {
 }
 
 local gearAdvKbotLab = {
+	"gear_psycho",
+	{action = "randomness", probability = 0.5, value = "gear_psycho"},
+	{action = "randomness", probability = 0.5, value = "gear_psycho"},
 	"gear_moe",
 	"gear_adv_construction_kbot",
 	"gear_cube",
@@ -2144,6 +2325,7 @@ local clawCommander = {
 	checkMorph,
 	changeQueueToWaterCommanderIfNeeded,
 	metalExtractorNearbyIfSafe,
+	lvl1PlantIfNeeded,
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
 	windSolarIfNeeded,
@@ -2151,8 +2333,9 @@ local clawCommander = {
 	windSolarIfNeeded,
 	windSolarIfNeeded,
 	windSolarIfNeeded,
-	lvl1PlantIfNeeded,
+	moveBaseCenter,
 	areaLimit_Respawner,
+	scoutPadIfNeeded,
 	areaLimit_Llt,
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
@@ -2206,14 +2389,24 @@ local clawWaterCommander = {
 local clawUCommander = {
 	checkMorph,
 	changeQueueToCommanderBaseBuilderIfNeeded,
+	changeQueueToRoamingCommanderIfNeeded,
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	metalExtractorNearbyIfSafe,
 	patrolAtkCenter
 }
 
-local atkSupporter = {
-	moveAtkCenter,
-	{action = "wait", frames = 32}
+
+
+local clawURoamingCommander = {
+	checkMorph,
+	changeQueueToCommanderBaseBuilderIfNeeded,
+	{action = "cleanup", frames = CLEANUP_FRAMES},
+	metalExtractorNearbyIfSafe,
+	commanderRoam,
+	metalExtractorNearbyIfSafe,
+	areaLimit_MediumAA,
+	areaLimit_Radar,
+	commanderRoam
 }
 
 local clawLev1Con = {
@@ -2223,6 +2416,7 @@ local clawLev1Con = {
 	windSolarIfNeeded,
 	moveBaseCenter,
 	areaLimit_Respawner,
+	scoutPadIfNeeded,
 	changeQueueToMexBuilderIfNeeded,
 	basePatrolIfNeeded,
 	changeQueueToDefenseBuilderIfNeeded,
@@ -2386,6 +2580,8 @@ local clawLev2DefenseBuilder = {
 }
 
 local clawPlant = {
+	"claw_knife",
+	"claw_knife",	
 	"claw_jester",
 	"claw_construction_kbot",
 	{action = "randomness", probability = 0.5, value = "claw_construction_kbot"},
@@ -2435,6 +2631,8 @@ local clawAdvAircraftPlant = {
 
 local clawAdvKbotLab = {
 	"claw_centaur",
+	{action = "randomness", probability = 0.5, value = "claw_centaur"},
+	{action = "randomness", probability = 0.5, value = "claw_centaur"},
 	"claw_adv_construction_kbot",
 	"claw_brute",
 	clawL2KbotChoice,
@@ -2518,12 +2716,14 @@ local sphereCommander = {
 	checkMorph,
 	changeQueueToWaterCommanderIfNeeded,
 	metalExtractorNearbyIfSafe,
+	lvl1PlantIfNeeded,
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
 	areaLimit_Llt,
+	moveBaseCenter,
 	roughFusionIfNeeded,
-	lvl1PlantIfNeeded,
 	areaLimit_Respawner,
+	scoutPadIfNeeded,
 	areaLimit_Llt,
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
@@ -2574,14 +2774,22 @@ local sphereWaterCommander = {
 local sphereUCommander = {
 	checkMorph,
 	changeQueueToCommanderBaseBuilderIfNeeded,
+	changeQueueToRoamingCommanderIfNeeded,
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	metalExtractorNearbyIfSafe,
 	patrolAtkCenter
 }
 
-local atkSupporter = {
-	moveAtkCenter,
-	{action = "wait", frames = 32}
+local sphereURoamingCommander = {
+	checkMorph,
+	changeQueueToCommanderBaseBuilderIfNeeded,
+	{action = "cleanup", frames = CLEANUP_FRAMES},
+	metalExtractorNearbyIfSafe,
+	commanderRoam,
+	metalExtractorNearbyIfSafe,
+	areaLimit_MediumAA,
+	areaLimit_Radar,
+	commanderRoam
 }
 
 local sphereLev1Con = {
@@ -2590,6 +2798,7 @@ local sphereLev1Con = {
 	metalExtractorNearbyIfSafe,
 	moveBaseCenter,
 	areaLimit_Respawner,
+	scoutPadIfNeeded,
 	roughFusionIfNeeded,	
 	changeQueueToMexBuilderIfNeeded,
 	basePatrolIfNeeded,
@@ -2718,7 +2927,7 @@ local sphereLev2Con = {
 	moveVulnerablePos,
 	areaLimit_L3LongRangeArtillery,
 	airRepairPadIfNeeded,
-	{action = "cleanup", frames = 128},
+	{action = "cleanup", frames = CLEANUP_FRAMES},
 	moveBaseCenter	
 }
 
@@ -2748,6 +2957,7 @@ local sphereLev2DefenseBuilder = {
 }
 
 local spherePlant = {
+	"sphere_trike",
 	"sphere_needles",
 	"sphere_construction_vehicle",
 	{action = "randomness", probability = 0.5, value = "sphere_construction_vehicle"},
@@ -2809,12 +3019,14 @@ local sphereAdvKbotLab = {
 }
 
 local sphereAdvVehiclePlant = {
+	"sphere_quad",
+	{action = "randomness", probability = 0.5, value = "sphere_quad"},
+	{action = "randomness", probability = 0.5, value = "sphere_quad"},
 	"sphere_trax",
 	"sphere_adv_construction_vehicle",
 	sphereL2VehicleChoice,
 	sphereL2VehicleChoice,
 	sphereL2VehicleChoice,
-	"sphere_quad",
 	"sphere_slammer",
 	sphereL2VehicleRadar,
 	sphereL2VehicleRadarJammer,
@@ -2848,11 +3060,12 @@ local sphereAdvShipPlant = {
 
 ------------------------------- unit-queue table
 
-mexUpgraderQueueByFaction = { [side1Name] = avenMexUpgrader, [side2Name] = coreMexUpgrader, [side3Name] = clawMexUpgrader, [side4Name] = sphereMexUpgrader}
+mexUpgraderQueueByFaction = { [side1Name] = avenMexUpgrader, [side2Name] = gearMexUpgrader, [side3Name] = clawMexUpgrader, [side4Name] = sphereMexUpgrader}
 mexBuilderQueueByFaction = { [side1Name] = avenMexBuilder, [side2Name] = gearMexBuilder, [side3Name] = clawMexBuilder, [side4Name] = sphereMexBuilder}
 commanderBaseBuilderQueueByFaction = { [side1Name] = avenCommander, [side2Name] = gearCommander, [side3Name] = clawCommander, [side4Name] = sphereCommander}
 commanderAtkQueueByFaction = { [side1Name] = avenUCommander, [side2Name] = gearUCommander, [side3Name] = clawUCommander, [side4Name] = sphereUCommander}
-commanderWaterQueueByFaction = { [side1Name] = avenWaterCommander, [side2Name] = coreWaterCommander, [side3Name] = clawWaterCommander, [side4Name] = sphereWaterCommander}
+commanderRoamingQueueByFaction = { [side1Name] = avenURoamingCommander, [side2Name] = gearURoamingCommander, [side3Name] = clawURoamingCommander, [side4Name] = sphereURoamingCommander}
+commanderWaterQueueByFaction = { [side1Name] = avenWaterCommander, [side2Name] = gearWaterCommander, [side3Name] = clawWaterCommander, [side4Name] = sphereWaterCommander}
 defenseBuilderQueueByFaction = { [side1Name] = avenLev1DefenseBuilder, [side2Name] = gearLev1DefenseBuilder, [side3Name] = clawLev1DefenseBuilder, [side4Name] = sphereLev1DefenseBuilder}
 advancedDefenseBuilderQueueByFaction = { [side1Name] = avenLev2DefenseBuilder, [side2Name] = gearLev2DefenseBuilder, [side3Name] = clawLev2DefenseBuilder, [side4Name] = sphereLev2DefenseBuilder}
 waterDefenseBuilderQueueByFaction = { [side1Name] = avenLev1WaterDefenseBuilder, [side2Name] = gearLev1WaterDefenseBuilder, [side3Name] = clawLev1WaterDefenseBuilder, [side4Name] = sphereLev1WaterDefenseBuilder}
@@ -2888,11 +3101,13 @@ taskqueues = {
 	aven_hovercraft_platform = avenHovercraftPlant,
 	aven_adv_shipyard = avenAdvShipPlant,
 	aven_upgrade_center = upgradeCenter,
+	aven_scout_pad = scoutPad,
 	aven_marky = atkSupporter,
 	aven_eraser = atkSupporter,
 	aven_seer = atkSupporter,
 	aven_jammer = atkSupporter,
 	aven_zephyr = atkSupporter,
+	aven_peeper = airScout,
 ------------------- GEAR
 	gear_commander_respawner = respawner,
 	gear_commander = gearCommander,
@@ -2917,10 +3132,12 @@ taskqueues = {
 	gear_adv_aircraft_plant = gearAdvAircraftPlant,
 	gear_adv_shipyard = gearAdvShipPlant,
 	gear_upgrade_center = upgradeCenter,
+	gear_scout_pad = scoutPad,
 	gear_voyeur = atkSupporter,
 	gear_spectre = atkSupporter,
 	gear_informer = atkSupporter,
 	gear_deleter = atkSupporter,
+	gear_fink = airScout,
 ------------------- CLAW
 	claw_commander_respawner = respawner,
 	claw_commander = clawCommander,
@@ -2947,11 +3164,13 @@ taskqueues = {
 	claw_adv_shipyard = clawAdvShipPlant,
 	claw_spinbot_plant = clawSpinbotPlant,
 	claw_upgrade_center = upgradeCenter,
+	claw_scout_pad = scoutPad,
 	claw_revealer = atkSupporter,
 	claw_shade = atkSupporter,
 	claw_seer = atkSupporter,
 	claw_jammer = atkSupporter,
-	claw_haze = atkSupporter,	
+	claw_haze = atkSupporter,
+	claw_spotter = airScout,
 ------------------- SPHERE
 	sphere_commander_respawner = respawner,
 	sphere_commander = sphereCommander,
@@ -2960,12 +3179,13 @@ taskqueues = {
 	sphere_u3commander = sphereUCommander,
 	sphere_u4commander = sphereUCommander,
 	sphere_u5commander = sphereUCommander,
+	sphere_u6commander = sphereUCommander,
 	sphere_construction_vehicle = sphereLev1Con,
 	sphere_construction_aircraft = sphereLev1Con,
 	sphere_construction_ship = sphereLev1WaterCon,
 	sphere_adv_construction_vehicle = sphereLev2Con,
 	sphere_adv_construction_kbot = sphereLev2Con,
-	sphere_construction_sphere = sphereLev2Con,
+	sphere_construction_sphere = atkPatroller,
 	sphere_adv_construction_aircraft = sphereLev2Con,	
 	sphere_adv_construction_sub = sphereLev2WaterCon,
 	sphere_light_factory = spherePlant,
@@ -2977,11 +3197,13 @@ taskqueues = {
 	sphere_sphere_factory = sphereSpherePlant,
 	sphere_adv_shipyard = sphereAdvShipPlant,
 	sphere_upgrade_center = upgradeCenter,
+	sphere_scout_pad = scoutPad,
 	sphere_sensor = atkSupporter,
 	sphere_rain = atkSupporter,
 	sphere_scanner = atkSupporter,
 	sphere_concealer = atkSupporter,
 	sphere_orb = atkSupporter,
 	sphere_shielder = atkSupporter,
-	sphere_screener = atkSupporter
+	sphere_screener = atkSupporter,
+	sphere_probe = airScout
 }

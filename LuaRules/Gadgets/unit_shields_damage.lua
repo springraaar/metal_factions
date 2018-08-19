@@ -33,6 +33,7 @@ local COLVOL_BASE = 1
 local PARALYZE_DAMAGE_FACTOR = 0.33 -- paralyze damage adds this fraction as normal damage
 local PARALYZE_MISSING_HP_FACTOR = 2.0 -- how much paralyze damage is amplified by target's missing HP %
 local DAMAGE_REPAIR_DISRUPT_FRAMES = 60 
+local SELF_DAMAGE_FACTOR = 0.33
 
 --local projectileHitShield = {}
 local weaponDefIdByNameTable = {}
@@ -404,6 +405,11 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	-- disables unit collision damage
 	if (weaponDefID == -3) then
 		return 0
+	end
+	
+	-- sharply reduce self-damage in general
+	if (unitID == attackerID) then
+		damage = damage * SELF_DAMAGE_FACTOR
 	end
 	
 	-- show animation for AOE damage from disruptor weapons 

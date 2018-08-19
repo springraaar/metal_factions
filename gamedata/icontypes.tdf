@@ -65,7 +65,13 @@
 		distance=1;
 		size=0.8;
 	}
-
+	[wall]
+	{
+		bitmap=icons/wall.tga;
+		radiusadjust=0;
+		distance=1;
+		size=0.9;
+	}
 	[nuke]
 	{
 		bitmap=icons/nuke.tga;

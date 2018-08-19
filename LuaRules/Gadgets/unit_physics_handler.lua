@@ -36,6 +36,7 @@ local spSetRelativeVelocity = Spring.MoveCtrl.SetRelativeVelocity
 local spSetUnitVelocity = Spring.SetUnitVelocity
 local spSetUnitPhysics = Spring.SetUnitPhysics
 local spSetUnitRotation = Spring.SetUnitRotation
+local spSetUnitPosition = Spring.SetUnitPosition
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
 local spGetCommandQueue = Spring.GetCommandQueue
 local spGetGameFrame = Spring.GetGameFrame
@@ -104,12 +105,61 @@ local aircraftMovementFixDefIds = {
 
 local aircraftMovementFixUnitIds = {}
 
+-- these are used to warp back aircraft that flew off the map due to an engine bug
+local mapSizeX = Game.mapSizeX
+local mapSizeZ = Game.mapSizeZ
+
+local MAP_SAFETY_TOLERANCE = 1500
+local mapSafetyPoints = {
+	{x=100,z=100},
+	{x=mapSizeX/2,z=100},
+	{x=mapSizeX-100,z=100},
+
+	{x=100,z=mapSizeZ/2},
+	{x=mapSizeX-100,z=mapSizeZ/2},
+
+	{x=100,z=mapSizeZ/2},
+	{x=mapSizeX/2,z=mapSizeZ/2},
+	{x=mapSizeX-100,z=mapSizeZ-100}
+}
+
+local function sqDistance(x1,x2,z1,z2)
+	return (x2-x1)*(x2-x1)+(z2-z1)*(z2-z1)
+end 
+ 
+
 local x,y,z,vx,vy,vz,v,h,rx,ry,rz, enableGC
 local physics
 local function updateUnitPhysics(unitId)
 	x,y,z = spGetUnitPosition(unitId)
 	vx,vy,vz,v = spGetUnitVelocity(unitId)
 	rx,ry,rz = spGetUnitRotation(unitId)
+	
+	
+	-- force aircraft that flew off the map to "teleport" back into the nearest edge
+	-- workaround for 104.0 engine bug
+	 if (x < -MAP_SAFETY_TOLERANCE or x > mapSizeX+MAP_SAFETY_TOLERANCE) or (z < -MAP_SAFETY_TOLERANCE or z > mapSizeZ+MAP_SAFETY_TOLERANCE) then
+	 	local bestDistance = math.huge
+	 	local d = 0
+	 	local targetX, targetY, targetZ
+	 	for _,p in pairs(mapSafetyPoints) do
+	 		d = sqDistance(x,p.x,z,p.z) 
+	 		if (d < bestDistance) then
+	 			bestDistance = d
+	 			targetX = p.x
+	 			targetY = p.y
+	 			targetZ = p.z
+	 		end
+	 	end
+	 	
+	 	spSetUnitPosition(unitId,targetX,targetY,targetZ)
+	 	spSetUnitVelocity(unitId,0,0,0)
+	 	--Spring.Echo("WARNING : unit "..unitId.." was flying way off the map : moved to ("..targetX..","..targetY..","..targetZ..")")
+
+		x,y,z = spGetUnitPosition(unitId)
+		vx,vy,vz,v = spGetUnitVelocity(unitId)
+	 end
+	 
 	
 	if comsatBeacons[unitId] then
 		spSetUnitVelocity(unitId,0,0,0)
@@ -149,7 +199,16 @@ end
 
 local function updateFeaturePhysics(featureId)
 	x,y,z = spGetFeaturePosition(featureId)
-	vx,vy,vz = spGetFeatureVelocity(featureId)
+	vx,vy,vz,v = spGetFeatureVelocity(featureId)
+	
+	-- make sure features that are nearly completely stopped but aren't, stop
+	-- workaround for shaking aircraft debris
+	-- TODO not working...
+	--if v > 0 and v < 0.5 then
+	--	spSetFeatureMoveCtrl(featureId,false,1,1,1,1,1,1,1,1,1)
+	--	spSetFeatureVelocity(featureId,0,vy,0)
+	--	spSetFeatureRotation(featureId,0,0,0)
+	--end 
 end
 
 local function randomNegative(scale)
@@ -167,6 +226,13 @@ local function isDrone(ud)
   return(ud and ud.customParams and ud.customParams.isdrone)
 end
 
+
+function gadget:Initialize()
+	-- for each safety point, add the "y"
+	for _,p in pairs(mapSafetyPoints) do
+		p.y = spGetGroundHeight(p.x,p.z) + 100
+	end
+end
 
 function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 	if UnitDefs[unitDefId].isGroundUnit and not UnitDefs[unitDefId].isBuilding and not UnitDefs[unitDefId].isImmobile then

@@ -16,6 +16,7 @@ FORCE_SIZE_MOD_METAL = 0.01
 FORCE_SIZE_MOD_FAILURE = 0.1
 FREE_METAL_SPOT_EXPANSION_THRESHOLD = 0.7
 ORDER_DELAY_FRAMES = 150
+RAIDING_PARTY_TOLERANCE_FRAMES = 900
 BUILD_SPREAD_DISTANCE = 50
 BUILD_CELL_BUILDING_LIMIT = 8 
 UNIT_RETREAT_HEALTH = 0.5
@@ -31,21 +32,25 @@ ATTACK_ENEMY_THREAT_EVALUATION_FACTOR = 0.8
 DEFENSE_ENEMY_THREAT_EVALUATION_FACTOR = 0.6
 ATTACK_PERSISTENCE_THREAT_EVALUATION_FACTOR = 0.6
 AIR_ATTACKER_EVALUATION_FACTOR = 0.5
-AIR_ATTACKER_DISTANCE_EVALUATION_FACTOR = 0.25
+DEFENDER_EVALUATION_FACTOR = 2
+ATTACKER_DISTANCE_EVALUATION_FACTOR = 1
+AIR_ATTACKER_DISTANCE_EVALUATION_FACTOR = 1
 ATTACK_ENEMY_THREAT_EVALUATION_EASY_FACTOR = 0.30
-ATTACK_ENEMY_THREAT_EVALUATION_BRUTAL_FACTOR = 0.20
+ATTACK_ENEMY_THREAT_EVALUATION_BRUTAL_FACTOR = 0.60
 ENEMY_STRATEGIC_COST_FACTOR = 2
-ENEMY_EXTRACTOR_COST_FACTOR = 3
+ENEMY_EXTRACTOR_COST_FACTOR = 5
 EASY_RANDOM_TIME_WASTE_PROBABILITY = 0.5 
-EASY_RANDOM_TIME_WASTE_FRAMES = 90
+EASY_RANDOM_TIME_WASTE_FRAMES = 120
 -- base income values are per half second
-BRUTAL_BASE_INCOME_METAL = 25
-BRUTAL_BASE_INCOME_ENERGY = 500
+BRUTAL_BASE_INCOME_METAL = 17.5
+BRUTAL_BASE_INCOME_ENERGY = 400
 BRUTAL_FORCE_SIZE_MOD_FAILURE = 0.3 
-BRUTAL_BASE_INCOME_METAL_PER_MIN = 1
-BRUTAL_BASE_INCOME_ENERGY_PER_MIN = 10
+BRUTAL_BASE_INCOME_METAL_PER_MIN = 0.5
+BRUTAL_BASE_INCOME_ENERGY_PER_MIN = 5
 BRUTAL_FORCE_SIZE_MOD_FAILURE = 0.3 
 ALL_IN_ADVANTAGE_THRESHOLD = 1.4
+CELL_VALUE_RETARGET_PREFERENCE_FACTOR = 2
+
 
 FRAMES_PER_MIN = 30 * 60
 
@@ -53,8 +58,8 @@ BUILDER_UNIT_LIMIT = 7
 ENERGY_STORAGE_LIMIT = 3
 METAL_STORAGE_LIMIT = 2
 
-CELL_SIZE = 600
-PF_CELL_SIZE = 100
+CELL_SIZE = 512
+PF_CELL_SIZE = 128
 PF_TYPE_LAND = 0
 PF_TYPE_LAND_SLOPE = 1
 PF_TYPE_LAND_STEEP_SLOPE = 2
@@ -148,7 +153,7 @@ PF_STEEP_SLOPE_THRESHOLD = 0.25
 PF_DEEP_WATER_THRESHOLD = -15
 PF_STEEP_SLOPE_HEIGHT_THRESHOLD = 60
 
-INFINITY = 9999999
+INFINITY = math.huge
 
 ENERGY_METAL_VALUE = 1/60
 
@@ -171,7 +176,7 @@ HUMAN_TASK_DELAY_FRAMES = 5400
 BRIEF_AREA_PATROL_FRAMES = 2400
 ATK_FAIL_TOLERANCE_FRAMES = 1800
 TASK_WATCHDOG_LIMIT_FRAMES = 5000
-
+DANGER_CELL_FORGET_FRAMES = 900
 
 TASK_IDLE = 0
 TASK_ATTACK = 1
@@ -191,7 +196,7 @@ UNIT_ROLE_ATTACK_PATROLLER = 6
 UNIT_GROUP_ATTACKERS = 0
 UNIT_GROUP_AIR_ATTACKERS = 1
 UNIT_GROUP_SEA_ATTACKERS = 2
-
+UNIT_GROUP_RAIDERS = 3
 
 -- Map terrain profiles
 MAP_PROFILE_LAND_FLAT = 0
@@ -216,8 +221,10 @@ EXPANSION_SAFETY_RADIUS = 1800
 CLUSTER_RADIUS = 1000
 FORCE_RADIUS = 200
 FORCE_RADIUS_AIR = 600
+FORCE_RADIUS_RAIDERS = 100
 FORCE_INCLUSION_RADIUS = 1000
-FORCE_INCLUSION_RADIUS_AIR = 1250
+FORCE_INCLUSION_RADIUS_AIR = 800
+FORCE_INCLUSION_RADIUS_RAIDERS = 500
 FORCE_TARGET_RADIUS = 500
 RETREAT_RADIUS = 900
 BRIEF_AREA_PATROL_RADIUS = 600
@@ -307,7 +314,7 @@ abs = math.abs
 fmod = math.fmod
 random = math.random
 floor = math.floor
-Echo = Spring.Echo
+echo = Spring.Echo
 
 spGetGameFrame = Spring.GetGameFrame
 spTestBuildOrder = Spring.TestBuildOrder
@@ -404,9 +411,9 @@ end
 function log(inStr, ai)
 	if DEBUG then
 		if( ai ~= nil ) then
-			Echo("player "..ai.id.." : "..inStr)
+			echo("player "..ai.id.." : "..inStr)
 		else
-			Echo(inStr)
+			echo(inStr)
 		end
 	end
 end
@@ -481,7 +488,6 @@ function getWeightedCost(ud)
 	return 0
 end
 
-
 function getWeightedCostByName(uName)
 	if (uName ~= nil) then
 		return getWeightedCost(UnitDefNames[uName])
@@ -490,6 +496,8 @@ function getWeightedCostByName(uName)
 	return 0
 end
 
+
+-- create new position obj from coordinates
 function newPosition(x,y,z)
 	x = x or 0
 	y = y or 0
@@ -499,30 +507,44 @@ function newPosition(x,y,z)
     return self
 end
 
+-- checks if position are within map bounds
+function checkWithinMapBounds(x,z)
+	if (x and z) then
+		if (x >= 0 and x <= Game.mapSizeX and z >= 0 and z <= Game.mapSizeZ) then
+			return true
+		end
+	else
+		--echo("map bounds check with invalid data x="..tostring(x).." z="..tostring(z))
+	end
+	
+	return false
+end
+
+-- retrieve cell x,z indexes for position (general purpose cells)
+
 function getCellXZIndexesForPosition(pos)
 	if pos ~= nil then
 		local cellX = pos.x - fmod(pos.x, CELL_SIZE)
 		local cellZ = pos.z - fmod(pos.z, CELL_SIZE)
 		cellX = cellX / CELL_SIZE
 		cellZ = cellZ / CELL_SIZE
-		
 		return	cellX, cellZ
 	end
 end
 
+-- retrieve cell x,z indexes for position (smaller pathfinding cells)
 function getPFCellXZIndexesForPosition(pos)
 	if pos ~= nil then
 		local cellX = pos.x - fmod(pos.x, PF_CELL_SIZE)
 		local cellZ = pos.z - fmod(pos.z, PF_CELL_SIZE)
 		cellX = cellX / PF_CELL_SIZE
 		cellZ = cellZ / PF_CELL_SIZE
-		
 		return	cellX, cellZ
 	end
 end
 
 function getCellFromTableIfExists(table,xIndex,zIndex)
-	cell = nil
+	local cell = nil
 	if table ~= nil then
 		if (table[xIndex] ~= nil and table[xIndex][zIndex] ~= nil) then
 			cell = table[xIndex][zIndex]
@@ -582,14 +604,23 @@ end
 
 -- get combined cost of armed enemies inside and near a cell
 function getCombinedThreatCost(cell)
-	return (cell.attackerCost+cell.defenderCost*2+cell.airAttackerCost/2)+(cell.nearbyAttackerCost+cell.nearbyDefenderCost*2+cell.nearbyAirAttackerCost/2)
+	return (cell.attackerCost+cell.defenderCost*DEFENDER_EVALUATION_FACTOR+cell.airAttackerCost*AIR_ATTACKER_EVALUATION_FACTOR)+(cell.nearbyAttackerCost+cell.nearbyDefenderCost*DEFENDER_EVALUATION_FACTOR+cell.nearbyAirAttackerCost*AIR_ATTACKER_EVALUATION_FACTOR)
 end
 
 -- get combined cost of armed enemies inside a cell
 function getInternalThreatCost(cell)
-	return (cell.attackerCost+cell.defenderCost*2+cell.airAttackerCost/2)
+	return (cell.attackerCost+cell.defenderCost*DEFENDER_EVALUATION_FACTOR+cell.airAttackerCost*AIR_ATTACKER_EVALUATION_FACTOR)
 end
 
+-- get combined cost of armed enemies inside and near a cell, excluding bad AA
+function getCombinedThreatCostExcludingBadAA(cell)
+	return ((cell.attackerCost-cell.badAAAttackerCost)+(cell.defenderCost-cell.badAADefenderCost)*DEFENDER_EVALUATION_FACTOR+(cell.airAttackerCost-cell.badAAAirAttackerCost)*AIR_ATTACKER_EVALUATION_FACTOR)+((cell.nearbyAttackerCost-cell.nearbyBadAAAttackerCost)+(cell.nearbyDefenderCost-cell.nearbyBadAADefenderCost)*DEFENDER_EVALUATION_FACTOR+(cell.nearbyAirAttackerCost-cell.nearbyBadAAAirAttackerCost)*AIR_ATTACKER_EVALUATION_FACTOR)
+end
+
+-- get combined cost of armed enemies inside a cell, excluding bad AA
+function getInternalThreatCostExcludingBadAA(cell)
+	return ((cell.attackerCost-cell.badAAAttackerCost)+(cell.defenderCost-cell.badAADefenderCost)*DEFENDER_EVALUATION_FACTOR+(cell.airAttackerCost-cell.badAAAirAttackerCost)*AIR_ATTACKER_EVALUATION_FACTOR)
+end
 
 ------------------------------------------------------
 
@@ -599,46 +630,6 @@ end
 --------------------------------- UNIT LISTS
 
 
-
-
--- these will be set to Hold Position
-holdPositionList = {
-	gear_thud = 1,
-}
-
--- these will be set to Roam
-roamList = {
-	gear_aggressor = 1,
-}
-
--- these will not be interrupted by watchdog checks
-dontInterruptList = {
-	"gear_adv_construction_kbot",
-}
-
--- if any of these is found among enemy units, AA units will be built
-airFacList = {
-	"aven_aircraft_plant",
-	"aven_adv_aircraft_plant",
-	"gear_aircraft_plant",
-	"gear_adv_aircraft_plant",
-	"claw_aircraft_plant",
-	"claw_adv_aircraft_plant",
-	"sphere_aircraft_factory",
-	"sphere_adv_aircraft_factory",	
-}
-
-
--- these units will be used to raid weakly defended spots
--- this is different from attacking in that raiders use Move, not MoveAndFire (and so will not delay to fight occasional enemy units encountered on the way)
--- TODO : make raiding parties work
-raiderList = {
-	"gear_psycho",
-	"aven_zipper",
-	"claw_knife",
-	"claw_centaur",
-}
-
 -- build ranges for stationary constructors
 -- for use until a way to get those automatically is provided
 buildRanges = {
@@ -646,48 +637,6 @@ buildRanges = {
 	aven_nano_tower = 200,
 	claw_nano_tower = 200,
 	sphere_nano_tower = 200,
-}
-
--- these are placed using the alternate build location function
--- tends to find locations when standard one fails
-unitsForNewPlacing = {
-}
-
--- these will be placed closer together if first placement attempt fails
-unitsForNewPlacingLowOnSpace = {
-}
-
--- these will NOT cause alternative build spots to be evaluated
-dontTryAlternativePoints = {
-	gear_tidal_generator = 1,
-	aven_tidal_generator = 1,
-}
-
--- these will be placed using defence placement algo - 6 in a circle around the builder
-unitsForDefencePlacing = {
-}
-
-
--- units to consider as targets for air (bomber) attacks
--- values are priority. Negative values decrease target weight (AA units in the same sector)
-bomberAttackTargets =
-{
-	-- fusions = big BOOM
-	gear_fusion_power_plant = 150,
-	aven_fusion_reactor = 150,
-	-- T2 towers, also great BOOM
-	gear_punisher = 120,
-	aven_guardian = 120,
-}
-
--- units in this list are bombers
-bomberList =
-{
-	gear_shadow = 1,
-	aven_thunder = 1,
-	sphere_manta = 1,
-	aven_ace = 2,
-	gear_cascade = 2,
 }
 
 
@@ -835,6 +784,7 @@ attackerList =
       "sphere_rock",
       "sphere_needles",
       "sphere_crustle",
+      "sphere_trike",
       "sphere_hanz",
       "sphere_trax",
       "sphere_pulsar",
@@ -872,6 +822,7 @@ airAttackerList =
 
 	"aven_swift",
 	"aven_tornado",
+	"aven_twister",
 ----------- l2
 	"aven_icarus",
 	"aven_gryphon",
@@ -1058,23 +1009,27 @@ l2ConstructorList =
 supporterList = 
 {
 ------------------------------------------------ AVEN
+	"aven_peeper",
 	"aven_marky",
 	"aven_eraser",
 	"aven_seer",
 	"aven_jammer",
 	"aven_zephyr",
 ------------------------------------------------ GEAR
+	"gear_fink",
 	"gear_informer",
 	"gear_deleter",
 	"gear_voyeur",
 	"gear_spectre",
 ------------------------------------------------ CLAW
+	"claw_spotter",
 	"claw_revealer",
 	"claw_shade",
 	"claw_seer",
 	"claw_jammer",
 	"claw_haze",	
 ------------------------------------------------ SPHERE
+	"sphere_probe",
 	"sphere_rain",
 	"sphere_sensor",
 	"sphere_scanner",
@@ -1082,6 +1037,20 @@ supporterList =
 	"sphere_orb",
 	"sphere_screener",
 	"sphere_shielder"
+}
+
+naturallyRoamingCommanders = {
+------------------------------------------------ AVEN
+	"aven_u1commander",
+	"aven_u3commander",
+	"aven_u5commander",
+------------------------------------------------ GEAR
+	"gear_u1commander",
+------------------------------------------------ CLAW
+	"claw_u3commander",
+	"claw_u6commander",
+------------------------------------------------ SPHERE
+	"sphere_u1commander"
 }
 
 
@@ -1104,14 +1073,17 @@ metalStorageByFaction = { [side1Name] = "aven_metal_storage", [side2Name] = "gea
 radarByFaction = { [side1Name] = "aven_radar_tower", [side2Name] = "gear_radar_tower", [side3Name] = "claw_radar_tower", [side4Name] = "sphere_radar_tower"}
 commanderByFaction = {[side1Name] = "aven_commander", [side2Name] = "gear_commander", [side3Name] = "claw_commander", [side4Name] = "sphere_commander"}
 mexByFaction =  { [side1Name] = "aven_metal_extractor", [side2Name] = "gear_metal_extractor", [side3Name] = "claw_metal_extractor", [side4Name] = "sphere_metal_extractor"}
+hazMexByFaction =  { [side1Name] = "aven_exploiter", [side2Name] = "gear_exploiter", [side3Name] = "claw_exploiter", [side4Name] = "sphere_exploiter"}
 mohoMineByFaction = { [side1Name] = "aven_moho_mine", [side2Name] = "gear_moho_mine", [side3Name] = "claw_moho_mine", [side4Name] = "sphere_moho_mine"}
 fusionByFaction = { [side1Name] = "aven_fusion_reactor", [side2Name] = "gear_fusion_power_plant", [side3Name] = "claw_adv_fusion_reactor", [side4Name] = "sphere_adv_fusion_reactor"}
 advRadarByFaction = { [side1Name] = "aven_advanced_radar_tower", [side2Name] = "gear_advanced_radar_tower", [side3Name] = "claw_advanced_radar_tower", [side4Name] = "sphere_adv_radar_tower"}
-commanderMorphByFaction = {[side1Name] = {"aven_u1commander","aven_u2commander","aven_u3commander","aven_u4commander","aven_u5commander","aven_u6commander"}, [side2Name] = {"gear_u1commander","gear_u2commander","gear_u3commander","gear_u4commander","gear_u5commander"}, [side3Name] = {"claw_u1commander","claw_u2commander","claw_u3commander","claw_u4commander","claw_u5commander","claw_u6commander"}, [side4Name] = {"sphere_u1commander","sphere_u2commander","sphere_u3commander","sphere_u4commander","sphere_u5commander"}}
+commanderMorphByFaction = {[side1Name] = {"aven_u1commander","aven_u2commander","aven_u3commander","aven_u4commander","aven_u5commander","aven_u6commander"}, [side2Name] = {"gear_u1commander","gear_u2commander","gear_u3commander","gear_u4commander","gear_u5commander"}, [side3Name] = {"claw_u1commander","claw_u2commander","claw_u3commander","claw_u4commander","claw_u5commander","claw_u6commander"}, [side4Name] = {"sphere_u1commander","sphere_u2commander","sphere_u3commander","sphere_u4commander","sphere_u5commander","sphere_u6commander"}}
 airRepairPadByFaction = { [side1Name] = "aven_air_repair_pad", [side2Name] = "gear_air_repair_pad", [side3Name] = "claw_air_repair_pad", [side4Name] = "sphere_air_repair_pad"}
 commanderMorphCmdByFaction = {[side1Name] = {31433,31434,31435,31436}, [side2Name] = {31427,31428,31429,31430}, [side3Name] = {31423,31424,31425,31426}, [side4Name] = {31412,31413,31414,31415}}
 nanoTowerFaction =  { [side1Name] = "aven_nano_tower", [side2Name] = "gear_nano_tower", [side3Name] = "claw_nano_tower", [side4Name] = "sphere_pole"}
 upgradeCenterByFaction = { [side1Name] = "aven_upgrade_center", [side2Name] = "gear_upgrade_center", [side3Name] = "claw_upgrade_center", [side4Name] = "sphere_upgrade_center"}
+scoutPadByFaction =  { [side1Name] = "aven_scout_pad", [side2Name] = "gear_scout_pad", [side3Name] = "claw_scout_pad", [side4Name] = "sphere_scout_pad"}
+airScoutByFaction =  { [side1Name] = "aven_peeper", [side2Name] = "gear_fink", [side3Name] = "claw_spotter", [side4Name] = "sphere_probe"}
 
 UWMexByFaction =  { [side1Name] = "aven_metal_extractor", [side2Name] = "gear_metal_extractor", [side3Name] = "claw_metal_extractor", [side4Name] = "sphere_metal_extractor"}
 UWMohoMineByFaction = { [side1Name] = "aven_moho_mine", [side2Name] = "gear_moho_mine", [side3Name] = "claw_moho_mine", [side4Name] = "sphere_moho_mine"}
@@ -1134,9 +1106,9 @@ unitTypeSets = {
 	[TYPE_FUSION] = tableToSet(fusionByFaction),
 	[TYPE_MEX] = tableToSet({mexByFaction,UWMexByFaction}),
 	[TYPE_MOHO] = tableToSet({mohoMineByFaction,UWMohoMineByFaction}),
-	[TYPE_EXTRACTOR] = tableToSet({mexByFaction,UWMexByFaction,mohoMineByFaction,UWMohoMineByFaction}),
+	[TYPE_EXTRACTOR] = tableToSet({mexByFaction,hazMexByFaction,UWMexByFaction,mohoMineByFaction,UWMohoMineByFaction}),
 	[TYPE_ENERGYGENERATOR] = tableToSet({solarByFaction,windByFaction,geoByFaction,fusionByFaction,tidalByFaction,{"sphere_fusion_reactor","sphere_hardened_fission_reactor"}}),
-	[TYPE_ECONOMY] = tableToSet({mexByFaction,mohoMineByFaction,solarByFaction,windByFaction,geoByFaction,fusionByFaction,energyStorageByFaction,metalStorageByFaction,{"sphere_fusion_reactor","sphere_hardened_fission_reactor"}}),
+	[TYPE_ECONOMY] = tableToSet({mexByFaction,hazMexByFaction,mohoMineByFaction,solarByFaction,windByFaction,geoByFaction,fusionByFaction,energyStorageByFaction,metalStorageByFaction,{"sphere_fusion_reactor","sphere_hardened_fission_reactor"}}),
 	[TYPE_PLANT] = tableToSet({lev1PlantByFaction,lev2PlantByFaction}),	
 	[TYPE_ATTACKER] = listToSet(attackerList),
 	[TYPE_AIR_ATTACKER] = listToSet(airAttackerList),

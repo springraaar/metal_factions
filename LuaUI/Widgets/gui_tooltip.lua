@@ -62,34 +62,26 @@ end
 function widget:Shutdown()
         Spring.SendCommands({"tooltip 1"})
 end
- 
- 
+  
 -- format number  
 -- TODO put this on a lib
 function FormatNbr(x,digits)
 	if x then
-		local _,fractional = modf(x)
-		if fractional==0 then
-			return x
-		elseif fractional<0.01 then
-			return floor(x)
-		elseif fractional>0.99 then
-			return ceil(x)
-		else
-			local ret=string.format("%."..(digits or 0).."f",x)
-			if digits and digits>0 then
-				while true do
-					local last = string.sub(ret,string.len(ret))
-					if last=="0" or last=="." then
-						ret = string.sub(ret,1,string.len(ret)-1)
-					end
-					if last~="0" then
-						break
-					end
+		local ret=string.format("%."..(digits or 0).."f",x)
+		if digits and digits>0 then
+			while true do
+				local last = string.sub(ret,string.len(ret))
+				if last=="0" or last=="." then
+					ret = string.sub(ret,1,string.len(ret)-1)
+				end
+				if last~="0" then
+					break
 				end
 			end
-			return ret
 		end
+		return ret
+	else
+		return ""
 	end
 end
 

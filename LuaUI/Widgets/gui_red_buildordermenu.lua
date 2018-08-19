@@ -60,6 +60,36 @@ local firstUpdate = true
 
 local spacingList = {0,1,3,6,12,20}
 
+-- adds relevant information for some tooltip texts like default hotkeys
+local function tooltipExtension(tooltip)
+	if (tooltip) then
+		if string.match(tooltip, "Move:") then
+			tooltip = tooltip .. ".\255\100\255\100 Hotkey \"M\", click-drag to move in line formation"
+		elseif string.match(tooltip, "Guard:") then
+			tooltip = tooltip .. ".\255\100\255\100 Hotkey \"G\""
+		elseif string.match(tooltip, "Stop:") then
+			tooltip = tooltip .. ".\255\100\255\100 Hotkey \"S\""
+		elseif string.match(tooltip, "Wait:") then
+			tooltip = tooltip .. ".\255\100\255\100 Hotkey \"W\""
+		elseif string.match(tooltip, "Attack:") then
+			tooltip = tooltip .. ".\255\100\255\100 Hotkey \"A\", click-drag to attack targets within an area"
+		elseif string.match(tooltip, "Fight:") then
+			tooltip = tooltip .. ".\255\100\255\100 Hotkey \"F\", click-drag for line formation"
+		elseif string.match(tooltip, "Patrol:") then
+			tooltip = tooltip .. ".\255\100\255\100 Hotkey \"P\", click-drag for line formation"
+		elseif string.match(tooltip, "Repair:") then
+			tooltip = tooltip .. ".\255\100\255\100 Hotkey \"R\", click-drag to repair targets within an area"
+		elseif string.match(tooltip, "Reclaim:") then
+			tooltip = tooltip .. ".\255\100\255\100 Hotkey \"E\", click-drag to reclaim targets within an area"
+		elseif string.match(tooltip, "Cloak state:") then
+			tooltip = tooltip .. ".\255\100\255\100 Hotkey \"K\" (also toggles fire state)"
+		end
+	end
+	
+	
+	return tooltip
+end
+
 local Config = {
 	buildMenu = {
 		px = 0,py = CanvasY - 380,
@@ -280,7 +310,7 @@ local function CreateGrid(r)
 			mouseOverHighlight.py = self.py
 			mouseOverHighlight.active = nil
 			
-			SetTooltip(self.tooltip)
+			SetTooltip(tooltipExtension(self.tooltip))
 		end,
 		
 		onUpdate=function(self)

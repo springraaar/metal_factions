@@ -65,7 +65,7 @@
 	turnrate=768;
 	acceleration=0.4;
 	brakerate=4;
-	maxvelocity=5.86;
+	maxvelocity=6.0;
 	maxslope=10;
 	maxwaterdepth=255;
 	cruisealt=110;
@@ -80,12 +80,11 @@
 	//  Weapons
 	//***********
 	weapon1=aven_twister_laser;
-	weapon2=aven_twister_rocket;
+	weapon2=aven_twister_emg;
 	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
-	onlytargetcategory2=NOTAIR;
+	badtargetcategory2=VTOL;
 	explodeas=BIG_UNITEX;
-	selfdestructas=MEDIUM_UNIT;
+	selfdestructas=BIG_UNITEX;
 
 	//************************************************************
 	//  Orders
@@ -128,7 +127,7 @@
 	{
 		explosiongenerator0=custom:GLOWSML;
 	}
-	buildcostenergy=1605;//#AUTO#
-	buildcostmetal=321;//#AUTO#
-	buildtime=3827;//#AUTO#
+	buildcostenergy=1494;//#AUTO#
+	buildcostmetal=298;//#AUTO#
+	buildtime=3562;//#AUTO#
 }

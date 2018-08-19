@@ -114,11 +114,25 @@ function BuildSiteHandler:FindClosestBuildSite(ud, searchPos, searchRadius, minD
 								end
 							end
 							
+							
+							if ( valid == true ) then
+								-- test if it can move to the location
+								if not self.ai.mapHandler:checkConnection(builderBehavior.pos, testPos,builderBehavior.pFType) then
+									valid = false
+								end
+							end
+							
 							-- if it is a factory, check if south exit is clear
+							-- also check if it's on the same pathing region as the center of base
 							if ( valid == true ) then
 								if ud.isBuilder then
 									buildTest = spTestBuildOrder(ud.id, testPos.x, testPos.y, testPos.z + 80,0)
 									if (buildTest ~= 1 and buildTest ~= 2) then
+										valid = false
+									end
+									
+									--TODO this means no shipyards atm
+									if not self.ai.mapHandler:checkConnection(self.ai.unitHandler.basePos, testPos,PF_TYPE_LAND) then									
 										valid = false
 									end
 								end
@@ -161,12 +175,6 @@ function BuildSiteHandler:FindClosestBuildSite(ud, searchPos, searchRadius, minD
 								end
 							end
 							
-							if ( valid == true ) then
-								-- test if it can move to the location
-								if not self.ai.mapHandler:checkConnection(builderBehavior.pos, testPos,builderBehavior.pFType) then
-									valid = false
-								end
-							end
 
 							if (valid == true) then
 								return testPos
@@ -226,9 +234,10 @@ function BuildSiteHandler:ClosestBuildSpot(builderBehavior, ud, minimumDistance,
 	return pos
 end
 
+-- return position where builder should attempt to build metal extractor or geothermal plant
 function BuildSiteHandler:ClosestFreeSpot(builderBehavior, ud, position, safety, type, builderDef, builderId)
 	local pos = nil
-	local bestDistance = 10000
+	local bestDistance = INFINITY
 
  	-- check for armed enemy units nearby
 	local enemyUnitIds = self.ai.enemyUnitIds
@@ -248,30 +257,19 @@ function BuildSiteHandler:ClosestFreeSpot(builderBehavior, ud, position, safety,
 		if dist < bestDistance and (builderDef.canFly or self.ai.mapHandler:checkConnection(position,p,builderBehavior.pFType)) then
 			-- now check if we can build there
 			if spTestBuildOrder(ud.id, p.x, p.y, p.z,0) > 0 then
-				-- check for armed enemies nearby
-				for _,cell  in pairs(self.ai.unitHandler.enemyCellList) do
-					if checkWithinDistance(cell.p,p,EXPANSION_SAFETY_RADIUS) and getInternalThreatCost(cell) > 0 then
-						-- if safety is required, discard spot if enemies are nearby
-						if (safety ~= nil and safety == true) then
-							dist = 10001
-						-- else just consider the position less interesting
-						else
-							dist = dist + getInternalThreatCost(cell)
-						end
+				if ((not safety) or self.ai.unitHandler:isPathBetweenPositionsSafe(position, v)) then
+					if dist < bestDistance then
+						bestDistance = dist
+						pos = p
 					end
-					-- if already worse than some other distance, abort
-					if dist > bestDistance then
-						break
-					end
-				end
-
-				if dist < bestDistance then
-					bestDistance = dist
-					pos = p
 				end
 			end
 		end
 	end
+	
+--	if pos == nil then
+--		Spring.MarkerAddPoint(position.x,500,position.z,"NO MEX!") --DEBUG
+--	end
 	
 	return pos
 end
@@ -297,24 +295,25 @@ function BuildSiteHandler:getBuildSearchPos(builderBehavior,ud)
 	local distanceToSelf = 0
 	local distanceToBase = 0
 	local cost = getWeightedCost(ud)
+	
 
 	for _,cell in ipairs(self.ai.mapHandler.mapCellList) do
 		distanceToSelf = distance(cell.p,builderPos)
 		if(distanceToSelf < 5000) then
-			local ownCell = getCellFromTableIfExists(self.ai.unitHandler.ownCells,cell.p.x,cell.p.z)
-			if spTestMoveOrder(builderBehavior.unitDef.id,cell.p.x,cell.p.y,cell.p.z) and (ownCell == nil or ownCell.buildingCount < BUILD_CELL_BUILDING_LIMIT) then
+			local ownCell = getCellFromTableIfExists(self.ai.unitHandler.ownCells,cell.xIndex,cell.zIndex)
+			if self.ai.mapHandler:checkConnection(builderPos,cell.p,builderBehavior.pFType) and (ownCell == nil or ownCell.buildingCount < BUILD_CELL_BUILDING_LIMIT) then
 
 				if (self.ai.unitHandler.collectedData) then
 					distanceToVulnerable = distance(cell.p,self.ai.unitHandler.mostVulnerableCell.p) 
 					distanceToSafe = distance(cell.p,self.ai.unitHandler.leastVulnerableCell.p)
 					distanceToBase = distance(cell.p,self.ai.unitHandler.basePos)
 					
-					if (isArmed or isRadar) and not builderBehavior.isCommander then
+					if (builderBehavior.isCommander and (isArmed or isRadar)) then
+						weightedDistance = distanceToSelf
+					elseif (isArmed or isRadar) then
 						weightedDistance = distanceToSelf * 0.3 + distanceToVulnerable * 0.45 + distanceToBase * 0.25
-					else --if getWeightedCost(ud) > 20 then
+					else
 						weightedDistance = distanceToSelf * 0.3 + distanceToSafe * 0.45 + distanceToBase * 0.25
-					--else
-						--weightedDistance = distanceToSelf
 					end					
 						
 				else
@@ -329,7 +328,7 @@ function BuildSiteHandler:getBuildSearchPos(builderBehavior,ud)
 		end
 	end
 	if bestCell ~= nil then
-		targetPos = bestCell.p
+		targetPos = newPosition(bestCell.p.x,bestCell.p.y,bestCell.p.z)
 	end
 	
 	-- return nil to make builder skip this order if another one already marked it

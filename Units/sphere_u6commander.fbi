@@ -1,0 +1,129 @@
+[UNITINFO]
+{
+	// ------------------- description
+	Side=Sphere;
+	Name=Commander;
+	Description=Nova Form;
+	icontype=sphere_commander;
+
+	// ------------------- categories
+	Category=SPHERE COMMANDER LEVEL1 WEAPON NOTAIR NOTSUB;
+	TEDClass=COMMANDER;
+
+
+	// ------------------- external specs
+	UnitName=sphere_u6commander;
+	UnitNumber=10000;
+	Objectname=sphere_u6commander.3do;
+	buildpic=sphere_u6commander.png;
+	corpse=sphere_u6commander_dead;
+	SoundCategory=SPHERE_COM;
+
+	// ------------------- health/cost/size
+	MaxDamage=5000;
+	buildcostmetal=2000;
+	buildcostenergy=20000;
+	buildtime=30000;
+	FootprintX=3;
+	FootprintZ=3;
+	autoheal=12;
+	mass=2500;
+	reclaimable=0;
+	capturable=0;
+	power=3750;
+	
+	// ------------------- resources
+	EnergyMake=50;
+	MetalMake=2;
+	energyStorage=0;
+	metalStorage=0;
+	EnergyUse=0;
+
+	// ------------------- constructor
+	builder=1;
+	builddistance=200;
+	workertime=300;
+      RepairSpeed=300;
+      ReclaimSpeed=300;
+      //ResurrectSpeed=0;
+      TerraformSpeed=600;
+      capturespeed=200;
+
+
+	// ------------------- abilities
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canguard=1;
+	canattack=1;
+	CanReclamate=1;
+	CanCapture=1;
+
+
+	// ------------------- movement
+	MaxVelocity=0.8;
+	BrakeRate=0.9;
+	Acceleration=1.00;
+	TurnRate=632;
+	SteeringMode=2;
+	MovementClass=KBOTATUW;
+
+	// ------------------- scout
+	sightdistance=500;
+	RadarDistance=800;
+	SonarDistance=800;
+
+	// ------------------- weapons
+	Weapon1=sphere_u6commander_cannon;
+	Weapon2=sphere_u6commander_torpedo;
+	Weapon3=sphere_u1commander_shield;
+	badtargetcategory1=VTOL;
+	onlytargetcategory2=NOTAIR;
+	NoChaseCategory=VTOL;
+	hightrajectory=2;
+	ExplodeAs=sphere_commander_nanoblast;
+	SelfDestructAs=sphere_commander_nanoblast;
+
+	// ------------------- orders
+	firestandorders=1;
+	mobilestandorders=1;
+	StandingFireOrder=2;
+	StandingMoveOrder=0;
+	DefaultMissionType=Standby;
+
+	// ------------------- stealth
+	//cloakcost=200;
+	//cloakcostmoving=750;
+	//mincloakdistance=100;
+
+	// ------------------- misc
+	commander=1;
+	Designation=S-Com;
+	showplayername=1;
+	BMcode=1;
+	ThreeD=1;
+	ZBuffer=1;
+	ShootMe=1;
+	maneuverleashlength=640;
+	hidedamage=0;
+	ImmuneToParalyzer=1;
+	downloadable=1;		
+	norestrict=1;
+	Version=1;
+	activatewhenbuilt=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =39 40 39;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		isCommander=1;
+	}
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:yellowflarebig;
+		explosiongenerator1=custom:buildglow;
+		explosiongenerator2=custom:Nano;
+	}
+}

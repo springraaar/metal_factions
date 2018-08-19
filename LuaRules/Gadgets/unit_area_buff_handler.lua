@@ -360,7 +360,7 @@ function gadget:GameFrame(n)
 	end
 	
 	if (n%COST_DELAY == 0) then
-		local ud,v, cost = nil
+		local ud,v,vx,vz,cost = nil
 		for unitId,zId in pairs(zephyrAffectedUnitIds) do
 			ud = UnitDefs[spGetUnitDefID(unitId)]
 			_,_,_,v = spGetUnitVelocity(unitId)
@@ -378,7 +378,10 @@ function gadget:GameFrame(n)
 		-- TODO : make it generic
 		for unitId,_ in pairs(flyingSphereUnitIds) do
 			ud = UnitDefs[spGetUnitDefID(unitId)]
-			_,_,_,v = spGetUnitVelocity(unitId)
+			vx,_,vz,v = spGetUnitVelocity(unitId)
+			if (vx ~= nil) then
+				v = math.sqrt(vx*vx + vz*vz)
+			end		
 			if (v ~= nil and v > 0.5) then
 				cost = ud.customParams.energycostmoving * COST_DELAY / 30
 				spUseUnitResource(unitId, "e", cost)

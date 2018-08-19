@@ -50,6 +50,10 @@ local haltedList = {}
 local builderNames = {}
 
 local highPriorityNames = {
+	aven_adv_construction_drone = true,
+	gear_adv_construction_drone = true,
+	claw_adv_construction_drone = true,
+	sphere_adv_construction_drone = true,
 	aven_commander_respawner = true,
 	gear_commander_respawner = true,
 	claw_commander_respawner = true,

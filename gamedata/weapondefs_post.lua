@@ -91,11 +91,14 @@ for wdName, wd in pairs(WeaponDefs) do
 			wd.intensity = 0.1
 			wd.weapontype = "Cannon"
 		end
-	
-		--wd.cylindertargeting = 1
-		--wd.avoidground=0
 	end
 	
+	-- set explosion speed
+	-- defaults are about 3-4 for most cases
+	if (not wd.explosionSpeed) then
+		wd.explosionSpeed = 8
+	end
+
 	-- force unit to retry the aim animation more often 
 	-- without this it would only run twice per second (?)
 	-- wd.allownonblockingaim = 1

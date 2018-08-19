@@ -6,6 +6,7 @@
 	side=Sphere;
 	name=Fortification Wall;
 	description=Perimeter Defense;
+	icontype=wall;
 
 	//************************************************************
 	//  Categories
@@ -19,17 +20,19 @@
 	unitname=sphere_fortification_wall;
 	unitnumber=10029;
 	objectname=sphere_fortification_wall.3do;
-	corpse=sphere_fortification_wall_dead;
+	corpse=rock_fort;
 	buildpic=sphere_fortification_wall.png;
+	script=fortification_wall.cob;
 	soundcategory=;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=4800;
-	buildcostmetal=65;
-	buildcostenergy=675;
-	buildtime=1400;
+	maxdamage=2500;
+	buildcostmetal=70;
+	buildcostenergy=700;
+	buildtime=1550;
+
 	footprintx=2;
 	footprintz=2;
 
@@ -60,7 +63,9 @@
 	//************************************************************
 	//  Abilities
 	//*************
-	isfeature=1;
+	isfeature=0;
+	canSelfDestruct=0;
+	power=1;
 
 	//************************************************************
 	//  Movement
@@ -76,8 +81,8 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=;
-	selfdestructas=;
+	explodeas=WALL;
+	selfdestructas=WALL;
 
 	//************************************************************
 	//  Orders

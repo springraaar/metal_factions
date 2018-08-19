@@ -173,7 +173,8 @@ local droneNamesForUnitDefName = {
 	sphere_u2commander = sphereDrones,
 	sphere_u3commander = sphereDrones,
 	sphere_u4commander = sphereDrones,
-	sphere_u5commander = sphereDrones
+	sphere_u5commander = sphereDrones,
+	sphere_u6commander = sphereDrones
 }
 
 local droneBuildCEG = "dronebuild"
@@ -261,16 +262,16 @@ function gadget:GameFrame(n)
 			end
 						
 			if hasLight and hasLight > 0 then
-				set[droneNamesForUnitDefName[uName]["light_drones"]] = 2
+				set[droneNamesForUnitDefName[uName]["light_drones"]] = hasLight * 2
 			end
 			if hasMedium and hasMedium > 0 then
-				set[droneNamesForUnitDefName[uName]["medium_drone"]] = 1
+				set[droneNamesForUnitDefName[uName]["medium_drone"]] = hasMedium * 1
 			end
 			if hasBuilder and hasBuilder > 0 then
-				set[droneNamesForUnitDefName[uName]["builder_drone"]] = 1
+				set[droneNamesForUnitDefName[uName]["builder_drone"]] = hasBuilder * 1
 			end
 			if hasStealth and hasStealth > 0 then
-				set[droneNamesForUnitDefName[uName]["stealth_drone"]] = 1
+				set[droneNamesForUnitDefName[uName]["stealth_drone"]] = hasStealth * 1
 			end
 
 			droneOwnersLimits[unitId] = set

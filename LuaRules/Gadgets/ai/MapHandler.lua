@@ -54,6 +54,8 @@ function MapHandler:Init()
 	-- get terrain profile (cells)
 	local cellCountX = math.ceil(Game.mapSizeX / CELL_SIZE)
 	local cellCountZ = math.ceil(Game.mapSizeZ / CELL_SIZE)
+	self.cellCountX = cellCountX
+	self.cellCountZ = cellCountZ
 	self.mapCells = {}
 	self.mapCellList = {}
 	-- log("cellSize X="..cellCountX.." Z="..cellCountZ, self.ai) --DEBUG
@@ -80,6 +82,7 @@ function MapHandler:Init()
 	local pFDeepWaterCount = 0
 
 	-- standard large cells	
+	local cellCount = 0
 	for i=0,(cellCountX - 1) do
 		self.mapCells[i] = {}
 		for j=0,(cellCountZ - 1) do
@@ -98,7 +101,9 @@ function MapHandler:Init()
 				newCell.isLandSlope = true	
 			end
 			
-			self.mapCellList[#self.mapCellList+1] = newCell
+			cellCount = cellCount + 1
+			newCell.index = cellCount
+			self.mapCellList[newCell.index] = newCell
 			-- log("map cell at ".."("..i..";"..j..")",self.ai)  --DEBUG
 			
 			if(newCell.isLand) then 
@@ -110,6 +115,8 @@ function MapHandler:Init()
 			elseif (newCell.isWater) then
 				waterCount = waterCount + 1
 			end			
+			
+			--Spring.MarkerAddPoint(self.mapCells[i][j].p.x,0,self.mapCells[i][j].p.z,"CELL "..i..","..j)
 		end
 	end
 	
@@ -175,7 +182,6 @@ function MapHandler:Init()
 			self.mapPFCellList[newCell.index] = newCell
 			
 			-- log("map PF cell at ".."("..i..";"..j..")",self.ai)  --DEBUG
-			
 			-- Spring.MarkerAddPoint(newCell.p.x,height,newCell.p.z,"h="..string.format("%.0f",height).."\ns="..string.format("%.2f",slope))
 			
 			newCell.height = height
@@ -190,6 +196,8 @@ function MapHandler:Init()
 			elseif (newCell.isWater) then
 				pFWaterCount = pFWaterCount + 1
 			end
+			
+			--Spring.MarkerAddPoint(self.mapPFCells[i][j].p.x,0,self.mapPFCells[i][j].p.z,"PFcell "..i..","..j)
 		end
 	end
 
@@ -277,6 +285,15 @@ function MapHandler:Init()
 	end
 	--]]
 	
+	self.cellConnections = {}
+	self.cellConnections[PF_UNIT_LAND] = {}
+	self.cellConnections[PF_UNIT_LAND_AT] = {}
+	self.cellConnections[PF_UNIT_AMPHIBIOUS] = {}
+	self.cellConnections[PF_UNIT_AMPHIBIOUS_FLOATER] = {}
+	self.cellConnections[PF_UNIT_WATER] = {}
+	self.cellConnections[PF_UNIT_WATER_DEEP] = {}
+	
+	
 	-- TODO : check PF cells and/or regions for each pathing type instead
 	--log("land="..landCount.." slope="..landSlopeCount.." water="..waterCount.." deepWater="..deepWaterCount.." underWaterSpotFraction="..underWaterSpotCountFraction, self.ai)  --DEBUG
 	self.mapProfile = MAP_PROFILE_LAND_FLAT
@@ -336,7 +353,7 @@ function MapHandler:initDistancesForPathingType(unitPathingType)
 					if(otherCell ~= nil) then
 						--val = distMods[otherCell.type]
 						
-						val = self:checkAdjacentCellConnection(cell.p,otherCell.p,unitPathingType)
+						val = self:checkAdjacentPFCellConnection(cell.p,otherCell.p,unitPathingType)
 						
 						--[[
 						if (val == 1) then
@@ -371,9 +388,16 @@ function MapHandler:checkConnection(p1,p2,unitPathingType)
 	CHECKx1, CHECKz1 = getPFCellXZIndexesForPosition(p1)
 	CHECKx2, CHECKz2 = getPFCellXZIndexesForPosition(p2)
 	
-	CHECKi1 = self.mapPFCells[CHECKx1][CHECKz1].index
-	CHECKi2 = self.mapPFCells[CHECKx2][CHECKz2].index
-	
+	if (self.mapPFCells[CHECKx1] and self.mapPFCells[CHECKx1][CHECKz1] and self.mapPFCells[CHECKx2] and self.mapPFCells[CHECKx2][CHECKz2]) then
+		CHECKi1 = self.mapPFCells[CHECKx1][CHECKz1].index
+		CHECKi2 = self.mapPFCells[CHECKx2][CHECKz2].index
+	else 
+		--echo("WARNING: path type="..unitPathingType.." x1,z1="..CHECKx1..","..CHECKz1.." x2,z2="..CHECKx2..","..CHECKz2.." PF cell not found! p1="..(p1.x)..","..(p1.z).." p2="..(p2.x)..","..(p2.z).." "..tostring(label))
+		--Spring.MarkerAddPoint(p1.x,500,p1.z,"BUG1") --DEBUG
+		--Spring.MarkerAddPoint(p2.x,500,p2.z,"BUG2") --DEBUG
+		return false
+	end
+
 	if (CHECKregions[CHECKi1] ~= CHECKregions[CHECKi2]) then
 		return false
 	end
@@ -381,9 +405,54 @@ function MapHandler:checkConnection(p1,p2,unitPathingType)
 	return true
 end 
 
--- checks if unit with pathing type can move from p1 to p2 (adjacent cells only)
+-- checks if unit with pathing type can move from cell c1 to cell c2
+-- returns true if possible or false otherwise
+-- relies on PF cell connections being established first
+local cIdx1, cIdx2, hasAnyConnection
+function MapHandler:checkCellConnection(c1,c2,unitPathingType)
+	if (unitPathingType == PF_UNIT_AMPHIBIOUS_AT) or (unitPathingType == PF_UNIT_AIR) then
+		return true
+	end
+	
+	cIdx1 = c1.index
+	cIdx2 = c2.index
+	
+	-- use connection status if already cached
+	if (self.cellConnections[unitPathingType][cIdx1] and self.cellConnections[unitPathingType][cIdx1][cIdx2] ~= nil) then
+		return self.cellConnections[unitPathingType][cIdx1][cIdx2] 
+	else
+		-- do the tests and add to cache otherwise
+		if not self.cellConnections[unitPathingType][cIdx1] then
+			self.cellConnections[unitPathingType][cIdx1] = {}
+		end
+		
+		-- if tests were done for the opposite pair, use them, because symmetry
+		if self.cellConnections[unitPathingType][cIdx2] and self.cellConnections[unitPathingType][cIdx2][cIdx1] ~= nil then
+			self.cellConnections[unitPathingType][cIdx1][cIdx2] = self.cellConnections[unitPathingType][cIdx2][cIdx1]
+			return  self.cellConnections[unitPathingType][cIdx1][cIdx2]
+		end
+
+		hasAnyConnection = self:checkConnection(newPosition(c1.p.x - 128,c1.p.y,c1.p.z - 128),newPosition(c2.p.x - 128,c2.p.y,c2.p.z - 128),unitPathingType) or self:checkConnection(c1.p,c2.p,unitPathingType) or self:checkConnection(newPosition(c1.p.x + 128,c1.p.y,c1.p.z + 128),newPosition(c2.p.x + 128,c2.p.y,c2.p.z + 128),unitPathingType)
+	
+		self.cellConnections[unitPathingType][cIdx1][cIdx2] = hasAnyConnection 	
+		
+		return hasAnyConnection
+	end
+end
+
+-- checks if cell indexes are within bounds
+-- those table indexes start at 0
+function MapHandler:checkCellBounds(xi,zi)
+	if (xi >= 0 and xi < self.cellCountX and zi >= 0 and zi < self.cellCountZ) then
+		return true
+	end
+	return false
+end
+
+
+-- checks if unit with pathing type can move from p1 to p2 (adjacent PF cells only)
 -- returns 1 if possible and math.huge otherwise
-function MapHandler:checkAdjacentCellConnection(p1,p2,unitPathingType)
+function MapHandler:checkAdjacentPFCellConnection(p1,p2,unitPathingType)
 
 	h1 = spGetGroundHeight(p1.x,p1.z)
 	_,_,_,s1 = spGetGroundNormal(p1.x,p1.z)

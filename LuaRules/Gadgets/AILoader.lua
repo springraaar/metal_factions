@@ -22,6 +22,8 @@ local spGetAllUnits = Spring.GetAllUnits
 local spGetUnitTeam = Spring.GetUnitTeam
 local mFAIs = {}
 
+local showAIWarningMessage = 0
+
 include("LuaRules/Gadgets/ai/Common.lua")
 include("LuaRules/Gadgets/ai/AI.lua")
 include("LuaRules/Gadgets/ai/MapHandler.lua")
@@ -67,7 +69,8 @@ function gadget:Initialize()
 				thisAI.mapHandler = mapHandler
 				mFAIs[#mFAIs+1] = thisAI
 			else
-				Echo("Player " .. teamList[i] .. " is another type of lua AI!")
+				showAIWarningMessage = 1
+				Echo("AI player " .. teamList[i] .. " is not supported")
 			end
 		end
 	end
@@ -103,7 +106,13 @@ end
 
 
 function gadget:GameFrame(n) 
-
+	if (n%16) == 0 then
+		if (showAIWarningMessage == 1) then
+			Spring.Echo("---------------------------------------------\nWARNING : unsupported AI players detected. Use MFAI instead.")
+			showAIWarningMessage = 0
+		end	
+	end
+	
 	-- for each AI...
     for _,thisAI in ipairs(mFAIs) do
         

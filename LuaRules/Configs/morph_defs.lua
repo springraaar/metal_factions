@@ -212,7 +212,15 @@ local morphDefs = {
 			energy = 10000,
 			metal = 1000,
 			text = 'Morph to Gazer Form : Greatly increased range. Heavy armor. Slower speed.'
-		}
+		},
+		{
+			into = 'sphere_u6commander',
+			time = 30,
+			cmdname = 'Nova Form',
+			energy = 10000,
+			metal = 1000,
+			text = 'Morph to Nova Form : Weapon has huge area of effect and can shoot in high-trajectory mode. Heavy armor. Slower speed.'
+		}		
 	}
 }
 

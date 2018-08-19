@@ -74,6 +74,7 @@ local USECOLORCODES = true
 local CURRENT_FRAME				= 0
 local LAST_PLAYER_MSG_CLEAR_FRAME	= 0
 local LAST_SYSTEM_MSG_CLEAR_FRAME	= 0
+local LAST_PLAYER_MSG_SCROLL_FRAME	= 0
 -- table mapping names to colors
 local PLAYER_COLOR_TABLE			= {}
 -- message patterns our filter should match
@@ -262,6 +263,8 @@ function widget:KeyPress(key, modifier, isRepeat)
 				MESSAGE_FRAME_MIN = MESSAGE_FRAME_MIN - 1
 				MESSAGE_FRAME_MAX = MESSAGE_FRAME_MAX - 1
 			end
+			
+			LAST_PLAYER_MSG_SCROLL_FRAME = CURRENT_FRAME
 		end
 		if (key == SCROLL_DOWN_KEY) then
 			-- if we are in non-transparent rendering mode
@@ -428,6 +431,7 @@ function widget:TweakMouseWheel(up, value)
 				MAX_NUM_PLAYER_MESSAGES = math_floor((PLAYER_MSG_BOX_H - FONT_SIZE) / FONT_SIZE)
 				MAX_NUM_SYSTEM_MESSAGES = math_floor((SYSTEM_MSG_BOX_H - FONT_SIZE) / FONT_SIZE)
 			end
+			LAST_PLAYER_MSG_SCROLL_FRAME = CURRENT_FRAME
 		else
 			if (FONT_SIZE > 1) then
 				FONT_SIZE = FONT_SIZE - 1
@@ -454,6 +458,7 @@ function widget:MouseWheel(up, value)
 				MESSAGE_FRAME_MIN = MESSAGE_FRAME_MIN - 1
 				MESSAGE_FRAME_MAX = MESSAGE_FRAME_MAX - 1
 			end
+			LAST_PLAYER_MSG_SCROLL_FRAME = CURRENT_FRAME
 		else
 			if (MESSAGE_FRAME_MAX < NUM_PLAYER_MESSAGES) then
 				MESSAGE_FRAME_MIN = MESSAGE_FRAME_MIN + 1
@@ -551,7 +556,6 @@ function widget:TweakMouseMove(x, y, dx, dy, button)
 
 		return
 	end
-
 end
 
 
@@ -625,6 +629,13 @@ function clearSystemMessageHistory()
 	NUM_SYSTEM_MESSAGES = 0
 end
 
+function scrollToLatestPlayerMessage()
+	while (MESSAGE_FRAME_MAX < NUM_PLAYER_MESSAGES) do
+		MESSAGE_FRAME_MIN = MESSAGE_FRAME_MIN + 1
+		MESSAGE_FRAME_MAX = MESSAGE_FRAME_MAX + 1
+	end
+end
+
 
 -- if our viewport is resized then we need to
 -- reposition (and resize?) our message boxes
@@ -637,10 +648,7 @@ function widget:ViewResize(newSizeX, newSizeY)
 			setDefaultUserVars(newSizeX, newSizeY, true)
 			
 			-- scroll to latest message
-			while (MESSAGE_FRAME_MAX < NUM_PLAYER_MESSAGES) do
-				MESSAGE_FRAME_MIN = MESSAGE_FRAME_MIN + 1
-				MESSAGE_FRAME_MAX = MESSAGE_FRAME_MAX + 1
-			end
+			scrollToLatestPlayerMessage()
 		end
 	end
 end
@@ -756,6 +764,20 @@ function widget:DrawScreen()
 		PLAYER_BOX_ALPHA = MIN_ALPHA
 	end
 
+	-- show message box and scroll to latest message on mouse over if it was invisible
+	local mx,my,_,_,_ = GetMouseState()
+	if (not DRAW_PLAYER_MESSAGES) and mouseOverPlayerMessageBox( mx, my ) then
+		PLAYER_BOX_ALPHA = MAX_ALPHA
+		DRAW_PLAYER_MESSAGES = true
+		-- scroll to latest message
+		scrollToLatestPlayerMessage()
+	end
+	
+	-- is it time to scroll back to the latest message?
+	if ((CURRENT_FRAME - LAST_PLAYER_MSG_SCROLL_FRAME) > DELAY_BEFORE_CLEAR) then
+		scrollToLatestPlayerMessage()
+	end
+	
 	-- is it time to clear our system message buffer?
 	if ((CURRENT_FRAME - LAST_SYSTEM_MSG_CLEAR_FRAME) > DELAY_BEFORE_CLEAR) then
 		LAST_SYSTEM_MSG_CLEAR_FRAME = CURRENT_FRAME

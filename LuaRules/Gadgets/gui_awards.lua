@@ -250,7 +250,7 @@ function gadget:GameOver(winningAllyTeams)
 		teamInfo[teamID].dmgRec = stats[cur_max].damageReceived
 		teamInfo[teamID].ecoUsed = teamInfo[teamID].ecoUsed + getWeightedCost(stats[cur_max].metalUsed,stats[cur_max].energyUsed)
 		--Spring.Echo("TEAM"..teamID.." unitsCost="..teamInfo[teamID].unitsCost.." killValue="..teamInfo[teamID].killValue.." avgKillValue="..avgKillValue.." lossValue="..teamInfo[teamID].lossValue)
-		if teamID ~= gaiaTeamID and teamInfo[teamID].killValue >= 0.25 * avgKillValue then 
+		if teamID ~= gaiaTeamID and teamInfo[teamID].killValue >= 0.25 * avgKillValue and avgKillValue > 500 then 
 			if teamInfo[teamID].lossValue > 0 then
 				teamInfo[teamID].dmgRatio = teamInfo[teamID].killValue / teamInfo[teamID].lossValue
 			else 

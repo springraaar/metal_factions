@@ -3,9 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, rwing, lwing, tail, jet, weapon,barrel,flare, base2, base3, jp1;
+piece  base, rwing, lwing, tail, jet, weapon,barrel,flare, base2, base3, jp1, barrels;
 
-static-var  statechg_DesiredState, statechg_StateChanging, Static_Var_5, isFlying;
+static-var  statechg_DesiredState, statechg_StateChanging, Static_Var_5, isFlying, drumpos;
 
 
 Crashing(Func_Var_1)
@@ -103,6 +103,7 @@ RequestState(requestedstate, currentstate)
 Create()
 {
 	isFlying = FALSE;
+	drumpos = [0];
 	call-script InitState();
 	start-script SmokeUnit();
 	start-script Crashing();
@@ -130,6 +131,30 @@ AimPrimary()
 FirePrimary()
 {
 	emit-sfx 1024 from flare;
+	if( drumpos == [0] )
+	{
+		sleep 100;
+		drumpos = [1];
+		sleep 300;
+		turn barrels to z-axis <0.000000> speed <400.093407>;
+		return 0;
+	}
+	if( drumpos == [1] )
+	{
+		sleep 100;
+		drumpos = [2];
+		sleep 300;
+		turn barrels to z-axis <120.000000> speed <400.093407>;
+		return 0;
+	}
+	if( drumpos == [2] )
+	{
+		sleep 100;
+		drumpos = [0];
+		sleep 300;
+		turn barrels to z-axis <0.000000> - <120.027473> speed <400.093407>;
+		return 0;
+	}
 }
 
 QueryPrimary(piecenum)

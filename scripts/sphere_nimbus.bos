@@ -17,8 +17,8 @@ static-var bMoving,bAiming, firept2, isOpen;
 Open()
 {
 	set ARMORED to FALSE;
-	move left to x-axis [-3.500000] speed [10.000000];
-	move right to x-axis [3.500000] speed [10.000000];
+	move left to x-axis [-3.700000] speed [10.000000];
+	move right to x-axis [3.700000] speed [10.000000];
 	wait-for-move left along x-axis;
 
 	move mis to z-axis [0.000000] speed [8.000000];
@@ -29,7 +29,7 @@ Open()
 Close()
 {
 	isOpen = FALSE;
-	move mis to z-axis [-3.500000] speed [8.000000];
+	move mis to z-axis [-3.800000] speed [8.000000];
 	wait-for-move mis along z-axis;
 	
 	move left to x-axis [0.000000] speed [20.000000];
@@ -86,7 +86,7 @@ QueryPrimary(piecenum)
 FirePrimary()
 {
 	emit-sfx 1024 + 0 from rflare1;
-	move mis to z-axis [-3.50000] now;
+	move mis to z-axis [-4.00000] now;
 	sleep 2000;
 	move mis to z-axis [0.000000] speed [8.000000];
 	return (0);
@@ -104,7 +104,7 @@ AimPrimary(heading, pitch)
 	{
 		call-script Open();
 	}
-	turn torso to y-axis heading speed <100.027473>;
+	turn torso to y-axis heading speed <150.027473>;
 	wait-for-turn torso around y-axis;
 	start-script RestoreAfterDelayWeapon();
 	return (1);
@@ -164,7 +164,7 @@ AimSecondary(heading, pitch)
 		call-script Open();
 	}
 	
-	turn torso to y-axis heading speed <100.027473>;
+	turn torso to y-axis heading speed <150.027473>;
 	wait-for-turn torso around y-axis;
 	start-script RestoreAfterDelayWeapon();
 	return (1);

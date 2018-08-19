@@ -35,7 +35,9 @@ function gadget:Initialize()
 	end
 
 	-- set ambient lighting for units
-	Spring.SetSunLighting({unitAmbientColor = {0.7, 0.7, 0.7}, unitDiffuseColor = {0.5, 0.5, 0.5}, unitSpecularColor = {0.5,0.5,0.5}})
+	if(Spring.SetSunLighting) then
+		Spring.SetSunLighting({unitAmbientColor = {0.7, 0.7, 0.7}, unitDiffuseColor = {0.5, 0.5, 0.5}, unitSpecularColor = {0.5,0.5,0.5}})
+	end
 	
 	-- adjust smooth mesh to follow the terrain profile more closely
 	Spring.SetSmoothMeshFunc(
