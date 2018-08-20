@@ -27,33 +27,37 @@ end
 
 local function checkMorph(self)
 	if self.unitId ~= nil then
-		if not setContains(unitTypeSets[TYPE_UPGRADED_COMMANDER],self.unitName) then
+		local f = spGetGameFrame()
 
-			local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
-			local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
-			
-			-- morph only if income is decent
-			if incomeM > 30 and incomeE > 300 then
-				-- if enemies are nearby, skip morph
-				if areEnemiesNearby(self, self.pos, MORPH_CHECK_RADIUS) then
-					--log("enemies nearby")
-					return SKIP_THIS_TASK
-				end
-
-			
-				local cmds = Spring.GetUnitCmdDescs(self.unitId)
-				local morphCmdIds = {}
-				for i,c in ipairs(cmds) do
-					if (c.action == "morph") then
-						--Spring.Echo(c.id.." ; "..c.name.." ; "..c.type.." ; "..c.action.." ; "..c.texture) --DEBUG
-						morphCmdIds[#morphCmdIds + 1] = c.id
+		if (f > 600) then
+			if not setContains(unitTypeSets[TYPE_UPGRADED_COMMANDER],self.unitName) then
+	
+				local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
+				local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
+				
+				-- morph only if income is decent
+				if incomeM > 30 and incomeE > 300 then
+					-- if enemies are nearby, skip morph
+					if areEnemiesNearby(self, self.pos, MORPH_CHECK_RADIUS) then
+						--log("enemies nearby")
+						return SKIP_THIS_TASK
 					end
+	
+				
+					local cmds = Spring.GetUnitCmdDescs(self.unitId)
+					local morphCmdIds = {}
+					for i,c in ipairs(cmds) do
+						if (c.action == "morph") then
+							--Spring.Echo(c.id.." ; "..c.name.." ; "..c.type.." ; "..c.action.." ; "..c.texture) --DEBUG
+							morphCmdIds[#morphCmdIds + 1] = c.id
+						end
+					end
+					local morphCmd = morphCmdIds[ random( 1, #morphCmdIds) ]
+				
+					spGiveOrderToUnit(self.unitId,morphCmd,{},{})
+					-- wait until finished or 5 minutes elapsed
+					return {action="wait", frames=30*300}
 				end
-				local morphCmd = morphCmdIds[ random( 1, #morphCmdIds) ]
-			
-				spGiveOrderToUnit(self.unitId,morphCmd,{},{})
-				-- wait until finished or 5 minutes elapsed
-				return {action="wait", frames=30*300}
 			end
 		end
 	end
