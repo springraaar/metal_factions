@@ -3719,7 +3719,7 @@
 		emitRot=80;
 		emitRotSpread=5; 
 		directional=1; 
-
+		alwaysVisible=1;
 		}
 	air=1;
 	water=1;
@@ -3756,7 +3756,7 @@
 		emitRot=0;
 		emitRotSpread=80; 
 		directional=1; 
-
+		alwaysVisible=1;
 		}
 	air=1;
 	water=1;
@@ -3794,7 +3794,7 @@
 		emitRot=80;
 		emitRotSpread=5; 
 		directional=1; 
-
+		alwaysVisible=1;
 		}
 	air=1;
 	water=1;
@@ -3831,7 +3831,7 @@
 		emitRot=0;
 		emitRotSpread=170; 
 		directional=1; 
-
+		alwaysVisible=1;
 		}
 	air=1;
 	water=1;
@@ -3841,7 +3841,7 @@
 	alwaysVisible=1;
 	}
 
-	[G_smokewave1] ////////!!!Shockwave explosion!!//////////////////////textures and script released under GPL by Luke Cieron Fahy XTA mod/////////////////////
+	[G_smokewave1]
 	{
 		class=CSimpleParticleSystem;
 		[properties]
@@ -3851,8 +3851,7 @@
 		pos=0, 1, 0; 
 		gravity=0, 0, 0;
 		
-		colorMap=1 1.0 0.2 0.01 	1 0.5 0.2 0.01 	0.1 0.1 0.1 0.01 	0.1 0.1 0.1 0.01 	0 0 0 0.01;
-		//colorMap=1 0 0 0.01	1 1 0 0.01	1 1 0 0.01	0.5 0.5 0 0.01		0.1 0.1 0.1 0.01	0 0 0 0.01;	
+		colorMap=1 1.0 0.2 0.01 	1 0.5 0.2 0.01 	0.5 0.3 0.1 0.01 	0.1 0.1 0.1 0.01 	0 0 0 0.01;
 
 		Texture=YELLOWBLAST;
 		airdrag=0.92;
@@ -3871,12 +3870,13 @@
 		emitRot=80;
 		emitRotSpread=5; 
 		directional=0; 
-
+		alwaysVisible=1;
 		}
 	air=1;
 	water=1;
 	ground=1;
 	count=1;
+	alwaysVisible=1;
 	}
 	[G_smokewave2]
 	{
@@ -3888,8 +3888,8 @@
 		pos=0, 1, 0; 
 		gravity=0, 0, 0;
 	
-		colorMap=1 0.3 0.2 0.01 	1 0.5 0.2 0.01	 0.1 0.1 0.1 0.01 	0.1 0.1 0.1 0.01 	0 0 0 0.01;
-		//colorMap=1 1 0 0.01	1 1 0 0.01	0.5 0.5 0 0.01		0.1 0.1 0.1 0.01	0 0 0 0.01;	
+		colorMap=1 0.7 0.2 0.01 	1 0.5 0.2 0.01	 0.5 0.3 0.1 0.01 	0.1 0.1 0.1 0.01 	0 0 0 0.01;
+
 
 		Texture=YELLOWBLAST1;
 		airdrag=0.92;
@@ -3908,12 +3908,13 @@
 		emitRot=80;
 		emitRotSpread=5; 
 		directional=0; 
-
+		alwaysVisible=1;
 		}
 	air=1;
 	water=1;
 	ground=1;
 	count=1;
+	alwaysVisible=1;
 	}
 	[G_smokewave3]
 	{
@@ -3925,8 +3926,7 @@
 		pos=0, 1, 0; 
 		gravity=0, 0, 0;
 		
-		colorMap=1 0.3 0.2 0.01 	1 0.5 0.2 0.01 	0.1 0.1 0.1 0.01 	0.1 0.1 0.1 0.01 	0 0 0 0.01;
-		//colorMap=1 1 0 0.01	1 1 0.50 0.01	1 1 0.75 0.01		0.1 0.1 0.1 0.01	0 0 0 0.01;
+		colorMap=1 0.7 0.2 0.01 	1 0.5 0.2 0.01 	0.5 0.3 0.1 0.01 	0.1 0.1 0.1 0.01 	0 0 0 0.01;
 
 		Texture=YELLOWBLAST2;
 		airdrag=0.92;
@@ -3945,12 +3945,13 @@
 		emitRot=80;
 		emitRotSpread=5; 
 		directional=0; 
-
+		alwaysVisible=1;
 		}
 	air=1;
 	water=1;
 	ground=1;
 	count=1;
+	alwaysVisible=1;
 	}
 	[G_smokewave4]
 	{
@@ -3962,8 +3963,7 @@
 		pos=0, 1, 0; 
 		gravity=0, 0, 0;
 		
-		colorMap=1 0.3 0.2 0.01 	1 0.5 0.2 0.01	 0.1 0.1 0.1 0.01 	0.1 0.1 0.1 0.01 	0 0 0 0.01;
-		//colorMap=1 1 0 0.01	1 1 0.50 0.01	1 1 0.75 0.01		0.1 0.1 0.1 0.01	0 0 0 0.01;	
+		colorMap=1 0.7 0.2 0.01 	1 0.5 0.2 0.01	 0.5 0.3 0.1 0.01 	0.1 0.1 0.1 0.01 	0 0 0 0.01;
 		
 		Texture=YELLOWBLAST3;
 		airdrag=0.92;
@@ -3982,12 +3982,13 @@
 		emitRot=80;
 		emitRotSpread=5; 
 		directional=0; 
-
+		alwaysVisible=1;
 		}
 	air=1;
 	water=1;
 	ground=1;
 	count=1;
+	alwaysVisible=1;
 	}
 	[_dust]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=d130;explosionGenerator=custom:DYNDUSTBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }

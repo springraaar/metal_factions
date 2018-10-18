@@ -71,8 +71,8 @@ AimPrimary(heading, pitch)
 	{
 		turn barrel to z-axis <0.000000> - <120.027473> speed <400.093407>;
 	}
-	turn turret to y-axis heading speed <250.060440>;
-	turn launcher to x-axis <0.000000> - pitch speed <250.060440>;
+	turn turret to y-axis heading speed <450.060440>;
+	turn launcher to x-axis <0.000000> - pitch speed <450.060440>;
 	wait-for-turn barrel around z-axis;
 	wait-for-turn turret around y-axis;
 	wait-for-turn launcher around x-axis;

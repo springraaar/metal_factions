@@ -77,22 +77,35 @@
 		bitmap=icons/nuke.tga;
 		radiusadjust=0;
 		distance=1;
+		size=1.5;
+	}
+	[dcrocket]
+	{
+		bitmap=icons/dcrocket.tga;
+		radiusadjust=0;
+		distance=1;
+		size=1.5;
+	}
+	[rocket_platform]
+	{
+		bitmap=icons/rocket_platform.tga;
+		radiusadjust=0;
+		distance=1;
 		size=2;
 	}
-
 	[plant]
 	{
 		bitmap=icons/plant.tga;
-		radiusadjust=1;
+		radiusadjust=0;
 		distance=1;
-		size=0.9;
+		size=2;
 	}
 	[plant2]
 	{
 		bitmap=icons/plant2.tga;
-		radiusadjust=1;
+		radiusadjust=0;
 		distance=1;
-		size=0.9;
+		size=2;
 	}
 	[energy]
 	{

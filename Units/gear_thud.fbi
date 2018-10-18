@@ -35,8 +35,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.6;
-	energyuse=0.6;
+	energymake=0.0;
+	energyuse=0.0;
 	energystorage=0;
 
 	//************************************************************
@@ -82,8 +82,8 @@
 	weapon1=gear_thud_cannon;
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -124,7 +124,7 @@
 	explosiongenerator0=custom:yellowflaresml;
 	}
 
-	buildcostenergy=783;//#AUTO#
-	buildcostmetal=156;//#AUTO#
-	buildtime=1866;//#AUTO#
+	buildcostenergy=778;//#AUTO#
+	buildcostmetal=155;//#AUTO#
+	buildtime=1856;//#AUTO#
 }

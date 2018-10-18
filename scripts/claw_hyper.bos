@@ -42,14 +42,14 @@ Open()
 {
 	SET ARMORED to FALSE;
 
-	turn ldoor to z-axis <90.000000> speed <300.000000>;
-	turn rdoor to z-axis <-90.000000> speed <300.000000>;
+	turn ldoor to z-axis <90.000000> speed <450.000000>;
+	turn rdoor to z-axis <-90.000000> speed <450.000000>;
 	wait-for-turn ldoor around z-axis;
 	wait-for-turn rdoor around z-axis;
 
-	move ldoor to y-axis [-25] speed [50];
-	move rdoor to y-axis [-25] speed [50];
-	move turbase to y-axis [25] speed [25];
+	move ldoor to y-axis [-25] speed [200];
+	move rdoor to y-axis [-25] speed [200];
+	move turbase to y-axis [35] speed [170];
 	wait-for-move turbase along y-axis;
 	wait-for-move ldoor along y-axis;
 	wait-for-move rdoor along y-axis;
@@ -64,7 +64,7 @@ Close()
 
 	turn sleeve to x-axis <0.000000> speed <300.000000>;
 	turn turret to y-axis <0.000000> speed <300.000000>;
-	move turbase to y-axis [0] speed [25];
+	move turbase to y-axis [0] speed [35];
 	wait-for-turn sleeve around x-axis;
 	wait-for-turn turret around y-axis;
 	wait-for-move turbase along y-axis;
@@ -130,8 +130,8 @@ AimPrimary(heading, pitch)
 	{
 		call-script Open();
 	}
-	turn sleeve to x-axis <0.000000> - pitch speed <200.000000>;
-	turn turret to y-axis heading speed <200.000000>;
+	turn sleeve to x-axis <0.000000> - pitch speed <300.000000>;
+	turn turret to y-axis heading speed <300.000000>;
 	wait-for-turn sleeve around x-axis;
 	wait-for-turn turret around y-axis;
 	start-script RestoreAfterDelay();

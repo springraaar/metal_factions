@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1400;
+	maxdamage=1500;
 	healtime=30;
 	footprintx=3;
 	footprintz=3;
@@ -35,8 +35,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.6;
-	energyuse=0.6;
+	energymake=0.0;
+	energyuse=0.0;
 	energystorage=0;
 
 	//************************************************************
@@ -62,10 +62,10 @@
 	//  Movement
 	//************
 	movementclass=TANKSH3;
-	turnrate=409; // was 430
+	turnrate=409;
 	acceleration=0.195;
 	brakerate=0.0976563;
-	maxvelocity=1.6;//was 2
+	maxvelocity=1.7;
 	maxslope=10;
 	maxwaterdepth=12;
 
@@ -81,9 +81,8 @@
 	weapon1=aven_LIGHTCANNON;
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
-	badtargetcategory1=VTOL;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -114,7 +113,7 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =23 17 25;
+	collisionVolumeScales =30 17 30;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
@@ -127,7 +126,7 @@
 	{
 	explosiongenerator0=custom:yellowflaresml;
 	}
-	buildcostenergy=1064;//#AUTO#
-	buildcostmetal=212;//#AUTO#
-	buildtime=2536;//#AUTO#
+	buildcostenergy=1102;//#AUTO#
+	buildcostmetal=220;//#AUTO#
+	buildtime=2628;//#AUTO#
 }

@@ -45,6 +45,7 @@ local WRAP_KEY					= KEYSYMS.P
 local TEXT_OUTLINE_KEY			= KEYSYMS.O
 local SCROLL_UP_KEY				= KEYSYMS.COMMA
 local SCROLL_DOWN_KEY				= KEYSYMS.PERIOD
+local SHOW_KEY					= KEYSYMS.SPACE
 -- how many game-logic frames to wait
 -- before clearing message buffers at
 -- normal (1x) speed, 30 frames per sec
@@ -100,6 +101,7 @@ local FONT_SIZE = 15
 local FONT_RENDER_STYLE = FONT_RENDER_STYLES[1]
 local BORDER_MASKS = { 0,0,0,0 }
 local MAX_LINE_STRING_LENGTH = 75
+local VISIBILITY_HINT_SHOWN = false
 
 -- Compensate for gl.Text y positioning change between 0.80.0 and 0.80.1
 if not gl.TextAdjusted then
@@ -206,6 +208,14 @@ function convertColor(colorarray)
 end
 
 function widget:KeyPress(key, modifier, isRepeat)
+	if (key == SHOW_KEY) then
+		PLAYER_BOX_ALPHA = MAX_ALPHA
+		DRAW_PLAYER_MESSAGES = true
+		-- scroll to latest message
+		scrollToLatestPlayerMessage()
+		return
+	end
+
 	if (modifier.ctrl) then
 		if (key == MASTER_KEY) then
 			if (KEYS_ENABLED == 1) then
@@ -767,10 +777,7 @@ function widget:DrawScreen()
 	-- show message box and scroll to latest message on mouse over if it was invisible
 	local mx,my,_,_,_ = GetMouseState()
 	if (not DRAW_PLAYER_MESSAGES) and mouseOverPlayerMessageBox( mx, my ) then
-		PLAYER_BOX_ALPHA = MAX_ALPHA
-		DRAW_PLAYER_MESSAGES = true
-		-- scroll to latest message
-		scrollToLatestPlayerMessage()
+		drawVisibilityHint()
 	end
 	
 	-- is it time to scroll back to the latest message?
@@ -1088,6 +1095,13 @@ function drawBox(left, top, width, height, fillColor, lineColor)
 
 	gl_Color(fillColor)
 	gl_Rect(left, top, left + width, top - height)
+end
+
+-- draw hint to show chat
+function drawVisibilityHint()
+	drawBox(PLAYER_MSG_BOX_X_MIN, PLAYER_MSG_BOX_Y_MAX, PLAYER_MSG_BOX_W, 26, {0.0, 0.0, 0.0, 0.5},  {0.0, 0.0, 0.0, 1})
+	gl_Color(SYSTEM_TEXT_COLOR)
+	gl_Text(">>>>>>>> Press SPACE to view chat", PLAYER_MSG_BOX_X_MIN +5, PLAYER_MSG_BOX_Y_MAX - (FONT_SIZE + 6), FONT_SIZE, FONT_RENDER_STYLES[2])
 end
 
 function getTimeStr()

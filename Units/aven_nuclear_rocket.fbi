@@ -1,0 +1,119 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=AVEN;
+	name=Tactical Nuke;
+	description=Long Range Nuclear Missile;
+	icontype=nuke;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN VTOL NOTSUB;
+
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=aven_nuclear_rocket;
+	objectname=aven_nuclear_rocket.3do;
+	script=long_range_rocket.cob;
+	buildpic=aven_nuclear_rocket.png;
+	soundcategory=MINE;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=500;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	upright=0;
+	collisionVolumeType=Sphere;
+	collisionVolumeScales=40 40 40;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canmove=0;
+	canpatrol=0;
+	canstop=0;
+	kamikaze=0;
+	stealth=0;
+	canguard=0;
+	canRepeat=0;
+	canwait=0;
+	canstop=0;
+	canfight=0;
+	sonarStealth=0;
+	canfly=1;
+
+
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=30;
+	maxwaterdepth=100;
+	maxvelocity=0;
+	acceleration=0;
+	brakerate=0;
+	turnrate=900;
+	blocking=0;
+	usesmoothmesh=0;
+	mygravity=0;
+	hoverAttack=1;
+	airHoverFactor=0.01;
+	airStrafe=0;
+	bankingallowed=0;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=600;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_nuclear_rocket;
+	onlytargetcategory1=NOTAIR;
+	explodeas=aven_nuclear_rocket;
+	selfdestructas=aven_nuclear_rocket;
+	selfdestructcountdown=0;
+	fireState=0;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[customParams]
+	{
+	}
+
+
+	buildcostenergy=20000;//#AUTO#
+	buildcostmetal=4000;//#AUTO#
+	buildtime=48000;//#AUTO#
+}

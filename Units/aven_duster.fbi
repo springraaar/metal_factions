@@ -82,8 +82,8 @@
 	weapon1=aven_duster_cannon;
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -129,7 +129,7 @@
 	explosiongenerator0=custom:yellowflaresml;
 	}
 
-	buildcostenergy=1029;//#AUTO#
-	buildcostmetal=205;//#AUTO#
-	buildtime=2452;//#AUTO#
+	buildcostenergy=1049;//#AUTO#
+	buildcostmetal=209;//#AUTO#
+	buildtime=2501;//#AUTO#
 }

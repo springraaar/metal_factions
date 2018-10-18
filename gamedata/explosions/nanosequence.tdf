@@ -261,6 +261,39 @@
 	}
 }
 
+[CONSTRUCTORNANO]
+{
+	usedefaultexplosions=0;	
+	[baseexplosion] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=0,0,0;  
+			delay=0;	
+			damage=d1;
+			explosionGenerator=custom:debrisblastwrapper;
+		}
+		air=1;ground=1;water=1;underwater=1;unit=1;count=1;
+	}
+	[nanoexplosion] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=0,0,0;  
+			delay=0;				  
+			explosionGenerator=custom:SmallNano;
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+}
+
+
 [AVENCOMNANO]
 {
 	usedefaultexplosions=0;	
@@ -426,6 +459,39 @@
 			pos=0,0,0;
 			//pos=-15 r30,0,-15 r30;
 			//delay=i4 p1.2;
+			explosionGenerator=custom:BUILDGLOW;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+}
+
+[AUTOBUILD]
+{
+	[nanoparticles] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=-30 r60,15,-30 r60;
+			//delay=i4 p1.2;
+			explosionGenerator=custom:DRONEBUILDNANO;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+	[glow1] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=0,0,0;
+			pos=-15 r30,15,-15 r30;
+			
 			explosionGenerator=custom:BUILDGLOW;
 		}
 		air=1;

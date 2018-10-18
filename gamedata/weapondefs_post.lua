@@ -85,6 +85,10 @@ for wdName, wd in pairs(WeaponDefs) do
 			wd.heightmod = 0.5			-- default was 0.8
 			wd.heightboostfactor = 1.1		-- default was -1.0
 		end
+		if (wd.weapontype == "MissileLauncher" or wd.weapontype == "StarburstLauncher" ) then
+			wd.cylindertargeting = 2
+			wd.heightboostfactor = 1.1		-- default was -1.0
+		end
 		
 		-- change intensity for EMG cannons, change weaponType
 		if wd.weapontype == "EmgCannon" then
@@ -103,6 +107,6 @@ for wdName, wd in pairs(WeaponDefs) do
 	-- without this it would only run twice per second (?)
 	-- wd.allownonblockingaim = 1
 	if (wd.tolerance ~= nil and wd.range ~= nil) then
-		wd.firetolerance = wd.tolerance
+		wd.firetolerance = wd.tolerance * 0.5
 	end
 end

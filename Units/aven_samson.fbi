@@ -80,8 +80,8 @@
 	//***********
 	weapon1=aven_samson_missile;
 	badtargetcategory1=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -126,7 +126,7 @@
 	{
 	explosiongenerator0=custom:rocketflaresml;
 	}
-	buildcostenergy=954;//#AUTO#
-	buildcostmetal=190;//#AUTO#
-	buildtime=2275;//#AUTO#
+	buildcostenergy=1014;//#AUTO#
+	buildcostmetal=202;//#AUTO#
+	buildtime=2418;//#AUTO#
 }

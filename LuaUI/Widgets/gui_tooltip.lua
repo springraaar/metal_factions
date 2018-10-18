@@ -45,6 +45,8 @@ local spGetUnitTeam = Spring.GetUnitTeam
 local TRANSPORT_MASS_LIMIT_LIGHT = 1200
 local TRANSPORT_MASS_LIMIT_HEAVY = 3000  
 
+local ONCE_RELOAD_THRESHOLD = 999
+
 function widget:Initialize()
 	Spring.SendCommands({"tooltip 0"})
 	
@@ -168,7 +170,7 @@ function GetTooltipWeaponData(ud, xpMod, rangeMod, dmgMod)
                    isDisruptor = true
                 end
 				if (reloadTime > 5) then
-					actionStr = weapon_action..": \255\255\255\255"..(isDisruptor and "\255\100\255\255" or "")..FormatNbr(damage,0).."\255\255\255\255/"..FormatNbr(reloadTime,2).."s"
+					actionStr = weapon_action..": \255\255\255\255"..(isDisruptor and "\255\100\255\255" or "")..FormatNbr(damage,0).."\255\255\255\255"..(reloadTime >= ONCE_RELOAD_THRESHOLD and " once" or ("/"..FormatNbr(reloadTime,2).."s"))
 				else 
 					actionStr = weapon_action..": \255\255\255\255"..(isDisruptor and "\255\100\255\255" or "")..FormatNbr(dps,1).."\255\255\255\255"
 				end

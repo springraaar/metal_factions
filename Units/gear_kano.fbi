@@ -80,9 +80,8 @@
 	//***********
 	weapon1=gear_kano_cannon;
 	badtargetcategory1=NOTAIR;
-	badtargetcategory1=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -122,7 +121,7 @@
 		explosiongenerator0=custom:yellowflaremed;
 	}
 
-	buildcostenergy=1100;//#AUTO#
-	buildcostmetal=220;//#AUTO#
-	buildtime=2622;//#AUTO#
+	buildcostenergy=1118;//#AUTO#
+	buildcostmetal=223;//#AUTO#
+	buildtime=2666;//#AUTO#
 }

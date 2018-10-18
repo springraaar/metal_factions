@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1000;
+	maxdamage=1100;
 	healtime=30;
 	footprintx=2;
 	footprintz=2;
@@ -81,8 +81,8 @@
 	weapon1=GATOR_LASER;
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -127,7 +127,7 @@
 		explosiongenerator0=custom:GLOWSML;
 	}
 
-	buildcostenergy=943;//#AUTO#
-	buildcostmetal=188;//#AUTO#
-	buildtime=2248;//#AUTO#
+	buildcostenergy=993;//#AUTO#
+	buildcostmetal=198;//#AUTO#
+	buildtime=2367;//#AUTO#
 }

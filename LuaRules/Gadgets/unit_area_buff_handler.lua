@@ -53,6 +53,8 @@ local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spGetUnitWeaponState = Spring.GetUnitWeaponState
 local spGetTeamResources = Spring.GetTeamResources
+local spSpawnCEG = Spring.SpawnCEG
+local spGetUnitIsDead = Spring.GetUnitIsDead
 
 local max = math.max
 local floor = math.floor
@@ -60,13 +62,16 @@ local floor = math.floor
 local AREA_CHECK_DELAY = 6
 local COST_DELAY = 15
 local REGEN_DELAY = 30		-- once per second
+local AUTO_BUILD_STEP_FRAMES = 15
+
 -- idle here means not taking damage for a while
 local IDLE_REGEN_FRAMES = 30 * 25	-- 25 seconds
 local IDLE_REGEN_FLAT = 2
 local IDLE_REGEN_FRACTION = 0.002
 
 local SPHERE_ENERGY_CHECK_THRESHOLD = 2000
- 
+
+local autoBuildCEG = "autobuild" 
 
 local landSlowerDefIds = {
 	[UnitDefNames["aven_catfish"].id] = true,
@@ -118,6 +123,7 @@ local waterSlowerUnitIds = {}
 local lastDamageFrameUnitIds = {}
 local flyingSphereUnitIds = {}
 local allUnitIds = {}
+local autoBuildUnitIds = {}
 
 -- mark unit as zephyr or unit with terrain speed modifiers
 function gadget:UnitCreated(unitId, unitDefId, unitTeam)
@@ -151,8 +157,13 @@ function gadget:UnitFinished(unitId, unitDefId, unitTeam)
 end
 
 function gadget:GameFrame(n)
+	local allUnits = spGetAllUnits()
 
-
+	
+	for uId,p in pairs(autoBuildUnitIds) do
+		spSpawnCEG(autoBuildCEG, p[1],p[2],p[3])
+	end
+	
 	if (n%AREA_CHECK_DELAY == 0) then
 		-- clear affected unit list
 		zephyrAffectedUnitIds = {}
@@ -186,7 +197,7 @@ function gadget:GameFrame(n)
 		end
 		
 		-- check speed modifiers due to upgrades
-		for _,unitId in ipairs(spGetAllUnits()) do
+		for _,unitId in ipairs(allUnits) do
 			spdMod = spGetUnitRulesParam(unitId, "upgrade_speed")
 			if spdMod and spdMod ~= 0 then
 				m = newSpeedModifierUnitIds[unitId]
@@ -296,7 +307,7 @@ function gadget:GameFrame(n)
 	
 	-- unit hp regeneration
 	if (n%REGEN_DELAY == 0) then
-	
+		
 		-- zephyr aura regeneration 
 		for unitId,_ in pairs(zephyrAffectedUnitIds) do
 			local health,maxHealth,_,_,bp = spGetUnitHealth(unitId)
@@ -314,7 +325,8 @@ function gadget:GameFrame(n)
 		
 		-- check regeneration due to upgrades
 		local regen = 0
-		for _,unitId in ipairs(spGetAllUnits()) do
+		local health,maxHealth,bp = 0
+		for _,unitId in ipairs(allUnits) do
 			r = spGetUnitRulesParam(unitId, "upgrade_regen")
 			if (not r) then
 				r = 0
@@ -324,7 +336,7 @@ function gadget:GameFrame(n)
 				phpR = 0
 			end
 			if (r > 0 or phpR > 0) then
-				local health,maxHealth,_,_,bp = spGetUnitHealth(unitId)
+				health,maxHealth,_,_,bp = spGetUnitHealth(unitId)
 				
 				if (bp and bp > 0.9) then
 					regen = r + phpR * maxHealth
@@ -339,9 +351,9 @@ function gadget:GameFrame(n)
 				--Spring.Echo(unitId.." : upgraded regen : "..regen)
 			end
 		end
-		
+
 		-- idle regeneration
-		for _,unitId in ipairs(spGetAllUnits()) do
+		for _,unitId in ipairs(allUnits) do
 			if (not lastDamageFrameUnitIds[unitId] or (n - lastDamageFrameUnitIds[unitId] > IDLE_REGEN_FRAMES) ) then
 				local health,maxHealth,_,_,bp = spGetUnitHealth(unitId)
 				
@@ -357,6 +369,57 @@ function gadget:GameFrame(n)
 				end
 			end
 		end
+	end
+	
+
+	if (n%AUTO_BUILD_STEP_FRAMES == 0) then
+		local health,maxHealth,bp,x,y,z = 0
+		local steps = 0
+
+		-- check regeneration due to auto-build status
+		for _,unitId in ipairs(allUnits) do
+			r = spGetUnitRulesParam(unitId, "auto_build_fraction_per_step")
+			steps = spGetUnitRulesParam(unitId, "auto_build_steps")
+			if (not r) then
+				r = 0
+				steps = 0
+			else
+				r = tonumber(r)
+				steps = tonumber(steps)
+			end
+			if (r > 0 and steps > 0) then
+				health,maxHealth,_,_,bp = spGetUnitHealth(unitId)
+				
+				if (bp and bp < 1) then
+					local newBp = bp + r
+					local newHp = health + r * maxHealth
+					if newBp > 1 then
+						newBp = 1
+					end
+					if newHp > maxHealth then
+						newHp = maxHealth
+					end
+
+					spSetUnitHealth(unitId, {health = newHp, build = newBp})
+					
+					if steps > 1 or (not autoBuildUnitIds[unitId]) then
+						x,y,z = spGetUnitPosition(unitId)
+						if x then
+							autoBuildUnitIds[unitId] = {x,y,z}
+						end
+					else
+						autoBuildUnitIds[unitId] = nil
+					end
+					
+					-- decrement available steps
+					spSetUnitRulesParam(unitId,"auto_build_steps",(steps-1),{public = true})
+				else
+					autoBuildUnitIds[unitId] = nil
+					spSetUnitRulesParam(unitId,"auto_build_steps",0,{public = true})
+				end
+			end
+		end
+		
 	end
 	
 	if (n%COST_DELAY == 0) then
@@ -399,6 +462,9 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam)
 				zephyrAffectedUnitIds[uId] = nil
 			end		
 		end
+	end
+	if autoBuildUnitIds[unitId] then
+		autoBuildUnitIds[unitId] = nil
 	end
 	if (landSlowerUnitIds[unitId]) then
 		landSlowerUnitIds[unitId] = nil

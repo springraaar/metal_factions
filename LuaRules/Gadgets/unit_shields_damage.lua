@@ -83,8 +83,14 @@ local BURNING_SOUND = "Sounds/BURN1.wav"
 local EMP_CEG = "ElectricSequenceSML2"
 local EMP_SOUND = 'Sounds/Lashit.wav'
 
-local UNIT_DAMAGE_XP = 0.05     -- 100% damage taken is converted to experience using this factor
-								-- currently set to half as much as fully damaging and enemy unit of equal power
+local UNIT_DAMAGE_DEALT_XP = 0.12    	-- 100%HP damage dealt to enemy unit of equal value is converted to experience using this factor
+
+local UNIT_DAMAGE_TAKEN_XP = 0.06		-- 100%HP damage taken from enemies is converted to experience using this factor
+										-- currently set to half as much as fully damaging and enemy unit of equal power
+								
+local dealtDef = nil
+local takenDef = nil
+local powerFraction = nil					
 
 local disruptorWaveEffectWeaponDefId = WeaponDefNames["aven_bass_disruptor_effect"].id
 local disruptorWaveUnitDefId = UnitDefNames["aven_bass"].id
@@ -131,7 +137,7 @@ local continuousBeamWeaponDefIds = {
 	[WeaponDefNames["sphere_u2commander_beam"].id] = true,
 	[WeaponDefNames["sphere_u3commander_beam"].id] = true,
 	[WeaponDefNames["sphere_u4commander_beam"].id] = true,
-	[WeaponDefNames["sphere_opal_sphere_beam"].id] = true,
+	[WeaponDefNames["sphere_emerald_sphere_beam"].id] = true,
 	[WeaponDefNames["sphere_ruby_sphere_beam"].id] = true,
 	[WeaponDefNames["sphere_obsidian_sphere_beam"].id] = true,
 	[WeaponDefNames["sphere_chroma_beam1"].id] = true,
@@ -580,15 +586,34 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 		targetDamage = targetDamage + damage
 		return
 	end
-	if (attackerTeam and (not spAreTeamsAllied(unitTeam,attackerTeam))) then
+	if (attackerTeam and (not spAreTeamsAllied(unitTeam,attackerTeam))) and (not paralyzer) then
 		-- add entry to table
 		if unitXPTable[unitID] == nil then
 			unitXPTable[unitID] = 0
 		end
 		
+		-- assign experience to unit that took damage
 		local health,maxHealth,_,_,_ = spGetUnitHealth(unitID) 
 		local frac = damage / maxHealth
-		unitXPTable[unitID] = unitXPTable[unitID] + frac * UNIT_DAMAGE_XP
+		if frac > 1 then
+			frac = 1
+		end 
+		
+		unitXPTable[unitID] = unitXPTable[unitID] + frac * UNIT_DAMAGE_TAKEN_XP
+		if attackerID > 0 then
+			-- add entry to table
+			if unitXPTable[attackerID] == nil then
+				unitXPTable[attackerID] = 0
+			end
+
+			-- assign experience to unit that dealt damage		
+			dealtDef = UnitDefs[attackerDefID]
+			takenDef = UnitDefs[unitDefID]
+			if (dealtDef.power > 0) then
+				frac = (takenDef.power / dealtDef.power) * frac
+				unitXPTable[attackerID] = unitXPTable[attackerID] + frac * UNIT_DAMAGE_DEALT_XP
+			end
+		end
 	end
 	if (damage > 0 ) then
 		damagedUnitFrameTable[unitID] = spGetGameFrame()

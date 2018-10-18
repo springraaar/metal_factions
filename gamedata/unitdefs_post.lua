@@ -119,6 +119,19 @@ local reducedDecalDurationUnits = {
 	sphere_moho_mine = true
 }
 
+
+local noDecalUnits = {
+	gear_mine = true,
+	aven_nuclear_rocket = true,
+	aven_dc_rocket = true,
+	gear_nuclear_rocket = true,
+	gear_dc_rocket = true,
+	claw_nuclear_rocket = true,
+	claw_dc_rocket = true,
+	sphere_nuclear_rocket = true,
+	sphere_dc_rocket = true
+}
+
 -- unitdef tweaking
 if (true) then
 	for name,unitDef in pairs(UnitDefs) do
@@ -230,7 +243,7 @@ if (true) then
 				factionBuilding = true
 			end
 			local fpMod = 1.5
-			if (factionBuilding == true and name ~= "gear_mine" and (not (unitDef.floater or unitDef.waterline) or (not unitDef.minwaterdepth or tonumber(unitDef.minwaterdepth) < 0) )) then
+			if (factionBuilding == true and (not noDecalUnits[name]) and (not (unitDef.floater or unitDef.waterline) or (not unitDef.minwaterdepth or tonumber(unitDef.minwaterdepth) < 0) )) then
 				unitDef.usebuildinggrounddecal = true
 				if (reducedDecalSizeUnits[name] ) then
 					fpMod = 0.85

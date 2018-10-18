@@ -1,0 +1,82 @@
+[UNITINFO]
+	{
+
+	// ------------------- description
+	Side=Aven;
+	Name=Long Range Rocket Platform;
+	Description=Builds long range rockets;
+	icontype=rocket_platform;
+
+	// ------------------- categories
+	Category=AVEN PLANT LEVEL2 NOTAIR NOTSUB;
+	TEDClass=PLANT;
+
+	// ------------------- external specs
+	UnitName=aven_long_range_rocket_platform;
+	UnitNumber=10000;
+	Objectname=aven_long_range_rocket_platform.3do;
+	buildpic=aven_long_range_rocket_platform.png;
+	script=long_range_rocket_platform.cob;
+	SoundCategory=aven_HOVER_PLANT;
+	Corpse=aven_long_range_rocket_platform_dead;
+
+	// ------------------- health/cost/size
+	MaxDamage=3500;
+	BuildCostEnergy=12500;
+	BuildCostMetal=2500;
+	BuildTime=30000;
+	FootprintX=9;
+	FootprintZ=9;
+	idleautoheal=5;
+
+
+	// ------------------- resources
+	EnergyStorage=0;
+	MetalStorage=0;
+	EnergyUse=0;
+
+
+	// ------------------- constructor
+	Builder=1;
+	WorkerTime=300;
+	canBeAssisted=1;
+
+
+	// ------------------- abilities
+	canmove=0;
+	canpatrol=0;
+	canattack=0;
+	canfight=0;
+	canguard=0;
+	canstop=1;
+	
+	// ------------------- movement
+	buildangle=1024;
+	YardMap=ooooooooo ooooooooo oocccccoo oocccccoo oocccccoo oocccccoo oocccccoo ooooooooo ooooooooo; 
+	MaxWaterDepth=255;
+	MaxSlope=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =130 25 130;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	modelCenterOffset=0 0 0;
+
+	// ------------------- scout
+	sightdistance=500;
+	RadarDistance=0;
+
+	// ------------------- weapons
+	ExplodeAs=LARGE_BUILDING;
+	SelfDestructAs=LARGE_BUILDING;
+
+	// ------------------- orders
+
+
+	// ------------------- misc
+	Version=3.1;
+	BMcode=0;
+	ThreeD=1;
+	ZBuffer=1;
+	NoAutoFire=0;
+	downloadable=1;
+}

@@ -48,6 +48,7 @@ local featureHpThreshold = 0.85
 local infoDistance = 1000000
 
 local minReloadTime = 4 --// in seconds
+local maxReloadTime = 999 --// in seconds
 
 local drawStunnedOverlay = true
 local drawUnitsOnFire    = true
@@ -626,7 +627,7 @@ do
       end
 
       --// RELOAD
-      if (ci.reloadTime>=minReloadTime) then
+      if (ci.reloadTime>=minReloadTime and ci.reloadTime<=maxReloadTime) then
         _,reloaded,reloadFrame = GetUnitWeaponState(unitID,ci.primaryWeapon)
         if (reloaded==false) then
           reload = 1 - ((reloadFrame-gameFrame)/30) / ci.reloadTime;

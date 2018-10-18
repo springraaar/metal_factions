@@ -46,12 +46,12 @@ local modifiersByUpgrade = {
 -- armor / green
 
 	upgrade_green_1_hp = { hp = 0.05, speed = -0.02, limit = 3, type = TYPE_MINOR },
-	upgrade_green_1_regen = { regen = 2 , limit = 3, type = TYPE_MINOR },
+	upgrade_green_1_regen = { regen = 1, php_regen = 0.001, limit = 3, type = TYPE_MINOR },
 
 	upgrade_green_2_commander_regen = { regen = 20, restrictions = "commander", limit = 3, type = TYPE_COMMANDER },
 	upgrade_green_2_commander_hp = { hp = 0.15, restrictions = "commander", limit = 2, type = TYPE_COMMANDER },
 
-	upgrade_green_3_regen = { regen = 2, php_regen = 0.002, limit = 1, type = TYPE_MAJOR },
+	upgrade_green_3_regen = { regen = 3, php_regen = 0.002, limit = 1, type = TYPE_MAJOR },
 	upgrade_green_3_hp = { hp=0.1, limit = 1, type = TYPE_MAJOR },
 
 -- utility / blue

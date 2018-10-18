@@ -66,8 +66,11 @@ local airFactories = {
 	claw_adv_aircraft_plant = true,
 	sphere_aircraft_factory = true,
 	sphere_adv_aircraft_factory = true,
-	sphere_sphere_factory = true
+	sphere_sphere_factory = true,
+	aven_long_range_missile_platform = true
 }
+
+local csBeaconIds = {}
 
 if (gadgetHandler:IsSyncedCode()) then
 
@@ -83,6 +86,8 @@ if (gadgetHandler:IsSyncedCode()) then
 		elseif (respawners[UnitDefs[unitDefID].name]) then 
 			spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.25, ys*0.5)
 		-- added radius reduction for aircraft
+		elseif (UnitDefs[unitDefID].name == "cs_beacon") then
+			csBeaconIds[unitID] = true
 		elseif (UnitDefs[unitDefID].canFly) then 
 			if (UnitDefs[unitDefID].transportCapacity>0) then
 				spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.6/2, ys*0.6)
@@ -95,11 +100,13 @@ if (gadgetHandler:IsSyncedCode()) then
 			end
 		end
 		
-		unitYSizeOffset[unitID] = {ys,yo}
+		if not csBeaconIds[unitID] then
+			unitYSizeOffset[unitID] = {ys,yo}
+		end
 
 		-- reduce size of aircraft factories
 		if (airFactories[UnitDefs[unitDefID].name]) then 
-			spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.5/2, ys*0.5)
+			spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.05, ys*0.5)
 		end
 
 		
@@ -119,22 +126,23 @@ if (gadgetHandler:IsSyncedCode()) then
 
 
 	function gadget:UnitFinished(unitID, unitDefID, unitTeam)
-
-		-- check if a unit is pop-up type (the list must be entered manually)
-		local un = UnitDefs[unitDefID].name
-		if unitCollisionVolume[un] then
-			popupUnits[unitID]=un
-		end
-
-		-- set height to expected value for fully built unit
-		if unitYSizeOffset[unitID] then
-			local xs, ys, zs, xo, yo, zo, vtype, htype, axis,_ = spGetUnitCollisionVolumeData(unitID)
-			local data = unitYSizeOffset[unitID]
-			ys = data[1]
-			yo = data[2]
-			
-			spSetUnitCollisionVolumeData(unitID, xs, ys, zs, xo, yo, zo, vtype, htype, axis)
-			spSetUnitMidAndAimPos(unitID,0, ys*0.5, 0,0, ys*0.5,0,true)
+		if not csBeaconIds[unitID] then
+			-- check if a unit is pop-up type (the list must be entered manually)
+			local un = UnitDefs[unitDefID].name
+			if unitCollisionVolume[un] then
+				popupUnits[unitID]=un
+			end
+	
+			-- set height to expected value for fully built unit
+			if unitYSizeOffset[unitID] then
+				local xs, ys, zs, xo, yo, zo, vtype, htype, axis,_ = spGetUnitCollisionVolumeData(unitID)
+				local data = unitYSizeOffset[unitID]
+				ys = data[1]
+				yo = data[2]
+				
+				spSetUnitCollisionVolumeData(unitID, xs, ys, zs, xo, yo, zo, vtype, htype, axis)
+				spSetUnitMidAndAimPos(unitID,0, ys*0.5, 0,0, ys*0.5,0,true)
+			end
 		end
 	end
 
@@ -142,6 +150,9 @@ if (gadgetHandler:IsSyncedCode()) then
 	function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 		if popupUnits[unitID] then
 			popupUnits[unitID] = nil
+		end
+		if csBeaconIds[unitID] then
+			csBeaconIds[unitID] = nil
 		end
 		if unitYSizeOffset[unitID] then
 			unitYSizeOffset[unitID] = nil
@@ -196,6 +207,14 @@ if (gadgetHandler:IsSyncedCode()) then
 					spSetUnitMidAndAimPos(uId,0, ys*0.5, 0,0, ys*0.5,0,true)
 				end
 			end
+		end
+		
+		-- remove collision volume for cs beacons
+		-- this is here because it wasn't working on unitcreated, for some reason 
+		for unitID,_ in pairs(csBeaconIds) do
+			spSetUnitRadiusAndHeight(unitID, 1, 1)
+			spSetUnitCollisionVolumeData(unitID, 1, 1, 1, 0, 0,0, -1, 1, 0)
+			csBeaconIds[unitID] = nil
 		end
 	end
 end

@@ -18,6 +18,18 @@ local airTransportMaxSpeeds = {}
 local unloadedUnits = {}
 local spSetUnitRulesParam  = Spring.SetUnitRulesParam	
 
+
+local missileDefIds = {
+	[UnitDefNames["aven_nuclear_rocket"].id] = true,
+	[UnitDefNames["aven_dc_rocket"].id] = true,
+	[UnitDefNames["gear_nuclear_rocket"].id] = true,
+	[UnitDefNames["gear_dc_rocket"].id] = true,
+	[UnitDefNames["claw_nuclear_rocket"].id] = true,
+	[UnitDefNames["claw_dc_rocket"].id] = true,
+	[UnitDefNames["sphere_nuclear_rocket"].id] = true,
+	[UnitDefNames["sphere_dc_rocket"].id] = true
+}
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 if (gadgetHandler:IsSyncedCode()) then
@@ -30,7 +42,6 @@ local allowedSpeed = 0
 local currentMassUsage = 0
 -- update allowed speed for transport
 function updateAllowedSpeed(transportId, transportUnitDef)
-	
 	-- get sum of mass and size for all transported units                                
 	currentMassUsage = 0
 	for _,tUnitId in pairs(Spring.GetUnitIsTransporting(transportId)) do
@@ -107,25 +118,26 @@ end
 
 
 function gadget:UnitUnloaded(unitId, unitDefId, teamId, transportId)
-
-	-- prevent unloaded units from sliding across the map
-	-- TODO remove when fixed in the engine
-	if not unloadedUnits[unitId] then
-		local px,py,pz = Spring.GetUnitPosition(unitId,false,false)
-		local dx,dy,dz = Spring.GetUnitDirection(unitId)
-		local frame = Spring.GetGameFrame()
-		unloadedUnits[unitId] = {["px"]=px,["py"]=py,["pz"]=pz,["dx"]=dx,["dy"]=dy,["dz"]=dz,["frame"]=frame}
-	end
-
-	if airTransports[transportId] and not Spring.GetUnitIsTransporting(transportId)[1] then
-		-- transport is empty, cleanup tables
-		airTransports[transportId] = nil
-		airTransportMaxSpeeds[transportId] = nil
-		
-		spSetUnitRulesParam(unitId,"transport_load_factor","0",{public = true})
-	else
-		-- update allowed speed
-		updateAllowedSpeed(transportId, airTransports[transportId])
+	if( not missileDefIds[unitDefId]) then
+		-- prevent unloaded units from sliding across the map
+		-- TODO remove when fixed in the engine
+		if not unloadedUnits[unitId] then
+			local px,py,pz = Spring.GetUnitPosition(unitId,false,false)
+			local dx,dy,dz = Spring.GetUnitDirection(unitId)
+			local frame = Spring.GetGameFrame()
+			unloadedUnits[unitId] = {["px"]=px,["py"]=py,["pz"]=pz,["dx"]=dx,["dy"]=dy,["dz"]=dz,["frame"]=frame}
+		end
+	
+		if airTransports[transportId] and not Spring.GetUnitIsTransporting(transportId)[1] then
+			-- transport is empty, cleanup tables
+			airTransports[transportId] = nil
+			airTransportMaxSpeeds[transportId] = nil
+			
+			spSetUnitRulesParam(unitId,"transport_load_factor","0",{public = true})
+		else
+			-- update allowed speed
+			updateAllowedSpeed(transportId, airTransports[transportId])
+		end
 	end
 end
 

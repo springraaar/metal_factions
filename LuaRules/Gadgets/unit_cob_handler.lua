@@ -90,6 +90,16 @@ function delayReload(unitID, unitDefID, teamID, delay)
 end
 
 
+-- returns the next free build point, if any
+-- for factories with multiple pads
+function getBuildPt(unitID, unitDefID, teamID)
+	
+	-- if this is called, allowUnitCreation was already called and set a unit rules parameter with the piece number
+	local buildPt = spGetUnitRulesParam(unitID,"build_pt")
+	
+	return buildPt
+end
+
 
 function cobDebug(unitID, unitDefID, teamID, data)
 	spEcho(data)
@@ -100,3 +110,4 @@ gadgetHandler:RegisterGlobal("cobDebug", cobDebug)
 gadgetHandler:RegisterGlobal("checkEnergy", checkEnergy)
 gadgetHandler:RegisterGlobal("resetReload", resetReload)
 gadgetHandler:RegisterGlobal("delayReload", delayReload)
+gadgetHandler:RegisterGlobal("getBuildPt", getBuildPt)

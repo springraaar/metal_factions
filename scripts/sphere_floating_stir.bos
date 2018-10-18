@@ -69,8 +69,8 @@ AimPrimary(heading, pitch)
 {
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	turn turret to y-axis heading speed <320.038462>;
-	turn slpt to x-axis <0.000000> - pitch speed <350.000000>;
+	turn turret to y-axis heading speed <420.038462>;
+	turn slpt to x-axis <0.000000> - pitch speed <450.000000>;
 	if ( get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE )
 	{
 		wait-for-turn turret around y-axis;

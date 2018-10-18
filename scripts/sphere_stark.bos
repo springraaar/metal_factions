@@ -53,8 +53,8 @@ SetMaxReloadTime(Func_Var_1)
 RestoreAfterDelay()
 {
 	sleep restore_delay;
-	turn turret to y-axis <0.000000> speed <60.016484>;
-	turn sleeve to x-axis <0.000000> speed <60.005495>;
+	turn turret to y-axis <0.000000> speed <160.016484>;
+	turn sleeve to x-axis <0.000000> speed <160.005495>;
 }
 
 
@@ -62,8 +62,8 @@ AimPrimary(heading, pitch)
 {
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	turn sleeve to x-axis <0.000000> - pitch speed <100.000000>;
-	turn turret to y-axis heading speed <100.000000>;
+	turn sleeve to x-axis <0.000000> - pitch speed <300.000000>;
+	turn turret to y-axis heading speed <300.000000>;
 	wait-for-turn sleeve around x-axis;
 	wait-for-turn turret around y-axis;
 	start-script RestoreAfterDelay();

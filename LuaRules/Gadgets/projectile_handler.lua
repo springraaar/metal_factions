@@ -10,6 +10,7 @@ function gadget:GetInfo()
    }
 end
 
+-- oct 2018 : handles destructible rockets
 -- jan 2018 : handles comsat projectiles
 -- feb 2016 : handles magnetar projectiles
 -- sep 2015 : handles area fire effects
@@ -20,23 +21,48 @@ end
 local Echo = Spring.Echo
 local floor = math.floor
 local ceil = math.ceil
-local GetGameFrame = Spring.GetGameFrame
-local GetProjectileName = Spring.GetProjectileName
-local GetProjectilePosition = Spring.GetProjectilePosition
-local SetProjectileCollision = Spring.SetProjectileCollision
-local GetProjectilesInRectangle = Spring.GetProjectilesInRectangle
-local GetProjectileVelocity = Spring.GetProjectileVelocity
+local abs = math.abs
+local random = math.random
+local spGetGameFrame = Spring.GetGameFrame
+local spGetProjectilePosition = Spring.GetProjectilePosition
+local spSetProjectileCollision = Spring.SetProjectileCollision
+local spGetProjectileVelocity = Spring.GetProjectileVelocity
 local spCreateUnit = Spring.CreateUnit
 local spGetUnitTeam = Spring.GetUnitTeam
 local spDestroyUnit = Spring.DestroyUnit
 local spDeleteProjectile = Spring.DeleteProjectile
 local spGetUnitHealth = Spring.GetUnitHealth
+local spGetUnitPosition = Spring.GetUnitPosition
+local spGetFeaturePosition = Spring.GetFeaturePosition
 local spGetFeatureHealth = Spring.GetFeatureHealth
 local spGetProjectileDamages = Spring.GetProjectileDamages
 local spSetProjectileDamages = Spring.SetProjectileDamages
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spSetUnitRulesParam = Spring.SetUnitRulesParam
+local spGetProjectileTarget = Spring.GetProjectileTarget
+local spSetProjectileTarget = Spring.SetProjectileTarget
+local spGetProjectileTeamID = Spring.GetProjectileTeamID
+local spSetUnitNeutral = Spring.SetUnitNeutral
+local spTestBuildOrder = Spring.TestBuildOrder
+local spGetGroundHeight = Spring.GetGroundHeight
+local spUnitDetach = Spring.UnitDetach
+
+-- aim point over target when far from it
+local LONG_RANGE_ROCKET_FAR_FROM_TARGET_H = 1000		
+local LONG_RANGE_ROCKET_FAR_TARGET_DIST = 900			
+
+-- detonate when very close to target
+local LONG_RANGE_ROCKET_TERMINAL_DIST = 100
+
+local DC_ROCKET_DEPLOY_LIMIT_H = 300
+local DC_ROCKET_AUTO_BUILD_STEPS = 20
+local DC_ROCKET_AUTO_BUILD_FRACTION_PER_STEP = 0.05
+local DC_ROCKET_DEPLOY_DELAY_FRAMES = 30
+
+local mapSizeX = Game.mapSizeX
+local mapSizeZ = Game.mapSizeZ
 local max = math.max
 local min = math.min
-
 local STEP_DELAY = 6 		-- process steps every N frames
 local FIRE_AOE_STEPS = 100	-- 20 seconds
 
@@ -111,6 +137,32 @@ local torpedoWeaponIds = {
 	[WeaponDefNames["sphere_clam_torpedo"].id]=true,
 	[WeaponDefNames["sphere_oyster_torpedo"].id]=true
 }
+
+
+local destructibleWeaponIds = {
+	-- AVEN
+	[WeaponDefNames["aven_nuclear_rocket"].id]=true,
+	[WeaponDefNames["aven_dc_rocket"].id]=true,
+	-- GEAR
+	[WeaponDefNames["gear_nuclear_rocket"].id]=true,
+	[WeaponDefNames["gear_dc_rocket"].id]=true,
+	-- CLAW
+	[WeaponDefNames["claw_nuclear_rocket"].id]=true,
+	[WeaponDefNames["claw_dc_rocket"].id]=true,
+	-- SPHERE
+	[WeaponDefNames["sphere_nuclear_rocket"].id]=true,
+	[WeaponDefNames["sphere_dc_rocket"].id]=true
+}
+
+local dcRocketSpawnWeaponIds = {
+	[WeaponDefNames["aven_dc_rocket"].id]=UnitDefNames["aven_nano_tower"].id,
+	[WeaponDefNames["gear_dc_rocket"].id]=UnitDefNames["gear_nano_tower"].id,
+	[WeaponDefNames["claw_dc_rocket"].id]=UnitDefNames["claw_nano_tower"].id,
+	[WeaponDefNames["sphere_dc_rocket"].id]=UnitDefNames["sphere_pole"].id
+}
+
+
+local longRangeRocketOriginalTargetsById = {}
 local disruptorProjectiles = {}
 local disruptorEffectProjectiles = {}
 local torpedoProjectiles = {}
@@ -118,9 +170,28 @@ local fireAOEProjectiles = {}
 local fireAOEEffectProjectiles = {}
 local fireAOEPositions = {}
 local magnetarProjectiles = {}
+local destructibleProjectiles = {}
+local dcRockets = {}
 local comsatProjectiles = {}
 local comsatBeaconDefId = UnitDefNames["cs_beacon"].id
 local dynamoProjectiles = {}
+dcRocketSpawn = {}
+
+-- is close enough on x-z plane to start diving toward target
+function isCloseToTarget(px,pz,tx,tz)
+	if (abs(px-tx) < LONG_RANGE_ROCKET_FAR_TARGET_DIST) and (abs(pz-tz) < LONG_RANGE_ROCKET_FAR_TARGET_DIST) then
+		return true
+	end 
+	return false
+end
+
+-- is just about to hit the target
+function isAboutToCollide(px,py,pz,tx,ty,tz)
+	if (abs(px-tx) < LONG_RANGE_ROCKET_TERMINAL_DIST) and (abs(pz-tz) < LONG_RANGE_ROCKET_TERMINAL_DIST and abs(py-ty) < LONG_RANGE_ROCKET_TERMINAL_DIST) then
+		return true
+	end 
+	return false
+end
 
 -------------------------- SYNCED CODE ONLY
 if (not gadgetHandler:IsSyncedCode()) then
@@ -150,6 +221,11 @@ function gadget:Initialize()
 	
 	-- track dynamo projectiles
 	Script.SetWatchWeapon(dynamoWeaponId,true)
+
+	-- track destructible projectiles
+	for id,_ in pairs(destructibleWeaponIds) do
+		Script.SetWatchWeapon(id,true)
+	end
 end
 
 
@@ -158,7 +234,7 @@ function gadget:GameFrame(n)
 	-- explode disruptor wave effect projectiles
 	for id,ownerId in pairs(disruptorEffectProjectiles) do
 		-- explode projectile
-		SetProjectileCollision(id)
+		spSetProjectileCollision(id)
 		
 		-- remove table entry
 		disruptorEffectProjectiles[id] = nil
@@ -167,10 +243,115 @@ function gadget:GameFrame(n)
 	-- explode fire aoe effect projectiles
 	for id,ownerId in pairs(fireAOEEffectProjectiles) do
 		-- explode projectile
-		SetProjectileCollision(id)
+		spSetProjectileCollision(id)
 		
 		-- remove table entry
 		fireAOEEffectProjectiles[id] = nil
+	end
+	
+	-- dc rocket construction tower spawn
+	for id,info in pairs(dcRocketSpawn) do
+		if (info and n > info.frame) then
+			local test = false
+			local fBlockingId = 0
+			
+			local canBuild = false
+			test,fBlockingId = spTestBuildOrder(info.defId,info.px,info.py,info.pz,0) 
+			-- adjust position if stuff is in the way
+			if test == 2 and not fBlockingId then
+				canBuild = true
+			end
+			
+			local dxi = 0
+			local dzi = 0
+			local xi = 0
+			local zi = 0
+			local h = 0
+			local searchOrder = {0,-1,1,-2,2,-3,3}
+			if (not canBuild) then
+
+				-- check nearby cells
+				for dxi in ipairs(searchOrder) do
+					if (canBuild) then
+						break
+					end
+					for dzi in ipairs(searchOrder) do
+						xi = info.px + dxi * 60
+						zi = info.pz + dzi * 60
+						if (xi >=0) and (zi >= 0) and not (dxi == 0 and dzi == 0) and (xi < mapSizeX) and (zi < mapSizeZ)  then
+							h = spGetGroundHeight(xi,zi)
+							test,fBlockingId = spTestBuildOrder(info.defId,xi,h,zi,0) 
+							if test == 2 and not fBlockingId then
+								canBuild = true
+								info.px = xi
+								info.py = h
+								info.pz = zi
+								break
+							end
+						end
+					end
+				end
+			end
+			
+			if canBuild then
+				local uId = spCreateUnit(info.defId,info.px,info.py,info.pz,0,info.teamId,true,true)
+				-- set it to auto-build itself
+				if uId then
+					spSetUnitRulesParam(uId,"auto_build_fraction_per_step",DC_ROCKET_AUTO_BUILD_FRACTION_PER_STEP,{public = true})	
+					spSetUnitRulesParam(uId,"auto_build_steps",DC_ROCKET_AUTO_BUILD_STEPS,{public = true})
+				end
+				-- also add a cs beacon temporarily over it to provide los
+				uId = spCreateUnit("cs_beacon",info.px,info.py+500,info.pz,0,info.teamId,false)
+				if uId then
+					spSetUnitNeutral(uId,true)
+				end
+			end
+			
+			dcRocketSpawn[id] = nil
+		end
+	end
+	
+	-- handle destructible long range projectiles
+	local px,py,pz = 0
+	local ot = nil
+	local tType,st = nil
+	local nearCollision = false
+	for id,ownerId in pairs(destructibleProjectiles) do
+		px,py,pz = spGetProjectilePosition(id)
+		ot = longRangeRocketOriginalTargetsById[id]
+		nearCollision = false
+		tType,st = spGetProjectileTarget(id)
+		
+		--Spring.Echo("projectile px="..tostring(px).." otx="..tostring(ot[1]))
+		if (px and ot) then
+			if (tType == string.byte('u') or tType == string.byte('f')) then
+				st = ot
+			end
+			
+			if (isCloseToTarget(px,pz,st[1],st[3])) then
+				-- if close to original target, go towards it
+				spSetProjectileTarget(id,ot[1],ot[2],ot[3])
+				
+				-- remove owner, the projectile
+				if isAboutToCollide(px,py,pz,ot[1],ot[2],ot[3]) then
+					nearCollision = true
+				end
+			end
+		end
+		
+		-- remove destructible projectiles if the owner died
+		if (GG.destructibleProjectilesDestroyed and GG.destructibleProjectilesDestroyed[ownerId] == true) then
+			--Spring.Echo("projectile removed because unit "..ownerId.." was destroyed")
+			-- remove projectile (unit was reclaimed or explosion already happened when it died)
+			spDeleteProjectile(id)
+			
+			GG.destructibleProjectilesDestroyed[ownerId] = nil
+		elseif(nearCollision) then
+			-- detonate when very close to target, to avoid the owner bouncing off the ground
+			--Spring.Echo("projectile removed and unit "..ownerId.." detonated properly")			
+			spSetProjectileCollision(id)
+			GG.destructibleProjectilesDestroyed[ownerId] = nil
+		end
 	end
 	
 	-- TODO maybe this isn't really necessary...
@@ -179,8 +360,8 @@ function gadget:GameFrame(n)
 	local wasUnderwater = 0
 	local h = 0
 	for projID,_ in pairs(torpedoProjectiles) do
-		px,py,pz = GetProjectilePosition(projID)
-		h = Spring.GetGroundHeight(px,pz)
+		px,py,pz = spGetProjectilePosition(projID)
+		h = spGetGroundHeight(px,pz)
 		-- mark underwater projectiles
 		if (py < -5) then
 			projectileWasUnderwater[projID] = n
@@ -193,7 +374,7 @@ function gadget:GameFrame(n)
 		wasUnderwater = projectileWasUnderwater[projID]
 		if wasUnderwater ~= nil and wasUnderwater > 0 and (n - wasUnderwater) < 18000 then
 			if py > 20 or h > 5 then
-				SetProjectileCollision(projID)
+				spSetProjectileCollision(projID)
 				
 				-- remove table entry
 				projectileWasUnderwater[projID] = nil
@@ -207,11 +388,11 @@ function gadget:GameFrame(n)
 	for projID,ownerId in pairs(magnetarProjectiles) do
 		
 		-- get position
-		px,py,pz = GetProjectilePosition(projID)
-		h = Spring.GetGroundHeight(px,pz)
+		px,py,pz = spGetProjectilePosition(projID)
+		h = spGetGroundHeight(px,pz)
 			
 		-- make main projectile explode
-		SetProjectileCollision(projID)
+		spSetProjectileCollision(projID)
 		magnetarProjectiles[projID] = nil
 		
 		
@@ -243,12 +424,12 @@ function gadget:GameFrame(n)
 	
 	-- generate disruptor wave effect projectiles
 	for id,ownerId in pairs(disruptorProjectiles) do
-		local px,py,pz = GetProjectilePosition(id)
+		local px,py,pz = spGetProjectilePosition(id)
 		px = px - 15 + math.random(30)
 		py = py - 15 + math.random(30)
 		pz = pz - 15 + math.random(30)
 		
-		local vx,vy,vz = GetProjectileVelocity(id)
+		local vx,vy,vz = spGetProjectileVelocity(id)
 		
 		local createdId = Spring.SpawnProjectile(disruptorWeaponEffectId,{
 			["pos"] = {px,py,pz},
@@ -293,6 +474,37 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		torpedoProjectiles[proID] = true
 		return
 	end
+	if destructibleWeaponIds[weaponDefID] then
+		destructibleProjectiles[proID] = proOwnerID
+		spSetUnitRulesParam(proOwnerID,"destructible_projectile_id",proID,{public = true})
+		spUnitDetach(proOwnerID)
+		
+		local tType,tInfo = spGetProjectileTarget(proID)
+		if (tType == string.byte('u')) then
+			 local x,y,z = spGetUnitPosition(tInfo)
+			 if (x) then
+			 	longRangeRocketOriginalTargetsById[proID] = {x,y,z}
+			 	tInfo = {x,y,z}
+			 end
+		elseif (tType == string.byte('f')) then
+			 local x,y,z = spGetFeaturePosition(tInfo)
+			 if (x) then
+			 	longRangeRocketOriginalTargetsById[proID] = {x,y,z}
+			 	tInfo = {x,y,z}
+			 end
+		else
+			longRangeRocketOriginalTargetsById[proID] = tInfo
+		end
+		
+		-- if far from original target, go towards the point high above it, randomly offset to spread out
+		spSetProjectileTarget(proID,tInfo[1]+200-random(400),tInfo[2]+LONG_RANGE_ROCKET_FAR_FROM_TARGET_H,tInfo[3]+200-random(400))
+		
+		if (dcRocketSpawnWeaponIds[weaponDefID]) then
+			dcRockets[proID] = dcRocketSpawnWeaponIds[weaponDefID]
+		end
+		
+		return
+	end	
 	if weaponDefID == magnetarWeaponId then
 		magnetarProjectiles[proID] = proOwnerID
 		return
@@ -313,6 +525,28 @@ end
 
 -- remove tracked projectiles from table on destruction or trigger other effects
 function gadget:ProjectileDestroyed(proID)
+	if destructibleProjectiles[proID] then
+		-- if was a DC rocket, exploding near the ground
+		-- spawn construction tower at position
+		if(dcRockets[proID]) then
+			local px,py,pz = spGetProjectilePosition(proID)
+			local h = spGetGroundHeight(px,pz)
+
+			if px and abs(py - h) < DC_ROCKET_DEPLOY_LIMIT_H then
+				dcRocketSpawn[proID]={frame=spGetGameFrame()+DC_ROCKET_DEPLOY_DELAY_FRAMES,px=px,py=h,pz=pz,defId=dcRockets[proID],teamId=spGetProjectileTeamID(proID)}
+			end
+			
+			dcRockets[proID] = nil
+		end
+
+
+		-- remove the unit (no explosion)
+		spDestroyUnit(destructibleProjectiles[proID],true)
+		--Spring.Echo("unit removed because projectile "..proID.." was destroyed")
+		destructibleProjectiles[proID] = nil
+		longRangeRocketOriginalTargetsById[proID] = nil
+	end
+
 	if disruptorProjectiles[proID] then
 		disruptorProjectiles[proID] = nil
 	elseif torpedoProjectiles[proID] then
@@ -322,8 +556,8 @@ function gadget:ProjectileDestroyed(proID)
 	elseif fireAOEProjectiles[proID] then
 
 		-- spawn fire effect at position
-		local px,py,pz = GetProjectilePosition(proID)
-		local h = Spring.GetGroundHeight(px,pz)
+		local px,py,pz = spGetProjectilePosition(proID)
+		local h = spGetGroundHeight(px,pz)
 		local weaponDefId = Spring.GetProjectileDefID(proID)
 		local effect = fireAOEWeaponEffectId
 		if ((WeaponDefs[weaponDefId].customParams.burnaoe) == "2") then
@@ -340,9 +574,12 @@ function gadget:ProjectileDestroyed(proID)
 		local ownerId = comsatProjectiles[proID]
 		if ownerId then
 			local teamId = spGetUnitTeam(ownerId)
-			local px,py,pz = GetProjectilePosition(proID)
+			local px,py,pz = spGetProjectilePosition(proID)
 			if px then
-				spCreateUnit("cs_beacon",px,py+500,pz,0,teamId,false)
+				local uId = spCreateUnit("cs_beacon",px,py+500,pz,0,teamId,false)
+				if uId then
+					spSetUnitNeutral(uId,true)
+				end
 			end
 		end
 		comsatProjectiles[proID] = nil
@@ -357,7 +594,7 @@ function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attac
 	if torpedoWeaponIds[attackerWeaponDefID] then
 		-- if target is on land, return false
 		local x,y,z = Spring.GetUnitPosition(targetID)
-		local h = Spring.GetGroundHeight(x,z)
+		local h = spGetGroundHeight(x,z)
 		
 		if (h > 0 or y > 30) then
 			return false,99999999
@@ -385,7 +622,7 @@ function handleRingDamage(projId, damage, unitHp)
 	if (expired) then
 		spDeleteProjectile(projId)
 		-- spawn a bigger explosion
-		px,py,pz = GetProjectilePosition(projId)
+		px,py,pz = spGetProjectilePosition(projId)
 		Spring.SpawnCEG("ringblastwrapper", px, py, pz,0,1,0,3000,3000)
 		Spring.PlaySoundFile('Sounds/ringhit.wav', 1, px, py, pz)
 	else
@@ -415,9 +652,9 @@ end
 -- ground explosions for rings are limited 
 function gadget:Explosion(weaponDefID, px, py, pz, attackerID, projectileID)
 	if (dynamoProjectiles[projectileID]) then
-		h = Spring.GetGroundHeight(px,pz)
+		h = spGetGroundHeight(px,pz)
 		if (py < h + 3 or py < 3) then
-			--Spring.Echo("dynamo projectile GROUND impact at frame="..GetGameFrame())
+			--Spring.Echo("dynamo projectile GROUND impact at frame="..spGetGameFrame())
 			handleRingDamage(projectileID, DYNAMO_RING_GROUND_DAMAGE,DYNAMO_RING_GROUND_HP)
 		end
 	end

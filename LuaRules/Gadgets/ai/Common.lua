@@ -724,7 +724,7 @@ attackerList =
 	"gear_reaper",
 	"gear_tremor",
 	"gear_diplomat",
-	"gear_crock",
+	"gear_rhino",
 	"gear_snapper",
 	"gear_slinger",
 	"gear_mobile_artillery",
@@ -935,7 +935,7 @@ amphibiousAttackerList =
 
 ----------- l2
 
-	"gear_crock",
+	"gear_rhino",
 	"gear_proteus",
 
 ------------------------------------------------ CLAW
@@ -1057,7 +1057,7 @@ naturallyRoamingCommanders = {
 lltByFaction = { [side1Name] = "aven_light_laser_tower", [side2Name] = "gear_light_laser_tower", [side3Name] = "claw_drill", [side4Name] = "sphere_stir"}
 lightAAByFaction = { [side1Name] = "aven_defender", [side2Name] = "gear_pulverizer"}
 mediumAAByFaction = { [side3Name] = "claw_gemini", [side4Name] = "sphere_shine"}
-heavyAAByFaction = { [side1Name] = {"aven_warden"}, [side2Name] = {"gear_missilator"}, [side3Name] = {"claw_hyper"}, [side4Name] = {"sphere_opal_sphere","sphere_ruby_sphere","sphere_obsidian_sphere","sphere_stark","sphere_stark"}}
+heavyAAByFaction = { [side1Name] = {"aven_warden"}, [side2Name] = {"gear_missilator"}, [side3Name] = {"claw_hyper"}, [side4Name] = {"sphere_stark"}}
 lev2HeavyDefenseByFaction = {[side1Name] = {"aven_sentinel"}, [side2Name] = {"gear_blaze"}, [side3Name] = {"claw_piercer"}, [side4Name] = {"sphere_stout"}}
 lev2ArtilleryDefenseByFaction = {[side1Name] = {"aven_ambusher"}, [side2Name] = {"gear_toaster"}, [side3Name] = {"claw_thumper"}, [side4Name] = {"sphere_lancer"}}
 lev3ArtilleryDefenseByFaction = {[side1Name] = {"aven_guardian"}, [side2Name] = {"gear_punisher"}, [side3Name] = {"claw_massacre"}, [side4Name] = {"sphere_banger"}}

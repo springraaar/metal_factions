@@ -1,3 +1,80 @@
+2018/10/18 ------------------ NOTES v1.000 ----------------------
+
+
+--- new units
+
+- added long range rocket platforms for all factions (level 2), which can hold up to 4 rockets each
+- the rockets have relatively low HP and L armor type and can be shot down by enemy weapons which target fast units and aircraft effectively and have good range
+- the rockets' range covers the whole map
+
+New rocket types:
+- Nuclear Missile: expensive missile that will likely kill all units on a large radius unless it's shot down while still far from target
+- Destruction/Construction "DC" Missile: can kill small clusters of units, provides temporary vision and spawns a construction tower on impact
+
+(these are identical for all factions : faction-specific ones may be added at a later date)
+
+
+--- balance / mechanics
+
+GENERAL
+- fortification walls have H armor instead of M
+
+- comsat stations reveal the targeted area for 30s instead of 15s
+- fixed issue with comsat beacons being targetable and blocking projectiles
+
+- made relatively slow units and defenses and units with relatively high HP/cost up to 10% cheaper
+- made relatively fast units or units with relatively powerful and long-ranged weapons up to 10% more expensive
+
+- reduced the death explosion damage and area of effect for most level 1 ground units
+
+- removed experience gain by dealing the killing blow to enemy units
+(this means that having the HP bar drained by enemy fire is now worth 50% as much experience as killing an enemy of equal value instead of 25%)
+
+- removed obscure flanking mechanic unless specifically stated
+(units took up to twice as much damage when being hit from different directions)
+
+- increased the HP and speed of level 1 light tanks by about 10% and adjusted the cost
+
+- GEAR "Canister" and "Eruptor" are set to hold position by default
+- GEAR "Infernal" form commander got about 5% less direct weapon damage on the fireball cannon and 5% increased range on the torpedo weapon
+- replaced GEAR "Crock" with "Rhino" : Amphibious assault gun with 33% front-back dmg resistance bonus/penalty a forward-only cannon and a secondary laser turret
+- CLAW "Assassin" form commander got about 5% less range, reduced HP by 100 and 25% higher reload time on its torpedo weapon
+- CLAW "Longhorn" : increase model height to compensate for its flatter trajectory
+- SPHERE "Emerald" form commander got 5% more movement speed but 9% reduced range and reduced energy cost to fire from 160 to 120 E/s
+- SPHERE "Nova" form commander got 10% increased range
+- SPHERE "Ruby" form commander got 15% reduced energy cost to fire
+- increased the HP of SPHERE "Rock" and "Slicer" by about 10% and adjusted the cost
+
+MISSILES/AA
+- increase damage and reload time for light missiles by about 20-40%
+- make large fast missiles L damage instead of M and reduce the area of effect (from 80-120 to 60)
+- reduced range by 200 on static launchers, increased turret turn rates and reduced pop-up delay and reduced the unit costs significantly
+(this increases the effectiveness against light units and aircraft, including long range rockets, relative to against medium/heavy armored units)
+- missiles have cylinder targeting with 2x range altitude limit and fly a bit faster
+(so they're also better at shooting down long range rockets)
+- CLAW "Hyper" is a bit taller when open and also slightly improved the model
+
+
+UPGRADES
+- changed minor regen upgrade to give 1 + 0.1%HP per second instead of 2 HP/s
+- increased flat regen on major regen upgrade from +2 to +3 HP/s
+
+
+--- UI / Visuals
+
+- Made lasers thicker to make them shinier
+- SPHERE "Opal" beams and forms have been renamed to "Emerald"
+- big explosions shake the camera
+- used a rounder model (more faces) for SPHERE "Chroma" and "Magnetar"
+- moving mouse to the upper part of the screen will show a less intrusive "press space to view chat" hint instead of showing the chat
+- GEAR "Heater" tank has a longer and narrower body to differentiate it more from the "squarer" slower tanks
+
+--- AI
+- SPHERE AI will make more long range missile towers instead of static sphere towers
+- AI moves attacking groups more decisively when targeting undefended clusters of enemies
+- fixed AI definition of number of builders by task type
+
+
 2018/08/19 ------------------ NOTES v0.999 ----------------------
 
 - fixed MFAI sometimes morphing its commander immediately when the game starts

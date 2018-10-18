@@ -29,7 +29,11 @@ function CommonUnitBehavior:CommonInit(ai, uId)
 	elseif string.find(self.unitName,"sphere_") then
 		self.unitSide = side4Name
 	end
-
+	
+	-- unit properties
+	self.isCommander = setContains(unitTypeSets[TYPE_COMMANDER],self.unitName)
+	self.isUpgradedCommander = setContains(unitTypeSets[TYPE_UPGRADED_COMMANDER],self.unitName)
+	
 	self.isArmed = #self.unitDef.weapons > 0
 	self.unitCost = getWeightedCostByName(self.unitName) 
 	self.isMobileBuilder = not self.isCommander and self.unitDef.isMobileBuilder

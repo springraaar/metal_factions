@@ -80,8 +80,8 @@
 	weapon1=claw_sickle_laser;
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -128,7 +128,7 @@
 		explosiongenerator0=custom:blueflaresml;
 	}
 
-	buildcostenergy=1800;//#AUTO#
-	buildcostmetal=360;//#AUTO#
-	buildtime=4291;//#AUTO#
+	buildcostenergy=1875;//#AUTO#
+	buildcostmetal=375;//#AUTO#
+	buildtime=4469;//#AUTO#
 }

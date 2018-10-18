@@ -83,8 +83,8 @@
 	Weapon1=sphere_tick_laser;
 	badtargetcategory1=VTOL;
 	NoChaseCategory=VTOL;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -125,7 +125,7 @@
 		explosiongenerator0=custom:redflare;
 	}
 
-	buildcostenergy=1585;//#AUTO#
-	buildcostmetal=317;//#AUTO#
-	buildtime=3778;//#AUTO#
+	buildcostenergy=1597;//#AUTO#
+	buildcostmetal=319;//#AUTO#
+	buildtime=3806;//#AUTO#
 }

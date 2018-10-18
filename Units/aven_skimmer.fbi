@@ -84,8 +84,8 @@
 	weapon1=aven_skimmer_emg;
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -124,7 +124,7 @@
 		explosiongenerator0=custom:emgflare;
 	}
 
-	buildcostenergy=1261;//#AUTO#
-	buildcostmetal=252;//#AUTO#
-	buildtime=3006;//#AUTO#
+	buildcostenergy=1311;//#AUTO#
+	buildcostmetal=262;//#AUTO#
+	buildtime=3125;//#AUTO#
 }

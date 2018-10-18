@@ -85,8 +85,8 @@
 	//***********
 	weapon1=claw_dizzy_laser;
 	nochasecategory=VTOL;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -129,7 +129,7 @@
 		explosiongenerator0=custom:glowsml;
 	}
 
-	buildcostenergy=1510;//#AUTO#
-	buildcostmetal=302;//#AUTO#
-	buildtime=3600;//#AUTO#
+	buildcostenergy=1518;//#AUTO#
+	buildcostmetal=303;//#AUTO#
+	buildtime=3619;//#AUTO#
 }

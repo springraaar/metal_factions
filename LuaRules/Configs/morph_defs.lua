@@ -176,10 +176,10 @@ local morphDefs = {
 		{
 			into = 'sphere_u1commander',
 			time = 30,
-			cmdname = 'Opal Form',
+			cmdname = 'Emerald Form',
 			energy = 10000,
 			metal = 1000,
-			text = 'Morph to Opal Form : Greatly increased speed and firepower against light units and aircraft.'
+			text = 'Morph to Emerald Form : Greatly increased speed and firepower against light units and aircraft.'
 		},
 		{
 			into = 'sphere_u2commander',

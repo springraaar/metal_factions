@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1300;
+	maxdamage=1350;
 	healtime=30;
 	footprintx=3;
 	footprintz=3;
@@ -35,8 +35,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.6;
-	energyuse=0.6;
+	energymake=0.0;
+	energyuse=0.0;
 	energystorage=0;
 
 	//************************************************************
@@ -65,7 +65,7 @@
 	turnrate=428;
 	acceleration=0.24; 
 	brakerate=0.1;
-	maxvelocity=1.78;
+	maxvelocity=1.9;
 	maxslope=10;
 	maxwaterdepth=12;
 
@@ -81,8 +81,8 @@
 	weapon1=aven_LIGHTCANNON;
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -127,7 +127,7 @@
 	explosiongenerator0=custom:yellowflaresml;
 	}
 
-	buildcostenergy=1052;//#AUTO#
-	buildcostmetal=210;//#AUTO#
-	buildtime=2509;//#AUTO#
+	buildcostenergy=1080;//#AUTO#
+	buildcostmetal=216;//#AUTO#
+	buildtime=2575;//#AUTO#
 }

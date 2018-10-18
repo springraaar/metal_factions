@@ -24,9 +24,6 @@ end
 function TaskQueueBehavior:Init(ai, uId)
 	self:CommonInit(ai, uId)
 	
-	-- unit properties
-	self.isCommander = setContains(unitTypeSets[TYPE_COMMANDER],self.unitName)
-	self.isUpgradedCommander = setContains(unitTypeSets[TYPE_UPGRADED_COMMANDER],self.unitName)
 	
 	-- state properties
 	self.active = false
@@ -193,6 +190,10 @@ function TaskQueueBehavior:Update()
 	end
 	
 	self.pos = newPosition(spGetUnitPosition(self.unitId,false,false))
+	
+	--if (self.specialRole and self.isMobileBuilder) then
+		--Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(self.specialRole)) --DEBUG
+	--end
 	
 	local health,maxHealth,_,_,bp = spGetUnitHealth(self.unitId)
 	self.isFullyBuilt = (bp > 0.999)

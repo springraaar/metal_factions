@@ -37,11 +37,13 @@ local spSetUnitVelocity = Spring.SetUnitVelocity
 local spSetUnitPhysics = Spring.SetUnitPhysics
 local spSetUnitRotation = Spring.SetUnitRotation
 local spSetUnitPosition = Spring.SetUnitPosition
+local spSetUnitDirection = Spring.SetUnitDirection
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
 local spGetCommandQueue = Spring.GetCommandQueue
 local spGetGameFrame = Spring.GetGameFrame
 local spGetUnitIsActive = Spring.GetUnitIsActive
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spCallCOBScript = Spring.CallCOBScript
 local spGetFeatureVelocity = Spring.GetFeatureVelocity
 local spGetFeaturePosition = Spring.GetFeaturePosition
@@ -49,6 +51,8 @@ local spGetFeatureRadius = Spring.GetFeatureRadius
 local spPlaySoundFile = Spring.PlaySoundFile
 local spSpawnCEG = Spring.SpawnCEG
 local spSetProjectileCollision = Spring.SetProjectileCollision
+local spGetProjectilePosition = Spring.GetProjectilePosition
+local spGetProjectileVelocity = Spring.GetProjectileVelocity
 local spSpawnProjectile = Spring.SpawnProjectile
 local spDestroyUnit = Spring.DestroyUnit
 
@@ -82,7 +86,7 @@ local GROUND_COLLISION_H_THRESHOLD = 30
 
 local AIRCRAFT_DEBRIS_METAL_FACTOR = 0.4
 
-local COMSAT_SCAN_DURATION_FRAMES = 450
+local COMSAT_SCAN_DURATION_FRAMES = 900
 
 local moveAnimationUnitIds = {}
 local unitPhysicsById = {}
@@ -91,6 +95,8 @@ local featurePhysicsById = {}
 local magnetarUnitIds = {}
 local comsatBeacons = {}
 local comsatBeaconDefId = UnitDefNames["cs_beacon"].id
+
+GG.destructibleProjectilesDestroyed = {}
 
 local aircraftMovementFixDefIds = {
 	[UnitDefNames["aven_swift"].id] = true,
@@ -102,6 +108,19 @@ local aircraftMovementFixDefIds = {
 	[UnitDefNames["claw_x"].id] = true,
 	[UnitDefNames["sphere_twilight"].id] = true
 }
+
+local destructibleProjectileDefIds = {
+	[UnitDefNames["aven_nuclear_rocket"].id] = true,
+	[UnitDefNames["aven_dc_rocket"].id] = true,
+	[UnitDefNames["gear_nuclear_rocket"].id] = true,
+	[UnitDefNames["gear_dc_rocket"].id] = true,
+	[UnitDefNames["claw_nuclear_rocket"].id] = true,
+	[UnitDefNames["claw_dc_rocket"].id] = true,
+	[UnitDefNames["sphere_nuclear_rocket"].id] = true,
+	[UnitDefNames["sphere_dc_rocket"].id] = true
+}
+local destructibleProjectileUnitIds = {}
+local destructibleProjectileInitialPositionByUnitId = {}
 
 local aircraftMovementFixUnitIds = {}
 
@@ -138,7 +157,7 @@ local function updateUnitPhysics(unitId)
 	
 	-- force aircraft that flew off the map to "teleport" back into the nearest edge
 	-- workaround for 104.0 engine bug
-	 if (x < -MAP_SAFETY_TOLERANCE or x > mapSizeX+MAP_SAFETY_TOLERANCE) or (z < -MAP_SAFETY_TOLERANCE or z > mapSizeZ+MAP_SAFETY_TOLERANCE) then
+	 if (not destructibleProjectileUnitIds[unitId]) and ((x < -MAP_SAFETY_TOLERANCE or x > mapSizeX+MAP_SAFETY_TOLERANCE) or (z < -MAP_SAFETY_TOLERANCE or z > mapSizeZ+MAP_SAFETY_TOLERANCE)) then
 	 	local bestDistance = math.huge
 	 	local d = 0
 	 	local targetX, targetY, targetZ
@@ -194,7 +213,29 @@ local function updateUnitPhysics(unitId)
 				--spSetUnitRotation(unitId,rx,ry,rz)	
 			end
 		end
-	end  	
+	end
+	
+	-- attach destructible unit ids to the projectile if it's in flight 
+	if destructibleProjectileUnitIds[unitId] == true then
+		if not destructibleProjectileInitialPositionByUnitId[unitId] then
+			destructibleProjectileInitialPositionByUnitId[unitId] = {x=x,y=y,z=z}
+		end
+		
+		local proId = spGetUnitRulesParam(unitId,"destructible_projectile_id")
+		if (proId) then
+			x,y,z = spGetProjectilePosition(proId)
+			vx,vy,vz,v = spGetProjectileVelocity(proId)
+			
+			if (x and vx) then
+				--Spring.Echo("v="..(v*30))
+				spSetUnitPhysics(unitId,x+3*vx,y+3*vy,z+3*vz,vx,vy,vz,0,0,0,0,0,0)
+			end
+		--else
+			--local p = destructibleProjectileInitialPositionByUnitId[unitId]
+			-- hold it in place
+			--spSetUnitPhysics(unitId,p.x,p.y,p.z,0,0,0,0,0,0,0,0,0)
+		end
+	end
 end
 
 local function updateFeaturePhysics(featureId)
@@ -246,6 +287,10 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 	if (unitDefId == comsatBeaconDefId) then
 		comsatBeacons[unitId] = 1
 	end
+	
+	if destructibleProjectileDefIds[unitDefId] then
+		destructibleProjectileUnitIds[unitId] = true
+	end
 
 	-- TODO this is disabled for now
 	--if aircraftMovementFixDefIds[unitDefId] then
@@ -254,7 +299,6 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 		
 	unitPhysicsById[unitId] = {0,0,0,0,0,0,0,false}
 end
-
 
 function gadget:GameFrame(n)
 	
@@ -406,13 +450,19 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 	if aircraftMovementFixUnitIds[unitId] then
 		aircraftMovementFixUnitIds[unitId] = nil
 	end
+	
+	if destructibleProjectileDefIds[unitDefId] then
+		destructibleProjectileUnitIds[unitId] = nil
+		destructibleProjectileInitialPositionByUnitId[unitId] = nil
+		GG.destructibleProjectilesDestroyed[unitId] = true
+	end
 
 	local _,_,_,_,bp = spGetUnitHealth(unitId)
 
 	-- if unit is an aircraft which leaves no wreckage, spawn some debris
 	local ud = UnitDefs[unitDefId]
 	--Spring.Echo("unit destroyed")
-	if ud and ud.canFly == true and (unitDefId ~= comsatBeaconDefId) and not isDrone(ud) and tostring(ud.wreckName) == '' then
+	if ud and ud.canFly == true and (not destructibleProjectileDefIds[unitDefId]) and (unitDefId ~= comsatBeaconDefId) and not isDrone(ud) and tostring(ud.wreckName) == '' then
 		if bp > 0.999 or (attackerId ~= nil and bp > 0.5) then
 			--Spring.Echo("aircraft destroyed "..tostring(ud.wreckName))
 			local physics = unitPhysicsById[unitId]

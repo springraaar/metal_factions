@@ -1928,7 +1928,7 @@ local avenHovercraftPlant = {
 
 local function gearL2KbotChoice(self) return choiceByType(self,{"gear_titan","gear_barrel"},{"gear_big_bob","gear_moe","gear_moe","gear_luminator"},{"gear_big_bob","gear_pyro","gear_moe","gear_psycho","gear_titan","gear_barrel"}) end
 local function gearL1LightChoice(self) return choiceByType(self,"gear_crasher",{"gear_raider","gear_kano","gear_thud"},{"gear_crasher","gear_kano","gear_box","gear_instigator","gear_aggressor"}) end
-local function gearL2VehicleChoice(self) return choiceByType(self,"gear_marauder",{"gear_mobile_artillery","gear_reaper","gear_eruptor"},{"gear_reaper","gear_marauder","gear_crock","gear_flareon"}) end
+local function gearL2VehicleChoice(self) return choiceByType(self,"gear_marauder",{"gear_mobile_artillery","gear_reaper","gear_eruptor"},{"gear_reaper","gear_marauder","gear_rhino","gear_flareon"}) end
 local function gearL2AirChoice(self) return choiceByType(self,"gear_vector",{"gear_stratos","gear_firestorm"},{"gear_vector","gear_stratos","gear_firestorm"},"gear_whirlpool") end
 local function gearL2KbotRadar(self) return buildWithLimitedNumber(self,"gear_voyeur",1) end
 local function gearL2KbotRadarJammer(self) return buildWithLimitedNumber(self,"gear_spectre",1) end
@@ -2929,6 +2929,7 @@ local sphereLev2Con = {
 	areaLimit_AdvRadar,	
 --	areaLimit_L3ArtilleryDefense,
 	moveVulnerablePos,
+	areaLimit_L3HeavyAA,
 	areaLimit_L3LongRangeArtillery,
 	airRepairPadIfNeeded,
 	{action = "cleanup", frames = CLEANUP_FRAMES},
@@ -2954,7 +2955,7 @@ local sphereLev2DefenseBuilder = {
 	areaLimit_AdvRadar,	
 	areaLimit_L3HeavyAA,
 	--areaLimit_L3ArtilleryDefense,
-	-- areaLimit_L3HeavyAA,
+	areaLimit_L3HeavyAA,
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	areaLimit_L3LongRangeArtillery,
 	restoreQueue	

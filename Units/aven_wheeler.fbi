@@ -35,8 +35,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.5;
-	energyuse=0.5;
+	energymake=0.0;
+	energyuse=0.0;
 	energystorage=0;
 
 	//************************************************************
@@ -85,8 +85,8 @@
 	weapon1=aven_wheeler_cannon;
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -137,7 +137,7 @@
 		explosiongenerator1=custom:UNITFIRE;
 	}
 
-	buildcostenergy=681;//#AUTO#
-	buildcostmetal=136;//#AUTO#
-	buildtime=1624;//#AUTO#
+	buildcostenergy=679;//#AUTO#
+	buildcostmetal=135;//#AUTO#
+	buildtime=1620;//#AUTO#
 }

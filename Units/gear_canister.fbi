@@ -91,11 +91,7 @@
 	//  Orders
 	//**********
 	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	moveState=0;
 
 	//************************************************************
 	//  Miscellaneous
@@ -131,7 +127,7 @@
 	//  To be removed
 	//*****************
 
-	buildcostenergy=1435;//#AUTO#
-	buildcostmetal=287;//#AUTO#
-	buildtime=3420;//#AUTO#
+	buildcostenergy=1501;//#AUTO#
+	buildcostmetal=300;//#AUTO#
+	buildtime=3579;//#AUTO#
 }
