@@ -1,3 +1,44 @@
+2018/11/22 ------------------ NOTES v1.01 ----------------------
+
+
+--- new units
+
+- added AVEN "Perceptor" : Intelligence hovercraft. Provides radar, sonar and radar jammer
+
+
+--- balance / mechanics
+
+- Fixed GEAR energy storage not being able to be built underwater
+- increased the terrain slope tolerance and reduced the death blast damage of AVEN "Runner" to match the other small robots
+- AVEN "Knight" has move state set to "hold position" by default
+- increased the movement footprint for a many small and medium robots so they'll clump together less when moving in groups
+- removed the 2x vertical range bonus on short range flamethrowers (GEAR) and laser cutter weapons (CLAW)
+- CLAW "Slayer" form commander gets 10% increased speed and 10% reduced range
+- CLAW "Sword" : reduced laser cutter range by 10%
+(this means flamethrower and laser cutter units can no longer hit air in most situations)
+
+--- AI
+
+- more likely to build energy generators in general to try to achieve a higher energy surplus 
+- more likely to build wind generators
+- fixed AI not building geothermal generators
+- fixed issue with MFAI assigning too many builders to dedicated roles and not leaving any to build level2 factories back in base
+- fixed AI skipping level2 factories unless it had significant surplus energy and full stores
+- AI builds radar and radar jammer units from the advanced factories earlier and is more likely to rebuild them if they're destroyed
+- more likely to build artillery units against enemies who make lots of static defenses
+- AI builders tasked with building metal extractors now build defenses and radars nearby instead of spending time moving around
+- fixed check for idle builders to avoid them getting stuck
+- less likely to move relatively fast units from the main party to the raiding party if unable to attack (requires much longer periods where it's unable to do so)
+- normal MFAI is slightly more conservative when attacking (will try to grow its numbers further before doing so)
+
+--- UI/visuals
+
+- change dust particles from small and medium explosions to be more noticeable while keeping them finer for large explosions
+- modified the chat widget to avoid breaking words when splitting text to lines
+- modified AVEN Bolter's model to make it look less blocky and reflect its light armored status
+
+
+
 2018/10/18 ------------------ NOTES v1.000 ----------------------
 
 

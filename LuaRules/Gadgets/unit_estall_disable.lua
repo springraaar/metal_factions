@@ -60,6 +60,7 @@ local radarDefs = {
   [ UnitDefNames['aven_discovery'].id ] = true,
   [ UnitDefNames['aven_escort'].id ] = true,
   [ UnitDefNames['aven_zephyr'].id ] = true,
+  [ UnitDefNames['aven_perceptor'].id ] = true,
 
   [ UnitDefNames['gear_advanced_radar_tower'].id ] = true,
   [ UnitDefNames['gear_radar_tower'].id ] = true,

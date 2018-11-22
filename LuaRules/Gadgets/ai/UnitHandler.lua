@@ -127,12 +127,15 @@ function UnitHandler:Init(ai)
 	self.enemyExtractorCount = 0
 	
 	-- task queue related information
+	self.standardQueueCount = 0
+	self.advancedStandardQueueCount = 0
 	self.mexBuilderCount = 0
 	self.basePatrollerCount = 0
 	self.mexUpgraderCount = 0
 	self.defenseBuilderCount = 0
 	self.advancedDefenseBuilderCount = 0 
 	self.attackPatrollerCount = 0
+	
 	
 	self.mexBuilderCountTarget = 1
 	self.basePatrollerCountTarget = 1
@@ -259,12 +262,16 @@ function UnitHandler:Update()
 		local advancedDefenseBuilderCount = 0
 		local attackPatrollerCount = 0
 		local standardQueueCount = 0
-
+		local advancedStandardQueueCount = 0
 		
 		-- update special role task queue counts
 		for _,tq in pairs(self.taskQueues) do
-			if (tq.specialRole == 0) then
-				standardQueueCount = standardQueueCount + 1
+			if ((not tq.isCommander) and tq.isMobileBuilder and tq.specialRole == 0) then
+				if (tq.isAdvBuilder) then
+					advancedStandardQueueCount = advancedStandardQueueCount + 1 
+				else 
+					standardQueueCount = standardQueueCount + 1
+				end
 			elseif (tq.specialRole == UNIT_ROLE_MEX_BUILDER) then
 				 mexBuilderCount = mexBuilderCount + 1
 			elseif (tq.specialRole == UNIT_ROLE_BASE_PATROLLER) then
@@ -279,44 +286,58 @@ function UnitHandler:Update()
 				attackPatrollerCount = attackPatrollerCount + 1
 			end
 		end
+		self.standardQueueCount = standardQueueCount
+		self.advancedStandardQueueCount = advancedStandardQueueCount
 		self.mexBuilderCount = mexBuilderCount
 		self.basePatrollerCount = basePatrollerCount
 		self.mexUpgraderCount = mexUpgraderCount
 		self.defenseBuilderCount = defenseBuilderCount
 		self.advancedDefenseBuilderCount = advancedDefenseBuilderCount 
 		self.attackPatrollerCount = attackPatrollerCount
+		--Spring.Echo("builders for AI "..self.ai.id.." std="..standardQueueCount.." advstd="..advancedStandardQueueCount.." mex="..mexBuilderCount.." baseptl="..basePatrollerCount.." atkptl="..attackPatrollerCount.." mexupg="..mexUpgraderCount.." def="..defenseBuilderCount.." advdef="..advancedDefenseBuilderCount) --DEBUG
+
 
 		self.attackerCount = 0
 		self.airAttackerCount = 0
 		self.seaAttackerCount = 0
 		
 		-- update targets based on economy size
-		self.mexBuilderCountTarget = self.ai.mapHandler.isMetalMap and 1 or max(1 + floor(incomeM / 40),2)
+		-- check if there are spots available
+		local capturedMetalFraction = (self.ai.unitHandler.enemyExtractorCount + self.ai.unitHandler.friendlyExtractorCount) / #self.ai.mapHandler.spots
+		if( capturedMetalFraction > FREE_METAL_SPOT_EXPANSION_THRESHOLD ) then
+			self.mexBuilderCountTarget = 0
+		else 
+			self.mexBuilderCountTarget = self.ai.mapHandler.isMetalMap and 1 or max(floor(2.5*(1-capturedMetalFraction)),1)
+		end
 		self.basePatrollerCountTarget = max(1 + floor(incomeM / 40),1)
-		self.mexUpgraderCountTarget = self.ai.mapHandler.isMetalMap and 0 or max(1 + floor(incomeM / 50),1)
+		self.mexUpgraderCountTarget = self.ai.mapHandler.isMetalMap and 0 or 1
 		self.defenseBuilderCountTarget = max(0 + floor((incomeM) / 40),1)
-		self.advancedDefenseBuilderCountTarget = max(0 + floor(incomeM / 50),1)
+		self.advancedDefenseBuilderCountTarget = max(0 + floor(incomeM / 50),0)
 		self.attackPatrollerCountTarget = max(0 + floor((15+incomeM) / 30),2)
 		
 		-- make sure at least a few builders have the standard queue
-		local standardQueueMin = 1
-		if (standardQueueCount < min(standardQueueMin + floor((20+incomeM) / 30),4)) then
+		local standardQueueMin = 2
+		local advancedStandardQueueMin = 1
+		if (standardQueueCount < standardQueueMin) then
+			--Spring.Echo(f.." "..standardQueueCount.." std builders is below min!") --DEBUG
 			self.basePatrollerCountTarget = 0
 			self.mexUpgraderCountTarget = 0
 			self.defenseBuilderCountTarget = 0
 			self.advancedDefenseBuilderCountTarget = 0
 			self.attackPatrollerCountTarget = 0
 		end
+		if (advancedStandardQueueCount < advancedStandardQueueMin) then
+			--Spring.Echo(f.." "..advancedStandardQueueCount.." ADV std builders is below min!") --DEBUG
+			self.mexUpgraderCountTarget = 0
+			self.advancedDefenseBuilderCountTarget = 0
+		end		
 		if self.isBrutalMode then
 			self.basePatrollerCountTarget = max(self.basePatrollerCountTarget-1,0)
 			self.mexUpgraderCountTarget = max(self.mexUpgraderCountTarget-1,0)
 			self.defenseBuilderCountTarget = max(self.defenseBuilderCountTarget-1,0)
 			self.advancedDefenseBuilderCountTarget = max(self.advancedDefenseBuilderCountTarget-1,0)
 			self.attackPatrollerCountTarget = max(self.attackPatrollerCountTarget-1,0)
-
 		end 
-		
-		
 
 		-- update base and atk forces location
 		local ownUnitIds = self.ai.ownUnitIds

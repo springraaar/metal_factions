@@ -308,7 +308,7 @@ function BuildSiteHandler:getBuildSearchPos(builderBehavior,ud)
 					distanceToSafe = distance(cell.p,self.ai.unitHandler.leastVulnerableCell.p)
 					distanceToBase = distance(cell.p,self.ai.unitHandler.basePos)
 					
-					if (builderBehavior.isCommander and (isArmed or isRadar)) then
+					if ((builderBehavior.isCommander or builderBehavior.specialRole == UNIT_ROLE_MEX_BUILDER) and (isArmed or isRadar)) then
 						weightedDistance = distanceToSelf
 					elseif (isArmed or isRadar) then
 						weightedDistance = distanceToSelf * 0.3 + distanceToVulnerable * 0.45 + distanceToBase * 0.25

@@ -566,6 +566,49 @@
 	collisionVolumeScales=44 2 44;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
+[aven_perceptor_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=aven_corpses;
+	object=aven_perceptor_dead;
+	featuredead=aven_perceptor_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=0;
+	hitdensity=100;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	metal=531;//#AUTO#
+	energy=0;//#AUTO#
+	damage=2250;//#AUTO#
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=44 21 50;//#AUTO#
+	collisionVolumeOffsets=0 3 0;//#AUTO#
+}
+[aven_perceptor_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3d;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	metal=132;//#AUTO#
+	energy=0;//#AUTO#
+	damage=2250;//#AUTO#
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=44 4 50;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
 [aven_adv_kbot_lab_dead]
 {
 	world=All Worlds;
@@ -12688,7 +12731,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	metal=1135;//#AUTO#
+	metal=1150;//#AUTO#
 	energy=0;//#AUTO#
 	damage=9000;//#AUTO#
 	collisionVolumeType=sphere;//#AUTO#
@@ -12709,7 +12752,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	metal=283;//#AUTO#
+	metal=287;//#AUTO#
 	energy=0;//#AUTO#
 	damage=9000;//#AUTO#
 	collisionVolumeType=sphere;//#AUTO#
@@ -12731,7 +12774,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	metal=744;//#AUTO#
+	metal=753;//#AUTO#
 	energy=0;//#AUTO#
 	damage=9000;//#AUTO#
 	collisionVolumeType=sphere;//#AUTO#
@@ -12752,7 +12795,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	metal=186;//#AUTO#
+	metal=188;//#AUTO#
 	energy=0;//#AUTO#
 	damage=9000;//#AUTO#
 	collisionVolumeType=sphere;//#AUTO#
@@ -12774,7 +12817,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	metal=910;//#AUTO#
+	metal=924;//#AUTO#
 	energy=0;//#AUTO#
 	damage=9000;//#AUTO#
 	collisionVolumeType=sphere;//#AUTO#
@@ -12795,7 +12838,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	metal=227;//#AUTO#
+	metal=231;//#AUTO#
 	energy=0;//#AUTO#
 	damage=9000;//#AUTO#
 	collisionVolumeType=sphere;//#AUTO#
@@ -12817,7 +12860,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	metal=328;//#AUTO#
+	metal=334;//#AUTO#
 	energy=0;//#AUTO#
 	damage=4500;//#AUTO#
 	collisionVolumeType=sphere;//#AUTO#
@@ -12838,7 +12881,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	metal=82;//#AUTO#
+	metal=83;//#AUTO#
 	energy=0;//#AUTO#
 	damage=4500;//#AUTO#
 	collisionVolumeType=sphere;//#AUTO#
@@ -12860,7 +12903,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	metal=521;//#AUTO#
+	metal=529;//#AUTO#
 	energy=0;//#AUTO#
 	damage=4500;//#AUTO#
 	collisionVolumeType=sphere;//#AUTO#
@@ -12881,7 +12924,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	metal=130;//#AUTO#
+	metal=132;//#AUTO#
 	energy=0;//#AUTO#
 	damage=4500;//#AUTO#
 	collisionVolumeType=sphere;//#AUTO#
@@ -12903,7 +12946,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	metal=4283;//#AUTO#
+	metal=4372;//#AUTO#
 	energy=0;//#AUTO#
 	damage=33000;//#AUTO#
 	collisionVolumeType=sphere;//#AUTO#
@@ -12924,7 +12967,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	metal=1070;//#AUTO#
+	metal=1093;//#AUTO#
 	energy=0;//#AUTO#
 	damage=33000;//#AUTO#
 	collisionVolumeType=sphere;//#AUTO#
@@ -12989,7 +13032,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	metal=1391;//#AUTO#
+	metal=1447;//#AUTO#
 	energy=0;//#AUTO#
 	damage=12000;//#AUTO#
 	collisionVolumeType=sphere;//#AUTO#
@@ -13010,7 +13053,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	metal=347;//#AUTO#
+	metal=361;//#AUTO#
 	energy=0;//#AUTO#
 	damage=12000;//#AUTO#
 	collisionVolumeType=sphere;//#AUTO#
@@ -14999,7 +15042,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	metal=199;//#AUTO#
+	metal=189;//#AUTO#
 	energy=0;//#AUTO#
 	damage=2625;//#AUTO#
 	collisionVolumeType=box;//#AUTO#

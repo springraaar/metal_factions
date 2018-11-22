@@ -31,6 +31,18 @@ local function tobool(val)
   return false
 end
 
+local noVerticalRangeBoostWeapons = {
+	gear_u1commander_flamethrower = true,
+	gear_pyro_flamethrower = true,
+	gear_heater_flamethrower = true,
+	gear_burner_flamethrower = true,
+	gear_cube_flamethrower = true,
+	claw_sword_laser = true,
+	claw_u6commander_laser = true,
+	claw_knife_laser = true
+
+}
+
 -- weapondef tweaking
 for wdName, wd in pairs(WeaponDefs) do
 	local hb = wd.heightBoostFactor
@@ -78,19 +90,20 @@ for wdName, wd in pairs(WeaponDefs) do
 		wd.cratermult = 0.1
 	end
 	if (wdName ~= "sphere_magnetar_blast") then
-		if (wd.weapontype == "BeamLaser" ) then
+		if (noVerticalRangeBoostWeapons[wdName]) then
+			wd.heightmod = 1
+			wd.heightboostfactor = 0
+		elseif (wd.weapontype == "BeamLaser" ) then
 			wd.heightmod = 0.5		-- default was 1.0
-		end
-		if (wd.weapontype == "Cannon" or wd.weapontype == "EmgCannon" ) then
+		elseif (wd.weapontype == "Cannon" or wd.weapontype == "EmgCannon" ) then
 			wd.heightmod = 0.5			-- default was 0.8
 			wd.heightboostfactor = 1.1		-- default was -1.0
-		end
-		if (wd.weapontype == "MissileLauncher" or wd.weapontype == "StarburstLauncher" ) then
+		elseif (wd.weapontype == "MissileLauncher" or wd.weapontype == "StarburstLauncher" ) then
 			wd.cylindertargeting = 2
 			wd.heightboostfactor = 1.1		-- default was -1.0
 		end
 		
-		-- change intensity for EMG cannons, change weaponType
+		-- change visual intensity for EMG cannons, change weaponType
 		if wd.weapontype == "EmgCannon" then
 			wd.intensity = 0.1
 			wd.weapontype = "Cannon"

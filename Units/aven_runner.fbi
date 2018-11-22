@@ -61,7 +61,7 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTSf3;
+	movementclass=KBOTHT2;
 	turnrate=790;
 	acceleration=0.8;
 	brakerate=1.0;
@@ -79,8 +79,8 @@
 	//  Weapons
 	//***********
 	weapon1=aven_runner_laser;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -124,7 +124,7 @@
 	{
 		evalfactor=0.9;
 	}
-	buildcostenergy=476;//#AUTO#
+	buildcostenergy=478;//#AUTO#
 	buildcostmetal=95;//#AUTO#
-	buildtime=1136;//#AUTO#
+	buildtime=1140;//#AUTO#
 }

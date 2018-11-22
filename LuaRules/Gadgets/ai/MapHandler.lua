@@ -35,6 +35,7 @@ function MapHandler:Init()
 	--log(#self.spots.." metal spots found!",self.ai) --DEBUG
 	self.geoSpots = GG.geoSpots
 	--log(#self.geoSpots.." geothermal spots found!",self.ai) --DEBUG
+	self.mapHasGeothermal = #self.geoSpots > 0
 	
 	-- check if there are any water metal spots
 	local UWSpots = {}

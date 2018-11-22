@@ -746,8 +746,19 @@ function widget:AddConsoleLine(line)
 					currentStr = string.sub(nextStr, 1 , idx-1)
 					nextStr = prefix..string.sub(nextStr, idx + 1)
 				elseif (string.len(nextStr) > MAX_LINE_STRING_LENGTH) then
-					currentStr = string.sub(nextStr, 1 , MAX_LINE_STRING_LENGTH)..lineSep
-					nextStr = prefix..lineSep..string.sub(nextStr, MAX_LINE_STRING_LENGTH + 1)
+					local cutoffIndex = MAX_LINE_STRING_LENGTH
+					-- if cutoff index is not a space, backtrack until a space is found to avoid breaking words
+					for shift=0,30 do
+						if (cutoffIndex-shift > 1) then
+							if nextStr:sub(cutoffIndex-shift,cutoffIndex-shift) == " " then
+								cutoffIndex = cutoffIndex - shift
+								break
+							end
+						end
+					end
+				
+					currentStr = string.sub(nextStr, 1 , cutoffIndex)..lineSep
+					nextStr = prefix..lineSep..string.sub(nextStr, cutoffIndex + 1)
 				else 
 					currentStr = nextStr
 					nextStr = ""
@@ -951,7 +962,6 @@ function splitMessage(message, messageWidth, boxWidth)
 		local messageLen = string.len(message)
 		local overflowFactor = messageWidth / boxWidth
 		local cutoffIndex = math_floor(messageLen / overflowFactor)
-
 		local messagePartL = string.sub(message, 1, cutoffIndex - 1)
 		local messagePartR = string.sub(message, cutoffIndex)
 

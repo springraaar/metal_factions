@@ -45,13 +45,11 @@
 	BrakeRate=0.25;
 	Acceleration=0.15;
 	TurnRate=650;
-	SteeringMode=2;
-	MovementClass=KBOTHT2;
+	MovementClass=KBOTHT3;
 
 	// ------------------- scout
 	sightdistance=500;
 	RadarDistance=0;
-
 
 	// ------------------- weapons
 	Weapon1=aven_knight_cannon;
@@ -60,12 +58,8 @@
 	ExplodeAs=BIG_UNITEX;
 	SelfDestructAs=BIG_UNIT;
 
-
 	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
+	movestate=0;
 
 	// ------------------- misc
 	Version=3.1;

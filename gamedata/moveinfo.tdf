@@ -27,24 +27,24 @@
 }
 [CLASS3]
 {
-	Name=KBOTSF2;
-	FootprintX=2;
-	FootprintZ=2;
+	Name=KBOTHT4;
+	FootprintX=4;
+	FootprintZ=4;
 	MaxWaterDepth=25;
-	MaxSlope=32;
-	CrushStrength=30;
+	MaxSlope=36;
+	CrushStrength=70;
 	depthmod=0;
 	slopemod=6;
 	allowRawMovement=1;
 }
 [CLASS4]
 {
-	Name=KBOTSf3;
+	Name=KBOTHT3;
 	FootprintX=3;
 	FootprintZ=3;
 	MaxWaterDepth=25;
-	MaxSlope=32;
-	CrushStrength=100;
+	MaxSlope=36;
+	CrushStrength=40;
 	depthmod=0;
 	slopemod=6;
 	allowRawMovement=1;
@@ -77,8 +77,8 @@
 [CLASS7]
 {
 	Name=KBOTAT;
-	FootprintX=2;
-	FootprintZ=2;
+	FootprintX=3;
+	FootprintZ=3;
 	MaxWaterDepth=16;
 	CrushStrength=30;
 	depthmod=0;
@@ -277,19 +277,8 @@
 	slopemod=6;
 	allowRawMovement=1;
 }
+
 [CLASS23]
-{
-	Name=KBOTHT4;
-	FootprintX=4;
-	FootprintZ=4;
-	MaxWaterDepth=25;
-	MaxSlope=36;
-	CrushStrength=200;
-	depthmod=0;
-	slopemod=6;
-	allowRawMovement=1;
-}
-[CLASS24]
 {
 	Name=KBOTUW4;
 	FootprintX=4;

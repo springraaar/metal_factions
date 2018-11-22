@@ -45,7 +45,7 @@ function CommonUnitBehavior:CommonInit(ai, uId)
 	self.alongPathIdx = 0
 	self.canFly = (self.unitDef.canFly)
 	self.pos = newPosition(spGetUnitPosition(uId,false,false))
-
+	
 	self.lastOrderFrame = 0
 	self.lastRetreatOrderFrame = 0
 	self.underAttackFrame = 0

@@ -43,7 +43,7 @@ function TaskQueueBehavior:Init(ai, uId)
 	self.isWaterMode = false
 	self.assistUnitId = 0
 	self.cleanupMaxFeatures = 10
-
+	self.isAdvBuilder = self.isMobileBuilder and self.unitDef.modCategories["level2"]
 	
 	-- load queue
 	if self:HasQueues() then
@@ -58,6 +58,31 @@ end
 function TaskQueueBehavior:HasQueues()
 	return (taskqueues[self.unitName] ~= nil)
 end
+
+function TaskQueueBehavior:BuilderRoleStr()
+	if ((not self.isCommander) and self.isMobileBuilder and self.specialRole == 0) then
+		if (self.isAdvBuilder) then
+			return "advstd" 
+		else 
+			return "std"
+		end
+	elseif (self.specialRole == UNIT_ROLE_MEX_BUILDER) then
+		 return "mex"
+	elseif (self.specialRole == UNIT_ROLE_BASE_PATROLLER) then
+		return "baseptl"
+	elseif (self.specialRole == UNIT_ROLE_MEX_UPGRADER) then
+		return "mexupg"
+	elseif (self.specialRole == UNIT_ROLE_DEFENSE_BUILDER) then
+		return "def"
+	elseif (self.specialRole == UNIT_ROLE_ADVANCED_DEFENSE_BUILDER) then
+		return "advdef"
+	elseif (self.specialRole == UNIT_ROLE_ATTACK_PATROLLER) then
+		return "atkptl"
+	end
+
+	return "???"
+end
+
 
 function TaskQueueBehavior:UnitFinished(uId)
 	if not self.active then
@@ -191,8 +216,13 @@ function TaskQueueBehavior:Update()
 	
 	self.pos = newPosition(spGetUnitPosition(self.unitId,false,false))
 	
-	--if (self.specialRole and self.isMobileBuilder) then
-		--Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(self.specialRole)) --DEBUG
+    --if (self.isMobileBuilder) then
+	--	local cmds = spGetUnitCommands(self.unitId,3)
+	--	local cmdCount = 0
+	--  if (cmds and (#cmds >= 0)) then
+	--		cmdCount = #cmds
+	--	end
+	--	Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(self:BuilderRoleStr().." "..cmdCount.." "..tostring(self.currentProject))) --DEBUG
 	--end
 	
 	local health,maxHealth,_,_,bp = spGetUnitHealth(self.unitId)
@@ -241,13 +271,13 @@ function TaskQueueBehavior:Update()
 	if self.isCommander or (fmod(f,10) == 9) then
 		if (self.waitLeft == 0) then
 			-- progress queue if unit is idle
-			if not self.progress and self.isFullyBuilt and self.currentProject == nil then
+			if not self.progress and self.isFullyBuilt and (self.isMobileBuilder or self.currentProject == nil) then
 				local cmds = spGetUnitCommands(self.unitId,0)
 				if (cmds <= 0) then
 					self.idleFrames = self.idleFrames + (self.isCommander and 1 or 10) 
 				
 					if (self.idleFrames > IDLE_FRAMES_PROGRESS_LIMIT) then
-						log(self.unitName.." was weirdly idle, progressing queue",self.ai)
+						-- log(self.unitName.." was weirdly idle, progressing queue",self.ai) --DEBUG
 						self.progress = true
 					end
 				else
@@ -368,7 +398,7 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 							checkAssistNearby = false
 						else
 							self.delayCounter = self.delayCounter + 1
-							-- log("WARNING: "..self.unitName.." delays building "..value.." because of low resources", self.ai)
+							-- log("WARNING: "..self.unitName.." delays building "..value.." because of low resources", self.ai) --DEBUG
 							value = {action = "wait", frames = 60}
 						end
 					end

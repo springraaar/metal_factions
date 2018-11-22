@@ -255,15 +255,18 @@ function changeQueueToWaterCommanderIfNeeded(self)
 end
 
 function changeQueueToMexUpgraderIfNeeded(self)
-	local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
-
-	local mexes = countOwnUnits(self,nil,0,TYPE_MEX)
-	local mohos = countOwnUnits(self,nil,0,TYPE_MOHO)
-	if  mexes > mohos and (incomeE > 200 and incomeE - expenseE > 60) then
-		self:ChangeQueue(mexUpgraderQueueByFaction[self.unitSide])
-		self.specialRole = UNIT_ROLE_MEX_UPGRADER
-	end
+	if (self.ai.unitHandler.mexUpgraderCount < self.ai.unitHandler.mexUpgraderCountTarget ) then
 	
+		local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
+	
+		local mexes = countOwnUnits(self,nil,0,TYPE_MEX)
+		local mohos = countOwnUnits(self,nil,0,TYPE_MOHO)
+		if  mexes > mohos and (incomeE > 400 or incomeE - expenseE > 150) then
+			self:ChangeQueue(mexUpgraderQueueByFaction[self.unitSide])
+			self.specialRole = UNIT_ROLE_MEX_UPGRADER
+			self.ai.unitHandler.mexUpgraderCount = self.ai.unitHandler.mexUpgraderCount + 1
+		end
+	end	
 	return SKIP_THIS_TASK
 end
 
@@ -284,6 +287,7 @@ function changeQueueToMexBuilderIfNeeded(self)
 		
 		self.noDelay = true
 		self.specialRole = UNIT_ROLE_MEX_BUILDER
+		self.ai.unitHandler.mexBuilderCount = self.ai.unitHandler.mexBuilderCount + 1
 	end
 	
 	return SKIP_THIS_TASK
@@ -299,6 +303,7 @@ function changeQueueToDefenseBuilderIfNeeded(self)
 			self:ChangeQueue(defenseBuilderQueueByFaction[self.unitSide])
 		end
 		
+		self.ai.unitHandler.defenseBuilderCount = self.ai.unitHandler.defenseBuilderCount + 1
 		self.noDelay = false
 		self.specialRole = UNIT_ROLE_DEFENSE_BUILDER
 	end
@@ -314,7 +319,8 @@ function changeQueueToAdvancedDefenseBuilderIfNeeded(self)
 		else
 			self:ChangeQueue(advancedDefenseBuilderQueueByFaction[self.unitSide])
 		end
-		
+
+		self.ai.unitHandler.advancedDefenseBuilderCount = self.ai.unitHandler.advancedDefenseBuilderCount + 1		
 		self.noDelay = false
 		self.specialRole = UNIT_ROLE_ADVANCED_DEFENSE_BUILDER		
 	end
@@ -326,7 +332,7 @@ function buildEnergyIfNeeded(self,unitName)
 	local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
 	local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
 
-	local threshold = max(max(1.2 * expenseE + 100, 8 * incomeM + 50),350)
+	local threshold = max(max(1.4 * expenseE + 100, 8 * incomeM + 50),350)
 	if incomeE < threshold then
 		-- log("buildEnergyIfNeeded: income "..incomeE..", usage "..expenseE..", building more energy",self.ai)
 		return unitName
@@ -407,40 +413,40 @@ end
 
 function basePatrolIfNeeded(self)
 
-	if self.ai.unitHandler.basePatrollerCount > 0 then
-		return SKIP_THIS_TASK
-	end
-	
-	local basePos = self.ai.unitHandler.basePos
-	local baseX = basePos.x
-	local baseZ = basePos.z
-	local radius = BASE_AREA_PATROL_RADIUS / 2
-	
-	local movePos = newPosition(baseX - (radius + random( 1, radius)),0,baseZ)
-	if (spTestMoveOrder(self.unitDefId,movePos.x,movePos.y,movePos.z)) then
-		spGiveOrderToUnit(self.unitId,CMD.PATROL,{movePos.x,movePos.y,movePos.z},{})
-	end
-
-	movePos.x=baseX + (radius + random( 1, radius))
-	if (spTestMoveOrder(self.unitDefId,movePos.x,movePos.y,movePos.z)) then
-		spGiveOrderToUnit(self.unitId,CMD.PATROL,{movePos.x,movePos.y,movePos.z},CMD.OPT_SHIFT)
-	end
-
-	movePos.x=baseX
-	movePos.z=baseZ + (radius + random( 1, radius))
-	if (spTestMoveOrder(self.unitDefId,movePos.x,movePos.y,movePos.z)) then
-		spGiveOrderToUnit(self.unitId,CMD.PATROL,{movePos.x,movePos.y,movePos.z},CMD.OPT_SHIFT)
-	end
+	if self.ai.unitHandler.basePatrollerCount < self.ai.unitHandler.basePatrollerCountTarget then
+		self.ai.unitHandler.basePatrollerCount = self.ai.unitHandler.basePatrollerCount + 1
+		local basePos = self.ai.unitHandler.basePos
+		local baseX = basePos.x
+		local baseZ = basePos.z
+		local radius = BASE_AREA_PATROL_RADIUS / 2
 		
-	movePos.z=baseZ - (radius + random( 1, radius))
-	if (spTestMoveOrder(self.unitDefId,movePos.x,movePos.y,movePos.z)) then
-		spGiveOrderToUnit(self.unitId,CMD.PATROL,{movePos.x,movePos.y,movePos.z},CMD.OPT_SHIFT)
+		local movePos = newPosition(baseX - (radius + random( 1, radius)),0,baseZ)
+		if (spTestMoveOrder(self.unitDefId,movePos.x,movePos.y,movePos.z)) then
+			spGiveOrderToUnit(self.unitId,CMD.PATROL,{movePos.x,movePos.y,movePos.z},{})
+		end
+	
+		movePos.x=baseX + (radius + random( 1, radius))
+		if (spTestMoveOrder(self.unitDefId,movePos.x,movePos.y,movePos.z)) then
+			spGiveOrderToUnit(self.unitId,CMD.PATROL,{movePos.x,movePos.y,movePos.z},CMD.OPT_SHIFT)
+		end
+	
+		movePos.x=baseX
+		movePos.z=baseZ + (radius + random( 1, radius))
+		if (spTestMoveOrder(self.unitDefId,movePos.x,movePos.y,movePos.z)) then
+			spGiveOrderToUnit(self.unitId,CMD.PATROL,{movePos.x,movePos.y,movePos.z},CMD.OPT_SHIFT)
+		end
+			
+		movePos.z=baseZ - (radius + random( 1, radius))
+		if (spTestMoveOrder(self.unitDefId,movePos.x,movePos.y,movePos.z)) then
+			spGiveOrderToUnit(self.unitId,CMD.PATROL,{movePos.x,movePos.y,movePos.z},CMD.OPT_SHIFT)
+		end
+	
+		self.specialRole = UNIT_ROLE_BASE_PATROLLER
+		 
+		-- do it forever!
+		return {action="wait", frames=9999999}
 	end
-
-	self.specialRole = UNIT_ROLE_BASE_PATROLLER
-	 
-	-- do it forever!
-	return {action="wait", frames=9999999}
+	return SKIP_THIS_TASK
 end
 
 
@@ -722,7 +728,7 @@ function storageIfNeeded(self)
 end
 
 function windSolar(self)
-	if ((Game.windMax+Game.windMin)/2 > 15) and (random(1,10) <=5) then
+	if ((Game.windMax+Game.windMin)/2 > 10) and (random(1,10) <=5) then
 		return windByFaction[self.unitSide]
 	else
 		return solarByFaction[self.unitSide]
@@ -867,9 +873,9 @@ local function lvl2PlantIfNeeded(self)
 	local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
 
 	-- if low on energy, skip
-	if currentLevelE < 0.5*storageE or incomeE < expenseE + 100 then
-		return SKIP_THIS_TASK
-	end 
+	--if currentLevelE < 0.2*storageE or incomeE < 0.8*expenseE then
+	--	return SKIP_THIS_TASK
+	--end 
 
 	unitName = buildWithLimitedNumber(self, unitName, 0 + math.floor((10+incomeM)/30), TYPE_L2_PLANT)
 
@@ -1098,6 +1104,7 @@ local function patrolAtkCenterIfNeeded(self)
 		self.noDelay = true
 		self.specialRole = UNIT_ROLE_ATTACK_PATROLLER
 		self:ChangeQueue(attackPatrollerQueue)
+		self.ai.unitHandler.attackPatrollerCount = self.ai.unitHandler.attackPatrollerCount +1
 		-- local selfPos = newPosition(spGetUnitPosition(self.unitId,false,false))
 		-- log(self.unitName.." at ("..selfPos.x.." ; "..selfPos.z..") changed to atk patroller",self.ai)
 	end
@@ -1544,14 +1551,15 @@ local upgradeMixedDronesCombat = {
 -- choices by threat type : AIR, DEFENSES, NORMAL[, UNDERWATER]
 
 local function avenL2KbotChoice(self) return choiceByType(self,"aven_weaver",{"aven_knight","aven_bolter"},{"aven_bolter","aven_shocker","aven_dervish","aven_knight","aven_magnum","aven_raptor"}) end
-local function avenL1LightChoice(self) return choiceByType(self,"aven_samson",{"aven_bold","aven_duster"},{"aven_samson","aven_trooper","aven_warrior"}) end
-local function avenL2VehicleChoice(self) return choiceByType(self,{"aven_javelin","aven_kodiak"},{"aven_merl","aven_centurion"},{"aven_centurion","aven_kodiak"}) end
+local function avenL1LightChoice(self) return choiceByType(self,"aven_samson",{"aven_bold","aven_duster","aven_duster"},{"aven_samson","aven_trooper","aven_warrior"}) end
+local function avenL2VehicleChoice(self) return choiceByType(self,{"aven_javelin","aven_kodiak"},{"aven_merl","aven_merl","aven_centurion"},{"aven_centurion","aven_kodiak"}) end
 local function avenL2AirChoice(self) return choiceByType(self,"aven_falcon",{"aven_gryphon", "aven_talon"},{"aven_gryphon","aven_falcon","aven_icarus"},"aven_albatross") end
-local function avenL2HoverChoice(self) return choiceByType(self,"aven_swatter",{"aven_turbulence", "aven_excalibur"},{"aven_slider","aven_swatter","aven_skimmer"},"aven_slider_s") end
+local function avenL2HoverChoice(self) return choiceByType(self,"aven_swatter",{"aven_turbulence", "aven_excalibur","aven_excalibur"},{"aven_slider","aven_swatter","aven_skimmer"},"aven_slider_s") end
 local function avenL2KbotRadar(self) return buildWithLimitedNumber(self,"aven_marky",1) end
 local function avenL2KbotRadarJammer(self) return buildWithLimitedNumber(self,"aven_eraser",1) end
 local function avenL2VehicleRadar(self) return buildWithLimitedNumber(self,"aven_seer",1) end
 local function avenL2VehicleRadarJammer(self) return buildWithLimitedNumber(self,"aven_jammer",1) end
+local function avenL2HoverIntel(self) return buildWithLimitedNumber(self,"aven_perceptor",1) end
 local function avenL1ShipChoice(self) return choiceByType(self,{"aven_skeeter","aven_vanguard"},"aven_crusader",{"aven_skeeter","aven_vanguard"},"aven_lurker") end
 local function avenL2ShipChoice(self) return choiceByType(self,"aven_fletcher",{"aven_conqueror","aven_emperor"},{"aven_conqueror","aven_piranha","aven_fletcher"},"aven_piranha") end
 
@@ -1668,6 +1676,7 @@ local avenLev1Con = {
 	metalExtractorNearbyIfSafe,
 	areaLimit_L2HeavyDefense,
 	areaLimit_LightAA,
+	geoIfNeeded,
 	windSolarIfNeeded,
 	windSolarIfNeeded,
 	windSolarIfNeeded,
@@ -1732,7 +1741,6 @@ local avenMexBuilder = {
 	"aven_metal_extractor",
 	areaLimit_LightAA,
 	areaLimit_Radar,
-	windSolarIfNeeded,
 	restoreQueue	
 }
 
@@ -1794,11 +1802,6 @@ local avenMexUpgrader = {
 	mohoIfMexReclaimed,
 	reclaimNearestMexIfNeeded,
 	mohoIfMexReclaimed,
-	moveSafePos,
-	reclaimNearestMexIfNeeded,
-	mohoIfMexReclaimed,
-	reclaimNearestMexIfNeeded,
-	mohoIfMexReclaimed,	
 	restoreQueue
 }
 
@@ -1867,14 +1870,16 @@ local avenAdvKbotLab = {
 	{action = "randomness", probability = 0.5, value = "aven_stalker"},
 	{action = "randomness", probability = 0.5, value = "aven_stalker"},
 	"aven_adv_construction_kbot",
+	avenL2KbotRadar,
+	avenL2KbotRadarJammer,
 	"aven_knight",
 	avenL2KbotChoice,
 	avenL2KbotChoice,
 	avenL2KbotChoice,
-	"aven_bolter",
-	"aven_weaver",
 	avenL2KbotRadar,
 	avenL2KbotRadarJammer,
+	"aven_bolter",
+	"aven_weaver",
 	"aven_shooter",
 	{action = "wait", frames = 128}
 }
@@ -1885,14 +1890,16 @@ local avenAdvVehiclePlant = {
 	{action = "randomness", probability = 0.5, value = "aven_racer"},
 	"aven_javelin",
 	"aven_adv_construction_vehicle",
+	avenL2VehicleRadar,
+	avenL2VehicleRadarJammer,
 	"aven_kodiak",
 	avenL2VehicleChoice,
 	avenL2VehicleChoice,
 	avenL2VehicleChoice,
-	"aven_centurion",
-	"aven_merl",	
 	avenL2VehicleRadar,
 	avenL2VehicleRadarJammer,
+	"aven_centurion",
+	"aven_merl",	
 	"aven_penetrator",
 	{action = "wait", frames = 128}
 }
@@ -1912,11 +1919,13 @@ local avenHovercraftPlant = {
 	"aven_skimmer",
 	"aven_construction_hovercraft",
 	"aven_swatter",
-	avenL2HoverChoice,	
+	avenL2HoverIntel,
+	avenL2HoverChoice,
 	avenL2HoverChoice,
 	avenL2HoverChoice,
 	"aven_slider",
 	"aven_excalibur",
+	avenL2HoverIntel,
 	{action = "randomness", probability = 0.5, value = "aven_turbulence"},
 	{action = "randomness", probability = 0.3, value = "aven_tsunami"},
 	{action = "wait", frames = 128}
@@ -1927,7 +1936,7 @@ local avenHovercraftPlant = {
 -- choices by threat type : AIR, DEFENSES, NORMAL[, UNDERWATER]
 
 local function gearL2KbotChoice(self) return choiceByType(self,{"gear_titan","gear_barrel"},{"gear_big_bob","gear_moe","gear_moe","gear_luminator"},{"gear_big_bob","gear_pyro","gear_moe","gear_psycho","gear_titan","gear_barrel"}) end
-local function gearL1LightChoice(self) return choiceByType(self,"gear_crasher",{"gear_raider","gear_kano","gear_thud"},{"gear_crasher","gear_kano","gear_box","gear_instigator","gear_aggressor"}) end
+local function gearL1LightChoice(self) return choiceByType(self,"gear_crasher",{"gear_raider","gear_thud","gear_thud"},{"gear_crasher","gear_kano","gear_box","gear_instigator","gear_aggressor"}) end
 local function gearL2VehicleChoice(self) return choiceByType(self,"gear_marauder",{"gear_mobile_artillery","gear_reaper","gear_eruptor"},{"gear_reaper","gear_marauder","gear_rhino","gear_flareon"}) end
 local function gearL2AirChoice(self) return choiceByType(self,"gear_vector",{"gear_stratos","gear_firestorm"},{"gear_vector","gear_stratos","gear_firestorm"},"gear_whirlpool") end
 local function gearL2KbotRadar(self) return buildWithLimitedNumber(self,"gear_voyeur",1) end
@@ -2050,6 +2059,7 @@ local gearLev1Con = {
 	metalExtractorNearbyIfSafe,
 	areaLimit_L2HeavyDefense,
 	areaLimit_LightAA,
+	geoIfNeeded,
 	windSolarIfNeeded,
 	windSolarIfNeeded,
 	windSolarIfNeeded,
@@ -2126,7 +2136,6 @@ local gearMexBuilder = {
 	"gear_metal_extractor",
 	areaLimit_LightAA,
 	areaLimit_Radar,
-	windSolarIfNeeded,
 	restoreQueue
 }
 
@@ -2187,11 +2196,6 @@ local gearMexUpgrader = {
 	mohoIfMexReclaimed,
 	reclaimNearestMexIfNeeded,
 	mohoIfMexReclaimed,
-	moveSafePos,
-	reclaimNearestMexIfNeeded,
-	mohoIfMexReclaimed,
-	reclaimNearestMexIfNeeded,
-	mohoIfMexReclaimed,	
 	restoreQueue
 }
 
@@ -2259,6 +2263,8 @@ local gearAdvKbotLab = {
 	"gear_psycho",
 	{action = "randomness", probability = 0.5, value = "gear_psycho"},
 	{action = "randomness", probability = 0.5, value = "gear_psycho"},
+	gearL2KbotRadar,
+	gearL2KbotRadarJammer,
 	"gear_moe",
 	"gear_adv_construction_kbot",
 	"gear_cube",
@@ -2277,14 +2283,16 @@ local gearAdvKbotLab = {
 local gearAdvVehiclePlant = {
 	"gear_marauder",
 	"gear_adv_construction_vehicle",
+	gearL2VehicleRadar,
+	gearL2VehicleRadarJammer,
 	gearL2VehicleChoice,
 	gearL2VehicleChoice,
 	gearL2VehicleChoice,
 	"gear_reaper",
 	"gear_mobile_artillery",	
 	gearL2VehicleRadar,
-	"gear_eruptor",
 	gearL2VehicleRadarJammer,
+	"gear_eruptor",
 	"gear_tremor",	
 	{action = "randomness", probability = 0.2, value = "gear_might"},
 	{action = "wait", frames = 128}
@@ -2307,7 +2315,7 @@ local gearAdvShipPlant = {
 
 local function clawL1LandChoice(self) return choiceByType(self,"claw_jester",{"claw_grunt","claw_piston","claw_roller"},{"claw_grunt","claw_boar","claw_piston","claw_roller"}) end
 local function clawL2KbotChoice(self) return choiceByType(self,"claw_bishop",{"claw_shrieker","claw_brute","claw_crawler"},{"claw_centaur","claw_brute"}) end
-local function clawL2VehicleChoice(self) return choiceByType(self,"claw_ravager",{"claw_pounder","claw_armadon"},{"claw_halberd","claw_ravager","claw_mega","claw_dynamo"}) end
+local function clawL2VehicleChoice(self) return choiceByType(self,"claw_ravager",{"claw_pounder","claw_pounder","claw_armadon"},{"claw_halberd","claw_ravager","claw_mega","claw_dynamo"}) end
 local function clawL2AirChoice(self) return choiceByType(self,"claw_x","claw_blizzard",{"claw_x","claw_blizzard"},"claw_trident") end
 local function clawL2SpinbotChoice(self) return choiceByType(self,{"claw_dizzy","claw_tempest"},"claw_gyro",{"claw_mace","claw_predator","claw_gyro","claw_dizzy"}) end
 local function clawL2KbotRadar(self) return buildWithLimitedNumber(self,"claw_revealer",1) end
@@ -2430,6 +2438,7 @@ local clawLev1Con = {
 	metalExtractorNearbyIfSafe,
 	areaLimit_L2HeavyDefense,
 	areaLimit_MediumAA,
+	geoIfNeeded,
 	windSolarIfNeeded,
 	windSolarIfNeeded,
 	windSolarIfNeeded,
@@ -2564,11 +2573,6 @@ local clawMexUpgrader = {
 	mohoIfMexReclaimed,
 	reclaimNearestMexIfNeeded,
 	mohoIfMexReclaimed,
-	moveSafePos,
-	reclaimNearestMexIfNeeded,
-	mohoIfMexReclaimed,
-	reclaimNearestMexIfNeeded,
-	mohoIfMexReclaimed,
 	restoreQueue
 }
 
@@ -2638,6 +2642,8 @@ local clawAdvKbotLab = {
 	{action = "randomness", probability = 0.5, value = "claw_centaur"},
 	{action = "randomness", probability = 0.5, value = "claw_centaur"},
 	"claw_adv_construction_kbot",
+	clawL2KbotRadar,
+	clawL2KbotRadarJammer,
 	"claw_brute",
 	clawL2KbotChoice,
 	clawL2KbotChoice,
@@ -2653,6 +2659,8 @@ local clawAdvKbotLab = {
 local clawAdvVehiclePlant = {
 	"claw_ravager",
 	"claw_adv_construction_vehicle",
+	clawL2VehicleRadar,
+	clawL2VehicleRadarJammer,
 	clawL2VehicleChoice,
 	clawL2VehicleChoice,
 	clawL2VehicleChoice,
@@ -2677,6 +2685,7 @@ local clawAdvShipPlant = {
 local clawSpinbotPlant = {
 	"claw_dizzy",
 	"claw_adv_construction_spinbot",
+	clawL2SpinbotRadar,
 	"claw_gyro",
 	clawL2SpinbotChoice,
 	clawL2SpinbotChoice,
@@ -2695,8 +2704,8 @@ local clawSpinbotPlant = {
 -- choices by threat type : AIR, DEFENSES, NORMAL[, UNDERWATER]
 
 local function sphereL1LandChoice(self) return choiceByType(self,"sphere_needles","sphere_rock",{"sphere_bit","sphere_rock"}) end
-local function sphereL2KbotChoice(self) return choiceByType(self,{"sphere_chub","sphere_chub","sphere_hermit"},{"sphere_ark","sphere_hanz"},{"sphere_hanz","sphere_chub"}) end
-local function sphereL2VehicleChoice(self) return choiceByType(self,"sphere_pulsar",{"sphere_slammer","sphere_bulk"},{"sphere_pulsar","sphere_trax","sphere_bulk"}) end
+local function sphereL2KbotChoice(self) return choiceByType(self,{"sphere_chub","sphere_chub","sphere_hermit"},{"sphere_ark","sphere_ark","sphere_golem"},{"sphere_hanz","sphere_chub"}) end
+local function sphereL2VehicleChoice(self) return choiceByType(self,"sphere_pulsar",{"sphere_slammer","sphere_slammer","sphere_bulk"},{"sphere_pulsar","sphere_trax","sphere_bulk"}) end
 local function sphereL2AirChoice(self) return choiceByType(self,"sphere_twilight","sphere_meteor",{"sphere_meteor","sphere_spitfire","sphere_twilight"},"sphere_neptune") end
 local function sphereL2SphereChoice(self) return choiceByType(self,"sphere_aster","sphere_gazer",{"sphere_nimbus","sphere_gazer"}) end
 local function sphereL2KbotRadar(self) return buildWithLimitedNumber(self,"sphere_sensor",1) end
@@ -2812,6 +2821,7 @@ local sphereLev1Con = {
 	areaLimit_Radar,	
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
+	geoIfNeeded,
 	moveSafePos,
 	roughFusionIfNeeded,
 	roughFusionIfNeeded,
@@ -2942,11 +2952,6 @@ local sphereMexUpgrader = {
 	mohoIfMexReclaimed,
 	reclaimNearestMexIfNeeded,
 	mohoIfMexReclaimed,
-	moveSafePos,
-	reclaimNearestMexIfNeeded,
-	mohoIfMexReclaimed,
-	reclaimNearestMexIfNeeded,
-	mohoIfMexReclaimed,	
 	restoreQueue
 }
 
@@ -3011,6 +3016,8 @@ local sphereAdvAircraftPlant = {
 local sphereAdvKbotLab = {
 	"sphere_hanz",
 	"sphere_adv_construction_kbot",
+	sphereL2KbotRadar,
+	sphereL2KbotRadarJammer,
 	"sphere_chub",
 	sphereL2KbotChoice,
 	sphereL2KbotChoice,
@@ -3029,6 +3036,8 @@ local sphereAdvVehiclePlant = {
 	{action = "randomness", probability = 0.5, value = "sphere_quad"},
 	"sphere_trax",
 	"sphere_adv_construction_vehicle",
+	sphereL2VehicleRadar,
+	sphereL2VehicleRadarJammer,
 	sphereL2VehicleChoice,
 	sphereL2VehicleChoice,
 	sphereL2VehicleChoice,
@@ -3044,6 +3053,7 @@ local sphereSpherePlant = {
 	"sphere_nimbus",
 	"sphere_nimbus",
 	"sphere_construction_sphere",
+	sphereL2SphereIntelligence,
 	sphereL2SphereChoice,
 	sphereL2SphereChoice,
 	sphereL2SphereChoice,
@@ -3112,6 +3122,7 @@ taskqueues = {
 	aven_seer = atkSupporter,
 	aven_jammer = atkSupporter,
 	aven_zephyr = atkSupporter,
+	aven_perceptor = atkSupporter,
 	aven_peeper = airScout,
 ------------------- GEAR
 	gear_commander_respawner = respawner,

@@ -81,7 +81,7 @@ walk()
 		turn rleg to x-axis legAngle3 speed mATurnSpd2;
 		turn rfoot to x-axis <0.000000>-legAngle2 speed mATurnSpd1;
 
-		move hips to y-axis [-2.000000] speed mAMoveSpd1;
+		move hips to y-axis [-0.500000] speed mAMoveSpd1;
 		move hips to z-axis [2.000000] speed mAMoveSpd1;
 		turn hips to x-axis <4.000000> speed slowTurnSpd2;
 
@@ -137,7 +137,7 @@ walk()
 		turn rleg to x-axis legAngle2 speed mATurnSpd2;
 		turn rfoot to x-axis legAngle3 speed mATurnSpd1;
 		
-		move hips to y-axis [-2.000000] speed mAMoveSpd1;
+		move hips to y-axis [-0.500000] speed mAMoveSpd1;
 		move hips to z-axis [2.000000] speed mAMoveSpd1;
 		turn hips to x-axis <4.000000> speed slowTurnSpd2;
 		
