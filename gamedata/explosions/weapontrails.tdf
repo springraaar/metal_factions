@@ -953,28 +953,6 @@ usedefaultexplosions=0;
 	     	ground=1;
 	      	water=1;
 	}
-	[LARGEFLASH]
-	{
-		class = CBitmapMuzzleFlame;
-      
-		[properties]
-	      	{
-	         	dir = dir;
-	         	colorMap=1.0 0.3 0.2 0.01 0.4 0.2 0.1 0.01 0 0 0 0.01; 
-	          	size=-3;
-	          	length=-16;
-	          	sizeGrowth=0.75;
-	          	ttl=2;
-	          	frontOffset=0;
-	          	sideTexture=muzzleside;
-	          	frontTexture=muzzlefront;
-	      	}
-		water=1;
-		air=1;
-		underwater=1;
-		ground=1;
-		count=1;
-	}
 	[spikes]
 	{
 		class=explspike;
@@ -1014,10 +992,10 @@ usedefaultexplosions=0;
 			particleSpeedSpread=2;  
 			particleSizeSpread=1;   
 		
-			particleLife=15;
+			particleLife=20;
 			numParticles=2; 
 			particleSpeed=0; 
-			particleSize=3;
+			particleSize=4;
 		
 		
 			emitVector=0, 1, 0; 
@@ -1033,6 +1011,79 @@ usedefaultexplosions=0;
 	}
 }
 
+[ROCKETTRAIL2B]
+{
+	usedefaultexplosions=0;	
+
+	[groundflash]
+   	{
+	      	flashSize = 40;
+	      	flashAlpha = 0.3;
+	      	circleGrowth = 0;
+	      	circleAlpha = 0;
+	      	ttl = 5;
+	      	color = 0.33, .2, 0.2;
+		air=1;
+	     	ground=1;
+	      	water=1;
+	}
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos = 0, 0, 0;
+			dir= dir;
+			width=8;
+			length=8;
+			alpha=0.6;
+			alphadecay=0.15;
+			color=1.0, 0.7, 0.3;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=1; 
+	}
+
+	[exhale]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.3;
+			sizeMod=1.0;
+			pos=0, 0, 0; 
+			gravity=0, 0, 0;
+		
+
+			Texture=smoke;
+			airdrag=0.77;
+			colorMap=0.7 0.5 0.4 0.01 0.1 0.1 0.1 0.2 0.0 0.0 0.0 0.01;
+
+			particleLifeSpread=3; 
+			particleSpeedSpread=2;  
+			particleSizeSpread=1;   
+		
+			particleLife=20;
+			numParticles=2; 
+			particleSpeed=0; 
+			particleSize=4;
+		
+		
+			emitVector=0, 1, 0; 
+			emitRot=80;
+			emitRotSpread=5; 
+			directional=0; 
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+}
 [ROCKETTRAIL3]
 {
 	usedefaultexplosions=0;	

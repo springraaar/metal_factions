@@ -4306,6 +4306,33 @@
 		armor_light=400;//#AUTO#
 	}
 }
+[BIG_SPHERE_BLAST]
+{
+	name=Big Sphere Blast;
+	weapontype=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=300;
+	soundstart=largegun;
+	soundhit=xplonuk1;
+	explosiongenerator=custom:LARGEBLASTWRAPPER1;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=1300;
+		group_invincible=1;
+		armor_heavy=1300;//#AUTO#
+		armor_medium=1300;//#AUTO#
+		armor_light=1300;//#AUTO#
+	}
+}
 [BIG_UNIT]
 {
 	name=Big Unit Explosion;
@@ -7893,15 +7920,16 @@
 	turret=1;
 	model=weapon_exphvyrock;
 	range=1000;
-	reloadtime=4;
+	reloadtime=12;
 	weapontimer=6;
 	weaponvelocity=300;
 	startvelocity=200;
 	weaponAcceleration=120;
 	areaofeffect=64;
 	energypershot=0;
-	burst=2;
-	burstrate=0.05;
+	burst=3;
+	projectiles=2;
+	burstrate=0.5;
 	sprayangle=500;
 	Trajectoryheight=1;
 	Wobble=0;
@@ -15800,7 +15828,7 @@
 	weapontype=StarburstLauncher;
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
 	model=weapon_medmsl;
-	cegTag=ROCKETTRAIL1;
+	cegTag=ROCKETTRAIL2B;
 	range=800;
 	reloadtime=3;
 	weapontimer=0.3;
@@ -15842,7 +15870,7 @@
 	weapontype=StarburstLauncher;
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
 	model=weapon_medmsl;
-	cegTag=ROCKETTRAIL1;
+	cegTag=ROCKETTRAIL2B;
 	range=800;
 	reloadtime=3;
 	weapontimer=0.3;

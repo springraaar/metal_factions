@@ -55,6 +55,8 @@ local spGetProjectilePosition = Spring.GetProjectilePosition
 local spGetProjectileVelocity = Spring.GetProjectileVelocity
 local spSpawnProjectile = Spring.SpawnProjectile
 local spDestroyUnit = Spring.DestroyUnit
+local spUnitDetach = Spring.UnitDetach
+local spGetUnitTransporter = Spring.GetUnitTransporter
 
 local spSetFeatureVelocity = Spring.SetFeatureVelocity
 local spSetFeaturePosition = Spring.SetFeaturePosition
@@ -225,6 +227,11 @@ local function updateUnitPhysics(unitId)
 		if (proId) then
 			x,y,z = spGetProjectilePosition(proId)
 			vx,vy,vz,v = spGetProjectileVelocity(proId)
+			
+			if(spGetUnitTransporter(unitId)) then
+				--Spring.Echo("proj. still attached! "..unitId.." x="..tostring(x).." vx="..tostring(vx))
+				spUnitDetach(unitId)
+			end
 			
 			if (x and vx) then
 				--Spring.Echo("v="..(v*30))

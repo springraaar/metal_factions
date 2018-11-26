@@ -69,8 +69,8 @@
 	Weapon2=sphere_comet_shield;
 	badtargetcategory1=VTOL;
 	NoChaseCategory=VTOL;
-	ExplodeAs=big_unit;
-	SelfDestructAs=big_unit;
+	ExplodeAs=BIG_SPHERE_BLAST;
+	SelfDestructAs=BIG_SPHERE_BLAST;
 
 	// ------------------- orders
 	movestate=0;
@@ -102,7 +102,7 @@
 		explosiongenerator0=custom:rocketflarebig;
 		explosiongenerator1=custom:comettrail;
 	}
-	buildcostenergy=18098;//#AUTO#
-	buildcostmetal=3619;//#AUTO#
-	buildtime=43134;//#AUTO#
+	buildcostenergy=17938;//#AUTO#
+	buildcostmetal=3587;//#AUTO#
+	buildtime=42753;//#AUTO#
 }

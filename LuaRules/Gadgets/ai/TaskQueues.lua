@@ -197,18 +197,16 @@ function restoreQueue(self)
 end
 
 function changeQueueToCommanderBaseBuilderIfNeeded(self)
-	if (not self.ai.unitHandler.baseUnderAttack) then
-		local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
-		local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
-	
-		-- if low on resource income or factories, rebuild base	
-		if (incomeM < 10 or incomeE < 100) or (countOwnUnits(self,nil,1,TYPE_PLANT) < 1 )  then
-			self:ChangeQueue(commanderBaseBuilderQueueByFaction[self.unitSide])
-			self.isAttackMode = false
-			-- log("changed to base builder commander!",self.ai)
-		end
+	local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
+	local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
 
+	-- if low on resource income or factories, rebuild base	
+	if (incomeM < 20 or incomeE < 200) or (countOwnUnits(self,nil,1,TYPE_PLANT) < 1)  then
+		self:ChangeQueue(commanderBaseBuilderQueueByFaction[self.unitSide])
+		self.isAttackMode = false
+		--log("changed to base builder commander!",self.ai)
 	end
+
 	return SKIP_THIS_TASK
 end
 
@@ -230,7 +228,7 @@ function changeQueueToCommanderAttackerIfNeeded(self)
 	local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
 
 	-- if has decent resource income and factories, go support the attackers
-	if (incomeM > 10 and incomeE > 130 and countOwnUnits(self,nil,2,TYPE_PLANT) > 0 ) then
+	if (incomeM > 25 and incomeE > 300 and countOwnUnits(self,nil,2,TYPE_PLANT) > 0 ) then
 		
 		if(self.isUpgradedCommander) then
 			self:ChangeQueue(taskqueues[self.unitName])
@@ -849,7 +847,7 @@ local function lvl1PlantIfNeeded(self)
 	local unitName = lev1PlantByFaction[self.unitSide][ random( 1, tableLength(lev1PlantByFaction[self.unitSide]) - excludeAir ) ] 
 	local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
 
-	unitName = buildWithLimitedNumber(self, unitName, 2 + math.floor(incomeM/70), TYPE_L1_PLANT) 
+	unitName = buildWithLimitedNumber(self, unitName, 1 + math.floor((30+incomeM)/70), TYPE_L1_PLANT) 
 	
 	-- if unit is far away from base center, move to center and then retry
 	if unitName ~= SKIP_THIS_TASK and farFromBaseCenter(self)  then
@@ -1570,12 +1568,14 @@ local avenCommander = {
 	brutalLightDefense,
 	brutalAADefense,
 	brutalHeavyDefense,
-	changeQueueToCommanderAttackerIfNeeded,
 	moveBaseCenter,
 	checkMorph,
-	changeQueueToWaterCommanderIfNeeded,
+	windSolarIfNeeded,
 	metalExtractorNearbyIfSafe,
 	lvl1PlantIfNeeded,
+	changeQueueToCommanderAttackerIfNeeded,
+	changeQueueToCommanderBaseBuilderIfNeeded,	
+	changeQueueToWaterCommanderIfNeeded,
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
 	windSolarIfNeeded,
@@ -1589,15 +1589,11 @@ local avenCommander = {
 	areaLimit_Llt,
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
-	changeQueueToCommanderAttackerIfNeeded,	
-	changeQueueToWaterCommanderIfNeeded,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
 	areaLimit_Radar,
-	lvl2PlantIfNeeded,
-	upgradeCenterIfNeeded,
+	windSolarIfNeeded,
+	windSolarIfNeeded,
+	windSolarIfNeeded,
+	windSolarIfNeeded,
 	changeQueueToCommanderAttackerIfNeeded
 }
 
@@ -1665,8 +1661,11 @@ local avenLev1Con = {
 	metalExtractorNearbyIfSafe,
 	windSolarIfNeeded,
 	moveBaseCenter,
+	windSolarIfNeeded,
 	areaLimit_Respawner,
 	scoutPadIfNeeded,
+	lvl2PlantIfNeeded,
+	lvl1PlantIfNeeded,
 	changeQueueToMexBuilderIfNeeded,
 	basePatrolIfNeeded,
 	changeQueueToDefenseBuilderIfNeeded,
@@ -1679,9 +1678,6 @@ local avenLev1Con = {
 	geoIfNeeded,
 	windSolarIfNeeded,
 	windSolarIfNeeded,
-	windSolarIfNeeded,
-	lvl2PlantIfNeeded,
-	lvl1PlantIfNeeded,
 	upgradeCenterIfNeeded,
 	metalExtractorNearbyIfSafe,
 	briefAreaPatrol,
@@ -1779,6 +1775,7 @@ local avenLev2Con = {
 	exitPlant,
 	brutalFusion,
 	airRepairPadIfNeeded,
+	areaLimit_Respawner,
 	changeQueueToMexUpgraderIfNeeded,
 	changeQueueToAdvancedDefenseBuilderIfNeeded,
 	moveSafePos,
@@ -1953,12 +1950,14 @@ local gearCommander = {
 	brutalLightDefense,
 	brutalAADefense,
 	brutalHeavyDefense,
-	changeQueueToCommanderAttackerIfNeeded,
 	moveBaseCenter,
 	checkMorph,
-	changeQueueToWaterCommanderIfNeeded,
 	metalExtractorNearbyIfSafe,
+	windSolarIfNeeded,
 	lvl1PlantIfNeeded,
+	changeQueueToCommanderAttackerIfNeeded,
+	changeQueueToCommanderBaseBuilderIfNeeded,
+	changeQueueToWaterCommanderIfNeeded,	
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
 	windSolarIfNeeded,
@@ -1972,15 +1971,10 @@ local gearCommander = {
 	areaLimit_Llt,
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
-	changeQueueToCommanderAttackerIfNeeded,
-	changeQueueToWaterCommanderIfNeeded,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
 	areaLimit_Radar,		
-	lvl2PlantIfNeeded,
-	upgradeCenterIfNeeded,
+	windSolarIfNeeded,
+	windSolarIfNeeded,
+	windSolarIfNeeded,
 	changeQueueToCommanderAttackerIfNeeded
 }
 
@@ -2048,8 +2042,11 @@ local gearLev1Con = {
 	metalExtractorNearbyIfSafe,
 	windSolarIfNeeded,
 	moveBaseCenter,
+	windSolarIfNeeded,
 	areaLimit_Respawner,	
 	scoutPadIfNeeded,
+	lvl2PlantIfNeeded,
+	lvl1PlantIfNeeded,
 	changeQueueToMexBuilderIfNeeded,
 	basePatrolIfNeeded,
 	changeQueueToDefenseBuilderIfNeeded,
@@ -2063,8 +2060,6 @@ local gearLev1Con = {
 	windSolarIfNeeded,
 	windSolarIfNeeded,
 	windSolarIfNeeded,
-	lvl2PlantIfNeeded,
-	lvl1PlantIfNeeded,
 	upgradeCenterIfNeeded,
 	metalExtractorNearbyIfSafe,
 	briefAreaPatrol,
@@ -2173,6 +2168,7 @@ local gearLev2Con = {
 	exitPlant,
 	brutalFusion,
 	airRepairPadIfNeeded,
+	areaLimit_Respawner,
 	changeQueueToMexUpgraderIfNeeded,
 	changeQueueToAdvancedDefenseBuilderIfNeeded,
 	moveSafePos,
@@ -2332,12 +2328,14 @@ local clawCommander = {
 	brutalLightDefense,
 	brutalAADefense,
 	brutalHeavyDefense,
-	changeQueueToCommanderAttackerIfNeeded,
 	moveBaseCenter,
 	checkMorph,
-	changeQueueToWaterCommanderIfNeeded,
 	metalExtractorNearbyIfSafe,
+	windSolarIfNeeded,
 	lvl1PlantIfNeeded,
+	changeQueueToCommanderAttackerIfNeeded,
+	changeQueueToCommanderBaseBuilderIfNeeded,
+	changeQueueToWaterCommanderIfNeeded,
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
 	windSolarIfNeeded,
@@ -2351,14 +2349,10 @@ local clawCommander = {
 	areaLimit_Llt,
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
-	changeQueueToCommanderAttackerIfNeeded,
-	changeQueueToWaterCommanderIfNeeded,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
 	areaLimit_Radar,
-	lvl2PlantIfNeeded,
-	upgradeCenterIfNeeded,
+	windSolarIfNeeded,
+	windSolarIfNeeded,
+	windSolarIfNeeded,
 	changeQueueToCommanderAttackerIfNeeded
 }
 
@@ -2427,8 +2421,11 @@ local clawLev1Con = {
 	metalExtractorNearbyIfSafe,
 	windSolarIfNeeded,
 	moveBaseCenter,
+	windSolarIfNeeded,
 	areaLimit_Respawner,
 	scoutPadIfNeeded,
+	lvl2PlantIfNeeded,
+	lvl1PlantIfNeeded,
 	changeQueueToMexBuilderIfNeeded,
 	basePatrolIfNeeded,
 	changeQueueToDefenseBuilderIfNeeded,
@@ -2442,8 +2439,6 @@ local clawLev1Con = {
 	windSolarIfNeeded,
 	windSolarIfNeeded,
 	windSolarIfNeeded,
-	lvl2PlantIfNeeded,
-	lvl1PlantIfNeeded,
 	upgradeCenterIfNeeded,
 	metalExtractorNearbyIfSafe,
 	briefAreaPatrol,
@@ -2550,6 +2545,7 @@ local clawLev2Con = {
 	exitPlant,
 	brutalFusion,
 	airRepairPadIfNeeded,
+	areaLimit_Respawner,
 	changeQueueToMexUpgraderIfNeeded,
 	changeQueueToAdvancedDefenseBuilderIfNeeded,
 	moveSafePos,
@@ -2724,12 +2720,13 @@ local sphereCommander = {
 	brutalLightDefense,
 	brutalAADefense,
 	brutalHeavyDefense,
-	changeQueueToCommanderAttackerIfNeeded,
 	moveBaseCenter,
 	checkMorph,
-	changeQueueToWaterCommanderIfNeeded,
 	metalExtractorNearbyIfSafe,
 	lvl1PlantIfNeeded,
+	roughFusionIfNeeded,
+	changeQueueToCommanderAttackerIfNeeded,
+	changeQueueToCommanderBaseBuilderIfNeeded,
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
 	areaLimit_Llt,
@@ -2740,11 +2737,8 @@ local sphereCommander = {
 	areaLimit_Llt,
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
-	changeQueueToCommanderAttackerIfNeeded,	
-	changeQueueToWaterCommanderIfNeeded,
 	areaLimit_Radar,		
-	lvl2PlantIfNeeded,
-	upgradeCenterIfNeeded,
+	changeQueueToWaterCommanderIfNeeded,
 	changeQueueToCommanderAttackerIfNeeded
 }
 
@@ -2813,6 +2807,8 @@ local sphereLev1Con = {
 	areaLimit_Respawner,
 	scoutPadIfNeeded,
 	roughFusionIfNeeded,	
+	lvl2PlantIfNeeded,
+	lvl1PlantIfNeeded,
 	changeQueueToMexBuilderIfNeeded,
 	basePatrolIfNeeded,
 	changeQueueToDefenseBuilderIfNeeded,
@@ -2830,8 +2826,6 @@ local sphereLev1Con = {
 	areaLimit_MediumAA,	
 	moveBaseCenter,
 	areaLimit_L2ArtilleryDefense,
-	lvl2PlantIfNeeded,
-	lvl1PlantIfNeeded,
 	upgradeCenterIfNeeded,
 	areaLimit_Respawner,
 	areaLimit_L2HeavyDefense,
@@ -2928,6 +2922,7 @@ local sphereLev2Con = {
 	exitPlant,
 	brutalFusion,
 	airRepairPadIfNeeded,
+	areaLimit_Respawner,
 	changeQueueToMexUpgraderIfNeeded,
 	changeQueueToAdvancedDefenseBuilderIfNeeded,
 	moveSafePos,

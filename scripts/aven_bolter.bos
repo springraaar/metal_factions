@@ -7,7 +7,7 @@
 
 piece  torso, rfirept, lfirept, hips, rfoot, lfoot, launcher, lthigh,lpack,rpack, rthigh, rleg, lleg, ground, lbarrels, rbarrels, visor, t2, lcover1,lcover2,lcover3,rcover1,rcover2,rcover3;
 
-static-var  gun_1, drumpos, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mADelay1, legAngle1, legAngle2, legAngle3, bMoving, bAiming;
+static-var  gun_1, drumpos, isFiring, fireHeading, unitFireHeading, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mADelay1, legAngle1, legAngle2, legAngle3, bMoving, bAiming;
 
 // Signal definitions
 #define SIG_MOVE			2
@@ -269,15 +269,48 @@ StopMoving()
 }
 
 
+RestoreAfterDelay(setMask)
+{
+	if (setMask) {
+		set-signal-mask SIG_AIM;
+	}
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn torso to y-axis <0.000000> speed <90.000000>;
+	turn launcher to x-axis <0.000000> speed <45.000000>;
+	wait-for-turn torso around y-axis;
+	wait-for-turn launcher around x-axis;
+	bAiming = FALSE;
+	return (0);
+}
+AimLock() 
+{
+	var heading;
+	while(TRUE) {
+		// override aim when firing to compensate for the body orientation if the unit turns
+		if (isFiring) {
+			heading = (get HEADING);
+			if (heading != unitFireHeading) {
+				turn torso to y-axis (fireHeading - heading + unitFireHeading) speed <360.000000>;
+				start-script RestoreAfterDelay(TRUE);
+			}
+		}
+		sleep 30;
+	}
+}
+
 Create()
 {
 	gun_1 = [0];
 	drumpos = [0];
 	bMoving = FALSE;
 	bAiming = FALSE;
+	isFiring = FALSE;
+	fireHeading = <999>;
+	unitFireHeading = <999>;	
 	start-script SmokeUnit();
 	start-script MotionControl();
-	start-script MotionSpeedControl();	
+	start-script MotionSpeedControl();
+	start-script AimLock();
 	return (0);
 }
 
@@ -308,26 +341,55 @@ QueryPrimary(piecenum)
 	return (0);
 }
 
-RestoreAfterDelay()
-{
-	sleep 5000;
-	turn torso to y-axis <0.000000> speed <90.000000>;
-	turn launcher to x-axis <0.000000> speed <45.000000>;
-	bAiming = FALSE;
-	return (0);
-}
 
 AimPrimary(heading, pitch)
 {
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
-	turn torso to y-axis heading speed <90.000000>;
-	turn launcher to x-axis <0.000000> - pitch speed <90.000000>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn launcher around x-axis;
+	if (!isFiring) {
+		turn torso to y-axis heading speed <90.000000>;
+		turn launcher to x-axis <0.000000> - pitch speed <90.000000>;
+		wait-for-turn torso around y-axis;
+		wait-for-turn launcher around x-axis;
+		fireHeading = heading;
+	}
+	
 	start-script RestoreAfterDelay();
 	return (1);
+}
+
+
+DrumRoll()
+{
+	if( drumpos == [0] )
+	{
+		sleep 50;
+		drumpos = [1];
+		sleep 100;
+		turn lbarrels to z-axis <0.000000> speed <900.093407>;
+		turn rbarrels to z-axis <0.000000> speed <900.093407>;
+		return 0;
+	}
+	if( drumpos == [1] )
+	{
+		sleep 50;
+		drumpos = [2];
+		sleep 100;
+		turn lbarrels to z-axis <120.000000> speed <900.093407>;
+		turn rbarrels to z-axis <120.000000> speed <900.093407>;
+		return 0;
+	}
+	if( drumpos == [2] )
+	{
+		sleep 50;
+		drumpos = [0];
+		sleep 100;
+		turn lbarrels to z-axis <0.000000> - <120.027473> speed <900.093407>;
+		turn rbarrels to z-axis <0.000000> - <120.027473> speed <900.093407>;
+		return 0;
+	}
+	return 0;
 }
 
 Shot1()
@@ -340,6 +402,7 @@ Shot1()
 	}
 	if( gun_1 == [1] )
 	{
+		start-script DrumRoll();
 		emit-sfx 1024 + 0 from lfirept;
 		gun_1 = [0];
 		return (0);
@@ -348,34 +411,11 @@ Shot1()
 
 FirePrimary()
 {
-	if( drumpos == [0] )
-	{
-		sleep 100;
-		drumpos = [1];
-		sleep 300;
-		turn lbarrels to z-axis <0.000000> speed <400.093407>;
-		turn rbarrels to z-axis <0.000000> speed <400.093407>;
-		return 0;
-	}
-	if( drumpos == [1] )
-	{
-		sleep 100;
-		drumpos = [2];
-		sleep 300;
-		turn lbarrels to z-axis <120.000000> speed <400.093407>;
-		turn rbarrels to z-axis <120.000000> speed <400.093407>;
-		return 0;
-	}
-	if( drumpos == [2] )
-	{
-		sleep 100;
-		drumpos = [0];
-		sleep 300;
-		turn lbarrels to z-axis <0.000000> - <120.027473> speed <400.093407>;
-		turn rbarrels to z-axis <0.000000> - <120.027473> speed <400.093407>;
-		return 0;
-	}
-	return 0;
+	unitFireHeading = get HEADING;
+	isFiring = TRUE;
+	sleep 4000;
+	isFiring = FALSE;
+	return;
 }
 
 Killed(severity, corpsetype)

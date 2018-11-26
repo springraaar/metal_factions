@@ -126,7 +126,7 @@ function BuildSiteHandler:FindClosestBuildSite(ud, searchPos, searchRadius, minD
 							-- also check if it's on the same pathing region as the center of base
 							if ( valid == true ) then
 								if ud.isBuilder then
-									buildTest = spTestBuildOrder(ud.id, testPos.x, testPos.y, testPos.z + 80,0)
+									buildTest = spTestBuildOrder(ud.id, testPos.x, testPos.y, testPos.z + 100,0)
 									if (buildTest ~= 1 and buildTest ~= 2) then
 										valid = false
 									end
@@ -141,7 +141,7 @@ function BuildSiteHandler:FindClosestBuildSite(ud, searchPos, searchRadius, minD
 								if (isMetalMap == false and self.ai.mapHandler.allowBuildingOverMetalSpots == false) then
 									-- check if unit violates minimum distance from nearby metal spots
 									for _,sPos in ipairs(mapCell.metalSpots) do
-										if (checkWithinDistance(testPos,sPos,testRadius+80)) then
+										if (checkWithinDistance(testPos,sPos,testRadius+120)) then
 											valid = false
 											break
 										end
@@ -152,7 +152,7 @@ function BuildSiteHandler:FindClosestBuildSite(ud, searchPos, searchRadius, minD
 							if ( valid == true ) then
 								-- check if unit violates minimum distance from nearby geothermal spots
 								for _,sPos in ipairs(self.ai.mapHandler.geoSpots) do
-									if (checkWithinDistance(testPos,sPos,testRadius+80)) then
+									if (checkWithinDistance(testPos,sPos,testRadius+120)) then
 										valid = false
 										break
 									end

@@ -37,13 +37,14 @@ function TaskQueueBehavior:Init(ai, uId)
 	self.idleFrame = -INFINITY -- last frame where UnitIdle was called (may be unreliable)
 	self.idleFrames = 0 -- count of consecutive frames where wait is 0, progress is false
 						-- but unit has been with idle command queue
-	self.isAttackMode = false
+	self.isAttackMode = self.isUpgradedCommander and true or false
 	self.delayCounter = 0
 	self.specialRole = 0
 	self.isWaterMode = false
 	self.assistUnitId = 0
 	self.cleanupMaxFeatures = 10
-	self.isAdvBuilder = self.isMobileBuilder and self.unitDef.modCategories["level2"]
+	self.isDrone =  self.unitDef.customParams and self.unitDef.customParams.isdrone
+	self.isAdvBuilder = (not self.isDrone) and self.isMobileBuilder and self.unitDef.modCategories["level2"]
 	
 	-- load queue
 	if self:HasQueues() then
@@ -216,13 +217,17 @@ function TaskQueueBehavior:Update()
 	
 	self.pos = newPosition(spGetUnitPosition(self.unitId,false,false))
 	
-    --if (self.isMobileBuilder) then
+    --if (self.isMobileBuilder or self.isCommander) then
 	--	local cmds = spGetUnitCommands(self.unitId,3)
 	--	local cmdCount = 0
-	--  if (cmds and (#cmds >= 0)) then
+	-- if (cmds and (#cmds >= 0)) then
 	--		cmdCount = #cmds
 	--	end
-	--	Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(self:BuilderRoleStr().." "..cmdCount.." "..tostring(self.currentProject))) --DEBUG
+	--	if (self.isCommander) then
+	--		Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(tostring(self.isAttackMode).." "..cmdCount.." "..tostring(self.currentProject))) --DEBUG
+	--	else
+	--		Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(self:BuilderRoleStr().." "..cmdCount.." "..tostring(self.currentProject))) --DEBUG
+	--	end
 	--end
 	
 	local health,maxHealth,_,_,bp = spGetUnitHealth(self.unitId)
@@ -369,7 +374,7 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 			end		
 
 			-- if building an unnecessary unit and low on resources, delay building for a few seconds
-			if(checkResources and (not self.noDelay)) then			
+			if(checkResources and (not self.noDelay)) and (not self.isCommander) then			
 				local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
 				local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
 	

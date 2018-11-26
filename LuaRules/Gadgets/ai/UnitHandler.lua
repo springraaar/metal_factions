@@ -236,7 +236,7 @@ function UnitHandler:Update()
 	end
 	-- load game status : own cells, friendly cells, enemy cells
 	if fmod(f,199) == 0 + self.ai.frameShift then
-		--Spring.SendCommands("ClearMapMarks") --DEBUG
+		Spring.SendCommands("ClearMapMarks") --DEBUG
 	
 		-- forget outdated danger cells, if any
 		for xi,row in pairs(self.dangerCells) do
@@ -266,24 +266,26 @@ function UnitHandler:Update()
 		
 		-- update special role task queue counts
 		for _,tq in pairs(self.taskQueues) do
-			if ((not tq.isCommander) and tq.isMobileBuilder and tq.specialRole == 0) then
-				if (tq.isAdvBuilder) then
-					advancedStandardQueueCount = advancedStandardQueueCount + 1 
-				else 
-					standardQueueCount = standardQueueCount + 1
+			if (not tq.isDrone) then
+				if ((not tq.isCommander) and tq.isMobileBuilder and tq.specialRole == 0) then
+					if (tq.isAdvBuilder) then
+						advancedStandardQueueCount = advancedStandardQueueCount + 1 
+					else 
+						standardQueueCount = standardQueueCount + 1
+					end
+				elseif (tq.specialRole == UNIT_ROLE_MEX_BUILDER) then
+					 mexBuilderCount = mexBuilderCount + 1
+				elseif (tq.specialRole == UNIT_ROLE_BASE_PATROLLER) then
+					basePatrollerCount = basePatrollerCount + 1
+				elseif (tq.specialRole == UNIT_ROLE_MEX_UPGRADER) then
+					mexUpgraderCount = mexUpgraderCount + 1
+				elseif (tq.specialRole == UNIT_ROLE_DEFENSE_BUILDER) then
+					defenseBuilderCount = defenseBuilderCount + 1
+				elseif (tq.specialRole == UNIT_ROLE_ADVANCED_DEFENSE_BUILDER) then
+					advancedDefenseBuilderCount = advancedDefenseBuilderCount + 1
+				elseif (tq.specialRole == UNIT_ROLE_ATTACK_PATROLLER) then
+					attackPatrollerCount = attackPatrollerCount + 1
 				end
-			elseif (tq.specialRole == UNIT_ROLE_MEX_BUILDER) then
-				 mexBuilderCount = mexBuilderCount + 1
-			elseif (tq.specialRole == UNIT_ROLE_BASE_PATROLLER) then
-				basePatrollerCount = basePatrollerCount + 1
-			elseif (tq.specialRole == UNIT_ROLE_MEX_UPGRADER) then
-				mexUpgraderCount = mexUpgraderCount + 1
-			elseif (tq.specialRole == UNIT_ROLE_DEFENSE_BUILDER) then
-				defenseBuilderCount = defenseBuilderCount + 1
-			elseif (tq.specialRole == UNIT_ROLE_ADVANCED_DEFENSE_BUILDER) then
-				advancedDefenseBuilderCount = advancedDefenseBuilderCount + 1
-			elseif (tq.specialRole == UNIT_ROLE_ATTACK_PATROLLER) then
-				attackPatrollerCount = attackPatrollerCount + 1
 			end
 		end
 		self.standardQueueCount = standardQueueCount
@@ -294,7 +296,7 @@ function UnitHandler:Update()
 		self.defenseBuilderCount = defenseBuilderCount
 		self.advancedDefenseBuilderCount = advancedDefenseBuilderCount 
 		self.attackPatrollerCount = attackPatrollerCount
-		--Spring.Echo("builders for AI "..self.ai.id.." std="..standardQueueCount.." advstd="..advancedStandardQueueCount.." mex="..mexBuilderCount.." baseptl="..basePatrollerCount.." atkptl="..attackPatrollerCount.." mexupg="..mexUpgraderCount.." def="..defenseBuilderCount.." advdef="..advancedDefenseBuilderCount) --DEBUG
+		-- Spring.Echo("builders for AI "..self.ai.id.." std="..standardQueueCount.." advstd="..advancedStandardQueueCount.." mex="..mexBuilderCount.." baseptl="..basePatrollerCount.." atkptl="..attackPatrollerCount.." mexupg="..mexUpgraderCount.." def="..defenseBuilderCount.." advdef="..advancedDefenseBuilderCount) --DEBUG
 
 
 		self.attackerCount = 0
@@ -332,11 +334,11 @@ function UnitHandler:Update()
 			self.advancedDefenseBuilderCountTarget = 0
 		end		
 		if self.isBrutalMode then
-			self.basePatrollerCountTarget = max(self.basePatrollerCountTarget-1,0)
-			self.mexUpgraderCountTarget = max(self.mexUpgraderCountTarget-1,0)
-			self.defenseBuilderCountTarget = max(self.defenseBuilderCountTarget-1,0)
-			self.advancedDefenseBuilderCountTarget = max(self.advancedDefenseBuilderCountTarget-1,0)
-			self.attackPatrollerCountTarget = max(self.attackPatrollerCountTarget-1,0)
+			self.basePatrollerCountTarget = max(self.basePatrollerCountTarget-1,1)
+			self.mexUpgraderCountTarget = max(self.mexUpgraderCountTarget-1,1)
+			self.defenseBuilderCountTarget = max(self.defenseBuilderCountTarget-1,1)
+			self.advancedDefenseBuilderCountTarget = max(self.advancedDefenseBuilderCountTarget-1,1)
+			self.attackPatrollerCountTarget = max(self.attackPatrollerCountTarget-1,1)
 		end 
 
 		-- update base and atk forces location

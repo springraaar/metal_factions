@@ -71,8 +71,8 @@
 	Weapon4=sphere_chroma_beam3;
 	badtargetcategory1=VTOL;
 	NoChaseCategory=VTOL;
-	ExplodeAs=big_unit;
-	SelfDestructAs=big_unit;
+	ExplodeAs=BIG_SPHERE_BLAST;
+	SelfDestructAs=BIG_SPHERE_BLAST;
 
 	// ------------------- orders
 	movestate=0;
@@ -103,7 +103,7 @@
 		explosiongenerator1=custom:rubyglow;
 		explosiongenerator2=custom:opalglow;
 	}
-	buildcostenergy=54659;//#AUTO#
-	buildcostmetal=10931;//#AUTO#
-	buildtime=130271;//#AUTO#
+	buildcostenergy=54522;//#AUTO#
+	buildcostmetal=10904;//#AUTO#
+	buildtime=129946;//#AUTO#
 }
