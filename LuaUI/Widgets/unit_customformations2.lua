@@ -259,6 +259,9 @@ local function GetInterpNodes(number)
 	
 	local interpNodes = {}
 	
+	if (#fNodes < 2 or (not fNodes[1]) or (not fNodes[2])) then
+		return nil
+	end
 	local sPos = fNodes[1]
 	local sX = sPos[1]
 	local sZ = sPos[3]
@@ -547,24 +550,26 @@ function widget:MouseRelease(mx, my, mButton)
 				
 				local interpNodes = GetInterpNodes(#mUnits)
 				
-				local orders
-				if (#mUnits <= maxHungarianUnits) then
-					orders = GetOrdersHungarian(interpNodes, mUnits, #mUnits, shift and not meta)
-				else
-					orders = GetOrdersNoX(interpNodes, mUnits, #mUnits, shift and not meta)
-				end
-				
-				if meta then
-					local altOpts = GetCmdOpts(true, false, false, false, false)
-					for i = 1, #orders do
-						local orderPair = orders[i]
-						local orderPos = orderPair[2]
-						GiveNotifyingOrderToUnit(orderPair[1], CMD_INSERT, {0, usingCmd, cmdOpts.coded, orderPos[1], orderPos[2], orderPos[3]}, altOpts)
+				if interpNodes then
+					local orders
+					if (#mUnits <= maxHungarianUnits) then
+						orders = GetOrdersHungarian(interpNodes, mUnits, #mUnits, shift and not meta)
+					else
+						orders = GetOrdersNoX(interpNodes, mUnits, #mUnits, shift and not meta)
 					end
-				else
-					for i = 1, #orders do
-						local orderPair = orders[i]
-						GiveNotifyingOrderToUnit(orderPair[1], usingCmd, orderPair[2], cmdOpts)
+					
+					if meta then
+						local altOpts = GetCmdOpts(true, false, false, false, false)
+						for i = 1, #orders do
+							local orderPair = orders[i]
+							local orderPos = orderPair[2]
+							GiveNotifyingOrderToUnit(orderPair[1], CMD_INSERT, {0, usingCmd, cmdOpts.coded, orderPos[1], orderPos[2], orderPos[3]}, altOpts)
+						end
+					else
+						for i = 1, #orders do
+							local orderPair = orders[i]
+							GiveNotifyingOrderToUnit(orderPair[1], usingCmd, orderPair[2], cmdOpts)
+						end
 					end
 				end
 			end

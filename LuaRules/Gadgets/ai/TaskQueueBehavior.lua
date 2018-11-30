@@ -268,7 +268,7 @@ function TaskQueueBehavior:Update()
 				spGiveOrderToUnit(self.unitId,CMD.STOP,{},{})
 				self:ChangeQueue(commanderAtkQueueByFaction[self.unitSide])
 				self.isAttackMode = true
-				-- log("changed to attack commander!",self.ai)
+				--log("changed to attack commander!",self.ai)
 			end
 		end
 	end

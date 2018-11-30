@@ -197,16 +197,17 @@ function restoreQueue(self)
 end
 
 function changeQueueToCommanderBaseBuilderIfNeeded(self)
-	local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
-	local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
-
-	-- if low on resource income or factories, rebuild base	
-	if (incomeM < 20 or incomeE < 200) or (countOwnUnits(self,nil,1,TYPE_PLANT) < 1)  then
-		self:ChangeQueue(commanderBaseBuilderQueueByFaction[self.unitSide])
-		self.isAttackMode = false
-		--log("changed to base builder commander!",self.ai)
+	if (not self.ai.unitHandler.baseUnderAttack and self.isAttackMode) then
+		local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
+		local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
+	
+		-- if low on resource income or factories, rebuild base	
+		if (incomeM < 20 or incomeE < 200) or (countOwnUnits(self,nil,1,TYPE_PLANT) < 1)  then
+			self:ChangeQueue(commanderBaseBuilderQueueByFaction[self.unitSide])
+			self.isAttackMode = false
+			--log("changed to base builder commander!",self.ai)
+		end
 	end
-
 	return SKIP_THIS_TASK
 end
 
@@ -228,7 +229,7 @@ function changeQueueToCommanderAttackerIfNeeded(self)
 	local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
 
 	-- if has decent resource income and factories, go support the attackers
-	if (incomeM > 25 and incomeE > 300 and countOwnUnits(self,nil,2,TYPE_PLANT) > 0 ) then
+	if (incomeM > 22 and incomeE > 250 and countOwnUnits(self,nil,2,TYPE_PLANT) > 0 ) then
 		
 		if(self.isUpgradedCommander) then
 			self:ChangeQueue(taskqueues[self.unitName])
@@ -330,7 +331,7 @@ function buildEnergyIfNeeded(self,unitName)
 	local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
 	local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
 
-	local threshold = max(max(1.4 * expenseE + 100, 8 * incomeM + 50),350)
+	local threshold = max(max(1.4 * expenseE + 100, 8 * incomeM + 50),300)
 	if incomeE < threshold then
 		-- log("buildEnergyIfNeeded: income "..incomeE..", usage "..expenseE..", building more energy",self.ai)
 		return unitName
@@ -1573,6 +1574,7 @@ local avenCommander = {
 	windSolarIfNeeded,
 	metalExtractorNearbyIfSafe,
 	lvl1PlantIfNeeded,
+	areaLimit_L2HeavyDefense,
 	changeQueueToCommanderAttackerIfNeeded,
 	changeQueueToCommanderBaseBuilderIfNeeded,	
 	changeQueueToWaterCommanderIfNeeded,
@@ -1955,6 +1957,7 @@ local gearCommander = {
 	metalExtractorNearbyIfSafe,
 	windSolarIfNeeded,
 	lvl1PlantIfNeeded,
+	areaLimit_L2HeavyDefense,
 	changeQueueToCommanderAttackerIfNeeded,
 	changeQueueToCommanderBaseBuilderIfNeeded,
 	changeQueueToWaterCommanderIfNeeded,	
@@ -2333,6 +2336,8 @@ local clawCommander = {
 	metalExtractorNearbyIfSafe,
 	windSolarIfNeeded,
 	lvl1PlantIfNeeded,
+	areaLimit_MediumAA,
+	areaLimit_MediumAA,
 	changeQueueToCommanderAttackerIfNeeded,
 	changeQueueToCommanderBaseBuilderIfNeeded,
 	changeQueueToWaterCommanderIfNeeded,
@@ -2725,6 +2730,8 @@ local sphereCommander = {
 	metalExtractorNearbyIfSafe,
 	lvl1PlantIfNeeded,
 	roughFusionIfNeeded,
+	areaLimit_MediumAA,
+	areaLimit_MediumAA,
 	changeQueueToCommanderAttackerIfNeeded,
 	changeQueueToCommanderBaseBuilderIfNeeded,
 	metalExtractorNearbyIfSafe,
