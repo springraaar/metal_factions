@@ -236,7 +236,7 @@ function UnitHandler:Update()
 	end
 	-- load game status : own cells, friendly cells, enemy cells
 	if fmod(f,199) == 0 + self.ai.frameShift then
-		Spring.SendCommands("ClearMapMarks") --DEBUG
+		--Spring.SendCommands("ClearMapMarks") --DEBUG
 	
 		-- forget outdated danger cells, if any
 		for xi,row in pairs(self.dangerCells) do

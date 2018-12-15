@@ -1,7 +1,7 @@
 function widget:GetInfo()
 	return {
 		name = "Local Team Colors",
-		desc = "Makes neat team color scheme - you teal, allies blueish, enemies reddish",
+		desc = "Makes neat team color scheme - you blue, allies blueish, enemies reddish",
 		author = "Licho",
 		date = "February, 2010",
 		license = "GPL v3",

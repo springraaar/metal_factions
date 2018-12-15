@@ -15,10 +15,69 @@ local floor = math.floor
 local ceil = math.ceil
 local max = math.max
 local spGetUnitWeaponTestRange = Spring.GetUnitWeaponTestRange 
-
+local spGetGroundHeight = Spring.GetGroundHeight
+local spGetUnitPosition = Spring.GetUnitPosition
 
 local targetForUnitId = {}
 local trackedWeaponDefIds = {}
+
+
+local torpedoWeaponIds = {
+	-- AVEN
+	[WeaponDefNames["aven_u1commander_torpedo"].id]=true,
+	[WeaponDefNames["aven_u2commander_torpedo"].id]=true,
+	[WeaponDefNames["aven_u4commander_torpedo"].id]=true,
+	[WeaponDefNames["aven_u5commander_torpedo"].id]=true,
+	[WeaponDefNames["aven_u6commander_torpedo"].id]=true,
+	[WeaponDefNames["aven_commander_torpedo"].id]=true,
+	[WeaponDefNames["aven_lurker_torpedo"].id]=true,
+	[WeaponDefNames["aven_piranha_torpedo"].id]=true,
+	[WeaponDefNames["aven_tl_torpedo"].id]=true,
+	[WeaponDefNames["aven_rush_depthcharge"].id]=true,
+	[WeaponDefNames["aven_vanguard_depthcharge"].id]=true,
+	[WeaponDefNames["armdepthcharge"].id]=true,
+	[WeaponDefNames["aven_slider_s_depthcharge"].id]=true,
+	
+	-- GEAR
+	[WeaponDefNames["gear_commander_torpedo"].id]=true,
+	[WeaponDefNames["gear_u1commander_torpedo"].id]=true,
+	[WeaponDefNames["gear_u2commander_torpedo"].id]=true,
+	[WeaponDefNames["gear_u3commander_torpedo"].id]=true,
+	[WeaponDefNames["gear_u4commander_torpedo"].id]=true,
+	[WeaponDefNames["gear_u5commander_torpedo"].id]=true,
+	[WeaponDefNames["gear_snake_torpedo"].id]=true,
+	[WeaponDefNames["gear_noser_torpedo"].id]=true,
+	[WeaponDefNames["corssub_weapon"].id]=true,
+	[WeaponDefNames["gear_tl_torpedo"].id]=true,
+	[WeaponDefNames["coredepthcharge"].id]=true,
+	[WeaponDefNames["gear_viking_depthcharge"].id]=true,
+	-- CLAW
+	[WeaponDefNames["claw_commander_torpedo"].id]=true,
+	[WeaponDefNames["claw_u1commander_torpedo"].id]=true,
+	[WeaponDefNames["claw_u2commander_torpedo"].id]=true,
+	[WeaponDefNames["claw_u3commander_torpedo"].id]=true,
+	[WeaponDefNames["claw_u4commander_torpedo"].id]=true,
+	[WeaponDefNames["claw_u5commander_torpedo"].id]=true,
+	[WeaponDefNames["claw_u6commander_torpedo"].id]=true,
+	[WeaponDefNames["claw_spine_torpedo"].id]=true,
+	[WeaponDefNames["claw_monster_torpedo"].id]=true,
+	[WeaponDefNames["claw_sinker_depthcharge"].id]=true,
+	[WeaponDefNames["claw_drakkar_depthcharge"].id]=true,
+	-- SPHERE
+	[WeaponDefNames["sphere_commander_torpedo"].id]=true,
+	[WeaponDefNames["sphere_u1commander_torpedo"].id]=true,
+	[WeaponDefNames["sphere_u2commander_torpedo"].id]=true,
+	[WeaponDefNames["sphere_u3commander_torpedo"].id]=true,
+	[WeaponDefNames["sphere_u4commander_torpedo"].id]=true,
+	[WeaponDefNames["sphere_u5commander_torpedo"].id]=true,
+	[WeaponDefNames["sphere_u6commander_torpedo"].id]=true,
+	[WeaponDefNames["sphere_crab_torpedo"].id]=true,
+	[WeaponDefNames["sphere_carp_torpedo"].id]=true,
+	[WeaponDefNames["sphere_pluto_torpedo"].id]=true,
+	[WeaponDefNames["sphere_clam_torpedo"].id]=true,
+	[WeaponDefNames["sphere_endeavour_depthcharge"].id]=true,
+	[WeaponDefNames["sphere_oyster_torpedo"].id]=true
+}
 
 
 -- track unit's weapons
@@ -41,6 +100,17 @@ end
 if (not gadgetHandler:IsSyncedCode()) then
 	return false
 end
+
+
+
+function gadget:Initialize()
+	-- track torpedoes fired from submarines
+	for id,_ in pairs(torpedoWeaponIds) do
+		Script.SetWatchWeapon(id,true)
+		--Spring.Echo("WEAPON "..id.." BLOCKED")
+	end
+end
+
 
 -- mark units that targeted other units for attack
 -- clear marking if STOP command is used
@@ -70,6 +140,18 @@ end
 function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attackerWeaponDefID, defaultPriority)
 	--Spring.Echo(attackerID.." ALLOWTARGET "..targetID.." ?")
 	--Spring.Echo(attackerID.." has line of fire to "..targetID.." ? "..tostring(Spring.GetUnitWeaponHaveFreeLineOfFire(attackerID,attackerWeaponNum,targetID)))
+	
+	-- TODO : this is not working, probable engine bug
+	-- it does work but only if the owner is busy, else an attack order is added and it'll start firing
+	if torpedoWeaponIds[attackerWeaponDefID] then
+		-- if target is on land, return false
+		local x,y,z = spGetUnitPosition(targetID)
+		local h = spGetGroundHeight(x,z)
+		if (h > 0 or y > 30) then
+			--Spring.Echo("TORPEDO FIRING AT LAND "..Spring.GetGameFrame())
+			return false,0
+		end
+	end
 	
 	if targetForUnitId[attackerID] then
 		-- only do this if in range of the target

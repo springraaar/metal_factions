@@ -53,8 +53,8 @@ local Config = {
 		dragbutton = {2}, --middle mouse button
 		tooltip = {
 			background ="\255\255\255\1Leftclick\255\255\255\255 on the bar to set team share.",
-			income = "Your metal income.",
-			pull = "Your metal pull.",
+			income = "Your metal income per second.",
+			pull = "Your metal expense per second.",
 			expense = "Your metal expense, same as pull if not shown.",
 			storage = "Your maximum metal storage.",
 			current = "Your current metal storage.",
@@ -92,8 +92,8 @@ local Config = {
 		dragbutton = {2}, --middle mouse button
 		tooltip = {
 			background ="\255\255\255\1Leftclick\255\255\255\255 on the bar to set team share.",
-			income = "Your energy income.",
-			pull = "Your energy pull.",
+			income = "Your energy income per second.",
+			pull = "Your energy expense per second.",
 			expense = "Your energy expense, same as pull if not shown.",
 			storage = "Your maximum energy storage.",
 			current = "Your current energy storage.",
@@ -342,7 +342,7 @@ local function updatebar(b,res)
 	end
 	
 	b.income.caption = "+ "..short(r[4],(r[4] < 10 and 1 or 0))
-	b.pull.caption = "- "..short(r[3],(r[3] < 10 and 1 or 0))
+	b.pull.caption = "- "..short(r[5],(r[5] < 10 and 1 or 0))  --- was r[3], but it considers weapon E drain twice for some reason
 	b.current.caption = short(r[1])
 	b.storage.caption = short(r[2])
 	b.label.caption = string.upper(res)
@@ -354,7 +354,10 @@ local function updatebar(b,res)
 	b.storage.px = barbackpx + barbacksx - b.storage.getWidth() 
 	b.label.px = barbackpx - b.label.getWidth() -b.margin*4.4 - math.max(b.income.getWidth(),b.pull.getWidth())
 	
-	if (r[3]~=r[5]) then
+	-- TODO check this
+	-- disable expense to make bars less confusing 
+	-- it also showed double the amounts it should, which was weird
+	if (false and r[3]~=r[5]) then
 		b.expense.active = nil --activate
 		b.expense.caption = "  - "..short(r[5],(r[5] < 10 and 1 or 0))
 	else

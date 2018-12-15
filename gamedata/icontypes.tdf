@@ -48,7 +48,7 @@
 		bitmap=icons/triangle.tga;
 		radiusadjust=1;
 		distance=1;
-		size=1.1;
+		size=1.2;
 	}
 	[sea]
 	{
@@ -93,19 +93,26 @@
 		distance=1;
 		size=2;
 	}
+	[buildertower]
+	{
+		bitmap=icons/plant.tga;
+		radiusadjust=0;
+		distance=1;
+		size=1.2;
+	}
 	[plant]
 	{
 		bitmap=icons/plant.tga;
 		radiusadjust=0;
 		distance=1;
-		size=2;
+		size=2.1;
 	}
 	[plant2]
 	{
 		bitmap=icons/plant2.tga;
 		radiusadjust=0;
 		distance=1;
-		size=2;
+		size=2.6;
 	}
 	[energy]
 	{
@@ -184,5 +191,48 @@
 		distance=1;
 		size=0.1;
 	}
+	[mobilejammer]
+	{
+		bitmap=icons/mobilejammer.tga;
+		radiusadjust=1;
+		distance=1;
+		size=1.2;
+	}
+	[staticjammer]
+	{
+		bitmap=icons/staticjammer.tga;
+		radiusadjust=1;
+		distance=1;
+		size=1.2;
+	}
+	[mobileradar]
+	{
+		bitmap=icons/mobileradar.tga;
+		radiusadjust=1;
+		distance=1;
+		size=1.2;
+	}
+	[staticradar]
+	{
+		bitmap=icons/staticradar.tga;
+		radiusadjust=1;
+		distance=1;
+		size=1.2;
+	}
+	[mobileintel]
+	{
+		bitmap=icons/mobileintel.tga;
+		radiusadjust=1;
+		distance=1;
+		size=1.2;
+	}
+	[magnetar]
+	{
+		bitmap=icons/magnetar.tga;
+		radiusadjust=1;
+		distance=1;
+		size=1.6;
+	}
+
 }
 

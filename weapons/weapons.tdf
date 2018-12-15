@@ -1550,7 +1550,7 @@
 }
 [ARMATL_TORPEDO]
 {
-	name=Guided Torpedo;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	turret=1;
 	CollideFriendly=1;
@@ -1966,6 +1966,8 @@
   	alphadecay=0.24;
   	sizedecay=-0.1;
 	turret=1;
+	gravityaffected=0;
+	mygravity=0.1;
 	range=1950;
 	reloadtime=3;
 	weaponvelocity=480;
@@ -2978,7 +2980,7 @@
 }
 [aven_piranha_torpedo]
 {
-	name=Guided Torpedo;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	turret=1;
 	collidefriendly=1;
@@ -4095,7 +4097,7 @@
 }
 [aven_lurker_torpedo]
 {
-	name=Torpedo;
+	name=Unguided Torpedoes;
 	weapontype=TorpedoLauncher;
 	turret=1;
 	CollideFriendly=1;
@@ -5306,42 +5308,6 @@
 		armor_light=220;//#AUTO#
 	}
 }
-[CORADVBOMB]
-{
-	name=Bombs;
-	weapontype=AircraftBomb;
-	projectiles=4;
-	sprayangle=4000;
-	burst=3;
-	burstrate=.1;
-	accuracy=2000;
-	model=weapon_bomb;
-	cegTag=REDLIGHTBOMB;
-	range=700;
-	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	reloadtime=7;
-	areaofeffect=96;
-	soundstart=bombrel;
-	soundhit=xplomed2;
-	impulsefactor=2; //by Noruas//
-	myGravity=0.7;
-	collidefriendly=0;
-	avoidfriendly=0;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=3;
-	}
-	[DAMAGE]
-	{
-		default=102;
-		group_invincible=1;
-		armor_heavy=102;//#AUTO#
-		armor_medium=102;//#AUTO#
-		armor_light=102;//#AUTO#
-	}
-}
 [gear_crasher_missile]
 {
 	name=Missiles;
@@ -6549,7 +6515,7 @@
 }
 [gear_snake_torpedo]
 {
-	name=Unguided Torpedo;
+	name=Unguided Torpedoes;
 	weapontype=TorpedoLauncher;
 	turret=1;
     CollideFriendly=1;
@@ -6715,6 +6681,8 @@
 	energypershot=0;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	turret=1;
+	gravityaffected=0;
+	mygravity=0.1;
 	range=1900;
 	reloadtime=2.8;
 	weaponvelocity=450;
@@ -7142,7 +7110,7 @@
 }
 [CORSSUB_WEAPON]
 {
-	name=Unguided Torpedo;
+	name=Unguided Torpedoes;
 	weapontype=TorpedoLauncher;
 	turret=1;
 	model=weapon_Advtorpedo;
@@ -8187,6 +8155,7 @@
 	energypershot=0;
 	weaponvelocity=300;
 	gravityaffected=0;
+	mygravity=0.13;
 	collisionSize=10;
 	areaofeffect=120;
 	edgeeffectiveness=0;
@@ -8234,6 +8203,7 @@
 	energypershot=0;
 	weaponvelocity=400;
 	gravityaffected=0;
+	mygravity=0.12;
 	collisionSize=10;
 	areaofeffect=240;
 	edgeeffectiveness=0;
@@ -8268,53 +8238,6 @@
 		armor_heavy=200;//#AUTO#
 		armor_medium=400;//#AUTO#
 		armor_light=800;//#AUTO#
-	}
-}
-[gear_firestorm_fireball]
-{
-	name=Fireball Cannon;
-	weapontype=Cannon;	
-	turret=1;
-	range=450;
-	reloadtime=1.4;
-	weapontimer=4;
-	energypershot=0;
-	weaponvelocity=300;
-	gravityaffected=1;
-	mygravity=0.13;
-	collisionSize=10;
-	areaofeffect=120;
-	edgeeffectiveness=0;
-	impulsefactor=0.1;
-	accuracy=500;
-	movingaccuracy=1000;
-	soundstart=canlite2;
-	soundhit=flamlit2;
-	firestarter=70;
-	explosiongenerator=custom:fireballboommed;
-	cegTag=fireballtrail3;
-	rgbcolor=0.7 0.3 0.0;
-	size=4.00;
-	stages=7;
-  	separation=0.0;
-  	alphadecay=0.8;
-  	sizedecay=-0.11;
-	tolerance=4000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-		burn=1;
-		burnaoe=1;
-	}
-	[DAMAGE]
-	{
-		default=200;
-		group_invincible=1;
-		armor_heavy=50;//#AUTO#
-		armor_medium=100;//#AUTO#
-		armor_light=200;//#AUTO#
 	}
 }
 [gear_firestorm_rocket]
@@ -9795,7 +9718,7 @@
 	startvelocity=650;
 	weaponAcceleration=136;
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	turnrate=8660;
+	turnrate=38660;
 	areaofeffect=48;
 	metalpershot=0;
 	trajectoryheight=0.1;
@@ -13603,7 +13526,7 @@
 }
 [claw_cutter_torpedo]
 {
-	name=Unguided Torpedo;
+	name=Unguided Torpedoes;
 	weapontype=TorpedoLauncher;
 	turret=1;
     	CollideFriendly=1;
@@ -13676,7 +13599,7 @@
 }
 [claw_drakkar_torpedo]
 {
-	name=Fast Torpedo;
+	name=Fast Torpedoes;
 	weapontype=TorpedoLauncher;
 	model=weapon_fasttorpedo;
 	cegTag=RAILGUNTRAIL;
@@ -13947,7 +13870,7 @@
 }
 [claw_monster_torpedo]
 {
-	name=Guided Torpedo;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	turret=1;
 	CollideFriendly=1;
@@ -13998,6 +13921,8 @@
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	GroundBounce=0;
 	WaterBounce=0;
+	gravityaffected=0;
+	mygravity=0.1;
 	turret=1;
 	range=1600;
 	reloadtime=4.5;
@@ -14228,7 +14153,7 @@
 	reloadtime=0.1;
 	energypershot=8;
 	weaponvelocity=4000;
-  	texture1=testlightning;
+  	texture1=lightning;
   	laserflaresize=2;
 	areaofeffect=16;
 	SoundStart=elec1;
@@ -14267,7 +14192,7 @@
 	reloadtime=0.1;
 	energypershot=9;
 	weaponvelocity=4000;
-  	texture1=testlightning;
+  	texture1=lightning;
   	laserflaresize=2;
 	areaofeffect=16;
 	SoundStart=elec1;
@@ -14307,7 +14232,7 @@
 	reloadtime=0.1;
 	energypershot=6;
 	weaponvelocity=400;
-  	texture1=testlightning;
+  	texture1=lightning;
   	laserflaresize=2;
 	areaofeffect=16;
 	SoundStart=elec2;
@@ -14345,7 +14270,7 @@
 	reloadtime=0.1;
 	energypershot=19;
 	weaponvelocity=400;
-  	texture1=testlightning;
+  	texture1=lightning2;
   	laserflaresize=2;
 	areaofeffect=16;
 	SoundStart=elec3;
@@ -14385,7 +14310,7 @@
 	reloadtime=0.1;
 	energypershot=42;
 	weaponvelocity=400;
-  	texture1=testlightning;
+  	texture1=lightning2;
   	laserflaresize=2;
 	areaofeffect=16;
 	SoundStart=elec5;
@@ -17244,7 +17169,7 @@
 	reloadtime=0.1;
 	energypershot=10;
 	weaponvelocity=400;
-  	texture1=testlightning;
+  	texture1=lightning;
   	laserflaresize=2;
 	areaofeffect=16;
 	SoundStart=elec2;
@@ -17282,7 +17207,7 @@
 	reloadtime=0.1;
 	energypershot=30;
 	weaponvelocity=400;
-  	texture1=testlightning;
+  	texture1=lightning2;
   	laserflaresize=2;
 	areaofeffect=16;
 	SoundStart=elec3;
@@ -17322,7 +17247,7 @@
 	reloadtime=0.1;
 	energypershot=80;
 	weaponvelocity=400;
-  	texture1=testlightning;
+  	texture1=lightning2;
   	laserflaresize=2;
 	areaofeffect=16;
 	edgeeffectiveness=1.0;
@@ -17363,7 +17288,7 @@
 	reloadtime=0.1;
 	energypershot=13;
 	weaponvelocity=400;
-  	texture1=testlightning;
+  	texture1=lightning;
   	laserflaresize=2;
 	areaofeffect=16;
 	SoundStart=elec2;
@@ -17401,7 +17326,7 @@
 	reloadtime=0.1;
 	energypershot=30;
 	weaponvelocity=400;
-  	texture1=testlightning;
+  	texture1=lightning2;
   	laserflaresize=2;
 	areaofeffect=16;
 	SoundStart=elec3;
@@ -17441,7 +17366,7 @@
 	reloadtime=0.1;
 	energypershot=60;
 	weaponvelocity=400;
-  	texture1=testlightning;
+  	texture1=lightning2;
   	laserflaresize=2;
 	areaofeffect=16;
 	edgeeffectiveness=1.0;
@@ -17995,7 +17920,7 @@
 }
 [sphere_crab_torpedo]
 {
-	name=Torpedo;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
         CollideFriendly=1;
 	model=weapon_torpedo;

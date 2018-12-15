@@ -1,3 +1,49 @@
+2018/12/15 ------------------ NOTES v1.04 ----------------------
+
+--- balance / mechanics
+
+- reduced the cost of most aircraft (not spheres) by about 4-8%
+
+- removed stealth (invisible to radars) ability from air scouts, aven warrior and adv. sonar stations
+- removed high trajectory mode from AVEN "Racer"
+- reduced AVEN upgraded commanders' radar/sonar ranges from 1000 to 800 to match all the others
+- reduced the minimum decloak distance for stealth drones from 200 to 90 (commanders have 100)
+
+- fixed many torpedo and depthcharge weapons not being destroyed by the out-of-water threshold
+
+- fixed bug where one of the queued upgrades would sometimes get wrongly canceled
+- fixed bug that could allow players to build more upgrades than the allowed maximum for each type
+
+- fixed issue where aircraft and flying sphere factories would become invulnerable to projectiles with low AOE when fired at from certain directions
+
+- increased turnrate of AVEN "Icarus" missiles so they can properly chase fast air units flying nearby
+
+- set specific gravity for some high trajectory weapons (namely CLAW "Massacre") to prevent them having lower than expected range
+
+
+--- UI / visuals
+
+- automatically reset orders for construction towers if they're targetting outside their build range
+- adjusted the name of torpedo weapons for consistency : "Torpedoes" and "Unguided Torpedoes"
+- fixed clearing of map markers and drawings every few seconds which shouldn't happen (leftover from AI debug)
+
+- settings widget enforce 10k nanoparticles limit and sets mouse scroll wheel speed to -25
+(the latter should prevent new players from bumping into the annoying inverted mousewheel zoom issue)
+
+- fixed invisible hull sections on GEAR "Executioner" and "Jigsaw" ships and added thruster tubes on all ship models
+- GEAR "Jigsaw" back turret raises significantly higher as the laser can shoot over the front turret
+
+- increased icon size for level2 factories
+- reduced icon size for construction towers
+- added icons for magnetar, radars and radar jammers
+
+- fixed expenditure labels and values on the resource bars
+
+- made ruby and obsidian lightning beams more intense visually
+
+- made team colors somewhat brighter to make it easier to tell icons apart and contrast better with darker map backgrounds
+
+
 2018/11/30 ------------------ NOTES v1.03 ----------------------
 
 --- balance / mechanics

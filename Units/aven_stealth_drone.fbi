@@ -6,7 +6,7 @@
 	Side=Aven;
 	name=Cloakable Intelligence Drone;
 	description=Provides Radar, Sonar and Radar Jammer;
-	icontype=air;
+	icontype=mobileintel;
 
 	//************************************************************
 	//  Categories
@@ -66,7 +66,7 @@
 	cancloak=1;
 	cloakcost=30;
 	cloakcostmoving=60;
-	mincloakdistance=200;
+	mincloakdistance=90;
 	initCloaked=1;
 
 	//************************************************************
@@ -136,7 +136,7 @@
 	//  To be removed
 	//*****************
 
-	buildcostenergy=2338;//#AUTO#
-	buildcostmetal=467;//#AUTO#
-	buildtime=5573;//#AUTO#
+	buildcostenergy=2218;//#AUTO#
+	buildcostmetal=443;//#AUTO#
+	buildtime=5287;//#AUTO#
 }

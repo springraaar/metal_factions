@@ -189,7 +189,7 @@ local function updateUnitPhysics(unitId)
 	if magnetarUnitIds[unitId] == true then
 		local smHeight = spGetSmoothMeshHeight(x,z)
 		h = y - smHeight
-		if (h > 100 and vy > 0) or v > 1.5 then
+		if (h > 100 and vy > 0.01) or v > 1.5 then
 			--Spring.Echo("enforced vy for magnetar vy="..vy.." v="..v)
 			spSetUnitVelocity(unitId,vx * 0.8/v,0,vz * 0.8/v)
 		end

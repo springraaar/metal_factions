@@ -6,7 +6,7 @@
 	Side=Gear;
 	name=Cloakable Intelligence Drone;
 	description=Provides Radar, Sonar and Radar Jammer;
-	icontype=air;
+	icontype=mobileintel;
 
 	//************************************************************
 	//  Categories
@@ -66,7 +66,7 @@
 	cancloak=1;
 	cloakcost=30;
 	cloakcostmoving=60;
-	mincloakdistance=200;
+	mincloakdistance=90;
 	initCloaked=1;
 
 	//************************************************************
@@ -136,7 +136,7 @@
 	//  To be removed
 	//*****************
 
-	buildcostenergy=2192;//#AUTO#
-	buildcostmetal=438;//#AUTO#
-	buildtime=5225;//#AUTO#
+	buildcostenergy=2079;//#AUTO#
+	buildcostmetal=415;//#AUTO#
+	buildtime=4955;//#AUTO#
 }

@@ -1,11 +1,10 @@
 colors = {
-	myColor		= { 60, 60, 255 },	-- can only be 1 color
---	myColor		= { 008, 192, 016 },
+	myColor		= { 100, 100, 255 },	-- can only be 1 color
 	gaiaColor	= { 200, 200, 200 },	-- can only be 1 color
 	
 	allyColors = {						-- as many as needed
-	  { 150, 255, 150 },
-	  { 50, 100, 50 },
+	  { 150, 255, 200 },
+	  { 80, 180, 130 },
 	  { 100, 200, 100 },
 	  
 	  { 75, 150, 75 },
@@ -22,7 +21,7 @@ colors = {
 
 	enemyColors = {
 	-- as many as needed
-	  { 255, 000, 000 },
+	  { 255, 70, 70 },
 	  { 255, 255, 000 },
 	  { 255, 100, 000 },
 	  { 150, 040, 040 },

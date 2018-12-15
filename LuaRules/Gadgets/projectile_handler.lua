@@ -104,6 +104,12 @@ local torpedoWeaponIds = {
 	[WeaponDefNames["aven_commander_torpedo"].id]=true,
 	[WeaponDefNames["aven_lurker_torpedo"].id]=true,
 	[WeaponDefNames["aven_piranha_torpedo"].id]=true,
+	[WeaponDefNames["aven_tl_torpedo"].id]=true,
+	[WeaponDefNames["aven_rush_depthcharge"].id]=true,
+	[WeaponDefNames["aven_vanguard_depthcharge"].id]=true,
+	[WeaponDefNames["armdepthcharge"].id]=true,
+	[WeaponDefNames["aven_slider_s_depthcharge"].id]=true,
+	
 	-- GEAR
 	[WeaponDefNames["gear_commander_torpedo"].id]=true,
 	[WeaponDefNames["gear_u1commander_torpedo"].id]=true,
@@ -114,6 +120,9 @@ local torpedoWeaponIds = {
 	[WeaponDefNames["gear_snake_torpedo"].id]=true,
 	[WeaponDefNames["gear_noser_torpedo"].id]=true,
 	[WeaponDefNames["corssub_weapon"].id]=true,
+	[WeaponDefNames["gear_tl_torpedo"].id]=true,
+	[WeaponDefNames["coredepthcharge"].id]=true,
+	[WeaponDefNames["gear_viking_depthcharge"].id]=true,
 	-- CLAW
 	[WeaponDefNames["claw_commander_torpedo"].id]=true,
 	[WeaponDefNames["claw_u1commander_torpedo"].id]=true,
@@ -124,6 +133,8 @@ local torpedoWeaponIds = {
 	[WeaponDefNames["claw_u6commander_torpedo"].id]=true,
 	[WeaponDefNames["claw_spine_torpedo"].id]=true,
 	[WeaponDefNames["claw_monster_torpedo"].id]=true,
+	[WeaponDefNames["claw_sinker_depthcharge"].id]=true,
+	[WeaponDefNames["claw_drakkar_depthcharge"].id]=true,
 	-- SPHERE
 	[WeaponDefNames["sphere_commander_torpedo"].id]=true,
 	[WeaponDefNames["sphere_u1commander_torpedo"].id]=true,
@@ -132,9 +143,11 @@ local torpedoWeaponIds = {
 	[WeaponDefNames["sphere_u4commander_torpedo"].id]=true,
 	[WeaponDefNames["sphere_u5commander_torpedo"].id]=true,
 	[WeaponDefNames["sphere_u6commander_torpedo"].id]=true,
+	[WeaponDefNames["sphere_crab_torpedo"].id]=true,
 	[WeaponDefNames["sphere_carp_torpedo"].id]=true,
 	[WeaponDefNames["sphere_pluto_torpedo"].id]=true,
 	[WeaponDefNames["sphere_clam_torpedo"].id]=true,
+	[WeaponDefNames["sphere_endeavour_depthcharge"].id]=true,
 	[WeaponDefNames["sphere_oyster_torpedo"].id]=true
 }
 
@@ -586,22 +599,6 @@ function gadget:ProjectileDestroyed(proID)
 	elseif dynamoProjectiles[proID] then
 		dynamoProjectiles[proID] = nil
 	end
-end
-
--- torpedo weapon target check
--- TODO this should work, but doesn't: engine bug
-function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attackerWeaponDefID, defaultPriority)
-	if torpedoWeaponIds[attackerWeaponDefID] then
-		-- if target is on land, return false
-		local x,y,z = Spring.GetUnitPosition(targetID)
-		local h = spGetGroundHeight(x,z)
-		
-		if (h > 0 or y > 30) then
-			return false,99999999
-		end
-	end
-
-	return true,defaultPriority
 end
 
 -- handle ring damage

@@ -22,6 +22,12 @@ function widget:Initialize()
 	
 	-- set max particles to 20000
 	Spring.SetConfigInt("MaxParticles",20000)
+
+	-- set max nano particles to 10000
+	Spring.SetConfigInt("MaxNanoParticles",10000)
+	
+	-- set scrollwheel speed to -25
+	Spring.SetConfigInt("ScrollWheelSpeed",-25)
 	
 	-- disable clock and fps (widget is used instead)
 	Spring.SendCommands("clock 0")
