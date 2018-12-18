@@ -140,7 +140,7 @@ function widget:GameFrame(frame)
 	local cmds,cmd1,tx,tz,x,z
 	 
 	for unitID,_ in pairs(immobileBuilders) do
-		cmds = spGetUnitCommands(unitID)
+		cmds = spGetUnitCommands(unitID,5)
 		
 		-- if first command targets something outside build radius, cancel it
 		if (cmds and (#cmds > 0)) then
@@ -180,11 +180,11 @@ function widget:GameFrame(frame)
 	for unitID, f in pairs(idlers) do
 		local idler = idlers[k]
 		if ((frame - f) > idleFrames) then
-			local cmds = spGetUnitCommands(unitID)
-			if (cmds and (#cmds <= 0)) then
-				SetupUnit(unitID)
+			local cmds = spGetUnitCommands(unitID,0)
+			if (cmds and cmds > 0) then
+				idlers[unitID] = nil				
 			else
-				idlers[unitID] = nil
+				SetupUnit(unitID)
 			end
 		end
 	end  

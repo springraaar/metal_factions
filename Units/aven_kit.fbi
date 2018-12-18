@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=600;
+	maxdamage=750;
 	healtime=30;
 	footprintx=2;
 	footprintz=2;
@@ -35,8 +35,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.6;
-	energyuse=0.6;
+	energymake=0.0;
+	energyuse=0.0;
 	energystorage=0;
 
 	//************************************************************
@@ -66,7 +66,7 @@
 	turnrate=1005;
 	acceleration=1.0;
 	brakerate=1.5;
-	maxvelocity=2.2;
+	maxvelocity=2.35;
 	maxslope=14;
 	maxwaterdepth=12;
 
@@ -124,7 +124,7 @@
 	{
 	explosiongenerator0=custom:rocketflaresml;
 	}
-	buildcostenergy=639;//#AUTO#
-	buildcostmetal=127;//#AUTO#
-	buildtime=1524;//#AUTO#
+	buildcostenergy=832;//#AUTO#
+	buildcostmetal=166;//#AUTO#
+	buildtime=1983;//#AUTO#
 }
