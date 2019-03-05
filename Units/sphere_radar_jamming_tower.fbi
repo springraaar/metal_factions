@@ -61,7 +61,6 @@
 	//  Movement
 	//************
 	maxslope=10;
-	maxwaterdepth=22;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -92,9 +91,11 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 	collisionVolumeType=cily;
-	collisionVolumeScales=30 60 30;
+	collisionVolumeScales=30 70 30;
 	collisionVolumeOffsets=0 0 0;
 	collisionVolumeTest = 1;
+	floater=1;
+	waterline=0;
 
 	//************************************************************
 	//  To be removed

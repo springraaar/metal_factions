@@ -4,48 +4,43 @@
 	//  Unit Description
 	//********************
 	Side=Aven;
-	name=Floating Sentinel;
-	description=Floating Heavy Laser Tower;
-	icontype=sea;
+	name=Ghost;
+	description=Stealth Bomber;
+	icontype=air;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN SPECIAL LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=WATER;
+	category=AVEN VTOL LEVEL2 WEAPON BOMB NOTSUB  ;
+	tedclass=VTOL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_floating_sentinel;
-	unitnumber=177;
-	objectname=aven_floating_sentinel.3do;
-	corpse=aven_floating_sentinel_dead;
-	buildpic=aven_floating_sentinel.png;
-	soundcategory=aven_KBOT;
+	unitname=aven_ghost;
+	objectname=aven_ghost.3do;
+	buildpic=aven_ghost.png;
+	soundcategory=aven_VTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2500;
-	healtime=11;
-	footprintx=4;
-	footprintz=4;
+	maxdamage=1800;
+	healtime=30;
+	footprintx=5;
+	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalstorage=0;
-	energyuse=0.1;
+	energymake=0;
+	energyuse=50;
 	energystorage=0;
-	windgenerator=0.001;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
-	yardmap=wwww wwww wwww wwww;
-	activatewhenbuilt=1;
 
 	//************************************************************
 	//  Constructor
@@ -57,27 +52,61 @@
 	//  Abilities
 	//*************
 	canattack=1;
+	candropflare=0;
+	canfly=1;
 	canguard=1;
+	canmove=1;
+	canpatrol=1;
 	canstop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	minwaterdepth=10;
-	floater=1;
-	waterline=3;
+	turnrate=365;
+	acceleration=0.2;
+	brakerate=0.1;
+	maxvelocity=5.0;
+	maxslope=10;
+	maxwaterdepth=2;
+	cruisealt=250;
+	hoverattack=1;
+	upright=1;
+
+	// flight behaviour
+	wingdrag=0.07;      //0.07
+	wingangle=0.08;	//0.08;
+	drag=0.08;		//0.08
+	fronttospeed=0.1;  //0.1
+	speedtofront=0.07; //0.07
+	mygravity=0.4; //0.4
+	maxbank=0.8;	//0.8
+	maxpitch=0.45;	//0.45
+	turnradius=350; //500
+	maxaileron=0.01;	//0.015
+	maxelevator=0.01;	//0.01
+	maxrudder=0.01;  //0.004
+	maxAcc=0.365; //0.065
+
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
+	sightdistance=600;
 	radardistance=0;
+	radardistancejam=600;
+
+	// stealth
+	cloakcost=150;
+	cloakcostmoving=300;
+	mincloakdistance=250;
+
 
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=aven_sentinel_laser;
-	badtargetcategory1=VTOL;
+	weapon1=aven_ghost_bomb;
+	nochasecategory=UNDERWATER;
+	onlytargetcategory1=NOTAIR;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
 
@@ -86,37 +115,50 @@
 	//**********
 	noautofire=0;
 	firestandorders=1;
+	mobilestandorders=1;
 	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	standingmoveorder=1;
+	defaultmissiontype=VTOL_standby;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	ai_limit=limit ARMFHLT 6;
-	bmcode=0;
-	designation=ARM-FHL;
+	altfromsealevel=1;
+	attackrunlength=225;
+	bankscale=1;
+	bmcode=1;
+	designation=AFD-HAB;
 	downloadable=1;
-	noshadow=1;
+	flaredelay=0.3;
+	flaredropvector=0 0 -1;
+	flareefficieny=0.3;
+	flarereload=4;
+	maneuverleashlength=1280;
+	scale=1;
 	shootme=1;
+	steeringmode=1;
 	threed=1;
 	version=1.2;
 	zbuffer=1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
-	collisionVolumeType = cyly;
-	collisionVolumeScales =60 65 60;
-	collisionVolumeOffsets = 0 -10 0;
+
+	collide=1;
+	minCollisionSpeed=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =70 15 40;
+	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	
+
 	//************************************************************
 	//  To be removed
 	//*****************
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:greenflare;
+	
 	}
-	buildcostenergy=4729;//#AUTO#
-	buildcostmetal=945;//#AUTO#
-	buildtime=11272;//#AUTO#
+	buildcostenergy=17942;//#AUTO#
+	buildcostmetal=3588;//#AUTO#
+	buildtime=42762;//#AUTO#
 }

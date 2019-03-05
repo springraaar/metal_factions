@@ -84,7 +84,7 @@
 	turnrate=1030;
 	acceleration=0.26;
 	brakerate=0.32;
-	maxvelocity=1.05;
+	maxvelocity=1.00;
 	maxslope=20;
 	maxwaterdepth=999;
 
@@ -101,9 +101,8 @@
 	weapon1=gear_u5commander_fireball;
 	weapon2=gear_u5commander_torpedo;
 	hightrajectory=2;
-	onlytargetcategory1=NOTAIR;
-	onlytargetcategory2=NOTAIR;
-	onlytargetcategory3=NOTAIR;
+	badtargetcategory1=VTOL;
+	badtargetcategory2=VTOL;
 	explodeas=gear_commander_nanoblast;
 	selfdestructas=gear_commander_nanoblast;
 

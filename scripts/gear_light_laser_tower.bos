@@ -3,9 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, stand, logo1, logo2, ldoor, rdoor, turret, sleeve, barrels, lb1,lb2,lb3, flare1, tlogo, aimpt;
+piece  base, stand, logo1, logo2, ldoor, rdoor, turret, sleeve, barrels, lb1,lb2,lb3, flare1, tlogo, aimpt, floatbase, fb2,fb3;
 
-static-var gun_1, isOpen, currentHeading, currentPitch;
+static-var gun_1, isOpen, currentHeading, currentPitch, isFloating;
 
 #define HEADING_TOLERANCE	<15.000000>
 #define PITCH_TOLERANCE		<25.000000>
@@ -90,6 +90,18 @@ Create()
 	currentHeading = <0>;
 	currentPitch = <0>;
 	gun_1 = [0];
+	
+	hide floatbase;
+	hide fb2;
+	hide fb3;
+	isFloating = FALSE;
+	if ( GET GROUND_WATER_HEIGHT(GET UNIT_XZ) < [0])
+	{
+		isFloating = TRUE;
+		show floatbase;
+		show fb2;
+		show fb3;
+	}
 
 	start-script SmokeUnit();
 	start-script close();
@@ -177,35 +189,25 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode lb1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-		explode lb2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-		explode turret type SHATTER | BITMAP4;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode base type SHATTER | BITMAP4;
-		explode stand type SHATTER | BITMAP4;
-		explode turret type SHATTER | BITMAP4;
-		explode lb1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-		explode lb2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-		return (0);
+		if (isFloating) 
+		{
+			corpsetype = 1;
+		}
+		if (!isFloating) 
+		{
+			corpsetype = 2;
+		}
+		explode lb1 type SHATTER | BITMAP4;	
+		explode lb2 type SHATTER | BITMAP4;	
+		explode turret type SHATTER | BITMAP4;	
+		return corpsetype;
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode base type SHATTER | BITMAP4;
-		explode stand type SHATTER | BITMAP4;
-		explode turret type SHATTER | BITMAP4;
-		return (0);
-	}
+
 	corpsetype = 3;
 	explode base type SHATTER | BITMAP4;
 	explode stand type SHATTER | BITMAP4;
-	explode turret type SHATTER | BITMAP4;
-	return (0);
+	explode turret type SHATTER | BITMAP4;	
+	return corpsetype;
 }

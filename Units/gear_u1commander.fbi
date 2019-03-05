@@ -5,7 +5,7 @@
 	//********************
 	Side=Gear;
 	name=Commander;
-	description=Destroyer Form;
+	description=Raider Form;
 	icontype=gear_commander;
 
 	//************************************************************
@@ -28,7 +28,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3750;
+	maxdamage=3650;
 	healtime=100;
 	buildcostmetal=2000;
 	buildcostenergy=20000;
@@ -102,7 +102,7 @@
 	//***********
 	weapon1=gear_u1commander_flamethrower;
 	weapon2=gear_u1commander_torpedo;
-	weapon3=gear_u1commander_laser2;
+	weapon3=gear_u1commander_missile;
 	slaveto1=3;
 	nochasecategory=WEAPON;
 	badtargetcategory1=VTOL;
@@ -157,7 +157,7 @@
 	[CustomParams]
 	{
 		isCommander=1;
-		tip=Targets burn for 180(M) dmg over 6s;
+		tip=Burns ground for 20s, dealing up to 20(M) dmg/s. Affected units burn for 180(M) dmg over 6s;
 	}
 	//************************************************************
 	//  To be removed

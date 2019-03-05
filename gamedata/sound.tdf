@@ -404,11 +404,10 @@
 [aven_JAM]
 {
 	select1=radjam1;
-	ok1=varmmove;
-	arrived1=varmstop;
+	ok1=servlrg1;
 	cant1=cantdo4;
+	arrived1=radjam1;
 	underattack=warning1;
-	activate=radjam1;
 	deactivate=radjam1;
 	count5=count1;
 	count4=count2;
@@ -1040,11 +1039,10 @@
 [gear_JAM]
 {
 	select1=radjam2;
-	ok1=vcormove;
-	arrived1=vcorstop;
+	ok1=servtny1;
 	cant1=cantdo4;
 	underattack=warning2;
-	activate=radjam2;
+	arrived1=radjam2;
 	deactivate=radjam2;
 	count5=count1;
 	count4=count2;

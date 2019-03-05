@@ -3,17 +3,49 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, rwing, lwing, tail, ljet, rjet, ljp, rjp, base2, base3, center, weapon,flare, front;
+piece  base, rwing, lwing, tail, ljet, rjet, ljp, rjp, base2, base3, center, weapon,barrel,flare, front;
 
-static-var  statechg_DesiredState, statechg_StateChanging, Static_Var_5, isFlying;
+static-var  statechg_DesiredState, statechg_StateChanging, isFlying, bMoving, energyBoostedMovement;
+
+lua_checkEnergy() { return 0; }
 
 
-Crashing(Func_Var_1)
+MotionControl(hasEnergy)
 {
-	Func_Var_1 = get HEALTH;
-	if( Func_Var_1 < 0 )
+	hasEnergy = 1;
+	while (TRUE)
 	{
-		Static_Var_5 = 2;
+		bMoving = ((get CURRENT_SPEED) * 100 / (get MAX_SPEED)) > 70;
+
+		// lua check for energy availability		
+		call-script lua_checkEnergy(2000);
+		hasEnergy = get LUA1;
+		
+		// update speed and activation state
+		if (bMoving && hasEnergy)
+		{
+			energyBoostedMovement = TRUE;
+		}
+		if (!bMoving || !hasEnergy)
+		{
+			energyBoostedMovement = FALSE;
+		}
+
+		sleep 60;
+	}
+}
+
+
+Effect()
+{
+	while (TRUE)
+	{
+		if (energyBoostedMovement)
+		{
+			emit-sfx 1024+1 from barrel;
+		}
+
+		sleep 30;
 	}
 }
 
@@ -100,10 +132,13 @@ RequestState(requestedstate, currentstate)
 
 Create()
 {
+	energyBoostedMovement = FALSE;
+	bMoving=FALSE;
 	isFlying = FALSE;
 	call-script InitState();
+	start-script MotionControl();
 	start-script SmokeUnit();
-	start-script Crashing();
+	start-script Effect();
 }
 
 Activate()
@@ -127,7 +162,7 @@ AimPrimary()
 
 FirePrimary()
 {
-	emit-sfx 1024+1 from flare;
+	emit-sfx 1024+0 from flare;
 }
 
 QueryPrimary(piecenum)
@@ -142,8 +177,6 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	//start-script Crashing();
-
 	corpsetype = 3;
 	explode base2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
 	explode lwing type SHATTER | EXPLODE_ON_HIT | BITMAP5;

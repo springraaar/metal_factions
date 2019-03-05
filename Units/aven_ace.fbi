@@ -5,13 +5,13 @@
 	//********************
 	Side=Aven;
 	name=Ace;
-	description=Fast Mini-nuke Bomber;
+	description=Very Fast Assassination Bomber;
 	icontype=air;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN VTOL LEVEL2 WEAPON BOMB NOTSUB  ;
+	category=AVEN VTOL LEVEL2 WEAPON BOMB NOTSUB;
 	tedclass=VTOL;
 
 	//************************************************************
@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1000;
+	maxdamage=1400;
 	healtime=30;
 	footprintx=4;
 	footprintz=4;
@@ -63,13 +63,13 @@
 	//************************************************************
 	//  Movement
 	//************
-	turnrate=365;
-	acceleration=0.25;
+	turnrate=505;
+	acceleration=0.75;
 	brakerate=0.1;
-	maxvelocity=10.0;
+	maxvelocity=18;
 	maxslope=10;
 	maxwaterdepth=2;
-	cruisealt=250;
+	cruisealt=180;
 
 	// flight behaviour
 	wingdrag=0.07;      //0.07
@@ -84,7 +84,7 @@
 	maxaileron=0.01;	//0.015
 	maxelevator=0.01;	//0.01
 	maxrudder=0.01;  //0.004
-	maxAcc=0.365; //0.065
+	maxAcc=0.765; //0.065
 
 
 	//************************************************************
@@ -96,9 +96,11 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=aven_ace_bomb;
+	weapon1=aven_ace_laser;
 	nochasecategory=UNDERWATER;
-	onlytargetcategory1=NOTAIR;
+	badtargetcategory1=VTOL;
+	WeaponMainDir1=0 0 1;  //x:0 y:0 z:1 => that's forward!
+	MaxAngleDif1=60;       //60deg from side to side, or 30deg from center to each direction
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
 
@@ -120,21 +122,9 @@
 	bankscale=1;
 	bmcode=1;
 	designation=AFD-HAB;
-	downloadable=1;
-	flaredelay=0.3;
-	flaredropvector=0 0 -1;
-	flareefficieny=0.3;
-	flarereload=4;
 	maneuverleashlength=1280;
-	scale=1;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
-
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
@@ -145,12 +135,18 @@
 	//************************************************************
 	//  To be removed
 	//*****************
+	[CustomParams]
+	{
+		energyCostMoving=300;
+		tip=Requires 300E/s to move;
+	}
 
 	[SFXTypes]
 	{
-	
+		explosiongenerator0=custom:rocketflaresml;
+		explosiongenerator1=custom:acetrail;
 	}
-	buildcostenergy=15858;//#AUTO#
-	buildcostmetal=3171;//#AUTO#
-	buildtime=37796;//#AUTO#
+	buildcostenergy=7701;//#AUTO#
+	buildcostmetal=1540;//#AUTO#
+	buildtime=18355;//#AUTO#
 }

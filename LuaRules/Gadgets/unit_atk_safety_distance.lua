@@ -11,9 +11,7 @@ function gadget:GetInfo()
 end
 
 
-local specialCases = {
-	aven_ace = 9999.0
-}
+local specialCases = {}
 
 local DEFAULT_DISTANCE = 350.0
 

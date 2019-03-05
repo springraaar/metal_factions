@@ -372,6 +372,15 @@ function GenerateNewTooltip()
 			NewTooltip = NewTooltip.."\255\255\255\255\n"
 			if fud.speed and fud.speed>0 then
 				NewTooltip = NewTooltip.."\255\193\255\187Speed: \255\134\255\121"..FormatNbr(fud.speed,2).."\255\255\255\255"
+			else
+				-- show where buildings can be built
+				if (fud.minWaterDepth > 0) then
+					NewTooltip = NewTooltip.."Buildable on \255\64\64\255WATER\255\255\255\255\n"
+				elseif (fud.maxWaterDepth < 100) then
+					NewTooltip = NewTooltip.."Buildable on \255\200\200\200LAND\255\255\255\255\n"
+				else
+					NewTooltip = NewTooltip.."Buildable on \255\200\200\200LAND\255\255\255\255,\255\64\64\255WATER\255\255\255\255\n"
+				end
 			end
 			FoundTooltipType="knownbuildbutton"
 			

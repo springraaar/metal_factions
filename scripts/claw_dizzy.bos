@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define SPEEDUP_FACTOR 120
+#define SPEEDUP_FACTOR 200
 
 piece  base, pivot, wake1, wake2, tbase, spinner, bottom, b2, d2, s1, s2,s3,d3, base1, base2,base3, turret, tur2, gun1, gun2, gun3, sleeve, flare, sup2, sup3;
 
@@ -220,11 +220,11 @@ AimPrimary(heading, pitch)
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
-	turn tbase to y-axis heading speed <300.000000>;
-	turn sleeve to x-axis <0.000000> - pitch speed <300.000000>;
-	turn gun1 to x-axis <0.000000> - pitch speed <300.000000>;
-	turn gun2 to x-axis <0.000000> - pitch speed <300.000000>;
-	turn gun3 to x-axis <0.000000> - pitch speed <300.000000>;
+	turn tbase to y-axis heading speed <450.000000>;
+	turn sleeve to x-axis <0.000000> - pitch speed <450.000000>;
+	turn gun1 to x-axis <0.000000> - pitch speed <450.000000>;
+	turn gun2 to x-axis <0.000000> - pitch speed <450.000000>;
+	turn gun3 to x-axis <0.000000> - pitch speed <450.000000>;
 
 	if ( (get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE ))
 	{
@@ -245,19 +245,19 @@ FirePrimary()
 	if (gun_1 == [0]) {
 		sleep 100;
 		gun_1 = [1];
-		turn turret to y-axis <120> speed <720>;
+		turn turret to y-axis <120> speed <1220>;
 		return (1);
 	}
 	if (gun_1 == [1]) {
 		sleep 100;
 		gun_1 = [2];
-		turn turret to y-axis <240> speed <720>;
+		turn turret to y-axis <240> speed <1220>;
 		return (1);
 	}
 	if (gun_1 == [2]) {
 		sleep 100;
 		gun_1 = [0];
-		turn turret to y-axis <361> speed <720>;
+		turn turret to y-axis <361> speed <1220>;
 		return (1);
 	}
 }

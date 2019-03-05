@@ -6,9 +6,9 @@
 #define SPEEDUP_FACTOR 250
 #define RESTORE_DELAY	3000
 
-piece  torso, ruparm, luparm, larm, rarm, rflare, nanospray, flamer, pelvis, lflare, head, h2, pack, tube1, tube2, lthigh, rthigh, nanogun, torpgun, biggun, rleg, lleg, lfoot, rfoot, torpedo, bg2, lknee, rknee, nanobox;
+piece  torso, ruparm, luparm, larm, rarm, lfirept,rfirept, lflare, rflare,lnanospray,rnanospray, lflamer,rflamer, pelvis, head, h2, pack, tube1, tube2, lthigh, rthigh, lgun,rgun, ltorpgun,rtorpgun, rleg, lleg, lfoot, rfoot, ltorpedo, rtorpedo, lknee, rknee, lnanobox,rnanobox, launcherpt;
 
-static-var  bMoving, bBuilding, Static_Var_3, bAiming, Static_Var_5, Static_Var_6, bDgunning, bUnderwater, canAim1, canAim2, firePt1,  mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
+static-var  bMoving, bBuilding, bAiming, bDgunning, bUnderwater, canAim1, canAim2, gun_1, gun_2, nanoPt, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
 
 // signal definition
 #define SIG_AIM		2
@@ -56,40 +56,6 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 }
 
 
-Sing()
-{
-	Static_Var_6 = Rand( 0, 9 );
-	if( Static_Var_6 == 0 )
-	{
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		return (0);
-	}
-	if( Static_Var_6 == 1 )
-	{
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		return (0);
-	}
-	if( Static_Var_6 > 1 AND Static_Var_6 < 10 )
-	{
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		return (0);
-	}
-}
-
-
-
 
 // shows nano effect while building
 Build()
@@ -98,7 +64,8 @@ Build()
 	{
 		if( bBuilding )
 		{
-			emit-sfx 1024 + 1 from nanospray;
+			emit-sfx 1024 + 1 from lnanospray;
+			emit-sfx 1024 + 1 from rnanospray;
 			call-script lua_delayReload(3);
 		}
 		sleep 100;
@@ -131,15 +98,19 @@ checkUnderwater()
 			if(bUnderwater)
 			{
 				//hide flamer stuff
-				hide flamer;			
+				hide lflamer;
+				hide rflamer;
  				
 				//TODO show weapon morph stuff
 				sleep 10;
 				
 				//show torpedo stuff 			
- 				move torpedo to z-axis [0.000000] now;
- 				show torpgun;
- 				show torpedo;
+ 				move ltorpedo to z-axis [0.000000] now;
+ 				show ltorpgun;
+ 				show ltorpedo;
+ 				move rtorpedo to z-axis [0.000000] now;
+ 				show rtorpgun;
+ 				show rtorpedo;
  				
 
 				sleep 200;
@@ -149,16 +120,20 @@ checkUnderwater()
 			if(!bUnderwater)
 			{
 				//hide torpedo stuff
-				hide torpedo;
-				hide torpgun;
-				move torpedo to z-axis [0.000000] now;
+				hide ltorpedo;
+				hide ltorpgun;
+				move ltorpedo to z-axis [0.000000] now;
+				hide rtorpedo;
+				hide rtorpgun;
+				move rtorpedo to z-axis [0.000000] now;
 
 
 				//TODO show weapon morph stuff
 				sleep 10;
 
 				//show flamer stuff 			
- 				show flamer;
+ 				show lflamer;
+ 				show rflamer;
  		
  				sleep 200;	
  				canAim1 = TRUE;
@@ -366,18 +341,20 @@ MotionControl()
 
 Create()
 {
-	hide rflare;
-	hide lflare;
-	hide nanospray;
-	hide torpedo;
-	hide torpgun;
+	hide ltorpedo;
+	hide ltorpgun;
+	hide rtorpedo;
+	hide rtorpgun;
+	
 	bMoving = FALSE;
 	bBuilding = FALSE;
 	bDgunning = FALSE;
 	bUnderwater = FALSE;
 	canAim1 = TRUE;
 	canAim2 = FALSE;
-	firePt1=[0];
+	gun_1 = [0];
+	gun_2 = [0];
+	nanoPt= [0];
 	bAiming = 0;
 	start-script MotionSpeedControl();
 	start-script MotionControl();
@@ -406,8 +383,16 @@ SweetSpot(piecenum)
 
 QueryNanoPiece(piecenum)
 {
-	piecenum = nanospray;
-	return;
+	if (nanoPt == [0] ) {
+		piecenum = lnanospray;
+		nanoPt = [1];
+		return;
+	}
+	if (nanoPt == [1] ) {
+		piecenum = rnanospray;
+		nanoPt = [0];
+		return;
+	}
 }
 
 RestorePosition()
@@ -417,13 +402,13 @@ RestorePosition()
 	turn torso to y-axis <0.000000> speed <290.000000>;
 	turn ruparm to x-axis <0.000000> speed <245.000000>;
 	turn luparm to x-axis <0.000000> speed <245.000000>;
-	turn nanogun to x-axis <0.791209> speed <100.000000> * SPEEDUP_FACTOR / 100;
-	turn biggun to x-axis <0.593407> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn lgun to x-axis <0.791209> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn rgun to x-axis <0.593407> speed <100.000000> * SPEEDUP_FACTOR / 100;
 	wait-for-turn torso around y-axis;
 	wait-for-turn ruparm around x-axis;
 	wait-for-turn luparm around x-axis;
-	wait-for-turn nanogun around x-axis;
-	wait-for-turn biggun around x-axis;
+	wait-for-turn lgun around x-axis;
+	wait-for-turn rgun around x-axis;
 	bAiming = FALSE;
 	return;
 }
@@ -436,8 +421,15 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	piecenum = lflare;
-	return;
+	if (gun_1 == [0]) {
+		piecenum = lfirept;
+		return;
+	}
+	if (gun_1 == [1]) {
+		piecenum = rfirept;
+		return;
+	}
+
 }
 
 AimPrimary(heading, pitch)
@@ -451,21 +443,32 @@ AimPrimary(heading, pitch)
 	bAiming = TRUE;
 
 	turn torso to y-axis heading speed <300.093407>;
-	turn luparm to x-axis <0.000000> - pitch speed <245.000000>;
-	turn nanogun to x-axis <0.000000> speed <245.000000>;
+	turn luparm to x-axis <0.000000> - pitch speed <345.000000>;
+	turn lgun to x-axis <0.000000> speed <345.000000>;
+	turn ruparm to x-axis <0.000000> - pitch speed <345.000000>;
+	turn rgun to x-axis <0.000000> speed <345.000000>;
+
 	wait-for-turn torso around y-axis;
 	wait-for-turn luparm around x-axis;
-	wait-for-turn nanogun around x-axis;
+	wait-for-turn lgun around x-axis;
 	start-script RestorePosition();
 	return (1);
 }
 
-Shot1()
+Shot1(test)
 {
-	emit-sfx 1024 + 2 from lflare;
-	return 0;
-}
+	if (gun_1 == [0]) {
+		emit-sfx 1024 + 2 from lfirept;
+		gun_1 = [1];
+		return;
+	}
 
+	if (gun_1 == [1]) {
+		emit-sfx 1024 + 2 from rfirept;
+		gun_1 = [0];
+		return;
+	}
+}
 
 AimFromSecondary(piecenum)
 {
@@ -475,7 +478,14 @@ AimFromSecondary(piecenum)
 
 QuerySecondary(piecenum)
 {
-	piecenum = lflare;
+	if (gun_2 == [0]) {
+		piecenum = lflare;
+		return;
+	}
+	if (gun_2 == [1]) {
+		piecenum = rflare;
+		return;
+	}
 	return;
 }
 
@@ -490,21 +500,34 @@ AimSecondary(heading, pitch)
 	bAiming = TRUE;
 
 	turn torso to y-axis heading speed <300.093407>;
-	turn luparm to x-axis <0.000000> - pitch speed <245.000000>;
-	turn nanogun to x-axis <0.000000> speed <245.000000>;
+	turn luparm to x-axis <0.000000> - pitch speed <345.000000>;
+	turn lgun to x-axis <0.000000> speed <345.000000>;
+	turn ruparm to x-axis <0.000000> - pitch speed <345.000000>;
+	turn rgun to x-axis <0.000000> speed <345.000000>;	
 	wait-for-turn torso around y-axis;
 	wait-for-turn luparm around x-axis;
-	wait-for-turn nanogun around x-axis;
+	wait-for-turn lgun around x-axis;
 	start-script RestorePosition();
 	return (1);
 }
 
 FireSecondary()
 {
-	move torpedo to z-axis [-3.500000] now;
-	sleep 1000;
-	move torpedo to z-axis [0.000000] speed [9.000000];
-	return;
+	if (gun_2 == [0]) {
+		move ltorpedo to z-axis [-3.500000] now;
+		sleep 1000;
+		move ltorpedo to z-axis [0.000000] speed [9.000000];
+		gun_2 = [1];
+		return;
+	}
+
+	if (gun_2 == [1]) {
+		move rtorpedo to z-axis [-3.500000] now;
+		sleep 1000;
+		move rtorpedo to z-axis [0.000000] speed [9.000000];
+		gun_2 = [0];
+		return;
+	}
 }
 
 AimFromTertiary(piecenum)
@@ -515,37 +538,21 @@ AimFromTertiary(piecenum)
 
 QueryTertiary(piecenum)
 {
-
-	piecenum = rflare;
-
+	piecenum = launcherpt;
 	return (0);
 }
 
 AimTertiary(heading, pitch)
 {
-	signal SIG_AIM2;
-	set-signal-mask SIG_AIM2;
 	bAiming = TRUE;
 	//bDgunning = TRUE;
-
-	turn torso to y-axis heading speed <300.093407>;
-	turn ruparm to x-axis <0.000000> - pitch speed <245.000000>;
-	turn biggun to x-axis <0.000000> speed <310.000000>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn ruparm around x-axis;
-	wait-for-turn biggun around x-axis;
-	start-script RestorePosition();
 
 	return (1);
 }
 
-Shot3(test)
+FireTertiary()
 {
-	turn rarm to x-axis <30.000000> now;
-	turn biggun to x-axis <-30.000000> now;
-	emit-sfx 1024 from rflare;
-	turn rarm to x-axis <0.000000> speed <80.038462>;
-	turn biggun to x-axis <0.000000> speed <80.038462>;
+	emit-sfx 1024 from launcherpt;
 	return 1;
 }
 
@@ -557,11 +564,14 @@ StartBuilding(heading, pitch)
 	bAiming = TRUE;
 	turn torso to y-axis heading speed <300.093407>;
 	turn luparm to x-axis <0.000000> - pitch speed <350.000000>;
-	turn nanogun to x-axis <0.000000> speed <395.000000>;
-	move nanobox to y-axis [2.000000] speed [8.000000];
+	turn lgun to x-axis <0.000000> speed <395.000000>;
+	turn ruparm to x-axis <0.000000> - pitch speed <350.000000>;
+	turn rgun to x-axis <0.000000> speed <395.000000>;
+	move lnanobox to y-axis [2.000000] speed [8.000000];
+	move rnanobox to y-axis [2.000000] speed [8.000000];
 	wait-for-turn torso around y-axis;
 	wait-for-turn luparm around x-axis;
-	wait-for-turn nanogun around x-axis;
+	wait-for-turn lgun around x-axis;
 	set INBUILDSTANCE to 1;
 	return;
 }
@@ -575,7 +585,8 @@ StopBuilding()
 	set-signal-mask SIG_AIM;
 	start-script RestorePosition();
 	sleep 3000;
-	move nanobox to y-axis [0.000000] speed [8.000000];
+	move lnanobox to y-axis [0.000000] speed [8.000000];
+	move rnanobox to y-axis [0.000000] speed [8.000000];
 	return;
 }
 

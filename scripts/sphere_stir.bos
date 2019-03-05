@@ -3,9 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, base2,turret,slpt, sleeve, barrel, flash,sleeve2,barrel2,flash2;
+piece  base, base2,turret,slpt, sleeve, barrel, flash,sleeve2,barrel2,flash2,floatbase,fb2;
 
-static-var  gun_1, currentHeading, currentPitch;
+static-var  gun_1, currentHeading, currentPitch, isFloating;
 
 
 #define HEADING_TOLERANCE	<15.000000>
@@ -48,6 +48,15 @@ Create()
 {
 	hide flash;
 	hide flash2;
+	hide floatbase;
+	hide fb2;
+	isFloating = FALSE;
+	if ( GET GROUND_WATER_HEIGHT(GET UNIT_XZ) < [0])
+	{
+		isFloating = TRUE;
+		show floatbase;
+		show fb2;
+	}	
 	gun_1=111;
 	currentHeading = <0>;
 	currentPitch = <0>;
@@ -124,41 +133,26 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	hide flash;
-	if( severity <= 25 )
+	if( severity <= 250 )
 	{
-		corpsetype = 1;
-		explode barrel type BITMAPONLY | BITMAP1;
-		explode sleeve type BITMAPONLY | BITMAP1;
-		explode base type BITMAPONLY | BITMAP2;
-		explode flash type BITMAPONLY | BITMAP3;
-		explode turret type BITMAPONLY | BITMAP4;
-		return (0);
+		if (isFloating) 
+		{
+			corpsetype = 1;
+		}
+		if (!isFloating) 
+		{
+			corpsetype = 2;
+		}
+		explode turret type SHATTER | BITMAP1;
+		explode sleeve type SHATTER | BITMAP1;
+		return corpsetype;
 	}
-	if( severity <= 50 )
-	{
-		corpsetype = 2;
-		explode barrel type FALL | BITMAP1;
-		explode sleeve type FALL | BITMAP1;
-		explode base type BITMAPONLY | BITMAP2;
-		explode flash type FALL | BITMAP3;
-		explode turret type SHATTER | BITMAP4;
-		return (0);
-	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode base type BITMAPONLY | BITMAP2;
-		explode flash type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-		explode turret type SHATTER | BITMAP4;
-		return (0);
-	}
+
 	corpsetype = 3;
-	explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-	explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-	explode base type BITMAPONLY | BITMAP2;
-	explode flash type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-	explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode turret type SHATTER | BITMAP1;
+	explode sleeve type SHATTER | BITMAP1;
+	explode barrel type SHATTER | BITMAP1;
+	explode barrel2 type SHATTER | BITMAP1;
+	explode base2 type SHATTER | BITMAP1;
+	return corpsetype;
 }

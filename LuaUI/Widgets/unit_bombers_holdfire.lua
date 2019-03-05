@@ -21,6 +21,7 @@ local bombers = {
 -------------------- AVEN
 	[UnitDefNames["aven_thunder"].id] = 1,
 	[UnitDefNames["aven_ace"].id] = 1,
+	[UnitDefNames["aven_ghost"].id] = 1,
 -------------------- GEAR
 	[UnitDefNames["gear_shadow"].id] = 1,
 	[UnitDefNames["gear_cascade"].id] = 1,

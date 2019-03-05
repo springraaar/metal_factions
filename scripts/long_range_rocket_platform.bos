@@ -3,9 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, silo1,silo2,silo3,silo4,pad, b2, nano, beam1,beam2,beam3,beam4,beam5,beam6,base1,base2,base3,base4;
+piece  base, silo1,silo2,silo3,silo4,pad, b2, nano, beam1,beam2,beam3,beam4,beam5,beam6,base1,base2,base3,base4,floatbase,fb2,fb3;
 
-static-var  emitPiece, unitviewer, statechg_DesiredState, statechg_StateChanging, padNum;
+static-var  emitPiece, statechg_DesiredState, statechg_StateChanging, padNum, isFloating;
 
 // Signal definitions
 #define SIG_ACTIVATE			2
@@ -100,9 +100,18 @@ RequestState(requestedstate, currentstate) {
 }
 
 Create() {
-	unitviewer = FALSE;
 	emitPiece = [0];
-	
+	hide floatbase;
+	hide fb2;
+	hide fb3;
+	isFloating = FALSE;
+	if ( GET GROUND_WATER_HEIGHT(GET UNIT_XZ) < [0])
+	{
+		isFloating = TRUE;
+		show floatbase;
+		show fb2;
+		show fb3;
+	}	
 	padNum = 1;
 
 	move nano to y-axis [45] now;
@@ -203,32 +212,27 @@ SweetSpot(piecenum) {
 }
 
 Killed(severity, corpsetype) {
-	if( severity <= 25 ) {
-		corpsetype = 1;
-		explode base type BITMAPONLY | BITMAP1;
-		explode pad type BITMAPONLY | BITMAP2;
-		explode b2 type BITMAPONLY | BITMAP3;
-		return (0);
+	if( severity <= 150 )
+	{
+		if (isFloating) 
+		{
+			corpsetype = 1;
+		}
+		if (!isFloating) 
+		{
+			corpsetype = 2;
+		}
+		explode base1 type SHATTER;
+		explode base2 type SHATTER;
+		explode base3 type SHATTER;
+		explode base4 type SHATTER;
+		return corpsetype;
 	}
-	if( severity <= 50 ) {
-		corpsetype = 2;
-		explode base type BITMAPONLY | BITMAP1;
-		explode pad type BITMAPONLY | BITMAP2;
-		explode b2 type BITMAPONLY | BITMAP3;
-		explode b2 type SHATTER | BITMAP5;
-		return (0);
-	}
-	if( severity <= 99 ) {
-		corpsetype = 3;
-		explode base type BITMAPONLY | BITMAP1;
-		explode pad type SHATTER | BITMAP2;
-		explode b2 type SHATTER | BITMAP3;
-		explode b2 type SHATTER | BITMAP5;
-		return (0);
-	}
+
 	corpsetype = 3;
-	explode base type BITMAPONLY | BITMAP1;
-	explode pad type SHATTER | BITMAP2;
-	explode b2 type SHATTER | BITMAP3;
-	explode b2 type SHATTER | BITMAP5;
+	explode base1 type SHATTER;
+	explode base2 type SHATTER;
+	explode base3 type SHATTER;
+	explode base4 type SHATTER;
+	return corpsetype;
 }

@@ -3,9 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, base2,turret,sleeve, lpack,rpack,lflare1,lflare2,lflare3,rflare1,rflare2,rflare3,l1,l2,l3;
+piece  base, base2,turret,sleeve, lpack,rpack,lflare1,lflare2,lflare3,rflare1,rflare2,rflare3,l1,l2,l3, floatbase, fb2;
 
-static-var firept1;
+static-var firept1, isFloating;
 
 // Signal definitions
 #define SIG_AIM				2
@@ -42,6 +42,15 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 Create()
 {
+	hide floatbase;
+	hide fb2;
+	isFloating = FALSE;
+	if ( GET GROUND_WATER_HEIGHT(GET UNIT_XZ) < [0])
+	{
+		isFloating = TRUE;
+		show floatbase;
+		show fb2;
+	}
 	firept1 = [0];
 	start-script SmokeUnit();
 }
@@ -145,37 +154,27 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode lpack type BITMAPONLY | BITMAP1;
-		explode rpack type BITMAPONLY | BITMAP1;
-		explode sleeve type BITMAPONLY | BITMAP1;
-		explode base type BITMAPONLY | BITMAP2;
-		explode turret type BITMAPONLY | BITMAP4;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode lpack type FALL | BITMAP1;
-		explode rpack type FALL | BITMAP1;
-		explode base type BITMAPONLY | BITMAP2;
-		explode turret type SHATTER | BITMAP4;
-		return (0);
+		if (isFloating) 
+		{
+			corpsetype = 1;
+		}
+		if (!isFloating) 
+		{
+			corpsetype = 2;
+		}
+		explode lpack type SHATTER | BITMAP1;
+		explode rpack type SHATTER | BITMAP1;
+		explode turret type SHATTER | BITMAP1;
+		return corpsetype;
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode lpack type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode rpack type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode base type BITMAPONLY | BITMAP2;
-		explode turret type SHATTER | BITMAP4;
-		return (0);
-	}
+
 	corpsetype = 3;
-	explode lpack type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-	explode rpack type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-	explode base type BITMAPONLY | BITMAP2;
-	explode turret type SHATTER | BITMAP4;
+	explode lpack type SHATTER | BITMAP1;
+	explode rpack type SHATTER | BITMAP1;
+	explode turret type SHATTER | BITMAP1;
+	explode base type SHATTER | BITMAP1;
+	explode base2 type SHATTER | BITMAP1;
+	return corpsetype;
 }

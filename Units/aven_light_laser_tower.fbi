@@ -45,8 +45,8 @@
 	buildangle=32768;
 	yardmap=oooo;
 	collisionVolumeType = CylY;
-	collisionVolumeScales =28 63 28;
-	collisionVolumeOffsets = 0 6 0;
+	collisionVolumeScales =28 55 28;
+	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
 	//************************************************************
@@ -66,7 +66,6 @@
 	//  Movement
 	//************
 	maxslope=14;
-	maxwaterdepth=22;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -79,8 +78,8 @@
 	//***********
 	weapon1=aven_LIGHTLASER;
 	badtargetcategory1=VTOL;
-	explodeas=MEDIUM_BUILDINGEX;
-	selfdestructas=MEDIUM_BUILDING;
+	explodeas=SMALL_BUILDINGEX;
+	selfdestructas=SMALL_BUILDING;
 
 	//************************************************************
 	//  Orders
@@ -102,6 +101,8 @@
 	zbuffer=1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
+	floater=1;
+	waterline=0;
 
 	//************************************************************
 	//  To be removed
@@ -111,7 +112,7 @@
 		explosiongenerator0=custom:redflare;
 	}
 
-	buildcostenergy=988;//#AUTO#
-	buildcostmetal=197;//#AUTO#
-	buildtime=2355;//#AUTO#
+	buildcostenergy=991;//#AUTO#
+	buildcostmetal=198;//#AUTO#
+	buildtime=2362;//#AUTO#
 }

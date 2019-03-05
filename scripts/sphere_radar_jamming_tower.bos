@@ -3,9 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, dish,  base2, s2;
+piece  base, dish,  base2, s2, floatbase, fb2;
 
-static-var  statechg_DesiredState, statechg_StateChanging;
+static-var  statechg_DesiredState, statechg_StateChanging, isFloating;
 
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
@@ -84,6 +84,15 @@ RequestState(requestedstate, currentstate)
 
 Create()
 {
+	hide floatbase;
+	hide fb2;
+	isFloating = FALSE;
+	if ( GET GROUND_WATER_HEIGHT(GET UNIT_XZ) < [0])
+	{
+		isFloating = TRUE;
+		show floatbase;
+		show fb2;
+	}
 	call-script InitState();
 	start-script SmokeUnit();
 	return (0);
@@ -109,34 +118,25 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode s2 type SHATTER | BITMAP2;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode s2 type SHATTER | BITMAP2;
-		explode base type SHATTER | BITMAP2;				
-		explode base2 type SHATTER | BITMAP2;				
-		explode dish type SHATTER | BITMAP2;				
-		return (0);
+		if (isFloating) 
+		{
+			corpsetype = 1;
+		}
+		if (!isFloating) 
+		{
+			corpsetype = 2;
+		}
+		explode dish type SHATTER | BITMAP1;
+		explode s2 type SHATTER | BITMAP1;
+		return corpsetype;
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode s2 type SHATTER | BITMAP2;
-		explode base type SHATTER | BITMAP2;				
-		explode base2 type SHATTER | BITMAP2;				
-		explode dish type SHATTER | BITMAP2;				
-		return (0);
-	}
+
 	corpsetype = 3;
-	explode s2 type SHATTER | BITMAP2;
-	explode base type SHATTER | BITMAP2;				
-	explode base2 type SHATTER | BITMAP2;				
-	explode dish type SHATTER | BITMAP2;				
-	return (0);
+	explode base type SHATTER | BITMAP1;
+	explode dish type SHATTER | BITMAP1;
+	explode s2 type SHATTER | BITMAP1;
+	explode base2 type SHATTER | BITMAP1;
+	return corpsetype;
 }

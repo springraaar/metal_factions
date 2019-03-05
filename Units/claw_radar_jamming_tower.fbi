@@ -43,7 +43,7 @@
 	//  Building
 	//************
 	buildangle=8192;
-	yardmap=ooo ooo ooo ooo;
+	yardmap=ooo ooo ooo;
 	activatewhenbuilt=1;
 
 	//************************************************************
@@ -61,7 +61,6 @@
 	//  Movement
 	//************
 	maxslope=10;
-	maxwaterdepth=22;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -95,6 +94,8 @@
 	collisionVolumeScales=30 65 30;
 	collisionVolumeOffsets=0 0 0;
 	collisionVolumeTest = 1;
+	floater=1;
+	waterline=0;
 
 	//************************************************************
 	//  To be removed

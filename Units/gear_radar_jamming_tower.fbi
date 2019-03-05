@@ -61,7 +61,6 @@
 	//  Movement
 	//************
 	maxslope=10;
-	maxwaterdepth=22;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -97,6 +96,8 @@
 	collisionVolumeScales=30 60 30;
 	collisionVolumeOffsets=0 0 0;
 	collisionVolumeTest = 1;
+	floater=1;
+	waterline=0;
 
 	//************************************************************
 	//  To be removed

@@ -130,6 +130,7 @@ local noDecalUnits = {
 	claw_dc_rocket = true,
 	sphere_nuclear_rocket = true,
 	sphere_dc_rocket = true
+	
 }
 
 -- unitdef tweaking

@@ -65,6 +65,8 @@ local max = math.max
 local min = math.min
 local STEP_DELAY = 6 		-- process steps every N frames
 local FIRE_AOE_STEPS = 100	-- 20 seconds
+local FIRE_AOE_STEPS_AIR = 10	-- 2 seconds
+local FIRE_AOE_STEPS_AIR_H = 100
 
 local projectileWasUnderwater = {}
 
@@ -91,6 +93,7 @@ local fireAOEWeaponIds = {
 	[WeaponDefNames["gear_canister_fireball"].id]=true,
 	[WeaponDefNames["gear_eruptor_fireball"].id]=true,
 	[WeaponDefNames["gear_firestorm_rocket"].id]=true,
+	[WeaponDefNames["gear_u1commander_missile"].id]=true,
 	[WeaponDefNames["gear_u5commander_fireball"].id]=true
 }
 
@@ -577,9 +580,14 @@ function gadget:ProjectileDestroyed(proID)
 			effect = fireAOEWeaponEffectId2
 		end
 
-		-- do not spawn fire effect in water
+		-- do not spawn fire effect in water, and spawn with reduced duration in air
 		if (h > 0) then
-			fireAOEPositions[proID]={px=px,py=h+5,pz=pz,steps=FIRE_AOE_STEPS,ownerId=fireAOEProjectiles[proID],effect=effect}
+			local steps = FIRE_AOE_STEPS
+			if (py - h > FIRE_AOE_STEPS_AIR_H) then
+				steps = FIRE_AOE_STEPS_AIR
+			end
+
+			fireAOEPositions[proID]={px=px,py=py,pz=pz,steps=steps,ownerId=fireAOEProjectiles[proID],effect=effect}
 		end
 		fireAOEProjectiles[proID] = nil
 	elseif comsatProjectiles[proID] then

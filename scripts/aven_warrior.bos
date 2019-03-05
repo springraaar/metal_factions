@@ -413,6 +413,9 @@ AimSecondary(heading, pitch)
 	set-signal-mask SIG_AIM2;
 	bAiming = TRUE;
 	
+	// if it's not going to be able to fire on the next ~2s, don't try to aim
+	if ((get WEAPON_RELOADSTATE(2)) > (get GAME_FRAME) + 40)) { return(0); }
+	
 	turn torso to y-axis heading speed <220.000000>;
 	turn luparm to x-axis <-90.000000> - pitch speed <220.000000>;
 	wait-for-turn torso around y-axis;

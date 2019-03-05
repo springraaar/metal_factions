@@ -81,7 +81,7 @@ if (gadgetHandler:IsSyncedCode()) then
 
 		-- added radius reduction for submarines
 		if (submarines[UnitDefs[unitDefID].name]) then 
-			spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.6/2, ys*0.6)
+			spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.4/2, ys*0.4)
 		-- added radius reduction for commander respawners
 		elseif (respawners[UnitDefs[unitDefID].name]) then 
 			spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.25, ys*0.5)

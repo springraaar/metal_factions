@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN defensive LEVEL2 WEAPON NOTAIR NOTSUB;
+	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB;
 	tedclass=FORT;
 
 	//************************************************************
@@ -62,7 +62,6 @@
 	//  Movement
 	//************
 	maxslope=20;
-	maxwaterdepth=22;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -97,11 +96,13 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =28 40 28;
+	collisionVolumeScales =28 60 28;
 	collisionVolumeOffsets = 0 1 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
+	floater=1;
+	waterline=0;
 
 	//************************************************************
 	//  To be removed

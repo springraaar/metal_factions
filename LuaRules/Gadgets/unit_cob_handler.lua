@@ -31,7 +31,6 @@ function checkEnergy(unitID, unitDefID, teamID, data)
 
 	-- get team energy
 	local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = Spring.GetTeamResources(teamID,"energy")
-
 	-- if greater than threshold, return 1
 	if currentLevelE > data then
 		return 1

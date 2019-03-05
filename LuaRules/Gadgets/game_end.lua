@@ -40,6 +40,7 @@ local spGetTeamInfo = Spring.GetTeamInfo
 local spGameOver = Spring.GameOver
 local spAreTeamsAllied = Spring.AreTeamsAllied
 local spSetTeamRulesParam = Spring.SetTeamRulesParam
+local spSetGameRulesParam = Spring.SetGameRulesParam
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -135,6 +136,7 @@ local function CheckGameOver()
 			for _,teamId in pairs(teams) do
 				--Spring.Echo("winner team "..teamId)
 				spSetTeamRulesParam(teamId, 'victory_status', 1 , {public=true})
+				spSetGameRulesParam('game_over', 1 , {public=true})
 			end		
 		end
 		spGameOver(winners)

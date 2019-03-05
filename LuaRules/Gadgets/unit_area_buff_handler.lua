@@ -22,7 +22,8 @@ end
 local LAND_WATER_MOD = 0.66
 local ZEPHYR_REGEN_PER_SECOND = 4
 local ZEPHYR_MOD = 1.25
-local FLYING_SPHERE_SLOW_MOD = 0.25
+local ENERGY_BOOSTED_MOVEMENT_SLOW_MOD = 0.25
+local FLYING_PLANE_SLOW_MOD = 0.45
 local ZEPHYR_RADIUS = 600
 local ZEPHYR_MASS_COST_FACTOR = 1/100 -- applied twice per second
 local WATER_HEIGHT_THRESHOLD = -5
@@ -69,7 +70,7 @@ local IDLE_REGEN_FRAMES = 30 * 25	-- 25 seconds
 local IDLE_REGEN_FLAT = 2
 local IDLE_REGEN_FRACTION = 0.002
 
-local SPHERE_ENERGY_CHECK_THRESHOLD = 2000
+local ENERGY_BOOSTED_MOVEMENT_CHECK_THRESHOLD = 2000
 
 local autoBuildCEG = "autobuild" 
 
@@ -99,6 +100,19 @@ local flyingSphereDefIds = {
 	[UnitDefNames["sphere_comet"].id] = true
 }
 
+-- units that have energy boosted movement, values are min speeds at which drain is applied
+local energyBoostedMovementDefIds = {
+	[UnitDefNames["sphere_construction_sphere"].id] = 0.5,
+	[UnitDefNames["sphere_nimbus"].id] = 0.5,
+	[UnitDefNames["sphere_aster"].id] = 0.5,
+	[UnitDefNames["sphere_gazer"].id] = 0.5,
+	[UnitDefNames["sphere_magnetar"].id] = 0.5,
+	[UnitDefNames["sphere_chroma"].id] = 0.5,
+	[UnitDefNames["sphere_orb"].id] = 0.5,
+	[UnitDefNames["sphere_comet"].id] = 1.0,
+	[UnitDefNames["aven_ace"].id] = 10.0
+}
+
 local cometDefIds = {
 	[UnitDefNames["sphere_comet"].id] = true
 }
@@ -121,6 +135,7 @@ local speedModifierUnitIds = {} -- (unitId,modifier)
 local landSlowerUnitIds = {}
 local waterSlowerUnitIds = {}
 local lastDamageFrameUnitIds = {}
+local energyBoostedMovementUnitIds = {}
 local flyingSphereUnitIds = {}
 local allUnitIds = {}
 local autoBuildUnitIds = {}
@@ -133,9 +148,12 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 		landSlowerUnitIds[unitId] = true
 	elseif (waterSlowerDefIds[unitDefId]) then
 		waterSlowerUnitIds[unitId] = true
-	elseif (flyingSphereDefIds[unitDefId]) then
-		flyingSphereUnitIds[unitId] = true
+	elseif (energyBoostedMovementDefIds[unitDefId]) then
+		energyBoostedMovementUnitIds[unitId] = true
 		
+		if (flyingSphereDefIds[unitDefId]) then
+			flyingSphereUnitIds[unitId] = true
+		end
 		if (magnetarDefIds[unitDefId]) then
 			magnetarIds[unitId] = true
 		end
@@ -236,12 +254,12 @@ function gadget:GameFrame(n)
 		local allowEnergyBoostedMovement = false
 		local currentLevelE = 0
 		local teamId = nil
-		for unitId,_ in pairs(flyingSphereUnitIds) do
+		for unitId,_ in pairs(energyBoostedMovementUnitIds) do
 			teamId = spGetUnitTeam(unitId)
 			if teamId ~= nil then
 				currentLevelE,_,_,_,_,_,_,_ = spGetTeamResources(teamId,"energy");
 	
-				allowEnergyBoostedMovement = currentLevelE > SPHERE_ENERGY_CHECK_THRESHOLD
+				allowEnergyBoostedMovement = currentLevelE > ENERGY_BOOSTED_MOVEMENT_CHECK_THRESHOLD
 				if ( not allowEnergyBoostedMovement ) then
 					m = newSpeedModifierUnitIds[unitId]
 					if (m == nil) then
@@ -250,9 +268,9 @@ function gadget:GameFrame(n)
 					
 					-- if it's the fast attack sphere, apply the debuff twice
 					if (cometDefIds[spGetUnitDefID(unitId)]) then
-						newSpeedModifierUnitIds[unitId] = m * FLYING_SPHERE_SLOW_MOD * FLYING_SPHERE_SLOW_MOD
+						newSpeedModifierUnitIds[unitId] = m * ENERGY_BOOSTED_MOVEMENT_SLOW_MOD * ENERGY_BOOSTED_MOVEMENT_SLOW_MOD
 					else
-						newSpeedModifierUnitIds[unitId] = m * FLYING_SPHERE_SLOW_MOD 
+						newSpeedModifierUnitIds[unitId] = m * ENERGY_BOOSTED_MOVEMENT_SLOW_MOD 
 					end
 				end
 				
@@ -437,15 +455,14 @@ function gadget:GameFrame(n)
 			end
 		end
 		
-		-- currently only spheres have E drain associated with movement
-		-- TODO : make it generic
-		for unitId,_ in pairs(flyingSphereUnitIds) do
+		-- process E drain associated with movement
+		for unitId,_ in pairs(energyBoostedMovementUnitIds) do
 			ud = UnitDefs[spGetUnitDefID(unitId)]
 			vx,_,vz,v = spGetUnitVelocity(unitId)
 			if (vx ~= nil) then
 				v = math.sqrt(vx*vx + vz*vz)
 			end		
-			if (v ~= nil and v > 0.5) then
+			if (v ~= nil and v > energyBoostedMovementDefIds[ud.id]) then
 				cost = ud.customParams.energycostmoving * COST_DELAY / 30
 				spUseUnitResource(unitId, "e", cost)
 			end
@@ -484,6 +501,15 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam)
 	if (magnetarIds[unitId]) then
 		magnetarIds[unitId] = nil
 	end
+	if (energyBoostedMovementUnitIds[unitId]) then
+		energyBoostedMovementUnitIds[unitId] = nil
+		if (flyingSphereUnitIds[unitId]) then
+			flyingSphereUnitIds[unitId] = nil
+		end
+		if (magnetarIds[unitId]) then
+			magnetarIds[unitId] = nil
+		end
+	end	
 	
 	allUnitIds[unitId] = nil
 end

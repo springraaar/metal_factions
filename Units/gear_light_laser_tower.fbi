@@ -29,8 +29,8 @@
 	//********************
 	maxdamage=1150;
 	healtime=11;
-	footprintx=2;
-	footprintz=2;
+	footprintx=3;
+	footprintz=3;
 	damageModifier=0.5;	
 
 	//************************************************************
@@ -44,7 +44,7 @@
 	//  Building
 	//************
 	buildangle=32768;
-	yardmap=oooo;
+	yardmap=ooo ooo ooo;
 	collisionVolumeType = CylY;
 	collisionVolumeScales =28 63 28;
 	collisionVolumeOffsets = 0 8 0;
@@ -67,7 +67,6 @@
 	//  Movement
 	//************
 	maxslope=20;
-	maxwaterdepth=2;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -103,7 +102,8 @@
 	zbuffer=1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
-
+	floater=1;
+	waterline=0;
 	[CustomParams]
 	{
 		tip=Gains 50% dmg resistance when closed;

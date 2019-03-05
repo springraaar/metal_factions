@@ -94,6 +94,11 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.1,0.1,0}, width=3, length=20, piece="ljp", onActive=true}},
     {class='AirJet',options={color={0.1,0.1,0}, width=3, length=20, piece="rjp", onActive=true}}
   },
+  aven_ghost = {
+    {class='AirJet',options={color={0.1,0.1,0}, width=6, length=30, piece="ljp", onActive=true}},
+    {class='AirJet',options={color={0.1,0.1,0}, width=6, length=30, piece="cjp", onActive=true}},
+    {class='AirJet',options={color={0.1,0.1,0}, width=6, length=30, piece="rjp", onActive=true}}
+  },
   aven_medium_drone = {
     {class='AirJet',options={color={0.3,0.1,0}, width=4, length=20, piece="ljp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=4, length=20, piece="rjp", onActive=true}}
@@ -119,8 +124,8 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=7, length=40, piece="jp1", onActive=true}}
   },  
   aven_ace = {
-    {class='AirJet',options={color={0.35,0.2,0}, width=7, length=55, piece="ljp", onActive=true}},
-    {class='AirJet',options={color={0.35,0.2,0}, width=7, length=55, piece="rjp", onActive=true}}
+    {class='AirJet',options={color={0.35,0.35,0.3}, width=12, length=85, piece="ljp", onActive=true}},
+    {class='AirJet',options={color={0.35,0.35,0.3}, width=12, length=85, piece="rjp", onActive=true}}
   },
   aven_atlas = {
     {class='AirJet',options={color={0.3,0.1,0}, width=7, length=25, piece="tp1", onActive=true, down=true}},

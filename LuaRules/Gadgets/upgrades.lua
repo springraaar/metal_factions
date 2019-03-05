@@ -92,6 +92,7 @@ local spSendMessageToTeam = Spring.SendMessageToTeam
 local spSetUnitWeaponState = Spring.SetUnitWeaponState
 local spGetTeamInfo = Spring.GetTeamInfo
 local spGetUnitHealth = Spring.GetUnitHealth
+local spSetUnitWeaponDamages = Spring.SetUnitWeaponDamages
 
 local min = math.min
 local floor = math.floor
@@ -344,7 +345,6 @@ function updateUnitModifiers(unitId, unitDefId, teamId)
 end
 
 -- applies weapon range modifier on unit
--- TODO after changing to spring 101 use SetUnitWeaponDamages to change dynDamageRange as well
 function updateUnitWeaponRange(unitId, modifier)
 	local unitDefId = spGetUnitDefId(unitId)
 	if (unitDefId ~= nil) then
@@ -358,6 +358,7 @@ function updateUnitWeaponRange(unitId, modifier)
 	                local range = weap.range * (1 + modifier)
 	
 					spSetUnitWeaponState(unitId,wNum,"range",range)
+					spSetUnitWeaponDamages(unitId,wNum,"dynDamageRange",range)
 					--Spring.Echo("range changed to "..range)
 			    end
 			end

@@ -81,10 +81,10 @@ local morphDefs = {
 		{
 			into = 'gear_u1commander',
 			time = 30,
-			cmdname = 'Destroyer Form',
+			cmdname = 'Raider Form',
 			energy = 10000,
 			metal = 1000,
-			text = 'Morph to Destroyer Form : Increased speed and greatly increased firepower against light units and structures. Shorter range.'
+			text = 'Morph to Raider Form : Greatly increased speed and firepower against light units and structures. Shorter range.'
 		},
 		{
 			into = 'gear_u2commander',

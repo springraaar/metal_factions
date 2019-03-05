@@ -3,9 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, flare, turret, barrel,sleeve, front, f2,stand, tl,tr,logo;
+piece  base, flare, turret, barrel,sleeve, front, f2,stand, tl,tr,logo, floatbase, fb2,fb3,fb4;
 
-static-var isFiring;
+static-var isFiring, isFloating;
 
 // Signal definitions
 #define SIG_AIM				2
@@ -43,6 +43,21 @@ Create()
 {
 	isFiring = FALSE;
 	start-script SmokeUnit();
+
+	hide floatbase;
+	hide fb2;
+	hide fb3;
+	hide fb4;
+	isFloating = FALSE;
+	if ( GET GROUND_WATER_HEIGHT(GET UNIT_XZ) < [0])
+	{
+		isFloating = TRUE;
+		show floatbase;
+		show fb2;
+		show fb3;
+		show fb4;
+	}
+
 	return (0);
 }
 
@@ -97,34 +112,25 @@ AimFromPrimary(piecenum)
 
 Killed(severity, corpsetype)
 {
-	hide flare;
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
+		if (isFloating) 
+		{
+			corpsetype = 1;
+		}
+		if (!isFloating) 
+		{
+			corpsetype = 2;
+		}
 		explode tl type SHATTER | BITMAP3;
 		explode tr type SHATTER | BITMAP3;
 		explode base type SHATTER | BITMAP3;
 		explode logo type SHATTER | BITMAP3;
 		explode sleeve type SHATTER | BITMAP3;
 		explode turret type SHATTER | BITMAP3;
-		return (0);
+		return corpsetype;
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode tl type SHATTER | BITMAP3;
-		explode tr type SHATTER | BITMAP3;
-		explode base type SHATTER | BITMAP3;
-		explode logo type SHATTER | BITMAP3;
-		explode sleeve type SHATTER | BITMAP3;
-		explode turret type SHATTER | BITMAP3;
-		return (0);
-	}
+
 	corpsetype = 3;
 	explode tl type SHATTER | BITMAP3;
 	explode tr type SHATTER | BITMAP3;
@@ -132,5 +138,5 @@ Killed(severity, corpsetype)
 	explode logo type SHATTER | BITMAP3;
 	explode sleeve type SHATTER | BITMAP3;
 	explode turret type SHATTER | BITMAP3;
-	return (0);
+	return corpsetype;
 }

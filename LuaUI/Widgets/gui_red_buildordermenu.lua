@@ -554,7 +554,7 @@ local function UpdateGrid(g,cmds,orderType)
 				icon.texture = cmd.texture
 			end
 		end
-		if (cmd.disabled) then
+		if (cmd.disabled) then		-- TODO apparently this does nothing
 			icon.texturecolor = {0.5,0.5,0.5,1}	
 		else
 			icon.texturecolor = {1,1,1,1}
@@ -575,6 +575,9 @@ local function UpdateGrid(g,cmds,orderType)
 				icon.caption = "\n\n"..cmd.params[1].."          "
 			else
 				icon.caption = nil
+			end
+			if (cmd.disabled) then
+				icon.texture = ":n:"..LUAUI_DIRNAME.."Images/buildMenu/disabled.png"
 			end
 		else
 			if (cmd.type == 5) then --state cmds (fire at will, etc)

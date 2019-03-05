@@ -64,7 +64,6 @@
 	//  Movement
 	//************
 	maxslope=10;
-	maxwaterdepth=22;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -101,6 +100,8 @@
 	zbuffer=1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
+	floater=1;
+	waterline=0;
 
 	//************************************************************
 	//  To be removed

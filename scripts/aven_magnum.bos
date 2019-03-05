@@ -335,6 +335,8 @@ AimPrimary(heading, pitch)
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 	
+	// if it's not going to be able to fire on the next ~2s, don't try to aim
+	if ((get WEAPON_RELOADSTATE(1)) > (get GAME_FRAME) + 40)) { return(0); }
 	
 	turn rarm to x-axis <0.000000> speed <250.027473>;
 	turn torso to y-axis heading speed <250.027473>;

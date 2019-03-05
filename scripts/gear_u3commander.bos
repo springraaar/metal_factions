@@ -8,7 +8,7 @@
 
 piece  torso, ruparm, luparm, larm, rarm, rflare, nanospray, lasergun, pelvis, lflare, head, h2, h3, pack, lthigh, rthigh, nanogun, torpgun, biggun, rleg, lleg, lfoot, rfoot, torpedo, lbarrels, firept, lb1, lb2, lb3;
 
-static-var  bMoving, bBuilding, Static_Var_3, bAiming, Static_Var_5, Static_Var_6, bDgunning, bUnderwater, canAim1, canAim2, gun_1,mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;;
+static-var  bMoving, bBuilding, bAiming, bDgunning, bUnderwater, canAim1, canAim2, gun_1,mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
 
 // signal definition
 #define SIG_AIM		2
@@ -54,40 +54,6 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 		sleep 60;
 	}
 }
-
-Sing()
-{
-	Static_Var_6 = Rand( 0, 9 );
-	if( Static_Var_6 == 0 )
-	{
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		return (0);
-	}
-	if( Static_Var_6 == 1 )
-	{
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		return (0);
-	}
-	if( Static_Var_6 > 1 AND Static_Var_6 < 10 )
-	{
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		return (0);
-	}
-}
-
-
 
 
 // shows nano effect while building
@@ -551,6 +517,9 @@ AimTertiary(heading, pitch)
 	set-signal-mask SIG_AIM2;
 	bAiming = TRUE;
 	//bDgunning = TRUE;
+	
+	// if it's not going to be able to fire on the next ~2s, don't try to aim
+	if ((get WEAPON_RELOADSTATE(3)) > (get GAME_FRAME) + 40)) { return(0); }
 
 	turn torso to y-axis heading speed <300.093407>;
 	turn ruparm to x-axis <0.000000> - pitch speed <245.000000>;

@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN defensive WEAPON level2 NOTAIR NOTSUB;
+	category=AVEN WEAPON level2 NOTAIR NOTSUB;
 	tedclass=FORT;
 
 	//************************************************************
@@ -45,7 +45,7 @@
 	buildangle=8192;
 	yardmap=ooo ooo ooo;
 	collisionVolumeType=CylY;
-	collisionVolumeScales=40 60 40;
+	collisionVolumeScales=40 70 40;
 	collisionVolumeOffsets=0 0 0;
 	collisionVolumeTest = 1;
 	
@@ -66,7 +66,6 @@
 	//  Movement
 	//************
 	maxslope=10;
-	maxwaterdepth=22;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -102,6 +101,8 @@
 	zbuffer=1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
+	floater=1;
+	waterline=0;
 
 	//************************************************************
 	//  To be removed
@@ -109,7 +110,7 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:greenflare;
+		explosiongenerator0=custom:greenflare;
 	}
 	buildcostenergy=4478;//#AUTO#
 	buildcostmetal=895;//#AUTO#

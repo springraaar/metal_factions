@@ -3,9 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, stand, logo1, logo2, ldoor, rdoor, turret, llauncher, rlauncher, lgun1, lgun2, rgun1, rgun2, lfirept1, lfirept2, rfirept1, rfirept2, tlogo, aimpt;
+piece  base, stand, logo1, logo2, ldoor, rdoor, turret, llauncher, rlauncher, lgun1, lgun2, rgun1, rgun2, lfirept1, lfirept2, rfirept1, rfirept2, tlogo, aimpt, floatbase,fb2,fb3;
 
-static-var gun_1, isOpen;
+static-var gun_1, isOpen, isFloating;
 
 // Signal definitions
 #define SIG_AIM				2
@@ -85,6 +85,19 @@ Create()
 	move aimpt to y-axis [40.000000] now;
 	isOpen = FALSE;
 	gun_1 = [0];
+	
+	hide floatbase;
+	hide fb2;
+	hide fb3;
+	isFloating = FALSE;
+	if ( GET GROUND_WATER_HEIGHT(GET UNIT_XZ) < [0])
+	{
+		isFloating = TRUE;
+		show floatbase;
+		show fb2;
+		show fb3;
+	}
+	
 	start-script close();
 	start-script SmokeUnit();
 	return (0);
@@ -186,39 +199,27 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
+	if( severity <= 50 )
 	{
-		corpsetype = 1;
+		if (isFloating) 
+		{
+			corpsetype = 1;
+		}
+		if (!isFloating) 
+		{
+			corpsetype = 2;
+		}
 		explode lgun1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
 		explode rgun2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
 		explode turret type SHATTER | BITMAP4;
-		return (0);
+		return corpsetype;
 	}
-	if( severity <= 50 )
-	{
-		corpsetype = 2;
-		explode base type SHATTER | BITMAP4;
-		explode stand type SHATTER | BITMAP4;
-		explode turret type SHATTER | BITMAP4;
-		explode llauncher type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-		explode rlauncher type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-		return (0);
-	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode base type SHATTER | BITMAP4;
-		explode stand type SHATTER | BITMAP4;
-		explode turret type SHATTER | BITMAP4;
-		explode llauncher type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-		explode rlauncher type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-		return (0);
-	}
+
 	corpsetype = 3;
 	explode base type SHATTER | BITMAP4;
 	explode stand type SHATTER | BITMAP4;
 	explode turret type SHATTER | BITMAP4;
 	explode llauncher type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
 	explode rlauncher type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-	return (0);
+	return corpsetype;
 }

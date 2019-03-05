@@ -56,7 +56,7 @@
 	
 	MaxSlope=30;
 	collisionVolumeType = box;
-	collisionVolumeScales =130 25 130;
+	collisionVolumeScales =130 30 130;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	modelCenterOffset=0 0 0;
@@ -79,4 +79,6 @@
 	ZBuffer=1;
 	NoAutoFire=0;
 	downloadable=1;
+	floater=1;
+	waterline=0;
 }

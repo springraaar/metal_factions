@@ -3,9 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, flare, turret, barrel, launcher;
+piece  base, flare, turret, barrel, launcher, floatbase;
 
-static-var  gun_1;
+static-var  gun_1, isFloating;
 
 // Signal definitions
 #define SIG_AIM				2
@@ -41,15 +41,14 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 Create()
 {
-	hide flare;
-	dont-cache barrel;
-	dont-cache launcher;
-	dont-cache turret;
-	dont-cache flare;
-	dont-shade barrel;
-	dont-shade launcher;
-	dont-shade turret;
-	dont-shade flare;
+	hide floatbase;
+	isFloating = FALSE;
+	if ( GET GROUND_WATER_HEIGHT(GET UNIT_XZ) < [0])
+	{
+		isFloating = TRUE;
+		show floatbase;
+	}
+	
 	gun_1 = flare;
 	start-script SmokeUnit();
 	return (0);
@@ -110,37 +109,25 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode barrel type FALL | BITMAP1;
-		explode base type BITMAPONLY | BITMAP2;
-		explode launcher type SHATTER | BITMAP4;
-		explode turret type FALL | BITMAP5;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode barrel type FALL | BITMAP1;
-		explode base type BITMAPONLY | BITMAP2;
+		if (isFloating) 
+		{
+			corpsetype = 1;
+		}
+		if (!isFloating) 
+		{
+			corpsetype = 2;
+		}
 		explode launcher type SHATTER | BITMAP4;
-		explode turret type FALL | BITMAP5;
-		return (0);
+		explode turret type SHATTER | BITMAP2;
+		return corpsetype;
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode base type BITMAPONLY | BITMAP2;
-		explode launcher type SHATTER | BITMAP4;
-		explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-		return (0);
-	}
+
 	corpsetype = 3;
 	explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-	explode base type BITMAPONLY | BITMAP2;
+	explode base type SHATTER | BITMAP2;
+	explode turret type SHATTER | BITMAP2;
 	explode launcher type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-	explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-	return (0);
+	return corpsetype;
 }

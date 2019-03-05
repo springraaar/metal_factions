@@ -19,13 +19,15 @@ local spGiveOrderToUnit = Spring.GiveOrderToUnit
 local spGetUnitPosition = Spring.GetUnitPosition 
 local spGetUnitHealth = Spring.GetUnitHealth 
 local spGetUnitTeam = Spring.GetUnitTeam 
+local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local spFindUnitCmdDesc = Spring.FindUnitCmdDesc 
 local spInsertUnitCmdDesc = Spring.InsertUnitCmdDesc 
 local spEditUnitCmdDesc = Spring.EditUnitCmdDesc
 local spGetUnitsInCylinder = Spring.GetUnitsInCylinder
 local spAreTeamsAllied = Spring.AreTeamsAllied
 local spTestBuildOrder = Spring.TestBuildOrder
-
+local spIsPosInLos = Spring.IsPosInLos
+local spGetGroundHeight = Spring.GetGroundHeight
 
 local MAP_EDGE_MARGIN = 50
 local mapMinX = MAP_EDGE_MARGIN
@@ -278,13 +280,23 @@ end
 -- build metal extractor at or near the spot's position
 function buildExtractor(spot, unitId, extractorId,opt)
 	
-	local buildPos = findClosestBuildSite(extractorId, spot, 70)
+	-- if the unit's owner can't see the spot, return its center
+	local h = spGetGroundHeight(spot.x,spot.z)
+	local inLos = spIsPosInLos(spot.x,h+20,spot.z,spGetUnitAllyTeam(unitId))
+
+	if (not inLos) then
+		spGiveOrderToUnit(unitId,-extractorId,{spot.x,h,spot.z},opt)
+		--Spring.Echo("unit "..unitId.." trying to build "..UnitDefs[extractorId].name.." OUT OF LOS near ("..spot.x..","..spot.z..")")
+	else
+		--Spring.Echo("IN LOS")
+		local buildPos = findClosestBuildSite(extractorId, spot, 70)
 	
-	if buildPos ~= nil then
-		--Spring.Echo("unit "..unitId.." building "..UnitDefs[extractorId].name.." at ("..spot.x..","..spot.z..")")
-		spGiveOrderToUnit(unitId,-extractorId,{buildPos.x,buildPos.y,buildPos.z},opt)
-	else 
-		--Spring.Echo("unit "..unitId.." could NOT build "..UnitDefs[extractorId].name.." near ("..spot.x..","..spot.z..")")
+		if buildPos ~= nil then
+			--Spring.Echo("unit "..unitId.." building "..UnitDefs[extractorId].name.." at ("..spot.x..","..spot.z..")")
+			spGiveOrderToUnit(unitId,-extractorId,{buildPos.x,buildPos.y,buildPos.z},opt)
+		else 
+			--Spring.Echo("unit "..unitId.." could NOT build "..UnitDefs[extractorId].name.." near ("..spot.x..","..spot.z..")")
+		end
 	end
 end
 

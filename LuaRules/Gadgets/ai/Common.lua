@@ -826,6 +826,8 @@ airAttackerList =
 	"aven_gryphon",
 	"aven_falcon",
 	"aven_talon",
+	"aven_ace",
+	"aven_ghost",
 	"aven_albatross",
 
 ------------------------------------------------ GEAR
@@ -1088,13 +1090,13 @@ airScoutByFaction =  { [side1Name] = "aven_peeper", [side2Name] = "gear_fink", [
 UWMexByFaction =  { [side1Name] = "aven_metal_extractor", [side2Name] = "gear_metal_extractor", [side3Name] = "claw_metal_extractor", [side4Name] = "sphere_metal_extractor"}
 UWMohoMineByFaction = { [side1Name] = "aven_moho_mine", [side2Name] = "gear_moho_mine", [side3Name] = "claw_moho_mine", [side4Name] = "sphere_moho_mine"}
 tidalByFaction = { [side1Name] = "aven_tidal_generator", [side2Name] = "gear_tidal_generator", [side3Name] = "claw_tidal_generator", [side4Name] = "sphere_tidal_generator"} 
-waterLltByFaction = { [side1Name] = "aven_floating_light_laser_tower", [side2Name] = "gear_floating_light_laser_tower", [side3Name] = "claw_floating_drill", [side4Name] = "sphere_floating_stir"}
+waterLltByFaction = { [side1Name] = "aven_light_laser_tower", [side2Name] = "gear_light_laser_tower", [side3Name] = "claw_drill", [side4Name] = "sphere_stir"}
 UWFusionByFaction = { [side1Name] = "aven_fusion_reactor", [side2Name] = "gear_fusion_power_plant", [side3Name] = "claw_adv_fusion_reactor", [side4Name] = "sphere_adv_fusion_reactor"}
-waterLightAAByFaction = { [side1Name] = "aven_floating_defender", [side2Name] = "gear_floating_pulverizer"}
-lev2WaterHeavyDefenseByFaction = {[side1Name] = {"aven_floating_sentinel"}, [side2Name] = {"gear_floating_blaze"}, [side3Name] = {"claw_floating_piercer"}}
-waterRadarByFaction = { [side1Name] = "aven_floating_radar", [side2Name] = "gear_floating_radar", [side3Name] = "claw_floating_radar", [side4Name] = "sphere_floating_radar"}
+waterLightAAByFaction = { [side1Name] = "aven_defender", [side2Name] = "gear_pulverizer"}
+lev2WaterHeavyDefenseByFaction = {[side1Name] = {"aven_sentinel"}, [side2Name] = {"gear_blaze"}, [side3Name] = {"claw_piercer"}}
+waterRadarByFaction = { [side1Name] = "aven_radar_tower", [side2Name] = "gear_radar_tower", [side3Name] = "claw_radar_tower", [side4Name] = "sphere_radar_tower"}
 sonarByFaction = { [side1Name] = "aven_sonar_station", [side2Name] = "gear_sonar_station", [side3Name] = "claw_sonar_station", [side4Name] = "sphere_sonar_station"}
-waterLightAAByFaction = { [side1Name] = "aven_floating_defender", [side2Name] = "gear_floating_pulverizer"}
+
 
 unitTypeSets = {
 	[TYPE_LIGHT_DEFENSE] = tableToSet({lltByFaction,waterLltByFaction}),

@@ -1,16 +1,12 @@
--- $Id: unit_disable_buildoptions.lua 3636 2009-01-02 22:57:43Z evil4zerggin $
--------------------------------------------------------------------------------------
--------------------------------------------------------------------------------------
-
 function gadget:GetInfo()
 	return {
 		name			= "Disable Buildoptions",
-		desc			= "Disables wind if wind is too low, units if waterdepth is not appropriate.",
-		author		= "quantum",
+		desc			= "Disables wind or tidal generators according to map attributes.",
+		author		= "quantum, modified by raaar",
 		date			= "May 11, 2008",
 		license	 = "GNU GPL, v2 or later",
 		layer		 = 0,
-		enabled	 = false
+		enabled	 = true
 	}
 end
 
@@ -18,17 +14,15 @@ end
 --config
 --------------------------------------------------------------------------------
 
-local breakEvenWind = 9.1
+local MIN_AVG_WIND = 9
+local MIN_TIDAL = 10
 
 --------------------------------------------------------------------------------
 --speedups
 --------------------------------------------------------------------------------
 
 local FindUnitCmdDesc = Spring.FindUnitCmdDesc
-local GetUnitPosition = Spring.GetUnitPosition
-local GetGroundHeight = Spring.GetGroundHeight
-local GetUnitPosition = Spring.GetUnitPosition
-local disableWind
+local disableWind, disableTidal
 --values: {unitID, reason,}
 local alwaysDisableTable = {}
 
@@ -53,49 +47,31 @@ local function DisableBuildButtons(unitID, disableTable)
 end
 
 function gadget:Initialize()
-	disableWind = Game.windMax < breakEvenWind
-	
+	disableWind = ((Game.windMax + Game.windMin) / 2) < MIN_AVG_WIND
 	if (disableWind) then
 		table.insert(alwaysDisableTable, {UnitDefNames["aven_wind_generator"].id, "Unit disabled: Wind is too weak on this map.",})
 		table.insert(alwaysDisableTable, {UnitDefNames["gear_wind_generator"].id, "Unit disabled: Wind is too weak on this map.",})
 		table.insert(alwaysDisableTable, {UnitDefNames["claw_wind_generator"].id, "Unit disabled: Wind is too weak on this map.",})
 	end
+	
+	disableTidal = Game.tidal < MIN_TIDAL
+	if (disableTidal) then
+		table.insert(alwaysDisableTable, {UnitDefNames["aven_tidal_generator"].id, "Unit disabled: Tides are too weak on this map.",})
+		table.insert(alwaysDisableTable, {UnitDefNames["gear_tidal_generator"].id, "Unit disabled: Tides are too weak on this map.",})
+		table.insert(alwaysDisableTable, {UnitDefNames["claw_tidal_generator"].id, "Unit disabled: Tides are too weak on this map.",})
+		table.insert(alwaysDisableTable, {UnitDefNames["sphere_tidal_generator"].id, "Unit disabled: Tides are too weak on this map.",})
+	end	
 end
 
 function gadget:UnitCreated(unitID, unitDefID)
 	local disableTable = {}
-	local unitDef = UnitDefs[unitDefID]
-	local posX, posY, posZ = GetUnitPosition(unitID)
-	local groundheight = GetGroundHeight(posX, posZ)
 	
 	for key, value in ipairs(alwaysDisableTable) do
 		disableTable[key] = value
 	end
 	
-	--amph facs
-	if (unitDef.isFactory and unitDef.buildOptions) then
-		for _, buildoptionID in ipairs(unitDef.buildOptions) do
-			if (UnitDefs[buildoptionID] and UnitDefs[buildoptionID].moveData) then
-				local moveData = UnitDefs[buildoptionID].moveData
-				if (moveData and moveData.family and moveData.depth) then
-					if (moveData.family == "ship") then
-						if (-groundheight < moveData.depth) then
-							table.insert(disableTable, {buildoptionID, "Unit disabled: Water is too shallow here."})
-						end
-					elseif (moveData.family ~= "hover") then
-						if (-groundheight > moveData.depth) then
-							table.insert(disableTable, {buildoptionID, "Unit disabled: Water is too deep here."})
-						end
-					end
-				end
-			end
-		end
-	end
-	
 	DisableBuildButtons(unitID, disableTable)
 end
-
--- AllowCommand is probably overkill
 
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------

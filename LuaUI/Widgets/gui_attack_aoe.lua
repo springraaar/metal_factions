@@ -1,13 +1,12 @@
--- $Id: gui_attack_aoe.lua 3823 2009-01-19 23:40:49Z evil4zerggin $
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local versionNumber = "v3.1"
+local versionNumber = "v3.1b"
 
 function widget:GetInfo()
   return {
     name      = "Attack AoE",
     desc      = versionNumber .. " Cursor indicator for area of effect and scatter when giving attack command.",
-    author    = "Evil4Zerggin",
+    author    = "Evil4Zerggin, modified by raaar",
     date      = "26 September 2008",
     license   = "GNU LGPL, v2.1 or later",
     layer     = 1, 
@@ -57,6 +56,8 @@ local GetUnitPosition        = Spring.GetUnitPosition
 local GetUnitRadius          = Spring.GetUnitRadius
 local GetUnitStates          = Spring.GetUnitStates
 local TraceScreenRay         = Spring.TraceScreenRay
+local spGetUnitDefId         = Spring.GetUnitDefID
+local spGetUnitWeaponState   = Spring.GetUnitWeaponState
 local CMD_ATTACK             = CMD.ATTACK
 local CMD_MANUALFIRE         = CMD.MANUALFIRE
 local g                      = Game.gravity
@@ -301,7 +302,8 @@ local function UpdateSelection()
 	        aoeUnitID = GetRepUnitID(unitIDs)
 	      end
 	    end
-		extraDrawRange = UnitDefs[unitDefID] and UnitDefs[unitDefID].customParams and UnitDefs[unitDefID].customParams.extradrawrange
+		--extraDrawRange = UnitDefs[unitDefID] and UnitDefs[unitDefID].customParams and UnitDefs[unitDefID].customParams.extradrawrange
+		extraDrawRange = true
 		if extraDrawRange then
 			selUnitID = GetRepUnitID(unitIDs)
 		end
@@ -616,11 +618,31 @@ function widget:DrawWorld()
   
   if extraDrawRange and selUnitID and cmd == CMD_ATTACK then
     local fx, fy, fz = GetUnitPosition(selUnitID)
-	if fx then
-		glColor(1, 0.35, 0.35, 0.75)
-		glLineWidth(1)
-		glDrawGroundCircle(fx, fy, fz, extraDrawRange, 50)
-		glColor(1,1,1,1)
+    if fx then
+      -- get the unit's range circles
+      local range = 0
+      local unitDefId = spGetUnitDefId(selUnitID)
+      if (unitDefId ~= nil) then
+        local ud = UnitDefs[unitDefId]
+	
+        -- show range circles for all non-shield weapons other than the primary (which is already shown)
+        if ud.weapons and ud.weapons[1] and ud.weapons[1].weaponDef then
+          for wNum,w in pairs(ud.weapons) do
+            local wd=WeaponDefs[w.weaponDef]
+            if wNum > 1 and wd.isShield == false and wd.description ~= "No Weapon" then
+              range = spGetUnitWeaponState(selUnitID,wNum,"range")
+              if (wd.type == "TorpedoLauncher") then
+                glColor(0.7, 0.35, 1, 0.5)
+              else
+                glColor(1, 0.35, 0.35, 0.5)
+              end
+              glLineWidth(2)
+              glDrawGroundCircle(fx, fy, fz, range, 50)
+              glColor(1,1,1,1)
+            end
+          end
+        end
+      end
 	end
   end
   

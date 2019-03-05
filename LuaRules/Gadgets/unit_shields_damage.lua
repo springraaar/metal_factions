@@ -108,6 +108,7 @@ local burningEffectWeaponDefIds = {
 	[WeaponDefNames["gear_heater_flamethrower"].id] = true,
 	[WeaponDefNames["gear_canister_fireball"].id] = true,
 	[WeaponDefNames["gear_firestorm_rocket"].id] = true,
+	[WeaponDefNames["gear_u1commander_missile"].id] = true,
 	[WeaponDefNames["gear_eruptor_fireball"].id] = true,
 	[WeaponDefNames["gear_u5commander_fireball"].id] = true,
 	[WeaponDefNames["gear_canister"].id] = true,

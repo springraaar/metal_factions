@@ -20,7 +20,7 @@ function widget:GetInfo()
     date      = "Dec 06, 2007",
     license   = "GNU GPL, v2 or later",
     layer     = -10,
-    enabled   = false
+    enabled   = true
   }
 end
 
@@ -82,6 +82,12 @@ local glMatrixMode    = gl.MatrixMode
 local glPushMatrix    = gl.PushMatrix
 local glLoadIdentity  = gl.LoadIdentity
 local glPopMatrix     = gl.PopMatrix
+
+local spGetUnitDefID = Spring.GetUnitDefID
+
+local noOutlineUnitDefIds = {
+	[UnitDefNames["sphere_magnetar"].id] = true
+}
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -278,7 +284,9 @@ end
 local function DrawVisibleUnits()
   local visibleUnits = GetVisibleUnits(ALL_UNITS,nil,true)
   for i=1,#visibleUnits do  
-    glUnit(visibleUnits[i],true)
+    if not noOutlineUnitDefIds[spGetUnitDefID(visibleUnits[i])] then
+      glUnit(visibleUnits[i],true)
+    end
   end
 end
 

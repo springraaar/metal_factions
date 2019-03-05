@@ -43,7 +43,7 @@
 	buildangle=2048;
 	yardmap=ooo ooo ooo;
 	collisionVolumeType=CylY;
-	collisionVolumeScales=40 50 40;
+	collisionVolumeScales=40 70 40;
 	collisionVolumeOffsets=0 0 0;
 	collisionVolumeTest = 1;
 
@@ -64,7 +64,6 @@
 	//  Movement
 	//************
 	maxslope=10;
-	maxwaterdepth=22;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -101,6 +100,8 @@
 	zbuffer=1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
+	floater=1;
+	waterline=0;
 
 	//************************************************************
 	//  To be removed

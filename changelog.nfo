@@ -1,3 +1,79 @@
+2019/03/05 ------------------ NOTES v1.06 ----------------------
+
+
+--- New units
+
+- split the existing AVEN "Ace" into two energy-intensive aircraft:
+. AVEN "Ghost" : Stealth Bomber  (can cloak and has radar jammer)
+. AVEN "Ace" : Very Fast Assassination Bomber
+
+
+--- Balance / Mechanics
+
+- increased reload times on AVEN, GEAR and SPHERE armed scouts (~20% dmg/s dps reduction) but kept costs similar
+
+- increased speed of commander "Builder" and some of the average-moving commander forms by about 10%
+
+- fixed SPHERE sphere factory's wreckage not blocking units
+- fixed AVEN sentinel aiming from wrong barrel
+
+- reduced energy efficiency for AVEN energy bolt weapons, slightly increased damage per shot and reload time (dmg/s is about the same)
+
+- merged floating versions of basic turrets with the land versions to clean up the build menus
+- radar jamming tower can now be built on water
+- GEAR's basic pop-up turrets now also pop-up when built on water
+- long range missile platforms now float on water
+- increased torpedo flight times to avoid them falling short of targets
+- GEAR Noser : made torpedoes properly track their targets
+- increased turn rates on construction ships
+- reduced the minimum water depth for medium and large ships from 25, 50 to 18, 30
+- slightly reduced the targeting radius of submarines to avoid them being targeted by anti-surface weapons
+
+
+- incendiary explosions that happen in the air trigger a mid-air fireball with 2s duration instead of the normal 20s on the ground
+- GEAR "Destroyer" form commander was renamed to "Raider" and modified to have a dual flamethrower and vertically launched incendiary missile system
+- GEAR "Infernal" form commander can now explode its fireballs mid-air
+(this makes it a potentially dangerous against low gunship swarms, like the SPHERE "Nova" form)
+- rebalanced fire AOE weapons : relatively fast-firing ones (Infernal form and Firestorm) got fire rate penalties and increased cost while slower firing ones got 5-10% cheaper
+
+- CLAW "Dizzy" : reduced range by 10%, increased speed by 15% and fire rate by 60% and increased cost by 35%
+(to make it crazier and differentiate it more from the other spinbots)
+
+- fixed a potential scouting exploit with the area-metal-extractor commands
+
+- fixed range upgrades not updating the dynamic damage drop with distance
+
+- modified how aiming is done on some robots with different weapons on each arm to prevent conflicts
+
+
+
+--- Sounds / Animations
+
+- GEAR "Harasser" now properly turns it's barrel sleeve vertically when aiming 
+(note that this didn't prevent it from firing)
+
+- modified the sounds for light plasma cannons and small incendiary explosions
+
+- removed annoying looping sound when mobile radar jammers and intelligence drones are guarding other mobile units
+
+
+--- UI
+
+- enabled outline widget by default to make units easier to see
+- made build and attack range indicator lines more visible
+- show extra range circles for secondary weapons (red or purple for torpedoes)
+- tooltip shows if buildings can be built on land and/or water
+
+- disable wind or tidal generators on the build menus if the map has low average wind or tidal strength
+
+- added hit-n-run mode option for attack aircraft : when attacking they automatically retreat in the opposite direction after firing
+(hopefully this will make strafing aircraft more useful, it's going to be enabled by default only on bombers with a long reload time)
+
+- added ON/OFF button to radar/sonar ships
+
+- 10s after the game ends, a 30s countdown timer starts and when it ends the game exits automatically
+
+
 2018/12/18 ------------------ NOTES v1.05 ----------------------
 
 - increased AVEN "Kit" HP and DPS by 25% and speed by about 7% and increased cost by 30%
