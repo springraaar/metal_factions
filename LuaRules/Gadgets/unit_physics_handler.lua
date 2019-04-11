@@ -57,6 +57,7 @@ local spSpawnProjectile = Spring.SpawnProjectile
 local spDestroyUnit = Spring.DestroyUnit
 local spUnitDetach = Spring.UnitDetach
 local spGetUnitTransporter = Spring.GetUnitTransporter
+local spGetUnitIsTransporting = Spring.GetUnitIsTransporting
 
 local spSetFeatureVelocity = Spring.SetFeatureVelocity
 local spSetFeaturePosition = Spring.SetFeaturePosition
@@ -71,6 +72,7 @@ local floor = math.floor
 local min = math.min
 local abs = math.abs
 
+local WATER_DEALS_DAMAGE = Game.waterDamage > 0
 
 local groundCollisionCEG = "COLLISION"
 local waterCollisionCEG = "COLLISION"
@@ -150,7 +152,7 @@ end
  
 
 local x,y,z,vx,vy,vz,v,h,rx,ry,rz, enableGC
-local physics
+local physics, transportedUnits
 local function updateUnitPhysics(unitId)
 	x,y,z = spGetUnitPosition(unitId)
 	vx,vy,vz,v = spGetUnitVelocity(unitId)
@@ -195,9 +197,23 @@ local function updateUnitPhysics(unitId)
 		end
 	end
 	
+	-- force physics to prevent idle air transports carrying stuff from diving into fog, lava, etc.
+	-- TODO workaround for spring engine bug, remove when possible
+	if WATER_DEALS_DAMAGE then
+		transportedUnits = spGetUnitIsTransporting(unitId)
+		if (transportedUnits and #transportedUnits > 0) then
+			local groundHeight = spGetGroundHeight(x,z)
+			if (groundHeight < 0 and y < 250 and vy < 0) then
+				--Spring.Echo("enforced vy for air transport vy="..vy.." v="..v)
+				spSetUnitVelocity(unitId,vx,y < 200 and 2 or (2*abs(y-200) / 200),vz)
+			end
+		end
+	end
+	 
+	
 	-- force physics for aircraft movement to prevent shaking in some cases
 	-- TODO disabled for now, needs fixing
-	if aircraftMovementFixUnitIds[unitId] == true then
+	if false and aircraftMovementFixUnitIds[unitId] == true then
 		local groundHeight = spGetGroundHeight(x,z)
 		h = y - groundHeight
 		if (h > 50) and v > 0.2 then

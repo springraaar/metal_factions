@@ -158,10 +158,10 @@ end
 function gadget:Initialize()
 	for _,ud in pairs(UnitDefs) do
 		if ud.canFly and ud.canAttack then
-			unitNames[ud.name] = true
 
 			-- track the units' weapons to know when projectiles are created			
 			if ud.weapons and ud.weapons[1] then
+				unitNames[ud.name] = true
 				for _,w in pairs(ud.weapons) do
 					Script.SetWatchWeapon(w.weaponDef,true)
 				end

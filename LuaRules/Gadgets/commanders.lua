@@ -16,10 +16,13 @@ end
 
 local commanderXp = {}
 local commanderName = {}
+local commanderMoveState = {}
 local commanderBuildOrderFrameByTeam = {}
 local GetTeamUnits = Spring.GetTeamUnits 
 local GetUnitDefId = Spring.GetUnitDefID
 local GetGameFrame = Spring.GetGameFrame
+local spGiveOrderToUnit = Spring.GiveOrderToUnit
+local spGetUnitStates = Spring.GetUnitStates
 local AreTeamsAllied = Spring.AreTeamsAllied
 local markedWreckPositions = {}
 local damagedByEnemyByUnitIdFrame = {}
@@ -103,6 +106,10 @@ function gadget:UnitCreated(unitId, unitDefId, teamId)
 			Spring.SetUnitExperience(unitId, commanderXp[teamId])
 			--Spring.Echo("experience set for team "..teamId.." value="..commanderXp[teamId])
 		end
+		-- if previous move state found, set it
+		if (commanderMoveState[teamId]) then
+			spGiveOrderToUnit(unitId, CMD.MOVE_STATE, {commanderMoveState[teamId]}, {})
+		end
 	end
 end
 
@@ -132,6 +139,11 @@ function gadget:UnitDestroyed(unitId, unitDefId, teamId)
 		if (commanderXp[teamId] and commanderXp[teamId] < xp) then
 			commanderXp[teamId] = xp
 			--Spring.Echo("experience saved for team "..teamId.." value="..commanderXp[teamId])
+		end
+		local states = spGetUnitStates(unitId)
+		if (states) then
+			commanderMoveState[teamId] = states["movestate"]
+			--Spring.Echo("move state saved for team "..teamId.." value="..commanderMoveState[teamId])
 		end
 		if (commanderName[teamId]) then
 			commanderName[teamId] = UnitDefs[unitDefId].name

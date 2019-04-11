@@ -61,12 +61,12 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 stopWheels()
 {
-	stop-spin rmidwheel around x-axis decelerate <10.000000>;
-	stop-spin rfrontwheel around x-axis decelerate <10.000000>;
-	stop-spin rbackwheel around x-axis decelerate <10.000000>;
-	stop-spin lmidwheel around x-axis decelerate <10.000000>;
-	stop-spin lfrontwheel around x-axis decelerate <10.000000>;
-	stop-spin lbackwheel around x-axis decelerate <10.000000>;
+	stop-spin rmidwheel around x-axis decelerate <50.000000>;
+	stop-spin rfrontwheel around x-axis decelerate <50.000000>;
+	stop-spin rbackwheel around x-axis decelerate <50.000000>;
+	stop-spin lmidwheel around x-axis decelerate <50.000000>;
+	stop-spin lfrontwheel around x-axis decelerate <50.000000>;
+	stop-spin lbackwheel around x-axis decelerate <50.000000>;
 	return (0);
 }
 
@@ -74,12 +74,12 @@ walk()
 {
 	if( bMoving )
 	{
-		spin rmidwheel around x-axis speed wheelSpeed accelerate <20.000000>;
-		spin rfrontwheel around x-axis speed wheelSpeed accelerate <20.000000>;
-		spin rbackwheel around x-axis speed wheelSpeed accelerate <20.000000>;
-		spin lmidwheel around x-axis speed wheelSpeed accelerate <20.000000>;
-		spin lfrontwheel around x-axis speed wheelSpeed accelerate <20.000000>;
-		spin lbackwheel around x-axis speed wheelSpeed accelerate <20.000000>;
+		spin rmidwheel around x-axis speed wheelSpeed accelerate <40.000000>;
+		spin rfrontwheel around x-axis speed wheelSpeed accelerate <40.000000>;
+		spin rbackwheel around x-axis speed wheelSpeed accelerate <40.000000>;
+		spin lmidwheel around x-axis speed wheelSpeed accelerate <40.000000>;
+		spin lfrontwheel around x-axis speed wheelSpeed accelerate <40.000000>;
+		spin lbackwheel around x-axis speed wheelSpeed accelerate <40.000000>;
 		sleep 200;
 	}
 	return (0);

@@ -600,14 +600,14 @@ FirePrimary()
 		emit-sfx 1024 + 0 from lflare;
 		sleep 150;
 		firePt=[1];
-		return (0);
+		return (1);
 	}
 	if( firePt == [1])
 	{
 		emit-sfx 1024 + 0 from rflare;
 		sleep 150;
 		firePt=[0];
-		return (0);
+		return (1);
 	}
 }
 

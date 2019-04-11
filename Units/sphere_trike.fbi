@@ -3,7 +3,7 @@
 	// ------------------- description
 	Side=Sphere;
 	Name=Trike;
-	Description=Light Scout Vehicle;
+	Description=Light Scout/Raider Vehicle;
 
 	// ------------------- categories
 	Category=SPHERE TANK LEVEL1 WEAPON NOTAIR NOTSUB;
@@ -21,7 +21,7 @@
 	// ------------------- health/cost/size
 	FootprintX=2;
 	FootprintZ=2;
-	MaxDamage=380;
+	MaxDamage=580;
 
 
 	// ------------------- resources
@@ -43,8 +43,8 @@
 	MaxSlope=17;
 	MaxVelocity=3.1;
 	BrakeRate=0.06;
-	Acceleration=0.08;
-	TurnRate=500;
+	Acceleration=0.12;
+	TurnRate=650;
 	SteeringMode=1;
 	turninplace=0;
 	MovementClass=TANKSH3;
@@ -97,7 +97,7 @@
 	{
 		evalfactor=1;
 	}
-	buildcostenergy=425;//#AUTO#
-	buildcostmetal=85;//#AUTO#
-	buildtime=1013;//#AUTO#
+	buildcostenergy=628;//#AUTO#
+	buildcostmetal=125;//#AUTO#
+	buildtime=1497;//#AUTO#
 }

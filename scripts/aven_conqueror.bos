@@ -285,11 +285,11 @@ AimFromSecondary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if( gun_1 == 0 )
+	if( gun_1 == [0] )
 	{
 		piecenum = flare1;
 	}
-	if( gun_1 == 1 )
+	if( gun_1 == [1] )
 	{
 		piecenum = flare2;
 	}

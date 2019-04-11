@@ -10,14 +10,21 @@
       }
     end
 
-     
-if (not gadgetHandler:IsSyncedCode()) then
-  return
-end
 
 local eceg = "gplasmaballbloom"
 local mceg = "bplasmaballbloom"
 local dceg = "featureblastwrapper"
+
+
+if (not gadgetHandler:IsSyncedCode()) then
+  return
+end
+
+function gadget:Initialize()
+	Spring.LoadSoundDef("LuaRules/Configs/sound_defs.lua")
+end
+
+
 function gadget:FeatureDestroyed(featureID,allyteam)
 	fx,fy,fz=Spring.GetFeaturePosition(featureID)
 	--Spring.Echo(allyteam)
@@ -35,7 +42,7 @@ function gadget:FeatureDestroyed(featureID,allyteam)
 			else
 				local radius = tonumber(Spring.GetFeatureRadius(featureID))
 				Spring.SpawnCEG(dceg, fx, fy, fz, 0, 1, 0,radius ,radius)
-				Spring.PlaySoundFile('Sounds/DEBRIS5.wav', 4, fx, fy, fz)
+				Spring.PlaySoundFile('FEATURECRUSH', 1, fx, fy, fz)
 			end
 		end
 	end

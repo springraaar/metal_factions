@@ -35,8 +35,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.3;
-	energyuse=0.3;
+	energymake=0.0;
+	energyuse=0.0;
 	energystorage=0;
 
 	//************************************************************
@@ -79,7 +79,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=AK_LASER;
+	weapon1=gear_aggressor_laser;
 	explodeas=SMALL_UNITEX;
 	selfdestructas=SMALL_UNIT;
 
@@ -121,7 +121,7 @@
 	//  To be removed
 	//*****************
 
-	buildcostenergy=495;//#AUTO#
-	buildcostmetal=99;//#AUTO#
-	buildtime=1181;//#AUTO#
+	buildcostenergy=530;//#AUTO#
+	buildcostmetal=106;//#AUTO#
+	buildtime=1263;//#AUTO#
 }

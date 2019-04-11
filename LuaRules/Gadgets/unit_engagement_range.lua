@@ -33,6 +33,7 @@ local specialCases = {
 if (gadgetHandler:IsSyncedCode()) then
 
 	function gadget:UnitCreated(unitID, unitDefID, unitTeam)
+
 		-- handle exceptions
 		if ignoreCases[unitDefID] then
 			return
@@ -57,7 +58,6 @@ if (gadgetHandler:IsSyncedCode()) then
 			end
 	    end
 	    
-	    engagementRange = 1000
 		spSetUnitMaxRange(unitID, engagementRange)
 		Spring.Echo("unit "..ud.name.." engagementRange = "..engagementRange)
 	end

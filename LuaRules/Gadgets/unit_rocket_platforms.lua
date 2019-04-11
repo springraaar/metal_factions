@@ -58,10 +58,10 @@ local missileWeaponIds = {
 }
 
 local buildPieceNumbers = {
-	[1] = 13,	-- silo1
-	[2] = 10,	-- silo2
-	[3] = 7,	-- silo3
-	[4] = 4		-- silo4 
+	[1] = 16,	-- silo1
+	[2] = 13,	-- silo2
+	[3] = 10,	-- silo3
+	[4] = 7		-- silo4 
 }
 
 local nextAttachPointForPlatformId = {}
@@ -80,8 +80,7 @@ end
 
 -- check if the silo has a free pad we can use
 function gadget:AllowUnitCreation(udefId, builderId)
-	if (missileDefIds[udefId]) then 
-	
+	if (missileDefIds[udefId]) then
 		-- get the first clear build point, if any
 		local point = -1
 		local px,py,pz
@@ -128,7 +127,6 @@ function gadget:AllowUnitCreation(udefId, builderId)
 	
 	return true
 end
-
 
 -- attach missile to the platform piece 
 function gadget:UnitFromFactory(unitId, unitDefId, unitTeam, factId, factDefId, userOrders)

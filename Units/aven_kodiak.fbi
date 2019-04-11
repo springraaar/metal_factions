@@ -35,8 +35,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.5;
-	energyuse=0.5;
+	energymake=0.0;
+	energyuse=0.0;
 	energystorage=0;
 
 	//************************************************************
@@ -62,7 +62,7 @@
 	//  Movement
 	//************
 	movementclass=TANKHOVER3;
-	turnrate=350;
+	turnrate=550;
 	acceleration=0.27;
 	brakerate=0.08;
 	maxvelocity=2.5;
@@ -70,7 +70,7 @@
 	maxwaterdepth=1000;
 	turninplace=0;
 	floater=1;
-	waterline=8;
+	waterline=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -140,7 +140,7 @@
 		explosiongenerator2=custom:rocketflaresml;
 	}
 
-	buildcostenergy=4407;//#AUTO#
-	buildcostmetal=881;//#AUTO#
-	buildtime=10505;//#AUTO#
+	buildcostenergy=4909;//#AUTO#
+	buildcostmetal=981;//#AUTO#
+	buildtime=11701;//#AUTO#
 }

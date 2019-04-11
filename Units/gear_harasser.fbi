@@ -5,7 +5,7 @@
 	//********************
 	Side=Gear;
 	name=Harasser;
-	description=Light Scout Vehicle;
+	description=Light Scout/Raider Vehicle;
 
 	//************************************************************
 	//  Categories
@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=550;
+	maxdamage=720;
 	healtime=30;
 	footprintx=2;
 	footprintz=2;
@@ -62,7 +62,7 @@
 	//  Movement
 	//************
 	movementclass=TANKSH3;
-	turnrate=500;
+	turnrate=650;
 	acceleration=0.072;
 	brakerate=0.051;
 	maxvelocity=3.5;
@@ -123,7 +123,7 @@
 	{
 		evalfactor=1;
 	}
-	buildcostenergy=476;//#AUTO#
-	buildcostmetal=95;//#AUTO#
-	buildtime=1134;//#AUTO#
+	buildcostenergy=713;//#AUTO#
+	buildcostmetal=142;//#AUTO#
+	buildtime=1700;//#AUTO#
 }

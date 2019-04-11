@@ -62,15 +62,15 @@
 	//  Movement
 	//************
 	movementclass=TANKHOVER3;
-	turnrate=400;
+	turnrate=600;
 	acceleration=0.27;
 	brakerate=0.08;
-	maxvelocity=2.4;
+	maxvelocity=2.6;
 	maxslope=12;
 	maxwaterdepth=1000;
 	turninplace=0;
 	floater=1;
-	waterline=5;
+	waterline=8;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -137,7 +137,7 @@
 		explosiongenerator1=custom:UNITFIRE;
 	}
 
-	buildcostenergy=679;//#AUTO#
-	buildcostmetal=135;//#AUTO#
-	buildtime=1620;//#AUTO#
+	buildcostenergy=943;//#AUTO#
+	buildcostmetal=188;//#AUTO#
+	buildtime=2249;//#AUTO#
 }

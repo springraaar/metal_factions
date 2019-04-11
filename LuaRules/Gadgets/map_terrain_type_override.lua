@@ -33,7 +33,7 @@ function gadget:Initialize()
 			Spring.SetTerrainTypeData(i,1,1,1,1)
 		end
 	end
-
+ 	
 	-- set ambient lighting for units
 	if(Spring.SetSunLighting) then
 		Spring.SetSunLighting({unitAmbientColor = {0.7, 0.7, 0.7}, unitDiffuseColor = {0.5, 0.5, 0.5}, unitSpecularColor = {0.5,0.5,0.5}})

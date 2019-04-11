@@ -5,10 +5,9 @@
 
 #define SPEEDUP_FACTOR 170
 
-piece  base, flare, wake1, wake2, turret, sleeve, barrel, hull,bottom, rmidsup,rmidwheel,rfrontsup,rfrontwheel,rbacksup,rbackwheel,lbacksup,lbackwheel,lmidsup,lmidwheel,lfrontsup,lfrontwheel, base2, sleeve2,lbarrel,lflare, rbarrel, rflare;
+piece  base, flare, flare2, wake1, wake2, turret, sleeve, barrel, barrel2, hull,bottom, rmidsup,rmidwheel,rfrontsup,rfrontwheel,rbacksup,rbackwheel,lbacksup,lbackwheel,lmidsup,lmidwheel,lfrontsup,lfrontwheel, base2, sleeve2,lbarrel,lflare, rbarrel, rflare;
 
-static-var  bMoving, bAiming, bSwimming, gun_2,
-            restore_delay, terrainStatus, waterSpeed, landSpeed, wheelSpeed, wheelAcceleration;
+static-var  bMoving, bAiming, bSwimming, gun_2,gun_1, restore_delay, terrainStatus, waterSpeed, landSpeed, wheelSpeed, wheelAcceleration;
 
 // Signal definitions
 #define SIG_MOVE			2
@@ -63,12 +62,12 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 stopWheels()
 {
-	stop-spin rmidwheel around x-axis decelerate <10.000000>;
-	stop-spin rfrontwheel around x-axis decelerate <10.000000>;
-	stop-spin rbackwheel around x-axis decelerate <10.000000>;
-	stop-spin lmidwheel around x-axis decelerate <10.000000>;
-	stop-spin lfrontwheel around x-axis decelerate <10.000000>;
-	stop-spin lbackwheel around x-axis decelerate <10.000000>;
+	stop-spin rmidwheel around x-axis decelerate <30.000000>;
+	stop-spin rfrontwheel around x-axis decelerate <30.000000>;
+	stop-spin rbackwheel around x-axis decelerate <30.000000>;
+	stop-spin lmidwheel around x-axis decelerate <30.000000>;
+	stop-spin lfrontwheel around x-axis decelerate <30.000000>;
+	stop-spin lbackwheel around x-axis decelerate <30.000000>;
 	return (0);
 }
 
@@ -76,12 +75,12 @@ walk()
 {
 	if( bMoving )
 	{
-		spin rmidwheel around x-axis speed wheelSpeed accelerate <20.000000>;
-		spin rfrontwheel around x-axis speed wheelSpeed accelerate <20.000000>;
-		spin rbackwheel around x-axis speed wheelSpeed accelerate <20.000000>;
-		spin lmidwheel around x-axis speed wheelSpeed accelerate <20.000000>;
-		spin lfrontwheel around x-axis speed wheelSpeed accelerate <20.000000>;
-		spin lbackwheel around x-axis speed wheelSpeed accelerate <20.000000>;
+		spin rmidwheel around x-axis speed wheelSpeed accelerate <30.000000>;
+		spin rfrontwheel around x-axis speed wheelSpeed accelerate <30.000000>;
+		spin rbackwheel around x-axis speed wheelSpeed accelerate <30.000000>;
+		spin lmidwheel around x-axis speed wheelSpeed accelerate <30.000000>;
+		spin lfrontwheel around x-axis speed wheelSpeed accelerate <30.000000>;
+		spin lbackwheel around x-axis speed wheelSpeed accelerate <30.000000>;
 		sleep 200;
 	}
 	return (0);
@@ -167,6 +166,8 @@ Create()
 	bMoving = FALSE;
 	bAiming = FALSE;
 	bSwimming = FALSE;
+	gun_1 = [0];
+	gun_2 = [0];
 	restore_delay = 3000;
 	start-script WheelSpeedControl();
 	start-script MotionControl();
@@ -248,11 +249,22 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	move barrel to z-axis [-4.250000] now;
-	emit-sfx 1024 from flare;
-	sleep 100;
-	move barrel to z-axis [0.000000] speed [3.000000];
-	return (1);
+	if (gun_1 == [0]) {
+		move barrel to z-axis [-4.250000] now;
+		emit-sfx 1024 from flare;
+		sleep 100;
+		gun_1 = [1];
+		move barrel to z-axis [0.000000] speed [4.000000];
+		return (1);
+	}
+	if (gun_1 == [1]) {
+		move barrel2 to z-axis [-4.250000] now;
+		emit-sfx 1024 from flare2;
+		sleep 100;
+		gun_1 = [0];
+		move barrel2 to z-axis [0.000000] speed [4.000000];
+		return (1);
+	}
 }
 
 
@@ -264,8 +276,14 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	piecenum = flare;
-	return (0);
+	if (gun_1 == [0]) {
+		piecenum = flare;
+		return (0);
+	}
+	if (gun_1 == [1]) {
+		piecenum = flare2;
+		return (0);
+	}	
 }
 
 SweetSpot(piecenum)

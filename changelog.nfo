@@ -1,6 +1,42 @@
+2019/04/11 ------------------ NOTES v1.07 ----------------------
+
+--- Balance / Mechanics
+
+- changed AVEN "Wheeler" armor type from L to M, increased speed by about 10% and increased cost by 37%
+- increased AVEN "Kodiak" cannon's rate of fire by about 25% and range by 10%, increased cost by about 10% and adjusted the model 
+
+- AVEN conqueror projectiles shoot out of both barrels to match the animation
+
+- made AVEN "Runner", GEAR "Harasser" and SPHERE "Trike" stronger but more expensive to make them more broadly effective as fast attack units
+
+- slightly increased the turnrate of relatively fast vehicles to avoid pathing issues
+- most smaller units can no longer crush trees
+
+- allow depth charges to hit hovercraft
+
+- removed "hit n run" button from construction aircraft
+- prevent air transports from lowering into "void" hazard areas on some maps, killing the transported unit as it got below the threshold
+
+- fixed issue of long range rockets getting attached to the wrong pad on long range rocket platforms
+
+- respawned commanders are set to the move state they had when they were previously destroyed
+
+
+--- Sounds / Visuals
+
+- added logic to automatically replace engine trees on some maps (for example, "Small supreme battlefield V2") with nicer looking trees
+(models and textures by Beherith, same as used on ZK)
+
+- modified sound when firing torpedo weapons and some of the light lasers
+
+- made feature crush sound less annoying and fade out with distance
+
+
+
+
 2019/03/09 ------------------ NOTES v1.061 ----------------------
 
-- fixed SPHERE "shine" wreck error (typo on the previous version)
+- fixed SPHERE "Shine" wreck error (typo on the previous version)
 
 - modified AVEN "Ghost" bombs' trajectory to avoid it missing nearby targets
 
