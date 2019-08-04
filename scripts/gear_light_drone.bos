@@ -5,18 +5,30 @@
 
 piece  base, lwing, rwing, lbody, rbody, center, weapon, firept, jet, b2,jp1;
 
-static-var  Static_Var_1, Static_Var_2, Static_Var_3, Static_Var_4;
+static-var  Static_Var_3, Static_Var_4,isFlying;
 
 
 
 activatescr()
 {
-	sleep 100;
+	if( !isFlying)
+	{
+		// nothing to do here
+		sleep 50;
+		isFlying = TRUE;
+	}
+	sleep 30;
 }
 
 
 deactivatescr()
 {
+	if( isFlying )
+	{
+		isFlying = FALSE;
+		sleep 50;
+		// nothing to do here
+	}
 	sleep 24;
 }
 
@@ -82,8 +94,7 @@ RequestState(requestedstate, currentstate)
 
 Create()
 {
-	Static_Var_1 = 0;
-	Static_Var_2 = 0;
+	isFlying = FALSE;
 	call-script InitState();
 	start-script SmokeUnit();
 }
@@ -96,6 +107,15 @@ Activate()
 Deactivate()
 {
 	start-script RequestState(1);
+}
+
+AimPrimary()
+{
+	if(!isFlying)
+	{
+		return (0);
+	}
+	return (1);
 }
 
 firePrimary()

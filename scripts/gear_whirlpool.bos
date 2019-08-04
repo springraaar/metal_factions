@@ -5,19 +5,21 @@
 
 piece  base, lwing, rwing, lbody, rbody, lw2, rw2, center, weapon, firept, ljet, rjet, b2, ljp,rjp,ljp2,rjp2;
 
-static-var  statechg_DesiredState, statechg_StateChanging, Static_Var_3, Static_Var_4;
+static-var  isFlying, statechg_DesiredState, statechg_StateChanging, Static_Var_3, Static_Var_4;
 
 
 
 activatescr()
 {
 	sleep 100;
+	isFlying = TRUE;
 }
 
 
 deactivatescr()
 {
-	sleep 24;
+	sleep 100;
+	isFlying = FALSE;
 }
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
@@ -83,6 +85,7 @@ RequestState(requestedstate, currentstate)
 Create()
 {
 	turn firept to x-axis <-45.000000> now;
+	isFlying = FALSE;
 	statechg_DesiredState = 0;
 	statechg_StateChanging = 0;
 	call-script InitState();
@@ -114,10 +117,15 @@ AimFromPrimary(piecenum)
 	piecenum = firept;
 }
 
-AimPrimary(heading,pitch)
+AimPrimary()
 {
+	if(!isFlying)
+	{
+		return (0);
+	}
 	return (1);
 }
+
 
 SweetSpot(piecenum)
 {

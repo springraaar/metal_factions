@@ -5,22 +5,32 @@
 
 piece  base, h1,h2,h3, wingsup, wing1, wing2, shieldpt, wsup, barrel1, flare1,jp1;
 
-static-var  statechg_DesiredState, statechg_StateChanging;
+static-var  statechg_DesiredState, statechg_StateChanging, isFlying;
 #define SIG_AIM		2
+
+
 
 activatescr()
 {
-	
-	sleep 500;
-	
-	return (0);
-	// Build by COBBLER Ver4.0 Copyright @1998 DIGITAL CONCEPT SOFTWARE (MANU@inext.fr) / http://www.annihilationcenter.com/DCS/  
+	if( !isFlying)
+	{
+		// nothing to do here
+		sleep 50;
+		isFlying = TRUE;
+	}
+	sleep 30;
 }
+
 
 deactivatescr()
 {
-	sleep 500;
-	return (0);
+	if( isFlying )
+	{
+		isFlying = FALSE;
+		sleep 50;
+		// nothing to do here
+	}
+	sleep 24;
 }
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
@@ -87,6 +97,7 @@ RequestState(requestedstate, currentstate)
 
 Create()
 {
+	isFlying = FALSE;
 	call-script InitState();
 	start-script SmokeUnit();
 	return (0);
@@ -110,6 +121,14 @@ SweetSpot(piecenum)
 	return (0);
 }
 
+AimPrimary()
+{
+	if(!isFlying)
+	{
+		return (0);
+	}
+	return (1);
+}
 
 FirePrimary()
 {

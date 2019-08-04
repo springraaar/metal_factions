@@ -5,7 +5,7 @@
 
 piece  f1, base,hull,bottom,pack1,cover, jp1;
 
-static-var  Static_Var_2, statechg_DesiredState, statechg_StateChanging,canaim;
+static-var  isFlying, statechg_DesiredState, statechg_StateChanging;
 
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
@@ -39,13 +39,13 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 Takeoff()
 {
-	Static_Var_2 = 1;
+	isFlying = TRUE;
 }
 
 Landing()
 {
 	turn hull to x-axis <0.000000> speed <70.000000>;
-	Static_Var_2 = 0;
+	isFlying = FALSE;
 }
 
 InitState()
@@ -85,7 +85,7 @@ RequestState(requestedstate, currentstate)
 Create()
 {
 	hide f1;
-	Static_Var_2 = 0;
+	isFlying = FALSE;
 	call-script InitState();
 	start-script SmokeUnit();
 }
@@ -103,6 +103,15 @@ Deactivate()
 SweetSpot(piecenum)
 {
 	piecenum = base;
+}
+
+AimPrimary()
+{
+	if(!isFlying)
+	{
+		return (0);
+	}
+	return (1);
 }
 
 FirePrimary()
