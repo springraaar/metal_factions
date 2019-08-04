@@ -295,3 +295,138 @@
 	seqnamereclamate=tree1reclamate;
 	reclaimTime=500;
 }
+[rock_fort_large]
+{
+	world=allworld;
+	description=Rubble;
+	category=dragonteeth;
+	object=rock_fort_large;
+	footprintx=4;
+	footprintz=4;
+	height=30;
+	blocking=1;
+	hitdensity=100;
+	metal=224;
+	damage=10000;
+	crushResistance=500;
+	collisionVolumeType = box;
+	collisionVolumeScales =60 90 60;
+	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=0;
+	featuredead=rock_fort_large2;
+	seqnamereclamate=tree1reclamate;
+	reclaimTime=4000;
+}
+[rock_fort_large2]
+{
+	world=allworld;
+	description=Rubble;
+	category=rocks;
+	object=rock_fort_large2;
+	footprintx=4;
+	footprintz=4;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=112;
+	damage=4000;
+	collisionVolumeType = box;
+	collisionVolumeScales =50 50 50;
+	collisionVolumeOffsets = 0 -5 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=0;
+	featuredead=rock_fort_large_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[rock_fort_large_heap]
+{
+	world=All Worlds;
+	description=Rubble;
+	category=heaps;
+	object=4x4a;
+	footprintx=4;
+	footprintz=4;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	metal=64;
+	energy=0;
+	damage=5000;
+	collisionVolumeType=box;
+	collisionVolumeScales=50 6 50;
+	collisionVolumeOffsets=0 0 0;
+}
+
+[rock_gate]
+{
+	world=allworld;
+	description=Rubble;
+	category=dragonteeth;
+	object=rock_gate;
+	footprintx=4;
+	footprintz=4;
+	height=30;
+	blocking=1;
+	hitdensity=100;
+	metal=224;
+	damage=10000;
+	crushResistance=500;
+	collisionVolumeType = box;
+	collisionVolumeScales =60 90 60;
+	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=0;
+	featuredead=rock_gate2;
+	seqnamereclamate=tree1reclamate;
+	reclaimTime=4000;
+}
+[rock_gate2]
+{
+	world=allworld;
+	description=Rubble;
+	category=rocks;
+	object=rock_gate2;
+	footprintx=4;
+	footprintz=4;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=112;
+	damage=4000;
+	collisionVolumeType = box;
+	collisionVolumeScales =50 50 50;
+	collisionVolumeOffsets = 0 -5 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=0;
+	featuredead=rock_gate_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[rock_gate_heap]
+{
+	world=All Worlds;
+	description=Rubble;
+	category=heaps;
+	object=4x4a;
+	footprintx=4;
+	footprintz=4;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	metal=64;
+	energy=0;
+	damage=5000;
+	collisionVolumeType=box;
+	collisionVolumeScales=50 6 50;
+	collisionVolumeOffsets=0 0 0;
+}

@@ -3,9 +3,14 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
+#define HEADING_TOLERANCE	<15>
+#define PITCH_TOLERANCE		<15>
+
 piece  base, hull, bottom, h2,turret, weapon, sleeve1, barrel1, flare1, sleeve2, barrel2, flare2, wake1, wake2, depthcharge, fmisbase, fdoor1, fdoor2, fhole, fmispt, bmisbase, bdoor1, bdoor2, bhole, bmispt;
 
-static-var  restore_delay, gun_1, gun_2;
+static-var  gun_1, gun_2;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_MOVE			2
@@ -43,22 +48,17 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 Create()
 {
-	restore_delay = 3000;
 	start-script SmokeUnit();
+	call-script stopAimHelper1(<1000>,<1000>);
 	gun_1 = [0];
 	gun_2 = [0];
 	return (0);
 }
 
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
-	return (0);
-}
-
 RestoreAfterDelay()
 {
-	sleep restore_delay;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<80>,<80>);
 	turn turret to y-axis <0.000000> speed <80.000000>;
 	turn sleeve1 to x-axis <0.000000> speed <80.000000>;
 	turn sleeve2 to x-axis <0.000000> speed <80.000000>;
@@ -87,14 +87,18 @@ StopMoving()
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<70>,<70>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	turn turret to y-axis heading speed <60.000000>;
-	turn sleeve1 to x-axis <0.000000> - pitch speed <80.000000>;
-	turn sleeve2 to x-axis <0.000000> - pitch speed <80.000000>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn sleeve1 around x-axis;
-	wait-for-turn sleeve2 around x-axis;
+	turn turret to y-axis heading speed <70.000000>;
+	turn sleeve1 to x-axis <0.000000> - pitch speed <70.000000>;
+	turn sleeve2 to x-axis <0.000000> - pitch speed <70.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve1 around x-axis;
+		wait-for-turn sleeve2 around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }
@@ -213,11 +217,8 @@ Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		corpsetype = 1;
-		return (0);
+		return (1);
 	}
-	corpsetype = 3;
-
 	explode hull type SHATTER;
 	explode bottom type SHATTER;
 	explode turret type SHATTER;
@@ -226,5 +227,5 @@ Killed(severity, corpsetype)
 	explode sleeve2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
 	explode barrel1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
 	explode barrel2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-	return (0);
+	return (2);
 }

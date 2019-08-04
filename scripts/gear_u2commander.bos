@@ -6,9 +6,14 @@
 #define SPEEDUP_FACTOR 145
 #define RESTORE_DELAY	3000
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 piece  torso, ruparm, luparm, larm, rarm, lgun, rgun, rbarrel, lbarrel, lnanospray, rnanospray,pelvis, lflare, rflare, head, h2, pack, lthigh, rthigh, lnano, rnano, ltbarrel, rtbarrel, rleg, lleg, lfoot, rfoot, lknee, rknee;
 
 static-var  bMoving, firePoint, firePoint2, nanoPt, bBuilding, Static_Var_3, bAiming, Static_Var_5, Static_Var_6, bDgunning, bUnderwater, canAim1, canAim2, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
+
+#include "aimhelper1.h"
 
 // signal definition
 #define SIG_AIM		2
@@ -381,6 +386,7 @@ Create()
 	firePoint2 = [0];
 	nanoPt = [0];
 	bAiming = FALSE;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();
 	start-script MotionControl();
 	start-script Build();
@@ -426,6 +432,7 @@ RestorePosition()
 {
 	bDgunning = 0;
 	sleep RESTORE_DELAY;
+	call-script stopAimHelper1(<290>,<250>);
 	turn torso to y-axis <0.000000> speed <290.000000>;
 	turn ruparm to x-axis <0.000000> speed <245.000000>;
 	turn luparm to x-axis <0.000000> speed <245.000000>;
@@ -466,20 +473,24 @@ AimPrimary(heading, pitch)
 	{
 		return (0);
 	}
+	call-script updateAimHelper1(heading,pitch,<200>,<200>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 
-	turn torso to y-axis heading speed <300.093407>;
-	turn luparm to x-axis <0.000000> - pitch speed <245.000000>;
-	turn ruparm to x-axis <0.000000> - pitch speed <245.000000>;
-	turn lgun to x-axis <0.000000> speed <245.000000>;
-	turn rgun to x-axis <0.000000> speed <245.000000>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn luparm around x-axis;
-	wait-for-turn ruparm around x-axis;
-	wait-for-turn lgun around x-axis;
-	wait-for-turn rgun around x-axis;
+	turn torso to y-axis heading speed <200.093407>;
+	turn luparm to x-axis <0.000000> - pitch speed <200.000000>;
+	turn ruparm to x-axis <0.000000> - pitch speed <200.000000>;
+	turn lgun to x-axis <0.000000> speed <205.000000>;
+	turn rgun to x-axis <0.000000> speed <205.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn luparm around x-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn lgun around x-axis;
+		wait-for-turn rgun around x-axis;
+	}
 	start-script RestorePosition();
 	return (1);
 }
@@ -540,20 +551,24 @@ AimSecondary(heading, pitch)
 	{
 		return (0);
 	}
+	call-script updateAimHelper1(heading,pitch,<200>,<200>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 
-	turn torso to y-axis heading speed <300.093407>;
-	turn luparm to x-axis <0.000000> - pitch speed <245.000000>;
-	turn ruparm to x-axis <0.000000> - pitch speed <245.000000>;
-	turn lgun to x-axis <0.000000> speed <245.000000>;
-	turn rgun to x-axis <0.000000> speed <245.000000>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn luparm around x-axis;
-	wait-for-turn ruparm around x-axis;
-	wait-for-turn lgun around x-axis;
-	wait-for-turn rgun around x-axis;
+	turn torso to y-axis heading speed <200.093407>;
+	turn luparm to x-axis <0.000000> - pitch speed <200.000000>;
+	turn ruparm to x-axis <0.000000> - pitch speed <200.000000>;
+	turn lgun to x-axis <0.000000> speed <200.000000>;
+	turn rgun to x-axis <0.000000> speed <200.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn luparm around x-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn lgun around x-axis;
+		wait-for-turn rgun around x-axis;
+	}
 	start-script RestorePosition();
 	return (1);
 }
@@ -577,6 +592,7 @@ FireSecondary()
 
 StartBuilding(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<300>,<300>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bBuilding = TRUE;
@@ -584,8 +600,8 @@ StartBuilding(heading, pitch)
 	move lnano to y-axis [2.000000] speed [8.000000];
 	move rnano to y-axis [2.000000] speed [8.000000];
 	turn torso to y-axis heading speed <300.093407>;
-	turn luparm to x-axis <0.000000> - pitch speed <350.000000>;
-	turn ruparm to x-axis <0.000000> - pitch speed <350.000000>;
+	turn luparm to x-axis <0.000000> - pitch speed <300.000000>;
+	turn ruparm to x-axis <0.000000> - pitch speed <300.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn luparm around x-axis;
 	wait-for-turn ruparm around x-axis;

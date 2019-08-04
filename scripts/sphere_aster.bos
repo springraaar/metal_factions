@@ -3,11 +3,14 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<25>
 
 piece ground, hips,torso,left,right,lflare1,lflare2,lflare3,rflare1,rflare2,rflare3,sphere,shieldpt;
 
-	
 static-var bMoving,bAiming,firept1;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				2
@@ -18,6 +21,7 @@ Create()
 	firept1 = [0];
 	bMoving=FALSE;
 	bAiming=FALSE;
+	call-script stopAimHelper1(<1000>,<1000>);
 }
 
 
@@ -30,8 +34,9 @@ SweetSpot(piecenum)
 RestoreAfterDelayWeapon()
 {
 	//aim1=FALSE;
-	sleep 5000;
-	turn torso to y-axis <0.000000> speed <65.016484>;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
+	turn torso to y-axis <0.000000> speed <100.016484>;
 	bAiming = FALSE;
 }
 
@@ -123,13 +128,17 @@ Shot1()
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<150>,<1500>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 	
 	//aim1=TRUE;
-	turn torso to y-axis heading speed <100.027473>;
-	wait-for-turn torso around y-axis;
+	turn torso to y-axis heading speed <150.027473>;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+	}
 	start-script RestoreAfterDelayWeapon();
 	return (1);
 }

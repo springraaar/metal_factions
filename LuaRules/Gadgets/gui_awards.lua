@@ -858,7 +858,7 @@ function FindPlayerName(teamID)
 		if isAI then
 			_,_,_,_, name, version = Spring.GetAIInfo(teamID)
 			local aiInfo = Spring.GetTeamLuaAI(teamID)
-			if (string.sub(aiInfo,1,4) == "MFAI") then
+			if (aiInfo and string.sub(aiInfo,1,4) == "MFAI") then
 				name = aiInfo
 			else
 				if type(version) == "string" then

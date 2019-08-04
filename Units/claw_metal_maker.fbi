@@ -1,0 +1,106 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=CLAW;
+	name=Metal Maker;
+	description=Converts up to 300 E/s into 2.5 M/s;
+	icontype=metal;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW METAL LEVEL2 NOTAIR NOTSUB;
+	tedclass=METAL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=claw_metal_maker;
+	objectname=claw_metal_maker.3do;
+	corpse=claw_metal_maker_dead;
+	buildpic=claw_metal_maker.png;
+	soundcategory=aven_maker;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1500;
+	footprintx=6;
+	footprintz=6;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=80 50 80;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=300;
+	makesmetal=2.5;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=65535;
+	yardmap=oooooo oooooo oooooo oooooo oooooo oooooo;
+	activatewhenbuilt=0;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=10;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=MMAKER_BUILDING;
+	selfdestructas=MMAKER_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=AE-ESF;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:mmakersmoke;
+	}
+	buildcostenergy=3000;//#AUTO#
+	buildcostmetal=600;//#AUTO#
+	buildtime=7140;//#AUTO#
+}

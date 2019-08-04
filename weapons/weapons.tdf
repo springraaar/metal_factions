@@ -39,7 +39,7 @@
   	separation=0.1;
   	alphadecay=0.9;
   	sizedecay=-0.2;
-	range=450;
+	range=430;
 	reloadtime=3.7;
 	weapontimer=1;
 	weaponvelocity=450;
@@ -55,6 +55,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -79,7 +80,7 @@
   	separation=0.1;
   	alphadecay=0.9;
   	sizedecay=-0.2;
-	range=500;
+	range=460;
 	reloadtime=4;
 	weapontimer=1;
 	weaponvelocity=500;
@@ -95,6 +96,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -129,6 +131,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -164,6 +167,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -234,6 +238,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -275,6 +280,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -371,7 +377,7 @@
   	alphadecay=0.5;
   	sizedecay=-0.2;
 	turret=1;
-	range=420;
+	range=430;
 	reloadtime=0.18;
 	weapontimer=0.6;
 	weaponvelocity=500;
@@ -386,6 +392,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -408,7 +415,7 @@
   	alphadecay=0.5;
   	sizedecay=-0.2;
 	turret=1;
-	range=440;
+	range=460;
 	reloadtime=0.2;
 	weapontimer=0.6;
 	weaponvelocity=600;
@@ -423,6 +430,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -456,6 +464,7 @@
 	avoidfeature=0;
 	[CUSTOMPARAMS]
 	{
+		reaimtime=1;
 		hitpower=3;
 	}
 	[DAMAGE]
@@ -482,7 +491,7 @@
   	separation=0.1;
   	alphadecay=0.9;
   	sizedecay=-0.2;
-	range=720;
+	range=710;
 	reloadtime=4.2;
 	weapontimer=1;
 	weaponvelocity=450;
@@ -498,6 +507,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -516,7 +526,7 @@
 	turret=1;
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
-	range=700;
+	range=710;
 	reloadtime=1.2;
 	flighttime=4;
 	trajectoryheight=0.2;
@@ -539,6 +549,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -561,7 +572,7 @@
   	alphadecay=0.5;
   	sizedecay=-0.2;
 	turret=1;
-	range=400;
+	range=410;
 	reloadtime=0.13;
 	weapontimer=0.6;
 	weaponvelocity=600;
@@ -576,6 +587,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -594,7 +606,7 @@
 	energypershot=50;
 	accuracy=250;
 	turret=1;
-	range=400;
+	range=410;
 	reloadtime=1.0;
 	weaponvelocity=500;
 	areaofeffect=64;
@@ -617,6 +629,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -654,6 +667,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -690,6 +704,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -732,6 +747,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -772,6 +788,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -814,6 +831,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -855,6 +873,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -941,6 +960,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -1015,12 +1035,13 @@
 	rgbcolor=0.51 0.0 0.0;
 	rgbcolor2=1.0 0.4 0.4;
 	impulsefactor=0.222;
-	tolerance=3000;
+	tolerance=4000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=4;
 	}
 	[DAMAGE]
 	{
@@ -1061,6 +1082,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -1138,6 +1160,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -1220,6 +1243,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -1263,6 +1287,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -1345,6 +1370,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -1381,7 +1407,7 @@
 	Texture2=null;//first segment of missiletrail//
 	Texture3=null;//flame//
 	Texture4=null;//unknown//
-	soundstart=Rockhvy1;
+	soundstart=rockhvy3;
 	soundhit=xplomed4;
 	firestarter=100;
 	smoketrail=0;
@@ -1538,6 +1564,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -2022,7 +2049,7 @@
 	areaofeffect=100;
 	soundstart=cannhvy5;
 	soundhit=xplomed2;
-	accuracy=400;
+	accuracy=260;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -2177,6 +2204,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -2405,7 +2433,7 @@
 	Texture2=null;//first segment of missiletrail//
 	Texture3=null;//flame//
 	Texture4=null;//unknown//
-	reloadtime=7;
+	reloadtime=6;
 	weapontimer=3;
 	flighttime=10;
 	weaponvelocity=600;
@@ -2413,7 +2441,7 @@
 	turnrate=14384;
 	areaofeffect=96;
 	metalpershot=0;
-	soundstart=Rockhvy1;
+	soundstart=rockhvy3;
 	soundhit=xplomed4;
 	firestarter=100;
 	smoketrail=0;
@@ -2426,11 +2454,11 @@
 	}
 	[DAMAGE]
 	{
-		default=700;
+		default=720;
 		group_invincible=1;
-		armor_heavy=700;//#AUTO#
-		armor_medium=700;//#AUTO#
-		armor_light=700;//#AUTO#
+		armor_heavy=720;//#AUTO#
+		armor_medium=720;//#AUTO#
+		armor_light=720;//#AUTO#
 	}
 }
 [aven_nuclear_rocket]
@@ -2854,7 +2882,7 @@
 	Texture2=null;//first segment of missiletrail//
 	Texture3=null;//flame//
 	Texture4=null;//unknown//
-	soundstart=Rockhvy1;
+	soundstart=rockhvy3;
 	soundhit=xplomed4;
 	firestarter=100;
 	smoketrail=0;
@@ -3095,6 +3123,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -3136,6 +3165,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -3193,7 +3223,7 @@
 	weapontype=LaserCannon;
 	turret=1;
 	duration=0.10;
-	range=850;
+	range=600;
 	minintensity=1.0;
 	thickness=6;
 	reloadtime=6.5;
@@ -3218,6 +3248,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -3258,6 +3289,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -3281,9 +3313,10 @@
 	Texture2=null;//first segment of missiletrail//
 	Texture3=null;//flame//
 	Texture4=null;//unknown//
-	reloadtime=12;
+	reloadtime=8;
 	weapontimer=2;
 	flighttime=10;
+	tracks=0;
 	fixedlauncher=1;
 	weaponvelocity=550;
 	weaponAcceleration=160;
@@ -3291,24 +3324,25 @@
 	turnrate=20000;
 	areaofeffect=96;
 	metalpershot=0;
-	soundstart=Rockhvy1;
+	soundstart=rockhvy3;
 	soundhit=xplomed4;
 	firestarter=100;
 	smoketrail=0;
 	tolerance=4000;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
+	avoidground=0;
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
 	}
 	[DAMAGE]
 	{
-		default=661;
+		default=720;
 		group_invincible=1;
-		armor_heavy=661;//#AUTO#
-		armor_medium=661;//#AUTO#
-		armor_light=661;//#AUTO#
+		armor_heavy=720;//#AUTO#
+		armor_medium=720;//#AUTO#
+		armor_light=720;//#AUTO#
 	}
 }
 [aven_swift_missile]
@@ -3419,6 +3453,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -3520,7 +3555,6 @@
 	energypershot=2500;
 	areaofeffect=125;
 	accuracy=30;
-	targetmoveerror=0.2;
 	soundstart=xplonuk4;
 	soundhit=xplonuk1;
 	firestarter=50;
@@ -3565,6 +3599,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -3600,6 +3635,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -3637,6 +3673,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -3678,6 +3715,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -3836,6 +3874,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -3876,6 +3915,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -3911,6 +3951,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -3946,6 +3987,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -3981,6 +4023,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -4018,6 +4061,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -4096,6 +4140,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -4211,6 +4256,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -4541,6 +4587,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -4587,7 +4634,7 @@
 	corethickness=0.6;
 	Intensity=0.9; 
 	turret=1;
-	range=440;
+	range=470;
 	minintensity=1.0;
 	reloadtime=1;
 	weaponvelocity=1533; 
@@ -4608,6 +4655,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -4643,6 +4691,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -4658,7 +4707,7 @@
 	name=High Energy Bolt;
 	weapontype=LaserCannon;
 	turret=1;
-	range=480;
+	range=470;
 	duration=0.10;
 	reloadtime=10;
 	energypershot=500;
@@ -4674,13 +4723,14 @@
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
-	thickness=9;
+	thickness=6;
 	impulsefactor=0.222;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -4722,6 +4772,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -4759,6 +4810,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -4805,6 +4857,7 @@
 	{
 		hitpower=1;
 		burn=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -4879,6 +4932,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -4955,6 +5009,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -4974,7 +5029,7 @@
 	corethickness=0.8;
 	Intensity=0.9; 	
 	turret=1;
-	range=500;
+	range=550;
 	minintensity=1.0;
 	reloadtime=1.1;
 	energypershot=100;
@@ -4994,6 +5049,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -5032,6 +5088,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -5069,6 +5126,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -5106,6 +5164,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -5153,6 +5212,7 @@
 		hitpower=1;
 		burn=1;
 		burnaoe=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -5190,6 +5250,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -5230,6 +5291,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -5249,7 +5311,7 @@
 	turret=1;
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
-	range=750;
+	range=700;
 	burst=2;
 	burstrate=0.1;
 	reloadtime=2.75;
@@ -5274,6 +5336,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -5551,6 +5614,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -5701,6 +5765,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -5738,6 +5803,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -5770,7 +5836,6 @@
 	soundhit=xplonuk1;
 	firestarter=50;
 	accuracy=40;
-	targetmoveerror=0.2;
 	tolerance=3000;
 	edgeeffectiveness=0.1;
 	InterceptedByShieldType=1;
@@ -6031,6 +6096,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -6145,6 +6211,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -6181,6 +6248,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -6217,6 +6285,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -6232,7 +6301,7 @@
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	turret=1;
-	range=650;
+	range=700;
 	accuracy=300;
 	movingaccuracy=700;
 	cegTag=PLASMATRAIL2;
@@ -6253,6 +6322,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -6297,7 +6367,7 @@
 		armor_light=260;//#AUTO#
 	}
 }
-[gear_ROY]
+[gear_enforcer_cannon]
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
@@ -6323,6 +6393,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -6360,6 +6431,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -6474,6 +6546,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -6557,6 +6630,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -6589,7 +6663,7 @@
   	separation=0.4;
   	alphadecay=0.24;
   	sizedecay=-0.1;
-	accuracy=400;
+	accuracy=260;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -6666,7 +6740,7 @@
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
-	soundstart=Rockhvy1;
+	soundstart=rockhvy3;
 	soundhit=xplomed4;
 	firestarter=100;
 	smoketrail=0;
@@ -7068,6 +7142,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -7108,6 +7183,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -7125,7 +7201,7 @@
 	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	energypershot=0;
-	accuracy=375;
+	accuracy=350;
 	turret=1;
 	range=1330;
 	reloadtime=3;
@@ -7311,6 +7387,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -7349,6 +7426,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -7558,6 +7636,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -7641,7 +7720,7 @@
 	range=480;
 	reloadtime=3.6;
 	weaponvelocity=250;
-	areaofeffect=420;
+	areaofeffect=460;
 	soundstart=largegun;
 	soundhit=xplonuk1;
 	explosiongenerator=custom:LARGEBLASTWRAPPER1;
@@ -7653,11 +7732,38 @@
 	}
 	[DAMAGE]
 	{
-		default=1900;
+		default=1800;
 		group_invincible=1;
-		armor_heavy=1900;//#AUTO#
-		armor_medium=1900;//#AUTO#
-		armor_light=1900;//#AUTO#
+		armor_heavy=1800;//#AUTO#
+		armor_medium=1800;//#AUTO#
+		armor_light=1800;//#AUTO#
+	}
+}
+[MMAKER_BUILDING]
+{
+	name=metal maker explosion;
+	weapontype=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=380;
+	soundstart=largegun;
+	soundhit=xplonuk1;
+	explosiongenerator=custom:LARGEBLASTWRAPPER1;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=1400;
+		group_invincible=1;
+		armor_heavy=1400;//#AUTO#
+		armor_medium=1400;//#AUTO#
+		armor_light=1400;//#AUTO#
 	}
 }
 [ESTOR_BUILDINGEX]
@@ -7852,6 +7958,7 @@
 	{
 		hitpower=1;
 		burn=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -7897,6 +8004,7 @@
 	{
 		hitpower=1;
 		burn=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -7942,6 +8050,7 @@
 	{
 		hitpower=1;
 		burn=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -8042,6 +8151,7 @@
 {
 	name=Fireball Cannon;
 	weapontype=Cannon;	
+	hightrajectory=1;
 	turret=1;
 	range=600;
 	reloadtime=6;
@@ -8090,6 +8200,7 @@
 {
 	name=Fireball Cannon;
 	weapontype=Cannon;	
+	hightrajectory=1;
 	turret=1;
 	range=1100;
 	reloadtime=7;
@@ -8177,6 +8288,50 @@
 		armor_light=200;//#AUTO#
 	}
 }
+[gear_igniter_rocket]
+{
+	name=Incendiary Rockets;
+	weapontype=MissileLauncher;
+	explosiongenerator=custom:fireballboommed;
+	cegTag=ROCKETTRAIL1;
+	turret=1;
+	model=weapon_incrocket.3do;
+	range=450;
+	reloadtime=9;
+	trajectoryheight=0.1;
+	flighttime=1.9;
+	fixedlauncher=1;
+	weaponvelocity=350;
+	startvelocity=300;
+	weaponAcceleration=30;
+	areaofeffect=120;
+	metalpershot=0;
+	soundstart=rocklit1;
+	soundhit=firebombsml;
+	firestarter=70;
+	smoketrail=0;
+	tolerance=9000;
+	InterceptedByShieldType=1;
+	collidefriendly=0;
+	avoidfeature=0;
+	tracks=0;
+	turnrate=20000;
+	wobble=5500;
+	[CUSTOMPARAMS]
+	{
+		hitpower=1;
+		burn=1;
+		burnaoe=1;
+	}
+	[DAMAGE]
+	{
+		default=200;
+		group_invincible=1;
+		armor_heavy=50;//#AUTO#
+		armor_medium=100;//#AUTO#
+		armor_light=200;//#AUTO#
+	}
+}
 [gear_u1commander_missile]
 {
 	name=Incendiary Missiles;
@@ -8207,6 +8362,7 @@
 	tolerance=9000;
 	InterceptedByShieldType=1;
 	collidefriendly=0;
+	avoidfriendly=0;
 	avoidfeature=0;
 	avoidground=0;
 	[CUSTOMPARAMS]
@@ -8276,7 +8432,7 @@
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
-	soundstart=Rockhvy1;
+	soundstart=rockhvy3;
 	soundhit=xplomed4;
 	firestarter=100;
 	smoketrail=0;
@@ -8366,6 +8522,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -8406,6 +8563,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -8447,6 +8605,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -8488,6 +8647,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -8533,6 +8693,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -8577,6 +8738,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -8620,6 +8782,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -8836,7 +8999,7 @@
 	areaofeffect=30;
 	soundstart=largegun;
 	soundhit=DEBRIS5;
-	explosiongenerator=custom:DEBRISBLASTWRAPPER;
+	explosiongenerator=custom:WALL;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -8845,11 +9008,38 @@
 	}
 	[DAMAGE]
 	{
-		default=100;
+		default=20;
 		group_invincible=1;
-		armor_heavy=25;//#AUTO#
-		armor_medium=50;//#AUTO#
-		armor_light=100;//#AUTO#
+		armor_heavy=5;//#AUTO#
+		armor_medium=10;//#AUTO#
+		armor_light=20;//#AUTO#
+	}
+}
+[WALLLARGE]
+{
+	name=Large Fortification Wall;
+	weapontype=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=30;
+	soundstart=largegun;
+	soundhit=DEBRIS5;
+	explosiongenerator=custom:WALLLARGE;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=1;
+	}
+	[DAMAGE]
+	{
+		default=40;
+		group_invincible=1;
+		armor_heavy=10;//#AUTO#
+		armor_medium=20;//#AUTO#
+		armor_light=40;//#AUTO#
 	}
 }
 [SMALL_BUILDING]
@@ -9506,6 +9696,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -9548,6 +9739,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -9590,6 +9782,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -9795,6 +9988,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -9832,6 +10026,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -9869,6 +10064,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -9963,6 +10159,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -10000,6 +10197,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -10037,6 +10235,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -10079,6 +10278,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -10120,6 +10320,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -10167,13 +10368,13 @@
 	avoidfeature=0;
 	[CUSTOMPARAMS]
 	{
-		hitpower=2;
+		hitpower=3;
 	}
 	[DAMAGE]
 	{
 		default=1000;
 		group_invincible=1;
-		armor_heavy=500;//#AUTO#
+		armor_heavy=1000;//#AUTO#
 		armor_medium=1000;//#AUTO#
 		armor_light=1000;//#AUTO#
 	}
@@ -10216,13 +10417,13 @@
 	avoidfeature=0;
 	[CUSTOMPARAMS]
 	{
-		hitpower=2;
+		hitpower=3;
 	}
 	[DAMAGE]
 	{
 		default=1000;
 		group_invincible=1;
-		armor_heavy=500;//#AUTO#
+		armor_heavy=1000;//#AUTO#
 		armor_medium=1000;//#AUTO#
 		armor_light=1000;//#AUTO#
 	}
@@ -10255,6 +10456,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -10303,13 +10505,13 @@
 	avoidfeature=0;
 	[CUSTOMPARAMS]
 	{
-		hitpower=2;
+		hitpower=3;
 	}
 	[DAMAGE]
 	{
 		default=6000;
 		group_invincible=1;
-		armor_heavy=3000;//#AUTO#
+		armor_heavy=6000;//#AUTO#
 		armor_medium=6000;//#AUTO#
 		armor_light=6000;//#AUTO#
 	}
@@ -10352,13 +10554,13 @@
 	avoidfeature=0;
 	[CUSTOMPARAMS]
 	{
-		hitpower=2;
+		hitpower=3;
 	}
 	[DAMAGE]
 	{
 		default=4000;
 		group_invincible=1;
-		armor_heavy=2000;//#AUTO#
+		armor_heavy=4000;//#AUTO#
 		armor_medium=4000;//#AUTO#
 		armor_light=4000;//#AUTO#
 	}
@@ -10485,6 +10687,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -10531,7 +10734,7 @@
 	thickness=2.888;
 	corethickness=0.6;
 	turret=1;
-	range=430;
+	range=440;
 	minintensity=1.0;
 	reloadtime=0.4;
 	weaponvelocity=1533;
@@ -10552,6 +10755,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -10667,6 +10871,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -10707,6 +10912,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -10747,6 +10953,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -10782,6 +10989,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -10790,46 +10998,6 @@
 		armor_heavy=110;//#AUTO#
 		armor_medium=220;//#AUTO#
 		armor_light=220;//#AUTO#
-	}
-}
-[claw_u1commander_aeroblast]
-{
-	name=Frag Blast;
-	weapontype=LaserCannon;
-	explosiongenerator=custom:FLAKBLASTWRAPPER;
-	duration=0.08;
-	intensity=0.85;
-	thickness=1.5; 
-	corethickness=1.0; 
-	turret=1;
-	range=400;
-	projectiles=1;
-	reloadtime=12;
-	weaponvelocity=1533;
-	energypershot=300;
-	areaofeffect=200;
-	edgeeffectiveness=0.8;
-	impulsefactor=0.3;
-	soundtrigger=1;
-	soundstart=lghthvy2;
-	soundhit=xplosml1;
-	firestarter=50;
-	commandfire=1;
-	rgbcolor=0.0 0.0 0.0;
-	rgbcolor2=0.0 0.0 0.0;
-	tolerance=3000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=600;
-		armor_heavy=150;//#AUTO#
-		armor_medium=300;//#AUTO#
-		armor_light=600;//#AUTO#
 	}
 }
 [claw_u1commander_torpedo]
@@ -10859,6 +11027,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -10896,6 +11065,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -10939,6 +11109,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -10946,46 +11117,6 @@
 		armor_heavy=30;//#AUTO#
 		armor_medium=60;//#AUTO#
 		armor_light=120;//#AUTO#
-	}
-}
-[claw_u2commander_rocket]
-{
-	name=Rocket barrage;
-	weapontype=MissileLauncher;
-	trajectoryheight=0.6;
-	turret=1;
-	model=weapon_missile.3do;
-	range=700;
-	accuracy=800;
-	movingaccuracy=800;
-	burst=6;
-	burstrate=0.25;
-	sprayangle=1024;
-	reloadtime=30;
-	flighttime=3.75;
-	commandfire=1;
-	weaponvelocity=400;
-	energypershot=500;
-	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	cegTag=ROCKETTRAIL1;
-	areaofeffect=50;
-	soundstart=MISLHVY3;
-	soundhit=xplomed2;
-	tolerance=3000;
-	startvelocity=300;
-	weaponAcceleration=50;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=2;
-	}
-	[DAMAGE]
-	{
-		default=130;
-		armor_heavy=65;//#AUTO#
-		armor_medium=130;//#AUTO#
-		armor_light=130;//#AUTO#
 	}
 }
 [claw_u2commander_torpedo]
@@ -11014,6 +11145,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -11055,6 +11187,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -11062,46 +11195,6 @@
 		armor_heavy=650;//#AUTO#
 		armor_medium=650;//#AUTO#
 		armor_light=650;//#AUTO#
-	}
-}
-[claw_u3commander_aeroblast]
-{
-	name=Aeroblast;
-	weapontype=LaserCannon;
-	explosiongenerator=custom:FLAKBLASTWRAPPER;
-	duration=0.08;
-	intensity=0.85;
-	thickness=1.5; 
-	corethickness=1.0; 
-	turret=1;
-	range=400;
-	projectiles=1;
-	reloadtime=12;
-	weaponvelocity=1533;
-	energypershot=300;
-	areaofeffect=200;
-	edgeeffectiveness=0.8;
-	impulsefactor=0.3;
-	soundtrigger=1;
-	soundstart=lghthvy2;
-	soundhit=xplosml1;
-	firestarter=50;
-	commandfire=1;
-	rgbcolor=0.0 0.0 0.0;
-	rgbcolor2=0.0 0.0 0.0;
-	tolerance=3000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=600;
-		armor_heavy=150;//#AUTO#
-		armor_medium=300;//#AUTO#
-		armor_light=600;//#AUTO#
 	}
 }
 [claw_u3commander_torpedo]
@@ -11130,6 +11223,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -11166,6 +11260,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -11203,6 +11298,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -11263,8 +11359,8 @@
 	cegTag=ROCKETTRAIL1;
 	turret=0;
 	model=weapon_rocket3.3do;
-	range=450;
-	reloadtime=7;
+	range=400;
+	reloadtime=6;
 	flighttime=2;
 	weaponvelocity=300;
 	startvelocity=300;
@@ -11290,11 +11386,11 @@
 	}
 	[DAMAGE]
 	{
-		default=200;
+		default=220;
 		group_invincible=1;
-		armor_heavy=200;//#AUTO#
-		armor_medium=200;//#AUTO#
-		armor_light=200;//#AUTO#
+		armor_heavy=220;//#AUTO#
+		armor_medium=220;//#AUTO#
+		armor_light=220;//#AUTO#
 	}
 }
 [claw_boomer_m_rocket]
@@ -11305,8 +11401,8 @@
 	cegTag=ROCKETTRAIL1;
 	turret=0;
 	model=weapon_rocket2.3do;
-	range=420;
-	reloadtime=1.9;
+	range=400;
+	reloadtime=1.8;
 	flighttime=1.9;
 	weaponvelocity=300;
 	startvelocity=300;
@@ -11495,6 +11591,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -11574,6 +11671,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -11657,6 +11755,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -11699,6 +11798,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -11983,6 +12083,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -12063,6 +12164,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -12093,7 +12195,6 @@
 	weapontimer=1;
 	weaponvelocity=2532;
 	accuracy=10;
-	targetmoveerror=0.2;
 	areaofeffect=64;
 	soundstart=railgunbig;
 	soundhit=xplonuk1;
@@ -12111,6 +12212,46 @@
 		armor_heavy=2500;//#AUTO#
 		armor_medium=2500;//#AUTO#
 		armor_light=2500;//#AUTO#
+	}
+}
+[claw_pike_railgun]
+{
+	name=Heavy Railgun;
+	weapontype=Cannon;
+	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
+  	nogap=0;
+	intensity=1;
+	size=1.5;
+	rgbcolor=0.1 0.1 0.1;
+	stages=10;
+  	separation=0.75;
+  	alphadecay=0;
+  	sizedecay=-0.1;
+	cegTag=RAILGUNTRAILBIG;
+	energypershot=1700;
+	turret=1;
+	range=1580;
+	reloadtime=8;
+	weapontimer=1;
+	weaponvelocity=2132;
+	accuracy=10;
+	areaofeffect=48;
+	soundstart=railgunbig2;
+	soundhit=xplonuk1;
+	soundtrigger=1;
+	tolerance=3000;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=1500;
+		armor_heavy=1500;//#AUTO#
+		armor_medium=1500;//#AUTO#
+		armor_light=1500;//#AUTO#
 	}
 }
 [claw_drill_gun]
@@ -12221,6 +12362,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -12262,47 +12404,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=30;
-		armor_heavy=7;//#AUTO#
-		armor_medium=15;//#AUTO#
-		armor_light=30;//#AUTO#
-	}
-}
-[claw_u6commander_shotgun]
-{
-	name=Shotgun;
-	weapontype=Cannon;
-	explosiongenerator=custom:railgunblastsml;
-  	nogap=0;
-	intensity=1;
-	size=1.0;
-	rgbcolor=0.1 0.1 0.1;
-	stages=2;
-  	separation=0.5;
-  	alphadecay=0.0;
-  	sizedecay=-0.2;
-	energypershot=7;
-	turret=1;
-	range=430;
-	reloadtime=2.7;
-	accuracy=0;
-	sprayangle=900;
-	projectiles=15;
-	weapontimer=0.7;
-	weaponvelocity=1032;
-	areaofeffect=8;
-	soundstart=shotgun;
-	soundtrigger=0;
-	soundhit=comfire1;
-	tolerance=1500;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -12374,6 +12476,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -12416,6 +12519,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -12457,6 +12561,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -12537,6 +12642,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -12576,6 +12682,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -12696,6 +12803,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -12777,6 +12885,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -12800,7 +12909,7 @@
   	alphadecay=0.3;
   	sizedecay=-0.1;
 	turret=1;
-	range=400;
+	range=500;
 	reloadtime=2.75;
 	burst=2;
 	burstrate=0.2;
@@ -12814,6 +12923,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -12851,6 +12961,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -12887,6 +12998,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -12923,6 +13035,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -12958,6 +13071,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -13065,6 +13179,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -13102,6 +13217,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -13139,6 +13255,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -13177,6 +13294,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -13215,6 +13333,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -13256,6 +13375,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -13296,6 +13416,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -13336,6 +13457,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -13356,7 +13478,7 @@
 	corethickness=0.6;
 	energypershot=20;
 	turret=1;
-	range=450;
+	range=550;
 	minintensity=1.0;
 	reloadtime=0.9;
 	weaponvelocity=1533;
@@ -13376,6 +13498,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -13493,6 +13616,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -13604,6 +13728,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -13644,6 +13769,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -13684,6 +13810,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -13700,7 +13827,7 @@
 	turret=1;
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
 	model=weapon_missile.3do;
-	range=750;
+	range=800;
 	reloadtime=5.0;
 	flighttime=3.75;
 	weaponvelocity=790;
@@ -13724,6 +13851,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -13761,6 +13889,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -13852,6 +13981,7 @@
 {
 	name=Energized Plasma Cannon;
 	weapontype=Cannon;
+	hightrajectory=1;
 	size=5.1;
 	rgbcolor=1.0 0.8 0.5;
 	stages=5;
@@ -13865,9 +13995,9 @@
 	gravityaffected=0;
 	mygravity=0.1;
 	turret=1;
-	range=1600;
-	reloadtime=4.5;
-	weaponvelocity=400;
+	range=2100;
+	reloadtime=5;
+	weaponvelocity=450;
 	energypershot=700;
 	areaofeffect=150;
 	soundstart=largegun;
@@ -13964,6 +14094,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -14111,6 +14242,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -14149,6 +14281,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -14189,6 +14322,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -14227,6 +14361,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -14267,6 +14402,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -14307,6 +14443,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -14347,6 +14484,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -14381,6 +14519,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -14417,6 +14556,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -14454,6 +14594,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -14491,6 +14632,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -14528,6 +14670,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -14565,6 +14708,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -14602,6 +14746,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -14716,6 +14861,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -14757,6 +14903,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -14799,6 +14946,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -14842,6 +14990,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -14883,6 +15032,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -15036,6 +15186,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -15072,6 +15223,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -15111,6 +15263,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -15150,6 +15303,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -15228,6 +15382,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -15343,6 +15498,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -15378,6 +15534,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -15479,6 +15636,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -15518,6 +15676,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -15559,6 +15718,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -15599,6 +15759,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -15680,6 +15841,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -15804,6 +15966,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -15920,6 +16083,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -15959,6 +16123,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -15998,6 +16163,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -16038,6 +16204,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -16124,6 +16291,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -16132,6 +16300,50 @@
 		armor_heavy=320;//#AUTO#
 		armor_medium=320;//#AUTO#
 		armor_light=320;//#AUTO#
+	}
+}
+[sphere_atom_cannon]
+{
+	name=Homing Plasma Bombardment;
+	weapontype=MissileLauncher;
+	explosiongenerator=custom:REDBLASTWRAPPER;
+	cegTag=YELLOWPLASMATRAIL;
+	turret=1;
+	model=weapon_redplasma.3do;
+	range=400;
+	reloadtime=10;
+	flighttime=1.9;
+	fixedlauncher=1;
+	weaponvelocity=340;
+	startvelocity=340;
+	weaponAcceleration=30;
+	areaofeffect=76;
+	energypershot=1800;
+	metalpershot=0;
+	projectiles=8;
+	burnblow=1;
+	soundtrigger=0;
+	soundstart=atomfire;
+	soundhit=xplomed4;
+	firestarter=70;
+	smoketrail=0;
+	tolerance=64000;
+	InterceptedByShieldType=1;
+	collidefriendly=0;
+	avoidfeature=0;
+	tracks=1;
+	turnrate=64000;
+	[CUSTOMPARAMS]
+	{
+		hitpower=2;
+	}
+	[DAMAGE]
+	{
+		default=220;
+		group_invincible=1;
+		armor_heavy=110;//#AUTO#
+		armor_medium=220;//#AUTO#
+		armor_light=220;//#AUTO#
 	}
 }
 [sphere_nimbus_rocket]
@@ -16165,6 +16377,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -16200,6 +16413,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -16268,6 +16482,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -16407,6 +16622,32 @@
 		default=10;
 	}
 }
+[sphere_atom_shield]
+{
+	name=Energy shield;
+	weapontype=Shield;
+	SmartShield=1;
+	ExteriorShield=0;
+	VisibleShield=1;
+	VisibleShieldRepulse=0;
+	ShieldEnergyUse=0;
+	ShieldForce=3000;
+	ShieldRadius=32;
+	ShieldMaxSpeed=2000;
+	ShieldPower=1500;
+	ShieldStartingPower=1500;
+	ShieldPowerRegen=30;
+	ShieldPowerRegenEnergy=60;
+	ShieldInterceptType=2;
+	ShieldGoodColor=0.9 0.9 0.5 1;
+	ShieldBadColor=0.6 0.2 0.2 0.05;
+	ShieldAlpha=0.5;
+	visibleShieldHitFrames=5;
+	[DAMAGE]
+	{
+		default=10;
+	}
+}
 [sphere_rain_shield]
 {
 	name=Energy shield;
@@ -16490,6 +16731,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -16530,6 +16772,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -16570,6 +16813,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -16610,6 +16854,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -16822,6 +17067,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -16902,6 +17148,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -16982,6 +17229,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -17246,6 +17494,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -17284,6 +17533,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -17325,6 +17575,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -17358,7 +17609,6 @@
 	soundhit=xplonuk1;
 	firestarter=50;
 	accuracy=30;
-	targetmoveerror=0.2;
 	tolerance=3000;
 	edgeeffectiveness=0.1;
 	InterceptedByShieldType=1;
@@ -17850,6 +18100,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -17887,6 +18138,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{

@@ -10,13 +10,11 @@
 	buildpic=aven_vanguard.png;
 	FootprintX=3;
 	FootprintZ=3;
-	MaxDamage=1471;
-	EnergyUse=1;
+	MaxDamage=1450;
+	EnergyUse=0;
 	WorkerTime=0;
-	BMcode=1;
 	Builder=0;
-	ThreeD=1;
-	ZBuffer=1;
+
 	sightdistance=500;
 	sonardistance=400; 
 	RadarDistance=0;
@@ -25,10 +23,8 @@
 	MetalStorage=0;
 	ExplodeAs=SMALL_UNITEX;
 	SelfDestructAs=SMALL_UNIT;
-	Category=AVEN SHIP LEVEL1 WEAPON NOTAIR NOTSUB ;
+	Category=AVEN SHIP LEVEL1 WEAPON NOTAIR NOTSUB;
 	TEDClass=SHIP;
-	Copyright=Copyright 1997 Humongous Entertainment. All rights reserved.;
-	UnitNumber=65564453;
 	firestandorders=1;
 	StandingFireOrder=2;
 	mobilestandorders=1;
@@ -52,11 +48,11 @@
 	buildangle=16384;
 	Weapon1=aven_vanguard_missile;
 	Weapon2=aven_vanguard_depthcharge;
+	onlytargetcategory2=NOTAIR;
 	canattack=1;
 	ActivateWhenBuilt=1;
 	MinWaterDepth=12;
 	waterline=1;
-	windgenerator=0.001;
 	Floater=1;
 	Corpse=aven_VANGUARD_dead;
 	[customParams] 
@@ -73,7 +69,7 @@
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
-	buildcostenergy=2613;//#AUTO#
-	buildcostmetal=522;//#AUTO#
-	buildtime=6228;//#AUTO#
+	buildcostenergy=2591;//#AUTO#
+	buildcostmetal=518;//#AUTO#
+	buildtime=6177;//#AUTO#
 	}

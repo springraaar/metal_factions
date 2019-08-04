@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define SPEEDUP_FACTOR 100
+#define SPEEDUP_FACTOR 70
 
 piece  flare1, flare2, base, box, mispt1, mispt2, bwheell, bwheelr, fwheell, fwheelr, bcoverl, bcoverr, fcoverl, fcoverr, b2;
 
@@ -95,7 +95,6 @@ Open()
 	{
 		turn box to x-axis <-90.000000> speed <90.000000>;
 		wait-for-turn box around x-axis;
-		sleep 200;
 		isOpen = TRUE;
 	}
 }
@@ -124,8 +123,10 @@ AimPrimary(heading, pitch)
 {
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	
-	call-script Open();
+	if (!isOpen)
+	{
+		call-script Open();
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

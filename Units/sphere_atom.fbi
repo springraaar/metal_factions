@@ -1,0 +1,111 @@
+[UNITINFO]
+{
+	// ------------------- description
+	Side=Sphere;
+	Name=Atom;
+	Description=Energy-intensive Fast Bomber Sphere;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+	TEDClass=COMMANDER;
+
+
+	// ------------------- external specs
+	UnitName=sphere_atom;
+	UnitNumber=10000;
+	Objectname=sphere_atom.3do;
+	Corpse=sphere_atom_dead;
+	buildpic=sphere_atom.png;
+	SoundCategory=SPHERE_SPHERESML;
+
+	// ------------------- health/cost/size
+	MaxDamage=3000;
+	FootprintX=3;
+	FootprintZ=3;
+	mass=1200;
+	
+	// ------------------- resources
+	EnergyMake=0;
+	MetalMake=0;
+	EnergyStorage=0;
+	MetalStorage=0;
+	EnergyUse=0;
+
+	// ------------------- constructor
+	builder=0;
+
+
+	// ------------------- abilities
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canguard=1;
+	canattack=1;
+	onoffable=0;
+
+
+	// ------------------- movement
+	canfly=1;
+	MaxVelocity=2.8;
+	BrakeRate=0.06;
+	Acceleration=0.06;
+	TurnRate=632;
+	SteeringMode=2;
+	cruisealt=100;
+	hoverattack=1;
+	airstrafe=0;
+	airhoverfactor=0.1;
+	upright=1;
+	bankingallowed=0;
+	useSmoothMesh=1;
+
+	// ------------------- scout
+	sightdistance=600;
+	RadarDistance=0;
+	SonarDistance=0;
+
+	// ------------------- weapons
+	Weapon1=sphere_atom_cannon;
+	Weapon2=sphere_atom_shield;
+	badtargetcategory1=VTOL;
+	NoChaseCategory=VTOL;
+	ExplodeAs=BIG_SPHERE_BLAST;
+	SelfDestructAs=BIG_SPHERE_BLAST;
+
+	// ------------------- orders
+	movestate=0;
+
+	// ------------------- stealth
+	//cloakcost=200;
+	//cloakcostmoving=750;
+	//mincloakdistance=100;
+
+	// ------------------- misc
+	Designation=comet;
+	ShootMe=1;
+	maneuverleashlength=640;
+	Version=1;
+	minAirbasePower=99999;
+	activatewhenbuilt=0;
+	collisionVolumeType = sphere;
+	collisionVolumeScales =35 35 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		energyCostMoving=250;
+		tip=Requires 250E/s to move. Depletes own shield when it fires.;
+	}
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:rocketflaremed;
+		explosiongenerator1=custom:comettrail;
+		explosiongenerator2=custom:atomcharge1;
+		explosiongenerator3=custom:atomcharge2;
+		explosiongenerator4=custom:atomfirewave;
+	}
+	buildcostenergy=5587;//#AUTO#
+	buildcostmetal=1117;//#AUTO#
+	buildtime=13316;//#AUTO#
+}

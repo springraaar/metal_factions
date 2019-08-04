@@ -5,14 +5,18 @@
 
 #define SPEEDUP_FACTOR	150
 
+
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 piece  ground, torso, ruparm, luparm, rloarm, lloarm, rbarrel, lbarrel, rgf, lgf, rgun, lgun, a2, a1, pelvis, tr, tl, t2, rleg, rfoot, lleg, lfoot, head, lthigh, rthigh, rlauncher, rgun1, rgun2, rfirept1, rfirept2, llauncher, lgun1, lgun2, lfirept1, lfirept2;
 
-static-var  gun_1, gun_2, bMoving, bAiming, Static_Var_3, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
+static-var  gun_1, gun_2, bMoving, bAiming, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
+
+#include "aimhelper1.h"
 
 // Signal definitions
-#define SIG_AIM				4
-#define SIG_AIM2			8
-
+#define SIG_AIM				2
 
 MotionSpeedControl(maxSpeed,currentSpeed)
 {
@@ -280,6 +284,7 @@ Create()
 	gun_2 = [0];
 	bMoving = FALSE;
 	bAiming = FALSE;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
 	start-script SmokeUnit();
 	start-script MotionSpeedControl();
@@ -307,9 +312,10 @@ SweetSpot(piecenum)
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
-	turn torso to y-axis <0.000000> speed <90.000000>;
-	turn ruparm to x-axis <0.000000> speed <45.000000>;
-	turn luparm to x-axis <0.000000> speed <45.000000>;
+	call-script stopAimHelper1(<100>,<100>);
+	turn torso to y-axis <0.000000> speed <100.000000>;
+	turn ruparm to x-axis <0.000000> speed <100.000000>;
+	turn luparm to x-axis <0.000000> speed <100.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn ruparm around x-axis;
 	bAiming = FALSE;
@@ -338,17 +344,20 @@ QueryPrimary(piecenum)
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<150>,<150>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 
-
 	turn torso to y-axis heading speed <150.000000>;
-	turn ruparm to x-axis <0.000000> - pitch speed <100.000000>;
-	turn luparm to x-axis <0.000000> - pitch speed <100.000000>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn ruparm around x-axis;
-	wait-for-turn luparm around x-axis;
+	turn ruparm to x-axis <0.000000> - pitch speed <150.000000>;
+	turn luparm to x-axis <0.000000> - pitch speed <150.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn luparm around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }
@@ -408,12 +417,17 @@ QuerySecondary(piecenum)
 
 AimSecondary(heading, pitch)
 {
-	signal SIG_AIM2;
-	set-signal-mask SIG_AIM2;
+	// do the aim check with extended tolerance
+	call-script updateAimHelper1(heading,pitch,<150>,<150>,HEADING_TOLERANCE*2,PITCH_TOLERANCE*5);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 
 	turn torso to y-axis heading speed <150.000000>;
-	wait-for-turn torso around y-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

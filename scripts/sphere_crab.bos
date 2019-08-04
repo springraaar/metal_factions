@@ -5,14 +5,19 @@
 
 #define SPEEDUP_FACTOR 120
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
+
 piece  gp, hips, torso, head, h2, luparm,l1, larm, larm2, lflare,larm3, ruparm, r1, rarm, rarm2, rflare, rarm3, t2, rc1, rc2, lc1,lc2, rflare2,lflare2, leg1,bleg,leg2,bleg2,leg3,bleg3,leg4,bleg4, ljoint, rjoint, t3;
 
 static-var  bMoving, bAiming, isOpen, bUnderwater, firePt2, firePoint;
 
+#include "aimhelper1.h"
+
 // Signal definitions
 #define SIG_AIM				2
-#define SIG_AIM_2			4
-#define SIG_MOVE			8
+#define SIG_MOVE			4
 
 checkUnderwater()
 {
@@ -269,6 +274,7 @@ Create()
 	bUnderwater = FALSE;
 	firePt2 = [0];
 	firePoint = [0];
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
 	start-script SmokeUnit();
 	start-script checkUnderwater();
@@ -308,7 +314,8 @@ SweetSpot(piecenum)
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
-	turn torso to y-axis <0.000000> speed <100.016484>;
+	call-script stopAimHelper1(<140>,<140>);
+	turn torso to y-axis <0.000000> speed <140.016484>;
 	turn ruparm to x-axis <0.000000> speed <145.005495>;
 	turn luparm to x-axis <0.000000> speed <145.005495>;
 	call-script Close();
@@ -362,16 +369,20 @@ AimSecondary(heading, pitch)
 		return(0);
 	}
 	
+	call-script updateAimHelper1(heading,pitch,<140>,<140>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 	
-	turn torso to y-axis heading speed <120.027473>;
-	turn ruparm to x-axis <0.000000> - pitch speed <130.038462>;
-	turn luparm to x-axis <0.000000> - pitch speed <130.038462>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn ruparm around x-axis;
-	wait-for-turn luparm around x-axis;
+	turn torso to y-axis heading speed <140.027473>;
+	turn ruparm to x-axis <0.000000> - pitch speed <140.038462>;
+	turn luparm to x-axis <0.000000> - pitch speed <140.038462>;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn luparm around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }
@@ -429,21 +440,25 @@ AimPrimary(heading, pitch)
 		return(0);
 	}
 
-	signal SIG_AIM;
-	set-signal-mask SIG_AIM;
-	bAiming = TRUE;
-	
 	if(!isOpen)
 	{
 		call-script Open();
 	}
+	call-script updateAimHelper1(heading,pitch,<140>,<140>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+
 	
-	turn torso to y-axis heading speed <120.027473>;
-	turn ruparm to x-axis <0.000000> - pitch speed <130.038462>;
-	turn luparm to x-axis <0.000000> - pitch speed <130.038462>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn ruparm around x-axis;
-	wait-for-turn luparm around x-axis;
+	turn torso to y-axis heading speed <140.027473>;
+	turn ruparm to x-axis <0.000000> - pitch speed <140.038462>;
+	turn luparm to x-axis <0.000000> - pitch speed <140.038462>;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn luparm around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

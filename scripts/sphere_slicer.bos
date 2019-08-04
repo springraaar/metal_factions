@@ -5,15 +5,17 @@
 
 #define SPEEDUP_FACTOR 150
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 piece  groundx2, hips, torso,tl,tr,sleeve,barrel,flare,sleeve2,barrel2,flare2,slpt, leg1, bleg, leg2, bleg2, leg3, bleg3, leg4, bleg4,tc,tl2,tr2;
 
-static-var  bMoving, bAiming, justmoved, restore_delay, gun_1, currentHeading, currentPitch;
+static-var  bMoving, bAiming, justmoved, gun_1;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				2
-
-#define HEADING_TOLERANCE	<15.000000>
-#define PITCH_TOLERANCE		<25.000000>
 
 
 walk()
@@ -216,17 +218,10 @@ Create()
 	bMoving = FALSE;
 	bAiming = FALSE;
 	justmoved=FALSE;
-	restore_delay = 6000;
 	gun_1=[0];
-	currentHeading = <0>;
-	currentPitch = <0>;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
 	start-script SmokeUnit();
-}
-
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
 }
 
 StartMoving()
@@ -241,28 +236,25 @@ StopMoving()
 
 RestoreAfterDelay()
 {
-	sleep restore_delay;
-	currentHeading = <0>;
-	currentPitch = <0>;
-	turn torso to y-axis <0.000000> speed <80.016484>;
-	turn slpt to x-axis <0.000000> speed <90.005495>;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
+	turn torso to y-axis <0.000000> speed <100>;
+	turn slpt to x-axis <0.000000> speed <100>;
 	bAiming = FALSE;
 }
 
-
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<250>,<250>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
-	turn torso to y-axis heading speed <150.027473>;
-	turn slpt to x-axis <0.000000> - pitch speed <150.038462>;
-	if ( (get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE ))
+	turn torso to y-axis heading speed <250.027473>;
+	turn slpt to x-axis <0.000000> - pitch speed <250.038462>;
+	if ( !aimReady1 )
 	{
 		wait-for-turn torso around y-axis;
 		wait-for-turn slpt around x-axis;
-		currentHeading = heading;
-		currentPitch = pitch;
 	}
 
 	start-script RestoreAfterDelay();
@@ -314,48 +306,22 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode tl type BITMAPONLY | BITMAP2;
-	
-		explode leg4 type BITMAPONLY | BITMAP2;
-		explode tr type BITMAPONLY | BITMAP4;
-	
-		explode leg3 type BITMAPONLY | BITMAP4;
-		explode torso type BITMAPONLY | BITMAP5;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode tl type FALL | BITMAP2;
-		
-		explode leg4 type FALL | BITMAP2;
-		explode tr type FALL | BITMAP4;
-	
-		explode leg3 type FALL | BITMAP4;
-		explode torso type SHATTER | BITMAP5;
-		return (0);
-	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode tl type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-	
-		explode leg4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-		explode tr type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
-	
-		explode leg3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
-		explode torso type SHATTER | BITMAP5;
-		return (0);
-	}
-	corpsetype = 3;
-	explode tl type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode tl type SHATTER;
+		explode sleeve type SHATTER;
+		explode barrel type SHATTER;
 
+		return (1);
+	}
+	explode tl type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode leg1 type SHATTER;
+	explode bleg type SHATTER;
+	explode leg2 type SHATTER;
+	explode bleg2 type SHATTER;
 	explode leg4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
 	explode tr type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
-
 	explode leg3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
 	explode torso type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	return (2);
 }

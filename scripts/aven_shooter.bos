@@ -5,13 +5,18 @@
 
 #define SPEEDUP_FACTOR 200
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 piece  torso,head,face, pelvis, flash, rthigh, lthigh, lleg, rleg, lfoot,rfoot,ruparm,
        luparm, larm, lloarm, lhand, rloarm, gun, ground,support,handle,support2;
 
-static-var  bMoving, bAiming, Static_Var_3, Static_Var_4, Static_Var_5, Static_Var_6, restore_delay,  mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
+static-var  bMoving, bAiming, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
+
+#include "aimhelper1.h"
 
 // Signal definitions
-#define SIG_AIM				4
+#define SIG_AIM				2
 
 
 MotionSpeedControl(maxSpeed,currentSpeed)
@@ -52,7 +57,6 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 		sleep 60;
 	}
 }
-
 
 walk()
 {
@@ -197,17 +201,6 @@ walk()
 	return;
 }
 
-
-drawgun()
-{
-	sleep 30;
-}
-
-holstgun()
-{
-	sleep 15;
-}
-
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
 	while( get BUILD_PERCENT_LEFT )
@@ -244,21 +237,11 @@ MotionControl(moving, aiming, justmoved)
 		aiming = bAiming;
 		if( moving )
 		{
-			if( aiming )
-			{
-				Static_Var_3 = 1;
-				call-script walk();
-			}
-			if( !aiming )
-			{
-				Static_Var_3 = 0;
-				call-script walk();
-			}
+			call-script walk();
 			justmoved = TRUE;
 		}
 		if( !moving )
 		{
-			Static_Var_3 = 1;
 			if( justmoved )
 			{
 				move pelvis to y-axis [0.000000] speed [25.000000];
@@ -287,19 +270,10 @@ Create()
 {
 	bMoving = FALSE;
 	bAiming = FALSE;
-	Static_Var_3 = 1;
-	Static_Var_4 = 1;
-	Static_Var_5 = 0;
-	Static_Var_6 = 0;
-	restore_delay = 3000;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();
 	start-script MotionControl();
 	start-script SmokeUnit();
-}
-
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
 }
 
 StartMoving()
@@ -319,7 +293,8 @@ SweetSpot(piecenum)
 
 RestoreAfterDelay()
 {
-	sleep restore_delay;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<90>,<90>);
 	turn torso to y-axis <0.000000> speed <90.016484>;
 	turn ruparm to x-axis <0.000000> speed <90.016484>;
 	wait-for-turn torso around y-axis;
@@ -329,13 +304,17 @@ RestoreAfterDelay()
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<70>,<70>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
-	turn torso to y-axis heading speed <90.016484>;
-	turn ruparm to x-axis <0.000000> - pitch speed <90.016484>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn ruparm around x-axis;
+	turn torso to y-axis heading speed <70.016484>;
+	turn ruparm to x-axis <0.000000> - pitch speed <70.016484>;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn ruparm around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

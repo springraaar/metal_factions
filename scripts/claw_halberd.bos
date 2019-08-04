@@ -5,9 +5,14 @@
 
 #define SPEEDUP_FACTOR 	80
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 piece  gp, base, flash, turret, holder, sleeve, barrel,base2,l1,l2,l3,l4,farmor,barmor, launcher, tubes, f1,f2, t1, t2, t1cover,t2cover;
 
-static-var  restore_delay, gun_1;
+static-var  gun_1;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				2
@@ -43,33 +48,33 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 Create()
 {
-	restore_delay = 5000;
 	gun_1 = [0];
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script SmokeUnit();
 	start-script AnimateTracks();
 }
 
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
-}
-
 RestoreAfterDelay()
 {
-	sleep restore_delay;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<90>,<90>);
 	turn turret to y-axis <0.000000> speed <90.016484>;
-	turn sleeve to x-axis <0.000000> speed <50.005495>;
-	turn launcher to x-axis <0.000000> speed <50.005495>;
+	turn sleeve to x-axis <0.000000> speed <90.005495>;
+	turn launcher to x-axis <0.000000> speed <90.005495>;
 }
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<150>,<150>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	turn turret to y-axis heading speed <150.038462>;
 	turn sleeve to x-axis <0.000000> - pitch speed <150.000000>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn sleeve around x-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }
@@ -93,11 +98,15 @@ QueryPrimary(piecenum)
 }
 AimSecondary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<150>,<150>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	set-signal-mask SIG_AIM;
 	turn turret to y-axis heading speed <150.038462>;
 	turn launcher to x-axis <0.000000> - pitch speed <150.000000>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn launcher around x-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn launcher around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

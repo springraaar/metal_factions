@@ -439,6 +439,63 @@
 	}
 }
 
+[ATOMTRAIL]
+{
+	usedefaultexplosions=0;	
+
+	
+	[GLOW1]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir = -0.6 r1.2, -0.6 r1.2, -0.6 r1.2;
+			width=35;
+			length=35;
+			alpha=0.06;
+			alphadecay=0.0015;
+			color=1.0, 0, 0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1; 
+	}
+	[GLOW2]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir = -0.6 r1.2, -0.6 r1.2, -0.6 r1.2;
+			width=35;
+			length=35;
+			alpha=0.06;
+			alphadecay=0.0015;
+			color=1.0, 0, 0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1; 
+	}
+	[GLOW3]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir = -0.6 r1.2, -0.6 r1.2, -0.6 r1.2;
+			width=35;
+			length=35;
+			alpha=0.06;
+			alphadecay=0.0015;
+			color=1.0, 0, 0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1; 
+	}
+}
 [ACETRAIL]
 {
 	usedefaultexplosions=0;	

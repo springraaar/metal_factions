@@ -46,6 +46,8 @@ local GetGameSeconds    = Spring.GetGameSeconds
 local units = {}
 local disabledUnits = {}
 local changeStateDelay = 3 -- delay in seconds before state of unit can be changed. Do not set it below 2 seconds, because it takes 2 seconds before enabled unit reaches full energy use
+local LOW_ENERGY_DISABLE_THRESHOLD = 800
+local LOW_ENERGY_ENABLE_THRESHOLD = 1200
 local radarDefs = {
   [ UnitDefNames['aven_advanced_radar_tower'].id ] = true,
   [ UnitDefNames['aven_radar_tower'].id ] = true,
@@ -95,11 +97,21 @@ local radarDefs = {
   [ UnitDefNames['sphere_rain'].id ] = true,
   [ UnitDefNames['sphere_advanced_sonar_station'].id ] = true,
   [ UnitDefNames['sphere_sonar_station'].id ] = true,
-   [ UnitDefNames['sphere_echo'].id ] = true,
+  [ UnitDefNames['sphere_echo'].id ] = true,
   [ UnitDefNames['sphere_orb'].id ] = true,
   [ UnitDefNames['sphere_mist'].id ] = true
 }
 
+local metalDefs = {
+  [ UnitDefNames['aven_exploiter'].id ] = true,
+  [ UnitDefNames['gear_exploiter'].id ] = true,
+  [ UnitDefNames['claw_exploiter'].id ] = true,
+  [ UnitDefNames['sphere_exploiter'].id ] = true,
+  [ UnitDefNames['aven_moho_mine'].id ] = true,
+  [ UnitDefNames['gear_moho_mine'].id ] = true,
+  [ UnitDefNames['claw_moho_mine'].id ] = true,
+  [ UnitDefNames['sphere_moho_mine'].id ] = true
+}
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -113,7 +125,7 @@ end
 
 
 function AddUnit(unitID, unitDefID) 
-  if (radarDefs[unitDefID]) then
+  if (radarDefs[unitDefID] or metalDefs[unitDefID]) then
 		units[unitID] = { defID = unitDefID, changeStateTime = GetGameSeconds() } 
   end
 end
@@ -144,42 +156,44 @@ end
 
 
 function gadget:GameFrame(n)
-  if (((n+8) % 64) < 0.1) then
+	if (((n+8) % 64) < 0.1) then
 		local teamEnergy = {}
 		local gameSeconds = GetGameSeconds()
-    local temp = Spring.GetTeamList() 
+		local temp = Spring.GetTeamList() 
+		-- update energy available for each team
 		for _,teamID in ipairs(temp) do 
 			local eCur, eMax, ePull, eInc, _, _, _, eRec = Spring.GetTeamResources(teamID, "energy")
 			teamEnergy[teamID] = eCur - ePull + eInc
 		end 
-		
 
-
+		-- check each unit
 		for unitID,data in pairs(units) do
-      if (gameSeconds - data.changeStateTime > changeStateDelay) then
-        local disabledUnitEnergyUse = disabledUnits[unitID] 
-        if (disabledUnitEnergyUse~=nil) then -- we have disabled unit
-          local unitTeamID = GetUnitTeam(unitID)
-          if (disabledUnitEnergyUse < teamEnergy[unitTeamID]) then  -- we still have enough energy to reenable unit
-            disabledUnits[unitID]=nil
-            GiveOrderToUnit(unitID, CMD.ONOFF, { 1 }, { })
-            data.changeStateTime = gameSeconds
-            teamEnergy[unitTeamID] = teamEnergy[unitTeamID] - disabledUnitEnergyUse
-          end
-        else -- we have non-disabled unit
-          local _, _, _, energyUse =	GetUnitResources(unitID)
-          local energyUpkeep = UnitDefs[data.defID].energyUpkeep
-          if (energyUse == nil or energyUpkeep == nil) then -- unit probably doesnt exists, get rid of it
-            RemoveUnit(unitID)
-          elseif (energyUse < energyUpkeep) then -- there is not enough energy to keep unit running (its energy use auto dropped to 0), we will disable it 
-            if (GetUnitStates(unitID).active) then  -- only disable "active" unit
-              GiveOrderToUnit(unitID, CMD.ONOFF, { 0 }, { })
-              data.changeStateTime = gameSeconds
-              disabledUnits[unitID] = energyUpkeep
-            end				
-          end
-        end
-      end
+			if (gameSeconds - data.changeStateTime > changeStateDelay) then
+				local disabledUnitEnergyUse = disabledUnits[unitID] 
+				local unitTeamID = GetUnitTeam(unitID)
+				
+				-- if unit has been disabled, check if it can be activated
+				if (disabledUnitEnergyUse~=nil) then -- we have disabled unit
+					if (disabledUnitEnergyUse < teamEnergy[unitTeamID] and teamEnergy[unitTeamID] > LOW_ENERGY_ENABLE_THRESHOLD) then  -- we still have enough energy to reenable unit
+						disabledUnits[unitID]=nil
+						GiveOrderToUnit(unitID, CMD.ONOFF, { 1 }, { })
+						data.changeStateTime = gameSeconds
+						teamEnergy[unitTeamID] = teamEnergy[unitTeamID] - disabledUnitEnergyUse
+					end
+				else -- we have non-disabled unit
+					local _, _, _, energyUse =	GetUnitResources(unitID)
+					local energyUpkeep = UnitDefs[data.defID].energyUpkeep
+					if (energyUse == nil or energyUpkeep == nil) then -- unit probably doesn't exist, get rid of it
+						RemoveUnit(unitID)
+					elseif (energyUse > 0 and teamEnergy[unitTeamID] < LOW_ENERGY_DISABLE_THRESHOLD) then -- there is not enough energy to keep unit running (its energy use auto dropped to 0), we will disable it 
+						if (GetUnitStates(unitID).active) then  -- only disable "active" unit
+							GiveOrderToUnit(unitID, CMD.ONOFF, { 0 }, { })
+							data.changeStateTime = gameSeconds
+							disabledUnits[unitID] = energyUpkeep
+						end				
+					end
+				end
+			end
 		end
 	end
 end

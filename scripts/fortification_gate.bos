@@ -1,0 +1,123 @@
+#define TA			// This is a TA script
+
+#define HEIGHT_MOD	[14.8]
+#define HEIGHT_CHANGE_SPEED [45]
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, platform;
+
+static-var isOpen, currentLevel;
+
+lua_setHeightLevel() { return 0; }
+
+lowerPlatform()
+{
+	if (currentLevel > 0)
+	{
+		move platform to y-axis (currentLevel - 11)*HEIGHT_MOD speed HEIGHT_CHANGE_SPEED;
+		wait-for-move platform along y-axis;
+		currentLevel = currentLevel -1;
+		return;
+	}
+	if (currentLevel == 0)
+	{
+		sleep 10;
+	}
+}
+
+raisePlatform()
+{
+	if (currentLevel < 10)
+	{
+		move platform to y-axis (-9 + currentLevel)*HEIGHT_MOD speed HEIGHT_CHANGE_SPEED;
+		wait-for-move platform along y-axis;
+		currentLevel = currentLevel +1;
+		return;
+	}
+	if (currentLevel == 10)
+	{
+		sleep 10;
+	}
+}
+
+
+openYard()
+{
+	set YARD_OPEN to 1;
+	while( !get YARD_OPEN )
+	{
+		set BUGGER_OFF to 1;
+		sleep 1500;
+		set YARD_OPEN to 1;
+	}
+	set BUGGER_OFF to 0;
+}
+
+closeYard()
+{
+	set YARD_OPEN to 0;
+	while( get YARD_OPEN )
+	{
+		set BUGGER_OFF to 1;
+		sleep 1500;
+		set YARD_OPEN to 0;
+	}
+	set BUGGER_OFF to 0;
+}
+
+adjustOpenLevel(oldLevel)
+{
+	while (TRUE)	
+	{
+		oldLevel = currentLevel;
+		// if active, progressively open the gate
+		if (get ACTIVATION)
+		{
+			call-script lowerPlatform();
+		}
+		// if not active, progressively close the gate
+		else 
+		{
+			if (currentLevel == 0)
+			{
+				call-script closeYard();
+			}
+			call-script raisePlatform();
+		}
+		
+		// adjust pathability
+		if (oldLevel != currentLevel)
+		{
+			call-script lua_setHeightLevel(currentLevel);
+			if (currentLevel == 0)
+			{
+				call-script openYard();
+			}
+			else
+			{
+				call-script closeYard();
+			}
+		}
+	}
+}
+
+Create()
+{
+	currentLevel = 10;
+	while (GET BUILD_PERCENT_LEFT) {
+		sleep 100;
+	}
+	start-script adjustOpenLevel();
+	return(1);
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 70 )
+	{
+		return (1);
+	}
+	return (2);
+}

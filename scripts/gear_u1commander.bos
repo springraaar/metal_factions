@@ -6,9 +6,14 @@
 #define SPEEDUP_FACTOR 250
 #define RESTORE_DELAY	3000
 
+#define HEADING_TOLERANCE	<35>
+#define PITCH_TOLERANCE		<25>
+
 piece  torso, ruparm, luparm, larm, rarm, lfirept,rfirept, lflare, rflare,lnanospray,rnanospray, lflamer,rflamer, pelvis, head, h2, pack, tube1, tube2, lthigh, rthigh, lgun,rgun, ltorpgun,rtorpgun, rleg, lleg, lfoot, rfoot, ltorpedo, rtorpedo, lknee, rknee, lnanobox,rnanobox, launcherpt;
 
 static-var  bMoving, bBuilding, bAiming, bDgunning, bUnderwater, canAim1, canAim2, gun_1, gun_2, nanoPt, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
+
+#include "aimhelper1.h"
 
 // signal definition
 #define SIG_AIM		2
@@ -356,6 +361,7 @@ Create()
 	gun_2 = [0];
 	nanoPt= [0];
 	bAiming = 0;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();
 	start-script MotionControl();
 	start-script Build();
@@ -399,6 +405,7 @@ RestorePosition()
 {
 	bDgunning = FALSE;
 	sleep RESTORE_DELAY;
+	call-script stopAimHelper1(<290>,<240>);
 	turn torso to y-axis <0.000000> speed <290.000000>;
 	turn ruparm to x-axis <0.000000> speed <245.000000>;
 	turn luparm to x-axis <0.000000> speed <245.000000>;
@@ -438,19 +445,22 @@ AimPrimary(heading, pitch)
 	{
 		return (0);
 	}
+	call-script updateAimHelper1(heading,pitch,<400>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 
-	turn torso to y-axis heading speed <300.093407>;
-	turn luparm to x-axis <0.000000> - pitch speed <345.000000>;
-	turn lgun to x-axis <0.000000> speed <345.000000>;
-	turn ruparm to x-axis <0.000000> - pitch speed <345.000000>;
-	turn rgun to x-axis <0.000000> speed <345.000000>;
-
-	wait-for-turn torso around y-axis;
-	wait-for-turn luparm around x-axis;
-	wait-for-turn lgun around x-axis;
+	turn torso to y-axis heading speed <400.093407>;
+	turn luparm to x-axis <0.000000> - pitch speed <400.000000>;
+	turn lgun to x-axis <0.000000> speed <400.000000>;
+	turn ruparm to x-axis <0.000000> - pitch speed <400.000000>;
+	turn rgun to x-axis <0.000000> speed <400.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn luparm around x-axis;
+		wait-for-turn lgun around x-axis;
+	}
 	start-script RestorePosition();
 	return (1);
 }
@@ -495,18 +505,22 @@ AimSecondary(heading, pitch)
 	{
 		return (0);
 	}
+	call-script updateAimHelper1(heading,pitch,<400>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 
-	turn torso to y-axis heading speed <300.093407>;
-	turn luparm to x-axis <0.000000> - pitch speed <345.000000>;
-	turn lgun to x-axis <0.000000> speed <345.000000>;
-	turn ruparm to x-axis <0.000000> - pitch speed <345.000000>;
-	turn rgun to x-axis <0.000000> speed <345.000000>;	
-	wait-for-turn torso around y-axis;
-	wait-for-turn luparm around x-axis;
-	wait-for-turn lgun around x-axis;
+	turn torso to y-axis heading speed <400.093407>;
+	turn luparm to x-axis <0.000000> - pitch speed <400.000000>;
+	turn lgun to x-axis <0.000000> speed <400.000000>;
+	turn ruparm to x-axis <0.000000> - pitch speed <400.000000>;
+	turn rgun to x-axis <0.000000> speed <400.000000>;	
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn luparm around x-axis;
+		wait-for-turn lgun around x-axis;
+	}
 	start-script RestorePosition();
 	return (1);
 }
@@ -558,14 +572,15 @@ FireTertiary()
 
 StartBuilding(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<400>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bBuilding = TRUE;
 	bAiming = TRUE;
-	turn torso to y-axis heading speed <300.093407>;
-	turn luparm to x-axis <0.000000> - pitch speed <350.000000>;
+	turn torso to y-axis heading speed <400.093407>;
+	turn luparm to x-axis <0.000000> - pitch speed <400.000000>;
 	turn lgun to x-axis <0.000000> speed <395.000000>;
-	turn ruparm to x-axis <0.000000> - pitch speed <350.000000>;
+	turn ruparm to x-axis <0.000000> - pitch speed <400.000000>;
 	turn rgun to x-axis <0.000000> speed <395.000000>;
 	move lnanobox to y-axis [2.000000] speed [8.000000];
 	move rnanobox to y-axis [2.000000] speed [8.000000];

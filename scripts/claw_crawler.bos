@@ -5,9 +5,14 @@
 
 #define SPEEDUP_FACTOR 110
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 piece  gp, hips, l1, l2,l3, base2, front, back,lbackleg,lb2,rbackleg,rb2,rfrontleg,rf2,lfrontleg,lf2, turret, holder, sleeve, barrel, flare;
 
-static-var  bMoving, bAiming, restoreDelay, isUnderWater, mASpdFactor;
+static-var  bMoving, bAiming, isUnderWater, mASpdFactor;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				2
@@ -179,7 +184,7 @@ Create()
 	bMoving = FALSE;
 	bAiming = FALSE;
 	isUnderWater = FALSE;
-	restoreDelay = 6000;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();
 	start-script MotionControl();
 	start-script SmokeUnit();
@@ -223,9 +228,10 @@ SweetSpot(piecenum)
 
 RestoreAfterDelay()
 {
-	sleep restoreDelay;
-	turn turret to y-axis <0.000000> speed <100.016484>;
-	turn sleeve to x-axis <0.000000> speed <145.005495>;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<90>,<90>);
+	turn turret to y-axis <0.000000> speed <90.016484>;
+	turn sleeve to x-axis <0.000000> speed <90.005495>;
 	bAiming = FALSE;
 }
 
@@ -252,15 +258,18 @@ FirePrimary()
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<110>,<110>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 	
-	turn turret to y-axis heading speed <120.027473>;
-	turn sleeve to x-axis <0.000000> - pitch speed <120.038462>;
-	
-	wait-for-turn turret around y-axis;
-	wait-for-turn sleeve around x-axis;
+	turn turret to y-axis heading speed <110.027473>;
+	turn sleeve to x-axis <0.000000> - pitch speed <110.038462>;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }
@@ -271,16 +280,13 @@ Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-
 		explode base2 type SHATTER;
 		explode holder type SHATTER;
 		explode sleeve type SHATTER;
 		explode front type SHATTER;
 		
-		return (0);
+		return (1);
 	}
-	corpsetype = 3;
 	explode base2 type SHATTER;
 	explode holder type SHATTER;
 	explode sleeve type SHATTER;
@@ -291,4 +297,5 @@ Killed(severity, corpsetype)
 	explode rbackleg type SHATTER;
 	explode lfrontleg type SHATTER;
 	explode lbackleg type SHATTER;
+	return (2);
 }

@@ -5,12 +5,19 @@
 
 #define SPEEDUP_FACTOR	550
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
+
 piece  ground, hips, torso, lthigh, rthigh, rleg, lleg, rfoot, lfoot, p2, sleeve, barrel, flare;
 
 static-var  Static_Var_1, bMoving, bAiming, Static_Var_5, restore_delay, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mADelay1, legAngle1, legAngle2, legAngle3;
 
+#include "aimhelper1.h"
+
 // Signal definitions
 #define SIG_AIM				2
+
 
 
 MotionSpeedControl(maxSpeed,currentSpeed)
@@ -274,6 +281,7 @@ Create()
 	Static_Var_5 = 1;
 	Static_Var_1 = 0;
 	restore_delay = 6000;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
 	start-script SmokeUnit();
 	start-script MotionSpeedControl();
@@ -295,7 +303,7 @@ StopMoving()
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
-
+	call-script stopAimHelper1(<200>,<350>);
 	turn sleeve to x-axis <0.000000> speed <350.027473>;
 	turn torso to y-axis <0.000000> speed <200.038462>;
 	bAiming = FALSE;
@@ -304,15 +312,17 @@ RestoreAfterDelay()
 
 AimPrimary(heading, pitch)
 {
+	bAiming = TRUE;
+	call-script updateAimHelper1(heading,pitch,<300>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	bAiming = TRUE;
-
-
 	turn torso to y-axis heading speed <350.027473>;
 	turn sleeve to x-axis <0.000000> - pitch speed <350.027473>;
-	wait-for-turn sleeve around x-axis;
-	wait-for-turn torso around y-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn sleeve around x-axis;
+		wait-for-turn torso around y-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }
@@ -343,25 +353,15 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
+	if( severity <= 35 )
 	{
-		corpsetype = 1;
 		explode torso type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		return (0);
+		return (1);
 	}
-	if( severity <= 50 )
-	{
-		corpsetype = 2;
-		explode torso type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		return (0);
-	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode torso type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		return (0);
-	}
-	corpsetype = 3;
 	explode torso type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-	return (0);
+	explode lthigh type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode rthigh type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode hips type SHATTER;
+	explode sleeve type SHATTER;
+	return (2);
 }

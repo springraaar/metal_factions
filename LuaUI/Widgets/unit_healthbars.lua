@@ -17,7 +17,7 @@ function widget:GetInfo()
     author    = "jK. (modified by raaar)",
     date      = "2009",
     license   = "GNU GPL, v2 or later",
-    layer     = -10,
+    layer     = 999,
     enabled   = true
   }
 end
@@ -95,22 +95,23 @@ local barColors = {
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-local blink = false;
-local gameFrame = 0;
+local blink = false
+local gameFrame = 0
 
-local empDecline = 32/30/40;
+local empDecline = 32/30/40
 
-local cx, cy, cz = 0,0,0;  --// camera pos
+local cx, cy, cz = 0,0,0  --// camera pos
 
-local paraUnits   = {};
-local onFireUnits = {};
-local UnitMorphs  = {};
-local magnetars   = {};
-local MAGNETAR_DEF_ID = UnitDefNames["sphere_magnetar"].id
+local paraUnits   = {}
+local onFireUnits = {}
+local regenUnits = {}
+local UnitMorphs  = {}
+local magnetars   = {}
 
-local barShader;
-local barDList;
-local barFeatureDList;
+
+local barShader
+local barDList
+local barFeatureDList
 
 local unitArmorTypeTable = {}
 
@@ -166,6 +167,7 @@ function widget:Initialize()
 
 
 	-- find units armor types and large shield unit def ids
+	-- TODO not used, remove?
 	local armorTypeStr = "L"
     if ( Game.armorTypes[ud.armorType] == "armor_heavy" ) then
     	armorTypeStr = "H"
@@ -490,11 +492,11 @@ do
   local hp, hp100, emp, morph
   local reload,reloaded,reloadFrame
   local numStockpiled,numStockpileQued
-
   local customInfo = {}
   local ci
 
   function DrawUnitInfos(unitID,unitDefID, ud)
+    local MAGNETAR_DEF_ID = UnitDefNames["sphere_magnetar"].id
     if (not customInfo[unitDefID]) then
     
       -- find the weapon with the highest reload time
@@ -544,10 +546,14 @@ do
     hp  = (health or 0)/maxHealth
     morph = UnitMorphs[unitID]
 
-    if (drawUnitsOnFire)and(GetUnitRulesParam(unitID,"on_fire")==1) then
+    if (drawUnitsOnFire) and (GetUnitRulesParam(unitID,"on_fire")==1) then
       onFireUnits[#onFireUnits+1]=unitID
     end
 	
+    if (GetUnitRulesParam(unitID,"recent_regen") and GetUnitRulesParam(unitID,"recent_regen") > 1) then
+      regenUnits[#regenUnits+1]={unitID,GetUnitRulesParam(unitID,"recent_regen")}
+    end
+    
 	if (ud.id == MAGNETAR_DEF_ID) then
       magnetarPower = GetUnitRulesParam(unitID,"magnetar_power")
       if magnetarPower and magnetarPower > 0 then
@@ -817,8 +823,8 @@ do
       glPolygonOffset(-2, -2)
       glBlending(GL_SRC_ALPHA, GL_ONE)
 
-      local alpha = (spGetGameFrame() % 5) / 5
-      glColor(1,0.3,0,alpha/5)
+      local alpha = (spGetGameFrame() % 5) / 25
+      glColor(1,0.3,0,alpha)
       for i=1,#onFireUnits do
         glUnit(onFireUnits[i],true)
       end
@@ -828,6 +834,26 @@ do
       glDepthTest(false)
 
       onFireUnits = {}
+    end
+    
+    --// overlay for units ongoing relatively high hp regeneration
+    if (regenUnits) then
+      glDepthTest(true)
+      glPolygonOffset(-2, -2)
+      glBlending(GL_SRC_ALPHA, GL_ONE)
+
+      local alpha = (spGetGameFrame() % 3) / 3
+      for i=1,#regenUnits do
+      	--Spring.Echo("f="..spGetGameFrame().." regen="..tostring(alpha * regenUnits[i][2] / 30))
+      	glColor(0,1,0,alpha * regenUnits[i][2] / 60)
+        glUnit(regenUnits[i][1],true)
+      end
+
+      glBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+      glPolygonOffset(false)
+      glDepthTest(false)
+
+      regenUnits = {}
     end
 
     --// overlay for units morphing

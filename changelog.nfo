@@ -1,3 +1,76 @@
+2019/08/04 ------------------ NOTES v1.1 ----------------------
+
+--- Engine
+
+- changed the recommended engine from "104.0" to "104.0.1-1327-g315b3fd maintenance" or later
+(lobby clients should auto-download the correct version after joining the nebula hosts on the official server)
+
+
+--- New units
+
+- added GEAR "Igniter" : level 2 Incendiary Raider Vehicle
+- added SPHERE "Atom" : level 2 Energy-intensive Fast Bomber Sphere
+- added CLAW "Pike" : level 2 Heavy Fire Support Vehicle
+- added large fortification wall sections for all factions (twice as big, 4x HP and build time, 8x cost)
+- added large fortification gate sections for all factions
+(gates are slightly weaker and more expensive than the big walls, but can be lowered to let units through)
+- added level 2 Energy-to-Metal converter buildings for all factions : each costs 600M and converts up to 300 E/s to 2.5 M/s
+
+
+--- Balance / Mechanics
+
+AIMING
+- increased turret turn rate for AVEN samson, centurion, and many other units
+(short ranged units have higher turret turn rates relative to longer ranged units, with the exception of the ones which fire L missiles)
+- make mobile units adjust their aim more frequently to more efficiently track targets when maneuvering
+- evened out the range for many units with two weapons with slightly different ranges mounted on the same turret/torso to avoid issues
+- slightly increased the precision of AVEN "Guardian" and GEAR "Punisher"
+(also made the barrels a bit longer to highlight their relatively long range)
+- removed inaccuracy on long range plasma cannons when targetting moving units (too random)
+- fixed GEAR raider form commander's missiles not firing when it's building drones
+- fixed some units with depth charges trying to hit aircraft
+- AVEN "Twister" is more likely to use both weapons against air targets and chase them when patrolling
+
+ECONOMY
+- l2 advanced metal extractors have more HP but slightly increased cost
+- l2 exploiter metal extractors are bigger, tougher and have 3.3x extraction multiplier instead of 2.5x, but drain 180 E/s and are more expensive
+- radars and other energy-consuming units no longer get disabled for a few seconds after they're built if the player has enough energy
+- l2 metal extractors are now disabled if the energy store falls below 800
+
+WRECKAGES
+- fixed AVEN "Kodiak" and hovercrafts' wreckage not blocking movement
+- fixed most small units always leaving the full wreckage regardless of how brutally they were destroyed
+
+COMMANDER DRONES
+- reduced the delay between building drones from 4s to 2s
+- reduced build time for light drones by 20% and increased build time for medium drones by 20%
+
+OTHER
+- adjust balance to reduce cost of weapons which are locked to high-trajectory mode and don't have tracking projectiles
+- increased damage, HP and firing rate of AVEN "Merl", and also improved the 3D model
+- increased range of CLAW "Massacre" from 1600 to 2100 and slightly increased reload time
+(these changes offset the previous cost reduction)
+- increased maneuverability and dmg/s of CLAW "Boomer" variants, but reduced range
+- modified GEAR heat rays' damage type from M to H and adjusted the unit costs (about +15%)
+- halved the energy cost of wall sections (it's 5x the metal cost, same as the other units)
+
+
+--- Animations / Visuals
+
+- units glow green with intensity depending on how much HP% per second they're regenerating
+- fixed CLAW "Grinder" form commander rotating its barrels out of sync with the fire rate
+- fixed laser firing point and modified barrel on basic/builder GEAR commander forms
+- slightly modified GEAR "Proteus" model and fixed the build picture
+- slightly improved textures on lots of AVEN units
+- replaced an annoying sound when giving orders to some of the light vehicles
+- improved model of the flying sphere factory and "Gazer"
+
+--- UI / Widgets
+
+- added widget that allows selecting a subset of the currently selected units of the same type
+
+
+
 2019/04/11 ------------------ NOTES v1.07 ----------------------
 
 --- Balance / Mechanics

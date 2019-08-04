@@ -22,7 +22,7 @@ local MIN_WATER_DEPTH = 10
 
 local spGetGroundHeight = Spring.GetGroundHeight
 local spGetUnitPosition = Spring.GetUnitPosition
-local spRemoveBuildingDecal = Spring.RemoveBuildingDecal
+local spRemoveObjectDecal = Spring.RemoveObjectDecal
 local removeDecalUnitIds = {}
 
 -- removes ground decal for floating buildings when built over water
@@ -38,11 +38,9 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 	end
 end
 
--- process update steps every N frames
--- process aircraft altitude loss every frame
 function gadget:GameFrame(n)
 	for uId,_ in pairs(removeDecalUnitIds) do
-		spRemoveBuildingDecal(uId)   -- this is going to change to removeObjectDecal on 105.0
+		spRemoveObjectDecal(uId)   
 		removeDecalUnitIds[uId] = nil
 	end
 end

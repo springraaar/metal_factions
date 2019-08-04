@@ -5,10 +5,16 @@
 
 #define SPEEDUP_FACTOR 170
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 piece  base, flare, wake1, wake2, turret, sleeve, barrel, hull,bottom, rmidsup,rmidwheel,rfrontsup,rfrontwheel,rbacksup,rbackwheel,lbacksup,lbackwheel,lmidsup,lmidwheel,lfrontsup,lfrontwheel, lmidsup2, lmidwheel2, rmidsup2, rmidwheel2, base2, turret2,sleeve2,barrel1,emit1, barrel2, emit2, wings, base1;
 
 static-var  bMoving, bAiming, Static_Var_3, bSwimming, gun_2,
             restore_delay, terrainStatus, Static_Var_8, waterSpeed, landSpeed;
+
+#include "aimhelper1.h"
+#include "aimhelper2.h"
 
 // Signal definitions
 #define SIG_MOVE			2
@@ -46,14 +52,14 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 stopWheels()
 {
-	stop-spin rmidwheel around x-axis decelerate <10.000000>;
-	stop-spin rmidwheel2 around x-axis decelerate <10.000000>;
-	stop-spin rfrontwheel around x-axis decelerate <10.000000>;
-	stop-spin rbackwheel around x-axis decelerate <10.000000>;
-	stop-spin lmidwheel around x-axis decelerate <10.000000>;
-	stop-spin lmidwheel2 around x-axis decelerate <10.000000>;
-	stop-spin lfrontwheel around x-axis decelerate <10.000000>;
-	stop-spin lbackwheel around x-axis decelerate <10.000000>;
+	stop-spin rmidwheel around x-axis decelerate <50.000000>;
+	stop-spin rmidwheel2 around x-axis decelerate <50.000000>;
+	stop-spin rfrontwheel around x-axis decelerate <50.000000>;
+	stop-spin rbackwheel around x-axis decelerate <50.000000>;
+	stop-spin lmidwheel around x-axis decelerate <50.000000>;
+	stop-spin lmidwheel2 around x-axis decelerate <50.000000>;
+	stop-spin lfrontwheel around x-axis decelerate <50.000000>;
+	stop-spin lbackwheel around x-axis decelerate <50.000000>;
 	return (0);
 }
 
@@ -159,7 +165,8 @@ Create()
 	Static_Var_3 = 1;
 	bSwimming = FALSE;
 	Static_Var_8 = 1;
-	restore_delay = 3000;
+	call-script stopAimHelper1(<1000>,<1000>);
+	call-script stopAimHelper2(<1000>,<1000>);
 	start-script MotionControl();
 	start-script SmokeUnit();
 	return (0);
@@ -200,15 +207,11 @@ setSFXoccupy(Func_Var_1)
 	return (0);
 }
 
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
-	return (0);
-}
 
 RestoreAfterDelay()
 {
-	sleep 10000;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<60>,<60>);
 	turn turret to y-axis <0.000000> speed <60.000000>;
 	turn sleeve to x-axis <0.000000> speed <60.000000>;
 
@@ -217,6 +220,7 @@ RestoreAfterDelay()
 RestoreAfterDelay2()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper2(<100>,<80>);
 	turn turret2 to y-axis <0.000000> speed <100.000000>;
 	turn sleeve2 to x-axis <0.000000> speed <80.000000>;
 
@@ -226,13 +230,17 @@ RestoreAfterDelay2()
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<80>,<80>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 	turn turret to y-axis heading speed <80.000000>;
 	turn sleeve to x-axis <0.000000> - pitch speed <80.000000>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn sleeve around x-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }
@@ -270,13 +278,17 @@ SweetSpot(piecenum)
 
 AimSecondary(heading, pitch)
 {
+	call-script updateAimHelper2(heading,pitch,<150>,<150>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM_2;
 	set-signal-mask SIG_AIM_2;
 	bAiming = TRUE;
-	turn turret2 to y-axis heading speed <100.000000>;
-	turn sleeve2 to x-axis <0.000000> - pitch speed <130.000000>;
-	wait-for-turn turret2 around y-axis;
-	wait-for-turn sleeve2 around x-axis;
+	turn turret2 to y-axis heading speed <150.000000>;
+	turn sleeve2 to x-axis <0.000000> - pitch speed <150.000000>;
+	if (!aimReady2)
+	{
+		wait-for-turn turret2 around y-axis;
+		wait-for-turn sleeve2 around x-axis;
+	}
 	start-script RestoreAfterDelay2();
 	return (1);
 }

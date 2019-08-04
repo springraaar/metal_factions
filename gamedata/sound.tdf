@@ -726,8 +726,8 @@
 [aven_VEHICLE]
 {
 	select1=varmsel;
-	ok1=varmmove;
-	arrived1=varmstop;
+	ok1=tarmmove;
+	arrived1=tarmst0p;
 	cant1=cantdo4;
 	underattack=warning1;
 	count5=count1;
@@ -1526,7 +1526,7 @@
 [GATE]
 {
 	select1=drone1;
-	ok1=drone1;
+	ok1=servlrg4;
 	cant1=cantdo4;
 	underattack=warning1;
 	count5=count1;
@@ -2023,6 +2023,48 @@
 	unitcomplete=kcarmmov;
 	ok1=kcarmmov;
 	arrived1=kcarmstp;
+	cant1=cantdo4;
+	underattack=warning2;
+	build=nanlath1;
+	repair=repair1;
+	working=reclaim1;
+	cloak=kloak1;
+	uncloak=kloak1un;
+	capture=capture1;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+
+
+[SPHERE_SPHERESML]
+{
+	select1=spheresmlsel;
+	ok1=spheresmlok;
+	cant1=cantdo4;
+	underattack=warning2;
+	build=nanlath1;
+	repair=repair1;
+	working=reclaim1;
+	cloak=kloak1;
+	uncloak=kloak1un;
+	capture=capture1;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+[SPHERE_SPHEREBIG]
+{
+	select1=spherebigsel;
+	ok1=spherebigok;
 	cant1=cantdo4;
 	underattack=warning2;
 	build=nanlath1;

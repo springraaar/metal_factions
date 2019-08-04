@@ -46,7 +46,7 @@ function gadget:Initialize()
 		---- adding AI
 		if (isAI) then
 			local aiInfo = spGetTeamLuaAI(id)
-			if (string.sub(aiInfo,1,4) == "MFAI") then
+			if (aiInfo and string.sub(aiInfo,1,4) == "MFAI") then
 				numberOfmFAITeams = numberOfmFAITeams + 1
 				Echo("Player " .. teamList[i] .. " is " .. aiInfo)
 				
@@ -70,7 +70,7 @@ function gadget:Initialize()
 				mFAIs[#mFAIs+1] = thisAI
 			else
 				showAIWarningMessage = 1
-				Echo("AI player " .. teamList[i] .. " is not supported")
+				Echo("AI player " .. teamList[i] .. " is not supported, use MFAI instead.")
 			end
 		end
 	end

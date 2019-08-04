@@ -576,7 +576,7 @@ function CreatePlayerFromTeam(teamID)
 		_,_,_,_, tname, version = Spring_GetAIInfo(teamID)
 
 		local aiInfo = Spring.GetTeamLuaAI(teamID)
-		if (string.sub(aiInfo,1,4) == "MFAI") then
+		if (aiInfo and string.sub(aiInfo,1,4) == "MFAI") then
 			tname = aiInfo
 		else
 			if type(version) == "string" then
@@ -1996,8 +1996,8 @@ end
 function GetSkill(playerID)
 	local customtable = select(10,Spring_GetPlayerInfo(playerID)) -- player custom table
 	local unknown = "\255"..string.char(160)..string.char(160)..string.char(160) .. "?"
-	
-	if (customtable) then
+
+	if (customtable and type(customtable) == "table") then
 		local tsMu = customtable.skill
 		local tsSigma = customtable.skilluncertainty
 		local tskill = ""

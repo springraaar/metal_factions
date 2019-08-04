@@ -3,15 +3,18 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  ignite1, ignite2, ignite3, ignite4, ignite5, flare1, flare2, flare3,
-       base, turret, barrel1, barrel2, wake1, wake2,sleeve;
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
 
-static-var  gun_1, restore_delay, Static_Var_3, Static_Var_4, Static_Var_5,
-            Static_Var_6, Static_Var_7;
+piece  ignite1, ignite2, ignite3, ignite4, ignite5, flare1, flare2, flare3, base, turret, barrel1, barrel2, wake1, wake2,sleeve;
+
+#include "aimhelper1.h"
+
+static-var  gun_1, Static_Var_3, Static_Var_4, Static_Var_5, Static_Var_6, Static_Var_7;
 
 // Signal definitions
 #define SIG_AIM				2
-#define SIG_MOVE			16
+#define SIG_MOVE			4
 
 
 FlameControl()
@@ -187,24 +190,18 @@ Create()
 	Static_Var_6 = 0;
 	Static_Var_7 = 0;
 	gun_1 = [0];
-	restore_delay = 3000;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script SmokeUnit();
 	start-script Flameon();
 	return (0);
 }
 
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
-	return (0);
-}
-
-
 RestoreAfterDelay()
 {
-	sleep restore_delay;
-	turn turret to y-axis <0.000000> speed <11.000000>;
-	turn sleeve to x-axis <0.000000> speed <11.000000>;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<60>,<60>);
+	turn turret to y-axis <0.000000> speed <60.000000>;
+	turn sleeve to x-axis <0.000000> speed <60.000000>;
 	return (0);
 }
 
@@ -229,12 +226,16 @@ StopMoving()
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<60>,<60>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	turn turret to y-axis heading speed <44.000000>;
-	turn sleeve to x-axis <0.000000> - pitch speed <44.000000>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn sleeve around x-axis;
+	turn turret to y-axis heading speed <60.000000>;
+	turn sleeve to x-axis <0.000000> - pitch speed <60.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

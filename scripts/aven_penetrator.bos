@@ -5,9 +5,15 @@
 
 #define SPEEDUP_FACTOR 	80
 
+#define HEADING_TOLERANCE	<15>
+#define PITCH_TOLERANCE		<15>
+
+
 piece  base, flare, turret, sleeve, barrel, wings, t1,t2,t1cover,t2cover,body,left,right,b2;
 
 static-var  restore_delay;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				2
@@ -46,6 +52,7 @@ Create()
 {
 	hide flare;
 	restore_delay = 3000;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script SmokeUnit();
 	start-script AnimateTracks();
 	return (0);
@@ -54,6 +61,7 @@ Create()
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY2;
+	call-script stopAimHelper1(<60>,<60>);
 	turn turret to y-axis <0.000000> speed <60.000000>;
 	turn sleeve to x-axis <0.000000> speed <60.000000>;
 	return (0);
@@ -61,12 +69,16 @@ RestoreAfterDelay()
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<70>,<70>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	turn turret to y-axis heading speed <70.000000>;
 	turn sleeve to x-axis <0.000000> - pitch speed <70.000000>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn sleeve around x-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

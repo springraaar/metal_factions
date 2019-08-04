@@ -3,16 +3,17 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<35>
 
 piece ground, hips,torso,left,right,lflare1,lflare2,rflare1,sphere,shieldpt,mis;
 
-	
 static-var bMoving,bAiming, firept2, isOpen;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				2
-#define SIG_AIM2			4
-
 
 Open()
 {
@@ -49,7 +50,7 @@ Create()
 	firept2 = [0];
 	bMoving=FALSE;
 	bAiming=FALSE;
-
+	call-script stopAimHelper1(<1000>,<1000>);
 }
 
 
@@ -61,8 +62,9 @@ SweetSpot(piecenum)
 
 RestoreAfterDelayWeapon()
 {
-	sleep 5000;
-	turn torso to y-axis <0.000000> speed <65.016484>;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
+	turn torso to y-axis <0.000000> speed <100.016484>;
 	bAiming = FALSE;
 	call-script Close();
 }
@@ -96,16 +98,20 @@ FirePrimary()
 
 AimPrimary(heading, pitch)
 {
-	signal SIG_AIM;
-	set-signal-mask SIG_AIM;
-	bAiming = TRUE;
-	
 	if( ! isOpen)
 	{
 		call-script Open();
 	}
+	call-script updateAimHelper1(heading,pitch,<150>,<1500>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	
 	turn torso to y-axis heading speed <150.027473>;
-	wait-for-turn torso around y-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+	}
 	start-script RestoreAfterDelayWeapon();
 	return (1);
 }
@@ -155,17 +161,21 @@ FireSecondary()
 
 AimSecondary(heading, pitch)
 {
-	signal SIG_AIM2;
-	set-signal-mask SIG_AIM2;
-	bAiming = TRUE;
-	
 	if( ! isOpen)
 	{
 		call-script Open();
 	}
+
+	call-script updateAimHelper1(heading,pitch,<150>,<1500>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
 	
 	turn torso to y-axis heading speed <150.027473>;
-	wait-for-turn torso around y-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+	}
 	start-script RestoreAfterDelayWeapon();
 	return (1);
 }
@@ -175,31 +185,18 @@ AimSecondary(heading, pitch)
 
 Killed(severity, corpsetype)
 {
-	
-	if( severity <= 25 )
+	if( severity <= 50 )
 	{
 		corpsetype = 1;
 		explode sphere type SHATTER | BITMAP4;
-		explode sphere type SHATTER | BITMAP4;
-		return (0);
+		explode left type SHATTER | BITMAP4;
+		explode right type SHATTER | BITMAP4;
+		return (1);
 	}
-	if( severity <= 50 )
-	{
-		corpsetype = 2;
-		explode sphere type SHATTER | BITMAP4;
-		explode sphere type SHATTER | BITMAP4;
-		return (0);
-	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode sphere type SHATTER | BITMAP4;
-		explode sphere type SHATTER | BITMAP4;
-		return (0);
-	}
-	corpsetype = 3;
 	explode sphere type SHATTER | BITMAP4;
 	explode sphere type SHATTER | BITMAP4;
-		
+	explode left type SHATTER | BITMAP4;
+	explode right type SHATTER | BITMAP4;
+	return (2);
 }
 

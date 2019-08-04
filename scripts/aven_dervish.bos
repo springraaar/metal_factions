@@ -5,10 +5,15 @@
 
 #define SPEEDUP_FACTOR	150
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 piece  flare1, flare2, torso, hips, lthigh, rthigh, rleg, lleg, rfoot, head, luparm, lgunbase, lgunshaft, ruparm, rgunbase, rgunshaft, rshoulder, lshoulder,
        larm, rarm, lfoot, lgunbarrel, rgunbarrel;
 
-static-var  Static_Var_1, gun_1, bMoving, bAiming, Static_Var_5, restore_delay, statechg_DesiredState, statechg_StateChanging, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, isOpen, legAngle1, legAngle2, legAngle3;
+static-var  Static_Var_1, gun_1, bMoving, bAiming, Static_Var_5, statechg_DesiredState, statechg_StateChanging, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, isOpen, legAngle1, legAngle2, legAngle3;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				2
@@ -339,9 +344,10 @@ Create()
 	Static_Var_5 = 1;
 	gun_1 = flare1;
 	Static_Var_1 = 0;
-	restore_delay = 6000;
 	isOpen = FALSE;
 	call-script Close();
+	
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
 	start-script SmokeUnit();
 	start-script MotionSpeedControl();
@@ -363,6 +369,7 @@ StopMoving()
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY2;
+	call-script stopAimHelper1(<1000>,<1000>);
 	turn rshoulder to x-axis <0.000000> speed <350.027473>;
 	turn lshoulder to x-axis <0.000000> speed <350.027473>;
 	wait-for-turn rshoulder around x-axis;
@@ -377,21 +384,25 @@ RestoreAfterDelay()
 
 AimPrimary(heading, pitch)
 {
-	signal SIG_AIM;
-	set-signal-mask SIG_AIM;
-	bAiming = TRUE;
-
 	if ( ! isOpen )
 	{
 		call-script Open();
 	}
 
+	call-script updateAimHelper1(heading,pitch + <90>,<350>,<350>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+
 	turn torso to y-axis heading speed <350.027473>;
 	turn rshoulder to x-axis <-90.000000> - pitch speed <350.027473>;
 	turn lshoulder to x-axis <-90.000000> - pitch speed <350.027473>;
-	wait-for-turn rshoulder around x-axis;
-	wait-for-turn lshoulder around x-axis;
-	wait-for-turn torso around y-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn rshoulder around x-axis;
+		wait-for-turn lshoulder around x-axis;
+		wait-for-turn torso around y-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

@@ -5,13 +5,18 @@
 
 #define SPEEDUP_FACTOR 150
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 piece  base, firept1, back, turret, gunbase, pelvis, lleg, rleg, gun1,s2,tbase;
 
 static-var  bMoving, bAiming, lastHeading;
 
+#include "aimhelper1.h"
+
 // Signal definitions
 #define SIG_MOVE			2
-#define SIG_AIM_3			4
+#define SIG_AIM				4
 
 
 recoil(anglex, anglez)
@@ -289,6 +294,7 @@ MotionControl(moving, aiming, justmoved)
 Create()
 {
 	lastHeading = <0>;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
 	start-script SmokeUnit();
 	return (0);
@@ -318,9 +324,9 @@ QueryPrimary(piecenum)
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
-	set-signal-mask 0;
-	turn turret to y-axis <0.000000> speed <90.000000>;
-	turn gunbase to x-axis <0.000000> speed <90.000000>;
+	call-script stopAimHelper1(<100>,<100>);
+	turn turret to y-axis <0.000000> speed <100.000000>;
+	turn gunbase to x-axis <0.000000> speed <100.000000>;
 	wait-for-turn turret around y-axis;
 	lastHeading = <0>;
 	return (0);
@@ -328,12 +334,16 @@ RestoreAfterDelay()
 
 AimPrimary(heading, pitch)
 {
-	signal SIG_AIM_3;
-	set-signal-mask SIG_AIM_3;
-	turn turret to y-axis heading speed <140.000000>;
-	turn gunbase to x-axis <0> - pitch speed <140.000000>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn gunbase around x-axis;
+	call-script updateAimHelper1(heading,pitch,<200>,<200>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn turret to y-axis heading speed <200.000000>;
+	turn gunbase to x-axis <0> - pitch speed <200.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn gunbase around x-axis;
+	}
 	lastHeading = heading;
 	start-script RestoreAfterDelay();
 	return (1);
@@ -350,51 +360,21 @@ FirePrimary()
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
+	if( severity <= 35 )
 	{
-		corpsetype = 1;
 		explode gunbase type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 		explode tbase type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 		explode s2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		return (0);
+		return (1);
 	}
-	if( severity <= 50 )
-	{
-		corpsetype = 2;
-		explode gunbase type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode tbase type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode s2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode gun1 type FALL | BITMAP4;
-		explode gunbase type BITMAPONLY | BITMAP1;
-		explode lleg type FALL | BITMAP2;
-		explode pelvis type BITMAPONLY | BITMAP3;
-		explode rleg type FALL | BITMAP4;
-		explode turret type BITMAPONLY | BITMAP5;
-		return (0);
-	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode gunbase type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode tbase type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode s2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode gun1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
-		explode gunbase type BITMAPONLY | BITMAP1;
-		explode lleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-		explode pelvis type BITMAPONLY | BITMAP3;
-		explode rleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
-		explode turret type BITMAPONLY | BITMAP5;
-		return (0);
-	}
-	corpsetype = 3;
 	explode gunbase type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 	explode tbase type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 	explode s2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 	explode gun1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
 	explode gunbase type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 	explode lleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-	explode pelvis type BITMAPONLY | BITMAP3;
+	explode pelvis type SHATTER;
 	explode rleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
-	explode turret type BITMAPONLY | BITMAP5;
-	return (0);
+	explode turret type SHATTER;
+	return (2);
 }

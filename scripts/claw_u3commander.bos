@@ -6,9 +6,14 @@
 #define SPEEDUP_FACTOR 260
 #define RESTORE_DELAY	3000
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 piece  torso, luparm, larm, lgun, lnanospray, lhand,lh1,lh2, l1,l2,l3, ruparm, rarm, rgun, rnanospray, rg1, rflare1, r1,r2,r3, pelvis, head, pack, lthigh, rthigh, rleg, lleg, lfoot, rfoot, rtorpgun,rtorpflare, emit3, tbase;
 
-static-var  bMoving, bBuilding, Static_Var_3, bAiming, Static_Var_5, Static_Var_6, bDgunning, bUnderwater, canAim1, canAim2, firept2, firept3, nanopt1, stanceActivated, mASpdFactor, moveSpd1, turnSpd1, turnSpd2, turnSpd3;
+static-var  bMoving, bBuilding, bAiming, Static_Var_5, Static_Var_6, bDgunning, bUnderwater, canAim1, canAim2, firept2, firept3, nanopt1, stanceActivated, mASpdFactor, moveSpd1, turnSpd1, turnSpd2, turnSpd3;
+
+#include "aimhelper1.h"
 
 // signal definition
 #define SIG_AIM		2
@@ -429,6 +434,7 @@ Create()
 	firept2 = [0];
 	firept3 = [0];
 	nanopt1 = [0];
+	call-script stopAimHelper1(<1000>,<1000>);	
 	start-script MotionSpeedControl();
 	start-script MotionControl();
 	start-script Build();
@@ -474,9 +480,10 @@ RestorePosition()
 {
 	bDgunning = 0;
 	sleep RESTORE_DELAY;
-	turn torso to y-axis <0.000000> speed <290.000000>;
-	turn ruparm to x-axis <0.000000> speed <245.000000>;
-	turn luparm to x-axis <0.000000> speed <245.000000>;
+	call-script stopAimHelper1(<200>,<200>);
+	turn torso to y-axis <0.000000> speed <200.000000>;
+	turn ruparm to x-axis <0.000000> speed <200.000000>;
+	turn luparm to x-axis <0.000000> speed <200.000000>;
 	turn rgun to x-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
 	turn lgun to x-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
 	turn larm to y-axis <0.000000> speed <300.000000>;
@@ -512,6 +519,7 @@ AimPrimary(heading, pitch)
 		sleep 100;
 		return (0);
 	}
+	call-script updateAimHelper1(heading,pitch,<300>,<240>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
@@ -520,10 +528,13 @@ AimPrimary(heading, pitch)
 	turn ruparm to x-axis <0.000000> - pitch speed <245.000000>;
 	turn rgun to x-axis <0.000000> speed <245.000000>;
 	turn rarm to y-axis <0.000000> speed <300.000000>;
-	wait-for-turn rarm around y-axis;
-	wait-for-turn torso around y-axis;
-	wait-for-turn ruparm around x-axis;
-	wait-for-turn rgun around x-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn rarm around y-axis;
+		wait-for-turn torso around y-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn rgun around x-axis;
+	}
 	start-script RestorePosition();
 	return (1);
 }
@@ -557,6 +568,7 @@ AimSecondary(heading, pitch)
 		sleep 100;
 		return (0);
 	}
+	call-script updateAimHelper1(heading,pitch,<300>,<240>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
@@ -565,10 +577,13 @@ AimSecondary(heading, pitch)
 	turn ruparm to x-axis <0.000000> - pitch speed <245.000000>;
 	turn rgun to x-axis <0.000000> speed <245.000000>;
 	turn rarm to y-axis <0.000000> speed <300.000000>;
-	wait-for-turn rarm around y-axis;
-	wait-for-turn torso around y-axis;
-	wait-for-turn ruparm around x-axis;
-	wait-for-turn rgun around x-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn rarm around y-axis;
+		wait-for-turn torso around y-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn rgun around x-axis;
+	}
 	start-script RestorePosition();
 	return (1);
 }
@@ -644,6 +659,7 @@ Shot3(zero)
 
 StartBuilding(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<300>,<350>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bBuilding = TRUE;

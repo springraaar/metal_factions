@@ -716,6 +716,7 @@ attackerList =
 	"gear_barrel",
 	"gear_pyro",
 
+	"gear_igniter",
 	"gear_marauder",
 	"gear_copperhead",
 	"gear_heater",
@@ -775,7 +776,8 @@ attackerList =
       "claw_dizzy",
       "claw_gyro",
       "claw_mace",
-      "claw_dynamo",     
+      "claw_dynamo",
+      "claw_pike",
 ------------------------------------------------ SPHERE
       "sphere_bit",
       "sphere_slicer",
@@ -808,6 +810,7 @@ attackerList =
       "sphere_aster",
       "sphere_gazer",
       "sphere_comet",
+      "sphere_atom",
       "sphere_chroma"      
 }
 
@@ -1096,7 +1099,7 @@ waterLightAAByFaction = { [side1Name] = "aven_defender", [side2Name] = "gear_pul
 lev2WaterHeavyDefenseByFaction = {[side1Name] = {"aven_sentinel"}, [side2Name] = {"gear_blaze"}, [side3Name] = {"claw_piercer"}}
 waterRadarByFaction = { [side1Name] = "aven_radar_tower", [side2Name] = "gear_radar_tower", [side3Name] = "claw_radar_tower", [side4Name] = "sphere_radar_tower"}
 sonarByFaction = { [side1Name] = "aven_sonar_station", [side2Name] = "gear_sonar_station", [side3Name] = "claw_sonar_station", [side4Name] = "sphere_sonar_station"}
-
+mmakerByFaction =  { [side1Name] = "aven_metal_maker", [side2Name] = "gear_metal_maker", [side3Name] = "claw_metal_maker", [side4Name] = "sphere_metal_maker"}
 
 unitTypeSets = {
 	[TYPE_LIGHT_DEFENSE] = tableToSet({lltByFaction,waterLltByFaction}),
@@ -1110,7 +1113,7 @@ unitTypeSets = {
 	[TYPE_MOHO] = tableToSet({mohoMineByFaction,UWMohoMineByFaction}),
 	[TYPE_EXTRACTOR] = tableToSet({mexByFaction,hazMexByFaction,UWMexByFaction,mohoMineByFaction,UWMohoMineByFaction}),
 	[TYPE_ENERGYGENERATOR] = tableToSet({solarByFaction,windByFaction,geoByFaction,fusionByFaction,tidalByFaction,{"sphere_fusion_reactor","sphere_hardened_fission_reactor"}}),
-	[TYPE_ECONOMY] = tableToSet({mexByFaction,hazMexByFaction,mohoMineByFaction,solarByFaction,windByFaction,geoByFaction,fusionByFaction,energyStorageByFaction,metalStorageByFaction,{"sphere_fusion_reactor","sphere_hardened_fission_reactor"}}),
+	[TYPE_ECONOMY] = tableToSet({mexByFaction,hazMexByFaction,mohoMineByFaction,mmakerByFaction,solarByFaction,windByFaction,geoByFaction,fusionByFaction,energyStorageByFaction,metalStorageByFaction,{"sphere_fusion_reactor","sphere_hardened_fission_reactor"}}),
 	[TYPE_PLANT] = tableToSet({lev1PlantByFaction,lev2PlantByFaction}),	
 	[TYPE_ATTACKER] = listToSet(attackerList),
 	[TYPE_AIR_ATTACKER] = listToSet(airAttackerList),

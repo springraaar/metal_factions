@@ -46,6 +46,7 @@ local spSetUnitNeutral = Spring.SetUnitNeutral
 local spTestBuildOrder = Spring.TestBuildOrder
 local spGetGroundHeight = Spring.GetGroundHeight
 local spUnitDetach = Spring.UnitDetach
+local spSetUnitShieldState = Spring.SetUnitShieldState
 
 -- aim point over target when far from it
 local LONG_RANGE_ROCKET_FAR_FROM_TARGET_H = 1000		
@@ -78,6 +79,7 @@ local magnetarWeaponId = WeaponDefNames["sphere_magnetar_blast"].id
 local magnetarWeaponEffectId = WeaponDefNames["sphere_magnetar_blast_effect"].id
 local comsatWeaponId = WeaponDefNames["comsat_beacon"].id
 local dynamoWeaponId = WeaponDefNames["claw_dynamo_ring"].id
+local atomWeaponId = WeaponDefNames["sphere_atom_cannon"].id
 
 local DYNAMO_RING_MAX_DAMAGE = 5000
 local DYNAMO_RING_BASE_DAMAGE = 3000
@@ -93,6 +95,7 @@ local fireAOEWeaponIds = {
 	[WeaponDefNames["gear_canister_fireball"].id]=true,
 	[WeaponDefNames["gear_eruptor_fireball"].id]=true,
 	[WeaponDefNames["gear_firestorm_rocket"].id]=true,
+	[WeaponDefNames["gear_igniter_rocket"].id]=true,
 	[WeaponDefNames["gear_u1commander_missile"].id]=true,
 	[WeaponDefNames["gear_u5commander_fireball"].id]=true
 }
@@ -482,6 +485,12 @@ end
 
 -- add tracked projectiles to table on creation
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
+
+	-- make atom firing drain own shield
+	if (atomWeaponId == weaponDefID) then
+		spSetUnitShieldState(proOwnerID, 0)
+	end
+		
 	if weaponDefID == disruptorWeaponId then
 		disruptorProjectiles[proID] = proOwnerID
 		return

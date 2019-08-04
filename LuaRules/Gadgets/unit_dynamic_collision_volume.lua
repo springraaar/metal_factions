@@ -18,6 +18,7 @@ local spGetUnitHealth = Spring.GetUnitHealth
 local spGetUnitCollisionVolumeData = Spring.GetUnitCollisionVolumeData
 local spGetUnitMidAndAimPos = Spring.GetUnitMidAndAimPos
 local spSetUnitRadiusAndHeight = Spring.SetUnitRadiusAndHeight 
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
 
 local popupUnits = {}		--list of pop-up style units
 local unitCollisionVolume = include("LuaRules/Configs/CollisionVolumes.lua")	--pop-up style unit collision volume definitions
@@ -47,6 +48,7 @@ local flyingSpheres = {
 	sphere_gazer = true,
 	sphere_comet = true,
 	sphere_magnetar = true,
+	sphere_atom = true,
 	sphere_chroma = true
 }
 
@@ -200,10 +202,35 @@ if (gadgetHandler:IsSyncedCode()) then
 					xs, ys, zs, xo, yo, zo, vtype, htype, axis,_ = spGetUnitCollisionVolumeData(uId)
 	
 					val = math.max(bp*BP_SIZE_MULTIPLIER,0.1)
+					-- adjust height level of gates 
+					local heightLevel = spGetUnitRulesParam(uId,"height_level")
+					if (type(heightLevel) == "number") then
+						val = math.max( val * heightLevel / 10, 0.03)
+					end
 					ys = data[1] * val
 					yo = data[2] * val
+					
+					
 					spSetUnitCollisionVolumeData(uId, xs, ys, zs, xo, yo, zo, vtype, htype, axis)
 					spSetUnitMidAndAimPos(uId,0, ys*0.5, 0,0, ys*0.5,0,true)
+				else
+					-- adjust height level of gates 
+					local heightLevel = spGetUnitRulesParam(uId,"height_level")
+					if (type(heightLevel) == "number") then
+						xs, ys, zs, xo, yo, zo, vtype, htype, axis,_ = spGetUnitCollisionVolumeData(uId)
+		
+						val = 1
+						-- adjust height level of gates 
+						local heightLevel = spGetUnitRulesParam(uId,"height_level")
+						if (type(heightLevel) == "number") then
+							val = math.max( val * heightLevel / 10, 0.03)
+						end
+						ys = data[1] * val
+						yo = data[2] * val
+						
+						spSetUnitCollisionVolumeData(uId, xs, ys, zs, xo, yo, zo, vtype, htype, axis)
+						spSetUnitMidAndAimPos(uId,0, ys*0.5, 0,0, ys*0.5,0,true)
+					end
 				end
 			end
 		end

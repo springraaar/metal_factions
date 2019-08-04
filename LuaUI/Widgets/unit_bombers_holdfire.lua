@@ -28,7 +28,8 @@ local bombers = {
 -------------------- CLAW	
 
 -------------------- SPHERE	
-	[UnitDefNames["sphere_manta"].id] = 1
+	[UnitDefNames["sphere_manta"].id] = 1,
+	[UnitDefNames["sphere_atom"].id] = 1
 }
 
 --------------------------------------------------------------------------------

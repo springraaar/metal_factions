@@ -3,11 +3,17 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define SPEEDUP_FACTOR	350
+#define SPEEDUP_FACTOR	400
+
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 
 piece  torso, firept, hips, rfoot, lfoot, launcher, lthigh,pack, rthigh, rleg, lleg, ground, l1, t2, sleeve, s1,s2,barrel1,flare1,barrel2,flare2, door1, door2;
 
 static-var  gun_1, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mADelay1, legAngle1, legAngle2, legAngle3, bMoving, bAiming;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_MOVE			2
@@ -274,6 +280,7 @@ Create()
 	gun_1 = [0];
 	bMoving = FALSE;
 	bAiming = FALSE;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script SmokeUnit();
 	start-script MotionControl();
 	start-script MotionSpeedControl();	
@@ -325,22 +332,27 @@ RestoreAfterDelay()
 	set-signal-mask SIG_AIM;
 	set-signal-mask SIG_AIM2;
 	sleep 5000;
-	turn torso to y-axis <0.000000> speed <90.000000>;
-	turn launcher to x-axis <0.000000> speed <45.000000>;
-	turn sleeve to x-axis <0.000000> speed <45.000000>;
+	call-script stopAimHelper1(<100>,<100>);
+	turn torso to y-axis <0.000000> speed <100.000000>;
+	turn launcher to x-axis <0.000000> speed <100.000000>;
+	turn sleeve to x-axis <0.000000> speed <100.000000>;
 	bAiming = FALSE;
 	return (0);
 }
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<190>,<190>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 	turn torso to y-axis heading speed <190.000000>;
 	turn sleeve to x-axis <0.000000> - pitch speed <190.000000>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn sleeve around x-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }
@@ -349,12 +361,16 @@ AimPrimary(heading, pitch)
 
 AimSecondary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<190>,<190>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM2;
 	set-signal-mask SIG_AIM2;
 	bAiming = TRUE;
 	turn torso to y-axis heading speed <190.000000>;
 	//turn launcher to x-axis <0.000000> - pitch speed <290.000000>;
-	wait-for-turn torso around y-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+	}
 	//wait-for-turn launcher around x-axis;
 	//start-script RestoreAfterDelay();
 	return (1);

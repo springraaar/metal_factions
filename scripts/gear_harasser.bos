@@ -5,9 +5,12 @@
 
 #define SPEEDUP_FACTOR 200
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 piece  base, turret, sleeve, flare, fwheell, fwheelr,  bwheell, bwheelr, b2, b3;
 
-static-var  restore_delay;
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				2
@@ -84,32 +87,33 @@ HitByWeapon(Func_Var_1, Func_Var_2)
 
 Create()
 {
-	restore_delay = 3000;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script SmokeUnit();
 	start-script WheelSpeedControl();
 	start-script SpinWheels();
 }
 
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
-}
 
 RestoreAfterDelay()
 {
-	sleep restore_delay;
-	turn turret to y-axis <0.000000> speed <90.000000>;
-	turn sleeve to y-axis <0.000000> speed <90.000000>;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
+	turn turret to y-axis <0.000000> speed <100.000000>;
+	turn sleeve to y-axis <0.000000> speed <100.000000>;
 }
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<300>,<300>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	turn turret to y-axis heading speed <300.000000>;
-	turn sleeve to x-axis <0.000000> - pitch speed <200.000000>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn sleeve around x-axis;
+	turn sleeve to x-axis <0.000000> - pitch speed <300.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
 	
 	start-script RestoreAfterDelay();
 	return (1);
@@ -139,36 +143,15 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
+	if( severity <= 35 )
 	{
-		corpsetype = 1;
-		explode base type BITMAPONLY | BITMAP1;
-		explode turret type BITMAPONLY | BITMAP3;
-		return (0);
+		explode sleeve type SHATTER;
+		explode turret type SHATTER;
+		return (1);
 	}
-	if( severity <= 50 )
-	{
-		corpsetype = 2;
-		explode base type BITMAPONLY | BITMAP1;
-		explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-		explode bwheelr type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-		explode fwheelr type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-		explode b2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
-		explode b3 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
-		return (0);
-	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode base type BITMAPONLY | BITMAP1;
-		explode bwheelr type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-		explode fwheelr type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-		explode turret type SHATTER | BITMAP3;
-		return (0);
-	}
-	corpsetype = 3;
-	explode base type BITMAPONLY | BITMAP1;
 	explode bwheelr type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
 	explode fwheelr type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
 	explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+	explode sleeve type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+	return (2);
 }

@@ -91,7 +91,7 @@ local Config = {
 		
 		dragbutton = {2}, --middle mouse button
 		tooltip = {
-			background ="\255\255\255\1Leftclick\255\255\255\255 on the bar to set team share.",
+			background ="\255\255\255\1Left Click\255\255\255\255 on the bar to set team share.",
 			income = "Your energy income per second.",
 			pull = "Your energy expense per second.",
 			expense = "Your energy expense, same as pull if not shown.",

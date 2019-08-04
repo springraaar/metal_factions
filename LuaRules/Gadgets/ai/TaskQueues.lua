@@ -2282,6 +2282,7 @@ local gearAdvKbotLab = {
 local gearAdvVehiclePlant = {
 	"gear_marauder",
 	"gear_adv_construction_vehicle",
+	"gear_igniter",
 	gearL2VehicleRadar,
 	gearL2VehicleRadarJammer,
 	gearL2VehicleChoice,
@@ -2666,10 +2667,11 @@ local clawAdvVehiclePlant = {
 	clawL2VehicleChoice,
 	clawL2VehicleChoice,
 	"claw_halberd",
-	"claw_pounder",	
-	"claw_dynamo",
+	"claw_pounder",
+	{action = "randomness", probability = 0.5, value = "claw_dynamo"},	
 	clawL2VehicleRadar,
 	clawL2VehicleRadarJammer,
+	{action = "randomness", probability = 0.3, value = "claw_pike"},
 	"claw_armadon",	
 	{action = "wait", frames = 128}
 }

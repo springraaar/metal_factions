@@ -3,9 +3,14 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 piece  base, hull, bottom, h2,turret, sleeve, barrel, b1, flash,barrel2, b2, flash2, wake1, wake2, depthcharge;
 
-static-var  restore_delay, gun_1;
+static-var  gun_1;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_MOVE			2
@@ -42,23 +47,18 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 Create()
 {
-	restore_delay = 3000;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script SmokeUnit();
 	gun_1 = [0];
 	return (0);
 }
 
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
-	return (0);
-}
-
 RestoreAfterDelay()
 {
-	sleep restore_delay;
-	turn turret to y-axis <0.000000> speed <150.000000>;
-	turn sleeve to x-axis <0.000000> speed <150.000000>;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
+	turn turret to y-axis <0.000000> speed <100.000000>;
+	turn sleeve to x-axis <0.000000> speed <100.000000>;
 	return (0);
 }
 
@@ -84,12 +84,16 @@ StopMoving()
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<100>,<100>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	turn turret to y-axis heading speed <100.000000>;
 	turn sleeve to x-axis <0.000000> - pitch speed <100.000000>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn sleeve around x-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }
@@ -169,15 +173,11 @@ Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		corpsetype = 1;
-		
 		explode sleeve type SHATTER;
 		explode barrel type SHATTER;
 		explode barrel2 type SHATTER;
-		return (0);
+		return (1);
 	}
-	corpsetype = 3;
-
 	explode hull type SHATTER;
 	explode bottom type SHATTER;
 	explode turret type SHATTER;
@@ -185,5 +185,5 @@ Killed(severity, corpsetype)
 	explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
 	explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
 	explode barrel2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-	return (0);
+	return (2);
 }

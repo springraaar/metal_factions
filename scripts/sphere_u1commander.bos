@@ -5,18 +5,23 @@
 
 #define SPEEDUP_FACTOR 210
 
+#define HEADING_TOLERANCE	<30>
+#define PITCH_TOLERANCE		<20>
+
 piece ground, hips,legs,rmidleg,rmid2,rfrontleg,rfront2,rbackleg,rback2,lbackleg,lback2,lmidleg,lmid2,lfrontleg,lfront2,torso,turret2,sleeve2,arc2, weapon2,flare2,torpedo,nanospinner,p1,p2,p3,p4,p5,p6, sphere, turret1, sleeve1, flare1, turret3, sleeve3, flare3, shieldpt;
 
 	
-static-var bMoving,bAiming,bUnderwater, canAim1, canAim2, bBuilding, nanoPt,  currentHeading1, currentPitch1,  currentHeading2, currentPitch2, mASpdFactor;
+static-var bMoving,bAiming,bUnderwater, canAim1, canAim2, bBuilding, nanoPt, mASpdFactor;
+
+#include "aimhelper1.h"
+#include "aimhelper2.h"
+#include "aimhelper3.h"
 
 // Signal definitions
-#define SIG_AIM				2
-#define SIG_BUILD			4
-#define SIG_AIM2			8
-
-#define HEADING_TOLERANCE	<40.000000>
-#define PITCH_TOLERANCE		<40.000000>
+#define SIG_AIM				1
+#define SIG_AIM2			2
+#define SIG_AIM3			4
+#define SIG_BUILD			8
 
 lua_delayReload() { return 0; }
 
@@ -308,10 +313,10 @@ Create()
 	canAim2 = FALSE;
 	nanoPt = [0];	
 
-	currentHeading1 = <0>;
-	currentPitch1 = <0>;
-	currentHeading2 = <0>;
-	currentPitch2 = <0>;	
+	call-script stopAimHelper1(<1000>,<1000>);	
+	call-script stopAimHelper2(<1000>,<1000>);	
+	call-script stopAimHelper3(<1000>,<1000>);	
+	
 	start-script MotionSpeedControl();
 	start-script MotionControl();
 	start-script checkUnderwater();
@@ -331,17 +336,31 @@ RestoreAfterDelayWeapon()
 {
 	//aim1=FALSE;
 	sleep 5000;
-	currentHeading1 = <0>;
-	currentPitch1 = <0>;
-	currentHeading2 = <0>;
-	currentPitch2 = <0>;
-	turn turret1 to y-axis <0.000000> speed <65.016484>;
-	turn sleeve1 to x-axis <0.000000> speed <65.005495>;
-	turn turret2 to y-axis <0.000000> speed <65.016484>;
-	turn sleeve2 to x-axis <0.000000> speed <65.005495>;
-	turn turret3 to y-axis <0.000000> speed <65.016484>;
-	turn sleeve3 to x-axis <0.000000> speed <65.005495>;
+	call-script stopAimHelper1(<100>,<100>);	
+	turn turret1 to y-axis <0.000000> speed <100>;
+	turn sleeve1 to x-axis <0.000000> speed <100>;
 
+	bAiming = FALSE;
+}
+
+RestoreAfterDelayWeapon2()
+{
+	//aim1=FALSE;
+	sleep 5000;
+	call-script stopAimHelper2(<100>,<100>);	
+	turn turret2 to y-axis <0.000000> speed <100>;
+	turn sleeve2 to x-axis <0.000000> speed <100>;
+
+	bAiming = FALSE;
+}
+
+RestoreAfterDelayWeapon3()
+{
+	//aim1=FALSE;
+	sleep 5000;
+	call-script stopAimHelper3(<100>,<100>);	
+	turn turret3 to y-axis <0.000000> speed <100>;
+	turn sleeve3 to x-axis <0.000000> speed <100>;
 
 	bAiming = FALSE;
 }
@@ -379,6 +398,7 @@ AimPrimary(heading, pitch)
 		sleep 100;
 		return (0);
 	}
+	call-script updateAimHelper1(heading,pitch,<400>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
@@ -386,12 +406,10 @@ AimPrimary(heading, pitch)
 	//aim1=TRUE;
 	turn turret1 to y-axis heading speed <400.027473>;
 	turn sleeve1 to x-axis <0.000000> - pitch speed <400.038462>;
-	if ( get ABS(heading - currentHeading1)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch1) > PITCH_TOLERANCE )
+	if ( !aimReady1 )
 	{
 		wait-for-turn turret1 around y-axis;
 		wait-for-turn sleeve1 around x-axis;
-		currentHeading1 = heading;
-		currentPitch1 = pitch;
 	}
 
 	start-script RestoreAfterDelayWeapon();
@@ -424,6 +442,7 @@ AimSecondary(heading, pitch)
 		sleep 100;
 		return (0);
 	}
+	call-script updateAimHelper2(heading,pitch,<400>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
@@ -431,9 +450,12 @@ AimSecondary(heading, pitch)
 	//aim1=TRUE;
 	turn turret2 to y-axis heading speed <400.027473>;
 	turn sleeve2 to x-axis <0.000000> - pitch speed <400.038462>;
-	wait-for-turn turret2 around y-axis;
-	wait-for-turn sleeve2 around x-axis;
-	start-script RestoreAfterDelayWeapon();
+	if (!aimReady2)
+	{
+		wait-for-turn turret2 around y-axis;
+		wait-for-turn sleeve2 around x-axis;
+	}
+	start-script RestoreAfterDelayWeapon2();
 	return (1);
 }
 
@@ -542,22 +564,21 @@ AimWeapon4(heading, pitch)
 		sleep 100;
 		return (0);
 	}
-	signal SIG_AIM2;
-	set-signal-mask SIG_AIM2;
+	call-script updateAimHelper3(heading,pitch,<400>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM3;
+	set-signal-mask SIG_AIM3;
 	bAiming = TRUE;
 	
 	//aim1=TRUE;
 	turn turret3 to y-axis heading speed <400.027473>;
 	turn sleeve3 to x-axis <0.000000> - pitch speed <400.038462>;
-	if ( get ABS(heading - currentHeading2)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch2) > PITCH_TOLERANCE )
+	if ( !aimReady3 )
 	{
 		wait-for-turn turret3 around y-axis;
 		wait-for-turn sleeve3 around x-axis;
-		currentHeading2 = heading;
-		currentPitch2 = pitch;
 	}
 	
-	start-script RestoreAfterDelayWeapon();
+	start-script RestoreAfterDelayWeapon3();
 	return (1);
 }
 

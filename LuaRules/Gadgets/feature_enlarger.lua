@@ -13,16 +13,17 @@ end
 --------------------------------------------------------------------------------
 -- speedups
 --------------------------------------------------------------------------------
-local spSetFeatureLuaDraw = Spring.FeatureRendering.SetFeatureLuaDraw
-local spGetFeatureDefID = Spring.GetFeatureDefID
-local glScale = gl.Scale
-local rand = math.random
 
 --------------------------------------------------------------------------------
 -- UNSYNCED
 --------------------------------------------------------------------------------
 if not (gadgetHandler:IsSyncedCode()) then
 
+
+local spSetFeatureLuaDraw = Spring.FeatureRendering.SetFeatureLuaDraw
+local spGetFeatureDefID = Spring.GetFeatureDefID
+local glScale = gl.Scale
+local rand = math.random
 
 local scaleById = {}
 local SCALE_SPREAD = 0.16

@@ -5,7 +5,7 @@
 	//********************
 	side=Claw;
 	name=Massacre;
-	description=Heavy Plasma Mortar;
+	description=Very Heavy Plasma Mortar;
 	icontype=building;
 
 	//************************************************************
@@ -81,7 +81,7 @@
 	onlytargetcategory1=NOTAIR;
 	explodeas=ATOMIC_BLASTSML;
 	selfdestructas=ATOMIC_BLAST;
-	highTrajectory=1;
+
 
 	//************************************************************
 	//  Orders
@@ -116,7 +116,7 @@
 	{
 		canAreaAttack=1;
 	}
-	buildcostenergy=14985;//#AUTO#
-	buildcostmetal=2997;//#AUTO#
-	buildtime=35715;//#AUTO#
+	buildcostenergy=15458;//#AUTO#
+	buildcostmetal=3091;//#AUTO#
+	buildtime=36841;//#AUTO#
 }

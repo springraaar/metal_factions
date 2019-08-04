@@ -5,13 +5,14 @@
 
 #define SPEEDUP_FACTOR 170
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<20>
+
 piece  base, flare, wake1, wake2, turret, sleeve, support, s2, rotor, hull,h2,bottom, rmidsup,rmidleg,rmid2,rfrontsup,rfrontleg,rfront2,rbacksup,rbackleg,rback2,lbacksup,lbackleg,lback2,lmidsup,lmidleg,lmid2,lfrontsup,lfrontleg,lfront2, barrel, s3, h3;
 
-static-var  bMoving, bAiming, Static_Var_3, bSwimming, gun_3, restore_delay, terrainStatus, Static_Var_8, waterSpeed, landSpeed, currentHeading, currentPitch;
+static-var  bMoving, bAiming, bSwimming, terrainStatus, waterSpeed, landSpeed;
 
-#define HEADING_TOLERANCE	<15.000000>
-#define PITCH_TOLERANCE		<25.000000>
-
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_MOVE			2
@@ -20,7 +21,6 @@ static-var  bMoving, bAiming, Static_Var_3, bSwimming, gun_3, restore_delay, ter
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
-	var Func_Var_4;
 	while( get BUILD_PERCENT_LEFT )
 	{
 		sleep 400;
@@ -273,7 +273,6 @@ MotionControl(justMoved)
 		}
 		if( bMoving )
 		{
-			Static_Var_3 = 1;
 			if( bSwimming )
 			{
 				//set MAX_SPEED to waterSpeed;  // REPLACED BY GADGET
@@ -290,7 +289,6 @@ MotionControl(justMoved)
 		}
 		if( !bMoving )
 		{
-			Static_Var_3 = 1;
 			if( justMoved AND ( !bSwimming ) )
 			{
 
@@ -326,12 +324,8 @@ Create()
 	landSpeed = waterSpeed * 100 / 150;
 	bMoving = FALSE;
 	bAiming = FALSE;
-	Static_Var_3 = 1;
 	bSwimming = TRUE;
-	Static_Var_8 = 1;
-	restore_delay = 3000;
-	currentHeading = <0>;
-	currentPitch = <0>;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
 	start-script SmokeUnit();
 	return (0);
@@ -372,19 +366,12 @@ setSFXoccupy(Func_Var_1)
 	return (0);
 }
 
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
-	return (0);
-}
-
 RestoreAfterDelay()
 {
-	sleep restore_delay;
-	currentHeading = <0>;
-	currentPitch = <0>;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
 	turn turret to y-axis <0.000000> speed <100.000000>;
-	turn sleeve to x-axis <0.000000> speed <80.000000>;
+	turn sleeve to x-axis <0.000000> speed <100.000000>;
 	spin rotor around z-axis speed <150.000000>;
 	return (0);
 }
@@ -392,18 +379,17 @@ RestoreAfterDelay()
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<200>,<200>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 	spin rotor around z-axis speed <650.000000>;
-	turn turret to y-axis heading speed <150.000000>;
-	turn sleeve to x-axis <0.000000> - pitch speed <150.000000>;
-	if ( get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE )
+	turn turret to y-axis heading speed <200.000000>;
+	turn sleeve to x-axis <0.000000> - pitch speed <200.000000>;
+	if ( !aimReady1 )
 	{
 		wait-for-turn turret around y-axis;
 		wait-for-turn sleeve around x-axis;
-		currentHeading = heading;
-		currentPitch = pitch;
 	}
 	start-script RestoreAfterDelay();
 	return (1);
@@ -442,13 +428,10 @@ Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		corpsetype = 1;
-		
 		explode sleeve type SHATTER;
 		explode rotor type SHATTER;
-		return (0);
+		return (1);
 	}
-	corpsetype = 3;
 
 	explode hull type SHATTER;
 	explode bottom type SHATTER;
@@ -456,5 +439,5 @@ Killed(severity, corpsetype)
 	explode h2 type SHATTER;
 	explode sleeve type SHATTER;
 	explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-	return (0);
+	return (2);
 }

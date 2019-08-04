@@ -5,9 +5,15 @@
 
 #define SPEEDUP_FACTOR 100
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
+
 piece  gp, hips, torso, head, sphere2, eye, luparm,l1, larm, larm2, lflare,larm3, ruparm, r1, rarm, rarm2, rflare, rarm3, b1, t2, lmisbox, lhole, lemit, rmisbox, rhole, remit, leg1,bleg,leg2,bleg2,leg3,bleg3,leg4,bleg4,shieldpt, ljoint, rjoint, t3;
 
-static-var  bMoving, bAiming, restoreDelay, isUnderWater, misPoint, firePoint;
+static-var  bMoving, bAiming, isUnderWater, misPoint, firePoint;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				2
@@ -216,10 +222,10 @@ Create()
 	bMoving = FALSE;
 	bAiming = FALSE;
 	isUnderWater = FALSE;
-	restoreDelay = 6000;
 	misPoint = [0];
 	firePoint = [0];
 	turn ruparm to y-axis <4.000000> speed <1000.000000>;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
 	start-script SmokeUnit();
 }
@@ -262,10 +268,11 @@ SweetSpot(piecenum)
 
 RestoreAfterDelay()
 {
-	sleep restoreDelay;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
 	turn torso to y-axis <0.000000> speed <100.016484>;
-	turn ruparm to x-axis <0.000000> speed <145.005495>;
-	turn luparm to x-axis <0.000000> speed <145.005495>;
+	turn ruparm to x-axis <0.000000> speed <100.005495>;
+	turn luparm to x-axis <0.000000> speed <100.005495>;
 	bAiming = FALSE;
 }
 
@@ -367,16 +374,20 @@ FirePrimary()
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<180>,<180>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 	
-	turn torso to y-axis heading speed <220.027473>;
-	turn ruparm to x-axis <0.000000> - pitch speed <270.038462>;
-	turn luparm to x-axis <0.000000> - pitch speed <270.038462>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn ruparm around x-axis;
-	wait-for-turn luparm around x-axis;
+	turn torso to y-axis heading speed <180.027473>;
+	turn ruparm to x-axis <0.000000> - pitch speed <180.038462>;
+	turn luparm to x-axis <0.000000> - pitch speed <180.038462>;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn luparm around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

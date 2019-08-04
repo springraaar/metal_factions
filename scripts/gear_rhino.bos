@@ -5,9 +5,12 @@
 
 #define SPEEDUP_FACTOR 	100
 
+#define HEADING_TOLERANCE	<30>
+#define PITCH_TOLERANCE		<20>
+
 piece  base, flare, turret, sleeve, barrel, t1,t2,t1cover,t2cover,body,left,right,b2, turret2,sleeve2,barrel2,flare2;
 
-static-var  restore_delay;
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				2
@@ -46,17 +49,12 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 Create()
 {
 	hide flare;
-	restore_delay = 3000;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script SmokeUnit();
 	start-script AnimateTracks();
 	return (0);
 }
 
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
-	return (0);
-}
 
 RestoreAfterDelay()
 {
@@ -69,6 +67,7 @@ RestoreAfterDelay()
 RestoreAfterDelay2()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<120>,<120>);
 	turn turret2 to y-axis <0.000000> speed <120.000000>;
 	turn sleeve2 to x-axis <0.000000> speed <120.000000>;
 	return (0);
@@ -119,12 +118,16 @@ QueryPrimary(piecenum)
 
 AimSecondary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<300>,<300>,HEADING_TOLERANCE,PITCH_TOLERANCE);	
 	signal SIG_AIM2;
 	set-signal-mask SIG_AIM2;
-	turn turret2 to y-axis heading speed <200.000000>;
+	turn turret2 to y-axis heading speed <300.000000>;
 	turn sleeve2 to x-axis <0.000000> - pitch speed <300.000000>;
-	wait-for-turn turret2 around y-axis;
-	wait-for-turn sleeve2 around x-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn turret2 around y-axis;
+		wait-for-turn sleeve2 around x-axis;
+	}
 	start-script RestoreAfterDelay2();
 	return (1);
 }

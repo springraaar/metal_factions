@@ -1139,6 +1139,20 @@
 	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d1 p0.6 x0 100;explosionGenerator=custom:DEBRISBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
 
+[WALL]
+{
+	usedefaultexplosions=0;
+	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=200;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+[WALLLARGE]
+{
+	usedefaultexplosions=0;
+	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,90,0;delay=0;damage=400;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,70,0;delay=10;damage=500;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,20,0;delay=20;damage=600;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+
+
 [FEATUREBLAST]			// feature blast
 {
 	usedefaultexplosions=0;

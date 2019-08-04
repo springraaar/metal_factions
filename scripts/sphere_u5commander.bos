@@ -5,10 +5,16 @@
 
 #define SPEEDUP_FACTOR 130
 
-piece ground, hips,legs,rmidleg,rmid2,rfrontleg,rfront2,rbackleg,rback2,lbackleg,lback2,lmidleg,lmid2,lfrontleg,lfront2,torso,turret2,sleeve2,arc2, weapon2,flare2,torpedo,nanospinner,p1,p2,p3,p4,p5,p6, sphere, turret1, sleeve1, flare1, turret3, sleeve3, flare3, rfront3, rmid3, rback3, lfront3,lmid3,lback3, shieldpt, front, fb,front2,front3;
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
 
+
+piece ground, hips,legs,rmidleg,rmid2,rfrontleg,rfront2,rbackleg,rback2,lbackleg,lback2,lmidleg,lmid2,lfrontleg,lfront2,torso,turret2,sleeve2,arc2, weapon2,flare2,torpedo,nanospinner,p1,p2,p3,p4,p5,p6, sphere, turret1, sleeve1, flare1, turret3, sleeve3, flare3, rfront3, rmid3, rback3, lfront3,lmid3,lback3, shieldpt, front, front2,front3, front5,bw2,bw3;
 	
-static-var bMoving,bAiming,bUnderwater, canAim1, canAim2, bBuilding, nanoPt, currentHeading, currentPitch, mASpdFactor;
+static-var bMoving,bAiming,bUnderwater, canAim1, canAim2, bBuilding, nanoPt, mASpdFactor;
+
+#include "aimhelper1.h"
+#include "aimhelper2.h"
 
 // Signal definitions
 #define SIG_AIM				2
@@ -76,9 +82,11 @@ checkUnderwater()
 			{
 				//hide beam stuff
 				hide front;
-				hide fb;
+				hide bw2;
+				hide bw3;
 				hide front2;
 				hide front3;
+				hide front5;
 				
 				//TODO show weapon morph stuff
 				sleep 1000;
@@ -107,10 +115,11 @@ checkUnderwater()
 
 				//show beam stuff
 				show front;
-				show fb;
+				show bw2;
+				show bw3;
 				show front2;
 				show front3;
-
+				show front5;
 
 				sleep 200;
  				canAim1 = TRUE;
@@ -315,6 +324,8 @@ Create()
 	canAim2 = FALSE;
 	nanoPt = [0];
 	
+	call-script stopAimHelper1(<1000>,<1000>);	
+	call-script stopAimHelper2(<1000>,<1000>);	
 	start-script MotionSpeedControl();
 	start-script MotionControl();
 	start-script checkUnderwater();
@@ -335,13 +346,19 @@ RestoreAfterDelayWeapon()
 {
 	//aim1=FALSE;
 	sleep 5000;
-	turn turret1 to y-axis <0.000000> speed <65.016484>;
-	turn sleeve1 to x-axis <0.000000> speed <65.005495>;
-	turn turret2 to y-axis <0.000000> speed <65.016484>;
-	turn sleeve2 to x-axis <0.000000> speed <65.005495>;
-	turn turret3 to y-axis <0.000000> speed <65.016484>;
-	turn sleeve3 to x-axis <0.000000> speed <65.005495>;
+	call-script stopAimHelper1(<100>,<100>);
+	turn turret1 to y-axis <0.000000> speed <100.016484>;
+	turn sleeve1 to x-axis <0.000000> speed <100.005495>;
 
+	bAiming = FALSE;
+}
+RestoreAfterDelayWeapon2()
+{
+	//aim1=FALSE;
+	sleep 5000;
+	call-script stopAimHelper2(<100>,<100>);
+	turn turret2 to y-axis <0.000000> speed <100.016484>;
+	turn sleeve2 to x-axis <0.000000> speed <100.005495>;
 
 	bAiming = FALSE;
 }
@@ -379,6 +396,7 @@ AimPrimary(heading, pitch)
 		sleep 100;
 		return (0);
 	}
+	call-script updateAimHelper1(heading,pitch,<200>,<200>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
@@ -386,12 +404,10 @@ AimPrimary(heading, pitch)
 	//aim1=TRUE;
 	turn turret1 to y-axis heading speed <200.027473>;
 	turn sleeve1 to x-axis <0.000000> - pitch speed <200.038462>;
-	if (heading != currentHeading || pitch != currentPitch) 
+	if ( !aimReady1) 
 	{
 		wait-for-turn turret1 around y-axis;
 		wait-for-turn sleeve1 around x-axis;
-		currentHeading = heading;
-		currentPitch = pitch;
 	}
 	start-script RestoreAfterDelayWeapon();
 	return (1);
@@ -423,16 +439,20 @@ AimSecondary(heading, pitch)
 		sleep 100;
 		return (0);
 	}
+	call-script updateAimHelper2(heading,pitch,<200>,<200>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 	
 	//aim1=TRUE;
-	turn turret2 to y-axis heading speed <400.027473>;
-	turn sleeve2 to x-axis <0.000000> - pitch speed <400.038462>;
-	wait-for-turn turret2 around y-axis;
-	wait-for-turn sleeve2 around x-axis;
-	start-script RestoreAfterDelayWeapon();
+	turn turret2 to y-axis heading speed <200.027473>;
+	turn sleeve2 to x-axis <0.000000> - pitch speed <200.038462>;
+	if (!aimReady2)
+	{
+		wait-for-turn turret2 around y-axis;
+		wait-for-turn sleeve2 around x-axis;
+	}
+	start-script RestoreAfterDelayWeapon2();
 	return (1);
 }
 

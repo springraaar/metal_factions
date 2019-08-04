@@ -3,6 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 #define SPEEDUP_FACTOR	90
 #define RESTORE_DELAY	3000
 
@@ -10,9 +13,10 @@ piece  torso, ruparm, luparm, rbigflash, nanospray, pelvis, lf1, lf2, head, lthi
 
 static-var  bMoving, bBuilding, bDgunning,bAiming, Static_Var_6, bUnderwater, canAim1, canAim2, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, gun_1, legAngle1, legAngle2, legAngle3;
 
+#include "aimhelper1.h"
+
 // signal definition
 #define SIG_AIM		2
-#define SIG_AIM2	4
 
 lua_cobDebug() { return 0; }
 lua_delayReload() { return 0; }
@@ -393,6 +397,7 @@ Create()
 	canAim1 = TRUE;
 	canAim2 = FALSE;
 	gun_1 = [0];
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();
 	start-script MotionControl();
 	start-script Build();
@@ -428,6 +433,7 @@ RestorePosition()
 {
 	bDgunning = FALSE;
 	sleep RESTORE_DELAY;
+	call-script stopAimHelper1(<290>,<100>);
 	turn torso to y-axis <0.000000> speed <290.000000>;
 	turn ruparm to x-axis <0.000000> speed <245.000000>;
 	turn luparm to x-axis <0.000000> speed <245.000000>;
@@ -469,14 +475,19 @@ AimPrimary(heading, pitch)
 		return (0);
 	}
 	bAiming = TRUE;
+	call-script updateAimHelper1(heading,pitch + <90.000000>,<300>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	turn torso to y-axis heading speed <300.093407>;
 	turn luparm to x-axis <0.000000> - pitch - <90.000000> speed <395.000000>;
 	turn lloarm to x-axis <0.000000> speed <395.000000>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn luparm around x-axis;
-	wait-for-turn lloarm around x-axis;
+	turn ruparm to x-axis <0.000000> - pitch - <90.000000> speed <395.000000>;
+	turn rloarm to x-axis <0.000000> speed <395.000000>;
+	if (!aimReady1) {
+		wait-for-turn torso around y-axis;
+		wait-for-turn luparm around x-axis;
+		wait-for-turn lloarm around x-axis;
+	}
 	start-script RestorePosition();
 	return (1);
 }
@@ -527,14 +538,18 @@ AimSecondary(heading, pitch)
 	}
 
 	bAiming = TRUE;
+	call-script updateAimHelper1(heading,pitch + <90.000000>,<300>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	turn torso to y-axis heading speed <300.093407>;
 	turn luparm to x-axis <0.000000> - pitch - <90.000000> speed <395.000000>;
 	turn lloarm to x-axis <0.000000> speed <395.000000>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn luparm around x-axis;
-	wait-for-turn lloarm around x-axis;
+	if (!aimReady1) 
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn luparm around x-axis;
+		wait-for-turn lloarm around x-axis;
+	}
 	start-script RestorePosition();
 	return (1);
 }
@@ -561,20 +576,27 @@ QueryTertiary(piecenum)
 
 AimTertiary(heading, pitch)
 {
-	signal SIG_AIM2;
-	set-signal-mask SIG_AIM2;
 	bAiming = TRUE;
 	
 	// if it's not going to be able to fire on the next ~2s, don't try to aim
 	if ((get WEAPON_RELOADSTATE(3)) > (get GAME_FRAME) + 40)) { return(0); }
 	
+	call-script updateAimHelper1(heading,pitch + <90.000000>,<300>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	
 	//bDgunning = TRUE;
 	turn torso to y-axis heading speed <300.093407>;
 	turn ruparm to x-axis <0.000000> - pitch - <90.000000> speed <310.000000>;
 	turn rloarm to x-axis <0.000000> speed <310.000000>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn ruparm around x-axis;
-	wait-for-turn rloarm around x-axis;
+	turn luparm to x-axis <0.000000> - pitch - <90.000000> speed <310.000000>;
+	turn lloarm to x-axis <0.000000> speed <310.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn rloarm around x-axis;
+	}
 	start-script RestorePosition();
 	return (1);
 }
@@ -596,6 +618,7 @@ StartBuilding(heading, pitch)
 	set-signal-mask SIG_AIM;
 	bBuilding = TRUE;
 	bAiming = TRUE;
+	call-script updateAimHelper1(heading,pitch + <90.000000>,<300>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	turn torso to y-axis heading speed <300.093407>;
 	turn luparm to x-axis <0.000000> - pitch - <90.000000> speed <350.000000>;
 	turn lloarm to x-axis <0.000000> speed <395.000000>;

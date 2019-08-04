@@ -3,10 +3,16 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
+#define HEADING_TOLERANCE	<15>
+#define PITCH_TOLERANCE		<15>
+
+
 piece  base, flare, turret, wake1, wake2, wake3, wake4, wake5,
        wake6, wake7, wake8, sleeve, barrel;
 
 static-var  Static_Var_1, restore_delay, Static_Var_3, Static_Var_4;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				2
@@ -128,6 +134,7 @@ Create()
 	Static_Var_3 = 1;
 	hide flare;
 	restore_delay = 3000;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script WobbleUnit();
 	//start-script BankClerck();
 	start-script SmokeUnit();
@@ -143,6 +150,7 @@ SetMaxReloadTime(Func_Var_1)
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<50>,<50>);
 	turn turret to y-axis <0.000000> speed <50.000000>;
 	turn sleeve to x-axis <0.000000> speed <50.000000>;
 	return (0);
@@ -150,12 +158,16 @@ RestoreAfterDelay()
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<70>,<70>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	turn turret to y-axis heading speed <60.000000>;
-	turn sleeve to x-axis <0.000000> - pitch speed <60.000000>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn sleeve around x-axis;
+	turn turret to y-axis heading speed <70.000000>;
+	turn sleeve to x-axis <0.000000> - pitch speed <70.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

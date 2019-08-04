@@ -22,7 +22,15 @@ local wallDefIds = {
 	[UnitDefNames["aven_fortification_wall"].id] = true,
 	[UnitDefNames["gear_fortification_wall"].id] = true,
 	[UnitDefNames["claw_fortification_wall"].id] = true,
-	[UnitDefNames["sphere_fortification_wall"].id] = true
+	[UnitDefNames["sphere_fortification_wall"].id] = true,
+	[UnitDefNames["aven_large_fortification_wall"].id] = true,
+	[UnitDefNames["gear_large_fortification_wall"].id] = true,
+	[UnitDefNames["claw_large_fortification_wall"].id] = true,
+	[UnitDefNames["sphere_large_fortification_wall"].id] = true,
+	[UnitDefNames["aven_fortification_gate"].id] = true,
+	[UnitDefNames["gear_fortification_gate"].id] = true,
+	[UnitDefNames["claw_fortification_gate"].id] = true,
+	[UnitDefNames["sphere_fortification_gate"].id] = true
 }
 
 -- set built wall sections to neutral

@@ -108,6 +108,7 @@ local burningEffectWeaponDefIds = {
 	[WeaponDefNames["gear_heater_flamethrower"].id] = true,
 	[WeaponDefNames["gear_canister_fireball"].id] = true,
 	[WeaponDefNames["gear_firestorm_rocket"].id] = true,
+	[WeaponDefNames["gear_igniter_rocket"].id] = true,
 	[WeaponDefNames["gear_u1commander_missile"].id] = true,
 	[WeaponDefNames["gear_eruptor_fireball"].id] = true,
 	[WeaponDefNames["gear_u5commander_fireball"].id] = true,
@@ -623,7 +624,7 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 end
 
 function gadget:AllowUnitBuildStep(builderID, builderTeam, unitID, unitDefID, part)
-	--Spring.Echo("STEP builderId="..builderID.." unitId="..unitID.." part="..part)
+	-- Spring.Echo("STEP builderId="..builderID.." unitId="..unitID.." part="..part)
 	
 	-- if unit got damaged recently, deny half of the build steps
 	local f = spGetGameFrame()
@@ -632,5 +633,6 @@ function gadget:AllowUnitBuildStep(builderID, builderTeam, unitID, unitDefID, pa
 			return false
 		end
 	end
+	
 	return true
 end

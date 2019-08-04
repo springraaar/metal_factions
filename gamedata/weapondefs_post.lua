@@ -120,6 +120,12 @@ for wdName, wd in pairs(WeaponDefs) do
 	-- without this it would only run twice per second (?)
 	-- wd.allownonblockingaim = 1
 	if (wd.tolerance ~= nil and wd.range ~= nil) then
-		wd.firetolerance = wd.tolerance * 0.5
+		wd.firetolerance = 32000 -- wd.tolerance * 0.5
+	end
+	if not (wd.customparams) then
+		wd.customparams = {}
+	end
+	if not (wd.customparams.reaimtime) then
+		wd.customparams.reaimtime = 6
 	end
 end

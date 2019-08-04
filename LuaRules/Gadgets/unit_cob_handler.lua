@@ -14,6 +14,8 @@ end
 local spEcho = Spring.Echo
 local spSetUnitWeaponState = Spring.SetUnitWeaponState
 local spGetUnitWeaponState = Spring.GetUnitWeaponState
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spGetGameFrame = Spring.GetGameFrame
 
 -------------------------------------------------------------------------------------
@@ -99,10 +101,20 @@ function getBuildPt(unitID, unitDefID, teamID)
 	return buildPt
 end
 
-
-function cobDebug(unitID, unitDefID, teamID, data)
-	spEcho(data)
+-- sets the current height level (0-10)
+-- for units like fortification gates that can be raised or lowered
+function setHeightLevel(unitID, unitDefID, teamID, heightLevel)
+	
+	spSetUnitRulesParam(unitID,"height_level",heightLevel)
+	
+	return 0
 end
+
+function cobDebug(unitID, unitDefID, teamID, data1, data2)
+	spEcho("uId="..unitID.." f="..spGetGameFrame().." DEBUG1="..data1.." DEBUG2="..tostring(data2))
+end
+
+
 
 
 gadgetHandler:RegisterGlobal("cobDebug", cobDebug)
@@ -110,3 +122,5 @@ gadgetHandler:RegisterGlobal("checkEnergy", checkEnergy)
 gadgetHandler:RegisterGlobal("resetReload", resetReload)
 gadgetHandler:RegisterGlobal("delayReload", delayReload)
 gadgetHandler:RegisterGlobal("getBuildPt", getBuildPt)
+gadgetHandler:RegisterGlobal("setHeightLevel", setHeightLevel)
+gadgetHandler:RegisterGlobal("delayReload", delayReload)

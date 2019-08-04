@@ -5,9 +5,14 @@
 
 #define SPEEDUP_FACTOR 160
 
+#define HEADING_TOLERANCE	<30>
+#define PITCH_TOLERANCE		<20>
+
 piece  ground, hips, leg1,bleg,leg2,bleg2,leg3,bleg3,leg4,bleg4, body, turret, sleeve, barrel, flare, cover, b2, legsup1, legsup2, legsup3, legsup4;
 
-static-var  restore_delay, bMoving, isOpen;
+static-var  bMoving, isOpen;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_MOVE			2
@@ -262,23 +267,19 @@ Close()
 RestoreAfterDelay()
 {
 	sleep 3000;
+	call-script stopAimHelper1(<200>,<200>);
 	call-script Close();
 }
 Create()
 {
 	isOpen = FALSE;
 	bMoving = FALSE;
-	restore_delay = 3000;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
 	start-script SmokeUnit();
 	return (0);
 }
 
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
-	return (0);
-}
 
 SweetSpot(piecenum)
 {
@@ -301,17 +302,20 @@ QueryPrimary(piecenum)
 
 AimPrimary(heading, pitch)
 {
-	signal SIG_AIM;
-	set-signal-mask SIG_AIM;
 	if( ! isOpen)
 	{
 		call-script Open();
 	}
-	turn turret to y-axis heading speed <220.000000>;
+	call-script updateAimHelper1(heading,pitch,<300>,<300>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn turret to y-axis heading speed <300.000000>;
 	//turn sleeve to x-axis <0.000000> - pitch speed <280.000000>;
-	wait-for-turn turret around y-axis;
-	//wait-for-turn sleeve around x-axis;
-	
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		//wait-for-turn sleeve around x-axis;
+	}
 
 	start-script RestoreAfterDelay();
 	return (1);

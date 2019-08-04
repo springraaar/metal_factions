@@ -5,11 +5,15 @@
 
 #define SPEEDUP_FACTOR 130
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 piece  torso, hips, l_thigh, r_thigh, head, h2, luparm, l1, la,
        la2, r1, ra, ra2, gun, g1, g2, g3, firept,ruparm, rleg, rfoot, lleg, lfoot, lthumb,rthumb;
 
-static-var  bMoving, bAiming, Static_Var_4, restore_delay,
-            canAim;
+static-var  bMoving, bAiming, canAim;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				2
@@ -393,16 +397,10 @@ Create()
 	turn ra2 to x-axis <-30.000000> now;
 	bMoving = FALSE;
 	bAiming = FALSE;
-	Static_Var_4 = 0;
 	canAim = FALSE;
-	restore_delay = 9000;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
 	start-script SmokeUnit();
-}
-
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
 }
 
 StartMoving()
@@ -479,6 +477,7 @@ Close()
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<45>,<45>);
 	turn torso to y-axis <0.000000> speed <90.016484>;
 	turn ruparm to x-axis <0.000000> speed <45.005495>;
 	turn ra to y-axis <0.000000> speed <45.005495>;
@@ -505,13 +504,17 @@ AimPrimary(heading, pitch)
 		call-script Open();
 		//return (0);
 	}
-	
+
+	call-script updateAimHelper1(heading,pitch + <90>,<230>,<230>,HEADING_TOLERANCE,PITCH_TOLERANCE);	
 	turn torso to y-axis heading speed <230.027473>;
 	turn ruparm to x-axis <-20.000000> - pitch speed <230.038462>;
 	turn gun to x-axis <90.000000> - pitch speed <230.038462>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn ruparm around x-axis;
-	wait-for-turn gun around x-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn gun around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

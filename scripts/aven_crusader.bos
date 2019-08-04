@@ -3,16 +3,19 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  flare1, flare2, flare3, base, turret, sleeve, wake1, wake2, barrel1,
-       barrel2, wings, fp31;
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
 
-static-var  gun_1, restore_delay, bAiming, Static_Var_4, Static_Var_5;
+piece  flare1, flare2, flare3, base, turret, sleeve, wake1, wake2, barrel1, barrel2, wings, fp31;
+
+static-var  gun_1, bAiming, Static_Var_4, Static_Var_5;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				2
-#define SIG_AIM_3			4
-#define SIG_AIM_2			8
-#define SIG_MOVE			16
+#define SIG_AIM_2			4
+#define SIG_MOVE			8
 
 
 Abs(Func_Var_1)
@@ -132,30 +135,18 @@ Create()
 	hide flare2;
 	hide flare3;
 	gun_1 = flare1;
-	restore_delay = 3000;
+	call-script stopAimHelper1(<1000>,<1000>);
 	call-script RockZInit();
 	start-script SmokeUnit();
 	return (0);
 }
 
-abaim()
-{
-	sleep 4000;
-	signal SIG_AIM_3;
-	return (0);
-}
-
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
-	return (0);
-}
-
 RestoreAfterDelay()
 {
-	sleep restore_delay;
-	turn turret to y-axis <0.000000> speed <55.000000>;
-	turn sleeve to x-axis <0.000000> speed <45.000000>;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<70>,<70>);
+	turn turret to y-axis <0.000000> speed <70.000000>;
+	turn sleeve to x-axis <0.000000> speed <70.000000>;
 	return (0);
 }
 
@@ -180,12 +171,16 @@ StopMoving()
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<100>,<100>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	turn turret to y-axis heading speed <120.000000>;
-	turn sleeve to x-axis <0.000000> - pitch speed <60.000000>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn sleeve around x-axis;
+	turn turret to y-axis heading speed <100.000000>;
+	turn sleeve to x-axis <0.000000> - pitch speed <100.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	bAiming = heading;
 	return (1);
@@ -198,19 +193,7 @@ AimSecondary(heading, pitch)
 	return (0);
 }
 
-AimTertiary(heading, pitch)
-{
-	signal SIG_AIM_3;
-	set-signal-mask SIG_AIM_3;
-	start-script abaim();
-	return (1);
-}
 
-TargetCleared(Func_Var_1)
-{
-	signal SIG_AIM_3;
-	return (0);
-}
 
 FirePrimary()
 {
@@ -242,15 +225,10 @@ AimFromPrimary(piecenum)
 
 AimFromSecondary(piecenum)
 {
-	piecenum = turret;
-	return (0);
-}
-
-AimFromTertiary(piecenum)
-{
 	piecenum = fp31;
 	return (0);
 }
+
 
 QueryPrimary(piecenum)
 {
@@ -266,12 +244,6 @@ QueryPrimary(piecenum)
 }
 
 QuerySecondary(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
-
-QueryTertiary(piecenum)
 {
 	piecenum = fp31;
 	return (0);

@@ -13,7 +13,7 @@ end
 
 local showWarningMessage = 0
 local currentEngineVersion = "???"
-local recommendedEngineVersion = "104"
+local recommendedEngineVersion = "104.0.1-1327-g315b3fd maintenance"
 
 --SYNCED CODE
 if (gadgetHandler:IsSyncedCode()) then
@@ -25,7 +25,7 @@ function gadget:Initialize()
 		currentEngineVersion = Game.version
 	end
 	
-	if currentEngineVersion ~= "104" then
+	if (not string.find(currentEngineVersion,"104.0.1-1")) or (not string.find(currentEngineVersion,"maintenance"))   then
 		showWarningMessage = 1
 	end 
 end
@@ -35,7 +35,7 @@ end
 function gadget:GameFrame(n) 
 	if (n%16) == 0 then
 		if (showWarningMessage == 1) then
-			Spring.Echo("---------------------------------------------\nWARNING : unsupported Spring Engine version detected ("..currentEngineVersion.."). Use Spring "..recommendedEngineVersion.. " instead.")
+			Spring.Echo("---------------------------------------------\nWARNING : unsupported Spring Engine version detected ("..currentEngineVersion.."). Use Spring "..recommendedEngineVersion.. " or later instead.\nGet the latest recommended engine and game versions by joining the MF rooms on the official server.")
 			showWarningMessage = 0
 			gadgetHandler:RemoveGadget()
 		end	

@@ -116,7 +116,7 @@ function loadMetalSpots(gridSize)
 			newCell.p.x = i * gridSize + gridSize / 2
 			newCell.p.z = j * gridSize + gridSize / 2
 
-			local _, groundMetal, groundMetal2 = spGetGroundInfo(newCell.p.x, newCell.p.z)
+			local _,_, groundMetal, groundMetal2 = spGetGroundInfo(newCell.p.x, newCell.p.z)
 			if type(groundMetal) == 'string' then    -- Spring > v104
 				groundMetal = groundMetal2
 			end

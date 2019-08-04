@@ -5,16 +5,18 @@
 
 #define SPEEDUP_FACTOR 200
 
+#define HEADING_TOLERANCE	<30>
+#define PITCH_TOLERANCE		<25>
+
 piece  base, pivot, wake1, wake2, tbase, spinner, bottom, b2, d2, s1, s2,s3,d3, base1, base2,base3, turret, tur2, gun1, gun2, gun3, sleeve, flare, sup2, sup3;
 
-static-var  bAiming, bSwimming, gun_1, restore_delay, terrainStatus, waterSpeed, landSpeed,  currentHeading, currentPitch;
+static-var  bAiming, bSwimming, gun_1, terrainStatus, waterSpeed, landSpeed;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_MOVE			2
 #define SIG_AIM				4
-
-#define HEADING_TOLERANCE	<15.000000>
-#define PITCH_TOLERANCE		<25.000000>
 
 #include "spinbot.h"
 
@@ -157,9 +159,9 @@ Create()
 	bMoving = FALSE;
 	bAiming = FALSE;
 	bSwimming = FALSE;
-	currentHeading = <0>;
-	currentPitch = <0>;
+	
 	gun_1 = [0];
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
 	start-script WheelSpeedControl();
 	start-script SmokeUnit();
@@ -205,8 +207,7 @@ setSFXoccupy(Func_Var_1)
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
-	currentHeading = <0>;
-	currentPitch = <0>;
+	call-script stopAimHelper1(<160>,<160>);
 	turn tbase to y-axis <0.000000> speed <160.000000>;
 	turn gun1 to x-axis <0.000000> speed <160.000000>;
 	turn gun2 to x-axis <0.000000> speed <160.000000>;
@@ -217,6 +218,7 @@ RestoreAfterDelay()
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<450>,<450>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
@@ -225,13 +227,10 @@ AimPrimary(heading, pitch)
 	turn gun1 to x-axis <0.000000> - pitch speed <450.000000>;
 	turn gun2 to x-axis <0.000000> - pitch speed <450.000000>;
 	turn gun3 to x-axis <0.000000> - pitch speed <450.000000>;
-
-	if ( (get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE ))
+	if ( !aimReady1)
 	{
 		wait-for-turn tbase around y-axis;
 		wait-for-turn sleeve around x-axis;
-		currentHeading = heading;
-		currentPitch = pitch;
 	}
 
 	start-script RestoreAfterDelay();
@@ -288,15 +287,11 @@ Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		corpsetype = 1;
-		
 		explode turret type SHATTER;
 		explode base2 type SHATTER;
 		explode base3 type SHATTER;
-		return (0);
+		return (1);
 	}
-	corpsetype = 2;
-
 	explode base2 type SHATTER;
 	explode base1 type SHATTER;
 	explode turret type SHATTER;
@@ -305,6 +300,5 @@ Killed(severity, corpsetype)
 	explode gun2 type SHATTER;
 	explode gun3 type SHATTER;
 	explode spinner type SHATTER;
-	
-	return (0);
+	return (2);
 }

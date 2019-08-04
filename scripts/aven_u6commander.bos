@@ -3,12 +3,17 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 #define SPEEDUP_FACTOR	100
 #define RESTORE_DELAY	3000
 
 piece  torso, ruparm, luparm, rbigflash, nanospray, pelvis, head, lthigh, rthigh, lloarm, rloarm, rleg, lleg, rfoot,lfoot, torpgun,torpedo, rfirept2, h2, nano, lhand, rgun, t2,t3,t4,lshoulder,rshoulder, rg2,rg3;
 
 static-var  bMoving, bBuilding, bDgunning,bAiming, Static_Var_6, bUnderwater, canAim1, canAim2, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1,mAVertFactor, legAngle1, legAngle2, legAngle3;
+
+#include "aimhelper1.h"
 
 // signal definition
 #define SIG_AIM		2
@@ -385,6 +390,7 @@ Create()
 	bAiming = FALSE;
 	canAim1 = TRUE;
 	canAim2 = FALSE;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();
 	start-script MotionControl();
 	start-script Build();
@@ -419,7 +425,9 @@ QueryNanoPiece(piecenum)
 RestorePosition()
 {
 	bDgunning = 0;
+	set-signal-mask SIG_AIM;
 	sleep RESTORE_DELAY;
+	call-script stopAimHelper1(<290>,<200>);
 	turn torso to y-axis <0.000000> speed <200.000000>;
 	turn ruparm to x-axis <0.000000> speed <225.000000>;
 	turn luparm to x-axis <0.000000> speed <225.000000>;
@@ -454,14 +462,18 @@ AimPrimary(heading, pitch)
 		return (0);
 	}
 	bAiming = TRUE;
+	call-script updateAimHelper1(heading,pitch + <90.000000>,<280>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	turn torso to y-axis heading speed <280.093407>;
 	turn ruparm to x-axis <0.000000> - pitch - <90.000000> speed <395.000000>;
 	turn rloarm to x-axis <0.000000> speed <395.000000>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn ruparm around x-axis;
-	wait-for-turn rloarm around x-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn rloarm around x-axis;
+	}
 	start-script RestorePosition();
 	return (1);
 }
@@ -494,14 +506,18 @@ AimSecondary(heading, pitch)
 	}
 
 	bAiming = TRUE;
+	call-script updateAimHelper1(heading,pitch + <90.000000>,<280>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	turn torso to y-axis heading speed <280.093407>;
 	turn ruparm to x-axis <0.000000> - pitch - <90.000000> speed <395.000000>;
 	turn rloarm to x-axis <0.000000> speed <395.000000>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn ruparm around x-axis;
-	wait-for-turn rloarm around x-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn rloarm around x-axis;
+	}
 	start-script RestorePosition();
 	return (1);
 }
@@ -521,6 +537,7 @@ StartBuilding(heading, pitch)
 	set-signal-mask SIG_AIM;
 	bBuilding = TRUE;
 	bAiming = TRUE;
+	call-script updateAimHelper1(heading,pitch + <90.000000>,<280>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	turn torso to y-axis heading speed <280.093407>;
 	turn luparm to x-axis <0.000000> - pitch - <90.000000> speed <350.000000>;
 	turn lloarm to x-axis <0.000000> speed <395.000000>;

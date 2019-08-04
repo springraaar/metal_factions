@@ -21,6 +21,7 @@ local spGetUnitPosition = Spring.GetUnitPosition
 local targetForUnitId = {}
 local trackedWeaponDefIds = {}
 
+local LOWEST_PRIORITY = 500000000
 
 local torpedoWeaponIds = {
 	-- AVEN
@@ -138,10 +139,15 @@ end
 
 -- weapon target check
 function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attackerWeaponDefID, defaultPriority)
-	--Spring.Echo(attackerID.." ALLOWTARGET "..targetID.." ?")
+	--Spring.Echo(attackerID.." ALLOWTARGET "..targetID.." ? prio="..tostring(defaultPriority))
 	--Spring.Echo(attackerID.." has line of fire to "..targetID.." ? "..tostring(Spring.GetUnitWeaponHaveFreeLineOfFire(attackerID,attackerWeaponNum,targetID)))
 	
-	-- TODO : this is not working, probable engine bug
+	
+	if defaultPriority == nil then
+		defaultPriority = LOWEST_PRIORITY
+	end
+	
+	-- TODO : this is not working, probable engine bug (this was true on 104.0, check on 104.0.1)
 	-- it does work but only if the owner is busy, else an attack order is added and it'll start firing
 	if torpedoWeaponIds[attackerWeaponDefID] then
 		-- if target is on land, return false
@@ -158,7 +164,7 @@ function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attac
 		if (spGetUnitWeaponTestRange(attackerID, attackerWeaponNum, targetForUnitId[attackerID]) == true) then
 			--Spring.Echo("in range "..tonumber(targetForUnitId[attackerID]).." / "..UnitDefs[Spring.GetUnitDefID(targetForUnitId[attackerID])].name)
 
-			-- if unit is marked as target, assume lowest priority value (highest priority)
+			-- if unit is marked as target, reject all other targets
 			if targetForUnitId[attackerID] == targetID then
 				--Spring.Echo("focus "..tonumber(targetID).." / "..UnitDefs[Spring.GetUnitDefID(targetID)].name)
 				return true,defaultPriority

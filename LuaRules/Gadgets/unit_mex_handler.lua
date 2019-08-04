@@ -257,7 +257,7 @@ function findClosestBuildSite(unitDefId, searchPos, searchRadius)
 							-- on metal maps, check if spot actually has metal
 							-- (some metal maps have zones without metal)
 							if (isMetalMap == true and ud.extractsMetal > 0) then
-								 _, groundMetal = spGetGroundInfo(x, z)
+								 _,_, groundMetal = spGetGroundInfo(x, z)
 								if groundMetal == 0 then
 									valid = false								
 								end

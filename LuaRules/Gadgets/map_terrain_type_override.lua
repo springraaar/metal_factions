@@ -21,7 +21,7 @@ function gadget:Initialize()
 	local override = {}
 	for i = 0,255,1 do
 		Spring.SetMapSquareTerrainType(0,0,i)
-		local name,_,_,t,b,v,s = Spring.GetGroundInfo(0,0)
+		local _,name,_,_,t,b,v,s = Spring.GetGroundInfo(0,0)
 		if (t == 0 and b == 0 and v == 0 and s == 0) or (t == 1 and b == 1 and v == 1 and s == 1)  then
 			override[i] = false
 		else

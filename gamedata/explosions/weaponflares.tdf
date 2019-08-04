@@ -1689,3 +1689,23 @@
   		count=1; 
 	}
 }
+
+
+[ATOMFIREWAVE]
+{
+	[windsphere]
+	{
+		class=CSpherePartSpawner;
+		[properties]
+		{
+			ttl=10;
+			alpha=0.3;
+			expansionSpeed=10;
+			color=1.0, 1, 0.5;
+		}
+		water=1;
+		ground=1;
+		air=1;
+		count=1;
+	}
+}

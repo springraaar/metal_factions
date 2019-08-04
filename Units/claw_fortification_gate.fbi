@@ -1,0 +1,102 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Claw;
+	name=Large Fortification Gate;
+	description=Perimeter Defense;
+	icontype=walllarge;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW LEVEL2 NOTAIR NOTSUB;
+	tedclass=FORT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=claw_fortification_gate;
+	objectname=claw_fortification_gate.3do;
+	corpse=rock_gate;
+	script=fortification_gate.cob;
+	buildpic=claw_fortification_gate.png;
+	soundcategory=gate;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=7500;
+	buildcostmetal=650;
+	buildcostenergy=3250;
+	buildtime=7750;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=0;
+	yardmap=cccc cccc cccc cccc;
+	collisionVolumeType = box;
+	collisionVolumeScales =64 170 64;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onoffable=1;
+	activatewhenbuilt=0;
+	isfeature=0;
+	canSelfDestruct=0;
+	power=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=32;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=0;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=WALLLARGE;
+	selfdestructas=WALLLARGE;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	[customParams]
+	{
+		tip="Use ON/OFF to open/close";
+	}
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+}

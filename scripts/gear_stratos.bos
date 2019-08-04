@@ -3,17 +3,18 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
+#define HEADING_TOLERANCE	<30>
+#define PITCH_TOLERANCE		<20>
+
 piece  base, b2, weapon1, weapon2, weapon3, weapon4, firept1, firept2, firept3, firept4, turret, sleeve, barrel, flare, lwing, rwing, center,c2, lweapon,rweapon,ljet,rjet,ljet2,rjet2,tbase, lbody,rbody, rw2,lw2,ljp,rjp,ljp2,rjp2;
 
-static-var  gun_1, gun_2, bAiming, currentHeading, currentPitch;
+static-var  gun_1, gun_2, bAiming;
 
-
-#define HEADING_TOLERANCE	<20.000000>
-#define PITCH_TOLERANCE		<25.000000>
+#include "aimhelper1.h"
 
 // Signal definitions
-#define SIG_AIM				4
-#define SIG_AIM_2			8
+#define SIG_AIM				2
+#define SIG_AIM_2			4
 
 
 lua_HeavyGunshipStrafe() { return 0; }
@@ -62,8 +63,7 @@ Create()
 	gun_1 = [0];
 	gun_2 = [0];
 	bAiming = FALSE;
-	currentHeading = <0>;
-	currentPitch = <0>;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script SmokeUnit();
 	start-script HeavyGunshipStrafe();
 }
@@ -83,11 +83,10 @@ SweetSpot(piecenum)
 
 RestoreAfterDelay()
 {
-	sleep 3000;
-	currentHeading = <0>;
-	currentPitch = <0>;
-	turn turret to y-axis <0.000000> speed <80.000000>;
-	turn sleeve to y-axis <0.000000> speed <80.000000>;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<150>,<150>);
+	turn turret to y-axis <0.000000> speed <150.000000>;
+	turn sleeve to y-axis <0.000000> speed <150.000000>;
 	bAiming = FALSE;
 	//call-script lua_HeavyGunshipStrafe();
 	//turn base to x-axis <0.000000> speed <45.000000>;
@@ -105,18 +104,16 @@ QuerySecondary(piecenum)
 
 AimSecondary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<400>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);	
 	signal SIG_AIM_2;
 	set-signal-mask SIG_AIM_2;
 	bAiming = TRUE;
-	//turn base to x-axis <-45.000000> speed <45.000000>;
-	turn turret to y-axis heading speed <300.000000>;
-	turn sleeve to x-axis <0.000000>-pitch speed <300.000000>;
-	if ( get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE )
+	turn turret to y-axis heading speed <400.000000>;
+	turn sleeve to x-axis <0.000000>-pitch speed <400.000000>;
+	if (!aimReady1 )
 	{
 		wait-for-turn sleeve around x-axis;
 		wait-for-turn turret around y-axis;
-		currentHeading = heading;
-		currentPitch = pitch;
 	}
 	start-script RestoreAfterDelay();
 	return (1);

@@ -27,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2753;
+	maxdamage=2750;
 	healtime=30;
 	footprintx=4;
 	footprintz=4;
@@ -36,10 +36,9 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=2;
-	energyuse=2;
+	energymake=0;
+	energyuse=0;
 	energystorage=0;
-	windgenerator=0.001;
 
 	//************************************************************
 	//  Building
@@ -85,8 +84,8 @@
 	//  Weapons
 	//***********
 	weapon1=aven_ROY;
-	weapon3=ARMDEPTHCHARGE;
-	badtargetcategory3=NOTSUB;
+	weapon2=ARMDEPTHCHARGE;
+	onlytargetcategory2=NOTAIR;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
 
@@ -132,7 +131,7 @@
 	explosiongenerator0=custom:yellowflaremed;
 	explosiongenerator1=custom:UNITFIRE;
 	}
-	buildcostenergy=4901;//#AUTO#
-	buildcostmetal=980;//#AUTO#
-	buildtime=11681;//#AUTO#
+	buildcostenergy=4897;//#AUTO#
+	buildcostmetal=979;//#AUTO#
+	buildtime=11673;//#AUTO#
 }

@@ -5,9 +5,15 @@
 
 #define SPEEDUP_FACTOR	400
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
+
 piece  ground, hips, torso, lthigh, rthigh, rleg, lleg, rfoot, lfoot, p2, lbase, sleeve, barrel1, flare1, barrel2, flare2;
 
-static-var  gun_1,Static_Var_1, bMoving, bAiming, Static_Var_5, restore_delay, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mADelay1, legAngle1, legAngle2, legAngle3;
+static-var  gun_1, bMoving, bAiming, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mADelay1, legAngle1, legAngle2, legAngle3;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				2
@@ -228,21 +234,11 @@ MotionControl(moving, aiming, justmoved)
 		aiming = bAiming;
 		if( moving )
 		{
-			if( aiming )
-			{
-				Static_Var_5 = 1;
-				call-script walk();
-			}
-			if( !aiming )
-			{
-				Static_Var_5 = 0;
-				call-script walk();
-			}
+			call-script walk();
 			justmoved = TRUE;
 		}
 		if( !moving )
 		{
-			Static_Var_5 = 1;
 			if( justMoved )
 			{
 				move hips to y-axis [0.000000] speed [25.000000];
@@ -271,10 +267,8 @@ Create()
 {
 	bMoving = FALSE;
 	bAiming = FALSE;
-	Static_Var_5 = 1;
-	Static_Var_1 = 0;
-	restore_delay = 6000;
 	gun_1=[0];
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
 	start-script SmokeUnit();
 	start-script MotionSpeedControl();
@@ -295,8 +289,8 @@ StopMoving()
 
 RestoreAfterDelay()
 {
-	sleep restore_delay;
-	set-signal-mask 0;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<150>,<125>);
 	bAiming = FALSE;
 	turn torso to y-axis <0.000000> speed <150.000000>;
 	turn sleeve to x-axis <0.000000> speed <125.000000>;
@@ -305,13 +299,17 @@ RestoreAfterDelay()
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<170>,<140>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 	turn torso to y-axis heading speed <175.000000>;
 	turn sleeve to x-axis <0.000000> - pitch speed <140.000000>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn sleeve around x-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }
@@ -361,25 +359,19 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
+	if( severity <= 35 )
 	{
-		corpsetype = 1;
 		explode torso type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		return (0);
+		explode lthigh type SHATTER;
+		explode rthigh type SHATTER;
+		return (1);
 	}
-	if( severity <= 50 )
-	{
-		corpsetype = 2;
-		explode torso type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		return (0);
-	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode torso type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		return (0);
-	}
-	corpsetype = 3;
 	explode torso type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-	return (0);
+	explode lthigh type SHATTER;
+	explode rthigh type SHATTER;
+	explode hips type SHATTER;
+	explode lleg type SHATTER;
+	explode rleg type SHATTER;
+
+	return (2);
 }

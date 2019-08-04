@@ -5,10 +5,17 @@
 
 #define SPEEDUP_FACTOR 140
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 piece  base, flare1, flare2, wake1, wake2, turret, sleeve, support, hull, h1,h2,h3,h4,bottom, rmidsup,rmidleg,rmid2,rfrontsup,rfrontleg,rfront2,rbacksup,rbackleg,rback2,lbacksup,lbackleg,lback2,lmidsup,lmidleg,lmid2,lfrontsup,lfrontleg,lfront2, barrel1, barrel2, turret2, sleeve2, rgunbase, lgunbase, rgun1, rgun2, rfirept1, rfirept2, lgun1, lgun2, lfirept1, lfirept2;
 
-static-var  bMoving, bAiming, Static_Var_3, bSwimming, gun_1, gun_2,
+static-var  bMoving, bAiming, bSwimming, gun_1, gun_2,
             restore_delay, terrainStatus, Static_Var_8, waterSpeed, landSpeed;
+
+
+#include "aimhelper1.h"
+#include "aimhelper2.h"
 
 // Signal definitions
 #define SIG_MOVE			2
@@ -269,7 +276,6 @@ MotionControl(justMoved)
 		}
 		if( bMoving )
 		{
-			Static_Var_3 = 1;
 			if( bSwimming )
 			{
 				//set MAX_SPEED to waterSpeed; // REPLACED BY GADGET
@@ -286,7 +292,6 @@ MotionControl(justMoved)
 		}
 		if( !bMoving )
 		{
-			Static_Var_3 = 1;
 			if( justMoved AND ( !bSwimming ) )
 			{
 
@@ -322,12 +327,13 @@ Create()
 	landSpeed = waterSpeed * 100 / 150;
 	bMoving = FALSE;
 	bAiming = FALSE;
-	Static_Var_3 = 1;
+	
 	bSwimming = TRUE;
 	Static_Var_8 = 1;
 	gun_1 = [0];
 	gun_2 = [0];
-	restore_delay = 3000;
+	call-script stopAimHelper1(<1000>,<1000>);
+	call-script stopAimHelper2(<1000>,<1000>);
 	start-script MotionControl();
 	start-script SmokeUnit();
 	return (0);
@@ -368,15 +374,11 @@ setSFXoccupy(Func_Var_1)
 	return (0);
 }
 
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
-	return (0);
-}
 
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<70>,<70>);
 	turn turret to y-axis <0.000000> speed <70.000000>;
 	turn sleeve to x-axis <0.000000> speed <70.000000>;
 	return (0);
@@ -385,6 +387,7 @@ RestoreAfterDelay()
 RestoreAfterDelay2()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper2(<70>,<70>);
 	turn turret2 to y-axis <0.000000> speed <70.000000>;
 	turn sleeve2 to x-axis <0.000000> speed <70.000000>;
 	return (0);
@@ -392,13 +395,17 @@ RestoreAfterDelay2()
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<80>,<80>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 	turn turret to y-axis heading speed <80.000000>;
 	turn sleeve to x-axis <0.000000> - pitch speed <70.000000>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn sleeve around x-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }
@@ -450,13 +457,17 @@ QueryPrimary(piecenum)
 
 AimSecondary(heading, pitch)
 {
+	call-script updateAimHelper2(heading,pitch,<140>,<140>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM_2;
 	set-signal-mask SIG_AIM_2;
 	bAiming = TRUE;
-	turn turret2 to y-axis heading speed <130.000000>;
-	turn sleeve2 to x-axis <0.000000> - pitch speed <130.000000>;
-	wait-for-turn turret2 around y-axis;
-	wait-for-turn sleeve2 around x-axis;
+	turn turret2 to y-axis heading speed <140.000000>;
+	turn sleeve2 to x-axis <0.000000> - pitch speed <140.000000>;
+	if (!aimReady2)
+	{
+		wait-for-turn turret2 around y-axis;
+		wait-for-turn sleeve2 around x-axis;
+	}
 	start-script RestoreAfterDelay2();
 	return (1);
 }

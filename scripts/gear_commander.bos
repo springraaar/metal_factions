@@ -6,9 +6,14 @@
 #define SPEEDUP_FACTOR 145
 #define RESTORE_DELAY	3000
 
-piece  torso, ruparm, luparm, larm, rarm, rflare, nanospray, laser, pelvis, lflare, head, h2, pack, lthigh, rthigh, nanogun, torpgun, biggun, rleg, lleg, lfoot, rfoot, torpedo, bg2, bg3, lknee, rknee;
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
 
-static-var  bMoving, bBuilding, Static_Var_3, bAiming, Static_Var_5, Static_Var_6, bDgunning, bUnderwater, canAim1, canAim2,  mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
+piece  torso, ruparm, luparm, larm, rarm, rflare, nanospray, laser, pelvis, lflare,firept, head, h2, pack, lthigh, rthigh, nanogun, torpgun, biggun, rleg, lleg, lfoot, rfoot, torpedo, bg2, bg3, lknee, rknee;
+
+static-var  bMoving, bBuilding, bAiming, Static_Var_6, bDgunning, bUnderwater, canAim1, canAim2,  mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
+
+#include "aimhelper1.h"
 
 // signal definition
 #define SIG_AIM		2
@@ -378,6 +383,7 @@ Create()
 	canAim1 = TRUE;
 	canAim2 = FALSE;
 	bAiming = 0;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();
 	start-script MotionControl();
 	start-script Build();
@@ -413,6 +419,7 @@ RestorePosition()
 {
 	bDgunning = FALSE;
 	sleep RESTORE_DELAY;
+	call-script stopAimHelper1(<290>,<240>);
 	turn torso to y-axis <0.000000> speed <290.000000>;
 	turn ruparm to x-axis <0.000000> speed <245.000000>;
 	turn luparm to x-axis <0.000000> speed <245.000000>;
@@ -435,7 +442,7 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	piecenum = lflare;
+	piecenum = firept;
 	return;
 }
 
@@ -445,23 +452,27 @@ AimPrimary(heading, pitch)
 	{
 		return (0);
 	}
+	call-script updateAimHelper1(heading,pitch,<300>,<300>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 
 	turn torso to y-axis heading speed <300.093407>;
-	turn luparm to x-axis <0.000000> - pitch speed <245.000000>;
-	turn nanogun to x-axis <0.000000> speed <245.000000>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn luparm around x-axis;
-	wait-for-turn nanogun around x-axis;
+	turn luparm to x-axis <0.000000> - pitch speed <300.000000>;
+	turn nanogun to x-axis <0.000000> speed <300.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn luparm around x-axis;
+		wait-for-turn nanogun around x-axis;
+	}
 	start-script RestorePosition();
 	return (1);
 }
 
 FirePrimary()
 {
-	emit-sfx 1024 + 2 from lflare;
+	emit-sfx 1024 + 2 from firept;
 	return;
 }
 
@@ -484,16 +495,20 @@ AimSecondary(heading, pitch)
 	{
 		return (0);
 	}
+	call-script updateAimHelper1(heading,pitch,<300>,<300>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 
 	turn torso to y-axis heading speed <300.093407>;
-	turn luparm to x-axis <0.000000> - pitch speed <245.000000>;
-	turn nanogun to x-axis <0.000000> speed <245.000000>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn luparm around x-axis;
-	wait-for-turn nanogun around x-axis;
+	turn luparm to x-axis <0.000000> - pitch speed <300.000000>;
+	turn nanogun to x-axis <0.000000> speed <300.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn luparm around x-axis;
+		wait-for-turn nanogun around x-axis;
+	}
 	start-script RestorePosition();
 	return (1);
 }
@@ -520,20 +535,24 @@ QueryTertiary(piecenum)
 
 AimTertiary(heading, pitch)
 {
-	signal SIG_AIM2;
-	set-signal-mask SIG_AIM2;
-	bAiming = TRUE;
-
 	// if it's not going to be able to fire on the next ~2s, don't try to aim
 	if ((get WEAPON_RELOADSTATE(3)) > (get GAME_FRAME) + 40)) { return(0); }
+
+	call-script updateAimHelper1(heading,pitch,<300>,<300>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
 	
 	//bDgunning = TRUE;
 	turn torso to y-axis heading speed <300.093407>;
-	turn ruparm to x-axis <0.000000> - pitch speed <245.000000>;
-	turn biggun to x-axis <0.000000> speed <310.000000>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn ruparm around x-axis;
-	wait-for-turn biggun around x-axis;
+	turn ruparm to x-axis <0.000000> - pitch speed <300.000000>;
+	turn biggun to x-axis <0.000000> speed <300.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn biggun around x-axis;
+	}
 	start-script RestorePosition();
 
 	return (1);
@@ -552,13 +571,15 @@ FireTertiary()
 
 StartBuilding(heading, pitch)
 {
+
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bBuilding = TRUE;
 	bAiming = TRUE;
+	call-script updateAimHelper1(heading,pitch,<300>,<300>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	turn torso to y-axis heading speed <300.093407>;
-	turn luparm to x-axis <0.000000> - pitch speed <350.000000>;
-	turn nanogun to x-axis <0.000000> speed <395.000000>;
+	turn luparm to x-axis <0.000000> - pitch speed <300.000000>;
+	turn nanogun to x-axis <0.000000> speed <300.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn luparm around x-axis;
 	wait-for-turn nanogun around x-axis;

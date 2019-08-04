@@ -3,11 +3,14 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
 
-piece ground, hips,torso,turret,sleeve,front, front2, front3, fb,flare, sphere,shieldpt;
-
+piece ground, hips,torso,turret,sleeve,front, front2, front3, flare, sphere,shieldpt;
 	
 static-var bMoving,bAiming;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				2
@@ -19,6 +22,7 @@ Create()
 	spin front2 around z-axis speed <240.000000>;
 	bMoving=FALSE;
 	bAiming=FALSE;
+	call-script stopAimHelper1(<1000>,<1000>);
 }
 
 
@@ -31,9 +35,10 @@ SweetSpot(piecenum)
 RestoreAfterDelayWeapon()
 {
 	//aim1=FALSE;
-	sleep 5000;
-	turn turret to y-axis <0.000000> speed <65.016484>;
-	turn sleeve to x-axis <0.000000> speed <65.005495>;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
+	turn turret to y-axis <0.000000> speed <100.016484>;
+	turn sleeve to x-axis <0.000000> speed <100.005495>;
 	bAiming = FALSE;
 }
 
@@ -57,6 +62,7 @@ FirePrimary()
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<100>,<100>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
@@ -64,8 +70,11 @@ AimPrimary(heading, pitch)
 	//aim1=TRUE;
 	turn turret to y-axis heading speed <100.027473>;
 	turn sleeve to x-axis <0.000000> - pitch speed <100.038462>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn sleeve around x-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
 	start-script RestoreAfterDelayWeapon();
 	return (1);
 }

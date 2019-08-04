@@ -5,9 +5,14 @@
 
 #define SPEEDUP_FACTOR 100
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 piece  base, pivot, wake1, wake2, tbase, spinner, bottom, b2, d2, s1, s2,s3,d3, base1, base2,base3, turret, tur2, tur3, spike, sleeve,barrel,flare;
 
-static-var  bAiming, bSwimming, restore_delay, terrainStatus, waterSpeed, landSpeed, lastHeading;
+static-var  bAiming, bSwimming, terrainStatus, waterSpeed, landSpeed, lastHeading;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_MOVE			2
@@ -166,6 +171,7 @@ Create()
 	bAiming = FALSE;
 	bSwimming = FALSE;
 	lastHeading = 0;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
 	start-script WheelSpeedControl();
 	start-script SmokeUnit();
@@ -211,6 +217,7 @@ setSFXoccupy(Func_Var_1)
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
 	turn tbase to y-axis <0.000000> speed <100.000000>;
 	turn sleeve to x-axis <0.000000> speed <100.000000>;
 	lastHeading = 0;
@@ -220,13 +227,17 @@ RestoreAfterDelay()
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<200>,<200>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
-	turn tbase to y-axis heading speed <160.000000>;
-	turn sleeve to x-axis <0.000000> - pitch speed <150.000000>;
-	wait-for-turn tbase around y-axis;
-	wait-for-turn sleeve around x-axis;
+	turn tbase to y-axis heading speed <200.000000>;
+	turn sleeve to x-axis <0.000000> - pitch speed <200.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn tbase around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
 	lastHeading = heading;
 	start-script RestoreAfterDelay();
 	return (1);
@@ -269,21 +280,16 @@ Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		corpsetype = 1;
-		
 		explode turret type SHATTER;
 		explode base2 type SHATTER;
 		explode base3 type SHATTER;
-		return (0);
+		return (1);
 	}
-	corpsetype = 2;
-
 	explode base2 type SHATTER;
 	explode base1 type SHATTER;
 	explode turret type SHATTER;
 	explode tur2 type SHATTER;
 	explode barrel type SHATTER;
 	explode spinner type SHATTER;
-	
-	return (0);
+	return (2);
 }

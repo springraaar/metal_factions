@@ -64,6 +64,7 @@ local AREA_CHECK_DELAY = 6
 local COST_DELAY = 15
 local REGEN_DELAY = 30		-- once per second
 local AUTO_BUILD_STEP_FRAMES = 15
+local REGEN_EFFECT_DELAY = 10		
 
 -- idle here means not taking damage for a while
 local IDLE_REGEN_FRAMES = 30 * 25	-- 25 seconds
@@ -97,7 +98,8 @@ local flyingSphereDefIds = {
 	[UnitDefNames["sphere_magnetar"].id] = true,
 	[UnitDefNames["sphere_chroma"].id] = true,
 	[UnitDefNames["sphere_orb"].id] = true,
-	[UnitDefNames["sphere_comet"].id] = true
+	[UnitDefNames["sphere_comet"].id] = true,
+	[UnitDefNames["sphere_atom"].id] = true
 }
 
 -- units that have energy boosted movement, values are min speeds at which drain is applied
@@ -110,11 +112,13 @@ local energyBoostedMovementDefIds = {
 	[UnitDefNames["sphere_chroma"].id] = 0.5,
 	[UnitDefNames["sphere_orb"].id] = 0.5,
 	[UnitDefNames["sphere_comet"].id] = 1.0,
+	[UnitDefNames["sphere_atom"].id] = 1.0,
 	[UnitDefNames["aven_ace"].id] = 10.0
 }
 
 local cometDefIds = {
-	[UnitDefNames["sphere_comet"].id] = true
+	[UnitDefNames["sphere_comet"].id] = true,
+	[UnitDefNames["sphere_atom"].id] = true
 }
 
 local zephyrDefIds = {
@@ -135,10 +139,13 @@ local speedModifierUnitIds = {} -- (unitId,modifier)
 local landSlowerUnitIds = {}
 local waterSlowerUnitIds = {}
 local lastDamageFrameUnitIds = {}
+local lastFrameDamageAmountByUnitId = {}
 local energyBoostedMovementUnitIds = {}
 local flyingSphereUnitIds = {}
 local allUnitIds = {}
 local autoBuildUnitIds = {}
+local latestHPByUnitId = {}
+local recentHPGainByUnitId = {}
 
 -- mark unit as zephyr or unit with terrain speed modifiers
 function gadget:UnitCreated(unitId, unitDefId, unitTeam)
@@ -177,7 +184,6 @@ end
 function gadget:GameFrame(n)
 	local allUnits = spGetAllUnits()
 
-	
 	for uId,p in pairs(autoBuildUnitIds) do
 		spSpawnCEG(autoBuildCEG, p[1],p[2],p[3])
 	end
@@ -468,6 +474,33 @@ function gadget:GameFrame(n)
 			end
 		end		
 	end
+	
+	-- update the unit rules param indicating % hp regenerated over the last second or so	
+	local percentRegenPerSecond = 0
+	for _,unitId in ipairs(allUnits) do
+		local health,maxHealth,_,_,bp = spGetUnitHealth(unitId)
+		if (bp) then
+			if not latestHPByUnitId[unitId] then
+				latestHPByUnitId[unitId] = health
+				recentHPGainByUnitId[unitId] = 0
+				lastFrameDamageAmountByUnitId[unitId] = 0
+			else
+				recentHPGainByUnitId[unitId] = recentHPGainByUnitId[unitId] + lastFrameDamageAmountByUnitId[unitId] + health - latestHPByUnitId[unitId] 
+				latestHPByUnitId[unitId] = health
+				lastFrameDamageAmountByUnitId[unitId] = 0 -- reset counter
+				
+				if (n%REGEN_EFFECT_DELAY == 0) then
+					percentRegenPerSecond = (recentHPGainByUnitId[unitId]) * (3000/REGEN_EFFECT_DELAY) / maxHealth
+					--Spring.Echo("uId="..unitId.." hpGain="..percentRegenPerSecond)
+					if (percentRegenPerSecond < 0) then 
+						percentRegenPerSecond = 0
+					end
+					spSetUnitRulesParam(unitId,"recent_regen",percentRegenPerSecond,{public = true})
+					recentHPGainByUnitId[unitId] = 0
+				end
+			end
+		end
+	end
 end
 
 -- cleanup when some units are destroyed
@@ -510,7 +543,15 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam)
 			magnetarIds[unitId] = nil
 		end
 	end	
-	
+	if (latestHPByUnitId[unitId]) then
+		latestHPByUnitId[unitId] = nil
+	end
+	if (recentHPGainByUnitId[unitId]) then
+		recentHPGainByUnitId[unitId] = nil
+	end
+	if lastFrameDamageAmountByUnitId[unitId] then
+		lastFrameDamageAmountByUnitId[unitId] = nil
+	end
 	allUnitIds[unitId] = nil
 end
 
@@ -524,16 +565,22 @@ function updateUnitSpeedModifier(unitId, modifier)
 		
 		-- strafe air
 		if (ud.canFly and ud.isStrafingAirUnit and not ud.hoverAttack) then 
-			spSetAirMoveTypeData(unitId,{maxSpeed=spd})
-			enforceSpeedChange(unitId,spd)
+			spSetAirMoveTypeData(unitId,{maxSpeed=spd,maxWantedSpeed=spd})
+			--spSetAirMoveTypeData(unitId,"useWantedSpeed[0]",false)
+			--spSetAirMoveTypeData(unitId,"useWantedSpeed[1]",false)
+			--enforceSpeedChange(unitId,spd)
 		-- hover air
 		elseif (ud.canFly and ud.isHoveringAirUnit) then
-			spSetGunshipMoveTypeData(unitId,{maxSpeed=spd})
-			enforceSpeedChange(unitId,spd)
+			spSetGunshipMoveTypeData(unitId,{maxSpeed=spd,maxWantedSpeed=spd})
+			--spSetGunshipMoveTypeData(unitId,"useWantedSpeed[0]",false)
+			--spSetGunshipMoveTypeData(unitId,"useWantedSpeed[1]",false)
+			--enforceSpeedChange(unitId,spd)
 		-- ground
 		elseif (ud.canMove and not ud.isBuilding) then	
-			spSetGroundMoveTypeData(unitId,{maxSpeed=spd})
-			enforceSpeedChange(unitId,spd)
+			spSetGroundMoveTypeData(unitId,{maxSpeed=spd,maxWantedSpeed=spd})
+			--spSetGroundMoveTypeData(unitId,"useWantedSpeed[0]",false)
+			--spSetGroundMoveTypeData(unitId,"useWantedSpeed[1]",false)
+			--enforceSpeedChange(unitId,spd)
 		end
 	end
 end
@@ -558,4 +605,11 @@ end
 -- mark when units take damage from enemies
 function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
 	lastDamageFrameUnitIds[unitID] = spGetGameFrame()
+	if not paralyzer then 
+		if not lastFrameDamageAmountByUnitId[unitID]  then
+			lastFrameDamageAmountByUnitId[unitID] = damage
+		else
+			lastFrameDamageAmountByUnitId[unitID] = lastFrameDamageAmountByUnitId[unitID] + damage
+		end
+	end
 end

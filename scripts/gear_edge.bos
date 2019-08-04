@@ -3,17 +3,23 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 piece  base, turret1, sleeve1, barrel11, flare11, barrel12, flare12, turret2, sleeve2, flare2, b2,  wake1, wake2, turret3, sleeve3, barrel3, flare3, turret4, sleeve4, barrel4, flare4, tur2, tur3, logo, logo2, tl, tr, b22;
 
-static-var  gun_2, bAiming, restore_delay, gun_1, Static_Var_5,
-            Static_Var_6, Static_Var_7;
+static-var  gun_2, bAiming, gun_1, lastHeading,  Static_Var_6, Static_Var_7;
+
+#include "aimhelper1.h"
+#include "aimhelper2.h"
 
 // Signal definitions
-#define SIG_AIM				2
-#define SIG_AIM_2			4
-#define SIG_AIM_3			8
-#define SIG_AIM_4			16
-#define SIG_MOVE			32
+#define SIG_AIM				1
+#define SIG_AIM_2			2
+#define SIG_AIM_3			4
+#define SIG_AIM_4			8
+#define SIG_MOVE			128
+
 
 Abs(Func_Var_1)
 {
@@ -131,45 +137,41 @@ Create()
 {
 	gun_1 = [0];
 	bAiming = TRUE;
-	restore_delay = 3000;
+	call-script stopAimHelper1(<1000>,<1000>);
+	call-script stopAimHelper2(<1000>,<1000>);
 	start-script SmokeUnit();
 	call-script RockZInit();
 	return (0);
 }
 
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 3;
-	return (0);
-}
-
-
 RestoreWeapon4()
 {
-	sleep restore_delay;
-	turn turret4 to y-axis <0.000000> speed <50.000000>;
-	turn sleeve4 to x-axis <0.000000> speed <50.000000>;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn turret4 to y-axis <0.000000> speed <150.000000>;
+	turn sleeve4 to x-axis <0.000000> speed <150.000000>;
 	return (0);
 }
 RestoreWeapon3()
 {
-	sleep restore_delay;
-	turn turret3 to y-axis <0.000000> speed <50.000000>;
-	turn sleeve3 to x-axis <0.000000> speed <50.000000>;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn turret3 to y-axis <0.000000> speed <150.000000>;
+	turn sleeve3 to x-axis <0.000000> speed <150.000000>;
 	return (0);
 }
 RestoreSecondary()
 {
-	sleep restore_delay;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper2(<50>,<50>);
 	turn turret2 to y-axis <0.000000> speed <50.000000>;
 	turn sleeve2 to x-axis <0.000000> speed <50.000000>;
 	return (0);
 }
 RestoreAfterDelay()
 {
-	sleep restore_delay;
-	turn turret1 to y-axis <0.000000> speed <40.000000>;
-	turn sleeve1 to x-axis <0.000000> speed <40.000000>;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<50>,<50>);
+	turn turret1 to y-axis <0.000000> speed <50.000000>;
+	turn sleeve1 to x-axis <0.000000> speed <50.000000>;
 	return (0);
 }
 
@@ -219,27 +221,35 @@ AimWeapon3(heading, pitch)
 
 AimSecondary(heading, pitch)
 {
+	call-script updateAimHelper2(heading,pitch,<100>,<100>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM_2;
 	set-signal-mask SIG_AIM_2;
 	turn turret2 to y-axis heading speed <100.000000>;
 	turn sleeve2 to x-axis <0> - pitch speed <100.000000>;
-	wait-for-turn turret2 around y-axis;
-	wait-for-turn sleeve2 around x-axis;
+	if (!aimReady2)
+	{
+		wait-for-turn turret2 around y-axis;
+		wait-for-turn sleeve2 around x-axis;
+	}
 	start-script RestoreSecondary();
 	return (1);
 }
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<70>,<70>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	turn turret1 to y-axis heading speed <40.000000>;
-	turn sleeve1 to x-axis <0.000000> - pitch speed <40.000000>;
-	wait-for-turn turret1 around y-axis;
-	wait-for-turn sleeve1 around x-axis;
+	turn turret1 to y-axis heading speed <70.000000>;
+	turn sleeve1 to x-axis <0.000000> - pitch speed <70.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn turret1 around y-axis;
+		wait-for-turn sleeve1 around x-axis;
+	}
 
 	start-script RestoreAfterDelay();
-	Static_Var_5 = heading;
+	lastHeading = heading;
 	return (1);
 }
 
@@ -260,7 +270,7 @@ FireSecondary()
 
 FirePrimary()
 {
-	//start-script RockZ(-5,Static_Var_5);
+	//start-script RockZ(-5,lastHeading);
 	if( gun_1 == [0] )
 	{
 		emit-sfx 1024 + 0 from flare11;

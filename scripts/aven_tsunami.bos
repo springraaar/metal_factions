@@ -3,14 +3,14 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<25>
+
 piece  base, turret, sleeve, barrel, flare, wake1, wake2, wake3, wake4, wake5, wake6, wake7, wake8, h2, ldoor, rdoor, tbase;
 
-static-var  Static_Var_1, restore_delay, Static_Var_3, Static_Var_4, currentHeading, currentPitch, gun_1, isOpen;
+static-var  Static_Var_1, Static_Var_3, Static_Var_4, gun_1, isOpen;
 
-
-#define HEADING_TOLERANCE	<15.000000>
-#define PITCH_TOLERANCE		<25.000000>
-
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				2
@@ -163,50 +163,39 @@ Close()
 Create()
 {
 	Static_Var_3 = 1;
-	restore_delay = 3000;
-	currentHeading = <-370>;
-	currentPitch = <-370>;
-	
 	gun_1 = [0];
 	isOpen = FALSE;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script SmokeUnit();
 	start-script WobbleUnit();
 	//start-script BankClerck();
 	return (0);
 }
 
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
-	return (0);
-}
 
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
-	currentHeading = <-370>;
-	currentPitch = <-370>;
-	
+	call-script stopAimHelper1(<100>,<100>);
 	call-script Close();
 	return (0);
 }
 
 AimPrimary(heading, pitch)
 {
-	signal SIG_AIM;
-	set-signal-mask SIG_AIM;
 	if( ! isOpen)
 	{
 		call-script Open();
 	}
+	call-script updateAimHelper1(heading,pitch,<170>,<170>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
 	turn turret to y-axis heading speed <170.000000>;
 	turn sleeve to x-axis <0.000000> - pitch speed <170.000000>;
-	if ( get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE )
+	if ( !aimReady1 )
 	{
 		wait-for-turn turret around y-axis;
 		wait-for-turn sleeve around x-axis;
-		currentHeading = heading;
-		currentPitch = pitch;
 	}
 	start-script RestoreAfterDelay();
 	return (1);

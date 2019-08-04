@@ -575,23 +575,26 @@ function widget:MouseRelease(mx, my, mButton)
 			end
 		end
 		
-		-- Move Speed (Applicable to every order)
-		local wantedSpeed = 99999 -- High enough to exceed all units speed, but not high enough to cause errors (i.e. vs math.huge)
 		
-		if ctrl then
-			local selUnits = spGetSelectedUnits()
-			for i = 1, #selUnits do
-				local uSpeed = UnitDefs[spGetUnitDefID(selUnits[i])].speed
-				if uSpeed > 0 and uSpeed < wantedSpeed then
-					wantedSpeed = uSpeed
-				end
-			end
-		end
+		-- Move Speed (Applicable to every order)
+		-- TODO remove? CMD_SET_WANTED_MAX_SPEED was removed on 105.0
+		--local wantedSpeed = 99999 -- High enough to exceed all units speed, but not high enough to cause errors (i.e. vs math.huge)
+		
+		--if ctrl then
+		--	local selUnits = spGetSelectedUnits()
+		--	for i = 1, #selUnits do
+		--		local uSpeed = UnitDefs[spGetUnitDefID(selUnits[i])].speed
+		--		if uSpeed > 0 and uSpeed < wantedSpeed then
+		--			wantedSpeed = uSpeed
+		--		end
+		--	end
+		--end
 		
 		-- Directly giving speed order appears to work perfectly, including with shifted orders ...
 		-- ... But other widgets CMD.INSERT the speed order into the front (Posn 1) of the queue instead (which doesn't work with shifted orders)
-		local speedOpts = GetCmdOpts(alt, ctrl, meta, shift, true)
-		GiveNotifyingOrder(CMD_SET_WANTED_MAX_SPEED, {wantedSpeed / 30}, speedOpts)
+		--
+		--local speedOpts = GetCmdOpts(alt, ctrl, meta, shift, true)
+		--GiveNotifyingOrder(CMD_SET_WANTED_MAX_SPEED, {wantedSpeed / 30}, speedOpts)
 	end
 	
 	if #fNodes > 1 then

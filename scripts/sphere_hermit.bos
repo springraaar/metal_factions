@@ -5,9 +5,14 @@
 
 #define SPEEDUP_FACTOR 140
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 piece  gp, hips, torso, shieldpt, leg1,bleg,leg2,bleg2,leg3,bleg3,leg4,bleg4, sphere,shieldbase,b2,b3,turret,sleeve1, barrel1, flare1, sleeve2, barrel2, flare2, c1,c2,c3,c4,b4,c5,c6,c7,c8;
 
 static-var  bMoving, bAiming, isOpen, bUnderwater, firePt, firePoint;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				2
@@ -239,6 +244,7 @@ Create()
 	isOpen = FALSE;
 	bUnderwater = FALSE;
 	firePt = [0];
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
 	start-script SmokeUnit();
 	start-script checkUnderwater();
@@ -278,9 +284,10 @@ SweetSpot(piecenum)
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
-	turn turret to y-axis <0.000000> speed <100.016484>;
-	turn sleeve1 to x-axis <0.000000> speed <145.005495>;
-	turn sleeve2 to x-axis <0.000000> speed <145.005495>;
+	call-script stopAimHelper1(<130>,<130>);
+	turn turret to y-axis <0.000000> speed <130.016484>;
+	turn sleeve1 to x-axis <0.000000> speed <130.005495>;
+	turn sleeve2 to x-axis <0.000000> speed <130.005495>;
 	bAiming = FALSE;
 }
 
@@ -330,17 +337,20 @@ AimPrimary(heading, pitch)
 		sleep 100;
 		return(0);
 	}
-	
+	call-script updateAimHelper1(heading,pitch,<160>,<160>,HEADING_TOLERANCE,PITCH_TOLERANCE);	
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 	
-	turn turret to y-axis heading speed <120.027473>;
-	turn sleeve1 to x-axis <0.000000> - pitch speed <130.038462>;
-	turn sleeve2 to x-axis <0.000000> - pitch speed <130.038462>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn sleeve1 around x-axis;
-	wait-for-turn sleeve2 around x-axis;
+	turn turret to y-axis heading speed <160.027473>;
+	turn sleeve1 to x-axis <0.000000> - pitch speed <160.038462>;
+	turn sleeve2 to x-axis <0.000000> - pitch speed <160.038462>;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve1 around x-axis;
+		wait-for-turn sleeve2 around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

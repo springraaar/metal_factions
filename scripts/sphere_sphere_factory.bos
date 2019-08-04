@@ -5,23 +5,37 @@
 
 piece  base, pad, beam1, beam2, platform1, platform2, nano2, nano1, a1, a2,x1,x1bottom, a1bottom,a2bottom, buildpt;
 
-static-var  Static_Var_1, statechg_DesiredState, statechg_StateChanging;
+static-var  Static_Var_1, statechg_DesiredState, statechg_StateChanging, isBuilding;
 
 // Signal definitions
 #define SIG_ACTIVATE			2
 
 
+Build()
+{
+	while (TRUE)
+	{
+		if( isBuilding == 1 )
+		{
+			emit-sfx 1024 + 0 from beam1;
+			emit-sfx 1024 + 0 from beam2;
+			sleep 60;
+		}
+		sleep 40;
+	}
+	return (0);
+}
 activatescr()
 {
 
-	move platform1 to y-axis [8.000000] speed [12.000000];
-	move platform2 to y-axis [8.000000] speed [12.000000];
+	move platform1 to y-axis [11.000000] speed [17.000000];
+	move platform2 to y-axis [11.000000] speed [17.000000];
 	
 	wait-for-move platform1 along y-axis;
 	wait-for-move platform2 along y-axis;
 
-	move nano1 to x-axis [-4.000000] speed [12.000000];
-	move nano2 to x-axis [4.000000] speed [12.000000];
+	move nano1 to x-axis [-4.000000] speed [17.000000];
+	move nano2 to x-axis [4.000000] speed [17.000000];
 	wait-for-move nano1 along x-axis;
 	wait-for-move nano2 along x-axis;
 	
@@ -145,8 +159,10 @@ Create()
 {
 	move buildpt to y-axis [30.000000] now;
 	Static_Var_1 = 111;
+	isBuilding = 0;
 	call-script InitState();
 	start-script SmokeUnit();
+	start-script Build();
 }
 
 QueryNanoPiece(piecenum)
@@ -183,10 +199,12 @@ Deactivate()
 
 StartBuilding()
 {
+	isBuilding = 1;
 }
 
 StopBuilding()
 {
+	isBuilding = 0;
 }
 
 QueryBuildInfo(piecenum)

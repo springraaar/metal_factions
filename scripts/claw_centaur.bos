@@ -5,11 +5,17 @@
 
 #define SPEEDUP_FACTOR 280
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
+
 piece  turret, front,back,ruparm, luparm, pelvis, lthigh,
        rthigh, rleg, rfoot, lleg, lfoot, lloarm, lhand, rloarm,turbase,faxis,baxis,
        rhand, ground, luparm2,ruparm2,larm,rarm,lgun,rgun,lg,rg,lflare,rflare,lspike,rspike, backhead;
 
-static-var  restore_delay, firePt, bMoving, bAiming, mAVertFactor, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mADelay1, legAngle1, legAngle2, legAngle3, legAngle4, shouldRun;
+static-var  firePt, bMoving, bAiming, mAVertFactor, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mADelay1, legAngle1, legAngle2, legAngle3, legAngle4, shouldRun;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_MOVE			2
@@ -529,9 +535,9 @@ Create()
 	hide rflare;
 	bMoving = FALSE;
 	bAiming = FALSE;
-	restore_delay = 5000;
 	firePt = [0];
 	shouldRun = FALSE;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
 	start-script SmokeUnit();
 	start-script MotionSpeedControl();
@@ -559,10 +565,11 @@ SweetSpot(piecenum)
 
 RestoreAfterDelay()
 {
-	sleep restore_delay;
-	turn turret to y-axis <0.000000> speed <90.000000>;
-	turn luparm2 to x-axis <0.000000> speed <50.000000>;
-	turn ruparm2 to x-axis <0.000000> speed <50.000000>;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
+	turn turret to y-axis <0.000000> speed <100.000000>;
+	turn luparm2 to x-axis <0.000000> speed <100.000000>;
+	turn ruparm2 to x-axis <0.000000> speed <100.000000>;
 	wait-for-turn turret around y-axis;
 	wait-for-turn luparm2 around x-axis;
 	wait-for-turn ruparm2 around x-axis;
@@ -572,15 +579,19 @@ RestoreAfterDelay()
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<300>,<300>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 	turn turret to y-axis heading speed <300.000000>;
 	turn luparm2 to x-axis <0.000000> - pitch speed <300.000000>;
 	turn ruparm2 to x-axis <0.000000> - pitch speed <300.000000>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn luparm2 around x-axis;
-	wait-for-turn ruparm2 around x-axis;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn luparm2 around x-axis;
+		wait-for-turn ruparm2 around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

@@ -550,3 +550,56 @@
 }
 
 
+[ATOMCHARGE1]
+{
+	useAirLos=0;
+	usedefaultexplosions=0;
+	[heatcloud]
+	{
+      		[properties]
+      		{
+      			heat = 25;
+			Texture=yellowlight;
+	      		maxheat = 25;
+	      		heatFalloff = 15;
+	      		size = 5.0 r2;
+	      		sizeGrowth = 0.08 r.16;
+	      		sizemod = 0;
+	      		sizemodmod = 0;
+	      		speed = 0, 0, 0;
+	      		pos = 0, 0.0, 0;
+      		}
+		air=1;
+	      	water=0;
+	      	ground=1;
+	      	count=1;
+		useAirLos=0;
+   	}
+}
+
+[ATOMCHARGE2]
+{
+	useAirLos=0;
+	usedefaultexplosions=0;
+	[heatcloud]
+	{
+      		[properties]
+      		{
+      			heat = 25;
+			Texture=yellowlight;
+	      		maxheat = 25;
+	      		heatFalloff = 15;
+	      		size = 9.0 r2;
+	      		sizeGrowth = 0.08 r.16;
+	      		sizemod = 0;
+	      		sizemodmod = 0;
+	      		speed = 0, 0, 0;
+	      		pos = 0, 0.0, 0;
+      		}
+		air=1;
+	      	water=0;
+	      	ground=1;
+	      	count=1;
+		useAirLos=0;
+   	}
+}

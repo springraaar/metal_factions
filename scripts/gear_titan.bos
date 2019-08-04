@@ -5,9 +5,14 @@
 
 #define SPEEDUP_FACTOR 120
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 piece  ground, hips, lbackleg,bleg,rbackleg,bleg2,rfrontleg,bleg3,lfrontleg,bleg4, body, turret, sleeve, barrel1, flare1, barrel2, flare2, cover, b2, legsup1, legsup2, legsup3, legsup4, lcover1, lcover2, lcover3, lcover4;
 
-static-var  restore_delay, bMoving, gun_1, mASpdFactor;
+static-var  bMoving, gun_1, mASpdFactor;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_MOVE			2
@@ -199,6 +204,7 @@ StopMoving()
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
 	turn turret to y-axis <0.000000> speed <100.000000>;
 	turn sleeve to x-axis <0.000000> speed <100.000000>;
 }
@@ -207,15 +213,10 @@ Create()
 {
 	bMoving = FALSE;
 	gun_1 = [0];
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();
 	start-script MotionControl();
 	start-script SmokeUnit();
-	return (0);
-}
-
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
 	return (0);
 }
 
@@ -248,14 +249,17 @@ QueryPrimary(piecenum)
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<150>,<150>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 
-	turn turret to y-axis heading speed <130.000000>;
+	turn turret to y-axis heading speed <150.000000>;
 	turn sleeve to x-axis <0.000000> - pitch speed <150.000000>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn sleeve around x-axis;
-	
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
 
 	start-script RestoreAfterDelay();
 	return (1);

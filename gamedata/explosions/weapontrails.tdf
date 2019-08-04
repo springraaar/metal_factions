@@ -2088,6 +2088,57 @@ usedefaultexplosions=0;
 	}
 
 }
+[YELLOWPLASMATRAIL]
+{
+	usedefaultexplosions=0;	
+	[groundflash]
+	{
+		flashSize = 35;
+		flashAlpha = 0.15;
+		circleGrowth = 0;
+		circleAlpha = 0.1;
+		ttl = 3;
+		color = 1.0, 1.0, 0.2;
+
+	}
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-1 r2, -1 r2,-1 r2;
+			width=12;
+			length=12;
+			alpha=0.06;
+			alphadecay=0.008;
+			color=1.0, 1.0, 0.2;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=3; 
+	}
+	[center]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-0.6 r1.2, -0.6 r1.2,-0.6 r1.2;
+			width=2;
+			length=2;
+			alpha=2.0;
+			alphadecay=1.0;
+			color=1.0, 1.0, 0.0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=4; 
+	}
+
+}
 [BLUEGLOWSML]
 {
 	usedefaultexplosions=0;	

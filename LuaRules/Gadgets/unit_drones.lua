@@ -67,10 +67,10 @@ local droneBuildStalled = {}
 local markedForDestruction = {}
 local DRONE_CHECK_DELAY = 15		-- 2 steps per second
 
-local LIGHT_DRONE_BUILD_STEPS = 10
-local MEDIUM_DRONE_BUILD_STEPS = 20	
+local LIGHT_DRONE_BUILD_STEPS = 8
+local MEDIUM_DRONE_BUILD_STEPS = 24	
 
-local DRONE_REBUILD_DELAY_STEPS = 8
+local DRONE_REBUILD_DELAY_STEPS = 4
 local DRONE_BUILD_ENERGY_FACTOR = 1.0		
 local DRONE_BUILD_ENERGY_MIN = 500
 

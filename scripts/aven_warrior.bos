@@ -2,20 +2,22 @@
 
 #define SPEEDUP_FACTOR	220
 
+
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 #include "sfxtype.h"
 #include "exptype.h"
 
 piece  torso, ruparm, luparm, rfire, rarm, larm, rloarm, lloarm, pelvis,
        rthigh, lthigh, lleg, rleg, rfoot, lfoot, ground, head, r2,rshield, lshield, lgun, flare;
 
-static-var  bMoving, bAiming, Static_Var_3, restore_delay, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3, currentHeading, currentPitch;
+static-var  bMoving, bAiming, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
 
-#define HEADING_TOLERANCE	<15.000000>
-#define PITCH_TOLERANCE		<25.000000>
+#include "aimhelper1.h"
 
 // Signal definitions
-#define SIG_AIM				4
-#define SIG_AIM2			8
+#define SIG_AIM				2
 
 lua_cobDebug() { return 0; }
 
@@ -247,21 +249,11 @@ MotionControl(moving, aiming, justmoved)
 		aiming = bAiming;
 		if( moving )
 		{
-			if( aiming )
-			{
-				Static_Var_3 = 1;
-				call-script walk();
-			}
-			if( !aiming )
-			{
-				Static_Var_3 = 0;
-				call-script walk();
-			}
+			call-script walk();
 			justmoved = TRUE;
 		}
 		if( !moving )
 		{
-			Static_Var_3 = 1;
 			if( justmoved )
 			{
 
@@ -294,19 +286,10 @@ Create()
 	hide rfire;
 	bMoving = FALSE;
 	bAiming = FALSE;
-	Static_Var_3 = 1;
-	restore_delay = 12000;
-	currentHeading = <0>;
-	currentPitch = <0>;
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();
 	start-script MotionControl();
 	start-script SmokeUnit();
-	return (0);
-}
-
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
 	return (0);
 }
 
@@ -330,9 +313,9 @@ SweetSpot(piecenum)
 
 RestoreAfterDelay()
 {
-	sleep 5000;
-	currentHeading = <0>;
-	currentPitch = <0>;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<245>,<300>);
+
 	turn torso to y-axis <0.000000> speed <290.000000>;
 	turn ruparm to x-axis <0.000000> speed <245.000000>;
 	
@@ -371,18 +354,17 @@ FirePrimary()
 
 AimPrimary(heading, pitch)
 {
+	bAiming = TRUE;
+	call-script updateAimHelper1(heading,pitch + <90.000000>,<220>,<220>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	bAiming = TRUE;
 	
 	turn torso to y-axis heading speed <220.000000>;
 	turn ruparm to x-axis <-90.000000> - pitch speed <220.000000>;
-	if ( get ABS(heading - currentHeading)  > HEADING_TOLERANCE || get ABS(pitch - currentPitch) > PITCH_TOLERANCE )
+	if ( !aimReady1 )
 	{
 		wait-for-turn torso around y-axis;
 		wait-for-turn ruparm around x-axis;
-		currentHeading = heading;
-		currentPitch = pitch;
 	}
 	start-script RestoreAfterDelay();
 	return (1);
@@ -409,17 +391,22 @@ FireSecondary()
 
 AimSecondary(heading, pitch)
 {
-	signal SIG_AIM2;
-	set-signal-mask SIG_AIM2;
 	bAiming = TRUE;
-	
+
 	// if it's not going to be able to fire on the next ~2s, don't try to aim
 	if ((get WEAPON_RELOADSTATE(2)) > (get GAME_FRAME) + 40)) { return(0); }
+
+	call-script updateAimHelper1(heading,pitch + <90.000000>,<220>,<220>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
 	
 	turn torso to y-axis heading speed <220.000000>;
 	turn luparm to x-axis <-90.000000> - pitch speed <220.000000>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn luparm around x-axis;
+	if( !aimReady1 ) 
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn luparm around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }
@@ -427,47 +414,13 @@ AimSecondary(heading, pitch)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
+	if( severity <= 50 )
 	{
-		corpsetype = 1;
 		explode ruparm type SHATTER | BITMAP5;		
 		explode luparm type SHATTER | BITMAP5;		
 		explode torso type SHATTER | BITMAP5;
-		return (0);
+		return (1);
 	}
-	if( severity <= 50 )
-	{
-		corpsetype = 2;
-		explode lfoot type FALL | BITMAP3;
-		explode lleg type FALL | BITMAP4;
-		explode lloarm type FALL | BITMAP5;
-		explode lthigh type FALL | BITMAP1;
-		explode luparm type FALL | BITMAP2;
-		explode rfoot type FALL | BITMAP5;
-		explode rleg type FALL | BITMAP1;
-		explode rloarm type FALL | BITMAP2;
-		explode rthigh type FALL | BITMAP3;
-		explode ruparm type FALL | BITMAP4;
-		explode torso type SHATTER | BITMAP5;
-		return (0);
-	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode lfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-		explode lleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
-		explode lloarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-		explode lthigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode luparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-		explode rfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-		explode rleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode rloarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-		explode rthigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-		explode ruparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
-		explode torso type SHATTER | BITMAP5;
-		return (0);
-	}
-	corpsetype = 3;
 	explode lfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
 	explode lleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
 	explode lloarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
@@ -479,5 +432,5 @@ Killed(severity, corpsetype)
 	explode rthigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
 	explode ruparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
 	explode torso type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-	return (0);
+	return (2);
 }
