@@ -13,12 +13,19 @@ end
 local TRANSPORTED_MASS_SPEED_PENALTY = 0.5 -- higher makes unit slower
 local FRAMES_PER_SECOND = 30
 
+local TRANSPORT_SQDISTANCE_TOLERANCE = 512 -- about 22 elmos 
+
 local airTransports = {}
 local airTransportMaxSpeeds = {}
 local unloadedUnits = {}
 local spSetUnitRulesParam  = Spring.SetUnitRulesParam	
-
-
+local spGetUnitPosition = Spring.GetUnitPosition
+local spSetUnitVelocity = Spring.SetUnitVelocity
+local spGetUnitVelocity = Spring.GetUnitVelocity
+local spSetUnitPhysics = Spring.SetUnitPhysics
+local spSetUnitDirection = Spring.SetUnitDirection
+local spGiveOrderToUnit = Spring.GiveOrderToUnit
+			
 local missileDefIds = {
 	[UnitDefNames["aven_nuclear_rocket"].id] = true,
 	[UnitDefNames["aven_dc_rocket"].id] = true,
@@ -106,11 +113,11 @@ function gadget:GameFrame(n)
 	local vx,vy,vz,vw = 0
 	local alSpeed = 0
 	for unitId,ud in pairs(airTransports) do
-		vx,vy,vz,vw = Spring.GetUnitVelocity(unitId)
+		vx,vy,vz,vw = spGetUnitVelocity(unitId)
 		alSpeed = airTransportMaxSpeeds[unitId]
 		if (alSpeed and vw > alSpeed) then
 			factor = alSpeed / vw
-			Spring.SetUnitVelocity(unitId,vx * factor,vy * factor,vz * factor)
+			spSetUnitVelocity(unitId,vx * factor,vy * factor,vz * factor)
 		end
 	end
 	
@@ -140,6 +147,38 @@ function gadget:UnitUnloaded(unitId, unitDefId, teamId, transportId)
 		end
 	end
 end
+
+
+------------------------ LOAD / UNLOAD workarounds for 104.0.1-1327 maintenance and later
+local function sqDist(pos1, pos2)
+	local difX = pos1[1] - pos2[1]
+	local difY = pos1[2] - pos2[2]
+	local difZ = pos1[3] - pos2[3]
+	return difX^2 + difY^2 + difZ^2
+end
+
+function gadget:AllowUnitTransportLoad(transporterID, transporterUnitDefID, transporterTeam, transporteeID, transporteeUnitDefID, transporteeTeam, goalX, goalY, goalZ)
+
+	local pos1 = {spGetUnitPosition(transporterID)}
+	local pos2 = {goalX, goalY, goalZ}
+	if sqDist(pos1, pos2) > TRANSPORT_SQDISTANCE_TOLERANCE then
+		return false
+	end
+	spSetUnitVelocity(transporterID, 0,0,0)
+	return true
+end
+
+function gadget:AllowUnitTransportUnload(transporterID, transporterUnitDefID, transporterTeam, transporteeID, transporteeUnitDefID, transporteeTeam, goalX, goalY, goalZ)
+
+	local pos1 = {spGetUnitPosition(transporterID)}
+	local pos2 = {goalX, goalY, goalZ}
+	if sqDist(pos1, pos2) > TRANSPORT_SQDISTANCE_TOLERANCE then
+		return false
+	end
+	spSetUnitVelocity(transporterID, 0,0,0)
+	return true
+end
+
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

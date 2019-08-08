@@ -48,6 +48,7 @@ local unitBurningTable = {}
 local unitBurningDPStepTable = {}
 local unitXPTable = {}
 local damagedUnitFrameTable = {}
+local cloakDisruptedUnitFrameTable = {}
 
 local spGetUnitHealth = Spring.GetUnitHealth
 local spSetUnitCollisionVolumeData = Spring.SetUnitCollisionVolumeData
@@ -68,6 +69,10 @@ local spSetUnitDirection = Spring.SetUnitDirection
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetAllUnits = Spring.GetAllUnits
+local spGetUnitVelocity = Spring.GetUnitVelocity
+local spUseUnitResource = Spring.UseUnitResource
+local spGetUnitDefID = Spring.GetUnitDefID
+local spGetUnitIsStunned = Spring.GetUnitIsStunned
 local spGetGameFrame = Spring.GetGameFrame
 local max = math.max
 
@@ -87,6 +92,9 @@ local UNIT_DAMAGE_DEALT_XP = 0.12    	-- 100%HP damage dealt to enemy unit of eq
 
 local UNIT_DAMAGE_TAKEN_XP = 0.06		-- 100%HP damage taken from enemies is converted to experience using this factor
 										-- currently set to half as much as fully damaging and enemy unit of equal power
+
+local RECLOAK_DELAY_FRAMES = 150
+local CLOAK_MOVING_THRESHOLD = 0.3 
 								
 local dealtDef = nil
 local takenDef = nil
@@ -189,6 +197,9 @@ function gadget:Initialize()
     	weaponDefIdByNameTable[wd.name] = wd.id
     	weaponHitpowerTable[wd.id] = hitpowerStr
     	weaponParalyzerTable[wd.id] = wd.paralyzer
+    	
+    	-- track all projectiles
+		Script.SetWatchWeapon(wd.id,true)
     end
 end
 
@@ -361,6 +372,9 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 	end
 	if damagedUnitFrameTable[unitID] ~= nil then
 		damagedUnitFrameTable[unitID] = nil
+	end
+	if cloakDisruptedUnitFrameTable[unitID] ~= nil then
+		cloakDisruptedUnitFrameTable[unitID] = nil
 	end
 	
 	-- spawn a fireball when canister dies
@@ -618,6 +632,7 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 		end
 	end
 	if (damage > 0 ) then
+		cloakDisruptedUnitFrameTable[unitID] = spGetGameFrame()
 		damagedUnitFrameTable[unitID] = spGetGameFrame()
 		--Spring.Echo("UNIT DAMAGED unitId="..unitID.." f="..spGetGameFrame())
 	end 
@@ -626,12 +641,59 @@ end
 function gadget:AllowUnitBuildStep(builderID, builderTeam, unitID, unitDefID, part)
 	-- Spring.Echo("STEP builderId="..builderID.." unitId="..unitID.." part="..part)
 	
+	cloakDisruptedUnitFrameTable[builderID] = spGetGameFrame()
+	
 	-- if unit got damaged recently, deny half of the build steps
 	local f = spGetGameFrame()
 	if damagedUnitFrameTable[unitID] and (f - damagedUnitFrameTable[unitID] < DAMAGE_REPAIR_DISRUPT_FRAMES) then
 		if f%2 == 0 then
 			return false
 		end
+	end
+	
+	return true
+end
+
+-- assume weapons are being tracked, mark unit to disrupt cloak
+function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
+	if (proOwnerID) then
+		cloakDisruptedUnitFrameTable[proOwnerID] = spGetGameFrame() 
+	end
+end
+
+-- prevent units from cloaking a few seconds after being disrupted or doing something disrupting
+function gadget:AllowUnitCloak(unitId)
+	if (cloakDisruptedUnitFrameTable[unitId] and cloakDisruptedUnitFrameTable[unitId] + RECLOAK_DELAY_FRAMES > spGetGameFrame()  ) then
+		return false
+	end
+	
+	local unitDefId = unitId and spGetUnitDefID(unitId)
+	local ud = unitDefId and UnitDefs[unitDefId]
+	if not ud then
+		return false
+	end
+
+	local stunnedOrBeingBuilt = spGetUnitIsStunned(unitId)
+	if stunnedOrBeingBuilt then
+		return false
+	end
+
+	-- if it's on water, decloak
+	x,y,z = spGetUnitPosition(unitId)
+	h = spGetGroundHeight(x,z)
+	if ( h < -5 ) then
+		return false
+	end
+	
+	-- if it's going to return true, apply energy drain
+	-- (it stopped worked on 104.0.1 xxxx maintenance)
+	local speed = select(4, spGetUnitVelocity(unitId))
+	local moving = speed and speed > CLOAK_MOVING_THRESHOLD
+	local cost = moving and ud.cloakCostMoving or ud.cloakCost
+
+	
+	if not spUseUnitResource(unitId, "e", cost/2) then -- SlowUpdate happens twice a second.
+		return false
 	end
 	
 	return true

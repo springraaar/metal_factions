@@ -479,7 +479,7 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 		destructibleProjectileInitialPositionByUnitId[unitId] = nil
 		GG.destructibleProjectilesDestroyed[unitId] = true
 	end
-
+	
 	local _,_,_,_,bp = spGetUnitHealth(unitId)
 
 	-- if unit is an aircraft which leaves no wreckage, spawn some debris
@@ -622,3 +622,4 @@ function gadget:AllowCommand(unitId, unitDefId, unitTeam, cmdId, cmdParams, cmdO
 	end 
 	return true
 end
+

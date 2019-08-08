@@ -83,11 +83,10 @@ Create()
 {
 	move aimpt to y-axis [45.000000] now;
 	turn turret to y-axis <45.000000> now;
-	start-script SmokeUnit();
-	start-script close();
 	isOpen = FALSE;
 	gun_1 = [0];
-	return (0);
+	start-script close();
+	start-script SmokeUnit();
 }
 
 RestoreAfterDelay()

@@ -11,7 +11,7 @@
 
 piece  base, hips, h2, wheel, torso, ruparm, luparm, rarm, larm, rgun, lgun, rg, lg, rflare, lflare, rspike, lspike, head, l1, l2, l3, visor;
 
-static-var  bMoving, bAiming, lastHeading;
+static-var  bMoving, bAiming, lastHeading, gun_1;
 
 #include "aimhelper1.h"
 
@@ -115,6 +115,7 @@ Create()
 	
 	bMoving = FALSE;
 	bAiming = FALSE;
+	gun_1 = [0];
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
 	start-script SmokeUnit();
@@ -136,6 +137,7 @@ RestoreAfterDelay1()
 	call-script stopAimHelper1(<140>,<140>);
 	turn torso to y-axis <0.000000> speed <140.016484>;
 	turn luparm to x-axis <0.000000> speed <145.005495>;
+	turn ruparm to x-axis <0.000000> speed <145.005495>;
 }
 
 RestoreAfterDelay2()
@@ -156,6 +158,7 @@ AimPrimary(heading, pitch)
 	bAiming = TRUE;
 	turn torso to y-axis heading speed <300.027473>;
 	turn luparm to x-axis <0.000000> - pitch speed <300.038462>;
+	turn ruparm to x-axis <0.000000> - pitch speed <300.038462>;
 	if (!aimReady1)
 	{
 		wait-for-turn torso around y-axis;
@@ -168,13 +171,30 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	emit-sfx 1024 + 0 from lflare;
-	return 0;
+	if (gun_1 == [0]) {
+		emit-sfx 1024 + 0 from lflare;
+		sleep 100;
+		gun_1 = [1];
+		return 0;
+	}
+	if (gun_1 == [1]) {
+		emit-sfx 1024 + 0 from rflare;
+		sleep 100;
+		gun_1 = [0];
+		return 0;
+	}
 }
 
 QueryPrimary(piecenum)
 {
-	piecenum = lflare;
+	if (gun_1 == [0]) {
+		piecenum = lflare;
+		return (0);
+	}
+	if (gun_1 == [1]) {
+		piecenum = rflare;
+		return (0);
+	}
 }
 
 AimFromPrimary(piecenum)

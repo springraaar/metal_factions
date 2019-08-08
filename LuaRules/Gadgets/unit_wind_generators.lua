@@ -28,6 +28,7 @@ local groundMin,groundMax = 0
 local spGetWind = Spring.GetWind
 local spAddUnitResource = Spring.AddUnitResource
 local spGetGroundHeight = Spring.GetGroundHeight
+local spGetUnitHealth = Spring.GetUnitHealth
 
 -- load wind gen unitdef ids
 function gadget:Initialize()
@@ -63,21 +64,23 @@ function gadget:GameFrame(n)
 	for unitID,_ in pairs(windGeneratorIds) do
 		factor = 1
 		x,y,z = Spring.GetUnitPosition(unitID)
-		
-		if y >= groundMax then
-			factor = 1 + WIND_ALTITUDE_EXTRA_INCOME_MULTIPLIER
-		elseif y < groundMin then
-			factor = 1
-		else
-			factor = 1 + (y / groundMax) * WIND_ALTITUDE_EXTRA_INCOME_MULTIPLIER
-		end
-		
-		--Spring.Echo("alt="..string.format("%.0f",y).." factor="..string.format("%.2f",factor).." windStrength="..string.format("%.1f",windStrength))
-		
-		if (factor > 1) then
-			spAddUnitResource(unitID, "e", windStrength * factor)
-		else
-			spAddUnitResource(unitID, "e", windStrength)
+		local _,_,_,_,bp = spGetUnitHealth(unitID)
+		if bp >= 1 then
+			if y >= groundMax then
+				factor = 1 + WIND_ALTITUDE_EXTRA_INCOME_MULTIPLIER
+			elseif y < groundMin then
+				factor = 1
+			else
+				factor = 1 + (y / groundMax) * WIND_ALTITUDE_EXTRA_INCOME_MULTIPLIER
+			end
+			
+			--Spring.Echo("alt="..string.format("%.0f",y).." factor="..string.format("%.2f",factor).." windStrength="..string.format("%.1f",windStrength))
+			
+			if (factor > 1) then
+				spAddUnitResource(unitID, "e", windStrength * factor)
+			else
+				spAddUnitResource(unitID, "e", windStrength)
+			end
 		end
 	end
 end

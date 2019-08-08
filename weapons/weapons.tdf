@@ -381,7 +381,7 @@
 	reloadtime=0.18;
 	weapontimer=0.6;
 	weaponvelocity=500;
-	sprayangle=500;
+	sprayangle=300;
 	areaofeffect=8;
 	soundstart=armsml3;
 	soundhit=emghit;
@@ -419,7 +419,7 @@
 	reloadtime=0.2;
 	weapontimer=0.6;
 	weaponvelocity=600;
-	sprayangle=600;
+	sprayangle=300;
 	areaofeffect=12;
 	soundstart=armsml3;
 	soundhit=emghit;
@@ -576,7 +576,7 @@
 	reloadtime=0.13;
 	weapontimer=0.6;
 	weaponvelocity=600;
-	sprayangle=700;
+	sprayangle=300;
 	areaofeffect=12;
 	soundstart=armsml3;
 	soundhit=emghit;
@@ -656,7 +656,7 @@
 	reloadtime=0.13;
 	weapontimer=0.6;
 	weaponvelocity=600;
-	sprayangle=600;
+	sprayangle=300;
 	areaofeffect=12;
 	soundstart=armsml3;
 	soundhit=emghit;
@@ -3433,7 +3433,7 @@
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	turret=1;
-	range=340;
+	range=370;
 	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=2.4;
@@ -3931,7 +3931,7 @@
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	turret=1;
-	range=385;
+	range=420;
 	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=2;
@@ -4003,7 +4003,7 @@
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	turret=1;
-	range=320;
+	range=360;
 	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=2;
@@ -5905,7 +5905,6 @@
 	reloadtime=0.75;
 	weaponvelocity=1533;
 	explosiongenerator=custom:REDLASERBLASTWRAPPER;
-	tolerance=3000;
 	beamtime=0.1;
 	thickness=2.888;
 	corethickness=0.6;
@@ -8315,8 +8314,8 @@
 	collidefriendly=0;
 	avoidfeature=0;
 	tracks=0;
-	turnrate=20000;
-	wobble=5500;
+	turnrate=5000;
+	wobble=1000;
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
@@ -8463,7 +8462,7 @@
 	corethickness=0.55;
 	intensity=0.85;
 	turret=1;
-	range=340;
+	range=380;
 	minintensity=1.0;
 	reloadtime=1;
 	weaponvelocity=1533;
@@ -8543,7 +8542,7 @@
 	thickness=2.123;
 	corethickness=0.55;
 	turret=1;
-	range=350;
+	range=380;
 	minintensity=1.0;
 	reloadtime=0.9;
 	weaponvelocity=1533;
@@ -8584,7 +8583,7 @@
 	corethickness=0.55;
 	intensity=0.85;
 	turret=1;
-	range=320;
+	range=350;
 	minintensity=1.0;
 	reloadtime=0.9;
 	projectiles=2;
@@ -9973,11 +9972,11 @@
   	alphadecay=0.3;
   	sizedecay=-0.1;
 	turret=1;
-	range=330;
+	range=370;
 	reloadtime=0.16;
 	weapontimer=0.6;
 	weaponvelocity=500;
-	accuracy=700;
+	accuracy=200;
 	areaofeffect=8;
 	soundstart=armsml2;
 	soundhit=emghit;
@@ -10011,11 +10010,11 @@
   	alphadecay=0.3;
   	sizedecay=-0.1;
 	turret=1;
-	range=340;
+	range=370;
 	reloadtime=0.25;
 	weapontimer=0.6;
 	weaponvelocity=500;
-	accuracy=600;
+	accuracy=150;
 	areaofeffect=8;
 	soundstart=armsml2;
 	soundhit=emghit;
@@ -10053,7 +10052,7 @@
 	reloadtime=0.13;
 	weapontimer=0.6;
 	weaponvelocity=500;
-	accuracy=700;
+	accuracy=250;
 	areaofeffect=8;
 	soundstart=armsml2;
 	soundhit=emghit;
@@ -11500,7 +11499,7 @@
 	soundstart=amprockfire;
 	soundhit=xplomed5;
 	firestarter=70;
-	trajectoryheight=0.2;
+	trajectoryheight=0;
 	waterweapon=1;
 	submissile=1;
 	smoketrail=0;
@@ -12622,9 +12621,9 @@
 	thickness=2.123;
 	corethickness=0.55;
 	turret=1;
-	range=330;
+	range=370;
 	minintensity=1.0;
-	reloadtime=1.1;
+	reloadtime=0.62;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundtrigger=1;
@@ -12662,7 +12661,7 @@
 	thickness=2.123;
 	corethickness=0.55;
 	turret=1;
-	range=360;
+	range=375;
 	minintensity=1.0;
 	reloadtime=0.25;
 	weaponvelocity=1533;
@@ -12976,7 +12975,7 @@
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	turret=1;
-	range=300;
+	range=370;
 	accuracy=800;
 	movingaccuracy=1600;
 	reloadtime=2.8;
@@ -14845,7 +14844,7 @@
   	alphadecay=0.7;
   	sizedecay=-0.2;
 	turret=1;
-	range=350;
+	range=390;
 	reloadtime=1.65;
 	energypershot=10;
 	weapontimer=1;
@@ -15283,7 +15282,7 @@
 	thickness=2.123;
 	corethickness=0.55;
 	turret=1;
-	range=340;
+	range=380;
 	minintensity=1.0;
 	reloadtime=1.0;
 	weaponvelocity=1533;
@@ -16792,7 +16791,7 @@
 	thickness=2.123;
 	corethickness=0.55;
 	turret=1;
-	range=390;
+	range=410;
 	minintensity=1.0;
 	reloadtime=0.5;
 	energypershot=0;

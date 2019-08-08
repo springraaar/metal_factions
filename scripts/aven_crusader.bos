@@ -14,7 +14,6 @@ static-var  gun_1, bAiming, Static_Var_4, Static_Var_5;
 
 // Signal definitions
 #define SIG_AIM				2
-#define SIG_AIM_2			4
 #define SIG_MOVE			8
 
 
@@ -188,9 +187,7 @@ AimPrimary(heading, pitch)
 
 AimSecondary(heading, pitch)
 {
-	signal SIG_AIM_2;
-	set-signal-mask SIG_AIM_2;
-	return (0);
+	return (1);
 }
 
 

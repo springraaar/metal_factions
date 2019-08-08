@@ -80,9 +80,7 @@
 	//  Weapons
 	//***********
 	weapon1=claw_grunt_laser;
-	weapon2=claw_grunt_cannon;
 	nochasecategory=VTOL;
-	badtargetcategory2=VTOL;
 	explodeas=SMALL_UNITEX;
 	selfdestructas=SMALL_UNIT;
 
@@ -117,7 +115,7 @@
 	pieceTrailCEGRange = 4;
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:blueflaresml;
+		explosiongenerator0=custom:glowsml;
 		explosiongenerator1=custom:yellowflaresml;
 	}
 
@@ -125,7 +123,7 @@
 	//  To be removed
 	//*****************
 
-	buildcostenergy=691;//#AUTO#
-	buildcostmetal=138;//#AUTO#
-	buildtime=1647;//#AUTO#
+	buildcostenergy=835;//#AUTO#
+	buildcostmetal=167;//#AUTO#
+	buildtime=1990;//#AUTO#
 }

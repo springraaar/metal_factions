@@ -1,3 +1,27 @@
+2019/08/08 ------------------ NOTES v1.13 ----------------------
+
+--- Balance / Mechanics
+
+CLOAK
+- fixed cloak delay after building,firing,etc. not being applied (set to 5s)
+- fixed cloak not draining energy
+- units will now decloak when capturing, taking damage and moving on water
+
+AIMING
+- GEAR "Igniter" no longer tries to target air units
+- fix some units not completing their aim animation and not firing (units with special aim poses and static defenses with pop-up and open animations)
+- increased range and cost by about 5-10% on AVEN "Trooper", "Warrior", "Bold" and "Wheeler"
+- increased range and cost by about 5-10% on GEAR "Aggressor", "Box", "Instigator" and "Raider"
+- increased range and cost by about 5-10% on CLAW "Dizzy" and "Grunt" and now it has lasers on both arms
+- increased range and cost by about 5-10% on SPHERE "Bit" (slightly reduced speed), "Crustle" and "Slicer"
+- made AVEN EMG weapons more precise
+
+OTHER
+- fixed air transports not lowering their altitude to load/unload units
+- fixed wind generators still generating some energy while partially reclaimed
+
+
+
 2019/08/05 ------------------ NOTES v1.12 ----------------------
 
 - fixed problem which prevented several aircraft from firing

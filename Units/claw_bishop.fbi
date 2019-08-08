@@ -14,21 +14,21 @@
 	UnitNumber=11000;
 	Objectname=claw_bishop.3do;
 	buildpic=claw_bishop.png;
-	SoundCategory=CORAK;
+	SoundCategory=MAVERICK;
 	Corpse=claw_bishop_dead;
 
 
 	// ------------------- health/cost/size
-	FootprintX=2;
-	FootprintZ=2;
+	FootprintX=3;
+	FootprintZ=3;
 	MaxDamage=2000;
 
 
 	// ------------------- resources
-	EnergyUse=1;
+	EnergyUse=0;
 	EnergyStorage=0;
 	MetalStorage=0;
-	EnergyMake=1;
+	EnergyMake=0;
 
 	// ------------------- abilities
 	canmove=1;

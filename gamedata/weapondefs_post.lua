@@ -126,6 +126,6 @@ for wdName, wd in pairs(WeaponDefs) do
 		wd.customparams = {}
 	end
 	if not (wd.customparams.reaimtime) then
-		wd.customparams.reaimtime = 6
+		wd.customparams.reaimtime = 10
 	end
 end
