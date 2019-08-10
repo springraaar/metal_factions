@@ -48,12 +48,12 @@ open()
 		turn rdoor to z-axis <-90.000000> speed <180.000000>;
 		turn ldoor to z-axis <90.000000> speed <180.000000>;
 		wait-for-turn ldoor around z-axis;
+
 		move rdoor to y-axis  [-25.000000] speed [30.000000];
 		move ldoor to y-axis  [-25.000000] speed [30.000000];
-		wait-for-move ldoor along y-axis;
-
 		move stand to y-axis [20.000000] speed [80.000000];
 		move slholder to y-axis [0.000000] speed [38.000000];
+		wait-for-move ldoor along y-axis;
 		wait-for-move stand along y-axis;
 		wait-for-move slholder along y-axis;
 
