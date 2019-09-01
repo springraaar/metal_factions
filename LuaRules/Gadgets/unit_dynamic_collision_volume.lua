@@ -19,11 +19,16 @@ local spGetUnitCollisionVolumeData = Spring.GetUnitCollisionVolumeData
 local spGetUnitMidAndAimPos = Spring.GetUnitMidAndAimPos
 local spSetUnitRadiusAndHeight = Spring.SetUnitRadiusAndHeight 
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spSetUnitBlocking = Spring.SetUnitBlocking
+local spGetUnitBlocking = Spring.GetUnitBlocking
 
 local popupUnits = {}		--list of pop-up style units
 local unitCollisionVolume = include("LuaRules/Configs/CollisionVolumes.lua")	--pop-up style unit collision volume definitions
-local unitYSizeOffset = {}     -- <uId,{sizeY,offsetY}>
+local unitXYZSizeOffset = {}     -- <uId,{sizeX,sizeY,sizeZ,offsetX,offsetY,offsetZ}>
+local unitBlocking = {} --   <uId,{isBlocking, isSolidObjectCollidable,isProjectileCollidable,isRaySegmentCollidable,crushable,blockEnemyPushing,blockHeightChanges}>
+
 local BP_SIZE_LIMIT = 0.8
+local BP_REDUCED_FP_LIMIT = 0.2
 local BP_SIZE_MULTIPLIER = 1 / BP_SIZE_LIMIT
 
 local submarines = {
@@ -80,34 +85,40 @@ if (gadgetHandler:IsSyncedCode()) then
 	--for S3O models it's not needed and will in fact result in wrong collision volume
 	function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 		local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetUnitCollisionVolumeData(unitID)
-
+		local ud = UnitDefs[unitDefID]
 		-- added radius reduction for submarines
-		if (submarines[UnitDefs[unitDefID].name]) then 
+		if (submarines[ud.name]) then 
 			spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.4/2, ys*0.4)
 		-- added radius reduction for commander respawners
-		elseif (respawners[UnitDefs[unitDefID].name]) then 
+		elseif (respawners[ud.name]) then 
 			spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.25, ys*0.5)
 		-- added radius reduction for aircraft
-		elseif (UnitDefs[unitDefID].name == "cs_beacon") then
+		elseif (ud.name == "cs_beacon") then
 			csBeaconIds[unitID] = true
-		elseif (UnitDefs[unitDefID].canFly) then 
-			if (UnitDefs[unitDefID].transportCapacity>0) then
-				spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.6/2, ys*0.6)
+		elseif (ud.canFly) then 
+			if (ud.transportCapacity>0) then
+				spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.7/2, ys*0.7)
 			else
-				if (flyingSpheres[UnitDefs[unitDefID].name]) then
-					spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.6/2, ys*0.6)
+				if (flyingSpheres[ud.name]) then
+					spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.7/2, ys*0.7)
 				else
-					spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.6/2, ys*0.6)
+					spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.7/2, ys*0.7)
 				end
 			end
 		end
 		
 		if not csBeaconIds[unitID] then
-			unitYSizeOffset[unitID] = {ys,yo}
+			unitXYZSizeOffset[unitID] = {xs,ys,zs,xo,yo,zo}
+			local isb,issoc,ispc,isrsc,cr,bep,bhc = spGetUnitBlocking(unitID)
+			if not ud.isBuilding then
+				unitBlocking[unitID] = {isb,issoc,ispc,isrsc,cr,bep,bhc}
+				-- prevent big units from making the previously built unit stuck
+				spSetUnitBlocking(unitID,false,false,ispc,isrsc,cr,bep,bhc)	
+			end
 		end
 
 		-- reduce size of aircraft factories
-		if (airFactories[UnitDefs[unitDefID].name]) then 
+		if (airFactories[ud.name]) then 
 			spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.25, ys*0.5)
 		end
 		
@@ -117,8 +128,12 @@ if (gadgetHandler:IsSyncedCode()) then
 		-- only affect units under construction
 		if (bp < BP_SIZE_LIMIT) then
 			val = math.max(bp*BP_SIZE_MULTIPLIER,0.1)
+			xs = xs * val
 			ys = ys * val
+			zs = zs * val
+			xo = xo * val
 			yo = yo * val
+			zo = zo * val
 			spSetUnitCollisionVolumeData(unitID, xs, ys, zs, xo, yo, zo, vtype, htype, axis)
 			spSetUnitMidAndAimPos(unitID,0, ys*0.5, 0,0, ys*0.5,0,true)
 		end
@@ -135,11 +150,21 @@ if (gadgetHandler:IsSyncedCode()) then
 			end
 	
 			-- set height to expected value for fully built unit
-			if unitYSizeOffset[unitID] then
+			if unitXYZSizeOffset[unitID] then
 				local xs, ys, zs, xo, yo, zo, vtype, htype, axis,_ = spGetUnitCollisionVolumeData(unitID)
-				local data = unitYSizeOffset[unitID]
-				ys = data[1]
-				yo = data[2]
+				local data = unitXYZSizeOffset[unitID]
+				xs = data[1]
+				ys = data[2]
+				zs = data[3]
+				xo = data[4]
+				yo = data[5]
+				zo = data[6]
+				
+				-- restore the blocking status							
+				if (unitBlocking[unitID]) then
+					local bData = unitBlocking[unitID]
+					spSetUnitBlocking(unitID,bData[1],bData[2],bData[3],bData[4],bData[5],bData[6],bData[7])	
+				end
 				
 				spSetUnitCollisionVolumeData(unitID, xs, ys, zs, xo, yo, zo, vtype, htype, axis)
 				spSetUnitMidAndAimPos(unitID,0, ys*0.5, 0,0, ys*0.5,0,true)
@@ -155,8 +180,11 @@ if (gadgetHandler:IsSyncedCode()) then
 		if csBeaconIds[unitID] then
 			csBeaconIds[unitID] = nil
 		end
-		if unitYSizeOffset[unitID] then
-			unitYSizeOffset[unitID] = nil
+		if unitXYZSizeOffset[unitID] then
+			unitXYZSizeOffset[unitID] = nil
+		end
+		if unitBlocking[unitID] then
+			unitBlocking[unitID] = nil 
 		end
 	end
 
@@ -193,7 +221,7 @@ if (gadgetHandler:IsSyncedCode()) then
 		if (n%5 == 0) then
 			local xs, ys, zs, xo, yo, zo, vtype, htype, axis, disabled
 			local val = 0
-			for uId,data in pairs(unitYSizeOffset) do
+			for uId,data in pairs(unitXYZSizeOffset) do
 				local _,_,_,_,bp = spGetUnitHealth(uId)
 				
 				-- only affect units under construction
@@ -207,9 +235,26 @@ if (gadgetHandler:IsSyncedCode()) then
 					if (type(heightLevel) == "number") then
 						val = math.max( val * heightLevel / 10, 0.03)
 					end
-					ys = data[1] * val
-					yo = data[2] * val
-					
+					ys = data[2] * val
+					yo = data[5] * val
+
+					if (bp < BP_REDUCED_FP_LIMIT) then
+						xs = data[1] * val
+						xo = data[4] * val
+						zs = data[3] * val
+						zo = data[6] * val
+
+						-- prevent big units from making the previously built unit stuck
+						if (unitBlocking[unitID]) then
+							local bData = unitBlocking[unitID]
+							spSetUnitBlocking(unitID,false,false,bData[3],bData[4],bData[5],bData[6],bData[7])	
+						end
+					else
+						xs = data[1]
+						xo = data[4]
+						zs = data[3]
+						zo = data[6]
+					end
 					
 					spSetUnitCollisionVolumeData(uId, xs, ys, zs, xo, yo, zo, vtype, htype, axis)
 					spSetUnitMidAndAimPos(uId,0, ys*0.5, 0,0, ys*0.5,0,true)

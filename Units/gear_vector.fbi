@@ -6,7 +6,7 @@
 	Side=Gear;
 	name=Vector;
 	description=Advanced Fighter;
-	icontype=air;
+	icontype=airfighter;
 
 	//************************************************************
 	//  Categories
@@ -141,7 +141,7 @@
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
-	collisionVolumeScales =25 10 25;
+	collisionVolumeScales =30 12 40;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;

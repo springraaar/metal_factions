@@ -6,7 +6,7 @@
 	side=Claw;
 	name=X;
 	description=Advanced Fighter;
-	icontype=air;
+	icontype=airfighter;
 
 	//************************************************************
 	//  Categories
@@ -147,7 +147,7 @@
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
-	collisionVolumeScales =30 15 30;
+	collisionVolumeScales =35 15 40;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;

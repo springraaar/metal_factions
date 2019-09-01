@@ -25,6 +25,7 @@ local spGetUnitVelocity = Spring.GetUnitVelocity
 local spSetUnitPhysics = Spring.SetUnitPhysics
 local spSetUnitDirection = Spring.SetUnitDirection
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
 			
 local missileDefIds = {
 	[UnitDefNames["aven_nuclear_rocket"].id] = true,
@@ -112,9 +113,24 @@ function gadget:GameFrame(n)
 	local factor = 1
 	local vx,vy,vz,vw = 0
 	local alSpeed = 0
+	local spdMod = 0
 	for unitId,ud in pairs(airTransports) do
 		vx,vy,vz,vw = spGetUnitVelocity(unitId)
 		alSpeed = airTransportMaxSpeeds[unitId]
+		
+		-- apply the modifier from upgrades
+		-- TODO put this on the area buff handler gadget instead
+		--spdMod = spGetUnitRulesParam(unitId, "upgrade_speed")
+		--if spdMod and spdMod ~= 0 then
+		--	alSpeed = alSpeed * (1+spdMod)
+		--end
+		if (GG.speedModifierUnitIds) then
+			spdMod = GG.speedModifierUnitIds[unitId]
+			if (spdMod and spdMod ~= 0) then
+				alSpeed = alSpeed * spdMod
+			end
+		end 
+		
 		if (alSpeed and vw > alSpeed) then
 			factor = alSpeed / vw
 			spSetUnitVelocity(unitId,vx * factor,vy * factor,vz * factor)

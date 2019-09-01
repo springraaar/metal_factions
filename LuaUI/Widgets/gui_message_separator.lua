@@ -17,7 +17,7 @@ function widget:GetInfo()
 		author    = "Kloot & BD, tweaked by raaar",
 		date      = "April 22, 2009",
 		license   = "GNU GPL v2",
-		layer     = 0,
+		layer     = 999,
 		enabled   = true
 	}
 end
@@ -35,6 +35,7 @@ local SYSTEM_MSG_BOX_MIN_W		= BOX_BORDER_SIZE * 4
 local SYSTEM_MSG_BOX_MIN_H		= BOX_BORDER_SIZE * 4
 local FONT_MAX_SIZE				= 30
 local ROSTER_SORT_TYPE			= 1
+local SYSTEM_PREFIX_PATTERNS	= {"%[~"}
 local NAME_PREFIX_PATTERNS		= {"%<", "%["}
 local NAME_POSTFIX_PATTERNS		= {"%> ", "%] "}
 local NUM_PLAYER_MESSAGES			= 0
@@ -582,6 +583,7 @@ function setDefaultUserVars(sizeX, sizeY, useParams)
 	else
 		-- get dimensions of our OGL viewport
 		SIZE_X, SIZE_Y = widgetHandler:GetViewSizes()
+		Spring.Echo("VIEWPORT SX="..tonumber(SIZE_X).." SY="..tonumber(SIZE_Y))
 	end
 
 	if (SIZE_X > 1 and SIZE_Y > 1) then
@@ -729,8 +731,6 @@ function widget:AddConsoleLine(line)
 	
 		if (string.len(playerName) > 0) then
 			prefix = string.sub(line,1,string.find(line, " "))
-			lineSep = "" 
-			
 			-- lineSep was "...", "-" might be an option but maybe it's best to leave it empty
 		end
 		
@@ -739,14 +739,18 @@ function widget:AddConsoleLine(line)
 		else
 			local nextStr = line
 			local currentStr = ""
+			local iter = 0
+			local idx = 0
+			local cutoffIndex = MAX_LINE_STRING_LENGTH
 			while (string.len(nextStr) > 0) do
-				local idx,_ = string.find(nextStr,'\n',1,true)
+				iter = iter +1
+				idx,_ = string.find(nextStr,'\n',1,true)
 
-				if idx ~= nil and idx <= MAX_LINE_STRING_LENGTH then
+				if iter < 30 and idx ~= nil and idx <= MAX_LINE_STRING_LENGTH then
 					currentStr = string.sub(nextStr, 1 , idx-1)
 					nextStr = prefix..string.sub(nextStr, idx + 1)
-				elseif (string.len(nextStr) > MAX_LINE_STRING_LENGTH) then
-					local cutoffIndex = MAX_LINE_STRING_LENGTH
+				elseif  (iter < 30 and string.len(nextStr) > MAX_LINE_STRING_LENGTH) then
+					cutoffIndex = MAX_LINE_STRING_LENGTH
 					-- if cutoff index is not a space, backtrack until a space is found to avoid breaking words
 					for shift=0,30 do
 						if (cutoffIndex-shift > 1) then
@@ -764,6 +768,7 @@ function widget:AddConsoleLine(line)
 					nextStr = ""
 				end
 				
+				--processConsoleLine(iter.."!"..string.len(currentStr).." vs "..string.len(nextStr).."! "..currentStr,playerName,playerColor,playerFontStyle)
 				processConsoleLine(currentStr,playerName,playerColor,playerFontStyle)
 			end
 		end
@@ -1020,6 +1025,11 @@ end
 -- returned will then be "XYZ>" and "XYZ]"
 -- rather than "")
 function getPlayerName(playerMessage)
+	-- if on loading sequence, assume it's not a player
+	if (string.find(playerMessage, SYSTEM_PREFIX_PATTERNS[1]) == 1) then
+		return ""
+	end
+
 	local i1 = string.find(playerMessage, NAME_PREFIX_PATTERNS[1])
 	local i2 = string.find(playerMessage, NAME_POSTFIX_PATTERNS[1])
 

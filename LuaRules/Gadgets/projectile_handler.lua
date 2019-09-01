@@ -47,6 +47,7 @@ local spTestBuildOrder = Spring.TestBuildOrder
 local spGetGroundHeight = Spring.GetGroundHeight
 local spUnitDetach = Spring.UnitDetach
 local spSetUnitShieldState = Spring.SetUnitShieldState
+local spSpawnProjectile = Spring.SpawnProjectile
 
 -- aim point over target when far from it
 local LONG_RANGE_ROCKET_FAR_FROM_TARGET_H = 1000		
@@ -431,7 +432,7 @@ function gadget:GameFrame(n)
 			vy = math.min(-10,vy)
 			vz = v * math.cos(axz) 
 		
-			local createdId = Spring.SpawnProjectile(magnetarWeaponEffectId,{
+			local createdId = spSpawnProjectile(magnetarWeaponEffectId,{
 				["pos"] = {px,py,pz},
 				["end"] = {px+vx,py+vy,pz+vz},
 				["speed"] = {vx,vy,vz},
@@ -450,7 +451,7 @@ function gadget:GameFrame(n)
 		
 		local vx,vy,vz = spGetProjectileVelocity(id)
 		
-		local createdId = Spring.SpawnProjectile(disruptorWeaponEffectId,{
+		local createdId = spSpawnProjectile(disruptorWeaponEffectId,{
 			["pos"] = {px,py,pz},
 			["end"] = {px,py+3,pz},
 			["speed"] = {vx,vy,vz},
@@ -464,7 +465,7 @@ function gadget:GameFrame(n)
 	if(n%STEP_DELAY == 0) then
 		for id,data in pairs(fireAOEPositions) do
 
-			local createdId = Spring.SpawnProjectile(data.effect,{
+			local createdId = spSpawnProjectile(data.effect,{
 				["pos"] = {data.px,data.py,data.pz},
 				["end"] = {data.px,data.py+3,data.pz},
 				["speed"] = {0,1,0},

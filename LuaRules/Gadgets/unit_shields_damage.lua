@@ -73,6 +73,7 @@ local spGetUnitVelocity = Spring.GetUnitVelocity
 local spUseUnitResource = Spring.UseUnitResource
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetUnitIsStunned = Spring.GetUnitIsStunned
+local spGetUnitNearestEnemy = Spring.GetUnitNearestEnemy
 local spGetGameFrame = Spring.GetGameFrame
 local max = math.max
 
@@ -656,7 +657,7 @@ end
 
 -- assume weapons are being tracked, mark unit to disrupt cloak
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
-	if (proOwnerID) then
+	if (proOwnerID and (not burningAOEPerStepWeaponDefIds[weaponDefID])) then
 		cloakDisruptedUnitFrameTable[proOwnerID] = spGetGameFrame() 
 	end
 end
@@ -682,6 +683,11 @@ function gadget:AllowUnitCloak(unitId)
 	x,y,z = spGetUnitPosition(unitId)
 	h = spGetGroundHeight(x,z)
 	if ( h < -5 ) then
+		return false
+	end
+	
+	-- if there's a nearby enemy within cloak radius, decloak
+	if spGetUnitNearestEnemy(unitId,ud.decloakDistance+30) ~= nil then
 		return false
 	end
 	

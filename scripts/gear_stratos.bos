@@ -65,7 +65,7 @@ Create()
 	bAiming = FALSE;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script SmokeUnit();
-	start-script HeavyGunshipStrafe();
+	//start-script HeavyGunshipStrafe();
 }
 
 Activate()
@@ -86,7 +86,7 @@ RestoreAfterDelay()
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
 	call-script stopAimHelper1(<150>,<150>);
 	turn turret to y-axis <0.000000> speed <150.000000>;
-	turn sleeve to y-axis <0.000000> speed <150.000000>;
+	turn sleeve to x-axis <0.000000> speed <150.000000>;
 	bAiming = FALSE;
 	//call-script lua_HeavyGunshipStrafe();
 	//turn base to x-axis <0.000000> speed <45.000000>;

@@ -6,7 +6,7 @@
 	Side=Aven;
 	name=Tornado;
 	description=Ground Attack Aircraft;
-	icontype=air;
+	icontype=airbomber;
 
 	//************************************************************
 	//  Categories
@@ -115,7 +115,7 @@
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
-	collisionVolumeScales =20 10 25;
+	collisionVolumeScales =25 13 35;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 

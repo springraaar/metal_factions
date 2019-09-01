@@ -6,7 +6,7 @@
 	Side=Aven;
 	name=Talon;
 	description=Fighter/Bomber;
-	icontype=air;
+	icontype=airfighter;
 
 	//************************************************************
 	//  Categories
@@ -143,7 +143,7 @@
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
-	collisionVolumeScales =30 16 30;
+	collisionVolumeScales =45 16 40;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;	
 	

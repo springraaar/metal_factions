@@ -6,7 +6,7 @@
 	Side=Gear;
 	name=Stratos;
 	description=Heavy Ground Attack Aircraft;
-	icontype=air;
+	icontype=airbomber;
 
 	//************************************************************
 	//  Categories
@@ -130,7 +130,7 @@
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
-	collisionVolumeScales =55 15 50;
+	collisionVolumeScales =60 20 55;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;

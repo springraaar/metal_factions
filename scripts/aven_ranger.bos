@@ -5,7 +5,7 @@
 
 piece  base, door1, door2, plate, wake1, wake2, turret, sleeve, barrel, flare, hull, bottom, m1,m2,m3,m4,f11,f12,f13,f14,p2, h3,h4;
 
-static-var  Static_Var_1, gun_1, gun_3, restore_delay, statechg_DesiredState,
+static-var  Static_Var_1, gun_1, restore_delay, statechg_DesiredState,
             statechg_StateChanging;
 
 // Signal definitions
@@ -231,7 +231,7 @@ FirePrimary()
 		gun_1 = [3];
 		return (0);
 	}
-	if( gun_1 == [0] )
+	if( gun_1 == [3] )
 	{
 		emit-sfx 1024+1 from f14;
 		sleep 100;

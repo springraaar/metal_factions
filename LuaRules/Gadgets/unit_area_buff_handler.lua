@@ -326,6 +326,7 @@ function gadget:GameFrame(n)
 		end	
 		
 		speedModifierUnitIds = newSpeedModifierUnitIds
+		GG.speedModifierUnitIds = speedModifierUnitIds -- for other gadgets
 	end
 	
 	

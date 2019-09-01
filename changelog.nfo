@@ -1,6 +1,48 @@
+2019/09/01 ------------------ NOTES v1.15 ----------------------
+
+--- Engine
+
+- changed the recommended engine from "104.0.1-1327-g315b3fd maintenance" to "104.0.1-1382-gc0c48fc maintenance" or later
+(lobby clients should auto-download the correct version after joining the nebula hosts on the official server)
+
+
+--- General
+
+- fixed issue where UI wouldn't load and game would sometimes crash at start with out of memory error
+
+- improved models and build pictures for various AVEN and GEAR aircraft
+
+--- Balance / Mechanics
+
+- fixed units getting stuck in factories if a large unit starts being built before they exit
+
+- fixed GEAR incendiary commanders not recloaking while the fire area effect is active
+
+- fixed AVEN "Dervish" sometimes not fully opening its arms when aiming, reduced its aim setup time and enabled smooth aiming
+- fixed AVEN "Ranger" missile firing positions (to use all holes)
+
+- AVEN "Kit" no longer tries to hit enemy aircraft
+
+- fixed air transports not taking into account speed upgrades or zephyr's boost when loaded
+
+- fixed cloakable units not being uncloaked by enemies within radius
+
+--- UI / Widgets
+
+- added map icons for most combat unit types
+(check the website for details http://www.metalfactions.pt/icons.html)
+
+
+
+2019/08/10 ------------------ NOTES v1.142 ----------------------
+
+- same as the previous version, but released to try to work around a sychronization issue on multiplayer battles
+(deployed to springfiles only)
+
 2019/08/10 ------------------ NOTES v1.141 ----------------------
 
 - same as the previous version, but released to try to work around a sychronization issue on multiplayer battles
+(deployed to rapid only)
 
 2019/08/10 ------------------ NOTES v1.14 ----------------------
 

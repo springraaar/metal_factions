@@ -212,23 +212,20 @@ Open()
 {
 	move lgunshaft to x-axis [0.000000] speed [30.000000];
 	move rgunshaft to x-axis [0.000000] speed [30.000000];
-	turn luparm to y-axis <-70.000000> speed <320.000000>;
-	turn ruparm to y-axis <70.000000> speed <320.000000>;
-	turn larm to x-axis <0.000000> speed <220.000000>;
-	turn rarm to x-axis <0.000000> speed <220.000000>;
+	turn luparm to y-axis <-70.000000> speed <420.000000>;
+	turn ruparm to y-axis <70.000000> speed <420.000000>;
+	turn larm to x-axis <0.000000> speed <320.000000>;
+	turn rarm to x-axis <0.000000> speed <320.000000>;
 	wait-for-move lgunshaft along x-axis;
 	wait-for-move rgunshaft along x-axis;
-	move lgunbarrel to y-axis [0.000000] speed [30.000000];
-	move rgunbarrel to y-axis [0.000000] speed [30.000000];
+	move lgunbarrel to y-axis [0.000000] speed [50.000000];
+	move rgunbarrel to y-axis [0.000000] speed [50.000000];
 	wait-for-move lgunbarrel along y-axis;
 	wait-for-move rgunbarrel along y-axis;
 	wait-for-turn larm around x-axis;
 	wait-for-turn rarm around x-axis;
 	wait-for-turn luparm around y-axis;
 	wait-for-turn ruparm around y-axis;
-
-	
-	sleep 100;
 	isOpen = TRUE;
 	return (0);
 }
@@ -384,6 +381,7 @@ RestoreAfterDelay()
 
 AimPrimary(heading, pitch)
 {
+	bAiming = TRUE;
 	if ( ! isOpen )
 	{
 		call-script Open();
@@ -392,7 +390,7 @@ AimPrimary(heading, pitch)
 	call-script updateAimHelper1(heading,pitch + <90>,<350>,<350>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	bAiming = TRUE;
+	
 
 	turn torso to y-axis heading speed <350.027473>;
 	turn rshoulder to x-axis <-90.000000> - pitch speed <350.027473>;

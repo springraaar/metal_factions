@@ -6,6 +6,7 @@
 	Side=Aven;
 	name=Kit;
 	description=Fast Rocket Robot;
+	icontype=mobileartilleryfs;
 
 	//************************************************************
 	//  Categories
@@ -81,8 +82,7 @@
 	//***********
 	weapon1=aven_kit_rocket;
 	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
-	badtargetcategory1=VTOL;
+	onlytargetcategory1=NOTAIR;
 	explodeas=SMALL_UNITEX;
 	selfdestructas=SMALL_UNIT;
 
