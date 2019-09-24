@@ -1805,9 +1805,9 @@
 [CLAW_COM]
 {
 	select1=clawcom;
-	unitcomplete=kcarmmov;
-	ok1=clawcom;
-	arrived1=kcarmstp;
+	unitcomplete=clawbotmedok;
+	ok1=clawbotmedok;
+	arrived1=clawbotmedstp;
 	cant1=cantdo4;
 	underattack=warning2;
 	build=nanlath1;
@@ -1827,10 +1827,10 @@
 
 [CLAW_TANKSML]
 {
-	select1=kcarmsel;
-	unitcomplete=kcarmmov;
-	ok1=kcarmmov;
-	arrived1=kcarmstp;
+	select1=tarmsel;
+	unitcomplete=tarmmove;
+	ok1=tarmmove;
+	arrived1=tarmst0p;
 	cant1=cantdo4;
 	underattack=warning2;
 	build=nanlath1;
@@ -1850,10 +1850,10 @@
 
 [CLAW_TANKBIG]
 {
-	select1=kcarmsel;
-	unitcomplete=kcarmmov;
-	ok1=kcarmmov;
-	arrived1=kcarmstp;
+	select1=tarmsel;
+	unitcomplete=tarmmove;
+	ok1=tarmmove;
+	arrived1=tarmst0p;
 	cant1=cantdo4;
 	underattack=warning2;
 	build=nanlath1;
@@ -1875,10 +1875,10 @@
 
 [CLAW_BOTSML]
 {
-	select1=kcarmsel;
-	unitcomplete=kcarmmov;
-	ok1=kcarmmov;
-	arrived1=kcarmstp;
+	select1=clawbotsmlsel;
+	unitcomplete=clawbotsmlok;
+	ok1=clawbotsmlok;
+	arrived1=clawbotsmlstp;
 	cant1=cantdo4;
 	underattack=warning2;
 	build=nanlath1;
@@ -1896,12 +1896,34 @@
 	canceldestruct=cancel2;
 }
 
+[CLAW_BOTMED]
+{
+	select1=clawbotmedsel;
+	unitcomplete=clawbotmedok;
+	ok1=clawbotmedok;
+	arrived1=clawbotmedstp;
+	cant1=cantdo4;
+	underattack=warning2;
+	build=nanlath1;
+	repair=repair1;
+	working=reclaim1;
+	cloak=kloak1;
+	uncloak=kloak1un;
+	capture=capture1;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
 [CLAW_BOTBIG]
 {
-	select1=kcarmsel;
-	unitcomplete=kcarmmov;
-	ok1=kcarmmov;
-	arrived1=kcarmstp;
+	select1=clawbotbigsel;
+	unitcomplete=clawbotbigok;
+	ok1=clawbotbigok;
+	arrived1=clawbotbigstp;
 	cant1=cantdo4;
 	underattack=warning2;
 	build=nanlath1;
@@ -1926,9 +1948,9 @@
 [SPHERE_COM]
 {
 	select1=spherecom;
-	unitcomplete=kcarmmov;
-	ok1=spherecom;
-	arrived1=kcarmstp;
+	unitcomplete=spherecomok;
+	ok1=spherecomok;
+	arrived1=spherecomstp;
 	cant1=cantdo4;
 	underattack=warning2;
 	build=nanlath1;
@@ -1949,10 +1971,10 @@
 
 [SPHERE_TANKSML]
 {
-	select1=kcarmsel;
-	unitcomplete=kcarmmov;
-	ok1=kcarmmov;
-	arrived1=kcarmstp;
+	select1=tcorsel;
+	unitcomplete=tcormove;
+	ok1=tcormove;
+	arrived1=tcorst0p;
 	cant1=cantdo4;
 	underattack=warning2;
 	build=nanlath1;
@@ -1972,10 +1994,10 @@
 
 [SPHERE_TANKBIG]
 {
-	select1=kcarmsel;
-	unitcomplete=kcarmmov;
-	ok1=kcarmmov;
-	arrived1=kcarmstp;
+	select1=tcorsel;
+	unitcomplete=tcormove;
+	ok1=tcormove;
+	arrived1=tcorst0p;
 	cant1=cantdo4;
 	underattack=warning2;
 	build=nanlath1;
@@ -1996,10 +2018,10 @@
 
 [SPHERE_BOTSML]
 {
-	select1=kcarmsel;
-	unitcomplete=kcarmmov;
-	ok1=kcarmmov;
-	arrived1=kcarmstp;
+	select1=spherebotsmlsel;
+	unitcomplete=spherebotsmlok;
+	ok1=spherebotsmlok;
+	arrived1=spherebotsmlstp;
 	cant1=cantdo4;
 	underattack=warning2;
 	build=nanlath1;
@@ -2017,12 +2039,35 @@
 	canceldestruct=cancel2;
 }
 
+
+[SPHERE_BOTMED]
+{
+	select1=spherebotmedsel;
+	unitcomplete=spherebotmedok;
+	ok1=spherebotmedok;
+	arrived1=spherebotmedstp;
+	cant1=cantdo4;
+	underattack=warning2;
+	build=nanlath1;
+	repair=repair1;
+	working=reclaim1;
+	cloak=kloak1;
+	uncloak=kloak1un;
+	capture=capture1;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
 [SPHERE_BOTBIG]
 {
-	select1=kcarmsel;
-	unitcomplete=kcarmmov;
-	ok1=kcarmmov;
-	arrived1=kcarmstp;
+	select1=spherebotbigsel;
+	unitcomplete=spherebotbigok;
+	ok1=spherebotbigok;
+	arrived1=spherebotbigstp;
 	cant1=cantdo4;
 	underattack=warning2;
 	build=nanlath1;

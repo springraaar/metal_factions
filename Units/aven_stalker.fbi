@@ -80,10 +80,8 @@
 	//  Weapons
 	//***********
 	weapon1=aven_stalker_laser;
-	weapon2=aven_stalker_missile;
+	weapon2=aven_stalker_laser2;
 	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
-	badtargetcategory2=NOTAIR;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
 
@@ -127,9 +125,9 @@
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:redflare;
-		explosiongenerator1=custom:rocketflaresml;
+		explosiongenerator1=custom:glowsml;
 	}
-	buildcostenergy=5040;//#AUTO#
-	buildcostmetal=1008;//#AUTO#
-	buildtime=12012;//#AUTO#
+	buildcostenergy=4686;//#AUTO#
+	buildcostmetal=937;//#AUTO#
+	buildtime=11169;//#AUTO#
 }

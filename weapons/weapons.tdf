@@ -1171,6 +1171,49 @@
 		armor_light=80;//#AUTO#
 	}
 }
+[aven_stalker_laser2]
+{
+	name=Laser;
+	weapontype=BeamLaser;
+	turret=1;
+	range=420;
+	minintensity=1.0;
+	reloadtime=0.55;
+	weaponvelocity=1533;
+	explosiongenerator=custom:REDLASERBLASTWRAPPER;
+	tolerance=3000;
+	beamtime=0.05;
+	thickness=2.123;
+	corethickness=0.55;
+	Intensity=0.85;
+	energypershot=5;
+	areaofeffect=8;
+	soundtrigger=1;
+	soundstart=lasrfir1;
+	soundhit=lasrhit2;
+	firestarter=30;
+	scrollspeed=0;
+	pulsespeed=0;
+	rgbcolor=0.51 0.0 0.0;
+	rgbcolor2=1.0 0.4 0.4;
+	tolerance=4000;
+	impulsefactor=0.222;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=1;
+		reaimtime=1;
+	}
+	[DAMAGE]
+	{
+		default=50;
+		group_invincible=1;
+		armor_heavy=12;//#AUTO#
+		armor_medium=25;//#AUTO#
+		armor_light=50;//#AUTO#
+	}
+}
 [aven_medium_drone_laser]
 {
 	name=Laser;
@@ -6357,6 +6400,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -8726,7 +8770,6 @@
 	turnrate=12000;
 	weaponAcceleration=0;
 	fixedlauncher=1;
-	trajectoryheight=0.2;
 	areaofeffect=96;
 	metalpershot=0;
 	soundstart=MISLHVY3;
@@ -11333,7 +11376,6 @@
 	soundstart=rocklit1;
 	soundhit=xplomed2;
 	firestarter=70;
-	trajectoryheight=0.1;
 	smoketrail=0;
 	tolerance=3000;
 	InterceptedByShieldType=1;
@@ -12386,15 +12428,15 @@
   	separation=0.5;
   	alphadecay=0.0;
   	sizedecay=-0.2;
-	energypershot=7;
+	energypershot=70;
 	turret=1;
-	range=400;
+	range=420;
 	reloadtime=3.0;
 	accuracy=0;
-	sprayangle=900;
+	sprayangle=700;
 	projectiles=15;
 	weapontimer=0.7;
-	weaponvelocity=1032;
+	weaponvelocity=1132;
 	areaofeffect=8;
 	soundstart=shotgun;
 	soundtrigger=0;
@@ -17635,12 +17677,12 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=510;
-	reloadtime=3.6;
+	reloadtime=3.5;
 	flighttime=3.75;
 	weaponvelocity=759;
-	startvelocity=550;
+	startvelocity=350;
 	weaponAcceleration=130;
-	turnrate=24384;
+	turnrate=32384;
 	areaofeffect=48;
 	metalpershot=0;
 	soundstart=Rocklit3;
@@ -17649,7 +17691,7 @@
 	tracks=1;
 	smoketrail=1;
 	cegTag=SMLROCKETTRAIL;
-	tolerance=16000;
+	tolerance=18000;
 	collidefriendly=0;
 	avoidfriendly=0;
 	InterceptedByShieldType=1;
@@ -17660,11 +17702,11 @@
 	}
 	[DAMAGE]
 	{
-		default=120;
+		default=140;
 		group_invincible=1;
-		armor_heavy=30;//#AUTO#
-		armor_medium=60;//#AUTO#
-		armor_light=120;//#AUTO#
+		armor_heavy=35;//#AUTO#
+		armor_medium=70;//#AUTO#
+		armor_light=140;//#AUTO#
 	}
 }
 [sphere_meteor_shield]

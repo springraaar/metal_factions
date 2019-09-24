@@ -1,3 +1,52 @@
+2019/09/24 ------------------ NOTES v1.16 ----------------------
+
+--- Engine
+
+- changed the recommended engine from "104.0.1-1382-gc0c48fc maintenance" to "104.0.1-1404-g47794d1 maintenance" or later
+(lobby clients should auto-download the correct version after joining the nebula hosts on the official server)
+
+
+
+--- Balance / Mechanics
+
+- made GEAR "Reaper" use smooth aiming
+
+- fixed CLAW "Hazard" and AVEN "Raptor" rockets diving into the ground when firing at higher targets
+
+- reverted building's collision volume growth to always cover their footprint and fixed being able to stack construction towers in some situations
+
+- fixed AVEN "Turbulence" not firing from the main rocket turret (oops)
+
+- fixed AVEN "Bass" firing too early (before reaching the proper aim alignment)
+
+- fixed AVEN "Ghost" decloaking while flying over water
+
+- CLAW "Flail" now has two shotguns instead of shotgun/cannon. Slightly increased is range and energy cost to fire.
+- AVEN "Stalker" side missile launchers are replaced with higher dps light lasers with same range as the main weapon.
+(these help make the units role clearer and avoid aiming issues)
+
+- SPHERE "Moth" has slightly improved maneuverability, dmg/s, aiming tolerance and projectile turn rate but reduced projectile speed
+(it should be much less likely to miss nearby targets)
+
+
+--- Sounds
+
+- made unit selection and movement sounds more noticeable (they've been too muted on the latest versions unless the player zooms in)
+(use +/- to adjust global volume ingame)
+- added distinctive sounds for CLAW and SPHERE robots and commanders
+- added generic "tap" sound for area metal extractor and line formation movement orders
+
+--- UI
+
+- adjusted icon for GEAR "Heater" and "Cube" robots, AVEN "Albatross", Zephyr and various radar/jammer units
+- settings widget enforces "grounddetail" and "icon distance" 
+(to avoid people with default values not seeing icons or having visually distorted map height profile when zooming out)
+
+--- Animations / Visuals
+
+- slightly improved textures on several CLAW robots
+
+
 2019/09/01 ------------------ NOTES v1.15 ----------------------
 
 --- Engine

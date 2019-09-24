@@ -663,7 +663,12 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 end
 
 -- prevent units from cloaking a few seconds after being disrupted or doing something disrupting
-function gadget:AllowUnitCloak(unitId)
+function gadget:AllowUnitCloak(unitId,enemyId)
+	-- if there's a nearby enemy within cloak radius, decloak
+	if enemyId ~= nil then
+		return false
+	end
+
 	if (cloakDisruptedUnitFrameTable[unitId] and cloakDisruptedUnitFrameTable[unitId] + RECLOAK_DELAY_FRAMES > spGetGameFrame()  ) then
 		return false
 	end
@@ -682,12 +687,7 @@ function gadget:AllowUnitCloak(unitId)
 	-- if it's on water, decloak
 	x,y,z = spGetUnitPosition(unitId)
 	h = spGetGroundHeight(x,z)
-	if ( h < -5 ) then
-		return false
-	end
-	
-	-- if there's a nearby enemy within cloak radius, decloak
-	if spGetUnitNearestEnemy(unitId,ud.decloakDistance+30) ~= nil then
+	if ( h < -5 and y < 0) then
 		return false
 	end
 	

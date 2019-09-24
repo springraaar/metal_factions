@@ -22,7 +22,7 @@
 	objectname=claw_flail.3do;
 	corpse=claw_flail_dead;
 	buildpic=claw_flail.png;
-	soundcategory=CORAK;
+	soundcategory=CLAW_BOTMED;
 
 	//************************************************************
 	//  Health/Cost/Size
@@ -36,8 +36,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.3;
-	energyuse=0.3;
+	energymake=0.0;
+	energyuse=0.0;
 	energystorage=0;
 
 	//************************************************************
@@ -81,7 +81,7 @@
 	//  Weapons
 	//***********
 	weapon1=claw_flail_shotgun;
-	weapon2=claw_flail_cannon;
+	weapon2=claw_flail_shotgun;
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
 	badtargetcategory2=VTOL;
@@ -127,7 +127,7 @@
 	//  To be removed
 	//*****************
 
-	buildcostenergy=3879;//#AUTO#
-	buildcostmetal=775;//#AUTO#
-	buildtime=9245;//#AUTO#
+	buildcostenergy=3718;//#AUTO#
+	buildcostmetal=743;//#AUTO#
+	buildtime=8861;//#AUTO#
 }

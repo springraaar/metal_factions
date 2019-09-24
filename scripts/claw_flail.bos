@@ -165,9 +165,9 @@ FirePrimary()
 	turn larm to x-axis <40.000000> now;
 	turn lgun to x-axis <-40.000000> now;
 	emit-sfx 1024+1 from lflare;
-	call-script recoil();
 	turn larm to x-axis <0.000000> speed <230.038462>;
 	turn lgun to x-axis <0.000000> speed <230.038462>;
+	call-script recoil();
 	return 0;
 }
 
@@ -207,10 +207,10 @@ FireWeapon2()
 	turn rarm to x-axis <40.000000> now;
 	turn rgun to x-axis <-40.000000> now;
 	emit-sfx 1024+1 from rflare;
-	call-script recoil();
 	turn rarm to x-axis <0.000000> speed <230.038462>;
 	turn rgun to x-axis <0.000000> speed <230.038462>;
-	return (1);
+	call-script recoil();
+	return (0);
 }
 
 QueryWeapon2(piecenum)

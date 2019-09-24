@@ -433,8 +433,9 @@ function processCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
 			end
 			i = i + 1
 		end
+		
+		Spring.PlaySoundFile('GENERICCMD', 1)
 		return true, true
-	 
 	end
 	return false
 end
@@ -446,6 +447,8 @@ if (gadgetHandler:IsSyncedCode()) then
 function gadget:Initialize()  
 	determine()
 	registerUnits()  
+	
+	Spring.LoadSoundDef("LuaRules/Configs/sound_defs.lua")
 end 
 
 

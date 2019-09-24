@@ -35,5 +35,11 @@ function widget:Initialize()
 	
 	-- disable game speed indicator
 	Spring.SendCommands("speed 0")
+	
+	-- enforce unit icon distance
+	Spring.SendCommands("disticon 120")
+
+	-- enforce high terrain detail
+	Spring.SendCommands("grounddetail 140")	
 end
 

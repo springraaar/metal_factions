@@ -77,6 +77,13 @@ local airFactories = {
 	aven_long_range_missile_platform = true
 }
 
+local constructionTowers = {
+	aven_nano_tower = true,
+	gear_nano_tower = true,
+	claw_nano_tower = true,
+	sphere_pole = true
+}
+
 local csBeaconIds = {}
 
 if (gadgetHandler:IsSyncedCode()) then
@@ -110,7 +117,7 @@ if (gadgetHandler:IsSyncedCode()) then
 		if not csBeaconIds[unitID] then
 			unitXYZSizeOffset[unitID] = {xs,ys,zs,xo,yo,zo}
 			local isb,issoc,ispc,isrsc,cr,bep,bhc = spGetUnitBlocking(unitID)
-			if not ud.isBuilding then
+			if not (ud.isBuilding or constructionTowers[ud.name]) then
 				unitBlocking[unitID] = {isb,issoc,ispc,isrsc,cr,bep,bhc}
 				-- prevent big units from making the previously built unit stuck
 				spSetUnitBlocking(unitID,false,false,ispc,isrsc,cr,bep,bhc)	
@@ -238,17 +245,16 @@ if (gadgetHandler:IsSyncedCode()) then
 					ys = data[2] * val
 					yo = data[5] * val
 
-					if (bp < BP_REDUCED_FP_LIMIT) then
+					-- prevent big units from making the previously built unit stuck
+					-- only applies to mobile units
+					if (unitBlocking[unitID] and bp < BP_REDUCED_FP_LIMIT) then
 						xs = data[1] * val
 						xo = data[4] * val
 						zs = data[3] * val
 						zo = data[6] * val
 
-						-- prevent big units from making the previously built unit stuck
-						if (unitBlocking[unitID]) then
-							local bData = unitBlocking[unitID]
-							spSetUnitBlocking(unitID,false,false,bData[3],bData[4],bData[5],bData[6],bData[7])	
-						end
+						local bData = unitBlocking[unitID]
+						spSetUnitBlocking(unitID,false,false,bData[3],bData[4],bData[5],bData[6],bData[7])	
 					else
 						xs = data[1]
 						xo = data[4]

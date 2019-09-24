@@ -51,6 +51,7 @@ QueryWeapon1(piecenum)
 
 AimWeapon1(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<120>,<120>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	turn turret to y-axis heading speed <120.021978>;

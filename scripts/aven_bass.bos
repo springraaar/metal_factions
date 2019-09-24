@@ -5,7 +5,7 @@
 
 #define SPEEDUP_FACTOR 	100
 
-#define HEADING_TOLERANCE	<25>
+#define HEADING_TOLERANCE	<15>
 #define PITCH_TOLERANCE		<15>
 
 piece  flare1, turret, base, sleeve, barrel1, t1,t2,t3,t4,t1cover,t2cover,t3cover,t4cover,left,right,center,center2,body, dish, dish2, dish3;
@@ -117,7 +117,7 @@ Create()
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
-	call-script stopAimHelper1(<60>,<1000>);
+	call-script stopAimHelper1(<60>,<60>);
 	turn turret to y-axis <0.000000> speed <60.000000>;
 	turn sleeve to x-axis <0.000000> speed <60.000000>;
 	return (0);
@@ -125,7 +125,7 @@ RestoreAfterDelay()
 
 AimPrimary(heading, pitch)
 {
-	call-script updateAimHelper1(heading,pitch,<75>,<1000>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	call-script updateAimHelper1(heading,pitch,<75>,<75>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	turn turret to y-axis heading speed <75.000000>;

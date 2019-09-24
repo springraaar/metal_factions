@@ -573,6 +573,8 @@ function widget:MouseRelease(mx, my, mButton)
 					end
 				end
 			end
+			
+			Spring.PlaySoundFile('GENERICCMD', 1)
 		end
 		
 		
@@ -690,6 +692,10 @@ function widget:GetConfigData() -- Saving
 end
 function widget:SetConfigData(data) -- Loading
 	maxHungarianUnits = data['maxHungarianUnits'] or defaultHungarianUnits
+end
+
+function widget:Initialize()
+	Spring.LoadSoundDef("LuaRules/Configs/sound_defs.lua")
 end
 
 ---------------------------------------------------------------------------------------------------------
