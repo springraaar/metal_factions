@@ -43,6 +43,26 @@ local noVerticalRangeBoostWeapons = {
 
 }
 
+local function processSoundDefaults(wd)
+	local forceSetVolume = (not wd.soundstartvolume) or (not wd.soundhitvolume)
+	if not forceSetVolume then
+		return
+	end
+	local defaultDamage = wd.damage and wd.damage.default
+	if (not defaultDamage) then
+		wd.soundstartvolume = 1
+		wd.soundhitvolume = 1
+		return
+	end
+	local soundVolume = 1.4 + math.sqrt(defaultDamage * 0.1) * 0.1
+	if (not wd.soundstartvolume) then
+		wd.soundstartvolume = soundVolume
+	end
+	if (not wd.soundhitvolume) then
+		wd.soundhitvolume = soundVolume
+	end
+end
+
 -- weapondef tweaking
 for wdName, wd in pairs(WeaponDefs) do
 	local hb = wd.heightBoostFactor
@@ -128,4 +148,7 @@ for wdName, wd in pairs(WeaponDefs) do
 	if not (wd.customparams.reaimtime) then
 		wd.customparams.reaimtime = 10
 	end
+
+	-- make weapon sounds relatively louder
+	processSoundDefaults(wd)
 end

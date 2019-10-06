@@ -24,11 +24,11 @@ local CanvasX,CanvasY = 1280,734 --resolution in which the widget was made (for 
 local Config = {
 	metal = {
 		px = 370,py = 0, --default start position
-		sx = 220,sy = 29, --background size
+		sx = 235,sy = 35, --background size
 		
 		barsy = 6, --width of the actual bar
-		fontsize = 11,
-		maxFontsize = 20,
+		fontsize = 12,
+		maxFontsize = 24,
 		margin = 5, --distance from background border
 		
 		padding = 4, -- for border effect
@@ -63,11 +63,11 @@ local Config = {
 	
 	energy = {
 		px = 636,py = 0,
-		sx = 220,sy = 29, --background size
+		sx = 235,sy = 35, --background size
 		
 		barsy = 6, --width of the actual bar
-		fontsize = 11,
-		maxFontsize = 20,
+		fontsize = 12,
+		maxFontsize = 24,
 		margin = 5,
 		
 		padding = 4, -- for border effect
@@ -145,7 +145,7 @@ local function AutoResizeObjects() --autoresize v2
 	local vsx,vsy = Screen.vsx,Screen.vsy
 	if ((lx ~= vsx) or (ly ~= vsy)) then
 		local objects = GetWidgetObjects(widget)
-		local scale = vsy/ly
+		local scale = (vsy/ly + vsx/lx) * 0.5 
 		local skippedobjects = {}
 		for i=1,#objects do
 			local o = objects[i]

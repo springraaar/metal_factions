@@ -35,8 +35,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=4;
-	energyuse=4;
+	energymake=0;
+	energyuse=0;
 	energystorage=0;
 
 	//************************************************************
@@ -117,8 +117,8 @@
 	zbuffer=1;
 	
 	collide=1;
-	collisionVolumeType = sphere;
-	collisionVolumeScales =60 20 60;
+	collisionVolumeType = box;
+	collisionVolumeScales = 65 20 65;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
@@ -131,7 +131,7 @@
 	{
 		explosiongenerator0=custom:rocketflaremed;
 	}
-	buildcostenergy=11814;//#AUTO#
-	buildcostmetal=2362;//#AUTO#
-	buildtime=28157;//#AUTO#
+	buildcostenergy=11943;//#AUTO#
+	buildcostmetal=2388;//#AUTO#
+	buildtime=28464;//#AUTO#
 }

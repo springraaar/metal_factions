@@ -713,7 +713,7 @@ Shot1()
 
 AimPrimary(heading, pitch)
 {
-	call-script updateAimHelper1(heading,pitch,<230>,<460>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	call-script updateAimHelper1(heading,pitch,<230>,<230>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	

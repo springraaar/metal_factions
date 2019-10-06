@@ -78,11 +78,11 @@ local Sounds = {
 			pitchmod = 0.05,
 			pitch = 1,
 			in3d = true,
-			maxdist = 10000,
+			maxdist = 20000,
 			maxconcurrent = 12,
 			dopplerscale = 0,
 			priority = 0,
-			rolloff = 0.1,
+			rolloff = 0.22,
 		},
 	},
 }

@@ -103,6 +103,7 @@ local FONT_RENDER_STYLE = FONT_RENDER_STYLES[1]
 local BORDER_MASKS = { 0,0,0,0 }
 local MAX_LINE_STRING_LENGTH = 75
 local VISIBILITY_HINT_SHOWN = false
+local scaleFactor = 1 
 
 -- Compensate for gl.Text y positioning change between 0.80.0 and 0.80.1
 if not gl.TextAdjusted then
@@ -569,9 +570,6 @@ function widget:TweakMouseMove(x, y, dx, dy, button)
 	end
 end
 
-
-
-
 -- set default values for user-configurable vars
 -- if they haven't yet been initialized (called
 -- (from Initialize() and ViewResize() call-ins)
@@ -587,6 +585,16 @@ function setDefaultUserVars(sizeX, sizeY, useParams)
 	end
 
 	if (SIZE_X > 1 and SIZE_Y > 1) then
+		if (SIZE_Y > 1800) then
+			scaleFactor = 1.6
+		elseif (SIZE_Y > 1400) then
+			scaleFactor = 1.4
+		elseif (SIZE_Y > 1200) then
+			scaleFactor = 1.2
+		else
+			scaleFactor = 1
+		end
+		
 		-- default positions and dimensions of message boxes are relative to viewport size
 		if ((PLAYER_MSG_BOX_W == nil or PLAYER_MSG_BOX_H == nil) or (SYSTEM_MSG_BOX_W == nil or SYSTEM_MSG_BOX_H == nil)) then
 			PLAYER_MSG_BOX_X_MIN = (SIZE_X / 4)
@@ -599,7 +607,7 @@ function setDefaultUserVars(sizeX, sizeY, useParams)
 			PLAYER_MSG_BOX_H = (SIZE_Y / 8)
 			SYSTEM_MSG_BOX_H = (PLAYER_MSG_BOX_H / 1.5)
 
-			PLAYER_MSG_BOX_Y_MAX = SIZE_Y - 48
+			PLAYER_MSG_BOX_Y_MAX = SIZE_Y - 56 * scaleFactor
 			PLAYER_MSG_BOX_Y_MIN = PLAYER_MSG_BOX_Y_MAX - PLAYER_MSG_BOX_H
 			SYSTEM_MSG_BOX_Y_MAX = PLAYER_MSG_BOX_Y_MIN - 7
 			SYSTEM_MSG_BOX_Y_MIN = SYSTEM_MSG_BOX_Y_MAX - SYSTEM_MSG_BOX_H
@@ -621,7 +629,7 @@ function setDefaultUserVars(sizeX, sizeY, useParams)
 		end
 		
 		if FONT_SIZE == nil then
-			FONT_SIZE = 15
+			FONT_SIZE = 15 * scaleFactor
 		end
 		MAX_NUM_PLAYER_MESSAGES = math_floor((PLAYER_MSG_BOX_H - FONT_SIZE) / FONT_SIZE)
 		MAX_NUM_SYSTEM_MESSAGES = math_floor((SYSTEM_MSG_BOX_H - FONT_SIZE) / FONT_SIZE)

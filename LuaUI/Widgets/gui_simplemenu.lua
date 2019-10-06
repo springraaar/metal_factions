@@ -12,7 +12,6 @@ end
 
 local Echo 							= Spring.Echo
 local vsx, vsy 						= gl.GetViewSizes()
-local posX, posY					= vsx/2, vsy/2
 local ButtonMenu					= {}
 local glColor 						= gl.Color
 local glRect						= gl.Rect
@@ -21,6 +20,12 @@ local glTexRect 					= gl.TexRect
 local TextDraw            = fontHandler.Draw
 local TextDrawCentered    = fontHandler.DrawCentered
 local TextDrawRight       = fontHandler.DrawRight
+
+local refFontSize = 14
+local refBoxSizeX = 60
+local refBoxSizeY = 30
+local fontSize = refFontSize
+local scaleFactor = 1
 
 -- colors
 local cLight						= {1, 1, 1, 0.5}
@@ -38,12 +43,32 @@ local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
 	                      and y <= TRcornerY
 end
 
+function updateSizesPositions()
+	if (vsy > 1800) then
+		scaleFactor=1.6
+	elseif (vsy > 1400) then
+		scaleFactor=1.4
+	elseif (vsy > 1200) then
+		scaleFactor=1.2
+	else
+		scaleFactor=1
+	end
+	fontSize = refFontSize * scaleFactor 
+	ButtonMenu.x1 = vsx - 10 - refBoxSizeX*scaleFactor
+	ButtonMenu.x2 = vsx - 10
+	ButtonMenu.y1 = vsy - 10 - refBoxSizeY*scaleFactor
+	ButtonMenu.y2 = vsy - 10
+	
+end
+
+function widget:ViewResize(viewSizeX, viewSizeY)
+	vsx,vsy = widgetHandler:GetViewSizes()
+	
+	updateSizesPositions()
+end
 
 function widget:Initialize()
-	ButtonMenu.x1 = vsx - 60
-	ButtonMenu.x2 = vsx - 10
-	ButtonMenu.y1 = vsy - 40
-	ButtonMenu.y2 = vsy - 10
+	updateSizesPositions()
 end
 
 
@@ -59,7 +84,8 @@ function widget:DrawScreen()
 	
 	glColor(cWhite)
 	-- menu button text
-	TextDrawCentered("MENU", (ButtonMenu.x1 + ButtonMenu.x2) /2, ButtonMenu.y1 + 10 )
+	gl.Text("MENU",(ButtonMenu.x1 + ButtonMenu.x2) /2, (ButtonMenu.y1 + ButtonMenu.y2) / 2-fontSize/2,fontSize,"c")
+	--TextDrawCentered("MENU", (ButtonMenu.x1 + ButtonMenu.x2) /2, ButtonMenu.y1 + 10 )
 
 	-- menu button border
 	if ButtonMenu.above then

@@ -182,9 +182,9 @@
 [aven_COM]
 {
 	select1=kcarmsel;
-	unitcomplete=kcarmmov;
-	ok1=kcarmmov;
-	arrived1=kcarmstp;
+	unitcomplete=AVENBOTMEDOK;
+	ok1=AVENBOTMEDOK;
+	arrived1=AVENBOTMEDSTP;
 	cant1=cantdo4;
 	underattack=warning2;
 	build=nanlath1;
@@ -204,8 +204,8 @@
 [aven_CSEAPLN]
 {
 	select1=seapsel1;
-	ok1=vtolcrmv;
-	arrived1=vtolarld;
+	ok1=VTOLOK2;
+	arrived1=VTOLSTP1;
 	cant1=cantdo4;
 	build=nanlath1;
 	repair=repair1;
@@ -291,8 +291,8 @@
 [aven_CVTOL]
 {
 	select1=vtolarac;
-	ok1=vtolarmv;
-	arrived1=vtolarld;
+	ok1=VTOLOK1;
+	arrived1=VTOLSTP1;
 	cant1=cantdo4;
 	build=nanlath1;
 	repair=repair1;
@@ -435,8 +435,8 @@
 [aven_KBOT]
 {
 	select1=kbarmsel;
-	ok1=kbarmmov;
-	arrived1=kbarmstp;
+	ok1=AVENBOTMEDOK;
+	arrived1=AVENBOTMEDSTP;
 	cant1=cantdo4;
 	underattack=warning1;
 	count5=count1;
@@ -537,8 +537,8 @@
 [aven_SEAPLN]
 {
 	select1=seapsel1;
-	ok1=vtolcrmv;
-	arrived1=vtolarld;
+	ok1=VTOLOK2;
+	arrived1=VTOLSTP1;
 	cant1=cantdo4;
 	build=nanlath1;
 	repair=repair1;
@@ -569,8 +569,8 @@
 [aven_SEASONAR]
 {
 	select1=seasonr2;
-	ok1=vtolarmv;
-	arrived1=vtolarld;
+	ok1=VTOLOK1;
+	arrived1=VTOLSTP1;
 	cant1=cantdo4;
 	build=nanlath1;
 	repair=repair1;
@@ -741,8 +741,8 @@
 [aven_VTOL]
 {
 	select1=vtolarac;
-	ok1=vtolarmv;
-	arrived1=vtolarld;
+	ok1=VTOLOK1;
+	arrived1=VTOLSTP1;
 	cant1=cantdo4;
 	underattack=warning1;
 	count5=count1;
@@ -831,10 +831,10 @@
 }
 [gear_COM]
 {
-	select1=kccorsel;
-	unitcomplete=kccorsel;
-	ok1=kcormov;
-	arrived1=kccorstp;
+	select1=GEARBOTMEDSEL;
+	unitcomplete=GEARBOTMEDSEL;
+	ok1=GEARBOTMEDOK;
+	arrived1=GEARBOTMEDSTP;
 	cant1=cantdo4;
 	underattack=warning2;
 	build=nanlath2;
@@ -908,8 +908,8 @@
 [gear_CVTOL]
 {
 	select1=vtolcrac;
-	ok1=vtolcrmv;
-	arrived1=vtolcrld;
+	ok1=VTOLOK2;
+	arrived1=VTOLSTP2;
 	cant1=cantdo4;
 	build=nanlath2;
 	repair=repair2;
@@ -1313,8 +1313,8 @@
 [gear_VTOL]
 {
 	select1=vtolcrac;
-	ok1=vtolcrmv;
-	arrived1=vtolcrld;
+	ok1=VTOLOK2;
+	arrived1=VTOLSTP2;
 	cant1=cantdo4;
 	underattack=warning2;
 	count5=count1;
@@ -1373,8 +1373,8 @@
 [COR_CSEAPLN]
 {
 	select1=seapsel2;
-	ok1=vtolcrmv;
-	arrived1=vtolarld;
+	ok1=VTOLOK2;
+	arrived1=VTOLSTP1;
 	cant1=cantdo4;
 	build=nanlath1;
 	repair=repair1;
@@ -1447,11 +1447,33 @@
 }
 [COR_KBOT]
 {
-	select1=kbcorsel;
-	ok1=kbcormov;
-	arrived1=kbcorstp;
+	select1=GEARBOTMEDSEL;
+	ok1=GEARBOTMEDOK;
+	arrived1=GEARBOTMEDSTP;
 	cant1=cantdo4;
 	underattack=warning2;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+[GEAR_BOTBIG]
+{
+	select1=gearbotbigsel;
+	unitcomplete=gearbotbigok;
+	ok1=gearbotbigok;
+	arrived1=gearbotbigstp;
+	cant1=cantdo4;
+	underattack=warning2;
+	build=nanlath1;
+	repair=repair1;
+	working=reclaim1;
+	cloak=kloak1;
+	uncloak=kloak1un;
+	capture=capture1;
 	count5=count1;
 	count4=count2;
 	count3=count3;
@@ -1478,8 +1500,8 @@
 [COR_SEAPLN]
 {
 	select1=seapsel2;
-	ok1=vtolcrmv;
-	arrived1=vtolcrld;
+	ok1=VTOLOK2;
+	arrived1=VTOLSTP2;
 	cant1=cantdo4;
 	build=nanlath1;
 	repair=repair1;
@@ -1496,8 +1518,8 @@
 [COR_SEASONAR]
 {
 	select1=seasonr2;
-	ok1=vtolcrmv;
-	arrived1=vtolarld;
+	ok1=VTOLOK2;
+	arrived1=VTOLSTP1;
 	cant1=cantdo4;
 	build=nanlath1;
 	repair=repair1;

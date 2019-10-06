@@ -53,6 +53,7 @@ local cloakDisruptedUnitFrameTable = {}
 local spGetUnitHealth = Spring.GetUnitHealth
 local spSetUnitCollisionVolumeData = Spring.SetUnitCollisionVolumeData
 local spGetUnitCollisionVolumeData = Spring.GetUnitCollisionVolumeData
+local spSetUnitMidAndAimPos = Spring.SetUnitMidAndAimPos
 local spSetUnitShieldState = Spring.SetUnitShieldState
 local spGetUnitShieldState = Spring.GetUnitShieldState
 local spAddUnitDamage = Spring.AddUnitDamage
@@ -168,7 +169,8 @@ function SetColvol(unitID, colvolType)
 		d = baseUnitColvolTable[unitID]
 	end
 	if d ~= nil then
-		spSetUnitCollisionVolumeData(unitID, d[1],d[2],d[3], d[4],d[5],d[6],d[7],d[8],d[9])	
+		--spSetUnitCollisionVolumeData(unitID, d[1],d[2],d[3], d[4],d[5],d[6],d[7],d[8],d[9])
+		--spSetUnitMidAndAimPos(unitID,0, d[2]*0.5, 0,0, d[2]*0.5,0,true)	
 	end
 end
 

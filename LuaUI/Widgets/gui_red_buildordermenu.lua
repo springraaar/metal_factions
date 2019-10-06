@@ -29,7 +29,13 @@ include("keysym.h.lua")
 local NeededFrameworkVersion = 8.1
 local CanvasX,CanvasY = 1272,734 --resolution in which the widget was made (for 1:1 size)
 --1272,734 == 1280,768 windowed
-
+local vsx, vsy = gl.GetViewSizes()
+local maxFontSizeFactor = 1
+if (vsy > 1800) then
+	maxFontSizeFactor = 1.4
+elseif (vsy > 1200) then
+	maxFontSizeFactor = 1.2
+end	
 local sGetSelectedUnitsCount = Spring.GetSelectedUnitsCount
 local sGetActiveCommand = Spring.GetActiveCommand
 local sGetActiveCmdDescs = Spring.GetActiveCmdDescs
@@ -176,6 +182,7 @@ local function AutoResizeObjects() --autoresize v2
 	end
 	local lx,ly = LastAutoResizeX,LastAutoResizeY
 	local vsx,vsy = Screen.vsx,Screen.vsy
+	--local vsx,vsy = 3940,2160
 	if ((lx ~= vsx) or (ly ~= vsy)) then
 		local objects = GetWidgetObjects(widget)
 		local scale = vsy/ly
@@ -291,7 +298,7 @@ local function CreateGrid(r)
 		sx=r.isx,sy=r.isy,
 		color=r.cbuttonBackground,
 		border=r.cborder,
-		maxFontsize=15,
+		maxFontsize=15 * maxFontSizeFactor,
 		options="n", --disable colorcodes
 		captionColor=r.ctext,
 		
@@ -385,7 +392,7 @@ local function CreateGrid(r)
 		px=0,py=0,
 		sx=r.isx,sy=ICON_SML_HEIGHT,
 		captionColor=r.ctext,
-		maxFontsize = 20,
+		maxFontsize = 20 * maxFontSizeFactor,
 		options = "n",
 		
 		effects = background.effects,

@@ -41,5 +41,8 @@ function widget:Initialize()
 
 	-- enforce high terrain detail
 	Spring.SendCommands("grounddetail 140")	
+
+	-- enforce hardware cursor	
+	Spring.SendCommands("HardwareCursor 1")
 end
 

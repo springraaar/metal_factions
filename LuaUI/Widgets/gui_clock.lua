@@ -24,6 +24,15 @@ local TextDrawRight       = fontHandler.DrawRight
 local hh,mm,ss 
 local seconds 
 
+local refFontSize = 14
+local refClockSizeX = 80
+local refClockSizeY = 30
+local refFPSSizeX = 80
+local refFPSSizeY = 30
+local refShiftY = 40
+local fontSize = refFontSize
+local scaleFactor = 1
+
 -- colors
 local cLight						= {1, 1, 1, 0.5}
 local cLightBorder						= {1, 1, 1, 1}
@@ -40,17 +49,41 @@ local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
 	                      and y <= TRcornerY
 end
 
+function updateSizesPositions()
+	if (vsy > 1800) then
+		scaleFactor=1.6
+	elseif (vsy > 1400) then
+		scaleFactor=1.4
+	elseif (vsy > 1200) then
+		scaleFactor=1.2
+	else
+		scaleFactor=1
+	end
+	fontSize = refFontSize * scaleFactor 
+	
+	bgClock.x1 = vsx - 10 - refClockSizeX * scaleFactor 
+	bgClock.x2 = vsx - 10
+	bgClock.y1 = vsy - 10 - refClockSizeY * scaleFactor - refShiftY * scaleFactor
+	bgClock.y2 = vsy - 10 - refShiftY * scaleFactor
+	
+	bgFPS.x1 = vsx - 10 - refFPSSizeX * scaleFactor
+	bgFPS.x2 = vsx - 10
+	bgFPS.y1 = vsy - 10 - refFPSSizeY * scaleFactor - refShiftY * 2 * scaleFactor
+	bgFPS.y2 = vsy - 10 - refShiftY * 2 * scaleFactor
+end
+
+function widget:ViewResize(viewSizeX, viewSizeY)
+	vsx,vsy = widgetHandler:GetViewSizes()
+	
+	updateSizesPositions()
+end
 
 function widget:Initialize()
-	bgClock.x1 = vsx - 90
-	bgClock.x2 = vsx - 10
-	bgClock.y1 = vsy - 40 - 40
-	bgClock.y2 = vsy - 10 - 40
 	
-	bgFPS.x1 = vsx - 90
-	bgFPS.x2 = vsx - 10
-	bgFPS.y1 = vsy - 40 - 75
-	bgFPS.y2 = vsy - 10 - 75
+end
+
+function widget:Initialize()
+	updateSizesPositions()
 end
 
 
@@ -72,7 +105,8 @@ function widget:DrawScreen()
    	ss = ss < 10 and "0"..ss or ss
 	
 	-- clock text
-	TextDrawCentered(hh..":"..mm..":"..ss, (bgClock.x1 + bgClock.x2) /2, bgClock.y1 + 10 )
+	--TextDrawCentered(, (bgClock.x1 + bgClock.x2) /2, bgClock.y1 + 10 )
+	gl.Text(hh..":"..mm..":"..ss,(bgClock.x1 + bgClock.x2) /2, (bgClock.y1 + bgClock.y2) / 2-fontSize/2,fontSize,"c")
 
 	-- clock border
 	glColor(cBorder)
@@ -86,7 +120,7 @@ function widget:DrawScreen()
 	glColor(cBack)
 	glRect(bgFPS.x1,bgFPS.y1,bgFPS.x2,bgFPS.y2)
 	glColor(cWhite)
-	TextDrawCentered("FPS: "..Spring.GetFPS(), (bgFPS.x1 + bgFPS.x2) /2, bgFPS.y1 + 10 )	
+	gl.Text("FPS: "..Spring.GetFPS(),(bgFPS.x1 + bgFPS.x2) /2, (bgFPS.y1 + bgFPS.y2) / 2-fontSize/2,fontSize,"c")
 	glColor(cBorder)
 	glRect(bgFPS.x1,bgFPS.y1,bgFPS.x1+1,bgFPS.y2)
 	glRect(bgFPS.x2-1,bgFPS.y1,bgFPS.x2,bgFPS.y2)

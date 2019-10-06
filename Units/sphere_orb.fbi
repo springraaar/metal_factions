@@ -17,7 +17,7 @@
 	Objectname=sphere_orb.3do;
 	Corpse=sphere_orb_dead;
 	buildpic=sphere_orb.png;
-	SoundCategory=COR_DOOM;
+	SoundCategory=SPHERE_SPHERESML;
 
 	// ------------------- health/cost/size
 	MaxDamage=3000;
@@ -94,7 +94,7 @@
 	minAirbasePower=99999;
 	activatewhenbuilt=1;
 	collisionVolumeType = sphere;
-	collisionVolumeScales =50 40 50;
+	collisionVolumeScales =60 45 60;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
