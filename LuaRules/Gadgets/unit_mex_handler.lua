@@ -71,6 +71,7 @@ local CMD_UPGRADEMEX = 31244
 local CMD_UPGRADEMEX2 = 31245
 local CMD_AREAMEX = 31246  
 
+local commandQueue = {}
 
 local areaMexCmdDesc = { 
   id      = CMD_AREAMEX, 
@@ -336,9 +337,14 @@ function updateCommand(unitID, insertID, cmd)
 	end 
 end 
 
+-- add command to queue
+function addCommandToQueue(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
+	table.insert(commandQueue, {unitID,unitDefID,teamID,cmdID,cmdParams,cmdOptions})
+end
+
+
 -- process command
 function processCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
-
 	local builder = builders[teamID][unitID]
 	local x, y, z, radius 
 	if not cmdParams[2] then
@@ -476,19 +482,34 @@ end
 -- handle commands
 function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions, cmdTag, synced)
 	if cmdID == CMD_UPGRADEMEX or cmdID == CMD_UPGRADEMEX2 or cmdID == CMD_AREAMEX then 
-		return processCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
+		--return processCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
+		return addCommandToQueue(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
 	else
 		return true
 	end
 end
 
 function gadget:CommandFallback(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions) 
-	
 	if cmdID ~= CMD_UPGRADEMEX and cmdID ~= CMD_UPGRADEMEX2 and cmdID ~= CMD_AREAMEX then 
 		return false 
 	end 
   
-	return processCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
+	--return processCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
+	return addCommandToQueue(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
+end 
+
+
+
+-- process command queue
+function gadget:GameFrame(n)
+	for idx,cmdData in pairs(commandQueue) do
+		-- if shift was not used, stop current queue before adding orders
+		if (cmdData[6] and not cmdData[6].shift) then
+			spGiveOrderToUnit(cmdData[1],CMD.STOP,{},{})
+		end
+		processCommand(cmdData[1], cmdData[2], cmdData[3], cmdData[4], cmdData[5], cmdData[6])
+		commandQueue[idx] = nil
+	end
 end 
 
 ------------------------------------------------ UNSYNCED

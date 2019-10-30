@@ -84,7 +84,7 @@ local nanoExplosionCEG = "NANOFRAMEBLAST"
 local nanoExplosionSound = "Sounds/NECRNAN2.wav"
 
 local MOVING_CHECK_DELAY = 10
-local COLLISION_SPEED_THRESHOLD = 3
+local COLLISION_SPEED_THRESHOLD = 5
 local COLLISION_SPEED_MOD = 0.1
 local GROUND_COLLISION_H_THRESHOLD = 30
 
@@ -369,7 +369,7 @@ function gadget:GameFrame(n)
 				-- only trigger this if moving fast
 				if abs(oldPhysics[5]) > COLLISION_SPEED_THRESHOLD then
 					local radius = spGetUnitRadius(unitId) * 2 * (1 + COLLISION_SPEED_MOD * abs(oldPhysics[5]))
-					--Spring.Echo("unit "..unitId.." ground collision at frame "..n.." radius="..radius)
+					--Spring.Echo("unit "..unitId.." ground collision at frame "..n.." radius="..radius.." speed="..abs(oldPhysics[5]))
 					spSpawnCEG(groundCollisionCEG, x,groundHeight+5,z,0,1,0,radius,radius)
 					spPlaySoundFile(groundCollisionSound, math.min(1,math.max(0.2,radius/50)), x, y, z)
 					enableGC = false

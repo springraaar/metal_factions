@@ -3312,7 +3312,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=660;
-	reloadtime=4.1;
+	reloadtime=3.9;
 	flighttime=3.75;
 	weaponvelocity=800;
 	startvelocity=550;
@@ -3864,8 +3864,8 @@
 	turret=1;
 	range=840;
 	minintensity=1.0;
-	reloadtime=1;
-	energypershot=100;
+	reloadtime=1.2;
+	energypershot=120;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundstart=lasrhvy3;
@@ -3881,11 +3881,11 @@
 	}
 	[DAMAGE]
 	{
-		default=185;
+		default=240;
 		group_invincible=1;
-		armor_heavy=185;//#AUTO#
-		armor_medium=185;//#AUTO#
-		armor_light=185;//#AUTO#
+		armor_heavy=240;//#AUTO#
+		armor_medium=240;//#AUTO#
+		armor_light=240;//#AUTO#
 	}
 }
 [aven_raptor_laser]
@@ -4109,11 +4109,11 @@
 	}
 	[DAMAGE]
 	{
-		default=90;
+		default=100;
 		group_invincible=1;
-		armor_heavy=45;//#AUTO#
-		armor_medium=90;//#AUTO#
-		armor_light=90;//#AUTO#
+		armor_heavy=50;//#AUTO#
+		armor_medium=100;//#AUTO#
+		armor_light=100;//#AUTO#
 	}
 }
 [aven_LIGHTLASER]
@@ -5315,7 +5315,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=670;
-	reloadtime=4.5;
+	reloadtime=3.8;
 	flighttime=3.75;
 	weaponvelocity=800;
 	startvelocity=570;
@@ -5944,9 +5944,9 @@
 	name=Medium Laser;
 	weapontype=BeamLaser;
 	turret=1;
-	range=780;
+	range=790;
 	minintensity=1.0;
-	reloadtime=0.75;
+	reloadtime=0.8;
 	weaponvelocity=1533;
 	explosiongenerator=custom:REDLASERBLASTWRAPPER;
 	beamtime=0.1;
@@ -5974,11 +5974,11 @@
 	}
 	[DAMAGE]
 	{
-		default=110;
+		default=125;
 		group_invincible=1;
-		armor_heavy=55;//#AUTO#
-		armor_medium=110;//#AUTO#
-		armor_light=110;//#AUTO#
+		armor_heavy=62;//#AUTO#
+		armor_medium=125;//#AUTO#
+		armor_light=125;//#AUTO#
 	}
 }
 [gear_edge_laser]
@@ -6453,10 +6453,10 @@
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	turret=1;
-	range=500; 
+	range=500;
 	accuracy=920;
 	movingaccuracy=1620;
-	reloadtime=2.4;
+	reloadtime=2;
 	weaponvelocity=280;
 	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
@@ -8198,7 +8198,7 @@
 	weapontype=Cannon;	
 	hightrajectory=1;
 	turret=1;
-	range=600;
+	range=640;
 	reloadtime=6;
 	weapontimer=4;
 	energypershot=0;
@@ -10385,12 +10385,12 @@
 	laserflaresize=8;
 	corethickness=1.5;
 	thickness=3;
-	beamtime=1.5;
+	beamtime=1.3;
 	beamdecay=0.8;
 	beamttl=5;
 	hardStop=0;
 	range=1000;
-	reloadtime=5;
+	reloadtime=4.5;
 	energypershot=700;
 	weaponvelocity=10000;
 	areaofeffect=45;
@@ -10407,7 +10407,7 @@
 	rgbcolor=1.0 0.0 0.0;
 	cratermult=0.2;
 	explosiongenerator=custom:heatrayboomsml;
-	leadlimit=1; // disable leading
+	leadlimit=35;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -10434,7 +10434,7 @@
 	laserflaresize=7;
 	corethickness=1.5;
 	thickness=3;
-	beamtime=1.5;
+	beamtime=1.3;
 	beamdecay=0.8;
 	beamttl=5;
 	hardStop=0;
@@ -10456,7 +10456,7 @@
 	rgbcolor=1.0 0.0 0.0;
 	cratermult=0.2;
 	explosiongenerator=custom:heatrayboomsml;
-	leadlimit=1; // disable leading
+	leadlimit=35;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -10522,7 +10522,7 @@
 	laserflaresize=5;
 	corethickness=2.8;
 	thickness=4;
-	beamtime=2.5;
+	beamtime=2.0;
 	beamdecay=0.8;
 	beamttl=5;
 	hardStop=0;
@@ -10544,7 +10544,7 @@
 	rgbcolor=1.0 0.0 0.0;
 	cratermult=0.2;
 	explosiongenerator=custom:heatrayboom;
-	leadlimit=1; // disable leading
+	leadlimit=35;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -10572,7 +10572,7 @@
 	corethickness=2.3;
 	thickness=3.6;
 	hardstop=0;
-	beamtime=2.5;
+	beamtime=2.0;
 	beamdecay=0.8;
 	beamttl=5;
 	range=1250;
@@ -10593,7 +10593,7 @@
 	rgbcolor=1.0 0.0 0.0;
 	cratermult=0.2;
 	explosiongenerator=custom:heatrayboom;
-	leadlimit=1; // disable leading
+	leadlimit=35;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -11614,7 +11614,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=650;
-	reloadtime=4.5;
+	reloadtime=3.5;
 	flighttime=3.75;
 	trajectoryheight=0.1;
 	weaponvelocity=760;
@@ -14924,7 +14924,7 @@
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
 	range=650;
-	reloadtime=4.5;
+	reloadtime=4.0;
 	flighttime=3.75;
 	trajectoryheight=0.1;
 	weaponvelocity=760;
@@ -15868,7 +15868,7 @@
   	alphadecay=0.8;
   	sizedecay=-0.2;
 	turret=1;
-	range=550;
+	range=500;
 	reloadtime=6;
 	energypershot=300;
 	weapontimer=1;
@@ -17213,8 +17213,8 @@
 	turret=1;
 	range=800;
 	minintensity=1.0;
-	reloadtime=1;
-	energypershot=25;
+	reloadtime=1.1;
+	energypershot=35;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundstart=lasrfir3;
@@ -17234,11 +17234,11 @@
 	}
 	[DAMAGE]
 	{
-		default=110;
+		default=132;
 		group_invincible=1;
-		armor_heavy=55;//#AUTO#
-		armor_medium=110;//#AUTO#
-		armor_light=110;//#AUTO#
+		armor_heavy=66;//#AUTO#
+		armor_medium=132;//#AUTO#
+		armor_light=132;//#AUTO#
 	}
 }
 [sphere_pulsar_laser]

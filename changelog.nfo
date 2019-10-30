@@ -1,3 +1,53 @@
+2019/10/30 ------------------ NOTES v1.18 ----------------------
+
+--- Engine
+
+- changed the recommended engine from "104.0.1-1404-g47794d1 maintenance" to "104.0.1-1429-g1add37c maintenance" or later
+(lobby clients should auto-download the correct version after joining the nebula hosts on the official server)
+
+
+--- Balance / Mechanics
+
+- let GEAR heat rays slightly lead their targets and slightly reduced the beam duration 
+(this to avoid them wasting most of their damage when firing at fast targets moving sideways)
+
+- fix GEAR Knocker not firing against elevated targets, namely flying spheres
+
+- slightly increased collision size of SPHERE "Comet"
+- slightly increased costs of flying spheres by 15% for "Atom" and "Comet" and about 5% for the others
+
+- slightly increased the dmg/s of level1 medium and heavy laser towers and adjusted the costs by about 5%
+
+- reduced the cost of GEAR units with heat ray weapons by about 5-10%
+
+- reduced speed of CLAW "Assassin" Form commander by 5%
+
+- increased the energy drain from metal makers from 300 to 360 E/s
+
+- attempt to fix units with two different weapons on the same torso sometimes not firing
+
+- increased GEAR "Canister"'s range from 600 to 640 and increased cost by 7%
+
+- increased fire rate and dmg/s for land-based level1 missile units and adjusted costs (+5-15%). 
+(CLAW "Jester" gets a higher dmg/s and cost boost because its weapons look bigger)
+
+- increased AVEN "Duster"'s dmg/s by about 10% and cost by about 5%
+
+- increased GEAR "Thud"'s dmg/s by about 20% and cost by about 10%
+
+
+--- UI / Other
+
+- no longer trigger collision sound when airplanes land
+ (it was too similar to missile explosions, but this may be changed in the future)
+
+- made flying sphere map icons a bit bigger
+
+- fixed errors that appeared ocasionally when issuing area-metal-extractor commands
+
+
+
+
 2019/10/06 ------------------ NOTES v1.17 ----------------------
 
 

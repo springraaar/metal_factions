@@ -17,11 +17,34 @@ local max = math.max
 local spGetUnitWeaponTestRange = Spring.GetUnitWeaponTestRange 
 local spGetGroundHeight = Spring.GetGroundHeight
 local spGetUnitPosition = Spring.GetUnitPosition
+local spGetUnitWeaponTarget = Spring.GetUnitWeaponTarget
+local spSetUnitTarget = Spring.SetUnitTarget
 
 local targetForUnitId = {}
 local trackedWeaponDefIds = {}
 
 local LOWEST_PRIORITY = 500000000
+
+
+-- slave weapon indexes (master,slave)
+local slaveWeaponIndexesByUnitDefId = {
+	-- AVEN
+	[UnitDefNames["aven_commander"].id] = {3,1},
+	[UnitDefNames["aven_u1commander"].id] = {3,1},
+	[UnitDefNames["aven_u2commander"].id] = {3,1},
+	[UnitDefNames["aven_u3commander"].id] = {3,1},
+	[UnitDefNames["aven_warrior"].id] = {1,2},
+	[UnitDefNames["aven_magnum"].id] = {2,1},
+	-- GEAR	
+	[UnitDefNames["gear_commander"].id] = {3,1},
+	[UnitDefNames["gear_u3commander"].id] = {3,1},
+	-- SPHERE
+	[UnitDefNames["sphere_charger"].id] = {1,2},
+}
+
+-- unit ids with slaved weapons
+local slaveWeaponIndexesByUnitId = {}
+
 
 local torpedoWeaponIds = {
 	-- AVEN
@@ -192,5 +215,33 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
 		if tId == unitID then
 			targetForUnitId[uId] = nil
 		end
+	end
+	
+	if slaveWeaponIndexesByUnitId[unitID] then
+		slaveWeaponIndexesByUnitId[unitID] = nil
+	end
+end
+
+
+-- enforce slave weapon target to be the same as master weapon
+function gadget:GameFrame(n)
+	for unitId,data in pairs(slaveWeaponIndexesByUnitId) do
+		local masterIdx = data[1]
+		local slaveIdx = data[2]
+		local m1,m2,masterTarget = spGetUnitWeaponTarget(unitId,masterIdx)
+		local s1,s2,slaveTarget = spGetUnitWeaponTarget(unitId,slaveIdx)
+		
+		if masterTarget ~= nil and slaveTarget ~= nil and type(slaveTarget) ~= "table" and type(masterTarget) ~= "table" and slaveTarget ~= masterTarget then
+			Spring.SetUnitTarget(unitId,masterTarget)
+			targetForUnitId[unitId] = masterTarget
+			--Spring.Echo("unit targets overridden, f="..n.." m="..tostring(masterTarget).." s="..tostring(slaveTarget))
+		end
+	end
+end
+
+
+function gadget:UnitCreated(unitID, unitDefID, unitTeam)
+	if slaveWeaponIndexesByUnitDefId[unitDefID] then
+		slaveWeaponIndexesByUnitId[unitID] = slaveWeaponIndexesByUnitDefId[unitDefID]
 	end
 end

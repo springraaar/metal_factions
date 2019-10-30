@@ -13,7 +13,7 @@ end
 
 local showWarningMessage = 0
 local currentEngineVersion = "???"
-local recommendedEngineVersion = "104.0.1-1404-g47794d1 maintenance"
+local recommendedEngineVersion = "104.0.1-1429-g1add37c maintenanc"
 
 --SYNCED CODE
 if (gadgetHandler:IsSyncedCode()) then
