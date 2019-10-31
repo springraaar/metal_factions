@@ -32,7 +32,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Alpha Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Alpha Form : Increased speed, HP and firepower.'
 		},
 		{
@@ -40,7 +40,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Delta Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Delta Form : Missile/Cannon skirmisher with greatly increased range.'
 		},
 		{
@@ -48,7 +48,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Omega Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Omega Form : Increased speed and greatly increased HP, but shorter range. Disruptor weapon stuns light units.'
 		},
 		{
@@ -56,7 +56,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Builder Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Builder Form : Greatly increased build speed and build range.'
 		},
 		{
@@ -64,7 +64,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Zeta Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Zeta Form : Greatly increased speed. Reduced build speed and combat attributes.'
 		},
 		{
@@ -72,7 +72,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Gamma Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Gamma Form : Laser skirmisher with increased range and firepower against heavy units.'
 		}
 	},
@@ -83,7 +83,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Raider Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Raider Form : Greatly increased speed and firepower against light units and structures. Shorter range.'
 		},
 		{
@@ -91,7 +91,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Dominator Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Dominator Form : Artillery form with greatly increased range and twin heavy cannons.'
 		},
 		{
@@ -99,7 +99,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Devastator Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Devastator Form : Greatly increased HP and firepower. Heavy armor. Slower speed.'
 		},
 		{
@@ -107,7 +107,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Builder Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Builder Form : Greatly increased build speed and build range.'
 		},
 		{
@@ -115,7 +115,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Infernal Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Infernal Form : Greatly increased HP and weapon area of effect. Heavy armor. Slower speed.'
 		}
 
@@ -127,7 +127,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Breaker Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Breaker Form : Increased HP and greatly increased firepower against heavy units. Slightly slower speed.'
 		},
 		{
@@ -135,7 +135,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Aggressor Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Aggressor Form : Greatly increased range and anti-air capability.'
 		},
 		{
@@ -143,7 +143,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Assassin Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Assassin Form : Greatly increased speed and damage per shot. Increased range.'
 		},
 		{
@@ -151,7 +151,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Builder Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Builder Form : Greatly increased build speed and build range.'
 		},
 		{
@@ -159,7 +159,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Grinder Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Grinder Form : Greatly increased firepower. Slower speed.'
 		},
 		{
@@ -167,7 +167,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Slayer Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Slayer Form : Greatly increased speed and firepower. Reduced range.'
 		}
 	},	
@@ -178,7 +178,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Emerald Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Emerald Form : Greatly increased speed and firepower against light units and aircraft.'
 		},
 		{
@@ -186,7 +186,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Ruby Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Ruby Form : Increased HP and firepower.'
 		},
 		{
@@ -194,7 +194,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Obsidian Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Obsidian Form : Greatly increased HP and firepower. Heavy armor. Slower speed.'
 		},
 		{
@@ -202,7 +202,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Builder Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Builder Form : Greatly increased build speed and build range.'
 		},
 		{
@@ -210,7 +210,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Gazer Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Gazer Form : Greatly increased range. Heavy armor. Slower speed.'
 		},
 		{
@@ -218,7 +218,7 @@ local morphDefs = {
 			time = 30,
 			cmdname = 'Nova Form',
 			energy = 10000,
-			metal = 1000,
+			metal = 1200,
 			text = 'Morph to Nova Form : Weapon has huge area of effect and can shoot in high-trajectory mode. Heavy armor. Slower speed.'
 		}		
 	}
