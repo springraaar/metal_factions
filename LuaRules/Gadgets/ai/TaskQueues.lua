@@ -1561,7 +1561,7 @@ local function avenL2VehicleRadarJammer(self) return buildWithLimitedNumber(self
 local function avenL2HoverIntel(self) return buildWithLimitedNumber(self,"aven_perceptor",1) end
 local function avenL1ShipChoice(self) return choiceByType(self,{"aven_skeeter","aven_vanguard"},"aven_crusader",{"aven_skeeter","aven_vanguard"},"aven_lurker") end
 local function avenL2ShipChoice(self) return choiceByType(self,"aven_fletcher",{"aven_conqueror","aven_emperor"},{"aven_conqueror","aven_piranha","aven_fletcher"},"aven_piranha") end
-
+local function avenScoper(self) return buildWithLimitedNumber(self,"aven_scoper",1) end
 
 local avenCommander = {
 	brutalPlant,
@@ -1839,6 +1839,7 @@ local avenAircraftPlant = {
 	"aven_swift",
 	"aven_twister",
 	"aven_swift",
+	avenScoper,
 	{action = "wait", frames = 128}
 }
 
@@ -1854,6 +1855,7 @@ local avenShipPlant = {
 local avenAdvAircraftPlant = {
 	"aven_falcon",
 	"aven_adv_construction_aircraft",
+	avenScoper,
 	avenL2AirChoice,
 	avenL2AirChoice,
 	avenL2AirChoice,
@@ -1944,7 +1946,7 @@ local function gearL2VehicleRadar(self) return buildWithLimitedNumber(self,"gear
 local function gearL2VehicleRadarJammer(self) return buildWithLimitedNumber(self,"gear_deleter",1) end
 local function gearL1ShipChoice(self) return choiceByType(self,{"gear_searcher","gear_viking"},"gear_enforcer",{"gear_searcher","gear_viking"},"gear_snake") end
 local function gearL2ShipChoice(self) return choiceByType(self,"gear_shredder",{"gear_executioner","gear_edge"},{"gear_executioner","gear_noser"},"gear_noser") end
-
+local function gearScoper(self) return buildWithLimitedNumber(self,"gear_zoomer",1) end
 
 local gearCommander = {
 	brutalPlant,
@@ -2234,6 +2236,7 @@ local gearAircraftPlant = {
 	"gear_dash",
 	"gear_knocker",
 	"gear_dash",
+	gearScoper,
 	{action = "wait", frames = 128}
 }
 
@@ -2249,6 +2252,7 @@ local gearShipPlant = {
 local gearAdvAircraftPlant = {
 	"gear_vector",
 	"gear_adv_construction_aircraft",
+	gearScoper,
 	gearL2AirChoice,
 	gearL2AirChoice,
 	gearL2AirChoice,
@@ -2325,6 +2329,7 @@ local function clawL2VehicleRadarJammer(self) return buildWithLimitedNumber(self
 local function clawL1ShipChoice(self) return choiceByType(self,{"claw_speeder","claw_striker"},"claw_sword",{"claw_speeder","claw_striker"},"claw_spine") end
 local function clawL2ShipChoice(self) return choiceByType(self,"claw_predator",{"claw_maul","claw_wrecker"},{"claw_drakkar","claw_monster"},"claw_monster") end
 local function clawL2SpinbotRadar(self) return buildWithLimitedNumber(self,"claw_haze",1) end
+local function clawScoper(self) return buildWithLimitedNumber(self,"claw_lensor",1) end
 
 local clawCommander = {
 	brutalPlant,
@@ -2614,6 +2619,7 @@ local clawAircraftPlant = {
 	"claw_hornet",
 	"claw_boomer_m",
 	"claw_hornet",
+	clawScoper,
 	{action = "wait", frames = 128}
 }
 
@@ -2629,6 +2635,7 @@ local clawShipPlant = {
 local clawAdvAircraftPlant = {
 	"claw_x",
 	"claw_adv_construction_aircraft",
+	clawScoper,
 	clawL2AirChoice,
 	clawL2AirChoice,
 	clawL2AirChoice,
@@ -2718,7 +2725,7 @@ local function sphereL2VehicleRadarJammer(self) return buildWithLimitedNumber(se
 local function sphereL1ShipChoice(self) return choiceByType(self,"sphere_reacher","sphere_endeavour",{"sphere_skiff","sphere_endeavour"},"sphere_carp") end
 local function sphereL2ShipChoice(self) return choiceByType(self,"sphere_stalwart",{"sphere_stalwart"},{"sphere_helix","sphere_pluto"},"sphere_pluto") end
 local function sphereL2SphereIntelligence(self) return buildWithLimitedNumber(self,"sphere_orb",1) end
-
+local function sphereScoper(self) return buildWithLimitedNumber(self,"sphere_resolver",1) end
 
 
 local sphereCommander = {
@@ -2994,6 +3001,7 @@ local sphereAircraftPlant = {
 	"sphere_moth",
 	"sphere_moth",
 	"sphere_tycho",
+	sphereScoper,
 	{action = "wait", frames = 128}
 }
 
@@ -3009,6 +3017,7 @@ local sphereShipPlant = {
 local sphereAdvAircraftPlant = {
 	"sphere_spitfire",
 	"sphere_adv_construction_aircraft",
+	sphereScoper,
 	sphereL2AirChoice,
 	sphereL2AirChoice,
 	sphereL2AirChoice,
@@ -3127,6 +3136,7 @@ taskqueues = {
 	aven_jammer = atkSupporter,
 	aven_zephyr = atkSupporter,
 	aven_perceptor = atkSupporter,
+	aven_scoper = atkSupporter,
 	aven_peeper = airScout,
 ------------------- GEAR
 	gear_commander_respawner = respawner,
@@ -3157,6 +3167,7 @@ taskqueues = {
 	gear_spectre = atkSupporter,
 	gear_informer = atkSupporter,
 	gear_deleter = atkSupporter,
+	gear_zoomer = atkSupporter,	
 	gear_fink = airScout,
 ------------------- CLAW
 	claw_commander_respawner = respawner,
@@ -3190,6 +3201,7 @@ taskqueues = {
 	claw_seer = atkSupporter,
 	claw_jammer = atkSupporter,
 	claw_haze = atkSupporter,
+	claw_lensor = atkSupporter,
 	claw_spotter = airScout,
 ------------------- SPHERE
 	sphere_commander_respawner = respawner,
@@ -3225,5 +3237,6 @@ taskqueues = {
 	sphere_orb = atkSupporter,
 	sphere_shielder = atkSupporter,
 	sphere_screener = atkSupporter,
+	sphere_resolver = atkSupporter,	
 	sphere_probe = airScout
 }

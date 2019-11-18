@@ -3,38 +3,40 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=All;
-	name=CS Beacon;
-	description=Air Scout;
-	icontype=invisible;
+	side=AVEN;
+	name=Scoper;
+	description=Air Scout / Long Range Scoper;
+	icontype=airscoper;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=VTOL LEVEL2 NOTSUB;
+	category=AVEN VTOL LEVEL1 NOTSUB;
 	tedclass=VTOL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=cs_beacon;
-	objectname=cs_beacon.3do;
-	buildpic=cs_beacon.png;
+	unitname=aven_scoper;
+	unitnumber=10000;
+	objectname=aven_scoper.3do;
+	buildpic=aven_scoper.png;
+	soundcategory=gear_VTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=9999999;
+	maxdamage=300;
 	healtime=30;
-	footprintx=1;
-	footprintz=1;
+	footprintx=3;
+	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
+	energymake=0;
+	energyuse=0;
 	energystorage=0;
 
 	//************************************************************
@@ -50,72 +52,69 @@
 	//************************************************************
 	//  Abilities
 	//*************
+	canattack=1;
 	canfly=1;
-	canguard=0;
+	canguard=1;
 	canmove=1;
-	canpatrol=0;
+	canpatrol=1;
 	canstop=1;
-	cloakable=1;
-	initCloaked=1;
-	cloakcost=0;
-	cloakcostmoving=0;
-	stealth=1;
-	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	turnrate=800;
-	acceleration=0.5;
-	brakerate=0.09;
-	maxvelocity=0;
+	turnrate=700;
+	acceleration=0.4;
+	brakerate=0.07;
+	maxvelocity=4.5;
 	maxslope=10;
 	
-	cruisealt=500;
-	verticalSpeed=0;
-	myGravity=0;
-
+	cruisealt=180;
 
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
 	sightdistance=600;
+	radardistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-
+	weapon1=scoper_beacon;
+	badtargetcategory1=NOTAIR;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
 	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=VTOL_standby;
+	moveState=0;
+
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	maneuverleashlength=1280;
-	collide=0;
+	collide=1;
+	hoverattack=1;
+	airhoverfactor=1.1;
+	airstrafe=0;
+	upright=1;
 	minCollisionSpeed=30;
-	collisionVolumeType = -1;
-	collisionVolumeScales =1 1 1;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 15 25;
 	collisionVolumeOffsets = 0 0 0;
-	collisionVolumeTest = 0;
+	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
-	hoverAttack=1;
-	airHoverFactor=0.01;
-	   
+   
+	[CustomParams]
+	{
+		tip=Target a unit or position to reveal a 200 radius area around it. Obstructed by terrain and other obstacles.;
+	}
 
-	//************************************************************
-	//  To be removed
-	//*****************
 
-	buildcostenergy=1;//#AUTO#
-	buildcostmetal=1;//#AUTO#
-	buildtime=1;//#AUTO#
+	buildcostenergy=2000;//#AUTO#
+	buildcostmetal=400;//#AUTO#
+	buildtime=4800;//#AUTO#
 }

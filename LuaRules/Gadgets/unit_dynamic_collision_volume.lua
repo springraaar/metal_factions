@@ -100,7 +100,7 @@ if (gadgetHandler:IsSyncedCode()) then
 		elseif (respawners[ud.name]) then 
 			spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.25, ys*0.5)
 		-- added radius reduction for aircraft
-		elseif (ud.name == "cs_beacon") then
+		elseif (ud.name == "cs_beacon" or ud.name == "scoper_beacon") then
 			csBeaconIds[unitID] = true
 		elseif (ud.canFly) then 
 			if (ud.transportCapacity>0) then

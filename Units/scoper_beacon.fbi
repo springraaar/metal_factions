@@ -4,7 +4,7 @@
 	//  Unit Description
 	//********************
 	Side=All;
-	name=CS Beacon;
+	name=Scoper Beacon;
 	description=Air Scout;
 	icontype=invisible;
 
@@ -17,9 +17,9 @@
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=cs_beacon;
-	objectname=cs_beacon.3do;
-	buildpic=cs_beacon.png;
+	unitname=scoper_beacon;
+	objectname=scoper_beacon.3do;
+	buildpic=scoper_beacon.png;
 
 	//************************************************************
 	//  Health/Cost/Size
@@ -71,7 +71,7 @@
 	maxvelocity=0;
 	maxslope=10;
 	
-	cruisealt=500;
+	cruisealt=200;
 	verticalSpeed=0;
 	myGravity=0;
 
@@ -80,7 +80,7 @@
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
+	sightdistance=200;
 
 	//************************************************************
 	//  Weapons
@@ -102,7 +102,7 @@
 	collide=0;
 	minCollisionSpeed=30;
 	collisionVolumeType = -1;
-	collisionVolumeScales =1 1 1;
+	collisionVolumeScales =0 0 0;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 0;
 	pieceTrailCEGTag=Debree;
@@ -115,7 +115,7 @@
 	//  To be removed
 	//*****************
 
-	buildcostenergy=1;//#AUTO#
-	buildcostmetal=1;//#AUTO#
-	buildtime=1;//#AUTO#
+	buildcostenergy=1021260;//#AUTO#
+	buildcostmetal=204252;//#AUTO#
+	buildtime=2434003;//#AUTO#
 }

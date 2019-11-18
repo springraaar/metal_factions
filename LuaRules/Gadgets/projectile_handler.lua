@@ -48,6 +48,10 @@ local spGetGroundHeight = Spring.GetGroundHeight
 local spUnitDetach = Spring.UnitDetach
 local spSetUnitShieldState = Spring.SetUnitShieldState
 local spSpawnProjectile = Spring.SpawnProjectile
+local spSetUnitNoDraw = Spring.SetUnitNoDraw
+local spSetUnitNoSelect = Spring.SetUnitNoSelect
+local spSetUnitNoMinimap = Spring.SetUnitNoMinimap
+
 
 -- aim point over target when far from it
 local LONG_RANGE_ROCKET_FAR_FROM_TARGET_H = 1000		
@@ -79,6 +83,7 @@ local fireAOEWeaponEffectId2 = WeaponDefNames["gear_fire_effect2"].id
 local magnetarWeaponId = WeaponDefNames["sphere_magnetar_blast"].id
 local magnetarWeaponEffectId = WeaponDefNames["sphere_magnetar_blast_effect"].id
 local comsatWeaponId = WeaponDefNames["comsat_beacon"].id
+local scoperWeaponId = WeaponDefNames["scoper_beacon"].id
 local dynamoWeaponId = WeaponDefNames["claw_dynamo_ring"].id
 local atomWeaponId = WeaponDefNames["sphere_atom_cannon"].id
 
@@ -194,6 +199,8 @@ local destructibleProjectiles = {}
 local dcRockets = {}
 local comsatProjectiles = {}
 local comsatBeaconDefId = UnitDefNames["cs_beacon"].id
+local scoperProjectiles = {}
+local scoperBeaconDefId = UnitDefNames["scoper_beacon"].id
 local dynamoProjectiles = {}
 dcRocketSpawn = {}
 
@@ -211,6 +218,13 @@ function isAboutToCollide(px,py,pz,tx,ty,tz)
 		return true
 	end 
 	return false
+end
+
+-- make unit invisible and unselectable
+function applyNonInteractiveProperties(uId)
+	spSetUnitNoDraw(uId,true)
+	spSetUnitNoSelect(uId,true)
+	spSetUnitNoMinimap(uId,true)
 end
 
 -------------------------- SYNCED CODE ONLY
@@ -236,8 +250,9 @@ function gadget:Initialize()
 		Script.SetWatchWeapon(id,true)
 	end
 	
-	-- track comsat projectiles
+	-- track comsat and scoper projectiles
 	Script.SetWatchWeapon(comsatWeaponId,true)
+	Script.SetWatchWeapon(scoperWeaponId,true)
 	
 	-- track dynamo projectiles
 	Script.SetWatchWeapon(dynamoWeaponId,true)
@@ -324,6 +339,7 @@ function gadget:GameFrame(n)
 				uId = spCreateUnit("cs_beacon",info.px,info.py+500,info.pz,0,info.teamId,false)
 				if uId then
 					spSetUnitNeutral(uId,true)
+					applyNonInteractiveProperties(uId)
 				end
 			end
 			
@@ -543,6 +559,11 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		comsatProjectiles[proID] = proOwnerID
 		return
 	end
+	if weaponDefID == scoperWeaponId then
+		scoperProjectiles[proID] = proOwnerID
+		return
+	end
+
 	if weaponDefID == dynamoWeaponId then
 		dynamoProjectiles[proID] = DYNAMO_RING_MAX_DAMAGE
 		return
@@ -606,14 +627,30 @@ function gadget:ProjectileDestroyed(proID)
 		if ownerId then
 			local teamId = spGetUnitTeam(ownerId)
 			local px,py,pz = spGetProjectilePosition(proID)
-			if px then
+			if px and teamId >= 0 then
 				local uId = spCreateUnit("cs_beacon",px,py+500,pz,0,teamId,false)
 				if uId then
 					spSetUnitNeutral(uId,true)
+					applyNonInteractiveProperties(uId)
 				end
 			end
 		end
 		comsatProjectiles[proID] = nil
+	elseif scoperProjectiles[proID] then
+		-- spawn unit to provide LOS
+		local ownerId = scoperProjectiles[proID]
+		if ownerId then
+			local teamId = spGetUnitTeam(ownerId)
+			local px,py,pz = spGetProjectilePosition(proID)
+			if px and teamId >= 0 then
+				local uId = spCreateUnit("scoper_beacon",px,py+200,pz,0,teamId,false)
+				if uId then
+					spSetUnitNeutral(uId,true)
+					applyNonInteractiveProperties(uId)
+				end
+			end
+		end
+		scoperProjectiles[proID] = nil		
 	elseif dynamoProjectiles[proID] then
 		dynamoProjectiles[proID] = nil
 	end

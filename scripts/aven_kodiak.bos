@@ -17,7 +17,7 @@ static-var  bMoving, bAiming, bSwimming, gun_2,gun_1, terrainStatus, waterSpeed,
 // Signal definitions
 #define SIG_MOVE			2
 #define SIG_AIM				4
-
+#define SIG_AIM2			8
 
 
 WheelSpeedControl(maxSpeed,currentSpeed)
@@ -220,10 +220,14 @@ RestoreAfterDelay()
 	call-script stopAimHelper1(<100>,<100>);
 	turn turret to y-axis <0.000000> speed <100.000000>;
 	turn sleeve to x-axis <0.000000> speed <100.000000>;
+	return (0);
+}
+RestoreAfterDelay2()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
 	turn sleeve2 to x-axis <0.000000> speed <100.000000>;
 	return (0);
 }
-
 
 AimPrimary(heading, pitch)
 {
@@ -292,18 +296,22 @@ SweetSpot(piecenum)
 
 AimSecondary(heading, pitch)
 {
-	call-script updateAimHelper1(heading,pitch,<200>,<200>,HEADING_TOLERANCE,3*PITCH_TOLERANCE);
-	signal SIG_AIM;
-	set-signal-mask SIG_AIM;
-	bAiming = TRUE;
-	turn turret to y-axis heading speed <200.000000>;
+	//TODO fix this eventually...
+	// if it's not going to be able to fire on the next ~2s, don't try to aim
+	//if ((get WEAPON_RELOADSTATE(2)) > (get GAME_FRAME) + 40)) { return(0); }
+
+	//call-script updateAimHelper1(heading,pitch,<200>,<200>,4*HEADING_TOLERANCE,8*PITCH_TOLERANCE);
+	signal SIG_AIM2;
+	set-signal-mask SIG_AIM2;
+	//bAiming = TRUE;
+	//turn turret to y-axis heading speed <200.000000>;
 	turn sleeve2 to x-axis <0.000000> - pitch speed <200.000000>;
-	if (!aimReady1)
-	{
-		wait-for-turn turret around y-axis;
+	//if (!aimReady1)
+	//{
+		//wait-for-turn turret around y-axis;
 		wait-for-turn sleeve2 around x-axis;
-	}
-	start-script RestoreAfterDelay();
+	//}
+	start-script RestoreAfterDelay2();
 	return (1);
 }
 

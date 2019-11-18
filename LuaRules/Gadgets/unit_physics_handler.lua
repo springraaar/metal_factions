@@ -90,7 +90,9 @@ local GROUND_COLLISION_H_THRESHOLD = 30
 
 local AIRCRAFT_DEBRIS_METAL_FACTOR = 0.4
 
-local COMSAT_SCAN_DURATION_FRAMES = 900
+local COMSAT_SCAN_DURATION_FRAMES = 900		-- 30s
+
+local SCOPER_SCAN_DURATION_FRAMES = 25		-- about 1s
 
 local moveAnimationUnitIds = {}
 local unitPhysicsById = {}
@@ -98,7 +100,9 @@ local featureIds = {}
 local featurePhysicsById = {}
 local magnetarUnitIds = {}
 local comsatBeacons = {}
+local scoperBeacons = {}
 local comsatBeaconDefId = UnitDefNames["cs_beacon"].id
+local scoperBeaconDefId = UnitDefNames["scoper_beacon"].id
 
 GG.destructibleProjectilesDestroyed = {}
 
@@ -184,7 +188,7 @@ local function updateUnitPhysics(unitId)
 	 end
 	 
 	
-	if comsatBeacons[unitId] then
+	if comsatBeacons[unitId] or scoperBeacons[unitId] then
 		spSetUnitVelocity(unitId,0,0,0)
 	end
 	-- force physics for magnetar to prevent it from being pushed away 
@@ -307,8 +311,11 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 		magnetarUnitIds[unitId] = true
 	end
 
-	if (unitDefId == comsatBeaconDefId) then
+	if (unitDefId == comsatBeaconDefId ) then
 		comsatBeacons[unitId] = 1
+	end
+	if (unitDefId == scoperBeaconDefId ) then
+		scoperBeacons[unitId] = 1
 	end
 	
 	if destructibleProjectileDefIds[unitDefId] then
@@ -330,6 +337,13 @@ function gadget:GameFrame(n)
 		comsatBeacons[uId] = comsatBeacons[uId] + 1
 		
 		if (comsatBeacons[uId] > COMSAT_SCAN_DURATION_FRAMES) then
+			spDestroyUnit(uId,false,true)
+		end
+	end
+	for uId,frames in pairs(scoperBeacons) do
+		scoperBeacons[uId] = scoperBeacons[uId] + 1
+		
+		if (scoperBeacons[uId] > SCOPER_SCAN_DURATION_FRAMES) then
 			spDestroyUnit(uId,false,true)
 		end
 	end
@@ -485,7 +499,7 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 	-- if unit is an aircraft which leaves no wreckage, spawn some debris
 	local ud = UnitDefs[unitDefId]
 	--Spring.Echo("unit destroyed")
-	if ud and ud.canFly == true and (not destructibleProjectileDefIds[unitDefId]) and (unitDefId ~= comsatBeaconDefId) and not isDrone(ud) and tostring(ud.wreckName) == '' then
+	if ud and ud.canFly == true and (not destructibleProjectileDefIds[unitDefId]) and (unitDefId ~= comsatBeaconDefId) and (unitDefId ~= scoperBeaconDefId) and not isDrone(ud) and tostring(ud.wreckName) == '' then
 		if bp > 0.999 or (attackerId ~= nil and bp > 0.5) then
 			--Spring.Echo("aircraft destroyed "..tostring(ud.wreckName))
 			local physics = unitPhysicsById[unitId]

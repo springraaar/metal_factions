@@ -107,7 +107,10 @@ local disruptorWaveUnitDefId = UnitDefNames["aven_bass"].id
 local magnetarWeaponDefId = WeaponDefNames["sphere_magnetar_blast"].id
 local magnetarAuraWeaponDefId = WeaponDefNames["sphere_magnetar_aura_blast"].id
 
-
+local scoperBeaconDefIds = {
+	[UnitDefNames["comsat_beacon"].id] = true,
+	[UnitDefNames["scoper_beacon"].id] = true
+}
 
 
 local burningEffectWeaponDefIds = {
@@ -667,7 +670,7 @@ end
 -- prevent units from cloaking a few seconds after being disrupted or doing something disrupting
 function gadget:AllowUnitCloak(unitId,enemyId)
 	-- if there's a nearby enemy within cloak radius, decloak
-	if enemyId ~= nil then
+	if enemyId ~= nil and (not scoperBeaconDefIds[spGetUnitDefID(enemyId)]) then
 		return false
 	end
 

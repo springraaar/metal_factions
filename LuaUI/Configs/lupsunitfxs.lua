@@ -80,6 +80,11 @@ effectUnitDefs = {
   aven_swift = {
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=35, piece="jp1", onActive=true}}
   },
+  aven_scoper = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=35, piece="jp1", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=15, piece="ljp", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=15, piece="rjp", onActive=true,down=true}}
+  },
   aven_twister = {
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=30, piece="jp1", onActive=true}}
   },
@@ -172,6 +177,12 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=3, length=20, piece="ljp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=3, length=20, piece="rjp", onActive=true}}
   },   
+  gear_zoomer = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=3, length=30, piece="ljp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=3, length=30, piece="rjp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=15, piece="ljp2", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=15, piece="rjp2", onActive=true,down=true}}
+  },
   gear_dash = {
     {class='AirJet',options={color={0.3,0.1,0}, width=3, length=30, piece="ljp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=3, length=30, piece="rjp", onActive=true}}
@@ -251,6 +262,12 @@ effectUnitDefs = {
   claw_spotter = {
     {class='AirJet',options={color={0.3,0.1,0}, width=4, length=30, piece="jp1", onActive=true}}
   },
+  claw_lensor = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=4, length=25, piece="ljp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=4, length=25, piece="rjp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=15, piece="ljp2", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=15, piece="rjp2", onActive=true,down=true}}
+  },  
   claw_light_drone = {
     {class='AirJet',options={color={0.3,0.1,0}, width=4, length=25, piece="jp1", onActive=true}}
   },    
@@ -322,6 +339,11 @@ effectUnitDefs = {
   sphere_probe = {
     {class='AirJet',options={color={0.3,0.1,0}, width=4, length=30, piece="jp1", onActive=true}}
   },
+  sphere_resolver = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=4, length=30, piece="jp1", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=15, piece="ljp", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=15, piece="rjp", onActive=true,down=true}}
+  },
   sphere_light_drone = {
     {class='AirJet',options={color={0.3,0.1,0}, width=4, length=25, piece="jp1", onActive=true}}
   },
@@ -381,7 +403,8 @@ effectUnitDefs = {
   },  
   sphere_tycho = {
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=25, piece="ljp", onActive=true}},
-    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=25, piece="rjp", onActive=true}}
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=25, piece="rjp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=8, length=25, piece="bjp", onActive=true,down=true}},
   },  
 
   --// OTHER

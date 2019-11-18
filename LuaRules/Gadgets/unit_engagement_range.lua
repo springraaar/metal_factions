@@ -57,7 +57,7 @@ local function updateEngagementRange(unitID, unitDefID)
     end
     
 	spSetUnitMaxRange(unitID, engagementRange)
-	Spring.Echo("unit "..ud.name.." engagementRange = "..engagementRange)
+	Spring.Echo("f="..Spring.GetGameFrame().." unit "..ud.name.." engagementRange = "..engagementRange)
 end
 
 

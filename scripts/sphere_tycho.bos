@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, basetop,basetop2,basebottom, launcher,m1,m2,m3, wing1, wing2, shieldpt, w1, w2, jetsup, jetsup2, barrel1, barrel2, barrel3, flare1, flare2, flare3,ljp,rjp;
+piece  base, basetop,basetop2,basebottom, launcher,m1,m2,m3, wing1, wing2, shieldpt, w1, w2, jetsup, jetsup2, barrel1, barrel2, barrel3, flare1, flare2, flare3,ljp,rjp,bjp;
 
 static-var  statechg_DesiredState, statechg_StateChanging, gun_1, isFlying;
 
@@ -91,6 +91,7 @@ Create()
 {
 	gun_1 = [0];
 	isFlying = FALSE;
+	turn bjp to x-axis <-90.000000> now;
 	call-script InitState();
 	start-script SmokeUnit();
 	return (0);

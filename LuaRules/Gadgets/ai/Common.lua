@@ -1019,19 +1019,22 @@ supporterList =
 	"aven_jammer",
 	"aven_perceptor",
 	"aven_zephyr",
+	"aven_scoper",
 ------------------------------------------------ GEAR
 	"gear_fink",
 	"gear_informer",
 	"gear_deleter",
 	"gear_voyeur",
 	"gear_spectre",
+	"gear_zoomer",	
 ------------------------------------------------ CLAW
 	"claw_spotter",
 	"claw_revealer",
 	"claw_shade",
 	"claw_seer",
 	"claw_jammer",
-	"claw_haze",	
+	"claw_haze",
+	"claw_lensor",
 ------------------------------------------------ SPHERE
 	"sphere_probe",
 	"sphere_rain",
@@ -1040,7 +1043,8 @@ supporterList =
 	"sphere_concealer",
 	"sphere_orb",
 	"sphere_screener",
-	"sphere_shielder"
+	"sphere_shielder",
+	"sphere_resolver"
 }
 
 -- TODO : not used atm
