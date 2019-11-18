@@ -108,7 +108,7 @@ local magnetarWeaponDefId = WeaponDefNames["sphere_magnetar_blast"].id
 local magnetarAuraWeaponDefId = WeaponDefNames["sphere_magnetar_aura_blast"].id
 
 local scoperBeaconDefIds = {
-	[UnitDefNames["comsat_beacon"].id] = true,
+	[UnitDefNames["cs_beacon"].id] = true,
 	[UnitDefNames["scoper_beacon"].id] = true
 }
 

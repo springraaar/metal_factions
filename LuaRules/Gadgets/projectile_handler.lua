@@ -51,7 +51,7 @@ local spSpawnProjectile = Spring.SpawnProjectile
 local spSetUnitNoDraw = Spring.SetUnitNoDraw
 local spSetUnitNoSelect = Spring.SetUnitNoSelect
 local spSetUnitNoMinimap = Spring.SetUnitNoMinimap
-
+local spSetUnitRadiusAndHeight = Spring.SetUnitRadiusAndHeight
 
 -- aim point over target when far from it
 local LONG_RANGE_ROCKET_FAR_FROM_TARGET_H = 1000		
@@ -225,6 +225,7 @@ function applyNonInteractiveProperties(uId)
 	spSetUnitNoDraw(uId,true)
 	spSetUnitNoSelect(uId,true)
 	spSetUnitNoMinimap(uId,true)
+	spSetUnitRadiusAndHeight(uId,0,0)
 end
 
 -------------------------- SYNCED CODE ONLY

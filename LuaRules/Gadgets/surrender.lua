@@ -24,6 +24,12 @@ local aliveCommandersPerAllyTeam = {}
 local strongestAllyTeamId = null 
 local defeatedAllyIds = {}
 
+local unitDefIdsToIgnore = {
+	[UnitDefNames["target"].id] = true,
+	[UnitDefNames["cs_beacon"].id] = true,
+	[UnitDefNames["scoper_beacon"].id] = true
+}
+
 -------------------------- SYNCED CODE ONLY
 if (not gadgetHandler:IsSyncedCode()) then
 	return false
@@ -45,6 +51,7 @@ function gadget:GameFrame(n)
 		
 		local allyId = 0
 		local ud = nil
+		local udId = nil
 		local cost =  nil
 	    for _,uId in ipairs(allUnits) do
 			local _,_,_,_,progress = spGetUnitHealth(uId) 
@@ -53,13 +60,16 @@ function gadget:GameFrame(n)
 	    	if progress > 0.85 then
 		    	teamId = Spring.GetUnitTeam(uId)
 		    	allyId = Spring.GetUnitAllyTeam(uId)
-		    	ud = UnitDefs[Spring.GetUnitDefID(uId)]
-		    	cost = getWeightedCost(ud)
+		    	udId = Spring.GetUnitDefID(uId)
+				if (not unitDefIdsToIgnore[udId]) then
+		    		ud = UnitDefs[udId]
+		    		cost = getWeightedCost(ud)
 		    	
-		    	unitCostPerAllyTeam[allyId] = unitCostPerAllyTeam[allyId] + cost
-		    	if (isCommander(ud)) then
-		    		teamCommanderIds[teamId] = uId
-		    		aliveCommandersPerAllyTeam[allyId] = aliveCommandersPerAllyTeam[allyId] + 1 
+			    	unitCostPerAllyTeam[allyId] = unitCostPerAllyTeam[allyId] + cost
+		    		if (isCommander(ud)) then
+			    		teamCommanderIds[teamId] = uId
+		    			aliveCommandersPerAllyTeam[allyId] = aliveCommandersPerAllyTeam[allyId] + 1 
+		    		end
 		    	end
 	    	end
 	    end
