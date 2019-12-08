@@ -32,7 +32,7 @@
 	MetalMake=0;
 	EnergyStorage=0;
 	MetalStorage=0;
-	EnergyUse=50;
+	EnergyUse=0;
 
 	// ------------------- constructor
 	builder=0;
@@ -98,7 +98,7 @@
 	maneuverleashlength=640;
 	Version=1;
 	minAirbasePower=99999;
-	activatewhenbuilt=1;
+	activatewhenbuilt=0;
 	collisionVolumeType = sphere;
 	collisionVolumeScales =80 80 80;
 	collisionVolumeOffsets = 0 0 0;
@@ -107,14 +107,14 @@
 	[CustomParams]
 	{
 		energyCostMoving=280;
-		tip=Requires 280E/s to move. Regenerates 250HP/s. If charged, 300 range aura pulls and deals 150(L) disruptor dmg/s; 
+		tip=Requires 280E/s to move. Regenerates 250HP/s. If charged, 400 range aura pulls and deals 220(L) disruptor dmg/s; 
 	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:magnetar;
 		explosiongenerator1=custom:magnetaraura;
 	}
-	buildcostenergy=25000;//#AUTO#
-	buildcostmetal=5000;//#AUTO#
-	buildtime=60000;//#AUTO#
+	buildcostenergy=30000;//#AUTO#
+	buildcostmetal=6000;//#AUTO#
+	buildtime=72000;//#AUTO#
 }

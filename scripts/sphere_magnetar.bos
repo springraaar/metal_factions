@@ -7,7 +7,7 @@
 piece ground, hips,torso,turret1,sleeve1,flare1,turret2,sleeve2,flare2,turret3,sleeve3,flare3, sphere, shieldpt;
 
 	
-static-var bMoving,bAiming, normalSpeed, slowSpeed, isReloading, reloadTime;
+static-var bMoving,bAiming, normalSpeed, slowSpeed, isReloading, reloadTime, liftoffDisable;
 
 // Signal definitions
 #define SIG_AIM					2
@@ -90,12 +90,22 @@ Create()
 	isReloading = FALSE;
 	bMoving = FALSE;
 	bAiming = FALSE;
+	liftoffDisable = FALSE;
 	start-script ShowEffect();
 	start-script SmokeUnit();
 	start-script delayReload();
 }
 
-
+StartMoving()
+{
+ 	// deactivate to compensate for the unwanted activation when lifting off after being built
+ 	// do this only once
+	if (!liftoffDisable)
+	{
+		liftoffDisable = TRUE;
+		set ACTIVATION to FALSE; 
+	}
+}
 
 SweetSpot(piecenum)
 {

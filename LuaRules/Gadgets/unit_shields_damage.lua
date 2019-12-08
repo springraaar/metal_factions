@@ -112,7 +112,6 @@ local scoperBeaconDefIds = {
 	[UnitDefNames["scoper_beacon"].id] = true
 }
 
-
 local burningEffectWeaponDefIds = {
 	[WeaponDefNames["gear_pyro_flamethrower"].id] = true,
 	[WeaponDefNames["gear_u1commander_flamethrower"].id] = true,
@@ -414,6 +413,11 @@ end
 
 -- if unit has active shield with power > 0, drain damage from shield first instead of going directly to hp
 function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
+	-- disable scoper damage
+	if(scoperBeaconDefIds[attackerDefID]) then
+		return 0
+	end
+	
 	-- disable bass self-damage
 	if (weaponDefID == disruptorWaveEffectWeaponDefId and unitDefID == disruptorWaveUnitDefId) then
 		return 0

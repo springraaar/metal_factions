@@ -9392,11 +9392,12 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		action=Reveal Area;
 	}
 	[DAMAGE]
 	{
 		default=0;
-		group_invincible=1;
+		group_invincible=0;
 		armor_heavy=0;//#AUTO#
 		armor_medium=0;//#AUTO#
 		armor_light=0;//#AUTO#
@@ -9435,6 +9436,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		action=Reveal Area;
 	}
 	[DAMAGE]
 	{
@@ -18338,9 +18340,9 @@
 	Texture4=null;
 	reloadtime=40;
 	weaponvelocity=30;
-	explosionSpeed=14;
-	areaofeffect=600;
-	edgeeffectiveness=0.5;
+	explosionSpeed=30;
+	areaofeffect=800;
+	edgeeffectiveness=0.7;
 	tolerance=30000;
 	explosionscar=0;
 	collisionsize=70;
@@ -18354,8 +18356,8 @@
 	collideFriendly=1;
 	avoidFriendly=0;
 	cratermult=0;
-	impulseboost=2;
-	impulsefactor=-24;
+	impulseboost=140;
+	impulsefactor=-8;
 	paralyzer=1;
 	paralyzetime=15;
 	[CUSTOMPARAMS]
@@ -18364,9 +18366,9 @@
 	}
 	[DAMAGE]
 	{
-		default=30;
-		armor_heavy=7;//#AUTO#
-		armor_medium=15;//#AUTO#
-		armor_light=30;//#AUTO#
+		default=44;
+		armor_heavy=11;//#AUTO#
+		armor_medium=22;//#AUTO#
+		armor_light=44;//#AUTO#
 	}
 }

@@ -1,3 +1,31 @@
+2019/12/08 ------------------ NOTES v1.22 ----------------------
+
+--- Balance / Mechanics
+
+- modified SPHERE "Magnetar" :
+. increased damage, area of effect and pull strength of the aura, but increased cost by 20%
+. the pull aura is now much more effective at catching medium and heavy units
+. aura drains 200 E/s when active
+. it's now disabled by default to avoid damaging your own units after getting out of the factory
+. updated radar icon
+
+- fixed lua error that sometimes happened when scoper aircraft were destroyed
+
+- increased collision volume size for AVEN "Dazer" and "Stasis"
+
+
+--- UI
+
+- tooltip shows that units that deal paralyze damage also deal 33% normal damage
+- tooltip shows E cost per shot for weapons with reload time > 5s
+
+--- Visuals
+
+- modified AVEN "Zephyr" aura effects to be teal instead of green
+
+
+
+
 2019/11/18 ------------------ NOTES v1.21 ----------------------
 
 - fixed two bugs with the previous version 

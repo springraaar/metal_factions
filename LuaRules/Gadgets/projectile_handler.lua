@@ -643,7 +643,7 @@ function gadget:ProjectileDestroyed(proID)
 		if ownerId then
 			local teamId = spGetUnitTeam(ownerId)
 			local px,py,pz = spGetProjectilePosition(proID)
-			if px and teamId >= 0 then
+			if px and teamId ~= nil and teamId >= 0 then
 				local uId = spCreateUnit("scoper_beacon",px,py+200,pz,0,teamId,false)
 				if uId then
 					spSetUnitNeutral(uId,true)

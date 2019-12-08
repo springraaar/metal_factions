@@ -44,8 +44,13 @@ local spGetUnitTeam = Spring.GetUnitTeam
 
 local TRANSPORT_MASS_LIMIT_LIGHT = 1200
 local TRANSPORT_MASS_LIMIT_HEAVY = 3000  
-
+local PARALYZE_DAMAGE_FACTOR = 0.33 -- paralyze damage adds this fraction as normal damage
 local ONCE_RELOAD_THRESHOLD = 999
+
+local noDamageWeaponDefIds = {
+	[WeaponDefNames["comsat_beacon"].id] = true,
+	[WeaponDefNames["scoper_beacon"].id] = true
+}
 
 function widget:Initialize()
 	Spring.SendCommands({"tooltip 0"})
@@ -148,14 +153,18 @@ function GetTooltipWeaponData(ud, xpMod, rangeMod, dmgMod)
 	    if weap then
 	        local weapon_action="Damage"
 	        if weap.damages and weap.damages.paralyzeDamageTime and weap.damages.paralyzeDamageTime>0 then
-	                weapon_action="Paralyze"
+                weapon_action="Paralyze"
+                local paralyzeDmg = dmgMod * weap.damages[Game.armorTypes.default]
+                local normalDmg = PARALYZE_DAMAGE_FACTOR * paralyzeDmg
+				NewTooltip = NewTooltip.. "\n\255\100\255\255Paralyze: "..FormatNbr(paralyzeDmg,2).."/once \255\255\213\213Damage: \255\255\170\170"..FormatNbr(dmg,2).."/once"
+	        else
+	        	NewTooltip = NewTooltip.."\n\255\255\213\213Damage: \255\255\170\170"..FormatNbr(normalDmg,2).."/once"
 	        end
-	        NewTooltip = NewTooltip.."\n\255\255\213\213Damage: \255\255\170\170"..FormatNbr(dmgMod * weap.damages[Game.armorTypes.default],2).."/once"
 	    end
     elseif ud.weapons and ud.weapons[1] and ud.weapons[1].weaponDef then
 		for _,w in pairs(ud.weapons) do
 			local weap=WeaponDefs[w.weaponDef]
-		    if weap.isShield == false and weap.description ~= "No Weapon" then
+			if weap.isShield == false and weap.description ~= "No Weapon" then
 				local weapon_action="Dmg/s"
 				local reloadTime = weap.reload / xpMod
 				local isBeamLaser = weap.type == "BeamLaser"
@@ -164,41 +173,62 @@ function GetTooltipWeaponData(ud, xpMod, rangeMod, dmgMod)
 				local energyPerSecond = (weap.energyCost * (weap.salvoSize)) / reloadTime
 				local isDisruptor = false
 				local actionStr = ""
-
-				if weap.damages and weap.damages.paralyzeDamageTime and weap.damages.paralyzeDamageTime>0 then
-                   weapon_action="Paralyze/s"
-                   isDisruptor = true
-                end
-				if (reloadTime > 5) then
-					actionStr = weapon_action..": \255\255\255\255"..(isDisruptor and "\255\100\255\255" or "")..FormatNbr(damage,0).."\255\255\255\255"..(reloadTime >= ONCE_RELOAD_THRESHOLD and " once" or ("/"..FormatNbr(reloadTime,2).."s"))
-				else 
-					actionStr = weapon_action..": \255\255\255\255"..(isDisruptor and "\255\100\255\255" or "")..FormatNbr(dps,1).."\255\255\255\255"
+			
+				local range = weap.range * rangeMod
+				if (noDamageWeaponDefIds[w.weaponDef]) then
+					if (weap.customParams and weap.customParams.action) then
+						actionStr = weap.customParams.action
+					else
+						actionStr = "no damage"
+					end
+				else
+					if weap.damages and weap.damages.paralyzeDamageTime and weap.damages.paralyzeDamageTime>0 then
+						isDisruptor = true
+					end
+					
+					if (reloadTime > 5) then
+						if (isDisruptor) then
+							local paralyzeDmg = damage
+							local normalDmg = paralyzeDmg * PARALYZE_DAMAGE_FACTOR
+							actionStr = "Paralyze/s: \255\100\255\255"..FormatNbr(paralyzeDmg,0).."\255\255\255\255"..(reloadTime >= ONCE_RELOAD_THRESHOLD and " once" or ("/"..FormatNbr(reloadTime,2).."s"))
+							actionStr = actionStr.." Dmg/s: \255\255\255\255"..FormatNbr(normalDmg,0).."\255\255\255\255"..(reloadTime >= ONCE_RELOAD_THRESHOLD and " once" or ("/"..FormatNbr(reloadTime,2).."s"))
+						else
+							actionStr = "Dmg/s: \255\255\255\255"..FormatNbr(damage,0).."\255\255\255\255"..(reloadTime >= ONCE_RELOAD_THRESHOLD and " once" or ("/"..FormatNbr(reloadTime,2).."s"))
+						end
+					else 
+						if (isDisruptor) then
+							local paralyzeDps = dps
+							local normalDps = paralyzeDps * PARALYZE_DAMAGE_FACTOR
+							actionStr = "Paralyze/s: \255\100\255\255"..FormatNbr(paralyzeDps,0).."\255\255\255\255"
+							actionStr = actionStr.." Dmg/s: \255\255\255\255"..FormatNbr(normalDps,0).."\255\255\255\255"
+						else
+							actionStr = "Dmg/s: \255\255\255\255"..FormatNbr(dps,1).."\255\255\255\255"
+						end
+					end
+					
+					local hitpower = "L"
+					
+					if ( weap.damages[Game.armorTypes.default] == weap.damages[Game.armorTypes.armor_heavy] ) then
+						hitpower = "H"
+					elseif ( weap.damages[Game.armorTypes.default] == weap.damages[Game.armorTypes.armor_medium] ) then
+						hitpower = "M"
+					end
+					actionStr = actionStr.."("..hitpower..")"
+				end       
+				NewTooltip = NewTooltip.."\n\255\255\255\255"..weap.description.."    "..actionStr.."     Range: "..FormatNbr(range,2)
+			
+				if energyPerSecond  > 0 then
+					NewTooltip = NewTooltip.."     \255\255\255\0E"..(reloadTime >= 5 and "" or "/s")..": "..FormatNbr((reloadTime >= 5 and energyPerSecond*reloadTime or energyPerSecond),1)
 				end
-
-                local range = weap.range * rangeMod
-                local hitpower = "L"
-                
-                if ( weap.damages[Game.armorTypes.default] == weap.damages[Game.armorTypes.armor_heavy] ) then
-                	hitpower = "H"
-                elseif ( weap.damages[Game.armorTypes.default] == weap.damages[Game.armorTypes.armor_medium] ) then
-                	hitpower = "M"
-                end
-                
-       
-                NewTooltip = NewTooltip.."\n\255\255\255\255"..weap.description.."    "..actionStr.."("..hitpower..")     Range: "..FormatNbr(range,2)
-
-                if energyPerSecond  > 0 then
-                   NewTooltip = NewTooltip.."     \255\255\255\0E/s: "..FormatNbr(energyPerSecond,1)
-                end
-                
-                if weap.waterWeapon then
-                	 NewTooltip = NewTooltip.."    \255\64\64\255WATER"
-                end
-		    end
+				
+				if weap.waterWeapon then
+					NewTooltip = NewTooltip.."    \255\64\64\255WATER"
+				end
+			end
 		end
-    end
+	end
     
-    return NewTooltip
+	return NewTooltip
 end
  
 -- generates build power string in m/s as a function of build speed

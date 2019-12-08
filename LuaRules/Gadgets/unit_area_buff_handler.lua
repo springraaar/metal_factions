@@ -56,6 +56,7 @@ local spGetUnitWeaponState = Spring.GetUnitWeaponState
 local spGetTeamResources = Spring.GetTeamResources
 local spSpawnCEG = Spring.SpawnCEG
 local spGetUnitIsDead = Spring.GetUnitIsDead
+local spSpawnProjectile = Spring.SpawnProjectile
 
 local max = math.max
 local floor = math.floor
@@ -132,7 +133,7 @@ local magnetarDefIds = {
 }
 local magnetarIds = {}
 local magnetarAuraWeaponId = WeaponDefNames["sphere_magnetar_aura_blast"].id
-
+local magnetarAuraEPerProjectile = 40 
 
 local speedModifierUnitIds = {} -- (unitId,modifier)
 
@@ -296,14 +297,16 @@ function gadget:GameFrame(n)
 					spSetUnitRulesParam(unitId,"magnetar_power",reloadPercent,{public = true})
 	
 					-- trigger magnetar "aura" when active	
-					if (isActive and reloadPercent > 99) then
+					if (isActive and reloadPercent > 99 and allowEnergyBoostedMovement) then
 						_,_,_,x,y,z = spGetUnitPosition(unitId,true)
-						local createdId = Spring.SpawnProjectile(magnetarAuraWeaponId,{
+						local createdId = spSpawnProjectile(magnetarAuraWeaponId,{
 							["pos"] = {x,y,z},
 							["end"] = {x,y+5,z},
 							["speed"] = {100,100,100},
 							["owner"] = unitId
 						})
+						
+						spUseUnitResource(unitId, "e", magnetarAuraEPerProjectile)
 						if (createdId) then
 							Spring.SetProjectileCollision(createdId)
 						end
