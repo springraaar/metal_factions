@@ -12,7 +12,7 @@ function AI.create(id, mode)
    obj.id = id      -- initialize our object
    obj.mode = mode
    obj.frameShift = 7*tonumber(id)	-- used to spread out processing from different AIs across multiple frames
-   obj.needStartPosAdjustment = true
+   obj.needStartPosAdjustment = false
    return obj
 end
 
@@ -35,52 +35,86 @@ function AI:hasStartBox(xMin,xMax,zMin,zMax)
 end
 
 -- find good starting position within start box
-function AI:findSpot()
-	local rangeCheck = true
-	local METAL_POTENTIAL_THRESHOLD = 1
-	local minStartPosDist = 800
-	
+-- if start boxes aren't set, return the assigned start position
+function AI:findStartPos(doRangeCheck, minStartPosDist)
 	local xMin, zMin, xMax, zMax = Spring.GetAllyTeamStartBox(self.allyId)
-	
-	-- adjust min distance taking into account zone size and number of allies 
-	local numAllies = #Spring.GetTeamList(self.allyId)
-	if (numAllies > 0) then
-		minStartPosDist = ((xMax-xMin) + (zMax-zMin)) / (2*numAllies)
-	end
-	
-	for _, cell in spairs(self.mapHandler.mapCellList, function(t,a,b) return t[b].metalPotential < t[a].metalPotential end) do
-		rangeCheck = true
-
-		-- check that cell center is within start box for the team and has metal potential
-		if cell.metalSpotCount > 0 and cell.metalPotential >= METAL_POTENTIAL_THRESHOLD and (cell.p.x > xMin and cell.p.x < xMax) and (cell.p.z > zMin and cell.p.z < zMax) then
-			-- Echo("cellX="..cell.p.x.." cellZ="..cell.p.z.." metal="..cell.metalPotential) --DEBUG
+	if self:hasStartBox(xMin,xMax,zMin,zMax) and (xMax > xMin + 100) and (zMax > zMin + 100) then
+		local rangeCheck = true
+		local METAL_POTENTIAL_THRESHOLD = 1
 		
-			-- check range from every other ally unit
-			for uId,_ in pairs(self.friendlyUnitIds) do
-				local x,y,z = spGetUnitPosition(uId)
-				local uPos = {x=x,y=y,z=z}
-				if(checkWithinDistance(cell.p,uPos,minStartPosDist) == true) then
-					rangeCheck = false
-					break
-				end
-			end
+		
+		local xMin, zMin, xMax, zMax = Spring.GetAllyTeamStartBox(self.allyId)
+		
+		-- adjust min distance taking into account zone size and number of allies 
+		local allies = Spring.GetTeamList(self.allyId)
+		local numAllies = #allies
+		if (numAllies > 0 and doRangeCheck and minStartPosDist == INFINITY) then
+			minStartPosDist = ((xMax-xMin) + (zMax-zMin)) / (1.5*numAllies)
+		end
+		
+		for _, cell in spairs(self.mapHandler.mapCellList, function(t,a,b) return t[b].metalPotential < t[a].metalPotential end) do
+			rangeCheck = true
+	
+			-- check that cell center is within start box for the team and has metal potential
+			if cell.metalSpotCount > 0 and cell.metalPotential >= METAL_POTENTIAL_THRESHOLD and (cell.p.x > xMin and cell.p.x < xMax) and (cell.p.z > zMin and cell.p.z < zMax) then
+				-- Echo("cellX="..cell.p.x.." cellZ="..cell.p.z.." metal="..cell.metalPotential) --DEBUG
 			
-			-- return spot
-			if rangeCheck == true then
-				local mSpot = cell.metalSpots[1]
-				
-				if (mSpot == nil) then
-					mSpot = {x=cell.p.x, z=cell.p.z}
+				if (numAllies > 0 and doRangeCheck) then
+					-- check range from every other ally
+					for _,teamId in pairs(allies) do
+						local x,y,z
+						local uPos
+						-- if it's another AI, check if it set the position already
+						if (GG.mFAIStartPosByTeamId[teamId]) then
+							uPos = GG.mFAIStartPosByTeamId[teamId]
+						else
+							-- humans already picked their positions
+							x,y,z = Spring.GetTeamStartPosition(teamId)
+							uPos = {x=x,y=y,z=z}
+						end
+						
+						if(checkWithinDistance(cell.p,uPos,minStartPosDist) == true) then
+							rangeCheck = false
+							break
+						end
+					end
 				end
-				local spot = {}
-				spot.x = min(xMax, max(xMin, mSpot.x -50 + random(100)))
-				spot.z = min(zMax, max(zMin, mSpot.z -50 + random(100)))  
-				spot.y = spGetGroundHeight(spot.x, spot.z)		
-				return spot
+				
+				-- return spot
+				if rangeCheck == true then
+					local mSpot = cell.metalSpots[1]
+					
+					if (mSpot == nil) then
+						mSpot = {x=cell.p.x, z=cell.p.z}
+					end
+					local spot = {}
+					spot.x = min(xMax, max(xMin, mSpot.x -50 + random(100)))
+					spot.z = min(zMax, max(zMin, mSpot.z -50 + random(100)))  
+					spot.y = spGetGroundHeight(spot.x, spot.z)		
+					
+					Spring.Echo("found start position for MFAI id="..self.id.." at ("..spot.x..";"..spot.y..";"..spot.z..")") --DEBUG
+					return spot
+				end
 			end
+		end
+	else
+		-- no start boxes, return the fixed start pos
+		local x,y,z = Spring.GetTeamStartPosition(self.id)
+		return {x=x,y=y,z=z}
+	end
+
+	-- allies are too close, maybe there's no way around it
+	-- try again with lower min distance or range check disabled
+	if (doRangeCheck) then
+		if (minStartPosDist > 200) then
+			return self:findStartPos(true,minStartPosDist/2)
+		else
+			Spring.Echo("could not find start position for MFAI id="..self.id.." : trying again with distance check disabled") --DEBUG
+			return self:findStartPos(false,0)
 		end
 	end
 	
+	Spring.Echo("could not find start position for MFAI id="..self.id) --DEBUG
 	return nil
 end 
 
@@ -103,36 +137,8 @@ function AI:Init()
 	self.unitBehaviors = {}
 end
 
-function AI:Update()
+function AI:Update(n)
 	if self.gameEnd == true then
-		return
-	end
-	
-	local frame = spGetGameFrame()
-	-- adjust start positions if necessary (wait a few frames to give units time to spawn)
-	if ((frame == self.id+2) and self.needStartPosAdjustment) then  
-		local xMin, zMin, xMax, zMax = Spring.GetAllyTeamStartBox(self.allyId)
-		-- Echo("xMin="..xMin.." xMax="..xMax.." zMin="..zMin.." zMax="..zMax.." mapX="..Game.mapSizeX.." mapZ="..Game.mapSizeZ.." hasbox="..tostring(self:hasStartBox(xMin,xMax,zMin,zMax)) ) --DEBUG
-	
-		if self:hasStartBox(xMin,xMax,zMin,zMax) and (xMax > xMin + 100) and (zMax > zMin + 100) then
-			-- find a good spot, away from allies and near metal spots
-			local spot = self:findSpot(self)
-			
-			if (spot ~= nil) then
-				-- move units to that spot (should be a lone commander)
-				for uId,_ in pairs(self.ownUnitIds) do
-					Spring.SetUnitPosition(uId,spot.x,spot.z)
-					
-					-- Echo("adjusted commander position to ("..spot.x..";"..spot.z..") for AI team "..self.id) --DEBUG
-				end
-			else 
-				-- Echo("couldn't find start position for AI team "..self.id) --DEBUG
-			end
-		end
-		self.needStartPosAdjustment = false
-	end
-	
-	if self.needStartPosAdjustment == true then
 		return
 	end
 	
@@ -141,21 +147,21 @@ function AI:Update()
 			log("nil module!")
 		else
 			if (m.Update ~= nil) then
-				m:Update()
+				m:Update(n)
 			end
 		end
 	end
 	
 	-- add behaviour for units missing	
     for uId,_ in pairs(self.ownUnitIds) do
-		if ((self.recentlyDestroyedUnitIds == nil or self.recentlyDestroyedUnitIds[uId] == nil or (frame - self.recentlyDestroyedUnitIds[uId] > 10)) and self.unitBehaviors[uId] == nil) then
+		if ((self.recentlyDestroyedUnitIds == nil or self.recentlyDestroyedUnitIds[uId] == nil or (n - self.recentlyDestroyedUnitIds[uId] > 10)) and self.unitBehaviors[uId] == nil) then
 			self:AddUnitBehavior(uId, spGetUnitDefID(uId))
 		end
     end 
 	
 	for i,b in pairs(self.unitBehaviors) do
 		if (b.Update ~= nil) then
-			b:Update()
+			b:Update(n)
 		end
 	end
 	

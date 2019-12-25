@@ -1,3 +1,32 @@
+2019/12/25 ------------------ NOTES v1.23 ----------------------
+
+
+--- Balance / Mechanics
+
+- on team games, players are no longer set to "dead" even if they lost all units as long as allies are still standing
+(this is to allow the other teammates to give a them a commander pad and get back into the game)
+
+MOVEMENT
+- make units overlap and clump together less when moving but also be slightly less efficient at moving around
+- make non all-terrain ground units slide down slopes they can't walk or drive through
+- relatively fast units will generally make sharper turns and bump into terrain or get stuck less, but also lose some speed while turning
+
+--- UI
+
+- fixed icon for commander respawners
+- when single units are selected or mouse is over them, show owner name on the bottom-left tooltip
+- fixed ctrl-c focusing on but not selecting the commander
+- added button to change the chat type above the players list
+
+--- AI / MFAI
+
+- AI will ignore walls 
+(sometimes its raider or aircraft groups would get distracted by a lone wall section somewhere on the map)
+- fix AI not choosing start locations properly some maps
+
+
+
+
 2019/12/08 ------------------ NOTES v1.22 ----------------------
 
 --- Balance / Mechanics

@@ -58,6 +58,7 @@ local spDestroyUnit = Spring.DestroyUnit
 local spUnitDetach = Spring.UnitDetach
 local spGetUnitTransporter = Spring.GetUnitTransporter
 local spGetUnitIsTransporting = Spring.GetUnitIsTransporting
+local spGetGroundNormal = Spring.GetGroundNormal
 
 local spSetFeatureVelocity = Spring.SetFeatureVelocity
 local spSetFeaturePosition = Spring.SetFeaturePosition
@@ -103,6 +104,9 @@ local comsatBeacons = {}
 local scoperBeacons = {}
 local comsatBeaconDefId = UnitDefNames["cs_beacon"].id
 local scoperBeaconDefId = UnitDefNames["scoper_beacon"].id
+
+local maxSlopeByUnitDefId = {}
+local stuckGroundUnitIds = {}
 
 GG.destructibleProjectilesDestroyed = {}
 
@@ -201,6 +205,22 @@ local function updateUnitPhysics(unitId)
 		end
 	end
 	
+	-- force stuck ground units to slide down the slope, give them a push
+	if stuckGroundUnitIds[unitId] == true then
+		local nx,ny,nz,slope = spGetGroundNormal(x,z,true)
+		h = abs(y - spGetGroundHeight(x,z))
+		if (v < 0.3 ) then
+			--Spring.Echo("moving stuck unit at ("..x..";"..y..";"..z..") n=("..nx..";"..ny..";"..nz..") slope="..slope)
+			
+			-- push the unit out of the slope
+			if (y > 0) then
+				spSetUnitPosition(unitId,x+nx,y,z+nz)
+			else
+				Spring.AddUnitImpulse(unitId,2*nx,0,2*nz)
+			end
+		end
+	end
+	
 	-- force physics to prevent idle air transports carrying stuff from diving into fog, lava, etc.
 	-- TODO workaround for spring engine bug, remove when possible
 	if WATER_DEALS_DAMAGE then
@@ -279,6 +299,28 @@ local function updateFeaturePhysics(featureId)
 	--end 
 end
 
+-- checks if a unit is stuck by testing slope
+local function checkStuck(defId,x,y,z,v)
+	if (maxSlopeByUnitDefId[defId] and v < 0.1) then
+		local dx, dz, slope
+		_,_,_,slope = spGetGroundNormal(x,z)
+		if slope > maxSlopeByUnitDefId[defId] then
+			return true
+		end
+		
+		-- check nearby positions, justincase
+		for dx=-8,8,16 do
+			for dz=-8,8,16 do
+				_,_,_,slope = spGetGroundNormal(x+dx,z+dz)
+				if slope > maxSlopeByUnitDefId[defId] then
+					return true
+				end
+			end
+		end
+	end
+	return false
+end
+
 local function randomNegative(scale)
 	return (random() * scale * 2 - scale)
 end
@@ -299,6 +341,15 @@ function gadget:Initialize()
 	-- for each safety point, add the "y"
 	for _,p in pairs(mapSafetyPoints) do
 		p.y = spGetGroundHeight(p.x,p.z) + 100
+	end
+	
+	for defId,unitDef in pairs(UnitDefs) do
+		if unitDef ~= nil and (not unitDef.isImmobile) and not (unitDef.canFly) then
+			if unitDef.moveDef and unitDef.moveDef.maxSlope and unitDef.moveDef.maxSlope < 0.5 then
+				maxSlopeByUnitDefId[defId] = unitDef.moveDef.maxSlope
+				--Spring.Echo(unitDef.name.." maxSlope="..unitDef.moveDef.maxSlope)
+			end 
+		end
 	end
 end
 
@@ -402,6 +453,20 @@ function gadget:GameFrame(n)
 			end
 		end
 	
+		-- check if unit is stuck
+		local defId = spGetUnitDefID(unitId)
+		if (checkStuck(defId,x,y,z,v)) then
+			if not stuckGroundUnitIds[unitId] then
+				--Spring.Echo(unitId.." is stuck!")
+				stuckGroundUnitIds[unitId] = true
+			end
+		else
+			if stuckGroundUnitIds[unitId] then
+				--Spring.Echo(unitId.." is no longer stuck")
+				stuckGroundUnitIds[unitId] = nil
+			end
+		end
+		
 		-- update physics
 		oldPhysics[1] = x
 		oldPhysics[2] = y
@@ -414,6 +479,7 @@ function gadget:GameFrame(n)
 		oldPhysics[9] = rx
 		oldPhysics[10] = ry
 		oldPhysics[11] = rz
+		oldPhysics[12] = v
 	end
 	
 	-- feature physics
@@ -486,6 +552,10 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 	
 	if aircraftMovementFixUnitIds[unitId] then
 		aircraftMovementFixUnitIds[unitId] = nil
+	end
+	
+	if stuckGroundUnitIds[unitId] then
+		stuckGroundUnitIds[unitId] = nil
 	end
 	
 	if destructibleProjectileDefIds[unitDefId] then

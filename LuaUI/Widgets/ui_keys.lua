@@ -12,14 +12,18 @@ end
 
 include("keysym.h.lua")
 
-menuSecond = -1
+local menuSecond = -1
 WG.menuShown = false
-shouldShowMenu = false
+local shouldShowMenu = false
+local shouldSelectCom = false
 
 function widget:Initialize()
    Spring.SendCommands("unbindaction showmetalmap")
    Spring.SendCommands("unbindaction quitmenu")
 end
+
+
+
 
 function widget:KeyPress(key, mods, isRepeat)
 	if (key == KEYSYMS.C) and mods.ctrl then
@@ -34,7 +38,7 @@ function widget:KeyPress(key, mods, isRepeat)
 			local cp 		= unitDef.customParams or nil
 			
 			if unitDef and cp and cp.iscommander then
-				Spring.SelectUnitArray({unitID})
+				shouldSelectCom = unitID
 				local x,y,z = Spring.GetUnitPosition(unitID)
 				Spring.SetCameraTarget(x,y,z)
 				return false
@@ -59,6 +63,9 @@ function widget:KeyRelease()
 		Spring.SendCommands("quitmenu")
 		WG.menuShown = true
 		shouldShowMenu = false
+	elseif (shouldSelectCom) then
+		Spring.SelectUnitArray({shouldSelectCom})
+		shouldSelectCom = false
 	end
 end
 

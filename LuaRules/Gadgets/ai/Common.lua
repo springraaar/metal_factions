@@ -1047,6 +1047,26 @@ supporterList =
 	"sphere_resolver"
 }
 
+
+-- units that the AI won't target
+neutralUnits = {
+	"aven_fortification_wall",
+	"gear_fortification_wall",
+	"claw_fortification_wall",
+	"sphere_fortification_wall",
+	"aven_large_fortification_wall",
+	"gear_large_fortification_wall",
+	"claw_large_fortification_wall",
+	"sphere_large_fortification_wall",	
+	"aven_fortification_gate",
+	"gear_fortification_gate",
+	"claw_fortification_gate",
+	"sphere_fortification_gate",
+	"cs_beacon",
+	"scoper_beacon"
+}
+
+
 -- TODO : not used atm
 naturallyRoamingCommanders = {
 ------------------------------------------------ AVEN

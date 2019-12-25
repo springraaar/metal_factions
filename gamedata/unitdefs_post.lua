@@ -189,7 +189,7 @@ if (true) then
   
 			-- disable speed penalty when turning
 			unitDef.turninplaceanglelimit = 90.0
-			unitDef.turninplacespeedlimit = mv
+			unitDef.turninplacespeedlimit = mv / 1.5
 
 			-- make sure low acceleration units are able to beat drag
 			local minAcceleration = mv / 80

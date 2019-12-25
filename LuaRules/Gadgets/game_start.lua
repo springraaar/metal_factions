@@ -5,7 +5,7 @@ function gadget:GetInfo()
         author    = "Tobi Vollebregt (modified by raaar)",
         date      = "January, 2010",
         license   = "GNU GPL, v2 or later",
-        layer     = 0,
+        layer     = math.huge,
         enabled   = true
     }
 end
@@ -51,8 +51,19 @@ local function SpawnStartUnit(teamID)
     Spring.SetTeamRulesParam(teamID, 'faction', factionStr , {public=true})
     
     if (startUnit and startUnit ~= "") then
-        -- spawn the specified start unit
-        local x,y,z = Spring.GetTeamStartPosition(teamID)
+		-- spawn the specified start unit
+		local x,y,z
+		-- use mfai start position if set, else get it normally
+		if (GG.mFAIStartPosByTeamId[teamID]) then
+			local startPos = GG.mFAIStartPosByTeamId[teamID]
+			if (startPos ~= nil) then
+				x=startPos.x
+				y=startPos.y
+				z=startPos.z
+			end
+		else
+        	x,y,z = Spring.GetTeamStartPosition(teamID)
+        end
         -- snap to 16x16 grid
         x, z = 16*math.floor((x+8)/16), 16*math.floor((z+8)/16)
         y = Spring.GetGroundHeight(x, z)

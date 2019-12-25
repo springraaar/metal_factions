@@ -21,6 +21,7 @@ local spGetTeamUnits = Spring.GetTeamUnits
 local spGetAllUnits = Spring.GetAllUnits
 local spGetUnitTeam = Spring.GetUnitTeam
 local mFAIs = {}
+GG.mFAIStartPosByTeamId = {}
 
 local showAIWarningMessage = 0
 
@@ -96,14 +97,14 @@ end
 function gadget:GameStart() 
     -- Initialise MFAIs
     for _,thisAI in ipairs(mFAIs) do
+    	local startPos = thisAI:findStartPos(true,INFINITY)
+        GG.mFAIStartPosByTeamId[thisAI.id] = startPos
+
         local _,_,_,isAI,side = spGetTeamInfo(thisAI.id)
 		thisAI.side = side
-		local x,y,z = spGetTeamStartPosition(thisAI.id)
-		thisAI.startPos = {x,y,z}
 		thisAI:Init()
     end
 end
-
 
 function gadget:GameFrame(n) 
 	if (n%16) == 0 then
@@ -132,7 +133,7 @@ function gadget:GameFrame(n)
         end 
 	
 		-- run AI game frame update handlers
-		thisAI:Update()
+		thisAI:Update(n)
     end
 end
 

@@ -21,7 +21,7 @@ end
 local modOptions = Spring.GetModOptions()
 
 -- teamDeathMode possible values: "none", "teamzerounits" , "allyzerounits"
-local teamDeathMode = modOptions.teamdeathmode or "teamzerounits"
+local teamDeathMode = modOptions.teamdeathmode or "allyzerounits"
 
 -- sharedDynamicAllianceVictory is a C-like bool
 local sharedDynamicAllianceVictory = tonumber(modOptions.shareddynamicalliancevictory) or 0
@@ -188,14 +188,16 @@ function gadget:GameFrame(frame)
 			return
 		end
 	
-		CheckGameOver()
-		-- kill teams after checking for gameover to avoid to trigger instantly gameover
-		if teamDeathMode == "teamzerounits" then
-			KillTeamsZeroUnits()
-		elseif teamDeathMode == "allyzerounits" then
-			KillAllyTeamsZeroUnits()
+		if (frame > 1) then
+			CheckGameOver()
+			-- kill teams after checking for gameover to avoid to trigger instantly gameover
+			if teamDeathMode == "teamzerounits" then
+				KillTeamsZeroUnits()
+			elseif teamDeathMode == "allyzerounits" then
+				KillAllyTeamsZeroUnits()
+			end
+			KillResignedTeams()
 		end
-		KillResignedTeams()
 	end
 end
 

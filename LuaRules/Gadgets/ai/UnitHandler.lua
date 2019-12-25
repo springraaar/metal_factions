@@ -606,74 +606,77 @@ function UnitHandler:Update()
 			for eId,_ in pairs (enemyUnitIds) do
 				ud = UnitDefs[spGetUnitDefID(eId)]
 				local tmpName = ud.name
-				local hasWeapons = #ud.weapons > 0
-				local cost = getWeightedCostByName(tmpName)
-				local _,_,_,_,progress = spGetUnitHealth(eId) 
-				progress = progress or 1
-				
-
-				-- count every enemy unit
-				pos = newPosition(spGetUnitPosition(eId,false,false))
-				local xIndex, zIndex = getCellXZIndexesForPosition(pos)
-				
-				-- log("enemy cell at ".."("..xIndex..";"..zIndex..")",self.ai)  --DEBUG
-				if cells[xIndex] == nil then
-					cells[xIndex] = {}
-				end
-				if cells[xIndex][zIndex] == nil then
-					local newCell = initUnitCell()
-					newCell.xIndex = xIndex
-					newCell.zIndex = zIndex
-					newCell.p.x = xIndex*CELL_SIZE+CELL_SIZE/2
-					newCell.p.z = zIndex*CELL_SIZE+CELL_SIZE/2
-					cells[xIndex][zIndex] = newCell
-					table.insert(cellList,newCell)
-				end
-				cell = cells[xIndex][zIndex]
-			
-				if (pos.y < UNDERWATER_THRESHOLD ) then
-					cell.underWaterCost = cell.underWaterCost + cost				
-				end
-				if setContains(unitTypeSets[TYPE_EXTRACTOR],tmpName) then
-					cost = cost * ENEMY_EXTRACTOR_COST_FACTOR
-					cell.extractorCount = cell.extractorCount + 1
-				end
-
-				if progress > 0.85 and setContains(unitTypeSets[TYPE_AIR_ATTACKER],tmpName) then
-					cell.airAttackerCost = cell.airAttackerCost + cost
-					enemyArmedUnits = enemyArmedUnits + cost
-					enemyAirAttackers = enemyAirAttackers + cost
-					enemyArmedWeightedCost = enemyArmedWeightedCost + cost * AIR_ATTACKER_EVALUATION_FACTOR
-					if (self.badAAUnitNames[tmpName]) then
-						cell.badAAAirAttackerCost = cell.badAAAirAttackerCost + cost
+				if (not neutralUnits[tmpName]) then
+					
+					local hasWeapons = #ud.weapons > 0
+					local cost = getWeightedCostByName(tmpName)
+					local _,_,_,_,progress = spGetUnitHealth(eId) 
+					progress = progress or 1
+					
+	
+					-- count every enemy unit
+					pos = newPosition(spGetUnitPosition(eId,false,false))
+					local xIndex, zIndex = getCellXZIndexesForPosition(pos)
+					
+					-- log("enemy cell at ".."("..xIndex..";"..zIndex..")",self.ai)  --DEBUG
+					if cells[xIndex] == nil then
+						cells[xIndex] = {}
 					end
-				elseif progress > 0.85 and hasWeapons and ud.canMove then
-					cell.attackerCost = cell.attackerCost + cost
-					enemyArmedUnits = enemyArmedUnits + cost
-					enemyAttackers = enemyAttackers + cost
-					enemyArmedWeightedCost = enemyArmedWeightedCost + cost
-					if (self.badAAUnitNames[tmpName]) then
-						cell.badAAAttackerCost = cell.badAAAttackerCost + cost
+					if cells[xIndex][zIndex] == nil then
+						local newCell = initUnitCell()
+						newCell.xIndex = xIndex
+						newCell.zIndex = zIndex
+						newCell.p.x = xIndex*CELL_SIZE+CELL_SIZE/2
+						newCell.p.z = zIndex*CELL_SIZE+CELL_SIZE/2
+						cells[xIndex][zIndex] = newCell
+						table.insert(cellList,newCell)
 					end
-				elseif progress > 0.85 and hasWeapons then
-					cell.defenderCost = cell.defenderCost + cost
-					enemyArmedUnits = enemyArmedUnits + cost
-					enemyDefenders = enemyDefenders + cost
-					enemyArmedWeightedCost = enemyArmedWeightedCost + cost
-					if (self.badAAUnitNames[tmpName]) then
-						cell.badAADefenderCost = cell.badAADefenderCost + cost
+					cell = cells[xIndex][zIndex]
+				
+					if (pos.y < UNDERWATER_THRESHOLD ) then
+						cell.underWaterCost = cell.underWaterCost + cost				
 					end
+					if setContains(unitTypeSets[TYPE_EXTRACTOR],tmpName) then
+						cost = cost * ENEMY_EXTRACTOR_COST_FACTOR
+						cell.extractorCount = cell.extractorCount + 1
+					end
+	
+					if progress > 0.85 and setContains(unitTypeSets[TYPE_AIR_ATTACKER],tmpName) then
+						cell.airAttackerCost = cell.airAttackerCost + cost
+						enemyArmedUnits = enemyArmedUnits + cost
+						enemyAirAttackers = enemyAirAttackers + cost
+						enemyArmedWeightedCost = enemyArmedWeightedCost + cost * AIR_ATTACKER_EVALUATION_FACTOR
+						if (self.badAAUnitNames[tmpName]) then
+							cell.badAAAirAttackerCost = cell.badAAAirAttackerCost + cost
+						end
+					elseif progress > 0.85 and hasWeapons and ud.canMove then
+						cell.attackerCost = cell.attackerCost + cost
+						enemyArmedUnits = enemyArmedUnits + cost
+						enemyAttackers = enemyAttackers + cost
+						enemyArmedWeightedCost = enemyArmedWeightedCost + cost
+						if (self.badAAUnitNames[tmpName]) then
+							cell.badAAAttackerCost = cell.badAAAttackerCost + cost
+						end
+					elseif progress > 0.85 and hasWeapons then
+						cell.defenderCost = cell.defenderCost + cost
+						enemyArmedUnits = enemyArmedUnits + cost
+						enemyDefenders = enemyDefenders + cost
+						enemyArmedWeightedCost = enemyArmedWeightedCost + cost
+						if (self.badAAUnitNames[tmpName]) then
+							cell.badAADefenderCost = cell.badAADefenderCost + cost
+						end
+					end
+					
+					-- if unit is strategic, assume it is worth twice as much
+					if setContains(unitTypeSets[TYPE_STRATEGIC], tmpName) then
+						cost = cost * ENEMY_STRATEGIC_COST_FACTOR
+					end
+					cell.cost = cell.cost + cost
+					
+					-- target the unit's position instead of the center of the cell
+					cell.p.x = pos.x
+					cell.p.z = pos.z
 				end
-				
-				-- if unit is strategic, assume it is worth twice as much
-				if setContains(unitTypeSets[TYPE_STRATEGIC], tmpName) then
-					cost = cost * ENEMY_STRATEGIC_COST_FACTOR
-				end
-				cell.cost = cell.cost + cost
-				
-				-- target the unit's position instead of the center of the cell
-				cell.p.x = pos.x
-				cell.p.z = pos.z
 			end
 			
 			-- load nearby cell data for each cell

@@ -93,6 +93,7 @@ local namePic         = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/name.png"
 local IDPic           = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/ID.png"
 local pointPic        = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/point.png"
 local chatPic         = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/chat.png"
+local chatTypePic     = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/chatType.png"
 local lowPic          = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/low.png"
 local settingsPic     = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/settings.png"
 local sidePic         = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/side.png"
@@ -235,6 +236,77 @@ local playerOffset    = 19
 local drawList        = {}
 local teamN
 local newSide		  = {}
+
+
+
+
+--------------- chat button stuff
+
+
+local chatTypeButton				= {}
+local glColor 						= gl.Color
+local glRect						= gl.Rect
+local glTexture 					= gl.Texture
+local glTexRect 					= gl.TexRect
+
+local refFontSize = 14
+local refBoxSizeX = 100
+local refBoxSizeY = 30
+local fontSize = refFontSize
+local scaleFactor = 1
+
+-- colors
+local cLight						= {1, 1, 1, 0.5}
+local cLightBorder					= {1, 1, 1, 1}
+local cWhite						= {1, 1, 1, 1}
+local cBorder						= {0, 0, 0, 1}		
+local cBack							= {0, 0, 0, 0.5}
+
+local CHAT_ALL = 0
+local CHAT_ALLIES = 1
+local CHAT_SPECTATORS = 2
+
+local chatType = CHAT_ALL
+local chatTypeLabels = {
+	[CHAT_ALL] = "Everyone",
+	[CHAT_ALLIES] = "Allies",
+	[CHAT_SPECTATORS] = "Spectators"
+
+}
+
+local function isOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
+	if BLcornerX == nil then return false end
+	-- check if the mouse is in a rectangle
+
+	return x >= BLcornerX and x <= TRcornerX
+	                      and y >= BLcornerY
+	                      and y <= TRcornerY
+end
+
+function updateChatTypeSizesPositions()
+	if (vsy > 1800) then
+		scaleFactor=1.6
+	elseif (vsy > 1400) then
+		scaleFactor=1.4
+	elseif (vsy > 1200) then
+		scaleFactor=1.2
+	else
+		scaleFactor=1
+	end
+	fontSize = refFontSize * scaleFactor 
+	chatTypeButton.x1 = vsx - 1 - refBoxSizeX*scaleFactor
+	chatTypeButton.x2 = vsx - 1
+	chatTypeButton.y1 = widgetPosY + widgetHeight + 1
+	chatTypeButton.y2 = widgetPosY + widgetHeight + 1 + refBoxSizeY*scaleFactor
+end
+
+function widget:IsAbove(mx,my)
+	if not Spring.IsGUIHidden() then
+		chatTypeButton.above = isOnButton(mx, my, chatTypeButton["x1"],chatTypeButton["y1"],chatTypeButton["x2"],chatTypeButton["y2"])
+	end
+	return false		
+end	
+
 
 --------------------------------------------------
 -- Modules
@@ -516,7 +588,7 @@ function Init()
 	SortList()
 	SetModulesPositionX()
 	GeometryChange()
-	
+	updateChatTypeSizesPositions()
 end
 
 function widget:Initialize()
@@ -873,6 +945,31 @@ function widget:DrawScreen()
 
 	-- draws share energy/metal sliders
 	DrawShareSlider()
+	
+	-- draw chat type button
+	if chatTypeButton.above then
+		glColor(cLight)
+	else
+		glColor(cBack)
+	end
+	glRect(chatTypeButton.x1,chatTypeButton.y1,chatTypeButton.x2,chatTypeButton.y2)
+	glColor(cWhite)
+	-- chat button text
+	gl.Text(chatTypeLabels[chatType],(chatTypeButton.x1 + chatTypeButton.x2) /2, (chatTypeButton.y1 + chatTypeButton.y2) / 2-fontSize/2,fontSize,"c")
+	-- chat type button border
+	if chatTypeButton.above then
+		glColor(cLightBorder)
+	else
+		glColor(cBorder)
+	end
+	glRect(chatTypeButton.x1,chatTypeButton.y1,chatTypeButton.x1+1,chatTypeButton.y2)
+	glRect(chatTypeButton.x2-1,chatTypeButton.y1,chatTypeButton.x2,chatTypeButton.y2)
+	glRect(chatTypeButton.x1,chatTypeButton.y1,chatTypeButton.x2,chatTypeButton.y1+1)
+	glRect(chatTypeButton.x1,chatTypeButton.y2-1,chatTypeButton.x2,chatTypeButton.y2)
+	
+	gl_Color(1,1,1,1)
+	gl_Texture(chatTypePic)
+	gl_TexRect(chatTypeButton.x1 - 1 - (chatTypeButton.y2-chatTypeButton.y1), chatTypeButton.y1, chatTypeButton.x1 - 1, chatTypeButton.y2)
 end
 
 function UpdateResources()
@@ -1544,6 +1641,22 @@ function Spec(teamID)
 end
 
 function widget:MousePress(x,y,button)
+	-- check chat type button first
+	if not Spring.IsGUIHidden() then
+		if chatTypeButton.above then	
+			if (chatType == CHAT_ALL) then
+				chatType = CHAT_ALLIES
+				Spring.SendCommands("ChatAlly")
+			elseif (chatType == CHAT_ALLIES) then
+				chatType = CHAT_SPECTATORS
+				Spring.SendCommands("ChatSpec")
+			elseif (chatType == CHAT_SPECTATORS) then
+				chatType = CHAT_ALL
+				Spring.SendCommands("ChatAll")
+			end
+		end
+	end
+	
 	local t = false       -- true if the object is a team leader
 	local clickedPlayer
 	local posY
@@ -2224,6 +2337,7 @@ function widget:ViewResize(viewSizeX, viewSizeY)
 		widgetRight = widgetRight - dx
 		widgetPosX  = widgetRight - widgetWidth
 	end
+	updateChatTypeSizesPositions()
 end
 
 

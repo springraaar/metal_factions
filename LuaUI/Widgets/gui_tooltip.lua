@@ -28,6 +28,7 @@ local xpArr = {
 }
 local tempTooltip = nil
 local min = math.min
+local max = math.max
 local floor = math.floor
 local ceil = math.ceil
 local modf = math.modf
@@ -41,6 +42,7 @@ local spGetUnitVelocity = Spring.GetUnitVelocity
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetTeamRulesParam = Spring.GetTeamRulesParam
 local spGetUnitTeam = Spring.GetUnitTeam
+local spGetTeamColor = Spring.GetTeamColor
 
 local TRANSPORT_MASS_LIMIT_LIGHT = 1200
 local TRANSPORT_MASS_LIMIT_HEAVY = 3000  
@@ -52,6 +54,26 @@ local noDamageWeaponDefIds = {
 	[WeaponDefNames["scoper_beacon"].id] = true
 }
 
+local myPlayerID
+local myTeamID
+local myAllyTeamID
+local nameByTeamID = {}
+local addedBrightness = 0.2
+
+-- make text brighter to avoid white outline
+local function convertColor(r,g,b,a)
+	local red = r + addedBrightness
+	local green = g + addedBrightness
+	local blue = b + addedBrightness
+	red = max( red, 0 )
+	green = max( green, 0 )
+	blue = max( blue, 0 )
+	red = min( red, 1 )
+	green = min( green, 1 )
+	blue = min( blue, 1 )
+	return red,green,blue,a
+end
+
 function widget:Initialize()
 	Spring.SendCommands({"tooltip 0"})
 	
@@ -62,6 +84,35 @@ function widget:Initialize()
 		ud.shieldPower   = 0;
 		local shieldDefID = ud.shieldWeaponDef
 		ud.shieldPower = ((shieldDefID)and(WeaponDefs[shieldDefID].shieldPower))or(-1)
+	end
+	
+	-- get players and teams info
+	myPlayerID = Spring.GetLocalPlayerID()
+	myTeamID = Spring.GetLocalTeamID()
+	myAllyTeamID = Spring.GetLocalAllyTeamID()
+	local teamList   = Spring.GetTeamList()
+	for _,teamID in pairs(teamList) do
+		local _,playerID,_,isAI, tside, tallyteam = Spring.GetTeamInfo(teamID)
+		local name,version
+		
+		if isAI then
+			_,_,_,_, name, version = Spring.GetAIInfo(teamID)
+	
+			local aiInfo = Spring.GetTeamLuaAI(teamID)
+			if (aiInfo and string.sub(aiInfo,1,4) == "MFAI") then
+				name = aiInfo
+			else
+				if type(version) == "string" then
+					name = "AI:" .. name .. "-" .. version 
+				else
+					name = "AI:" .. name
+				end
+			end
+		else
+			name,_, _, _, _, _, _, _, _ = Spring.GetPlayerInfo(playerID)
+		end
+		
+		nameByTeamID[teamID] = name == nil and "Uncontrolled" or name 
 	end
 end
  
@@ -337,8 +388,10 @@ function GenerateNewTooltip()
 			NewTooltip=NewTooltip.."\n\n("..floor(gx+0.5)..","..floor(gz+0.5)..")"
 			
 			local h = Spring.GetGroundHeight(gx,gz)
-			local airMeshH = Spring.GetSmoothMeshHeight(gx,gz) 
-			NewTooltip=NewTooltip.."\n\nAltitude "..floor(h).."\n\nAir Mesh Altitude "..floor(airMeshH)
+			local airMeshH = Spring.GetSmoothMeshHeight(gx,gz)
+			local _,_,_,slope = Spring.GetGroundNormal(gx,gz,true)  
+			--NewTooltip=NewTooltip.."\n\nAltitude "..floor(h).."\n\nAir Mesh Altitude "..floor(airMeshH)
+			NewTooltip=NewTooltip.."\n\nAltitude "..floor(h).."\n\nAir Mesh Altitude "..floor(airMeshH).."\n\nSlope "..slope
 		end
 		FoundTooltipType="terrain"
 	end
@@ -519,11 +572,17 @@ function GenerateNewTooltip()
 			
 			local metalMake,metalUse,energyMake,energyUse = Spring.GetUnitResources(u)
 			local isFriendly = metalMake ~= nil       -- assume only friendly units have this info
+			local teamID = spGetUnitTeam(id) 
 			
 			-- build progress, health and shield
 			local health,maxHealth,paralyzeDamage,captureProgress,buildProgress = Spring.GetUnitHealth(u)
 			stunned_or_beingbuilt, stunned, beingbuilt = Spring.GetUnitIsStunned(u)
 			NewTooltip = NewTooltip.."\n"..ud.humanName.." ("..ud.tooltip..")"
+			-- owner
+			local r,g,b = spGetTeamColor(teamID)
+			r,g,b,_ = convertColor(r,g,b,0)
+			NewTooltip = NewTooltip.." \255"..string.char(floor(255*r))..string.char(floor(255*g))..string.char(floor(255*b))..nameByTeamID[teamID]
+			
 			local hpMod = spGetUnitRulesParam(u,"upgrade_hp")
 			if not hpMod then
 				hpMod = 1
@@ -536,7 +595,7 @@ function GenerateNewTooltip()
 			local xp = spGetUnitExperience(u)
 			local xpMod = 1
 			if xp and xp>0 then
-				local xpIndex = math.min(10,math.max(floor(11*xp/(xp+1)),0))+1
+				local xpIndex = min(10,max(floor(11*xp/(xp+1)),0))+1
 				xpMod = 1+0.35*(xp/(xp+1))
 				if(xpIndex > 1) then
 					NewTooltip = NewTooltip.."\255\255\255\255    Experience: "..xpArr[xpIndex]
@@ -564,10 +623,11 @@ function GenerateNewTooltip()
 			if spGetUnitIsCloaked(u) then
 				NewTooltip = NewTooltip.."\255\170\170\170   CLOAKED"
 			end        
-			-- alliance                
+			-- alliance
 			if isFriendly == false then
-				NewTooltip = NewTooltip.."   \255\255\0\0ENEMY"	
+				NewTooltip = NewTooltip.."    \255\255\0\0ENEMY"	
 			end
+
 			NewTooltip = NewTooltip.."\n"
 			if buildProgress and buildProgress<1 then
 				NewTooltip = NewTooltip.."\255\213\213\255".."Build progress: ".."\255\170\170\255"..FormatNbr(100*buildProgress).."%\n"
@@ -699,7 +759,7 @@ function widget:DrawScreenEffects(vsx,vsy)
         end
  
         if not FontSize then
-                FontSize = math.max(8,4+vsy/100)
+                FontSize = max(8,4+vsy/100)
         end
  
         xTooltipSize = FontSize*(1+maxWidth)
@@ -739,7 +799,7 @@ end
 --        local xMouse,yMouse = GetMouseState()
 --        if xMouse < xTooltipSize and yMouse < yTooltipSize and not Spring.IsGUIHidden() then
 --                if up then
---                        FontSize = math.max(FontSize - 1,2)
+--                        FontSize = max(FontSize - 1,2)
 --                else
 --                        FontSize = FontSize + 1
 --                end
