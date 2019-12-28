@@ -92,7 +92,7 @@ function AI:findStartPos(doRangeCheck, minStartPosDist)
 					spot.z = min(zMax, max(zMin, mSpot.z -50 + random(100)))  
 					spot.y = spGetGroundHeight(spot.x, spot.z)		
 					
-					Spring.Echo("found start position for MFAI id="..self.id.." at ("..spot.x..";"..spot.y..";"..spot.z..")") --DEBUG
+					-- Spring.Echo("found start position for MFAI id="..self.id.." at ("..spot.x..";"..spot.y..";"..spot.z..")") --DEBUG
 					return spot
 				end
 			end
@@ -109,7 +109,7 @@ function AI:findStartPos(doRangeCheck, minStartPosDist)
 		if (minStartPosDist > 200) then
 			return self:findStartPos(true,minStartPosDist/2)
 		else
-			Spring.Echo("could not find start position for MFAI id="..self.id.." : trying again with distance check disabled") --DEBUG
+			-- Spring.Echo("could not find start position for MFAI id="..self.id.." : trying again with distance check disabled") --DEBUG
 			return self:findStartPos(false,0)
 		end
 	end

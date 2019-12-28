@@ -2264,7 +2264,7 @@ function CheckPlayersChange()
 		SortList()
 		SetModulesPositionX()    -- change the X size if needed (change of widest name)
 	end
-
+	updateChatTypeSizesPositions()
 end
 
 function updateTake(allyTeamID)
@@ -2324,6 +2324,7 @@ function widget:TeamDied(teamID)
 	player[teamID+32]        = CreatePlayerFromTeam(teamID)
 	player[teamID+32].totake = false
 	SortList()
+	updateChatTypeSizesPositions()
 end
 
 function widget:ViewResize(viewSizeX, viewSizeY)
