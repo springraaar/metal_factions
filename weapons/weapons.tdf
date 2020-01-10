@@ -4376,7 +4376,7 @@
 	weaponvelocity=250;
 	areaofeffect=300;
 	soundstart=largegun;
-	soundhit=xplonuk1;
+	soundhit=xplolrg5;
 	explosiongenerator=custom:LARGEBLASTWRAPPER1;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -4403,7 +4403,7 @@
 	weaponvelocity=250;
 	areaofeffect=385;
 	soundstart=largegun;
-	soundhit=xplonuk1;
+	soundhit=xplolrg5;
 	explosiongenerator=custom:LARGEBLASTWRAPPER1;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -4457,7 +4457,7 @@
 	weaponvelocity=250;
 	areaofeffect=300;
 	soundstart=largegun;
-	soundhit=xplonuk1;
+	soundhit=xplolrg5;
 	explosiongenerator=custom:LARGEBLASTWRAPPER1;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -5273,7 +5273,7 @@
 	name=Heavy Plasma Cannon;
 	weapontype=Cannon;
 	turret=1;
-	range=445;
+	range=530;
 	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=3;
@@ -7742,7 +7742,7 @@
 	weaponvelocity=250;
 	areaofeffect=420;
 	soundstart=largegun;
-	soundhit=xplonuk1;
+	soundhit=xplomas2;
 	explosiongenerator=custom:LARGEBLASTWRAPPER1;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -7769,7 +7769,7 @@
 	weaponvelocity=250;
 	areaofeffect=460;
 	soundstart=largegun;
-	soundhit=xplonuk1;
+	soundhit=xplomas2;
 	explosiongenerator=custom:LARGEBLASTWRAPPER1;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -7796,7 +7796,7 @@
 	weaponvelocity=250;
 	areaofeffect=380;
 	soundstart=largegun;
-	soundhit=xplonuk1;
+	soundhit=xplomas2;
 	explosiongenerator=custom:LARGEBLASTWRAPPER1;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -7823,7 +7823,7 @@
 	weaponvelocity=250;
 	areaofeffect=420;
 	soundstart=largegun;
-	soundhit=xplonuk1;
+	soundhit=xplomas2;
 	explosiongenerator=custom:LARGEBLASTWRAPPER1;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -7850,7 +7850,7 @@
 	weaponvelocity=250;
 	areaofeffect=325;
 	soundstart=largegun;
-	soundhit=xplonuk1;
+	soundhit=xplolrg5;
 	explosiongenerator=custom:LARGEBLASTWRAPPER1;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -7877,7 +7877,7 @@
 	weaponvelocity=250;
 	areaofeffect=520;
 	soundstart=largegun;
-	soundhit=xplonuk1;
+	soundhit=xplolrg5;
 	explosiongenerator=custom:LARGEBLASTWRAPPER2;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -7904,7 +7904,7 @@
 	weaponvelocity=250;
 	areaofeffect=650;
 	soundstart=largegun;
-	soundhit=xplonuk1;
+	soundhit=xplolrg5;
 	explosiongenerator=custom:LARGEBLASTWRAPPER2;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -12327,7 +12327,7 @@
 	accuracy=10;
 	areaofeffect=48;
 	soundstart=railgunbig2;
-	soundhit=xplonuk1;
+	soundhit=xplolrg5;
 	soundtrigger=1;
 	tolerance=3000;
 	InterceptedByShieldType=1;
@@ -14091,7 +14091,7 @@
 	energypershot=700;
 	areaofeffect=150;
 	soundstart=largegun;
-	soundhit=xplonuk1;
+	soundhit=xplolrg5;
 	firestarter=50;
 	accuracy=250;
 	tolerance=3000;
@@ -14133,7 +14133,7 @@
 	energypershot=350;
 	areaofeffect=150;
 	soundstart=largegun2;
-	soundhit=xplonuk1;
+	soundhit=xplolrg5;
 	firestarter=50;
 	accuracy=500;
 	tolerance=3000;
@@ -14174,7 +14174,7 @@
 	energypershot=800;
 	areaofeffect=170;
 	soundstart=largegun2;
-	soundhit=xplonuk1;
+	soundhit=xplolrg5;
 	firestarter=50;
 	accuracy=400;
 	tolerance=3000;
@@ -14193,6 +14193,47 @@
 		armor_heavy=1150;//#AUTO#
 		armor_medium=1150;//#AUTO#
 		armor_light=1150;//#AUTO#
+	}
+}
+[claw_ringo_ring]
+{
+	name=High Energy Ring Launcher;
+	weapontype=MissileLauncher;
+	trajectoryheight=0.2;
+	turret=1;
+	model=weapon_ringsml.3do;
+	range=450;
+	accuracy=100;
+	movingaccuracy=200;
+	reloadtime=6.5;
+	flighttime=3.75;
+	Texture1=null; //flare//
+	burnblow=1;
+	wobble=100;
+	turnrate=6000;
+	weaponvelocity=500;
+	cegTag=RINGTRAILSML;
+	explosiongenerator=custom:RINGBLASTWRAPPER;
+	areaofeffect=32;
+	soundstart=ringfire;
+	soundhit=ringhit;
+	energyPerShot=200;
+	tolerance=6000;
+	startvelocity=500;
+	weaponAcceleration=50;
+	InterceptedByShieldType=1;
+	impulsefactor=0.4;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=400;
+		armor_heavy=400;//#AUTO#
+		armor_medium=400;//#AUTO#
+		armor_light=400;//#AUTO#
 	}
 }
 [claw_gyro_ring]
@@ -14959,6 +15000,49 @@
 		armor_heavy=35;//#AUTO#
 		armor_medium=70;//#AUTO#
 		armor_light=70;//#AUTO#
+	}
+}
+[sphere_double_blaster]
+{
+	name=Energy Blaster;
+	weapontype=EmgCannon;
+	explosiongenerator=custom:REDBLASTWRAPPER;
+	cegTag=REDGLOWSML;
+  	nogap=0;
+	intensity=1;
+	size=2.7;
+	rgbcolor=1.0 0.3 0.3;
+	stages=2;
+  	separation=1;
+  	alphadecay=0.7;
+  	sizedecay=-0.2;
+	turret=1;
+	range=310;
+	reloadtime=2;
+	energypershot=40;
+	projectiles=2;
+	weapontimer=1;
+	weaponvelocity=390;
+	accuracy=200;
+	sprayangle=700;
+	areaofeffect=24;
+	soundstart=engcannon;
+	soundhit=xplomed5;
+	soundtrigger=1;
+	tolerance=6000;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=2;
+		reaimtime=1;
+	}
+	[DAMAGE]
+	{
+		default=100;
+		armor_heavy=50;//#AUTO#
+		armor_medium=100;//#AUTO#
+		armor_light=100;//#AUTO#
 	}
 }
 [sphere_needles_missile]
@@ -16196,7 +16280,8 @@
 	turret=1;
 	range=680;
 	minintensity=1.0;
-	reloadtime=2;
+	reloadtime=3.5;
+	energypershot=40;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundstart=lasrfir3;
@@ -16217,11 +16302,11 @@
 	}
 	[DAMAGE]
 	{
-		default=95;
+		default=150;
 		group_invincible=1;
-		armor_heavy=47;//#AUTO#
-		armor_medium=95;//#AUTO#
-		armor_light=95;//#AUTO#
+		armor_heavy=75;//#AUTO#
+		armor_medium=150;//#AUTO#
+		armor_light=150;//#AUTO#
 	}
 }
 [sphere_screener_laser]
@@ -16237,6 +16322,7 @@
 	range=680;
 	minintensity=1.0;
 	reloadtime=1;
+	energypershot=20;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundstart=lasrfir3;

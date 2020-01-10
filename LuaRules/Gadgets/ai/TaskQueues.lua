@@ -341,6 +341,16 @@ function buildEnergyIfNeeded(self,unitName)
 end
 
 
+function changeQueueToLightGroundRaidersIfNeeded(self)
+
+	-- 30% probability to go raiders
+	if (random( 1, 10) > 6) then 
+		self:ChangeQueue(lightGroundRaiderQueueByFaction[self.unitSide])
+	end
+	
+	return SKIP_THIS_TASK
+end
+
 
 function reclaimNearestMexIfNeeded(self)
 	-- try to find nearest mex
@@ -1814,11 +1824,23 @@ local avenLev2DefenseBuilder = {
 	restoreQueue	
 }
 
+local avenL1GroundRaiders = {
+	"aven_runner",
+	"aven_kit",
+	"aven_wheeler",
+	"aven_runner",
+	"aven_kit",
+	"aven_wheeler",
+	"aven_runner",
+	restoreQueue	
+}
+
 local avenLightPlant = {
 	"aven_runner",
 	"aven_samson",
 	"aven_construction_kbot",
 	{action = "randomness", probability = 0.5, value = "aven_construction_kbot"},
+	changeQueueToLightGroundRaidersIfNeeded,
 	avenL1LightChoice,
 	avenL1LightChoice,
 	avenL1LightChoice,
@@ -1937,7 +1959,7 @@ local avenHovercraftPlant = {
 -- choices by threat type : AIR, DEFENSES, NORMAL[, UNDERWATER]
 
 local function gearL2KbotChoice(self) return choiceByType(self,{"gear_titan","gear_barrel"},{"gear_big_bob","gear_moe","gear_moe","gear_luminator"},{"gear_big_bob","gear_pyro","gear_moe","gear_psycho","gear_titan","gear_barrel"}) end
-local function gearL1LightChoice(self) return choiceByType(self,"gear_crasher",{"gear_raider","gear_thud","gear_thud"},{"gear_crasher","gear_kano","gear_box","gear_instigator","gear_aggressor"}) end
+local function gearL1LightChoice(self) return choiceByType(self,"gear_crasher",{"gear_assaulter","gear_thud","gear_thud"},{"gear_crasher","gear_kano","gear_box","gear_instigator","gear_aggressor"}) end
 local function gearL2VehicleChoice(self) return choiceByType(self,"gear_marauder",{"gear_mobile_artillery","gear_reaper","gear_eruptor"},{"gear_reaper","gear_marauder","gear_rhino","gear_flareon"}) end
 local function gearL2AirChoice(self) return choiceByType(self,"gear_vector",{"gear_stratos","gear_firestorm"},{"gear_vector","gear_stratos","gear_firestorm"},"gear_whirlpool") end
 local function gearL2KbotRadar(self) return buildWithLimitedNumber(self,"gear_voyeur",1) end
@@ -2211,17 +2233,29 @@ local gearLev2DefenseBuilder = {
 	restoreQueue	
 }
 
+local gearL1GroundRaiders = {
+	"gear_harasser",
+	{action = "randomness", probability = 0.5, value = "gear_igniter"},
+	{action = "randomness", probability = 0.5, value = "gear_igniter"},
+	"gear_harasser",
+	"gear_igniter",
+	"gear_harasser",
+	"gear_harasser",
+	restoreQueue	
+}
+
 local gearLightPlant = {
 	"gear_harasser",
 	{action = "randomness", probability = 0.5, value = "gear_harasser"},
 	"gear_aggressor",
 	"gear_construction_kbot",
-	{action = "randomness", probability = 0.5, value = "gear_construction_kbot"},	
+	{action = "randomness", probability = 0.5, value = "gear_construction_kbot"},
+	changeQueueToLightGroundRaidersIfNeeded,
 	gearL1LightChoice,
 	gearL1LightChoice,
 	gearL1LightChoice,
 	"gear_instigator",
-	"gear_raider",	
+	"gear_assaulter",	
 	"gear_kano",
 	"gear_canister",
 	{action = "wait", frames = 128}
@@ -2317,7 +2351,7 @@ local gearAdvShipPlant = {
 
 -- choices by threat type : AIR, DEFENSES, NORMAL[, UNDERWATER]
 
-local function clawL1LandChoice(self) return choiceByType(self,"claw_jester",{"claw_grunt","claw_piston","claw_roller"},{"claw_grunt","claw_boar","claw_piston","claw_roller"}) end
+local function clawL1LandChoice(self) return choiceByType(self,"claw_jester",{"claw_grunt","claw_piston","claw_roller"},{"claw_grunt","claw_boar","claw_piston","claw_roller","claw_ringo"}) end
 local function clawL2KbotChoice(self) return choiceByType(self,"claw_bishop",{"claw_shrieker","claw_brute","claw_crawler"},{"claw_centaur","claw_brute"}) end
 local function clawL2VehicleChoice(self) return choiceByType(self,"claw_ravager",{"claw_pounder","claw_pounder","claw_armadon"},{"claw_halberd","claw_ravager","claw_mega","claw_dynamo"}) end
 local function clawL2AirChoice(self) return choiceByType(self,"claw_x","claw_blizzard",{"claw_x","claw_blizzard"},"claw_trident") end
@@ -2594,12 +2628,23 @@ local clawLev2DefenseBuilder = {
 	restoreQueue	
 }
 
+local clawL1GroundRaiders = {
+	"claw_knife",
+	{action = "randomness", probability = 0.5, value = "claw_ringo"},
+	{action = "randomness", probability = 0.5, value = "claw_ringo"},
+	"claw_knife",
+	"claw_ringo",
+	"claw_knife",
+	restoreQueue	
+}
+
 local clawPlant = {
 	"claw_knife",
 	"claw_knife",	
 	"claw_jester",
 	"claw_construction_kbot",
 	{action = "randomness", probability = 0.5, value = "claw_construction_kbot"},
+	changeQueueToLightGroundRaidersIfNeeded,
 	clawL1LandChoice,
 	clawL1LandChoice,
 	clawL1LandChoice,
@@ -2713,7 +2758,7 @@ local clawSpinbotPlant = {
 
 -- choices by threat type : AIR, DEFENSES, NORMAL[, UNDERWATER]
 
-local function sphereL1LandChoice(self) return choiceByType(self,"sphere_needles","sphere_rock",{"sphere_bit","sphere_rock"}) end
+local function sphereL1LandChoice(self) return choiceByType(self,{"sphere_needles","sphere_needles","sphere_slicer"},"sphere_rock",{"sphere_bit","sphere_rock","sphere_gaunt","sphere_double"}) end
 local function sphereL2KbotChoice(self) return choiceByType(self,{"sphere_chub","sphere_chub","sphere_hermit"},{"sphere_ark","sphere_ark","sphere_golem"},{"sphere_hanz","sphere_chub"}) end
 local function sphereL2VehicleChoice(self) return choiceByType(self,"sphere_pulsar",{"sphere_slammer","sphere_slammer","sphere_bulk"},{"sphere_pulsar","sphere_trax","sphere_bulk"}) end
 local function sphereL2AirChoice(self) return choiceByType(self,"sphere_twilight","sphere_meteor",{"sphere_meteor","sphere_spitfire","sphere_twilight"},"sphere_neptune") end
@@ -2977,17 +3022,30 @@ local sphereLev2DefenseBuilder = {
 	restoreQueue	
 }
 
+local sphereL1GroundRaiders = {
+	"sphere_trike",
+	{action = "randomness", probability = 0.5, value = "sphere_double"},
+	{action = "randomness", probability = 0.5, value = "sphere_double"},
+	{action = "randomness", probability = 0.5, value = "sphere_double"},
+	"sphere_trike",
+	"sphere_double",
+	"sphere_trike",
+	restoreQueue	
+}
+
 local spherePlant = {
 	"sphere_trike",
 	"sphere_needles",
 	"sphere_construction_vehicle",
 	{action = "randomness", probability = 0.5, value = "sphere_construction_vehicle"},
+	changeQueueToLightGroundRaidersIfNeeded,
+	{action = "randomness", probability = 0.5, value = "sphere_double"},
 	sphereL1LandChoice,
 	sphereL1LandChoice,
 	sphereL1LandChoice,
 	"sphere_slicer",
 	"sphere_bit",
-	"sphere_needles",
+	"sphere_gaunt",
 	{action = "wait", frames = 128}
 }
 
@@ -3096,6 +3154,7 @@ commanderRoamingQueueByFaction = { [side1Name] = avenURoamingCommander, [side2Na
 commanderWaterQueueByFaction = { [side1Name] = avenWaterCommander, [side2Name] = gearWaterCommander, [side3Name] = clawWaterCommander, [side4Name] = sphereWaterCommander}
 defenseBuilderQueueByFaction = { [side1Name] = avenLev1DefenseBuilder, [side2Name] = gearLev1DefenseBuilder, [side3Name] = clawLev1DefenseBuilder, [side4Name] = sphereLev1DefenseBuilder}
 advancedDefenseBuilderQueueByFaction = { [side1Name] = avenLev2DefenseBuilder, [side2Name] = gearLev2DefenseBuilder, [side3Name] = clawLev2DefenseBuilder, [side4Name] = sphereLev2DefenseBuilder}
+lightGroundRaiderQueueByFaction = { [side1Name] = avenL1GroundRaiders, [side2Name] = gearL1GroundRaiders, [side3Name] = clawL1GroundRaiders, [side4Name] = sphereL1GroundRaiders}
 waterDefenseBuilderQueueByFaction = { [side1Name] = avenLev1WaterDefenseBuilder, [side2Name] = gearLev1WaterDefenseBuilder, [side3Name] = clawLev1WaterDefenseBuilder, [side4Name] = sphereLev1WaterDefenseBuilder}
 advancedWaterDefenseBuilderQueueByFaction = { [side1Name] = avenLev2WaterDefenseBuilder, [side2Name] = gearLev2WaterDefenseBuilder, [side3Name] = clawLev2WaterDefenseBuilder, [side4Name] = sphereLev2WaterDefenseBuilder}
 attackPatrollerQueue = atkPatroller

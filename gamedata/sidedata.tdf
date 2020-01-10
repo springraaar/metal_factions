@@ -1320,7 +1320,7 @@
 		canbuild3=gear_harasser;
 		canbuild4=gear_igniter;
 		canbuild5=gear_instigator;
-		canbuild6=gear_raider;
+		canbuild6=gear_assaulter;
 		canbuild7=gear_informer;
 		canbuild8=gear_deleter;
 		canbuild9=gear_rhino;
@@ -1838,14 +1838,15 @@
 	{
 		canbuild1=gear_construction_kbot;
 		canbuild2=gear_harasser;
-		canbuild3=gear_aggressor;
-		canbuild4=gear_instigator;
-		canbuild5=gear_thud;
-		canbuild6=gear_crasher;
-		canbuild7=gear_raider;
-		canbuild8=gear_kano;
-		canbuild9=gear_canister;
-		canbuild10=gear_box;
+		canbuild3=gear_igniter;
+		canbuild4=gear_aggressor;
+		canbuild5=gear_instigator;
+		canbuild6=gear_thud;
+		canbuild7=gear_crasher;
+		canbuild8=gear_assaulter;
+		canbuild9=gear_kano;
+		canbuild10=gear_canister;
+		canbuild11=gear_box;
 	}
 //---------------------------------------------------------------------------- CLAW
 	[claw_upgrade_center]
@@ -2579,31 +2580,33 @@
 		canbuild1=claw_construction_kbot;
 		canbuild2=claw_adv_construction_kbot;
 		canbuild3=claw_knife;
-		canbuild4=claw_grunt;
-		canbuild5=claw_jester;
-		canbuild6=claw_roller;
-		canbuild7=claw_sickle;
-		canbuild8=claw_shade;
-		canbuild9=claw_revealer;
-		canbuild10=claw_centaur;
-		canbuild11=claw_flail;
-		canbuild12=claw_cutter;
-		canbuild13=claw_crawler;
-		canbuild14=claw_nucleus;
-		canbuild15=claw_brute;
-		canbuild16=claw_bishop;
-		canbuild17=claw_scythe;
-		canbuild18=claw_shrieker;
+		canbuild4=claw_ringo;
+		canbuild5=claw_grunt;
+		canbuild6=claw_jester;
+		canbuild7=claw_roller;
+		canbuild8=claw_sickle;
+		canbuild9=claw_shade;
+		canbuild10=claw_revealer;
+		canbuild11=claw_centaur;
+		canbuild12=claw_flail;
+		canbuild13=claw_cutter;
+		canbuild14=claw_crawler;
+		canbuild15=claw_nucleus;
+		canbuild16=claw_brute;
+		canbuild17=claw_bishop;
+		canbuild18=claw_scythe;
+		canbuild19=claw_shrieker;
 	}
 	[claw_light_plant]
 	{
 		canbuild1=claw_construction_kbot;
 		canbuild2=claw_knife;
-		canbuild3=claw_grunt;
-		canbuild4=claw_jester;
-		canbuild5=claw_roller;
-		canbuild6=claw_piston;
-		canbuild7=claw_boar;
+		canbuild3=claw_ringo;
+		canbuild4=claw_grunt;
+		canbuild5=claw_jester;
+		canbuild6=claw_roller;
+		canbuild7=claw_piston;
+		canbuild8=claw_boar;
 	}
 	[claw_scout_pad]
 	{
@@ -2980,11 +2983,13 @@
 	{
 		canbuild1=sphere_construction_vehicle;
 		canbuild2=sphere_trike;
-		canbuild3=sphere_bit;
-		canbuild4=sphere_needles;
-		canbuild5=sphere_crustle;
-		canbuild6=sphere_rock;
-		canbuild7=sphere_slicer;
+		canbuild3=sphere_double;
+		canbuild4=sphere_bit;
+		canbuild5=sphere_needles;
+		canbuild6=sphere_crustle;
+		canbuild7=sphere_rock;
+		canbuild8=sphere_slicer;
+		canbuild9=sphere_gaunt;
 	}
 	[sphere_shipyard]
 	{
@@ -3125,15 +3130,16 @@
 		canbuild1=sphere_construction_vehicle;
 		canbuild2=sphere_adv_construction_vehicle;
 		canbuild3=sphere_trike;
-		canbuild4=sphere_crustle;
-		canbuild5=sphere_scanner;
-		canbuild6=sphere_quad;
-		canbuild7=sphere_trax;
-		canbuild8=sphere_concealer;
-		canbuild9=sphere_slammer;
-		canbuild10=sphere_shielder;
-		canbuild11=sphere_bulk;
-		canbuild12=sphere_pulsar;
+		canbuild4=sphere_double;
+		canbuild5=sphere_crustle;
+		canbuild6=sphere_scanner;
+		canbuild7=sphere_quad;
+		canbuild8=sphere_trax;
+		canbuild9=sphere_concealer;
+		canbuild10=sphere_slammer;
+		canbuild11=sphere_shielder;
+		canbuild12=sphere_bulk;
+		canbuild13=sphere_pulsar;
 	}
 	[sphere_scout_pad]
 	{

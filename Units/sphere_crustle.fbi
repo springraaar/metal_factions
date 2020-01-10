@@ -15,7 +15,7 @@
 	UnitNumber=10024;
 	Objectname=sphere_crustle.3do;
 	buildpic=sphere_crustle.png;
-	SoundCategory=CORAK;
+	SoundCategory=SPHERE_TANKSML;
 	Corpse=sphere_crustle_dead;
 
 
@@ -88,14 +88,14 @@
 	trackwidth=35;
 
 	collisionVolumeType = box;
-	collisionVolumeScales =30 18 30;
+	collisionVolumeScales =30 20 30;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:GLOWSML;
 	}
-	buildcostenergy=1017;//#AUTO#
-	buildcostmetal=203;//#AUTO#
-	buildtime=2425;//#AUTO#
+	buildcostenergy=970;//#AUTO#
+	buildcostmetal=194;//#AUTO#
+	buildtime=2312;//#AUTO#
 }

@@ -1,0 +1,99 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	Side=Sphere;
+	Name=Double;
+	Description=Raider Vehicle;
+	icontype=mobileraider;
+
+	// ------------------- categories
+	Category=SPHERE TANK LEVEL1 WEAPON NOTAIR NOTSUB;
+	TEDClass=TANK;
+
+	// ------------------- external specs
+	UnitName=sphere_double;
+	UnitNumber=10011;
+	Objectname=sphere_double.3do;
+	buildpic=sphere_double.png;
+	SoundCategory=SPHERE_TANKSML;
+	Corpse=sphere_double_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=3;
+	FootprintZ=3;
+	MaxDamage=920;
+
+
+	// ------------------- resources
+	EnergyUse=0;
+	EnergyStorage=0;
+	MetalStorage=0;
+	EnergyMake=0;
+
+	// ------------------- abilities
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	canguard=1;
+	canattack=1;
+	Builder=0;
+
+	// ------------------- movement
+	MaxWaterDepth=12;
+	MaxSlope=17;
+	MaxVelocity=2.9;
+	BrakeRate=0.06;
+	Acceleration=0.12;
+	TurnRate=650;
+	SteeringMode=1;
+	turninplace=0;
+	MovementClass=TANKSH3;
+
+	// ------------------- scout
+	sightdistance=500;
+	RadarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_double_blaster;
+	nochasecategory=VTOL;
+	badtargetcategory1=VTOL;
+	ExplodeAs=SMALL_UNITEX;
+	SelfDestructAs=SMALL_UNIT;
+
+
+	// ------------------- orders
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+
+	// ------------------- misc
+	Version=3.1;
+	NoAutoFire=0;
+	DefaultMissionType=Standby;
+
+	leavetracks=1;
+	trackoffset=8;
+	trackstrength=5;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=35;
+
+	collisionVolumeType = box;
+	collisionVolumeScales =20 20 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:redflare;
+	}
+	[CustomParams]
+	{
+		evalfactor=1;
+	}
+	buildcostenergy=939;//#AUTO#
+	buildcostmetal=187;//#AUTO#
+	buildtime=2240;//#AUTO#
+}

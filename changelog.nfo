@@ -1,3 +1,38 @@
+2020/01/10 ------------------ NOTES v1.25 ----------------------
+
+--- New units
+
+- added SPHERE "Double" : level1 Raider Vehicle
+
+- added CLAW "Ringo" : level1 Raider/Skirmisher Robot equipped with an energy ring launcher
+
+
+--- Balance / Mechanics
+
+- increased GEAR "Kano" range and cost by about 15%
+- GEAR light plant can now build "Igniter" incendiary raider vehicles
+- renamed GEAR "Raider" to "Assaulter" and increased its speed by about 6% and cost by about 3%
+
+- increased CLAW "Knife" HP by 16% and cost by 8%
+
+- SPHERE "Gaunt" : increased damage per shot and reload time but decreased dmg/s by about 10%, speed reduced by 16%, cost reduced by about 10%
+- SPHERE light plant can now build "Gaunt" 
+
+- further general cost change of up to about -5% to +5% penalizing relatively strong or long-ranged units (mostly level2)
+(short ranged level1 units should be relatively cheaper now compared to the other options - this is applied on top of the previous cost changes)
+
+--- Sounds
+
+- modified sounds for some of AVEN and SPHERE light vehicles
+- modified sounds of some large explosions to differentiate them from long range plasma cannon explosions
+
+--- AI / MFAI
+
+- modified AI to use the new build options
+- AI Light factories will sometimes build a set of half a dozen raiders and then restore the normal queue
+
+
+
 2019/12/28 ------------------ NOTES v1.24 ----------------------
 
 - fixed chat type button overlapping the players list when spectators are present

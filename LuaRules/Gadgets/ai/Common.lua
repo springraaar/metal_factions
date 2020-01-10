@@ -699,8 +699,9 @@ attackerList =
 	"gear_harasser",
 	"gear_canister",
 	"gear_instigator",
-	"gear_raider",
-
+	"gear_assaulter",
+	"gear_igniter",
+	
 	"gear_dash",
 	"gear_zipper",
 	"gear_knocker",
@@ -716,7 +717,6 @@ attackerList =
 	"gear_barrel",
 	"gear_pyro",
 
-	"gear_igniter",
 	"gear_marauder",
 	"gear_copperhead",
 	"gear_heater",
@@ -740,6 +740,7 @@ attackerList =
       "claw_grunt",
       "claw_piston",
       "claw_jester",
+      "claw_ringo",
       "claw_boar",
       "claw_knife",
       "claw_roller",
@@ -780,11 +781,13 @@ attackerList =
       "claw_pike",
 ------------------------------------------------ SPHERE
       "sphere_bit",
+      "sphere_gaunt",
       "sphere_slicer",
       "sphere_rock",
       "sphere_needles",
       "sphere_crustle",
       "sphere_trike",
+      "sphere_double",
       "sphere_hanz",
       "sphere_trax",
       "sphere_pulsar",

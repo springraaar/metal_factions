@@ -3181,6 +3181,30 @@ usedefaultexplosions=0;
   		count=3; 
 	}
 }
+[RINGTRAILSML]
+{
+	usedefaultexplosions=0;	
+
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos = 0, 0, 0;
+			dir= -1 r2, -1 r2, -1 r2;
+			width=21;
+			length=21;
+			alpha=0.08;
+			alphadecay=0.02;
+			color=1.0, 1.0, 1.0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=3; 
+	}
+}
 [RINGTRAIL]
 {
 	usedefaultexplosions=0;	

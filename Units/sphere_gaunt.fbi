@@ -3,7 +3,7 @@
 	// ------------------- description
 	Side=Sphere;
 	Name=Gaunt;
-	Description=Infantry Robot;
+	Description=Light Sniper Robot;
 	icontype=mobilefs;
 
 	// ------------------- categories
@@ -26,10 +26,10 @@
 
 
 	// ------------------- resources
-	EnergyUse=1;
+	EnergyUse=0;
 	EnergyStorage=0;
 	MetalStorage=0;
-	EnergyMake=1;
+	EnergyMake=0;
 
 	// ------------------- abilities
 	canmove=1;
@@ -42,7 +42,7 @@
 	// ------------------- movement
 	MaxWaterDepth=12;
 	MaxSlope=17;
-	MaxVelocity=1.50;
+	MaxVelocity=1.25;
 	BrakeRate=0.35;
 	Acceleration=0.15;
 	TurnRate=750;
@@ -89,7 +89,7 @@
 	{
 		explosiongenerator0=custom:redflare;
 	}
-	buildcostenergy=1730;//#AUTO#
-	buildcostmetal=346;//#AUTO#
-	buildtime=4125;//#AUTO#
+	buildcostenergy=1454;//#AUTO#
+	buildcostmetal=290;//#AUTO#
+	buildtime=3466;//#AUTO#
 }
