@@ -276,8 +276,8 @@ if (gadgetHandler:IsSyncedCode()) then
 						if (type(heightLevel) == "number") then
 							val = math.max( val * heightLevel / 10, 0.03)
 						end
-						ys = data[1] * val
-						yo = data[2] * val
+						ys = data[2] * val
+						yo = data[5] * val
 						
 						spSetUnitCollisionVolumeData(uId, xs, ys, zs, xo, yo, zo, vtype, htype, axis)
 						spSetUnitMidAndAimPos(uId,0, ys*0.5, 0,0, ys*0.5,0,true)
