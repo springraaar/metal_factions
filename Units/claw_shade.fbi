@@ -99,8 +99,8 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	cloakcost=30;
-	cloakcostmoving=75;
+	cloakcost=50;
+	cloakcostmoving=105;
 	mincloakdistance=150;
 	bmcode=1;
 	designation=ATAS;
@@ -120,16 +120,18 @@
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		evalFactor=1.25;
+		tip=Becomes fully invisible when ON and cloaked;
+	}
 
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:blueflaresml;
 	}
 
-	buildcostenergy=1838;//#AUTO#
-	buildcostmetal=367;//#AUTO#
-	buildtime=4382;//#AUTO#
+	buildcostenergy=2526;//#AUTO#
+	buildcostmetal=505;//#AUTO#
+	buildtime=6021;//#AUTO#
 }

@@ -178,6 +178,42 @@
 		armor_light=400;//#AUTO#
 	}
 }
+[aven_u3commander_torpedo]
+{
+	name=Torpedoes;
+	weapontype=TorpedoLauncher;
+	model=weapon_torpedo;
+	range=520;
+	reloadtime=3.7;
+	turret=1;
+	FlightTime=4;
+	submissile=1;
+	weaponvelocity=250;
+	startvelocity=250;
+	weaponAcceleration=33;
+	areaofeffect=60;
+	soundstart=torpedo2;
+	soundhit=xplodep3;
+	tracks=1;
+	turnrate=16000;
+	waterweapon=1;
+	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+		reaimtime=1;
+	}
+	[DAMAGE]
+	{
+		default=400;
+		group_invincible=1;
+		armor_heavy=400;//#AUTO#
+		armor_medium=400;//#AUTO#
+		armor_light=400;//#AUTO#
+	}
+}
 [aven_u6commander_torpedo]
 {
 	name=Torpedoes;
@@ -603,7 +639,7 @@
 	weapontype=Cannon;
 	explosiongenerator=custom:EMPBLASTSML;
 	cegTag=empshottrail;
-	energypershot=50;
+	energypershot=100;
 	accuracy=250;
 	turret=1;
 	range=410;
@@ -630,6 +666,7 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		evalfactor=0.9;
 	}
 	[DAMAGE]
 	{
@@ -1121,6 +1158,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -1243,6 +1281,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -1499,6 +1538,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -1714,14 +1754,15 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
-		default=600;
+		default=650;
     		group_invincible=1;
-		armor_heavy=600;//#AUTO#
-		armor_medium=600;//#AUTO#
-		armor_light=600;//#AUTO#
+		armor_heavy=650;//#AUTO#
+		armor_medium=650;//#AUTO#
+		armor_light=650;//#AUTO#
 	}
 }
 [aven_talon_bomb]
@@ -1752,6 +1793,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -1795,6 +1837,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -1834,6 +1877,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		evalfactor=0.75;
 	}
 	[DAMAGE]
 	{
@@ -2977,6 +3021,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -3013,6 +3058,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -3047,6 +3093,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -3127,6 +3174,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -3401,9 +3449,9 @@
 	reloadtime=5.2;
 	flighttime=2.75;
 	weaponvelocity=700;
-	startvelocity=450;
+	startvelocity=350;
 	weaponAcceleration=130;
-	turnrate=24384;
+	turnrate=34384;
 	burst=2;
 	burstrate=0.5;
 	areaofeffect=48;
@@ -3421,6 +3469,7 @@
 	avoidfeature=0;
 	[CUSTOMPARAMS]
 	{
+		restrictedAngle=1;
 		hitpower=1;
 	}
 	[DAMAGE]
@@ -3463,6 +3512,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -4052,7 +4102,7 @@
 	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=2;
-	weaponvelocity=300;
+	weaponvelocity=310;
 	areaofeffect=48;
 	soundstart=canlite3;
 	soundhit=xplomed3;
@@ -4260,6 +4310,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -5098,11 +5149,11 @@
 	}
 	[DAMAGE]
 	{
-		default=190;
+		default=180;
 		group_invincible=1;
-		armor_heavy=190;//#AUTO#
-		armor_medium=190;//#AUTO#
-		armor_light=190;//#AUTO#
+		armor_heavy=180;//#AUTO#
+		armor_medium=180;//#AUTO#
+		armor_light=180;//#AUTO#
 	}
 }
 [gear_u3commander_laser2]
@@ -5137,11 +5188,11 @@
 	}
 	[DAMAGE]
 	{
-		default=1250;
+		default=1150;
 		group_invincible=1;
-		armor_heavy=1250;//#AUTO#
-		armor_medium=1250;//#AUTO#
-		armor_light=1250;//#AUTO#
+		armor_heavy=1150;//#AUTO#
+		armor_medium=1150;//#AUTO#
+		armor_light=1150;//#AUTO#
 	}
 }
 [gear_u3commander_torpedo]
@@ -5444,7 +5495,7 @@
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
 	model=weapon_smlmsl2.3do;
 	cegTag=SMLROCKETTRAIL;
-	range=650;
+	range=720;
 	reloadtime=1.24;
 	weapontimer=0.3;
 	flighttime=6;
@@ -5547,6 +5598,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -5583,14 +5635,15 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
-		default=600;
+		default=650;
     		group_invincible=1;
-		armor_heavy=600;//#AUTO#
-		armor_medium=600;//#AUTO#
-		armor_light=600;//#AUTO#
+		armor_heavy=650;//#AUTO#
+		armor_medium=650;//#AUTO#
+		armor_light=650;//#AUTO#
 	}
 }
 [COREDEPTHCHARGE]
@@ -5699,6 +5752,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -6057,6 +6111,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -6184,6 +6239,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -6219,6 +6275,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -6515,6 +6572,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -6552,6 +6610,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -7074,6 +7133,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -7112,6 +7172,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -7149,6 +7210,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -7349,6 +7411,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -7370,9 +7433,9 @@
 	reloadtime=5.2;
 	flighttime=2.75;
 	weaponvelocity=800;
-	startvelocity=500;
+	startvelocity=300;
 	weaponAcceleration=131;
-	turnrate=24384;
+	turnrate=34384;
 	burst=2;
 	burstrate=0.5;
 	areaofeffect=48;
@@ -7396,6 +7459,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -8200,11 +8264,11 @@
 	weapontype=Cannon;	
 	hightrajectory=1;
 	turret=1;
-	range=640;
+	range=660;
 	reloadtime=6;
 	weapontimer=4;
 	energypershot=0;
-	weaponvelocity=300;
+	weaponvelocity=320;
 	gravityaffected=0;
 	mygravity=0.13;
 	collisionSize=10;
@@ -8233,6 +8297,7 @@
 		hitpower=1;
 		burn=1;
 		burnaoe=1;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -8325,6 +8390,7 @@
 		hitpower=1;
 		burn=1;
 		burnaoe=1;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -8417,6 +8483,7 @@
 		hitpower=1;
 		burn=1;
 		burnaoe=1;
+		evalfactor=0.9;
 	}
 	[DAMAGE]
 	{
@@ -8721,8 +8788,8 @@
 	range=450;
 	reloadtime=7;
 	flighttime=2;
-	weaponvelocity=300;
-	startvelocity=300;
+	weaponvelocity=400;
+	startvelocity=400;
 	burst=2;
 	burstrate=0.1;
 	turnrate=12000;
@@ -9500,6 +9567,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -9543,6 +9611,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -9585,6 +9654,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -9625,6 +9695,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -9663,6 +9734,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -10003,6 +10075,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -10041,6 +10114,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -10737,6 +10811,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -11136,7 +11211,7 @@
 	CollideFriendly=1;
 	model=weapon_torpedo;
 	range=400;
-	reloadtime=3;
+	reloadtime=3.5;
 	turret=1;
 	weapontimer=10;
 	FlightTime=4;
@@ -11296,7 +11371,7 @@
 	range=580;
 	tracks=1;
 	turnrate=16000;
-	reloadtime=5;
+	reloadtime=6;
 	turret=1;
 	weapontimer=2;
 	flighttime=3;
@@ -11330,7 +11405,7 @@
 	name=Fast Torpedoes;
 	weapontype=TorpedoLauncher;
 	model=weapon_fasttorpedo;
-	range=620;
+	range=560;
 	tracks=1;
 	turnrate=16000;
 	reloadtime=4;
@@ -11452,10 +11527,10 @@
 	range=400;
 	reloadtime=6;
 	flighttime=2;
-	weaponvelocity=300;
+	weaponvelocity=330;
 	startvelocity=300;
 	projectiles=2;
-	weaponAcceleration=30;
+	weaponAcceleration=60;
 	areaofeffect=64;
 	metalpershot=0;
 	sprayangle=300;
@@ -11473,6 +11548,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -11494,10 +11570,10 @@
 	range=400;
 	reloadtime=1.8;
 	flighttime=1.9;
-	weaponvelocity=300;
+	weaponvelocity=350;
 	startvelocity=300;
 	projectiles=1;
-	weaponAcceleration=30;
+	weaponAcceleration=60;
 	areaofeffect=48;
 	metalpershot=0;
 	sprayangle=300;
@@ -11515,6 +11591,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -11560,6 +11637,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -11641,6 +11719,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -11929,6 +12008,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -11969,6 +12049,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -12011,6 +12092,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -12053,6 +12135,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -12623,7 +12706,7 @@
 {
 	name=Laser Cutter;
 	weapontype=BeamLaser;
-	explosiongenerator=custom:BLUELASERBLASTWRAPPER;
+	explosiongenerator=custom:BIGCUTTERLASERBLASTWRAPPER;
 	intensity=0.85;
 	beamtime=0.3;
 	thickness=3.31;
@@ -12655,17 +12738,17 @@
 	}
 	[DAMAGE]
 	{
-		default=340;
-		armor_heavy=170;//#AUTO#
-		armor_medium=340;//#AUTO#
-		armor_light=340;//#AUTO#
+		default=400;
+		armor_heavy=200;//#AUTO#
+		armor_medium=400;//#AUTO#
+		armor_light=400;//#AUTO#
 	}
 }
 [claw_sword_laser]
 {
 	name=Laser Cutter;
 	weapontype=BeamLaser;
-	explosiongenerator=custom:BLUELASERBLASTWRAPPER;
+	explosiongenerator=custom:BIGCUTTERLASERBLASTWRAPPER;
 	intensity=0.85;
 	beamtime=0.3;
 	thickness=3.31;
@@ -12812,6 +12895,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -13033,7 +13117,7 @@
 	accuracy=800;
 	movingaccuracy=1600;
 	reloadtime=0.8;
-	weaponvelocity=290;
+	weaponvelocity=320;
 	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	areaofeffect=48;
@@ -13669,6 +13753,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -14018,6 +14103,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -14057,6 +14143,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -14553,7 +14640,7 @@
 	corethickness=1.0;
 	intensity=0.9;
 	turret=1;
-	range=780;
+	range=760;
 	minintensity=1.0;
 	reloadtime=4.2;
 	energypershot=500;
@@ -14818,7 +14905,7 @@
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_torpedo;
-	range=600;
+	range=640;
 	reloadtime=4.5;
 	turret=1;
 	weapontimer=10;
@@ -15323,6 +15410,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -15517,6 +15605,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -15593,6 +15682,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -15631,6 +15721,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -15658,7 +15749,7 @@
 	turret=1;
 	range=500;
 	reloadtime=0.5;
-	energypershot=15;
+	energypershot=20;
 	weapontimer=1;
 	weaponvelocity=600;
 	accuracy=400;
@@ -15745,14 +15836,15 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
-		default=600;
+		default=650;
     		group_invincible=1;
-		armor_heavy=600;//#AUTO#
-		armor_medium=600;//#AUTO#
-		armor_light=600;//#AUTO#
+		armor_heavy=650;//#AUTO#
+		armor_medium=650;//#AUTO#
+		armor_light=650;//#AUTO#
 	}
 }
 [dummy_bomb]
@@ -15886,7 +15978,7 @@
 	soundhit=xplomed5;
 	soundtrigger=1;
 	tolerance=3000;
-	energypershot=15;
+	energypershot=20;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -15975,6 +16067,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -16126,7 +16219,7 @@
 	turret=1;
 	range=650;
 	reloadtime=1.5;
-	energypershot=80;
+	energypershot=100;
 	weapontimer=1;
 	weaponvelocity=500;
 	accuracy=150;
@@ -16424,6 +16517,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -16605,7 +16699,7 @@
 	weapontype=Cannon;
 	turret=1;
 	range=650;
-	reloadtime=1.8;
+	reloadtime=1.65;
 	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	weaponvelocity=380;
@@ -17832,6 +17926,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -17951,6 +18046,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -17992,6 +18088,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -18197,6 +18294,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -18235,6 +18333,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{

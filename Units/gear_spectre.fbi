@@ -98,8 +98,8 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	cloakcost=30;
-	cloakcostmoving=75;
+	cloakcost=50;
+	cloakcostmoving=105;
 	mincloakdistance=150;
 	bmcode=1;
 	designation=UV-2-AB;
@@ -122,7 +122,13 @@
 	//  To be removed
 	//*****************
 
-	buildcostenergy=1450;//#AUTO#
-	buildcostmetal=290;//#AUTO#
-	buildtime=3456;//#AUTO#
+	[CustomParams]
+	{
+		evalFactor=1.25;
+		tip=Becomes fully invisible when ON and cloaked;
+	}
+
+	buildcostenergy=1962;//#AUTO#
+	buildcostmetal=392;//#AUTO#
+	buildtime=4676;//#AUTO#
 }

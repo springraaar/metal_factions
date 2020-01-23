@@ -223,7 +223,7 @@ if (true) then
 			end
 			
 			-- make heavy units push resistant
-			 if tonumber(unitDef.buildcostmetal) > 3000 or unitDef.mass > 2000 then
+			 if tonumber(unitDef.buildcostmetal) > 2000 or unitDef.mass > 1500 then
 			 	--Spring.Echo(name.." is push resistant")
 			 	unitDef.pushresistant = 1
 			 end

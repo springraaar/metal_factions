@@ -126,12 +126,16 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
    
+	[CustomParams]
+	{
+		evalfactor=0.9;
+	}
 
 	//************************************************************
 	//  To be removed
 	//*****************
 
-	buildcostenergy=396;//#AUTO#
-	buildcostmetal=79;//#AUTO#
-	buildtime=946;//#AUTO#
+	buildcostenergy=400;//#AUTO#
+	buildcostmetal=80;//#AUTO#
+	buildtime=954;//#AUTO#
 }

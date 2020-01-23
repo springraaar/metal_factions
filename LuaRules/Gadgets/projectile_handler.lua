@@ -110,6 +110,7 @@ local torpedoWeaponIds = {
 	-- AVEN
 	[WeaponDefNames["aven_u1commander_torpedo"].id]=true,
 	[WeaponDefNames["aven_u2commander_torpedo"].id]=true,
+	[WeaponDefNames["aven_u3commander_torpedo"].id]=true,
 	[WeaponDefNames["aven_u4commander_torpedo"].id]=true,
 	[WeaponDefNames["aven_u5commander_torpedo"].id]=true,
 	[WeaponDefNames["aven_u6commander_torpedo"].id]=true,

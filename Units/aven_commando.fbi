@@ -22,7 +22,7 @@
 	objectname=aven_commando.3do;
 	corpse=aven_commando_dead;
 	buildpic=aven_commando.png;
-	soundcategory=ARMPW;
+	soundcategory=aven_kbot;
 
 	//************************************************************
 	//  Health/Cost/Size
@@ -32,8 +32,8 @@
 	footprintz=2;
 
 	metalstorage=0;
-	energymake=0.3;
-	energyuse=0.3;
+	energymake=0.0;
+	energyuse=0.0;
 	energystorage=0;
 
 
@@ -100,7 +100,7 @@
 	{
 	explosiongenerator0=custom:BlueFlareBig;
 	}
-	buildcostenergy=3224;//#AUTO#
-	buildcostmetal=644;//#AUTO#
-	buildtime=7686;//#AUTO#
+	buildcostenergy=3605;//#AUTO#
+	buildcostmetal=721;//#AUTO#
+	buildtime=8593;//#AUTO#
 }

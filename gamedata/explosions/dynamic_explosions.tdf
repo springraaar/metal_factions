@@ -1803,9 +1803,6 @@
 	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d1 p0.6 x0;explosionGenerator=custom:PURPLELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
 
-
-
-
 [BLUELASERBLAST]			// blue laser blast
 {
 	usedefaultexplosions=0;
@@ -1897,7 +1894,8 @@
 	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d1 p0.6 x0;explosionGenerator=custom:BLUELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
 
-[RINGBLASTWRAPPER]			// blue laser blast wrapper
+
+[RINGBLASTWRAPPER]			// ring blast wrapper
 {
 	usedefaultexplosions=0;
 	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d0.5 p0.6 x0;explosionGenerator=custom:BLUELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
@@ -1905,13 +1903,103 @@
 	[_stdblast3]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=10;damage=6 y0 d0.3 p0.6 x0;explosionGenerator=custom:BLUELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
 
-[RINGBIGBLASTWRAPPER]			// blue laser blast wrapper
+[RINGBIGBLASTWRAPPER]			// ring big blast wrapper
 {
 	usedefaultexplosions=0;
 	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d0.15 p0.6 x0;explosionGenerator=custom:BLUELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=6;damage=6 y0 d0.12 p0.6 x0;explosionGenerator=custom:BLUELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 	[_stdblast3]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=12;damage=6 y0 d0.1 p0.6 x0;explosionGenerator=custom:BLUELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 	[_stdblast4]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=18;damage=6 y0 d0.08 p0.6 x0;explosionGenerator=custom:BLUELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+
+[BIGCUTTERLASERBLAST]			// big cutter laser blast
+{
+	usedefaultexplosions=0;
+	[_std]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=d0.5;explosionGenerator=custom:STDBLASTEFFECTS;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+
+	// inner flash
+	[innerflash]
+	{
+		class=CSimpleGroundFlash;
+		[properties]
+		{
+			size = d0.05 5;
+			sizeGrowth = 1;
+			texture=groundflash;
+	     		ttl = d0.2 5;
+     			colormap = 0.6 0.8 1 1    0.8 0.4 0.2 0;
+		}
+		air=0;
+     		ground=1;
+	      	water=0;
+		underwater=1;
+		count=1;
+	}
+
+
+	// main explosion spikes
+	[blobs]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=-1 r2,-1 r2,-1 r2;
+			width=d0.035 5;
+			length=d0.035 5;
+			alpha=1;
+			alphadecay=d1p-1y0 15x0;
+			color=0.6, 0.8, 1;
+		}
+		air=1;
+		water=0;
+		ground=1;
+		underwater=0;
+  		count=3;
+	}
+	// main explosion spikes (water)
+	[waterblobs]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=-1 r2,-1 r2,-1 r2;
+			width=d0.025 5;
+			length=d0.025 5;
+			alpha=1;
+			alphadecay=d1p-1y0 15x0;
+			color=1.0, 0.9, 0.8;
+		}
+		air=0;
+		water=1;
+		underwater=0;
+		ground=1;
+  		count=3;
+	}
+	// extra explosion spikes
+	[spikes]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=-1 r2,-1 r2,-1 r2;
+			width=d0.01 2;
+			length=d0.4 5;
+			alpha=1;
+			alphadecay=d1p-1y0 15x0;
+			color=0.4, 0.7, 1.0;
+		}
+		air=1;
+		water=1;
+		underwater=0;
+		ground=1;
+  		count=2;
+	}
+}
+
+[BIGCUTTERLASERBLASTWRAPPER]			// big cutter laser blast wrapper
+{
+	usedefaultexplosions=0;
+	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d4 p0.6 x0;explosionGenerator=custom:BIGCUTTERLASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
 
 [COLLISION]			// collision "blast"

@@ -127,11 +127,16 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	
+	[CustomParams]
+	{
+		evalfactor=0.9;
+	}
+
 	//************************************************************
 	//  To be removed
 	//*****************
 
-	buildcostenergy=385;//#AUTO#
+	buildcostenergy=388;//#AUTO#
 	buildcostmetal=77;//#AUTO#
-	buildtime=918;//#AUTO#
+	buildtime=925;//#AUTO#
 }

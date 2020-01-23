@@ -138,15 +138,16 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		tip=Becomes fully invisible when ON and cloaked;
+	}
 
 	[SFXTypes]
 	{
 	
 	}
-	buildcostenergy=19732;//#AUTO#
-	buildcostmetal=3946;//#AUTO#
-	buildtime=47028;//#AUTO#
+	buildcostenergy=19361;//#AUTO#
+	buildcostmetal=3872;//#AUTO#
+	buildtime=46145;//#AUTO#
 }
