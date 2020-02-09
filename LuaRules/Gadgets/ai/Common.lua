@@ -208,6 +208,7 @@ CMD_PATROL = 15
 CMD_FIGHT = 16
 CMD_RECLAIM = 10	 --FIXME
 CMD_REPAIR = 10	 --FIXME
+CMD_BUILDPRIORITY = 33455
 
 -- reference distances
 
@@ -1053,20 +1054,20 @@ supporterList =
 
 -- units that the AI won't target
 neutralUnits = {
-	"aven_fortification_wall",
-	"gear_fortification_wall",
-	"claw_fortification_wall",
-	"sphere_fortification_wall",
-	"aven_large_fortification_wall",
-	"gear_large_fortification_wall",
-	"claw_large_fortification_wall",
-	"sphere_large_fortification_wall",	
-	"aven_fortification_gate",
-	"gear_fortification_gate",
-	"claw_fortification_gate",
-	"sphere_fortification_gate",
-	"cs_beacon",
-	"scoper_beacon"
+	aven_fortification_wall = true,
+	gear_fortification_wall = true,
+	claw_fortification_wall = true,
+	sphere_fortification_wall = true,
+	aven_large_fortification_wall = true,
+	gear_large_fortification_wall = true,
+	claw_large_fortification_wall = true,
+	sphere_large_fortification_wall = true,	
+	aven_fortification_gate = true,
+	gear_fortification_gate = true,
+	claw_fortification_gate = true,
+	sphere_fortification_gate = true,
+	cs_beacon = true,
+	scoper_beacon = true
 }
 
 
@@ -1109,7 +1110,7 @@ hazMexByFaction =  { [side1Name] = "aven_exploiter", [side2Name] = "gear_exploit
 mohoMineByFaction = { [side1Name] = "aven_moho_mine", [side2Name] = "gear_moho_mine", [side3Name] = "claw_moho_mine", [side4Name] = "sphere_moho_mine"}
 fusionByFaction = { [side1Name] = "aven_fusion_reactor", [side2Name] = "gear_fusion_power_plant", [side3Name] = "claw_adv_fusion_reactor", [side4Name] = "sphere_adv_fusion_reactor"}
 advRadarByFaction = { [side1Name] = "aven_advanced_radar_tower", [side2Name] = "gear_advanced_radar_tower", [side3Name] = "claw_advanced_radar_tower", [side4Name] = "sphere_adv_radar_tower"}
-commanderMorphByFaction = {[side1Name] = {"aven_u1commander","aven_u2commander","aven_u3commander","aven_u4commander","aven_u5commander","aven_u6commander"}, [side2Name] = {"gear_u1commander","gear_u2commander","gear_u3commander","gear_u4commander","gear_u5commander"}, [side3Name] = {"claw_u1commander","claw_u2commander","claw_u3commander","claw_u4commander","claw_u5commander","claw_u6commander"}, [side4Name] = {"sphere_u1commander","sphere_u2commander","sphere_u3commander","sphere_u4commander","sphere_u5commander","sphere_u6commander"}}
+commanderMorphByFaction = {[side1Name] = {"aven_u1commander","aven_u2commander","aven_u3commander","aven_u4commander","aven_u5commander","aven_u6commander"}, [side2Name] = {"gear_u1commander","gear_u2commander","gear_u3commander","gear_u4commander","gear_u5commander","gear_u6commander"}, [side3Name] = {"claw_u1commander","claw_u2commander","claw_u3commander","claw_u4commander","claw_u5commander","claw_u6commander"}, [side4Name] = {"sphere_u1commander","sphere_u2commander","sphere_u3commander","sphere_u4commander","sphere_u5commander","sphere_u6commander"}}
 airRepairPadByFaction = { [side1Name] = "aven_air_repair_pad", [side2Name] = "gear_air_repair_pad", [side3Name] = "claw_air_repair_pad", [side4Name] = "sphere_air_repair_pad"}
 commanderMorphCmdByFaction = {[side1Name] = {31433,31434,31435,31436}, [side2Name] = {31427,31428,31429,31430}, [side3Name] = {31423,31424,31425,31426}, [side4Name] = {31412,31413,31414,31415}}
 nanoTowerFaction =  { [side1Name] = "aven_nano_tower", [side2Name] = "gear_nano_tower", [side3Name] = "claw_nano_tower", [side4Name] = "sphere_pole"}

@@ -3,9 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, flare, turret, barrel,sleeve,b1,b2,b3,b4, front, f2,stand, tl,tr,logo;
+piece  base, flare, turret, barrel,sleeve,b1,b2,b4, front, f2,stand, tl,tr,logo;
 
-static-var isFiring;
+static-var isFiring, fireHeat;
 
 // Signal definitions
 #define SIG_AIM				2
@@ -43,6 +43,7 @@ Create()
 {
 	isFiring = FALSE;
 	start-script SmokeUnit();
+	fireHeat = 0;
 	return (0);
 }
 
@@ -72,8 +73,29 @@ FirePrimary(Func_Var_1)
 {
 	emit-sfx 1024 from flare;
 	isFiring = TRUE;
-	sleep 3000;
-	isFiring = FALSE;
+	fireHeat = 80;
+	while( fireHeat > 0 )
+	{
+		fireHeat = fireHeat - 1;
+		if (fireHeat < 50) 
+		{
+			isFiring = FALSE;
+		}
+		
+		if (fireHeat > 30) 
+		{
+			emit-sfx 1024+1 from flare;
+		}
+		else if (fireHeat > 15) 
+		{
+			emit-sfx 1024+2 from flare;
+		}
+		else
+		{
+			emit-sfx 1024+3 from flare;
+		}
+		sleep 60;
+	}
 	return (0);
 }
 

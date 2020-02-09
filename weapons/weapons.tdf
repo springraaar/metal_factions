@@ -5039,6 +5039,44 @@
 		armor_light=400;//#AUTO#
 	}
 }
+[gear_u6commander_torpedo]
+{
+	name=Torpedoes;
+	weapontype=TorpedoLauncher;
+	CollideFriendly=1;
+	model=weapon_torpedo;
+	range=640;
+	reloadtime=2.9;
+	turret=1;
+	weapontimer=4;
+	FlightTime=6;
+	submissile=1;
+	weaponvelocity=270;
+	startvelocity=270;
+	weaponAcceleration=33;
+	areaofeffect=60;
+	soundstart=torpedo2;
+	soundhit=xplodep3;
+	tracks=1;
+	turnrate=16000;
+	waterweapon=1;
+	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+		reaimtime=1;
+	}
+	[DAMAGE]
+	{
+		default=400;
+		group_invincible=1;
+		armor_heavy=400;//#AUTO#
+		armor_medium=400;//#AUTO#
+		armor_light=400;//#AUTO#
+	}
+}
 [gear_u2commander_flak]
 {
 	name=Flak Cannon;
@@ -10515,7 +10553,7 @@
 	energypershot=700;
 	weaponvelocity=10000;
 	areaofeffect=45;
-	soundstart=flamlit1;
+	soundstart=heatrayfire1;
 	soundhit=heatrayhit1;
 	firestarter=90;
 	largebeamlaser=1;
@@ -10564,7 +10602,7 @@
 	energypershot=700;
 	weaponvelocity=1000;
 	areaofeffect=45;
-	soundstart=flamlit1;
+	soundstart=heatrayfire1;
 	soundhit=heatrayhit1;
 	firestarter=90;
 	largebeamlaser=1;
@@ -10591,6 +10629,55 @@
 		armor_heavy=1000;//#AUTO#
 		armor_medium=1000;//#AUTO#
 		armor_light=1000;//#AUTO#
+	}
+}
+[gear_u6commander_heatray]
+{
+	name=Heat Ray;
+	weapontype=BeamLaser;
+	turret=1;
+	SoundTrigger=1;
+	Intensity=0.3; 
+	minintensity=0.7; 
+	laserflaresize=7;
+	corethickness=1.5;
+	thickness=3;
+	beamtime=1;
+	beamdecay=0.8;
+	beamttl=5;
+	hardStop=0;
+	range=690;
+	reloadtime=3.2;
+	energypershot=450;
+	weaponvelocity=1000;
+	areaofeffect=45;
+	soundstart=heatrayfire1;
+	soundhit=heatrayhit1;
+	firestarter=90;
+	largebeamlaser=1;
+	texture1=heatray1;
+	texture2=heatray2;
+	tilelength=1100;
+	scrollspeed=3.0;
+	pulsespeed=2;
+	rgbcolor2=1.0 1.0 0.0;
+	rgbcolor=1.0 0.0 0.0;
+	cratermult=0.2;
+	explosiongenerator=custom:heatrayboomsml;
+	leadlimit=35;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=900;
+		group_invincible=1;
+		armor_heavy=900;//#AUTO#
+		armor_medium=900;//#AUTO#
+		armor_light=900;//#AUTO#
 	}
 }
 [gear_edge_laser2]
@@ -10652,7 +10739,7 @@
 	energypershot=4200;
 	weaponvelocity=1000;
 	areaofeffect=65;
-	soundstart=flamlit1;
+	soundstart=heatrayfire2;
 	soundhit=heatrayhit2;
 	firestarter=90;
 	largebeamlaser=1;
@@ -10701,7 +10788,7 @@
 	energypershot=4200;
 	weaponvelocity=3000;
 	areaofeffect=55;
-	soundstart=flamlit1;
+	soundstart=heatrayfire2;
 	soundhit=heatrayhit2;
 	firestarter=90;
 	largebeamlaser=1;

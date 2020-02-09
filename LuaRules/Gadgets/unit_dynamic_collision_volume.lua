@@ -281,6 +281,14 @@ if (gadgetHandler:IsSyncedCode()) then
 						
 						spSetUnitCollisionVolumeData(uId, xs, ys, zs, xo, yo, zo, vtype, htype, axis)
 						spSetUnitMidAndAimPos(uId,0, ys*0.5, 0,0, ys*0.5,0,true)
+
+						-- force gates to not be blocking if they're fully lowered 						
+						local isb,issoc,ispc,isrsc,cr,bep,bhc = spGetUnitBlocking(uId)
+						if heightLevel == 0 then
+							spSetUnitBlocking(uId,false,false,ispc,isrsc,cr,bep,bhc)	
+						else
+							spSetUnitBlocking(uId,true,true,ispc,isrsc,cr,bep,bhc)
+						end
 					end
 				end
 			end

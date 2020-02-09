@@ -70,8 +70,8 @@
 	Weapon2=sphere_gazer_shield;
 	badtargetcategory1=VTOL;
 	NoChaseCategory=VTOL;
-	ExplodeAs=big_unit;
-	SelfDestructAs=big_unit;
+	ExplodeAs=PENETRATOR_BLAST;
+	SelfDestructAs=PENETRATOR_BLAST;
 
 	// ------------------- orders
 	movestate=0;
@@ -105,7 +105,7 @@
 	{
 		explosiongenerator0=custom:redflare;
 	}
-	buildcostenergy=16150;//#AUTO#
-	buildcostmetal=3230;//#AUTO#
-	buildtime=38492;//#AUTO#
+	buildcostenergy=15958;//#AUTO#
+	buildcostmetal=3191;//#AUTO#
+	buildtime=38034;//#AUTO#
 }

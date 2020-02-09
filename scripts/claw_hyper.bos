@@ -5,11 +5,12 @@
 
 piece  base, turbase, turret, sleeve, llauncher, lflare,rlauncher,rflare,r1,r2,r3,l1,l2,l3, b1,b2,b3,b4,ldoor,rdoor,bottom,aimpt;
 
-static-var  restore_delay, unitviewer, gun_1,canAim;
+static-var  gun_1,canAim;
 
 // Signal definitions
 #define SIG_AIM				2
 
+lua_stopFiring() { return 0; }
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
@@ -82,6 +83,40 @@ Close()
 	SET ARMORED to TRUE;
 }
 
+
+RestoreAfterDelay()
+{
+	if((get STANDINGFIREORDERS) > 0)
+	{
+		sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	} 
+	else 
+	{
+		sleep 600;
+	}
+	
+	call-script Close();
+}
+
+// if fire state changes to hold fire, force closure
+checkClose(fireState,previousFireState)
+{
+	while (TRUE)
+	{
+		fireState = (get STANDINGFIREORDERS);
+		
+		if (fireState == 0 && previousFireState > 0) 
+		{
+			signal SIG_AIM;
+			call-script lua_stopFiring();
+			call-script RestoreAfterDelay();
+		}
+	
+		previousFireState = fireState;
+		sleep 100;
+	}
+}
+
 Create()
 {
 	hide lflare;
@@ -89,27 +124,9 @@ Create()
 	move aimpt to y-axis [40.000000] now;
 	gun_1=[0];
 	canAim = FALSE;
-	restore_delay = 4000;
-	unitviewer = FALSE;
 	start-script SmokeUnit();
 	start-script Close();
-}
-
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
-}
-
-RestoreAfterDelay()
-{
-	sleep restore_delay;
-	
-	call-script Close();
-}
-
-Demo()
-{
-	unitviewer = TRUE;
+	start-script checkClose();
 }
 
 SweetSpot(piecenum)

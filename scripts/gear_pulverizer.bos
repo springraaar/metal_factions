@@ -10,6 +10,7 @@ static-var gun_1, isOpen, isFloating;
 // Signal definitions
 #define SIG_AIM				2
 
+lua_stopFiring() { return 0; }
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
@@ -48,8 +49,8 @@ open()
 	wait-for-turn ldoor around z-axis;
 	move rdoor to y-axis  [-25.000000] speed [190.000000];
 	move ldoor to y-axis  [-25.000000] speed [190.000000];
-	wait-for-move ldoor along y-axis;
 	move stand to y-axis [40.000000] speed [280.000000];
+	wait-for-move ldoor along y-axis;
 	wait-for-move stand along y-axis;
 	isOpen = TRUE;
 	return (0);
@@ -79,6 +80,41 @@ close()
 	return (0);
 }
 
+RestoreAfterDelay()
+{
+	if((get STANDINGFIREORDERS) > 0)
+	{
+		sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	} 
+	else 
+	{
+		sleep 600;
+	}
+	turn turret to y-axis <0.000000> speed <300.000000>;
+	turn llauncher to x-axis <0.000000> speed <300.000000>;
+	turn rlauncher to x-axis <0.000000> speed <300.000000>;
+	call-script close();
+	return (0);
+}
+
+// if fire state changes to hold fire, force closure
+checkClose(fireState,previousFireState)
+{
+	while (TRUE)
+	{
+		fireState = (get STANDINGFIREORDERS);
+		
+		if (fireState == 0 && previousFireState > 0) 
+		{
+			signal SIG_AIM;
+			call-script lua_stopFiring();
+			call-script RestoreAfterDelay();
+		}
+	
+		previousFireState = fireState;
+		sleep 100;
+	}
+}
 
 Create()
 {
@@ -100,18 +136,11 @@ Create()
 	
 	start-script close();
 	start-script SmokeUnit();
+	start-script checkClose();
 	return (0);
 }
 
-RestoreAfterDelay()
-{
-	sleep 3000;
-	turn turret to y-axis <0.000000> speed <300.000000>;
-	turn llauncher to x-axis <0.000000> speed <300.000000>;
-	turn rlauncher to x-axis <0.000000> speed <300.000000>;
-	call-script close();
-	return (0);
-}
+
 
 AimPrimary(heading, pitch)
 {

@@ -266,7 +266,14 @@ Close()
 
 RestoreAfterDelay()
 {
-	sleep 3000;
+	if((get STANDINGFIREORDERS) > 0)
+	{
+		sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	} 
+	else 
+	{
+		sleep 600;
+	}
 	call-script stopAimHelper1(<200>,<200>);
 	call-script Close();
 }

@@ -11,7 +11,7 @@
 
 piece  base, turret, sleeve, barrel, flare, t1,t2,t1cover,t2cover,body,left,right,l1,r1,b2, tur2, tur3, turret2, sleeves2, barrel21, barrel22, flare21, flare22, front;
 
-static-var  gun_2, bAiming2, isFiring, unitFireHeading, fireHeading;
+static-var  gun_2, bAiming2, isFiring, unitFireHeading, fireHeading, fireHeat;
 
 #include "aimhelper1.h"
 
@@ -117,8 +117,29 @@ FirePrimary()
 	emit-sfx 1024 from flare;
 	unitFireHeading = get HEADING;
 	isFiring = TRUE;
-	sleep 1700;
-	isFiring = FALSE;
+	fireHeat = 35;
+	while( fireHeat > 0 )
+	{
+		fireHeat = fireHeat - 1;
+		if (fireHeat < 10) 
+		{
+			isFiring = FALSE;
+		}
+		
+		if (fireHeat > 20) 
+		{
+			emit-sfx 1024+2 from flare;
+		}
+		else if (fireHeat > 10) 
+		{
+			emit-sfx 1024+3 from flare;
+		}
+		else
+		{
+			emit-sfx 1024+4 from flare;
+		}
+		sleep 60;
+	}
 	return;
 }
 
@@ -215,6 +236,7 @@ Create()
 	gun_2 = [0];
 	bAiming2 = FALSE;
 	isFiring = FALSE;
+	fireHeat = 0;
 	fireHeading = <0>;
 	unitFireHeading = <0>;
 	

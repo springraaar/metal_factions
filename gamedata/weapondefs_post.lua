@@ -113,9 +113,11 @@ for wdName, wd in pairs(WeaponDefs) do
 		if (noVerticalRangeBoostWeapons[wdName]) then
 			wd.heightmod = 1
 			wd.heightboostfactor = 0
-		elseif (wd.weapontype == "BeamLaser" ) then
+		elseif (wd.weapontype == "BeamLaser") then
 			--wd.cylindertargeting = 2
-			wd.heightmod = 0.5		-- default was 1.0
+			wd.heightmod = 0.75		-- default was 1.0
+		elseif (wd.weapontype == "LaserCannon") then
+			wd.heightmod = 0.75		-- default was 1.0?
 		elseif (wd.weapontype == "Cannon" or wd.weapontype == "EmgCannon" ) then
 			wd.heightmod = 0.5			-- default was 0.8
 			wd.heightboostfactor = 1.1		-- default was -1.0

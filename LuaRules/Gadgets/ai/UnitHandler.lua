@@ -607,7 +607,9 @@ function UnitHandler:Update()
 				ud = UnitDefs[spGetUnitDefID(eId)]
 				local tmpName = ud.name
 				if (not neutralUnits[tmpName]) then
-					
+					if (tmpName == "aven_fortification_wall") then
+						Spring.Echo("WALL: "..tmpName)
+					end
 					local hasWeapons = #ud.weapons > 0
 					local cost = getWeightedCostByName(tmpName)
 					local _,_,_,_,progress = spGetUnitHealth(eId) 

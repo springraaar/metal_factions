@@ -7,7 +7,7 @@
 
 piece  ground, pelvis, tr, tl, sc2,front,f2, rleg, rfoot, lleg, lfoot, turret, lthigh, rthigh,sleeve,barrel,flare;
 
-static-var  isFiring, bMoving, bAiming, Static_Var_3, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3, fireHeading, unitFireHeading;
+static-var  isFiring, bMoving, bAiming, Static_Var_3, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3, fireHeading, unitFireHeading, fireHeat;
 
 // Signal definitions
 #define SIG_AIM				4
@@ -296,6 +296,7 @@ Create()
 	bMoving = FALSE;
 	bAiming = FALSE;
 	isFiring = FALSE;
+	fireHeat = 0;
 	fireHeading = <0>;
 	unitFireHeading = <0>;
 	start-script MotionControl();
@@ -361,8 +362,29 @@ FirePrimary()
 	emit-sfx 1024+0 from flare;
 	unitFireHeading = get HEADING;
 	isFiring = TRUE;
-	sleep 4000;
-	isFiring = FALSE;
+	fireHeat = 80;
+	while( fireHeat > 0 )
+	{
+		fireHeat = fireHeat - 1;
+		if (fireHeat < 50) 
+		{
+			isFiring = FALSE;
+		}
+		
+		if (fireHeat > 30) 
+		{
+			emit-sfx 1024+1 from flare;
+		}
+		else if (fireHeat > 15) 
+		{
+			emit-sfx 1024+2 from flare;
+		}
+		else
+		{
+			emit-sfx 1024+3 from flare;
+		}
+		sleep 60;
+	}
 	return;
 }
 

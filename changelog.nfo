@@ -1,4 +1,47 @@
-2020/01/20 ------------------ NOTES v1.27 ----------------------
+2020/02/09 ------------------ NOTES v1.28 ----------------------
+
+--- new units
+
+- added GEAR "Blazer" commander form : skirmisher form with dual heat ray weapons. Hits hard but moves relatively slowly.
+
+
+--- Balance / Mechanics
+
+- reverted the change that made heavy units push-resistant to avoid an issue where units can get stuck on each other
+
+- CLAW "Mega" should no longer target air units if there are nearby ground targets
+
+- SPHERE "Gazer" now explodes more violently when killed
+
+- increased the footprint of CLAW "Ringo" so they clump together less
+
+- walls are no longer automatically targeted by enemies when being built or after changing ownership
+- fixed fortification gates sometimes still blocking unit movement when they're open
+
+- reduced the amount of vertical range increase for laser beams to avoid them shooting at targets they can't reach
+(this is a workaround for a springRTS engine issue)
+
+- armed units which have open/close states will now close in less than a second if set to "hold fire" regardless of their attack orders
+
+- slightly increased the speed of open/close animations on GEAR pop-up towers (namely light and medium laser ones)
+
+--- UI
+
+- hide checksum messages when players connect to the game
+
+--- Visuals
+
+- slightly improved the 3d model textures and walk cycles for GEAR commanders
+- slightly improved the fire point texture and effects for GEAR Heat Ray weapons (they how glow after firing)
+
+--- AI
+
+- MFAI commander will patrol and assist its factory early in the game and make less defenses in easy and normal modes
+- MFAI will set builders to high priority when building economy or factories
+
+
+
+2020/01/23 ------------------ NOTES v1.27 ----------------------
 
 --- Balance / Mechanics
 

@@ -225,7 +225,7 @@ if (true) then
 			-- make heavy units push resistant
 			 if tonumber(unitDef.buildcostmetal) > 2000 or unitDef.mass > 1500 then
 			 	--Spring.Echo(name.." is push resistant")
-			 	unitDef.pushresistant = 1
+			 	--unitDef.pushresistant = 1
 			 end
 		else
 			local factionBuilding = false

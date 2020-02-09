@@ -230,6 +230,7 @@ function TaskQueueBehavior:Update()
 	--	end
 	--end
 	
+	
 	local health,maxHealth,_,_,bp = spGetUnitHealth(self.unitId)
 	self.isFullyBuilt = (bp > 0.999)
 	if (health/maxHealth < UNIT_RETREAT_HEALTH) then
@@ -295,6 +296,11 @@ function TaskQueueBehavior:Update()
 				self.idleFrames = 0
 				-- log(self.unitName.." progressing queue",self.ai)
 				self:ProgressQueue()
+				
+				--if (self.isCommander) then
+				--	Spring.SendCommands("clearmapmarks") 
+				--	Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(" role="..self:BuilderRoleStr().." proj="..tostring(self.currentProject))) --DEBUG
+				--end
 				return
 			end
 		end		
@@ -466,6 +472,16 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 				ud = nil
 				value = "nil"
 			end
+			
+			-- assign high priority to AI builders building metal extractors, factories and fusion reactors
+			if not self.isCommander then
+				if setContains(unitTypeSets[TYPE_ECONOMY],value) or setContains(unitTypeSets[TYPE_PLANT],value) then
+					spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{1},{})
+				else
+					spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{0},{})
+				end
+			end
+						
 			--log("building "..value)
 			success = false
 			if ud ~= nil then

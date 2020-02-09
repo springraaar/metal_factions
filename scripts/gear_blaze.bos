@@ -5,7 +5,7 @@
 
 piece  base, flare, turret, barrel,sleeve, front, f2,stand, tl,tr,logo, floatbase, fb2,fb3,fb4;
 
-static-var isFiring, isFloating;
+static-var isFiring, isFloating, fireHeat;
 
 // Signal definitions
 #define SIG_AIM				2
@@ -43,7 +43,7 @@ Create()
 {
 	isFiring = FALSE;
 	start-script SmokeUnit();
-
+	fireHeat = 0;
 	hide floatbase;
 	hide fb2;
 	hide fb3;
@@ -87,8 +87,29 @@ FirePrimary(Func_Var_1)
 {
 	emit-sfx 1024 from flare;
 	isFiring = TRUE;
-	sleep 2000;
-	isFiring = FALSE;	
+	fireHeat = 40;
+	while( fireHeat > 0 )
+	{
+		fireHeat = fireHeat - 1;
+		if (fireHeat < 10) 
+		{
+			isFiring = FALSE;
+		}
+		
+		if (fireHeat > 20) 
+		{
+			emit-sfx 1024+1 from flare;
+		}
+		else if (fireHeat > 10) 
+		{
+			emit-sfx 1024+2 from flare;
+		}
+		else
+		{
+			emit-sfx 1024+3 from flare;
+		}
+		sleep 60;
+	}
 	return (0);
 }
 

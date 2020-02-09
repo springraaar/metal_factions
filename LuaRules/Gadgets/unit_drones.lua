@@ -161,6 +161,7 @@ local droneNamesForUnitDefName = {
 	gear_u3commander = gearDrones,
 	gear_u4commander = gearDrones,	
 	gear_u5commander = gearDrones,
+	gear_u6commander = gearDrones,
 	claw_commander = clawDrones,
 	claw_u1commander = clawDrones,
 	claw_u2commander = clawDrones,

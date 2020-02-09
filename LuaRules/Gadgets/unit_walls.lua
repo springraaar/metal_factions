@@ -40,4 +40,17 @@ function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 	end
 end
 
+function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
+	if wallDefIds[unitDefID] then
+		Spring.SetUnitNeutral(unitID,true)
+	end
+end
+
+function gadget:UnitGiven(unitID, unitDefID, unitTeam, oldTeam)
+	if wallDefIds[unitDefID] then
+		Spring.SetUnitNeutral(unitID,true)
+	end
+end
+
+
 

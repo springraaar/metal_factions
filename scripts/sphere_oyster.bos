@@ -10,6 +10,7 @@ static-var  gun_1;
 // Signal definitions
 #define SIG_AIM				2
 
+lua_stopFiring() { return 0; }
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
@@ -39,15 +40,6 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 }
 
 
-
-Create()
-{
-	hide flash1;
-	hide flash2;
-	gun_1 = [0];
-	start-script SmokeUnit();
-}
-
 open()
 {
 	turn rdoor to z-axis <-70.000000> speed <100.000000>;
@@ -69,11 +61,46 @@ close()
 
 RestoreAfterDelay()
 {
-	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	if((get STANDINGFIREORDERS) > 0)
+	{
+		sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	} 
+	else 
+	{
+		sleep 600;
+	}
 	turn turret to y-axis <0.000000> speed <90.016484>;
 	turn slpt to x-axis <0.000000> speed <50.005495>;
 	call-script close();
 }
+
+// if fire state changes to hold fire, force closure
+checkClose(fireState,previousFireState)
+{
+	while (TRUE)
+	{
+		fireState = (get STANDINGFIREORDERS);
+		
+		if (fireState == 0 && previousFireState > 0) 
+		{
+			signal SIG_AIM;
+			call-script lua_stopFiring();
+			call-script RestoreAfterDelay();
+		}
+	
+		previousFireState = fireState;
+		sleep 100;
+	}
+}
+Create()
+{
+	hide flash1;
+	hide flash2;
+	gun_1 = [0];
+	start-script SmokeUnit();
+	start-script checkClose();
+}
+
 
 AimPrimary(heading, pitch)
 {

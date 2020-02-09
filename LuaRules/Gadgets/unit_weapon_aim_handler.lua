@@ -70,6 +70,7 @@ local torpedoWeaponIds = {
 	[WeaponDefNames["gear_u3commander_torpedo"].id]=true,
 	[WeaponDefNames["gear_u4commander_torpedo"].id]=true,
 	[WeaponDefNames["gear_u5commander_torpedo"].id]=true,
+	[WeaponDefNames["gear_u6commander_torpedo"].id]=true,
 	[WeaponDefNames["gear_snake_torpedo"].id]=true,
 	[WeaponDefNames["gear_noser_torpedo"].id]=true,
 	[WeaponDefNames["corssub_weapon"].id]=true,

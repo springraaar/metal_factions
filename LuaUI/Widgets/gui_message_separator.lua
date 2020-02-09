@@ -80,7 +80,7 @@ local LAST_PLAYER_MSG_SCROLL_FRAME	= 0
 -- table mapping names to colors
 local PLAYER_COLOR_TABLE			= {}
 -- message patterns our filter should match
-local MESSAGE_FILTERS				= {"Can't reach destination", "Build pos blocked", "Delayed response", "Sync error", "be given"}
+local MESSAGE_FILTERS				= { "ClientReadNet","to access the quit menu" }
 -- are we currently dragging or resizing a message box?
 local DRAGGING_PLAYER_BOX			= false
 local DRAGGING_SYSTEM_BOX			= false
@@ -95,7 +95,7 @@ local FONT_STYLES_INDEX			= 1
 -- should key commands be enabled?
 local KEYS_ENABLED				= 0
 local LAST_LINE					= ""
-local FILTER_SYSTEM_MESSAGES = 0
+local FILTER_SYSTEM_MESSAGES = 1
 local MESSAGE_WRAPPING = 0 
 local TEXT_OUTLINING = 0
 local FONT_SIZE = 15
@@ -150,20 +150,23 @@ end
 -- will be nil but immediately overwritten
 -- by setDefaultUserVars())
 function widget:SetConfigData(data)
-	FILTER_SYSTEM_MESSAGES = data.filterSystemMessages
-	MESSAGE_WRAPPING = data.messageWrapping
-	TEXT_OUTLINING = data.textOutlining
-	FONT_SIZE = data.fontSize
-	FONT_RENDER_STYLE = data.fontRenderStyle
-	PLAYER_MSG_BOX_W = data.playerMsgBoxWidth
-	PLAYER_MSG_BOX_H = data.playerMsgBoxHeight
-	SYSTEM_MSG_BOX_W = data.systemMsgBoxWidth
-	SYSTEM_MSG_BOX_H = data.systemMsgBoxHeight
-	-- restore relative message box positions
-	PLAYER_MSG_BOX_X_MIN = data.playerMsgBoxXMin
-	SYSTEM_MSG_BOX_X_MIN = data.systemMsgBoxXMin
-	PLAYER_MSG_BOX_Y_MAX = data.playerMsgBoxYMax
-	SYSTEM_MSG_BOX_Y_MAX = data.systemMsgBoxYMax
+	-- TODO DISABLED, always use defaults
+	if (false) then
+		FILTER_SYSTEM_MESSAGES = data.filterSystemMessages
+		MESSAGE_WRAPPING = data.messageWrapping
+		TEXT_OUTLINING = data.textOutlining
+		FONT_SIZE = data.fontSize
+		FONT_RENDER_STYLE = data.fontRenderStyle
+		PLAYER_MSG_BOX_W = data.playerMsgBoxWidth
+		PLAYER_MSG_BOX_H = data.playerMsgBoxHeight
+		SYSTEM_MSG_BOX_W = data.systemMsgBoxWidth
+		SYSTEM_MSG_BOX_H = data.systemMsgBoxHeight
+		-- restore relative message box positions
+		PLAYER_MSG_BOX_X_MIN = data.playerMsgBoxXMin
+		SYSTEM_MSG_BOX_X_MIN = data.systemMsgBoxXMin
+		PLAYER_MSG_BOX_Y_MAX = data.playerMsgBoxYMax
+		SYSTEM_MSG_BOX_Y_MAX = data.systemMsgBoxYMax
+	end
 	return
 end
 
@@ -675,6 +678,13 @@ end
 
 -- process console line
 function processConsoleLine(line, playerName, playerColor, playerFontStyle)
+	if (FILTER_SYSTEM_MESSAGES == 1) then
+		for _,str in pairs(MESSAGE_FILTERS) do
+			if (string.find(line, str) ~= nil) then
+				return
+			end
+		end
+	end
 
 	if (SEPARATE_MESSAGES == 0 or string.len(playerName) > 0) then
 		-- autoscroll if bottom of message
@@ -699,14 +709,6 @@ function processConsoleLine(line, playerName, playerColor, playerFontStyle)
 		PLAYER_BOX_ALPHA = MAX_ALPHA
 
 	else
-		if (FILTER_SYSTEM_MESSAGES == 1) then
-			for index = 1, table.getn(MESSAGE_FILTERS), 1 do
-				if (string.find(line, MESSAGE_FILTERS[index]) ~= nil) then
-					return
-				end
-			end
-		end
-
 		-- is system message box about to overflow vertically?
 		if ( NUM_SYSTEM_MESSAGES ~= nil ) then
 			if ( MAX_NUM_SYSTEM_MESSAGES ~= nil ) then

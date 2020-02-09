@@ -17,6 +17,8 @@ local spGetUnitWeaponState = Spring.GetUnitWeaponState
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spGetGameFrame = Spring.GetGameFrame
+local spGetUnitCommands = Spring.GetUnitCommands
+local spGiveOrderToUnit = Spring.GiveOrderToUnit
 
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
@@ -110,6 +112,21 @@ function setHeightLevel(unitID, unitDefID, teamID, heightLevel)
 	return 0
 end
 
+-- cancels attack orders
+function stopFiring(unitID, unitDefID, teamID, data)
+	cmds = spGetUnitCommands(unitID,5)
+	-- stop the unit and order it to move somewhere
+	if (cmds and (#cmds > 0)) then
+		for i,cmd in ipairs(cmds) do
+			if cmd["id"] == CMD.ATTACK then
+				--Spring.Echo("unit "..unitID.." attack order cancelled")
+				spGiveOrderToUnit(unitID, CMD.STOP,{},{})
+			end
+		end
+	end
+	return 0
+end
+
 function cobDebug(unitID, unitDefID, teamID, data1, data2)
 	spEcho("uId="..unitID.." f="..spGetGameFrame().." DEBUG1="..data1.." DEBUG2="..tostring(data2))
 end
@@ -124,3 +141,4 @@ gadgetHandler:RegisterGlobal("delayReload", delayReload)
 gadgetHandler:RegisterGlobal("getBuildPt", getBuildPt)
 gadgetHandler:RegisterGlobal("setHeightLevel", setHeightLevel)
 gadgetHandler:RegisterGlobal("delayReload", delayReload)
+gadgetHandler:RegisterGlobal("stopFiring", stopFiring)

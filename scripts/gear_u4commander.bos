@@ -43,7 +43,7 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 		mATurnSpd2 = <200.000000> * (100 + mASpdFactor) / 200;
 		mATurnSpd3 = <50.000000> * (100 + mASpdFactor) / 200;
 
-		mAVertFactor = [0.000000]-[1.000000] * mASpdFactor / SPEEDUP_FACTOR;
+		mAVertFactor = [0.000000]-[2.000000] * mASpdFactor / SPEEDUP_FACTOR;
 		legAngle1 = <50.000000>;
 		legAngle2 = <40.000000>;
 		legAngle3 = <15.000000>;
@@ -191,7 +191,7 @@ walk()
 		turn lleg to x-axis legAngle2 speed mATurnSpd2;
 		turn lfoot to x-axis <0> speed mATurnSpd3;
 
-		turn rthigh to x-axis legAngle2 speed mATurnSpd2;
+		turn rthigh to x-axis <-10>+legAngle2 speed mATurnSpd2;
 		turn rleg to x-axis legAngle3 speed mATurnSpd2;
 		turn rfoot to x-axis <0.000000>-legAngle2 speed mATurnSpd1;
 
@@ -253,7 +253,7 @@ walk()
 	// forward contact point : right foot forward, left foot behind
 	if( bMoving )
 	{
-		turn lthigh to x-axis legAngle2 speed mATurnSpd2;
+		turn lthigh to x-axis <-10>+legAngle2 speed mATurnSpd2;
 		turn lleg to x-axis legAngle3 speed mATurnSpd2;
 		turn lfoot to x-axis <0>-legAngle2 speed mATurnSpd1;
 

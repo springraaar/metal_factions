@@ -117,6 +117,14 @@ local morphDefs = {
 			energy = 10000,
 			metal = 1200,
 			text = 'Morph to Infernal Form : Greatly increased HP and weapon area of effect. Heavy armor. Slower speed.'
+		},
+		{
+			into = 'gear_u6commander',
+			time = 30,
+			cmdname = 'Blazer Form',
+			energy = 10000,
+			metal = 1200,
+			text = 'Morph to Blazer Form : Heavy fire support form with dual Heat Rays. Greatly increased firepower and range.'
 		}
 
 	},	

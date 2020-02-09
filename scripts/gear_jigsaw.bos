@@ -168,7 +168,14 @@ Create()
 
 RestoreAfterDelay()
 {
-	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	if((get STANDINGFIREORDERS) > 0)
+	{
+		sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	} 
+	else 
+	{
+		sleep 600;
+	}
 	call-script stopAimHelper1(<80>,<80>);
 	turn turret to y-axis <0.000000> speed <80.000000>;
 	turn sleeve to x-axis <0.000000> speed <80.000000>;
@@ -179,7 +186,14 @@ RestoreAfterDelay()
 
 RestoreAfterDelay2()
 {
-	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	if((get STANDINGFIREORDERS) > 0)
+	{
+		sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	} 
+	else 
+	{
+		sleep 600;
+	}
 	call-script stopAimHelper2(<100>,<100>);
 	turn turret2 to y-axis <0.000000> speed <100.000000>;
 	turn sleeve2 to x-axis <0.000000> speed <100.000000>;

@@ -603,3 +603,140 @@
 		useAirLos=0;
    	}
 }
+
+
+[HRGLOWSML1]
+{
+	[GLOW1]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=-1 r2,-1 r2,-1 r2;
+			width=12;
+			length=12;
+			alpha=0.36;
+			alphadecay=0.04;
+			color=1, 0.8, 0.6;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=2;
+	}
+}
+
+[HRGLOWSML2]
+{
+	[GLOW1]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=-1 r2,-1 r2,-1 r2;
+			width=10;
+			length=10;
+			alpha=0.28;
+			alphadecay=0.04;
+			color=1, 0.7, 0.4;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=2;
+	}
+}
+[HRGLOWSML3]
+{
+	[GLOW1]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=-1 r2,-1 r2,-1 r2;
+			width=8;
+			length=8;
+			alpha=0.24;
+			alphadecay=0.04;
+			color=0.8, 0.6, 0.1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=2;
+	}
+}
+
+[HRGLOWBIG1]
+{
+	[GLOW1]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=-1 r2,-1 r2,-1 r2;
+			width=22;
+			length=22;
+			alpha=0.36;
+			alphadecay=0.04;
+			color=1, 0.8, 0.6;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=3;
+	}
+}
+
+[HRGLOWBIG2]
+{
+	[GLOW1]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=-1 r2,-1 r2,-1 r2;
+			width=20;
+			length=20;
+			alpha=0.28;
+			alphadecay=0.04;
+			color=1, 0.7, 0.4;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=3;
+	}
+}
+[HRGLOWBIG3]
+{
+	[GLOW1]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=-1 r2,-1 r2,-1 r2;
+			width=18;
+			length=18;
+			alpha=0.24;
+			alphadecay=0.04;
+			color=0.8, 0.6, 0.1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=3;
+	}
+}
