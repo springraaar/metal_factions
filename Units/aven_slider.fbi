@@ -36,8 +36,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=2.6;
-	energyuse=2.6;
+	energymake=0;
+	energyuse=0;
 	energystorage=0;
 
 	//************************************************************
@@ -64,8 +64,8 @@
 	//  Movement
 	//************
 	movementclass=TANKHOVER3;
-	turnrate=260;
-	acceleration=0.041;
+	turnrate=350;
+	acceleration=0.05;
 	brakerate=0.09;
 	maxvelocity=2.6;
 	maxslope=16;
@@ -124,7 +124,7 @@
 	explosiongenerator0=custom:yellowflaresml;
 	}
 
-	buildcostenergy=4573;//#AUTO#
-	buildcostmetal=914;//#AUTO#
-	buildtime=10900;//#AUTO#
+	buildcostenergy=4469;//#AUTO#
+	buildcostmetal=893;//#AUTO#
+	buildtime=10652;//#AUTO#
 }

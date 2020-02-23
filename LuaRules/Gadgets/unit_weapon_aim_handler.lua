@@ -32,7 +32,6 @@ local slaveWeaponIndexesByUnitDefId = {
 	[UnitDefNames["aven_commander"].id] = {3,1},
 	[UnitDefNames["aven_u1commander"].id] = {3,1},
 	[UnitDefNames["aven_u2commander"].id] = {3,1},
-	[UnitDefNames["aven_u3commander"].id] = {3,1},
 	[UnitDefNames["aven_warrior"].id] = {1,2},
 	[UnitDefNames["aven_magnum"].id] = {2,1},
 	-- GEAR	
@@ -62,6 +61,7 @@ local torpedoWeaponIds = {
 	[WeaponDefNames["aven_vanguard_depthcharge"].id]=true,
 	[WeaponDefNames["armdepthcharge"].id]=true,
 	[WeaponDefNames["aven_slider_s_depthcharge"].id]=true,
+	[WeaponDefNames["aven_adv_torpedo_launcher_torpedo"].id]=true,
 	
 	-- GEAR
 	[WeaponDefNames["gear_commander_torpedo"].id]=true,
@@ -73,7 +73,7 @@ local torpedoWeaponIds = {
 	[WeaponDefNames["gear_u6commander_torpedo"].id]=true,
 	[WeaponDefNames["gear_snake_torpedo"].id]=true,
 	[WeaponDefNames["gear_noser_torpedo"].id]=true,
-	[WeaponDefNames["corssub_weapon"].id]=true,
+	[WeaponDefNames["gear_adv_torpedo_launcher_torpedo"].id]=true,
 	[WeaponDefNames["gear_tl_torpedo"].id]=true,
 	[WeaponDefNames["coredepthcharge"].id]=true,
 	[WeaponDefNames["gear_viking_depthcharge"].id]=true,

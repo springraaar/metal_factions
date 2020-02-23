@@ -36,8 +36,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.7;
-	energyuse=0.7;
+	energymake=0.0;
+	energyuse=0.0;
 	energystorage=0;
 
 	//************************************************************
@@ -81,7 +81,8 @@
 	weapon1=aven_weaver_missile;
 	nochasecategory=VTOL;
 	badtargetcategory1=NOTAIR;
-	badtargetcategory1=NOTAIR;
+	weaponmaindir1=0 1 0;
+	maxangledif1=280;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
 
@@ -125,7 +126,7 @@
 		explosiongenerator0=custom:rocketflaresml;
 	}
 
-	buildcostenergy=2515;//#AUTO#
-	buildcostmetal=503;//#AUTO#
-	buildtime=5994;//#AUTO#
+	buildcostenergy=2508;//#AUTO#
+	buildcostmetal=501;//#AUTO#
+	buildtime=5979;//#AUTO#
 }

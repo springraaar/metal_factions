@@ -26,10 +26,10 @@
 
 
 	// ------------------- resources
-	EnergyUse=4;
+	EnergyUse=0;
 	EnergyStorage=0;
 	MetalStorage=0;
-	EnergyMake=4;
+	EnergyMake=0;
 
 	// ------------------- abilities
 	canmove=1;
@@ -56,8 +56,8 @@
 
 	// ------------------- weapons
 	Weapon1=claw_nucleus_cannon;
+	hightrajectory=2;
 	badtargetcategory1=VTOL;
-	onlytargetcategory=NOTAIR;
 	ExplodeAs=BIG_UNIT;
 	SelfDestructAs=BIG_UNIT;
 
@@ -91,7 +91,7 @@
 	{
 		explosiongenerator0=custom:yellowflarebig;
 	}
-	buildcostenergy=5620;//#AUTO#
-	buildcostmetal=1124;//#AUTO#
-	buildtime=13396;//#AUTO#
+	buildcostenergy=4977;//#AUTO#
+	buildcostmetal=995;//#AUTO#
+	buildtime=11863;//#AUTO#
 }

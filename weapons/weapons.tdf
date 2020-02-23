@@ -183,8 +183,8 @@
 	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	model=weapon_torpedo;
-	range=520;
-	reloadtime=3.7;
+	range=420;
+	reloadtime=2.5;
 	turret=1;
 	FlightTime=4;
 	submissile=1;
@@ -643,10 +643,10 @@
 	accuracy=250;
 	turret=1;
 	range=410;
-	reloadtime=1.0;
-	weaponvelocity=500;
-	areaofeffect=64;
-	edgeeffectiveness=0.5;
+	reloadtime=0.5;
+	weaponvelocity=650;
+	areaofeffect=96;
+	edgeeffectiveness=0;
 	soundstart=lasfirerb;
 	soundhit=emphit;
 	explosionscar=0;
@@ -661,6 +661,50 @@
 	impulsefactor=0.01;
 	cratermult=0;
 	paralyzer=1;
+	burnblow=1;
+	paralyzetime=6;
+	[CUSTOMPARAMS]
+	{
+		hitpower=2;
+		reaimtime=1;
+	}
+	[DAMAGE]
+	{
+		default=270;
+		armor_heavy=135;//#AUTO#
+		armor_medium=270;//#AUTO#
+		armor_light=270;//#AUTO#
+	}
+}
+[aven_u3commander_disruptor_new]
+{
+	name=Wide Blast Disruptor;
+	weapontype=Cannon;
+	explosiongenerator=custom:EMPBLAST;
+	cegTag=empshottrailbig;
+	energypershot=3000;
+	accuracy=250;
+	turret=1;
+	range=410;
+	reloadtime=10;
+	weaponvelocity=500;
+	areaofeffect=300;
+	edgeeffectiveness=0;
+	soundstart=disrfirebig;
+	soundhit=emphitbig;
+	explosionscar=0;
+	size=4.5;
+	rgbcolor=0 0.50 0.5;
+	stages=4;
+  	separation=0.66;
+  	alphadecay=0.8;
+  	sizedecay=-0.45;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	impulsefactor=0.01;
+	burnblow=1;
+	cratermult=0;
+	paralyzer=1;
 	paralyzetime=6;
 	[CUSTOMPARAMS]
 	{
@@ -670,10 +714,10 @@
 	}
 	[DAMAGE]
 	{
-		default=270;
-		armor_heavy=135;//#AUTO#
-		armor_medium=270;//#AUTO#
-		armor_light=270;//#AUTO#
+		default=2000;
+		armor_heavy=1000;//#AUTO#
+		armor_medium=2000;//#AUTO#
+		armor_light=2000;//#AUTO#
 	}
 }
 [aven_u4commander_emg]
@@ -848,7 +892,7 @@
 	range=480;
 	reloadtime=0.5;
 	weaponvelocity=500;
-	areaofeffect=48;
+	areaofeffect=96;
 	edgeeffectiveness=0.0;
 	soundstart=lasfirerb;
 	soundhit=emphit;
@@ -864,6 +908,7 @@
 	impulsefactor=0.01;
 	cratermult=0;
 	paralyzer=1;
+	burnblow=1;
 	paralyzetime=6;
 	[CUSTOMPARAMS]
 	{
@@ -890,7 +935,7 @@
 	range=370;
 	reloadtime=0.9;
 	weaponvelocity=500;
-	areaofeffect=48;
+	areaofeffect=96;
 	edgeeffectiveness=0.0;
 	soundstart=lasfirerb;
 	soundhit=emphit;
@@ -905,6 +950,7 @@
 	avoidfeature=0;
 	impulsefactor=0.01;
 	cratermult=0;
+	burnblow=1;
 	paralyzer=1;
 	paralyzetime=6;
 	[CUSTOMPARAMS]
@@ -929,10 +975,10 @@
 	energypershot=80;
 	accuracy=100;
 	turret=1;
-	range=850;
+	range=780;
 	reloadtime=0.4;
 	weaponvelocity=530;
-	areaofeffect=90;
+	areaofeffect=100;
 	edgeeffectiveness=0.25;
 	soundstart=lasfirerb;
 	soundhit=emphit;
@@ -947,6 +993,7 @@
 	avoidfeature=0;
 	impulsefactor=0.01;
 	cratermult=0;
+	burnblow=1;
 	paralyzer=1;
 	paralyzetime=6;
 	[CUSTOMPARAMS]
@@ -977,7 +1024,7 @@
 	reloadtime=3;
 	weaponvelocity=530;
 	areaofeffect=80;
-	soundstart=disruptorfire;
+	soundstart=disrwavefire;
 	tolerance=3000;
 	explosionscar=0;
 	collisionsize=70;
@@ -1398,7 +1445,7 @@
 	turnrate=31660;
 	areaofeffect=48;
 	metalpershot=0;
-	trajectoryheight=0.1;
+	trajectoryheight=0.2;
 	soundstart=mislite1;
 	soundhit=xplomed2;
 	firestarter=70;
@@ -4172,7 +4219,7 @@
 	name=Light Laser;
 	weapontype=BeamLaser;
 	turret=1;
-	range=550;
+	range=560;
 	minintensity=1.0;
 	reloadtime=0.5;
 	weaponvelocity=1533;
@@ -5045,8 +5092,8 @@
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_torpedo;
-	range=640;
-	reloadtime=2.9;
+	range=650;
+	reloadtime=2.8;
 	turret=1;
 	weapontimer=4;
 	FlightTime=6;
@@ -5315,7 +5362,7 @@
 	weapontype=Cannon;	
 	turret=1;
 	range=530;
-	reloadtime=3.5;
+	reloadtime=3.2;
 	weapontimer=4;
 	energypershot=0;
 	weaponvelocity=320;
@@ -6706,7 +6753,7 @@
 	weapontype=BeamLaser;
 	explosiongenerator=custom:REDLASERBLASTWRAPPER;
 	turret=1;
-	range=530;
+	range=560;
 	minintensity=1.0;
 	beamtime=0.05;
 	thickness=2.123;
@@ -7221,25 +7268,25 @@
 		armor_light=350;//#AUTO#
 	}
 }
-[CORSSUB_WEAPON]
+[gear_adv_torpedo_launcher_torpedo]
 {
-	name=Unguided Torpedoes;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	turret=1;
 	model=weapon_Advtorpedo;
 	collidefriendly=1;
-	range=1500;
+	range=1000;
 	reloadtime=4;
 	weapontimer=10;
 	weaponvelocity=450;
-	startvelocity=250;
-	weaponAcceleration=5;
+	startvelocity=150;
+	weaponAcceleration=50;
 	flighttime=8;
-	turnrate=750;
+	turnrate=15750;
 	areaofeffect=64;
 	soundstart=torpedo2;
 	soundhit=xplodep3;
-	tracks=0;
+	tracks=1;
 	waterweapon=1;
 	tolerance=32767;
 	explosiongenerator=custom:STDBLASTWRAPPER;
@@ -7248,7 +7295,6 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
-		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
@@ -7608,6 +7654,7 @@
   	alphadecay=0.24;
   	sizedecay=-0.1;
 	accuracy=400;
+	burnblow=1;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -7832,6 +7879,43 @@
 		armor_heavy=300;//#AUTO#
 		armor_medium=300;//#AUTO#
 		armor_light=300;//#AUTO#
+	}
+}
+[aven_adv_torpedo_launcher_torpedo]
+{
+	name=Torpedoes;
+	weapontype=TorpedoLauncher;
+	turret=1;
+	model=weapon_Advtorpedo;
+	collidefriendly=1;
+	range=1000;
+	reloadtime=4;
+	weapontimer=10;
+	weaponvelocity=450;
+	startvelocity=150;
+	weaponAcceleration=50;
+	flighttime=8;
+	turnrate=15750;
+	areaofeffect=64;
+	soundstart=torpedo2;
+	soundhit=xplodep3;
+	tracks=1;
+	waterweapon=1;
+	tolerance=32767;
+	explosiongenerator=custom:STDBLASTWRAPPER;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=600;
+		group_invincible=1;
+		armor_heavy=600;//#AUTO#
+		armor_medium=600;//#AUTO#
+		armor_light=600;//#AUTO#
 	}
 }
 [ESTOR_BUILDING]
@@ -8934,6 +9018,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		evalfactor=1.1;  // high impulse
 	}
 	[DAMAGE]
 	{
@@ -9882,7 +9967,7 @@
 	turnrate=31660;
 	areaofeffect=48;
 	metalpershot=0;
-	trajectoryheight=0.1;
+	trajectoryheight=0.3;
 	soundstart=misfire1;
 	soundhit=mishit1;
 	firestarter=70;
@@ -10132,9 +10217,9 @@
 	turret=1;
 	cylinderTargeting=1;
 	cegTag=BOMBTRAILBIG;
-	range=500;
+	range=480;
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	reloadtime=5.6;
+	reloadtime=4.6;
 	flighttime=2.75;
 	weaponvelocity=360;
 	startvelocity=150;
@@ -10673,11 +10758,11 @@
 	}
 	[DAMAGE]
 	{
-		default=900;
+		default=950;
 		group_invincible=1;
-		armor_heavy=900;//#AUTO#
-		armor_medium=900;//#AUTO#
-		armor_light=900;//#AUTO#
+		armor_heavy=950;//#AUTO#
+		armor_medium=950;//#AUTO#
+		armor_light=950;//#AUTO#
 	}
 }
 [gear_edge_laser2]
@@ -12529,7 +12614,7 @@
   	sizedecay=-0.2;
 	energypershot=7;
 	turret=1;
-	range=520;
+	range=560;
 	reloadtime=0.15;
 	accuracy=512;
 	weapontimer=1;
@@ -13348,7 +13433,7 @@
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	turret=1;
-	range=850;
+	range=770;
 	accuracy=120;
 	reloadtime=1.8;
 	weaponvelocity=350;
@@ -14312,6 +14397,7 @@
 	accuracy=500;
 	tolerance=3000;
 	edgeeffectiveness=0.1;
+	burnblow=1;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -14352,6 +14438,7 @@
 	firestarter=50;
 	accuracy=400;
 	tolerance=3000;
+	burnblow=1;
 	edgeeffectiveness=0.1;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
@@ -14765,7 +14852,7 @@
 	weapontype=Cannon;
 	turret=1;
 	range=600;
-	reloadtime=7;
+	reloadtime=6.5;
 	weaponvelocity=300;
 	areaofeffect=240;
 	soundstart=novafire;
@@ -14790,6 +14877,7 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		evalfactor=1.1;  // high impulse
 	}
 	[DAMAGE]
 	{
@@ -15435,7 +15523,7 @@
 	collidefriendly=1;
 	avoidfriendly=1;
 	model=weapon_advtorpedo2;
-	range=1200;
+	range=900;
 	reloadtime=4;
 	weapontimer=10.5;
 	FlightTime=7.0;
@@ -16190,6 +16278,7 @@
 	soundhit=xplochargedshot;
 	soundtrigger=1;
 	tolerance=3000;
+	burnblow=1;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -16315,6 +16404,7 @@
 	soundhit=xplochargedshot;
 	soundtrigger=1;
 	tolerance=3000;
+	burnblow=1;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -17317,12 +17407,12 @@
 	weapontype=MissileLauncher;
 	trajectoryheight=0.6;
 	turret=1;
-	model=weapon_redrocket.3do;
-	range=1900;
+	model=weapon_redrocket4.3do;
+	range=2000;
 	accuracy=120;
 	burst=2;
 	burstrate=0.3;
-	reloadtime=5.5;
+	reloadtime=6;
 	flighttime=6;
 	turnrate=6000;
 	wobble=500;
@@ -17343,10 +17433,10 @@
 	}
 	[DAMAGE]
 	{
-		default=400;
-		armor_heavy=400;//#AUTO#
-		armor_medium=400;//#AUTO#
-		armor_light=400;//#AUTO#
+		default=500;
+		armor_heavy=500;//#AUTO#
+		armor_medium=500;//#AUTO#
+		armor_light=500;//#AUTO#
 	}
 }
 [sphere_stark_missile]
@@ -17444,7 +17534,7 @@
 	thickness=2.123;
 	corethickness=0.55;
 	turret=1;
-	range=550;
+	range=560;
 	minintensity=1.0;
 	reloadtime=0.33;
 	energypershot=10;
@@ -18400,9 +18490,9 @@
 	turret=1;
 	cylinderTargeting=1;
 	cegTag=BOMBTRAILBIG;
-	range=450;
+	range=480;
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	reloadtime=5.5;
+	reloadtime=4.5;
 	flighttime=2.75;
 	weaponvelocity=360;
 	startvelocity=150;

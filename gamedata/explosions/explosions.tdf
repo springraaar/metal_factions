@@ -2344,10 +2344,24 @@
 		class=CSpherePartSpawner;
 		[properties]
 		{
-			ttl=10;
+			ttl=20;
+			alpha=0.05 r0.1;
+			expansionSpeed=11;
+			color=0.5, 0.8 r0.2, 0.8 r0.2;
+		}
+		ground=1;
+		air=1;
+		count=1;
+	}
+	[WIndsphere]
+	{
+		class=CSpherePartSpawner;
+		[properties]
+		{
+			ttl=20;
 			alpha=0.05 r0.1;
 			expansionSpeed=10;
-			color=0.5, 0.8 r0.2, 0.8 r0.2;
+			color=0.1, 0.7 r0.2, 1;
 		}
 		ground=1;
 		air=1;
@@ -2409,7 +2423,7 @@
 	ground=1;
 	count=1;
 	}
-	[_sparks]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;explosionGenerator=custom:ELECTRICSEQUENCE;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_sparks]{class=CExpGenSpawner;[properties]{pos=-60 r120,0,-60 r120;delay=r20;explosionGenerator=custom:ELECTRICSEQUENCE;}air=1;ground=1;water=1;underwater=1;unit=1;count=6;}
 }
 [EMPEFFECT]
 {
@@ -3741,6 +3755,23 @@
    		water=1;
 		alwaysVisible=1;
 	}
+	[waterwindsphere]
+	{
+		class=CSpherePartSpawner;
+		[properties]
+		{
+			ttl=27;
+			alpha=0.2;
+			expansionSpeed=2 d1.0;
+			color=1.0, 1, 1;
+		}
+		ground=0;
+		air=0;
+		count=1;
+   		water=1;
+		underwater=1;
+		alwaysVisible=1;
+	}
 	[G_blast]//base explo// 
 	{
 		class=CSimpleParticleSystem;
@@ -3850,6 +3881,7 @@
 	water=1;
 	ground=1;
 	count=1;
+	underwater=1;
 	alwaysVisible=1;
 	}
 	[largesmokepuffs] //large smoke puffs
@@ -4040,6 +4072,85 @@
 	count=1;
 	alwaysVisible=1;
 	}
+
+	[G_waterwave1]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.16;
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, 0, 0;
+		
+		colorMap=0.5 0.5 0.5 0.01 	0.15 0.15 0.15 0.01	 0.1 0.1 0.1 0.01 	0.05 0.05 0.05 0.01 	0 0 0 0.01;
+
+		Texture=YELLOWBLAST;
+		airdrag=0.92;
+		
+		particleLifeSpread=15; 
+		particleSpeedSpread=1;  
+		particleSizeSpread=1;   
+		
+		particleLife=d5;
+		numParticles=35; 
+		particleSpeed=d2; 
+		particleSize=d2.5;
+		
+		
+		emitVector=0, 1, 0; 
+		emitRot=60;
+		emitRotSpread=30; 
+		directional=0; 
+		alwaysVisible=1;
+		}
+	air=0;
+	water=1;
+	ground=0;
+	count=1;
+	underwater=1;
+	alwaysVisible=1;
+	}
+	[G_waterwave2]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.16; 
+		sizeMod=1.0;
+		pos=0, 1, 0; 
+		gravity=0, 0, 0;
+	
+		colorMap=0.5 0.5 0.5 0.01 	0.15 0.15 0.15 0.01	 0.1 0.1 0.1 0.01 	0.05 0.05 0.05 0.01 	0 0 0 0.01;
+
+
+		Texture=YELLOWBLAST1;
+		airdrag=0.92;
+		
+		particleLifeSpread=15; 
+		particleSpeedSpread=1;  
+		particleSizeSpread=1;   
+		
+		particleLife=d5;
+		numParticles=35; 
+		particleSpeed=d2; 
+		particleSize=d2.5;
+		
+		
+		emitVector=0, 1, 0; 
+		emitRot=60;
+		emitRotSpread=30; 
+		directional=0; 
+		alwaysVisible=1;
+		}
+	air=0;
+	water=1;
+	ground=0;
+	count=1;
+	underwater=1;
+	alwaysVisible=1;
+	}
+
 	[_dust]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=d130;explosionGenerator=custom:DYNBIGDUSTBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
 

@@ -2417,6 +2417,28 @@ usedefaultexplosions=0;
 	}
 }
 
+[EMPSHOTTRAILBIG]
+{
+	usedefaultexplosions=0;	
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-1 r2,-1 r2,-1 r2;
+			width=19;
+			length=19;
+			alpha=0.9;
+			alphadecay=0.8;
+			color=0.6, 0.7, 1.0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=6; 
+	}
+}
 [DISRUPTORWAVE]
 {
 	usedefaultexplosions=0;	

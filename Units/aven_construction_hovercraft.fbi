@@ -38,7 +38,7 @@
 	metalmake=0.0;
 	metalstorage=0;
 	energymake=16;
-	energyuse=1;
+	energyuse=0;
 	energystorage=0;
 
 	//************************************************************
@@ -71,7 +71,7 @@
 	movementclass=TANKHOVER3;
 	turnrate=600;
 	acceleration=0.4;
-	brakerate=0.01;
+	brakerate=0.02;
 	maxvelocity=2.7;
 	maxslope=16;
 	maxwaterdepth=0;
@@ -122,7 +122,7 @@
 	{
 	explosiongenerator0=custom:Nano;
 	}
-	buildcostenergy=4364;//#AUTO#
-	buildcostmetal=872;//#AUTO#
-	buildtime=10401;//#AUTO#
+	buildcostenergy=4380;//#AUTO#
+	buildcostmetal=876;//#AUTO#
+	buildtime=10439;//#AUTO#
 }

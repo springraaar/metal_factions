@@ -36,8 +36,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.8;
-	energyuse=0.8;
+	energymake=0.0;
+	energyuse=0.0;
 	energystorage=0;
 
 	//************************************************************
@@ -62,7 +62,7 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKBH3;
+	movementclass=TANKBH4;
 	turnrate=400;
 	acceleration=0.425;
 	brakerate=0.1;
@@ -127,7 +127,7 @@
 	{
 	explosiongenerator0=custom:rocketflaremed;
 	}
-	buildcostenergy=5940;//#AUTO#
-	buildcostmetal=1188;//#AUTO#
-	buildtime=14157;//#AUTO#
+	buildcostenergy=5836;//#AUTO#
+	buildcostmetal=1167;//#AUTO#
+	buildtime=13909;//#AUTO#
 }

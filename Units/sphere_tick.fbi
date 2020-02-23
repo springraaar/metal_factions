@@ -80,6 +80,8 @@
 	//  Weapons
 	//***********
 	Weapon1=sphere_tick_laser;
+	weaponmaindir1=0 1 0;
+	maxangledif1=280;
 	badtargetcategory1=VTOL;
 	NoChaseCategory=VTOL;
 	explodeas=SMALL_UNITEX;
@@ -124,7 +126,7 @@
 		explosiongenerator0=custom:redflare;
 	}
 
-	buildcostenergy=1471;//#AUTO#
-	buildcostmetal=294;//#AUTO#
-	buildtime=3506;//#AUTO#
+	buildcostenergy=1483;//#AUTO#
+	buildcostmetal=296;//#AUTO#
+	buildtime=3535;//#AUTO#
 }

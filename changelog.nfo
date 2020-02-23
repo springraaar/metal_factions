@@ -1,3 +1,66 @@
+2020/02/23 ------------------ NOTES v1.29 ----------------------
+
+
+--- Balance / Mechanics
+
+- increased ranges of light laser towers and CLAW "Drill" from 520-550 to 560 and slightly increased their costs (up to 10%)
+
+- CLAW "Thumper" : reduced range and cost by about 10%
+(this means it no longer slightly outranges medium laser or missile towers which cost more than twice as much)
+- CLAW "Nucleus" and "Mega" projectiles explode mid-air when targetting air units
+- CLAW "Nucleus" can use high-trajectory mode
+
+- AVEN and GEAR adv. torpedo launchers have their range reduced from 1500 to 1000 but have tracking torpedoes and a 20% cost reduction
+- normalized max water depth for non-amphibious units at 35 
+(this allows them to cross shallow water more consistently)
+- units will not be set on fire and stop burning if they're mostly submerged
+- AVEN and GEAR adv. construction submarines have their armor type changed from L to M and cost adjusted (+17%)
+- reduced SPHERE "Oyster" range and cost by about 25%
+- slightly increased maneuverability of AVEN hovercraft
+
+
+- made SPHERE "Banger"'s rockets deal 20% more damage with 10% more reload time and 5% more range and has a 10% cost increase
+(the rockets are now visually different from the "Lancer" ones)
+- increased SPHERE "Tycho"'s acceleration and brake rates
+
+- AVEN "Javelin" has a slightly bigger footprint and its missiles have a slightly higher trajectory to avoid hitting friendly units
+- increased AOE of AVEN rapid disruptor projectiles from 48-64 to 96 and made them explode mid-air when used against aicraft 
+(this makes them a bit more effective against air targets)
+- reduced cost of units with disruptor projectiles by about 10% (the cost increase from the AOE increase compensates for this though)
+- AVEN "Weaver" missiles follow a slightly higher trajectory to better avoid terrain obstructions
+- AVEN "Stasis" cost and range reduced by 10%
+- AVEN "Omega" form commander now has twin disruptor cannons instead of the secondary EMG weapon and has a shorter range torpedo launcher with higher dmg/s
+
+
+- up to about 5% cost reduction for relatively expensive units
+- reduced cost of units with weapons with large area of effect unless they have particularly long range
+(this also makes GEAR "Grenados" significantly cheaper and buildings with large death explosions slightly more expensive)
+
+- 7% fire rate increase on SPHERE "Nova" and GEAR "Infernal" commander forms
+
+- 20% fire rate increase on SPHERE "Meteor" and AVEN "Icarus" heavy bombs, set range to 480 and adjusted cost (it ends up being about the same)
+
+- 5% damage increase on GEAR "Blazer" form commander
+
+- All-terrain units now have an 80º blind spot in a downward direction to avoid them firing through their body when targetting units on cliff tops from cliff sides
+(this restriction should be barely noticeable and may be increased in the future)
+
+- tough GEAR units with relatively short range fire attacks can no longer be set on fire (they still take direct and area fire damage, though)
+
+
+--- UI
+
+- added widget to show metal/energy amounts within the selected area when area-reclaim commands are used
+(widget from Pendrokar/Janis Lukss)
+
+--- visuals
+
+- slightly improved the visual effects of big explosions happening underwater (from fusion reactors and such)
+
+
+
+
+
 2020/02/09 ------------------ NOTES v1.28 ----------------------
 
 --- new units

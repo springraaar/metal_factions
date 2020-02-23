@@ -9,9 +9,9 @@
 #define SPEEDUP_FACTOR	105
 #define RESTORE_DELAY	3000
 
-piece  torso, ruparm, luparm, rbigflash, nanospray, pelvis, lfirept, head, lthigh, rthigh, lloarm, rloarm, rleg, lleg, rfoot,lfoot, torpgun,torpedo, lfirept2, h2, nano, lemg, rgun, t2,t3,t4,lshoulder,rshoulder;
+piece  torso, ruparm, luparm, lnanopt,rnanopt, pelvis, lfirept,rfirept, head, lthigh, rthigh, lloarm, rloarm, rleg, lleg, rfoot,lfoot, ltorpgun,ltorpedo,lfirept2,rtorpgun,rtorpedo,rfirept2, h2, lnano,rnano, lgun, rgun, t2,t3,t4,lshoulder,rshoulder;
 
-static-var  bMoving, bBuilding, bDgunning,bAiming, Static_Var_6, bUnderwater, canAim1, canAim2, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
+static-var  bMoving, bBuilding, bDgunning,bAiming, Static_Var_6, bUnderwater, canAim1, canAim2, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3, gun_1,gun_2, nanoPt;
 
 #include "aimhelper1.h"
 
@@ -101,7 +101,8 @@ Build()
 	{
 		if( bBuilding )
 		{
-			emit-sfx 1024 + 1 from nanospray;
+			emit-sfx 1024 + 1 from lnanopt;
+			emit-sfx 1024 + 1 from rnanopt;
 			call-script lua_delayReload(3);
 		}
 		sleep 100;
@@ -135,15 +136,19 @@ checkUnderwater()
 			if(bUnderwater)
 			{
 				//hide emg stuff
-				hide lemg;
+				hide lgun;
+				hide rgun;
  				
 				//TODO show weapon morph stuff
 				sleep 10;
 				
 				//show torpedo stuff 			
- 				move torpedo to y-axis [0.000000] now;
- 				show torpgun;
- 				show torpedo;
+ 				move ltorpedo to y-axis [0.000000] now;
+ 				show ltorpgun;
+ 				show ltorpedo;
+ 				move rtorpedo to y-axis [0.000000] now;
+ 				show rtorpgun;
+ 				show rtorpedo;
  				
 
 				sleep 200;
@@ -153,16 +158,20 @@ checkUnderwater()
 			if(!bUnderwater)
 			{
 				//hide torpedo stuff
-				hide torpedo;
-				hide torpgun;
-				move torpedo to y-axis [0.000000] now;
+				hide ltorpedo;
+				hide ltorpgun;
+				move ltorpedo to y-axis [0.000000] now;
+				hide rtorpedo;
+				hide rtorpgun;
+				move rtorpedo to y-axis [0.000000] now;
 
 
 				//TODO show weapon morph stuff
 				sleep 10;
 
 				//show emg stuff 			
- 				show lemg;
+ 				show lgun;
+ 				show rgun;
  		
  				sleep 200;	
  				canAim1 = TRUE;
@@ -380,11 +389,13 @@ MotionControl()
 
 Create()
 {
-	hide rbigflash;
-	hide lfirept;
-	hide nanospray;
-	hide torpgun;
-	hide torpedo;
+	hide ltorpgun;
+	hide ltorpedo;
+	hide rtorpgun;
+	hide rtorpedo;
+	gun_1 = 0;
+	gun_2 = 0;
+	nanoPt = 0;
 	bMoving = FALSE;
 	bBuilding = FALSE;
 	bDgunning = FALSE;
@@ -420,8 +431,16 @@ SweetSpot(piecenum)
 
 QueryNanoPiece(piecenum)
 {
-	piecenum = nanospray;
-	return;
+	if (nanoPt == 0 ) {
+		piecenum = lnanopt;
+		nanoPt = 1;
+		return;
+	}
+	if (nanoPt == 1 ) {
+		piecenum = rnanopt;
+		nanoPt = 0;
+		return;
+	}
 }
 
 RestorePosition()
@@ -451,8 +470,14 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	piecenum = lfirept;
-	return;
+	if (gun_1 == 0) {
+		piecenum = lfirept;
+		return;
+	}
+	if (gun_1 == 1) {
+		piecenum = rfirept;
+		return;
+	}
 }
 
 AimPrimary(heading, pitch)
@@ -483,8 +508,18 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	emit-sfx 1024 + 2 from lfirept;
-	return;
+	if (gun_1 == 0) {
+		emit-sfx 1024 + 0 from lfirept;
+		sleep 100;
+		gun_1 = 1;
+		return;
+	}
+	if (gun_1 == 1) {
+		emit-sfx 1024 + 0 from rfirept;
+		sleep 100;
+		gun_1 = 0;
+		return;
+	}	
 }
 
 
@@ -496,8 +531,14 @@ AimFromSecondary(piecenum)
 
 QuerySecondary(piecenum)
 {
-	piecenum = lfirept2;
-	return;
+	if (gun_2 == 0) {
+		piecenum = lfirept2;
+		return;
+	}
+	if (gun_2 == 1) {
+		piecenum = rfirept2;
+		return;
+	}	
 }
 
 AimSecondary(heading, pitch)
@@ -515,6 +556,8 @@ AimSecondary(heading, pitch)
 	turn torso to y-axis heading speed <300.093407>;
 	turn luparm to x-axis <0.000000> - pitch - <90.000000> speed <395.000000>;
 	turn lloarm to x-axis <0.000000> speed <395.000000>;
+	turn ruparm to x-axis <0.000000> - pitch - <90.000000> speed <395.000000>;
+	turn rloarm to x-axis <0.000000> speed <395.000000>;
 	if (!aimReady1)
 	{
 		wait-for-turn torso around y-axis;
@@ -527,61 +570,22 @@ AimSecondary(heading, pitch)
 
 FireSecondary()
 {
-	move torpedo to y-axis [2.000000] now;
-	sleep 1000;
-	move torpedo to y-axis [0.000000] speed [6.000000];
-	return;
-}
-
-AimFromTertiary(piecenum)
-{
-	piecenum = torso;
-	return;
-}
-
-QueryTertiary(piecenum)
-{
-	piecenum = rbigflash;
-	return;
-}
-
-AimTertiary(heading, pitch)
-{
-	bAiming = TRUE;
-	//bDgunning = TRUE;
-	// if it's not going to be able to fire on the next ~2s, don't try to aim
-	if ((get WEAPON_RELOADSTATE(3)) > (get GAME_FRAME) + 40)) { return(0); }
-	
-	call-script updateAimHelper1(heading,pitch + <90.000000>,<300>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
-	signal SIG_AIM;
-	set-signal-mask SIG_AIM;
-	
-	turn torso to y-axis heading speed <300.093407>;
-	turn ruparm to x-axis <0.000000> - pitch - <90.000000> speed <400.000000>;
-	turn rloarm to x-axis <0.000000> speed <400.000000>;
-	turn luparm to x-axis <0.000000> - pitch - <90.000000> speed <400.000000>;
-	turn lloarm to x-axis <0.000000> speed <400.000000>;
-	if (!aimReady1)
-	{
-		wait-for-turn torso around y-axis;
-		wait-for-turn ruparm around x-axis;
-		wait-for-turn rloarm around x-axis;
+	if (gun_2 == 0) {
+		move ltorpedo to y-axis [2.500000] now;
+		sleep 1000;
+		gun_2 = 1;
+		move ltorpedo to y-axis [0.000000] speed [6.000000];
+		return;
 	}
-	
-	start-script RestorePosition();
-	return (1);
+	if (gun_2 == 1) {
+		move rtorpedo to y-axis [2.500000] now;
+		sleep 1000;
+		gun_2 = 0;
+		move rtorpedo to y-axis [0.000000] speed [6.000000];
+		return;
+	}
 }
 
-FireTertiary()
-{
-	emit-sfx 1024 + 0 from rbigflash;
-	move torso to z-axis[-0.250000] now;
-	move rgun to y-axis[1.000000] now;
-	sleep 150;
-	move torso to z-axis[0.000000] speed [4.000000];
-	move rgun to y-axis[0.000000] speed [4.000000];
-	return;
-}
 
 StartBuilding(heading, pitch)
 {
@@ -593,6 +597,8 @@ StartBuilding(heading, pitch)
 	turn torso to y-axis heading speed <300.093407>;
 	turn luparm to x-axis <0.000000> - pitch - <90.000000> speed <350.000000>;
 	turn lloarm to x-axis <0.000000> speed <395.000000>;
+	turn ruparm to x-axis <0.000000> - pitch - <90.000000> speed <350.000000>;
+	turn rloarm to x-axis <0.000000> speed <395.000000>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn luparm around x-axis;
 	wait-for-turn lloarm around x-axis;

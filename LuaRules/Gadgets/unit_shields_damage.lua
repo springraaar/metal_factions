@@ -112,6 +112,15 @@ local scoperBeaconDefIds = {
 	[UnitDefNames["scoper_beacon"].id] = true
 }
 
+local burningImmuneDefIds = {
+	[UnitDefNames["gear_pyro"].id] = true,
+	[UnitDefNames["gear_heater"].id] = true,
+	[UnitDefNames["gear_u1commander"].id] = true,
+	[UnitDefNames["gear_u5commander"].id] = true,
+	[UnitDefNames["gear_cloakable_cube"].id] = true,
+	[UnitDefNames["gear_cube"].id] = true
+}
+
 local burningEffectWeaponDefIds = {
 	[WeaponDefNames["gear_pyro_flamethrower"].id] = true,
 	[WeaponDefNames["gear_u1commander_flamethrower"].id] = true,
@@ -295,28 +304,32 @@ function gadget:GameFrame(n)
 	local dmg, radius = 0
 	
 	for unitID,data in pairs(unitBurningTable) do	
+		_,_,_,x,y,z = spGetUnitPosition(unitID,true)
 		
-		-- apply damage
-		local armorType = unitArmorTypeTable[data.unitDefID]
-		if (armorType == "H") then
-			dmg = FIRE_DMG_PER_STEP_HEAVY
-		else
-			dmg = FIRE_DMG_PER_STEP
-		end
-		spAddUnitDamage(unitID,dmg,0,data.attackerID)
-
-		-- spawn CEG
-		x,y,z = spGetUnitPosition(unitID)
-		radius = spGetUnitRadius(unitID)
-		if radius ~= nil then
-			local h = radius / 2
-			Spring.SpawnCEG(BURNING_CEG, x - h + math.random(2*h), y+h, z - h + math.random(2*h), 0, 1, 0,radius ,radius)
-			Spring.PlaySoundFile(BURNING_SOUND, 4, x, y+h, z)
+		if y and y > -10 then
+			-- apply damage
+			local armorType = unitArmorTypeTable[data.unitDefID]
+			if (armorType == "H") then
+				dmg = FIRE_DMG_PER_STEP_HEAVY
+			else
+				dmg = FIRE_DMG_PER_STEP
+			end
+			spAddUnitDamage(unitID,dmg,0,data.attackerID)
 	
-			-- update table
-			if (data.steps > 1) then
-				data.steps = data.steps - 1
-				unitBurningTable[unitID] = data
+			-- spawn CEG
+			radius = spGetUnitRadius(unitID)
+			if radius ~= nil then
+				local h = radius / 3
+				Spring.SpawnCEG(BURNING_CEG, x - h + math.random(2*h), y+h, z - h + math.random(2*h), 0, 1, 0,radius ,radius)
+				Spring.PlaySoundFile(BURNING_SOUND, 4, x, y+h, z)
+		
+				-- update table
+				if (data.steps > 1) then
+					data.steps = data.steps - 1
+					unitBurningTable[unitID] = data
+				else
+					unitBurningTable[unitID] = nil
+				end
 			else
 				unitBurningTable[unitID] = nil
 			end
@@ -493,7 +506,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	end
 	
 	-- add/refresh burning debuff, limit fire aoe damage
-	if ( burningEffectWeaponDefIds[weaponDefID]) then
+	if ( burningEffectWeaponDefIds[weaponDefID] and (not burningImmuneDefIds[unitDefID])) then
 		unitBurningTable[unitID] = {steps = FIRE_DMG_STEPS,unitDefID = unitDefID, attackerID = attackerID}
 
 		if ( burningAOEPerStepWeaponDefIds[weaponDefID]) then

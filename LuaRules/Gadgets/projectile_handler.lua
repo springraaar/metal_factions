@@ -122,6 +122,7 @@ local torpedoWeaponIds = {
 	[WeaponDefNames["aven_vanguard_depthcharge"].id]=true,
 	[WeaponDefNames["armdepthcharge"].id]=true,
 	[WeaponDefNames["aven_slider_s_depthcharge"].id]=true,
+	[WeaponDefNames["aven_adv_torpedo_launcher_torpedo"].id]=true,
 	
 	-- GEAR
 	[WeaponDefNames["gear_commander_torpedo"].id]=true,
@@ -133,7 +134,7 @@ local torpedoWeaponIds = {
 	[WeaponDefNames["gear_u6commander_torpedo"].id]=true,
 	[WeaponDefNames["gear_snake_torpedo"].id]=true,
 	[WeaponDefNames["gear_noser_torpedo"].id]=true,
-	[WeaponDefNames["corssub_weapon"].id]=true,
+	[WeaponDefNames["gear_adv_torpedo_launcher_torpedo"].id]=true,
 	[WeaponDefNames["gear_tl_torpedo"].id]=true,
 	[WeaponDefNames["coredepthcharge"].id]=true,
 	[WeaponDefNames["gear_viking_depthcharge"].id]=true,
