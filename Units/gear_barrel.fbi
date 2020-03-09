@@ -23,7 +23,7 @@
 	objectname=gear_barrel.3do;
 	corpse=gear_barrel_dead;
 	buildpic=gear_barrel.png;
-	soundcategory=CORAK;
+	soundcategory=COR_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
@@ -70,9 +70,9 @@
 	turnrate=645;
 	acceleration=0.13;
 	brakerate=0.3;
-	maxvelocity=1.2;
+	maxvelocity=1.1;
 	maxwaterdepth=1000;
-	turninplace=0;
+	turninplace=1;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -87,8 +87,10 @@
 	weapon1=gear_barrel_missile;
 	nochasecategory=VTOL;
 	badtargetcategory1=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	weapon2=gear_barrel_missile2;
+	badtargetcategory2=NOTAIR;
+	explodeas=GEAR_CANISTER;
+	selfdestructas=GEAR_CANISTER;
 
 	//************************************************************
 	//  Orders
@@ -117,17 +119,18 @@
 	pieceTrailCEGRange = 4;
 	waterline=15;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		tip=Burns ground for 20s, dealing up to 20(M) dmg/s. Affected units burn for 180(M) dmg over 6s;
+	}
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:redflare;
-	explosiongenerator1=custom:UNITFIRE;
+		explosiongenerator0=custom:rocketflaremed;
+		explosiongenerator1=custom:UNITFIRE;
 	}
 
-	buildcostenergy=3950;//#AUTO#
-	buildcostmetal=790;//#AUTO#
-	buildtime=9416;//#AUTO#
+	buildcostenergy=7477;//#AUTO#
+	buildcostmetal=1495;//#AUTO#
+	buildtime=17821;//#AUTO#
 }

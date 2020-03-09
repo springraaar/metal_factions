@@ -5,7 +5,7 @@
 	//********************
 	side=Claw;
 	name=Sinker;
-	description=Depthcharge Launcher;
+	description=Torpedo Launcher;
 	icontype=staticartilleryfs;
 
 	//************************************************************
@@ -27,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2200;
+	maxdamage=1800;
 	healtime=30;
 	footprintx=4;
 	footprintz=4;
@@ -79,10 +79,10 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=claw_sinker_depthcharge;
+	weapon1=claw_sinker_torpedo;
 	onlytargetcategory1=NOTAIR;
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -111,7 +111,7 @@
 	//  To be removed
 	//*****************
 
-	buildcostenergy=1097;//#AUTO#
-	buildcostmetal=219;//#AUTO#
-	buildtime=2614;//#AUTO#
+	buildcostenergy=1955;//#AUTO#
+	buildcostmetal=391;//#AUTO#
+	buildtime=4661;//#AUTO#
 }

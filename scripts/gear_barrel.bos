@@ -5,13 +5,14 @@
 
 #define SPEEDUP_FACTOR 210
 
-piece  base, firept1,firept2,firept3, wake1, wake2, launcher, hull,fb2,fb3,fb4,rfrontsup,rfrontleg,rfront2,rbacksup,rbackleg,rback2,lbacksup,lbackleg,lback2,lfrontsup,lfrontleg,lfront2;
+piece  base, firept1,firept2,firept3, wake1, wake2, launcher, hull,fb2,fb3,fb4,rfrontsup,rfrontleg,rfront2,rbacksup,rbackleg,rback2,lbacksup,lbackleg,lback2,lfrontsup,lfrontleg,lfront2, launcher2, fireptl2;
 
 static-var  bMoving, bAiming, Static_Var_3, bSwimming, gun_1, restore_delay, terrainStatus, waterSpeed, landSpeed;
 
 // Signal definitions
 #define SIG_MOVE			2
 #define SIG_AIM				4
+#define SIG_AIM2			8
 
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
@@ -374,6 +375,36 @@ QueryPrimary(piecenum)
 	if (gun_1 == [2]) {
 		piecenum = firept3;
 	}
+
+	return (0);
+}
+
+
+AimSecondary(heading, pitch)
+{
+	signal SIG_AIM2;
+	set-signal-mask SIG_AIM2;
+	bAiming = TRUE;
+
+	return (1);
+}
+
+FireSecondary()
+{
+	emit-sfx 1024 from fireptl2;
+	return (1);
+}
+
+
+AimFromSecondary(piecenum)
+{
+	piecenum = launcher2;
+	return (0);
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = fireptl2;
 
 	return (0);
 }

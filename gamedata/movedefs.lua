@@ -185,8 +185,16 @@ local moveDefs = {
 		slopemod=6,
 	},
 	BOATSUB = {
-		FootprintX=3,
-		FootprintZ=3,
+		FootprintX=4,
+		FootprintZ=4,
+		MinWaterDepth=36,
+		CrushStrength=100,
+		Submarine=1,
+		depthmodparams=commonDepthModParams,
+	},
+	BOATSUB5 = {
+		FootprintX=5,
+		FootprintZ=5,
 		MinWaterDepth=36,
 		CrushStrength=100,
 		Submarine=1,

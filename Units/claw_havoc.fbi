@@ -63,11 +63,11 @@
 	//  Movement
 	//************
 	turnrate=300;
-	acceleration=0.07;
+	acceleration=0.1;
 	brakerate=0.05;
 	maxvelocity=3.8;
 	maxslope=10;
-	cruisealt=250;
+	cruisealt=260;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -81,8 +81,8 @@
 	weapon1=claw_havoc_bomb;
 	nochasecategory=VTOL;
 	onlytargetcategory1=NOTAIR;
-	weaponmaindir1=0 -1 0.2;
-	maxangledif1=120;
+	weaponmaindir1=0 -1 0;
+	maxangledif1=190;
 	explodeas=ESTOR_BUILDING;
 	selfdestructas=ESTOR_BUILDING;
 
@@ -130,7 +130,7 @@
 	{
 		explosiongenerator0=custom:ROCKETFLAREMED;
 	}
-	buildcostenergy=12968;//#AUTO#
-	buildcostmetal=2593;//#AUTO#
-	buildtime=30907;//#AUTO#
+	buildcostenergy=13031;//#AUTO#
+	buildcostmetal=2606;//#AUTO#
+	buildtime=31058;//#AUTO#
 }

@@ -103,6 +103,7 @@ local fireAOEWeaponIds = {
 	[WeaponDefNames["gear_firestorm_rocket"].id]=true,
 	[WeaponDefNames["gear_igniter_rocket"].id]=true,
 	[WeaponDefNames["gear_u1commander_missile"].id]=true,
+	[WeaponDefNames["gear_barrel_missile2"].id]=true,
 	[WeaponDefNames["gear_u5commander_fireball"].id]=true
 }
 
@@ -148,7 +149,7 @@ local torpedoWeaponIds = {
 	[WeaponDefNames["claw_u6commander_torpedo"].id]=true,
 	[WeaponDefNames["claw_spine_torpedo"].id]=true,
 	[WeaponDefNames["claw_monster_torpedo"].id]=true,
-	[WeaponDefNames["claw_sinker_depthcharge"].id]=true,
+	[WeaponDefNames["claw_sinker_torpedo"].id]=true,
 	[WeaponDefNames["claw_drakkar_depthcharge"].id]=true,
 	-- SPHERE
 	[WeaponDefNames["sphere_commander_torpedo"].id]=true,

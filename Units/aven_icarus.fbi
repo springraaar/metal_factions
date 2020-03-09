@@ -64,7 +64,7 @@
 	brakerate=0.08;
 	maxvelocity=5.4;
 	maxwaterdepth=5;
-	cruisealt=200;
+	cruisealt=240;
 	turnrate=400;
 
 
@@ -83,8 +83,8 @@
 	badtargetcategory2=NOTAIR;
 	explodeas=BIG_UNIT;
 	selfdestructas=BIG_UNIT;
-	WeaponMainDir1=0 -1 0.2;  //x:0 y:0 z:1 => that's forward!
-	MaxAngleDif1=110;       //110deg from side to side, or 55deg from center to each direction
+	WeaponMainDir1=0 -1 0;  //x:0 y:0 z:1 => that's forward!
+	MaxAngleDif1=190;
 
 
 	//************************************************************
@@ -140,7 +140,7 @@
 	{
 		explosiongenerator0=custom:rocketflaresml;
 	}
-	buildcostenergy=12173;//#AUTO#
-	buildcostmetal=2434;//#AUTO#
-	buildtime=29012;//#AUTO#
+	buildcostenergy=12278;//#AUTO#
+	buildcostmetal=2455;//#AUTO#
+	buildtime=29263;//#AUTO#
 }

@@ -36,7 +36,7 @@ local function checkMorph(self)
 				local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
 				
 				-- morph only if income is decent
-				if incomeM > 30 and incomeE > 300 then
+				if incomeM > 20 and incomeE > 200 then
 					-- if enemies are nearby, skip morph
 					if areEnemiesNearby(self, self.pos, MORPH_CHECK_RADIUS) then
 						--log("enemies nearby")
@@ -460,9 +460,8 @@ end
 
 
 function briefAreaPatrol(self)
-	
 	-- if unit is far away from base center, move to center and then retry
-	if unitName ~= SKIP_THIS_TASK and farFromBaseCenter(self)  then
+	if farFromBaseCenter(self)  then
 		self:Retry()
 		return moveBaseCenter(self)
 	end
@@ -494,6 +493,15 @@ function briefAreaPatrol(self)
 	
 	-- do it for some time
 	return {action="wait", frames=BRIEF_AREA_PATROL_FRAMES}
+end
+
+function commanderBriefAreaPatrol(self)
+	if (countOwnUnitsInRadius(self,nil, self.pos, 600, 4, TYPE_L1_PLANT) < 1 and countOwnUnitsInRadius(self,nil, self.pos, 600, 4, TYPE_L2_PLANT) < 1) then
+		-- do nothing
+		return SKIP_THIS_TASK
+	end
+	
+	return briefAreaPatrol(self)
 end
 
 function exitPlant(self)
@@ -1586,7 +1594,7 @@ local avenCommander = {
 	windSolarIfNeeded,
 	windSolarIfNeeded,
 	lvl1PlantIfNeeded,
-	briefAreaPatrol,
+	commanderBriefAreaPatrol,
 	areaLimit_L2HeavyDefense,
 	changeQueueToCommanderAttackerIfNeeded,
 	changeQueueToCommanderBaseBuilderIfNeeded,	
@@ -1985,7 +1993,7 @@ local gearCommander = {
 	windSolarIfNeeded,
 	windSolarIfNeeded,
 	lvl1PlantIfNeeded,
-	briefAreaPatrol,
+	commanderBriefAreaPatrol,
 	areaLimit_L2HeavyDefense,	
 	changeQueueToCommanderAttackerIfNeeded,
 	changeQueueToCommanderBaseBuilderIfNeeded,
@@ -2251,10 +2259,9 @@ local gearL1GroundRaiders = {
 
 local gearLightPlant = {
 	"gear_harasser",
-	{action = "randomness", probability = 0.5, value = "gear_harasser"},
-	"gear_aggressor",
 	"gear_construction_kbot",
 	{action = "randomness", probability = 0.5, value = "gear_construction_kbot"},
+	"gear_aggressor",
 	changeQueueToLightGroundRaidersIfNeeded,
 	gearL1LightChoice,
 	gearL1LightChoice,
@@ -2382,7 +2389,7 @@ local clawCommander = {
 	windSolarIfNeeded,
 	windSolarIfNeeded,
 	lvl1PlantIfNeeded,
-	briefAreaPatrol,
+	commanderBriefAreaPatrol,
 	areaLimit_MediumAA,
 	--areaLimit_MediumAA,
 	changeQueueToCommanderAttackerIfNeeded,
@@ -2647,7 +2654,6 @@ local clawL1GroundRaiders = {
 
 local clawPlant = {
 	"claw_knife",
-	"claw_knife",	
 	"claw_jester",
 	"claw_construction_kbot",
 	{action = "randomness", probability = 0.5, value = "claw_construction_kbot"},
@@ -2791,7 +2797,7 @@ local sphereCommander = {
 	metalExtractorNearbyIfSafe,
 	roughFusionIfNeeded,
 	lvl1PlantIfNeeded,
-	briefAreaPatrol,
+	commanderBriefAreaPatrol,
 	areaLimit_MediumAA,
 	changeQueueToCommanderAttackerIfNeeded,
 	changeQueueToCommanderBaseBuilderIfNeeded,

@@ -520,13 +520,13 @@ function SetMaxPlayerNameWidth()
 	-- determines the maximal player name width (in order to set the width of the widget)
 
 	local t = Spring_GetPlayerList()
-	local maxWidth = GetTextWidth("- aband. units -")+4 -- minimal width = minimal standard text width
+	local maxWidth = GetTextWidth("- aband. units -")+4+100 -- minimal width = minimal standard text width
 	local name = ""
 	local nextWidth = 0
 	UseFont(font)
 	for _,wplayer in ipairs(t) do
 		name = Spring_GetPlayerInfo(wplayer)
-		nextWidth = GetTextWidth(name)+4
+		nextWidth = GetTextWidth(name)+4+100
 		if nextWidth > maxWidth then
 			maxWidth = nextWidth
 		end
@@ -598,7 +598,7 @@ end
 function CreatePlayer(playerID)
 
 	local tname,_, tspec, tteam, tallyteam, tping, tcpu, tcountry, trank = Spring_GetPlayerInfo(playerID)
-	local _,_,_,_, tside, tallyteam                                      = Spring_GetTeamInfo(tteam)
+	local _,_,_,_, tside, tallyteam,incomeMult                         = Spring_GetTeamInfo(tteam)
 	local tred, tgreen, tblue                                            = Spring_GetTeamColor(tteam)
 	local tskill = GetSkill(playerID)
 	
@@ -625,6 +625,7 @@ function CreatePlayer(playerID)
 		cpu              = tcpu,
 		tdead            = false,
 		spec             = tspec,
+		incomeMult		 = incomeMult,
 		storageM     = nil,
 		storageE     = nil,
 		currentM     = nil,
@@ -636,7 +637,7 @@ end
 
 function CreatePlayerFromTeam(teamID)
 
-	local _,_, isDead, isAI, tside, tallyteam = Spring_GetTeamInfo(teamID)
+	local _,_, isDead, isAI, tside, tallyteam,incomeMult = Spring_GetTeamInfo(teamID)
 	local tred, tgreen, tblue                 = Spring_GetTeamColor(teamID)
 	local tname, ttotake, tdead
 	local tskill = GetSkill(teamID)
@@ -698,6 +699,7 @@ function CreatePlayerFromTeam(teamID)
 		totake           = ttotake,
 		dead             = tdead,
 		spec             = false,
+		incomeMult		 = incomeMult,
 		storageM     = nil,
 		storageE     = nil,
 		currentM     = nil,
@@ -1104,6 +1106,7 @@ function DrawPlayer(playerID, leader, vOffset, mouseX, mouseY)
 	local needm    = player[playerID].needm
 	local neede    = player[playerID].neede
 	local dead     = player[playerID].dead
+	local incomeMult     = player[playerID].incomeMult
 	local posY     = widgetPosY + widgetHeight - vOffset
 	local hasResourceInfo = nil
 	local energyLevel, metalLevel, position
@@ -1156,7 +1159,11 @@ function DrawPlayer(playerID, leader, vOffset, mouseX, mouseY)
 		end
 		gl_Color(red,green,blue,1)	
 		if m_name.active == true then
-			DrawName(name, posY, dark)
+			if (incomeMult ~= 1) then
+				DrawName(name.." \255\255\255\255[+"..math.round(100*(incomeMult-1)).."%]", posY, dark)
+			else
+				DrawName(name, posY, dark)
+			end
 		end
 		if m_resources.active == true and hasResourceInfo then
 			DrawResourceBars(posY, energyLevel, metalLevel)

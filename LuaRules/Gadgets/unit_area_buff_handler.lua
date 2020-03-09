@@ -27,6 +27,8 @@ local FLYING_PLANE_SLOW_MOD = 0.45
 local ZEPHYR_RADIUS = 600
 local ZEPHYR_MASS_COST_FACTOR = 1/100 -- applied twice per second
 local WATER_HEIGHT_THRESHOLD = -5
+local UNDERWATER_SLOW_SPEED_THRESHOLD = 0.9*30
+local UNDERWATER_EXTRA_SPEED_MOD = 0.5
 
 local spAddUnitDamage = Spring.AddUnitDamage
 local spGetUnitPosition = Spring.GetUnitPosition
@@ -35,6 +37,7 @@ local spGetUnitStates = Spring.GetUnitStates
 local spSetAirMoveTypeData = Spring.MoveCtrl.SetAirMoveTypeData
 local spSetGroundMoveTypeData = Spring.MoveCtrl.SetGroundMoveTypeData
 local spSetGunshipMoveTypeData = Spring.MoveCtrl.SetGunshipMoveTypeData
+local spGetUnitMoveTypeData = Spring.GetUnitMoveTypeData
 local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local spGetUnitTeam = Spring.GetUnitTeam
 local spGetUnitsInCylinder = Spring.GetUnitsInCylinder
@@ -87,9 +90,10 @@ local landSlowerDefIds = {
 local waterSlowerDefIds = {
 	[UnitDefNames["aven_adv_construction_vehicle"].id] = true,
 	[UnitDefNames["aven_kodiak"].id] = true,
-	[UnitDefNames["aven_wheeler"].id] = true,
-	[UnitDefNames["aven_u5commander"].id] = true
+	[UnitDefNames["aven_wheeler"].id] = true
 }
+
+local underwaterSlowerDefIds = {}
 
 local flyingSphereDefIds = {
 	[UnitDefNames["sphere_construction_sphere"].id] = true,
@@ -139,6 +143,7 @@ local speedModifierUnitIds = {} -- (unitId,modifier)
 
 local landSlowerUnitIds = {}
 local waterSlowerUnitIds = {}
+local underwaterSlowerUnitIds = {}
 local lastDamageFrameUnitIds = {}
 local lastFrameDamageAmountByUnitId = {}
 local energyBoostedMovementUnitIds = {}
@@ -148,6 +153,17 @@ local autoBuildUnitIds = {}
 local latestHPByUnitId = {}
 local recentHPGainByUnitId = {}
 
+
+function gadget:Initialize()
+	for _,ud in pairs(UnitDefs) do
+		if (ud.minWaterDepth and ud.minWaterDepth < 0) and (ud.isGroundUnit) and (ud.canMove == true) and (not string.find(tostring(ud.moveDef.name),"hover")) then
+			underwaterSlowerDefIds[ud.id] = true
+			--Spring.Echo(ud.name.." moves slower underwater floatonwater="..tostring(ud.floatonwater).." floater="..tostring(ud.floater).." waterline="..tostring(ud.waterline).." mindepth="..tostring(ud.minWaterDepth).." mdname="..tostring(ud.moveDef.name))
+		end
+	end
+end
+
+
 -- mark unit as zephyr or unit with terrain speed modifiers
 function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 	if (zephyrDefIds[unitDefId]) then
@@ -156,6 +172,8 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 		landSlowerUnitIds[unitId] = true
 	elseif (waterSlowerDefIds[unitDefId]) then
 		waterSlowerUnitIds[unitId] = true
+	elseif (underwaterSlowerDefIds[unitDefId]) then
+		underwaterSlowerUnitIds[unitId] = true		
 	elseif (energyBoostedMovementDefIds[unitDefId]) then
 		energyBoostedMovementUnitIds[unitId] = true
 		
@@ -195,7 +213,7 @@ function gadget:GameFrame(n)
 		local newSpeedModifierUnitIds = {}
 			
 		-- check modifier for units around each zephyr
-		local x,y,z,h,m,spdMod = 0
+		local x,y,z,h,m,vx,vz,v,mData,spdMod = 0
 		for unitId,data in pairs(zephyrIds) do
 			
 			-- if enabled, apply buff to nearby units that don't have it already
@@ -256,6 +274,24 @@ function gadget:GameFrame(n)
 				newSpeedModifierUnitIds[unitId] = m * LAND_WATER_MOD
 			end
 		end
+		
+		for unitId,_ in pairs(underwaterSlowerUnitIds) do
+			x,y,z = spGetUnitPosition(unitId)
+			h = spGetGroundHeight(x,z)
+			if ( h <= WATER_HEIGHT_THRESHOLD ) then
+				m = newSpeedModifierUnitIds[unitId]
+				if (m == nil) then
+					m = 1
+				end
+				
+				mData = spGetUnitMoveTypeData(unitId)
+				if (mData and mData.maxSpeed and mData.maxSpeed > UNDERWATER_SLOW_SPEED_THRESHOLD) then
+					--Spring.Echo("max speed ="..mData.maxSpeed)
+					newSpeedModifierUnitIds[unitId] = m * (UNDERWATER_SLOW_SPEED_THRESHOLD + (mData.maxSpeed-UNDERWATER_SLOW_SPEED_THRESHOLD) * UNDERWATER_EXTRA_SPEED_MOD ) / mData.maxSpeed
+				end	
+			end
+		end
+		
 		-- check modifier for flying spheres
 		local isActive = false
 		local allowEnergyBoostedMovement = false
@@ -525,6 +561,9 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam)
 	end
 	if (waterSlowerUnitIds[unitId]) then
 		waterSlowerUnitIds[unitId] = nil
+	end
+	if (underwaterSlowerUnitIds[unitId]) then
+		underwaterSlowerUnitIds[unitId] = nil
 	end
 	if zephyrAffectedUnitIds[unitId] then
 		zephyrAffectedUnitIds[unitId] = nil

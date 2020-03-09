@@ -67,10 +67,10 @@ local droneBuildStalled = {}
 local markedForDestruction = {}
 local DRONE_CHECK_DELAY = 15		-- 2 steps per second
 
-local LIGHT_DRONE_BUILD_STEPS = 8
-local MEDIUM_DRONE_BUILD_STEPS = 24	
+local LIGHT_DRONE_BUILD_STEPS = 5
+local MEDIUM_DRONE_BUILD_STEPS = 22	
 
-local DRONE_REBUILD_DELAY_STEPS = 4
+local DRONE_REBUILD_DELAY_STEPS = 3
 local DRONE_BUILD_ENERGY_FACTOR = 1.0		
 local DRONE_BUILD_ENERGY_MIN = 500
 
@@ -108,17 +108,17 @@ droneLeashSQDistances = {
 
 
 lightDrones = {
-	"aven_light_drone", 
-	"gear_light_drone", 
-	"claw_light_drone", 
-	"sphere_light_drone"
+	aven_light_drone = true, 
+	gear_light_drone = true, 
+	claw_light_drone = true, 
+	sphere_light_drone = true
 }
 
 stealthDrones = {
-	"aven_stealth_drone", 
-	"gear_stealth_drone", 
-	"claw_stealth_drone", 
-	"sphere_stealth_drone"
+	aven_stealth_drone = true, 
+	gear_stealth_drone = true, 
+	claw_stealth_drone = true, 
+	sphere_stealth_drone = true
 }
 
 avenDrones = {
@@ -238,7 +238,6 @@ function gadget:GameFrame(n)
 	markedForDestruction = {}
 	
 	if fmod(n,DRONE_CHECK_DELAY) == 0 then
-		
 		-- update table of units with drones
 		local hasDrones = nil
 		for _,unitId in ipairs(spGetAllUnits()) do
@@ -263,7 +262,7 @@ function gadget:GameFrame(n)
 			end
 						
 			if hasLight and hasLight > 0 then
-				set[droneNamesForUnitDefName[uName]["light_drones"]] = hasLight * 2
+				set[droneNamesForUnitDefName[uName]["light_drones"]] = hasLight * 3
 			end
 			if hasMedium and hasMedium > 0 then
 				set[droneNamesForUnitDefName[uName]["medium_drone"]] = hasMedium * 1
@@ -367,11 +366,13 @@ function gadget:GameFrame(n)
 						if lightDrones[uName] then
 							newBp = bp + 1 / LIGHT_DRONE_BUILD_STEPS
 							newHp = hp + (1 / LIGHT_DRONE_BUILD_STEPS)*maxHp
+							--Spring.Echo(n.." light "..newBp.." "..uName)
 							ud = UnitDefNames[uName]								
 							drainE = ud.energyCost * DRONE_BUILD_ENERGY_FACTOR / LIGHT_DRONE_BUILD_STEPS
 						else
 							newBp = bp + 1 / MEDIUM_DRONE_BUILD_STEPS
 							newHp = hp + (1 / MEDIUM_DRONE_BUILD_STEPS)*maxHp
+							--Spring.Echo(n.." med "..newBp.." "..uName)
 							ud = UnitDefNames[uName]								
 							drainE = ud.energyCost * DRONE_BUILD_ENERGY_FACTOR / MEDIUM_DRONE_BUILD_STEPS
 						end

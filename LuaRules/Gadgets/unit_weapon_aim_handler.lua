@@ -87,7 +87,7 @@ local torpedoWeaponIds = {
 	[WeaponDefNames["claw_u6commander_torpedo"].id]=true,
 	[WeaponDefNames["claw_spine_torpedo"].id]=true,
 	[WeaponDefNames["claw_monster_torpedo"].id]=true,
-	[WeaponDefNames["claw_sinker_depthcharge"].id]=true,
+	[WeaponDefNames["claw_sinker_torpedo"].id]=true,
 	[WeaponDefNames["claw_drakkar_depthcharge"].id]=true,
 	-- SPHERE
 	[WeaponDefNames["sphere_commander_torpedo"].id]=true,

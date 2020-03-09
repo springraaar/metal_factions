@@ -48,6 +48,7 @@
 	areaofeffect=80;
 	soundstart=chargedshot;
 	soundhit=xplochargedshot;
+	burnblow=1;
 	soundtrigger=1;
 	tolerance=3000;
 	InterceptedByShieldType=1;
@@ -89,6 +90,7 @@
 	areaofeffect=90;
 	soundstart=chargedshot;
 	soundhit=xplochargedshot;
+	burnblow=1;
 	soundtrigger=1;
 	tolerance=3000;
 	InterceptedByShieldType=1;
@@ -309,6 +311,7 @@
 	areaofeffect=70;
 	soundstart=chargedshot;
 	soundhit=xplochargedshot;
+	burnblow=1;
 	soundtrigger=1;
 	tolerance=3000;
 	InterceptedByShieldType=1;
@@ -478,7 +481,7 @@
 }
 [aven_commander_torpedo]
 {
-	name=Unguided Torpedoes;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
     CollideFriendly=1;
 	model=weapon_torpedo;
@@ -488,6 +491,8 @@
 	weapontimer=10;
 	FlightTime=4;
 	submissile=1;
+	tracks=1;
+	turnrate=12000;
 	weaponvelocity=250;
 	startvelocity=250;
 	weaponAcceleration=33;
@@ -536,6 +541,7 @@
 	areaofeffect=90;
 	soundstart=chargedshot;
 	soundhit=xplochargedshot;
+	burnblow=1;
 	soundtrigger=1;
 	tolerance=3000;
 	InterceptedByShieldType=1;
@@ -1023,7 +1029,7 @@
 	Texture4=null;
 	reloadtime=3;
 	weaponvelocity=530;
-	areaofeffect=80;
+	areaofeffect=160;
 	soundstart=disrwavefire;
 	tolerance=3000;
 	explosionscar=0;
@@ -1063,7 +1069,7 @@
 	reloadtime=0.55;
 	weapontimer=1;
 	weaponvelocity=999;
-	areaofeffect=90;
+	areaofeffect=180;
 	tolerance=3000;
 	burnblow=1;
 	explosiongenerator=custom:EMPEFFECT2;
@@ -1090,10 +1096,10 @@
 	}
 	[DAMAGE]
 	{
-		default=200;
-		armor_heavy=50;//#AUTO#
-		armor_medium=100;//#AUTO#
-		armor_light=200;//#AUTO#
+		default=120;
+		armor_heavy=30;//#AUTO#
+		armor_medium=60;//#AUTO#
+		armor_light=120;//#AUTO#
 	}
 }
 [aven_turbulence_laser]
@@ -3087,7 +3093,7 @@
 	turret=0;
 	model=weapon_torpedo;
 	range=450;
-	reloadtime=3;
+	reloadtime=2;
 	weapontimer=15;
 	weaponvelocity=200;
 	startvelocity=100;
@@ -4332,7 +4338,7 @@
 }
 [aven_lurker_torpedo]
 {
-	name=Unguided Torpedoes;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	turret=1;
 	CollideFriendly=1;
@@ -4348,7 +4354,8 @@
 	areaofeffect=64;
 	soundstart=torpedo1;
 	soundhit=xplodep1;
-	tracks=0;
+	tracks=1;
+	turnrate=12000;
 	waterweapon=1;
 	tolerance=3000;
 	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
@@ -4642,7 +4649,7 @@
 	weaponvelocity=250;
 	startvelocity=250;
 	weaponAcceleration=33;
-	turnrate=5000;
+	turnrate=12000;
 	areaofeffect=48;
 	soundstart=torpedo1;
 	soundhit=xplodep1;
@@ -4811,7 +4818,7 @@
 }
 [gear_commander_torpedo]
 {
-	name=Unguided Torpedoes;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_torpedo;
@@ -4821,6 +4828,8 @@
 	weapontimer=10;
 	FlightTime=4;
 	submissile=1;
+	tracks=1;
+	turnrate=12000;
 	weaponvelocity=250;
 	startvelocity=250;
 	weaponAcceleration=33;
@@ -5581,7 +5590,7 @@
 	model=weapon_smlmsl2.3do;
 	cegTag=SMLROCKETTRAIL;
 	range=720;
-	reloadtime=1.24;
+	reloadtime=1.6;
 	weapontimer=0.3;
 	flighttime=6;
 	weaponvelocity=700;
@@ -5610,6 +5619,53 @@
 		armor_heavy=27;//#AUTO#
 		armor_medium=55;//#AUTO#
 		armor_light=110;//#AUTO#
+	}
+}
+[gear_barrel_missile2]
+{
+	name=Incendiary Missiles;
+	weapontype=StarburstLauncher;
+	explosiongenerator=custom:fireballboommed;
+	model=weapon_incrocket2.3do;
+	cegTag=ROCKETTRAIL2B;
+	range=720;
+	reloadtime=8;
+	weapontimer=0.4;
+	fixedlauncher=1;
+	flighttime=7;
+	weaponvelocity=550;
+	startvelocity=320;
+	weaponAcceleration=66;
+	turnrate=36000;
+	areaofeffect=120;
+	metalpershot=0;
+	soundstart=rocklit1;
+	soundhit=firebombsml;
+	firestarter=70;
+	tracks=1;
+	smoketrail=0;
+	Texture1=null; //testing//
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	tolerance=9000;
+	InterceptedByShieldType=1;
+	collidefriendly=0;
+	avoidfriendly=0;
+	avoidfeature=0;
+	avoidground=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=1;
+		burn=1;
+		burnaoe=1;
+	}
+	[DAMAGE]
+	{
+		default=250;
+		armor_heavy=62;//#AUTO#
+		armor_medium=125;//#AUTO#
+		armor_light=250;//#AUTO#
 	}
 }
 [gear_missilator_missile]
@@ -5661,13 +5717,13 @@
 	mygravity=60;
 	turret=1;
 	model=weapon_Advtorpedo;
-	range=500;
-	reloadtime=10;
+	range=450;
+	reloadtime=7;
 	weapontimer=15;
 	flighttime=6;
 	weaponvelocity=300;
 	startvelocity=100;
-	weaponAcceleration=20;
+	weaponAcceleration=30;
 	turnrate=60000;
 	fixedlauncher=1;
 	areaofeffect=90;
@@ -5675,7 +5731,7 @@
 	soundhit=xplodep2;
 	tracks=1;
 	waterweapon=1;
-	tolerance=4000;
+	tolerance=8000;
 	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
 	WaterBounce=0;
 	InterceptedByShieldType=1;
@@ -5687,11 +5743,11 @@
 	}
 	[DAMAGE]
 	{
-		default=750;
+		default=800;
 		group_invincible=1;
-		armor_heavy=750;//#AUTO#
-		armor_medium=750;//#AUTO#
-		armor_light=750;//#AUTO#
+		armor_heavy=800;//#AUTO#
+		armor_medium=800;//#AUTO#
+		armor_light=800;//#AUTO#
 	}
 }
 [gear_shadow_bomb]
@@ -6669,7 +6725,7 @@
 }
 [gear_snake_torpedo]
 {
-	name=Unguided Torpedoes;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	turret=1;
     CollideFriendly=1;
@@ -6686,7 +6742,8 @@
 	areaofeffect=60;
 	soundstart=torpedo2;
 	soundhit=xplodep3;
-	tracks=0;
+	tracks=1;
+	turnrate=12000;
 	waterweapon=1;
 	tolerance=3000;
 	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
@@ -7858,7 +7915,7 @@
 	weaponvelocity=250;
 	startvelocity=250;
 	weaponAcceleration=33;
-	turnrate=5000;
+	turnrate=12000;
 	areaofeffect=48;
 	soundstart=torpedo1;
 	soundhit=xplodep1;
@@ -8822,7 +8879,8 @@
 	turret=1;
 	range=350;
 	minintensity=1.0;
-	reloadtime=0.9;
+	reloadtime=1;
+	energypershot=20;
 	projectiles=2;
 	weaponvelocity=1533;
 	areaofeffect=8;
@@ -8845,11 +8903,11 @@
 	}
 	[DAMAGE]
 	{
-		default=41;
+		default=50;
 		group_invincible=1;
-		armor_heavy=10;//#AUTO#
-		armor_medium=20;//#AUTO#
-		armor_light=41;//#AUTO#
+		armor_heavy=12;//#AUTO#
+		armor_medium=25;//#AUTO#
+		armor_light=50;//#AUTO#
 	}
 }
 [gear_rhino_laser]
@@ -11187,7 +11245,7 @@
 }
 [claw_commander_torpedo]
 {
-	name=Unguided Torpedoes;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_smltorpedo;
@@ -11196,6 +11254,8 @@
 	turret=1;
 	FlightTime=4;
 	submissile=1;
+	tracks=1;
+	turnrate=12000;
 	weaponvelocity=250;
 	startvelocity=250;
 	weaponAcceleration=33;
@@ -12795,6 +12855,45 @@
 		armor_light=133;//#AUTO#
 	}
 }
+[claw_sinker_torpedo]
+{
+	name=Torpedoes;
+	weapontype=TorpedoLauncher;
+	turret=1;
+	collidefriendly=1;
+	avoidfriendly=1;
+	model=weapon_torpedo;
+	range=700;
+	reloadtime=3;
+	weapontimer=10.5;
+	FlightTime=6;
+	submissile=1;
+	weaponvelocity=250;
+	startvelocity=250;
+	weaponAcceleration=33;
+	turnrate=12000;
+	areaofeffect=48;
+	soundstart=torpedo1;
+	soundhit=xplodep1;
+	tracks=1;
+	waterweapon=1;
+	tolerance=12767;
+	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=300;
+		group_invincible=1;
+		armor_heavy=300;//#AUTO#
+		armor_medium=300;//#AUTO#
+		armor_light=300;//#AUTO#
+	}
+}
 [claw_wrecker_cannon]
 {
 	name=Plasma Cannon;
@@ -13937,7 +14036,7 @@
 }
 [claw_cutter_torpedo]
 {
-	name=Unguided Torpedoes;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	turret=1;
     	CollideFriendly=1;
@@ -13947,6 +14046,8 @@
 	weapontimer=5;
 	FlightTime=4;
 	submissile=1;
+	tracks=1;
+	turnrate=12000;
 	weaponvelocity=250;
 	startvelocity=250;
 	weaponAcceleration=33;
@@ -13954,7 +14055,6 @@
 	areaofeffect=64;
 	soundstart=torpedo1;
 	soundhit=xplodep1;
-	tracks=0;
 	waterweapon=1;
 	tolerance=3000;
 	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
@@ -14249,7 +14349,7 @@
 }
 [claw_spine_torpedo]
 {
-	name=Unguided Torpedo;
+	name=Torpedo;
 	weapontype=TorpedoLauncher;
 	turret=1;
 	CollideFriendly=1;
@@ -14262,11 +14362,11 @@
 	weaponvelocity=250;
 	startvelocity=250;
 	weaponAcceleration=33;
-	turnrate=750;
 	areaofeffect=64;
 	soundstart=torpedo1;
 	soundhit=xplodep1;
-	tracks=0;
+	tracks=1;
+	turnrate=12000;
 	waterweapon=1;
 	tolerance=3000;
 	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
@@ -14890,7 +14990,7 @@
 }
 [sphere_commander_torpedo]
 {
-	name=Unguided Torpedoes;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	CollideFriendly=1;
 	model=weapon_torpedo;
@@ -14899,6 +14999,8 @@
 	turret=1;
 	FlightTime=4;
 	submissile=1;
+	tracks=1;
+	turnrate=12000;
 	weaponvelocity=250;
 	startvelocity=250;
 	weaponAcceleration=33;
@@ -15485,18 +15587,18 @@
 	turret=1;
         CollideFriendly=1;
 	model=weapon_torpedo;
-	range=500;
+	range=630;
 	reloadtime=4;
 	FlightTime=4;
 	submissile=1;
 	weaponvelocity=250;
 	startvelocity=250;
 	weaponAcceleration=33;
-	turnrate=750;
+	tracks=1;
+	turnrate=12000;
 	areaofeffect=64;
 	soundstart=torpedo1;
 	soundhit=xplodep1;
-	tracks=0;
 	waterweapon=1;
 	tolerance=3000;
 	explosiongenerator=custom:TORPEDOBLASTWRAPPER;
@@ -15562,8 +15664,8 @@
 	mygravity=60;
 	turret=1;
 	model=weapon_torpedo;
-	range=500;
-	reloadtime=2.5;
+	range=450;
+	reloadtime=2;
 	weapontimer=15;
 	flighttime=6;
 	weaponvelocity=300;
@@ -15832,7 +15934,7 @@
 }
 [sphere_carp_torpedo]
 {
-	name=Unguided Torpedoes;
+	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	turret=1;
 	CollideFriendly=1;
@@ -15844,11 +15946,11 @@
 	weaponvelocity=250;
 	startvelocity=250;
 	weaponAcceleration=33;
-	turnrate=750;
+	tracks=1;
+	turnrate=12000;
 	areaofeffect=64;
 	soundstart=torpedo1;
 	soundhit=xplodep1;
-	tracks=0;
 	waterweapon=1;
 	tolerance=3000;
 	explosiongenerator=custom:TORPEDOBLASTWRAPPER;

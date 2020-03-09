@@ -28,6 +28,7 @@ local markedWreckPositions = {}
 local damagedByEnemyByUnitIdFrame = {}
 local FRIENDLY_FIRE_EXPLOIT_THRESHOLD_FRAMES = 600 -- 20s
 local WRECK_FIX_DELAY_FRAMES = 2
+local COMMANDER_RESPAWN_EXPERIENCE_FACTOR = 0.9
 
 local replacementFeature = "aven_ucommander_heap"
 -- TODO: hacky, needs replacement
@@ -137,8 +138,8 @@ function gadget:UnitDestroyed(unitId, unitDefId, teamId)
 	-- if unit is commander, save data for player
 	if ( isCommander(unitDefId)) then
 		local xp = Spring.GetUnitExperience(unitId)
-		if (commanderXp[teamId] and commanderXp[teamId] < xp) then
-			commanderXp[teamId] = xp
+		if (commanderXp[teamId]) then
+			commanderXp[teamId] = COMMANDER_RESPAWN_EXPERIENCE_FACTOR * xp
 			--Spring.Echo("experience saved for team "..teamId.." value="..commanderXp[teamId])
 		end
 		local states = spGetUnitStates(unitId)

@@ -164,9 +164,10 @@ function gadget:GameFrame(n)
 			if ( isCommander(Spring.GetUnitDefID(unitId))) then
 				local xp = Spring.GetUnitExperience(unitId)
 				
-				if (xp > teamInfo[teamId].comXP) then
+				-- commander experience can now be lost
+				--if (xp > teamInfo[teamId].comXP) then
 					teamInfo[teamId].comXP = xp
-				end
+				--end
 			end
 		end
 	end

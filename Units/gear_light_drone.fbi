@@ -64,7 +64,7 @@
 	//************
 	turnrate=768;
 	acceleration=0.3;
-	brakerate=3;
+	brakerate=0.3;
 	maxvelocity=3.5;
 	maxslope=10;
 	
@@ -80,8 +80,6 @@
 	//  Weapons
 	//***********
 	weapon1=gear_light_drone_laser;
-	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
 	explodeas=BIG_UNITEX;
 	selfdestructas=SMALL_UNIT;
 
@@ -123,7 +121,7 @@
 	[CustomParams]
 	{
 		isDrone=1;
-		evalfactor=0.7;
+		evalfactor=0.5;
 	}
 
 	//************************************************************
@@ -133,7 +131,7 @@
 	{
 		explosiongenerator0=custom:GLOWSML;
 	}
-	buildcostenergy=450;//#AUTO#
-	buildcostmetal=90;//#AUTO#
-	buildtime=1074;//#AUTO#
+	buildcostenergy=322;//#AUTO#
+	buildcostmetal=64;//#AUTO#
+	buildtime=767;//#AUTO#
 }

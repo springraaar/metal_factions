@@ -63,12 +63,12 @@
 	//  Movement
 	//************
 	turnrate=450;
-	acceleration=0.08;
+	acceleration=0.1;
 	brakerate=0.06;
 	maxvelocity=4.0;
 	maxslope=10;
 	maxwaterdepth=10;
-	cruisealt=190;
+	cruisealt=240;
 
 
 	//************************************************************
@@ -81,8 +81,8 @@
 	//  Weapons
 	//***********
 	weapon1=sphere_meteor_bomb;
-	weaponmaindir1=0 -1 0.2;
-	maxangledif1=120;
+	weaponmaindir1=0 -1 0;
+	maxangledif1=190;
 	weapon2=sphere_meteor_shield;
 	onlytargetcategory1=NOTAIR;
 	explodeas=BIG_UNIT;
@@ -131,7 +131,7 @@
 	{
 		explosiongenerator0=custom:rocketflaremed;
 	}
-	buildcostenergy=11451;//#AUTO#
-	buildcostmetal=2290;//#AUTO#
-	buildtime=27291;//#AUTO#
+	buildcostenergy=11486;//#AUTO#
+	buildcostmetal=2297;//#AUTO#
+	buildtime=27375;//#AUTO#
 }

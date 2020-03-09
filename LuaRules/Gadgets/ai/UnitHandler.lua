@@ -608,7 +608,7 @@ function UnitHandler:Update()
 				local tmpName = ud.name
 				if (not neutralUnits[tmpName]) then
 					if (tmpName == "aven_fortification_wall") then
-						Spring.Echo("WALL: "..tmpName)
+						--Spring.Echo("WALL: "..tmpName)
 					end
 					local hasWeapons = #ud.weapons > 0
 					local cost = getWeightedCostByName(tmpName)

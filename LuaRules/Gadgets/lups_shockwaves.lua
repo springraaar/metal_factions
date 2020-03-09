@@ -25,9 +25,9 @@ if (gadgetHandler:IsSyncedCode()) then
     local wd = WeaponDefs[i]
     local customParams = wd.customParams or {}
     if ( customParams.shockwave == "1") then
-      local strength = 1
-      local growth = 25
-      local life = 3
+      local strength = 0.3
+      local growth = 45
+      local life = 2
       
       Script.SetWatchWeapon(wd.id,true)
       hasShockwave[wd.id] = {growth = growth, life = life, strength = strength}

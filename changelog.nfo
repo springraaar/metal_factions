@@ -1,3 +1,59 @@
+2020/03/08 ------------------ NOTES v1.30 ----------------------
+
+--- Balance / Mechanics
+
+- GEAR "Box" had dmg/s increased by 10% but drains 20 E/s to fire and had its cost reduced by 6%
+- GEAR "Barrel" is about 10% slower and costs 80% more, but gets a secondary incendiary missile weapon
+
+- AVEN commander cannon shots explode mid-air vs air targets
+
+- AVEN "Bass" had its waves' area of effect doubled so it's much more effective against swarms of light units and aircraft
+(the damage per tick was reduced but the overall damage each target takes should be about the same: 250 to 1250 L disruptor damage and a third as normal damage)
+
+- commanders lose 10% of their experience whenever they're destroyed
+
+- increased collision size for Hanz, Charger and Golem
+- restored shielded units' collision volume adjustment to match the shield unless it's depleted
+(this also makes shielded spheres easier to hit with artillery)
+
+UNDERWATER
+- made all torpedoes tracking, namely the ones shot from unmorphed commanders and l1 submarines
+- increased Dmg/s of torpedo bomber aircraft (mostly through reductions in reload time), slightly reduced range to lower cost on SPHERE and GEAR torpedo bombers
+- increased SPHERE "Clam" range from 500 to 630
+- changed ground units' speed when they move underwater : they'll all slow down beyond a certain threshold (speed = 27), extra speed is halved. So a unit that'd move at 27 keeps its speed, while a unit with max speed = 54 will move at about 40 distance units/s. This means that the relative speed penalty is higher the faster the unit is (in practice relatively fast commanders will go from about 20% penalty to about 40% if they got full speed upgrades).
+- increased footprint of submarines to avoid clumping and friendly fire when moving in groups
+- reduced the inherent discout weapons with relatively slow but tracking projectiles get
+- CLAW "Sinker" is now similar to AVEN and GEAR t1 torpedo launcher floating turrets
+(the above changes also make the affected units cost about 10-40% more, excluding commanders)
+
+
+AIR
+- make AVEN, CLAW and SPHERE heavy bombers shoot in 360º and fly higher (they get slightly more expensive though)
+- improved maneuverability of some aircraft, namely SPHERE "Moth" which had particularly less acceleration that similar aircraft
+
+DRONES
+- all drones are now relatively cheaper to build (discount increased from 30% to 50%)
+- "Light drones" upgrade now costs 1000M but increases the limit to 3 drones instead of 2
+- reduced the self-build times on light/medium drones from 4/12s to 2.5s/11s 
+(fixed the self build times on light drones which were wrongly using the medium drone build times)
+
+
+--- AI
+
+- lowered the threshold for MFAI to morph its commander from 30m/300E to 20m/200E per second
+- AI will no longer area-patrol with its commander unless it has factories nearby
+
+--- Visuals
+
+- modified the models and sounds of torpedo projectiles
+- make resource multiplier show on the player's list next to the players' name
+- made build points glow effect also show up when they're underwater
+- modified firing sound of missiles from fighter aircraft
+
+
+
+
+
 2020/02/23 ------------------ NOTES v1.29 ----------------------
 
 

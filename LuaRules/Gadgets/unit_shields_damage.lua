@@ -131,6 +131,7 @@ local burningEffectWeaponDefIds = {
 	[WeaponDefNames["gear_firestorm_rocket"].id] = true,
 	[WeaponDefNames["gear_igniter_rocket"].id] = true,
 	[WeaponDefNames["gear_u1commander_missile"].id] = true,
+	[WeaponDefNames["gear_barrel_missile2"].id] = true,
 	[WeaponDefNames["gear_eruptor_fireball"].id] = true,
 	[WeaponDefNames["gear_u5commander_fireball"].id] = true,
 	[WeaponDefNames["gear_canister"].id] = true,
@@ -180,8 +181,8 @@ function SetColvol(unitID, colvolType)
 		d = baseUnitColvolTable[unitID]
 	end
 	if d ~= nil then
-		--spSetUnitCollisionVolumeData(unitID, d[1],d[2],d[3], d[4],d[5],d[6],d[7],d[8],d[9])
-		--spSetUnitMidAndAimPos(unitID,0, d[2]*0.5, 0,0, d[2]*0.5,0,true)	
+		spSetUnitCollisionVolumeData(unitID, d[1],d[2],d[3], d[4],d[5],d[6],d[7],d[8],d[9])
+		spSetUnitMidAndAimPos(unitID,0, d[2]*0.5, 0,0, d[2]*0.5,0,true)	
 	end
 end
 

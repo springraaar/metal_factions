@@ -63,12 +63,12 @@
 	//  Movement
 	//************
 	turnrate=650;
-	acceleration=0.18;
+	acceleration=0.28;
 	brakerate=0.12;
 	maxvelocity=2.8;
 	maxslope=10;
 	maxwaterdepth=10;
-	cruisealt=110;
+	cruisealt=190;
 
 
 	//************************************************************
@@ -83,7 +83,7 @@
 	//***********
 	weapon1=sphere_tycho_rocket;
 	weaponmaindir1=0 -1 0.2;
-	maxangledif1=140;
+	maxangledif1=160;
 	onlytargetcategory1=NOTAIR;
 	explodeas=BIG_UNIT;
 	selfdestructas=BIG_UNIT;
@@ -131,7 +131,7 @@
 	{
 		explosiongenerator0=custom:glowsml;
 	}
-	buildcostenergy=2278;//#AUTO#
-	buildcostmetal=455;//#AUTO#
-	buildtime=5429;//#AUTO#
+	buildcostenergy=2309;//#AUTO#
+	buildcostmetal=461;//#AUTO#
+	buildtime=5503;//#AUTO#
 }
