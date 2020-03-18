@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=320;
+	maxdamage=380;
 	healtime=30;
 	footprintx=2;
 	footprintz=2;
@@ -35,8 +35,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=1;
-	energyuse=1;
+	energymake=0;
+	energyuse=0;
 	energystorage=0;
 
 	//************************************************************
@@ -68,7 +68,7 @@
 	maxvelocity=8;
 	maxslope=10;
 	
-	cruisealt=200;
+	cruisealt=220;
 
 	// flight behaviour
 	wingdrag=0.10;      //0.07
@@ -142,7 +142,7 @@
 	[SFXTypes]
 	{
 	}
-	buildcostenergy=1361;//#AUTO#
-	buildcostmetal=272;//#AUTO#
-	buildtime=3243;//#AUTO#
+	buildcostenergy=1439;//#AUTO#
+	buildcostmetal=287;//#AUTO#
+	buildtime=3429;//#AUTO#
 }

@@ -29,6 +29,7 @@ local damagedByEnemyByUnitIdFrame = {}
 local FRIENDLY_FIRE_EXPLOIT_THRESHOLD_FRAMES = 600 -- 20s
 local WRECK_FIX_DELAY_FRAMES = 2
 local COMMANDER_RESPAWN_EXPERIENCE_FACTOR = 0.9
+local COMMANDER_REBUILD_LOCK_FRAMES = 10
 
 local replacementFeature = "aven_ucommander_heap"
 -- TODO: hacky, needs replacement
@@ -196,9 +197,10 @@ function gadget:AllowUnitCreation(unitDefId,builderId,teamId,x,y,z)
 		
 		-- abort if team tried successfully ordered another commander to be built in this frame
 		local frame = GetGameFrame()
-		local lastBuildFrame = commanderBuildOrderFrameByTeam[teamId] 
-		if ( lastBuildFrame ~= nil and lastBuildFrame == frame) then
-			-- Spring.Echo("Not allowed to build multiple commanders!")
+		local lastBuildFrame = commanderBuildOrderFrameByTeam[teamId]
+		--Spring.Echo("frame="..frame.."   lastBuildFrame="..tostring(lastBuildFrame))
+		if ( lastBuildFrame ~= nil and (frame - lastBuildFrame < COMMANDER_REBUILD_LOCK_FRAMES)) then
+			--Spring.Echo("Not allowed to build multiple commanders!")
 			return false
 		end
 		

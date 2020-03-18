@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3000;
+	maxdamage=3800;
 	healtime=30;
 	footprintx=6;
 	footprintz=6;
@@ -98,8 +98,8 @@
 	weapon1=gear_cascade_bomb;
 	nochasecategory=UNDERWATER;
 	onlytargetcategory1=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=HBOMBER;
+	selfdestructas=HBOMBER;
 
 	//************************************************************
 	//  Orders
@@ -146,7 +146,7 @@
 	[SFXTypes]
 	{
 	}
-	buildcostenergy=13967;//#AUTO#
-	buildcostmetal=2793;//#AUTO#
-	buildtime=33288;//#AUTO#
+	buildcostenergy=15618;//#AUTO#
+	buildcostmetal=3123;//#AUTO#
+	buildtime=37222;//#AUTO#
 }

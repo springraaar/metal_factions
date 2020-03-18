@@ -13,7 +13,7 @@ end
 
 local specialCases = {}
 
-local DEFAULT_DISTANCE = 350.0
+local DEFAULT_DISTANCE = 370.0
 
 
 if (gadgetHandler:IsSyncedCode()) then

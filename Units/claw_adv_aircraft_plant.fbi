@@ -21,8 +21,8 @@
 
 	// ------------------- health/cost/size
 	MaxDamage=4500;
-	FootprintX=9;
-	FootprintZ=7;
+	FootprintX=10;
+	FootprintZ=10;
 	idleautoheal=5;
 
 
@@ -45,11 +45,11 @@
 	
 	// ------------------- movement
 	buildangle=1024;
-	YardMap=oocccccoo oocccccoo oocccccoo oocccccoo oocccccoo oocccccoo oocccccoo; 
+	YardMap=oooooooooo oooooooooo ooccccccoo ooccccccoo ooccccccoo ooccccccoo ooccccccoo ooccccccoo oooooooooo oooooooooo;
 	MaxWaterDepth=0;
 	MaxSlope=14;
 	collisionVolumeType = box;
-	collisionVolumeScales =140 50 110;
+	collisionVolumeScales =160 30 160;
 	collisionVolumeOffsets=0 -5 0;
 	collisionVolumeTest = 1;
 
@@ -76,6 +76,12 @@
 	ZBuffer=1;
 	NoAutoFire=0;
 	downloadable=1;
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:Nano;
+	}
+
 	buildcostenergy=7792;//#AUTO#
 	buildcostmetal=1558;//#AUTO#
 	buildtime=18571;//#AUTO#

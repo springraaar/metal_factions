@@ -88,6 +88,12 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	activatewhenbuilt = 1;
+
+	[CustomParams]
+	{
+		tip=Can drain up to 10% charge/s from nearby large shields and 1% from small ones;
+	}
+
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:GLOWSML;

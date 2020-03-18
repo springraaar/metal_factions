@@ -5,11 +5,25 @@
 
 piece  base, pad, beam1, beam2, platform1, platform2, a1, a2,spike1,spike2, xl,xr, llogo, rlogo, a3,a4, spike3,spike4;
 
-static-var  Static_Var_1, unitviewer, statechg_DesiredState, statechg_StateChanging;
+static-var  Static_Var_1, bBuilding, statechg_DesiredState, statechg_StateChanging;
 
 // Signal definitions
 #define SIG_ACTIVATE			2
 
+Build()
+{
+	while (TRUE)
+	{
+		if( bBuilding == TRUE )
+		{
+			emit-sfx 1024 + 0 from beam1;
+			emit-sfx 1024 + 0 from beam2;
+			sleep 80;
+		}
+		sleep 40;
+	}
+	return (0);
+}
 
 activatescr()
 {
@@ -122,26 +136,11 @@ RequestState(requestedstate, currentstate)
 
 Create()
 {
-	dont-shade beam1;
-	dont-cache base;
-	dont-shade base;
-	dont-shade beam2;
-	dont-shade platform1;
-	dont-shade platform2;
-
-	dont-cache xr;
-	dont-cache xl;
-
-	dont-shade xr;
-	dont-shade xl;
-
-	dont-shade pad;
-	dont-cache pad;
-
-	unitviewer = FALSE;
+	bBuilding = FALSE;
 	Static_Var_1 = 111;
 	call-script InitState();
 	start-script SmokeUnit();
+	start-script Build();
 }
 
 QueryNanoPiece(piecenum)
@@ -161,11 +160,6 @@ QueryNanoPiece(piecenum)
 
 }
 
-Demo()
-{
-	unitviewer = TRUE;
-}
-
 Activate()
 {
 	signal SIG_ACTIVATE;
@@ -176,20 +170,19 @@ Deactivate()
 {
 	signal SIG_ACTIVATE;
 	set-signal-mask SIG_ACTIVATE;
-	if( !unitviewer )
-	{
-		sleep 5000;
-	}
+	sleep 5000;
 	set-signal-mask 0;
 	start-script RequestState(1);
 }
 
 StartBuilding()
 {
+	bBuilding = TRUE;
 }
 
 StopBuilding()
 {
+	bBuilding = FALSE;
 }
 
 QueryBuildInfo(piecenum)

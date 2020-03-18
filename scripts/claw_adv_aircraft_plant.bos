@@ -3,14 +3,31 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, pad, beam1, beam2, platform1, platform2,
+piece  base, pad, beam1, beam2,beam3,beam4, platform1, platform2, platform3,platform4,
        nano2, nano1, spike1, spike2, a1, a2, logo1, logo2;
 
-static-var  nanoPt, unitviewer, statechg_DesiredState, statechg_StateChanging;
+static-var  nanoPt, bBuilding,statechg_DesiredState, statechg_StateChanging;
 
 // Signal definitions
 #define SIG_ACTIVATE			2
 
+
+Build()
+{
+	while (TRUE)
+	{
+		if( bBuilding == TRUE )
+		{
+			emit-sfx 1024 + 0 from beam1;
+			emit-sfx 1024 + 0 from beam2;
+			emit-sfx 1024 + 0 from beam3;
+			emit-sfx 1024 + 0 from beam4;			
+			sleep 80;
+		}
+		sleep 40;
+	}
+	return (0);
+}
 
 activatescr()
 {
@@ -123,26 +140,11 @@ RequestState(requestedstate, currentstate)
 
 Create()
 {
-	dont-shade beam1;
-	dont-cache base;
-	dont-shade base;
-	dont-shade beam2;
-	dont-shade platform1;
-	dont-shade platform2;
-
-	dont-cache nano1;
-	dont-cache nano2;
-
-	dont-shade nano1;
-	dont-shade nano2;
-
-	dont-shade pad;
-	dont-cache pad;
-
-	unitviewer = FALSE;
+	bBuilding = FALSE;
 	nanoPt = [0];
 	call-script InitState();
 	start-script SmokeUnit();
+	start-script Build();
 }
 
 QueryNanoPiece(piecenum)
@@ -156,15 +158,22 @@ QueryNanoPiece(piecenum)
 	if( nanoPt == [1] )
 	{
 		piecenum = beam2;
-		nanoPt = [0];
+		nanoPt = [2];
 		return (0);
 	}
+	if( nanoPt == [2] )
+	{
+		piecenum = beam3;
+		nanoPt = [3];
+		return (0);
+	}
+	if( nanoPt == [3] )
+	{
+		piecenum = beam4;
+		nanoPt = [0];
+		return (0);
+	}		
 
-}
-
-Demo()
-{
-	unitviewer = TRUE;
 }
 
 Activate()
@@ -177,20 +186,18 @@ Deactivate()
 {
 	signal SIG_ACTIVATE;
 	set-signal-mask SIG_ACTIVATE;
-	if( !unitviewer )
-	{
-		sleep 5000;
-	}
 	set-signal-mask 0;
 	start-script RequestState(1);
 }
 
 StartBuilding()
 {
+	bBuilding = TRUE;
 }
 
 StopBuilding()
 {
+	bBuilding = FALSE;
 }
 
 QueryBuildInfo(piecenum)

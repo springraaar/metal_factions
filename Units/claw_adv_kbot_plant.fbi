@@ -71,11 +71,13 @@
 	// ------------------- misc
 	Version=3.1;
 	Designation=CA-lFCT;
-	BMcode=0;
-	ThreeD=1;
-	ZBuffer=1;
 	NoAutoFire=0;
-	downloadable=1;
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:Nano;
+	}
+
 	buildcostenergy=7792;//#AUTO#
 	buildcostmetal=1558;//#AUTO#
 	buildtime=18571;//#AUTO#

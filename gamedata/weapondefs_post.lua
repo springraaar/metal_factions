@@ -119,7 +119,9 @@ for wdName, wd in pairs(WeaponDefs) do
 		elseif (wd.weapontype == "LaserCannon") then
 			wd.heightmod = 0.75		-- default was 1.0?
 		elseif (wd.weapontype == "Cannon" or wd.weapontype == "EmgCannon" ) then
-			wd.heightmod = 0.5			-- default was 0.8
+			if wd.range and tonumber(wd.range) > 380 then
+				wd.heightmod = 0.5			-- default was 0.8
+			end
 			wd.heightboostfactor = 1.1		-- default was -1.0
 		elseif (wd.weapontype == "MissileLauncher" or wd.weapontype == "StarburstLauncher" ) then
 			wd.cylindertargeting = 2

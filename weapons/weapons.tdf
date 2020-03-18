@@ -3699,7 +3699,7 @@
 	explosiongenerator=custom:LRPCBLASTWRAPPER;
 	range=4400;
 	reloadtime=10;
-	weaponvelocity=900;
+	weaponvelocity=850;
 	energypershot=2500;
 	areaofeffect=125;
 	accuracy=30;
@@ -6069,7 +6069,7 @@
 	turret=1;
 	range=4500;
 	reloadtime=10;
-	weaponvelocity=950;
+	weaponvelocity=850;
 	energypershot=3000;
 	areaofeffect=125;
 	soundstart=xplonuk3;
@@ -8000,6 +8000,33 @@
 		armor_heavy=1900;//#AUTO#
 		armor_medium=1900;//#AUTO#
 		armor_light=1900;//#AUTO#
+	}
+}
+[HBOMBER]
+{
+	name=Heavy bomber explosion;
+	weapontype=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=300;
+	soundstart=largegun;
+	soundhit=xplomas2;
+	explosiongenerator=custom:LARGEBLASTWRAPPER1;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=2;
+	}
+	[DAMAGE]
+	{
+		default=1000;
+		group_invincible=1;
+		armor_heavy=500;//#AUTO#
+		armor_medium=1000;//#AUTO#
+		armor_light=1000;//#AUTO#
 	}
 }
 [HMEX_BUILDING]
@@ -10229,7 +10256,7 @@
 	turret=1;
 	range=550;
 	cylindertargeting=1;
-	reloadtime=2.3;
+	reloadtime=2.1;
 	weapontimer=5;
 	weaponvelocity=400;
 	startvelocity=350;
@@ -10277,7 +10304,7 @@
 	cegTag=BOMBTRAILBIG;
 	range=480;
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	reloadtime=4.6;
+	reloadtime=4.1;
 	flighttime=2.75;
 	weaponvelocity=360;
 	startvelocity=150;
@@ -11010,9 +11037,9 @@
 	weapontype=MissileLauncher;
 	model=weapon_rocket3.3do;
 	turret=0;
-	range=550;
+	range=480;
 	cylindertargeting=1;
-	reloadtime=2.3;
+	reloadtime=2.1;
 	burst=2;
 	burstrate=0.1;
 	weapontimer=5;
@@ -11058,7 +11085,7 @@
 	weapontype=BeamLaser;
 	explosiongenerator=custom:REDLASERBLASTWRAPPER;
 	turret=1;
-	range=550;
+	range=480;
 	minintensity=1.0;
 	beamtime=0.05;
 	thickness=2.123;
@@ -11933,7 +11960,7 @@
 	cegTag=BOMBTRAILBIG;
 	range=450;
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	reloadtime=3.3;
+	reloadtime=3.0;
 	flighttime=2.75;
 	weaponvelocity=360;
 	startvelocity=150;
@@ -14914,9 +14941,9 @@
 	corethickness=1.0;
 	intensity=0.9;
 	turret=1;
-	range=760;
+	range=740;
 	minintensity=1.0;
-	reloadtime=4.2;
+	reloadtime=3.9;
 	energypershot=500;
 	weaponvelocity=1533;
 	areaofeffect=8;
@@ -18151,7 +18178,7 @@
 	turret=1;
 	range=3900;
 	reloadtime=10;
-	weaponvelocity=900;
+	weaponvelocity=850;
 	energypershot=2600;
 	areaofeffect=110;
 	soundstart=xplonuk3;
@@ -18228,10 +18255,10 @@
 	ShieldForce=1000;
 	ShieldRadius=40;
 	ShieldMaxSpeed=2000;
-	ShieldPower=800;
-	ShieldStartingPower=800;
-	ShieldPowerRegen=16;
-	ShieldPowerRegenEnergy=32;
+	ShieldPower=1000;
+	ShieldStartingPower=1000;
+	ShieldPowerRegen=20;
+	ShieldPowerRegenEnergy=40;
 	ShieldInterceptType=2;
 	ShieldGoodColor=0.9 0.9 1.0 1;
 	ShieldBadColor=0.6 0.2 0.2 0.05;
@@ -18594,7 +18621,7 @@
 	cegTag=BOMBTRAILBIG;
 	range=480;
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
-	reloadtime=4.5;
+	reloadtime=3.6;
 	flighttime=2.75;
 	weaponvelocity=360;
 	startvelocity=150;
@@ -18633,7 +18660,7 @@
 	corethickness=1.0;
 	intensity=0.9;
 	turret=1;
-	range=950;
+	range=870;
 	minintensity=1.0;
 	reloadtime=5;
 	energypershot=500;
