@@ -33,6 +33,7 @@ function CommonUnitBehavior:CommonInit(ai, uId)
 	-- unit properties
 	self.isCommander = setContains(unitTypeSets[TYPE_COMMANDER],self.unitName)
 	self.isUpgradedCommander = setContains(unitTypeSets[TYPE_UPGRADED_COMMANDER],self.unitName)
+	self.isHighPriorityBuilder = self.isCommander or setContains(unitTypeSets[TYPE_RESPAWNER],self.unitName)
 	
 	self.isArmed = #self.unitDef.weapons > 0
 	self.unitCost = getWeightedCostByName(self.unitName) 

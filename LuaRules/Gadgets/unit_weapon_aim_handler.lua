@@ -19,6 +19,8 @@ local spGetGroundHeight = Spring.GetGroundHeight
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitWeaponTarget = Spring.GetUnitWeaponTarget
 local spSetUnitTarget = Spring.SetUnitTarget
+local spGetUnitDefID = Spring.GetUnitDefID
+local spGetGameFrame = Spring.GetGameFrame
 
 local targetForUnitId = {}
 local trackedWeaponDefIds = {}
@@ -200,6 +202,19 @@ function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attac
 			-- out of range, clear target
 			targetForUnitId[attackerID] = nil
 		end
+	end
+	
+	-- avoid aiming at targets that are marked as about to die
+	if targetID and tonumber(targetID) > 0 then
+		local defId = spGetUnitDefID(targetID)
+		if (defId and GG.lessThan500HPTargetDefIds[defId]) then
+			local f = spGetGameFrame()
+			local lastFireFrame = GG.unitFireFrameByTargetId[targetID]
+			if ( lastFireFrame and (f - lastFireFrame < GG.OKP_FRAMES) ) then
+				--Spring.Echo("f="..f.."unit "..attackerID.." refuses to aim at target "..tostring(targetID))
+				return false,defaultPriority
+			end
+		end 
 	end
 	
 	return true,defaultPriority

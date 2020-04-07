@@ -18,6 +18,10 @@ static-var  gun_2;
 #define SIG_AIM				4
 #define SIG_AIM2			8
 
+lua_checkAllowFiring() { return 0; }
+lua_checkLockTarget() { return 0; }
+
+
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
@@ -94,7 +98,7 @@ StopMoving()
 	return (0);
 }
 
-AimPrimary(heading, pitch)
+AimPrimary(heading, pitch, canFire)
 {
 	call-script updateAimHelper1(heading,pitch,<200>,<200>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
@@ -107,11 +111,21 @@ AimPrimary(heading, pitch)
 		wait-for-turn sleeve around x-axis;
 	}
 	start-script RestoreAfterDelay();
+	// overkill prevention check
+	canFire = (get GAME_FRAME) - (get WEAPON_RELOADSTATE(1)) > 0;
+	if (canFire) {
+		call-script lua_checkAllowFiring(1,(get TARGET_ID(1)));
+		canFire = get LUA1;
+	}
+	if (!canFire) {
+		return (0);
+	}
 	return (1);
 }
 
 FirePrimary()
 {
+	call-script lua_checkLockTarget(get TARGET_ID(1));
 	emit-sfx 1024+0 from flare;
 	return (0);
 }

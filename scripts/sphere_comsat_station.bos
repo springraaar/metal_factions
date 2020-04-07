@@ -10,6 +10,8 @@ static-var  lightCount;
 // Signal definitions
 #define SIG_AIM				2
 
+lua_checkComsatAllowFiring() { return 0; }
+lua_checkComsatLockTarget() { return 0; }
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
@@ -49,7 +51,7 @@ Create()
 	return (0);
 }
 
-AimPrimary(heading, pitch)
+AimPrimary(heading, pitch, canFire)
 {
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
@@ -58,12 +60,24 @@ AimPrimary(heading, pitch)
 	turn launcher to x-axis <0.000000> - pitch/2 speed <35.060440>;
 	wait-for-turn turret around y-axis;
 	wait-for-turn launcher around x-axis;
+
+	// overkill prevention check
+	canFire = (get GAME_FRAME) - (get WEAPON_RELOADSTATE(1)) > 0;
+	if (canFire) {
+		call-script lua_checkComsatAllowFiring(1,(get TARGET_ID(1)));
+		canFire = get LUA1;
+	}
+	if (!canFire) {
+		return (0);
+	}
+	
 	return (1);
 }
 
 FirePrimary()
 {
 	//emit-sfx 1024 from flare;
+	call-script lua_checkComsatLockTarget(get TARGET_ID(1));
 	
 	lightCount = 0;
 	while(lightCount < 65) {

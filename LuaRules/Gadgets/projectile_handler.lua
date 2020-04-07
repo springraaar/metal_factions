@@ -42,6 +42,9 @@ local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spGetProjectileTarget = Spring.GetProjectileTarget
 local spSetProjectileTarget = Spring.SetProjectileTarget
 local spGetProjectileTeamID = Spring.GetProjectileTeamID
+local spGetProjectileOwnerID = Spring.GetProjectileOwnerID
+local spGetUnitNearestEnemy = Spring.GetUnitNearestEnemy
+local spGetUnitIsDead = Spring.GetUnitIsDead
 local spSetUnitNeutral = Spring.SetUnitNeutral
 local spTestBuildOrder = Spring.TestBuildOrder
 local spGetGroundHeight = Spring.GetGroundHeight
@@ -71,7 +74,7 @@ local max = math.max
 local min = math.min
 local STEP_DELAY = 6 		-- process steps every N frames
 local FIRE_AOE_STEPS = 100	-- 20 seconds
-local FIRE_AOE_STEPS_AIR = 10	-- 2 seconds
+local FIRE_AOE_STEPS_AIR = 25	-- 5 seconds
 local FIRE_AOE_STEPS_AIR_H = 100
 
 local projectileWasUnderwater = {}
@@ -100,7 +103,7 @@ local fireAOEWeaponIds = {
 	[WeaponDefNames["gear_eruptor"].id]=true,
 	[WeaponDefNames["gear_canister_fireball"].id]=true,
 	[WeaponDefNames["gear_eruptor_fireball"].id]=true,
-	[WeaponDefNames["gear_firestorm_rocket"].id]=true,
+	[WeaponDefNames["gear_firestorm_missile"].id]=true,
 	[WeaponDefNames["gear_igniter_rocket"].id]=true,
 	[WeaponDefNames["gear_u1commander_missile"].id]=true,
 	[WeaponDefNames["gear_barrel_missile2"].id]=true,
@@ -168,6 +171,20 @@ local torpedoWeaponIds = {
 }
 
 
+local smartTrackingWeaponIds = {
+	-- AVEN
+	[WeaponDefNames["aven_falcon_missile"].id]=true,
+	-- GEAR
+	[WeaponDefNames["gear_vector_missile"].id]=true,
+	[WeaponDefNames["gear_u1commander_missile"].id]=true,
+	[WeaponDefNames["gear_firestorm_missile"].id]=true,
+	-- CLAW
+	[WeaponDefNames["claw_x_aabomb"].id]=true,
+	-- SPHERE
+	[WeaponDefNames["sphere_twilight_aabomb"].id]=true
+}
+
+
 local destructibleWeaponIds = {
 	-- AVEN
 	[WeaponDefNames["aven_nuclear_rocket"].id]=true,
@@ -195,6 +212,7 @@ local longRangeRocketOriginalTargetsById = {}
 local disruptorProjectiles = {}
 local disruptorEffectProjectiles = {}
 local torpedoProjectiles = {}
+local smartTrackingProjectiles = {}
 local fireAOEProjectiles = {}
 local fireAOEEffectProjectiles = {}
 local fireAOEPositions = {}
@@ -261,6 +279,10 @@ function gadget:Initialize()
 	
 	-- track dynamo projectiles
 	Script.SetWatchWeapon(dynamoWeaponId,true)
+
+	for id,_ in pairs(smartTrackingWeaponIds) do
+		Script.SetWatchWeapon(id,true)
+	end
 
 	-- track destructible projectiles
 	for id,_ in pairs(destructibleWeaponIds) do
@@ -422,6 +444,38 @@ function gadget:GameFrame(n)
 			end
 		end
 	end
+	
+	
+	-- handle smart tracking projectiles
+	for projID,ownerID in pairs(smartTrackingProjectiles) do
+	
+		-- if the target was a unit that died, chase something else
+		local _,targetId = spGetProjectileTarget(projID)
+		if (type(targetId) == "number" and targetId > 0) then
+			local isDead = spGetUnitIsDead(targetId)
+			if (isDead == nil or isDead == true) then
+				--px,py,pz = spGetProjectilePosition(projID)
+				
+				local isDeadOwner = spGetUnitIsDead(ownerID)
+				if (isDeadOwner == false) then
+					newTargetId = spGetUnitNearestEnemy(ownerID)
+					if (newTargetId) then
+						spSetProjectileTarget(newTargetId,'u')
+						--Spring.Echo("projectile "..projID.." changing target from "..targetId.." to "..newTargetId)
+					else 
+						--spSetProjectileCollision(projID)
+						--Spring.Echo("projectile "..projID.." has nothing to do : become dumb")
+						smartTrackingProjectiles[projID] = nil
+					end  
+				else
+					--spSetProjectileCollision(projID)
+					--Spring.Echo("projectile "..projID.." lost target : explode")
+					--Spring.Echo("projectile "..projID.." has nothing to do : become dumb")
+					smartTrackingProjectiles[projID] = nil
+				end
+			end
+		end
+	end	
 
 	--- handle magnetar projectiles
 	local v = 40
@@ -512,7 +566,10 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	if (atomWeaponId == weaponDefID) then
 		spSetUnitShieldState(proOwnerID, 0)
 	end
-		
+	if smartTrackingWeaponIds[weaponDefID] then
+		smartTrackingProjectiles[proID] = proOwnerID
+	end
+	
 	if weaponDefID == disruptorWeaponId then
 		disruptorProjectiles[proID] = proOwnerID
 		return
@@ -577,6 +634,9 @@ end
 
 -- remove tracked projectiles from table on destruction or trigger other effects
 function gadget:ProjectileDestroyed(proID)
+	if smartTrackingProjectiles[proID] then
+		smartTrackingProjectiles[proID] = nil
+	end
 	if destructibleProjectiles[proID] then
 		-- if was a DC rocket, exploding near the ground
 		-- spawn construction tower at position

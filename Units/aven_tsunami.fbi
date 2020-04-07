@@ -64,10 +64,10 @@
 	//  Movement
 	//************
 	movementclass=TANKHOVER5;
-	turnrate=270;
-	acceleration=0.02;
+	turnrate=285;
+	acceleration=0.03;
 	brakerate=0.02;
-	maxvelocity=1.9;
+	maxvelocity=1.8;
 	maxslope=16;
 	maxwaterdepth=0;
 	turnInPlace=0;
@@ -119,7 +119,7 @@
 
 	[CustomParams]
 	{
-		tip=Gains 20% damage resistance when closed. Projectile explosions push enemy units.;
+		tip=Gains 30% damage resistance when closed. Projectile explosions push enemy units.;
 	}
 
 	//************************************************************
@@ -130,7 +130,7 @@
 		explosiongenerator0=custom:blueflaresml;
 	}
 
-	buildcostenergy=19432;//#AUTO#
-	buildcostmetal=3886;//#AUTO#
-	buildtime=46315;//#AUTO#
+	buildcostenergy=20820;//#AUTO#
+	buildcostmetal=4164;//#AUTO#
+	buildtime=49621;//#AUTO#
 }

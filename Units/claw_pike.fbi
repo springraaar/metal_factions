@@ -82,8 +82,8 @@
 	weapon1=claw_pike_railgun;
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=PIKE_BLAST;
+	selfdestructas=PIKE_BLAST;
 	onlytargetcategory1=NOTAIR;
 
 	//************************************************************
@@ -131,7 +131,7 @@
 		explosiongenerator0=custom:railgunflarebig;
 	}
 
-	buildcostenergy=29601;//#AUTO#
-	buildcostmetal=5920;//#AUTO#
-	buildtime=70549;//#AUTO#
+	buildcostenergy=28964;//#AUTO#
+	buildcostmetal=5792;//#AUTO#
+	buildtime=69031;//#AUTO#
 }

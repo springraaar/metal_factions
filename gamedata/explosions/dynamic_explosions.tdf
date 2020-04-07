@@ -1368,7 +1368,7 @@
 [FASTMISBLASTWRAPPER]			// large fast missile blast wrapper
 {
 	usedefaultexplosions=0;
-	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d0.6 p0.6 x0;explosionGenerator=custom:FLAKBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d0.8 p0.6 x0;explosionGenerator=custom:FLAKBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 
 	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d0.7 p0.6 x0;explosionGenerator=custom:STDNARROWBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
@@ -1381,6 +1381,17 @@
 	[_dust]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d2 p0.6 x0;explosionGenerator=custom:DYNDUSTBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 	[_windsphere]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d2 p0.6 x0;explosionGenerator=custom:DYNWINDSPHERE;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
+
+
+
+[AABOMBBLASTWRAPPER]			// aa bomb blast wrapper
+{
+	usedefaultexplosions=0;
+	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d1 p0.6 x0;explosionGenerator=custom:FLAKBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_dust]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d2 p0.6 x0;explosionGenerator=custom:DYNDUSTBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_windsphere]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d2 p0.6 x0;explosionGenerator=custom:DYNWINDSPHERE;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+
 
 [REDBLAST]			// red blast
 {

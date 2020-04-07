@@ -9,9 +9,9 @@
 #define SPEEDUP_FACTOR	130
 #define RESTORE_DELAY	3000
 
-piece  torso, ruparm, luparm, nanospray, pelvis, lfirept, head, lthigh, rthigh, lloarm, rloarm, rleg, lleg, rfoot,lfoot, torpgun,torpedo, lfirept2, h2, nano, lemg, rgun, t2,t3,t4,lshoulder,rshoulder;
+piece  torso, ruparm, luparm, nanospray, pelvis, lfirept, head, lthigh, rthigh, lloarm, rloarm, rleg, lleg, rfoot,lfoot, torpgun,torpedo, lfirept2, h2, nano, lemg, rgun, t2,t3,t4,lshoulder,rshoulder, las1,las2;
 
-static-var  bMoving, bBuilding, bDgunning,bAiming, Static_Var_6, bUnderwater, canAim1, canAim2, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
+static-var  bMoving, bBuilding, bDgunning,bAiming, Static_Var_6, bUnderwater, canAim1, canAim2, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3, gun_1;
 
 #include "aimhelper1.h"
 
@@ -388,6 +388,7 @@ Create()
 	bAiming = FALSE;
 	canAim1 = TRUE;
 	canAim2 = FALSE;
+	gun_1 = [0];
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();
 	start-script MotionControl();
@@ -478,6 +479,25 @@ AimPrimary(heading, pitch)
 FirePrimary()
 {
 	emit-sfx 1024 + 0 from lfirept;
+	// turn barrel to next position
+	if( gun_1 == [0] )
+	{
+		sleep 100;
+		turn lemg to y-axis <90.000000> speed <1800.000000>;
+		wait-for-turn lemg around y-axis;
+		turn lemg to y-axis <180.000000> speed <1800.000000>;
+		gun_1 = [1];
+		return (0);
+	}
+	if( gun_1 == [1] )
+	{
+		sleep 100;
+		turn lemg to y-axis <270.000000> speed <1800.000000>;
+		wait-for-turn lemg around y-axis;
+		turn lemg to y-axis <360.000000> speed <1800.000000>;
+		gun_1 = [0];
+		return (0);
+	}
 	return;
 }
 

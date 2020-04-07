@@ -341,6 +341,11 @@ function TaskQueueBehavior:ProgressQueue()
 		--	log(idx.." : "..tostring(value),self.ai)
 		--end
 		
+		-- reset normal build priority for non-commander builders
+		if not self.isHighPriorityBuilder then
+			spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{0},{})
+		end
+		
 		-- process queue item, check for low resources or nearby similar units being built
 		self:ProcessItem(value, DELAY_BUILDING_IF_LOW_RESOURCES, ASSIST_EXPENSIVE_BASE_UNITS)
 	end
@@ -473,12 +478,10 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 				value = "nil"
 			end
 			
-			-- assign high priority to AI builders building metal extractors, factories and fusion reactors
-			if not self.isCommander then
+			-- assign high priority to AI normal priority builders building metal extractors, factories and fusion reactors
+			if not self.isHighPriorityBuilder then
 				if setContains(unitTypeSets[TYPE_ECONOMY],value) or setContains(unitTypeSets[TYPE_PLANT],value) then
 					spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{1},{})
-				else
-					spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{0},{})
 				end
 			end
 						

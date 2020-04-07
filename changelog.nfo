@@ -1,3 +1,103 @@
+2020/04/07 ------------------ NOTES v1.32 ----------------------
+
+
+--- Balance / Mechanics
+
+ECONOMY
+- reduced the HP of wreckages to 100% of the units original HP instead of 150%
+- reduced the amount of metal wreckages have from 40% (25% for heaps) to 30% (15% for heaps)
+- adv. metal extractors are about 30% more expensive
+- exploiter metal extractors are about 50% more expensive and slightly more explosive (also a bit bigger visually)
+- fusion reactors are about 5% cheaper but produce about 600 E/s instead of 800 E/s
+(the wreckage yield reduction and late game economy nerfs are meant to encourage players to attack and damage the enemy economy and avoid saturation)
+
+MISSILES
+- increased the area of effect of level 2 fast missiles from 60 to 100 and reduced their range from 1450 to 1350 and ajusted costs
+- also reduced the range by 100 on CLAW "Bishop" and SPHERE "Stresser" and adjusted costs
+- slightly increased the dmg/s of level 2 fast missille turrets
+
+- all l2 fast missile weapons with relatively high reload time now have overkill prevention to avoid wasting shots on light targets
+(this also makes other turrets not try to fire at those targets)
+
+FIGHTERS
+- AVEN and GEAR level 2 fighters's missiles now have 630 range and 120 area of effect
+- CLAW and SPHERE level 2 fighters' lasers now have 600+ range and they also have a secondary AA bomb with huge area of effect and a long reload time
+- missiles and AA bombs from level 2 fighters will try to reacquire targets instead of flying in circles (most of the time)
+(these changes made them significantly more expensive, but much effective against level 1 fighter swarms as long as they hit-n-run carefully)
+
+LONG RANGE ROCKETS
+- long range rocket platform cost increased to 3500m
+- long range rockets now have much smaller explosions if they're shot down
+(this also means that if launched in bursts they're much less likely to chain-explode if shot down)
+- long range nuclear rockets had their area of effect reduced from 800 to 600 and damage from 10000 to 8000 and cost reduced from 4000m to 3000m
+- long range rockets pierce through shields
+
+
+SHIELDS
+- increased the shield cap, regen rate and cost of SPHERE "Aegis" by 50% 
+- increased the shield cap, regen rate of SPHERE "Shielder","Screener" and "Hermit" by 100% and cost by 60-100%
+(this should lead to people requiring less shields to perform, which helps avoid performance issues)
+- drastically reduced the max amount of shield points shared between large area shields from 10% of max per second to 2%
+- large shields cannot absorb more than about 3-4x of their regeneration rate
+
+
+MISC
+- minor damage and HP upgrades add +6% instead of +5% each
+
+- SPHERE "Slicer" will now prioritize aircraft if they're in range
+- reduced range of SPHERE "Slammer" from 1350 to 1260 and adjusted cost (about 10% cheaper)
+
+- increased range and cost on GEAR "Barrager" by about 5%
+- increased cost of very long range plasma cannons and railgun by about 25%
+- increased the cost of CLAW "Massacre" by about 10%
+- increased the range and cost of CLAW "Dynamo" by 5%
+
+- CLAW "Pike" explodes violently when killed
+- violent death explosions (Penetrator, Pike, etc.) deal M instead of H damage
+
+- increased the turn rates of AVEN "Javelin" and "Turbulence" missile turrets by about 50%
+- increased HP of AVEN Zephyr from 1800 to 3000 and cost from 1800M to 3000M
+- increased AVEN "Tsunami" damage resistance when closed from 20 to 30%
+- made AVEN "Tsunami" about 5% slower but slightly more maneuverable and its weapon has faster projectiles with bigger area of effect and energy cost and slightly less dmg/s
+- increased AVEN "Swatter" dmg/s by 20% and cost by 10%
+- increased AVEN "Excalibur" range from 1100 to 1300 and also drastically increased damage per shot, energy costs and slightly increased size, but made it about 15% slower and nearly 2x as expensive
+- reduced range and projectile speed of AVEN "Skimmer" and made it about 15% cheaper
+
+
+- GEAR "Firestorm" is about 20% slower, has 10% more HP and its missiles are now tracking, but had its cost increased by about 50%
+(it's now also immune to burn)
+- fire area effect duration on air increased from 2s to 5s
+
+- increased brake rate for submarines
+- made hovercraft and spinbots air-transportable if below the 3000 mass threshold
+
+- made Comsat stations avoid wasting their turns when multiple stations from the same team are targetting the same location
+(players can reveal one location permanently if they have 6 stations targetting it with "repeat" enabled)
+
+- 5-10% cost reduction on dedicated anti-sub aircraft
+
+
+
+COMMANDERS
+- AVEN "Alpha" form commander now has -10% speed, +30% dmg/s and a M damage plasma bolt cannon instead of L damage EMG as secondary weapon
+- AVEN "Zeta" form has the -10% range and 30% dmg/s on the lasers
+- AVEN "Builder" form gets a very slight speed reduction and a light laser weapon instead of the EMG 
+- rebalanced many commander forms to keep the consistency of the relative strength of surface vs underwater weapons and more accurately 
+(this required lots of minor changes to a lot of commander forms, too many to name)
+
+--- UI / Visuals
+
+- tooltip shows a message with the transport weight class limit for air transports
+- AVEN plasma bolt projectiles are a bit bigger to make them more threathening
+- force player list widget to the bottom right corner
+- Comsat action sound fades after just a few seconds to be less annoying
+
+--- AI
+
+- fix MFAI not reverting its builders to normal priority in some cases
+
+
+
 2020/03/17 ------------------ NOTES v1.31 ----------------------
 
 
@@ -13,7 +113,7 @@
 - increased flight altitude by about 10-15% for level1 and 2 fighter aircraft that use strafing attack runs
 - very slightly increased the discount such strafing aircraft get from not being able to avoid closing range with their target (<3% effect on cost)
 - slightly reduced the speed of non-strafing heavy bombers (5-10%)
-- heavy bombers explode violently when destroyed (but AOE and damage is about halfr than CLAW "Havoc" had on the previous version)
+- heavy bombers explode violently when destroyed (but AOE and damage is about half than what CLAW "Havoc" had on the previous version)
 - reduced the range of GEAR "Stratos" weapons from 550 to 480 to lower the cost a bit (~15%)
 
 - reduced range and cost of SPHERE "Gazer" by about 10%

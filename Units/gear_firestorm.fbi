@@ -5,7 +5,7 @@
 	//********************
 	Side=Gear;
 	name=Firestorm;
-	description=Incendiary Ground Attack Aircraft;
+	description=Incendiary Riot Aircraft;
 	icontype=airbomber;
 
 	//************************************************************
@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1750;
+	maxdamage=1950;
 	healtime=30;
 	footprintx=5;
 	footprintz=5;
@@ -62,7 +62,7 @@
 	//************
 	acceleration=0.1;
 	brakerate=0.1;
-	maxvelocity=5.5;
+	maxvelocity=4.5;
 	cruisealt=120;
 	turnrate=600;
 
@@ -76,12 +76,11 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=gear_firestorm_rocket;
-	onlytargetcategory1=NOTAIR;
+	weapon1=gear_firestorm_missile;
 	explodeas=BIG_UNIT;
 	selfdestructas=BIG_UNIT;
-	weaponmaindir1=0 -1 0.2;
-	maxangledif1=140;
+	//weaponmaindir1=0 -1 0.2;
+	//maxangledif1=140;
 
 
 	//************************************************************
@@ -138,7 +137,7 @@
 		explosiongenerator0=custom:GLOWSML;
 		explosiongenerator1=custom:rocketflaresml;
 	}
-	buildcostenergy=7891;//#AUTO#
-	buildcostmetal=1578;//#AUTO#
-	buildtime=18808;//#AUTO#
+	buildcostenergy=11365;//#AUTO#
+	buildcostmetal=2273;//#AUTO#
+	buildtime=27087;//#AUTO#
 }

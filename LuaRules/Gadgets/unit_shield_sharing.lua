@@ -28,8 +28,9 @@ end
 local SHIELD_SHARING_THRESHOLD_FRACTION = 0.9	-- drain from nearby ally shields if below this value
 local SHIELD_SHARING_MIN_FRACTION = 0.5
 local SHIELD_SHARING_MIN_FRACTION_SML = 0.5
-local SHIELD_SHARING_SHARED_FRACTION_PER_STEP = 0.05 -- 10% per second
+local SHIELD_SHARING_SHARED_FRACTION_PER_STEP = 0.01 -- 2% per second
 local SHIELD_SHARING_SHARED_FRACTION_PER_STEP_SML = 0.005 -- 1% per second
+local SHIELD_SHARING_CAP_FRACTION = 0.03 -- 6% per second, or 3x the normal regen rate
 local SHIELD_SHARING_EFF = 1.0
 local SHIELD_SHARING_EFF_SML = 1.0
 
@@ -86,7 +87,7 @@ function gadget:GameFrame(n)
 	alreadySharedUnitIds = {} -- units are only allowed to give off shield to others once per check
 	
 	-- for each large shield unit, get nearby shielded units
-	local x,x2,z,z2,oldShieldPower,oldShieldPower2,maxShieldPower,maxShieldPower2,amountDrained,powerFraction,powerFraction2,amountNeeded,amountAvailable,drainFromSmlShield
+	local x,x2,z,z2,oldShieldPower,oldShieldPower2,maxShieldPower,maxShieldPower2,amountDrained,powerFraction,powerFraction2,amountNeeded,amountAvailable,drainFromSmlShield,drainLimit,totalAmountDrained
 	for uId,uDefId in pairs(largeShieldUnits) do
 		shieldEnabled,oldShieldPower = spGetUnitShieldState(uId)
 		
@@ -94,6 +95,8 @@ function gadget:GameFrame(n)
 		newShieldPower = oldShieldPower
 		maxShieldPower = shieldMaxByDefIds[uDefId]
 		powerFraction = (oldShieldPower / maxShieldPower)
+		drainLimit = maxShieldPower * SHIELD_SHARING_CAP_FRACTION
+		totalAmountDrained = 0 
 		
 		-- if shield is below threshold, try to drain from nearby allied shields
 		if shieldEnabled and oldShieldPower > 0 and powerFraction < SHIELD_SHARING_THRESHOLD_FRACTION then
@@ -137,7 +140,8 @@ function gadget:GameFrame(n)
 								
 								if (amountDrained > 0) then
 									alreadySharedUnitIds[uId2] = true
-	
+									totalAmountDrained = totalAmountDrained + amountDrained * (drainFromSmlShield and SHIELD_SHARING_EFF_SML or SHIELD_SHARING_EFF)
+									
 									newShieldPower = newShieldPower + amountDrained * (drainFromSmlShield and SHIELD_SHARING_EFF_SML or SHIELD_SHARING_EFF)
 									newShieldPower2 = newShieldPower2 - amountDrained
 									
@@ -145,6 +149,11 @@ function gadget:GameFrame(n)
 	
 									spSetUnitShieldState(uId, newShieldPower)
 									spSetUnitShieldState(uId2, newShieldPower2)
+
+									if (totalAmountDrained >= drainLimit) then
+										--Echo("large shield on "..uId.." absorbed "..totalAmountDrained.." which is past the limit of "..drainLimit.." and will not absorb any more")
+										break
+									end
 									
 									-- TODO draw some animation
 								end

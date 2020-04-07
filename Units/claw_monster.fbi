@@ -36,8 +36,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=5;
-	energyuse=5;
+	energymake=0;
+	energyuse=0;
 	energystorage=0;
 
 	//************************************************************
@@ -68,7 +68,7 @@
 	movementclass=BOATSUB5;
 	turnrate=400;
 	acceleration=0.06;
-	brakerate=0.01;
+	brakerate=0.1;
 	maxvelocity=1.5;
 	minwaterdepth=20;
 
@@ -123,7 +123,7 @@
 	//  To be removed
 	//*****************
 
-	buildcostenergy=6983;//#AUTO#
-	buildcostmetal=1396;//#AUTO#
-	buildtime=16644;//#AUTO#
+	buildcostenergy=6495;//#AUTO#
+	buildcostmetal=1299;//#AUTO#
+	buildtime=15481;//#AUTO#
 }

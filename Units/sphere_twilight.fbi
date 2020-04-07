@@ -96,8 +96,10 @@
 	weapon1=sphere_twilight_laser;
 	weapon2=sphere_twilight_laser;
 	weapon3=sphere_twilight_shield;
+	weapon4=sphere_twilight_aabomb;
 	badtargetcategory1=NOTAIR;
 	badtargetcategory2=NOTAIR;
+	onlytargetcategory4=VTOL;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
 	WeaponMainDir1=0 0 1;  //x:0 y:0 z:1 => that's forward!
@@ -157,8 +159,9 @@
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:emgflarefast;
+		explosiongenerator1=custom:rocketflaremed;
 	}
-	buildcostenergy=5509;//#AUTO#
-	buildcostmetal=1101;//#AUTO#
-	buildtime=13132;//#AUTO#
+	buildcostenergy=8000;//#AUTO#
+	buildcostmetal=1600;//#AUTO#
+	buildtime=19068;//#AUTO#
 }

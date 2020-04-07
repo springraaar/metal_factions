@@ -100,7 +100,7 @@
 	//***********
 	weapon1=sphere_nuclear_rocket;
 	onlytargetcategory1=NOTAIR;
-	explodeas=sphere_nuclear_rocket;
+	explodeas=sphere_nuclear_rocket_d;
 	selfdestructas=sphere_nuclear_rocket;
 	selfdestructcountdown=0;
 	fireState=0;
@@ -113,7 +113,7 @@
 	}
 
 
-	buildcostenergy=20000;//#AUTO#
-	buildcostmetal=4000;//#AUTO#
-	buildtime=48000;//#AUTO#
+	buildcostenergy=15000;//#AUTO#
+	buildcostmetal=3000;//#AUTO#
+	buildtime=36000;//#AUTO#
 }

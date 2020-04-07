@@ -117,6 +117,7 @@ local burningImmuneDefIds = {
 	[UnitDefNames["gear_heater"].id] = true,
 	[UnitDefNames["gear_u1commander"].id] = true,
 	[UnitDefNames["gear_u5commander"].id] = true,
+	[UnitDefNames["gear_firestorm"].id] = true,
 	[UnitDefNames["gear_cloakable_cube"].id] = true,
 	[UnitDefNames["gear_cube"].id] = true
 }
@@ -128,7 +129,7 @@ local burningEffectWeaponDefIds = {
 	[WeaponDefNames["gear_burner_flamethrower"].id] = true,
 	[WeaponDefNames["gear_heater_flamethrower"].id] = true,
 	[WeaponDefNames["gear_canister_fireball"].id] = true,
-	[WeaponDefNames["gear_firestorm_rocket"].id] = true,
+	[WeaponDefNames["gear_firestorm_missile"].id] = true,
 	[WeaponDefNames["gear_igniter_rocket"].id] = true,
 	[WeaponDefNames["gear_u1commander_missile"].id] = true,
 	[WeaponDefNames["gear_barrel_missile2"].id] = true,

@@ -10,6 +10,9 @@ static-var  restore_delay;
 // Signal definitions
 #define SIG_AIM				2
 
+lua_checkAllowFiring() { return 0; }
+lua_checkLockTarget() { return 0; }
+
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
@@ -58,7 +61,7 @@ RestoreAfterDelay()
 }
 
 
-AimPrimary(heading, pitch)
+AimPrimary(heading, pitch, canFire)
 {
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
@@ -67,11 +70,22 @@ AimPrimary(heading, pitch)
 	wait-for-turn sleeve around x-axis;
 	wait-for-turn turret around y-axis;
 	start-script RestoreAfterDelay();
+	
+	// overkill prevention check
+	canFire = (get GAME_FRAME) - (get WEAPON_RELOADSTATE(1)) > 0;
+	if (canFire) {
+		call-script lua_checkAllowFiring(1,(get TARGET_ID(1)));
+		canFire = get LUA1;
+	}
+	if (!canFire) {
+		return (0);
+	}
 	return (1);
 }
 
 FirePrimary()
 {
+	call-script lua_checkLockTarget(get TARGET_ID(1));
 }
 
 Shot1()

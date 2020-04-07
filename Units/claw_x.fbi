@@ -94,8 +94,10 @@
 	//***********
 	weapon1=claw_x_laser;
 	weapon2=claw_x_laser;
+	weapon3=claw_x_aabomb;
 	badtargetcategory1=NOTAIR;
 	badtargetcategory2=NOTAIR;
+	onlytargetcategory3=VTOL;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
 	WeaponMainDir1=0 0 1;  //x:0 y:0 z:1 => that's forward!
@@ -155,8 +157,9 @@
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:emgflarefast;
+		explosiongenerator1=custom:rocketflaremed;
 	}
-	buildcostenergy=5008;//#AUTO#
-	buildcostmetal=1001;//#AUTO#
-	buildtime=11937;//#AUTO#
+	buildcostenergy=7929;//#AUTO#
+	buildcostmetal=1585;//#AUTO#
+	buildtime=18898;//#AUTO#
 }

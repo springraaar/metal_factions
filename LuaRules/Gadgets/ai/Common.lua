@@ -281,6 +281,7 @@ TYPE_AMPHIBIOUS_ATTACKER = 31
 TYPE_FUSION = 32
 TYPE_UPGRADE_CENTER = 33
 TYPE_ENERGYGENERATOR = 34
+TYPE_RESPAWNER = 35
 
 -- Taskqueuebehavior skips this name
 SKIP_THIS_TASK = "skipthistask"
@@ -1134,6 +1135,7 @@ unitTypeSets = {
 	[TYPE_HEAVY_DEFENSE] = tableToSet({lev2HeavyDefenseByFaction,lev2WaterHeavyDefenseByFaction}),
 	[TYPE_ARTILLERY_DEFENSE] = tableToSet({lev2ArtilleryDefenseByFaction,lev3ArtilleryDefenseByFaction}),
 	[TYPE_LONG_RANGE_ARTILLERY] = tableToSet(lev3LongRangeArtilleryByFaction),
+	[TYPE_RESPAWNER]= tableToSet(respawnerByFaction),
 	[TYPE_L1_PLANT] = tableToSet(lev1PlantByFaction),
 	[TYPE_L2_PLANT] = tableToSet(lev2PlantByFaction),
 	[TYPE_FUSION] = tableToSet(fusionByFaction),

@@ -19,6 +19,14 @@ local spSetUnitRulesParam = Spring.SetUnitRulesParam
 local spGetGameFrame = Spring.GetGameFrame
 local spGetUnitCommands = Spring.GetUnitCommands
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
+local spGetUnitDefID = Spring.GetUnitDefID 
+local spGetAllyTeamList = Spring.GetAllyTeamList
+local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
+local spGetTeamList = Spring.GetTeamList
+local spGetUnitsInCylinder = Spring.GetUnitsInCylinder
+local spGetUnitsInRectangle = Spring.GetUnitsInRectangle
+
+local floor = math.floor
 
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
@@ -27,6 +35,17 @@ if (not gadgetHandler:IsSyncedCode()) then
     return
 end
 
+-- GLOBAL overkill prevention maps
+-- map fire frame by target unit id
+GG.unitFireFrameByTargetId = {}
+GG.lessThan500HPTargetDefIds = {}
+GG.OKP_FRAMES = 90		-- 3 seconds
+local COMSAT_OKP_FRAMES = 30*30 -- 30s
+local comsatFireFrameByAllyIdAndPosition = {}
+local comsatAllowIdThisFrameByAllyIdAndPosition = {}
+
+local comsatBeaconDefId = UnitDefNames["cs_beacon"].id
+ 
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
 
@@ -115,7 +134,7 @@ end
 -- cancels attack orders
 function stopFiring(unitID, unitDefID, teamID, data)
 	cmds = spGetUnitCommands(unitID,5)
-	-- stop the unit and order it to move somewhere
+	-- stop the unit
 	if (cmds and (#cmds > 0)) then
 		for i,cmd in ipairs(cmds) do
 			if cmd["id"] == CMD.ATTACK then
@@ -132,6 +151,185 @@ function cobDebug(unitID, unitDefID, teamID, data1, data2)
 end
 
 
+-- checks if a unit is allowed to fire at a target
+-- returns 0 (deny) or 1 (allow) 
+function checkAllowFiring(unitID, unitDefID, teamID, wNum, targetID)
+	local f = spGetGameFrame()
+	local result = 1
+	
+	if targetID and tonumber(targetID) > 0 then
+		local defId = spGetUnitDefID(targetID)
+		if (defId and GG.lessThan500HPTargetDefIds[defId]) then
+			local lastFireFrame = GG.unitFireFrameByTargetId[targetID]
+			if ( lastFireFrame and (f - lastFireFrame < GG.OKP_FRAMES) ) then
+				--Spring.Echo("f="..f.."unit "..unitID.." prevented from firing weapon "..wNum.." at target "..tostring(targetID))
+				result = 0
+			end
+		end 
+	end
+
+	--Spring.Echo("f="..f.." unit "..unitID.." checking if fire weapon "..wNum.." at target "..tostring(targetID).." : "..(result==1 and "YES" or "NO" ))
+	return result
+end
+
+
+-- marks that a unit fired at a target
+function checkLockTarget(unitID, unitDefID, teamID, targetID)
+	local f = spGetGameFrame()
+	local result = 1
+	
+	if targetID and tonumber(targetID) > 0 then
+		local defId = spGetUnitDefID(targetID)
+		if (defId and GG.lessThan500HPTargetDefIds[defId]) then
+			GG.unitFireFrameByTargetId[targetID] = f
+		end 
+	end
+	
+	--Spring.Echo("f="..f.." unit "..unitID.." fired at target "..tostring(targetID))
+end
+
+local COMSAT_ZONE_SIZE = 512
+--TODO this is probably slow, but should be ok as there are relatively few comsats in play 
+function getComsatZoneIndex(px,pz)
+	return floor(px/COMSAT_ZONE_SIZE) .."_".. floor(pz/COMSAT_ZONE_SIZE) 
+end
+
+-- checks if a unit is allowed to fire at a target
+-- specific for comsat stations
+-- returns 0 (deny) or 1 (allow) 
+function checkComsatAllowFiring(unitID, unitDefID, teamID, wNum, targetID)
+	local f = spGetGameFrame()
+	local result = 1
+	local allyId = spGetUnitAllyTeam(unitID)
+	local index = ""
+	local px,py,pz
+	if targetID and tonumber(targetID) > 0 then
+		px,py,pz = spGetUnitPosition(targetID)
+	else
+		-- check target of attack order
+		cmds = spGetUnitCommands(unitID,5)
+		if (cmds and (#cmds > 0)) then
+			for i,cmd in ipairs(cmds) do
+				if cmd["id"] == CMD.ATTACK then
+					local pos = cmd["params"]
+					if (pos and pos[1]) then
+						px=pos[1]
+						pz=pos[3]
+					end
+					--Spring.Echo("unit "..unitID.." target=("..pos[1]..","..pos[2]..","..pos[3]..")")
+					break
+				end
+			end
+		end
+	end
+	
+	if (px) then
+		
+		-- check comsat firing status
+		index = getComsatZoneIndex(px,pz)
+		-- if another comsat got to aim this frame and is pointed at the target, do not allow it to fire
+		if comsatAllowIdThisFrameByAllyIdAndPosition[allyId][index] and comsatAllowIdThisFrameByAllyIdAndPosition[allyId][index] ~= unitID then
+			result = 0
+		else
+			local lastFireFrame = comsatFireFrameByAllyIdAndPosition[allyId][index]
+			if ( lastFireFrame and (f - lastFireFrame < COMSAT_OKP_FRAMES) ) then
+				--Spring.Echo("f="..f.."unit "..unitID.." prevented from comsatting target "..tostring(targetID))
+				result = 0
+			end
+		end
+		if (result == 1) then
+			comsatAllowIdThisFrameByAllyIdAndPosition[allyId][index] = unitID
+		end
+		
+		-- if allowed, check for allied comsat beacons at position and mark it if they're still active
+		--if (result == 1) then
+		--	for _,tId in pairs(spGetTeamList(allyId)) do
+		--		for _,uId in pairs(spGetUnitsInRectangle(px-500,pz-500,px+500,pz+500,tId)) do
+		--			if (spGetUnitDefID(uId) == comsatBeaconDefId) then
+		--				comsatFireFrameByAllyIdAndPosition[allyId][index] = f 
+		--				Spring.Echo("f="..f.."unit "..unitID.." prevented from comsatting target (beacon)"..tostring(targetID))
+		--				result = 0
+		--				break
+		--			end
+		--		end
+		--	end
+		--end
+	
+	end
+	
+
+	--Spring.Echo("f="..f.." unit "..unitID.." comsat check for position "..index.." : "..(result==1 and "YES" or "NO" ))
+	return result
+end
+
+
+-- marks that a comsat fired at a target position or unit
+function checkComsatLockTarget(unitID, unitDefID, teamID, targetID)
+	local f = spGetGameFrame()
+	local result = 1
+	local allyId = spGetUnitAllyTeam(unitID)
+	if targetID and tonumber(targetID) > 0 then
+		local px,py,pz = spGetUnitPosition(targetID)
+		if (px) then 
+			local index = getComsatZoneIndex(px,pz)
+			comsatFireFrameByAllyIdAndPosition[allyId][index] = f
+		end
+	else
+		-- check target of attack order?
+		cmds = spGetUnitCommands(unitID,5)
+		if (cmds and (#cmds > 0)) then
+			for i,cmd in ipairs(cmds) do
+				if cmd["id"] == CMD.ATTACK then
+					local pos = cmd["params"]
+
+					if (pos and pos[1]) then
+						local index = getComsatZoneIndex(pos[1],pos[3])
+						comsatFireFrameByAllyIdAndPosition[allyId][index] = f
+					end
+					break
+				end
+			end
+		end
+	end
+	
+	--Spring.Echo("f="..f.." unit "..unitID.." fired at target "..tostring(targetID))
+end
+
+-- initialize maps
+function gadget:Initialize()
+	-- find low hp targets to take into account for OKP
+    for _,ud in pairs(UnitDefs) do
+    	if ud.health <= 500 then
+    		GG.lessThan500HPTargetDefIds[ud.id] = true
+    	end
+    end
+    
+    -- init comsat position map
+    for _,allyId in pairs(spGetAllyTeamList()) do
+    	comsatFireFrameByAllyIdAndPosition[allyId] = {}
+    end
+end
+
+-- clean up 
+function gadget:GameFrame(n)
+
+	-- clean up unit okp map
+    for k,v in pairs(GG.unitFireFrameByTargetId) do
+   		if (n-v > 2*GG.OKP_FRAMES ) then
+   			GG.unitFireFrameByTargetId[k] = nil
+   		end
+    end
+
+	-- clean up comsat okp map
+    for _,allyId in pairs(spGetAllyTeamList()) do
+    	for k,v in pairs(comsatFireFrameByAllyIdAndPosition[allyId]) do
+    		if (n-v > (COMSAT_OKP_FRAMES + 30) ) then
+    			comsatFireFrameByAllyIdAndPosition[allyId][k] = nil
+    		end
+    	end
+    	comsatAllowIdThisFrameByAllyIdAndPosition[allyId] = {}
+    end
+end
 
 
 gadgetHandler:RegisterGlobal("cobDebug", cobDebug)
@@ -142,3 +340,7 @@ gadgetHandler:RegisterGlobal("getBuildPt", getBuildPt)
 gadgetHandler:RegisterGlobal("setHeightLevel", setHeightLevel)
 gadgetHandler:RegisterGlobal("delayReload", delayReload)
 gadgetHandler:RegisterGlobal("stopFiring", stopFiring)
+gadgetHandler:RegisterGlobal("checkComsatAllowFiring", checkComsatAllowFiring)
+gadgetHandler:RegisterGlobal("checkComsatLockTarget", checkComsatLockTarget)
+gadgetHandler:RegisterGlobal("checkAllowFiring", checkAllowFiring)
+gadgetHandler:RegisterGlobal("checkLockTarget", checkLockTarget)

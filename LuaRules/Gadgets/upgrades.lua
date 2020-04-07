@@ -35,7 +35,7 @@ local modifierTypes = {"damage","range","hp","speed","hp","regen","php_regen","l
 local modifiersByUpgrade = {
 -- weapon / red
 	
-	upgrade_red_1_damage = { damage = 0.05, speed = -0.02, restrictions = "armed", limit = 3, type = TYPE_MINOR },
+	upgrade_red_1_damage = { damage = 0.06, speed = -0.02, restrictions = "armed", limit = 3, type = TYPE_MINOR },
 	upgrade_red_1_range = { range = 0.035, speed = -0.02, restrictions = "armed", limit = 3, type = TYPE_MINOR },
 
 	upgrade_red_2_commander_damage = { damage = 0.2, restrictions = "commander", limit = 2, type = TYPE_COMMANDER },
@@ -45,7 +45,7 @@ local modifiersByUpgrade = {
 
 -- armor / green
 
-	upgrade_green_1_hp = { hp = 0.05, speed = -0.02, limit = 3, type = TYPE_MINOR },
+	upgrade_green_1_hp = { hp = 0.06, speed = -0.02, limit = 3, type = TYPE_MINOR },
 	upgrade_green_1_regen = { regen = 1, php_regen = 0.001, limit = 3, type = TYPE_MINOR },
 
 	upgrade_green_2_commander_regen = { regen = 20, restrictions = "commander", limit = 3, type = TYPE_COMMANDER },

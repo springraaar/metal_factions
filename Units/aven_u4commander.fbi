@@ -86,7 +86,7 @@
 	turnrate=1044;
 	acceleration=0.3;
 	brakerate=0.4;
-	maxvelocity=2.0;
+	maxvelocity=1.95;
 	maxslope=20;
 	maxwaterdepth=35;
 
@@ -100,7 +100,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=aven_u4commander_emg;
+	weapon1=aven_u4commander_laser;
 	weapon2=aven_u4commander_torpedo;
 	nochasecategory=WEAPON;
 	onlytargetcategory2=NOTAIR;
@@ -158,7 +158,7 @@
 	//*****************
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:EMGFLAREMED;
+	explosiongenerator0=custom:GLOWSML;
 	explosiongenerator1=custom:Nano;
 
 	explosiongenerator3=custom:DGUNREADYFLARE;

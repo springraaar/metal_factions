@@ -53,6 +53,7 @@ local Spring_SendCommands        = Spring.SendCommands
 local Spring_GetConfigInt        = Spring.GetConfigInt
 local Spring_GetMouseState       = Spring.GetMouseState
 local Spring_GetAIInfo           = Spring.GetAIInfo
+local Spring_GetViewGeometry 	 = Spring.GetViewGeometry
 
 local GetTextWidth        = fontHandler.GetTextWidth
 local UseFont             = fontHandler.UseFont
@@ -2057,6 +2058,7 @@ function widget:GetConfigData(data)      -- send
 end
 
 function widget:SetConfigData(data)      -- load
+	if false then -- DISABLED
 	if data.expandDown ~= nil and data.widgetRight ~= nil then
 		expandDown   = data.expandDown
 		expandLeft   = data.expandLeft
@@ -2098,6 +2100,7 @@ function widget:SetConfigData(data)      -- load
 	m_chat.active         = SetDefault(data.m_chatActive, false)
 	m_resources.active         = SetDefault(data.m_resourcesActive, true)
 	m_position.active         = SetDefault(data.m_positionActive, true)
+	end -- DISABLED
 end
 
 function SetDefault(value, default)
@@ -2336,6 +2339,7 @@ end
 
 function widget:ViewResize(viewSizeX, viewSizeY)
 	local dx, dy = vsx - viewSizeX, vsy - viewSizeY
+	Spring.Echo("view resized from "..vsx.."*"..vsy.." to "..viewSizeX.."*"..viewSizeY.." edown="..tostring(expandDown).." eleft="..tostring(expandLeft))
 	vsx, vsy = viewSizeX, viewSizeY
 	if expandDown == true then
 		widgetTop  = widgetTop - dy
@@ -2345,6 +2349,10 @@ function widget:ViewResize(viewSizeX, viewSizeY)
 		widgetRight = widgetRight - dx
 		widgetPosX  = widgetRight - widgetWidth
 	end
+	-- force widget to the bottom right corner
+	widgetRight = vsx
+	widgetPosX = widgetRight - widgetWidth
+	
 	updateChatTypeSizesPositions()
 end
 

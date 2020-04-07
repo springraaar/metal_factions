@@ -17,6 +17,8 @@ static-var  bMoving, bAiming, canAim, mASpdFactor;
 // Signal definitions
 #define SIG_AIM				2
 
+lua_checkAllowFiring() { return 0; }
+lua_checkLockTarget() { return 0; }
 
 MotionSpeedControl(maxSpeed,currentSpeed)
 {
@@ -517,7 +519,7 @@ RestoreAfterDelay()
 }
 
 
-AimPrimary(heading, pitch)
+AimPrimary(heading, pitch, canFire)
 {
 	bAiming = TRUE;
 	while(!canAim)
@@ -538,11 +540,21 @@ AimPrimary(heading, pitch)
 		wait-for-turn gun around x-axis;
 	}
 	start-script RestoreAfterDelay();
+	// overkill prevention check
+	canFire = (get GAME_FRAME) - (get WEAPON_RELOADSTATE(1)) > 0;
+	if (canFire) {
+		call-script lua_checkAllowFiring(1,(get TARGET_ID(1)));
+		canFire = get LUA1;
+	}
+	if (!canFire) {
+		return (0);
+	}
 	return (1);
 }
 
 FirePrimary()
 {
+	call-script lua_checkLockTarget(get TARGET_ID(1));
 	turn torso to x-axis <-7.000000> now;
 	emit-sfx 1024 + 0 from firept;
 	sleep 130;

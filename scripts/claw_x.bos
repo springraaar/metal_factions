@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base,hull,bottom,wingsup,bwingl,bwingr,fwingl,fwingr, weapon1, barrel1,flare1,barrel2,flare2, ljet,rjet, ljp, rjp;
+piece  base,hull,bottom,wingsup,bwingl,bwingr,fwingl,fwingr, weapon1, barrel1,flare1,barrel2,flare2, ljet,rjet, ljp, rjp,bweapon,bflare;
 
 static-var  Static_Var_2, statechg_DesiredState, statechg_StateChanging,canaim;
 
@@ -151,7 +151,27 @@ AimSecondary(heading, pitch)
 
 FireTertiary()
 {
-	return 0;
+	move bweapon to y-axis [-2] now;
+	emit-sfx 1024+1 from bflare;
+	sleep 200;
+	move bweapon to y-axis [0] speed [6];
+}
+
+QueryTertiary(piecenum)
+{
+	piecenum = bflare;
+
+}
+
+AimFromTertiary(piecenum)
+{
+	piecenum = bweapon;
+	return (0);
+}
+
+AimTertiary(heading, pitch)
+{
+	return (1);
 }
 
 

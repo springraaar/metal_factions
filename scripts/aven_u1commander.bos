@@ -9,7 +9,7 @@
 #define SPEEDUP_FACTOR	120
 #define RESTORE_DELAY	3000
 
-piece  torso, ruparm, luparm, rbigflash, nanospray, pelvis, lfirept, head, lthigh, rthigh, lloarm, rloarm, rleg, lleg, rfoot,lfoot, torpgun,torpedo, lfirept2, h2, nano, lemg, rgun, t2,t3,t4,lshoulder,rshoulder;
+piece  torso, ruparm, luparm, rbigflash, nanospray, pelvis, lfirept, head, lthigh, rthigh, lloarm, rloarm, rleg, lleg, rfoot,lfoot, torpgun,torpedo, lfirept2, h2, nano, lemg, lc2, rgun, t2,t3,t4,lshoulder,rshoulder;
 
 static-var  bMoving, bBuilding, bDgunning,bAiming, Static_Var_6, bUnderwater, canAim1, canAim2, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1,mAVertFactor, legAngle1, legAngle2, legAngle3;
 
@@ -136,6 +136,7 @@ checkUnderwater()
 			{
 				//hide emg stuff
 				hide lemg;
+				hide lc2;
  				
 				//TODO show weapon morph stuff
 				sleep 10;
@@ -163,6 +164,7 @@ checkUnderwater()
 
 				//show emg stuff 			
  				show lemg;
+ 				show lc2;
  		
  				sleep 200;	
  				canAim1 = TRUE;
@@ -487,7 +489,10 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
+	move lemg to y-axis [1.000000] now;
 	emit-sfx 1024 + 2 from lfirept;
+	sleep 150;
+	move lemg to y-axis [0.000000] speed [4.000000];
 	return;
 }
 
