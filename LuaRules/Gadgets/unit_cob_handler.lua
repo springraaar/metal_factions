@@ -25,7 +25,7 @@ local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local spGetTeamList = Spring.GetTeamList
 local spGetUnitsInCylinder = Spring.GetUnitsInCylinder
 local spGetUnitsInRectangle = Spring.GetUnitsInRectangle
-
+local spGetUnitPosition = Spring.GetUnitPosition
 local floor = math.floor
 
 -------------------------------------------------------------------------------------

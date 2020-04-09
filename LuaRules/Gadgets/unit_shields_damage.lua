@@ -77,6 +77,7 @@ local spGetUnitIsStunned = Spring.GetUnitIsStunned
 local spGetUnitNearestEnemy = Spring.GetUnitNearestEnemy
 local spGetGameFrame = Spring.GetGameFrame
 local max = math.max
+local random = math.random
 
 local STEP_DELAY = 6 		-- process steps every N frames
 local FIRE_DMG_PER_STEP = 6	-- 6 dmg every 6 frames, 30 frames per second -> 30 dps
@@ -322,7 +323,7 @@ function gadget:GameFrame(n)
 			radius = spGetUnitRadius(unitID)
 			if radius ~= nil then
 				local h = radius / 3
-				Spring.SpawnCEG(BURNING_CEG, x - h + math.random(2*h), y+h, z - h + math.random(2*h), 0, 1, 0,radius ,radius)
+				Spring.SpawnCEG(BURNING_CEG, x - h + 2*h*random(), y+h, z - h + 2*h*random(), 0, 1, 0,radius ,radius)
 				Spring.PlaySoundFile(BURNING_SOUND, 4, x, y+h, z)
 		
 				-- update table
