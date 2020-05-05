@@ -3,9 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base,hull,bottom,wingsup,wing1,wing2, weapon1, barrel1,flare1,weapon2,barrel2,flare2,shieldpt, jet, jet2, jet3, ljp, rjp, cjp,bweapon,bflare;
+piece  base,hull,bottom,wingsup,wing1,wing2, weapon1, barrel1,flare1,weapon2,barrel2,flare2,shieldpt, jet, jet2, jet3, ljp, rjp, cjp,bweapon,bflare, lfirept,rfirept;
 
-static-var  Static_Var_2, statechg_DesiredState, statechg_StateChanging,canaim;
+static-var  isFlying, statechg_DesiredState, statechg_StateChanging,gun_1;
 
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
@@ -39,13 +39,13 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 Takeoff()
 {
-	Static_Var_2 = 1;
+	isFlying = 1;
 }
 
 Landing()
 {
 	turn hull to x-axis <0.000000> speed <70.000000>;
-	Static_Var_2 = 0;
+	isFlying = 0;
 }
 
 InitState()
@@ -86,7 +86,8 @@ Create()
 {
 	hide flare1;
 	hide flare2;
-	Static_Var_2 = 0;
+	isFlying = 0;
+	gun_1 = 0;
 	call-script InitState();
 	start-script SmokeUnit();
 }
@@ -108,86 +109,114 @@ SweetSpot(piecenum)
 
 FirePrimary()
 {
-	emit-sfx 1024+0 from flare1;
+	if (gun_1 == 0)	{
+		emit-sfx 1024+0 from flare1;
+		sleep 30;
+		gun_1 = 1;
+		return (0);
+	}
+	if (gun_1 == 1)	{
+		emit-sfx 1024+0 from flare2;
+		sleep 30;
+		gun_1 = 0;
+		return (0);
+	}
 }
 
 QueryPrimary(piecenum)
 {
-	piecenum = flare1;
-
+	if (gun_1 == 0) {
+		piecenum = flare1;
+		return (0);
+	}
+	if (gun_1 == 1) {
+		piecenum = flare2;
+		return (0);
+	}
 }
 
 AimFromPrimary(piecenum)
 {
-	piecenum = weapon1;
-	return (0);
+	if (gun_1 == 0) {
+		piecenum = weapon1;
+		return (0);
+	}
+	if (gun_1 == 1) {
+		piecenum = weapon2;
+		return (0);
+	}
 }
 
 AimPrimary(heading, pitch)
 {
+	if (!isFlying) {
+		return (0);
+	}
 	return (1);
 }
 
 FireSecondary()
 {
-	emit-sfx 1024+0 from flare2;
+	emit-sfx 1024+1 from lfirept;
 }
 
 QuerySecondary(piecenum)
 {
-	piecenum = flare2;
+	piecenum = lfirept;
 }
 
 AimFromSecondary(piecenum)
 {
-	piecenum = weapon2;
+	piecenum = lfirept;
 	return (0);
 }
 
 AimSecondary(heading, pitch)
 {
+	if (!isFlying) {
+		return (0);
+	}
 	return (1);
 }
 
+
 FireTertiary()
 {
-	return 0;
+	emit-sfx 1024+1 from rfirept;
 }
 
 QueryTertiary(piecenum)
 {
-	piecenum=shieldpt;
+	piecenum = rfirept;
 }
 
 AimFromTertiary(piecenum)
 {
-	piecenum = shieldpt;
+	piecenum = rfirept;
 	return (0);
 }
 
 AimTertiary(heading, pitch)
 {
+	if (!isFlying) {
+		return (0);
+	}
 	return (1);
 }
 
-
 FireWeapon4()
 {
-	move bweapon to y-axis [-2] now;
-	emit-sfx 1024+1 from bflare;
-	sleep 200;
-	move bweapon to y-axis [0] speed [6];
+	return 0;
 }
 
 QueryWeapon4(piecenum)
 {
-	piecenum = bflare;
-
+	piecenum=shieldpt;
 }
 
 AimFromWeapon4(piecenum)
 {
-	piecenum = bweapon;
+	piecenum = shieldpt;
 	return (0);
 }
 
@@ -195,6 +224,7 @@ AimWeapon4(heading, pitch)
 {
 	return (1);
 }
+
 
 Killed(severity, corpsetype)
 {

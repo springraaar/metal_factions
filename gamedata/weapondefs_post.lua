@@ -110,6 +110,12 @@ for wdName, wd in pairs(WeaponDefs) do
 		wd.cratermult = 0.1
 	end
 	if (wdName ~= "sphere_magnetar_blast") then
+		-- change visual intensity for EMG cannons, change weaponType
+		if wd.weapontype == "EmgCannon" then
+			wd.intensity = 0.1
+			wd.weapontype = "Cannon"
+		end
+		
 		if (noVerticalRangeBoostWeapons[wdName]) then
 			wd.heightmod = 1
 			wd.heightboostfactor = 0
@@ -118,6 +124,7 @@ for wdName, wd in pairs(WeaponDefs) do
 			wd.heightmod = 0.75		-- default was 1.0
 		elseif (wd.weapontype == "LaserCannon") then
 			wd.heightmod = 0.75		-- default was 1.0?
+			wd.heightboostfactor = 1.1
 		elseif (wd.weapontype == "Cannon" or wd.weapontype == "EmgCannon" ) then
 			if wd.range and tonumber(wd.range) > 380 then
 				wd.heightmod = 0.5			-- default was 0.8
@@ -128,10 +135,16 @@ for wdName, wd in pairs(WeaponDefs) do
 			wd.heightboostfactor = 1.1		-- default was -1.0
 		end
 		
-		-- change visual intensity for EMG cannons, change weaponType
-		if wd.weapontype == "EmgCannon" then
-			wd.intensity = 0.1
-			wd.weapontype = "Cannon"
+		--wd.heightmod=0.01
+		--wd.cylindertargeting=5
+		--wd.heightboostfactor = 15.0
+		
+		-- range compensation for lasercannons due to engine bug
+		if (wd.weapontype == "LaserCannon") then
+			local oRange = tonumber(wd.range)
+			if oRange > 0 then
+				wd.range = oRange + 30
+			end 
 		end
 	end
 	

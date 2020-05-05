@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1000;
+	maxdamage=1350;
 	healtime=30;
 	footprintx=3;
 	footprintz=3;
@@ -62,7 +62,7 @@
 	//************
 	acceleration=1.4;
 	brakerate=0.08;
-	maxvelocity=7.5;
+	maxvelocity=6.5;
 	maxwaterdepth=4;
 	cruisealt=240;
 	turnrate=1000;
@@ -76,7 +76,7 @@
 	mygravity=0.4; //0.4
 	maxbank=0.8;	//0.8
 	maxpitch=0.45;	//0.45
-	turnradius=350; //350
+	turnradius=250; //350
 	maxaileron=0.02;	//0.01
 	maxelevator=0.02;	//0.01
 	maxrudder=0.02;  //0.01
@@ -93,17 +93,29 @@
 	//  Weapons
 	//***********
 	weapon1=claw_x_laser;
-	weapon2=claw_x_laser;
-	weapon3=claw_x_aabomb;
+	weapon2=claw_x_laser2;
+	weapon3=claw_x_laser2;
+	weapon4=claw_x_laser2;
+	weapon5=claw_x_laser2;
 	badtargetcategory1=NOTAIR;
 	badtargetcategory2=NOTAIR;
-	onlytargetcategory3=VTOL;
+	badtargetcategory3=NOTAIR;
+	badtargetcategory4=NOTAIR;
+	badtargetcategory5=NOTAIR;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
 	WeaponMainDir1=0 0 1;  //x:0 y:0 z:1 => that's forward!
 	MaxAngleDif1=60;       //60deg from side to side, or 30deg from center to each direction
-	WeaponMainDir2=0 0 1;  //x:0 y:0 z:1 => that's forward!
-	MaxAngleDif2=60;       //60deg from side to side, or 30deg from center to each direction
+
+	weaponmaindir2=-0.6 0 1;
+	maxangledif2=160;
+	weaponmaindir3=0.6 0 1;
+	maxangledif3=160;
+	weaponmaindir4=0.6 0 -1;
+	maxangledif4=160;
+	weaponmaindir5=-0.6 0 -1;
+	maxangledif5=160;
+
 
 
 	//************************************************************
@@ -156,10 +168,10 @@
 	pieceTrailCEGRange = 4;
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:emgflarefast;
+		explosiongenerator0=custom:GLOWSML;
 		explosiongenerator1=custom:rocketflaremed;
 	}
-	buildcostenergy=7929;//#AUTO#
-	buildcostmetal=1585;//#AUTO#
-	buildtime=18898;//#AUTO#
+	buildcostenergy=7070;//#AUTO#
+	buildcostmetal=1414;//#AUTO#
+	buildtime=16851;//#AUTO#
 }

@@ -72,8 +72,8 @@
 	//  Weapons
 	//***********
 	weapon2=sphere_aegis_shield;
-	explodeas=ESTOR_BUILDINGEX;
-	selfdestructas=CRAWL_BLASTSML;
+	ExplodeAs=STATIC_SHIELD_BLAST;
+	SelfDestructAs=STATIC_SHIELD_BLAST;
 
 	//************************************************************
 	//  Orders
@@ -112,7 +112,7 @@
 	{
 	explosiongenerator0=custom:Glow;
 	}
-	buildcostenergy=11631;//#AUTO#
-	buildcostmetal=2326;//#AUTO#
-	buildtime=27721;//#AUTO#
+	buildcostenergy=11808;//#AUTO#
+	buildcostmetal=2361;//#AUTO#
+	buildtime=28142;//#AUTO#
 }

@@ -36,8 +36,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.8;
-	energyuse=0.8;
+	energymake=0.0;
+	energyuse=0.0;
 	energystorage=0;
 	windgenerator=0.001;
 
@@ -84,7 +84,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=ARMMSHIP_ROCKET;
+	weapon1=aven_ranger_rocket;
 	weapon2=aven_ranger_emg;
 	nochasecategory=VTOL;
 	onlytargetcategory1=NOTAIR;
@@ -138,7 +138,7 @@
 	
 	}
 
-	buildcostenergy=15646;//#AUTO#
-	buildcostmetal=3129;//#AUTO#
-	buildtime=37290;//#AUTO#
+	buildcostenergy=14287;//#AUTO#
+	buildcostmetal=2857;//#AUTO#
+	buildtime=34052;//#AUTO#
 }

@@ -61,7 +61,7 @@
 
 
 	// ------------------- movement
-	MaxVelocity=0.8;
+	MaxVelocity=0.83;
 	BrakeRate=0.9;
 	Acceleration=1.00;
 	TurnRate=632;
@@ -78,9 +78,9 @@
 	Weapon2=sphere_u6commander_torpedo;
 	Weapon3=sphere_u1commander_shield;
 	weaponmaindir1=0 1 0;
-	maxangledif1=280;
+	maxangledif1=270;
 	weaponmaindir2=0 1 0;
-	maxangledif2=280;
+	maxangledif2=270;
 	badtargetcategory1=VTOL;
 	onlytargetcategory2=NOTAIR;
 	NoChaseCategory=VTOL;
@@ -98,7 +98,7 @@
 	// ------------------- stealth
 	//cloakcost=200;
 	//cloakcostmoving=750;
-	//mincloakdistance=100;
+	//mincloakdistance=170;
 
 	// ------------------- misc
 	commander=1;

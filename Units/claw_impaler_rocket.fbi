@@ -1,0 +1,122 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=CLAW;
+	name=Impaler Missile;
+	description=Long Range Precision Strike Missile;
+	icontype=impalerrocket;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW VTOL NOTSUB;
+
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=claw_impaler_rocket;
+	objectname=claw_impaler_rocket.3do;
+	script=claw_impaler_rocket.cob;
+	buildpic=claw_impaler_rocket.png;
+	soundcategory=MINE;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=500;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	upright=0;
+	collisionVolumeType=Sphere;
+	collisionVolumeScales=40 40 40;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canmove=0;
+	canpatrol=0;
+	canstop=0;
+	kamikaze=0;
+	stealth=0;
+	canguard=0;
+	canRepeat=0;
+	canwait=0;
+	canstop=0;
+	canfight=0;
+	sonarStealth=0;
+	canfly=1;
+
+
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=30;
+	maxwaterdepth=100;
+	maxvelocity=0;
+	acceleration=0;
+	brakerate=0;
+	turnrate=900;
+	blocking=0;
+	usesmoothmesh=0;
+	mygravity=0;
+	hoverAttack=1;
+	airHoverFactor=0.01;
+	airStrafe=0;
+	bankingallowed=0;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=600;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_impaler_rocket;
+	onlytargetcategory1=NOTAIR;
+	weapon2=claw_impaler_submunition;
+	onlytargetcategory2=NOTAIR;
+	explodeas=claw_impaler_rocket_d;
+	selfdestructas=claw_impaler_rocket;
+	selfdestructcountdown=0;
+	fireState=0;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[customParams]
+	{
+		tip="Shoots an untargetable fast projectile towards the target when it reaches terminal phase";
+	}
+
+
+	buildcostenergy=6500;//#AUTO#
+	buildcostmetal=1300;//#AUTO#
+	buildtime=15600;//#AUTO#
+}

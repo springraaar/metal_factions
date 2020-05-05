@@ -1,0 +1,137 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=GEAR;
+	name=Pyroclasm Missile;
+	description=Long Range Incendiary Missile;
+	icontype=pyroclasmrocket;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR VTOL NOTSUB;
+
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=gear_pyroclasm_rocket;
+	objectname=gear_pyroclasm_rocket.3do;
+	script=gear_pyroclasm_rocket.cob;
+	buildpic=gear_pyroclasm_rocket.png;
+	soundcategory=MINE;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=500;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	upright=0;
+	collisionVolumeType=Sphere;
+	collisionVolumeScales=40 40 40;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canmove=0;
+	canpatrol=0;
+	canstop=0;
+	kamikaze=0;
+	stealth=0;
+	canguard=0;
+	canRepeat=0;
+	canwait=0;
+	canstop=0;
+	canfight=0;
+	sonarStealth=0;
+	canfly=1;
+
+
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=30;
+	maxwaterdepth=100;
+	maxvelocity=0;
+	acceleration=0;
+	brakerate=0;
+	turnrate=900;
+	blocking=0;
+	usesmoothmesh=0;
+	mygravity=0;
+	hoverAttack=1;
+	airHoverFactor=0.01;
+	airStrafe=0;
+	bankingallowed=0;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=600;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_pyroclasm_rocket;
+	onlytargetcategory1=NOTAIR;
+	weapon2=gear_pyroclasm_submunition;
+	onlytargetcategory2=NOTAIR;
+	weapon3=gear_pyroclasm_submunition;
+	onlytargetcategory3=NOTAIR;
+	weapon4=gear_pyroclasm_submunition;
+	onlytargetcategory4=NOTAIR;
+	weapon5=gear_pyroclasm_submunition;
+	onlytargetcategory5=NOTAIR;
+	weapon6=gear_pyroclasm_submunition;
+	onlytargetcategory6=NOTAIR;
+	weapon7=gear_pyroclasm_submunition;
+	onlytargetcategory7=NOTAIR;
+	explodeas=gear_pyroclasm_rocket_d;
+	selfdestructas=gear_pyroclasm_rocket;
+	selfdestructcountdown=0;
+	fireState=0;
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:rocketflaremed;
+	}
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[customParams]
+	{
+		tip="Burns ground for 20s, dealing up to 60(M) dmg/s. Affected units burn for 180(M) dmg over 6s";
+	}
+
+
+	buildcostenergy=6500;//#AUTO#
+	buildcostmetal=1300;//#AUTO#
+	buildtime=15600;//#AUTO#
+}

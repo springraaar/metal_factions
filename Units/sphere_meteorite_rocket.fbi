@@ -1,0 +1,120 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=SPHERE;
+	name=Meteorite Missile;
+	description=Long Range Armored Missile;
+	icontype=meteoriterocket;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE VTOL NOTSUB;
+
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=sphere_meteorite_rocket;
+	objectname=sphere_meteorite_rocket.3do;
+	script=long_range_rocket.cob;
+	buildpic=sphere_meteorite_rocket.png;
+	soundcategory=MINE;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1500;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	upright=0;
+	collisionVolumeType=Sphere;
+	collisionVolumeScales=40 40 40;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canmove=0;
+	canpatrol=0;
+	canstop=0;
+	kamikaze=0;
+	stealth=0;
+	canguard=0;
+	canRepeat=0;
+	canwait=0;
+	canstop=0;
+	canfight=0;
+	sonarStealth=0;
+	canfly=1;
+
+
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxslope=30;
+	maxwaterdepth=100;
+	maxvelocity=0;
+	acceleration=0;
+	brakerate=0;
+	turnrate=900;
+	blocking=0;
+	usesmoothmesh=0;
+	mygravity=0;
+	hoverAttack=1;
+	airHoverFactor=0.01;
+	airStrafe=0;
+	bankingallowed=0;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=600;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=sphere_meteorite_rocket;
+	onlytargetcategory1=NOTAIR;
+	explodeas=sphere_meteorite_rocket_d;
+	selfdestructas=sphere_meteorite_rocket;
+	selfdestructcountdown=0;
+	fireState=0;
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[customParams]
+	{
+		tip="Flies relatively slower on the terminal phase but it's harder to shoot down";
+	}
+
+
+	buildcostenergy=6500;//#AUTO#
+	buildcostmetal=1300;//#AUTO#
+	buildtime=15600;//#AUTO#
+}

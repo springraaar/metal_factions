@@ -1183,11 +1183,74 @@
 [WALLLARGE]
 {
 	usedefaultexplosions=0;
-	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,90,0;delay=0;damage=400;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
-	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,70,0;delay=10;damage=500;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
-	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,20,0;delay=20;damage=600;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast1]{class=CExpGenSpawner;[properties]{pos=0,90,0;delay=0;damage=400;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=0,70,0;delay=10;damage=500;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast3]{class=CExpGenSpawner;[properties]{pos=0,20,0;delay=20;damage=600;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
 
+[IMPALERSUBBLASTWRAPPER]
+{
+	usedefaultexplosions=0;
+	[_stdblast1]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=1000;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=-30 r60,-30,-30 r60;delay=10;damage=700;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast3]{class=CExpGenSpawner;[properties]{pos=-30 r60,-60,-30 r60;delay=20;damage=600;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+
+[PYROCLASMDEBRISBLASTWRAPPER]
+{
+	usedefaultexplosions=0;
+	[_stdblast1]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=1000;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=3;damage=1000;explosionGenerator=custom:FIREBALLBOOMBIG;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast3]{class=CExpGenSpawner;[properties]{pos=0,-10,0;delay=10;damage=1000;explosionGenerator=custom:FIREBALLBOOMBIG;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast4]{class=CExpGenSpawner;[properties]{pos=-30 r60,-30,-30 r60;delay=25;damage=1000;explosionGenerator=custom:FIREBALLBOOMBIG;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast5]{class=CExpGenSpawner;[properties]{pos=-30 r60,-60,-30 r60;delay=40;damage=1000;explosionGenerator=custom:FIREBALLBOOMBIG;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+
+[PYROCLASMSUBBLASTWRAPPER]
+{
+	usedefaultexplosions=0;
+	[_stdblast1]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=1000;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=-30 r60,-30,-30 r60;delay=10;damage=700;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast3]{class=CExpGenSpawner;[properties]{pos=-30 r60,-60,-30 r60;delay=20;damage=600;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+
+
+[EMPROCKETBLASTWRAPPER]
+{
+	usedefaultexplosions=0;
+	[_stdblast1]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=800;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=-80 r160,-20 r40,-80 r160;delay=5;damage=1000;explosionGenerator=custom:EMPBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast3]{class=CExpGenSpawner;[properties]{pos=-80 r160,-20 r40,-80 r160;delay=10;damage=1000;explosionGenerator=custom:EMPBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast4]{class=CExpGenSpawner;[properties]{pos=-80 r160,-20 r40,-80 r160;delay=15;damage=1000;explosionGenerator=custom:EMPBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast5]{class=CExpGenSpawner;[properties]{pos=-80 r160,-20 r40,-80 r160;delay=20;damage=1000;explosionGenerator=custom:EMPBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+
+
+[DEBRISROCKETBLASTWRAPPER]
+{
+	usedefaultexplosions=0;
+	[_stdblast1]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=700;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=-30 r60,-30,-30 r60;delay=10;damage=600;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast3]{class=CExpGenSpawner;[properties]{pos=-30 r60,-60,-30 r60;delay=20;damage=500;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+
+
+[DEBRISDCROCKETBLASTWRAPPER]
+{
+	usedefaultexplosions=0;
+	[_stdblast1]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=700;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=-30 r60,-30,-30 r60;delay=10;damage=600;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast3]{class=CExpGenSpawner;[properties]{pos=-30 r60,-60,-30 r60;delay=20;damage=500;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+
+
+[METEORITEBLASTWRAPPER]
+{
+	usedefaultexplosions=0;
+	[_stdblast1]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=1500;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=-30 r60,-20,-30 r60;delay=7;damage=1000;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast3]{class=CExpGenSpawner;[properties]{pos=-30 r60,-40,-30 r60;delay=14;damage=800;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
 
 [FEATUREBLAST]			// feature blast
 {

@@ -124,13 +124,16 @@ local noDecalUnits = {
 	gear_mine = true,
 	aven_nuclear_rocket = true,
 	aven_dc_rocket = true,
+	aven_lightning_rocket = true,
 	gear_nuclear_rocket = true,
 	gear_dc_rocket = true,
+	gear_pyroclasm_rocket = true,
 	claw_nuclear_rocket = true,
 	claw_dc_rocket = true,
+	claw_impaler_rocket = true,
 	sphere_nuclear_rocket = true,
-	sphere_dc_rocket = true
-	
+	sphere_dc_rocket = true,
+	sphere_meteorite_rocket = true
 }
 
 -- unitdef tweaking

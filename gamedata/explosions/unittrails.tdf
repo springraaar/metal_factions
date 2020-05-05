@@ -228,16 +228,86 @@
 		underwater=1;
 		unit=1;
 	}
+	[light] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=-100 r200,0,-100 r200;
+			explosionGenerator=custom:MAGNETARLIGHT;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=5;
+	}
+	[lightnorth] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=-100 r200,0,-50 r200;
+			explosionGenerator=custom:MAGNETARLIGHT;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=5;
+	}
+	[lightsouth] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=-100 r200,0,-150 r200;
+			explosionGenerator=custom:MAGNETARLIGHT;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=5;
+	}
+	[lighteast] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=-150 r200,0,-100 r200;
+			explosionGenerator=custom:MAGNETARLIGHT;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=5;
+	}
+	[lightwest] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=-50 r200,0,-100 r200;
+			explosionGenerator=custom:MAGNETARLIGHT;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=5;
+	}
+}
+
+[MAGNETARLIGHT]
+{
+	usedefaultexplosions=0;	
 	[flash]
 	{
 		class=CSimpleGroundFlash;
 		[properties]
 		{
-			size = 250;
-			sizeGrowth = 0.3;
+			size = 50;
+			sizeGrowth = 2;
 			texture=groundflash;	     		
-	     		ttl = 15;
-     			colormap = 0.05 0.05 0.05 0.4    0.02 0.02 0.02 0.0;
+	     		ttl = 10;
+     			colormap = 0.1 0.1 0.1 0.1    0.05 0.05 0.05 0.1;
 		}
 		air=1;
      		ground=1;
@@ -246,7 +316,6 @@
 		count=1;
 	}
 }
-
 [MAGNETARAURA]
 {
 	usedefaultexplosions=0;	
@@ -282,22 +351,70 @@
 		underwater=1;
 		unit=1;
 	}
-	[flash]
+	[light] 
 	{
-		class=CSimpleGroundFlash;
+		class=CExpGenSpawner;
 		[properties]
 		{
-			size = 300;
-			sizeGrowth = 0.3;
-			texture=groundflash;	     		
-	     		ttl = 15;
-     			colormap = 0.1 0.1 0.1 0.4    0.05 0.05 0.05 0.0;
+			pos=-100 r200,0,-100 r200;
+			explosionGenerator=custom:MAGNETARLIGHT;
 		}
 		air=1;
-     		ground=1;
-	      	water=1;
-		underwater=1;
-		count=1;
+		water=1;
+		ground=1;
+		count=4;
+	}
+	[lightnorth] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=-100 r200,0,-50 r200;
+			explosionGenerator=custom:MAGNETARLIGHT;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=2;
+	}
+	[lightsouth] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=-100 r200,0,-150 r200;
+			explosionGenerator=custom:MAGNETARLIGHT;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=2;
+	}
+	[lighteast] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=-150 r200,0,-100 r200;
+			explosionGenerator=custom:MAGNETARLIGHT;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=2;
+	}
+	[lightwest] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=-50 r200,0,-100 r200;
+			explosionGenerator=custom:MAGNETARLIGHT;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=2;
 	}
 }
 

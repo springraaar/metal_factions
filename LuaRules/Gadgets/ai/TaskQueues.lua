@@ -579,7 +579,6 @@ function patrolAtkCenter(self)
 	return {action="wait", frames=120}
 end
 
-
 function commanderRoam(self)
 	--local atkPos = self.ai.unitHandler.unitGroups[UNIT_GROUP_RAIDERS].centerPos
 	local basePos = self.ai.unitHandler.basePos
@@ -595,6 +594,86 @@ function commanderRoam(self)
 end
 
 
+function commanderPatrol(self)
+	local radius = MED_RADIUS
+	local atkPos = self.ai.unitHandler.unitGroups[UNIT_GROUP_ATTACKERS].centerPos
+	local atkStrength = self.ai.unitHandler.unitGroups[UNIT_GROUP_ATTACKERS].nearCenterCost
+	local raidersPos = self.ai.unitHandler.unitGroups[UNIT_GROUP_RAIDERS].centerPos
+	local raidersStrength = self.ai.unitHandler.unitGroups[UNIT_GROUP_RAIDERS].nearCenterCost
+	local basePos = self.ai.unitHandler.basePos
+
+	--Spring.Echo(spGetGameFrame().." raiders="..raidersStrength.." atk="..atkStrength)
+	if (raidersStrength > atkStrength) then
+		--Spring.Echo(spGetGameFrame().." following raiders")
+		return commanderRoam(self)
+	end
+	
+	local p = newPosition()
+	p.y = 0
+		
+	if ( atkPos.x > 0 and atkPos.z >0) then
+		p.x = atkPos.x-radius/2+random(1,radius)
+		p.z = atkPos.z-radius/2+random(1,radius)
+	elseif ( basePos.x > 0 and basePos.z > 0) then
+		p.x = basePos.x-radius/2+random(1,radius)
+		p.z = basePos.z-radius/2+random(1,radius)
+	else
+		-- do nothing
+		return SKIP_THIS_TASK
+	end
+
+	local f = spGetGameFrame()
+	
+	-- can't reach the attackers, patrol "in place"
+	if not self.ai.mapHandler:checkConnection(self.pos, p,self.pFType) then
+		-- check if it can't walk to base either
+		if not self.ai.mapHandler:checkConnection(self.pos, basePos,self.pFType) then
+			self.stuckCounter = self.stuckCounter + 1 
+			--Spring.Echo(spGetGameFrame().." can't reach attackers or base! Stuck="..self.stuckCounter)
+		else 
+			self.stuckCounter = 0
+		end
+				
+		if (self.stuckCounter == 5) then
+			-- probably fell into a hole, self destruct!
+			spGiveOrderToUnit(self.unitId,CMD.SELFD,{},{})
+		else
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{self.pos.x  - 60 + random( 1, 120),self.pos.y,self.pos.z - 60 + random( 1, 120)},{})	
+			spGiveOrderToUnit(self.unitId,CMD.PATROL,{self.pos.x - 60 + random( 1, 120),0,self.pos.z -60 + random( 1, 120)},CMD.OPT_SHIFT)
+			spGiveOrderToUnit(self.unitId,CMD.PATROL,{self.pos.x - 60 + random( 1, 120),0,self.pos.z -60 + random( 1, 120)},CMD.OPT_SHIFT)
+		end
+	else
+		self.stuckCounter = 0
+		-- get a position to patrol 
+		patrolPos = newPosition()
+		patrolPos.x = p.x - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS)
+		patrolPos.z = p.z - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS)
+		patrolPos.y = spGetGroundHeight(patrolPos.x,patrolPos.z)
+		 
+		-- test if that position is reachable
+		if self.ai.mapHandler:checkConnection(self.pos, p,self.pFType) and self.ai.mapHandler:checkConnection(self.pos, patrolPos,self.pFType) then
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},{})
+			spGiveOrderToUnit(self.unitId,CMD.PATROL,{patrolPos.x,patrolPos.y,patrolPos.z},CMD.OPT_SHIFT)
+		else
+			-- if not just patrol in place
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{self.pos.x  - 60 + random( 1, 120),self.pos.y,self.pos.z - 60 + random( 1, 120)},{})
+			spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x - 60 + random( 1, 120),p.y,p.z- 60 + random( 1, 120)},CMD.OPT_SHIFT)
+			spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x - 60 + random( 1, 120),p.y,p.z- 60 + random( 1, 120)},CMD.OPT_SHIFT)
+		end
+		 	
+		-- do not give the orders if already there
+		--if (distance(self.pos,p) > BIG_RADIUS) then
+		--	spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},{})			
+		--	spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS),0,p.z - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS)},CMD.OPT_SHIFT)
+		--elseif (f - self.idleFrame < 90 or self.distance(self.pos,p) > MED_RADIUS) then
+		--elseif (true) then
+		--	spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x,p.y,p.z},{})			
+		--	spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS),0,p.z - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS)},CMD.OPT_SHIFT)
+		--end
+	end
+	
+	return {action="wait", frames=120}
+end
 
 function scoutRandomly(self)
 	local basePos = self.ai.unitHandler.basePos
@@ -1591,10 +1670,12 @@ local avenCommander = {
 	checkMorph,
 	windSolarIfNeeded,
 	metalExtractorNearbyIfSafe,
+	metalExtractorNearbyIfSafe,
+	metalExtractorNearbyIfSafe,
 	windSolarIfNeeded,
 	windSolarIfNeeded,
 	lvl1PlantIfNeeded,
-	commanderBriefAreaPatrol,
+	--commanderBriefAreaPatrol,
 	areaLimit_L2HeavyDefense,
 	changeQueueToCommanderAttackerIfNeeded,
 	changeQueueToCommanderBaseBuilderIfNeeded,	
@@ -1662,7 +1743,7 @@ local avenUCommander = {
 	changeQueueToRoamingCommanderIfNeeded,
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	metalExtractorNearbyIfSafe,
-	patrolAtkCenter
+	commanderPatrol
 }
 
 local avenURoamingCommander = {
@@ -1990,16 +2071,16 @@ local gearCommander = {
 	moveBaseCenter,
 	checkMorph,
 	metalExtractorNearbyIfSafe,
+	metalExtractorNearbyIfSafe,
+	metalExtractorNearbyIfSafe,
 	windSolarIfNeeded,
 	windSolarIfNeeded,
 	lvl1PlantIfNeeded,
-	commanderBriefAreaPatrol,
+	--commanderBriefAreaPatrol,
 	areaLimit_L2HeavyDefense,	
 	changeQueueToCommanderAttackerIfNeeded,
 	changeQueueToCommanderBaseBuilderIfNeeded,
 	changeQueueToWaterCommanderIfNeeded,	
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
 	windSolarIfNeeded,
 	areaLimit_Llt,
 	windSolarIfNeeded,
@@ -2060,7 +2141,7 @@ local gearUCommander = {
 	changeQueueToRoamingCommanderIfNeeded,
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	metalExtractorNearbyIfSafe,
-	patrolAtkCenter
+	commanderPatrol
 }
 
 local gearURoamingCommander = {
@@ -2386,10 +2467,12 @@ local clawCommander = {
 	moveBaseCenter,
 	checkMorph,
 	metalExtractorNearbyIfSafe,
+	metalExtractorNearbyIfSafe,
+	metalExtractorNearbyIfSafe,
 	windSolarIfNeeded,
 	windSolarIfNeeded,
 	lvl1PlantIfNeeded,
-	commanderBriefAreaPatrol,
+	--commanderBriefAreaPatrol,
 	areaLimit_MediumAA,
 	--areaLimit_MediumAA,
 	changeQueueToCommanderAttackerIfNeeded,
@@ -2457,7 +2540,7 @@ local clawUCommander = {
 	changeQueueToRoamingCommanderIfNeeded,
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	metalExtractorNearbyIfSafe,
-	patrolAtkCenter
+	commanderPatrol
 }
 
 
@@ -2795,9 +2878,11 @@ local sphereCommander = {
 	moveBaseCenter,
 	checkMorph,
 	metalExtractorNearbyIfSafe,
+	metalExtractorNearbyIfSafe,
+	metalExtractorNearbyIfSafe,	
 	roughFusionIfNeeded,
 	lvl1PlantIfNeeded,
-	commanderBriefAreaPatrol,
+	--commanderBriefAreaPatrol,
 	areaLimit_MediumAA,
 	changeQueueToCommanderAttackerIfNeeded,
 	changeQueueToCommanderBaseBuilderIfNeeded,
@@ -2858,7 +2943,7 @@ local sphereUCommander = {
 	changeQueueToRoamingCommanderIfNeeded,
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	metalExtractorNearbyIfSafe,
-	patrolAtkCenter
+	commanderPatrol
 }
 
 local sphereURoamingCommander = {

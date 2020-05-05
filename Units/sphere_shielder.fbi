@@ -56,8 +56,8 @@
 	// ------------------- weapons
 	Weapon1=sphere_shielder_shield;
 	NoChaseCategory=VTOL;
-	ExplodeAs=BIG_UNITEX;
-	SelfDestructAs=BIG_UNIT;
+	ExplodeAs=MOBILE_SHIELD_BLAST;
+	SelfDestructAs=MOBILE_SHIELD_BLAST;
 
 
 	// ------------------- orders
@@ -97,7 +97,7 @@
 	{
 		explosiongenerator0=custom:emgflarefast;
 	}
-	buildcostenergy=17430;//#AUTO#
-	buildcostmetal=3486;//#AUTO#
-	buildtime=41541;//#AUTO#
+	buildcostenergy=17091;//#AUTO#
+	buildcostmetal=3418;//#AUTO#
+	buildtime=40735;//#AUTO#
 }

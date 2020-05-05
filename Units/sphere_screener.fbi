@@ -89,8 +89,8 @@
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
 	weapon2=sphere_screener_shield;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	ExplodeAs=MOBILE_SHIELD_BLAST;
+	SelfDestructAs=MOBILE_SHIELD_BLAST;
 
 	//************************************************************
 	//  Orders
@@ -139,7 +139,7 @@
 	explosiongenerator1=custom:UNITFIRE;
 	}
 
-	buildcostenergy=20586;//#AUTO#
-	buildcostmetal=4117;//#AUTO#
-	buildtime=49064;//#AUTO#
+	buildcostenergy=20229;//#AUTO#
+	buildcostmetal=4045;//#AUTO#
+	buildtime=48213;//#AUTO#
 }

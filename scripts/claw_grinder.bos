@@ -90,7 +90,7 @@ Shot1()
 	if( gun_1 == [0] )
 	{
 		move barrel1 to z-axis [-2.500000] now;
-		sleep 50;
+		sleep 100;
 		turn barrels to z-axis <60.000000> speed <720.000000>;
 		gun_1 = [1];
 		sleep 100;
@@ -100,7 +100,7 @@ Shot1()
 	if( gun_1 == [1] )
 	{
 		move barrel2 to z-axis [-2.500000] now;
-		sleep 50;
+		sleep 100;
 		turn barrels to z-axis <120.000000> speed <720.000000>;
 		gun_1 = [2];
 		sleep 100;
@@ -110,7 +110,7 @@ Shot1()
 	if( gun_1 == [2] )
 	{
 		move barrel3 to z-axis [-2.500000] now;
-		sleep 50;
+		sleep 100;
 		turn barrels to z-axis <180.000000> speed <720.000000>;
 		gun_1 = [3];
 		sleep 100;
@@ -121,7 +121,7 @@ Shot1()
 	if( gun_1 == [3] )
 	{
 		move barrel4 to z-axis [-2.500000] now;
-		sleep 50;
+		sleep 100;
 		turn barrels to z-axis <240.000000> speed <720.000000>;
 		gun_1 = [4];
 		sleep 100;
@@ -132,7 +132,7 @@ Shot1()
 	if( gun_1 == [4] )
 	{
 		move barrel5 to z-axis [-2.500000] now;
-		sleep 50;
+		sleep 100;
 		turn barrels to z-axis <300.000000> speed <720.000000>;
 		gun_1 = [5];
 		sleep 100;
@@ -143,7 +143,7 @@ Shot1()
 		if( gun_1 == [5] )
 	{
 		move barrel6 to z-axis [-2.500000] now;
-		sleep 50;
+		sleep 100;
 		turn barrels to z-axis <361.000000> speed <720.000000>;
 		gun_1 = [0];
 		sleep 100;

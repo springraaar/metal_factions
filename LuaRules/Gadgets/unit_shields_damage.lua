@@ -98,13 +98,17 @@ local UNIT_DAMAGE_TAKEN_XP = 0.06		-- 100%HP damage taken from enemies is conver
 
 local RECLOAK_DELAY_FRAMES = 150
 local CLOAK_MOVING_THRESHOLD = 0.3 
-								
+local DECLOAK_DAMAGE_THRESHOLD = 3
+
+local LONG_RANGE_ROCKET_CHAIN_DAMAGE_FACTOR = 0.1  -- shot down long range rockets dmg fraction against rockets in flight 
+
 local dealtDef = nil
 local takenDef = nil
 local powerFraction = nil					
 
 local disruptorWaveEffectWeaponDefId = WeaponDefNames["aven_bass_disruptor_effect"].id
 local disruptorWaveUnitDefId = UnitDefNames["aven_bass"].id
+local magnetarUnitDefId = UnitDefNames["sphere_magnetar"].id
 local magnetarWeaponDefId = WeaponDefNames["sphere_magnetar_blast"].id
 local magnetarAuraWeaponDefId = WeaponDefNames["sphere_magnetar_aura_blast"].id
 
@@ -136,6 +140,8 @@ local burningEffectWeaponDefIds = {
 	[WeaponDefNames["gear_barrel_missile2"].id] = true,
 	[WeaponDefNames["gear_eruptor_fireball"].id] = true,
 	[WeaponDefNames["gear_u5commander_fireball"].id] = true,
+	[WeaponDefNames["gear_pyroclasm_rocket_d"].id] = true,
+	[WeaponDefNames["gear_pyroclasm_submunition"].id] = true,
 	[WeaponDefNames["gear_canister"].id] = true,
 	[WeaponDefNames["gear_eruptor"].id] = true,
 	[WeaponDefNames["gear_fire_effect"].id] = true,
@@ -170,6 +176,49 @@ local continuousBeamWeaponDefIds = {
 	[WeaponDefNames["sphere_chroma_beam2"].id] = true,
 	[WeaponDefNames["sphere_chroma_beam3"].id] = true
 }
+
+local reducedDamageLongRangeRocketsWeaponDefIds = {
+	[WeaponDefNames["aven_nuclear_rocket_d"].id] = true,
+	[WeaponDefNames["aven_nuclear_rocket"].id] = true,
+	[WeaponDefNames["aven_dc_rocket_d"].id] = true,
+	[WeaponDefNames["aven_dc_rocket"].id] = true,
+	[WeaponDefNames["aven_lightning_rocket_d"].id] = true,
+	[WeaponDefNames["aven_lightning_rocket"].id] = true,
+	[WeaponDefNames["gear_nuclear_rocket_d"].id] = true,
+	[WeaponDefNames["gear_nuclear_rocket"].id] = true,
+	[WeaponDefNames["gear_dc_rocket_d"].id] = true,
+	[WeaponDefNames["gear_dc_rocket"].id] = true,
+	[WeaponDefNames["gear_pyroclasm_rocket_d"].id] = true,
+	[WeaponDefNames["gear_pyroclasm_rocket"].id] = true,
+	[WeaponDefNames["claw_nuclear_rocket_d"].id] = true,
+	[WeaponDefNames["claw_nuclear_rocket"].id] = true,
+	[WeaponDefNames["claw_dc_rocket_d"].id] = true,
+	[WeaponDefNames["claw_dc_rocket"].id] = true,
+	[WeaponDefNames["claw_impaler_rocket_d"].id] = true,
+	[WeaponDefNames["claw_impaler_rocket"].id] = true,
+	[WeaponDefNames["sphere_nuclear_rocket_d"].id] = true,
+	[WeaponDefNames["sphere_nuclear_rocket"].id] = true,
+	[WeaponDefNames["sphere_dc_rocket_d"].id] = true,
+	[WeaponDefNames["sphere_dc_rocket"].id] = true,
+	[WeaponDefNames["sphere_meteorite_rocket_d"].id] = true,
+	[WeaponDefNames["sphere_meteorite_rocket"].id] = true
+}
+
+local longRangeRocketsDefIds = {
+	[UnitDefNames["aven_nuclear_rocket"].id] = true,
+	[UnitDefNames["aven_dc_rocket"].id] = true,
+	[UnitDefNames["aven_lightning_rocket"].id] = true,
+	[UnitDefNames["gear_nuclear_rocket"].id] = true,
+	[UnitDefNames["gear_dc_rocket"].id] = true,
+	[UnitDefNames["gear_pyroclasm_rocket"].id] = true,
+	[UnitDefNames["claw_nuclear_rocket"].id] = true,
+	[UnitDefNames["claw_dc_rocket"].id] = true,
+	[UnitDefNames["claw_impaler_rocket"].id] = true,
+	[UnitDefNames["sphere_nuclear_rocket"].id] = true,
+	[UnitDefNames["sphere_dc_rocket"].id] = true,
+	[UnitDefNames["sphere_meteorite_rocket"].id] = true
+}
+
 
 local targetDefId = UnitDefNames["target"].id
 local targetDamage = 0
@@ -438,12 +487,9 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	if (weaponDefID == disruptorWaveEffectWeaponDefId and unitDefID == disruptorWaveUnitDefId) then
 		return 0
 	end
-	-- disable magnetar self-damage, but drain shield
-	if (weaponDefID == magnetarWeaponDefId) then
-		--spSetUnitShieldState(unitID, 0) -- magnetar no longer has shield
-		if (unitID == attackerID) then
-			return 0	
-		end
+	-- disable magnetar self-damage
+	if ( unitDefID == magnetarUnitDefId and (weaponDefID == magnetarWeaponDefId or weaponDefID == magnetarAuraWeaponDefId)) then
+		return 0,0	
 	end
 	-- disable upgrade finished effect self-damage
 	if (upgradeFinishedDefIds[weaponDefID]) then
@@ -458,6 +504,12 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	-- sharply reduce self-damage in general
 	if (unitID == attackerID) then
 		damage = damage * SELF_DAMAGE_FACTOR
+	end
+	
+	-- long range rockets that were shot down deal reduced dmg to others in flight
+	if (longRangeRocketsDefIds[unitDefID] == true and reducedDamageLongRangeRocketsWeaponDefIds[weaponDefID] == true) then
+		damage = damage * LONG_RANGE_ROCKET_CHAIN_DAMAGE_FACTOR
+		--Spring.Echo("Chain damage reduced "..damage)
 	end
 	
 	-- show animation for AOE damage from disruptor weapons 
@@ -657,7 +709,7 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 			end
 		end
 	end
-	if (damage > 0 ) then
+	if (damage > DECLOAK_DAMAGE_THRESHOLD ) then
 		cloakDisruptedUnitFrameTable[unitID] = spGetGameFrame()
 		damagedUnitFrameTable[unitID] = spGetGameFrame()
 		--Spring.Echo("UNIT DAMAGED unitId="..unitID.." f="..spGetGameFrame())

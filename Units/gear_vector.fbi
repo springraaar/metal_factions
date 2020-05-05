@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1100;
+	maxdamage=1250;
 	healtime=30;
 	footprintx=3;
 	footprintz=3;
@@ -63,7 +63,7 @@
 	//************
 	acceleration=1.2;
 	brakerate=0.08;
-	maxvelocity=7.0;
+	maxvelocity=6.8;
 	cruisealt=240;
 
 	// flight behaviour
@@ -75,7 +75,7 @@
 	mygravity=0.4; //0.4
 	maxbank=0.8;	//0.8
 	maxpitch=0.45;	//0.45
-	turnradius=350; //350
+	turnradius=250; //350
 	maxaileron=0.02;	//0.01
 	maxelevator=0.02;	//0.01
 	maxrudder=0.02;  //0.01
@@ -92,7 +92,7 @@
 	//  Weapons
 	//***********
 	weapon1=gear_vector_missile;
-	weapon2=gear_vector_missile;
+	weapon2=gear_vector_flare;
 	badtargetcategory1=NOTAIR;
 	badtargetcategory2=NOTAIR;
 	explodeas=BIG_UNITEX;
@@ -149,8 +149,10 @@
 
 	[SFXTypes]
 	{
+		explosiongenerator0=custom:glowsml;
+		explosiongenerator1=custom:rocketflaresml;
 	}
-	buildcostenergy=6445;//#AUTO#
-	buildcostmetal=1289;//#AUTO#
-	buildtime=15361;//#AUTO#
+	buildcostenergy=6573;//#AUTO#
+	buildcostmetal=1314;//#AUTO#
+	buildtime=15666;//#AUTO#
 }

@@ -1,3 +1,91 @@
+2020/05/05 ------------------ NOTES v1.34 ----------------------
+
+--- new units
+
+- added AVEN "Lightning" : long range rocket which damages and paralyzes units 
+- added GEAR "Pyroclasm" : long range rocket which separates into 6 untargetable incendiary submunitions when approaching the target
+- added CLAW "Impaler" : long range rocket which shoots an untargetable very fast projectile when approaching the target
+- added SPHERE "meteorite" : armored long range rocket with a relatively weaker warhead
+
+--- Balance / Mechanics
+
+
+FIGHTERS / AIR
+- GEAR "Instigator" and SPHERE "Crustle" no longer avoid targetting air units if there are ground units in range
+- GEAR "Firestorm" : increased HP by 50%, reduced speed by 20% and adjusted cost
+- SPHERE "Meteor" will no longer try to chase enemy air targets
+- AVEN "Falcon" and "Talon" have shorter range, shorter reload time missiles and fire them 1 by 1
+- AVEN "Falcon" has a secondary 460 range high dmg/s laser turret with 360º firing
+- CLAW "Hornet" has range reduced from 450 to 350 but higher damage/s and faster reload time
+- CLAW "X" is now slower, tougher and has 4 secondary 460 range lasers
+- increased range and cost of most units with lasers with less than 400 range by about 10% so they're more able to shoot at aircraft
+- CLAW "Blizzard" has 60% more HP and is about 25% slower and 10% more expensive
+- AVEN "Swift" and GEAR "Dash" now have shorter range missiles with less burst, higher dmg/s and faster reload time
+
+
+- GEAR "Luminator" : reduced reload time from 15s to 12s and adjusted cost
+
+- AVEN hovercraft plant and CLAW spinbot plant now also build l1 land and ship construction units
+(this is meant to make them more viable as starting factories)
+
+
+LONG RANGE ROCKETS
+- long range rockets accelerate to up to twice their normal cruise speed when descending towards target
+- long range rocket explosions deal only 10% damage to other rockets in flight
+
+
+OTHER
+- fixed scopers and comsat stations decloaking units when their projectiles hit
+- SPHERE magnetars no longer damage or pull other magnetars with either the aura or the active
+- CLAW "Gyro", "Ringo" and "Dynamo" get about 6% cheaper
+- SPHERE "Moth" about 5% more expensive as the angle restriction does not matter much
+- AVEN "Tsunami" now deals 500M dmg/s instead of 700L dmg/s and costs 5% more
+- AVEN "Slider S" now has slow firing H damage depthcharge is 25% more expensive
+- AVEN "SLider" costs 12% more, but had its 500 range cannon replaced with a 400 range energized plasma cannon with nearly double dmg/s
+- reduced range and cost of level2 static artillery by about 10% (Guardian, Punisher, Massacre, Banger)
+- increased CLAW "Armadon" movement speed by 20% and adjusted cost
+- reduced the cost of H armor units by about 6%
+- all area shield generator units now explode somewhat violently when killed (simila to Penetrator, and other ~3k metal cost energy intensive units)
+- slightly increased the "blind" zone of SPHERE commanders to avoid them attacking units while standing on cliff edges without being shot back
+- increased the radar and sonar ranges of advanced radars and sonars by about 30-40% and adjusted their costs
+- reduced the cost of air scouts by about 12%
+- increased range and cost of AVEN "Trooper" and "Warrior" by about 10%
+- slightly reduced CLAW "Pike" range from 1580 to 1500 and adjusted cost
+- cloaked commanders had their decloak range increased from 100 to 170
+- made units with relatively short range non-instant non-tracking projectiles slightly cheaper 
+(this is a partial revert of a previous nerf which intended to hurt Double and Boar but affected AVEN's emg units as well)
+
+- added 30 range to all weapons that use the "lasercannon" weapon type, which now also includes claw railguns and miniguns to work around an engine bug where they get up to 50 less range than intended
+(this is what caused units such as AVEN magnum and some GEAR commanders to have uneven weapon ranges)
+- reduced CLAW "Piercer" range and cost by about 10%
+
+- GEAR commander's raider form : missile reload 7->14s, flamer range 250-> 270, dps 600 -> 700, flamethrower projectile speed 230 -> 270, speed 2.1 -> 2.2
+- slightly increased the speed of H armored commander forms (about 4%)
+- reduced the model size and range of SPHERE "Moth" from 510 to 420 and reduced cost by about 20%
+
+- units will no longer try to target commander drones less than 50% built 
+
+--- AI
+
+- MFAI won't try to build on water (this caused issues on "island" maps with water edges)
+- MFAI will make a few more metal extractors early and not use the commander to area patrol
+ (revert of a recent change unintentionally made easy and normal AI too slow to expand and easy to beat)
+- MFAI will likely self-destruct and respawn its commander if it gets stuck in a hole on maps like "Ravaged" for more than about 30s
+- MFAI commander will try to chase its raiding group if it's stronger than it's regular attack group
+
+--- UI / Visuals
+
+- added "Artillery" to the description of several rocket and cannon turrets
+- added "Very effective against air" tip to t2 missile turrets
+- CLAW minigun and railgun weapons now have a more visible trail on their projectiles
+(this required using a different weapon type)
+- fixed GEAR land mines not showing damage on tooltip
+- added "Click Selection Helper" widget that allows people to select units by clicking on the ground nearby,
+(double click selects all of the same type within 1500 radius. It's disabled by default, but can be enabled on the F11 widgets menu)
+- modified magnetars' glow to a more flickering animated form which looks better on slopes
+
+
+
 2020/04/10 ------------------ NOTES v1.33 ----------------------
 
 - fixed two lua errors that could occur during battles

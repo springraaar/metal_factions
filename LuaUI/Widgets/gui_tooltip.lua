@@ -207,9 +207,10 @@ function GetTooltipWeaponData(ud, xpMod, rangeMod, dmgMod)
                 weapon_action="Paralyze"
                 local paralyzeDmg = dmgMod * weap.damages[Game.armorTypes.default]
                 local normalDmg = PARALYZE_DAMAGE_FACTOR * paralyzeDmg
-				NewTooltip = NewTooltip.. "\n\255\100\255\255Paralyze: "..FormatNbr(paralyzeDmg,2).."/once \255\255\213\213Damage: \255\255\170\170"..FormatNbr(dmg,2).."/once"
+				NewTooltip = NewTooltip.. "\n\255\100\255\255Paralyze: "..FormatNbr(paralyzeDmg,0).."/once \255\255\213\213Damage: \255\255\170\170"..FormatNbr(normalDmg,0).."/once"
 	        else
-	        	NewTooltip = NewTooltip.."\n\255\255\213\213Damage: \255\255\170\170"..FormatNbr(normalDmg,2).."/once"
+	        	local normalDmg = dmgMod * weap.damages[Game.armorTypes.default]
+	        	NewTooltip = NewTooltip.."\n\255\255\213\213Damage: \255\255\170\170"..FormatNbr(normalDmg,0).."/once"
 	        end
 	    end
     elseif ud.weapons and ud.weapons[1] and ud.weapons[1].weaponDef then
@@ -241,8 +242,8 @@ function GetTooltipWeaponData(ud, xpMod, rangeMod, dmgMod)
 						if (isDisruptor) then
 							local paralyzeDmg = damage
 							local normalDmg = paralyzeDmg * PARALYZE_DAMAGE_FACTOR
-							actionStr = "Paralyze/s: \255\100\255\255"..FormatNbr(paralyzeDmg,0).."\255\255\255\255"..(reloadTime >= ONCE_RELOAD_THRESHOLD and " once" or ("/"..FormatNbr(reloadTime,2).."s"))
-							actionStr = actionStr.." Dmg/s: \255\255\255\255"..FormatNbr(normalDmg,0).."\255\255\255\255"..(reloadTime >= ONCE_RELOAD_THRESHOLD and " once" or ("/"..FormatNbr(reloadTime,2).."s"))
+							actionStr = "Paralyze: \255\100\255\255"..FormatNbr(paralyzeDmg,0).."\255\255\255\255"..(reloadTime >= ONCE_RELOAD_THRESHOLD and " once" or ("/"..FormatNbr(reloadTime,2).."s"))
+							actionStr = actionStr.." Dmg: \255\255\255\255"..FormatNbr(normalDmg,0).."\255\255\255\255"..(reloadTime >= ONCE_RELOAD_THRESHOLD and " once" or ("/"..FormatNbr(reloadTime,2).."s"))
 						else
 							actionStr = "Dmg/s: \255\255\255\255"..FormatNbr(damage,0).."\255\255\255\255"..(reloadTime >= ONCE_RELOAD_THRESHOLD and " once" or ("/"..FormatNbr(reloadTime,2).."s"))
 						end
@@ -442,7 +443,7 @@ function GenerateNewTooltip()
 				if fud.shieldPower > 0 then NewTooltip=NewTooltip.."\255\135\135\255     Shield: "..FormatNbr(fud.shieldPower) end
 					
 			-- weapons
-			if fud.weapons and fud.weapons[1] and fud.weapons[1].weaponDef then
+			if fud.canKamikaze or (fud.weapons and fud.weapons[1] and fud.weapons[1].weaponDef) then
 				NewTooltip = NewTooltip..GetTooltipWeaponData(fud,1)
 			end
 			

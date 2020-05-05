@@ -124,12 +124,16 @@ local aircraftMovementFixDefIds = {
 local destructibleProjectileDefIds = {
 	[UnitDefNames["aven_nuclear_rocket"].id] = true,
 	[UnitDefNames["aven_dc_rocket"].id] = true,
+	[UnitDefNames["aven_lightning_rocket"].id] = true,
 	[UnitDefNames["gear_nuclear_rocket"].id] = true,
 	[UnitDefNames["gear_dc_rocket"].id] = true,
+	[UnitDefNames["gear_pyroclasm_rocket"].id] = true,
 	[UnitDefNames["claw_nuclear_rocket"].id] = true,
 	[UnitDefNames["claw_dc_rocket"].id] = true,
+	[UnitDefNames["claw_impaler_rocket"].id] = true,
 	[UnitDefNames["sphere_nuclear_rocket"].id] = true,
-	[UnitDefNames["sphere_dc_rocket"].id] = true
+	[UnitDefNames["sphere_dc_rocket"].id] = true,
+	[UnitDefNames["sphere_meteorite_rocket"].id] = true
 }
 local destructibleProjectileUnitIds = {}
 local destructibleProjectileInitialPositionByUnitId = {}
@@ -275,7 +279,11 @@ local function updateUnitPhysics(unitId)
 			
 			if (x and vx) then
 				--Spring.Echo("v="..(v*30))
+				--Spring.Echo(spGetGameFrame().." vx="..tostring(vx/v).." vy="..tostring(vy/v).." vz="..tostring(vz/v))
 				spSetUnitPhysics(unitId,x+3*vx,y+3*vy,z+3*vz,vx,vy,vz,0,0,0,0,0,0)
+				--Spring.SetUnitDirection(unitId,vx/v,vy/v,vz/v)
+				--spSetUnitPhysics(unitId,x+3*vx,y+3*vy,z+3*vz,vx,vy,vz,0,0,0,0,0,0)
+				--Spring.SetUnitDirection(unitId,0,-1,0)
 			end
 		--else
 			--local p = destructibleProjectileInitialPositionByUnitId[unitId]

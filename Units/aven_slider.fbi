@@ -80,9 +80,8 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=aven_slider_cannon;
+	weapon1=aven_slider_chargedshot;
 	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
 	badtargetcategory1=VTOL;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
@@ -121,10 +120,10 @@
 	//*****************
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:yellowflaresml;
+		explosiongenerator0=custom:BlueFlareBig;
 	}
 
-	buildcostenergy=4469;//#AUTO#
-	buildcostmetal=893;//#AUTO#
-	buildtime=10652;//#AUTO#
+	buildcostenergy=4964;//#AUTO#
+	buildcostmetal=992;//#AUTO#
+	buildtime=11832;//#AUTO#
 }

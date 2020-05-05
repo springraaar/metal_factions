@@ -62,7 +62,7 @@
 	//************
 	acceleration=1.0;
 	brakerate=0.08;
-	maxvelocity=8;
+	maxvelocity=7;
 	maxwaterdepth=5;
 	cruisealt=240;
 
@@ -75,7 +75,7 @@
 	mygravity=0.4; //0.4
 	maxbank=0.8;	//0.8
 	maxpitch=0.45;	//0.45
-	turnradius=350; //350
+	turnradius=250; //350
 	maxaileron=0.02;	//0.01
 	maxelevator=0.02;	//0.01
 	maxrudder=0.02;  //0.01
@@ -92,9 +92,12 @@
 	//  Weapons
 	//***********
 	weapon1=aven_falcon_missile;
-	weapon2=aven_falcon_missile;
+	weapon2=aven_falcon_laser;
+	WeaponMainDir2=0 -1 0;  //x:0 y:0 z:1 => that's forward!
+	MaxAngleDif2=290;       // belly turret can't shoot up
 	badtargetcategory1=NOTAIR;
 	badtargetcategory2=NOTAIR;
+	badtargetcategory3=NOTAIR;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
 
@@ -144,13 +147,13 @@
 	collisionVolumeScales =35 13 40;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;	
-	
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 	[SFXTypes]
 	{
+		explosiongenerator0=custom:GLOWSML;
 	}
-	buildcostenergy=6816;//#AUTO#
-	buildcostmetal=1363;//#AUTO#
-	buildtime=16246;//#AUTO#
+	buildcostenergy=6846;//#AUTO#
+	buildcostmetal=1369;//#AUTO#
+	buildtime=16316;//#AUTO#
 }

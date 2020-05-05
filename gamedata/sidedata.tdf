@@ -76,6 +76,7 @@
 	{
 		canbuild1=aven_nuclear_rocket;
 		canbuild2=aven_dc_rocket;
+		canbuild3=aven_lightning_rocket;
 	}
 	[aven_adv_construction_aircraft]
 	{
@@ -898,14 +899,16 @@
 	[aven_hovercraft_platform]
 	{
 		canbuild1=aven_construction_hovercraft;
-		canbuild2=aven_skimmer;
-		canbuild3=aven_swatter;
-		canbuild4=aven_slider;
-		canbuild5=aven_slider_s;
-		canbuild6=aven_perceptor;
-		canbuild7=aven_excalibur;
-		canbuild8=aven_turbulence;
-		canbuild9=aven_tsunami;
+		canbuild2=aven_construction_kbot;
+		canbuild3=aven_construction_ship;
+		canbuild4=aven_skimmer;
+		canbuild5=aven_swatter;
+		canbuild6=aven_slider;
+		canbuild7=aven_slider_s;
+		canbuild8=aven_perceptor;
+		canbuild9=aven_excalibur;
+		canbuild10=aven_turbulence;
+		canbuild11=aven_tsunami;
 	}
 	[aven_shipyard]
 	{
@@ -975,6 +978,7 @@
 	{
 		canbuild1=gear_nuclear_rocket;
 		canbuild2=gear_dc_rocket;
+		canbuild3=gear_pyroclasm_rocket;
 	}
 	[gear_adv_construction_aircraft]
 	{
@@ -2594,6 +2598,7 @@
 	{
 		canbuild1=claw_nuclear_rocket;
 		canbuild2=claw_dc_rocket;
+		canbuild3=claw_impaler_rocket;
 	}
 	[claw_adv_vehicle_plant]
 	{
@@ -2702,12 +2707,14 @@
 	[claw_spinbot_plant]
 	{
 		canbuild1=claw_adv_construction_spinbot;
-		canbuild2=claw_dizzy;
-		canbuild3=claw_haze;
-		canbuild4=claw_gyro;
-		canbuild5=claw_mace;
-		canbuild6=claw_predator;
-		canbuild7=claw_tempest;
+		canbuild2=claw_construction_kbot;
+		canbuild3=claw_construction_ship;
+		canbuild4=claw_dizzy;
+		canbuild5=claw_haze;
+		canbuild6=claw_gyro;
+		canbuild7=claw_mace;
+		canbuild8=claw_predator;
+		canbuild9=claw_tempest;
 	}
 //---------------------------------------------------------------------------- SPHERE
 	[sphere_upgrade_center]
@@ -3243,6 +3250,7 @@
 	{
 		canbuild1=sphere_nuclear_rocket;
 		canbuild2=sphere_dc_rocket;
+		canbuild3=sphere_meteorite_rocket;
 	}
 	[sphere_adv_construction_kbot]
 	{

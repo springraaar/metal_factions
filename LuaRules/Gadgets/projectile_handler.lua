@@ -27,6 +27,8 @@ local spGetGameFrame = Spring.GetGameFrame
 local spGetProjectilePosition = Spring.GetProjectilePosition
 local spSetProjectileCollision = Spring.SetProjectileCollision
 local spGetProjectileVelocity = Spring.GetProjectileVelocity
+local spSetProjectileVelocity = Spring.SetProjectileVelocity
+local spSetProjectileMoveControl = Spring.SetProjectileMoveControl
 local spCreateUnit = Spring.CreateUnit
 local spGetUnitTeam = Spring.GetUnitTeam
 local spDestroyUnit = Spring.DestroyUnit
@@ -60,8 +62,26 @@ local spSetUnitRadiusAndHeight = Spring.SetUnitRadiusAndHeight
 local LONG_RANGE_ROCKET_FAR_FROM_TARGET_H = 1000		
 local LONG_RANGE_ROCKET_FAR_TARGET_DIST = 900			
 
+-- terminal phase
+local LONG_RANGE_ROCKET_TERMINAL_DIST = 900
+local LONG_RANGE_ROCKET_SUBMUNITION_DIST = 700
+
+local LONG_RANGE_ROCKET_NON_TERMINAL_LIMIT_SQV = 277
+local LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION = 0.95    -- per frame
+local LONG_RANGE_ROCKET_TERMINAL_ACCELERATION = 1.05   -- per frame 
+
+local LONG_RANGE_ROCKET_SUB_TYPE_PYROCLASM = WeaponDefNames["gear_pyroclasm_submunition"].id
+local LONG_RANGE_ROCKET_SUB_TYPE_IMPALER = WeaponDefNames["claw_impaler_submunition"].id
+
+
+local submunitionRocketWeaponIds = {
+	[WeaponDefNames["gear_pyroclasm_rocket"].id] = WeaponDefNames["gear_pyroclasm_submunition"].id,
+	[WeaponDefNames["claw_impaler_rocket"].id] = WeaponDefNames["claw_impaler_submunition"].id
+}
+
+
 -- detonate when very close to target
-local LONG_RANGE_ROCKET_TERMINAL_DIST = 100
+local LONG_RANGE_ROCKET_DETONATE_DIST = 80
 
 local DC_ROCKET_DEPLOY_LIMIT_H = 300
 local DC_ROCKET_AUTO_BUILD_STEPS = 20
@@ -107,6 +127,8 @@ local fireAOEWeaponIds = {
 	[WeaponDefNames["gear_igniter_rocket"].id]=true,
 	[WeaponDefNames["gear_u1commander_missile"].id]=true,
 	[WeaponDefNames["gear_barrel_missile2"].id]=true,
+	[WeaponDefNames["gear_pyroclasm_submunition"].id]=true,
+	[WeaponDefNames["gear_pyroclasm_rocket_d"].id]=true,
 	[WeaponDefNames["gear_u5commander_fireball"].id]=true
 }
 
@@ -189,15 +211,19 @@ local destructibleWeaponIds = {
 	-- AVEN
 	[WeaponDefNames["aven_nuclear_rocket"].id]=true,
 	[WeaponDefNames["aven_dc_rocket"].id]=true,
+	[WeaponDefNames["aven_lightning_rocket"].id]=true,
 	-- GEAR
 	[WeaponDefNames["gear_nuclear_rocket"].id]=true,
 	[WeaponDefNames["gear_dc_rocket"].id]=true,
+	[WeaponDefNames["gear_pyroclasm_rocket"].id]=true,
 	-- CLAW
 	[WeaponDefNames["claw_nuclear_rocket"].id]=true,
 	[WeaponDefNames["claw_dc_rocket"].id]=true,
+	[WeaponDefNames["claw_impaler_rocket"].id]=true,
 	-- SPHERE
 	[WeaponDefNames["sphere_nuclear_rocket"].id]=true,
-	[WeaponDefNames["sphere_dc_rocket"].id]=true
+	[WeaponDefNames["sphere_dc_rocket"].id]=true,
+	[WeaponDefNames["sphere_meteorite_rocket"].id]=true
 }
 
 local dcRocketSpawnWeaponIds = {
@@ -219,6 +245,7 @@ local fireAOEPositions = {}
 local magnetarProjectiles = {}
 local destructibleProjectiles = {}
 local dcRockets = {}
+local submunitionRockets = {}
 local comsatProjectiles = {}
 local comsatBeaconDefId = UnitDefNames["cs_beacon"].id
 local scoperProjectiles = {}
@@ -234,9 +261,26 @@ function isCloseToTarget(px,pz,tx,tz)
 	return false
 end
 
+-- is close enough to enter the terminal phase
+function isTerminalPhase(px,py,pz,tx,ty,tz)
+	if (abs(px-tx) < LONG_RANGE_ROCKET_TERMINAL_DIST) and (abs(pz-tz) < LONG_RANGE_ROCKET_TERMINAL_DIST and abs(py-ty) < LONG_RANGE_ROCKET_TERMINAL_DIST) then
+		return true
+	end 
+	return false
+end
+
+
+-- is close enough to enter the terminal phase
+function isSubmunitionDeploymentPhase(px,py,pz,tx,ty,tz)
+	if (abs(px-tx) < LONG_RANGE_ROCKET_SUBMUNITION_DIST) and (abs(pz-tz) < LONG_RANGE_ROCKET_SUBMUNITION_DIST and abs(py-ty) < LONG_RANGE_ROCKET_SUBMUNITION_DIST) then
+		return true
+	end 
+	return false
+end
+
 -- is just about to hit the target
 function isAboutToCollide(px,py,pz,tx,ty,tz)
-	if (abs(px-tx) < LONG_RANGE_ROCKET_TERMINAL_DIST) and (abs(pz-tz) < LONG_RANGE_ROCKET_TERMINAL_DIST and abs(py-ty) < LONG_RANGE_ROCKET_TERMINAL_DIST) then
+	if (abs(px-tx) < LONG_RANGE_ROCKET_DETONATE_DIST) and (abs(pz-tz) < LONG_RANGE_ROCKET_DETONATE_DIST and abs(py-ty) < LONG_RANGE_ROCKET_DETONATE_DIST) then
 		return true
 	end 
 	return false
@@ -390,12 +434,70 @@ function gadget:GameFrame(n)
 			if (tType == string.byte('u') or tType == string.byte('f')) then
 				st = ot
 			end
+
+			-- restrict the speed of long range rockets when they're far from target
+			local vx,vy,vz = spGetProjectileVelocity(id)
+			
+			if vx then
+				local sqV = vx*vx+vy*vy+vz*vz
+				if not isTerminalPhase(px,py,pz,ot[1],ot[2],ot[3]) then
+					if (sqV > LONG_RANGE_ROCKET_NON_TERMINAL_LIMIT_SQV) then 
+						--spSetProjectileMoveControl(id,true)
+						spSetProjectileVelocity(id,vx*LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION,vy*LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION,vz*LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION)
+					end
+				else
+					-- terminal phase : speed up
+					spSetProjectileVelocity(id,vx*LONG_RANGE_ROCKET_TERMINAL_ACCELERATION,vy*LONG_RANGE_ROCKET_TERMINAL_ACCELERATION,vz*LONG_RANGE_ROCKET_TERMINAL_ACCELERATION)
+					
+					-- if has submunitions, check distance and deploy them
+					if submunitionRockets[id] and isSubmunitionDeploymentPhase(px,py,pz,ot[1],ot[2],ot[3]) then
+						local dirx,diry,dirz = 0
+						local v = math.sqrt(sqV)
+						dirx = vx/v
+						diry = vy/v
+						dirz = vz/v
+					
+						if (submunitionRockets[id] == LONG_RANGE_ROCKET_SUB_TYPE_PYROCLASM) then
+							-- spawn submunitions
+							Spring.SetUnitTarget(ownerId,ot[1],ot[2],ot[3],false,false,2)
+							Spring.SetUnitTarget(ownerId,ot[1],ot[2],ot[3],false,false,3)
+							Spring.SetUnitTarget(ownerId,ot[1],ot[2],ot[3],false,false,4)
+							Spring.SetUnitTarget(ownerId,ot[1],ot[2],ot[3],false,false,5)
+							Spring.SetUnitTarget(ownerId,ot[1],ot[2],ot[3],false,false,6)
+							Spring.SetUnitTarget(ownerId,ot[1],ot[2],ot[3],false,false,7)
+							Spring.UnitWeaponFire(ownerId,2)
+							Spring.UnitWeaponFire(ownerId,3)
+							Spring.UnitWeaponFire(ownerId,4)
+							Spring.UnitWeaponFire(ownerId,5)
+							Spring.UnitWeaponFire(ownerId,6)
+							Spring.UnitWeaponFire(ownerId,7)
+						elseif (submunitionRockets[id] == LONG_RANGE_ROCKET_SUB_TYPE_IMPALER) then
+						
+							-- spawn submunitions
+							--local createdId = spSpawnProjectile(LONG_RANGE_ROCKET_SUB_TYPE_IMPALER,{
+							--	["pos"] = {px,py,pz},
+							--	["end"] = {ot[1],ot[2],ot[3]},
+							--	["speed"] = {dirx*1500,diry*1500,dirz*1500},
+							--	["owner"] = ownerId
+							--})
+							Spring.SetUnitTarget(ownerId,ot[1],ot[2],ot[3],false,false,2)
+							Spring.UnitWeaponFire(ownerId,2)
+						end
+						
+						-- remove projectile
+						nearCollision = true
+						--spSetProjectileCollision(id)
+						--GG.destructibleProjectilesDestroyed[ownerId] = nil
+					end
+				end
+				--Spring.Echo("projectile velocity sq = "..tostring(sqV))
+			end
 			
 			if (isCloseToTarget(px,pz,st[1],st[3])) then
 				-- if close to original target, go towards it
 				spSetProjectileTarget(id,ot[1],ot[2],ot[3])
 				
-				-- remove owner, the projectile
+				-- mark projectile for explosion
 				if isAboutToCollide(px,py,pz,ot[1],ot[2],ot[3]) then
 					nearCollision = true
 				end
@@ -407,7 +509,6 @@ function gadget:GameFrame(n)
 			--Spring.Echo("projectile removed because unit "..ownerId.." was destroyed")
 			-- remove projectile (unit was reclaimed or explosion already happened when it died)
 			spDeleteProjectile(id)
-			
 			GG.destructibleProjectilesDestroyed[ownerId] = nil
 		elseif(nearCollision) then
 			-- detonate when very close to target, to avoid the owner bouncing off the ground
@@ -607,6 +708,10 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 			dcRockets[proID] = dcRocketSpawnWeaponIds[weaponDefID]
 		end
 		
+		if (submunitionRocketWeaponIds[weaponDefID]) then
+			submunitionRockets[proID] = submunitionRocketWeaponIds[weaponDefID]
+		end
+		
 		return
 	end	
 	if weaponDefID == magnetarWeaponId then
@@ -649,11 +754,12 @@ function gadget:ProjectileDestroyed(proID)
 			end
 			
 			dcRockets[proID] = nil
+		elseif submunitionRockets[proID] then
+			submunitionRockets[proID] = nil
 		end
 
-
 		-- remove the unit (no explosion)
-		spDestroyUnit(destructibleProjectiles[proID],true)
+		spDestroyUnit(destructibleProjectiles[proID],false,true)
 		--Spring.Echo("unit removed because projectile "..proID.." was destroyed")
 		destructibleProjectiles[proID] = nil
 		longRangeRocketOriginalTargetsById[proID] = nil

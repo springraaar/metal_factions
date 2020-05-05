@@ -59,8 +59,8 @@
 	Weapon1=sphere_hermit_laser;
 	Weapon2=sphere_hermit_shield;
 	NoChaseCategory=VTOL;
-	ExplodeAs=BIG_UNITEX;
-	SelfDestructAs=BIG_UNIT;
+	ExplodeAs=MOBILE_SHIELD_BLAST;
+	SelfDestructAs=MOBILE_SHIELD_BLAST;
 
 
 	// ------------------- orders
@@ -98,7 +98,7 @@
 	{
 		explosiongenerator0=custom:GLOWSML;
 	}
-	buildcostenergy=18779;//#AUTO#
-	buildcostmetal=3755;//#AUTO#
-	buildtime=44756;//#AUTO#
+	buildcostenergy=18415;//#AUTO#
+	buildcostmetal=3683;//#AUTO#
+	buildtime=43889;//#AUTO#
 }

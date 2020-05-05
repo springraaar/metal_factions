@@ -98,9 +98,10 @@ function BuildSiteHandler:FindClosestBuildSite(ud, searchPos, searchRadius, minD
 					testPos.z = z
 					buildTest = 0
 					
-					-- if spot is underwater and water does damage, skip
-					if not (self.waterDoesDamage and spGetGroundHeight(x,z) < 0) then
-						
+					-- if spot is underwater, skip
+					-- TODO support water maps properly
+					--if not ( self.waterDoesDamage and spGetGroundHeight(x,z) < 0) then
+					if spGetGroundHeight(x,z) >= 0 then
 						-- check if unit can be built
 						if spTestBuildOrder(ud.id, testPos.x, testPos.y, testPos.z,0) > 0 then
 							valid = true

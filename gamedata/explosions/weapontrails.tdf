@@ -2670,6 +2670,8 @@ usedefaultexplosions=0;
 	}
 
 }
+
+//TODO review this, railgun trails were replaced by lasercannon visuals on v1.34
 [RAILGUNTRAIL]
 {
 	usedefaultexplosions=0;	
@@ -2679,11 +2681,70 @@ usedefaultexplosions=0;
 		[properties]
 		{
 			dir=dir;
-			width=4;
-			length=6;
-			alpha=0.4;
-			alphadecay=0.2;
+			width=10;
+			length=10;
+			alpha=0.6;
+			alphadecay=0.5;
 			color=0.8, 0.6, 0.2;
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=1; 
+	}
+	//[LARGEFLASH]
+	//{
+	//	class = CBitmapMuzzleFlame;
+      	//
+	//	[properties]
+	//	{
+        //		dir = dir;
+	//         	colorMap=0.7 0.5 0.3 0.01 0.6 0.4 0.2 0.01 0.3 0.15 0.0 0.01; 
+	//          	size=2;
+	//          	length=0.1;
+	//          	sizeGrowth=15;
+	//          	ttl=10;
+	//          	frontOffset=0;
+	//		sideTexture=railguntrail; //muzzleside;
+	//          	frontTexture=null;
+	//	}
+	//	water=1;
+	//	air=1;
+	//	underwater=1;
+	//	ground=1;
+	//	alwaysvisible=1;
+	//	count=1;
+	//}
+	[gloweffect] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=0,0,0;
+			dir=dir;
+			delay=3 i1;
+			explosionGenerator=custom:railtrailglow;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=3;
+	}
+}
+[RAILTRAILGLOW]
+{
+	usedefaultexplosions=0;	
+	[glspike]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=dir;
+			width=4;
+			length=4;
+			alpha=0.3;
+			alphadecay=0.05;
+			color=0.7, 0.5, 0.1;
 		}
 		air=1;
 		water=1;
@@ -2702,7 +2763,7 @@ usedefaultexplosions=0;
 		{
 			dir=dir;
 			width=8;
-			length=12;
+			length=60;
 			alpha=0.4;
 			alphadecay=0.2;
 			color=0.9, 0.7, 0.3;
@@ -2710,9 +2771,10 @@ usedefaultexplosions=0;
 		air=1;
 		water=1;
 		ground=1;
-  		count=1; 
+  		count=2; 
 	}
 }
+
 
 [burneffect]
 {

@@ -21,6 +21,7 @@ local spGetUnitWeaponTarget = Spring.GetUnitWeaponTarget
 local spSetUnitTarget = Spring.SetUnitTarget
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetGameFrame = Spring.GetGameFrame
+local spGetUnitHealth = Spring.GetUnitHealth
 
 local targetForUnitId = {}
 local trackedWeaponDefIds = {}
@@ -42,6 +43,9 @@ local slaveWeaponIndexesByUnitDefId = {
 	-- SPHERE
 	[UnitDefNames["sphere_charger"].id] = {1,2},
 }
+
+-- done unit def ids
+local droneDefIds = {}
 
 -- unit ids with slaved weapons
 local slaveWeaponIndexesByUnitId = {}
@@ -137,6 +141,13 @@ function gadget:Initialize()
 		Script.SetWatchWeapon(id,true)
 		--Spring.Echo("WEAPON "..id.." BLOCKED")
 	end
+	-- drone unit defs
+	for id,ud in pairs(UnitDefs) do
+		if (ud.customParams and ud.customParams.isdrone) then
+			droneDefIds[ud.id] = true
+			--Spring.Echo(ud.name.." is drone")
+		end
+	end
 end
 
 
@@ -204,17 +215,28 @@ function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attac
 		end
 	end
 	
-	-- avoid aiming at targets that are marked as about to die
+	
 	if targetID and tonumber(targetID) > 0 then
+		-- avoid aiming at targets that are marked as about to die
 		local defId = spGetUnitDefID(targetID)
-		if (defId and GG.lessThan500HPTargetDefIds[defId]) then
-			local f = spGetGameFrame()
-			local lastFireFrame = GG.unitFireFrameByTargetId[targetID]
-			if ( lastFireFrame and (f - lastFireFrame < GG.OKP_FRAMES) ) then
-				--Spring.Echo("f="..f.."unit "..attackerID.." refuses to aim at target "..tostring(targetID))
-				return false,defaultPriority
+		if defId then
+			if (GG.lessThan500HPTargetDefIds[defId]) then
+				local f = spGetGameFrame()
+				local lastFireFrame = GG.unitFireFrameByTargetId[targetID]
+				if ( lastFireFrame and (f - lastFireFrame < GG.OKP_FRAMES) ) then
+					--Spring.Echo("f="..f.."unit "..attackerID.." refuses to aim at target "..tostring(targetID))
+					return false,defaultPriority
+				end
+			end 
+			
+			if (droneDefIds[defId]) then
+				local _,_,_,_,bp = spGetUnitHealth(targetID)
+				if bp < 0.5 then
+					--Spring.Echo("frame="..spGetGameFrame().." drone under construction : SKIP")
+					return false,defaultPriority
+				end
 			end
-		end 
+		end
 	end
 	
 	return true,defaultPriority
