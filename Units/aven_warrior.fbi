@@ -68,7 +68,7 @@
 	turnrate=900;
 	acceleration=0.9;
 	brakerate=1.0;
-	maxvelocity=1.5;
+	maxvelocity=1.4;
 	maxslope=17;
 	maxwaterdepth=12;
 
@@ -82,11 +82,10 @@
 	//  Weapons
 	//***********
 	weapon1=aven_warrior_emg;
-	weapon2=aven_warrior_cannon;
-	slaveto2=1;
+	weapon2=aven_warrior_missile;
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
-	badtargetcategory2=VTOL;
+	badtargetcategory2=NOTAIR;
 	explodeas=SMALL_UNITEX;
 	selfdestructas=SMALL_UNIT;
 
@@ -129,7 +128,7 @@
 		explosiongenerator1=custom:yellowflaresml;
 	}
 
-	buildcostenergy=1307;//#AUTO#
-	buildcostmetal=261;//#AUTO#
-	buildtime=3115;//#AUTO#
+	buildcostenergy=1493;//#AUTO#
+	buildcostmetal=298;//#AUTO#
+	buildtime=3558;//#AUTO#
 }

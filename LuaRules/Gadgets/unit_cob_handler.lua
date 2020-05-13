@@ -40,6 +40,7 @@ end
 GG.unitFireFrameByTargetId = {}
 GG.lessThan500HPTargetDefIds = {}
 GG.OKP_FRAMES = 90		-- 3 seconds
+GG.mobilityModifier = {}
 local COMSAT_OKP_FRAMES = 30*30 -- 30s
 local comsatFireFrameByAllyIdAndPosition = {}
 local comsatAllowIdThisFrameByAllyIdAndPosition = {}
@@ -111,6 +112,13 @@ function delayReload(unitID, unitDefID, teamID, delay)
 	end
 end
 
+
+-- sets mobility to a percentage of the max value for a unit
+function setMobility(unitID, unitDefID, teamID, mobPercent)
+	if mobPercent then
+		GG.mobilityModifier[unitID] = mobPercent / 100
+	end
+end
 
 -- returns the next free build point, if any
 -- for factories with multiple pads
@@ -344,3 +352,4 @@ gadgetHandler:RegisterGlobal("checkComsatAllowFiring", checkComsatAllowFiring)
 gadgetHandler:RegisterGlobal("checkComsatLockTarget", checkComsatLockTarget)
 gadgetHandler:RegisterGlobal("checkAllowFiring", checkAllowFiring)
 gadgetHandler:RegisterGlobal("checkLockTarget", checkLockTarget)
+gadgetHandler:RegisterGlobal("setMobility", setMobility)

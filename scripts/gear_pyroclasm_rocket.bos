@@ -61,7 +61,6 @@ AimPrimary() {
 
 FirePrimary() {
 	alreadyFired = TRUE;
-	sleep 1000;
 	//turn base to x-axis <90> now;
 	// hide missile model (it's replaced by the projectile model)
 	hide base;

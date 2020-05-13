@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1800;
+	maxdamage=2500;
 	healtime=30;
 	footprintx=5;
 	footprintz=5;
@@ -107,8 +107,8 @@
 	weapon1=aven_ghost_bomb;
 	nochasecategory=UNDERWATER;
 	onlytargetcategory1=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeas=HBOMBER;
+	selfdestructas=HBOMBER;
 
 	//************************************************************
 	//  Orders
@@ -147,7 +147,7 @@
 	{
 	
 	}
-	buildcostenergy=16976;//#AUTO#
-	buildcostmetal=3395;//#AUTO#
-	buildtime=40461;//#AUTO#
+	buildcostenergy=20566;//#AUTO#
+	buildcostmetal=4113;//#AUTO#
+	buildtime=49015;//#AUTO#
 }

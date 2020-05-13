@@ -1,0 +1,147 @@
+
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Hammer;
+	description=Deployable Heavy Mortar Spinbot;
+	icontype=amphibartillery;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW SHIP LEVEL2 WEAPON NOTAIR NOTSUB;
+	tedclass=SHIP;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=claw_hammer;
+	unitnumber=20000;
+	objectname=claw_hammer.3do;
+	corpse=claw_hammer_dead;
+	buildpic=claw_hammer.png;
+	soundcategory=CLAW_BOTBIG;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=3400;
+	healtime=30;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=0;
+	energystorage=0;
+
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	activatewhenbuilt=0;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canattack=1;
+	canguard=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+	floater=1;
+	onoffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementclass=TANKHOVER4;
+	turnrate=645;
+	acceleration=0.09;
+	brakerate=0.03;
+	maxvelocity=1.0;
+	turninplace=1;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=500;
+	sonardistance=250;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_hammer_cannon;
+	nochasecategory=VTOL;
+	onlytargetcategory1=NOTAIR;
+	explodeas=BIG_UNITEX;
+	selfdestructas=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=1;
+	designation=ASD-SC;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	version=1.2;
+	damagemodifier=0.66;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 60 40;
+	collisionVolumeOffsets = 0 -5 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	waterline=8;
+	pushResistant=1;
+
+
+
+	[CustomParams]
+	{
+		tip=Use ON/OFF toggle deployment mode. Can only fire if deployed but cannot move. Gains 33% dmg resistance when closed;
+		evalfactor=0.9; //can't fire while moving
+	}
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:yellowflarebig;
+		explosiongenerator1=custom:collision;
+	}
+
+	buildcostenergy=13945;//#AUTO#
+	buildcostmetal=2789;//#AUTO#
+	buildtime=33236;//#AUTO#
+}

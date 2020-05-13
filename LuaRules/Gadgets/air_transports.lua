@@ -184,6 +184,12 @@ function gadget:AllowUnitTransportLoad(transporterID, transporterUnitDefID, tran
 	if sqDist(pos1, pos2) > TRANSPORT_SQDISTANCE_TOLERANCE then
 		return false
 	end
+	
+	-- immobilized units are considered "stuck" and can't be lifted
+	if GG.mobilityModifier and GG.mobilityModifier[transporteeID] == 0 then
+		return false
+	end
+	
 	spSetUnitVelocity(transporterID, 0,0,0)
 	return true
 end

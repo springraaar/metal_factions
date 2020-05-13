@@ -84,8 +84,8 @@ local submunitionRocketWeaponIds = {
 local LONG_RANGE_ROCKET_DETONATE_DIST = 80
 
 local DC_ROCKET_DEPLOY_LIMIT_H = 300
-local DC_ROCKET_AUTO_BUILD_STEPS = 20
-local DC_ROCKET_AUTO_BUILD_FRACTION_PER_STEP = 0.05
+local DC_ROCKET_AUTO_BUILD_STEPS = 10
+local DC_ROCKET_AUTO_BUILD_FRACTION_PER_STEP = 0.1
 local DC_ROCKET_DEPLOY_DELAY_FRAMES = 30
 
 local mapSizeX = Game.mapSizeX
@@ -124,7 +124,7 @@ local fireAOEWeaponIds = {
 	[WeaponDefNames["gear_canister_fireball"].id]=true,
 	[WeaponDefNames["gear_eruptor_fireball"].id]=true,
 	[WeaponDefNames["gear_firestorm_missile"].id]=true,
-	[WeaponDefNames["gear_igniter_rocket"].id]=true,
+	[WeaponDefNames["gear_igniter_missile"].id]=true,
 	[WeaponDefNames["gear_u1commander_missile"].id]=true,
 	[WeaponDefNames["gear_barrel_missile2"].id]=true,
 	[WeaponDefNames["gear_pyroclasm_submunition"].id]=true,

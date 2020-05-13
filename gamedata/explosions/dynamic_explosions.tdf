@@ -879,6 +879,12 @@
 	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d1 p0.6 x0;explosionGenerator=custom:STDNARROWBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
 
+[FLAREBLASTWRAPPER]			// flare blast wrapper
+{
+	usedefaultexplosions=0;
+	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d1 p0.6 x0;explosionGenerator=custom:STDNARROWBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+
 [TORPEDOBLASTWRAPPER]			// torpedo blast wrapper  (same effect as std blast, for now)
 {
 	usedefaultexplosions=0;

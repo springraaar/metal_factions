@@ -36,8 +36,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.5;
-	energyuse=0.5;
+	energymake=0.0;
+	energyuse=0.0;
 	energystorage=0;
 
 	//************************************************************
@@ -69,14 +69,14 @@
 	turnrate=353;
 	acceleration=0.08;
 	brakerate=0.1;
-	maxvelocity=2.2;
+	maxvelocity=1.6;
 	minwaterdepth=15;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
 	sightdistance=500;
-	sonardistance=800;
+	sonardistance=900;
 
 	//************************************************************
 	//  Weapons
@@ -123,7 +123,7 @@
 	//  To be removed
 	//*****************
 
-	buildcostenergy=7932;//#AUTO#
-	buildcostmetal=1586;//#AUTO#
-	buildtime=18904;//#AUTO#
+	buildcostenergy=8920;//#AUTO#
+	buildcostmetal=1784;//#AUTO#
+	buildtime=21260;//#AUTO#
 }

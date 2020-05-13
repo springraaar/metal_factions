@@ -9,10 +9,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  torso, ruparm, luparm, rfire, rarm, larm, rloarm, lloarm, pelvis,
-       rthigh, lthigh, lleg, rleg, rfoot, lfoot, ground, head, r2,rshield, lshield, lgun, flare;
+piece  torso, ruparm, luparm, rarm, larm, rloarm, lloarm, pelvis, rthigh, lthigh, lleg, rleg, rfoot, lfoot, ground, head, rshield, lshield, lgun,rgun, lflare,rflare,mflare;
 
-static-var  bMoving, bAiming, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
+static-var  bMoving, bAiming, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3, gun_1;
 
 #include "aimhelper1.h"
 
@@ -283,9 +282,9 @@ MotionControl(moving, aiming, justmoved)
 
 Create()
 {
-	hide rfire;
 	bMoving = FALSE;
 	bAiming = FALSE;
+	gun_1 = 0;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();
 	start-script MotionControl();
@@ -342,25 +341,46 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	piecenum = rfire;
-	return (0);
+	if (gun_1 == 0)
+	{
+		piecenum = lflare;
+		return (0);
+	}
+	if (gun_1 == 1)
+	{
+		piecenum = rflare;
+		return (0);
+	}
 }
 
 FirePrimary()
 {
-	emit-sfx 1024 + 0 from rfire;
-	return (0);
+	if (gun_1 == 0)
+	{
+		emit-sfx 1024 + 0 from lflare;
+		sleep 100;
+		gun_1 = 1;
+		return (0);
+	}
+	if (gun_1 == 1)
+	{
+		emit-sfx 1024 + 0 from rflare;
+		sleep 100;
+		gun_1 = 0;
+		return (0);
+	}
 }
 
 AimPrimary(heading, pitch)
 {
 	bAiming = TRUE;
-	call-script updateAimHelper1(heading,pitch + <90.000000>,<220>,<220>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	call-script updateAimHelper1(heading,pitch + <90.000000>,<250>,<250>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	
-	turn torso to y-axis heading speed <220.000000>;
-	turn ruparm to x-axis <-90.000000> - pitch speed <220.000000>;
+	turn torso to y-axis heading speed <270.000000>;
+	turn ruparm to x-axis <-90.000000> - pitch speed <270.000000>;
+	turn luparm to x-axis <-90.000000> - pitch speed <270.000000>;
 	if ( !aimReady1 )
 	{
 		wait-for-turn torso around y-axis;
@@ -373,42 +393,25 @@ AimPrimary(heading, pitch)
 
 AimFromSecondary(piecenum)
 {
-	piecenum = torso;
+	piecenum = mflare;
 	return (0);
 }
 
 QuerySecondary(piecenum)
 {
-	piecenum = flare;
+	piecenum = mflare;
 	return (0);
 }
 
 FireSecondary()
 {
-	emit-sfx 1024 + 1 from flare;
+	emit-sfx 1024 + 1 from mflare;
 	return (0);
 }
 
 AimSecondary(heading, pitch)
 {
-	bAiming = TRUE;
-
-	// if it's not going to be able to fire on the next ~2s, don't try to aim
-	if ((get WEAPON_RELOADSTATE(2)) > (get GAME_FRAME) + 40)) { return(0); }
-
-	call-script updateAimHelper1(heading,pitch + <90.000000>,<220>,<220>,HEADING_TOLERANCE,PITCH_TOLERANCE);
-	signal SIG_AIM;
-	set-signal-mask SIG_AIM;
-	
-	turn torso to y-axis heading speed <220.000000>;
-	turn luparm to x-axis <-90.000000> - pitch speed <220.000000>;
-	if( !aimReady1 ) 
-	{
-		wait-for-turn torso around y-axis;
-		wait-for-turn luparm around x-axis;
-	}
-	start-script RestoreAfterDelay();
-	return (1);
+	return 1;
 }
 
 

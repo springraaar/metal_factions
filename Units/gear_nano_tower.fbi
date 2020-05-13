@@ -6,7 +6,7 @@
 	description=Construction Tower. Tech Level 1;
 	footprintx=3;
 	footprintz=3;
-	maxdamage=1250;
+	maxdamage=1500;
 	objectname=gear_nano_tower;
 	corpse=gear_nano_tower_dead;
 	Side=Gear;
@@ -24,9 +24,9 @@
 	workertime=300;
 	repairspeed=300;
 	reclaimspeed=300;
-	energystorage=100;
+	energystorage=0;
 	energyuse=0;
-	metalstorage=100;
+	metalstorage=0;
 	canstop=1;
 	idletime=1800;
 	idleautoheal=5;
@@ -61,7 +61,7 @@
 	{
 		explosiongenerator0=custom:Nano;
 	}
-	buildcostenergy=1600;//#AUTO#
-	buildcostmetal=320;//#AUTO#
-	buildtime=3813;//#AUTO#
+	buildcostenergy=1750;//#AUTO#
+	buildcostmetal=350;//#AUTO#
+	buildtime=4200;//#AUTO#
 }

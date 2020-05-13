@@ -352,6 +352,15 @@ function gadget:GameFrame(n)
 			end
 		end		
 		
+		-- global modifier
+		for unitId,modifier in pairs(GG.mobilityModifier) do
+			m = newSpeedModifierUnitIds[unitId]
+			if (m == nil) then
+				m = 1
+			end
+			newSpeedModifierUnitIds[unitId] = m * modifier
+		end
+		
 		-- apply speed modifiers
 		for unitId,modifier in pairs(newSpeedModifierUnitIds) do
 			if modifier ~= speedModifierUnitIds[unitId] then
@@ -483,7 +492,6 @@ function gadget:GameFrame(n)
 				end
 			end
 		end
-		
 	end
 	
 	if (n%COST_DELAY == 0) then
@@ -605,6 +613,11 @@ function updateUnitSpeedModifier(unitId, modifier)
 	if (unitDefId ~= nil) then
 		local ud = UnitDefs[unitDefId]
 		local spd =  ud.speed * modifier
+		local turnRate = ud.turnRate
+		-- disable turn rate for immobilized units
+		if (modifier == 0) then
+			turnRate = 0
+		end
 		
 		-- strafe air
 		if (ud.canFly and ud.isStrafingAirUnit and not ud.hoverAttack) then 
@@ -620,7 +633,7 @@ function updateUnitSpeedModifier(unitId, modifier)
 			--enforceSpeedChange(unitId,spd)
 		-- ground
 		elseif (ud.canMove and not ud.isBuilding) then	
-			spSetGroundMoveTypeData(unitId,{maxSpeed=spd,maxWantedSpeed=spd})
+			spSetGroundMoveTypeData(unitId,{maxSpeed=spd,maxWantedSpeed=spd,turnRate=turnRate})
 			--spSetGroundMoveTypeData(unitId,"useWantedSpeed[0]",false)
 			--spSetGroundMoveTypeData(unitId,"useWantedSpeed[1]",false)
 			--enforceSpeedChange(unitId,spd)
