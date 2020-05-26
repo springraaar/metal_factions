@@ -8,7 +8,7 @@
 #define HEADING_TOLERANCE	<25>
 #define PITCH_TOLERANCE		<15>
 
-piece  torso,head,face, pelvis, flash, rthigh, lthigh, lleg, rleg, lfoot,rfoot,ruparm,
+piece  torso,head,v1, pelvis, flash, rthigh, lthigh, lleg, rleg, lfoot,rfoot,ruparm,
        luparm, larm, lloarm, lhand, rloarm, gun, ground,support,handle,support2;
 
 static-var  bMoving, bAiming, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;

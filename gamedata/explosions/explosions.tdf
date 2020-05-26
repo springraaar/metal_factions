@@ -3671,6 +3671,11 @@
 	[_sparks]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=12;explosionGenerator=custom:DYNLARGEBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
 
+[LRFASTNUKEBLASTWRAPPER]
+{
+	[_blast1]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=11;explosionGenerator=custom:DYNLARGEBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_blast2]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=10;damage=13;explosionGenerator=custom:DYNLARGEBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
 
 [MAGNETARBLASTWRAPPER]
 {

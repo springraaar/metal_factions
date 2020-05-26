@@ -67,6 +67,7 @@ local LONG_RANGE_ROCKET_TERMINAL_DIST = 900
 local LONG_RANGE_ROCKET_SUBMUNITION_DIST = 700
 
 local LONG_RANGE_ROCKET_NON_TERMINAL_LIMIT_SQV = 277
+local LONG_RANGE_PREMIUM_ROCKET_NON_TERMINAL_LIMIT_SQV = 2304
 local LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION = 0.95    -- per frame
 local LONG_RANGE_ROCKET_TERMINAL_ACCELERATION = 1.05   -- per frame 
 
@@ -209,21 +210,37 @@ local smartTrackingWeaponIds = {
 
 local destructibleWeaponIds = {
 	-- AVEN
+	[WeaponDefNames["aven_premium_nuclear_rocket"].id]=true,
 	[WeaponDefNames["aven_nuclear_rocket"].id]=true,
 	[WeaponDefNames["aven_dc_rocket"].id]=true,
 	[WeaponDefNames["aven_lightning_rocket"].id]=true,
 	-- GEAR
+	[WeaponDefNames["gear_premium_nuclear_rocket"].id]=true,
 	[WeaponDefNames["gear_nuclear_rocket"].id]=true,
 	[WeaponDefNames["gear_dc_rocket"].id]=true,
 	[WeaponDefNames["gear_pyroclasm_rocket"].id]=true,
 	-- CLAW
+	[WeaponDefNames["claw_premium_nuclear_rocket"].id]=true,
 	[WeaponDefNames["claw_nuclear_rocket"].id]=true,
 	[WeaponDefNames["claw_dc_rocket"].id]=true,
 	[WeaponDefNames["claw_impaler_rocket"].id]=true,
 	-- SPHERE
+	[WeaponDefNames["sphere_premium_nuclear_rocket"].id]=true,
 	[WeaponDefNames["sphere_nuclear_rocket"].id]=true,
 	[WeaponDefNames["sphere_dc_rocket"].id]=true,
 	[WeaponDefNames["sphere_meteorite_rocket"].id]=true
+}
+
+
+local premiumRocketWeaponIds = {
+	-- AVEN
+	[WeaponDefNames["aven_premium_nuclear_rocket"].id]=true,
+	-- GEAR
+	[WeaponDefNames["gear_premium_nuclear_rocket"].id]=true,
+	-- CLAW
+	[WeaponDefNames["claw_premium_nuclear_rocket"].id]=true,
+	-- SPHERE
+	[WeaponDefNames["sphere_premium_nuclear_rocket"].id]=true
 }
 
 local dcRocketSpawnWeaponIds = {
@@ -246,6 +263,7 @@ local magnetarProjectiles = {}
 local destructibleProjectiles = {}
 local dcRockets = {}
 local submunitionRockets = {}
+local premiumRockets = {}
 local comsatProjectiles = {}
 local comsatBeaconDefId = UnitDefNames["cs_beacon"].id
 local scoperProjectiles = {}
@@ -437,20 +455,26 @@ function gadget:GameFrame(n)
 
 			-- restrict the speed of long range rockets when they're far from target
 			local vx,vy,vz = spGetProjectileVelocity(id)
-			
 			if vx then
 				local sqV = vx*vx+vy*vy+vz*vz
 				if not isTerminalPhase(px,py,pz,ot[1],ot[2],ot[3]) then
-					if (sqV > LONG_RANGE_ROCKET_NON_TERMINAL_LIMIT_SQV) then 
-						--spSetProjectileMoveControl(id,true)
-						spSetProjectileVelocity(id,vx*LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION,vy*LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION,vz*LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION)
+					if premiumRockets[id] then
+						if (sqV > LONG_RANGE_PREMIUM_ROCKET_NON_TERMINAL_LIMIT_SQV) then 
+							--spSetProjectileMoveControl(id,true)
+							spSetProjectileVelocity(id,vx*LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION,vy*LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION,vz*LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION)
+						end
+					else
+						if (sqV > LONG_RANGE_ROCKET_NON_TERMINAL_LIMIT_SQV) then 
+							--spSetProjectileMoveControl(id,true)
+							spSetProjectileVelocity(id,vx*LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION,vy*LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION,vz*LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION)
+						end
 					end
 				else
 					-- terminal phase : speed up
 					spSetProjectileVelocity(id,vx*LONG_RANGE_ROCKET_TERMINAL_ACCELERATION,vy*LONG_RANGE_ROCKET_TERMINAL_ACCELERATION,vz*LONG_RANGE_ROCKET_TERMINAL_ACCELERATION)
 					
 					-- if has submunitions, check distance and deploy them
-					if submunitionRockets[id] and isSubmunitionDeploymentPhase(px,py,pz,ot[1],ot[2],ot[3]) then
+					if submunitionRockets[id] and vy < 0 and isSubmunitionDeploymentPhase(px,py,pz,ot[1],ot[2],ot[3]) then
 						local dirx,diry,dirz = 0
 						local v = math.sqrt(sqV)
 						dirx = vx/v
@@ -458,6 +482,7 @@ function gadget:GameFrame(n)
 						dirz = vz/v
 					
 						if (submunitionRockets[id] == LONG_RANGE_ROCKET_SUB_TYPE_PYROCLASM) then
+							--Spring.Echo("target x="..ot[1].." y="..ot[2].." z="..ot[3])
 							-- spawn submunitions
 							Spring.SetUnitTarget(ownerId,ot[1],ot[2],ot[3],false,false,2)
 							Spring.SetUnitTarget(ownerId,ot[1],ot[2],ot[3],false,false,3)
@@ -472,7 +497,7 @@ function gadget:GameFrame(n)
 							Spring.UnitWeaponFire(ownerId,6)
 							Spring.UnitWeaponFire(ownerId,7)
 						elseif (submunitionRockets[id] == LONG_RANGE_ROCKET_SUB_TYPE_IMPALER) then
-						
+							--Spring.Echo("target x="..ot[1].." y="..ot[2].." z="..ot[3])
 							-- spawn submunitions
 							--local createdId = spSpawnProjectile(LONG_RANGE_ROCKET_SUB_TYPE_IMPALER,{
 							--	["pos"] = {px,py,pz},
@@ -702,7 +727,11 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		end
 		
 		-- if far from original target, go towards the point high above it, randomly offset to spread out
-		spSetProjectileTarget(proID,tInfo[1]+200-random(400),tInfo[2]+LONG_RANGE_ROCKET_FAR_FROM_TARGET_H,tInfo[3]+200-random(400))
+		if (premiumRocketWeaponIds[weaponDefID]) then
+			spSetProjectileTarget(proID,tInfo[1]+50-random(100),tInfo[2]+LONG_RANGE_ROCKET_FAR_FROM_TARGET_H*2,tInfo[3]+50-random(100))
+		else
+			spSetProjectileTarget(proID,tInfo[1]+200-random(400),tInfo[2]+LONG_RANGE_ROCKET_FAR_FROM_TARGET_H,tInfo[3]+200-random(400))
+		end
 		
 		if (dcRocketSpawnWeaponIds[weaponDefID]) then
 			dcRockets[proID] = dcRocketSpawnWeaponIds[weaponDefID]
@@ -710,6 +739,10 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		
 		if (submunitionRocketWeaponIds[weaponDefID]) then
 			submunitionRockets[proID] = submunitionRocketWeaponIds[weaponDefID]
+		end
+		
+		if (premiumRocketWeaponIds[weaponDefID]) then
+			premiumRockets[proID] = true
 		end
 		
 		return
@@ -756,6 +789,8 @@ function gadget:ProjectileDestroyed(proID)
 			dcRockets[proID] = nil
 		elseif submunitionRockets[proID] then
 			submunitionRockets[proID] = nil
+		elseif premiumRockets[proID] then
+			premiumRockets[proID] = nil
 		end
 
 		-- remove the unit (no explosion)

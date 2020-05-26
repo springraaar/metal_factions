@@ -47,6 +47,8 @@ function CommonUnitBehavior:CommonInit(ai, uId)
 	self.canFly = (self.unitDef.canFly)
 	self.pos = newPosition(spGetUnitPosition(uId,false,false))
 	
+	-- last minute hack to make assaults assault
+	self.noEvadeUnit = self.unitDef.health / self.unitCost > 3
 	self.stuckCounter = 0
 	self.lastOrderFrame = 0
 	self.lastRetreatOrderFrame = 0
@@ -57,7 +59,7 @@ function CommonUnitBehavior:EvadeIfNeeded()
 	local tmpFrame = spGetGameFrame()
 	
 	-- only evade if under attack
-	if( tmpFrame - self.underAttackFrame < UNDER_ATTACK_FRAMES) then
+	if((not self.noEvadeUnit) and (tmpFrame - self.underAttackFrame < UNDER_ATTACK_FRAMES )) then
 		local threatPos = nil
 		local threatCost = nil
 		local biggestThreatPos = nil

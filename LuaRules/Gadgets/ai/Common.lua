@@ -19,7 +19,7 @@ ORDER_DELAY_FRAMES = 150
 RAIDING_PARTY_TOLERANCE_FRAMES = 18000
 BUILD_SPREAD_DISTANCE = 50
 BUILD_CELL_BUILDING_LIMIT = 8 
-UNIT_RETREAT_HEALTH = 0.5
+UNIT_RETREAT_HEALTH = 0.35
 UNIT_EVADE_WAYPOINTS = 2
 UNDER_ATTACK_FRAMES = 100
 IDLE_FRAMES_PROGRESS_LIMIT = 90
@@ -28,9 +28,9 @@ METAL_SPOT_MIN_RELATIVE_VALUE = 0.2
 BASE_UNDER_ATTACK_FRAMES = 600
 BASE_VULNERABILITY_THRESHOLD_FACTOR = 0.0
 BUILD_ORDER_VALIDITY_FRAMES = 500
-ATTACK_ENEMY_THREAT_EVALUATION_FACTOR = 0.95
-DEFENSE_ENEMY_THREAT_EVALUATION_FACTOR = 0.7
-ATTACK_PERSISTENCE_THREAT_EVALUATION_FACTOR = 0.7
+ATTACK_ENEMY_THREAT_EVALUATION_FACTOR = 1.1
+DEFENSE_ENEMY_THREAT_EVALUATION_FACTOR = 1.1
+ATTACK_PERSISTENCE_THREAT_EVALUATION_FACTOR = 0.5
 AIR_ATTACKER_EVALUATION_FACTOR = 0.5
 DEFENDER_EVALUATION_FACTOR = 2
 ATTACKER_DISTANCE_EVALUATION_FACTOR = 1
@@ -661,7 +661,7 @@ attackerList =
 	"aven_twister",
 ----------- l2
 	"aven_magnum",
-	"aven_shooter",
+	"aven_sniper",
 	"aven_dazer",
 	"aven_weaver",
 	"aven_shocker",
@@ -1093,7 +1093,7 @@ lightAAByFaction = { [side1Name] = "aven_defender", [side2Name] = "gear_pulveriz
 mediumAAByFaction = { [side3Name] = "claw_gemini", [side4Name] = "sphere_shine"}
 heavyAAByFaction = { [side1Name] = {"aven_warden"}, [side2Name] = {"gear_missilator"}, [side3Name] = {"claw_hyper"}, [side4Name] = {"sphere_stark"}}
 lev2HeavyDefenseByFaction = {[side1Name] = {"aven_sentinel"}, [side2Name] = {"gear_blaze"}, [side3Name] = {"claw_piercer"}, [side4Name] = {"sphere_stout"}}
-lev2ArtilleryDefenseByFaction = {[side1Name] = {"aven_ambusher"}, [side2Name] = {"gear_toaster"}, [side3Name] = {"claw_thumper"}, [side4Name] = {"sphere_lancer"}}
+lev2ArtilleryDefenseByFaction = {[side1Name] = {"aven_gunner"}, [side2Name] = {"gear_toaster"}, [side3Name] = {"claw_thumper"}, [side4Name] = {"sphere_lancer"}}
 lev3ArtilleryDefenseByFaction = {[side1Name] = {"aven_guardian"}, [side2Name] = {"gear_punisher"}, [side3Name] = {"claw_massacre"}, [side4Name] = {"sphere_banger"}}
 lev3LongRangeArtilleryByFaction = {[side1Name] = {"aven_standoff"}, [side2Name] = {"gear_intimidator"}, [side3Name] = {"claw_longhorn"}, [side4Name] = {"sphere_bastion"}}
 respawnerByFaction = {[side1Name] = "aven_commander_respawner", [side2Name] = "gear_commander_respawner", [side3Name] = "claw_commander_respawner", [side4Name] = "sphere_commander_respawner"}

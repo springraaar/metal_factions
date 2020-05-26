@@ -1995,7 +1995,7 @@ local avenAdvKbotLab = {
 	avenL2KbotRadarJammer,
 	"aven_bolter",
 	"aven_weaver",
-	"aven_shooter",
+	"aven_sniper",
 	{action = "wait", frames = 128}
 }
 

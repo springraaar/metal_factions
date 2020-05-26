@@ -5,7 +5,7 @@
 	//********************
 	Side=Aven;
 	name=Sniper;
-	description=Sniper Robot;
+	description=Cloakable Sniper Robot;
 	icontype=mobileheavyfs;
 
 	//************************************************************
@@ -17,11 +17,11 @@
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_shooter;
+	unitname=aven_sniper;
 	unitnumber=250;
-	objectname=aven_shooter.3do;
-	corpse=aven_shooter_dead;
-	buildpic=aven_shooter.png;
+	objectname=aven_sniper.3do;
+	corpse=aven_sniper_dead;
+	buildpic=aven_sniper.png;
 	soundcategory=aven_KBOT;
 
 	//************************************************************
@@ -29,15 +29,15 @@
 	//********************
 	maxdamage=1290;
 	healtime=30;
-	footprintx=2;
-	footprintz=2;
+	footprintx=3;
+	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.9;
-	energyuse=0.9;
+	energymake=0.0;
+	energyuse=0.0;
 	energystorage=0;
 
 	//************************************************************
@@ -83,7 +83,6 @@
 	weapon1=ARMSNIPE_WEAPON;
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
-	badtargetcategory1=VTOL;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
 
@@ -97,24 +96,17 @@
 	standingmoveorder=1;
 	defaultmissiontype=Standby;
 
+	// ------------------- stealth
+	cloakcost=40;
+	cloakcostmoving=80;
+	mincloakdistance=200;
+
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	ai_limit=limit ARMsnipe 20;
-	ai_weight=weight ARMsnipe 0.5;
 	bmcode=1;
-	cloakcost=400;
-	cloakcostmoving=400;
-	designation=BK-CD4;
-	downloadable=1;
-	maneuverleashlength=640;
-	mincloakdistance=40;
 	shootme=1;
-	smoothanim=1;
 	steeringmode=2;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =30 40 21;
 	collisionVolumeOffsets = 0 -1 0;
@@ -124,13 +116,13 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:snipeflare;
+		explosiongenerator0=custom:snipeflare;
 	}
 	//************************************************************
 	//  To be removed
 	//*****************
 
-	buildcostenergy=6593;//#AUTO#
-	buildcostmetal=1318;//#AUTO#
-	buildtime=15714;//#AUTO#
+	buildcostenergy=6646;//#AUTO#
+	buildcostmetal=1329;//#AUTO#
+	buildtime=15840;//#AUTO#
 }

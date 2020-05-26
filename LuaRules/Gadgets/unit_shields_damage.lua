@@ -205,15 +205,19 @@ local reducedDamageLongRangeRocketsWeaponDefIds = {
 }
 
 local longRangeRocketsDefIds = {
+	[UnitDefNames["aven_premium_nuclear_rocket"].id] = true,
 	[UnitDefNames["aven_nuclear_rocket"].id] = true,
 	[UnitDefNames["aven_dc_rocket"].id] = true,
 	[UnitDefNames["aven_lightning_rocket"].id] = true,
+	[UnitDefNames["gear_premium_nuclear_rocket"].id] = true,
 	[UnitDefNames["gear_nuclear_rocket"].id] = true,
 	[UnitDefNames["gear_dc_rocket"].id] = true,
 	[UnitDefNames["gear_pyroclasm_rocket"].id] = true,
+	[UnitDefNames["claw_premium_nuclear_rocket"].id] = true,
 	[UnitDefNames["claw_nuclear_rocket"].id] = true,
 	[UnitDefNames["claw_dc_rocket"].id] = true,
 	[UnitDefNames["claw_impaler_rocket"].id] = true,
+	[UnitDefNames["sphere_premium_nuclear_rocket"].id] = true,
 	[UnitDefNames["sphere_nuclear_rocket"].id] = true,
 	[UnitDefNames["sphere_dc_rocket"].id] = true,
 	[UnitDefNames["sphere_meteorite_rocket"].id] = true
@@ -233,7 +237,7 @@ function SetColvol(unitID, colvolType)
 	end
 	if d ~= nil then
 		spSetUnitCollisionVolumeData(unitID, d[1],d[2],d[3], d[4],d[5],d[6],d[7],d[8],d[9])
-		spSetUnitMidAndAimPos(unitID,0, d[2]*0.5, 0,0, d[2]*0.5,0,true)	
+		--spSetUnitMidAndAimPos(unitID,0, d[2]*0.5, 0,0, d[2]*0.5,0,true)   -- disabled : this shifts the collision volume as well	
 	end
 end
 

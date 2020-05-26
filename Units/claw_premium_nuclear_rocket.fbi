@@ -3,34 +3,32 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
-	name=Gunner;
-	description=Artillery Cannon;
-	icontype=staticartillery;
+	side=CLAW;
+	name=Hypersonic Tactical Nuke;
+	description=Long Range Nuclear Missile;
+	icontype=fnuke;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=CLAW VTOL NOTSUB;
+
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_ambusher;
-	unitnumber=200;
-	objectname=aven_ambusher.3do;
-	corpse=aven_ambusher_dead;
-	buildpic=aven_ambusher.png;
-	soundcategory=GUARD;
+	unitname=claw_premium_nuclear_rocket;
+	objectname=claw_premium_nuclear_rocket.3do;
+	script=long_range_premium_rocket.cob;
+	buildpic=claw_premium_nuclear_rocket.png;
+	soundcategory=MINE;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2537;
-	healtime=11;
-	footprintx=3;
-	footprintz=3;
+	maxdamage=2000;
+	footprintx=2;
+	footprintz=2;
 
 	//************************************************************
 	//  Resources
@@ -42,8 +40,11 @@
 	//************************************************************
 	//  Building
 	//************
-	buildangle=8192;
-	yardmap=ooo ooo ooo;
+	upright=0;
+	collisionVolumeType=Sphere;
+	collisionVolumeScales=40 40 40;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Constructor
@@ -55,70 +56,66 @@
 	//  Abilities
 	//*************
 	canattack=1;
-	canguard=1;
-	canstop=1;
+	canmove=0;
+	canpatrol=0;
+	canstop=0;
+	kamikaze=0;
+	stealth=0;
+	canguard=0;
+	canRepeat=0;
+	canwait=0;
+	canstop=0;
+	canfight=0;
+	sonarStealth=0;
+	canfly=1;
 
+
+	
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=20;
-	maxwaterdepth=11;
+	maxslope=30;
+	maxwaterdepth=100;
+	maxvelocity=0;
+	acceleration=0;
+	brakerate=0;
+	turnrate=900;
+	blocking=0;
+	usesmoothmesh=0;
+	mygravity=0;
+	hoverAttack=1;
+	airHoverFactor=0.01;
+	airStrafe=0;
+	bankingallowed=0;
+	damagemodifier=0.01;
+	collide=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
+	sightdistance=600;
 	radardistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=ARMAMB_GUN;
-	badtargetcategory1=VTOL;
-	badtargetcategory1=VTOL;
+	weapon1=claw_premium_nuclear_rocket;
 	onlytargetcategory1=NOTAIR;
-	explodeas=LARGE_BUILDINGEX;
-	selfdestructas=LARGE_BUILDING;
-
-	//************************************************************
-	//  Orders
-	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
-
-	//************************************************************
-	//  Miscellaneous
-	//*****************
-	bmcode=0;
-	designation=ARM-GUARD;
-	digger=1;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
-	collisionVolumeType=CylY;
-	collisionVolumeScales=35 36 35;
-	collisionVolumeOffsets=0 0 0;
-	collisionVolumeTest = 1;
+	explodeas=claw_premium_nuclear_rocket;
+	selfdestructas=claw_premium_nuclear_rocket;
+	selfdestructcountdown=0;
+	fireState=0;
 
 	//************************************************************
 	//  To be removed
 	//*****************
+	[customParams]
+	{
+		tip=Cannot be shot down after 5s in flight;
+	}
 
-	[SFXTypes]
-	{
-	explosiongenerator0=custom:yellowflaremed;
-	}
-	[customParams] 
-	{
-    canAreaAttack=1;
-	}
-	buildcostenergy=5460;//#AUTO#
-	buildcostmetal=1092;//#AUTO#
-	buildtime=13014;//#AUTO#
+
+	buildcostenergy=125000;//#AUTO#
+	buildcostmetal=25000;//#AUTO#
+	buildtime=300000;//#AUTO#
 }

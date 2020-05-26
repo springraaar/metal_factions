@@ -435,10 +435,12 @@ function GenerateNewTooltip()
 			if ( Game.armorTypes[fud.armorType] == "armor_heavy" ) then armorTypeStr = "H"
 			elseif ( Game.armorTypes[fud.armorType] == "armor_medium" ) then armorTypeStr = "M" end
 			
+			-- old build time expression : floor((29+floor(31+fud.buildTime/(buildpower/32)))/30)
+			local buildTimeStr = FormatNbr(fud.buildTime/buildpower,2)
 			NewTooltip = NewTooltip.."\n"..unitpre.."\n"..fud.humanName.." ("..fud.tooltip..")\n"..
 				"\255\200\200\200Metal: "..unitmetalcost.."    \255\255\255\0Energy: "..unitenergycost..""..
 				"\255\213\213\255".."    Build time: ".."\255\170\170\255"..
-				floor((29+floor(31+fud.buildTime/(buildpower/32)))/30).."s".."    "..GetTooltipTransportability(fud).."\n"..
+				buildTimeStr.."s".."    "..GetTooltipTransportability(fud).."\n"..
 				"\255\200\200\200Health: ".."\255\200\200\200"..fud.health.."("..armorTypeStr..")"
 				if fud.shieldPower > 0 then NewTooltip=NewTooltip.."\255\135\135\255     Shield: "..FormatNbr(fud.shieldPower) end
 					
@@ -480,10 +482,11 @@ function GenerateNewTooltip()
 				NewTooltip = NewTooltip.."\n\255\180\180\180"..fud.customParams.tip.."\255\255\255\255\n"
 			end
 		else
+			local buildTimeStr = FormatNbr(ud.buildTime/buildpower,2)
 		    NewTooltip = NewTooltip.."\n"..unitpre.."\n"..unitname.." ("..unitdesc..")\n"..
 		            "\255\255\213\213Health: ".."\255\255\170\170"..unithealth..
 		            "\n\255\213\213\255Build time: ".."\255\170\170\255"..
-		            floor((29+floor(31+unitbuildtime/(buildpower/32)))/30).."s"..
+		            buildTimeStr.."s"..
 		            "\255\255\255\255\n"
 		    FoundTooltipType="unknownbuildbutton"
 		end

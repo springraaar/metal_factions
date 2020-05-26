@@ -1,3 +1,56 @@
+2020/05/26 ------------------ NOTES v1.36 ----------------------
+
+--- new units
+
+- rocket platforms can now build premium tactical nukes that fly higher, faster, hit harder and CANNOT be shot down, but cost 25000m each
+
+
+--- Balance / Mechanics
+
+COMMANDERS
+- reduced base respawn time from 42 to 38s
+- being morphed adds 50% to the respawn time
+- being upgraded adds up to 50% to the respawn time
+- increased the morph cost from 1200m to 1500m
+
+LONG RANGE ROCKETS
+- increased cost of "Pyroclasm", "Impaler" and "Meteorite" to 1400m
+- reduced cost of tactical nuclear rockets from 3000m to 2500m
+- decreased cost of "Lightning" rockets to to 1200m and reduced the impulse from the explosion
+- fixed long range rockets deploying submunitions immediately if targetting a nearby position
+- fixed collision avoidance issues which could make clusters of rockets "shake" in air and/or submunitions stray away from the target
+
+
+OTHER
+- GEAR Cloakable "Cube" : reduced HP and increased speed by about 20%
+- reduced cost of gear mines from 70m to 60m
+- reduced range and cost of GEAR "Snake" by about 10%
+- fixed collision volume adjustment of units with small shields (they were vertically off-center)
+- modified the targeted position of units to be at 75% of the unit's height instead of 50%
+- prevent comsat projectiles from colliding with friendly units
+- AVEN "Sniper" : increased damage per shot and reload time by about 20% and fixed the cloak attributes
+- increased cost of area shields by 8% for mobile ones and 23% for the static shield
+(the static one has a bigger radius)
+- fixed issue that could make artillery cannons get less range than specified and/or not be able to benefit from range upgrades
+(it would depend on map gravity)
+- increased firing tolerance and turn rate of rockets on AVEN and CLAW gunships
+- CLAW "Boomer" (heavy version) deals more damage and has a higher reload time (it now 1-shots metal extractors)
+
+--- UI / Visuals
+
+- build time indicator on the unit info box is no longer about 10% off
+- fixed AVEN L2 construction hovercraft wreckage
+- modified the build menu positions of hovercraft and spinbot factories to ensure L1 builders are shown before L2 builders
+
+- show progress indicator for replays and when rejoining games or catching up if lagging behind
+- show basic controls (speed/pause) when watching replays
+
+- show warning message when players lag behind by more than 5s
+- modified the first ally color to differentiate it more from the player's color
+
+
+
+
 2020/05/13 ------------------ NOTES v1.35 ----------------------
 
 
@@ -22,6 +75,7 @@ DEFENSES
 AIR
 - air units got 5-10% more expensive
 - scopers got their range increased from 1200 to 1300
+- AVEN "Ghost" explodes violently when killed and has 2500 HP instead of 1800 and costs about 20% more
 
 COMMANDERS
 - SPHERE "Nova" form commander's projectiles deal about 6% less damage but are ~10% faster to allow them to reach their max range if they get range upgrades

@@ -2299,7 +2299,6 @@
   	alphadecay=0.24;
   	sizedecay=-0.1;
 	turret=1;
-	gravityaffected=0;
 	mygravity=0.1;
 	range=1800;
 	reloadtime=3;
@@ -3129,6 +3128,210 @@
 		armor_light=8000;//#AUTO#
 	}
 }
+[aven_premium_nuclear_rocket]
+{
+	name=Hypersonic Nuclear Missile;
+	weapontype=StarburstLauncher;
+	model=weapon_aven_premium_nuclear_rocket;
+	range=20000;
+	cegTag=LRFASTNUKETRAIL;
+  	explosiongenerator=custom:LRFASTNUKEBLASTWRAPPER;
+	Texture1=null; //flare//
+	Texture2=null;//first segment of missiletrail//
+	Texture3=null;//flame//
+	Texture4=null;//unknown//
+	reloadtime=9999;
+	turret=1;
+	weapontimer=10;
+	flighttime=100;
+	fixedlauncher=1;
+	tracks=1;
+	weaponvelocity=3000;
+	startVelocity=150;
+	weaponAcceleration=130;
+	turnrate=33000;
+	areaofeffect=700;
+	edgeeffectiveness=0.4;
+	metalpershot=0;
+	soundstart=misicbmfast;
+	soundhit=xplonuk2;
+	firestarter=100;
+	smoketrail=0;
+	tolerance=60000;
+	commandfire=1;
+	explosionSpeed=16;
+  	cratermult=0.325;
+	InterceptedByShieldType=0;
+	avoidfeature=0;
+	avoidground=0;
+	avoidfriendly=0;
+	collidefriendly=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=12000;
+		group_invincible=1;
+		armor_heavy=12000;//#AUTO#
+		armor_medium=12000;//#AUTO#
+		armor_light=12000;//#AUTO#
+	}
+}
+[gear_premium_nuclear_rocket]
+{
+	name=Hypersonic Nuclear Missile;
+	weapontype=StarburstLauncher;
+	model=weapon_gear_premium_nuclear_rocket;
+	range=20000;
+	cegTag=LRFASTNUKETRAIL;
+  	explosiongenerator=custom:LRFASTNUKEBLASTWRAPPER;
+	Texture1=null; //flare//
+	Texture2=null;//first segment of missiletrail//
+	Texture3=null;//flame//
+	Texture4=null;//unknown//
+	reloadtime=9999;
+	turret=1;
+	weapontimer=10;
+	flighttime=100;
+	fixedlauncher=1;
+	tracks=1;
+	weaponvelocity=3000;
+	startVelocity=150;
+	weaponAcceleration=130;
+	turnrate=33000;
+	areaofeffect=700;
+	edgeeffectiveness=0.4;
+	metalpershot=0;
+	soundstart=misicbmfast;
+	soundhit=xplonuk2;
+	firestarter=100;
+	smoketrail=0;
+	tolerance=60000;
+	commandfire=1;
+	explosionSpeed=16;
+  	cratermult=0.325;
+	InterceptedByShieldType=0;
+	avoidfeature=0;
+	avoidground=0;
+	avoidfriendly=0;
+	collidefriendly=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=12000;
+		group_invincible=1;
+		armor_heavy=12000;//#AUTO#
+		armor_medium=12000;//#AUTO#
+		armor_light=12000;//#AUTO#
+	}
+}
+[claw_premium_nuclear_rocket]
+{
+	name=Hypersonic Nuclear Missile;
+	weapontype=StarburstLauncher;
+	model=weapon_claw_premium_nuclear_rocket;
+	range=20000;
+	cegTag=LRFASTNUKETRAIL;
+  	explosiongenerator=custom:LRFASTNUKEBLASTWRAPPER;
+	Texture1=null; //flare//
+	Texture2=null;//first segment of missiletrail//
+	Texture3=null;//flame//
+	Texture4=null;//unknown//
+	reloadtime=9999;
+	turret=1;
+	weapontimer=10;
+	flighttime=100;
+	fixedlauncher=1;
+	tracks=1;
+	weaponvelocity=3000;
+	startVelocity=150;
+	weaponAcceleration=130;
+	turnrate=33000;
+	areaofeffect=700;
+	edgeeffectiveness=0.4;
+	metalpershot=0;
+	soundstart=misicbmfast;
+	soundhit=xplonuk2;
+	firestarter=100;
+	smoketrail=0;
+	tolerance=60000;
+	commandfire=1;
+	explosionSpeed=16;
+  	cratermult=0.325;
+	InterceptedByShieldType=0;
+	avoidfeature=0;
+	avoidground=0;
+	avoidfriendly=0;
+	collidefriendly=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=12000;
+		group_invincible=1;
+		armor_heavy=12000;//#AUTO#
+		armor_medium=12000;//#AUTO#
+		armor_light=12000;//#AUTO#
+	}
+}
+[sphere_premium_nuclear_rocket]
+{
+	name=Hypersonic Nuclear Missile;
+	weapontype=StarburstLauncher;
+	model=weapon_sphere_premium_nuclear_rocket;
+	range=20000;
+	cegTag=LRFASTNUKETRAIL;
+  	explosiongenerator=custom:LRFASTNUKEBLASTWRAPPER;
+	Texture1=null; //flare//
+	Texture2=null;//first segment of missiletrail//
+	Texture3=null;//flame//
+	Texture4=null;//unknown//
+	reloadtime=9999;
+	turret=1;
+	weapontimer=10;
+	flighttime=100;
+	fixedlauncher=1;
+	tracks=1;
+	weaponvelocity=3000;
+	startVelocity=150;
+	weaponAcceleration=130;
+	turnrate=33000;
+	areaofeffect=700;
+	edgeeffectiveness=0.4;
+	metalpershot=0;
+	soundstart=misicbmfast;
+	soundhit=xplonuk2;
+	firestarter=100;
+	smoketrail=0;
+	tolerance=60000;
+	commandfire=1;
+	explosionSpeed=16;
+  	cratermult=0.325;
+	InterceptedByShieldType=0;
+	avoidfeature=0;
+	avoidground=0;
+	avoidfriendly=0;
+	collidefriendly=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=12000;
+		group_invincible=1;
+		armor_heavy=12000;//#AUTO#
+		armor_medium=12000;//#AUTO#
+		armor_light=12000;//#AUTO#
+	}
+}
 [aven_dc_rocket_d]
 {
 	name=DC Missile Shot Down;
@@ -3750,6 +3953,7 @@
 	tolerance=60000;
 	commandfire=1;
 	explosionSpeed=12;
+	impulsefactor=0.222;
 	InterceptedByShieldType=0;
 	avoidfeature=0;
 	avoidground=0;
@@ -3842,8 +4046,10 @@
 	smoketrail=0;
 	tolerance=9000;
 	InterceptedByShieldType=1;
-	collidefriendly=0;
 	avoidfeature=0;
+	avoidground=0;
+	avoidfriendly=0;
+	collidefriendly=0;
 	tracks=0;
 	dance=1;
 	accuracy=4000;
@@ -3985,6 +4191,9 @@
 	tolerance=3000;
 	InterceptedByShieldType=0;
 	avoidfeature=0;
+	avoidground=0;
+	avoidfriendly=0;
+	collidefriendly=0;
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
@@ -4252,8 +4461,8 @@
 	range=1000;
 	minintensity=1.0;
 	thickness=6;
-	reloadtime=10;
-	energypershot=700;
+	reloadtime=12;
+	energypershot=850;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundstart=annigun3;
@@ -4278,11 +4487,11 @@
 	}
 	[DAMAGE]
 	{
-		default=850;
+		default=1000;
 		group_invincible=1;
-		armor_heavy=850;//#AUTO#
-		armor_medium=850;//#AUTO#
-		armor_light=850;//#AUTO#
+		armor_heavy=1000;//#AUTO#
+		armor_medium=1000;//#AUTO#
+		armor_light=1000;//#AUTO#
 	}
 }
 [aven_excalibur_laser]
@@ -6381,7 +6590,7 @@
 	weapontimer=4;
 	energypershot=0;
 	weaponvelocity=320;
-	gravityaffected=0;
+	mygravity=0.1;
 	collisionSize=10;
 	areaofeffect=200;
 	edgeeffectiveness=0;
@@ -7777,7 +7986,7 @@
 	turret=1;
     CollideFriendly=1;
 	model=weapon_torpedo;
-	range=550;
+	range=500;
 	reloadtime=4;
 	weapontimer=10;
 	FlightTime=4;
@@ -7942,7 +8151,6 @@
 	energypershot=0;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	turret=1;
-	gravityaffected=0;
 	mygravity=0.1;
 	range=1800;
 	reloadtime=2.8;
@@ -9520,7 +9728,6 @@
 	weapontimer=4;
 	energypershot=0;
 	weaponvelocity=320;
-	gravityaffected=0;
 	mygravity=0.13;
 	collisionSize=10;
 	areaofeffect=120;
@@ -9570,7 +9777,6 @@
 	weapontimer=4;
 	energypershot=0;
 	weaponvelocity=400;
-	gravityaffected=0;
 	mygravity=0.12;
 	collisionSize=10;
 	areaofeffect=240;
@@ -10751,6 +10957,7 @@
 	avoidfeature=0;
 	avoidground=0;
 	avoidfriendly=0;
+	CollideFriendly=0;
 	collideEnemy=0;
 	commandFire=1;
 	InterceptedByShieldType=0;
@@ -10885,10 +11092,11 @@
 	burstrate=0.1;
 	weapontimer=5;
 	weaponvelocity=450;
-	startvelocity=350;
+	startvelocity=320;
 	weaponAcceleration=131;
 	metalpershot=0;
-	turnrate=9680;
+	turnrate=19680;
+	fixedlauncher=1;
 	areaofeffect=48;
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
 	cegTag=ROCKETTRAIL1;
@@ -10900,7 +11108,7 @@
 	soundhit=xplomed2;
 	firestarter=70;
 	smoketrail=0;
-	tolerance=3000;
+	tolerance=8000;
 	CollideFriendly=0;
 	tracks=0;
 	InterceptedByShieldType=1;
@@ -10924,14 +11132,15 @@
 	name=Rockets;
 	weapontype=MissileLauncher;
 	model=weapon_rocket2.3do;
-	range=390;
+	range=400;
 	reloadtime=2.3;
 	weapontimer=5;
-	weaponvelocity=350;
-	startvelocity=350;
+	weaponvelocity=430;
+	startvelocity=290;
 	weaponAcceleration=131;
 	metalpershot=0;
-	turnrate=9680;
+	fixedlauncher=1;
+	turnrate=19680;
 	areaofeffect=48;
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
 	cegTag=ROCKETTRAIL1;
@@ -10943,7 +11152,7 @@
 	soundhit=xplomed2;
 	firestarter=70;
 	smoketrail=0;
-	tolerance=3000;
+	tolerance=8000;
 	CollideFriendly=0;
 	tracks=0;
 	InterceptedByShieldType=1;
@@ -12960,12 +13169,12 @@
 	turret=0;
 	model=weapon_rocket3.3do;
 	range=400;
-	reloadtime=6;
+	reloadtime=9;
 	flighttime=2;
-	weaponvelocity=330;
+	weaponvelocity=360;
 	startvelocity=300;
 	projectiles=2;
-	weaponAcceleration=60;
+	weaponAcceleration=100;
 	areaofeffect=64;
 	metalpershot=0;
 	sprayangle=300;
@@ -12973,12 +13182,13 @@
 	soundhit=xplomed2;
 	firestarter=70;
 	smoketrail=0;
-	tolerance=4500;
+	tolerance=7500;
+	fixedlauncher=1;
 	InterceptedByShieldType=1;
 	collidefriendly=0;
 	avoidfeature=0;
 	tracks=0;
-	turnrate=10000;
+	turnrate=20000;
 	wobble=2000;
 	[CUSTOMPARAMS]
 	{
@@ -12987,11 +13197,11 @@
 	}
 	[DAMAGE]
 	{
-		default=220;
+		default=320;
 		group_invincible=1;
-		armor_heavy=220;//#AUTO#
-		armor_medium=220;//#AUTO#
-		armor_light=220;//#AUTO#
+		armor_heavy=320;//#AUTO#
+		armor_medium=320;//#AUTO#
+		armor_light=320;//#AUTO#
 	}
 }
 [claw_boomer_m_rocket]
@@ -13005,10 +13215,10 @@
 	range=400;
 	reloadtime=1.8;
 	flighttime=1.9;
-	weaponvelocity=350;
-	startvelocity=300;
+	weaponvelocity=450;
+	startvelocity=320;
 	projectiles=1;
-	weaponAcceleration=60;
+	weaponAcceleration=100;
 	areaofeffect=48;
 	metalpershot=0;
 	sprayangle=300;
@@ -13016,12 +13226,13 @@
 	soundhit=xplosml2;
 	firestarter=70;
 	smoketrail=0;
-	tolerance=4500;
+	tolerance=7500;
+	fixedlauncher=1;
 	InterceptedByShieldType=1;
 	collidefriendly=0;
 	avoidfeature=0;
 	tracks=0;
-	turnrate=10000;
+	turnrate=20000;
 	wobble=500;
 	[CUSTOMPARAMS]
 	{
@@ -15928,7 +16139,6 @@
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	GroundBounce=0;
 	WaterBounce=0;
-	gravityaffected=0;
 	mygravity=0.1;
 	turret=1;
 	range=1900;
@@ -15973,7 +16183,6 @@
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	GroundBounce=0;
 	WaterBounce=0;
-	gravityaffected=0;
 	mygravity=0.1;
 	turret=1;
 	range=1400;

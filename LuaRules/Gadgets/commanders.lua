@@ -23,6 +23,7 @@ local GetUnitDefId = Spring.GetUnitDefID
 local GetGameFrame = Spring.GetGameFrame
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
 local spGetUnitStates = Spring.GetUnitStates
+local spSetUnitCosts = Spring.SetUnitCosts
 local AreTeamsAllied = Spring.AreTeamsAllied
 local markedWreckPositions = {}
 local damagedByEnemyByUnitIdFrame = {}
@@ -78,6 +79,28 @@ function isCommanderToken(unitDefId)
 	return false
 end
 
+function getCommanderTokenMod(teamId)
+	local result = 1
+	if (commanderName[teamId]) then
+		local ud = UnitDefNames[commanderName[teamId]]
+		-- being morphed adds 50% to the respawn time
+		if ud and advCommanderDefIds[ud.id] then
+			result = result + 0.5
+		end
+		
+		-- being upgraded adds up to another 50% to the respawn time 
+		local upgrades = GG.upgradeCountsByTypeAndPlayerId[teamId]
+		if upgrades then
+			local minorCount = upgrades[1] or 0
+			local commanderCount = upgrades[2] or 0
+			local majorCount = upgrades[3] or 0
+			result = result + 0.5*((minorCount+2*majorCount)/7+2*commanderCount/3)/3
+		end
+	end
+	
+	return result
+end
+
 -------------------------- SYNCED CODE ONLY
 if (not gadgetHandler:IsSyncedCode()) then
 	return false
@@ -85,9 +108,19 @@ end
 
 -- load xp when commanders are created
 function gadget:UnitCreated(unitId, unitDefId, teamId)
-  
+
+  	-- if commander token is created, adjust cost and build time
+  	if isCommanderToken(unitDefId) then
+  		local mod = getCommanderTokenMod(teamId)
+  		--Spring.Echo("commander respawn mod for team "..teamId.." value="..tostring(mod))
+  		
+  		if mod > 1 then
+  			local ud = UnitDefs[unitDefId]
+  			spSetUnitCosts(unitId,{buildTime=ud.buildTime*mod})
+  		end
+  	
 	-- if commander is created, manage xp
-	if isCommander(unitDefId) then
+	elseif isCommander(unitDefId) then
 		if (not commanderXp[teamId] or not commanderName[teamId]) then
 			commanderXp[teamId] = 0
 			commanderName[teamId] = UnitDefs[unitDefId].name

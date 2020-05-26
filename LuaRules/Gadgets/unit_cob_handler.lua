@@ -303,6 +303,16 @@ function checkComsatLockTarget(unitID, unitDefID, teamID, targetID)
 	--Spring.Echo("f="..f.." unit "..unitID.." fired at target "..tostring(targetID))
 end
 
+-- sets the unit neutral to avoid being targetted by enemies automatically
+function disableEnemyTargetting(unitID, unitDefID, teamID)
+	Spring.SetUnitNeutral(unitID,true)	
+	return 0
+end
+
+
+
+---------------------------------------- CALLINS
+
 -- initialize maps
 function gadget:Initialize()
 	-- find low hp targets to take into account for OKP
@@ -353,3 +363,4 @@ gadgetHandler:RegisterGlobal("checkComsatLockTarget", checkComsatLockTarget)
 gadgetHandler:RegisterGlobal("checkAllowFiring", checkAllowFiring)
 gadgetHandler:RegisterGlobal("checkLockTarget", checkLockTarget)
 gadgetHandler:RegisterGlobal("setMobility", setMobility)
+gadgetHandler:RegisterGlobal("disableEnemyTargetting", disableEnemyTargetting)

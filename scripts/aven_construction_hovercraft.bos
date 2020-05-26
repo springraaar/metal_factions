@@ -271,44 +271,20 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode nano1 type SHATTER | BITMAP2;
-		explode nano2 type SHATTER | BITMAP2;
-		explode walls type SHATTER | BITMAP2;
-		explode door1 type SHATTER | BITMAP2;
-		explode door2 type SHATTER | BITMAP2;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
 		explode nano1 type SHATTER | BITMAP2;
 		explode nano2 type SHATTER | BITMAP2;
 		explode walls type SHATTER | BITMAP2;
 		explode door1 type SHATTER | BITMAP2;
 		explode door2 type SHATTER | BITMAP2;
-		explode b2 type SHATTER | BITMAP2;
-		return (0);
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode nano1 type SHATTER | BITMAP2;
-		explode nano2 type SHATTER | BITMAP2;
-		explode walls type SHATTER | BITMAP2;
-		explode door1 type SHATTER | BITMAP2;
-		explode door2 type SHATTER | BITMAP2;
-		explode b2 type SHATTER | BITMAP2;		
-		return (0);
-	}
-	corpsetype = 3;
 	explode nano1 type SHATTER | BITMAP2;
 	explode nano2 type SHATTER | BITMAP2;
 	explode walls type SHATTER | BITMAP2;
 	explode door1 type SHATTER | BITMAP2;
 	explode door2 type SHATTER | BITMAP2;
 	explode b2 type SHATTER | BITMAP2;
-	return (0);
+	return (2);
 }

@@ -35,15 +35,19 @@ local platformDefIds = {
 }
 
 local missileDefIds = {
+	[UnitDefNames["aven_premium_nuclear_rocket"].id] = true,
 	[UnitDefNames["aven_nuclear_rocket"].id] = true,
 	[UnitDefNames["aven_dc_rocket"].id] = true,
 	[UnitDefNames["aven_lightning_rocket"].id] = true,
+	[UnitDefNames["gear_premium_nuclear_rocket"].id] = true,
 	[UnitDefNames["gear_nuclear_rocket"].id] = true,
 	[UnitDefNames["gear_dc_rocket"].id] = true,
 	[UnitDefNames["gear_pyroclasm_rocket"].id] = true,
+	[UnitDefNames["claw_premium_nuclear_rocket"].id] = true,
 	[UnitDefNames["claw_nuclear_rocket"].id] = true,
 	[UnitDefNames["claw_dc_rocket"].id] = true,
 	[UnitDefNames["claw_impaler_rocket"].id] = true,
+	[UnitDefNames["sphere_premium_nuclear_rocket"].id] = true,
 	[UnitDefNames["sphere_nuclear_rocket"].id] = true,
 	[UnitDefNames["sphere_dc_rocket"].id] = true,
 	[UnitDefNames["sphere_meteorite_rocket"].id] = true
@@ -51,15 +55,19 @@ local missileDefIds = {
 
 
 local missileWeaponIds = {
+	[WeaponDefNames["aven_premium_nuclear_rocket"].id]=true,
 	[WeaponDefNames["aven_nuclear_rocket"].id]=true,
 	[WeaponDefNames["aven_dc_rocket"].id]=true,
 	[WeaponDefNames["aven_lightning_rocket"].id]=true,
+	[WeaponDefNames["gear_premium_nuclear_rocket"].id]=true,
 	[WeaponDefNames["gear_nuclear_rocket"].id]=true,
 	[WeaponDefNames["gear_dc_rocket"].id]=true,
 	[WeaponDefNames["gear_pyroclasm_rocket"].id]=true,
+	[WeaponDefNames["claw_premium_nuclear_rocket"].id]=true,
 	[WeaponDefNames["claw_nuclear_rocket"].id]=true,
 	[WeaponDefNames["claw_dc_rocket"].id]=true,
 	[WeaponDefNames["claw_impaler_rocket"].id]=true,
+	[WeaponDefNames["sphere_premium_nuclear_rocket"].id]=true,
 	[WeaponDefNames["sphere_nuclear_rocket"].id]=true,
 	[WeaponDefNames["sphere_dc_rocket"].id]=true,
 	[WeaponDefNames["sphere_meteorite_rocket"].id]=true

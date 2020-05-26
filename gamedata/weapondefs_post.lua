@@ -139,6 +139,13 @@ for wdName, wd in pairs(WeaponDefs) do
 		--wd.cylindertargeting=5
 		--wd.heightboostfactor = 15.0
 		
+		-- override mygravity for cannons if not specified
+		if (wd.weapontype == "Cannon") then
+			if (not wd.mygravity) then
+				wd.mygravity = 0.1
+			end
+		end
+		
 		-- range compensation for lasercannons due to engine bug
 		if (wd.weapontype == "LaserCannon") then
 			local oRange = tonumber(wd.range)

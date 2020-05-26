@@ -70,7 +70,7 @@ local modifiersByUpgrade = {
 
 
 local upgradesByPlayerId = {}
-local upgradeCountsByTypeAndPlayerId = {}
+GG.upgradeCountsByTypeAndPlayerId = {}
 local upgradeBuildOrdersByPlayerId = {}
 local upgradeBuildOrdersByTypePlayerId = {}
 local modifiersByPlayerId = {}
@@ -273,7 +273,7 @@ function updatePlayerModifiers(teamId)
 		count = count + 1
 	end
 
-	upgradeCountsByTypeAndPlayerId[teamId] = { [TYPE_MINOR] = minorCount, [TYPE_COMMANDER] = commanderCount, [TYPE_MAJOR] = majorCount }
+	GG.upgradeCountsByTypeAndPlayerId[teamId] = { [TYPE_MINOR] = minorCount, [TYPE_COMMANDER] = commanderCount, [TYPE_MAJOR] = majorCount }
 	local playerUpgradesStr = "UPGRADES        minor: "..minorCount.."/"..limitsByType[TYPE_MINOR].."       commander: "..commanderCount.."/"..limitsByType[TYPE_COMMANDER].."      major: "..majorCount.."/"..limitsByType[TYPE_MAJOR]
 	local playerUpgradesLabelStr = "Upgrades: "..(redCount > 0 and COLOR_RED or COLOR_DARK).." ["..redCount.."]"..(greenCount > 0 and COLOR_GREEN or COLOR_DARK).."  ["..greenCount.."]"..(blueCount > 0 and COLOR_BLUE or COLOR_DARK).."  ["..blueCount.."]"..COLOR_DEFAULT
 
@@ -393,7 +393,7 @@ function checkLimit(name, teamId)
 	end
 	
 	-- check for limit by type
-	local typeCount = upgradeCountsByTypeAndPlayerId[teamId][type]
+	local typeCount = GG.upgradeCountsByTypeAndPlayerId[teamId][type]
 	local typeLimit = limitsByType[type]
 	
 	local orders = upgradeBuildOrdersByPlayerId[teamId][name] or 0 
@@ -426,7 +426,7 @@ function gadget:Initialize()
 		local teamId = teamList[i]
 		
 		upgradesByPlayerId[teamId] = {}
-		upgradeCountsByTypeAndPlayerId[teamId] = { [TYPE_MINOR] = 0, [TYPE_COMMANDER] = 0, [TYPE_MAJOR] = 0 }
+		GG.upgradeCountsByTypeAndPlayerId[teamId] = { [TYPE_MINOR] = 0, [TYPE_COMMANDER] = 0, [TYPE_MAJOR] = 0 }
 		upgradeBuildOrdersByPlayerId[teamId] = {}
 		upgradeBuildOrdersByTypePlayerId[teamId] = {}
 		modifiersByPlayerId[teamId] = {}

@@ -54,6 +54,7 @@ local Spring_GetConfigInt        = Spring.GetConfigInt
 local Spring_GetMouseState       = Spring.GetMouseState
 local Spring_GetAIInfo           = Spring.GetAIInfo
 local Spring_GetViewGeometry 	 = Spring.GetViewGeometry
+local spGetGameFrame			 = Spring.GetGameFrame
 
 local GetTextWidth        = fontHandler.GetTextWidth
 local UseFont             = fontHandler.UseFont
@@ -274,6 +275,10 @@ local chatTypeLabels = {
 	[CHAT_SPECTATORS] = "Spectators"
 
 }
+
+local latestLagWarningByPlayer = {}
+local PLAYER_LAG_WARNING_THRESHOLD_MS = 5000
+local PLAYER_LAG_WARNING_DELAY_F = 3000 -- 100s
 
 local function isOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
 	if BLcornerX == nil then return false end
@@ -2166,6 +2171,7 @@ end
 
 function CheckPlayersChange()
 	local sorting = false
+	local f = spGetGameFrame() 
 
 	-- track resources for all teams, if allowed
 	local maxIncome = 0
@@ -2266,9 +2272,13 @@ function CheckPlayersChange()
 			player[i].cpuLvl  = GetCpuLvl(cpuUsage)
 			player[i].ping    = pingTime*1000-((pingTime*1000)%1)
 			player[i].cpu     = cpuUsage*100-((cpuUsage*100)%1)
+			
+			-- send warning message to yourself if player is lagging behind
+			if (tonumber(player[i].ping) > PLAYER_LAG_WARNING_THRESHOLD_MS and (f > 0 and (not latestLagWarningByPlayer[i] or f - latestLagWarningByPlayer[i] > PLAYER_LAG_WARNING_DELAY_F ))) then
+				Spring.SendMessageToPlayer(myPlayerID,"WARNING: <PLAYER"..i.."> is lagging behind "..(math.floor(tonumber(player[i].ping)/1000)).."s" )
+				latestLagWarningByPlayer[i] = f
+			end
 		end
-		
-
 	end
 	if sorting == true then    -- sorts the list again if change needs it
 		SortList()
