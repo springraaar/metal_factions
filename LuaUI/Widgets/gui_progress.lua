@@ -40,41 +40,37 @@ local refProgressSizeY = 30
 local fontSize = refFontSize
 local scaleFactor = 1
 
+-- colors
+local cLight						= {1, 1, 1, 0.5}
+local cLightBorder						= {1, 1, 1, 1}
+local cWhite						= {1, 1, 1, 1}
+local cBorder						= {0, 0, 0, 1}		
+local cBack							= {0, 0, 0, 0.5}
+
+
 ------- progress-related variables
 local playTexture	= ":n:"..LUAUI_DIRNAME.."Images/play.dds"
 local pauseTexture	= ":n:"..LUAUI_DIRNAME.."Images/pause.dds"
-
-local showCatchingUp = false
+local gameProgressCalled = false
+local showProgress = false
 local isReplay = Spring.IsReplay()
 local showSpeedButtons = isReplay
 local spGetGameSpeed = Spring.GetGameSpeed
 local spGetReplayLength = Spring.GetReplayLength
 local gameSpeed = Game.gameSpeed
-local CATCH_UP_THRESHOLD = 10 * gameSpeed -- only show the window if behind this much
+local CATCH_UP_THRESHOLD = 10 * gameSpeed -- only show the progress indicator if behind this much
 local UPDATE_RATE_F = 10 -- frames
-local MOVING_AVG_COUNT = 30 -- update periods
 local UPDATE_RATE_S = UPDATE_RATE_F / gameSpeed
 local t = UPDATE_RATE_S
 local localFrame = Spring.GetGameFrame()
 local percentStr = " ? "
-local currentCatchUpRate
 local serverFrame
-local previousFramesLeft
 local lastFrame
 local replayLengthFrames
 local replayPaused = false
 local running = (localFrame > 0)
-local movingAvg = {}
-for i = 1, MOVING_AVG_COUNT do
-	movingAvg[i] = 0
-end
-local movingAvgTotal = 0
-local movingAvgIndex = 1
 local progressCaption = ""
 local catchingPercent = "" 
-local etaCaption = ""
-
-
 
 
 local function estimateServerFrame()
@@ -96,17 +92,7 @@ local function parseFrameTime(frames)
 	end
 end
 
-
--- colors
-local cLight						= {1, 1, 1, 0.5}
-local cLightBorder						= {1, 1, 1, 1}
-local cWhite						= {1, 1, 1, 1}
-local cBorder						= {0, 0, 0, 1}		
-local cBack							= {0, 0, 0, 0.5}
-
-
-
-local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
+local function isOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
 	if BLcornerX == nil then return false end
 	-- check if the mouse is in a rectangle
 
@@ -193,12 +179,12 @@ end
 
 ----------------------------- CALLINS
 
-function widget:GameProgress (n) -- happens every 300 frames ?
-	--Spring.Echo("progress "..n)
-	if not serverFrame then
-		previousFramesLeft = n - localFrame
-	end
+function widget:GameProgress (n) -- happens every 300 frames
 	serverFrame = n
+	if (not gameProgressCalled) then
+		Echo("server at frame "..n)
+		gameProgressCalled = true
+	end
 end
 
 function widget:GameFrame(n)
@@ -207,17 +193,17 @@ end
 
 function widget:GameStart()
 	running = true
+	--widget:GameProgress(2000)
 	if (isReplay) then
 		replayLengthFrames = spGetReplayLength()
 		--Spring.Echo("replay length = "..replayLengthFrames)
 		serverFrame = 0
-		previousFramesLeft = serverFrame - localFrame
 	end
 end
 
 
 function widget:GameOver()
-	--widgetHandler:RemoveCallIn("Update")
+	widgetHandler:RemoveCallIn("Update")
 end
 
 function widget:Update(dt)
@@ -248,46 +234,28 @@ function widget:Update(dt)
 	
 	--Spring.Echo("serverFrame="..serverFrame.." localFrame="..localFrame)
 	if isReplay or framesLeft > CATCH_UP_THRESHOLD then
-		if not showCatchingUp then
-			showCatchingUp = true
+		if not showProgress then
+			showProgress = true
 		end
 	else
-		if showCatchingUp then
-			showCatchingUp = false
+		if showProgress then
+			showProgress = false
 		end
 		return
 	end
-
-	currentCatchUpRate = previousFramesLeft - framesLeft
-	previousFramesLeft = framesLeft
 	
-	--movingAvgTotal = movingAvgTotal - movingAvg[movingAvgIndex] + currentCatchUpRate
-	--movingAvg[movingAvgIndex] = currentCatchUpRate
-	--movingAvgIndex = (movingAvgIndex % MOVING_AVG_COUNT) + 1
-
-	
-	--progressCaption = "Server is " .. parseFrameTime(framesLeft) .. " ahead, at " .. parseFrameTime(serverFrame)
 	if isReplay then
 		if (replayLengthFrames and replayLengthFrames > 0) then
 			percentStr = math.floor(localFrame*100 / replayLengthFrames)
 		end
 		progressCaption = "Progress : " .. percentStr .. "%"
-		--progressCaption = "Catching up : " .. percentStr .. "% (" .. parseFrameTime(framesLeft).." ahead)"
 	else
 		if (serverFrame and serverFrame > 0) then
 			percentStr = math.floor(localFrame*100 / serverFrame)
 		end
-		progressCaption = "Catching up : " .. percentStr .. "% (" .. parseFrameTime(framesLeft).." ahead)"
+		progressCaption = "Synching : " .. percentStr .. "% (" .. parseFrameTime(framesLeft).." ahead)"
 	end 
 
-	--if movingAvgTotal > 0 then
-	--	local avgCatchupRatePerPeriod = movingAvgTotal / MOVING_AVG_COUNT
-	--	local avgCatchupRatePerFrame = avgCatchupRatePerPeriod / UPDATE_RATE_F
-	--	local etaFrames = framesLeft / avgCatchupRatePerFrame
-	--	etaCaption = "Catching up, ETA: " .. parseFrameTime(etaFrames)
-	--else
-	--	etaCaption = "Catching up, ETA: unknown"
-	--end
 end
 
 
@@ -317,7 +285,7 @@ function widget:DrawScreen()
 	drawElement(bgFPS,"FPS: "..Spring.GetFPS(),false)
 	
 	-- progress indicator
-	if (showCatchingUp) then
+	if (showProgress) then
 		drawElement(bgProgress,progressCaption,false)
 		if (showSpeedButtons) then
 			--local speedFactor, _, isPaused = spGetGameSpeed()
@@ -353,7 +321,7 @@ function widget:MousePress(mx, my, mButton)
 function widget:IsAbove(mx,my)
 	if not Spring.IsGUIHidden() then
 		for _,b in pairs(clickables) do
-			b.above = IsOnButton(mx, my, b["x1"],b["y1"],b["x2"],b["y2"])
+			b.above = isOnButton(mx, my, b["x1"],b["y1"],b["x2"],b["y2"])
 		end
 	end
 	

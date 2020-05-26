@@ -40,6 +40,10 @@ local MID_CLICK = 2
 local RIGHT_CLICK = 3
 
 local lastX,lastY = 0
+local clickMX = 0
+local clickMY = 0
+local clickPX = 0
+local clickPZ = 0
 local minDist = 9999999
 local bestSelUnitId = 0
 local selSeconds = 0
