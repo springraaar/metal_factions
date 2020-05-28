@@ -191,9 +191,9 @@ function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attac
 		-- if target is on land, return false
 		local x,y,z = spGetUnitPosition(targetID)
 		local h = spGetGroundHeight(x,z)
-		if (h > 0 or y > 30) then
-			--Spring.Echo("TORPEDO FIRING AT LAND "..Spring.GetGameFrame())
-			return false,0
+		if (h > 0 or y > 100) then
+			--Spring.Echo("TORPEDO FIRING AT LAND/AIR "..Spring.GetGameFrame())
+			return false,defaultPriority
 		end
 	end
 	

@@ -562,7 +562,7 @@ function gadget:GameFrame(n)
 		-- if they strayed too high out of the water, blow them up!
 		wasUnderwater = projectileWasUnderwater[projID]
 		if wasUnderwater ~= nil and wasUnderwater > 0 and (n - wasUnderwater) < 18000 then
-			if py > 20 or h > 5 then
+			if py > 100 or h > 5 then
 				spSetProjectileCollision(projID)
 				
 				-- remove table entry

@@ -646,6 +646,7 @@ attackerList =
 ----------- l1
 	"aven_runner",
 	"aven_trooper",
+	"aven_trooper_laser",
 	"aven_wheeler",
 	"aven_kit",
 	"aven_warrior",
@@ -778,6 +779,7 @@ attackerList =
       "claw_tempest",
       "claw_dizzy",
       "claw_gyro",
+      "claw_dancer",
       "claw_mace",
       "claw_dynamo",
       "claw_pike",

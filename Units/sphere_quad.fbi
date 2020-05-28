@@ -57,8 +57,7 @@
 
 	// ------------------- weapons
 	Weapon1=sphere_quad_laser;
-	badtargetcategory1=VTOL;
-	badtargetcategory1=VTOL;
+	badtargetcategory1=NOTAIR;
 	NoChaseCategory=VTOL;
 	ExplodeAs=SMALL_UNITEX;
 	SelfDestructAs=SMALL_UNIT;
@@ -97,7 +96,7 @@
 	{
 		explosiongenerator0=custom:GLOWSML;
 	}
-	buildcostenergy=1787;//#AUTO#
-	buildcostmetal=357;//#AUTO#
-	buildtime=4259;//#AUTO#
+	buildcostenergy=1570;//#AUTO#
+	buildcostmetal=314;//#AUTO#
+	buildtime=3742;//#AUTO#
 }

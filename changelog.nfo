@@ -1,8 +1,9 @@
-2020/05/26 ------------------ NOTES v1.37 ----------------------
+2020/05/27 ------------------ NOTES v1.38 ----------------------
 
 --- new units
 
 - rocket platforms can now build premium tactical nukes that fly higher, faster, hit harder and CANNOT be shot down, but cost 25000m each
+- AVEN "Trooper (Laser)" : trooper variant that's slightly slower and tougher and has an effective weapon against small and agile air units
 
 
 --- Balance / Mechanics
@@ -36,6 +37,17 @@ OTHER
 - increased firing tolerance and turn rate of rockets on AVEN and CLAW gunships
 - CLAW "Boomer" (heavy version) deals more damage and has a higher reload time (it now 1-shots metal extractors)
 - increased range and cost of GEAR "Knocker" by 15%
+- fixed torpedoes exploding mid-air before reaching floating targets
+- increased GEAR "Aggressor" HP from 580 to 620 and adjusted cost
+- increased SPHERE "Bit" HP from 525 to 680 and adjusted cost
+- increased AVEN "Samson" HP from 700 to 820 and adjusted cost
+- increased CLAW "Grunt" HP from 850 to 950 and adjusted cost
+- made most units with 380-500 range L lasers prioritize air targets and have a slight energy cost to fire
+(20% of their dmg/s, this makes them about 5-10% cheaper)
+- reduced cost of radars by 5-10%
+- GEAR "Grenado" becomes amphibous and has a 3x3 footprint instead of 4x4, so it can fit through cracks in base defense better
+- fixed an issue with air tranports sometimes not being able to load or unload units on water
+- increased the death blast damage and radius of AVEN mobile fusion reactors from 800 to 1900 with 500 radius
 
 
 --- UI / Visuals

@@ -1303,6 +1303,47 @@
 		armor_light=45;//#AUTO#
 	}
 }
+[aven_trooper_laser]
+{
+	name=Laser;
+	weapontype=BeamLaser;
+	explosiongenerator=custom:REDLASERBLASTWRAPPER;
+	beamtime=0.05;
+	thickness=2.123;
+	corethickness=0.55;
+	intensity=0.85;
+	turret=1;
+	range=420;
+	minintensity=1.0;
+	reloadtime=0.5;
+	weaponvelocity=1533;
+	energypershot=8;
+	areaofeffect=8;
+	soundtrigger=1;
+	soundstart=lasrfir1;
+	soundhit=lasrhit2;
+	firestarter=50;
+	scrollspeed=0;
+	pulsespeed=0;
+	rgbcolor=0.6 0.4 0.1;
+	rgbcolor2=1 0.8 0.4;
+	tolerance=4000;
+	impulsefactor=0.222;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=1;
+		reaimtime=1;
+	}
+	[DAMAGE]
+	{
+		default=40;
+		armor_heavy=10;//#AUTO#
+		armor_medium=20;//#AUTO#
+		armor_light=40;//#AUTO#
+	}
+}
 [aven_light_drone_laser]
 {
 	name=Laser;
@@ -7984,7 +8025,7 @@
 	name=Torpedoes;
 	weapontype=TorpedoLauncher;
 	turret=1;
-    CollideFriendly=1;
+	CollideFriendly=1;
 	model=weapon_torpedo;
 	range=500;
 	reloadtime=4;
@@ -8032,6 +8073,7 @@
 	corethickness=0.55;
 	intensity=0.85;
 	reloadtime=0.33;
+	energypershot=6;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundtrigger=1;
@@ -9417,6 +9459,33 @@
 		armor_light=2300;//#AUTO#
 	}
 }
+[MOBILE_FUSION]
+{
+	name=Mobile Fusion Reactor Blast;
+	weapontype=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=500;
+	soundstart=largegun;
+	soundhit=xplolrg5;
+	explosiongenerator=custom:LARGEBLASTWRAPPER2;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=1900;
+		group_invincible=1;
+		armor_heavy=1900;//#AUTO#
+		armor_medium=1900;//#AUTO#
+		armor_light=1900;//#AUTO#
+	}
+}
 [FUSION_BUILDING_BIG]
 {
 	name=Large Fusion Reactor Blast;
@@ -10160,7 +10229,8 @@
 	turret=1;
 	range=400;
 	minintensity=1.0;
-	reloadtime=0.9;
+	reloadtime=0.7;
+	energypershot=8;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundtrigger=1;
@@ -14763,6 +14833,7 @@
 	range=400;
 	minintensity=1.0;
 	reloadtime=0.62;
+	energypershot=10;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundtrigger=1;
@@ -14803,6 +14874,7 @@
 	range=400;
 	minintensity=1.0;
 	reloadtime=0.25;
+	energypershot=8;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundtrigger=1;
@@ -14883,6 +14955,7 @@
 	range=410;
 	minintensity=1.0;
 	reloadtime=0.6;
+	energypershot=10;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundtrigger=1;
@@ -19004,7 +19077,7 @@
 	range=380;
 	minintensity=1.0;
 	reloadtime=0.5;
-	energypershot=0;
+	energypershot=10;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundtrigger=1;
@@ -19086,7 +19159,7 @@
 	range=420;
 	minintensity=1.0;
 	reloadtime=0.5;
-	energypershot=0;
+	energypershot=9;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundtrigger=1;
@@ -19127,7 +19200,7 @@
 	range=440;
 	minintensity=1.0;
 	reloadtime=0.5;
-	energypershot=0;
+	energypershot=10;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundtrigger=1;

@@ -161,8 +161,7 @@ function drawElement(el,content,isImage)
 	if (isImage) then
 		glTexture(content)
 		glTexRect(el.x1+1, el.y1+1, el.x2-1, el.y2-1)
-		--gl.Flush()
-		gl.ResetState()
+		glTexture(false)
 	else
 		glText(content,(el.x1 + el.x2) /2, (el.y1 + el.y2) / 2-fontSize/2,fontSize,"c")
 	end
@@ -181,6 +180,7 @@ end
 
 function widget:GameProgress (n) -- happens every 300 frames
 	serverFrame = n
+	--Echo("progress "..n)
 	if (not gameProgressCalled) then
 		Echo("server at frame "..n)
 		gameProgressCalled = true
@@ -196,6 +196,9 @@ function widget:GameStart()
 	--widget:GameProgress(2000)
 	if (isReplay) then
 		replayLengthFrames = spGetReplayLength()
+		if (replayLengthFrames) then
+			replayLengthFrames = replayLengthFrames * 30
+		end
 		--Spring.Echo("replay length = "..replayLengthFrames)
 		serverFrame = 0
 	end
@@ -203,7 +206,7 @@ end
 
 
 function widget:GameOver()
-	widgetHandler:RemoveCallIn("Update")
+	--widgetHandler:RemoveCallIn("Update")
 end
 
 function widget:Update(dt)
@@ -248,7 +251,11 @@ function widget:Update(dt)
 		if (replayLengthFrames and replayLengthFrames > 0) then
 			percentStr = math.floor(localFrame*100 / replayLengthFrames)
 		end
-		progressCaption = "Progress : " .. percentStr .. "%"
+		if (replayLengthFrames and replayLengthFrames > 0 and localFrame > replayLengthFrames ) then
+			progressCaption = "Progress : 100% ("..parseFrameTime(replayLengthFrames)..")"
+		else
+			progressCaption = "Progress : " .. percentStr .. "%"
+		end
 	else
 		if (serverFrame and serverFrame > 0) then
 			percentStr = math.floor(localFrame*100 / serverFrame)

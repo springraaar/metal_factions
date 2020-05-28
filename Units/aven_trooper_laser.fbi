@@ -1,0 +1,99 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Aven;
+	name=Trooper (Laser);
+	description=Infantry Robot;
+	icontype=mobilefighter;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN KBOT LEVEL1 WEAPON NOTAIR NOTSUB;
+	tedclass=KBOT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=aven_trooper_laser;
+	unitnumber=55;
+	objectname=aven_trooper_laser.3do;
+	corpse=aven_trooper_laser_dead;
+	buildpic=aven_trooper_laser.png;
+	soundcategory=ARMPW;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=1000;
+	healtime=30;
+	footprintx=2;
+	footprintz=2;
+
+	metalstorage=0;
+	energymake=0.0;
+	energyuse=0.0;
+	energystorage=0;
+
+
+	builder=0;
+	workertime=0;
+
+	canattack=1;
+	canguard=1;
+	canmove=1.1;
+	canpatrol=1;
+	canstop=1;
+	upright=1;
+
+	movementclass=KBOTHT2;
+	turnrate=1032;
+	acceleration=1.1;
+	brakerate=2.0;
+	maxvelocity=1.5;
+	maxslope=17;
+	maxwaterdepth=12;
+
+	sightdistance=500;
+	radardistance=0;
+
+	weapon1=aven_trooper_laser;
+	nochasecategory=VTOL;
+	badtargetcategory1=NOTAIR;
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
+
+	noautofire=0;
+	firestandorders=1;
+	mobilestandorders=1;
+	standingfireorder=2;
+	standingmoveorder=1;
+	defaultmissiontype=Standby;
+
+	bmcode=1;
+	designation=ARM-KI;
+	downloadable=1;
+	maneuverleashlength=640;
+	shootme=1;
+	smoothanim=1;
+	steeringmode=2;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =20 35 20;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:GLOWSML;
+	}
+	buildcostenergy=887;//#AUTO#
+	buildcostmetal=177;//#AUTO#
+	buildtime=2114;//#AUTO#
+}

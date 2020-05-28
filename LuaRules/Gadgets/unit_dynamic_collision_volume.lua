@@ -142,7 +142,7 @@ if (gadgetHandler:IsSyncedCode()) then
 			yo = yo * val
 			zo = zo * val
 			spSetUnitCollisionVolumeData(unitID, xs, ys, zs, xo, yo, zo, vtype, htype, axis)
-			spSetUnitMidAndAimPos(unitID,0, ys*0.5, 0,0, ys*0.75,0,true)
+			spSetUnitMidAndAimPos(unitID,0, ys*0.5, 0,0, ys*0.75+yo,0,true)
 		end
 		
 	end
@@ -174,7 +174,7 @@ if (gadgetHandler:IsSyncedCode()) then
 				end
 				
 				spSetUnitCollisionVolumeData(unitID, xs, ys, zs, xo, yo, zo, vtype, htype, axis)
-				spSetUnitMidAndAimPos(unitID,0, ys*0.5, 0,0, ys*0.75,0,true)
+				spSetUnitMidAndAimPos(unitID,0, ys*0.5, 0,0, ys*0.75+yo,0,true)
 			end
 		end
 	end
@@ -219,7 +219,7 @@ if (gadgetHandler:IsSyncedCode()) then
 	
 				end
 				spSetUnitCollisionVolumeData(unitID, p[1], p[2], p[3], p[4], p[5], p[6], p[7], p[8], p[9])
-				spSetUnitMidAndAimPos(unitID,0, p[2]*0.5, 0,0, p[2]*0.75,0,true)
+				spSetUnitMidAndAimPos(unitID,0, p[2]*0.5, 0,0, p[2]*0.75+p[5],0,true)
 			end
 		end
 
@@ -263,7 +263,7 @@ if (gadgetHandler:IsSyncedCode()) then
 					end
 					
 					spSetUnitCollisionVolumeData(uId, xs, ys, zs, xo, yo, zo, vtype, htype, axis)
-					spSetUnitMidAndAimPos(uId,0, ys*0.5, 0,0, ys*0.75,0,true)
+					spSetUnitMidAndAimPos(uId,0, ys*0.5, 0,0, ys*0.75+yo,0,true)
 				else
 					-- adjust height level of gates 
 					local heightLevel = spGetUnitRulesParam(uId,"height_level")
@@ -280,7 +280,7 @@ if (gadgetHandler:IsSyncedCode()) then
 						yo = data[5] * val
 						
 						spSetUnitCollisionVolumeData(uId, xs, ys, zs, xo, yo, zo, vtype, htype, axis)
-						spSetUnitMidAndAimPos(uId,0, ys*0.5, 0,0, ys*0.75,0,true)
+						spSetUnitMidAndAimPos(uId,0, ys*0.5, 0,0, ys*0.75+yo,0,true)
 
 						-- force gates to not be blocking if they're fully lowered 						
 						local isb,issoc,ispc,isrsc,cr,bep,bhc = spGetUnitBlocking(uId)
