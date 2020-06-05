@@ -1,3 +1,43 @@
+2020/06/04 ------------------ NOTES v1.39 ----------------------
+
+
+--- Balance / Mechanics
+
+- modified how shield HP is factored into the costs of shielded units, including area shields
+(this makes them about 5-15% more expensive)
+
+- modified how weapon dmg/s, aoe, spike damage and range are factored into the weapon values and unit costs
+. this change penalizes units with 400+ range and relatively high dmg/s and benefits units with 500-1000 range and relatively low dmg/s
+. L1 short range stuff mostly stays the same
+. L1 light med range stuff (~600) gets ~10-20% cheaper
+. high dps stuff gets more expensive (10-20%, but up to 50% on some extreme cases)
+. long range ~200 dmg/s stuff gets more expensive (~10%)
+
+
+- increased GEAR "Assaulter" movement speed from 1.8 to 1.95
+
+- slightly increased fire rate and dmg/s for some L1 missile units
+
+- fixed railgun and energy bolts apparently going through targets near the edge of their range without colliding
+
+- CLAW "Assassin" form commander had its damage per shot increased from 650 to 850 with higher reload time (dmg/s slightly lower)
+
+- fixed wreckage collision volumes being slightly off the ground
+
+- walls and gates no longer count towards auto-surrender
+
+- increased cost of construction towers from 350m to 400m
+
+TODO
+- unable to build units
+- idle builders widget
+- ai improvements
+- improve gazer visuals
+
+
+
+
+
 2020/05/27 ------------------ NOTES v1.38 ----------------------
 
 --- new units

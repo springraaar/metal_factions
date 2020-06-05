@@ -59,12 +59,12 @@ local spUnitDetach = Spring.UnitDetach
 local spGetUnitTransporter = Spring.GetUnitTransporter
 local spGetUnitIsTransporting = Spring.GetUnitIsTransporting
 local spGetGroundNormal = Spring.GetGroundNormal
-
+local spSetFeatureMidAndAimPos = Spring.SetFeatureMidAndAimPos
 local spSetFeatureVelocity = Spring.SetFeatureVelocity
 local spSetFeaturePosition = Spring.SetFeaturePosition
 local spSetFeatureRotation = Spring.SetFeatureRotation
 local spSetFeatureMoveCtrl = Spring.SetFeatureMoveCtrl
-
+local spGetFeatureCollisionVolumeData = Spring.GetFeatureCollisionVolumeData
 local spSetFeaturePhysics = Spring.SetFeaturePhysics
 local spCreateFeature = Spring.CreateFeature
 
@@ -699,6 +699,12 @@ end
 function gadget:FeatureCreated(featureId, allyTeam)
 	featureIds[featureId] = true
 	featurePhysicsById[featureId] = {0,0,0,0,0,0,0,false}
+	
+	-- adjust the collision volume positions
+	local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetFeatureCollisionVolumeData(featureId)
+	if (xs and xo) then
+		spSetFeatureMidAndAimPos(featureId,0, ys*0.5, 0,0, ys*0.75+yo,0,true)
+	end
 end
 
 -- cleanup when features are destroyed

@@ -27,7 +27,19 @@ local defeatedAllyIds = {}
 local unitDefIdsToIgnore = {
 	[UnitDefNames["target"].id] = true,
 	[UnitDefNames["cs_beacon"].id] = true,
-	[UnitDefNames["scoper_beacon"].id] = true
+	[UnitDefNames["scoper_beacon"].id] = true,
+	[UnitDefNames["aven_fortification_wall"].id] = true,
+	[UnitDefNames["aven_fortification_gate"].id] = true,
+	[UnitDefNames["aven_large_fortification_wall"].id] = true,
+	[UnitDefNames["gear_fortification_wall"].id] = true,
+	[UnitDefNames["gear_fortification_gate"].id] = true,
+	[UnitDefNames["gear_large_fortification_wall"].id] = true,
+	[UnitDefNames["claw_fortification_wall"].id] = true,
+	[UnitDefNames["claw_fortification_gate"].id] = true,
+	[UnitDefNames["claw_large_fortification_wall"].id] = true,
+	[UnitDefNames["sphere_fortification_wall"].id] = true,
+	[UnitDefNames["sphere_fortification_gate"].id] = true,
+	[UnitDefNames["sphere_large_fortification_wall"].id] = true
 }
 
 -------------------------- SYNCED CODE ONLY
