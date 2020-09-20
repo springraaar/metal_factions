@@ -113,7 +113,6 @@
 	zbuffer=1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
-
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
@@ -121,9 +120,10 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=sphere_aircraft_factory,sphere_adv_aircraft_factory;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:rocketflaresml;
@@ -132,4 +132,5 @@
 	buildcostenergy=1338;//#AUTO#
 	buildcostmetal=267;//#AUTO#
 	buildtime=3189;//#AUTO#
+	mass=95;//#AUTO#
 }

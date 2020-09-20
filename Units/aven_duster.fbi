@@ -122,9 +122,10 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=aven_light_plant,aven_adv_vehicle_plant;
+	}
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:yellowflaresml;
@@ -133,4 +134,5 @@
 	buildcostenergy=983;//#AUTO#
 	buildcostmetal=196;//#AUTO#
 	buildtime=2344;//#AUTO#
+	mass=155;//#AUTO#
 }

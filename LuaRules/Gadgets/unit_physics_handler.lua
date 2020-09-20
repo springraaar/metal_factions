@@ -348,6 +348,10 @@ local function isDrone(ud)
   return(ud and ud.customParams and ud.customParams.isdrone)
 end
 
+local function isFeatureSpawner(ud)
+  return(ud and ud.isFeature == true)
+end
+
 
 function gadget:Initialize()
 	-- for each safety point, add the "y"
@@ -628,7 +632,7 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 			end
 		end
 	-- unit was not fully built but leaves wreckage		
-	elseif (ud and (not isDrone(ud)) and (tostring(ud.wreckName) ~= '') and bp > 0.5 and bp < 1 and attackerId ~= nil) then
+	elseif (ud and (not isDrone(ud)) and (not isFeatureSpawner(ud)) and (tostring(ud.wreckName) ~= '') and bp > 0.5 and bp < 1 and attackerId ~= nil) then
 		--Spring.Echo("attackerId="..tostring(attackerId).." attackerDefId="..tostring(attackerDefId).." attackerTeamId="..tostring(attackerTeamId))
 		
 		local physics = unitPhysicsById[unitId]

@@ -135,14 +135,15 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=gear_aircraft_plant,gear_adv_aircraft_plant;
+	}
 	[SFXTypes]
 	{
 	}
 	buildcostenergy=1657;//#AUTO#
 	buildcostmetal=331;//#AUTO#
 	buildtime=3949;//#AUTO#
+	mass=108;//#AUTO#
 }

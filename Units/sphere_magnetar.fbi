@@ -23,7 +23,7 @@
 	MaxDamage=15000;
 	FootprintX=4;
 	FootprintZ=4;
-	mass=5000;
+	mass=15000;
 	autoheal=250;
 	pushResistant=1;
 	
@@ -106,6 +106,7 @@
 
 	[CustomParams]
 	{
+		builtBy=sphere_sphere_factory;
 		energyCostMoving=280;
 		tip=Requires 280E/s to move. Regenerates 250HP/s. If charged, 400 range aura pulls and deals 220(L) disruptor dmg/s; 
 	}

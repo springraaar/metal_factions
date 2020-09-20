@@ -131,7 +131,6 @@
 	zbuffer=1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
-
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
@@ -139,14 +138,15 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=gear_adv_aircraft_plant;
+	}
 	[SFXTypes]
 	{
 	}
 	buildcostenergy=15900;//#AUTO#
 	buildcostmetal=3180;//#AUTO#
 	buildtime=37895;//#AUTO#
+	mass=1005;//#AUTO#
 }

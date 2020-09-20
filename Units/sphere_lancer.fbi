@@ -103,19 +103,18 @@
 	floater=1;
 	waterline=0;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=sphere_l1builder,sphere_l2builder;
+		canAreaAttack=1;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:rocketflaremed;
 	}
-	[customParams] 
-	{
-	    canAreaAttack=1;
-	}
+	
 	buildcostenergy=5721;//#AUTO#
 	buildcostmetal=1144;//#AUTO#
 	buildtime=13636;//#AUTO#
+	mass=1762;//#AUTO#
 }

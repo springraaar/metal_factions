@@ -159,18 +159,16 @@
 
 	[CustomParams]
 	{
+		buildertype=aven_l1builder;
 		isCommander=1;
 	}
 
-	//************************************************************
-	//  To be removed
-	//*****************
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:BLUEFLAREBIG;
-	explosiongenerator1=custom:Nano;
-	explosiongenerator2=custom:EMGFLAREMED;
-	explosiongenerator3=custom:DGUNREADYFLARE;
+		explosiongenerator0=custom:BLUEFLAREBIG;
+		explosiongenerator1=custom:Nano;
+		explosiongenerator2=custom:EMGFLAREMED;
+		explosiongenerator3=custom:DGUNREADYFLARE;
 	}
 
 }

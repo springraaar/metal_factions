@@ -103,10 +103,10 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=claw_l1builder,claw_l2builder;
+	}
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:Nano;
@@ -116,4 +116,5 @@
 	buildcostenergy=4141;//#AUTO#
 	buildcostmetal=828;//#AUTO#
 	buildtime=6514;//#AUTO#
+	mass=1952;//#AUTO#
 }

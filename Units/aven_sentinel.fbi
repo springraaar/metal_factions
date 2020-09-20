@@ -104,9 +104,10 @@
 	floater=1;
 	waterline=0;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=aven_l1builder,aven_l2builder;
+	}
 
 	[SFXTypes]
 	{
@@ -115,4 +116,5 @@
 	buildcostenergy=5876;//#AUTO#
 	buildcostmetal=1175;//#AUTO#
 	buildtime=14005;//#AUTO#
+	mass=1882;//#AUTO#
 }

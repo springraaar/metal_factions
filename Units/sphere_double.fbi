@@ -73,27 +73,27 @@
 	Version=3.1;
 	NoAutoFire=0;
 	DefaultMissionType=Standby;
-
 	leavetracks=1;
 	trackoffset=8;
 	trackstrength=5;
 	trackstretch=1;
 	tracktype=StdTank;
 	trackwidth=35;
-
 	collisionVolumeType = box;
 	collisionVolumeScales =20 20 30;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_light_factory,sphere_adv_vehicle_factory;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:redflare;
 	}
-	[CustomParams]
-	{
-		evalfactor=1;
-	}
 	buildcostenergy=1138;//#AUTO#
 	buildcostmetal=227;//#AUTO#
 	buildtime=2714;//#AUTO#
+	mass=152;//#AUTO#
 }

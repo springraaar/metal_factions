@@ -74,10 +74,15 @@
 
 	// ------------------- misc
 	Version=3.1;
-	Designation=CLAW-respawner;
+	Designation=AVEN-respawner;
 	BMcode=0;
 	ThreeD=1;
 	ZBuffer=1;
 	NoAutoFire=0;
 	downloadable=1;
+
+	[CustomParams]
+	{
+		builtBy=aven_l1builder,aven_l2builder;
+	}
 }

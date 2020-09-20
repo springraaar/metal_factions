@@ -85,6 +85,11 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	TransportByEnemy=0;
+
+	[CustomParams]
+	{
+		builtBy=sphere_light_factory,sphere_adv_kbot_factory;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:YELLOWFLARESML;
@@ -93,4 +98,5 @@
 	buildcostenergy=1100;//#AUTO#
 	buildcostmetal=220;//#AUTO#
 	buildtime=2622;//#AUTO#
+	mass=573;//#AUTO#
 }

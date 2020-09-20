@@ -27,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3100;
+	maxdamage=3200;
 	healtime=30;
 	footprintx=3;
 	footprintz=3;
@@ -36,8 +36,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=1.1;
-	energyuse=1.1;
+	energymake=0;
+	energyuse=0;
 	energystorage=0;
 
 	//************************************************************
@@ -66,8 +66,8 @@
 	movementclass=KBOTHT3;
 	turnrate=960;
 	acceleration=0.9;
-	brakerate=1.9;
-	maxvelocity=1.5;
+	brakerate=1.7;
+	maxvelocity=1.25;
 	maxslope=17;
 	maxwaterdepth=12;
 
@@ -112,19 +112,20 @@
 	pieceTrailCEGTag=NanoDebree;
 	pieceTrailCEGRange = 1;
 	collisionVolumeType = box;
-	collisionVolumeScales =28 40 28;
+	collisionVolumeScales =34 42 32;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=aven_adv_kbot_lab;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:ElectricFlare;
 	}
-	buildcostenergy=4203;//#AUTO#
-	buildcostmetal=840;//#AUTO#
-	buildtime=10017;//#AUTO#
+	buildcostenergy=4996;//#AUTO#
+	buildcostmetal=999;//#AUTO#
+	buildtime=11908;//#AUTO#
+	mass=1812;//#AUTO#
 }

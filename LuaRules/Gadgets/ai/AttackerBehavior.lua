@@ -1,4 +1,4 @@
-include("LuaRules/Gadgets/ai/Common.lua")
+include("LuaRules/Gadgets/ai/common.lua")
 include("LuaRules/Gadgets/ai/CommonUnitBehavior.lua")
  
 AttackerBehavior = {}
@@ -25,17 +25,17 @@ end
 function AttackerBehavior:Init(ai, uId)
 	self:CommonInit(ai, uId)
 
-	self:Activate()
+	self:activate()
 end
 
 function AttackerBehavior:UnitFinished(uId)
 	if uId == self.unitId then
 		if setContains(unitTypeSets[TYPE_AIR_ATTACKER],self.unitName) then
-			self.ai.unitHandler:AddRecruit(self,UNIT_GROUP_AIR_ATTACKERS)
+			self.ai.unitHandler:addRecruit(self,UNIT_GROUP_AIR_ATTACKERS)
 		elseif setContains(unitTypeSets[TYPE_SEA_ATTACKER],self.unitName) then
-			self.ai.unitHandler:AddRecruit(self,UNIT_GROUP_SEA_ATTACKERS)
+			self.ai.unitHandler:addRecruit(self,UNIT_GROUP_SEA_ATTACKERS)
 		else
-			self.ai.unitHandler:AddRecruit(self,UNIT_GROUP_ATTACKERS)
+			self.ai.unitHandler:addRecruit(self,UNIT_GROUP_ATTACKERS)
 		end
 	end
 end
@@ -43,19 +43,19 @@ end
 
 function AttackerBehavior:UnitDestroyed(uId)
 	if uId == self.unitId then
-		self.ai.unitHandler:RemoveRecruit(self,UNIT_GROUP_ATTACKERS)
-		self.ai.unitHandler:RemoveRecruit(self,UNIT_GROUP_AIR_ATTACKERS)
-		self.ai.unitHandler:RemoveRecruit(self,UNIT_GROUP_SEA_ATTACKERS)
-		self.ai.unitHandler:RemoveRecruit(self,UNIT_GROUP_RAIDERS)
+		self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_ATTACKERS)
+		self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_AIR_ATTACKERS)
+		self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_SEA_ATTACKERS)
+		self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_RAIDERS)
 	end
 end
 
 function AttackerBehavior:UnitTaken(uId)
 	if uId == self.unitId then
-		self.ai.unitHandler:RemoveRecruit(self,UNIT_GROUP_ATTACKERS)
-		self.ai.unitHandler:RemoveRecruit(self,UNIT_GROUP_AIR_ATTACKERS)
-		self.ai.unitHandler:RemoveRecruit(self,UNIT_GROUP_SEA_ATTACKERS)
-		self.ai.unitHandler:RemoveRecruit(self,UNIT_GROUP_RAIDERS)
+		self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_ATTACKERS)
+		self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_AIR_ATTACKERS)
+		self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_SEA_ATTACKERS)
+		self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_RAIDERS)
 	end
 end
 
@@ -73,7 +73,7 @@ function AttackerBehavior:UnitIdle(uId)
 	end
 end
 
-function AttackerBehavior:AttackCell(centerPos, cell)
+function AttackerBehavior:attackCell(centerPos, cell)
 	local tmpFrame = spGetGameFrame()
 
 	if (self.lastOrderFrame or 0) + ORDER_DELAY_FRAMES < tmpFrame then
@@ -99,7 +99,7 @@ function AttackerBehavior:AttackCell(centerPos, cell)
 		local p = newPosition()
 		p.x = cell.p.x -targetRadius/2 + random(1,targetRadius)
 		p.z = cell.p.z -targetRadius/2 + random(1,targetRadius)
-		p.y = 0
+		p.y = spGetGroundHeight(p.x,p.z)
 		self.target = p
 		
 		self.lastOrderFrame = tmpFrame
@@ -110,15 +110,16 @@ function AttackerBehavior:AttackCell(centerPos, cell)
 	end
 end
 
-function AttackerBehavior:AttackRegroupCenterIfNeeded(centerPos, radius)
+function AttackerBehavior:attackRegroupCenterIfNeeded(centerPos, radius)
 	local tmpFrame = spGetGameFrame()
 
 	local selfPos = newPosition(spGetUnitPosition(self.unitId,false,false))
 	if ( abs(selfPos.x - centerPos.x) > radius or abs(selfPos.z - centerPos.z) > radius  ) then
+		local spread = radius/2
 		p = newPosition()
-		p.x = centerPos.x-radius/2+random(1,radius)
-		p.z = centerPos.z-radius/2+random(1,radius)
-		p.y = 0
+		p.x = centerPos.x-spread/2+random(1,spread)
+		p.z = centerPos.z-spread/2+random(1,spread)
+		p.y = spGetGroundHeight(p.x,p.z)
 		if (self.lastOrderFrame or 0) + ORDER_DELAY_FRAMES < tmpFrame then
 			self.lastOrderFrame = tmpFrame - ORDER_DELAY_FRAMES/2
 			spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},{})
@@ -130,7 +131,7 @@ function AttackerBehavior:AttackRegroupCenterIfNeeded(centerPos, radius)
 	return false
 end
 
-function AttackerBehavior:Retreat()
+function AttackerBehavior:retreat()
 	local tmpFrame = spGetGameFrame()
 	
 	if (self.lastRetreatOrderFrame or 0) + ORDER_DELAY_FRAMES < tmpFrame then
@@ -139,7 +140,7 @@ function AttackerBehavior:Retreat()
 		if ( abs(selfPos.x - self.ai.unitHandler.basePos.x) > RETREAT_RADIUS or abs(selfPos.z - self.ai.unitHandler.basePos.z) > RETREAT_RADIUS  ) then
 			spGiveOrderToUnit(self.unitId,CMD.MOVE,{self.ai.unitHandler.basePos.x - BIG_RADIUS/2 + random( 1, BIG_RADIUS),0,self.ai.unitHandler.basePos.z - BIG_RADIUS/2 + random( 1, BIG_RADIUS)},{})
 		else
-			self:EvadeIfNeeded()
+			self:evadeIfNeeded()
 		end
 
 		self.lastRetreatOrderFrame = tmpFrame
@@ -147,19 +148,19 @@ function AttackerBehavior:Retreat()
 	end	
 end
 
-function AttackerBehavior:BasePatrol()
+function AttackerBehavior:basePatrol()
 	local tmpFrame = spGetGameFrame()
 	
 	if (self.lastOrderFrame or 0) + ORDER_DELAY_FRAMES < tmpFrame then
 		local baseX = self.ai.unitHandler.basePos.x
 		local baseZ = self.ai.unitHandler.basePos.z
 		local selfPos = newPosition(spGetUnitPosition(self.unitId,false,false))
-		
+		local h = spGetGroundHeight(selfPos.x,selfPos.z)
 		if not self.isBasePatrolling or not checkWithinDistance(selfPos,self.ai.unitHandler.basePos,2*HUGE_RADIUS)  then
-			spGiveOrderToUnit(self.unitId,CMD.MOVE,{baseX - (BIG_RADIUS + random( 1, BIG_RADIUS)),0,baseZ},{})
-			spGiveOrderToUnit(self.unitId,CMD_PATROL,{baseX + (BIG_RADIUS + random( 1, BIG_RADIUS)),0,baseZ},CMD.OPT_SHIFT)
-			spGiveOrderToUnit(self.unitId,CMD_PATROL,{baseX,0,baseZ + (BIG_RADIUS + random( 1, BIG_RADIUS))},CMD.OPT_SHIFT)	
-			spGiveOrderToUnit(self.unitId,CMD_PATROL,{baseX,0,baseZ - (BIG_RADIUS + random( 1, BIG_RADIUS))},CMD.OPT_SHIFT)		
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{baseX - (BIG_RADIUS + random( 1, BIG_RADIUS)),h,baseZ},{})
+			spGiveOrderToUnit(self.unitId,CMD.PATROL,{baseX + (BIG_RADIUS + random( 1, BIG_RADIUS)),h,baseZ},CMD.OPT_SHIFT)
+			spGiveOrderToUnit(self.unitId,CMD.PATROL,{baseX,h,baseZ + (BIG_RADIUS + random( 1, BIG_RADIUS))},CMD.OPT_SHIFT)	
+			spGiveOrderToUnit(self.unitId,CMD.PATROL,{baseX,h,baseZ - (BIG_RADIUS + random( 1, BIG_RADIUS))},CMD.OPT_SHIFT)		
 			
 			self.isBasePatrolling = true
 			--self.lastOrderFrame = tmpFrame
@@ -168,12 +169,11 @@ function AttackerBehavior:BasePatrol()
 end
 
 
-function AttackerBehavior:Activate()
+function AttackerBehavior:activate()
 	self.active = true
 end
 
-function AttackerBehavior:Update()
-	local tmpFrame = spGetGameFrame()
+function AttackerBehavior:GameFrame(f)
 	
 	self.pos = newPosition(spGetUnitPosition(self.unitId,false,false))
 
@@ -188,9 +188,9 @@ function AttackerBehavior:Update()
 		end
 	end
 
-	if (self.lastRetreatOrderFrame or 0) + ORDER_DELAY_FRAMES < tmpFrame then
+	if (self.lastRetreatOrderFrame or 0) + ORDER_DELAY_FRAMES < f then
 		if self.isSeriouslyDamaged then
-			self:Retreat()
+			self:retreat()
 		end
 	end	
 end
@@ -198,7 +198,7 @@ end
 
 -- to prevent artillery from chasing into enemy fire
 -- this will issue Hold Pos order to units that need it
-function AttackerBehavior:SetMoveState()
+function AttackerBehavior:setMoveState()
 	if (self.unitDef.maxWeaponRange and tonumber(self.unitDef.maxWeaponRange) > 850 ) then
 		spGiveOrderToUnit(self.unitId,CMD.MOVE_STATE,{0}, {})
 	end

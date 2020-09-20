@@ -81,7 +81,15 @@
 	ZBuffer=1;
 	NoAutoFire=0;
 	downloadable=1;
+
+	[CustomParams]
+	{
+		builtBy=claw_l1builder,claw_l2builder;
+	}
+
+
 	buildcostenergy=8537;//#AUTO#
 	buildcostmetal=1707;//#AUTO#
 	buildtime=20346;//#AUTO#
+	mass=3388;//#AUTO#
 }

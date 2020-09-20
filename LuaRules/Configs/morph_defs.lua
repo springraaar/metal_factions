@@ -1,7 +1,7 @@
 --[[   Morph Definition File
 
 Morph parameters description
-local morphDefs = {		--beginig of morphDefs
+local morphDefs = {		--beginning of morphDefs
 	unitname = {		--unit being morphed
 		into = 'newunitname',		--unit in that will morphing unit morph into
 		time = 12,			--time required to complete morph process (in seconds)
@@ -21,7 +21,7 @@ local morphDefs = {		--beginig of morphDefs
 --------------------------------------------------------------------------------
 
 
-local devolution = (-1 > 0)
+local devolution = false
 
 
 local morphDefs = {
@@ -49,7 +49,7 @@ local morphDefs = {
 			cmdname = 'Omega Form',
 			energy = 10000,
 			metal = 1500,
-			text = 'Morph to Omega Form : Increased speed and greatly increased HP, but shorter range. Disruptor weapon stuns light units.'
+			text = 'Morph to Omega Form : Increased speed and greatly increased HP. Disruptor weapon with relatively short range.'
 		},
 		{
 			into = 'aven_u4commander',

@@ -116,13 +116,9 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-	badtargetcategory1=VTOL;
-	[customParams] 
+	[CustomParams]
 	{
-	    canAreaAttack=1;
+		builtBy=aven_adv_kbot_lab;
 	}
 	[SFXTypes]
 	{
@@ -132,4 +128,5 @@
 	buildcostenergy=4599;//#AUTO#
 	buildcostmetal=919;//#AUTO#
 	buildtime=10962;//#AUTO#
+	mass=668;//#AUTO#
 }

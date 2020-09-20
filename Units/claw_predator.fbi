@@ -122,11 +122,10 @@
 	pieceTrailCEGRange = 4;
 	waterline=8;
 	
-
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=claw_spinbot_plant;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:blueflaresml;
@@ -136,4 +135,5 @@
 	buildcostenergy=8867;//#AUTO#
 	buildcostmetal=1773;//#AUTO#
 	buildtime=21135;//#AUTO#
+	mass=1291;//#AUTO#
 }

@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, pad, beam1, beam2, platform1, platform2, a1, x, nano1, nano2, b2, b3, a3;
+piece  base, pad, beam1, beam2, platform1, platform2, a1, x, nano1, nano2, b2, b3, a3,floater;
 
 static-var  beamPt, statechg_DesiredState, statechg_StateChanging, isBuilding;
 
@@ -158,6 +158,11 @@ RequestState(requestedstate, currentstate)
 
 Create()
 {
+	hide floater;
+	if ( GET GROUND_WATER_HEIGHT(GET UNIT_XZ) < 0)
+	{
+		show floater;
+	}
 	beamPt = [0];
 	call-script InitState();
 	start-script SmokeUnit();

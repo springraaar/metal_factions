@@ -118,9 +118,10 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=aven_adv_kbot_lab;
+	}
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:emgflarefast;
@@ -129,4 +130,5 @@
 	buildcostenergy=5790;//#AUTO#
 	buildcostmetal=1158;//#AUTO#
 	buildtime=13801;//#AUTO#
+	mass=961;//#AUTO#
 }

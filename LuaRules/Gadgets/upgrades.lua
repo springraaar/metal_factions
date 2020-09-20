@@ -39,7 +39,7 @@ local modifiersByUpgrade = {
 	upgrade_red_1_range = { range = 0.035, speed = -0.02, restrictions = "armed", limit = 3, type = TYPE_MINOR },
 
 	upgrade_red_2_commander_damage = { damage = 0.2, restrictions = "commander", limit = 2, type = TYPE_COMMANDER },
-	upgrade_red_2_commander_range = { range = 0.1, restrictions = "commander", limit = 2, type = TYPE_COMMANDER },
+	upgrade_red_2_commander_range = { range = 0.1, restrictions = "commander", limit = 1, type = TYPE_COMMANDER },
 	
 	upgrade_red_3_damage = { damage = 0.1, restrictions = "armed", limit = 1, type = TYPE_MAJOR },
 
@@ -64,6 +64,7 @@ local modifiersByUpgrade = {
 	upgrade_blue_3_commander_stealth_drone = { stealth_drone = 1, restrictions = "commander", limit = 3, type = TYPE_COMMANDER },
 	upgrade_blue_3_commander_builder_drone = { builder_drone = 1, restrictions = "commander", limit = 3, type = TYPE_COMMANDER },
 	upgrade_blue_3_commander_medium_drone = { medium_drone = 1, restrictions = "commander", limit = 3, type = TYPE_COMMANDER },
+	upgrade_blue_3_commander_transport_drone = { transport_drone = 1, restrictions = "commander", limit = 3, type = TYPE_COMMANDER },
 	
 	upgrade_blue_3_speed = { speed=0.10, limit = 1, type = TYPE_MAJOR }
 }

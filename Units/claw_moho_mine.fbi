@@ -96,11 +96,12 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=claw_l2builder;
+	}
 	buildcostenergy=6755;//#AUTO#
 	buildcostmetal=1351;//#AUTO#
 	buildtime=16099;//#AUTO#
+	mass=2200;//#AUTO#
 }

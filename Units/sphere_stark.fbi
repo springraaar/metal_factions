@@ -102,14 +102,13 @@
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
+
 	[CustomParams]
 	{
+		builtBy=sphere_l2builder;
 		tip=Very effective against air units;
 	}
 
-	//************************************************************
-	//  To be removed
-	//*****************
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:rocketflaremed;
@@ -117,4 +116,5 @@
 	buildcostenergy=6855;//#AUTO#
 	buildcostmetal=1371;//#AUTO#
 	buildtime=16339;//#AUTO#
+	mass=2914;//#AUTO#
 }

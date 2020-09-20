@@ -128,14 +128,13 @@
    
 	[CustomParams]
 	{
+		builtBy=aven_scout_pad,aven_aircraft_plant,aven_adv_aircraft_plant;
 		evalfactor=0.8;
 	}
 
-	//************************************************************
-	//  To be removed
-	//*****************
 
 	buildcostenergy=376;//#AUTO#
 	buildcostmetal=75;//#AUTO#
 	buildtime=897;//#AUTO#
+	mass=26;//#AUTO#
 }

@@ -27,8 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1450;
-	healtime=42;
+	maxdamage=3000;
 	footprintx=3;
 	footprintz=3;
 
@@ -110,23 +109,26 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =35 30 55;
-	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeScales =35 35 60;
+	collisionVolumeOffsets = 0 -10 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=NanoDebree;
 	pieceTrailCEGRange = 2;
 
 	[customParams] 
 	{
+		buildertype=claw_l2builder;
+		builtBy=claw_adv_shipyard;
 		evalfactor=0.85;//SHIP
 	}
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Nano;
-	explosiongenerator1=custom:UNITFIRE;
+		explosiongenerator0=custom:Nano;
+		explosiongenerator1=custom:UNITFIRE;
 	}
 
-	buildcostenergy=4550;//#AUTO#
-	buildcostmetal=910;//#AUTO#
-	buildtime=10846;//#AUTO#
+	buildcostenergy=6034;//#AUTO#
+	buildcostmetal=1206;//#AUTO#
+	buildtime=14381;//#AUTO#
+	mass=1152;//#AUTO#
 }

@@ -3,9 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define SPEEDUP_FACTOR	400
+#define SPEEDUP_FACTOR	180
 
-piece  hips, torso, lthigh, rthigh, rleg, lleg, rfoot, lfoot, p2, nano1, nanospray1, nano2, nanospray2, lbase, wings;
+piece  ground, torso, leg1, leg2, leg3, leg4, leg5, leg6, nano1, nanospray1, nano2, nanospray2, lbase, wings;
 
 static-var  Static_Var_1, bMoving, isBuilding, isOpen, nanoPt, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mADelay1, legAngle1, legAngle2, legAngle3;
 
@@ -76,126 +76,98 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 
 walk()
 {
-	var slowTurnSpd, slowTurnSpd2;
-
-	slowTurnSpd = mATurnSpd2 / 4;
-	slowTurnSpd2 = mATurnSpd2 / 6;
-	
-	
-	// back contact point : right foot behind, left foot forward
 	if( bMoving )
 	{
-		turn lthigh to x-axis <0.000000>-legAngle1 speed mATurnSpd1;
-		turn lleg to x-axis legAngle2 speed mATurnSpd2;
-		turn lfoot to x-axis legAngle3 speed mATurnSpd1;
+		turn ground to x-axis <2.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+		//turn base to z-axis <-1.000000> speed <15.000000> * SPEEDUP_FACTOR / 100;
 
-		turn rthigh to x-axis legAngle2 speed mATurnSpd2;
-		turn rleg to x-axis legAngle3 speed mATurnSpd2;
-		turn rfoot to x-axis <0.000000>-legAngle2 speed mATurnSpd1;
+		turn leg6 to y-axis <20.000000> speed <100.967033> * SPEEDUP_FACTOR / 100;
+		turn leg6 to z-axis <5.016484> speed <550.104396> * SPEEDUP_FACTOR / 100;
 
-		move hips to y-axis [-0.500000] speed mAMoveSpd1;
-		move hips to z-axis [1.000000] speed mAMoveSpd1;
-		turn hips to x-axis <4.000000> speed slowTurnSpd2;
+		turn leg5 to y-axis <-20.000000> speed <300.038462> * SPEEDUP_FACTOR / 100;
+		turn leg5 to z-axis <-15.016484> speed <60.104396> * SPEEDUP_FACTOR / 100;
 
-		if(!isBuilding)
-		{
-			// turn torso left, right arm forward
-			turn torso to y-axis <10.000000> speed slowTurnSpd2;
-		}
+		turn leg4 to y-axis <45.060440> speed <120.038462> * SPEEDUP_FACTOR / 100;
+		turn leg4 to z-axis <5.016484> speed <550.104396> * SPEEDUP_FACTOR / 100;
 		
-		wait-for-turn lthigh around x-axis;
-		wait-for-turn rthigh around x-axis;
-		wait-for-turn lleg around x-axis;
-		wait-for-turn rleg around x-axis;
+		turn leg3 to y-axis <40.412088> speed <300.060440> * SPEEDUP_FACTOR / 100;
+		turn leg3 to z-axis <15.016484> speed <60.104396> * SPEEDUP_FACTOR / 100;
+		
+		turn leg2 to y-axis <-20.093407> speed <100.368132> * SPEEDUP_FACTOR / 100;
+		turn leg2 to z-axis <-5.016484> speed <550.104396> * SPEEDUP_FACTOR / 100;
+		
+		turn leg1 to y-axis <15.137363> speed <300.681319> * SPEEDUP_FACTOR / 100;
+		turn leg1 to z-axis <15.016484> speed <60.104396> * SPEEDUP_FACTOR / 100;
+		
+		
+		sleep 175 * 100 / SPEEDUP_FACTOR;
 	}
 
-	// passing pose 2 : right foot raising, left foot on the ground
+	// only vertical
 	if( bMoving )
 	{
-		turn lthigh to x-axis <0.000000> speed mATurnSpd2;
-		turn lleg to x-axis <0.000000> speed mATurnSpd2;
-		turn lfoot to x-axis <10.000000> speed mATurnSpd3;
+		//turn leg6 to z-axis <-15.016484> speed <60.104396> * SPEEDUP_FACTOR / 100;
 
-		turn rthigh to x-axis <60.000000> speed mATurnSpd1;
-		turn rleg to x-axis <-60.000000> speed mATurnSpd1;
-		turn rfoot to x-axis <10.000000> speed mATurnSpd1;
+		turn leg5 to z-axis <5.016484> speed <150.104396> * SPEEDUP_FACTOR / 100;
 
-		if(!isBuilding)
-		{
-			// restore position
-			turn torso to y-axis <0.000000> speed slowTurnSpd2;
-		}
+		//turn leg4 to z-axis <-15.016484> speed <60.104396> * SPEEDUP_FACTOR / 100;
 
-		sleep mADelay1;
-		move hips to y-axis [0.000000] speed mAMoveSpd1;
-		move hips to z-axis [0.000000] speed mAMoveSpd1;
-		turn hips to x-axis <0.000000> speed slowTurnSpd2;
+		turn leg3 to z-axis <-5.016484> speed <150.104396> * SPEEDUP_FACTOR / 100;
 		
-		wait-for-turn lthigh around x-axis;
-		wait-for-turn rthigh around x-axis;
-		wait-for-turn lleg around x-axis;
-		wait-for-turn rleg around x-axis;
-
+		//turn leg2 to z-axis <15.016484> speed <60.104396> * SPEEDUP_FACTOR / 100;
+		
+		turn leg1 to z-axis <-5.016484> speed <150.104396> * SPEEDUP_FACTOR / 100;
+		
+		sleep 175 * 100 / SPEEDUP_FACTOR;
 	}
 	
-	// forward contact point : right foot forward, left foot behind
+	
 	if( bMoving )
 	{
-		turn lthigh to x-axis legAngle2 speed mATurnSpd2;
-		turn lleg to x-axis legAngle3 speed mATurnSpd2;
-		turn lfoot to x-axis <0>-legAngle2 speed mATurnSpd1;
+		turn ground to x-axis <-2.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+		//turn base to z-axis <1.000000> speed <15.000000> * SPEEDUP_FACTOR / 100;
 
-		turn rthigh to x-axis <0>-legAngle1 speed mATurnSpd1;
-		turn rleg to x-axis legAngle2 speed mATurnSpd2;
-		turn rfoot to x-axis legAngle3 speed mATurnSpd1;
-		
-		move hips to y-axis [-0.500000] speed mAMoveSpd1;
-		move hips to z-axis [1.000000] speed mAMoveSpd1;
-		turn hips to x-axis <4.000000> speed slowTurnSpd2;
-		
-		if(!isBuilding)
-		{
-			// turn torso right, left arm forward
-			turn torso to y-axis <-10.000000> speed slowTurnSpd2;
-		}
+		turn leg6 to y-axis <-40.000000> speed <300.967033> * SPEEDUP_FACTOR / 100;
+		turn leg6 to z-axis <-15.016484> speed <60.104396> * SPEEDUP_FACTOR / 100;
 
-		sleep mADelay1;
-		wait-for-turn lthigh around x-axis;
-		wait-for-turn rthigh around x-axis;
-		wait-for-turn lleg around x-axis;
-		wait-for-turn rleg around x-axis;
-	}
+		turn leg5 to y-axis <20.000000> speed <100.038462> * SPEEDUP_FACTOR / 100;
+		turn leg5 to z-axis <5.016484> speed <550.104396> * SPEEDUP_FACTOR / 100;
 
-	// passing pose 1 : right foot on ground, left foot raising
-	if( bMoving )
-	{
-		turn lthigh to x-axis <60.000000> speed mATurnSpd1;
-		turn lleg to x-axis <-60.000000> speed mATurnSpd1;
-		turn lfoot to x-axis <10.000000> speed mATurnSpd1;
-		
-		turn rthigh to x-axis <0.000000> speed mATurnSpd2;
-		turn rleg to x-axis <0.000000> speed mATurnSpd2;
-		turn rfoot to x-axis <10.000000> speed mATurnSpd3;
+		turn leg4 to y-axis <-15.060440> speed <300.038462> * SPEEDUP_FACTOR / 100;
+		turn leg4 to z-axis <-15.016484> speed <60.104396> * SPEEDUP_FACTOR / 100;
 
+		turn leg3 to y-axis <-20.412088> speed <100.060440> * SPEEDUP_FACTOR / 100;
+		turn leg3 to z-axis <-5.016484> speed <550.104396> * SPEEDUP_FACTOR / 100;
 		
-		if(!isBuilding)
-		{
-			// restore position
-			turn torso to y-axis <0.000000> speed slowTurnSpd2;
-		}
+		turn leg2 to y-axis <20.093407> speed <300.368132> * SPEEDUP_FACTOR / 100;
+		turn leg2 to z-axis <15.016484> speed <60.104396> * SPEEDUP_FACTOR / 100;
 		
-		sleep mADelay1;
-		move hips to y-axis [0.000000] speed mAMoveSpd1;
-		move hips to z-axis [0.000000] speed mAMoveSpd1;
-		turn hips to x-axis <0.000000> speed slowTurnSpd2;
+		turn leg1 to y-axis <-45.137363> speed <120.681319> * SPEEDUP_FACTOR / 100;
+		turn leg1 to z-axis <-5.016484> speed <550.104396> * SPEEDUP_FACTOR / 100;
 		
-		wait-for-turn lthigh around x-axis;
-		wait-for-turn rthigh around x-axis;
-		wait-for-turn lleg around x-axis;
-		wait-for-turn rleg around x-axis;
+		sleep 175 * 100 / SPEEDUP_FACTOR;
 	}
 	
-	return;
+	// only vertical
+	if( bMoving )
+	{
+
+		turn leg6 to z-axis <5.016484> speed <150.104396> * SPEEDUP_FACTOR / 100;
+
+		//turn leg5 to z-axis <-15.016484> speed <60.104396> * SPEEDUP_FACTOR / 100;
+
+		turn leg4 to z-axis <5.016484> speed <150.104396> * SPEEDUP_FACTOR / 100;
+		
+		//turn leg3 to z-axis <15.016484> speed <60.104396> * SPEEDUP_FACTOR / 100;
+		
+		turn leg2 to z-axis <-5.016484> speed <150.104396> * SPEEDUP_FACTOR / 100;
+		
+		//turn leg1 to z-axis <15.016484> speed <60.104396> * SPEEDUP_FACTOR / 100;
+		
+		
+		sleep 175 * 100 / SPEEDUP_FACTOR;
+	}
+	
 }
 
 
@@ -272,15 +244,20 @@ MotionControl(moving, justMoved)
 		{
 			if( justMoved )
 			{
-				move hips to y-axis [0.000000] speed [25.000000];
-				turn hips to x-axis <0.000000> speed <20.000000>;
-				turn rthigh to x-axis <0.000000> speed <200.000000>;
-				turn rleg to x-axis <0.000000> speed <200.000000>;
-				turn lthigh to x-axis <0.000000> speed <200.000000>;
-				turn lleg to x-axis <0.000000> speed <200.000000>;
-				turn rfoot to x-axis <0.000000> speed <200.000000>;
-				turn lfoot to x-axis <0.000000> speed <200.000000>;
-			
+				turn ground to z-axis <0.000000> speed <7.000000>;
+				turn ground to x-axis <0.000000> speed <7.000000>;
+				turn leg6 to y-axis <-25.000000> speed <237.000000>;
+				turn leg6 to z-axis <0.000000> speed <237.000000>;
+				turn leg5 to y-axis <0.000000> speed <237.000000>;
+				turn leg5 to z-axis <0.000000> speed <237.000000>;
+				turn leg4 to y-axis <0.000000> speed <237.000000>;
+				turn leg4 to z-axis <0.000000> speed <237.000000>;
+				turn leg1 to y-axis <0.000000> speed <237.000000>;
+				turn leg1 to z-axis <0.000000> speed <237.000000>;
+				turn leg2 to y-axis <0.000000> speed <237.000000>;
+				turn leg2 to z-axis <0.000000> speed <237.000000>;
+				turn leg3 to y-axis <25.000000> speed <237.000000>;
+				turn leg3 to z-axis <0.000000> speed <237.000000>;
 				if( !isBuilding )
 				{
 					turn torso to y-axis <0.000000> speed <200.000000>;

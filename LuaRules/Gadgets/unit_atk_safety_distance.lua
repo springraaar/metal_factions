@@ -26,7 +26,7 @@ if (gadgetHandler:IsSyncedCode()) then
 				dist = specialCases[name]
 			end		
 			
- 			Spring.MoveCtrl.SetAirMoveTypeData(unitID,{attackSafetyDistance=dist})
+ 			Spring.MoveCtrl.SetAirMoveTypeData(unitID,{attackSafetyDistance=dist,maneuverBlockTime=0})
 		end
 	end
 

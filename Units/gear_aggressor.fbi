@@ -114,16 +114,18 @@
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
+
+	[CustomParams]
+	{
+		builtBy=gear_light_plant,gear_adv_kbot_lab;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:GLOWSML;
 	}
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
 	buildcostenergy=556;//#AUTO#
 	buildcostmetal=111;//#AUTO#
 	buildtime=1325;//#AUTO#
+	mass=96;//#AUTO#
 }

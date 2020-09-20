@@ -129,16 +129,19 @@
 	version=1.2;
 	zbuffer=1;
 	CanLoopbackAttack=0;
-
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =30 12 30;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
+
+	[CustomParams]
+	{
+		builtBy=claw_aircraft_plant,claw_adv_aircraft_plant;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:emgflarefast;
@@ -146,4 +149,5 @@
 	buildcostenergy=1555;//#AUTO#
 	buildcostmetal=311;//#AUTO#
 	buildtime=3706;//#AUTO#
+	mass=104;//#AUTO#
 }

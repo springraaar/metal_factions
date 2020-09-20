@@ -116,15 +116,17 @@
 	pieceTrailCEGTag=NanoDebree;
 	pieceTrailCEGRange = 2;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		buildertype=aven_l1builder;
+		builtBy=aven_light_plant,aven_adv_kbot_lab,aven_adv_vehicle_plant;
+	}
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Nano;
+		explosiongenerator0=custom:Nano;
 	}
 	buildcostenergy=1600;//#AUTO#
 	buildcostmetal=320;//#AUTO#
 	buildtime=3814;//#AUTO#
+	mass=122;//#AUTO#
 }

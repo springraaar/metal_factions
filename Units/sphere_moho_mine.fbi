@@ -96,11 +96,13 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=sphere_l2builder;
+	}
 
 	buildcostenergy=7167;//#AUTO#
 	buildcostmetal=1433;//#AUTO#
 	buildtime=17081;//#AUTO#
+	mass=2604;//#AUTO#
 }

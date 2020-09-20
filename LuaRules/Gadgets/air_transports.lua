@@ -1,7 +1,7 @@
 function gadget:GetInfo()
    return {
       name = "Air Transports Handler",
-      desc = "Slows down transport depending on loaded mass (up to 50%) and fixes unloaded units sliding bug",
+      desc = "Slows down transport depending on loaded mass (up to 55%) and fixes unloaded units sliding bug",
       author = "raaar",
       date = "2015",
       license = "PD",
@@ -10,7 +10,7 @@ function gadget:GetInfo()
    }
 end
 
-local TRANSPORTED_MASS_SPEED_PENALTY = 0.5 -- higher makes unit slower
+local TRANSPORTED_MASS_SPEED_PENALTY = 0.55 -- higher makes unit slower
 local FRAMES_PER_SECOND = 30
 
 local TRANSPORT_SQDISTANCE_TOLERANCE = 1024 -- about 30 elmos 
@@ -26,6 +26,7 @@ local spSetUnitPhysics = Spring.SetUnitPhysics
 local spSetUnitDirection = Spring.SetUnitDirection
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spGetUnitIsTransporting = Spring.GetUnitIsTransporting
 			
 local missileDefIds = {
 	[UnitDefNames["aven_premium_nuclear_rocket"].id] = true,
@@ -60,7 +61,7 @@ local currentMassUsage = 0
 function updateAllowedSpeed(transportId, transportUnitDef)
 	-- get sum of mass and size for all transported units                                
 	currentMassUsage = 0
-	for _,tUnitId in pairs(Spring.GetUnitIsTransporting(transportId)) do
+	for _,tUnitId in pairs(spGetUnitIsTransporting(transportId)) do
 		local tUd = UnitDefs[Spring.GetUnitDefID(tUnitId)]
 		-- currentCapacityUsage = currentCapacityUsage + tUd.xsize 
 		currentMassUsage = currentMassUsage + tUd.mass
@@ -159,7 +160,7 @@ function gadget:UnitUnloaded(unitId, unitDefId, teamId, transportId)
 			unloadedUnits[unitId] = {["px"]=px,["py"]=py,["pz"]=pz,["dx"]=dx,["dy"]=dy,["dz"]=dz,["frame"]=frame}
 		end
 	
-		if airTransports[transportId] and not Spring.GetUnitIsTransporting(transportId)[1] then
+		if airTransports[transportId] and not spGetUnitIsTransporting(transportId)[1] then
 			-- transport is empty, cleanup tables
 			airTransports[transportId] = nil
 			airTransportMaxSpeeds[transportId] = nil

@@ -122,19 +122,17 @@
 	pieceTrailCEGRange = 4;
 	scale=1.2;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:yellowflaremed;
 	}
-	[customParams] 
+	[CustomParams]
 	{
-	    canAreaAttack=1;
+		builtBy=gear_adv_vehicle_plant;
+		canAreaAttack=1;
 	}
 	buildcostenergy=17191;//#AUTO#
 	buildcostmetal=3438;//#AUTO#
 	buildtime=40972;//#AUTO#
+	mass=2171;//#AUTO#
 }

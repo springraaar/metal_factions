@@ -124,13 +124,10 @@
 
 	[CustomParams]
 	{
+		builtBy=sphere_adv_shipyard;
 		evalfactor=0.85;//SHIP
 		tip=33% slower on land;
 	}
-	//************************************************************
-	//  To be removed
-	//*****************
-
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:redflare;
@@ -140,4 +137,5 @@
 	buildcostenergy=5979;//#AUTO#
 	buildcostmetal=1195;//#AUTO#
 	buildtime=14251;//#AUTO#
+	mass=1148;//#AUTO#
 }

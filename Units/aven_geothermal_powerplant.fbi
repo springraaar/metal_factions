@@ -95,11 +95,13 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=aven_geothermal_powerplant;
+	}
 
 	buildcostenergy=4812;//#AUTO#
 	buildcostmetal=962;//#AUTO#
 	buildtime=11468;//#AUTO#
+	mass=1290;//#AUTO#
 }

@@ -27,9 +27,9 @@
 	//  Health/Cost/Size
 	//********************
 	maxdamage=2000;
-	buildcostmetal=1200;
-	buildcostenergy=6000;
-	buildtime=14400;
+	buildcostmetal=1400;
+	buildcostenergy=7000;
+	buildtime=16800;
 	footprintx=4;
 	footprintz=4;
 
@@ -124,6 +124,7 @@
 	
 	[CustomParams]
 	{
+		builtBy=aven_aircraft_plant,aven_adv_aircraft_plant;
 		tip=Transport weight limit : HEAVY;
 	}
 	[SFXTypes]

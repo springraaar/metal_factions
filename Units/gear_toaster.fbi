@@ -107,26 +107,18 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-
 	[CustomParams]
 	{
+		builtBy=gear_l1builder,gear_l2builder;
+		canAreaAttack=1;
 		tip=Gains 50% dmg resistance when closed;
 	}
-
-	//************************************************************
-	//  To be removed
-	//*****************
-
-
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:YELLOWFLAREMED;
 	}
-	[customParams] 
-	{
-		canAreaAttack=1;
-	}
 	buildcostenergy=6778;//#AUTO#
 	buildcostmetal=1355;//#AUTO#
 	buildtime=16155;//#AUTO#
+	mass=2450;//#AUTO#
 }

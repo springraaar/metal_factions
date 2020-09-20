@@ -100,9 +100,10 @@
 	waterline=0;
 	floater=1;
 	
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=claw_l1builder,claw_l2builder;
+	}
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:Nano;
@@ -111,4 +112,5 @@
 	buildcostenergy=3791;//#AUTO#
 	buildcostmetal=758;//#AUTO#
 	buildtime=9036;//#AUTO#
+	mass=1754;//#AUTO#
 }

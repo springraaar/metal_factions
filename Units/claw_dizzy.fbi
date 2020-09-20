@@ -121,9 +121,10 @@
 	waterline=6;
 	
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=claw_spinbot_plant;
+	}
 
 	[SFXTypes]
 	{
@@ -133,4 +134,5 @@
 	buildcostenergy=1864;//#AUTO#
 	buildcostmetal=372;//#AUTO#
 	buildtime=4444;//#AUTO#
+	mass=399;//#AUTO#
 }

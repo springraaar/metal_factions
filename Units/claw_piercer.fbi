@@ -103,10 +103,10 @@
 	floater=1;
 	waterline=0;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=claw_l1builder,claw_l2builder;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:railgunflare;
@@ -114,4 +114,5 @@
 	buildcostenergy=7937;//#AUTO#
 	buildcostmetal=1587;//#AUTO#
 	buildtime=18918;//#AUTO#
+	mass=2308;//#AUTO#
 }

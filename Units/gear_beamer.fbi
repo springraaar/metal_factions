@@ -104,12 +104,10 @@
 
 	[CustomParams]
 	{
+		builtBy=gear_l1builder,gear_l2builder;
 		tip=Gains 50% dmg resistance when closed;
 	}
 
-	//************************************************************
-	//  To be removed
-	//*****************
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:GLOWSML;
@@ -118,4 +116,5 @@
 	buildcostenergy=3653;//#AUTO#
 	buildcostmetal=730;//#AUTO#
 	buildtime=8707;//#AUTO#
+	mass=1410;//#AUTO#
 }

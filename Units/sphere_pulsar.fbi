@@ -89,6 +89,11 @@
 	collisionVolumeScales =40 25 40;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_adv_vehicle_factory;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:emgflarefast;
@@ -96,4 +101,5 @@
 	buildcostenergy=9018;//#AUTO#
 	buildcostmetal=1803;//#AUTO#
 	buildtime=21494;//#AUTO#
+	mass=2561;//#AUTO#
 }

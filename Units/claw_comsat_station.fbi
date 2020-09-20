@@ -103,12 +103,10 @@
 
 	[CustomParams]
 	{
+		builtBy=claw_l1builder,claw_l2builder;
 		tip=Manually target a position to reveal a 720 radius area around it for 30 seconds;
 	}
 
-	//************************************************************
-	//  To be removed
-	//*****************
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:glowsml;

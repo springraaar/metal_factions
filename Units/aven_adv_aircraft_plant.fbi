@@ -48,6 +48,7 @@
 	collisionVolumeScales=100 45 120;
 	collisionVolumeOffsets=0 -5 0;
 	collisionVolumeTest = 1;
+	floater=1;
 
 	//************************************************************
 	//  Constructor
@@ -67,7 +68,6 @@
 	//  Movement
 	//************
 	maxslope=10;
-	maxwaterdepth=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -101,17 +101,19 @@
 	zbuffer=1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
+	[CustomParams]
+	{
+		builtBy=aven_l1builder,aven_l2builder;
+	}
 
-	//************************************************************
-	//  To be removed
-	//*****************
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Nano;
-	explosiongenerator1=custom:Normallight;
+		explosiongenerator0=custom:Nano;
+		explosiongenerator1=custom:Normallight;
 	}
 
 	buildcostenergy=8537;//#AUTO#
 	buildcostmetal=1707;//#AUTO#
 	buildtime=20346;//#AUTO#
+	mass=3388;//#AUTO#
 }

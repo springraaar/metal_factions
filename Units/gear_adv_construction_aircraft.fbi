@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=900;
+	maxdamage=2000;
 	healtime=33;
 	footprintx=3;
 	footprintz=3;
@@ -111,20 +111,21 @@
 	zbuffer=1;
 	pieceTrailCEGTag=NanoDebree;
 	pieceTrailCEGRange = 2;
-	
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =35 13 25;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		buildertype=gear_l2builder;
+		builtBy=gear_adv_aircraft_plant;
+	}
 
-	buildcostenergy=6709;//#AUTO#
-	buildcostmetal=1341;//#AUTO#
-	buildtime=15991;//#AUTO#
+	buildcostenergy=9112;//#AUTO#
+	buildcostmetal=1822;//#AUTO#
+	buildtime=21717;//#AUTO#
+	mass=553;//#AUTO#
 }

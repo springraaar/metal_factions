@@ -23,8 +23,6 @@ function widget:Initialize()
 end
 
 
-
-
 function widget:KeyPress(key, mods, isRepeat)
 	if (key == KEYSYMS.C) and mods.ctrl then
 		-- get team units
@@ -68,4 +66,5 @@ function widget:KeyRelease()
 		shouldSelectCom = false
 	end
 end
+
 

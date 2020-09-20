@@ -116,11 +116,11 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-	badtargetcategory1=VTOL;
 
+	[customParams] 
+	{
+		builtBy=aven_adv_kbot_lab;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:greenflare;
@@ -129,4 +129,5 @@
 	buildcostenergy=12193;//#AUTO#
 	buildcostmetal=2438;//#AUTO#
 	buildtime=29060;//#AUTO#
+	mass=1662;//#AUTO#
 }

@@ -97,11 +97,12 @@
 	floater=1;
 	waterline=0;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[customParams] 
+	{
+		builtBy=aven_l1builder,aven_l2builder;
+	}
 	buildcostenergy=632;//#AUTO#
 	buildcostmetal=126;//#AUTO#
 	buildtime=1507;//#AUTO#
+	mass=192;//#AUTO#
 }

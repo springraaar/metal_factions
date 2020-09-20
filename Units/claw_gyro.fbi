@@ -123,13 +123,10 @@
 	
 	[CustomParams]
 	{
+		builtBy=claw_spinbot_plant;
 		evalFactor=0.85;
 		tip=Ring charging resets if dealt 25%+ HP in damage within 3 seconds;
 	}
-
-	//************************************************************
-	//  To be removed
-	//*****************
 
 	[SFXTypes]
 	{
@@ -144,4 +141,5 @@
 	buildcostenergy=4136;//#AUTO#
 	buildcostmetal=827;//#AUTO#
 	buildtime=9857;//#AUTO#
+	mass=575;//#AUTO#
 }

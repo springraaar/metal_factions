@@ -121,11 +121,13 @@
 		explosiongenerator1=custom:yellowflaresml;
 	}
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=claw_light_plant,claw_adv_kbot_plant;
+	}
 
 	buildcostenergy=703;//#AUTO#
 	buildcostmetal=140;//#AUTO#
 	buildtime=1677;//#AUTO#
+	mass=129;//#AUTO#
 }

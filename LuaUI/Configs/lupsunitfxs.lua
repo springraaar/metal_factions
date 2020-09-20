@@ -95,6 +95,10 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=30, piece="ljp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=30, piece="rjp", onActive=true}}
   },
+  aven_gale = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=30, piece="ljp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=30, piece="rjp", onActive=true}}
+  },
   aven_stealth_drone = {
     {class='AirJet',options={color={0.1,0.1,0}, width=3, length=20, piece="ljp", onActive=true}},
     {class='AirJet',options={color={0.1,0.1,0}, width=3, length=20, piece="rjp", onActive=true}}
@@ -149,6 +153,16 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="rjp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=8, length=40, piece="cjp", onActive=true}}
   },
+  aven_transport_drone = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=25, piece="tp1", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=25, piece="tp2", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=25, piece="tp3", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=25, piece="tp4", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="ljp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="rjp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=8, length=40, piece="cjp", onActive=true}}
+  },
+
   aven_icarus = {
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="ljp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="rjp", onActive=true}},
@@ -252,6 +266,15 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="rjp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=8, length=40, piece="cjp", onActive=true}}
   },
+  gear_transport_drone = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=25, piece="tp1", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=25, piece="tp2", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=25, piece="tp3", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=25, piece="tp4", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="ljp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="rjp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=8, length=40, piece="cjp", onActive=true}}
+  },  
   gear_knocker = {
     {class='AirJet',options={color={0.3,0.1,0}, width=4, length=25, piece="ljp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=4, length=30, piece="rjp", onActive=true}},
@@ -315,7 +338,16 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="ljp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="rjp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=8, length=40, piece="cjp", onActive=true}}
-  }, 
+  },
+  claw_transport_drone = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=25, piece="tp1", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=25, piece="tp2", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=25, piece="tp3", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=25, piece="tp4", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="ljp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="rjp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=8, length=40, piece="cjp", onActive=true}}
+  },   
   claw_trident = {
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="ljp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="rjp", onActive=true}},
@@ -335,6 +367,11 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=25, piece="jp3", onActive=true,down=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=25, piece="jp4", onActive=true,down=true}}
   },  
+  claw_shredder = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=30, piece="cjp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=15, piece="ljp", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=15, piece="rjp", onActive=true,down=true}}
+  },    
   ----------------- SPHERE
   sphere_probe = {
     {class='AirJet',options={color={0.3,0.1,0}, width=4, length=30, piece="jp1", onActive=true}}
@@ -362,6 +399,9 @@ effectUnitDefs = {
   },    
   sphere_manta = {
     {class='AirJet',options={color={0.3,0.1,0}, width=7, length=40, piece="jp1", onActive=true}}
+  },
+  sphere_blower = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=40, piece="jp1", onActive=true}}
   },  
   sphere_twilight = {
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=40, piece="ljp", onActive=true}},
@@ -385,6 +425,14 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="rjp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=8, length=40, piece="cjp", onActive=true}}
   },
+  sphere_transport_drone = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=25, piece="tp1", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=25, piece="tp2", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=25, piece="tp3", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=25, piece="tp4", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="ljp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="rjp", onActive=true}}
+  },  
   sphere_spitfire = {
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=30, piece="ljp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=30, piece="rjp", onActive=true}}

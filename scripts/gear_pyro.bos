@@ -3,10 +3,10 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define SPEEDUP_FACTOR	360
+#define SPEEDUP_FACTOR	340
 
 #define HEADING_TOLERANCE	<30>
-#define PITCH_TOLERANCE		<20>
+#define PITCH_TOLERANCE		<25>
 
 piece  torso, ruparm, luparm, rfire, rloarm, lloarm, pelvis, rbarrel, lshield,
        rleg, rfoot, lleg, lfoot, head, lthigh, rthigh, ground;
@@ -38,7 +38,7 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 		
 		
 		mAMoveSpd1 = [20.000000] * mASpdFactor / 100;
-		mATurnSpd1 = <315.000000> * (100 + mASpdFactor) / 200;
+		mATurnSpd1 = <300.000000> * (100 + mASpdFactor) / 200;
 		mATurnSpd2 = <200.000000> * (100 + mASpdFactor) / 200;
 		mATurnSpd3 = <50.000000> * (100 + mASpdFactor) / 200;
 
@@ -101,14 +101,14 @@ walk()
 	{
 		turn lthigh to x-axis <0.000000>-legAngle1 speed mATurnSpd1;
 		turn lleg to x-axis legAngle2 speed mATurnSpd2;
-		turn lfoot to x-axis <0> speed mATurnSpd3;
+		//turn lfoot to x-axis <0> speed mATurnSpd3;
 
 		turn rthigh to x-axis legAngle2 speed mATurnSpd2;
 		turn rleg to x-axis legAngle3 speed mATurnSpd2;
-		turn rfoot to x-axis <0.000000>-legAngle2 speed mATurnSpd1;
+		//turn rfoot to x-axis <0.000000>-legAngle2 speed mATurnSpd1;
 
 		move pelvis to y-axis mAVertFactor speed mAMoveSpd1;
-		turn pelvis to x-axis <8.000000> speed slowTurnSpd2;
+		turn pelvis to x-axis <4.000000> speed slowTurnSpd2;
 		if(!bAiming)
 		{
 			// turn torso left, right arm forward
@@ -126,8 +126,8 @@ walk()
 	// intermediate pose 2 : left stomp ground
 	if( bMoving)
 	{
-		turn lfoot to x-axis legAngle3 speed mATurnSpd1*5;
-		wait-for-turn lfoot around x-axis;
+		//turn lfoot to x-axis legAngle3 speed mATurnSpd1*5;
+		//wait-for-turn lfoot around x-axis;
 	}
 
 	// passing pose 2 : right foot raising, left foot on the ground
@@ -135,11 +135,11 @@ walk()
 	{
 		turn lthigh to x-axis <0.000000> speed mATurnSpd2;
 		turn lleg to x-axis <0.000000> speed mATurnSpd2;
-		turn lfoot to x-axis <0.000000> speed mATurnSpd3;
+		//turn lfoot to x-axis <0.000000> speed mATurnSpd3;
 
 		turn rthigh to x-axis <-20.000000> speed mATurnSpd2;
 		turn rleg to x-axis <30.000000> speed mATurnSpd2;
-		turn rfoot to x-axis <10.000000> speed mATurnSpd1;
+		//turn rfoot to x-axis <10.000000> speed mATurnSpd1;
 
 		if(!bAiming)
 		{
@@ -165,14 +165,14 @@ walk()
 	{
 		turn lthigh to x-axis legAngle2 speed mATurnSpd2;
 		turn lleg to x-axis legAngle3 speed mATurnSpd2;
-		turn lfoot to x-axis <0>-legAngle2 speed mATurnSpd1;
+		//turn lfoot to x-axis <0>-legAngle2 speed mATurnSpd1;
 
 		turn rthigh to x-axis <0>-legAngle1 speed mATurnSpd1;
 		turn rleg to x-axis legAngle2 speed mATurnSpd2;
-		turn rfoot to x-axis <0> speed mATurnSpd3;
+		//turn rfoot to x-axis <0> speed mATurnSpd3;
 		
 		move pelvis to y-axis mAVertFactor speed mAMoveSpd1;
-		turn pelvis to x-axis <8.000000> speed slowTurnSpd2;
+		turn pelvis to x-axis <4.000000> speed slowTurnSpd2;
 		
 		if(!bAiming)
 		{
@@ -191,8 +191,8 @@ walk()
 	// intermediate pose 1 : right stomp ground
 	if( bMoving)
 	{
-		turn rfoot to x-axis legAngle3 speed mATurnSpd1*5;
-		wait-for-turn rfoot around x-axis;
+		//turn rfoot to x-axis legAngle3 speed mATurnSpd1*5;
+		//wait-for-turn rfoot around x-axis;
 	}
 
 	// passing pose 1 : right foot on ground, left foot raising
@@ -200,11 +200,11 @@ walk()
 	{
 		turn lthigh to x-axis <-20.000000> speed mATurnSpd2;
 		turn lleg to x-axis <30.000000> speed mATurnSpd2;
-		turn lfoot to x-axis <10.000000> speed mATurnSpd1;
+		//turn lfoot to x-axis <10.000000> speed mATurnSpd1;
 		
 		turn rthigh to x-axis <0.000000> speed mATurnSpd2;
 		turn rleg to x-axis <0.000000> speed mATurnSpd2;
-		turn rfoot to x-axis <0.000000> speed mATurnSpd3;
+		//turn rfoot to x-axis <0.000000> speed mATurnSpd3;
 
 		
 		if(!bAiming)
@@ -226,7 +226,6 @@ walk()
 	
 	return;
 }
-
 
 MotionControl(moving, aiming, justmoved)
 {

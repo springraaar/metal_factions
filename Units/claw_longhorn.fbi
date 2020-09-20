@@ -78,8 +78,8 @@
 	weapon1=claw_longhorn_railgun;
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
-	explodeas=MEDIUM_BUILDINGEX;
-	selfdestructas=MEDIUM_BUILDING;
+	explodeas=ATOMIC_BLASTSML;
+	selfdestructas=ATOMIC_BLAST;
 
 	//************************************************************
 	//  Orders
@@ -102,15 +102,17 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=claw_l2builder;
+	}
 
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:railgunflarebig;
 	}
-	buildcostenergy=79039;//#AUTO#
-	buildcostmetal=15807;//#AUTO#
-	buildtime=188377;//#AUTO#
+	buildcostenergy=78773;//#AUTO#
+	buildcostmetal=15754;//#AUTO#
+	buildtime=187744;//#AUTO#
+	mass=12502;//#AUTO#
 }

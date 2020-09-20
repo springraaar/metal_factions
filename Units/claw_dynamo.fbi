@@ -121,20 +121,12 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-
-	//************************************************************
-	//  To be removed
-	//*****************
-
 	[CustomParams]
 	{
+		builtBy=claw_adv_vehicle_plant;
 		evalFactor=0.85;
 		tip=Ring charging resets if dealt 15%+ HP in damage within 3 seconds. Penetrates wreckages and low HP targets;
 	}
-
-	//************************************************************
-	//  To be removed
-	//*****************
 
 	[SFXTypes]
 	{
@@ -149,4 +141,5 @@
 	buildcostenergy=20714;//#AUTO#
 	buildcostmetal=4142;//#AUTO#
 	buildtime=49370;//#AUTO#
+	mass=1980;//#AUTO#
 }

@@ -80,7 +80,8 @@
 	//  Weapons
 	//***********
 	weapon1=gear_kano_cannon;
-	badtargetcategory1=NOTAIR;
+	badtargetcategory1=VTOL;
+	nochasecategory1=VTOL;
 	explodeas=SMALL_UNITEX;
 	selfdestructas=SMALL_UNIT;
 
@@ -114,9 +115,10 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=gear_light_plant,gear_adv_kbot_lab;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:yellowflaremed;
@@ -125,4 +127,5 @@
 	buildcostenergy=1268;//#AUTO#
 	buildcostmetal=253;//#AUTO#
 	buildtime=3023;//#AUTO#
+	mass=160;//#AUTO#
 }

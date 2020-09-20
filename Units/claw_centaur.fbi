@@ -113,16 +113,17 @@
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
+	[CustomParams]
+	{
+		builtBy=claw_adv_kbot_plant;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:blueflaresml;
 	}
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
 	buildcostenergy=3624;//#AUTO#
 	buildcostmetal=724;//#AUTO#
 	buildtime=8639;//#AUTO#
+	mass=616;//#AUTO#
 }

@@ -101,9 +101,10 @@
 	floater=1;
 	waterline=0;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=sphere_l1builder,sphere_l2builder;
+	}
 
 	[SFXTypes]
 	{
@@ -112,4 +113,5 @@
 	buildcostenergy=2498;//#AUTO#
 	buildcostmetal=499;//#AUTO#
 	buildtime=5955;//#AUTO#
+	mass=1082;//#AUTO#
 }

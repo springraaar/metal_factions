@@ -26,9 +26,9 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=800;
-	footprintx=3;
-	footprintz=3;
+	maxdamage=1800;
+	footprintx=4;
+	footprintz=4;
 
 	//************************************************************
 	//  Resources
@@ -118,11 +118,13 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
-	buildcostenergy=6902;//#AUTO#
-	buildcostmetal=1380;//#AUTO#
-	buildtime=16451;//#AUTO#
+	[CustomParams]
+	{
+		buildertype=claw_l2builder;
+		builtBy=claw_adv_aircraft_plant;
+	}
+	buildcostenergy=9272;//#AUTO#
+	buildcostmetal=1854;//#AUTO#
+	buildtime=22098;//#AUTO#
+	mass=534;//#AUTO#
 }

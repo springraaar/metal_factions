@@ -113,7 +113,6 @@
 	trackwidth=48;
 	version=1.2;
 	zbuffer=1;
-	mass=75000;
 	collisionVolumeType = box;
 	collisionVolumeScales =66 33 66;
 	collisionVolumeOffsets = 0 0 0;
@@ -121,10 +120,10 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=gear_adv_vehicle_plant;
+	}
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:yellowflarebig;
@@ -134,4 +133,5 @@
 	buildcostenergy=17338;//#AUTO#
 	buildcostmetal=3467;//#AUTO#
 	buildtime=41324;//#AUTO#
+	mass=6249;//#AUTO#
 }

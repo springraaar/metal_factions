@@ -27,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1500;
+	maxdamage=3000;
 	healtime=67;
 	footprintx=3;
 	footprintz=3;
@@ -71,7 +71,7 @@
 	turnrate=350;
 	acceleration=0.18;
 	brakerate=0.15;
-	maxvelocity=1.7;
+	maxvelocity=1.8;
 	maxslope=16;
 	maxwaterdepth=1000;
 	turninplace=0;
@@ -126,17 +126,17 @@
 
 	[CustomParams]
 	{
+		buildertype=aven_l2builder;
+		builtBy=aven_adv_vehicle_plant;
 		tip=33% slower on water;
 	}
-	//************************************************************
-	//  To be removed
-	//*****************
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Nano;
+		explosiongenerator0=custom:Nano;
 	}
-	buildcostenergy=4720;//#AUTO#
-	buildcostmetal=944;//#AUTO#
-	buildtime=11251;//#AUTO#
+	buildcostenergy=6368;//#AUTO#
+	buildcostmetal=1273;//#AUTO#
+	buildtime=15177;//#AUTO#
+	mass=1174;//#AUTO#
 }

@@ -6,7 +6,7 @@
 	Side=Gear;
 	name=Firestorm;
 	description=Incendiary Riot Aircraft;
-	icontype=airbomber;
+	icontype=airmulti;
 
 	//************************************************************
 	//  Categories
@@ -113,11 +113,6 @@
 	version=1.2;
 	zbuffer=1;
 	CanLoopbackAttack=0;
-
-
-	//************************************************************
-	//  Out of Category
-	//*******************
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
@@ -129,6 +124,7 @@
 
 	[CustomParams]
 	{
+		builtBy=gear_adv_aircraft_plant;
 		tip=Burns ground for 20s, dealing up to 20(M) dmg/s. Affected units burn for 180(M) dmg over 6s;
 	}
 
@@ -140,4 +136,5 @@
 	buildcostenergy=14223;//#AUTO#
 	buildcostmetal=2844;//#AUTO#
 	buildtime=33900;//#AUTO#
+	mass=849;//#AUTO#
 }

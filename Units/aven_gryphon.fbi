@@ -122,9 +122,10 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=aven_adv_aircraft_plant;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:EMGFLAREFAST;
@@ -133,4 +134,5 @@
 	buildcostenergy=6757;//#AUTO#
 	buildcostmetal=1351;//#AUTO#
 	buildtime=16104;//#AUTO#
+	mass=406;//#AUTO#
 }

@@ -95,11 +95,12 @@
 	pieceTrailCEGTag=NanoDebree;
 	pieceTrailCEGRange = 1;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=aven_l1builder,aven_l2builder;
+	}
 	buildcostenergy=681;//#AUTO#
 	buildcostmetal=136;//#AUTO#
 	buildtime=1623;//#AUTO#
+	mass=184;//#AUTO#
 }

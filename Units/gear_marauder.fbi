@@ -82,7 +82,6 @@
 	weapon1=gear_marauder_laser;
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
-	badtargetcategory1=VTOL;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
 
@@ -121,14 +120,16 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=gear_adv_vehicle_plant;
+	}
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:redflare;
+		explosiongenerator0=custom:redflare;
 	}
 	buildcostenergy=4085;//#AUTO#
 	buildcostmetal=817;//#AUTO#
 	buildtime=9737;//#AUTO#
+	mass=797;//#AUTO#
 }

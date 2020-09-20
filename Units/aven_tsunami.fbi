@@ -27,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=7000;
+	maxdamage=6500;
 	healtime=30;
 	footprintx=6;
 	footprintz=6;
@@ -67,7 +67,7 @@
 	turnrate=285;
 	acceleration=0.03;
 	brakerate=0.02;
-	maxvelocity=1.8;
+	maxvelocity=1.7;
 	maxslope=16;
 	maxwaterdepth=0;
 	turnInPlace=0;
@@ -119,18 +119,18 @@
 
 	[CustomParams]
 	{
-		tip=Gains 30% damage resistance when closed. Projectile explosions push enemy units.;
+		builtBy=aven_hovercraft_platform;
+		tip=Gains 25% damage resistance when closed. Projectile explosions push enemy units.;
 	}
 
-	//************************************************************
-	//  To be removed
-	//*****************
+
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:blueflaresml;
 	}
 
-	buildcostenergy=26264;//#AUTO#
-	buildcostmetal=5252;//#AUTO#
-	buildtime=62597;//#AUTO#
+	buildcostenergy=28088;//#AUTO#
+	buildcostmetal=5617;//#AUTO#
+	buildtime=66943;//#AUTO#
+	mass=5595;//#AUTO#
 }

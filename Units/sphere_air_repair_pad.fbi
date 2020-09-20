@@ -100,15 +100,17 @@
 	waterline=0;
 	floater=1;
 	
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=sphere_l1builder,sphere_l2builder;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:Nano;
 	}
 
-	buildcostenergy=2726;//#AUTO#
-	buildcostmetal=545;//#AUTO#
-	buildtime=6499;//#AUTO#
+	buildcostenergy=2563;//#AUTO#
+	buildcostmetal=512;//#AUTO#
+	buildtime=6110;//#AUTO#
+	mass=1740;//#AUTO#
 }

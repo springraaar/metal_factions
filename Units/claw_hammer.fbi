@@ -123,17 +123,12 @@
 	waterline=8;
 	pushResistant=1;
 
-
-
 	[CustomParams]
 	{
+		builtBy=claw_adv_spinbot_plant;
 		tip=Use ON/OFF toggle deployment mode. Can only fire if deployed but cannot move. Gains 33% dmg resistance when closed;
 		evalfactor=0.9; //can't fire while moving
 	}
-
-	//************************************************************
-	//  To be removed
-	//*****************
 
 	[SFXTypes]
 	{
@@ -144,4 +139,5 @@
 	buildcostenergy=15577;//#AUTO#
 	buildcostmetal=3115;//#AUTO#
 	buildtime=37126;//#AUTO#
+	mass=1888;//#AUTO#
 }

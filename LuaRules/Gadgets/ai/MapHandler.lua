@@ -1,4 +1,4 @@
-include("LuaRules/Gadgets/ai/Common.lua")
+include("LuaRules/Gadgets/ai/common.lua")
 
 MapHandler = {}
 MapHandler.__index = MapHandler

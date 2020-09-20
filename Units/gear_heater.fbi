@@ -122,12 +122,9 @@
 
 	[CustomParams]
 	{
+		builtBy=gear_adv_vehicle_plant;
 		tip=Targets burn for 180(M) dmg over 6s;
 	}
-
-	//************************************************************
-	//  To be removed
-	//*****************
 
 	[SFXTypes]
 	{
@@ -136,4 +133,5 @@
 	buildcostenergy=4791;//#AUTO#
 	buildcostmetal=958;//#AUTO#
 	buildtime=11420;//#AUTO#
+	mass=2110;//#AUTO#
 }

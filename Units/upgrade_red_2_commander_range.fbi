@@ -5,7 +5,7 @@
 	//********************
 	Side=ALL;
 	name=Advanced Commander Targeting Systems;
-	description=COMMANDER Upgrade Module : +10% range (max x2);
+	description=COMMANDER Upgrade Module : +10% range (max x1);
 
 	//************************************************************
 	//  Categories
@@ -137,6 +137,7 @@
 
 	[CustomParams]
 	{
+		builtBy=aven_upgrade_center,gear_upgrade_center,claw_upgrade_center,sphere_upgrade_center;
 		isUpgrade=1;
 	}
 }

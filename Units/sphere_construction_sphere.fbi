@@ -23,7 +23,6 @@
 	MaxDamage=6000;
 	FootprintX=4;
 	FootprintZ=4;
-	mass=2500;
 	autoheal=30;
 	
 	// ------------------- resources
@@ -103,6 +102,8 @@
 
 	[CustomParams]
 	{
+		buildertype=sphere_l2builder;
+		builtBy=sphere_sphere_factory;
 		energyCostMoving=120;
 		tip=Requires 120E/s to move. Regenerates 30 HP/s;
 	}
@@ -111,7 +112,8 @@
 	{
 		explosiongenerator0=custom:buildglow;
 	}
-	buildcostenergy=11087;//#AUTO#
-	buildcostmetal=2217;//#AUTO#
-	buildtime=26424;//#AUTO#
+	buildcostenergy=10643;//#AUTO#
+	buildcostmetal=2128;//#AUTO#
+	buildtime=25367;//#AUTO#
+	mass=3534;//#AUTO#
 }

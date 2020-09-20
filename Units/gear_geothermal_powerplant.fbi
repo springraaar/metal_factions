@@ -95,11 +95,13 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=gear_l1builder,gear_l2builder;
+	}
 
 	buildcostenergy=5049;//#AUTO#
 	buildcostmetal=1009;//#AUTO#
 	buildtime=12035;//#AUTO#
+	mass=1472;//#AUTO#
 }

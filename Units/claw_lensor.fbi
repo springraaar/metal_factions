@@ -81,7 +81,7 @@
 	//  Weapons
 	//***********
 	weapon1=scoper_beacon;
-	badtargetcategory1=NOTAIR;
+	badtargetcategory1=VTOL;
 	explodeas=SMALL_UNITEX;
 	selfdestructas=SMALL_UNIT;
 
@@ -109,6 +109,7 @@
    
 	[CustomParams]
 	{
+		builtBy=claw_aircraft_plant,claw_adv_aircraft_plant;
 		tip=Target a unit or position to reveal a 200 radius area around it. Obstructed by terrain and other obstacles.;
 	}
 

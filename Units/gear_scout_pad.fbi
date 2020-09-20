@@ -70,7 +70,13 @@
 
 	// ------------------- misc
 	NoAutoFire=0;
+
+	[CustomParams]
+	{
+		builtBy=gear_l1builder,gear_l2builder;
+	}
 	buildcostenergy=978;//#AUTO#
 	buildcostmetal=195;//#AUTO#
 	buildtime=1539;//#AUTO#
+	mass=240;//#AUTO#
 }

@@ -104,10 +104,10 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=sphere_l2builder;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:opalglow;
@@ -115,4 +115,5 @@
 	buildcostenergy=9784;//#AUTO#
 	buildcostmetal=1956;//#AUTO#
 	buildtime=23319;//#AUTO#
+	mass=6886;//#AUTO#
 }

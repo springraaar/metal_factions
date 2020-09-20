@@ -84,6 +84,10 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
+	[CustomParams]
+	{
+		builtBy=claw_light_plant,claw_adv_kbot_plant;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:rocketflaresml;
@@ -91,4 +95,5 @@
 	buildcostenergy=793;//#AUTO#
 	buildcostmetal=158;//#AUTO#
 	buildtime=1890;//#AUTO#
+	mass=113;//#AUTO#
 }

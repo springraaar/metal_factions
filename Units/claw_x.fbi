@@ -64,7 +64,7 @@
 	brakerate=0.08;
 	maxvelocity=6.5;
 	maxwaterdepth=4;
-	cruisealt=240;
+	cruisealt=210;
 	turnrate=1000;
 
 	// flight behaviour
@@ -147,17 +147,6 @@
 	version=1.2;
 	zbuffer=1;
 	CanLoopbackAttack=0;
-	//************************************************************
-	//  To be removed
-	//*****************
-
-	//************************************************************
-	//  Out of Category
-	//*******************
-	//maxslope=10;
-	//turnrate=820;
-
-
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
@@ -166,12 +155,18 @@
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
+
+	[CustomParams]
+	{
+		builtBy=claw_adv_aircraft_plant;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:GLOWSML;
 		explosiongenerator1=custom:rocketflaremed;
 	}
-	buildcostenergy=6771;//#AUTO#
-	buildcostmetal=1354;//#AUTO#
-	buildtime=16139;//#AUTO#
+	buildcostenergy=7088;//#AUTO#
+	buildcostmetal=1417;//#AUTO#
+	buildtime=16893;//#AUTO#
+	mass=404;//#AUTO#
 }

@@ -20,10 +20,9 @@
 	Corpse=claw_aircraft_plant_dead;
 
 	// ------------------- health/cost/size
-	MaxDamage=2500;
+	MaxDamage=2900;
 	FootprintX=8;
 	FootprintZ=6;
-	idleautoheal=5;
 
 
 	// ------------------- resources
@@ -31,12 +30,9 @@
 	MetalStorage=100;
 	EnergyUse=0;
 
-
 	// ------------------- constructor
 	Builder=1;
 	WorkerTime=200;
-
-
 
 	// ------------------- abilities
 	canmove=1;
@@ -46,12 +42,12 @@
 	// ------------------- movement
 	buildangle=1024;
 	YardMap=ooccccoo ooccccoo ooccccoo ooccccoo ooccccoo ooccccoo; 
-	MaxWaterDepth=0;
 	MaxSlope=14;
 	collisionVolumeType = box;
 	collisionVolumeScales =130 35 100;
 	collisionVolumeOffsets=0 -5 0;
 	collisionVolumeTest = 1;
+	floater=1;
 
 	// ------------------- scout
 	sightdistance=500;
@@ -62,23 +58,21 @@
 	SelfDestructAs=LARGE_BUILDING;
 
 	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
 
 
 	// ------------------- misc
-	Version=3.1;
-	Designation=CA-lFCT;
 	NoAutoFire=0;
-
+	[CustomParams]
+	{
+		builtBy=claw_l1builder,claw_l2builder;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:Nano;
 	}
 
-	buildcostenergy=3939;//#AUTO#
-	buildcostmetal=787;//#AUTO#
-	buildtime=6196;//#AUTO#
+	buildcostenergy=4207;//#AUTO#
+	buildcostmetal=841;//#AUTO#
+	buildtime=6618;//#AUTO#
+	mass=2010;//#AUTO#
 }

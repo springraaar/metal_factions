@@ -87,6 +87,10 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
+	[CustomParams]
+	{
+		builtBy=claw_adv_kbot_plant;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:yellowflarebig;
@@ -94,4 +98,5 @@
 	buildcostenergy=5738;//#AUTO#
 	buildcostmetal=1147;//#AUTO#
 	buildtime=13675;//#AUTO#
+	mass=1007;//#AUTO#
 }

@@ -120,12 +120,9 @@
 
 	[CustomParams]
 	{
+		builtBy=gear_adv_kbot_plant;
 		tip=Gains 20% dmg resistance when not firing. Targets burn for 180(M) dmg over 6s;
 	}
-
-	//************************************************************
-	//  To be removed
-	//*****************
 
 	[SFXTypes]
 	{
@@ -134,4 +131,5 @@
 	buildcostenergy=2929;//#AUTO#
 	buildcostmetal=585;//#AUTO#
 	buildtime=6981;//#AUTO#
+	mass=1872;//#AUTO#
 }

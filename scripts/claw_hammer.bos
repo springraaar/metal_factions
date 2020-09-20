@@ -220,6 +220,12 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 stopWheels()
 {
+	if (get BUILD_PERCENT_LEFT) 
+	{
+		stop-spin spinner around y-axis;
+		return (0);
+	}
+
 	if (GET ACTIVATION)
 	{
 		stop-spin spinner around y-axis;

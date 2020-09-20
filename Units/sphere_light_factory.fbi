@@ -77,6 +77,10 @@
 	NoAutoFire=0;
 	downloadable=1;
 
+	[CustomParams]
+	{
+		builtBy=sphere_l1builder,sphere_l2builder;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:Nano;
@@ -85,4 +89,5 @@
 	buildcostenergy=3939;//#AUTO#
 	buildcostmetal=787;//#AUTO#
 	buildtime=6196;//#AUTO#
+	mass=1774;//#AUTO#
 }

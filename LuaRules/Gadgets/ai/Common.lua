@@ -13,16 +13,15 @@ ASSIST_UNIT_RADIUS = 1500
 FORCE_COST_REFERENCE = 300
 ATK_FAIL_TOLERANCE_COST = 500 
 FORCE_SIZE_MOD_METAL = 0.01
-FORCE_SIZE_MOD_FAILURE = 0.1
 FREE_METAL_SPOT_EXPANSION_THRESHOLD = 0.8
 ORDER_DELAY_FRAMES = 150
 RAIDING_PARTY_TOLERANCE_FRAMES = 18000
 BUILD_SPREAD_DISTANCE = 50
 BUILD_CELL_BUILDING_LIMIT = 8 
-UNIT_RETREAT_HEALTH = 0.35
+UNIT_RETREAT_HEALTH = 0.6
 UNIT_EVADE_WAYPOINTS = 2
 UNDER_ATTACK_FRAMES = 100
-IDLE_FRAMES_PROGRESS_LIMIT = 90
+IDLE_FRAMES_PROGRESS_LIMIT = 20
 CLEANUP_FRAMES = 900
 METAL_SPOT_MIN_RELATIVE_VALUE = 0.2
 BASE_UNDER_ATTACK_FRAMES = 600
@@ -44,13 +43,16 @@ EASY_RANDOM_TIME_WASTE_FRAMES = 120
 -- base income values are per half second
 BRUTAL_BASE_INCOME_METAL = 17.5
 BRUTAL_BASE_INCOME_ENERGY = 400
-BRUTAL_FORCE_SIZE_MOD_FAILURE = 0.3 
 BRUTAL_BASE_INCOME_METAL_PER_MIN = 0.5
 BRUTAL_BASE_INCOME_ENERGY_PER_MIN = 5
-BRUTAL_FORCE_SIZE_MOD_FAILURE = 0.3 
 ALL_IN_ADVANTAGE_THRESHOLD = 1.4
 CELL_VALUE_RETARGET_PREFERENCE_FACTOR = 2
+ENGAGE_THREAT_FACTOR = 0.5
 
+COMBAT_EFFICIENCY_HISTORY_STEP_FRAMES = 30*60
+COMBAT_EFFICIENCY_HISTORY_CHECK_STEPS = 10 
+COMBAT_EFFICIENCY_FORCE_SIZE_MOD_MIN = 1
+COMBAT_EFFICIENCY_FORCE_SIZE_MOD_MAX = 5
 
 FRAMES_PER_MIN = 30 * 60
 
@@ -167,14 +169,19 @@ THREAT_AIR_THRESHOLD = 0.2
 THREAT_DEFENSE_THRESHOLD = 0.2
 THREAT_UNDERWATER_THRESHOLD = 0.2
 
+-- special build conditions
+
+CONDITION_WATER = 1000
+
+
 -- AI tasks
 
 TASK_DELAY_FRAMES = 400
 HUMAN_TASK_DELAY_FRAMES = 5400
 BRIEF_AREA_PATROL_FRAMES = 2400
 ATK_FAIL_TOLERANCE_FRAMES = 1800
-TASK_WATCHDOG_LIMIT_FRAMES = 5000
 DANGER_CELL_FORGET_FRAMES = 900
+STATIC_AREA_PATROL_FRAMES = 300
 
 TASK_IDLE = 0
 TASK_ATTACK = 1
@@ -201,14 +208,29 @@ MAP_PROFILE_LAND_FLAT = 0
 MAP_PROFILE_LAND_RUGGED = 1
 MAP_PROFILE_WATER = 2
 MAP_PROFILE_MIXED = 3
+MAP_PROFILE_AIRONLY = 4
+
 
 -- commands
-CMD.MOVE = 10
-CMD_PATROL = 15
-CMD_FIGHT = 16
-CMD_RECLAIM = 10	 --FIXME
-CMD_REPAIR = 10	 --FIXME
+--CMD.MOVE = 10
+--CMD_PATROL = 15
+--CMD_FIGHT = 16
+--CMD_RECLAIM = 10	 --FIXME
+--CMD_REPAIR = 10	 --FIXME
 CMD_BUILDPRIORITY = 33455
+CMD_UPGRADEMEX = 31244
+CMD_UPGRADEMEX2 = 31245
+CMD_AREAMEX = 31246  
+CMD_FEATURE_ID_OFFSET = Game.maxUnits
+
+-- external commands
+
+EXTERNAL_CMD_SETBEACON = "SETBEACON"
+EXTERNAL_CMD_REMOVEBEACON = "REMOVEBEACON"
+EXTERNAL_CMD_STRATEGY = "STRATEGY"
+EXTERNAL_CMD_STATUS = "STATUS"
+
+BEACON_DURATION_FRAMES = 30*120
 
 -- reference distances
 
@@ -221,7 +243,7 @@ CLUSTER_RADIUS = 1000
 FORCE_RADIUS = 200
 FORCE_RADIUS_AIR = 600
 FORCE_RADIUS_RAIDERS = 100
-FORCE_INCLUSION_RADIUS = 1000
+FORCE_INCLUSION_RADIUS = 800
 FORCE_INCLUSION_RADIUS_AIR = 800
 FORCE_INCLUSION_RADIUS_RAIDERS = 500
 FORCE_TARGET_RADIUS = 500
@@ -282,9 +304,12 @@ TYPE_FUSION = 32
 TYPE_UPGRADE_CENTER = 33
 TYPE_ENERGYGENERATOR = 34
 TYPE_RESPAWNER = 35
+TYPE_HAZMOHO = 36
+TYPE_HIGH_PRIORITY = 37
+TYPE_UW_DEFENSE = 38
 
 -- Taskqueuebehavior skips this name
-SKIP_THIS_TASK = "skipthistask"
+SKIP_THIS_TASK = "s"
 
 -- this unit is used to check for underwater metal spots
 UWMetalSpotCheckUnit = "sphere_clam"
@@ -323,6 +348,9 @@ spGetUnitPosition = Spring.GetUnitPosition
 spGetUnitDefID = Spring.GetUnitDefID
 spGetUnitHealth = Spring.GetUnitHealth
 spGetFeaturesInSphere = Spring.GetFeaturesInSphere
+spGetFeaturesInCylinder = Spring.GetFeaturesInCylinder
+spGetFeatureDefID = Spring.GetFeatureDefID
+spGetFeatureResources = Spring.GetFeatureResources
 spGiveOrderToUnit = Spring.GiveOrderToUnit
 spTestMoveOrder = Spring.TestMoveOrder
 spGetGroundInfo = Spring.GetGroundInfo
@@ -336,6 +364,21 @@ spGetUnitMoveTypeData = Spring.GetUnitMoveTypeData
 spGetTeamRulesParam = Spring.GetTeamRulesParam
 spAddTeamResource = Spring.AddTeamResource
 spGetUnitCommands = Spring.GetUnitCommands
+spGetUnitsInCylinder = Spring.GetUnitsInCylinder
+spMarkerAddPoint = Spring.MarkerAddPoint
+spMarkerErasePosition = Spring.MarkerErasePosition
+spGetUnitNearestEnemy = Spring.GetUnitNearestEnemy
+
+function splitString (input, sep)
+	if sep == nil then
+		sep = "%s"
+	end
+	local t={}
+	for str in string.gmatch(input, "([^"..sep.."]+)") do
+		table.insert(t, str)
+	end
+	return t
+end
 
 function addToSet(set, key)
 	set[key] = true
@@ -351,7 +394,18 @@ end
 
 function listToSet (list)
 	local set = {}
-	for _, l in ipairs(list) do set[l] = true end
+	for _, l in ipairs(list) do 
+		-- if value is a table, add each value within into the set
+		if type(l) == "table" then
+			for k, _ in pairs(listToSet(l)) do
+				set[k] = true
+			end
+		-- otherwise, add value to set
+		else
+			set[l] = true
+		end 
+	
+	end
 	return set
 end
 
@@ -629,16 +683,96 @@ end
 
 --------------------------------- UNIT LISTS
 
+buildOptionsByPlant = {}
+for name,ud in pairs(UnitDefNames) do
+	if (ud.customParams and ud.customParams.builtby) then
+		local plantNames = splitString(ud.customParams.builtby,",")
+		
+		for i,pName in ipairs(plantNames) do
+			-- create table if missing 
+			if (not buildOptionsByPlant[pName]) then
+				buildOptionsByPlant[pName] = {}
+			end
+			
+			buildOptionsByPlant[pName][name] = true
+		end
+	end
+end
+-- for name,_ in pairs(buildOptionsByPlant["aven_light_plant"]) do
+-- 	Spring.Echo("BUILDOPTION "..name)
+-- end
 
 -- build ranges for stationary constructors
 -- for use until a way to get those automatically is provided
-buildRanges = {
+constructionTowers = {
 	gear_nano_tower = 200,
 	aven_nano_tower = 200,
 	claw_nano_tower = 200,
-	sphere_nano_tower = 200,
+	sphere_pole = 200,
 }
 
+-- pathfinding restrictions by factory
+-- default is PF_UNIT_LAND
+pFConnectionRestrictionsByPlant = {
+	----------- AVEN
+	aven_shipyard = PF_UNIT_AMPHIBIOUS,
+	aven_adv_shipyard = PF_UNIT_AMPHIBIOUS,
+	aven_hovercraft_platform = PF_UNIT_AMPHIBIOUS,
+	aven_aircraft_plant = PF_UNIT_AIR,
+	aven_adv_aircraft_plant = PF_UNIT_AIR,
+	aven_scout_pad = PF_UNIT_AIR,
+	aven_commander_respawner = PF_UNIT_AMPHIBIOUS,
+	aven_upgrade_center = PF_UNIT_AIR,
+	aven_nano_tower = PF_UNIT_AIR,
+	----------- GEAR
+	gear_shipyard = PF_UNIT_AMPHIBIOUS,
+	gear_adv_shipyard = PF_UNIT_AMPHIBIOUS,
+	gear_aircraft_plant = PF_UNIT_AIR,
+	gear_adv_aircraft_plant = PF_UNIT_AIR,
+	gear_scout_pad = PF_UNIT_AIR,
+	gear_commander_respawner = PF_UNIT_AMPHIBIOUS,
+	gear_upgrade_center = PF_UNIT_AIR,
+	gear_nano_tower = PF_UNIT_AIR,
+	----------- CLAW
+	claw_shipyard = PF_UNIT_AMPHIBIOUS,
+	claw_adv_shipyard = PF_UNIT_AMPHIBIOUS,
+	claw_spinbot_plant = PF_UNIT_AMPHIBIOUS,
+	claw_aircraft_plant = PF_UNIT_AIR,
+	claw_adv_aircraft_plant = PF_UNIT_AIR,
+	claw_scout_pad = PF_UNIT_AIR,
+	claw_commander_respawner = PF_UNIT_AMPHIBIOUS,
+	claw_upgrade_center = PF_UNIT_AIR,
+	claw_nano_tower = PF_UNIT_AIR,
+	----------- SPHERE
+	sphere_shipyard = PF_TYPE_AMPHIBIOUS,
+	sphere_adv_shipyard = PF_TYPE_AMPHIBIOUS,
+	sphere_sphere_factory = PF_UNIT_AIR,
+	sphere_aircraft_factory = PF_UNIT_AIR,
+	sphere_adv_aircraft_factory = PF_UNIT_AIR,
+	sphere_scout_pad = PF_UNIT_AIR,
+	sphere_commander_respawner = PF_UNIT_AMPHIBIOUS,
+	sphere_upgrade_center = PF_UNIT_AIR,
+	sphere_nano_tower = PF_UNIT_AIR
+}
+
+
+-- buildings that should be built in sets (generally cheap economy buildings)
+multiBuildBuildings = {
+	aven_solar_collector = 40,
+	aven_wind_generator = 40,
+	aven_tidal_generator = 32,
+	gear_solar_collector = 40,
+	gear_wind_generator = 40,
+	gear_tidal_generator = 32,
+	claw_solar_collector = 40,
+	claw_wind_generator = 40,
+	claw_tidal_generator = 32,
+	sphere_tidal_generator = 32,
+	aven_metal_maker = 48,
+	gear_metal_maker = 48,
+	claw_metal_maker = 48,
+	sphere_metal_maker = 48
+}
 
 attackerList = 
 {
@@ -665,6 +799,7 @@ attackerList =
 	"aven_sniper",
 	"aven_dazer",
 	"aven_weaver",
+	"aven_spiker",
 	"aven_shocker",
 	"aven_knight",
 	"aven_dervish",
@@ -686,6 +821,7 @@ attackerList =
 	"aven_merl",
 	"aven_kodiak",
 	"aven_tsunami",
+	"aven_catfish",
 
 	"aven_icarus",
 	"aven_gryphon",
@@ -721,9 +857,10 @@ attackerList =
 	"gear_pyro",
 
 	"gear_marauder",
-	"gear_copperhead",
+	"gear_proteus",
 	"gear_heater",
 	"gear_reaper",
+	"gear_thresher",
 	"gear_tremor",
 	"gear_diplomat",
 	"gear_rhino",
@@ -755,6 +892,7 @@ attackerList =
       "claw_pounder",
       "claw_shrieker",
       "claw_armadon",
+      "claw_bullfrog",
       "claw_mega",
       "claw_ravager",
       "claw_halberd",
@@ -762,6 +900,7 @@ attackerList =
       "claw_cutter",
       "claw_flail",
       "claw_scythe",
+      "claw_trajector",
       "claw_speeder",
       "claw_striker",
       "claw_sword",
@@ -793,6 +932,8 @@ attackerList =
       "sphere_trike",
       "sphere_double",
       "sphere_hanz",
+      "sphere_tick",
+      "sphere_masher",
       "sphere_trax",
       "sphere_pulsar",
       "sphere_quad",
@@ -806,6 +947,7 @@ attackerList =
       "sphere_skiff",
       "sphere_reacher",
       "sphere_endeavour",
+      "sphere_helix",
       "sphere_needles",
       "sphere_moth",
       "sphere_tycho",
@@ -822,7 +964,6 @@ attackerList =
 }
 
 
-
 airAttackerList = 
 {
 ------------------------------------------------ AVEN
@@ -831,6 +972,7 @@ airAttackerList =
 	"aven_swift",
 	"aven_tornado",
 	"aven_twister",
+	"aven_gale",
 ----------- l2
 	"aven_icarus",
 	"aven_gryphon",
@@ -858,6 +1000,7 @@ airAttackerList =
       "claw_hornet",
       "claw_boomer",
       "claw_boomer_m",
+      "claw_shredder",
 ----------- l2
       "claw_x",
       "claw_blizzard",
@@ -867,11 +1010,71 @@ airAttackerList =
 ----------- l1
       "sphere_moth",
       "sphere_tycho",
+      "sphere_blower",
 ----------- l2
       "sphere_meteor",
       "sphere_twilight",
       "sphere_spitfire",      
       "sphere_neptune"
+}
+
+
+unitAbleToHitUnderwater = {
+------------------------------------------------ AVEN
+	aven_commander = true,
+	aven_u1commander = true,
+	aven_u2commander = true,
+	aven_u3commander = true,
+	aven_u4commander = true,
+	aven_u5commander = true,
+	aven_u6commander = true,
+	aven_lurker = true,
+	aven_torpedo_launcher = true,
+	aven_piranha = true,
+	aven_slider_s = true,
+	aven_advanced_torpedo_launcher = true,
+	aven_albatross = true,
+------------------------------------------------ GEAR
+	gear_commander = true,
+	gear_u1commander = true,
+	gear_u2commander = true,
+	gear_u3commander = true,
+	gear_u4commander = true,
+	gear_u5commander = true,
+	gear_u6commander = true,
+	gear_snake = true,
+	gear_torpedo_launcher = true,
+	gear_noser = true,
+	gear_advanced_torpedo_launcher = true,
+	gear_whirlpool = true,
+------------------------------------------------ CLAW
+	claw_commander = true,
+	claw_u1commander = true,
+	claw_u2commander = true,
+	claw_u3commander = true,
+	claw_u4commander = true,
+	claw_u5commander = true,
+	claw_u6commander = true,
+	claw_spine = true,
+	claw_sinker = true,
+	claw_monster = true,
+	claw_dancer = true,
+	claw_cutter = true,
+	claw_trident = true,
+------------------------------------------------ SPHERE
+	sphere_commander = true,
+	sphere_u1commander = true,
+	sphere_u2commander = true,
+	sphere_u3commander = true,
+	sphere_u4commander = true,
+	sphere_u5commander = true,
+	sphere_u6commander = true,
+	sphere_carp = true,
+	sphere_clam = true,
+	sphere_pluto = true,
+	sphere_oyster = true,
+	sphere_crab = true,
+	sphere_neptune = true
 }
 
 
@@ -928,62 +1131,29 @@ seaAttackerList =
       "sphere_stresser"
 }
 
-
-amphibiousAttackerList = 
-{
------------------------------------------------- AVEN
------------ l1
-
-	"aven_wheeler",
------------ l2
-	"aven_catfish",
-	"aven_kodiak",
-
------------------------------------------------- GEAR
------------ l1
-	"gear_garpike",
-
------------ l2
-
-	"gear_rhino",
-	"gear_proteus",
-
------------------------------------------------- CLAW
------------ l1
------------ l2
-      "claw_predator",
-      "claw_tempest",
-      "claw_dizzy",
-      "claw_gyro",      
-      "claw_crawler",
-      "claw_cutter",
------------------------------------------------- SPHERE
------------ l1
------------ l2
-      "sphere_helix"
-}
-
 l1ConstructorList = 
 {
 ------------------------------------------------ AVEN
 	"aven_construction_kbot",
-	"aven_construction_vehicle",
 	"aven_construction_aircraft",
 	"aven_construction_ship",
+	"aven_nano_tower",
 ------------------------------------------------ GEAR
 	"gear_construction_kbot",
-	"gear_construction_vehicle",
 	"gear_construction_aircraft",
 	"gear_construction_ship",
+	"gear_nano_tower",	
 ------------------------------------------------ CLAW
 	"claw_construction_kbot",
 	"claw_construction_aircraft",
 	"claw_construction_ship",
+	"claw_nano_tower",
 
 ------------------------------------------------ SPHERE
 	"sphere_construction_vehicle",
 	"sphere_construction_aircraft",
-	"sphere_construction_ship"
+	"sphere_construction_ship",
+	"sphere_pole"
 }
 
 
@@ -1057,6 +1227,10 @@ supporterList =
 
 -- units that the AI won't target
 neutralUnits = {
+	aven_dragons_teeth = true,
+	gear_dragons_teeth = true,
+	claw_dragons_teeth = true,
+	sphere_dragons_teeth = true,
 	aven_fortification_wall = true,
 	gear_fortification_wall = true,
 	claw_fortification_wall = true,
@@ -1072,6 +1246,19 @@ neutralUnits = {
 	cs_beacon = true,
 	scoper_beacon = true
 }
+
+
+-- extra threat value
+-- for units which are unarmed but can help thwart the AI's attacks 
+extraThreatValue = {
+	sphere_shielder = 5000,
+	sphere_aegis = 6000,
+	aven_nano_tower = 300,
+	gear_nano_tower = 300,
+	claw_nano_tower = 300,
+	sphere_pole = 300
+}
+
 
 
 -- TODO : not used atm
@@ -1094,10 +1281,10 @@ lltByFaction = { [side1Name] = "aven_light_laser_tower", [side2Name] = "gear_lig
 lightAAByFaction = { [side1Name] = "aven_defender", [side2Name] = "gear_pulverizer"}
 mediumAAByFaction = { [side3Name] = "claw_gemini", [side4Name] = "sphere_shine"}
 heavyAAByFaction = { [side1Name] = {"aven_warden"}, [side2Name] = {"gear_missilator"}, [side3Name] = {"claw_hyper"}, [side4Name] = {"sphere_stark"}}
-lev2HeavyDefenseByFaction = {[side1Name] = {"aven_sentinel"}, [side2Name] = {"gear_blaze"}, [side3Name] = {"claw_piercer"}, [side4Name] = {"sphere_stout"}}
-lev2ArtilleryDefenseByFaction = {[side1Name] = {"aven_gunner"}, [side2Name] = {"gear_toaster"}, [side3Name] = {"claw_thumper"}, [side4Name] = {"sphere_lancer"}}
-lev3ArtilleryDefenseByFaction = {[side1Name] = {"aven_guardian"}, [side2Name] = {"gear_punisher"}, [side3Name] = {"claw_massacre"}, [side4Name] = {"sphere_banger"}}
-lev3LongRangeArtilleryByFaction = {[side1Name] = {"aven_standoff"}, [side2Name] = {"gear_intimidator"}, [side3Name] = {"claw_longhorn"}, [side4Name] = {"sphere_bastion"}}
+lev1HeavyDefenseByFaction = {[side1Name] = {"aven_sentinel"}, [side2Name] = {"gear_blaze","gear_beamer"}, [side3Name] = {"claw_piercer"}, [side4Name] = {"sphere_stout"}}
+lev1ArtilleryDefenseByFaction = {[side1Name] = {"aven_gunner"}, [side2Name] = {"gear_toaster"}, [side3Name] = {"claw_thumper"}, [side4Name] = {"sphere_lancer"}}
+lev2ArtilleryDefenseByFaction = {[side1Name] = {"aven_guardian"}, [side2Name] = {"gear_punisher"}, [side3Name] = {"claw_massacre"}, [side4Name] = {"sphere_banger"}}
+lev2LongRangeArtilleryByFaction = {[side1Name] = {"aven_standoff"}, [side2Name] = {"gear_intimidator"}, [side3Name] = {"claw_longhorn"}, [side4Name] = {"sphere_bastion"}}
 respawnerByFaction = {[side1Name] = "aven_commander_respawner", [side2Name] = "gear_commander_respawner", [side3Name] = "claw_commander_respawner", [side4Name] = "sphere_commander_respawner"}
 lev1PlantByFaction = {[side1Name] = {"aven_light_plant","aven_aircraft_plant"}, [side2Name] = {"gear_light_plant","gear_aircraft_plant"}, [side3Name] = {"claw_light_plant","claw_aircraft_plant"}, [side4Name] = {"sphere_light_factory","sphere_aircraft_factory"}}
 lev2PlantByFaction = {[side1Name] = {"aven_adv_kbot_lab","aven_adv_vehicle_plant","aven_hovercraft_platform","aven_adv_aircraft_plant"}, [side2Name] = {"gear_adv_kbot_lab","gear_adv_vehicle_plant","gear_adv_aircraft_plant"}, [side3Name] = {"claw_adv_kbot_plant","claw_adv_vehicle_plant","claw_spinbot_plant","claw_adv_aircraft_plant"}, [side4Name] = {"sphere_adv_vehicle_factory","sphere_adv_kbot_factory","sphere_sphere_factory","sphere_adv_aircraft_factory"}}
@@ -1120,46 +1307,53 @@ nanoTowerFaction =  { [side1Name] = "aven_nano_tower", [side2Name] = "gear_nano_
 upgradeCenterByFaction = { [side1Name] = "aven_upgrade_center", [side2Name] = "gear_upgrade_center", [side3Name] = "claw_upgrade_center", [side4Name] = "sphere_upgrade_center"}
 scoutPadByFaction =  { [side1Name] = "aven_scout_pad", [side2Name] = "gear_scout_pad", [side3Name] = "claw_scout_pad", [side4Name] = "sphere_scout_pad"}
 airScoutByFaction =  { [side1Name] = "aven_peeper", [side2Name] = "gear_fink", [side3Name] = "claw_spotter", [side4Name] = "sphere_probe"}
-
+fusionByFaction = { [side1Name] = "aven_fusion_reactor", [side2Name] = "gear_fusion_power_plant", [side3Name] = "claw_adv_fusion_reactor", [side4Name] = "sphere_adv_fusion_reactor"}
 UWMexByFaction =  { [side1Name] = "aven_metal_extractor", [side2Name] = "gear_metal_extractor", [side3Name] = "claw_metal_extractor", [side4Name] = "sphere_metal_extractor"}
 UWMohoMineByFaction = { [side1Name] = "aven_moho_mine", [side2Name] = "gear_moho_mine", [side3Name] = "claw_moho_mine", [side4Name] = "sphere_moho_mine"}
 tidalByFaction = { [side1Name] = "aven_tidal_generator", [side2Name] = "gear_tidal_generator", [side3Name] = "claw_tidal_generator", [side4Name] = "sphere_tidal_generator"} 
 waterLltByFaction = { [side1Name] = "aven_light_laser_tower", [side2Name] = "gear_light_laser_tower", [side3Name] = "claw_drill", [side4Name] = "sphere_stir"}
 UWFusionByFaction = { [side1Name] = "aven_fusion_reactor", [side2Name] = "gear_fusion_power_plant", [side3Name] = "claw_adv_fusion_reactor", [side4Name] = "sphere_adv_fusion_reactor"}
 waterLightAAByFaction = { [side1Name] = "aven_defender", [side2Name] = "gear_pulverizer"}
-lev2WaterHeavyDefenseByFaction = {[side1Name] = {"aven_sentinel"}, [side2Name] = {"gear_blaze"}, [side3Name] = {"claw_piercer"}}
+lev1WaterHeavyDefenseByFaction = {[side1Name] = {"aven_sentinel"}, [side2Name] = {"gear_blaze"}, [side3Name] = {"claw_piercer"}}
+lev1TorpedoDefenseByFaction = {[side1Name] = {"aven_torpedo_launcher"}, [side2Name] = {"gear_torpedo_launcher"}, [side3Name] = {"claw_sinker"}, [side4Name] = {"sphere_clam"}}
+lev2TorpedoDefenseByFaction = {[side1Name] = {"aven_advanced_torpedo_launcher"}, [side2Name] = {"gear_advanced_torpedo_launcher"}, [side3Name] = {"claw_sinker"}, [side4Name] = {"sphere_oyster"}}
 waterRadarByFaction = { [side1Name] = "aven_radar_tower", [side2Name] = "gear_radar_tower", [side3Name] = "claw_radar_tower", [side4Name] = "sphere_radar_tower"}
 sonarByFaction = { [side1Name] = "aven_sonar_station", [side2Name] = "gear_sonar_station", [side3Name] = "claw_sonar_station", [side4Name] = "sphere_sonar_station"}
 mmakerByFaction =  { [side1Name] = "aven_metal_maker", [side2Name] = "gear_metal_maker", [side3Name] = "claw_metal_maker", [side4Name] = "sphere_metal_maker"}
+rocketPlatformByFaction =  { [side1Name] = "aven_long_range_rocket_platform", [side2Name] = "gear_long_range_rocket_platform", [side3Name] = "claw_long_range_rocket_platform", [side4Name] = "sphere_long_range_rocket_platform"}
+unblockableNukeByFaction =  { [side1Name] = "aven_premium_nuclear_rocket", [side2Name] = "gear_premium_nuclear_rocket", [side3Name] = "claw_premium_nuclear_rocket", [side4Name] = "sphere_premium_nuclear_rocket"}
 
 unitTypeSets = {
 	[TYPE_LIGHT_DEFENSE] = tableToSet({lltByFaction,waterLltByFaction}),
-	[TYPE_HEAVY_DEFENSE] = tableToSet({lev2HeavyDefenseByFaction,lev2WaterHeavyDefenseByFaction}),
-	[TYPE_ARTILLERY_DEFENSE] = tableToSet({lev2ArtilleryDefenseByFaction,lev3ArtilleryDefenseByFaction}),
-	[TYPE_LONG_RANGE_ARTILLERY] = tableToSet(lev3LongRangeArtilleryByFaction),
+	[TYPE_HEAVY_DEFENSE] = tableToSet({lev1HeavyDefenseByFaction,lev1WaterHeavyDefenseByFaction}),
+	[TYPE_ARTILLERY_DEFENSE] = tableToSet({lev1ArtilleryDefenseByFaction,lev2ArtilleryDefenseByFaction}),
+	[TYPE_LONG_RANGE_ARTILLERY] = tableToSet(lev2LongRangeArtilleryByFaction),
 	[TYPE_RESPAWNER]= tableToSet(respawnerByFaction),
 	[TYPE_L1_PLANT] = tableToSet(lev1PlantByFaction),
-	[TYPE_L2_PLANT] = tableToSet(lev2PlantByFaction),
+	[TYPE_L2_PLANT] = tableToSet({lev2PlantByFaction,{"aven_adv_shipyard","gear_adv_shipyard","claw_adv_shipyard","sphere_adv_shipyard"}}),
 	[TYPE_FUSION] = tableToSet(fusionByFaction),
 	[TYPE_MEX] = tableToSet({mexByFaction,UWMexByFaction}),
-	[TYPE_MOHO] = tableToSet({mohoMineByFaction,UWMohoMineByFaction}),
+	[TYPE_MOHO] = tableToSet({mohoMineByFaction,UWMohoMineByFaction,hazMexByFaction}),
+	[TYPE_HAZMOHO] = tableToSet(hazMexByFaction),
 	[TYPE_EXTRACTOR] = tableToSet({mexByFaction,hazMexByFaction,UWMexByFaction,mohoMineByFaction,UWMohoMineByFaction}),
 	[TYPE_ENERGYGENERATOR] = tableToSet({solarByFaction,windByFaction,geoByFaction,fusionByFaction,tidalByFaction,{"sphere_fusion_reactor","sphere_hardened_fission_reactor"}}),
 	[TYPE_ECONOMY] = tableToSet({mexByFaction,hazMexByFaction,mohoMineByFaction,mmakerByFaction,solarByFaction,windByFaction,geoByFaction,fusionByFaction,energyStorageByFaction,metalStorageByFaction,{"sphere_fusion_reactor","sphere_hardened_fission_reactor"}}),
-	[TYPE_PLANT] = tableToSet({lev1PlantByFaction,lev2PlantByFaction}),	
-	[TYPE_ATTACKER] = listToSet(attackerList),
+	[TYPE_PLANT] = tableToSet({lev1PlantByFaction,lev2PlantByFaction}),
+	[TYPE_UW_DEFENSE] = tableToSet({lev1TorpedoDefenseByFaction,lev2TorpedoDefenseByFaction}),		
+	[TYPE_ATTACKER] = listToSet({attackerList,airAttackerList,seaAttackerList}),
 	[TYPE_AIR_ATTACKER] = listToSet(airAttackerList),
 	[TYPE_SEA_ATTACKER] = listToSet(seaAttackerList),
 	[TYPE_AMPHIBIOUS_ATTACKER] = listToSet(seaAttackerList),
-	[TYPE_L1_CONSTRUCTOR] = listToSet(l1ConstructorList),
-	[TYPE_L2_CONSTRUCTOR] = listToSet(l2ConstructorList),
-	[TYPE_BASE] = tableToSet({mohoMineByFaction,geoByFaction,fusionByFaction,lvl1PlantByFaction,lvl2PlantByFaction,lev2HeavyDefenseByFaction,lev2ArtilleryDefenseByFaction,lev3ArtilleryDefenseByFaction,lev3LongRangeArtilleryByFaction,heavyAAByFaction}),
+	[TYPE_L1_CONSTRUCTOR] = listToSet(l1ConstructorList),		-- not used
+	[TYPE_L2_CONSTRUCTOR] = listToSet(l2ConstructorList),		-- not used
+	[TYPE_BASE] = tableToSet({mohoMineByFaction,geoByFaction,fusionByFaction,lvl1PlantByFaction,lvl2PlantByFaction,lev1HeavyDefenseByFaction,lev1ArtilleryDefenseByFaction,lev2ArtilleryDefenseByFaction,lev2LongRangeArtilleryByFaction,heavyAAByFaction}),
 	[TYPE_LIGHT_AA] = tableToSet(lightAAByFaction),
 	[TYPE_MEDIUM_AA] = tableToSet(mediumAAByFaction),
 	[TYPE_HEAVY_AA] = tableToSet(heavyAAByFaction),
 	[TYPE_SUPPORT] = listToSet(supporterList),
 	[TYPE_COMMANDER] = tableToSet({commanderByFaction,commanderMorphByFaction}),
 	[TYPE_UPGRADED_COMMANDER] = tableToSet({commanderMorphByFaction}),
-	[TYPE_STRATEGIC] = tableToSet({lev2ArtilleryDefenseByFaction,lev3ArtilleryDefenseByFaction,lev3LongRangeArtilleryByFaction,mexByFaction, UWMexByFaction, mohoMineByFaction,UWMohoMineByFaction,fusionByFaction,UWFusionByFaction}),
-	[TYPE_UPGRADE_CENTER] = tableToSet(upgradeCenterByFaction)
+	[TYPE_STRATEGIC] = tableToSet({lev1ArtilleryDefenseByFaction,lev2ArtilleryDefenseByFaction,lev2LongRangeArtilleryByFaction,mexByFaction, UWMexByFaction, mohoMineByFaction,UWMohoMineByFaction,fusionByFaction,UWFusionByFaction,rocketPlatformByFaction}),
+	[TYPE_UPGRADE_CENTER] = tableToSet(upgradeCenterByFaction),
+	[TYPE_HIGH_PRIORITY] = tableToSet({commanderByFaction,commanderMorphByFaction,respawnerByFaction,rocketPlatformByFaction}),
 }

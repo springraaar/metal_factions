@@ -38,7 +38,7 @@
 	upright=1;
 	buildpic=sphere_pole.png;
 	icontype=buildertower;
-	mass=999999999999;
+	mass=900;
 	noautofire=0;
 	seismicsignature=0;
 	defaultmissiontype=Standby;
@@ -57,6 +57,11 @@
 	collisionVolumeOffsets=0 0 0;
 	collisionVolumeTest = 1;
 
+	[CustomParams]
+	{
+		buildertype=sphere_l1builder;
+		builtBy=sphere_l1builder,sphere_l2builder;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:buildglow;

@@ -116,15 +116,17 @@
 	pieceTrailCEGTag=NanoDebree;
 	pieceTrailCEGRange = 2;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		buildertype=claw_l1builder;
+		builtBy=claw_light_plant,claw_adv_kbot_plant;
+	}
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Nano;
+		explosiongenerator0=custom:Nano;
 	}
 	buildcostenergy=1608;//#AUTO#
 	buildcostmetal=321;//#AUTO#
 	buildtime=3832;//#AUTO#
+	mass=141;//#AUTO#
 }

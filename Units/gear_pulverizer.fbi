@@ -107,11 +107,9 @@
 
 	[CustomParams]
 	{
+		builtBy=gear_l1builder,gear_l2builder;
 		tip=Gains 50% dmg resistance when closed;
 	}
-	//************************************************************
-	//  To be removed
-	//*****************
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:rocketflaresml;
@@ -119,4 +117,5 @@
 	buildcostenergy=1312;//#AUTO#
 	buildcostmetal=262;//#AUTO#
 	buildtime=3128;//#AUTO#
+	mass=798;//#AUTO#
 }

@@ -70,7 +70,14 @@
 
 	// ------------------- misc
 	NoAutoFire=0;
+	[CustomParams]
+	{
+		builtBy=aven_l1builder,aven_l2builder;
+	}
+
+
 	buildcostenergy=978;//#AUTO#
 	buildcostmetal=195;//#AUTO#
 	buildtime=1539;//#AUTO#
+	mass=240;//#AUTO#
 }

@@ -106,14 +106,10 @@
 	version=1.2;
 	zbuffer=1;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-	[customParams]
+	[CustomParams]
 	{
-
+		builtBy=gear_l1builder,gear_l2builder;
 	}
-
 
 	buildcostenergy=300;//#AUTO#
 	buildcostmetal=60;//#AUTO#

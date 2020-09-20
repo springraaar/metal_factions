@@ -116,16 +116,6 @@
 	version=1.2;
 	zbuffer=1;
 	CanLoopbackAttack=0;
-
-	//************************************************************
-	//  To be removed
-	//*****************
-
-	//************************************************************
-	//  Out of Category
-	//*******************
-
-
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
@@ -134,6 +124,11 @@
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
+
+	[CustomParams]
+	{
+		builtBy=claw_adv_aircraft_plant;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:emgflarefast;
@@ -141,4 +136,5 @@
 	buildcostenergy=12477;//#AUTO#
 	buildcostmetal=2495;//#AUTO#
 	buildtime=29738;//#AUTO#
+	mass=728;//#AUTO#
 }

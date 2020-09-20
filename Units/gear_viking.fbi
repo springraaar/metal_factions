@@ -61,10 +61,6 @@
 	waterline=1;
 	windgenerator=0.001;
 	Corpse=gear_viking_dead;
-	[customParams] 
-	{
-		evalfactor=0.85;//SHIP
-	}
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 	collisionVolumeType = box;
@@ -72,12 +68,19 @@
 	collisionVolumeOffsets = 0 -10 0;
 	collisionVolumeTest = 1;
 
-		[SFXTypes]
-		{
-			explosiongenerator0=custom:GLOWSML;
-			explosiongenerator1=custom:rocketflaresml;
-		}
+	[CustomParams]
+	{
+		builtBy=gear_shipyard,gear_adv_shipyard;
+		evalfactor=0.85;//SHIP
+	}
+
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:GLOWSML;
+		explosiongenerator1=custom:rocketflaresml;
+	}
 	buildcostenergy=2223;//#AUTO#
 	buildcostmetal=444;//#AUTO#
 	buildtime=5298;//#AUTO#
+	mass=543;//#AUTO#
 	}

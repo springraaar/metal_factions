@@ -27,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1250;
+	maxdamage=1900;
 	healtime=75;
 	footprintx=4;
 	footprintz=4;
@@ -70,9 +70,9 @@
 	//  Movement
 	//************
 	movementclass=BOATSUB;
-	turnrate=256;
-	acceleration=0.05;
-	brakerate=0.02;
+	turnrate=556;
+	acceleration=0.1;
+	brakerate=0.08;
 	maxvelocity=1.9;
 	minwaterdepth=20;
 
@@ -113,20 +113,23 @@
 	pieceTrailCEGTag=NanoDebree;
 	pieceTrailCEGRange = 2;
 	collisionVolumeType = box;
-	collisionVolumeScales =40 18 52;
+	collisionVolumeScales =40 20 52;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		buildertype=sphere_l2builder;
+		builtBy=sphere_adv_shipyard;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:Nano;
 		explosiongenerator1=custom:UNITFIRE;
 	}
 
-	buildcostenergy=4368;//#AUTO#
-	buildcostmetal=873;//#AUTO#
-	buildtime=10411;//#AUTO#
+	buildcostenergy=4978;//#AUTO#
+	buildcostmetal=995;//#AUTO#
+	buildtime=11866;//#AUTO#
+	mass=403;//#AUTO#
 }

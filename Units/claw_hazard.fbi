@@ -107,12 +107,9 @@
 
 	[CustomParams]
 	{
+		builtBy=claw_l1builder,claw_l2builder;
 		tip=Gains 50% dmg resistance when closed;
 	}
-	//************************************************************
-	//  To be removed
-	//*****************
-
 
 	[SFXTypes]
 	{
@@ -121,4 +118,5 @@
 	buildcostenergy=1561;//#AUTO#
 	buildcostmetal=312;//#AUTO#
 	buildtime=3722;//#AUTO#
+	mass=958;//#AUTO#
 }

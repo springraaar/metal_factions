@@ -126,12 +126,10 @@
 
 	[CustomParams]
 	{
+		builtBy=gear_adv_shipyard;
 		tip=33% slower on land;
 		evalfactor=0.85;//SHIP
 	}
-	//************************************************************
-	//  To be removed
-	//*****************
 
 	[SFXTypes]
 	{
@@ -143,4 +141,5 @@
 	buildcostenergy=23352;//#AUTO#
 	buildcostmetal=4670;//#AUTO#
 	buildtime=55657;//#AUTO#
+	mass=5290;//#AUTO#
 }

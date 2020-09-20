@@ -5,19 +5,12 @@
 
 piece  base, rwing, lwing, tail, jet, ljp, jet2, rjp, weapon,barrel,flare, base2, base3;
 
-static-var  Static_Var_3, Static_Var_4, Static_Var_5, isFlying;
+static-var  statechg_DesiredState, statechg_StateChanging, isFlying;
 
 
-Crashing(Func_Var_1)
-{
-	Func_Var_1 = get HEALTH;
-	if( Func_Var_1 < 0 )
-	{
-		Static_Var_5 = 2;
-	}
-}
 
-activatescr()
+
+takeoff()
 {
 	if( !isFlying)
 	{
@@ -28,7 +21,7 @@ activatescr()
 }
 
 
-deactivatescr()
+landing()
 {
 	if( isFlying )
 	{
@@ -71,34 +64,34 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 InitState()
 {
-	Static_Var_3 = 1;
-	Static_Var_4 = 0;
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
 }
 
 RequestState(requestedstate, currentstate)
 {
-	if( Static_Var_4 )
+	if( statechg_StateChanging )
 	{
-		Static_Var_3 = requestedstate;
+		statechg_DesiredState = requestedstate;
 		return (0);
 	}
-	Static_Var_4 = 1;
-	currentstate = Static_Var_3;
-	Static_Var_3 = requestedstate;
-	while( Static_Var_3 != currentstate )
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
 	{
-		if( Static_Var_3 == 0 )
+		if( statechg_DesiredState == 0 )
 		{
-			call-script activatescr();
+			start-script takeoff();
 			currentstate = 0;
 		}
-		if( Static_Var_3 == 1 )
+		if( statechg_DesiredState == 1 )
 		{
-			call-script deactivatescr();
+			start-script landing();
 			currentstate = 1;
 		}
 	}
-	Static_Var_4 = 0;
+	statechg_StateChanging = FALSE;
 }
 
 
@@ -107,7 +100,6 @@ Create()
 	isFlying = FALSE;
 	call-script InitState();
 	start-script SmokeUnit();
-	start-script Crashing();
 }
 
 Activate()

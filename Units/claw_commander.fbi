@@ -138,14 +138,12 @@
 	smoothanim=1;
 	steeringmode=2;
 	threed=1;
-
 	leavetracks=1;
 	trackoffset=0;
 	trackstrength=8;
 	trackstretch=1;
 	tracktype=ComTrack;
 	trackwidth=22;
-
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
@@ -155,17 +153,15 @@
 
 	[CustomParams]
 	{
+		buildertype=claw_l1builder;
 		isCommander=1;	
 	}
 
-	//************************************************************
-	//  To be removed
-	//*****************
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:blueflaresml;
-	explosiongenerator1=custom:Nano;
-	explosiongenerator2=custom:emgflarefast;
-	explosiongenerator3=custom:DGUNREADYFLARE;
+		explosiongenerator0=custom:blueflaresml;
+		explosiongenerator1=custom:Nano;
+		explosiongenerator2=custom:emgflarefast;
+		explosiongenerator3=custom:DGUNREADYFLARE;
 	}
 }

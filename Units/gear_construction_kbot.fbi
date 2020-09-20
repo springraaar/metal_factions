@@ -116,15 +116,18 @@
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		buildertype=gear_l1builder;
+		builtBy=gear_light_plant,gear_adv_kbot_plant;
+	}
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Nano;
+		explosiongenerator0=custom:Nano;
 	}
 
 	buildcostenergy=1608;//#AUTO#
 	buildcostmetal=321;//#AUTO#
 	buildtime=3833;//#AUTO#
+	mass=138;//#AUTO#
 }

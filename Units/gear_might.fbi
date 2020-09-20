@@ -133,10 +133,10 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=gear_adv_vehicle_plant;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:yellowflarebig;
@@ -145,4 +145,5 @@
 	buildcostenergy=42383;//#AUTO#
 	buildcostmetal=8476;//#AUTO#
 	buildtime=101012;//#AUTO#
+	mass=10120;//#AUTO#
 }

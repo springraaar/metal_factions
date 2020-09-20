@@ -92,10 +92,10 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=claw_l2builder;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:mmakersmoke;

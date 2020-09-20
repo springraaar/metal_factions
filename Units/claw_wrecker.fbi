@@ -128,12 +128,14 @@
 	explosiongenerator1=custom:railgunflare;
 	explosiongenerator2=custom:UNITFIRE;
 	}
-	[customParams] 
+	[CustomParams]
 	{
+		builtBy=claw_adv_shipyard;
 		canAreaAttack=1;
 		evalfactor=0.85;//SHIP
 	}
 	buildcostenergy=69637;//#AUTO#
 	buildcostmetal=13927;//#AUTO#
 	buildtime=165969;//#AUTO#
+	mass=12227;//#AUTO#
 }

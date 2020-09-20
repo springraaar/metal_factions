@@ -106,11 +106,9 @@
 
 	[CustomParams]
 	{
+		builtBy=gear_l1builder,gear_l2builder;
 		tip=Loses up to 30% weapon damage over its range;
 	}
-	//************************************************************
-	//  To be removed
-	//*****************
 
 	[SFXTypes]
 	{
@@ -122,4 +120,5 @@
 	buildcostenergy=6866;//#AUTO#
 	buildcostmetal=1373;//#AUTO#
 	buildtime=16364;//#AUTO#
+	mass=2164;//#AUTO#
 }

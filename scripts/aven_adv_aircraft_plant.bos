@@ -3,8 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, pad, beam1, beam2, side1, side2, door1, door2,
-       plate1, plate2, nano1, nano2, post1, post2;
+piece  base, pad, beam1, beam2, side1, side2, door1, door2, plate1, plate2, nano1, nano2, post1, post2, floater;
 
 static-var  Static_Var_1, Static_Var_2, Static_Var_3, Static_Var_4, bBuilding;
 
@@ -183,6 +182,11 @@ RequestState(requestedstate, currentstate)
 
 Create()
 {
+	hide floater;
+	if ( GET GROUND_WATER_HEIGHT(GET UNIT_XZ) < 0)
+	{
+		show floater;
+	}
 	Static_Var_2 = 0;
 	Static_Var_1 = 0;
 	call-script InitState();

@@ -111,7 +111,6 @@
 	zbuffer=1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
-
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
@@ -119,9 +118,10 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=claw_aircraft_plant,claw_adv_aircraft_plant;
+	}	
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:ROCKETFLAREMED;
@@ -129,4 +129,5 @@
 	buildcostenergy=1980;//#AUTO#
 	buildcostmetal=396;//#AUTO#
 	buildtime=4720;//#AUTO#
+	mass=146;//#AUTO#
 }

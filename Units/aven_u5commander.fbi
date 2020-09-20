@@ -33,7 +33,7 @@
 	buildtime=30000;
 	footprintx=3;
 	footprintz=3;
-	mass=750;
+	mass=1000;
 	reclaimable=0;
 	capturable=0;
 	power=3750;
@@ -154,17 +154,15 @@
 
 	[CustomParams]
 	{
+		buildertype=aven_l1builder;
 		isCommander=1;
 	}
-	//************************************************************
-	//  To be removed
-	//*****************
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:GLOWSML;
-	explosiongenerator1=custom:Nano;
-	explosiongenerator2=custom:GLOWSML;
-	explosiongenerator3=custom:DGUNREADYFLARE;
+		explosiongenerator0=custom:GLOWSML;
+		explosiongenerator1=custom:Nano;
+		explosiongenerator2=custom:GLOWSML;
+		explosiongenerator3=custom:DGUNREADYFLARE;
 	}
 
 }

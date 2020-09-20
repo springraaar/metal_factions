@@ -116,8 +116,9 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	[customParams] 
+	[CustomParams]
 	{
+		builtBy=claw_shipyard,claw_adv_shipyard;
 		evalfactor=0.85;//SHIP
 	}
 
@@ -128,4 +129,5 @@
 	buildcostenergy=1101;//#AUTO#
 	buildcostmetal=220;//#AUTO#
 	buildtime=2625;//#AUTO#
+	mass=360;//#AUTO#
 }

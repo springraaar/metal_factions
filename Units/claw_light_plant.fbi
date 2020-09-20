@@ -73,6 +73,10 @@
 	NoAutoFire=0;
 	downloadable=1;
 
+	[CustomParams]
+	{
+		builtBy=claw_l1builder,claw_l2builder;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:Nano;
@@ -81,4 +85,5 @@
 	buildcostenergy=3939;//#AUTO#
 	buildcostmetal=787;//#AUTO#
 	buildtime=6196;//#AUTO#
+	mass=1774;//#AUTO#
 }

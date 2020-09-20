@@ -122,10 +122,10 @@
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=claw_adv_kbot_plant;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:blueflaresml;
@@ -134,4 +134,5 @@
 	buildcostenergy=2000;//#AUTO#
 	buildcostmetal=400;//#AUTO#
 	buildtime=4767;//#AUTO#
+	mass=191;//#AUTO#
 }

@@ -122,9 +122,10 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=sphere_adv_aircraft_factory;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:redflarefast;
@@ -132,4 +133,5 @@
 	buildcostenergy=6107;//#AUTO#
 	buildcostmetal=1221;//#AUTO#
 	buildtime=14555;//#AUTO#
+	mass=391;//#AUTO#
 }

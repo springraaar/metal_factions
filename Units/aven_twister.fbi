@@ -110,7 +110,6 @@
 	zbuffer=1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
-
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
@@ -118,14 +117,16 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=aven_aircraft_plant,aven_adv_aircraft_plant;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:GLOWSML;
 	}
-	buildcostenergy=1417;//#AUTO#
-	buildcostmetal=283;//#AUTO#
-	buildtime=3379;//#AUTO#
+	buildcostenergy=1447;//#AUTO#
+	buildcostmetal=289;//#AUTO#
+	buildtime=3449;//#AUTO#
+	mass=98;//#AUTO#
 }

@@ -5,7 +5,7 @@
 	//********************
 	Side=Aven;
 	name=Kodiak;
-	description=Amphibious Vehicle;
+	description=Amphibious Riot Vehicle;
 	icontype=amphibfighter;
 
 	//************************************************************
@@ -27,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2300;
+	maxdamage=2500;
 	healtime=30;
 	footprintx=3;
 	footprintz=3;
@@ -66,7 +66,7 @@
 	turnrate=550;
 	acceleration=0.27;
 	brakerate=0.08;
-	maxvelocity=2.5;
+	maxvelocity=2.4;
 	maxslope=12;
 	maxwaterdepth=1000;
 	turninplace=0;
@@ -85,8 +85,7 @@
 	//***********
 	weapon1=aven_kodiak_cannon;
 	weapon2=aven_kodiak_missile;
-	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
+	badtargetcategory1=NOTAIR;
 	badtargetcategory2=NOTAIR;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
@@ -128,12 +127,10 @@
 
 	[CustomParams]
 	{
+		builtBy=aven_adv_vehicle_plant;
 		tip=33% slower on water;
 	}
 
-	//************************************************************
-	//  To be removed
-	//*****************
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:yellowflaresml;
@@ -141,7 +138,8 @@
 		explosiongenerator2=custom:rocketflaresml;
 	}
 
-	buildcostenergy=4279;//#AUTO#
-	buildcostmetal=855;//#AUTO#
-	buildtime=10199;//#AUTO#
+	buildcostenergy=6736;//#AUTO#
+	buildcostmetal=1347;//#AUTO#
+	buildtime=16054;//#AUTO#
+	mass=1074;//#AUTO#
 }

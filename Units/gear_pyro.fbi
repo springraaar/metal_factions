@@ -5,8 +5,8 @@
 	//********************
 	Side=Gear;
 	name=Pyro;
-	description=Assault Robot;
-	icontype=mobileassault;
+	description=Fast Assault/Raider Robot;
+	icontype=mobileraider;
 
 	//************************************************************
 	//  Categories
@@ -27,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1600;
+	maxdamage=1500;
 	healtime=30;
 	footprintx=2;
 	footprintz=2;
@@ -36,8 +36,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=1.1;
-	energyuse=1.1;
+	energymake=0;
+	energyuse=0;
 	energystorage=0;
 
 	//************************************************************
@@ -67,7 +67,7 @@
 	turnrate=950;
 	acceleration=1.0;
 	brakerate=1.83105;
-	maxvelocity=2;
+	maxvelocity=2.4;
 	maxslope=17;
 	maxwaterdepth=25;
 
@@ -113,7 +113,7 @@
 	pieceTrailCEGTag=NanoDebree;
 	pieceTrailCEGRange = 1;
 	collisionVolumeType = box;
-	collisionVolumeScales =25 38 25;
+	collisionVolumeScales =28 40 28;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 
@@ -124,6 +124,7 @@
 
 	[CustomParams]
 	{
+		builtBy=gear_adv_kbot_lab;
 		tip=Targets burn for 180(M) dmg over 6s;
 	}
 
@@ -131,7 +132,8 @@
 	//  To be removed
 	//*****************
 
-	buildcostenergy=2048;//#AUTO#
-	buildcostmetal=409;//#AUTO#
-	buildtime=4882;//#AUTO#
+	buildcostenergy=2224;//#AUTO#
+	buildcostmetal=444;//#AUTO#
+	buildtime=5300;//#AUTO#
+	mass=523;//#AUTO#
 }

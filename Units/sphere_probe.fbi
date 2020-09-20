@@ -128,14 +128,13 @@
    
 	[CustomParams]
 	{
+		builtBy=sphere_scout_pad,sphere_aircraft_factory,sphere_adv_aircraft_factory;
 		evalfactor=0.8;
 	}
 
-	//************************************************************
-	//  To be removed
-	//*****************
 
 	buildcostenergy=376;//#AUTO#
 	buildcostmetal=75;//#AUTO#
 	buildtime=897;//#AUTO#
+	mass=26;//#AUTO#
 }

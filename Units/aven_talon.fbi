@@ -128,27 +128,20 @@
 	threed=1;
 	version=1.2;
 	zbuffer=1;
-	CanLoopbackAttack=1;
-
-	//************************************************************
-	//  To be removed
-	//*****************
-
-	//************************************************************
-	//  Out of Category
-	//*******************
-	//maxslope=10;
-	//turnrate=820;
-
+	CanLoopbackAttack=0;
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =45 16 40;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;	
-	
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
+
+	[CustomParams]
+	{
+		builtBy=aven_adv_aircraft_plant;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:rocketflaresml;
@@ -157,4 +150,5 @@
 	buildcostenergy=7910;//#AUTO#
 	buildcostmetal=1582;//#AUTO#
 	buildtime=18853;//#AUTO#
+	mass=423;//#AUTO#
 }

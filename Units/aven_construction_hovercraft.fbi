@@ -18,7 +18,6 @@
 	//  External Specs
 	//******************
 	unitname=aven_construction_hovercraft;
-	unitnumber=175;
 	objectname=aven_construction_hovercraft.3do;
 	corpse=aven_construction_hovercraft_dead;
 	buildpic=aven_construction_hovercraft.png;
@@ -27,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1100;
+	maxdamage=2200;
 	healtime=60;
 	footprintx=3;
 	footprintz=3;
@@ -108,21 +107,24 @@
 	version=1.2;
 	zbuffer=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =32 18 45;
+	collisionVolumeScales =32 24 50;
 	collisionVolumeOffsets = 0 8 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=NanoDebree;
 	pieceTrailCEGRange = 2;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		buildertype=aven_l2builder;
+		builtBy=aven_hovercraft_platform;
+	}
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Nano;
+		explosiongenerator0=custom:Nano;
 	}
-	buildcostenergy=4905;//#AUTO#
-	buildcostmetal=981;//#AUTO#
-	buildtime=11691;//#AUTO#
+	buildcostenergy=7082;//#AUTO#
+	buildcostmetal=1416;//#AUTO#
+	buildtime=16878;//#AUTO#
+	mass=1022;//#AUTO#
 }

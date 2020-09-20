@@ -103,17 +103,19 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=sphere_l1builder,sphere_l2builder;
+	}
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Nano;
-	explosiongenerator1=custom:Normallight;
-	explosiongenerator2=custom:UNITFIRE;
+		explosiongenerator0=custom:Nano;
+		explosiongenerator1=custom:Normallight;
+		explosiongenerator2=custom:UNITFIRE;
 	}
 	buildcostenergy=4141;//#AUTO#
 	buildcostmetal=828;//#AUTO#
 	buildtime=6514;//#AUTO#
+	mass=1952;//#AUTO#
 }

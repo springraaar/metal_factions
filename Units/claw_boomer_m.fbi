@@ -119,9 +119,10 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=claw_aircraft_plant,claw_adv_aircraft_plant;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:ROCKETFLAREMED;
@@ -129,4 +130,5 @@
 	buildcostenergy=1773;//#AUTO#
 	buildcostmetal=354;//#AUTO#
 	buildtime=4225;//#AUTO#
+	mass=139;//#AUTO#
 }

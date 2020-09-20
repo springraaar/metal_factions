@@ -117,9 +117,10 @@
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=aven_adv_kbot_lab;
+	}
 
 	[SFXTypes]
 	{
@@ -129,4 +130,5 @@
 	buildcostenergy=6382;//#AUTO#
 	buildcostmetal=1276;//#AUTO#
 	buildtime=15210;//#AUTO#
+	mass=1050;//#AUTO#
 }

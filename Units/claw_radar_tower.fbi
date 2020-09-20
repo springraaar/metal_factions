@@ -97,11 +97,12 @@
 	floater=1;
 	waterline=0;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=claw_l1builder,claw_l2builder;
+	}
 	buildcostenergy=601;//#AUTO#
 	buildcostmetal=120;//#AUTO#
 	buildtime=1433;//#AUTO#
+	mass=164;//#AUTO#
 }

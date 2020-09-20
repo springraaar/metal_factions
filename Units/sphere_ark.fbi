@@ -86,6 +86,10 @@
 	collisionVolumeScales =35 45 35;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
+	[CustomParams]
+	{
+		builtBy=sphere_adv_kbot_factory;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:yellowflaresml;
@@ -94,4 +98,5 @@
 	buildcostenergy=8218;//#AUTO#
 	buildcostmetal=1643;//#AUTO#
 	buildtime=19587;//#AUTO#
+	mass=2676;//#AUTO#
 }

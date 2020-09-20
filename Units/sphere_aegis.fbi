@@ -101,18 +101,16 @@
 
 	[CustomParams]
 	{
+		builtBy=sphere_l2builder;
 		tip=Can drain up to 2% charge/s from nearby large shields and 1% from small ones (max 3x regen);
 	}
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Glow;
+		explosiongenerator0=custom:Glow;
 	}
 	buildcostenergy=18951;//#AUTO#
 	buildcostmetal=3790;//#AUTO#
 	buildtime=45167;//#AUTO#
+	mass=8842;//#AUTO#
 }

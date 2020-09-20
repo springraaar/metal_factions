@@ -12,7 +12,6 @@
 
 	// ------------------- external specs
 	UnitName=sphere_shielder;
-	UnitNumber=10025;
 	Objectname=sphere_shielder.3do;
 	buildpic=sphere_shielder.png;
 	SoundCategory=CORAK;
@@ -26,22 +25,23 @@
 
 
 	// ------------------- resources
-	EnergyUse=1;
+	EnergyUse=0;
 	EnergyStorage=0;
 	MetalStorage=0;
-	EnergyMake=1;
+	EnergyMake=0;
 
 	// ------------------- abilities
 	canmove=1;
 	canpatrol=1;
 	canstop=1;
 	canguard=1;
+	canattack=0;
 	Builder=0;
 
 	// ------------------- movement
 	MaxWaterDepth=12;
 	MaxSlope=17;
-	MaxVelocity=1.45;
+	MaxVelocity=1.2;
 	BrakeRate=0.04;
 	Acceleration=0.05;
 	TurnRate=350;
@@ -90,6 +90,7 @@
 
 	[CustomParams]
 	{
+		builtBy=sphere_adv_vehicle_factory;
 		tip=Can drain up to 2% charge/s from nearby large shields and 1% from small ones (max 3x regen);
 	}
 
@@ -97,7 +98,8 @@
 	{
 		explosiongenerator0=custom:emgflarefast;
 	}
-	buildcostenergy=20506;//#AUTO#
-	buildcostmetal=4101;//#AUTO#
-	buildtime=48873;//#AUTO#
+	buildcostenergy=18808;//#AUTO#
+	buildcostmetal=3761;//#AUTO#
+	buildtime=44826;//#AUTO#
+	mass=3525;//#AUTO#
 }

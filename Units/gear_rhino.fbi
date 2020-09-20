@@ -88,6 +88,7 @@
 	weaponmaindir1=0 0 1;
 	maxangledif1=50;
 	onlytargetcategory1=NOTAIR;
+	badtargetcategory2=NOTAIR;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
 
@@ -124,20 +125,17 @@
 	
 	[CustomParams]
 	{
+		builtBy=gear_adv_vehicle_plant;
 		tip=+33% dmg resistance on front, -33% when hit from behind;
-		evalfactor=0.95;
 	}
-
-	//************************************************************
-	//  To be removed
-	//*****************
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:yellowflaremed;
 		explosiongenerator1=custom:glowsml;
 	}
 
-	buildcostenergy=5809;//#AUTO#
-	buildcostmetal=1161;//#AUTO#
-	buildtime=13845;//#AUTO#
+	buildcostenergy=6115;//#AUTO#
+	buildcostmetal=1223;//#AUTO#
+	buildtime=14574;//#AUTO#
+	mass=1282;//#AUTO#
 }

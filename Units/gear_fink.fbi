@@ -129,14 +129,12 @@
 	
 	[CustomParams]
 	{
+		builtBy=gear_scout_pad,gear_aircraft_plant,gear_adv_aircraft_plant;
 		evalfactor=0.8;
 	}
-
-	//************************************************************
-	//  To be removed
-	//*****************
 
 	buildcostenergy=365;//#AUTO#
 	buildcostmetal=73;//#AUTO#
 	buildtime=870;//#AUTO#
+	mass=25;//#AUTO#
 }

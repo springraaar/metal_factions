@@ -115,15 +115,17 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	[customParams] 
+	[CustomParams]
 	{
+		builtBy=sphere_adv_shipyard;
 		evalfactor=0.85;//SHIP
 	}
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:UNITFIRE;
+		explosiongenerator0=custom:UNITFIRE;
 	}
 	buildcostenergy=3357;//#AUTO#
 	buildcostmetal=671;//#AUTO#
 	buildtime=8002;//#AUTO#
+	mass=786;//#AUTO#
 }

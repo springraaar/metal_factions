@@ -118,9 +118,10 @@
 	pieceTrailCEGTag=NanoDebree;
 	pieceTrailCEGRange = 2;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=sphere_adv_kbot_factory;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:redflare;
@@ -129,4 +130,5 @@
 	buildcostenergy=1649;//#AUTO#
 	buildcostmetal=329;//#AUTO#
 	buildtime=3930;//#AUTO#
+	mass=409;//#AUTO#
 }

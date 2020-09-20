@@ -64,7 +64,7 @@
 	acceleration=1.2;
 	brakerate=0.08;
 	maxvelocity=6.8;
-	cruisealt=240;
+	cruisealt=210;
 
 	// flight behaviour
 	wingdrag=0.14;      //0.07
@@ -126,18 +126,7 @@
 	threed=1;
 	version=1.2;
 	zbuffer=1;
-	CanLoopbackAttack=1;
-
-	//************************************************************
-	//  To be removed
-	//*****************
-
-	//************************************************************
-	//  Out of Category
-	//*******************
-	//maxslope=10;
-	//turnrate=820;
-
+	CanLoopbackAttack=0;
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
@@ -147,6 +136,10 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
+	[CustomParams]
+	{
+		builtBy=gear_adv_aircraft_plant;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:glowsml;
@@ -155,4 +148,5 @@
 	buildcostenergy=6355;//#AUTO#
 	buildcostmetal=1271;//#AUTO#
 	buildtime=15148;//#AUTO#
+	mass=368;//#AUTO#
 }

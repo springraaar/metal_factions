@@ -64,7 +64,7 @@
 	brakerate=0.08;
 	maxvelocity=7;
 	maxwaterdepth=5;
-	cruisealt=240;
+	cruisealt=210;
 
 	// flight behaviour
 	wingdrag=0.07;      //0.07
@@ -97,7 +97,6 @@
 	MaxAngleDif2=290;       // belly turret can't shoot up
 	badtargetcategory1=NOTAIR;
 	badtargetcategory2=NOTAIR;
-	badtargetcategory3=NOTAIR;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
 
@@ -129,18 +128,7 @@
 	threed=1;
 	version=1.2;
 	zbuffer=1;
-	CanLoopbackAttack=1;
-
-	//************************************************************
-	//  To be removed
-	//*****************
-
-	//************************************************************
-	//  Out of Category
-	//*******************
-	//maxslope=10;
-	//turnrate=820;
-
+	CanLoopbackAttack=0;
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
@@ -149,11 +137,17 @@
 	collisionVolumeTest = 1;	
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
+
+	[CustomParams]
+	{
+		builtBy=aven_adv_aircraft_plant;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:GLOWSML;
 	}
-	buildcostenergy=6696;//#AUTO#
-	buildcostmetal=1339;//#AUTO#
-	buildtime=15960;//#AUTO#
+	buildcostenergy=6758;//#AUTO#
+	buildcostmetal=1351;//#AUTO#
+	buildtime=16106;//#AUTO#
+	mass=350;//#AUTO#
 }

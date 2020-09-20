@@ -104,9 +104,10 @@
 	floater=1;
 	waterline=0;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=aven_l1builder,aven_l2builder;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:rocketflaresml;
@@ -114,4 +115,5 @@
 	buildcostenergy=1088;//#AUTO#
 	buildcostmetal=217;//#AUTO#
 	buildtime=2593;//#AUTO#
+	mass=718;//#AUTO#
 }

@@ -106,10 +106,10 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=aven_l2builder;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:empflare;
@@ -118,4 +118,5 @@
 	buildcostenergy=13906;//#AUTO#
 	buildcostmetal=2781;//#AUTO#
 	buildtime=33144;//#AUTO#
+	mass=7126;//#AUTO#
 }

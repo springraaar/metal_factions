@@ -99,11 +99,12 @@
 	floater=1;
 	waterline=0;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=gear_l2builder;
+	}
 	buildcostenergy=1586;//#AUTO#
 	buildcostmetal=317;//#AUTO#
 	buildtime=3781;//#AUTO#
+	mass=398;//#AUTO#
 }

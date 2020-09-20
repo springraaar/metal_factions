@@ -93,6 +93,10 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
+	[CustomParams]
+	{
+		builtBy=sphere_adv_vehicle_factory;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:yellowflaresml;
@@ -100,4 +104,5 @@
 	buildcostenergy=7248;//#AUTO#
 	buildcostmetal=1449;//#AUTO#
 	buildtime=17275;//#AUTO#
+	mass=820;//#AUTO#
 }

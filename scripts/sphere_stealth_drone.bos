@@ -88,6 +88,24 @@ SweetSpot(piecenum)
 	return (0);
 }
 
+QueryPrimary(piecenum)
+{
+	piecenum = hull;
+}
+AimFromPrimary(piecenum)
+{
+	piecenum = hull;
+}
+AimPrimary(heading,pitch)
+{
+	return (1);
+}
+FirePrimary()
+{
+	return (1);
+}
+
+
 Killed(severity, corpsetype)
 {
 	corpsetype = 3;

@@ -30,15 +30,12 @@ activatescr()
 {
 	if( !isOpen )
 	{
-		turn door1 to z-axis <0.000000> now;
 		turn door1 to z-axis <-90.000000> speed <270.000000>;
-		turn door2 to z-axis <0.000000> now;
 		turn door2 to z-axis <90.000000> speed <270.000000>;
 		wait-for-turn door1 around z-axis;
 		move door1 to y-axis [-6.000000] speed [20.000000];
 		move door2 to y-axis [-6.000000] speed [20.000000];
 		wait-for-move door1 along y-axis;
-		
 		move plate to y-axis [4.000000] speed [10.000000];
 		move arm to y-axis [4.000000] speed [10.000000];
 		wait-for-move arm along y-axis;

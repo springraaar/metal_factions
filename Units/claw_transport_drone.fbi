@@ -1,0 +1,134 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	Side=Claw;
+	name=Transporter Drone;
+	description=Air Transport;
+	icontype=air;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW VTOL TPORT LEVEL2 NOTSUB;
+	tedclass=VTOL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitname=claw_transport_drone;
+	unitnumber=9000;
+	objectname=claw_transport_drone.3do;
+	buildpic=claw_transport_drone.png;
+	soundcategory=aven_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxdamage=800;
+	buildcostmetal=600;
+	buildcostenergy=3000;
+	buildtime=7200;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalstorage=0;
+	energymake=0;
+	energyuse=0;
+	energystorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workertime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canfly=1;
+	canguard=1;
+	canload=1;
+	canmove=1;
+	canpatrol=1;
+	canstop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnrate=512;
+	acceleration=0.2;
+	brakerate=1;
+	maxvelocity=4.0;
+	maxslope=10;
+	cruisealt=150;
+	cansubmerge=1;	
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightdistance=600;
+	radardistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeas=SMALL_UNITEX;
+	selfdestructas=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noautofire=0;
+	firestandorders=0;
+	mobilestandorders=0;
+	standingmoveorder=1;
+	defaultmissiontype=VTOL_standby;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bankscale=1;
+	bmcode=1;
+	designation=AFD-T3;
+	downloadable=1;
+	maneuverleashlength=1280;
+	scale=0.8;
+	shootme=1;
+	steeringmode=1;
+	threed=1;
+	transmaxunits=1;
+	transportcapacity=1;
+	transportmass=3000;
+	transportsize=4;
+	verticalspeed=10.0;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	releaseHeld=1;
+	collide=1;
+	minCollisionSpeed=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 15 40;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	
+	[CustomParams]
+	{
+		tip=Transport weight limit : HEAVY;
+		isDrone=1;
+	}
+	[SFXTypes]
+	{
+		explosiongenerator0=custom:TRANSPORTTRAIL4;
+	}
+}

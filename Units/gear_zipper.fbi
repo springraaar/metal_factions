@@ -79,7 +79,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=CORSFIG_WEAPON;
+	weapon1=gear_zipper_laser;
 	explodeas=BIG_UNITEX;
 	selfdestructas=MEDIUM_UNIT;
 
@@ -113,15 +113,17 @@
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
-	collisionVolumeScales =25 10 20;
+	collisionVolumeScales =28 10 25;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=gear_aircraft_plant,gear_adv_aircraft_plant;
+	}
 
-	buildcostenergy=1167;//#AUTO#
-	buildcostmetal=233;//#AUTO#
-	buildtime=2782;//#AUTO#
+	buildcostenergy=1218;//#AUTO#
+	buildcostmetal=243;//#AUTO#
+	buildtime=2904;//#AUTO#
+	mass=90;//#AUTO#
 }

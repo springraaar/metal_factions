@@ -27,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1925;
+	maxdamage=2850;
 	healtime=30;
 	footprintx=7;
 	footprintz=8;
@@ -48,6 +48,7 @@
 	collisionVolumeScales=90 40 110;
 	collisionVolumeOffsets=0 -5 0;
 	collisionVolumeTest = 1;
+	floater=1;
 
 	//************************************************************
 	//  Constructor
@@ -67,7 +68,7 @@
 	//  Movement
 	//************
 	maxslope=10;
-	maxwaterdepth=0;
+
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -103,15 +104,17 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=gear_l1builder,gear_l2builder;
+	}
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:Nano;
 	}
 
-	buildcostenergy=3535;//#AUTO#
-	buildcostmetal=707;//#AUTO#
-	buildtime=5561;//#AUTO#
+	buildcostenergy=4174;//#AUTO#
+	buildcostmetal=834;//#AUTO#
+	buildtime=6566;//#AUTO#
+	mass=1980;//#AUTO#
 }

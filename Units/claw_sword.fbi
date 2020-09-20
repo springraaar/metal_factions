@@ -119,8 +119,9 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	[customParams] 
+	[CustomParams]
 	{
+		builtBy=claw_shipyard,claw_adv_shipyard;
 		tip=Laser Cutter loses up to 30% damage over its range;
 		evalfactor=0.85;//SHIP
 	}
@@ -131,4 +132,5 @@
 	buildcostenergy=2369;//#AUTO#
 	buildcostmetal=473;//#AUTO#
 	buildtime=5646;//#AUTO#
+	mass=595;//#AUTO#
 }

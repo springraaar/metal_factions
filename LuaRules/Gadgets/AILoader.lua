@@ -13,6 +13,7 @@ end
 -- localization
 local Echo = Spring.Echo
 local spGetTeamList = Spring.GetTeamList
+local spGetPlayerInfo = Spring.GetPlayerInfo
 local spGetTeamInfo = Spring.GetTeamInfo
 local spGetTeamLuaAI = Spring.GetTeamLuaAI
 local spAreTeamsAllied = Spring.AreTeamsAllied
@@ -25,7 +26,7 @@ GG.mFAIStartPosByTeamId = {}
 
 local showAIWarningMessage = 0
 
-include("LuaRules/Gadgets/ai/Common.lua")
+include("LuaRules/Gadgets/ai/common.lua")
 include("LuaRules/Gadgets/ai/AI.lua")
 include("LuaRules/Gadgets/ai/MapHandler.lua")
 
@@ -59,15 +60,21 @@ function gadget:Initialize()
 				end
 				
 				local mode = "normal"
+				local strategyStr = "adaptable"
 				if (string.find(aiInfo,":") ~= nil) then
-					mode = string.sub(aiInfo,8)
-					--Echo("Player " .. teamList[i] .. " has mode = " .. mode)
+					local strategyPos1,strategyPos2 = string.find(aiInfo," %(")
+					if (strategyPos1 ~= nil) then
+						mode = string.sub(aiInfo,8,strategyPos1)
+						strategyStr = string.match(aiInfo,"%((.-)%)")
+					else
+						mode = string.sub(aiInfo,8)
+					end
+					Echo("Player " .. teamList[i] .. " has mode = " .. mode.." strategy="..strategyStr)
 				end 
 				
 				-- add AI object
-				thisAI = AI.create(id, mode)
-				thisAI.allyId = allyId
-				thisAI.mapHandler = mapHandler
+				thisAI = AI.create(id, mode, strategyStr, allyId, mapHandler)
+				thisAI:setStrategy("aven",strategyStr,true) -- side gets overridden once the first unit spawns
 				mFAIs[#mFAIs+1] = thisAI
 			else
 				showAIWarningMessage = 1
@@ -88,7 +95,7 @@ function gadget:Initialize()
 			end
 		end
 		
-		-- Echo("AI "..thisAI.id.." : allies="..#alliedTeamIds.." enemies="..#enemyTeamIds)
+		Echo("AI "..thisAI.id.." : allies="..#alliedTeamIds.." enemies="..#enemyTeamIds)
 		thisAI.alliedTeamIds = alliedTeamIds		
 		thisAI.enemyTeamIds = enemyTeamIds
 	end
@@ -100,8 +107,10 @@ function gadget:GameStart()
     	local startPos = thisAI:findStartPos(true,INFINITY)
         GG.mFAIStartPosByTeamId[thisAI.id] = startPos
 
-        local _,_,_,isAI,side = spGetTeamInfo(thisAI.id)
-		thisAI.side = side
+		-- don't set side here, wait for the first unit to spawn
+        -- local _,_,_,isAI,side = spGetTeamInfo(thisAI.id)
+		-- thisAI.side = side
+		
 		thisAI:Init()
     end
 end
@@ -133,8 +142,12 @@ function gadget:GameFrame(n)
         end 
 	
 		-- run AI game frame update handlers
-		thisAI:Update(n)
+		thisAI:GameFrame(n)
     end
+
+	--TODO make this work or remove it    
+    --local data={}
+    --SendToUnsynced("AIHighlightUpdateEvent",0,0)
 end
 
 
@@ -189,12 +202,44 @@ function gadget:UnitGiven(unitId, unitDefId, teamId, oldTeamId)
 	end
 end
 
---UNSYNCED CODE
+function gadget:RecvLuaMsg(msg, playerId)
+	--Spring.Echo("received lua msg from player "..playerId..": "..msg) --DEBUG
+
+	local pName,active,spectator,teamId,allyId,_,_,_,_,_ = spGetPlayerInfo(playerId)
+	-- exclude spectators
+	-- TODO allow cheats to override this
+	if (active and not spectator) then
+		Spring.Echo("pName="..pName.." teamId="..teamId.." allyId="..allyId)
+		-- if it was a message to set or remove beacon, forward it to all AIs allied with the player
+		for _,thisAI in ipairs(mFAIs) do
+			if (thisAI.allyId == allyId) then
+				thisAI:processExternalCommand(msg,playerId,teamId,pName)
+			end
+		end
+	end
+end
+
+
+--------------------------------------------- UNSYNCED CODE
 else
 
+--TODO use this eventually
+-- register synced->unsynced communication of AI UI highlight events
+local function AIHighlightUpdateEventHandler(allyId,data)
+	if Script.LuaUI('AIHighlightUpdateUIEvent') then
+		Script.LuaUI.AIHighlightUpdateUIEvent(allyId,data)
+	end
+end
 
 
+function gadget:Initialize()
+	gadgetHandler:AddSyncAction("AIHighlightUpdateEvent",AIHighlightUpdateEventHandler)
+end
 
+
+function gadget:Shutdown()
+	gadgetHandler:RemoveSyncAction("AIHighlightUpdateEvent",AIHighlightUpdateEventHandler)
+end
 
 end
 

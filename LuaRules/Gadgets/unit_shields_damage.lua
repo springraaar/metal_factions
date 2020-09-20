@@ -76,6 +76,7 @@ local spGetUnitDefID = Spring.GetUnitDefID
 local spGetUnitIsStunned = Spring.GetUnitIsStunned
 local spGetUnitNearestEnemy = Spring.GetUnitNearestEnemy
 local spGetGameFrame = Spring.GetGameFrame
+local spGetUnitTransporter = Spring.GetUnitTransporter
 local max = math.max
 local random = math.random
 
@@ -136,6 +137,7 @@ local burningEffectWeaponDefIds = {
 	[WeaponDefNames["gear_canister_fireball"].id] = true,
 	[WeaponDefNames["gear_firestorm_missile"].id] = true,
 	[WeaponDefNames["gear_igniter_missile"].id] = true,
+	[WeaponDefNames["gear_incendiary_mine_missile"].id] = true,
 	[WeaponDefNames["gear_u1commander_missile"].id] = true,
 	[WeaponDefNames["gear_barrel_missile2"].id] = true,
 	[WeaponDefNames["gear_eruptor_fireball"].id] = true,
@@ -648,6 +650,11 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		-- adds % of paralyzer damage as normal damage to HP
 		if (paralyzer) then
 			spAddUnitDamage(unitID,finalDamage*PARALYZE_DAMAGE_FACTOR,0,attackerID)
+
+			-- units being transported do not take paralyze damage to avoid a bug where they'd reload and start firing!
+			if spGetUnitTransporter(unitID) ~= nil then
+				return 0,0
+			end
 		
 			-- amplify paralyzer damage for lower hp units
 			local health,maxHealth,_,_,_ = spGetUnitHealth(unitID)

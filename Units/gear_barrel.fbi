@@ -118,9 +118,9 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 	waterline=15;
-
 	[CustomParams]
 	{
+		builtBy=gear_adv_kbot_lab;
 		tip=Burns ground for 20s, dealing up to 20(M) dmg/s. Affected units burn for 180(M) dmg over 6s;
 	}
 
@@ -133,4 +133,5 @@
 	buildcostenergy=6005;//#AUTO#
 	buildcostmetal=1201;//#AUTO#
 	buildtime=14313;//#AUTO#
+	mass=1025;//#AUTO#
 }

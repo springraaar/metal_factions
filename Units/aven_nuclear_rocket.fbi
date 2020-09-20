@@ -105,13 +105,10 @@
 	selfdestructcountdown=0;
 	fireState=0;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-	[customParams]
+	[CustomParams]
 	{
+		builtBy=aven_long_range_rocket_platform;
 	}
-
 
 	buildcostenergy=12500;//#AUTO#
 	buildcostmetal=2500;//#AUTO#

@@ -119,11 +119,9 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
 	[customParams] 
 	{
+		builtBy=aven_shipyard,aven_adv_shipyard;
 		evalfactor=0.85;//SHIP
 	}
 	[SFXTypes]
@@ -134,4 +132,5 @@
 	buildcostenergy=5112;//#AUTO#
 	buildcostmetal=1022;//#AUTO#
 	buildtime=12184;//#AUTO#
+	mass=1028;//#AUTO#
 }

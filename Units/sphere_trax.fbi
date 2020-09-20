@@ -80,18 +80,21 @@
 	DefaultMissionType=Standby;
 	maneuverleashlength=640;
 	Downloadable=1;
-
 	leavetracks=1;
 	trackoffset=8;
 	trackstrength=5;
 	trackstretch=1;
 	tracktype=StdTank;
 	trackwidth=35;
-
 	collisionVolumeType = box;
 	collisionVolumeScales =30 15 30;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_adv_vehicle_factory;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:yellowflaresml;
@@ -99,4 +102,5 @@
 	buildcostenergy=2313;//#AUTO#
 	buildcostmetal=462;//#AUTO#
 	buildtime=5513;//#AUTO#
+	mass=779;//#AUTO#
 }

@@ -119,12 +119,10 @@
 
 	[CustomParams]
 	{
-		tip=use CTRL-D to self-destruct for 3200 damage in a wide area;
+		builtBy=gear_adv_kbot_lab;
+		tip=use CTRL-D to self-destruct and deal up to 3200(H) damage in a wide area;
 		evalfactor=0.85;//GRENADO
 	}
-	//************************************************************
-	//  To be removed
-	//*****************
 
 	[SFXTypes]
 	{
@@ -133,4 +131,5 @@
 	buildcostenergy=10494;//#AUTO#
 	buildcostmetal=2098;//#AUTO#
 	buildtime=25012;//#AUTO#
+	mass=1824;//#AUTO#
 }

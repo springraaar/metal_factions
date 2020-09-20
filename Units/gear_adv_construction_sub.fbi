@@ -18,7 +18,6 @@
 	//  External Specs
 	//******************
 	unitname=gear_adv_construction_sub;
-	unitnumber=186;
 	objectname=gear_adv_construction_sub.3do;
 	corpse=gear_adv_construction_sub_dead;
 	buildpic=gear_adv_construction_sub.png;
@@ -27,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1325;
+	maxdamage=2100;
 	healtime=75;
 	footprintx=4;
 	footprintz=4;
@@ -70,9 +69,9 @@
 	//  Movement
 	//************
 	movementclass=BOATSUB;
-	turnrate=256;
-	acceleration=0.04;
-	brakerate=0.01;
+	turnrate=456;
+	acceleration=0.08;
+	brakerate=0.07;
 	maxvelocity=2.05;
 	minwaterdepth=20;
 
@@ -117,16 +116,19 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		buildertype=gear_l2builder;
+		builtBy=gear_adv_shipyard;
+	}
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Nano;
-	explosiongenerator1=custom:UNITFIRE;
+		explosiongenerator0=custom:Nano;
+		explosiongenerator1=custom:UNITFIRE;
 	}
 
-	buildcostenergy=5339;//#AUTO#
-	buildcostmetal=1067;//#AUTO#
-	buildtime=12726;//#AUTO#
+	buildcostenergy=6363;//#AUTO#
+	buildcostmetal=1272;//#AUTO#
+	buildtime=15166;//#AUTO#
+	mass=949;//#AUTO#
 }

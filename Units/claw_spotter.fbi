@@ -128,14 +128,12 @@
    
 	[CustomParams]
 	{
+		builtBy=claw_scout_pad,claw_aircraft_plant,claw_adv_aircraft_plant;
 		evalfactor=0.8;
 	}
-
-	//************************************************************
-	//  To be removed
-	//*****************
 
 	buildcostenergy=376;//#AUTO#
 	buildcostmetal=75;//#AUTO#
 	buildtime=897;//#AUTO#
+	mass=26;//#AUTO#
 }

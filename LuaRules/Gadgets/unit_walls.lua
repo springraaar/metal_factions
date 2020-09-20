@@ -19,6 +19,10 @@ end
 
 
 local wallDefIds = {
+	[UnitDefNames["aven_dragons_teeth"].id] = true,
+	[UnitDefNames["gear_dragons_teeth"].id] = true,
+	[UnitDefNames["claw_dragons_teeth"].id] = true,
+	[UnitDefNames["sphere_dragons_teeth"].id] = true,
 	[UnitDefNames["aven_fortification_wall"].id] = true,
 	[UnitDefNames["gear_fortification_wall"].id] = true,
 	[UnitDefNames["claw_fortification_wall"].id] = true,

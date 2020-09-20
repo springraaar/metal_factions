@@ -120,11 +120,12 @@
 	pieceTrailCEGRange = 4;
 	waterline=8;
 	
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=claw_spinbot_plant;
+	}
 	buildcostenergy=3489;//#AUTO#
 	buildcostmetal=697;//#AUTO#
 	buildtime=8316;//#AUTO#
+	mass=253;//#AUTO#
 }

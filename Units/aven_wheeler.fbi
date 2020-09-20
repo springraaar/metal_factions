@@ -126,12 +126,11 @@
 
 	[CustomParams]
 	{
+		builtBy=aven_light_plant,aven_adv_vehicle_plant;
 		tip=33% slower on water;
 	}
 
-	//************************************************************
-	//  To be removed
-	//*****************
+
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:yellowflaresml;
@@ -141,4 +140,5 @@
 	buildcostenergy=951;//#AUTO#
 	buildcostmetal=190;//#AUTO#
 	buildtime=2266;//#AUTO#
+	mass=313;//#AUTO#
 }

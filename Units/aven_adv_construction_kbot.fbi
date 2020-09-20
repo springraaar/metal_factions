@@ -4,7 +4,7 @@
 	//  Unit Description
 	//********************
 	Side=Aven;
-	name=Adv. Construction Robot;
+	name=All-Terrain Adv. Construction Robot;
 	description=Tech Level 2;
 	icontype=mobilebuilder2;
 
@@ -27,10 +27,10 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=850;
+	maxdamage=1800;
 	healtime=53;
-	footprintx=2;
-	footprintz=2;
+	footprintx=3;
+	footprintz=3;
 
 	//************************************************************
 	//  Resources
@@ -63,12 +63,12 @@
 	canpatrol=1;
 	canreclamate=1;
 	canstop=1;
-	upright=1;
+	upright=0;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTHT3;
+	movementclass=KBOTAT;
 	turnrate=1010;
 	acceleration=1.8;
 	brakerate=14.0;
@@ -112,10 +112,15 @@
 	pieceTrailCEGTag=NanoDebree;
 	pieceTrailCEGRange = 2;
 	collisionVolumeType = box;
-	collisionVolumeScales =22 32 22;
+	collisionVolumeScales =35 32 33;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 
+	[CustomParams]
+	{
+		buildertype=aven_l2builder;
+		builtBy=aven_adv_kbot_lab;
+	}
 	//************************************************************
 	//  To be removed
 	//*****************
@@ -124,7 +129,8 @@
 	{
 	explosiongenerator0=custom:Nano;
 	}
-	buildcostenergy=4085;//#AUTO#
-	buildcostmetal=817;//#AUTO#
-	buildtime=9736;//#AUTO#
+	buildcostenergy=5813;//#AUTO#
+	buildcostmetal=1162;//#AUTO#
+	buildtime=13856;//#AUTO#
+	mass=837;//#AUTO#
 }

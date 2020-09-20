@@ -127,16 +127,13 @@
 
 	[CustomParams]
 	{
+		builtBy=claw_light_plant,claw_adv_kbot_plant;
 		evalFactor=0.85;
 		tip=Ring charging resets if dealt 25%+ HP in damage within 3 seconds;
 	}
 
-
-	//************************************************************
-	//  To be removed
-	//*****************
-
 	buildcostenergy=1254;//#AUTO#
 	buildcostmetal=250;//#AUTO#
 	buildtime=2989;//#AUTO#
+	mass=159;//#AUTO#
 }

@@ -23,7 +23,6 @@
 	MaxDamage=3000;
 	FootprintX=3;
 	FootprintZ=3;
-	mass=1200;
 	
 	// ------------------- resources
 	EnergyMake=0;
@@ -95,6 +94,7 @@
 
 	[CustomParams]
 	{
+		builtBy=sphere_sphere_factory;
 		energyCostMoving=250;
 		tip=Requires 250E/s to move. Depletes own shield when it fires.;
 	}
@@ -109,4 +109,5 @@
 	buildcostenergy=8825;//#AUTO#
 	buildcostmetal=1765;//#AUTO#
 	buildtime=21034;//#AUTO#
+	mass=1338;//#AUTO#
 }

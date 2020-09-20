@@ -1,4 +1,4 @@
-include("LuaRules/Gadgets/ai/Common.lua")
+include("LuaRules/Gadgets/ai/common.lua")
  
 UnitHandler = {}
 UnitHandler.__index = UnitHandler
@@ -29,6 +29,8 @@ function initUnitGroup(id)
 	obj.nearCenterCount = 0
 	obj.totalCost = 0 
 	obj.recruits = {}
+	obj.nearCenterAntiUWCost = 0
+	obj.isAmphibious = false
 	obj.closestCell = nil
 	obj.closestCellVulnerable = nil
 	obj.targetValue = 0
@@ -45,7 +47,8 @@ function initUnitCell()
 	local newCell = {
 		cost = 0, 
 		attackerCost = 0,
-		defenderCost = 0, 
+		defenderCost = 0,
+		underwaterDefenderCost = 0, -- only own cells  
  		airAttackerCost = 0, 
 		nearbyAttackerCost = 0, 
 		nearbyDefenderCost = 0,
@@ -62,10 +65,10 @@ function initUnitCell()
 		baseDistance = 0, 
 		extractorCount = 0, 
 		underWaterCost = 0, 
-		economyCost = 0,  -- only own cells
+		economyCost = 0, 
 		nearbyCost = 0,   -- only own cells
 		nearbyEconomyCost = 0,   -- only own cells
-		buildingCount = 0,   -- only own cells
+		buildingCount = 0,
 		internalThreatCost = 0, 
 		combinedThreatCost = 0, 
 		internalThreatCostExcludingBadAA = 0,  -- only enemy cells
@@ -82,6 +85,11 @@ function UnitHandler:Init(ai)
 	
 	self.sizeMult = 1
 	self.atkFailureCost = 0
+	self.latestAlliedLossesCost = 0
+	self.latestEnemyLossesCost = 0
+	self.teamCombatEfficiencyHistory = {}
+	self.selfCombatEfficiency = 1
+	self.teamCombatEfficiency = 1
 	self.airHarassWhileAttacking = true
 
 	self.refForceCost = FORCE_COST_REFERENCE * self.sizeMult		-- target force size
@@ -105,6 +113,8 @@ function UnitHandler:Init(ai)
 	self.unitGroups[UNIT_GROUP_SEA_ATTACKERS] = initUnitGroup(UNIT_GROUP_SEA_ATTACKERS)	
 	self.unitGroups[UNIT_GROUP_RAIDERS] = initUnitGroup(UNIT_GROUP_RAIDERS)
 
+	self.baseCount = 0
+	self.mobileCount = 0
 	self.attackerCount = 0 
 	self.airAttackerCount = 0
 	self.seaAttackerCount = 0
@@ -205,6 +215,7 @@ function UnitHandler:Init(ai)
 	end
 	--printTable(self.badAAUnitNames)
 	
+	self.nukeTargetCell = nil
 	
 	self.brutalPlantDone = false
 	self.brutalAirPlantDone = false	
@@ -221,27 +232,78 @@ function UnitHandler:GetHumanTask()
 end
 
 
-function UnitHandler:Update()
+function UnitHandler:GameFrame(f)
 	--if self.perfCounter > 0 then
 	--	log("perfCounter was "..tostring(self.perfCounter),self.ai) 
 	--end
 	--self.perfCounter = 0
 	
-	local f = spGetGameFrame()
 	-- slowly "forget" about attack failures 
+	-- TODO no longer used, remove?
 	if fmod(f,ATK_FAIL_TOLERANCE_FRAMES) == 0 then
 		if self.atkFailureCost > 0 then 
 			self.atkFailureCost = self.atkFailureCost - ATK_FAIL_TOLERANCE_COST
 		end		
 	end
+
+	-- efficiency tracking
+	if fmod(f,COMBAT_EFFICIENCY_HISTORY_STEP_FRAMES) == 0 then
+		local kills = self.latestEnemyLossesCost
+		local losses = self.latestAlliedLossesCost
+		
+		local steps = 0
+		self.teamCombatEfficiencyHistory[#self.teamCombatEfficiencyHistory+1] = {kills,losses}
+
+		local avgKills = 0
+		local avgLosses = 0
+		local avgEfficiency = 1
+		for i=#self.teamCombatEfficiencyHistory,1,-1 do
+			steps = steps +1
+			avgKills = avgKills + self.teamCombatEfficiencyHistory[i][1]
+			avgLosses = avgLosses + self.teamCombatEfficiencyHistory[i][2]
+			if (steps >= COMBAT_EFFICIENCY_HISTORY_CHECK_STEPS) then
+				break
+			end
+		end
+		if (steps > 0 ) then
+			avgKills = avgKills / steps
+			avgLosses = avgLosses / steps
+		end
+
+		if avgKills > 0 and avgLosses > 0 then 
+			avgEfficiency = avgKills / avgLosses
+		elseif avgKills > 0 and avgLosses == 0 then
+			avgEfficiency = math.huge
+		elseif avgKills == 0 and avgLosses > 0 then
+			avgEfficiency = 0
+		elseif avgKills == 0 and avgLosses == 0 then
+			avgEfficiency = 1			
+		end
+		
+		--log("avgKills="..avgKills.." avgLosses="..avgLosses.." avgEfficiency="..avgEfficiency,self.ai) --DEBUG
+		-- reset counters
+		self.teamCombatEfficiency = avgEfficiency
+		self.latestEnemyLossesCost = 0
+		self.latestAlliedLossesCost = 0
+	end
+	
+	--if fmod(f,400) == 0 then
+		--if self.ai.id ==0 then Spring.SendCommands("ClearMapMarks") end  --DEBUG
+	--end
+		
+	local currentStrategy = self.ai.currentStrategy
+	local currentStrategyName = self.ai.currentStrategyName
+	local sStage = self.ai.currentStrategyStage
+	
 	-- load game status : own cells, friendly cells, enemy cells
 	if fmod(f,199) == 0 + self.ai.frameShift then
-		--Spring.SendCommands("ClearMapMarks") --DEBUG
+		--if self.ai.id ==0 then Spring.SendCommands("ClearMapMarks") end  --DEBUG
 	
 		-- forget outdated danger cells, if any
 		for xi,row in pairs(self.dangerCells) do
-			for zi,lastFrame in pairs(row[zi]) do
+			for zi,lastFrame in pairs(row) do
 				if f - lastFrame > DANGER_CELL_FORGET_FRAMES then
+					--log("forgotten danger cell at xi="..xi.." zi="..zi,self.ai) --DEBUG
 					row[zi] = nil
 				end
 			end
@@ -263,6 +325,26 @@ function UnitHandler:Update()
 		local attackPatrollerCount = 0
 		local standardQueueCount = 0
 		local advancedStandardQueueCount = 0
+		
+		-- update strategy stage (do this based on previously gathered state, shouldn't be an issue)
+		local maxReachedStage = 1
+		if (self.ai.useStrategies and f > 300) then
+
+			-- check up to which stage are the preconditions met			
+			for n,stage in ipairs(currentStrategy.stages) do
+				
+				local stageEco = stage.economy
+				--Spring.Echo("STAGE n="..n.." minM="..stageEco.minMetalIncome)
+				if incomeM > stageEco.minMetalIncome and incomeE > stageEco.minEnergyIncome then
+					maxReachedStage = n
+				end
+			end
+		end
+		self.ai.currentStrategyStage = maxReachedStage
+		--if (self.ai.useStrategies and f > 300) then
+			--log("MAX STAGE "..self.ai.currentStrategyStage,self.ai)	--DEBUG
+		--end
+		sStage = maxReachedStage
 		
 		-- update special role task queue counts
 		for _,tq in pairs(self.taskQueues) do
@@ -302,6 +384,7 @@ function UnitHandler:Update()
 		self.attackerCount = 0
 		self.airAttackerCount = 0
 		self.seaAttackerCount = 0
+		self.mobileCount = 0
 		
 		-- update targets based on economy size
 		-- check if there are spots available
@@ -340,6 +423,31 @@ function UnitHandler:Update()
 			self.advancedDefenseBuilderCountTarget = max(self.advancedDefenseBuilderCountTarget-1,1)
 			self.attackPatrollerCountTarget = max(self.attackPatrollerCountTarget-1,1)
 		end 
+
+		-- use strategy based targets
+		if (self.ai.useStrategies) then
+			local bRoles = currentStrategy.stages[sStage].builderRoles
+			if (bRoles) then
+				if (bRoles.mexBuilders) then
+					self.mexBuilderCountTarget = bRoles.mexBuilders
+				end
+				if (bRoles.basePatrollers) then
+					self.basePatrollerCountTarget = bRoles.basePatrollers
+				end
+				if (bRoles.defenseBuilders) then
+					self.defenseBuilderCountTarget = bRoles.defenseBuilders
+				end
+				if (bRoles.attackPatrollers) then
+					self.attackPatrollerCountTarget = bRoles.attackPatrollers
+				end
+				if (bRoles.mexUpgraders) then
+					self.mexUpgraderCountTarget = bRoles.mexUpgraders
+				end
+				if (bRoles.advancedDefenseBuilders) then
+					self.advancedDefenseBuilderCountTarget = bRoles.advancedDefenseBuilders
+				end
+			end
+		end
 
 		-- update base and atk forces location
 		local ownUnitIds = self.ai.ownUnitIds
@@ -381,6 +489,7 @@ function UnitHandler:Update()
 				baseX = baseX + pos.x
 				baseZ = baseZ + pos.z
 			end
+			self.baseCount = baseCount
 			
 			-- log("friendly cell at ".."("..xIndex..";"..zIndex..")",self.ai)  --DEBUG
 			if ownCells[xIndex] == nil then
@@ -415,6 +524,9 @@ function UnitHandler:Update()
 				ownArmedMobilesWeightedCost = ownArmedMobilesWeightedCost + cost
 			elseif hasWeapons then
 				cell.defenderCost = cell.defenderCost + cost
+				if setContains(unitTypeSets[TYPE_UW_DEFENSE],tmpName) then
+					cell.underwaterDefenderCost = cell.underwaterDefenderCost + cost
+				end
 				cell.buildingCount = cell.buildingCount + 1
 			elseif not ud.canMove then
 				cell.economyCost = cell.economyCost + cost
@@ -431,6 +543,9 @@ function UnitHandler:Update()
 			avgPos.x = avgPos.x + pos.x
 			avgPos.z = avgPos.z + pos.z
 			ownUnitCount = ownUnitCount + 1
+			if (ud.canMove and (not ud.isBuilding)) then
+				self.mobileCount = self.mobileCount + 1
+			end
 		end
 		self.ownCells = ownCells
 		self.ownCellList = ownCellList
@@ -452,6 +567,9 @@ function UnitHandler:Update()
 			self.basePos.x = avgPos.x
 			self.basePos.z = avgPos.z
 		end
+		self.basePos.y = spGetGroundHeight(self.basePos.x,self.basePos.z)
+		--Spring.MarkerAddPoint(self.basePos.x,self.basePos.y,self.basePos.z,"BASE") --DEBUG
+		
 		-- log("base center ("..baseCount..") : ("..baseX..";"..baseZ..")",self.ai) --DEBUG
 		-- get closest to base center cell
 		local bestDistance = INFINITY
@@ -607,12 +725,10 @@ function UnitHandler:Update()
 				ud = UnitDefs[spGetUnitDefID(eId)]
 				local tmpName = ud.name
 				if (not neutralUnits[tmpName]) then
-					if (tmpName == "aven_fortification_wall") then
-						--Spring.Echo("WALL: "..tmpName)
-					end
 					local hasWeapons = #ud.weapons > 0
 					local cost = getWeightedCostByName(tmpName)
 					local _,_,_,_,progress = spGetUnitHealth(eId) 
+					local isSubmerged = false
 					progress = progress or 1
 					
 	
@@ -636,7 +752,7 @@ function UnitHandler:Update()
 					cell = cells[xIndex][zIndex]
 				
 					if (pos.y < UNDERWATER_THRESHOLD ) then
-						cell.underWaterCost = cell.underWaterCost + cost				
+						isSubmerged = true
 					end
 					if setContains(unitTypeSets[TYPE_EXTRACTOR],tmpName) then
 						cost = cost * ENEMY_EXTRACTOR_COST_FACTOR
@@ -667,11 +783,23 @@ function UnitHandler:Update()
 						if (self.badAAUnitNames[tmpName]) then
 							cell.badAADefenderCost = cell.badAADefenderCost + cost
 						end
+						cell.buildingCount = cell.buildingCount + 1
+					elseif progress > 0.85 and (not ud.canMove or setContains(unitTypeSets[TYPE_ECONOMY],tmpName) ) then
+						cell.economyCost = cell.economyCost + cost
+						cell.buildingCount = cell.buildingCount + 1
+					end
+					-- add extra threat value
+					if extraThreatValue[tmpName] then
+						cell.attackerCost = cell.attackerCost + extraThreatValue[tmpName]
 					end
 					
 					-- if unit is strategic, assume it is worth twice as much
 					if setContains(unitTypeSets[TYPE_STRATEGIC], tmpName) then
 						cost = cost * ENEMY_STRATEGIC_COST_FACTOR
+					end
+					
+					if (isSubmerged) then
+						cell.underWaterCost = cell.underWaterCost + cost
 					end
 					cell.cost = cell.cost + cost
 					
@@ -767,6 +895,19 @@ function UnitHandler:Update()
 			self.enemyCellList = cellList
 			self.enemyCells = cells
 		end
+		
+		--[[		
+		if self.ai.id == 0 then
+			Spring.SendCommands("ClearMapMarks") --DEBUG
+			if self.enemyCells then 
+				for i=1,#self.enemyCellList do
+					local cell = self.enemyCellList[i]
+					Spring.MarkerAddPoint(cell.p.x,spGetGroundHeight(cell.p.x,cell.p.z),cell.p.z,"Value="..string.format("%2f", cell.combinedThreatCost)) --DEBUG
+				end	
+			end
+		end
+		]]--
+		
 		self.enemyExtractorCount = enemyExtractorCount
 		self.friendlyExtractorCount = friendlyExtractorCount
 		
@@ -782,7 +923,7 @@ function UnitHandler:Update()
 		-- calculate overall force advantage factor
 		self.perceivedTeamAdvantageFactor = (ownArmedMobilesWeightedCost + friendlyArmedMobilesWeightedCost ) / enemyArmedWeightedCost
 		--log("perceived adv factor : "..self.perceivedTeamAdvantageFactor, self.ai)
-		if self.perceivedTeamAdvantageFactor > ALL_IN_ADVANTAGE_THRESHOLD then 
+		if not self.ai.useStrategies and self.perceivedTeamAdvantageFactor > ALL_IN_ADVANTAGE_THRESHOLD then 
 			self.allIn = true
 			--log("team "..self.ai.id.." is going ALL IN! ("..self.perceivedTeamAdvantageFactor..")",self.ai)
 		else
@@ -826,11 +967,11 @@ function UnitHandler:Update()
 	-- update raiding paths for ground and air units
 	if fmod(f,199) == 32 + self.ai.frameShift then
 		self.raiderThreatCostReference[PF_UNIT_LAND] = self.unitGroups[UNIT_GROUP_RAIDERS] and self.unitGroups[UNIT_GROUP_RAIDERS].nearCenterCost/2 or 100
-		self.raiderThreatCostReference[PF_UNIT_AMPHIBIOUS] = 100
+		self.raiderThreatCostReference[PF_UNIT_AMPHIBIOUS] = self.unitGroups[UNIT_GROUP_RAIDERS] and self.unitGroups[UNIT_GROUP_RAIDERS].nearCenterCost/2 or 100
 		self.raiderThreatCostReference[PF_UNIT_AIR] = self.unitGroups[UNIT_GROUP_AIR_ATTACKERS] and self.unitGroups[UNIT_GROUP_AIR_ATTACKERS].nearCenterCost/2 or 100
 		
 		self:updateDistancesForPathingType(PF_UNIT_LAND)
-		--self:updateDistancesForPathingType(PF_UNIT_AMPHIBIOUS)
+		self:updateDistancesForPathingType(PF_UNIT_AMPHIBIOUS)
 		self:updateDistancesForPathingType(PF_UNIT_AIR)
 
 		-- start is base center
@@ -839,19 +980,28 @@ function UnitHandler:Update()
 	
 		local goal = nil	
 		local bestCell = nil
+		local bestNukeCell = nil
 		local bestValue = -INFINITY
-
+		local bestNukeValue = -INFINITY 
 		for i=1,#self.enemyCellList do
 			local cell = self.enemyCellList[i]
 			if ( cell.cost and cell.cost > 0 and checkWithinMapBounds(cell.p.x,cell.p.z)) then
 				local value = max(cell.cost - cell.combinedThreatCost,0)
+				local nukeValue = max((cell.cost + 2*cell.economyCost)/3,0) * (cell.buildingCount > 3 and 1 or 0.5) 
 				if (bestCell == nil) then
 					bestCell = cell
 				end
+				if (bestNukeCell == nil) then
+					bestNukeCell = cell
+				end				
 				if value > bestValue then
 					bestCell = cell
 					bestValue = value
 				end
+				if nukeValue > bestNukeValue then
+					bestNukeCell = cell
+					bestNukeValue = nukeValue
+				end				
 				
 				--Spring.MarkerAddPoint(cell.p.x+100,500,cell.p.z+100,"Value="..string.format("%2f",cell.cost - cell.combinedThreatCost)) --DEBUG
 			end
@@ -859,10 +1009,18 @@ function UnitHandler:Update()
 		if bestCell then
 			goal = getCellFromTableIfExists(self.ai.mapHandler.mapCells,bestCell.xIndex,bestCell.zIndex)
 		end
-		
+		if bestNukeCell then
+			self.nukeTargetCell = getCellFromTableIfExists(self.ai.mapHandler.mapCells,bestNukeCell.xIndex,bestNukeCell.zIndex)
+		end		
+		-- AI beacon override
+		if self.ai:isBeaconActive() then
+			local xIndex,zIndex = getCellXZIndexesForPosition(self.ai.beaconPos)
+			goal = getCellFromTableIfExists(self.ai.mapHandler.mapCells,xIndex,zIndex)
+		end
+					
 		if start and goal then
 			local landRaiderPathIndexes = self:getAStarPath(PF_UNIT_LAND,start,goal)
-			--local amphibiousRaiderPath = self:getAStarPath(PF_UNIT_AMPHIBIOUS,start,goal)
+			local amphibiousRaiderPathIndexes = self:getAStarPath(PF_UNIT_AMPHIBIOUS,start,goal)
 			local airRaiderPathIndexes = self:getAStarPath(PF_UNIT_AIR,start,goal)
 			
 			local landRaiderPath = {}
@@ -878,6 +1036,19 @@ function UnitHandler:Update()
 			end
 			self.raiderPath[PF_UNIT_LAND] = landRaiderPath
 		
+			local amphibiousRaiderPath = {}
+			if (amphibiousRaiderPathIndexes) then
+				for i=1,#amphibiousRaiderPathIndexes do
+					local cIdx = amphibiousRaiderPathIndexes[i]
+					local cell = self.ai.mapHandler.mapCellList[cIdx]
+					amphibiousRaiderPath[#amphibiousRaiderPath+1] = cell
+					--if (self.ai.id == 0) then
+						--Spring.MarkerAddPoint(cell.p.x,500,cell.p.z,string.format("RAID "..i,value)) --DEBUG
+					--end
+				end
+			end
+			self.raiderPath[PF_UNIT_AMPHIBIOUS] = amphibiousRaiderPath
+			
 			local airRaiderPath = {}
 				if airRaiderPathIndexes then
 				for i=1,#airRaiderPathIndexes do
@@ -897,16 +1068,26 @@ function UnitHandler:Update()
 		end
 	end
 	
-	-- move fast units to the land raiding group immediately
-	self:DetachLandRaidingParty(65)
-
-	-- also detach slower units, if main force has been unable to attack for some time
-	-- do this only if the main ground force still outnumbers the raiding party
-	if (self.unitGroups[UNIT_GROUP_ATTACKERS].totalCost > self.unitGroups[UNIT_GROUP_RAIDERS].totalCost) and ( f - self.lastMainForceAttackFrame > RAIDING_PARTY_TOLERANCE_FRAMES) then
-		self:DetachLandRaidingParty(48)
-	end
-	--log("AI "..self.ai.id.." attackers="..#(self.unitGroups[UNIT_GROUP_ATTACKERS].recruits).." raiders="..#(self.unitGroups[UNIT_GROUP_RAIDERS].recruits).." airAttackers"..#(self.unitGroups[UNIT_GROUP_AIR_ATTACKERS].recruits),self.ai)
+	if (self.ai.useStrategies) then
+		local raiderSpeedThreshold = currentStrategy.stages[sStage].properties.raiderSpeedThreshold
+		if (raiderSpeedThreshold and raiderSpeedThreshold < 999) then
+			-- move fast units to the land raiding group
+			self:detachLandRaidingParty(raiderSpeedThreshold)
+			
+			-- remove slow units from the land raiding group and merge them back on the regular attacker group
+			self:reattachRaidersToAttackers(raiderSpeedThreshold)
+		end
+	else
+		-- move fast units to the land raiding group immediately
+		self:detachLandRaidingParty(65)
 	
+		-- also detach slower units, if main force has been unable to attack for some time
+		-- do this only if the main ground force still outnumbers the raiding party
+		if (self.unitGroups[UNIT_GROUP_ATTACKERS].totalCost > self.unitGroups[UNIT_GROUP_RAIDERS].totalCost) and ( f - self.lastMainForceAttackFrame > RAIDING_PARTY_TOLERANCE_FRAMES) then
+			self:detachLandRaidingParty(48)
+		end
+		--log("AI "..self.ai.id.." attackers="..#(self.unitGroups[UNIT_GROUP_ATTACKERS].recruits).." raiders="..#(self.unitGroups[UNIT_GROUP_RAIDERS].recruits).." airAttackers"..#(self.unitGroups[UNIT_GROUP_AIR_ATTACKERS].recruits),self.ai)	
+	end
 	-- update status and positions for each group
 	if fmod(f,69) == 13 + self.ai.frameShift then
 		-- iterate through own units : members of unit groups
@@ -921,6 +1102,20 @@ function UnitHandler:Update()
 			local groupNearCenterCost = 0
 			local groupNearCenterCount = 0
 			local forceInclusionRadius = gId == UNIT_GROUP_AIR_ATTACKERS and FORCE_INCLUSION_RADIUS_AIR or FORCE_INCLUSION_RADIUS
+			local groupNearCenterAntiUWCost = 0
+			
+			group.isAmphibious = false
+			if (self.ai.useStrategies) then
+				if (gId == UNIT_GROUP_RAIDERS) then
+					if currentStrategy.stages[sStage].properties.amphibiousRaiders then
+						group.isAmphibious = true
+					end
+				elseif (gId == UNIT_GROUP_ATTACKERS) then
+					if currentStrategy.stages[sStage].properties.amphibiousMainForce then
+						group.isAmphibious = true
+					end				
+				end
+			end
 			
 			for _,behavior in ipairs(recruits) do
 				local upos = newPosition(spGetUnitPosition(behavior.unitId,false,false))
@@ -938,6 +1133,10 @@ function UnitHandler:Update()
 					groupZ = groupZ + upos.z
 					groupNearCenterCost = groupNearCenterCost + cost 
 					groupNearCenterCount = groupNearCenterCount + 1
+					
+					if unitAbleToHitUnderwater[un] then
+						groupNearCenterAntiUWCost = groupNearCenterAntiUWCost + cost
+					end 
 				end
 
 				groupCost = groupCost + cost
@@ -954,8 +1153,8 @@ function UnitHandler:Update()
 			
 			-- shift center position towards where it's been moving over the last few seconds
 			if (group.oldCenterPosFrame > 0) then
-				local newX = groupX + (groupX - group.oldCenterPos.x) / 2
-				local newZ = groupZ + (groupZ - group.oldCenterPos.z) / 2
+				local newX = groupX + (groupX - group.oldCenterPos.x)
+				local newZ = groupZ + (groupZ - group.oldCenterPos.z)
 				
 				if ( newX > 0 and newX < Game.mapSizeX and newZ > 0 and newZ < Game.mapSizeZ) then
 					groupX = newX
@@ -969,6 +1168,7 @@ function UnitHandler:Update()
 			group.totalCost = groupCost
 			group.nearCenterCost = groupNearCenterCost
 			group.nearCenterCount = groupNearCenterCount
+			group.nearCenterAntiUWCost = groupNearCenterAntiUWCost
 			
 			group.oldCenterPosFrame = f
 			-- log("group "..gId.." center ("..groupNearCenterCount.." / "..groupNearCenterCost..") : ("..groupX..";"..groupZ..")",self.ai) --DEBUG
@@ -984,7 +1184,7 @@ function UnitHandler:Update()
 		-- update attack force size multiplier
 		self.sizeMult = 1 + incomeM*FORCE_SIZE_MOD_METAL -- + (self.atkFailureCost/FORCE_COST_REFERENCE)*FORCE_SIZE_MOD_FAILURE
 		if self.isBrutalMode then
-			self.sizeMult = 1 + incomeM*FORCE_SIZE_MOD_METAL + (self.atkFailureCost/FORCE_COST_REFERENCE)*BRUTAL_FORCE_SIZE_MOD_FAILURE
+			self.sizeMult = 1 + incomeM*FORCE_SIZE_MOD_METAL -- + (self.atkFailureCost/FORCE_COST_REFERENCE)*BRUTAL_FORCE_SIZE_MOD_FAILURE
 		end
 		
 		self.refForceCost = FORCE_COST_REFERENCE * self.sizeMult -- target force size
@@ -1013,26 +1213,39 @@ function UnitHandler:Update()
 			local bestCell = nil
 			local bestValue = -INFINITY
 			local bestCellThreatAlongPath = 0
-			for i=1,#self.enemyCellList do
-				local cell = self.enemyCellList[i]
+			
+			-- AI beacon override
+			if self.ai:isBeaconActive() then
+				local xIndex,zIndex = getCellXZIndexesForPosition(self.ai.beaconPos)
+				local cell = getCellFromTableIfExists(self.ai.mapHandler.mapCells,xIndex,zIndex)
 				local value, threatAlongPath = self:getCellAttackValue(group,cell)
 				
-				-- if cell was targeted previously, double the value
-				-- this is to discourage hesitation
-				if (oldTargetCell ~= nil and i == oldTargetCell.index) then
-					value = value * CELL_VALUE_RETARGET_PREFERENCE_FACTOR
-				end
-				
-				if (bestCell == nil) then
+				if (cell) then
 					bestCell = cell
+					bestValue = value or 0
+					bestCellThreatAlongPath = threatAlongPath or 0
 				end
-				if value > bestValue then
-					bestCell = cell
-					bestValue = value
-					bestCellThreatAlongPath = threatAlongPath
+			else
+				for i=1,#self.enemyCellList do
+					local cell = self.enemyCellList[i]
+					local value, threatAlongPath = self:getCellAttackValue(group,cell)
+					
+					-- if cell was targeted previously, double the value
+					-- this is to discourage hesitation
+					if (oldTargetCell ~= nil and i == oldTargetCell.index) then
+						value = value * CELL_VALUE_RETARGET_PREFERENCE_FACTOR
+					end
+					
+					if (bestCell == nil) then
+						bestCell = cell
+					end
+					if value > bestValue then
+						bestCell = cell
+						bestValue = value
+						bestCellThreatAlongPath = threatAlongPath
+					end
 				end
 			end
-
 			if (bestCell ~= nil) then
 				group.targetPos.x = bestCell.p.x
 				group.targetPos.z = bestCell.p.z
@@ -1042,6 +1255,7 @@ function UnitHandler:Update()
 			group.targetThreatAlongPath = bestCellThreatAlongPath
 			
 			-- TODO : get human defined task, somehow
+			-- AI beacon and strategy changes are enough? remove this?
 			local task = group.task
 			local taskFrame = group.taskFrame
 			if ( self.humanTask == nil or (self.humanTaskFrame + HUMAN_TASK_DELAY_FRAMES < f) ) then
@@ -1050,7 +1264,7 @@ function UnitHandler:Update()
 				local wasAttacking = (task == TASK_ATTACK)
 				if (task == nil or (taskFrame + TASK_DELAY_FRAMES < f)) then
 					task = nil
-					if ( (group.nearCenterCost > minForceCost) and bestValue > 0 ) then
+					if self.ai:isBeaconActive() or ((group.nearCenterCost > minForceCost) and bestValue > 0 ) then
 						task = TASK_ATTACK
 						group.taskFrame = f
 						if (gId == UNIT_GROUP_ATTACKERS) then
@@ -1082,7 +1296,7 @@ function UnitHandler:Update()
 	-- issue orders to units in attack groups according to the current corresponding task
 	if fmod(f,60) == 4 + self.ai.frameShift then
 		for gId,group in pairs(self.unitGroups) do
-			self:DoTargetting(group)
+			self:doTargetting(group)
 		end
 	end
 	--if fmod(f,60) == 8 + self.ai.frameShift then
@@ -1128,8 +1342,14 @@ end
 function UnitHandler:UnitDestroyed(uId,teamId,unitDefId)
 	ud = UnitDefs[unitDefId]
 	un = ud.name
+	local thisAI = self.ai
+	local cost = getWeightedCost(ud)
+	
+	if setContains(thisAI.alliedTeamIds,teamId) then
+		self.latestAlliedLossesCost = self.latestAlliedLossesCost + cost
+	end
 	-- own units are dying
-	if teamId == self.ai.id then
+	if teamId == thisAI.id then
 		
 		-- remove building id from all adjacent cells
 		if ud.isBuilding then
@@ -1149,27 +1369,23 @@ function UnitHandler:UnitDestroyed(uId,teamId,unitDefId)
 			self.baseUnderAttackFrame = spGetGameFrame()
 		end
 
-	-- TODO : not properly used, remove?
-	-- enemies are dying => attacks should be working
+	-- enemies are dying
 	elseif setContains(thisAI.enemyTeamIds,teamId) then
-		if self.atkFailureCost > 0 then 
-			self.atkFailureCost = max(self.atkFailureCost - getWeightedCost(ud),0)
-		end	
+		self.latestEnemyLossesCost = self.latestEnemyLossesCost + getWeightedCost(ud)
 	end
 end
 
 
 function UnitHandler:UnitDamaged(unitId, unitDefId, unitTeamId, damage, paralyzer, weaponDefId, projectileId, attackerId, attackerDefId, attackerTeamId)
 	-- own units are getting damage, mark cell with current frame
-	if teamId == self.ai.id then
-		xIndex,zIndex = getCellXZIndexesForPosition(newPosition(spGetUnitPosition(uId)))
+	if unitTeamId == self.ai.id and attackerTeamId ~= self.ai.id then
+		local f = spGetGameFrame()
+		xIndex,zIndex = getCellXZIndexesForPosition(newPosition(spGetUnitPosition(unitId)))
 		if not self.dangerCells[xIndex] then
 			self.dangerCells[xIndex] = {}
-			if not self.dangerCells[xIndex][zIndex] then
-				local f = spGetGameFrame()
-				self.dangerCells[xIndex][zIndex] = f
-			end
 		end
+		self.dangerCells[xIndex][zIndex] = f
+		--log("DANGER cell at xi="..xIndex.." zi="..zIndex.." f="..f,self.ai) --DEBUG
 	end		
 end
 
@@ -1221,6 +1437,7 @@ local checkAssist = true
 local enemyCells = {}
 local ownCells = {}
 local friendlyCells = {}
+local dangerCells = {}
 local groupCostFactor = 1
 local groupDistanceFactor = 1
 local cellDistance = 0
@@ -1233,20 +1450,25 @@ function UnitHandler:getCellAttackValue(group, cell)
 		return -INFINITY, 0
 	end 
 
+	-- ignore cells with only underwater units
+	if ( cell.cost == cell.underWaterCost and group.nearCenterAntiUWCost == 0) then
+		return -INFINITY, 0
+	end
+		
 	if ( group.id == UNIT_GROUP_AIR_ATTACKERS ) then
-		-- ignore cells with only underwater units
-		if ( cell.cost == cell.underWaterCost ) then
-			return -INFINITY, 0
-		end
+		-- nothing here?
 	elseif ( group.id == UNIT_GROUP_ATTACKERS or group.id == UNIT_GROUP_RAIDERS) then
-		-- ignore deep water cells or cells with only underwater units
-		local mapCell = getCellFromTableIfExists(self.ai.mapHandler.mapCells,cell.xIndex,cell.zIndex) 
-		if ( mapCell ~= nil and mapCell.isDeepWater or (cell.cost == cell.underWaterCost)) then
-			return -INFINITY, 0
+		if not group.isAmphibious then
+			-- ignore deep water cells or cells with only underwater units
+			local mapCell = getCellFromTableIfExists(self.ai.mapHandler.mapCells,cell.xIndex,cell.zIndex) 
+			if ( mapCell ~= nil and mapCell.isDeepWater ) then
+				return -INFINITY, 0
+			end
 		end
 	elseif ( group.id == UNIT_GROUP_SEA_ATTACKERS ) then
 		-- ignore land cells without an adjacent water cell
-		local mapCell = getCellFromTableIfExists(self.ai.mapHandler.mapCells,cell.xIndex,cell.zIndex) 
+		local mapCell = getCellFromTableIfExists(self.ai.mapHandler.mapCells,cell.xIndex,cell.zIndex)
+
 		if ( mapCell ~= nil and (mapCell.isLand or mapCell.isLandSlope) and cell.hasNearbyWater == false ) then
 			return -INFINITY, 0
 		end
@@ -1276,7 +1498,6 @@ function UnitHandler:getCellAttackValue(group, cell)
 	else 
 		checkAssist = true
 	end
-
 
 	totalThreatCost = 0
 	nearerThreatCostAlongDirection = 0
@@ -1413,7 +1634,20 @@ function UnitHandler:getCellAttackValue(group, cell)
 		threatEvaluationFactor = threatEvaluationFactor * 2
 	end
 
+	if (self.ai.useStrategies) then
+		local currentStrategy = self.ai.currentStrategy
+		local sStage = self.ai.currentStrategyStage
+	
+		local mult = currentStrategy.stages[sStage].properties.enemyThreatEstimationMult
+		if (mult and mult ~= 1) then
+			threatEvaluationFactor = threatEvaluationFactor * mult
+		end
+	end
+
 	threatEvaluationFactor = threatEvaluationFactor * (group.task == TASK_ATTACK and ATTACK_PERSISTENCE_THREAT_EVALUATION_FACTOR or 1) 
+
+	-- scale threat according to combat efficiency history
+	threatEvaluationFactor = threatEvaluationFactor * min(max(1/self.teamCombatEfficiency,COMBAT_EFFICIENCY_FORCE_SIZE_MOD_MIN),COMBAT_EFFICIENCY_FORCE_SIZE_MOD_MAX)
 	
 	local cellValue = min(group.nearCenterCost * groupCostFactor + totalAssistCost - totalThreatCost * threatEvaluationFactor,cell.cost)
 	if (cellValue > 0) then
@@ -1441,10 +1675,26 @@ function UnitHandler:isPathBetweenPositionsSafe(startPos, endPos)
 	enemyCells = self.enemyCells
 	ownCells = self.ownCells
 	friendlyCells = self.friendlyCells
+	dangerCells = self.dangerCells
 	
-	-- check each cell that is closer to the group center
-	-- simplified, only interested if there's enemies nearby, not exactly how strong
-	-- along the direction (assume units can go straight to it)
+	-- if both start and end positions are close to base center, assume it's safe unless the target cell has been marked as dangerous
+	if (sqDistance(startPos.x,self.basePos.x,startPos.z,self.basePos.z) < 1000000 and sqDistance(endPos.x,self.basePos.x,endPos.z,self.basePos.z) < 1000000) then
+		xi, zi = getCellXZIndexesForPosition(startPos)
+		local dangerCell = getCellFromTableIfExists(dangerCells,xi,zi)
+		if dangerCell ~= nil then
+			return false
+		end
+		xi, zi = getCellXZIndexesForPosition(endPos)
+		dangerCell = getCellFromTableIfExists(dangerCells,xi,zi)
+		if dangerCell ~= nil then
+			return false
+		end
+		
+		--log("position at x="..endPos.x.." z="..endPos.z.." is safe and close to base center",self.ai) --DEBUG
+		return true
+	end 
+	
+	-- check along the direction (assume units can go straight to it)
 	-- TODO this will produce bad results if path is obstructed and a long detour is necessary
 	for i=1,lineSearchPoints do
 		searchX = (i/lineSearchPoints)*endPos.x + ((lineSearchPoints-i)/lineSearchPoints)*startPos.x 
@@ -1489,7 +1739,7 @@ function UnitHandler:UnitIdle(uId)
 end
 
 -- order unit behavior entries on the group according to the task set
-function UnitHandler:DoTargetting(group)
+function UnitHandler:doTargetting(group)
 	-- log("recruits : "..tostring(#group.recruits),self.ai)
 	local enemyUnitIds = self.ai.enemyUnitIds
 	if enemyUnitIds == nil or tableLength(enemyUnitIds) == 0 then
@@ -1505,6 +1755,24 @@ function UnitHandler:DoTargetting(group)
 		radius = FORCE_RADIUS_RAIDERS * (1 + sqrt(#group.recruits/8))
 	else
 		radius = FORCE_RADIUS * (1 + sqrt(#group.recruits/8))
+	end
+	
+	local amphibiousRaiders = false
+	local amphibiousMainForce = false
+	local raidersAmphibious = false
+	local mainForceAmphibious = false
+	if (self.ai.useStrategies) then
+		local currentStrategy = self.ai.currentStrategy
+		local sStage = self.ai.currentStrategyStage
+	
+		local mult = currentStrategy.stages[sStage].properties.forceSpreadFactor
+		if (mult and mult ~= 1) then
+			radius = radius * mult
+		end
+		
+		amphibiousRaiders = currentStrategy.stages[sStage].properties.amphibiousRaiders or false
+		amphibiousMainForce = currentStrategy.stages[sStage].properties.amphibiousMainForce or false
+		--log("group="..group.id.." radius="..radius,self.ai) --DEBUG
 	end
 	
 	local task = group.task
@@ -1525,13 +1793,13 @@ function UnitHandler:DoTargetting(group)
 					--Spring.MarkerAddPoint(group.centerPos.x,group.centerPos.y,group.centerPos.z,"REGROUP") --DEBUG
 					
 					if distance(recruit.pos,group.centerPos) < BIG_RADIUS then
-						recruit:OrderToPosition(group.centerPos,CMD.PATROL)
+						recruit:orderToPosition(group.centerPos,CMD.PATROL)
 					else
-						recruit:OrderToPosition(group.centerPos,CMD.MOVE)
+						recruit:orderToPosition(group.centerPos,CMD.MOVE)
 					end
 				else
 					-- retreat along raiding path
-					recruit:OrderToClosestCellAlongPath(group.id == UNIT_GROUP_RAIDERS and self.raiderPath[PF_UNIT_LAND] or self.raiderPath[PF_UNIT_AIR], {CMD.MOVE,CMD.MOVE}, true, true)
+					recruit:orderToClosestCellAlongPath(group.id == UNIT_GROUP_RAIDERS and self.raiderPath[amphibiousRaiders and PF_UNIT_AMPHIBIOUS or PF_UNIT_LAND] or self.raiderPath[PF_UNIT_AIR], {CMD.MOVE,CMD.MOVE}, true, true)
 				end
 			end
 			return
@@ -1547,18 +1815,18 @@ function UnitHandler:DoTargetting(group)
 			for i,recruit in ipairs(group.recruits) do
 				-- if target is armed and unit is far from center of atk force, move to center
 				-- else, attack the cell
-				if (not targetDefended) or (not recruit:AttackRegroupCenterIfNeeded(group.centerPos, radius)) then
+				if (not targetDefended) or (not recruit:attackRegroupCenterIfNeeded(group.centerPos, radius)) then
 					if (not recruit.isSeriouslyDamaged ) then
-						evade = (not self.allIn) and (not self.isEasyMode) and #group.recruits < 100 and not recruit.canFly
-						if not (evade and recruit:EvadeIfNeeded()) then
-							recruit:AttackCell(group.centerPos, bestCell)
+						evade = (not self.allIn) and (not self.isEasyMode) and #group.recruits < 200 and not recruit.canFly
+						if not (evade and recruit:evadeIfNeeded()) then
+							recruit:attackCell(group.centerPos, bestCell)
 						end
 					else
 						if ( group.id == UNIT_GROUP_RAIDERS or group.id == UNIT_GROUP_AIR_ATTACKERS) then
 							-- retreat along raiding path
-							recruit:OrderToClosestCellAlongPath(group.id == UNIT_GROUP_RAIDERS and self.raiderPath[PF_UNIT_LAND] or self.raiderPath[PF_UNIT_AIR], CMD.MOVE, true, true)
+							recruit:orderToClosestCellAlongPath(group.id == UNIT_GROUP_RAIDERS and self.raiderPath[amphibiousRaiders and PF_UNIT_AMPHIBIOUS or PF_UNIT_LAND] or self.raiderPath[PF_UNIT_AIR], CMD.MOVE, true, true)
 						else
-							recruit:Retreat()
+							recruit:retreat()
 						end
 					end	
 				end
@@ -1571,14 +1839,14 @@ function UnitHandler:DoTargetting(group)
 
 				if (not recruit.isSeriouslyDamaged ) then					
 					-- advance along raiding path
-					recruit:OrderToClosestCellAlongPath(group.id == UNIT_GROUP_RAIDERS and self.raiderPath[PF_UNIT_LAND] or self.raiderPath[PF_UNIT_AIR], {CMD.FIGHT,CMD.MOVE}, false, true)
+					recruit:orderToClosestCellAlongPath(group.id == UNIT_GROUP_RAIDERS and self.raiderPath[amphibiousRaiders and PF_UNIT_AMPHIBIOUS or PF_UNIT_LAND] or self.raiderPath[PF_UNIT_AIR], {CMD.FIGHT,CMD.MOVE}, false, true)
 				else
 					-- retreat along raiding path
-					recruit:OrderToClosestCellAlongPath(group.id == UNIT_GROUP_RAIDERS and self.raiderPath[PF_UNIT_LAND] or self.raiderPath[PF_UNIT_AIR], CMD.MOVE, true, true)
+					recruit:orderToClosestCellAlongPath(group.id == UNIT_GROUP_RAIDERS and self.raiderPath[amphibiousRaiders and PF_UNIT_AMPHIBIOUS or PF_UNIT_LAND] or self.raiderPath[PF_UNIT_AIR], CMD.MOVE, true, true)
 				end
 			else
-				if not recruit:AttackRegroupCenterIfNeeded(group.centerPos, radius) then
-					recruit:Retreat()
+				if not recruit:attackRegroupCenterIfNeeded(group.centerPos, radius) then
+					recruit:retreat()
 				end
 			end
 		end
@@ -1589,22 +1857,22 @@ function UnitHandler:DoTargetting(group)
 
 				if (not recruit.isSeriouslyDamaged ) then					
 					-- advance along raiding path
-					recruit:OrderToClosestCellAlongPath(group.id == UNIT_GROUP_RAIDERS and self.raiderPath[PF_UNIT_LAND] or self.raiderPath[PF_UNIT_AIR], {CMD.FIGHT,CMD.MOVE}, false, true)
+					recruit:orderToClosestCellAlongPath(group.id == UNIT_GROUP_RAIDERS and self.raiderPath[amphibiousRaiders and PF_UNIT_AMPHIBIOUS or PF_UNIT_LAND] or self.raiderPath[PF_UNIT_AIR], {CMD.FIGHT,CMD.MOVE}, false, true)
 				else
 					-- retreat along raiding path
-					recruit:OrderToClosestCellAlongPath(group.id == UNIT_GROUP_RAIDERS and self.raiderPath[PF_UNIT_LAND] or self.raiderPath[PF_UNIT_AIR], CMD.MOVE, true, true)
+					recruit:orderToClosestCellAlongPath(group.id == UNIT_GROUP_RAIDERS and self.raiderPath[amphibiousRaiders and PF_UNIT_AMPHIBIOUS or PF_UNIT_LAND] or self.raiderPath[PF_UNIT_AIR], CMD.MOVE, true, true)
 				end
 			else
-				if not recruit:AttackRegroupCenterIfNeeded(group.centerPos, radius) then
-					recruit:Retreat()
+				if not recruit:attackRegroupCenterIfNeeded(group.centerPos, radius) then
+					recruit:retreat()
 				end
 			end
 		end
 	end
 end
 
--- detatch raiding party (move units below a given speed threshold to the land raiders group)
-function UnitHandler:DetachLandRaidingParty(movementSpeedThreshold)
+-- detatch raiding party (move units above a given speed threshold to the land raiders group)
+function UnitHandler:detachLandRaidingParty(movementSpeedThreshold)
 	local unitCount = 0
 	for i,v in ipairs(self.unitGroups[UNIT_GROUP_ATTACKERS].recruits) do
 		
@@ -1618,7 +1886,22 @@ function UnitHandler:DetachLandRaidingParty(movementSpeedThreshold)
 	--log("Moved "..unitCount.." units to the raiding party",self.ai)
 end
 
-function UnitHandler:IsRecruit(attkbehavior,gId)
+-- reattach attacker party (move units below a given speed threshold to the land raiders group)
+function UnitHandler:reattachRaidersToAttackers(movementSpeedThreshold)
+	local unitCount = 0
+	for i,v in ipairs(self.unitGroups[UNIT_GROUP_RAIDERS].recruits) do
+		
+		-- move all units below a given movement speed threshold
+		if (v.unitDef.speed < movementSpeedThreshold) then
+			table.remove(self.unitGroups[UNIT_GROUP_RAIDERS].recruits,i)
+			table.insert(self.unitGroups[UNIT_GROUP_ATTACKERS].recruits,v)
+			unitCount = unitCount + 1
+		end
+	end
+	--log("Moved "..unitCount.." units to the raiding party",self.ai)
+end
+
+function UnitHandler:isRecruit(attkbehavior,gId)
 	for i,v in ipairs(self.unitGroups[gId].recruits) do
 		if v == attkbehavior then
 			return true
@@ -1627,14 +1910,14 @@ function UnitHandler:IsRecruit(attkbehavior,gId)
 	return false
 end
 
-function UnitHandler:AddRecruit(attkbehavior, gId)
-	if not self:IsRecruit(attkbehavior, gId) then
+function UnitHandler:addRecruit(attkbehavior, gId)
+	if not self:isRecruit(attkbehavior, gId) then
 		table.insert(self.unitGroups[gId].recruits,attkbehavior)
-		attkbehavior:SetMoveState()
+		attkbehavior:setMoveState()
 	end
 end
 
-function UnitHandler:RemoveRecruit(attkbehavior, gId)
+function UnitHandler:removeRecruit(attkbehavior, gId)
 	for i,v in ipairs(self.unitGroups[gId].recruits) do
 		if v.unitId == attkbehavior.unitId then
 			-- log(attkbehavior.unitId.."being removed from recruits",self.ai)

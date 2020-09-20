@@ -92,6 +92,11 @@
 	collisionVolumeScales =30 20 30;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_adv_vehicle_factory;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:GLOWSML;
@@ -99,4 +104,5 @@
 	buildcostenergy=1523;//#AUTO#
 	buildcostmetal=304;//#AUTO#
 	buildtime=3631;//#AUTO#
+	mass=351;//#AUTO#
 }

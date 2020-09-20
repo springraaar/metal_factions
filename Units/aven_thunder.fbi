@@ -35,8 +35,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=1.1;
-	energyuse=1.1;
+	energymake=0;
+	energyuse=0;
 	energystorage=0;
 
 	//************************************************************
@@ -133,7 +133,6 @@
 	zbuffer=1;
 	pieceTrailCEGTag=NanoDebree;
 	pieceTrailCEGRange = 1;
-
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
@@ -141,14 +140,15 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=aven_aircraft_plant,aven_adv_aircraft_plant;
+	}
 	[SFXTypes]
 	{
 	}
 	buildcostenergy=2443;//#AUTO#
 	buildcostmetal=488;//#AUTO#
 	buildtime=5824;//#AUTO#
+	mass=146;//#AUTO#
 }

@@ -64,7 +64,7 @@
 	brakerate=0.09;
 	maxvelocity=6.0;
 	
-	cruisealt=240;
+	cruisealt=210;
 	turnrate=500;
 
 	// flight behaviour
@@ -138,18 +138,6 @@
 	version=1.2;
 	zbuffer=1;
 	CanLoopbackAttack=0;
-
-	//************************************************************
-	//  To be removed
-	//*****************
-
-	//************************************************************
-	//  Out of Category
-	//*******************
-	//maxslope=10;
-	//turnrate=820;
-
-
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
@@ -158,12 +146,18 @@
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
+
+	[CustomParams]
+	{
+		builtBy=sphere_adv_aircraft_factory;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:glowsml;
 		explosiongenerator1=custom:glowsml;
 	}
-	buildcostenergy=8983;//#AUTO#
-	buildcostmetal=1796;//#AUTO#
-	buildtime=21411;//#AUTO#
+	buildcostenergy=9053;//#AUTO#
+	buildcostmetal=1810;//#AUTO#
+	buildtime=21578;//#AUTO#
+	mass=439;//#AUTO#
 }

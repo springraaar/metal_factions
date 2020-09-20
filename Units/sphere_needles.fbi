@@ -83,7 +83,11 @@
 	collisionVolumeScales =20 28 20;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-
+	
+	[CustomParams]
+	{
+		builtBy=sphere_light_factory,sphere_adv_kbot_factory;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:rocketflaresml;
@@ -91,4 +95,5 @@
 	buildcostenergy=664;//#AUTO#
 	buildcostmetal=132;//#AUTO#
 	buildtime=1584;//#AUTO#
+	mass=109;//#AUTO#
 }

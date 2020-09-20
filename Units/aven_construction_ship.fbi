@@ -118,15 +118,18 @@
 
 	[customParams] 
 	{
+		buildertype=aven_l1builder;
+		builtBy=aven_shipyard,aven_adv_shipyard,aven_hovercraft_plant;
 		evalfactor=0.85;//SHIP
 	}
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Nano;
-	explosiongenerator1=custom:UNITFIRE;
+		explosiongenerator0=custom:Nano;
+		explosiongenerator1=custom:UNITFIRE;
 	}
 
 	buildcostenergy=1784;//#AUTO#
 	buildcostmetal=356;//#AUTO#
 	buildtime=4252;//#AUTO#
+	mass=184;//#AUTO#
 }

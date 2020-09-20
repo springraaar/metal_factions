@@ -121,10 +121,10 @@
 	pieceTrailCEGRange = 4;
 
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=claw_adv_vehicle_plant;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:railgunflare;
@@ -133,4 +133,5 @@
 	buildcostenergy=14105;//#AUTO#
 	buildcostmetal=2821;//#AUTO#
 	buildtime=33618;//#AUTO#
+	mass=3024;//#AUTO#
 }

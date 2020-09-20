@@ -115,21 +115,19 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:yellowflarebig;
 	}
 
-	[customParams] 
+	[CustomParams]
 	{
+		builtBy=gear_adv_vehicle_plant;
 		tip=Burns ground for 20s, dealing up to 60(M) dmg/s. Affected units burn for 180(M) dmg over 6s;
 		canAreaAttack=1;
 	}
 	buildcostenergy=15081;//#AUTO#
 	buildcostmetal=3016;//#AUTO#
 	buildtime=35945;//#AUTO#
+	mass=1905;//#AUTO#
 }

@@ -119,19 +119,18 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:yellowflaresml;
 	}
-	[customParams] 
+	[CustomParams]
 	{
-    canAreaAttack=1;
+		builtBy=gear_adv_kbot_lab;
+		canAreaAttack=1;
 	}
 
 	buildcostenergy=7024;//#AUTO#
 	buildcostmetal=1404;//#AUTO#
 	buildtime=16742;//#AUTO#
+	mass=1018;//#AUTO#
 }

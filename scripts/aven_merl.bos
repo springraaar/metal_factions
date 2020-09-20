@@ -77,6 +77,7 @@ Create()
 	restore_delay = 3000;
 	isOpen = FALSE;
 	gun_1 = [0];
+	set ARMORED to TRUE;
 	start-script SmokeUnit();
 	start-script WheelSpeedControl();
 	start-script SpinWheels();
@@ -93,6 +94,7 @@ Open()
 {
 	if (!isOpen)
 	{
+		set ARMORED to FALSE;
 		turn box to x-axis <-90.000000> speed <90.000000>;
 		wait-for-turn box around x-axis;
 		isOpen = TRUE;
@@ -106,6 +108,7 @@ Close()
 		isOpen = FALSE;
 		turn box to x-axis <0.000000> speed <90.000000>;
 		wait-for-turn box around x-axis;
+		set ARMORED to TRUE;
 		sleep 200;
 	}
 }

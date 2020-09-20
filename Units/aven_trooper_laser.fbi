@@ -86,9 +86,13 @@
 	collisionVolumeScales =20 35 20;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
+
+	[CustomParams]
+	{
+		builtBy=aven_light_plant,aven_adv_kbot_lab;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:GLOWSML;
@@ -96,4 +100,5 @@
 	buildcostenergy=816;//#AUTO#
 	buildcostmetal=163;//#AUTO#
 	buildtime=1945;//#AUTO#
+	mass=152;//#AUTO#
 }

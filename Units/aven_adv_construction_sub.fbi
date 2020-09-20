@@ -27,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1250;
+	maxdamage=2250;
 	healtime=75;
 	footprintx=4;
 	footprintz=4;
@@ -70,9 +70,9 @@
 	//  Movement
 	//************
 	movementclass=BOATSUB;
-	turnrate=256;
-	acceleration=0.032;
-	brakerate=0.01;
+	turnrate=456;
+	acceleration=0.07;
+	brakerate=0.06;
 	maxvelocity=2.15;
 	minwaterdepth=20;
 
@@ -116,16 +116,18 @@
 	collisionVolumeScales =40 18 52;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		buildertype=aven_l2builder;
+		builtBy=aven_adv_shipyard;
+	}
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Nano;
-	explosiongenerator1=custom:UNITFIRE;
+		explosiongenerator0=custom:Nano;
+		explosiongenerator1=custom:UNITFIRE;
 	}
-	buildcostenergy=5373;//#AUTO#
-	buildcostmetal=1074;//#AUTO#
-	buildtime=12806;//#AUTO#
+	buildcostenergy=6766;//#AUTO#
+	buildcostmetal=1353;//#AUTO#
+	buildtime=16125;//#AUTO#
+	mass=1013;//#AUTO#
 }

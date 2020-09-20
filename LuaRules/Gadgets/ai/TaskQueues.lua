@@ -2,9 +2,9 @@
  Task Queues!
 ]]--
 
-include("LuaRules/Gadgets/ai/Common.lua")
+include("LuaRules/Gadgets/ai/common.lua")
 
-local function farFromBaseCenter(self, radius)
+function farFromBaseCenter(self, radius)
 	if self.unitId == nil then
 		return true
 	end
@@ -15,7 +15,7 @@ local function farFromBaseCenter(self, radius)
 	return false
 end
 
-local function areEnemiesNearby(self,pos, radius)
+function areEnemiesNearby(self,pos, radius)
 	for _,cell  in pairs(self.ai.unitHandler.enemyCellList) do
 		-- only check for armed units
 		if checkWithinDistance(cell.p,pos,radius) and (cell.attackerCost > 0 or cell.airAttackerCost > 0 or cell.defenderCost > 0) then
@@ -25,7 +25,47 @@ local function areEnemiesNearby(self,pos, radius)
 	return false
 end 
 
-local function checkMorph(self)
+-- reclaim nearby features if necessary according to their metal and energy values
+function reclaimNearbyFeaturesIfNecessary(self)
+	local selfPos = self.pos
+	local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
+	local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
+	
+	local wrecks = spGetFeaturesInCylinder(selfPos.x,selfPos.z, 500)
+	local featuresToReclaim = {}
+	if (#wrecks > 0) then
+		local metalAmount = 0
+		local energyAmount = 0
+		
+		for i,fId in ipairs(wrecks) do
+			local remainingM,_,remainingE,_,reclaimLeft,reclaimTime = spGetFeatureResources(fId)
+			local fd = FeatureDefs[spGetFeatureDefID(fId)]
+			if (fd and fd.reclaimable == true) then
+				if remainingM and remainingM > 0 and currentLevelM + metalAmount < 0.8*storageM  then
+					metalAmount = metalAmount + remainingM
+					featuresToReclaim[#featuresToReclaim+1] = fId
+				end
+				if remainingE and remainingE > 0 and currentLevelE + energyAmount < 0.5*storageE  then
+					energyAmount = energyAmount + remainingE
+					featuresToReclaim[#featuresToReclaim+1] = fId
+				end
+			end
+		end
+		
+		if #featuresToReclaim > 0 then
+			--log("reclaiming "..#featuresToReclaim,self.ai) --DEBUG
+			for i,fId in ipairs(featuresToReclaim) do
+				spGiveOrderToUnit( self.unitId, CMD.RECLAIM, {CMD_FEATURE_ID_OFFSET+fId}, i == 1 and {} or CMD.OPT_SHIFT )
+			end
+		
+			return {action = "wait_idle", frames = CLEANUP_FRAMES}
+		end
+	end	
+	
+	return SKIP_THIS_TASK	
+end
+
+function checkMorph(self)
 	if self.unitId ~= nil then
 		local f = spGetGameFrame()
 
@@ -36,25 +76,52 @@ local function checkMorph(self)
 				local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
 				
 				-- morph only if income is decent
-				if incomeM > 20 and incomeE > 200 then
+				if self.ai.useStrategies or (incomeM > 20 and incomeE > 200) then
 					-- if enemies are nearby, skip morph
 					if areEnemiesNearby(self, self.pos, MORPH_CHECK_RADIUS) then
 						--log("enemies nearby")
 						return SKIP_THIS_TASK
 					end
 	
-				
 					local cmds = Spring.GetUnitCmdDescs(self.unitId)
-					local morphCmdIds = {}
-					for i,c in ipairs(cmds) do
-						if (c.action == "morph") then
-							--Spring.Echo(c.id.." ; "..c.name.." ; "..c.type.." ; "..c.action.." ; "..c.texture) --DEBUG
-							morphCmdIds[#morphCmdIds + 1] = c.id
+					if (self.ai.useStrategies) then
+						-- morph to a random form within the set of allowed forms
+						local currentStrategy = self.ai.currentStrategy
+						local sStage = self.ai.currentStrategyStage
+						local comMorphMetalIncome = currentStrategy.stages[sStage].economy.comMorphMetalIncome or 99999
+						local comMorphEnergyIncome = currentStrategy.stages[sStage].economy.comMorphEnergyIncome or 99999
+						
+						if (incomeM > comMorphMetalIncome and incomeE > comMorphEnergyIncome) then
+							local morphName = currentStrategy.commanderMorphs[ random( 1, #currentStrategy.commanderMorphs) ]
+							local morphCmd = false
+							local morphCmdIds = {}
+							for i,c in ipairs(cmds) do
+								if (c.action == "morph" and string.find(c.name, morphName)) then
+									--Spring.Echo(c.id.." ; "..c.name.." ; "..c.type.." ; "..c.action.." ; "..c.texture) --DEBUG
+									morphCmd = c.id
+									break
+								end
+							end
+	
+							spGiveOrderToUnit(self.unitId,morphCmd,{},{})
+						else
+							return SKIP_THIS_TASK
 						end
+					else
+						-- morph to a random form
+						local morphCmdIds = {}
+						for i,c in ipairs(cmds) do
+							if (c.action == "morph") then
+								--Spring.Echo(c.id.." ; "..c.name.." ; "..c.type.." ; "..c.action.." ; "..c.texture) --DEBUG
+								morphCmdIds[#morphCmdIds + 1] = c.id
+							end
+						end
+
+						local morphCmd = morphCmdIds[ random( 1, #morphCmdIds) ]
+						spGiveOrderToUnit(self.unitId,morphCmd,{},{})
 					end
-					local morphCmd = morphCmdIds[ random( 1, #morphCmdIds) ]
-				
-					spGiveOrderToUnit(self.unitId,morphCmd,{},{})
+					
+					
 					-- wait until finished or 5 minutes elapsed
 					return {action="wait", frames=30*300}
 				end
@@ -66,7 +133,7 @@ local function checkMorph(self)
 end
 
 -- assist another builder that is performing specific functions
-local function assistOtherBuilderIfNeeded(self)
+function assistOtherBuilderIfNeeded(self)
 	local queues = self.ai.unitHandler.taskQueues
 
 	-- only about 20% should try to assist, the rest should skip
@@ -88,8 +155,43 @@ local function assistOtherBuilderIfNeeded(self)
 	return SKIP_THIS_TASK
 end
 
+function assistNearbyConstructionIfNeeded(self,includeMobiles,includeNonBuilders,radius)
+	local ownUnitIds = self.ai.ownUnitIds
+
+	local selfPos = self.pos
+	local ud = nil
+	local units = spGetUnitsInCylinder(selfPos.x,selfPos.z,radius,self.ai.id)
+	if (units ~= nil) then
+		--log("buildings :"..#units,self.ai) --DEBUG
+		for _,uId in pairs(units) do
+			ud = UnitDefs[spGetUnitDefID(uId)]
+			if ud ~= nil then
+				if includeMobiles or ud.speed == 0 then
+					if includeNonBuilders or ud.isBuilder then
+						un = ud.name
+						--if (un ~= nil and (constructionTowers[un] or setContains(unitTypeSets[TYPE_PLANT],un) )) then
+							local health,maxHealth,_,_,bp = spGetUnitHealth(uId)
+							if (bp < 1) then					
+								local uPos = newPosition(spGetUnitPosition(uId,false,false))
+								if self.ai.mapHandler:checkConnection(selfPos, uPos,self.pFType) then
+									--log("assisting nearby unit under construction",self.ai) --DEBUG
+									spGiveOrderToUnit(self.unitId,CMD.REPAIR,{uId},{})
+									return {action="wait_idle", frames=300}
+								end
+							end
+						--end
+					end
+				end
+			end
+		end
+	end
+	
+	return SKIP_THIS_TASK
+end
+
+
 -- check if nearby metal resources are mostly on land or on water
-local function checkLandOrWater(self)
+function checkLandOrWater(self)
 	local result = "land"
 	--TODO : make it work with water maps
 	--[[
@@ -162,21 +264,21 @@ function metalExtractorIfNeeded(self)
 end
 
 function metalExtractorNearbyIfSafe(self)
-	local unitName = nil
+	local unitName = SKIP_THIS_TASK
 	
 	local friendlyExtractorCount = self.ai.unitHandler.friendlyExtractorCount or 0
 	local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
-	if friendlyExtractorCount > 10 and incomeM > 30 and storageM > 500 and currentLevelM >= 0.9 * storageM and incomeM > expenseM then
+	if not self.ai.useStrategies and friendlyExtractorCount > 10 and incomeM > 30 and storageM > 500 and currentLevelM >= 0.9 * storageM and incomeM > expenseM then
 		return SKIP_THIS_TASK
 	end
 
-	if(self.isWaterMode == true) then
-		unitName = UWMexByFaction[self.unitSide]
+	if self.isAdvBuilder then
+		unitName = advMetalExtractor(self)
 	else
 		unitName = mexByFaction[self.unitSide]
 	end
 	
-	local p = self.ai.buildSiteHandler:ClosestFreeSpot(self, UnitDefNames[unitName], self.pos, true, "metal", self.unitDef)
+	local p = self.ai.buildSiteHandler:closestFreeSpot(self, UnitDefNames[unitName], self.pos, true, self.isAdvBuilder and "advMetal" or "metal", self.unitDef)
 	
 	if ( p ~= nil and distance(self.pos,p) < BIG_RADIUS) then	
 		return unitName
@@ -185,12 +287,28 @@ function metalExtractorNearbyIfSafe(self)
 	return SKIP_THIS_TASK
 end
 
+function geoNearbyIfSafe(self)
+	-- don't attempt if there are no spots on the map
+	if not self.ai.mapHandler.mapHasGeothermal then
+		return SKIP_THIS_TASK
+	end
+
+	local unitName = geoByFaction[self.unitSide]
+	local p = self.ai.buildSiteHandler:closestFreeSpot(self, UnitDefNames[unitName], self.pos, true, "geo", self.unitDef)
+	if ( p ~= nil and distance(self.pos,p) < BIG_RADIUS) then	
+		return unitName
+	end
+
+	return SKIP_THIS_TASK
+end
+
+
 
 -- restore original queue
 function restoreQueue(self)
 
 	-- revert to default queue
-	self:ChangeQueue(nil)
+	self:changeQueue(nil)
 	self.specialRole = 0
 	self.isWaterMode = false
 	return SKIP_THIS_TASK
@@ -203,7 +321,11 @@ function changeQueueToCommanderBaseBuilderIfNeeded(self)
 	
 		-- if low on resource income or factories, rebuild base	
 		if (incomeM < 20 or incomeE < 200) or (countOwnUnits(self,nil,1,TYPE_PLANT) < 1)  then
-			self:ChangeQueue(commanderBaseBuilderQueueByFaction[self.unitSide])
+			if (self.ai.useStrategies) then 
+				self:changeQueue(stratCommander)
+			else
+				self:changeQueue(commanderBaseBuilderQueueByFaction[self.unitSide])
+			end
 			self.isAttackMode = false
 			--log("changed to base builder commander!",self.ai)
 		end
@@ -215,7 +337,7 @@ function changeQueueToRoamingCommanderIfNeeded(self)
 
 	-- TODO roaming commanders are ineffective, make them work
 	--if(self.isUpgradedCommander ) and naturallyRoamingCommanders[self.unitName]) then
-	--	self:ChangeQueue(commanderRoamingQueueByFaction[self.unitSide])
+	--	self:changeQueue(commanderRoamingQueueByFaction[self.unitSide])
 	--	self.isAttackMode = true
 	--	-- log("changed to roaming commander!",self.ai)
 	--end
@@ -232,9 +354,9 @@ function changeQueueToCommanderAttackerIfNeeded(self)
 	if (incomeM > 22 and incomeE > 250 and countOwnUnits(self,nil,2,TYPE_PLANT) > 0 ) then
 		
 		if(self.isUpgradedCommander) then
-			self:ChangeQueue(taskqueues[self.unitName])
+			self:changeQueue(taskQueues[self.unitName])
 		else
-			self:ChangeQueue(commanderAtkQueueByFaction[self.unitSide])
+			self:changeQueue(commanderAtkQueueByFaction[self.unitSide])
 		end
 		self.isAttackMode = true
 		--log("changed to attack commander!",self.ai)
@@ -246,7 +368,7 @@ end
 
 function changeQueueToWaterCommanderIfNeeded(self)
 	if(checkLandOrWater(self) == "water") then
-		self:ChangeQueue(commanderWaterQueueByFaction[self.unitSide])
+		self:changeQueue(commanderWaterQueueByFaction[self.unitSide])
 
 		self.isWaterMode = true
 	end
@@ -258,10 +380,10 @@ function changeQueueToMexUpgraderIfNeeded(self)
 	
 		local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
 	
-		local mexes = countOwnUnits(self,nil,0,TYPE_MEX)
-		local mohos = countOwnUnits(self,nil,0,TYPE_MOHO)
-		if  mexes > mohos and (incomeE > 400 or incomeE - expenseE > 150) then
-			self:ChangeQueue(mexUpgraderQueueByFaction[self.unitSide])
+		local l1Mexes = countOwnUnits(self,nil,0,TYPE_MEX)
+		local allMexes = countOwnUnits(self,nil,0,TYPE_EXTRACTOR)
+		if self.ai.useStrategies or (l1Mexes > 0 and (incomeE > 400 or incomeE - expenseE > 150)) then
+			self:changeQueue(mexUpgraderQueueByFaction[self.unitSide])
 			self.specialRole = UNIT_ROLE_MEX_UPGRADER
 			self.ai.unitHandler.mexUpgraderCount = self.ai.unitHandler.mexUpgraderCount + 1
 		end
@@ -278,11 +400,7 @@ function changeQueueToMexBuilderIfNeeded(self)
 	end
 
 	if self.ai.unitHandler.mexBuilderCount < self.ai.unitHandler.mexBuilderCountTarget then
-		if( self.isWaterMode == true) then
-			self:ChangeQueue(waterMexBuilderQueueByFaction[self.unitSide])
-		else
-			self:ChangeQueue(mexBuilderQueueByFaction[self.unitSide])
-		end
+		self:changeQueue(mexBuilderQueueByFaction[self.unitSide])
 		
 		self.noDelay = true
 		self.specialRole = UNIT_ROLE_MEX_BUILDER
@@ -297,9 +415,9 @@ function changeQueueToDefenseBuilderIfNeeded(self)
 
 	if self.ai.unitHandler.mostVulnerableCell ~= nil and self.ai.unitHandler.defenseBuilderCount < self.ai.unitHandler.defenseBuilderCountTarget then
 		if( self.isWaterMode == true) then
-			self:ChangeQueue(waterDefenseBuilderQueueByFaction[self.unitSide])
+			self:changeQueue(waterDefenseBuilderQueueByFaction[self.unitSide])
 		else
-			self:ChangeQueue(defenseBuilderQueueByFaction[self.unitSide])
+			self:changeQueue(defenseBuilderQueueByFaction[self.unitSide])
 		end
 		
 		self.ai.unitHandler.defenseBuilderCount = self.ai.unitHandler.defenseBuilderCount + 1
@@ -314,9 +432,9 @@ function changeQueueToAdvancedDefenseBuilderIfNeeded(self)
 
 	if self.ai.unitHandler.mostVulnerableCell ~= nil and self.ai.unitHandler.advancedDefenseBuilderCount < self.ai.unitHandler.advancedDefenseBuilderCountTarget then
 		if( self.isWaterMode == true) then
-			self:ChangeQueue(advancedWaterDefenseBuilderQueueByFaction[self.unitSide])
+			self:changeQueue(advancedWaterDefenseBuilderQueueByFaction[self.unitSide])
 		else
-			self:ChangeQueue(advancedDefenseBuilderQueueByFaction[self.unitSide])
+			self:changeQueue(advancedDefenseBuilderQueueByFaction[self.unitSide])
 		end
 
 		self.ai.unitHandler.advancedDefenseBuilderCount = self.ai.unitHandler.advancedDefenseBuilderCount + 1		
@@ -340,12 +458,91 @@ function buildEnergyIfNeeded(self,unitName)
 	end
 end
 
+-- set up some static defense if near building clusters which aren't covered by any
+function defendNearbyBuildingsIfNeeded(self,safeFraction)
+	local ownUnitIds = self.ai.ownUnitIds
+	local unitCount = 0
+	local pos = self.pos
+	
+	local ownBuildingCell = getNearbyCellIfExists(self.ai.unitHandler.ownBuildingCells, pos)
+	if (ownBuildingCell ~= nil) then 
+		local ownCell = getNearbyCellIfExists(self.ai.unitHandler.ownCells, pos)
+		if (ownCell ~= nil) then 
+			local nearbyEconomyCost = ownCell.nearbyEconomyCost or 0
+			local extractorCount = ownCell.extractorCount or 0
+			local buildingCount = ownCell.buildingCount or 0
+			local defenderCost = ownCell.defenderCost or 0
+			local underwaterDefenderCost = ownCell.defenderCost or 0
+			
+			if buildingCount > 0 then
+				local valueToProtect = nearbyEconomyCost + 150 * extractorCount
+				
+				local defenseDensityMult = 1
+				if (self.ai.useStrategies) then
+					local currentStrategy = self.ai.currentStrategy
+					local currentStrategyName = self.ai.currentStrategyName
+					local sStage = self.ai.currentStrategyStage
+					defenseDensityMult = currentStrategy.stages[sStage].properties.defenseDensityMult or 1
+				end
+				
+				--if self.ai.id == 0 then log("defCost="..defenderCost.." valueToProtect="..valueToProtect,self.ai) end	--DEBUG
+				
+				-- if there's important stuff here that hasn't been properly defended
+				if defenderCost < safeFraction * valueToProtect then
+					local HIGH_VALUE_THRESHOLD = 3000
+					if valueToProtect > HIGH_VALUE_THRESHOLD then
+						local action = SKIP_THIS_TASK
+						-- heavy defense	
+						if (self.isAdvBuilder) then
+							if(self.isWaterMode == true and underwaterDefenderCost == 0) then
+								return lev2TorpedoDefenseByFaction[self.unitSide] 
+							else
+								local unitName = heavyAAByFaction[self.unitSide][ random( 1, tableLength(heavyAAByFaction[self.unitSide]) ) ]
+								action = checkAreaLimit(self, unitName, self.unitId, (1+valueToProtect/HIGH_VALUE_THRESHOLD)*defenseDensityMult, BIG_RADIUS, TYPE_HEAVY_AA)
+								if action ~= SKIP_THIS_TASK then
+									return action
+								end
+							end
+						else
+							if(self.isWaterMode == true and underwaterDefenderCost == 0) then
+								return lev1TorpedoDefenseByFaction[self.unitSide] 
+							else
+								if (self.unitSide == "claw" or self.unitSide == "sphere") then
+									local unitName = mediumAAByFaction[self.unitSide]
+									action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, MED_RADIUS, TYPE_LIGHT_AA)
+									if action ~= SKIP_THIS_TASK then
+										return action
+									end
+								elseif(self.unitSide == "aven" or self.unitSide == "gear") then
+									local unitName = lev1HeavyDefenseByFaction[self.unitSide][ random( 1, tableLength(lev1HeavyDefenseByFaction[self.unitSide]) ) ]
+									action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, MED_RADIUS, TYPE_HEAVY_DEFENSE)
+									if action ~= SKIP_THIS_TASK then
+										return action
+									end
+								end
+							end
+						end					
+					else
+						-- light defense
+						if lightAAByFaction[self.unitSide] then
+							return lightAAByFaction[self.unitSide]
+						end
+						return mediumAAByFaction[self.unitSide]
+					end
+				end
+			end
+		end
+	end
+	
+
+	return SKIP_THIS_TASK
+end
 
 function changeQueueToLightGroundRaidersIfNeeded(self)
 
 	-- 30% probability to go raiders
 	if (random( 1, 10) > 6) then 
-		self:ChangeQueue(lightGroundRaiderQueueByFaction[self.unitSide])
+		self:changeQueue(lightGroundRaiderQueueByFaction[self.unitSide])
 	end
 	
 	return SKIP_THIS_TASK
@@ -420,6 +617,27 @@ function mohoIfMexReclaimed(self)
 	end
 end
 
+function advMetalExtractor(self)
+	self.noDelay = true
+	local unitName = SKIP_THIS_TASK
+
+	if (self.ai.useStrategies) then
+		local currentStrategy = self.ai.currentStrategy
+		local sStage = self.ai.currentStrategyStage
+			
+		local useHazardousExtractors = currentStrategy.stages[sStage].economy.useHazardousExtractors
+		if (useHazardousExtractors) then
+			unitName = hazMexByFaction[self.unitSide]
+		else
+			unitName = mohoMineByFaction[self.unitSide]
+		end
+	else		
+		unitName = mohoMineByFaction[self.unitSide]
+	end
+
+	return unitName		
+end
+
 function basePatrolIfNeeded(self)
 
 	if self.ai.unitHandler.basePatrollerCount < self.ai.unitHandler.basePatrollerCountTarget then
@@ -490,16 +708,29 @@ function briefAreaPatrol(self)
 		spGiveOrderToUnit(self.unitId,CMD.PATROL,{movePos.x,movePos.y,movePos.z},CMD.OPT_SHIFT)
 	end
 	
+	-- do it for some time
+	return {action="wait", frames=300}
+end
+
+
+function staticBriefAreaPatrol(self)
+	local selfPos = self.pos
+	local radius = 100 
+	
+	local movePos = newPosition(selfPos.x - (radius + random( 1, radius)),selfPos.y,selfPos.z)
+	spGiveOrderToUnit(self.unitId,CMD.PATROL,{movePos.x,movePos.y,movePos.z},{})
+	movePos.x=selfPos.x + (radius + random( 1, radius))
+	spGiveOrderToUnit(self.unitId,CMD.PATROL,{movePos.x,movePos.y,movePos.z},CMD.OPT_SHIFT)
 	
 	-- do it for some time
-	return {action="wait", frames=BRIEF_AREA_PATROL_FRAMES}
+	return {action="wait", frames=STATIC_AREA_PATROL_FRAMES}
 end
 
 function commanderBriefAreaPatrol(self)
-	if (countOwnUnitsInRadius(self,nil, self.pos, 600, 4, TYPE_L1_PLANT) < 1 and countOwnUnitsInRadius(self,nil, self.pos, 600, 4, TYPE_L2_PLANT) < 1) then
+	--if (countOwnUnitsInRadius(self,nil, self.pos, 600, 4, TYPE_L1_PLANT) < 1 and countOwnUnitsInRadius(self,nil, self.pos, 600, 4, TYPE_L2_PLANT) < 1) then
 		-- do nothing
-		return SKIP_THIS_TASK
-	end
+		--return SKIP_THIS_TASK
+	--end
 	
 	return briefAreaPatrol(self)
 end
@@ -509,7 +740,7 @@ function exitPlant(self)
 	p = newPosition()
 	p.x = self.pos.x
 	p.z = self.pos.z+100
-	p.y = 0
+	p.y = self.pos.y
 	spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},{})
 
 	-- log(self.unitName.." ("..self.pos.x..";"..self.pos.z..") exiting factory to ("..p.x..";"..p.z..")",self.ai) --DEBUG
@@ -582,15 +813,17 @@ end
 function commanderRoam(self)
 	--local atkPos = self.ai.unitHandler.unitGroups[UNIT_GROUP_RAIDERS].centerPos
 	local basePos = self.ai.unitHandler.basePos
-
+	
+	--log("commander roam "..#(self.ai.unitHandler.raiderPath[PF_UNIT_AMPHIBIOUS]),self.ai) --DEBUG
+	
 	-- if far away, move there first
 	if (distance(self.pos,basePos) < HUGE_RADIUS) then
-		self:OrderToClosestCellAlongPath(self.ai.unitHandler.raiderPath[PF_UNIT_LAND], {CMD.MOVE,CMD.MOVE}, false, true)
+		self:orderToClosestCellAlongPath(self.ai.unitHandler.raiderPath[PF_UNIT_AMPHIBIOUS], {CMD.MOVE,CMD.MOVE}, false, true)
 	else
-		self:OrderToClosestCellAlongPath(self.ai.unitHandler.raiderPath[PF_UNIT_LAND], {CMD.FIGHT,CMD.MOVE}, false, true)
+		self:orderToClosestCellAlongPath(self.ai.unitHandler.raiderPath[PF_UNIT_AMPHIBIOUS], {CMD.FIGHT,CMD.MOVE}, false, true)
 	end
 	
-	return {action="wait", frames=450}
+	return {action="wait_idle", frames=120}
 end
 
 
@@ -601,12 +834,19 @@ function commanderPatrol(self)
 	local raidersPos = self.ai.unitHandler.unitGroups[UNIT_GROUP_RAIDERS].centerPos
 	local raidersStrength = self.ai.unitHandler.unitGroups[UNIT_GROUP_RAIDERS].nearCenterCost
 	local basePos = self.ai.unitHandler.basePos
-
+	local roam = false
+	
+	if (self.ai.useStrategies) then
+		local currentStrategy = self.ai.currentStrategy
+		local sStage = self.ai.currentStrategyStage
+		roam = currentStrategy.stages[sStage].properties.roamingCommander or false
+	end
 	--Spring.Echo(spGetGameFrame().." raiders="..raidersStrength.." atk="..atkStrength)
-	if (raidersStrength > atkStrength) then
+	if (roam or raidersStrength > atkStrength and not self.ai.unitHandler.baseUnderAttack) then
 		--Spring.Echo(spGetGameFrame().." following raiders")
 		return commanderRoam(self)
 	end
+	
 	
 	local p = newPosition()
 	p.y = 0
@@ -635,7 +875,7 @@ function commanderPatrol(self)
 		end
 				
 		if (self.stuckCounter == 5) then
-			-- probably fell into a hole, self destruct!
+			-- probably fell into a hole, selfdestruct!
 			spGiveOrderToUnit(self.unitId,CMD.SELFD,{},{})
 		else
 			spGiveOrderToUnit(self.unitId,CMD.MOVE,{self.pos.x  - 60 + random( 1, 120),self.pos.y,self.pos.z - 60 + random( 1, 120)},{})	
@@ -772,8 +1012,12 @@ function moveVulnerablePos(self)
 	return SKIP_THIS_TASK
 end
 
+-- move to a safe position before attempting to build expensive stuff
+-- TODO better to just move to base center, needs improvement
 function moveSafePos(self)
 	local radius = BIG_RADIUS
+	
+	--[[
 	local cellPos = self.ai.unitHandler.leastVulnerableCell.p
 	
 	if ( cellPos.x > 0 and cellPos.z > 0 ) then
@@ -781,6 +1025,7 @@ function moveSafePos(self)
 		p.x = cellPos.x-radius/2+random(1,radius)
 		p.z = cellPos.z-radius/2+random(1,radius)
 		p.y = 0
+
 
 		spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},{})
 		
@@ -790,8 +1035,9 @@ function moveSafePos(self)
 		-- wait a bit to let the move order finish
 		return {action="wait_idle", frames=1800}
 	end
+	]]--
 	
-	return SKIP_THIS_TASK
+	return moveBaseCenter(self)
 end
 
 
@@ -913,7 +1159,7 @@ function buildWithExtraMetalIncome(self,unitName, minNumber)
 end
 
 
-local function scoutPadIfNeeded(self)
+function scoutPadIfNeeded(self)
 	local unitName = scoutPadByFaction[self.unitSide] 
 	unitName = buildWithLimitedNumber(self, unitName, 1) 
 	
@@ -926,7 +1172,7 @@ local function scoutPadIfNeeded(self)
 	return unitName
 end
 
-local function airScoutIfNeeded(self)
+function airScoutIfNeeded(self)
 	local unitName = airScoutByFaction[self.unitSide] 
 	local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
 
@@ -935,7 +1181,7 @@ local function airScoutIfNeeded(self)
 end
 
 
-local function lvl1PlantIfNeeded(self)
+function lvl1PlantIfNeeded(self)
 	-- exclude aircraft factories at first
 	local excludeAir = 0 	
 	if (countOwnUnits(self, nil,2,TYPE_L1_PLANT) < 1) then
@@ -957,7 +1203,7 @@ local function lvl1PlantIfNeeded(self)
 end
 
 
-local function lvl2PlantIfNeeded(self)
+function lvl2PlantIfNeeded(self)
 	-- exclude aircraft factories at first
 	local excludeAir = 0 	
 	if (countOwnUnits(self, nil,1,TYPE_L2_PLANT) < 1) then
@@ -984,7 +1230,7 @@ local function lvl2PlantIfNeeded(self)
 	return unitName
 end
 
-local function upgradeCenterIfNeeded(self)
+function upgradeCenterIfNeeded(self)
 	-- skip this on easy mode
 	if(self.isEasyMode) then
 		return SKIP_THIS_TASK
@@ -1013,7 +1259,7 @@ local function upgradeCenterIfNeeded(self)
 end
 
 
-local function lvl1WaterPlantIfNeeded(self)
+function lvl1WaterPlantIfNeeded(self)
 	-- exclude aircraft factories at first
 	local excludeAir = 0 	
 	if (countOwnUnits(self, nil,2,TYPE_L1_PLANT) < 1) then
@@ -1035,7 +1281,7 @@ local function lvl1WaterPlantIfNeeded(self)
 end
 
 
-local function lvl2WaterPlantIfNeeded(self)
+function lvl2WaterPlantIfNeeded(self)
 	-- exclude aircraft factories at first
 	local excludeAir = 0 	
 	if (countOwnUnits(self, nil,1,TYPE_L2_PLANT) < 1) then
@@ -1058,7 +1304,7 @@ local function lvl2WaterPlantIfNeeded(self)
 end
 
 
-local function brutalPlant(self)
+function brutalPlant(self)
 	if self.isBrutalMode and not self.ai.unitHandler.brutalPlantDone then
 		self.ai.unitHandler.brutalPlantDone = true
 		return lvl1PlantIfNeeded(self)
@@ -1070,7 +1316,7 @@ end
 
 
 
-local function brutalAirPlant(self)
+function brutalAirPlant(self)
 	if self.isBrutalMode and not self.ai.unitHandler.brutalAirPlantDone then
 		if (countOwnUnits(self, nil,4,TYPE_L1_PLANT) < 3) then
 			self.ai.unitHandler.brutalAirPlantDone = true
@@ -1082,7 +1328,7 @@ local function brutalAirPlant(self)
 end
 
 
-local function brutalLightDefense(self)
+function brutalLightDefense(self)
 	if self.isBrutalMode and not self.ai.unitHandler.brutalLightDefenseDone then
 		self.ai.unitHandler.brutalLightDefenseDone = true
 		return lltByFaction[self.unitSide]
@@ -1092,7 +1338,7 @@ local function brutalLightDefense(self)
 	return SKIP_THIS_TASK
 end
 
-local function brutalAADefense(self)
+function brutalAADefense(self)
 	if self.isBrutalMode and not self.ai.unitHandler.brutalAADefenseDone then
 		self.ai.unitHandler.brutalAADefenseDone = true
 		if lightAAByFaction[self.unitSide] then
@@ -1105,18 +1351,18 @@ local function brutalAADefense(self)
 	return SKIP_THIS_TASK
 end
 
-local function brutalHeavyDefense(self)
+function brutalHeavyDefense(self)
 	if self.isBrutalMode and not self.ai.unitHandler.brutalHeavyDefenseDone then
 		self.ai.unitHandler.brutalHeavyDefenseDone = true
-		return lev2HeavyDefenseByFaction[self.unitSide][ random( 1, tableLength(lev2HeavyDefenseByFaction[self.unitSide]) ) ]
-		--return areaLimit_L2HeavyDefense(self)
+		return lev1HeavyDefenseByFaction[self.unitSide][ random( 1, tableLength(lev1HeavyDefenseByFaction[self.unitSide]) ) ]
+		--return areaLimit_L1HeavyDefense(self)
 	end
 	
 	return SKIP_THIS_TASK
 end
 
 
-local function respawnIfNeeded(self)
+function respawnIfNeeded(self)
 	local unitName = "commander_token"
 	
     -- respawn commander on this spot only if there are no enemies nearby
@@ -1135,11 +1381,11 @@ local function respawnIfNeeded(self)
 	return SKIP_THIS_TASK
 end
 
-local function zephyrIfNeeded(self)
+function zephyrIfNeeded(self)
 	return buildWithLimitedNumber(self,"aven_zephyr", 1, nil) 
 end
 
-local function geoIfNeeded(self)
+function geoIfNeeded(self)
 	-- don't attempt if there are no spots on the map
 	if not self.ai.mapHandler.mapHasGeothermal then
 		return SKIP_THIS_TASK
@@ -1148,8 +1394,7 @@ local function geoIfNeeded(self)
 	return buildEnergyIfNeeded(self,geoByFaction[self.unitSide])
 end
 
-local function fusionIfNeeded(self)
-
+function fusionIfNeeded(self)
 	local unitName = SKIP_THIS_TASK
 
 	if (countOwnUnits(self, fusionByFaction[self.unitSide],1) > 0 ) then
@@ -1167,7 +1412,27 @@ local function fusionIfNeeded(self)
 	return unitName
 end
 
-local function brutalFusion(self)
+
+function mmakerIfNeeded(self)
+
+	local unitName = SKIP_THIS_TASK
+
+	local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
+	
+	if (incomeE - expenseE > 500 and currentLevelE > 0.7 * storageE) then
+		unitName = mmakerByFaction[self.unitSide]
+	end
+	
+	-- if unit is far away from base center, move to center and then retry
+	if unitName ~= SKIP_THIS_TASK and farFromBaseCenter(self)  then
+		self:Retry()
+		return moveBaseCenter(self)
+	end	
+
+	return unitName
+end
+
+function brutalFusion(self)
 	if self.isBrutalMode then
 		return fusionIfNeeded(self)
 	end
@@ -1175,7 +1440,7 @@ local function brutalFusion(self)
 	return SKIP_THIS_TASK
 end
 
-local function roughFusionIfNeeded(self)
+function roughFusionIfNeeded(self)
 	local _,_,_,incomeE,_,_,_,_ = spGetTeamResources(self.ai.id,"energy")
 
 	local unitName = SKIP_THIS_TASK
@@ -1195,11 +1460,11 @@ local function roughFusionIfNeeded(self)
 end
 
 
-local function patrolAtkCenterIfNeeded(self)
+function patrolAtkCenterIfNeeded(self)
 	if self.ai.unitHandler.attackPatrollerCount < self.ai.unitHandler.attackPatrollerCountTarget then
 		self.noDelay = true
 		self.specialRole = UNIT_ROLE_ATTACK_PATROLLER
-		self:ChangeQueue(attackPatrollerQueue)
+		self:changeQueue(attackPatrollerQueue)
 		self.ai.unitHandler.attackPatrollerCount = self.ai.unitHandler.attackPatrollerCount +1
 		-- local selfPos = newPosition(spGetUnitPosition(self.unitId,false,false))
 		-- log(self.unitName.." at ("..selfPos.x.." ; "..selfPos.z..") changed to atk patroller",self.ai)
@@ -1238,7 +1503,7 @@ function countOwnUnitsInRadius(self,unitName, pos, radius, maxCount, type)
 	return unitCount
 end
 
-local function checkAreaLimit(self,unitName, builder, unitLimit, radius, type)
+function checkAreaLimit(self,unitName, builder, unitLimit, radius, type)
 	-- this is special case, it means the unit will not be built anyway
 	if unitName == nil or unitName == SKIP_THIS_TASK then
 		return unitName
@@ -1265,7 +1530,7 @@ local function checkAreaLimit(self,unitName, builder, unitLimit, radius, type)
 	return SKIP_THIS_TASK
 end
 
-local function areaLimit_Llt(self)
+function areaLimit_Llt(self)
 	if self.unitId == nil then
 		return SKIP_THIS_TASK
 	end
@@ -1275,7 +1540,7 @@ local function areaLimit_Llt(self)
 end
 
 
-local function areaLimit_LightAA(self)
+function areaLimit_LightAA(self)
 	if self.unitId == nil then
 		return SKIP_THIS_TASK
 	end
@@ -1287,7 +1552,7 @@ end
 
 
 
-local function areaLimit_WaterLightAA(self)
+function areaLimit_WaterLightAA(self)
 	if self.unitId == nil then
 		return SKIP_THIS_TASK
 	end
@@ -1298,7 +1563,7 @@ local function areaLimit_WaterLightAA(self)
 end
 
 
-local function areaLimit_MediumAA(self)
+function areaLimit_MediumAA(self)
 	if self.unitId == nil then
 		return SKIP_THIS_TASK
 	end
@@ -1308,7 +1573,7 @@ local function areaLimit_MediumAA(self)
 	return checkAreaLimit(self,unitName, self.unitId, 2, MED_RADIUS, TYPE_LIGHT_AA)
 end
 
-local function areaLimit_WaterMediumAA(self)
+function areaLimit_WaterMediumAA(self)
 	if self.unitId == nil then
 		return SKIP_THIS_TASK
 	end
@@ -1318,7 +1583,7 @@ local function areaLimit_WaterMediumAA(self)
 	return checkAreaLimit(self,unitName, self.unitId, 2, MED_RADIUS, TYPE_LIGHT_AA)
 end
 
-local function areaLimit_L2HeavyDefense(self)
+function areaLimit_L1HeavyDefense(self)
 	if self.unitId == nil then
 		return SKIP_THIS_TASK
 	end
@@ -1328,13 +1593,13 @@ local function areaLimit_L2HeavyDefense(self)
 --		return SKIP_THIS_TASK
 --	end	
 	
-	local unitName = lev2HeavyDefenseByFaction[self.unitSide][ random( 1, tableLength(lev2HeavyDefenseByFaction[self.unitSide]) ) ]
+	local unitName = lev1HeavyDefenseByFaction[self.unitSide][ random( 1, tableLength(lev1HeavyDefenseByFaction[self.unitSide]) ) ]
 	
 	return checkAreaLimit(self,unitName, self.unitId, 1, MED_RADIUS, TYPE_HEAVY_DEFENSE)
 end
 
 
-local function areaLimit_WaterL2HeavyDefense(self)
+function areaLimit_WaterL1HeavyDefense(self)
 	if self.unitId == nil then
 		return SKIP_THIS_TASK
 	end
@@ -1344,13 +1609,13 @@ local function areaLimit_WaterL2HeavyDefense(self)
 --		return SKIP_THIS_TASK
 --	end	
 	
-	local unitName = lev2WaterHeavyDefenseByFaction[self.unitSide][ random( 1, tableLength(lev2WaterHeavyDefenseByFaction[self.unitSide]) ) ]
+	local unitName = lev1WaterHeavyDefenseByFaction[self.unitSide][ random( 1, tableLength(lev1WaterHeavyDefenseByFaction[self.unitSide]) ) ]
 	
 	return checkAreaLimit(self,unitName, self.unitId, 1, MED_RADIUS, TYPE_HEAVY_DEFENSE)
 end
 
 
-local function areaLimit_L2ArtilleryDefense(self)
+function areaLimit_L1ArtilleryDefense(self)
 	if self.unitId == nil then
 		return SKIP_THIS_TASK
 	end
@@ -1360,12 +1625,12 @@ local function areaLimit_L2ArtilleryDefense(self)
 --		return SKIP_THIS_TASK
 --	end	
 	
-	local unitName = lev2ArtilleryDefenseByFaction[self.unitSide][ random( 1, tableLength(lev2ArtilleryDefenseByFaction[self.unitSide]) ) ]
+	local unitName = lev1ArtilleryDefenseByFaction[self.unitSide][ random( 1, tableLength(lev1ArtilleryDefenseByFaction[self.unitSide]) ) ]
 	
 	return checkAreaLimit(self, unitName, self.unitId, 1, BIG_RADIUS, TYPE_ARTILLERY_DEFENSE)
 end
 
-local function areaLimit_L3HeavyAA(self)
+function areaLimit_L2HeavyAA(self)
 	if self.unitId == nil then
 		return SKIP_THIS_TASK
 	end
@@ -1384,9 +1649,7 @@ local function areaLimit_L3HeavyAA(self)
 end
 
 
-
-
-local function areaLimit_L3ArtilleryDefense(self)
+function areaLimit_L2ArtilleryDefense(self)
 	if self.unitId == nil then
 		return SKIP_THIS_TASK
 	end
@@ -1396,25 +1659,24 @@ local function areaLimit_L3ArtilleryDefense(self)
 --		return SKIP_THIS_TASK
 --	end	
 	
-	local unitName = lev3ArtilleryDefenseByFaction[self.unitSide][ random( 1, tableLength(lev3ArtilleryDefenseByFaction[self.unitSide]) ) ]
+	local unitName = lev2ArtilleryDefenseByFaction[self.unitSide][ random( 1, tableLength(lev2ArtilleryDefenseByFaction[self.unitSide]) ) ]
 
 	return checkAreaLimit(self, unitName, self.unitId, 1, BIG_RADIUS, TYPE_ARTILLERY_DEFENSE)
 end
 
 
-local function areaLimit_L3LongRangeArtillery(self)
+function areaLimit_L2LongRangeArtillery(self)
 	if self.unitId == nil then
 		return SKIP_THIS_TASK
 	end
 
-	local unitName = lev3LongRangeArtilleryByFaction[self.unitSide][ random( 1, tableLength(lev3LongRangeArtilleryByFaction[self.unitSide]) ) ]
+	local unitName = lev2LongRangeArtilleryByFaction[self.unitSide][ random( 1, tableLength(lev2LongRangeArtilleryByFaction[self.unitSide]) ) ]
 	
 	return buildWithMinimalMetalIncome(self, buildWithMinimalEnergyIncome(self, checkAreaLimit(self, unitName, self.unitId, 4, BIG_RADIUS, TYPE_LONG_RANGE_ARTILLERY),1000),40)
 end
 
 
-
-local function areaLimit_Radar(self)
+function areaLimit_Radar(self)
 	if self.unitId == nil then
 		return SKIP_THIS_TASK
 	end
@@ -1424,7 +1686,7 @@ local function areaLimit_Radar(self)
 end
 
 
-local function areaLimit_WaterRadar(self)
+function areaLimit_WaterRadar(self)
 	if self.unitId == nil then
 		return SKIP_THIS_TASK
 	end
@@ -1433,7 +1695,7 @@ local function areaLimit_WaterRadar(self)
 	
 end
 
-local function areaLimit_Sonar(self)
+function areaLimit_Sonar(self)
 	if self.unitId == nil then
 		return SKIP_THIS_TASK
 	end
@@ -1442,7 +1704,7 @@ local function areaLimit_Sonar(self)
 	
 end
 
-local function areaLimit_AdvRadar(self)
+function areaLimit_AdvRadar(self)
 	if self.unitId == nil then
 		return SKIP_THIS_TASK
 	end
@@ -1452,7 +1714,7 @@ local function areaLimit_AdvRadar(self)
 end
 
 
-local function areaLimit_Respawner(self)
+function areaLimit_Respawner(self)
 	if self.unitId == nil then
 		return SKIP_THIS_TASK
 	end
@@ -1461,7 +1723,7 @@ local function areaLimit_Respawner(self)
 	
 end
 
-local function airRepairPadIfNeeded(self)
+function airRepairPadIfNeeded(self)
 	-- only make air pads if the team has air units
 	-- TODO: air repair pads have been disabled
 	if false and countOwnUnits(self,nil, 3, TYPE_AIR_ATTACKER) > 2 then
@@ -1471,7 +1733,7 @@ local function airRepairPadIfNeeded(self)
 	return SKIP_THIS_TASK
 end
 
-local function getChoice(choice)
+function getChoice(choice)
 	if (type(choice) == "table") then
 		return choice[ random( 1, tableLength(choice)) ] 
 	else
@@ -1479,7 +1741,7 @@ local function getChoice(choice)
 	end	
 end
 
-local function choiceByType(self,airThreatChoice,defenseThreatChoice,normalThreatChoice,underWaterThreatChoice)
+function choiceByType(self,airThreatChoice,defenseThreatChoice,normalThreatChoice,underWaterThreatChoice)
 	if self.ai.unitHandler.threatType == THREAT_AIR then
 		return getChoice(airThreatChoice)
 	elseif self.ai.unitHandler.threatType == THREAT_DEFENSE then
@@ -1492,18 +1754,51 @@ local function choiceByType(self,airThreatChoice,defenseThreatChoice,normalThrea
 	return SKIP_THIS_TASK
 end
 
+function longRangeRocketChoice(self)
+	-- TODO use other rockets
+	return unblockableNukeByFaction[self.unitSide]
+end
+
+function unblockableNukeTargetting(self)
+	local targetCell = self.ai.unitHandler.nukeTargetCell
+	if (targetCell ~= nil) then
+		-- TODO check best actual position to target
+		spGiveOrderToUnit(self.unitId,CMD.ATTACK,{targetCell.p.x,spGetGroundHeight(targetCell.p.x,targetCell.p.z),targetCell.p.z},{})
+	end
+	
+	return SKIP_THIS_TASK
+end
+
+function L1EnergyGenerator(self)
+	-- if unit is far away from base center, move to center and then retry
+	if farFromBaseCenter(self)  then
+		self:Retry()
+		return moveBaseCenter(self)
+	end	
+
+	if (self.unitSide == "sphere") then
+		return roughFusionIfNeeded(self)
+	else
+		if self.isWaterMode then
+			return tidalByFaction[self.unitSide]
+		else
+			return windSolar(self)
+		end
+	end
+end
+
 ------------------------------------ UPGRADES
 
 
 --upgradePaths = {"offensive", "defensive", "defensive_regen", "speed", "mixed", "mixed_drones_utility", "mixed_drones_combat"}
 upgradePathsByFaction = { [side1Name] = {"speed"}, [side2Name] = {"mixed","mixed_drones_utility","mixed_drones_combat"}, [side3Name] = {"offensive","mixed_drones_combat"}, [side4Name] = {"defensive","defensive_regen"}}
-local function selectUpgradeCenterQueue(self)
+function selectUpgradeCenterQueue(self)
 	if (not self.ai.upgradePath) then
 		self.ai.upgradePath = upgradePathsByFaction[self.unitSide][ random( 1, tableLength(upgradePathsByFaction[self.unitSide]) ) ]
 	end
 	
 	if self.ai.upgradePath then
-		self:ChangeQueue(upgradeQueueByPath[self.ai.upgradePath])
+		self:changeQueue(upgradeQueueByPath[self.ai.upgradePath])
 		--log("UPGRADES: "..self.ai.upgradePath.." "..type(upgradeQueueByPath[self.ai.upgradePath]),self.ai)
 	end
 
@@ -1516,42 +1811,61 @@ end
 
 
 
-local airScout = {
+airScout = {
 	scoutRandomly,
 	{action = "wait", frames = 32}
 }
 
-local atkSupporter = {
+atkSupporter = {
 	moveAtkCenter,
 	{action = "wait", frames = 32}
 }
 
 
-local atkPatroller = {
+atkPatroller = {
 	patrolAtkCenter,
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	{action = "wait", frames = 32}
 }
 
 
-local respawner = {
+builderAtkPatroller = {
+	metalExtractorNearbyIfSafe,
+	{action = "cleanup", frames = CLEANUP_FRAMES},
+	patrolAtkCenter
+}
+
+respawner = {
 	respawnIfNeeded,
 	{action = "wait", frames = 38}
 }
 
 
-local scoutPad = {
+scoutPad = {
 	airScoutIfNeeded,
 	{action = "wait", frames = 600}
 }
 
+staticBuilder = {		-- TODO classic AI should use these too...maybe
+	{action = "wait", frames = 600}
+}
 
-local upgradeCenter = {
+upgradeCenter = {
 	selectUpgradeCenterQueue,
 	{action = "wait", frames = 38}
 }
 
-local upgradeOffensive = {
+lRRocketPlatform = {
+	longRangeRocketChoice,
+	{action = "wait", frames = 38}
+}
+
+unblockableNuke = {
+	unblockableNukeTargetting,
+	{action = "wait", frames = 38}
+}
+
+upgradeOffensive = {
 	"upgrade_red_1_damage",
 	"upgrade_red_1_damage",
 	"upgrade_red_1_range",
@@ -1559,12 +1873,12 @@ local upgradeOffensive = {
 	"upgrade_red_1_range",
 	"upgrade_red_2_commander_damage",
 	"upgrade_red_2_commander_range",
-	"upgrade_red_2_commander_range",
-	"upgrade_red_3_damage",
+	"upgrade_green_2_commander_regen",
+	"upgrade_green_3_regen",
 	{action = "wait", frames = 38}
 }
 
-local upgradeDefensive = {
+upgradeDefensive = {
 	"upgrade_green_1_hp",
 	"upgrade_green_1_hp",
 	"upgrade_green_1_regen",
@@ -1573,11 +1887,11 @@ local upgradeDefensive = {
 	"upgrade_green_2_commander_hp",
 	"upgrade_green_2_commander_regen",
 	"upgrade_green_2_commander_regen",
-	"upgrade_green_3_hp",
+	"upgrade_green_3_regen",
 	{action = "wait", frames = 38}
 }
 
-local upgradeDefensiveRegen = {
+upgradeDefensiveRegen = {
 	"upgrade_green_1_regen",
 	"upgrade_green_1_regen",
 	"upgrade_green_1_regen",
@@ -1590,7 +1904,7 @@ local upgradeDefensiveRegen = {
 	{action = "wait", frames = 38}
 }
 
-local upgradeSpeed = {
+upgradeSpeed = {
 	"upgrade_blue_1_speed",
 	"upgrade_blue_1_speed",
 	"upgrade_blue_1_speed",
@@ -1603,7 +1917,7 @@ local upgradeSpeed = {
 	{action = "wait", frames = 38}
 }
 
-local upgradeMixed = {
+upgradeMixed = {
 	"upgrade_blue_1_speed",
 	"upgrade_green_1_regen",
 	"upgrade_blue_1_speed",
@@ -1612,11 +1926,11 @@ local upgradeMixed = {
 	"upgrade_green_2_commander_regen",
 	"upgrade_red_2_commander_damage",
 	"upgrade_green_2_commander_hp",
-	"upgrade_red_3_damage",
+	"upgrade_green_3_regen",
 	{action = "wait", frames = 38}
 }
 
-local upgradeMixedDronesUtility = {
+upgradeMixedDronesUtility = {
 	"upgrade_blue_1_speed",
 	"upgrade_green_1_regen",
 	"upgrade_blue_1_speed",
@@ -1625,11 +1939,11 @@ local upgradeMixedDronesUtility = {
 	"upgrade_blue_3_commander_stealth_drone",
 	"upgrade_blue_3_commander_builder_drone",
 	"upgrade_blue_3_commander_builder_drone",
-	"upgrade_red_3_damage",
+	"upgrade_green_3_regen",
 	{action = "wait", frames = 38}
 }
 
-local upgradeMixedDronesCombat = {
+upgradeMixedDronesCombat = {
 	"upgrade_blue_1_speed",
 	"upgrade_green_1_regen",
 	"upgrade_blue_1_speed",
@@ -1638,7 +1952,7 @@ local upgradeMixedDronesCombat = {
 	"upgrade_blue_2_commander_light_drones",
 	"upgrade_blue_3_commander_medium_drone",
 	"upgrade_blue_3_commander_medium_drone",
-	"upgrade_red_3_damage",
+	"upgrade_green_3_regen",
 	{action = "wait", frames = 38}
 }
 
@@ -1646,21 +1960,21 @@ local upgradeMixedDronesCombat = {
 
 -- choices by threat type : AIR, DEFENSES, NORMAL[, UNDERWATER]
 
-local function avenL2KbotChoice(self) return choiceByType(self,"aven_weaver",{"aven_knight","aven_bolter"},{"aven_bolter","aven_shocker","aven_dervish","aven_knight","aven_magnum","aven_raptor"}) end
-local function avenL1LightChoice(self) return choiceByType(self,"aven_samson",{"aven_bold","aven_duster","aven_duster"},{"aven_samson","aven_trooper","aven_warrior"}) end
-local function avenL2VehicleChoice(self) return choiceByType(self,{"aven_javelin","aven_kodiak"},{"aven_merl","aven_merl","aven_centurion"},{"aven_centurion","aven_kodiak"}) end
-local function avenL2AirChoice(self) return choiceByType(self,"aven_falcon",{"aven_gryphon", "aven_talon"},{"aven_gryphon","aven_falcon","aven_icarus"},"aven_albatross") end
-local function avenL2HoverChoice(self) return choiceByType(self,"aven_swatter",{"aven_turbulence", "aven_excalibur","aven_excalibur"},{"aven_slider","aven_swatter","aven_skimmer"},"aven_slider_s") end
-local function avenL2KbotRadar(self) return buildWithLimitedNumber(self,"aven_marky",1) end
-local function avenL2KbotRadarJammer(self) return buildWithLimitedNumber(self,"aven_eraser",1) end
-local function avenL2VehicleRadar(self) return buildWithLimitedNumber(self,"aven_seer",1) end
-local function avenL2VehicleRadarJammer(self) return buildWithLimitedNumber(self,"aven_jammer",1) end
-local function avenL2HoverIntel(self) return buildWithLimitedNumber(self,"aven_perceptor",1) end
-local function avenL1ShipChoice(self) return choiceByType(self,{"aven_skeeter","aven_vanguard"},"aven_crusader",{"aven_skeeter","aven_vanguard"},"aven_lurker") end
-local function avenL2ShipChoice(self) return choiceByType(self,"aven_fletcher",{"aven_conqueror","aven_emperor"},{"aven_conqueror","aven_piranha","aven_fletcher"},"aven_piranha") end
-local function avenScoper(self) return buildWithLimitedNumber(self,"aven_scoper",1) end
+function avenL2KbotChoice(self) return choiceByType(self,"aven_weaver",{"aven_knight","aven_bolter"},{"aven_bolter","aven_shocker","aven_dervish","aven_knight","aven_magnum","aven_raptor"}) end
+function avenL1LightChoice(self) return choiceByType(self,"aven_samson",{"aven_bold","aven_duster","aven_duster"},{"aven_samson","aven_trooper","aven_warrior"}) end
+function avenL2VehicleChoice(self) return choiceByType(self,{"aven_javelin","aven_kodiak"},{"aven_merl","aven_merl","aven_centurion"},{"aven_centurion","aven_kodiak"}) end
+function avenL2AirChoice(self) return choiceByType(self,"aven_falcon",{"aven_gryphon", "aven_talon"},{"aven_gryphon","aven_falcon","aven_icarus"},"aven_albatross") end
+function avenL2HoverChoice(self) return choiceByType(self,"aven_swatter",{"aven_turbulence", "aven_excalibur","aven_excalibur"},{"aven_slider","aven_swatter","aven_skimmer"},"aven_slider_s") end
+function avenL2KbotRadar(self) return buildWithLimitedNumber(self,"aven_marky",1) end
+function avenL2KbotRadarJammer(self) return buildWithLimitedNumber(self,"aven_eraser",1) end
+function avenL2VehicleRadar(self) return buildWithLimitedNumber(self,"aven_seer",1) end
+function avenL2VehicleRadarJammer(self) return buildWithLimitedNumber(self,"aven_jammer",1) end
+function avenL2HoverIntel(self) return buildWithLimitedNumber(self,"aven_perceptor",1) end
+function avenL1ShipChoice(self) return choiceByType(self,{"aven_skeeter","aven_vanguard"},"aven_crusader",{"aven_skeeter","aven_vanguard"},"aven_lurker") end
+function avenL2ShipChoice(self) return choiceByType(self,"aven_fletcher",{"aven_conqueror","aven_emperor"},{"aven_conqueror","aven_piranha","aven_fletcher"},"aven_piranha") end
+function avenScoper(self) return buildWithLimitedNumber(self,"aven_scoper",1) end
 
-local avenCommander = {
+avenCommander = {
 	brutalPlant,
 	brutalAirPlant,
 	brutalLightDefense,
@@ -1676,7 +1990,7 @@ local avenCommander = {
 	windSolarIfNeeded,
 	lvl1PlantIfNeeded,
 	--commanderBriefAreaPatrol,
-	areaLimit_L2HeavyDefense,
+	areaLimit_L1HeavyDefense,
 	changeQueueToCommanderAttackerIfNeeded,
 	changeQueueToCommanderBaseBuilderIfNeeded,	
 	changeQueueToWaterCommanderIfNeeded,
@@ -1702,7 +2016,7 @@ local avenCommander = {
 }
 
 
-local avenWaterCommander = {
+avenWaterCommander = {
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
@@ -1737,19 +2051,19 @@ local avenWaterCommander = {
 	restoreQueue
 }
 
-local avenUCommander = {
+avenUCommander = {
 	checkMorph,
 	changeQueueToCommanderBaseBuilderIfNeeded,
 	changeQueueToRoamingCommanderIfNeeded,
-	{action = "cleanup", frames = CLEANUP_FRAMES},
+	reclaimNearbyFeaturesIfNecessary,
 	metalExtractorNearbyIfSafe,
 	commanderPatrol
 }
 
-local avenURoamingCommander = {
+avenURoamingCommander = {
 	checkMorph,
 	changeQueueToCommanderBaseBuilderIfNeeded,
-	{action = "cleanup", frames = CLEANUP_FRAMES},
+	reclaimNearbyFeaturesIfNecessary,
 	metalExtractorNearbyIfSafe,
 	commanderRoam,
 	metalExtractorNearbyIfSafe,
@@ -1759,7 +2073,7 @@ local avenURoamingCommander = {
 }
 
 
-local avenLev1Con = {
+avenLev1Con = {
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	metalExtractorNearbyIfSafe,
@@ -1777,7 +2091,7 @@ local avenLev1Con = {
 	assistOtherBuilderIfNeeded,
 	windSolarIfNeeded,
 	metalExtractorNearbyIfSafe,
-	areaLimit_L2HeavyDefense,
+	areaLimit_L1HeavyDefense,
 	areaLimit_LightAA,
 	geoIfNeeded,
 	windSolarIfNeeded,
@@ -1785,16 +2099,16 @@ local avenLev1Con = {
 	upgradeCenterIfNeeded,
 	metalExtractorNearbyIfSafe,
 	briefAreaPatrol,
-	areaLimit_L2ArtilleryDefense,
+	areaLimit_L1ArtilleryDefense,
 	storageIfNeeded,
 	areaLimit_LightAA,
 	lvl2PlantIfNeeded,
 	lvl1PlantIfNeeded,
 	briefAreaPatrol,
 	windSolarIfNeeded,
-	areaLimit_L2HeavyDefense,
+	areaLimit_L1HeavyDefense,
 	windSolarIfNeeded,
-	areaLimit_L2ArtilleryDefense,
+	areaLimit_L1ArtilleryDefense,
 	areaLimit_Radar,
 	windSolarIfNeeded,
 	storageIfNeeded,
@@ -1804,7 +2118,7 @@ local avenLev1Con = {
 }
 
 
-local avenLev1WaterCon = {
+avenLev1WaterCon = {
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	setWaterMode,
@@ -1813,7 +2127,7 @@ local avenLev1WaterCon = {
 	basePatrolIfNeeded,
 	tidalIfNeeded,
 	metalExtractorNearbyIfSafe,
-	areaLimit_WaterL2HeavyDefense,
+	areaLimit_WaterL1HeavyDefense,
 	areaLimit_WaterLightAA,
 	tidalIfNeeded,
 	tidalIfNeeded,
@@ -1830,7 +2144,7 @@ local avenLev1WaterCon = {
 	moveBaseCenter
 }
 
-local avenMexBuilder = {
+avenMexBuilder = {
 	"aven_metal_extractor",
 	"aven_metal_extractor",
 	areaLimit_LightAA,
@@ -1844,7 +2158,7 @@ local avenMexBuilder = {
 	restoreQueue	
 }
 
-local avenWaterMexBuilder = {
+avenWaterMexBuilder = {
 	setWaterMode,
 	"aven_underwater_metal_extractor",
 	"aven_underwater_metal_extractor",
@@ -1860,21 +2174,21 @@ local avenWaterMexBuilder = {
 }
 
 
-local avenLev1DefenseBuilder = {
+avenLev1DefenseBuilder = {
 	moveVulnerablePos,
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	areaLimit_LightAA,
 	areaLimit_Radar,
-	areaLimit_L2HeavyDefense,
+	areaLimit_L1HeavyDefense,
 	areaLimit_LightAA,
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	windSolarIfNeeded,
-	areaLimit_L2ArtilleryDefense,
+	areaLimit_L1ArtilleryDefense,
 	restoreQueue
 }
 
 
-local avenLev2Con = {
+avenLev2Con = {
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	brutalFusion,
@@ -1887,36 +2201,34 @@ local avenLev2Con = {
 	lvl1PlantIfNeeded,
 	lvl2PlantIfNeeded,
 	upgradeCenterIfNeeded,
-	areaLimit_L3HeavyAA,
+	areaLimit_L2HeavyAA,
 	areaLimit_AdvRadar,
-	areaLimit_L3ArtilleryDefense,
+	areaLimit_L2ArtilleryDefense,
 	moveVulnerablePos,
-	areaLimit_L3LongRangeArtillery,
+	areaLimit_L2LongRangeArtillery,
 	airRepairPadIfNeeded,
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	moveBaseCenter	
 }
 
-local avenMexUpgrader = {
+avenMexUpgrader = {
 	moveSafePos,
-	reclaimNearestMexIfNeeded,
-	mohoIfMexReclaimed,
-	reclaimNearestMexIfNeeded,
-	mohoIfMexReclaimed,
+	advMetalExtractor,
+	advMetalExtractor,
 	restoreQueue
 }
 
-local avenLev2DefenseBuilder = {
+avenLev2DefenseBuilder = {
 	moveVulnerablePos,
 	areaLimit_AdvRadar,	
-	areaLimit_L3HeavyAA,
-	areaLimit_L3ArtilleryDefense,
-	areaLimit_L3HeavyAA,
-	areaLimit_L3LongRangeArtillery,
+	areaLimit_L2HeavyAA,
+	areaLimit_L2ArtilleryDefense,
+	areaLimit_L2HeavyAA,
+	areaLimit_L2LongRangeArtillery,
 	restoreQueue	
 }
 
-local avenL1GroundRaiders = {
+avenL1GroundRaiders = {
 	"aven_runner",
 	"aven_kit",
 	"aven_wheeler",
@@ -1927,7 +2239,7 @@ local avenL1GroundRaiders = {
 	restoreQueue	
 }
 
-local avenLightPlant = {
+avenLightPlant = {
 	"aven_runner",
 	"aven_samson",
 	"aven_construction_kbot",
@@ -1944,7 +2256,7 @@ local avenLightPlant = {
 	{action = "wait", frames = 128}
 }
 
-local avenAircraftPlant = {
+avenAircraftPlant = {
 	"aven_swift",
 	"aven_construction_aircraft",
 	{action = "randomness", probability = 0.3, value = "aven_construction_aircraft"},
@@ -1957,7 +2269,7 @@ local avenAircraftPlant = {
 	{action = "wait", frames = 128}
 }
 
-local avenShipPlant = {
+avenShipPlant = {
 	"aven_skeeter",
 	"aven_construction_ship",
 	avenL1ShipChoice,
@@ -1966,7 +2278,7 @@ local avenShipPlant = {
 	{action = "wait", frames = 128}
 }
 
-local avenAdvAircraftPlant = {
+avenAdvAircraftPlant = {
 	"aven_falcon",
 	"aven_adv_construction_aircraft",
 	avenScoper,
@@ -1980,7 +2292,7 @@ local avenAdvAircraftPlant = {
 	{action = "wait", frames = 128}
 }
 
-local avenAdvKbotLab = {
+avenAdvKbotLab = {
 	"aven_stalker",
 	{action = "randomness", probability = 0.5, value = "aven_stalker"},
 	{action = "randomness", probability = 0.5, value = "aven_stalker"},
@@ -1999,7 +2311,7 @@ local avenAdvKbotLab = {
 	{action = "wait", frames = 128}
 }
 
-local avenAdvVehiclePlant = {
+avenAdvVehiclePlant = {
 	"aven_racer",
 	{action = "randomness", probability = 0.5, value = "aven_racer"},
 	{action = "randomness", probability = 0.5, value = "aven_racer"},
@@ -2020,7 +2332,7 @@ local avenAdvVehiclePlant = {
 }
 
 
-local avenAdvShipPlant = {
+avenAdvShipPlant = {
 	"aven_piranha",
 	"aven_adv_construction_sub",
 	avenL2ShipChoice,
@@ -2030,7 +2342,7 @@ local avenAdvShipPlant = {
 }
 
 
-local avenHovercraftPlant = {
+avenHovercraftPlant = {
 	"aven_skimmer",
 	"aven_construction_hovercraft",
 	"aven_swatter",
@@ -2050,19 +2362,19 @@ local avenHovercraftPlant = {
 
 -- choices by threat type : AIR, DEFENSES, NORMAL[, UNDERWATER]
 
-local function gearL2KbotChoice(self) return choiceByType(self,{"gear_titan","gear_barrel"},{"gear_big_bob","gear_moe","gear_moe","gear_luminator"},{"gear_big_bob","gear_pyro","gear_moe","gear_psycho","gear_titan","gear_barrel"}) end
-local function gearL1LightChoice(self) return choiceByType(self,"gear_crasher",{"gear_assaulter","gear_thud","gear_thud"},{"gear_crasher","gear_kano","gear_box","gear_instigator","gear_aggressor"}) end
-local function gearL2VehicleChoice(self) return choiceByType(self,"gear_marauder",{"gear_mobile_artillery","gear_reaper","gear_eruptor"},{"gear_reaper","gear_marauder","gear_rhino","gear_flareon"}) end
-local function gearL2AirChoice(self) return choiceByType(self,"gear_vector",{"gear_stratos","gear_firestorm"},{"gear_vector","gear_stratos","gear_firestorm"},"gear_whirlpool") end
-local function gearL2KbotRadar(self) return buildWithLimitedNumber(self,"gear_voyeur",1) end
-local function gearL2KbotRadarJammer(self) return buildWithLimitedNumber(self,"gear_spectre",1) end
-local function gearL2VehicleRadar(self) return buildWithLimitedNumber(self,"gear_informer",1) end
-local function gearL2VehicleRadarJammer(self) return buildWithLimitedNumber(self,"gear_deleter",1) end
-local function gearL1ShipChoice(self) return choiceByType(self,{"gear_searcher","gear_viking"},"gear_enforcer",{"gear_searcher","gear_viking"},"gear_snake") end
-local function gearL2ShipChoice(self) return choiceByType(self,"gear_shredder",{"gear_executioner","gear_edge"},{"gear_executioner","gear_noser"},"gear_noser") end
-local function gearScoper(self) return buildWithLimitedNumber(self,"gear_zoomer",1) end
+function gearL2KbotChoice(self) return choiceByType(self,{"gear_titan","gear_barrel"},{"gear_big_bob","gear_moe","gear_moe","gear_luminator"},{"gear_big_bob","gear_pyro","gear_moe","gear_psycho","gear_titan","gear_barrel"}) end
+function gearL1LightChoice(self) return choiceByType(self,"gear_crasher",{"gear_assaulter","gear_thud","gear_thud"},{"gear_crasher","gear_kano","gear_box","gear_instigator","gear_aggressor"}) end
+function gearL2VehicleChoice(self) return choiceByType(self,"gear_marauder",{"gear_mobile_artillery","gear_reaper","gear_eruptor"},{"gear_reaper","gear_marauder","gear_rhino","gear_flareon"}) end
+function gearL2AirChoice(self) return choiceByType(self,"gear_vector",{"gear_stratos","gear_firestorm"},{"gear_vector","gear_stratos","gear_firestorm"},"gear_whirlpool") end
+function gearL2KbotRadar(self) return buildWithLimitedNumber(self,"gear_voyeur",1) end
+function gearL2KbotRadarJammer(self) return buildWithLimitedNumber(self,"gear_spectre",1) end
+function gearL2VehicleRadar(self) return buildWithLimitedNumber(self,"gear_informer",1) end
+function gearL2VehicleRadarJammer(self) return buildWithLimitedNumber(self,"gear_deleter",1) end
+function gearL1ShipChoice(self) return choiceByType(self,{"gear_searcher","gear_viking"},"gear_enforcer",{"gear_searcher","gear_viking"},"gear_snake") end
+function gearL2ShipChoice(self) return choiceByType(self,"gear_shredder",{"gear_executioner","gear_edge"},{"gear_executioner","gear_noser"},"gear_noser") end
+function gearScoper(self) return buildWithLimitedNumber(self,"gear_zoomer",1) end
 
-local gearCommander = {
+gearCommander = {
 	brutalPlant,
 	brutalAirPlant,	
 	brutalLightDefense,
@@ -2077,7 +2389,7 @@ local gearCommander = {
 	windSolarIfNeeded,
 	lvl1PlantIfNeeded,
 	--commanderBriefAreaPatrol,
-	areaLimit_L2HeavyDefense,	
+	areaLimit_L1HeavyDefense,	
 	changeQueueToCommanderAttackerIfNeeded,
 	changeQueueToCommanderBaseBuilderIfNeeded,
 	changeQueueToWaterCommanderIfNeeded,	
@@ -2100,7 +2412,7 @@ local gearCommander = {
 }
 
 
-local gearWaterCommander = {
+gearWaterCommander = {
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
@@ -2135,19 +2447,19 @@ local gearWaterCommander = {
 	restoreQueue
 }
 
-local gearUCommander = {
+gearUCommander = {
 	checkMorph,
 	changeQueueToCommanderBaseBuilderIfNeeded,
 	changeQueueToRoamingCommanderIfNeeded,
-	{action = "cleanup", frames = CLEANUP_FRAMES},
+	reclaimNearbyFeaturesIfNecessary,
 	metalExtractorNearbyIfSafe,
 	commanderPatrol
 }
 
-local gearURoamingCommander = {
+gearURoamingCommander = {
 	checkMorph,
 	changeQueueToCommanderBaseBuilderIfNeeded,
-	{action = "cleanup", frames = CLEANUP_FRAMES},
+	reclaimNearbyFeaturesIfNecessary,
 	metalExtractorNearbyIfSafe,
 	commanderRoam,
 	metalExtractorNearbyIfSafe,
@@ -2157,7 +2469,7 @@ local gearURoamingCommander = {
 }
 
 
-local gearLev1Con = {
+gearLev1Con = {
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	metalExtractorNearbyIfSafe,
@@ -2175,7 +2487,7 @@ local gearLev1Con = {
 	assistOtherBuilderIfNeeded,
 	windSolarIfNeeded,
 	metalExtractorNearbyIfSafe,
-	areaLimit_L2HeavyDefense,
+	areaLimit_L1HeavyDefense,
 	areaLimit_LightAA,
 	geoIfNeeded,
 	windSolarIfNeeded,
@@ -2184,16 +2496,16 @@ local gearLev1Con = {
 	upgradeCenterIfNeeded,
 	metalExtractorNearbyIfSafe,
 	briefAreaPatrol,
-	areaLimit_L2ArtilleryDefense,
+	areaLimit_L1ArtilleryDefense,
 	storageIfNeeded,
 	areaLimit_LightAA,
 	lvl2PlantIfNeeded,
 	lvl1PlantIfNeeded,
 	briefAreaPatrol,
 	windSolarIfNeeded,
-	areaLimit_L2HeavyDefense,
+	areaLimit_L1HeavyDefense,
 	windSolarIfNeeded,
-	areaLimit_L2ArtilleryDefense,
+	areaLimit_L1ArtilleryDefense,
 	areaLimit_Radar,
 	geoIfNeeded,
 	windSolarIfNeeded,
@@ -2203,7 +2515,7 @@ local gearLev1Con = {
 }
 
 
-local gearLev1WaterCon = {
+gearLev1WaterCon = {
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	setWaterMode,
@@ -2212,7 +2524,7 @@ local gearLev1WaterCon = {
 	basePatrolIfNeeded,
 	tidalIfNeeded,
 	metalExtractorNearbyIfSafe,
-	areaLimit_WaterL2HeavyDefense,
+	areaLimit_WaterL1HeavyDefense,
 	areaLimit_WaterLightAA,
 	tidalIfNeeded,
 	tidalIfNeeded,
@@ -2222,16 +2534,16 @@ local gearLev1WaterCon = {
 	upgradeCenterIfNeeded,
 	metalExtractorNearbyIfSafe,
 	briefAreaPatrol,
-	areaLimit_L2ArtilleryDefense,
+	areaLimit_L1ArtilleryDefense,
 	storageIfNeeded,
 	areaLimit_LightAA,
 	lvl1PlantIfNeeded,
 	lvl2PlantIfNeeded,
 	briefAreaPatrol,
 	windSolarIfNeeded,
-	areaLimit_L2HeavyDefense,
+	areaLimit_L1HeavyDefense,
 	windSolarIfNeeded,
-	areaLimit_L2ArtilleryDefense,
+	areaLimit_L1ArtilleryDefense,
 	areaLimit_Radar,
 	geoIfNeeded,
 	windSolarIfNeeded,
@@ -2240,7 +2552,7 @@ local gearLev1WaterCon = {
 	moveBaseCenter
 }
 
-local gearMexBuilder = {
+gearMexBuilder = {
 	"gear_metal_extractor",
 	"gear_metal_extractor",
 	areaLimit_LightAA,
@@ -2255,7 +2567,7 @@ local gearMexBuilder = {
 	restoreQueue
 }
 
-local gearWaterMexBuilder = {
+gearWaterMexBuilder = {
 	setWaterMode,
 	"gear_underwater_metal_extractor",
 	"gear_underwater_metal_extractor",
@@ -2271,20 +2583,20 @@ local gearWaterMexBuilder = {
 }
 
 
-local gearLev1DefenseBuilder = {
+gearLev1DefenseBuilder = {
 	moveVulnerablePos,
 	areaLimit_LightAA,
 	areaLimit_Radar,
-	areaLimit_L2HeavyDefense,
+	areaLimit_L1HeavyDefense,
 	areaLimit_LightAA,
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	windSolarIfNeeded,
-	areaLimit_L2ArtilleryDefense,
+	areaLimit_L1ArtilleryDefense,
 	restoreQueue
 }
 
 
-local gearLev2Con = {
+gearLev2Con = {
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	brutalFusion,
@@ -2297,37 +2609,35 @@ local gearLev2Con = {
 	lvl1PlantIfNeeded,
 	lvl2PlantIfNeeded,
 	upgradeCenterIfNeeded,
-	areaLimit_L3HeavyAA,
+	areaLimit_L2HeavyAA,
 	areaLimit_AdvRadar,
-	areaLimit_L3ArtilleryDefense,
+	areaLimit_L2ArtilleryDefense,
 	moveVulnerablePos,
-	areaLimit_L3LongRangeArtillery,
+	areaLimit_L2LongRangeArtillery,
 	airRepairPadIfNeeded,
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	moveBaseCenter
 }
 
-local gearMexUpgrader = {
+gearMexUpgrader = {
 	moveSafePos,
-	reclaimNearestMexIfNeeded,
-	mohoIfMexReclaimed,
-	reclaimNearestMexIfNeeded,
-	mohoIfMexReclaimed,
+	advMetalExtractor,
+	advMetalExtractor,
 	restoreQueue
 }
 
-local gearLev2DefenseBuilder = {
+gearLev2DefenseBuilder = {
 	moveVulnerablePos,
 	areaLimit_AdvRadar,	
-	areaLimit_L3HeavyAA,
-	areaLimit_L3ArtilleryDefense,
+	areaLimit_L2HeavyAA,
+	areaLimit_L2ArtilleryDefense,
 	{action = "cleanup", frames = CLEANUP_FRAMES},
-	areaLimit_L3HeavyAA,
-	areaLimit_L3LongRangeArtillery,
+	areaLimit_L2HeavyAA,
+	areaLimit_L2LongRangeArtillery,
 	restoreQueue	
 }
 
-local gearL1GroundRaiders = {
+gearL1GroundRaiders = {
 	"gear_harasser",
 	{action = "randomness", probability = 0.5, value = "gear_igniter"},
 	{action = "randomness", probability = 0.5, value = "gear_igniter"},
@@ -2338,7 +2648,7 @@ local gearL1GroundRaiders = {
 	restoreQueue	
 }
 
-local gearLightPlant = {
+gearLightPlant = {
 	"gear_harasser",
 	"gear_construction_kbot",
 	{action = "randomness", probability = 0.5, value = "gear_construction_kbot"},
@@ -2354,7 +2664,7 @@ local gearLightPlant = {
 	{action = "wait", frames = 128}
 }
 
-local gearAircraftPlant = {
+gearAircraftPlant = {
 	"gear_dash",
 	"gear_construction_aircraft",
 	{action = "randomness", probability = 0.3, value = "gear_construction_aircraft"},	
@@ -2367,7 +2677,7 @@ local gearAircraftPlant = {
 	{action = "wait", frames = 128}
 }
 
-local gearShipPlant = {
+gearShipPlant = {
 	"gear_searcher",
 	"gear_construction_ship",
 	gearL1ShipChoice,
@@ -2376,7 +2686,7 @@ local gearShipPlant = {
 	{action = "wait", frames = 128}
 }
 
-local gearAdvAircraftPlant = {
+gearAdvAircraftPlant = {
 	"gear_vector",
 	"gear_adv_construction_aircraft",
 	gearScoper,
@@ -2389,7 +2699,7 @@ local gearAdvAircraftPlant = {
 	{action = "wait", frames = 128}
 }
 
-local gearAdvKbotLab = {
+gearAdvKbotLab = {
 	"gear_psycho",
 	{action = "randomness", probability = 0.5, value = "gear_psycho"},
 	{action = "randomness", probability = 0.5, value = "gear_psycho"},
@@ -2410,7 +2720,7 @@ local gearAdvKbotLab = {
 	{action = "wait", frames = 128}
 }
 
-local gearAdvVehiclePlant = {
+gearAdvVehiclePlant = {
 	"gear_marauder",
 	"gear_adv_construction_vehicle",
 	"gear_igniter",
@@ -2430,7 +2740,7 @@ local gearAdvVehiclePlant = {
 }
 
 
-local gearAdvShipPlant = {
+gearAdvShipPlant = {
 	"gear_noser",
 	"gear_adv_construction_sub",
 	gearL2ShipChoice,
@@ -2444,21 +2754,21 @@ local gearAdvShipPlant = {
 
 -- choices by threat type : AIR, DEFENSES, NORMAL[, UNDERWATER]
 
-local function clawL1LandChoice(self) return choiceByType(self,"claw_jester",{"claw_grunt","claw_piston","claw_roller"},{"claw_grunt","claw_boar","claw_piston","claw_roller","claw_ringo"}) end
-local function clawL2KbotChoice(self) return choiceByType(self,"claw_bishop",{"claw_shrieker","claw_brute","claw_crawler"},{"claw_centaur","claw_brute"}) end
-local function clawL2VehicleChoice(self) return choiceByType(self,"claw_ravager",{"claw_pounder","claw_pounder","claw_armadon"},{"claw_halberd","claw_ravager","claw_mega","claw_dynamo"}) end
-local function clawL2AirChoice(self) return choiceByType(self,"claw_x","claw_blizzard",{"claw_x","claw_blizzard"},"claw_trident") end
-local function clawL2SpinbotChoice(self) return choiceByType(self,{"claw_dizzy","claw_tempest"},"claw_gyro",{"claw_mace","claw_predator","claw_gyro","claw_dizzy"}) end
-local function clawL2KbotRadar(self) return buildWithLimitedNumber(self,"claw_revealer",1) end
-local function clawL2KbotRadarJammer(self) return buildWithLimitedNumber(self,"claw_shade",1) end
-local function clawL2VehicleRadar(self) return buildWithLimitedNumber(self,"claw_seer",1) end
-local function clawL2VehicleRadarJammer(self) return buildWithLimitedNumber(self,"claw_jammer",1) end
-local function clawL1ShipChoice(self) return choiceByType(self,{"claw_speeder","claw_striker"},"claw_sword",{"claw_speeder","claw_striker"},"claw_spine") end
-local function clawL2ShipChoice(self) return choiceByType(self,"claw_predator",{"claw_maul","claw_wrecker"},{"claw_drakkar","claw_monster"},"claw_monster") end
-local function clawL2SpinbotRadar(self) return buildWithLimitedNumber(self,"claw_haze",1) end
-local function clawScoper(self) return buildWithLimitedNumber(self,"claw_lensor",1) end
+function clawL1LandChoice(self) return choiceByType(self,"claw_jester",{"claw_grunt","claw_piston","claw_roller"},{"claw_grunt","claw_boar","claw_piston","claw_roller","claw_ringo"}) end
+function clawL2KbotChoice(self) return choiceByType(self,"claw_bishop",{"claw_shrieker","claw_brute","claw_crawler"},{"claw_centaur","claw_brute"}) end
+function clawL2VehicleChoice(self) return choiceByType(self,"claw_ravager",{"claw_pounder","claw_pounder","claw_armadon"},{"claw_halberd","claw_ravager","claw_mega","claw_dynamo"}) end
+function clawL2AirChoice(self) return choiceByType(self,"claw_x","claw_blizzard",{"claw_x","claw_blizzard"},"claw_trident") end
+function clawL2SpinbotChoice(self) return choiceByType(self,{"claw_dizzy","claw_tempest"},"claw_gyro",{"claw_mace","claw_predator","claw_gyro","claw_dizzy"}) end
+function clawL2KbotRadar(self) return buildWithLimitedNumber(self,"claw_revealer",1) end
+function clawL2KbotRadarJammer(self) return buildWithLimitedNumber(self,"claw_shade",1) end
+function clawL2VehicleRadar(self) return buildWithLimitedNumber(self,"claw_seer",1) end
+function clawL2VehicleRadarJammer(self) return buildWithLimitedNumber(self,"claw_jammer",1) end
+function clawL1ShipChoice(self) return choiceByType(self,{"claw_speeder","claw_striker"},"claw_sword",{"claw_speeder","claw_striker"},"claw_spine") end
+function clawL2ShipChoice(self) return choiceByType(self,"claw_predator",{"claw_maul","claw_wrecker"},{"claw_drakkar","claw_monster"},"claw_monster") end
+function clawL2SpinbotRadar(self) return buildWithLimitedNumber(self,"claw_haze",1) end
+function clawScoper(self) return buildWithLimitedNumber(self,"claw_lensor",1) end
 
-local clawCommander = {
+clawCommander = {
 	brutalPlant,
 	brutalAirPlant,	
 	brutalLightDefense,
@@ -2499,7 +2809,7 @@ local clawCommander = {
 }
 
 
-local clawWaterCommander = {
+clawWaterCommander = {
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
@@ -2534,21 +2844,21 @@ local clawWaterCommander = {
 	restoreQueue
 }
 
-local clawUCommander = {
+clawUCommander = {
 	checkMorph,
 	changeQueueToCommanderBaseBuilderIfNeeded,
 	changeQueueToRoamingCommanderIfNeeded,
-	{action = "cleanup", frames = CLEANUP_FRAMES},
+	reclaimNearbyFeaturesIfNecessary,
 	metalExtractorNearbyIfSafe,
 	commanderPatrol
 }
 
 
 
-local clawURoamingCommander = {
+clawURoamingCommander = {
 	checkMorph,
 	changeQueueToCommanderBaseBuilderIfNeeded,
-	{action = "cleanup", frames = CLEANUP_FRAMES},
+	reclaimNearbyFeaturesIfNecessary,
 	metalExtractorNearbyIfSafe,
 	commanderRoam,
 	metalExtractorNearbyIfSafe,
@@ -2557,7 +2867,7 @@ local clawURoamingCommander = {
 	commanderRoam
 }
 
-local clawLev1Con = {
+clawLev1Con = {
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	metalExtractorNearbyIfSafe,
@@ -2575,7 +2885,7 @@ local clawLev1Con = {
 	assistOtherBuilderIfNeeded,
 	windSolarIfNeeded,
 	metalExtractorNearbyIfSafe,
-	areaLimit_L2HeavyDefense,
+	areaLimit_L1HeavyDefense,
 	areaLimit_MediumAA,
 	geoIfNeeded,
 	windSolarIfNeeded,
@@ -2584,16 +2894,16 @@ local clawLev1Con = {
 	upgradeCenterIfNeeded,
 	metalExtractorNearbyIfSafe,
 	briefAreaPatrol,
-	areaLimit_L2ArtilleryDefense,
+	areaLimit_L1ArtilleryDefense,
 	storageIfNeeded,
 	areaLimit_MediumAA,
 	lvl2PlantIfNeeded,
 	lvl1PlantIfNeeded,
 	briefAreaPatrol,
 	windSolarIfNeeded,
-	areaLimit_L2HeavyDefense,
+	areaLimit_L1HeavyDefense,
 	windSolarIfNeeded,
-	areaLimit_L2ArtilleryDefense,
+	areaLimit_L1ArtilleryDefense,
 	areaLimit_Radar,
 	geoIfNeeded,
 	windSolarIfNeeded,
@@ -2603,7 +2913,7 @@ local clawLev1Con = {
 }
 
 
-local clawLev1WaterCon = {
+clawLev1WaterCon = {
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	setWaterMode,
@@ -2612,7 +2922,7 @@ local clawLev1WaterCon = {
 	basePatrolIfNeeded,
 	tidalIfNeeded,
 	metalExtractorNearbyIfSafe,
-	areaLimit_WaterL2HeavyDefense,
+	areaLimit_WaterL1HeavyDefense,
 	areaLimit_WaterMediumAA,
 	tidalIfNeeded,
 	tidalIfNeeded,
@@ -2622,7 +2932,7 @@ local clawLev1WaterCon = {
 	upgradeCenterIfNeeded,
 	metalExtractorNearbyIfSafe,
 	briefAreaPatrol,
-	areaLimit_L2ArtilleryDefense,
+	areaLimit_L1ArtilleryDefense,
 	storageIfNeeded,
 	areaLimit_MediumAA,
 	geoIfNeeded,
@@ -2634,7 +2944,7 @@ local clawLev1WaterCon = {
 	moveBaseCenter
 }
 
-local clawMexBuilder = {
+clawMexBuilder = {
 	"claw_metal_extractor",
 	"claw_metal_extractor",
 	"claw_metal_extractor",
@@ -2650,7 +2960,7 @@ local clawMexBuilder = {
 	restoreQueue
 }
 
-local clawWaterMexBuilder = {
+clawWaterMexBuilder = {
 	setWaterMode,
 	"claw_metal_extractor",
 	"claw_metal_extractor",
@@ -2669,12 +2979,12 @@ local clawWaterMexBuilder = {
 }
 
 
-local clawLev1DefenseBuilder = {
+clawLev1DefenseBuilder = {
 	moveVulnerablePos,
 	areaLimit_Radar,
 	areaLimit_MediumAA,
-	areaLimit_L2ArtilleryDefense,
-	areaLimit_L2HeavyDefense,
+	areaLimit_L1ArtilleryDefense,
+	areaLimit_L1HeavyDefense,
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	areaLimit_MediumAA,
 	windSolarIfNeeded,
@@ -2682,7 +2992,7 @@ local clawLev1DefenseBuilder = {
 }
 
 
-local clawLev2Con = {
+clawLev2Con = {
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	brutalFusion,
@@ -2695,37 +3005,35 @@ local clawLev2Con = {
 	lvl1PlantIfNeeded,
 	lvl2PlantIfNeeded,
 	upgradeCenterIfNeeded,
-	areaLimit_L3HeavyAA,
+	areaLimit_L2HeavyAA,
 	areaLimit_AdvRadar,	
-	areaLimit_L3ArtilleryDefense,
+	areaLimit_L2ArtilleryDefense,
 	moveVulnerablePos,
-	areaLimit_L3LongRangeArtillery,
+	areaLimit_L2LongRangeArtillery,
 	airRepairPadIfNeeded,
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	moveBaseCenter
 }
 
-local clawMexUpgrader = {
+clawMexUpgrader = {
 	moveSafePos,
-	reclaimNearestMexIfNeeded,
-	mohoIfMexReclaimed,
-	reclaimNearestMexIfNeeded,
-	mohoIfMexReclaimed,
+	advMetalExtractor,
+	advMetalExtractor,
 	restoreQueue
 }
 
-local clawLev2DefenseBuilder = {
+clawLev2DefenseBuilder = {
 	moveVulnerablePos,
 	areaLimit_AdvRadar,
-	areaLimit_L3HeavyAA,
-	areaLimit_L3ArtilleryDefense,
+	areaLimit_L2HeavyAA,
+	areaLimit_L2ArtilleryDefense,
 	{action = "cleanup", frames = CLEANUP_FRAMES},
-	areaLimit_L3HeavyAA,
-	areaLimit_L3LongRangeArtillery,
+	areaLimit_L2HeavyAA,
+	areaLimit_L2LongRangeArtillery,
 	restoreQueue	
 }
 
-local clawL1GroundRaiders = {
+clawL1GroundRaiders = {
 	"claw_knife",
 	{action = "randomness", probability = 0.5, value = "claw_ringo"},
 	{action = "randomness", probability = 0.5, value = "claw_ringo"},
@@ -2735,7 +3043,7 @@ local clawL1GroundRaiders = {
 	restoreQueue	
 }
 
-local clawPlant = {
+clawPlant = {
 	"claw_knife",
 	"claw_jester",
 	"claw_construction_kbot",
@@ -2751,7 +3059,7 @@ local clawPlant = {
 }
 
 
-local clawAircraftPlant = {
+clawAircraftPlant = {
 	"claw_hornet",
 	"claw_construction_aircraft",
 	{action = "randomness", probability = 0.3, value = "claw_construction_aircraft"},
@@ -2764,7 +3072,7 @@ local clawAircraftPlant = {
 	{action = "wait", frames = 128}
 }
 
-local clawShipPlant = {
+clawShipPlant = {
 	"claw_speeder",
 	"claw_construction_ship",
 	clawL1ShipChoice,
@@ -2773,7 +3081,7 @@ local clawShipPlant = {
 	{action = "wait", frames = 128}
 }
 
-local clawAdvAircraftPlant = {
+clawAdvAircraftPlant = {
 	"claw_x",
 	"claw_adv_construction_aircraft",
 	clawScoper,
@@ -2787,7 +3095,7 @@ local clawAdvAircraftPlant = {
 	{action = "wait", frames = 128}
 }
 
-local clawAdvKbotLab = {
+clawAdvKbotLab = {
 	"claw_centaur",
 	{action = "randomness", probability = 0.5, value = "claw_centaur"},
 	{action = "randomness", probability = 0.5, value = "claw_centaur"},
@@ -2806,7 +3114,7 @@ local clawAdvKbotLab = {
 	{action = "wait", frames = 128}
 }
 
-local clawAdvVehiclePlant = {
+clawAdvVehiclePlant = {
 	"claw_ravager",
 	"claw_adv_construction_vehicle",
 	clawL2VehicleRadar,
@@ -2824,7 +3132,7 @@ local clawAdvVehiclePlant = {
 	{action = "wait", frames = 128}
 }
 
-local clawAdvShipPlant = {
+clawAdvShipPlant = {
 	"claw_monster",
 	"claw_adv_construction_ship",
 	clawL2ShipChoice,
@@ -2833,7 +3141,7 @@ local clawAdvShipPlant = {
 	{action = "wait", frames = 128}
 }
 
-local clawSpinbotPlant = {
+clawSpinbotPlant = {
 	"claw_dizzy",
 	"claw_adv_construction_spinbot",
 	clawL2SpinbotRadar,
@@ -2854,22 +3162,22 @@ local clawSpinbotPlant = {
 
 -- choices by threat type : AIR, DEFENSES, NORMAL[, UNDERWATER]
 
-local function sphereL1LandChoice(self) return choiceByType(self,{"sphere_needles","sphere_needles","sphere_slicer"},"sphere_rock",{"sphere_bit","sphere_rock","sphere_gaunt","sphere_double"}) end
-local function sphereL2KbotChoice(self) return choiceByType(self,{"sphere_chub","sphere_chub","sphere_hermit"},{"sphere_ark","sphere_ark","sphere_golem"},{"sphere_hanz","sphere_chub"}) end
-local function sphereL2VehicleChoice(self) return choiceByType(self,"sphere_pulsar",{"sphere_slammer","sphere_slammer","sphere_bulk"},{"sphere_pulsar","sphere_trax","sphere_bulk"}) end
-local function sphereL2AirChoice(self) return choiceByType(self,"sphere_twilight","sphere_meteor",{"sphere_meteor","sphere_spitfire","sphere_twilight"},"sphere_neptune") end
-local function sphereL2SphereChoice(self) return choiceByType(self,"sphere_aster","sphere_gazer",{"sphere_nimbus","sphere_gazer"}) end
-local function sphereL2KbotRadar(self) return buildWithLimitedNumber(self,"sphere_sensor",1) end
-local function sphereL2KbotRadarJammer(self) return buildWithLimitedNumber(self,"sphere_rain",2) end
-local function sphereL2VehicleRadar(self) return buildWithLimitedNumber(self,"sphere_scanner",1) end
-local function sphereL2VehicleRadarJammer(self) return buildWithLimitedNumber(self,"sphere_concealer",2) end
-local function sphereL1ShipChoice(self) return choiceByType(self,"sphere_reacher","sphere_endeavour",{"sphere_skiff","sphere_endeavour"},"sphere_carp") end
-local function sphereL2ShipChoice(self) return choiceByType(self,"sphere_stalwart",{"sphere_stalwart"},{"sphere_helix","sphere_pluto"},"sphere_pluto") end
-local function sphereL2SphereIntelligence(self) return buildWithLimitedNumber(self,"sphere_orb",1) end
-local function sphereScoper(self) return buildWithLimitedNumber(self,"sphere_resolver",1) end
+function sphereL1LandChoice(self) return choiceByType(self,{"sphere_needles","sphere_needles","sphere_slicer"},"sphere_rock",{"sphere_bit","sphere_rock","sphere_gaunt","sphere_double"}) end
+function sphereL2KbotChoice(self) return choiceByType(self,{"sphere_chub","sphere_chub","sphere_hermit"},{"sphere_ark","sphere_ark","sphere_golem"},{"sphere_hanz","sphere_chub"}) end
+function sphereL2VehicleChoice(self) return choiceByType(self,"sphere_pulsar",{"sphere_slammer","sphere_slammer","sphere_bulk"},{"sphere_pulsar","sphere_trax","sphere_bulk"}) end
+function sphereL2AirChoice(self) return choiceByType(self,"sphere_twilight","sphere_meteor",{"sphere_meteor","sphere_spitfire","sphere_twilight"},"sphere_neptune") end
+function sphereL2SphereChoice(self) return choiceByType(self,"sphere_aster","sphere_gazer",{"sphere_nimbus","sphere_gazer"}) end
+function sphereL2KbotRadar(self) return buildWithLimitedNumber(self,"sphere_sensor",1) end
+function sphereL2KbotRadarJammer(self) return buildWithLimitedNumber(self,"sphere_rain",2) end
+function sphereL2VehicleRadar(self) return buildWithLimitedNumber(self,"sphere_scanner",1) end
+function sphereL2VehicleRadarJammer(self) return buildWithLimitedNumber(self,"sphere_concealer",2) end
+function sphereL1ShipChoice(self) return choiceByType(self,"sphere_reacher","sphere_endeavour",{"sphere_skiff","sphere_endeavour"},"sphere_carp") end
+function sphereL2ShipChoice(self) return choiceByType(self,"sphere_stalwart",{"sphere_stalwart"},{"sphere_helix","sphere_pluto"},"sphere_pluto") end
+function sphereL2SphereIntelligence(self) return buildWithLimitedNumber(self,"sphere_orb",1) end
+function sphereScoper(self) return buildWithLimitedNumber(self,"sphere_resolver",1) end
 
 
-local sphereCommander = {
+sphereCommander = {
 	brutalPlant,
 	brutalAirPlant,	
 	brutalLightDefense,
@@ -2902,7 +3210,7 @@ local sphereCommander = {
 }
 
 
-local sphereWaterCommander = {
+sphereWaterCommander = {
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
 	metalExtractorNearbyIfSafe,
@@ -2937,19 +3245,19 @@ local sphereWaterCommander = {
 	restoreQueue
 }
 
-local sphereUCommander = {
+sphereUCommander = {
 	checkMorph,
 	changeQueueToCommanderBaseBuilderIfNeeded,
 	changeQueueToRoamingCommanderIfNeeded,
-	{action = "cleanup", frames = CLEANUP_FRAMES},
+	reclaimNearbyFeaturesIfNecessary,
 	metalExtractorNearbyIfSafe,
 	commanderPatrol
 }
 
-local sphereURoamingCommander = {
+sphereURoamingCommander = {
 	checkMorph,
 	changeQueueToCommanderBaseBuilderIfNeeded,
-	{action = "cleanup", frames = CLEANUP_FRAMES},
+	reclaimNearbyFeaturesIfNecessary,
 	metalExtractorNearbyIfSafe,
 	commanderRoam,
 	metalExtractorNearbyIfSafe,
@@ -2958,7 +3266,7 @@ local sphereURoamingCommander = {
 	commanderRoam
 }
 
-local sphereLev1Con = {
+sphereLev1Con = {
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	metalExtractorNearbyIfSafe,
@@ -2984,12 +3292,12 @@ local sphereLev1Con = {
 	storageIfNeeded,
 	areaLimit_MediumAA,	
 	moveBaseCenter,
-	areaLimit_L2ArtilleryDefense,
+	areaLimit_L1ArtilleryDefense,
 	upgradeCenterIfNeeded,
 	areaLimit_Respawner,
-	areaLimit_L2HeavyDefense,
+	areaLimit_L1HeavyDefense,
 	areaLimit_MediumAA,
-	areaLimit_L2ArtilleryDefense,
+	areaLimit_L1ArtilleryDefense,
 	geoIfNeeded,
 	areaLimit_MediumAA,
 	briefAreaPatrol,
@@ -2997,7 +3305,7 @@ local sphereLev1Con = {
 }
 
 
-local sphereLev1WaterCon = {
+sphereLev1WaterCon = {
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	setWaterMode,
@@ -3016,7 +3324,7 @@ local sphereLev1WaterCon = {
 	upgradeCenterIfNeeded,
 	metalExtractorNearbyIfSafe,
 	briefAreaPatrol,
-	areaLimit_L2ArtilleryDefense,
+	areaLimit_L1ArtilleryDefense,
 	storageIfNeeded,
 	areaLimit_MediumAA,
 	lvl1PlantIfNeeded,
@@ -3027,7 +3335,7 @@ local sphereLev1WaterCon = {
 	moveBaseCenter
 }
 
-local sphereMexBuilder = {
+sphereMexBuilder = {
 	"sphere_metal_extractor",
 	"sphere_metal_extractor",
 	"sphere_metal_extractor",
@@ -3044,7 +3352,7 @@ local sphereMexBuilder = {
 	restoreQueue
 }
 
-local sphereWaterMexBuilder = {
+sphereWaterMexBuilder = {
 	setWaterMode,
 	"sphere_metal_extractor",
 	"sphere_metal_extractor",
@@ -3064,19 +3372,19 @@ local sphereWaterMexBuilder = {
 }
 
 
-local sphereLev1DefenseBuilder = {
+sphereLev1DefenseBuilder = {
 	moveVulnerablePos,
 	areaLimit_Radar,
 	areaLimit_MediumAA,
-	areaLimit_L2ArtilleryDefense,
-	areaLimit_L2HeavyDefense,
+	areaLimit_L1ArtilleryDefense,
+	areaLimit_L1HeavyDefense,
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	areaLimit_MediumAA,
 	restoreQueue
 }
 
 
-local sphereLev2Con = {
+sphereLev2Con = {
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	exitPlant,
 	brutalFusion,
@@ -3089,38 +3397,36 @@ local sphereLev2Con = {
 	lvl1PlantIfNeeded,
 	lvl2PlantIfNeeded,
 	upgradeCenterIfNeeded,
-	areaLimit_L3HeavyAA,
+	areaLimit_L2HeavyAA,
 	areaLimit_AdvRadar,	
---	areaLimit_L3ArtilleryDefense,
+--	areaLimit_L2ArtilleryDefense,
 	moveVulnerablePos,
-	areaLimit_L3HeavyAA,
-	areaLimit_L3LongRangeArtillery,
+	areaLimit_L2HeavyAA,
+	areaLimit_L2LongRangeArtillery,
 	airRepairPadIfNeeded,
 	{action = "cleanup", frames = CLEANUP_FRAMES},
 	moveBaseCenter	
 }
 
-local sphereMexUpgrader = {
+sphereMexUpgrader = {
 	moveSafePos,
-	reclaimNearestMexIfNeeded,
-	mohoIfMexReclaimed,
-	reclaimNearestMexIfNeeded,
-	mohoIfMexReclaimed,
+	advMetalExtractor,
+	advMetalExtractor,
 	restoreQueue
 }
 
-local sphereLev2DefenseBuilder = {
+sphereLev2DefenseBuilder = {
 	moveVulnerablePos,
 	areaLimit_AdvRadar,	
-	areaLimit_L3HeavyAA,
-	--areaLimit_L3ArtilleryDefense,
-	areaLimit_L3HeavyAA,
+	areaLimit_L2HeavyAA,
+	--areaLimit_L2ArtilleryDefense,
+	areaLimit_L2HeavyAA,
 	{action = "cleanup", frames = CLEANUP_FRAMES},
-	areaLimit_L3LongRangeArtillery,
+	areaLimit_L2LongRangeArtillery,
 	restoreQueue	
 }
 
-local sphereL1GroundRaiders = {
+sphereL1GroundRaiders = {
 	"sphere_trike",
 	{action = "randomness", probability = 0.5, value = "sphere_double"},
 	{action = "randomness", probability = 0.5, value = "sphere_double"},
@@ -3131,7 +3437,7 @@ local sphereL1GroundRaiders = {
 	restoreQueue	
 }
 
-local spherePlant = {
+spherePlant = {
 	"sphere_trike",
 	"sphere_needles",
 	"sphere_construction_vehicle",
@@ -3148,7 +3454,7 @@ local spherePlant = {
 }
 
 
-local sphereAircraftPlant = {
+sphereAircraftPlant = {
 	"sphere_moth",
 	"sphere_construction_aircraft",
 	{action = "randomness", probability = 0.5, value = "sphere_construction_aircraft"},	
@@ -3161,7 +3467,7 @@ local sphereAircraftPlant = {
 	{action = "wait", frames = 128}
 }
 
-local sphereShipPlant = {
+sphereShipPlant = {
 	"sphere_skiff",
 	"sphere_construction_ship",
 	sphereL1ShipChoice,
@@ -3170,7 +3476,7 @@ local sphereShipPlant = {
 	{action = "wait", frames = 128}
 }
 
-local sphereAdvAircraftPlant = {
+sphereAdvAircraftPlant = {
 	"sphere_spitfire",
 	"sphere_adv_construction_aircraft",
 	sphereScoper,
@@ -3182,7 +3488,7 @@ local sphereAdvAircraftPlant = {
 	{action = "wait", frames = 128}
 }
 
-local sphereAdvKbotLab = {
+sphereAdvKbotLab = {
 	"sphere_hanz",
 	"sphere_adv_construction_kbot",
 	sphereL2KbotRadar,
@@ -3199,7 +3505,7 @@ local sphereAdvKbotLab = {
 	{action = "wait", frames = 128}
 }
 
-local sphereAdvVehiclePlant = {
+sphereAdvVehiclePlant = {
 	"sphere_quad",
 	{action = "randomness", probability = 0.5, value = "sphere_quad"},
 	{action = "randomness", probability = 0.5, value = "sphere_quad"},
@@ -3218,7 +3524,7 @@ local sphereAdvVehiclePlant = {
 	{action = "wait", frames = 128}
 }
 
-local sphereSpherePlant = {
+sphereSpherePlant = {
 	"sphere_nimbus",
 	"sphere_nimbus",
 	"sphere_construction_sphere",
@@ -3232,7 +3538,7 @@ local sphereSpherePlant = {
 	{action = "wait", frames = 128}
 }
 
-local sphereAdvShipPlant = {
+sphereAdvShipPlant = {
 	"sphere_monster",
 	"sphere_adv_construction_ship",
 	sphereL2ShipChoice,
@@ -3255,10 +3561,547 @@ advancedDefenseBuilderQueueByFaction = { [side1Name] = avenLev2DefenseBuilder, [
 lightGroundRaiderQueueByFaction = { [side1Name] = avenL1GroundRaiders, [side2Name] = gearL1GroundRaiders, [side3Name] = clawL1GroundRaiders, [side4Name] = sphereL1GroundRaiders}
 waterDefenseBuilderQueueByFaction = { [side1Name] = avenLev1WaterDefenseBuilder, [side2Name] = gearLev1WaterDefenseBuilder, [side3Name] = clawLev1WaterDefenseBuilder, [side4Name] = sphereLev1WaterDefenseBuilder}
 advancedWaterDefenseBuilderQueueByFaction = { [side1Name] = avenLev2WaterDefenseBuilder, [side2Name] = gearLev2WaterDefenseBuilder, [side3Name] = clawLev2WaterDefenseBuilder, [side4Name] = sphereLev2WaterDefenseBuilder}
-attackPatrollerQueue = atkPatroller
+attackPatrollerQueue = builderAtkPatroller
 upgradeQueueByPath = {offensive = upgradeOffensive, defensive = upgradeDefensive, defensive_regen = upgradeDefensiveRegen, speed = upgradeSpeed, mixed = upgradeMixed, mixed_drones_utility = upgradeMixedDronesUtility, mixed_drones_combat = upgradeMixedDronesCombat}
 
-taskqueues = {
+
+
+------------------------------------ action controllers for specific strategies  
+
+-- check if conditions are met
+function checkAllowedConditions(self,props)
+	-- exclude if any matches
+	if (props.excludeConditions) then
+		for i,c in ipairs(props.excludeConditions) do
+			if (self.ai.unitHandler.threatType == c) then
+				return false
+			elseif (c == CONDITION_WATER and self.isWaterMode) then
+				return false
+			end
+		end
+	end
+	-- include if any matches
+	if (props.includeConditions) then
+		for i,c in ipairs(props.includeConditions) do
+			if (self.ai.unitHandler.threatType == c) then
+				return true
+			elseif (c == CONDITION_WATER and self.isWaterMode) then
+				return true
+			end
+		end
+		return false
+	end
+	return true
+end
+
+function stratCommanderAction(self)
+	local currentStrategy = self.ai.currentStrategy
+	local currentStrategyName = self.ai.currentStrategyName
+	local sStage = self.ai.currentStrategyStage
+	local checkResult = SKIP_THIS_TASK
+	local comAttackerMetalIncome = currentStrategy.stages[sStage].economy.comAttackerMetalIncome or 99999
+	local comAttackerEnergyIncome = currentStrategy.stages[sStage].economy.comAttackerEnergyIncome or 99999
+	local comMorphMetalIncome = currentStrategy.stages[sStage].economy.comMorphMetalIncome or 99999
+	local comMorphEnergyIncome = currentStrategy.stages[sStage].economy.comMorphEnergyIncome or 99999
+	local defenseDensityMult = currentStrategy.stages[sStage].properties.defenseDensityMult or 1
+	local action = SKIP_THIS_TASK
+	
+	-- current economy
+	local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
+	local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
+	
+	-- check morph conditions
+	if ((incomeM > comMorphMetalIncome and incomeE > comMorphEnergyIncome)) then
+		action = checkMorph(self)
+		if ( action ~= SKIP_THIS_TASK) then
+			return action
+		end
+	end
+	
+	-- check build options on current strategy
+	local minMetalIncome = currentStrategy.stages[sStage].economy.minMetalIncome
+	local minEnergyIncome = currentStrategy.stages[sStage].economy.minEnergyIncome
+	local targetMetalIncome = currentStrategy.stages[sStage].economy.metalIncome
+	local targetEnergyIncome = currentStrategy.stages[sStage].economy.energyIncome
+	 
+	-- check if there's a nearby unit to assist
+	action = assistNearbyConstructionIfNeeded(self,false,true,1000)	-- exclude mobile units, include non-builders  
+	if ( action ~= SKIP_THIS_TASK) then
+		return action
+	end		
+
+	-- factories
+	local targetFactories = currentStrategy.stages[sStage].factories
+	local buildsFactories = currentStrategy.stages[sStage].properties.commanderBuildsFactories
+	if (targetFactories) then
+		for i,props in ipairs(targetFactories) do
+			local minCount = props.min 
+			local uName = props.name
+			if (buildsFactories or constructionTowers[uName]) then
+				if (checkAllowedConditions(self,props) and countOwnUnits(self,uName, 99, nil) < minCount) then
+		
+					-- if unit is far away from base center, move to center and then retry
+					if farFromBaseCenter(self)  then
+						self:Retry()
+						return moveBaseCenter(self)
+					end	
+					
+					return uName
+				end
+			end
+		end
+	end
+		
+	-- metal and energy generation : try to reach min income
+	if (incomeM < comAttackerMetalIncome) then
+		if not self.couldNotFindMetalSpot then
+			if (sStage == 1) then
+				action = mexByFaction[self.unitSide]
+			else
+				action = metalExtractorNearbyIfSafe(self)
+			end
+			if action ~= SKIP_THIS_TASK then
+				return action
+			end
+		end
+	end	
+	if (incomeE < minEnergyIncome or currentLevelE < 0.25*storageE) then
+		action = L1EnergyGenerator(self)
+		if (action ~= SKIP_THIS_TASK) then
+			return action
+		end
+	end
+	
+	-- set up minimal defense if necessary
+	action = defendNearbyBuildingsIfNeeded(self,0.1)
+	if action ~= SKIP_THIS_TASK then
+		return action
+	end	
+
+	-- check behavior type
+	-- if has decent resource income and factories, go support the attackers
+	if (incomeM > comAttackerMetalIncome and incomeE > comAttackerEnergyIncome and countOwnUnits(self,nil,2,TYPE_PLANT) > 0) then
+		--log("com changing to attack mode",self.ai) --DEBUG
+		self:changeQueue(commanderAtkQueueByFaction[self.unitSide])
+		self.isAttackMode = true
+		return SKIP_THIS_TASK
+	end
+	
+	-- metal and energy generation : try to reach target income
+	if (incomeM < targetMetalIncome) then
+		if not self.couldNotFindMetalSpot then
+			action = metalExtractorNearbyIfSafe(self)
+			if action ~= SKIP_THIS_TASK then
+				return action
+			end
+		end
+	end	
+	if (incomeE < targetEnergyIncome) then
+		action = L1EnergyGenerator(self)
+		if (action ~= SKIP_THIS_TASK) then
+			return action
+		end
+	end
+
+
+	self.couldNotFindGeoSpot = false
+	self.couldNotFindMetalSpot = false
+	-- short patrol
+	self.briefAreaPatrolFrames = 300
+	return briefAreaPatrol(self)
+end
+
+
+function stratStaticBuilderAction(self)
+	--Spring.Echo(spGetGameFrame().."STATIC BUILDER ")
+	local currentStrategy = self.ai.currentStrategy
+	local currentStrategyName = self.ai.currentStrategyName
+	local sStage = self.ai.currentStrategyStage
+	-- current economy
+	local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
+	local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
+	
+	local minMetalIncome = currentStrategy.stages[sStage].economy.minMetalIncome
+	local minEnergyIncome = currentStrategy.stages[sStage].economy.minEnergyIncome
+	local targetMetalIncome = currentStrategy.stages[sStage].economy.metalIncome
+	local targetEnergyIncome = currentStrategy.stages[sStage].economy.energyIncome
+	local defenseDensityMult = currentStrategy.stages[sStage].properties.defenseDensityMult or 1	
+	local action = SKIP_THIS_TASK
+	
+	-- reset priority
+	self:setHighPriorityState(0)
+	
+	-- check if there's a nearby unit to assist
+	action = assistNearbyConstructionIfNeeded(self,false,false,self.buildRange * 0.9)	-- exclude mobile units and non-builders 
+	if ( action ~= SKIP_THIS_TASK) then
+		return action
+	end	
+	
+	-- factories (only level 1 and 2 plants)
+	local targetFactories = currentStrategy.stages[sStage].factories
+	if (targetFactories) then
+		for i,props in ipairs(targetFactories) do
+			local minCount = props.min 
+			local uName = props.name
+			
+			if self:checkPreviousAttempts(uName) and setContains(unitTypeSets[TYPE_PLANT],uName) then
+				if checkAllowedConditions(self,props) and (countOwnUnits(self,uName, minCount, nil) < minCount) then
+					return uName
+				end
+			end
+		end
+	end
+
+	-- defense
+	if (self.unitSide == "claw" or self.unitSide == "sphere") then
+		local unitName = mediumAAByFaction[self.unitSide]
+		if self:checkPreviousAttempts(unitName) then
+			action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, MED_RADIUS, TYPE_LIGHT_AA)
+			if action ~= SKIP_THIS_TASK then
+				self:setHighPriorityState(1)
+				return action
+			end
+		end
+	elseif(self.unitSide == "aven" or self.unitSide == "gear") then
+		local unitName = lev1HeavyDefenseByFaction[self.unitSide][ random( 1, tableLength(lev1HeavyDefenseByFaction[self.unitSide]) ) ]
+		if self:checkPreviousAttempts(unitName) then
+			action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, MED_RADIUS, TYPE_HEAVY_DEFENSE)
+			if action ~= SKIP_THIS_TASK then
+				self:setHighPriorityState(1)
+				return action
+			end
+		end
+	end
+
+	-- other production buildings
+	local targetFactories = currentStrategy.stages[sStage].factories
+	if (targetFactories) then
+		for i,props in ipairs(targetFactories) do
+			local minCount = props.min 
+			local uName = props.name
+			if self:checkPreviousAttempts(uName) and not setContains(unitTypeSets[TYPE_PLANT],uName) then
+				if checkAllowedConditions(self,props) and (countOwnUnits(self,uName, 99, nil) < minCount) then
+					return uName
+				end
+			end
+		end
+	end
+	
+	self.couldNotFindGeoSpot = false
+	self.couldNotFindMetalSpot = false
+	
+	return staticBriefAreaPatrol(self)
+end
+
+function stratMobileBuilderAction(self)
+	local currentStrategy = self.ai.currentStrategy
+	local currentStrategyName = self.ai.currentStrategyName
+	local sStage = self.ai.currentStrategyStage
+	
+	-- current economy
+	local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
+	local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
+	
+	local minMetalIncome = currentStrategy.stages[sStage].economy.minMetalIncome
+	local minEnergyIncome = currentStrategy.stages[sStage].economy.minEnergyIncome
+	local targetMetalIncome = currentStrategy.stages[sStage].economy.metalIncome
+	local targetEnergyIncome = currentStrategy.stages[sStage].economy.energyIncome
+	local defenseDensityMult = currentStrategy.stages[sStage].properties.defenseDensityMult or 1
+		
+	local action = SKIP_THIS_TASK
+	
+	-- check if there's a nearby unit to assist
+	action = assistNearbyConstructionIfNeeded(self,false,true,1000)	-- exclude mobile units, include non-builders  
+	if ( action ~= SKIP_THIS_TASK) then
+		return action
+	end
+	
+	-- for adv builders raise the min to trigger upgrading nearby extractors 
+	if (self.isAdvBuilder) then
+		minMetalIncome = minMetalIncome * 1.5
+		minEnergyIncome = minEnergyIncome * 1.5
+	end
+	-- metal and energy generation : try to reach min income
+	if (incomeM < minMetalIncome) then
+		action = metalExtractorNearbyIfSafe(self)
+		if action ~= SKIP_THIS_TASK then
+			return action
+		end
+	end	
+	if (incomeE < minEnergyIncome or currentLevelE < 0.5*storageE) then
+		action = geoNearbyIfSafe(self)
+		if (action ~= SKIP_THIS_TASK) then
+			return action
+		end
+		if (self.isAdvBuilder) then
+			action = fusionIfNeeded(self)
+			if (action ~= SKIP_THIS_TASK) then
+				return action
+			else
+				action = L1EnergyGenerator(self)
+				if (action ~= SKIP_THIS_TASK) then
+					return action
+				end
+			end
+		else
+			action = L1EnergyGenerator(self)
+			if (action ~= SKIP_THIS_TASK) then
+				return action
+			end
+		end
+	end
+	
+	-- level 2 builder
+	if (self.isAdvBuilder) then
+		local stdQueueCount = self.ai.unitHandler.advancedStandardQueueCount or 0
+	
+		if stdQueueCount > 1 then
+			changeQueueToMexUpgraderIfNeeded(self)
+			if (self.specialRole == UNIT_ROLE_MEX_UPGRADER) then
+				return SKIP_THIS_TASK
+			end
+			changeQueueToAdvancedDefenseBuilderIfNeeded(self)
+			if (self.specialRole == UNIT_ROLE_ADVANCED_DEFENSE_BUILDER) then
+				return SKIP_THIS_TASK
+			end
+			patrolAtkCenterIfNeeded(self)
+			if (self.specialRole == UNIT_ROLE_ATTACK_PATROLLER) then
+				return SKIP_THIS_TASK
+			end
+		end
+	else
+	-- level 1 builder
+		local stdQueueCount = self.ai.unitHandler.standardQueueCount or 0
+		
+		if stdQueueCount > 1 then
+			changeQueueToMexBuilderIfNeeded(self)
+			if (self.specialRole == UNIT_ROLE_MEX_BUILDER) then
+				return SKIP_THIS_TASK
+			end
+			basePatrolIfNeeded(self)
+			if (self.specialRole == UNIT_ROLE_BASE_PATROLLER) then
+				return SKIP_THIS_TASK
+			end
+			changeQueueToDefenseBuilderIfNeeded(self)
+			if (self.specialRole == UNIT_ROLE_DEFENSE_BUILDER) then
+				return SKIP_THIS_TASK
+			end	
+			patrolAtkCenterIfNeeded(self)
+			if (self.specialRole == UNIT_ROLE_ATTACK_PATROLLER) then
+				return SKIP_THIS_TASK
+			end	
+		end
+	end
+	
+	-- factories
+	local targetFactories = currentStrategy.stages[sStage].factories
+	if (targetFactories) then
+		for i,props in ipairs(targetFactories) do
+			local minCount = props.min
+			local maxCount = props.max
+			local uName = props.name
+			if (checkAllowedConditions(self,props) and countOwnUnits(self,uName, 99, nil) < maxCount) then
+	
+				-- if unit is far away from base center, move to center and then retry
+				if farFromBaseCenter(self)  then
+					self:Retry()
+					return moveBaseCenter(self)
+				end	
+				
+				return uName
+			end
+		end
+	end
+	
+	-- set up minimal defense if necessary
+	action = defendNearbyBuildingsIfNeeded(self, 0.05)
+	if action ~= SKIP_THIS_TASK then
+		return action
+	end	
+	
+	-- support buildings
+	action = areaLimit_Radar(self)
+	if action ~= SKIP_THIS_TASK then
+		return action
+	end
+	
+
+	--[[
+	-- defenses
+	if (self.isAdvBuilder) then
+		local unitName = heavyAAByFaction[self.unitSide][ random( 1, tableLength(heavyAAByFaction[self.unitSide]) ) ]
+		action = checkAreaLimit(self, unitName, self.unitId, 1*defenseDensityMult, BIG_RADIUS, TYPE_HEAVY_AA)
+		if action ~= SKIP_THIS_TASK then
+			return action
+		end
+	else
+		if (self.unitSide == "claw" or self.unitSide == "sphere") then
+			local unitName = mediumAAByFaction[self.unitSide]
+			action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, MED_RADIUS, TYPE_LIGHT_AA)
+			if action ~= SKIP_THIS_TASK then
+				return action
+			end
+		elseif(self.unitSide == "aven" or self.unitSide == "gear") then
+			local unitName = lev1HeavyDefenseByFaction[self.unitSide][ random( 1, tableLength(lev1HeavyDefenseByFaction[self.unitSide]) ) ]
+			action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, MED_RADIUS, TYPE_HEAVY_DEFENSE)
+			if action ~= SKIP_THIS_TASK then
+				return action
+			end
+		end
+		--local unitName = lev1HeavyDefenseByFaction[self.unitSide][ random( 1, tableLength(lev1HeavyDefenseByFaction[self.unitSide]) ) ]
+		--action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, MED_RADIUS, TYPE_HEAVY_DEFENSE)
+		--if action ~= SKIP_THIS_TASK then
+		--	return action
+		--end
+	end
+	]]--
+	
+	-- storage
+	action = storageIfNeeded(self)
+	if action ~= SKIP_THIS_TASK then
+		return action
+	end	
+	
+	-- metal and energy generation : try to reach target income
+	if (incomeM < targetMetalIncome) then
+		if not self.couldNotFindMetalSpot then
+			local action = metalExtractorNearbyIfSafe(self)
+			if action ~= SKIP_THIS_TASK then
+				return action
+			end
+		end
+		if (self.isAdvBuilder) then
+			action = mmakerIfNeeded(self)
+			if (action ~= SKIP_THIS_TASK) then
+				return action
+			end
+		end
+	end	
+	if (incomeE < targetEnergyIncome) then
+		if not self.couldNotFindGeoSpot then
+			action = geoNearbyIfSafe(self)
+			if (action ~= SKIP_THIS_TASK) then
+				return action
+			end
+		end
+		if (self.isAdvBuilder and sStage > 1) then
+			action = fusionIfNeeded(self)
+			if (action ~= SKIP_THIS_TASK) then
+				return action
+			else
+				action = L1EnergyGenerator(self)
+				if (action ~= SKIP_THIS_TASK) then
+					return action
+				end
+			end
+		else
+			action = L1EnergyGenerator(self)
+			if (action ~= SKIP_THIS_TASK) then
+				return action
+			end
+		end
+	end
+	
+	
+	-- if unit is far away from base center, move to center
+	if farFromBaseCenter(self) then
+		return moveBaseCenter(self)
+	end	
+	
+	self.couldNotFindGeoSpot = false
+	self.couldNotFindMetalSpot = false
+	--log(self.unitName.." brief area patrol ",self.ai) --DEBUG
+	-- short patrol
+	self.briefAreaPatrolFrames = 300
+	return briefAreaPatrol(self)
+end
+
+function stratPlantAction(self)
+	local currentStrategy = self.ai.currentStrategy
+	local currentStrategyName = self.ai.currentStrategyName
+	local sStage = self.ai.currentStrategyStage
+	
+	-- check recommended build options and build what it can
+	-- factories
+	local targetMobileUnits = currentStrategy.stages[sStage].mobileUnits
+	local mobileUnitCount = self.ai.unitHandler.mobileCount
+	if (targetMobileUnits and buildOptionsByPlant[self.unitName]) then
+		-- get total weight
+		local totalWeight = 0
+		for i,props in ipairs(targetMobileUnits) do
+			if (props.weight and props.weight > 0 and checkAllowedConditions(self,props)) then
+				totalWeight = totalWeight + props.weight
+			end
+		end
+		--log(self.unitName.." totalWeight="..totalWeight,self.ai) --DEBUG
+		if totalWeight == 0 then
+			totalWeight = 1
+		end
+		
+		-- first pass, check which unit should be built
+		local lowestFraction = math.huge
+		local curFraction = math.huge
+		local mostNeededUnit = SKIP_THIS_TASK
+		local options = buildOptionsByPlant[self.unitName]
+		if options then
+			for i,props in ipairs(targetMobileUnits) do
+				local uName = props.name
+				if options[uName] == true then
+					local minCount = props.min 
+					
+					local currentCount =  countOwnUnits(self,uName, 9999, nil)
+					--Spring.Echo(spGetGameFrame().." HERE2 plant "..uName.." cnt="..currentCount.." maxCnt="..props.weight*mobileUnitCount / totalWeight) --DEBUG
+					local maxCount = props.max
+					if checkAllowedConditions(self,props) then
+						if (mobileUnitCount == 0) then
+							return uName
+						end
+						if currentCount < minCount then
+							return uName
+						end
+						
+						if (currentCount < maxCount and currentCount < props.weight*mobileUnitCount/totalWeight) then
+							curFraction = currentCount / (props.weight*mobileUnitCount)
+							if (curFraction < lowestFraction) then
+								lowestFraction = curFraction
+								mostNeededUnit = uName
+							end
+						end
+					end
+				end
+			end
+			if mostNeededUnit ~= SKIP_THIS_TASK  then
+				return mostNeededUnit
+			end
+		end
+	end
+	
+	return SKIP_THIS_TASK
+end
+	
+	
+
+stratCommander = {
+	stratCommanderAction,
+	reclaimNearbyFeaturesIfNecessary
+}
+
+stratStaticBuilder = {
+	stratStaticBuilderAction,
+	reclaimNearbyFeaturesIfNecessary
+}
+
+stratMobileBuilder = {
+	stratMobileBuilderAction,
+	reclaimNearbyFeaturesIfNecessary
+}
+
+stratPlant = {
+	stratPlantAction
+}
+
+
+taskQueues = {
 ------------------- AVEN
 	aven_commander_respawner = respawner,
 	aven_commander = avenCommander,
@@ -3277,6 +4120,7 @@ taskqueues = {
 	aven_construction_hovercraft = avenLev2Con,
 	aven_adv_construction_aircraft = avenLev2Con,	
 	aven_adv_construction_sub = avenLev2WaterCon,
+	aven_nano_tower = staticBuilder,
 	aven_light_plant = avenLightPlant,
 	aven_aircraft_plant = avenAircraftPlant,
 	aven_shipyard = avenShipPlant,
@@ -3295,6 +4139,8 @@ taskqueues = {
 	aven_perceptor = atkSupporter,
 	aven_scoper = atkSupporter,
 	aven_peeper = airScout,
+	aven_long_range_rocket_platform = lRRocketPlatform,
+	aven_premium_nuclear_rocket = unblockableNuke,
 ------------------- GEAR
 	gear_commander_respawner = respawner,
 	gear_commander = gearCommander,
@@ -3312,6 +4158,7 @@ taskqueues = {
 	gear_adv_construction_kbot = gearLev2Con,
 	gear_adv_construction_aircraft = gearLev2Con,	
 	gear_adv_construction_sub = gearLev2WaterCon,
+	gear_nano_tower = staticBuilder,
 	gear_light_plant = gearLightPlant,
 	gear_aircraft_plant = gearAircraftPlant,
 	gear_shipyard = gearShipPlant,
@@ -3327,6 +4174,8 @@ taskqueues = {
 	gear_deleter = atkSupporter,
 	gear_zoomer = atkSupporter,	
 	gear_fink = airScout,
+	gear_long_range_rocket_platform = lRRocketPlatform,
+	gear_premium_nuclear_rocket = unblockableNuke,
 ------------------- CLAW
 	claw_commander_respawner = respawner,
 	claw_commander = clawCommander,
@@ -3344,6 +4193,7 @@ taskqueues = {
 	claw_adv_construction_aircraft = clawLev2Con,	
 	claw_adv_construction_spinbot = clawLev2Con,
 	claw_adv_construction_ship = clawLev2WaterCon,
+	claw_nano_tower = staticBuilder,
 	claw_light_plant = clawPlant,
 	claw_aircraft_plant = clawAircraftPlant,
 	claw_shipyard = clawShipPlant,
@@ -3361,6 +4211,8 @@ taskqueues = {
 	claw_haze = atkSupporter,
 	claw_lensor = atkSupporter,
 	claw_spotter = airScout,
+	claw_long_range_rocket_platform = lRRocketPlatform,
+	claw_premium_nuclear_rocket = unblockableNuke,
 ------------------- SPHERE
 	sphere_commander_respawner = respawner,
 	sphere_commander = sphereCommander,
@@ -3378,6 +4230,7 @@ taskqueues = {
 	sphere_construction_sphere = atkPatroller,
 	sphere_adv_construction_aircraft = sphereLev2Con,	
 	sphere_adv_construction_sub = sphereLev2WaterCon,
+	sphere_pole = staticBuilder,
 	sphere_light_factory = spherePlant,
 	sphere_aircraft_factory = sphereAircraftPlant,
 	sphere_shipyard = sphereShipPlant,
@@ -3396,5 +4249,115 @@ taskqueues = {
 	sphere_shielder = atkSupporter,
 	sphere_screener = atkSupporter,
 	sphere_resolver = atkSupporter,	
-	sphere_probe = airScout
+	sphere_probe = airScout,
+	sphere_long_range_rocket_platform = lRRocketPlatform,
+	sphere_premium_nuclear_rocket = unblockableNuke
 }
+
+
+
+sTaskQueues = {
+------------------- AVEN
+	aven_commander = stratCommander,
+	aven_u1commander = stratCommander,
+	aven_u2commander = stratCommander,
+	aven_u3commander = stratCommander,
+	aven_u4commander = stratCommander,
+	aven_u5commander = stratCommander,
+	aven_u6commander = stratCommander,
+	aven_construction_vehicle = stratMobileBuilder,
+	aven_construction_kbot = stratMobileBuilder,
+	aven_construction_aircraft = stratMobileBuilder,
+	aven_construction_ship = stratMobileBuilder,
+	aven_adv_construction_vehicle = stratMobileBuilder,
+	aven_adv_construction_kbot = stratMobileBuilder,
+	aven_construction_hovercraft = stratMobileBuilder,
+	aven_adv_construction_aircraft = stratMobileBuilder,	
+	aven_adv_construction_sub = stratMobileBuilder,
+	aven_nano_tower = stratStaticBuilder,
+	aven_light_plant = stratPlant,
+	aven_aircraft_plant = stratPlant,
+	aven_shipyard = stratPlant,
+	aven_adv_kbot_lab = stratPlant,
+	aven_adv_vehicle_plant = stratPlant,
+	aven_adv_aircraft_plant = stratPlant,
+	aven_hovercraft_platform = stratPlant,
+	aven_adv_shipyard = stratPlant,
+------------------- GEAR
+	gear_commander = stratCommander,
+	gear_u1commander = stratCommander,
+	gear_u2commander = stratCommander,
+	gear_u3commander = stratCommander,
+	gear_u4commander = stratCommander,
+	gear_u5commander = stratCommander,
+	gear_u6commander = stratCommander,
+	gear_construction_vehicle = stratMobileBuilder,
+	gear_construction_kbot = stratMobileBuilder,
+	gear_construction_aircraft = stratMobileBuilder,
+	gear_construction_ship = stratMobileBuilder,
+	gear_adv_construction_vehicle = stratMobileBuilder,
+	gear_adv_construction_kbot = stratMobileBuilder,
+	gear_adv_construction_aircraft = stratMobileBuilder,	
+	gear_adv_construction_sub = stratMobileBuilder,
+	gear_nano_tower = stratStaticBuilder,
+	gear_light_plant = stratPlant,
+	gear_aircraft_plant = stratPlant,
+	gear_shipyard = stratPlant,
+	gear_adv_kbot_lab = stratPlant,
+	gear_adv_vehicle_plant = stratPlant,
+	gear_adv_aircraft_plant = stratPlant,
+	gear_adv_shipyard = stratPlant,
+------------------- CLAW
+	claw_commander = stratCommander,
+	claw_u1commander = stratCommander,
+	claw_u2commander = stratCommander,
+	claw_u3commander = stratCommander,
+	claw_u4commander = stratCommander,
+	claw_u5commander = stratCommander,
+	claw_u6commander = stratCommander,
+	claw_construction_kbot = stratMobileBuilder,
+	claw_construction_aircraft = stratMobileBuilder,
+	claw_construction_ship = stratMobileBuilder,
+	claw_adv_construction_vehicle = stratMobileBuilder,
+	claw_adv_construction_kbot = stratMobileBuilder,
+	claw_adv_construction_aircraft = stratMobileBuilder,	
+	claw_adv_construction_spinbot = stratMobileBuilder,
+	claw_adv_construction_ship = stratMobileBuilder,
+	claw_nano_tower = stratStaticBuilder,
+	claw_light_plant = stratPlant,
+	claw_aircraft_plant = stratPlant,
+	claw_shipyard = stratPlant,
+	claw_adv_kbot_plant = stratPlant,
+	claw_adv_vehicle_plant = stratPlant,
+	claw_adv_aircraft_plant = stratPlant,
+	claw_adv_shipyard = stratPlant,
+	claw_spinbot_plant = stratPlant,
+------------------- SPHERE
+	sphere_commander = stratCommander,
+	sphere_u1commander = stratCommander,
+	sphere_u2commander = stratCommander,
+	sphere_u3commander = stratCommander,
+	sphere_u4commander = stratCommander,
+	sphere_u5commander = stratCommander,
+	sphere_u6commander = stratCommander,
+	sphere_construction_vehicle = stratMobileBuilder,
+	sphere_construction_aircraft = stratMobileBuilder,
+	sphere_construction_ship = stratMobileBuilder,
+	sphere_adv_construction_vehicle = stratMobileBuilder,
+	sphere_adv_construction_kbot = stratMobileBuilder,
+	sphere_construction_sphere = stratMobileBuilder,
+	sphere_adv_construction_aircraft = stratMobileBuilder,	
+	sphere_adv_construction_sub = stratMobileBuilder,
+	sphere_pole = stratStaticBuilder,
+	sphere_light_factory = stratPlant,
+	sphere_aircraft_factory = stratPlant,
+	sphere_shipyard = stratPlant,
+	sphere_adv_kbot_factory = stratPlant,
+	sphere_adv_vehicle_factory = stratPlant,
+	sphere_adv_aircraft_factory = stratPlant,
+	sphere_sphere_factory = stratPlant,
+	sphere_adv_shipyard = stratPlant,
+}
+
+-- include default strategies
+include("LuaRules/Gadgets/ai/defaultStrategies.lua")

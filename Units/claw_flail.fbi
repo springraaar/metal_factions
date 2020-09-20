@@ -117,17 +117,19 @@
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
+
+	[CustomParams]
+	{
+		builtBy=claw_adv_kbot_plant;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:yellowflaremed;
 		explosiongenerator1=custom:yellowflaremed;
 	}
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
-	buildcostenergy=3568;//#AUTO#
-	buildcostmetal=713;//#AUTO#
-	buildtime=8505;//#AUTO#
+	buildcostenergy=4996;//#AUTO#
+	buildcostmetal=999;//#AUTO#
+	buildtime=11907;//#AUTO#
+	mass=770;//#AUTO#
 }

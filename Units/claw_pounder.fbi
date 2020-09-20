@@ -122,20 +122,17 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=claw_adv_vehicle_plant;
+		canAreaAttack=1;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:yellowflaremed;
 	}
-	[customParams] 
-	{
-		canAreaAttack=1;
-	}
 	buildcostenergy=11413;//#AUTO#
 	buildcostmetal=2282;//#AUTO#
 	buildtime=27203;//#AUTO#
+	mass=1365;//#AUTO#
 }

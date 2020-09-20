@@ -136,13 +136,12 @@
 
 	[CustomParams]
 	{
+		builtBy=aven_commander_respawner,gear_commander_respawner,claw_commander_respawner,sphere_commander_respawner;
 		isCommanderToken=1;
 		tip=Build time increases by 50% if morphed and up to another 50% from being upgraded;
 	}
 
-	//************************************************************
-	//  To be removed
-	//*****************
+
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:NANO;

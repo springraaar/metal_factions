@@ -23,7 +23,6 @@
 	MaxDamage=3000;
 	FootprintX=4;
 	FootprintZ=4;
-	mass=1000;
 	
 	// ------------------- resources
 	EnergyMake=0;
@@ -100,10 +99,12 @@
 
 	[CustomParams]
 	{
+		builtBy=sphere_sphere_factory;
 		energyCostMoving=50;
 		tip=Requires 50E/s to move;
 	}
 	buildcostenergy=7023;//#AUTO#
 	buildcostmetal=1404;//#AUTO#
 	buildtime=16738;//#AUTO#
+	mass=1218;//#AUTO#
 }

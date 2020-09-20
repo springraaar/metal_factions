@@ -135,9 +135,10 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=aven_aircraft_plant,aven_adv_aircraft_plant;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:JETSML;
@@ -146,4 +147,5 @@
 	buildcostenergy=1726;//#AUTO#
 	buildcostmetal=345;//#AUTO#
 	buildtime=4113;//#AUTO#
+	mass=108;//#AUTO#
 }

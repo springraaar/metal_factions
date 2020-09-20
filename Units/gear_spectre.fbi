@@ -118,12 +118,9 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
 	[CustomParams]
 	{
+		builtBy=gear_adv_kbot_lab;
 		evalFactor=1.25;
 		tip=Becomes fully invisible when ON and cloaked;
 	}
@@ -131,4 +128,5 @@
 	buildcostenergy=1927;//#AUTO#
 	buildcostmetal=385;//#AUTO#
 	buildtime=4593;//#AUTO#
+	mass=170;//#AUTO#
 }

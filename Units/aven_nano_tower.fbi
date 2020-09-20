@@ -38,7 +38,7 @@
 	upright=1;
 	buildpic=aven_nano_tower.png;
 	icontype=buildertower;
-	mass=999999999999;
+	mass=800;
 	noautofire=0;
 	seismicsignature=0;
 	defaultmissiontype=Standby;
@@ -57,6 +57,11 @@
 	collisionVolumeOffsets=0 0 0;
 	collisionVolumeTest = 1;
 
+	[customParams] 
+	{
+		buildertype=aven_l1builder;
+		builtBy=aven_l1builder,aven_l2builder;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:Nano;

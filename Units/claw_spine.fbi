@@ -119,11 +119,13 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=claw_shipyard,claw_adv_shipyard;
+	}
 
 	buildcostenergy=1900;//#AUTO#
 	buildcostmetal=380;//#AUTO#
 	buildtime=4529;//#AUTO#
+	mass=157;//#AUTO#
 }

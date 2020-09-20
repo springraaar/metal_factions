@@ -48,6 +48,7 @@
 	collisionVolumeScales=95 40 121;
 	collisionVolumeOffsets=0 -5 0;
 	collisionVolumeTest = 1;
+	floater=1;
 
 	//************************************************************
 	//  Constructor
@@ -67,7 +68,7 @@
 	//  Movement
 	//************
 	maxslope=10;
-	maxwaterdepth=0;
+
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -93,18 +94,13 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=ARM-ACF;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=aven_l1builder,aven_l2builder;
+	}
 
 	[SFXTypes]
 	{
@@ -114,4 +110,5 @@
 	buildcostenergy=4174;//#AUTO#
 	buildcostmetal=834;//#AUTO#
 	buildtime=6566;//#AUTO#
+	mass=1980;//#AUTO#
 }

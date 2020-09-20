@@ -423,7 +423,7 @@ local vsx, vsy = Spring.GetViewGeometry()
 local drawAwards = false 
 local cx,cy --coords for center of screen
 local bx,by --coords for top left hand corner of box
-local w = 740 
+local w = 900 
 local h = 550
 local bgMargin = 6
 

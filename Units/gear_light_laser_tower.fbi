@@ -104,14 +104,13 @@
 	pieceTrailCEGRange = 4;
 	floater=1;
 	waterline=0;
+
 	[CustomParams]
 	{
+		builtBy=gear_l1builder,gear_l2builder;
 		tip=Gains 50% dmg resistance when closed;
 	}
 
-	//************************************************************
-	//  To be removed
-	//*****************
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:GLOWSML;
@@ -120,4 +119,5 @@
 	buildcostenergy=1221;//#AUTO#
 	buildcostmetal=244;//#AUTO#
 	buildtime=2910;//#AUTO#
+	mass=736;//#AUTO#
 }

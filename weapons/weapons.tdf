@@ -1059,7 +1059,7 @@
 	energypershot=60;
 	accuracy=350;
 	turret=1;
-	range=400;
+	range=440;
 	reloadtime=0.9;
 	weaponvelocity=500;
 	areaofeffect=96;
@@ -1374,6 +1374,7 @@
 	{
 		hitpower=1;
 		restrictedAngle=1;
+		airLaser=1;
 	}
 	[DAMAGE]
 	{
@@ -1558,7 +1559,7 @@
 	turret=1;
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
-	range=700;
+	range=660;
 	reloadtime=7.2;
 	flighttime=3.75;
 	weaponvelocity=700;
@@ -2361,43 +2362,6 @@
 		armor_heavy=450;//#AUTO#
 		armor_medium=450;//#AUTO#
 		armor_light=450;//#AUTO#
-	}
-}
-[ARMFLAK_GUN]
-{
-	name=Flak Cannon;
-	weapontype=Cannon;
-	turret=1;
-	range=940;
-	reloadtime=0.55;
-	weapontimer=1;
-	weaponvelocity=999;
-	areaofeffect=130;
-	soundstart=canlite2;
-	soundhit=xploflak1;
-	tolerance=3000;
-	burnblow=1;
-	explosiongenerator=custom:FLAKBLASTWRAPPER;
-	size=2;
-	rgbcolor=1 1 1;
-	stages=2;
-  	separation=0.0;
-  	alphadecay=0.8;
-  	sizedecay=-2;
-  	cratermult=0.125;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=160;
-		group_invincible=1;
-		armor_heavy=40;//#AUTO#
-		armor_medium=80;//#AUTO#
-		armor_light=160;//#AUTO#
 	}
 }
 [aven_dervish_pistols]
@@ -4541,7 +4505,7 @@
 	weapontype=LaserCannon;
 	turret=1;
 	duration=0.12;
-	range=1250;
+	range=1300;
 	minintensity=1.0;
 	thickness=8;
 	reloadtime=10;
@@ -4701,7 +4665,7 @@
 		armor_light=110;//#AUTO#
 	}
 }
-[ARMTRUCK_ROCKET]
+[aven_merl_rocket]
 {
 	name=Rocket;
 	weapontype=StarburstLauncher;
@@ -4744,6 +4708,51 @@
 		armor_heavy=720;//#AUTO#
 		armor_medium=720;//#AUTO#
 		armor_light=720;//#AUTO#
+	}
+}
+[aven_spiker_missile]
+{
+	name=Heavy Missiles;
+	weapontype=StarburstLauncher;
+  	explosiongenerator=custom:ROCKETBLASTWRAPPER;
+	model=weapon_aven_big_missile;
+	range=800;
+	cegTag=ROCKETTRAIL2;
+  	explosiongenerator=custom:ROCKETBLASTWRAPPER;
+	Texture1=null; //flare//
+	Texture2=null;//first segment of missiletrail//
+	Texture3=null;//flame//
+	Texture4=null;//unknown//
+	reloadtime=7;
+	weapontimer=0.7;
+	flighttime=8;
+	tracks=1;
+	fixedlauncher=1;
+	weaponvelocity=500;
+	weaponAcceleration=100;
+	startvelocity=100;
+	turnrate=20000;
+	areaofeffect=64;
+	metalpershot=0;
+	soundstart=rocklit1;
+	soundhit=xplomed4;
+	firestarter=100;
+	smoketrail=0;
+	tolerance=4000;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	avoidground=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=400;
+		group_invincible=1;
+		armor_heavy=400;//#AUTO#
+		armor_medium=400;//#AUTO#
+		armor_light=400;//#AUTO#
 	}
 }
 [aven_swift_missile]
@@ -4827,6 +4836,51 @@
 		armor_heavy=68;//#AUTO#
 		armor_medium=137;//#AUTO#
 		armor_light=275;//#AUTO#
+	}
+}
+[aven_gale_aabomb]
+{
+	name=Large WB Missiles;
+	weapontype=MissileLauncher;
+	explosiongenerator=custom:AABOMBBLASTWRAPPER;
+	model=weapon_aven_aabomb_sml.3do;
+	Texture1=null; //flare//
+	turret=1;
+	range=420;
+	reloadtime=3;
+	flighttime=4.75;
+	weaponvelocity=600;
+	startvelocity=300;
+	weaponAcceleration=100;
+	turnrate=35384;
+	areaofeffect=150;
+	edgeEffectiveness=0.5;
+	metalpershot=0;
+	soundstart=aabombfire;
+	soundhit=aabombhit;
+	firestarter=70;
+	tracks=1;
+	fixedlauncher=1;
+	smoketrail=0;
+	cratermult=0.05;
+	craterareaofeffect=60;
+	cegTag=ROCKETTRAIL1;
+	tolerance=32000;
+	collidefriendly=0;
+	avoidfriendly=0;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=1;
+	}
+	[DAMAGE]
+	{
+		default=250;
+		group_invincible=1;
+		armor_heavy=62;//#AUTO#
+		armor_medium=125;//#AUTO#
+		armor_light=250;//#AUTO#
 	}
 }
 [aven_warrior_cannon]
@@ -5020,7 +5074,7 @@
 	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=3;
-	weaponvelocity=455;
+	weaponvelocity=400;
 	areaofeffect=64;
 	soundstart=cannon3;
 	soundhit=xplomed2;
@@ -5285,7 +5339,7 @@
 		armor_light=90;//#AUTO#
 	}
 }
-[aven_kodiak_cannon]
+[aven_kodiak_cannon_old]
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
@@ -5319,6 +5373,45 @@
 		armor_heavy=50;//#AUTO#
 		armor_medium=100;//#AUTO#
 		armor_light=100;//#AUTO#
+	}
+}
+[aven_kodiak_cannon]
+{
+	name=WB Cannon;
+	weapontype=Cannon;
+	turret=1;
+	range=500;
+	reloadtime=0.85;
+	weapontimer=1;
+	weaponvelocity=999;
+	areaofeffect=130;
+	edgeEffectiveness=0.5;
+	soundstart=canlite2;
+	soundhit=xploflak1;
+	tolerance=3000;
+	burnblow=1;
+	explosiongenerator=custom:FLAKBLASTWRAPPER;
+	size=2;
+	rgbcolor=1 1 1;
+	stages=2;
+  	separation=0.0;
+  	alphadecay=0.8;
+  	sizedecay=-2;
+  	cratermult=0.125;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=1;
+		reaimtime=1;
+	}
+	[DAMAGE]
+	{
+		default=120;
+		group_invincible=1;
+		armor_heavy=30;//#AUTO#
+		armor_medium=60;//#AUTO#
+		armor_light=120;//#AUTO#
 	}
 }
 [aven_wheeler_cannon]
@@ -7191,6 +7284,7 @@
 	{
 		hitpower=1;
 		restrictedAngle=1;
+		airLaser=1;
 	}
 	[DAMAGE]
 	{
@@ -7951,8 +8045,8 @@
 	weapontype=Cannon;
 	turret=1;
 	range=600;
-	accuracy=620;
-	movingaccuracy=1220;
+	accuracy=320;
+	movingaccuracy=620;
 	reloadtime=1.9;
 	weaponvelocity=290;
 	cegTag=PLASMATRAIL1;
@@ -8018,6 +8112,45 @@
 		armor_heavy=75;//#AUTO#
 		armor_medium=150;//#AUTO#
 		armor_light=150;//#AUTO#
+	}
+}
+[gear_thresher_cannon]
+{
+	name=WB Cannon;
+	weapontype=Cannon;
+	turret=1;
+	range=550;
+	reloadtime=0.85;
+	weapontimer=1;
+	weaponvelocity=999;
+	areaofeffect=130;
+	edgeEffectiveness=0.5;
+	soundstart=canlite2;
+	soundhit=xploflak1;
+	tolerance=3000;
+	burnblow=1;
+	explosiongenerator=custom:FLAKBLASTWRAPPER;
+	size=2;
+	rgbcolor=1 1 1;
+	stages=2;
+  	separation=0.0;
+  	alphadecay=0.8;
+  	sizedecay=-2;
+  	cratermult=0.125;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=1;
+		reaimtime=1;
+	}
+	[DAMAGE]
+	{
+		default=120;
+		group_invincible=1;
+		armor_heavy=30;//#AUTO#
+		armor_medium=60;//#AUTO#
+		armor_light=120;//#AUTO#
 	}
 }
 [gear_snake_torpedo]
@@ -8543,7 +8676,7 @@
 		armor_light=160;//#AUTO#
 	}
 }
-[CORSFIG_WEAPON]
+[gear_zipper_laser]
 {
 	name=Light Laser;
 	weapontype=BeamLaser;
@@ -8573,6 +8706,7 @@
 	{
 		hitpower=1;
 		restrictedAngle=1;
+		airLaser=1;
 	}
 	[DAMAGE]
 	{
@@ -10091,6 +10225,53 @@
 		armor_light=1000;//#AUTO#
 	}
 }
+[gear_incendiary_mine_missile]
+{
+	name=Incendiary Missiles;
+	weapontype=StarburstLauncher;
+	explosiongenerator=custom:fireballboommed;
+	model=weapon_incrocket2.3do;
+	cegTag=ROCKETTRAIL2B;
+	range=500;
+	reloadtime=999;
+	weapontimer=0.4;
+	fixedlauncher=1;
+	flighttime=3;
+	weaponvelocity=500;
+	startvelocity=300;
+	weaponAcceleration=66;
+	turnrate=36000;
+	areaofeffect=120;
+	metalpershot=0;
+	soundstart=rocklit1;
+	soundhit=firebombsml;
+	firestarter=70;
+	tracks=1;
+	smoketrail=0;
+	Texture1=null; //testing//
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	tolerance=9000;
+	InterceptedByShieldType=1;
+	collidefriendly=0;
+	avoidfriendly=0;
+	avoidfeature=0;
+	avoidground=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=1;
+		burn=1;
+		burnaoe=1;
+	}
+	[DAMAGE]
+	{
+		default=250;
+		armor_heavy=62;//#AUTO#
+		armor_medium=125;//#AUTO#
+		armor_light=250;//#AUTO#
+	}
+}
 [FMD_ROCKET]
 {
 	name=Rocket;
@@ -11311,6 +11492,7 @@
 	{
 		hitpower=1;
 		restrictedAngle=1;
+		airLaser=1;
 	}
 	[DAMAGE]
 	{
@@ -11352,6 +11534,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		airLaser=1;
 	}
 	[DAMAGE]
 	{
@@ -13856,7 +14039,7 @@
 	{
 		hitpower=1;
 		restrictedAngle=1;
-		evalfactor=0.9;
+		airLaser=1;
 	}
 	[DAMAGE]
 	{
@@ -13902,6 +14085,7 @@
 		hitpower=1;
 		restrictedAngle=1;
 		evalfactor=0.6;
+		airLaser=1;
 	}
 	[DAMAGE]
 	{
@@ -13954,6 +14138,45 @@
 		armor_heavy=125;//#AUTO#
 		armor_medium=250;//#AUTO#
 		armor_light=500;//#AUTO#
+	}
+}
+[claw_shredder_cannon]
+{
+	name=WB Cannon;
+	weapontype=Cannon;
+	turret=0;
+	range=420;
+	reloadtime=0.75;
+	weapontimer=1;
+	weaponvelocity=999;
+	areaofeffect=130;
+	edgeeffectiveness=0.5;
+	soundstart=canlite2;
+	soundhit=xploflak1;
+	tolerance=8000;
+	burnblow=1;
+	explosiongenerator=custom:FLAKBLASTWRAPPER;
+	size=1.5;
+	rgbcolor=1 1 1;
+	stages=2;
+  	separation=0.0;
+  	alphadecay=0.8;
+  	sizedecay=-2;
+  	cratermult=0.125;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=1;
+		restrictedAngle=1;
+	}
+	[DAMAGE]
+	{
+		default=100;
+		group_invincible=1;
+		armor_heavy=25;//#AUTO#
+		armor_medium=50;//#AUTO#
+		armor_light=100;//#AUTO#
 	}
 }
 [claw_hornet_laser]
@@ -14350,7 +14573,7 @@
 	Texture4=null;
 	energypershot=1700;
 	turret=1;
-	range=1450;
+	range=1500;
 	reloadtime=8;
 	weapontimer=1;
 	weaponvelocity=2132;
@@ -14571,14 +14794,14 @@
 	avoidfeature=0;
 	[CUSTOMPARAMS]
 	{
-		hitpower=1;
+		hitpower=2;
 		reaimtime=1;
 	}
 	[DAMAGE]
 	{
 		default=30;
-		armor_heavy=7;//#AUTO#
-		armor_medium=15;//#AUTO#
+		armor_heavy=15;//#AUTO#
+		armor_medium=30;//#AUTO#
 		armor_light=30;//#AUTO#
 	}
 }
@@ -14933,6 +15156,7 @@
 	{
 		hitpower=1;
 		restrictedAngle=1;
+		airLaser=1;
 	}
 	[DAMAGE]
 	{
@@ -15841,6 +16065,50 @@
 		armor_heavy=350;//#AUTO#
 		armor_medium=350;//#AUTO#
 		armor_light=350;//#AUTO#
+	}
+}
+[claw_trajector_missile]
+{
+	name=Medium Missiles;
+	weapontype=StarburstLauncher;
+	model=weapon_claw_medmsl;
+	range=750;
+	cegTag=ROCKETTRAIL2;
+  	explosiongenerator=custom:ROCKETBLASTWRAPPER;
+	Texture1=null; //flare//
+	Texture2=null;//first segment of missiletrail//
+	Texture3=null;//flame//
+	Texture4=null;//unknown//
+	reloadtime=2;
+	weapontimer=0.5;
+	flighttime=8;
+	tracks=1;
+	fixedlauncher=1;
+	weaponvelocity=650;
+	weaponAcceleration=80;
+	startvelocity=300;
+	turnrate=25000;
+	areaofeffect=64;
+	metalpershot=0;
+	soundstart=rocklit1;
+	soundhit=xplomed2;
+	firestarter=100;
+	smoketrail=0;
+	tolerance=4000;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	avoidground=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=2;
+	}
+	[DAMAGE]
+	{
+		default=160;
+		group_invincible=1;
+		armor_heavy=80;//#AUTO#
+		armor_medium=160;//#AUTO#
+		armor_light=160;//#AUTO#
 	}
 }
 [claw_drakkar_depthcharge]
@@ -17698,6 +17966,7 @@
 	{
 		hitpower=1;
 		restrictedAngle=1;
+		airLaser=1;
 	}
 	[DAMAGE]
 	{
@@ -17844,7 +18113,7 @@
 	energypershot=20;
 	weapontimer=1;
 	weaponvelocity=600;
-	accuracy=400;
+	accuracy=200;
 	areaofeffect=24;
 	soundstart=engcannon;
 	soundhit=xplomed5;
@@ -18539,7 +18808,7 @@
 }
 [sphere_slammer_rocket]
 {
-	name=Heavy Rocket;
+	name=Heavy Rockets;
 	weapontype=MissileLauncher;
 	trajectoryheight=0.6;
 	turret=1;
@@ -18575,6 +18844,46 @@
 		armor_heavy=400;//#AUTO#
 		armor_medium=400;//#AUTO#
 		armor_light=400;//#AUTO#
+	}
+}
+[sphere_masher_rocket]
+{
+	name=Heavy Rockets;
+	weapontype=MissileLauncher;
+	trajectoryheight=0.7;
+	turret=1;
+	model=weapon_redrocket3.3do;
+	range=880;
+	accuracy=300;
+	movingaccuracy=600;
+	burst=2;
+	burstrate=0.3;
+	reloadtime=6.4;
+	flighttime=3.75;
+	wobble=500;
+	turnrate=6000;
+	weaponvelocity=420;
+	cegTag=ROCKETTRAIL2;
+	explosiongenerator=custom:ROCKETBLASTWRAPPER;
+	areaofeffect=90;
+	soundstart=MISLHVY3;
+	soundhit=xplomed2;
+	tolerance=3000;
+	startvelocity=300;
+	weaponAcceleration=50;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+		reaimtime=1;
+	}
+	[DAMAGE]
+	{
+		default=320;
+		armor_heavy=320;//#AUTO#
+		armor_medium=320;//#AUTO#
+		armor_light=320;//#AUTO#
 	}
 }
 [sphere_tycho_rocket]
@@ -20182,6 +20491,7 @@
 	{
 		hitpower=1;
 		restrictedAngle=1;
+		airLaser=1;
 	}
 	[DAMAGE]
 	{
@@ -20224,6 +20534,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		airLaser=1;
 	}
 	[DAMAGE]
 	{
@@ -20233,22 +20544,23 @@
 		armor_light=10;//#AUTO#
 	}
 }
-[sphere_twilight_aabomb]
+[sphere_blower_aabomb]
 {
-	name=AA Airburst Bombs;
+	name=WB Missiles;
 	weapontype=MissileLauncher;
 	explosiongenerator=custom:AABOMBBLASTWRAPPER;
 	model=weapon_sphere_aabomb.3do;
 	Texture1=null; //flare//
-	toairweapon=1;
-	range=460;
-	reloadtime=15;
+	turret=1;
+	range=420;
+	reloadtime=3;
 	flighttime=4.75;
-	weaponvelocity=500;
+	weaponvelocity=600;
 	startvelocity=300;
 	weaponAcceleration=100;
 	turnrate=35384;
-	areaofeffect=230;
+	areaofeffect=150;
+	edgeEffectiveness=0.5;
 	metalpershot=0;
 	soundstart=aabombfire;
 	soundhit=aabombhit;
@@ -20259,7 +20571,7 @@
 	cratermult=0.05;
 	craterareaofeffect=60;
 	cegTag=ROCKETTRAIL1;
-	tolerance=64000;
+	tolerance=32000;
 	collidefriendly=0;
 	avoidfriendly=0;
 	InterceptedByShieldType=1;
@@ -20267,15 +20579,14 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
-		evalfactor=0.7; // aa only
 	}
 	[DAMAGE]
 	{
-		default=500;
+		default=250;
 		group_invincible=1;
-		armor_heavy=125;//#AUTO#
-		armor_medium=250;//#AUTO#
-		armor_light=500;//#AUTO#
+		armor_heavy=62;//#AUTO#
+		armor_medium=125;//#AUTO#
+		armor_light=250;//#AUTO#
 	}
 }
 [sphere_medium_drone_laser]

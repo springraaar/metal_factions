@@ -115,15 +115,17 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=aven_hovercraft_platform;
+	}
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:hoversnipeflare;
 	}
 
-	buildcostenergy=27373;//#AUTO#
-	buildcostmetal=5474;//#AUTO#
-	buildtime=65239;//#AUTO#
+	buildcostenergy=29102;//#AUTO#
+	buildcostmetal=5820;//#AUTO#
+	buildtime=69359;//#AUTO#
+	mass=2615;//#AUTO#
 }

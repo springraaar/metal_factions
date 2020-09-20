@@ -116,17 +116,20 @@
 	pieceTrailCEGTag=NanoDebree;
 	pieceTrailCEGRange = 2;
 
-	[customParams] 
+	[CustomParams]
 	{
+		buildertype=claw_l1builder;
+		builtBy=claw_shipyard,claw_adv_shipyard;
 		evalfactor=0.85;//SHIP
 	}
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Nano;
-	explosiongenerator1=custom:UNITFIRE;
+		explosiongenerator0=custom:Nano;
+		explosiongenerator1=custom:UNITFIRE;
 	}
 
 	buildcostenergy=1798;//#AUTO#
 	buildcostmetal=359;//#AUTO#
 	buildtime=4287;//#AUTO#
+	mass=178;//#AUTO#
 }

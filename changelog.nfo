@@ -1,3 +1,135 @@
+2020/09/20 ------------------ NOTES v1.40 ----------------------
+
+--- new units
+
+- AVEN "Gale" : level 1 anti-swarm aircraft which shoots wide AOE missiles
+- AVEN "Spiker" : level 2 all-terrain indirect fire support robot
+
+- GEAR "Incendiary mine" : level 1, shoots an incendiary missile at nearby ground or air targets, 90 metal each
+- GEAR "Thresher" : level 2 H armored FLAK tank
+
+- CLAW "Trajector" : level 2 all-terrain indirect fire support robot
+- CLAW "Shredder" : level 1 anti-swarm aircraft with WB cannons (good AOE)
+
+
+- SPHERE "Blower" : level 1 anti-swarm aircraft which shoots wide AOE missiles
+- SPHERE "Masher" : level 2 all-terrain rocket artillery (indirect fire, H rockets)
+
+
+UPGRADES
+- air transport drone commander upgrade / air transport drones (upgrade costs 1500m)
+
+--- Balance / Mechanics
+
+TRANSPORTS
+- air transports now lose up to 55% of their maximum speed when carrying heavy loads (up from 50%)
+- increased the cost of level 2 air transports from 1200m to 1400m
+
+CONSTRUCTION UNITS
+- AVEN and CLAW level 2 construction robots become all-terrain
+- GEAR level 2 construction robot becomes slower, more expensive, H armored and spawns 1 air transport drone which can carry itself uphill
+- all level 2 construction units become more expensive but significantly tougher to enable their usage as front line combat engineers
+- SPHERE level 1 construction vehicle is now M armored but slightly slower and more expensive
+- all aircraft factories are now buildable on water
+
+- wreckages now take about 3x as long to reclaim (half of the time it would take to build the original unit)
+
+OTHER
+- reduced AVEN "Knight"'s projectile speed, increased "pose" dmg reduction from 20 to 25% and reduced cost by about 5%
+- reduced AVEN "Shocker"'s speed by about 20%, increased hp by 100, range by 10%, changed armor type from M to H and increased cost by about 20%
+- AVEN "Merl" gets 20% damage resistance when closed
+- slightly increased AVEN "Dazer"'s model size (cosmetic only)
+- AVEN "Excalibur" gets increased range from 1250 to 1300 and adjusted cost
+- AVEN "Tsunami" gets slightly reduced speed and HP but armor changes from M to H
+- AVEN "Kodiak" is now more expensive and had its plasma cannons replaced with a longer ranged WB Cannons
+(it's should now be very effective vs air units)
+
+- GEAR "Canister" is 5% more expensive
+- GEAR "Thud" shoots more accurately now, especially in high trajectory mode
+- GEAR "Rhino" is 5% more expensive
+- increased GEAR "Box" HP from 1650 to 1850 and adjusted cost
+- GEAR "Kano" no longer prioritizes air enemies (oops)
+- GEAR "Psycho" gets bigger, HP increased from 900 to 1100 and armor type changed from L to M and 40% increased cost
+- GEAR "Pyro" is now taller and 20% faster but has slightly less HP and 10% increased cost
+
+- CLAW "Ravager" gets HP increased to 3000, H armor and adjusted cost
+- CLAW "Longhorn" explodes like the other static long range artillery
+- CLAW "Aggressor" commander form now prioritizes air targets
+- CLAW "Pike" gets increased range from 1450 to 1500 and adjusted cost
+- CLAW "Flail"'s damage type changed from L to M
+- spinbots no longer spin while under construction (visual only)
+
+- SPHERE "Astra" now prioritizes air targets
+- SPHERE "Shielder" had its speed reduced from 1.45 to 1.2 and cost reduced by 8%
+- SPHERE "Hanz" had its weapon accuracy improved
+
+- setting units to their cloaked state changes the fire state to "Return Fire" instead of "Hold Fire"
+
+- made dragon's teeth being built neutral so they don't "bait" enemy fire
+- made dragon's teeth not spawn the feature if they're destroyed before being fully built to avoid a possible "free" metal exploit
+
+- set maneuverBlockTime on fighter aircraft and, disable looping on aircraft with belly turrets
+(this should fix the issue where strafing aircraft would sometimes refuse to turn back and fly into enemy defenses)
+
+- fixed bug where occasionally drones would persist after the parent unit was destroyed
+
+- SPHERE "Shielder" can no longer be given "attack" orders to avoid it trying to ram enemy units
+
+- modified how unit masses are calculated to make L armored units lighter and H armored units heavier
+
+- SPHERE intelligence Drones now have their HP reduced from 1000 to 600 HP but get the "scoper" ability 
+
+- fixed a bug where shielded hit by paralyze damage would be able to fire while still being attached to air transports
+(as a side effect transported units no longer take paralyze damage)
+
+- removed a discount factor for air-borne short-ranged lasers as they don't get blocked by obstacles
+(the only noteworthy impact of this was increasing GEAR "Zipper" cost by 5%) 
+
+- reduced the reference flight altitude of level 2 fighter aircraft from 240 to 210
+
+- reduced the limit of commander weapon range upgrades from 2 to 1
+
+
+
+--- AI / MFAI
+
+- improved behavior to avoid wasting time when trying to reclaim nearby features/wrecks
+- AI will track its team's combat efficiency and delay attacks until it gets a bigger army if it's being ineffective
+- AI will now account for enemy unarmed area shields and some constructions units as threats
+- fixed AI's raider and air squads not temporarily avoiding some areas where they're under fire
+- fixed some AI orders ignoring altitude (this looked weird when fighting on elevated plateaus but was mostly harmless)
+- improved how it builds advanced metal extractors (uses the same area commands as the players can)
+- AI units will now move away to keep their distance from enemies that get close (on normal and brutal)
+- will build sets of 4 solar collectors, wind or tidal generators for a more compact base
+- added standard format to define AI strategies. The new naming convention for MFAI is MFAI : <difficulty> (strategy)
+- renamed previous AI behavior as "classic" and added a new default strategy which is flexible (picks a specific strategy according to the map)
+- added a set of more specific AI strategies:
+	. Air
+	. Assault
+	. Skirmisher
+	. Amphibious
+- AI may nuke its enemies depending on the strategy (if non-classic)
+- fixed issue which could lead to some builders getting stuck idling
+- avoid building fusion reactors adjacent to factories (it would sometimes lead to them getting stuck)
+- non-classic AI can use construction towers to speed up their early game
+- non-classic AI will build metal makers
+- added AI beacon which can be used to force AI to move to a position, can be used offensively or defensively
+(CTRL+ALT+CLICK to set, CTRL+ALT+RIGHT_CLICK to clear)
+
+WARNING : AI CHANGES ARE STILL A WORK IN PROGRESS AND HAVE SOME ISSUES
+
+--- UI
+
+- increased horizontal size of game end awards panel to allow longer player names
+- slightly modified how chat messages from different sources are colored
+
+
+
+
+
+
+
+
 2020/06/04 ------------------ NOTES v1.39 ----------------------
 
 
@@ -27,12 +159,6 @@
 - walls and gates no longer count towards auto-surrender
 
 - increased cost of construction towers from 350m to 400m
-
-TODO
-- unable to build units
-- idle builders widget
-- ai improvements
-- improve gazer visuals
 
 
 

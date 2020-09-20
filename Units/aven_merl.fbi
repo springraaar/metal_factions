@@ -80,10 +80,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=ARMTRUCK_ROCKET;
-	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
-	badtargetcategory1=CTRL_W;
+	weapon1=aven_merl_rocket;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
 	onlytargetcategory1=NOTAIR;
@@ -101,37 +98,29 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ARM-MRL;
-	downloadable=1;
 	leavetracks=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
 	trackoffset=6;
 	trackstrength=5;
 	trackstretch=1;
 	tracktype=StdTank;
 	trackwidth=35;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =42 20 50;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
+	damageModifier=0.8;
 
-	//************************************************************
-	//  To be removed
-	//*****************
 	[customParams] 
 	{
-    canAreaAttack=1;
+		builtBy=aven_adv_vehicle_plant;
+		canAreaAttack=1;
+		tip=Gains 20% damage resistance when closed;
 	}
 
-	buildcostenergy=5862;//#AUTO#
-	buildcostmetal=1172;//#AUTO#
-	buildtime=13973;//#AUTO#
+	buildcostenergy=6001;//#AUTO#
+	buildcostmetal=1200;//#AUTO#
+	buildtime=14302;//#AUTO#
+	mass=350;//#AUTO#
 }

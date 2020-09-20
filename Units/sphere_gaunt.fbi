@@ -85,6 +85,10 @@
 	collisionVolumeOffsets= 0 0 0;
 	collisionVolumeTest= 1;
 
+	[CustomParams]
+	{
+		builtBy=sphere_light_factory,sphere_adv_kbot_factory;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:redflare;
@@ -92,4 +96,5 @@
 	buildcostenergy=1231;//#AUTO#
 	buildcostmetal=246;//#AUTO#
 	buildtime=2934;//#AUTO#
+	mass=150;//#AUTO#
 }

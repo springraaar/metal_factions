@@ -55,8 +55,9 @@
 	waterline=1;
 	Floater=1;
 	Corpse=aven_VANGUARD_dead;
-	[customParams] 
+	[CustomParams]
 	{
+		builtBy=aven_shipyard,aven_adv_shipyard;
 		evalfactor=0.85;//SHIP
 	}
 	[SFXTypes]
@@ -72,4 +73,5 @@
 	buildcostenergy=2322;//#AUTO#
 	buildcostmetal=464;//#AUTO#
 	buildtime=5534;//#AUTO#
+	mass=517;//#AUTO#
 	}

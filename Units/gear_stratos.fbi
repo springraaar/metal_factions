@@ -107,26 +107,14 @@
 	downloadable=1;
 	hoverattack=1;
 	airstrafe=1;
-//	isbomber=1;
-
 	airhoverfactor=-1;
-//	maneuverleashlength=180;
 	bankingAllowed=0;
-
 	shootme=1;
 	steeringmode=1;
 	threed=1;
 	version=1.2;
 	zbuffer=1;
 	CanLoopbackAttack=0;
-
-	//************************************************************
-	//  To be removed
-	//*****************
-
-	//************************************************************
-	//  Out of Category
-	//*******************
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
@@ -135,6 +123,11 @@
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
+
+	[CustomParams]
+	{
+		builtBy=gear_adv_aircraft_plant;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:GLOWSML;
@@ -143,4 +136,5 @@
 	buildcostenergy=15468;//#AUTO#
 	buildcostmetal=3093;//#AUTO#
 	buildtime=36867;//#AUTO#
+	mass=1065;//#AUTO#
 }

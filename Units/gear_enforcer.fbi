@@ -121,8 +121,10 @@
 	collisionVolumeTest = 1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
-	[customParams] 
+
+	[CustomParams]
 	{
+		builtBy=gear_shipyard,gear_adv_shipyard;
 		evalfactor=0.85;//SHIP
 	}
 
@@ -134,4 +136,5 @@
 	buildcostenergy=5689;//#AUTO#
 	buildcostmetal=1137;//#AUTO#
 	buildtime=13561;//#AUTO#
+	mass=1079;//#AUTO#
 }

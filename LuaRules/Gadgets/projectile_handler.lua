@@ -126,6 +126,7 @@ local fireAOEWeaponIds = {
 	[WeaponDefNames["gear_eruptor_fireball"].id]=true,
 	[WeaponDefNames["gear_firestorm_missile"].id]=true,
 	[WeaponDefNames["gear_igniter_missile"].id]=true,
+	[WeaponDefNames["gear_incendiary_mine_missile"].id]=true,
 	[WeaponDefNames["gear_u1commander_missile"].id]=true,
 	[WeaponDefNames["gear_barrel_missile2"].id]=true,
 	[WeaponDefNames["gear_pyroclasm_submunition"].id]=true,
@@ -204,7 +205,7 @@ local smartTrackingWeaponIds = {
 	-- CLAW
 	[WeaponDefNames["claw_x_aabomb"].id]=true,
 	-- SPHERE
-	[WeaponDefNames["sphere_twilight_aabomb"].id]=true
+	[WeaponDefNames["sphere_blower_aabomb"].id]=true
 }
 
 

@@ -17,7 +17,7 @@ function widget:GetInfo()
 		author    = "Kloot & BD, tweaked by raaar",
 		date      = "April 22, 2009",
 		license   = "GNU GPL v2",
-		layer     = 999,
+		layer     = math.huge,
 		enabled   = true
 	}
 end
@@ -78,7 +78,9 @@ local LAST_PLAYER_MSG_CLEAR_FRAME	= 0
 local LAST_SYSTEM_MSG_CLEAR_FRAME	= 0
 local LAST_PLAYER_MSG_SCROLL_FRAME	= 0
 -- table mapping names to colors
-local PLAYER_COLOR_TABLE			= {}
+local PLAYER_COLOR_TABLE			= {}		-- indexed by player name
+local TEAM_COLOR_TABLE				= {}
+
 -- message patterns our filter should match
 local MESSAGE_FILTERS				= { "ClientReadNet","to access the quit menu" }
 -- are we currently dragging or resizing a message box?
@@ -122,6 +124,10 @@ local GetMouseState = Spring.GetMouseState
 local GetPlayerRoster = Spring.GetPlayerRoster
 local GetTeamColor = Spring.GetTeamColor
 local GetGameFrame = Spring.GetGameFrame
+local spGetPlayerList = Spring.GetPlayerList
+local spGetPlayerInfo = Spring.GetPlayerInfo
+local spGetTeamList = Spring.GetTeamList
+
 local math_ceil 		= math.ceil
 local math_floor 		= math.floor
 local math_min 			= math.min
@@ -200,9 +206,13 @@ end
 
 
 function convertColor(colorarray)
-	local red = math_ceil(colorarray[1]*255) + 100
-	local green = math_ceil(colorarray[2]*255) + 100
-	local blue = math_ceil(colorarray[3]*255) + 100
+	local red = math_ceil(colorarray[1]*255) --+ 100
+	local green = math_ceil(colorarray[2]*255) --+ 100
+	local blue = math_ceil(colorarray[3]*255) --+ 100
+	if red + green < 255 then -- hack to avoid outline
+		red = red + 50
+		green = green + 50
+	end
 	red = math_max( red, 1 )
 	green = math_max( green, 1 )
 	blue = math_max( blue, 1 )
@@ -739,6 +749,17 @@ function widget:AddConsoleLine(line)
 		end
 		LAST_LINE = line
 	
+		-- MFAI lines, apply team color
+		local aiPos = string.find(line, "--- AI")
+		if (aiPos) then
+			local teamId = string.match(line,"%-%-%- AI (%d+):")
+			playerColor = TEAM_COLOR_TABLE["t"..teamId]
+			playerName = " " -- to fool processConsoleLine into colouring the text..
+			if (playerColor == nil) then
+				playerColor = PLAYER_TEXT_DEFAULT_COLOR 
+			end
+		end
+	
 		if (string.len(playerName) > 0) then
 			prefix = string.sub(line,1,string.find(line, " "))
 			-- lineSep was "...", "-" might be an option but maybe it's best to leave it empty
@@ -1016,15 +1037,22 @@ end
 
 
 function buildTable()
-	local playerRoster = GetPlayerRoster(ROSTER_SORT_TYPE)
-
-	for index, playerInfo in ipairs(playerRoster) do
-		local playerName = playerInfo[1]
-		local playerTeam = playerInfo[3]
+	--local playerRoster = GetPlayerRoster(ROSTER_SORT_TYPE)
+	local playerIds = spGetPlayerList()
+	for index,pId in ipairs(playerIds) do
+		local playerName,_,_,playerTeam = spGetPlayerInfo(pId)
 		local r, g, b, a = GetTeamColor(playerTeam)
 
 		PLAYER_COLOR_TABLE[playerName] = {r, g, b, a}
 	end
+	
+	local teamIds = spGetTeamList() 
+	for _,tId in ipairs (teamIds) do
+		local r, g, b, a = GetTeamColor(tId)
+		TEAM_COLOR_TABLE["t"..tId] = {r, g, b, a}
+	end
+	
+	
 end
 
 

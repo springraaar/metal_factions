@@ -1,4 +1,4 @@
-include("LuaRules/Gadgets/ai/TaskQueues.lua")
+include("LuaRules/Gadgets/ai/taskQueues.lua")
 include("LuaRules/Gadgets/ai/CommonUnitBehavior.lua")
  
 TaskQueueBehavior = {}
@@ -24,12 +24,10 @@ end
 function TaskQueueBehavior:Init(ai, uId)
 	self:CommonInit(ai, uId)
 	
-	
 	-- state properties
 	self.active = false
 	self.currentProject = nil
 	self.waitLeft = 0
-	self.lastWatchdogCheck = 0
 	self.reclaimedMex = false
 	self.noDelay = false
 	self.lastRetreatOrderFrame = -ORDER_DELAY_FRAMES - 1
@@ -43,21 +41,51 @@ function TaskQueueBehavior:Init(ai, uId)
 	self.isWaterMode = false
 	self.assistUnitId = 0
 	self.cleanupMaxFeatures = 10
-	self.isDrone =  self.unitDef.customParams and self.unitDef.customParams.isdrone
+	self.isDrone = self.unitDef.customParams and self.unitDef.customParams.isdrone
 	self.isAdvBuilder = (not self.isDrone) and self.isMobileBuilder and self.unitDef.modCategories["level2"]
+	self.builderType = self.unitDef.customParams and self.unitDef.customParams.buildertype
+	self.isStaticBuilder = constructionTowers[self.unitName] ~= nil
+	self.buildRange = 0
+	if (self.isStaticBuilder) then
+		self.buildRange = self.unitDef.buildDistance
+	end
+	self.buildFailures = {} -- <unitName,lastAttemptFrame>
+	self.couldNotFindMetalSpot = false
+	self.couldNotFindGeoSpot = false
 	
 	-- load queue
 	if self:HasQueues() then
 		self.queue = self:GetQueue()
 	end
 	
-	self:Activate()
+	self.briefAreaPatrolFrames = BRIEF_AREA_PATROL_FRAMES 
+	
+	self:activate()
 	self.ai.unitHandler.taskQueues[uId] = self
-	self.waiting = {}
+end
+
+-- failed to build something, register the current frame and unit name
+function TaskQueueBehavior:markBuildFailure(uName)
+	self.buildFailures[uName] = spGetGameFrame()
+end
+
+-- if failed recently, return false, else clear the record and return true
+function TaskQueueBehavior:checkPreviousAttempts(uName)
+	local lastFailFrame = self.buildFailures[uName]
+	if lastFailFrame then
+		local f = spGetGameFrame()
+		-- if it happened more less than ~15s ago, return false, else forget it happened
+		if (f - lastFailFrame < 1000) then
+			return false
+		else
+			self.buildFailures[uName] = nil
+		end
+	end
+	return true
 end
 
 function TaskQueueBehavior:HasQueues()
-	return (taskqueues[self.unitName] ~= nil)
+	return (taskQueues[self.unitName] ~= nil)
 end
 
 function TaskQueueBehavior:BuilderRoleStr()
@@ -84,6 +112,14 @@ function TaskQueueBehavior:BuilderRoleStr()
 	return "???"
 end
 
+function TaskQueueBehavior:setHighPriorityState(state)
+	local desiredState = state == 1 and true or false
+	if (self.isHighPriorityBuilder ~= desiredState) then
+		self.isHighPriorityBuilder = desiredState
+		spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{state},{})
+	end
+end
+
 
 function TaskQueueBehavior:UnitFinished(uId)
 	if not self.active then
@@ -101,10 +137,10 @@ function TaskQueueBehavior:UnitIdle(uId)
 	end
 	if uId == self.unitId then
 		self.idleFrame = spGetGameFrame()
-		if( self.currentProject ~= "paused") then
+		if( self.currentProject ~= "paused" and not setContains(unitTypeSets[TYPE_EXTRACTOR],self.currentProject)) then
 			-- if unit was building an expensive base unit, and it is still alive and incomplete, repair it...
 			if setContains(unitTypeSets[TYPE_BASE],self.currentProject) then
-				local selfPos = newPosition(spGetUnitPosition(self.unitId,false,false))
+				local selfPos = self.pos
 				
 				for _,uId2 in ipairs(Spring.GetUnitsInCylinder(selfPos.x,selfPos.z,400)) do
 					local _,_,_,_,progress = spGetUnitHealth(uId2)
@@ -123,7 +159,7 @@ function TaskQueueBehavior:UnitIdle(uId)
 				end
 			end
 
-			-- log("unit "..self.unitName.." is idle.", self.ai)
+			--log("unit "..self.unitName.." is idle.", self.ai) --DEBUG
 			self.progress = true
 			self.currentProject = nil
 			self.waitLeft = 0
@@ -146,14 +182,6 @@ end
 function TaskQueueBehavior:UnitDestroyed(uId)
 	if self.unitId ~= nil then
 		if uId == self.unitId then
-
-			-- clear sleeping status
-			if self.waiting ~= nil then
-				for k,v in pairs(self.waiting) do
-					self.ai.modules.sleep.Kill(self.waiting[k])
-				end
-			end
-			self.waiting = nil
 			self.unitId = nil
 
 			-- clear unitHandler's reference
@@ -165,14 +193,6 @@ end
 function TaskQueueBehavior:UnitTaken(uId)
 	if self.unitId ~= nil then
 		if uId == self.unitId then
-
-			-- clear sleeping status
-			if self.waiting ~= nil then
-				for k,v in pairs(self.waiting) do
-					self.ai.modules.sleep.Kill(self.waiting[k])
-				end
-			end
-			self.waiting = nil
 			self.unitId = nil
 
 			-- clear unitHandler's reference
@@ -190,7 +210,7 @@ end
 
 function TaskQueueBehavior:GetQueue(queue)
 	--log("queue is "..tostring(queue),self.ai)
-	q = queue or taskqueues[self.unitName]
+	q = queue or (self.ai.useStrategies and sTaskQueues[self.unitName] or nil) or taskQueues[self.unitName]
 	if type(q) == "function" then
 		-- log("function table found!")
 		q = q(self)
@@ -198,7 +218,7 @@ function TaskQueueBehavior:GetQueue(queue)
 	return q
 end
 
-function TaskQueueBehavior:ChangeQueue(queue)
+function TaskQueueBehavior:changeQueue(queue)
 	self.queue = self:GetQueue(queue)
 	self.idx = nil
 	self.waitLeft = 0
@@ -207,9 +227,7 @@ function TaskQueueBehavior:ChangeQueue(queue)
 	self.delayCounter = 0
 end
 
-function TaskQueueBehavior:Update()
-	local f = spGetGameFrame()
-	
+function TaskQueueBehavior:GameFrame(f)
 	-- don't do anything until there has been one data collection
 	if not self.ai.unitHandler.collectedData then
 		return
@@ -217,22 +235,24 @@ function TaskQueueBehavior:Update()
 	
 	self.pos = newPosition(spGetUnitPosition(self.unitId,false,false))
 	
-    --if (self.isMobileBuilder or self.isCommander) then
-	--	local cmds = spGetUnitCommands(self.unitId,3)
-	--	local cmdCount = 0
-	-- if (cmds and (#cmds >= 0)) then
-	--		cmdCount = #cmds
-	--	end
-	--	if (self.isCommander) then
-	--		Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(tostring(self.isAttackMode).." "..cmdCount.." "..tostring(self.currentProject))) --DEBUG
-	--	else
-	--		Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(self:BuilderRoleStr().." "..cmdCount.." "..tostring(self.currentProject))) --DEBUG
-	--	end
-	--end
+	--[[
+    if (self.isMobileBuilder or self.isCommander) then
+		local cmds = spGetUnitCommands(self.unitId,3)
+		local cmdCount = 0
+		if (cmds and (#cmds >= 0)) then
+			cmdCount = #cmds
+		end
+		if (self.isCommander) then
+			Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(tostring(self.isAttackMode).." "..cmdCount.." "..tostring(self.currentProject))) --DEBUG
+		else
+			Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(self:BuilderRoleStr().." "..cmdCount.." "..tostring(self.currentProject))) --DEBUG
+		end
+	end
+	]]--
 	
-	
+	-- check health and built status	
 	local health,maxHealth,_,_,bp = spGetUnitHealth(self.unitId)
-	self.isFullyBuilt = (bp > 0.999)
+	self.isFullyBuilt = (bp >= 1)
 	if (health/maxHealth < UNIT_RETREAT_HEALTH) then
 		self.isSeriouslyDamaged = true
 		self.isFullHealth = false
@@ -243,6 +263,27 @@ function TaskQueueBehavior:Update()
 		end
 	end
 
+	-- not finished yet, wait
+	if (not self.isFullyBuilt) then
+		return
+	end
+
+	-- check water mode
+	if spGetGroundHeight(self.pos.x,self.pos.z) < -5 and not self.ai.mapHandler.waterDoesDamage then
+		self.isWaterMode = true
+		
+		-- if on water mode and game just started, override strategy to an amphibious one
+		-- do this only once
+		if (f < 100 and self.ai.useStrategies and (not self.ai.amphibiousStrategyOverride) and (self.ai.autoChangeStrategies) and (self.ai.currentStrategyStr ~= "amphibious")) then
+			viableStrategyStrList = {"amphibious"}
+			strategyStr = viableStrategyStrList[random( 1, #viableStrategyStrList)]
+			self.ai.amphibiousStrategyOverride = true
+			self.ai:setStrategy(self.unitSide,strategyStr,false)
+		end
+	else
+		self.isWaterMode = false
+	end
+			
 	if (self.waitLeft > 0 ) then
 		self.waitLeft = math.max(self.waitLeft - 1,0)
 		-- if self.waitLeft == 0 then
@@ -258,32 +299,47 @@ function TaskQueueBehavior:Update()
 			if(self.currentProject ~= nil and self.currentProject ~= "paused" and self.currentProject ~= "custom") then
 				self:Retry()
 			end
-			
-			self:Retreat()
+
+			-- check if you can engage
+			if (not self.isSeriouslyDamaged) and self.isArmed and self:engageIfNeeded() then
+				self.lastRetreatOrderFrame = f
+				self.progress = true
+				self.currentProject = "custom"
+				self.waitLeft = 200
+				return
+			end
+			-- evade or retreat
+			self:retreat()
 			return
 		end
 		
 		-- if is commander and base is under attack, go help!
 		if (self.isCommander and self.ai.unitHandler.baseUnderAttack) then
+			if countOwnUnits(self,nil,1,TYPE_PLANT) > 0  then
+				--spGiveOrderToUnit(self.unitId,CMD.STOP,{},{})
+				self:retreat()
+			end
+			--[[
 			if self.isAttackMode == false and (countOwnUnits(self,nil,1,TYPE_PLANT) > 0 ) then
 				spGiveOrderToUnit(self.unitId,CMD.STOP,{},{})
-				self:ChangeQueue(commanderAtkQueueByFaction[self.unitSide])
+				self:changeQueue(commanderAtkQueueByFaction[self.unitSide])
 				self.isAttackMode = true
 				--log("changed to attack commander!",self.ai)
 			end
+			]]--
 		end
 	end
 	
 	if self.isCommander or (fmod(f,10) == 9) then
 		if (self.waitLeft == 0) then
 			-- progress queue if unit is idle
-			if not self.progress and self.isFullyBuilt and (self.isMobileBuilder or self.currentProject == nil) then
-				local cmds = spGetUnitCommands(self.unitId,0)
-				if (cmds <= 0) then
+			if not self.progress and self.isFullyBuilt and (self.isMobileBuilder or self.isCommander or self.currentProject == nil) then
+				local cmds = spGetUnitCommands(self.unitId,3)
+				if (not cmds or #cmds <= 0) then
 					self.idleFrames = self.idleFrames + (self.isCommander and 1 or 10) 
 				
 					if (self.idleFrames > IDLE_FRAMES_PROGRESS_LIMIT) then
-						-- log(self.unitName.." was weirdly idle, progressing queue",self.ai) --DEBUG
+						--Spring.Echo(self.unitName.." was weirdly idle for "..self.idleFrames.." , progressing queue",self.ai) --DEBUG
 						self.progress = true
 					end
 				else
@@ -297,10 +353,6 @@ function TaskQueueBehavior:Update()
 				-- log(self.unitName.." progressing queue",self.ai)
 				self:ProgressQueue()
 				
-				--if (self.isCommander) then
-				--	Spring.SendCommands("clearmapmarks") 
-				--	Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(" role="..self:BuilderRoleStr().." proj="..tostring(self.currentProject))) --DEBUG
-				--end
 				return
 			end
 		end		
@@ -353,10 +405,9 @@ end
 
 function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 	local f = spGetGameFrame()
-	self.lastWatchdogCheck = f	-- TODO: reintegrate watchdog or remove it?
 	local success = false
 	local p = false
-	local selfPos = newPosition(spGetUnitPosition(self.unitId,false,false))
+	local selfPos = self.pos
 	local ud = nil
 	
 	-- evaluate any functions here, they may return tables
@@ -374,7 +425,7 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 		end
 	end
 	
-	if value ~= nil and type(value) ~= "table" and value ~= SKIP_THIS_TASK then
+	if not self.ai.useStrategies and value ~= nil and type(value) ~= "table" and value ~= SKIP_THIS_TASK then
 		ud = UnitDefNames[value]
 		if ud ~= nil then
 			-- if building a builder, check for unit limit
@@ -414,7 +465,7 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 							checkAssistNearby = false
 						else
 							self.delayCounter = self.delayCounter + 1
-							-- log("WARNING: "..self.unitName.." delays building "..value.." because of low resources", self.ai) --DEBUG
+							--log("WARNING: "..self.unitName.." delays building "..value.." because of low resources", self.ai) --DEBUG
 							value = {action = "wait", frames = 60}
 						end
 					end
@@ -426,8 +477,8 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 					if (UnitDefs[spGetUnitDefID(uId)].name == value ) then
 						local _,_,_,_,progress = spGetUnitHealth(uId)
 						local targetPos = newPosition(spGetUnitPosition(uId,false,false))
-	
-						if (progress < 1 and distance(selfPos, targetPos) < ASSIST_UNIT_RADIUS) then
+						local assistRadius = self.isStaticBuilder and self.buildRange or ASSIST_UNIT_RADIUS
+						if (progress < 1 and distance(selfPos, targetPos) < assistRadius) then
 							-- assist building
 							spGiveOrderToUnit(self.unitId,CMD.REPAIR,{uId},{})
 							
@@ -440,8 +491,6 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 			end
 		end
 	end
-	
-	
 	
 	if type(value) == "table" then
 		local action = value.action
@@ -460,10 +509,10 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 		end
 		-- reclaim features within 500 range until the wait timer ends
 		if action == "cleanup" then
-			wrecks = spGetFeaturesInSphere(selfPos.x,selfPos.y,selfPos.z, 500)
-			self.waitLeft = value.frames
+			wrecks = spGetFeaturesInCylinder(selfPos.x,selfPos.z, 500)
 			--log(self.unitName.." CLEANUP "..value.frames.." frames ".." found="..tostring(#wrecks),self.ai)
 			if (#wrecks > 0) then
+				self.waitLeft = value.frames
 				spGiveOrderToUnit( self.unitId, CMD.RECLAIM, { self.pos.x, self.pos.y, self.pos.z, 500 }, {} )
 			end	
 				
@@ -471,6 +520,13 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 		end
 	else
 		if value ~= SKIP_THIS_TASK then
+			--[[
+			if (self.isCommander) then
+				Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(tostring(self.isAttackMode).." value="..tostring(value))) --DEBUG
+			else
+				Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(self:BuilderRoleStr().." value="..tostring(value))) --DEBUG
+			end
+			]]--
 			if value ~= nil then
 				ud = UnitDefNames[value]
 			else
@@ -478,35 +534,65 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 				value = "nil"
 			end
 			
+			-- TODO only assigned if a build spot was actually found
 			-- assign high priority to AI normal priority builders building metal extractors, factories and fusion reactors
-			if not self.isHighPriorityBuilder then
-				if setContains(unitTypeSets[TYPE_ECONOMY],value) or setContains(unitTypeSets[TYPE_PLANT],value) then
-					spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{1},{})
-				end
-			end
+			--if not self.isHighPriorityBuilder then
+			--	if setContains(unitTypeSets[TYPE_ECONOMY],value) or setContains(unitTypeSets[TYPE_PLANT],value) then
+			--		spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{1},{})
+			--	end
+			--end
 						
 			--log("building "..value)
 			success = false
 			if ud ~= nil then
 				if true then  -- assume unit can build target
 					if ud.extractsMetal > 0 or ud.needGeo == true then
+						local advMetal = setContains(unitTypeSets[TYPE_MOHO],value)
+						
 						-- find a free spot
 						p = newPosition(selfPos.x,selfPos.y,selfPos.z)
 						if ud.extractsMetal > 0 then
 							if (self.ai.mapHandler.isMetalMap == true) then
-								p = self.ai.buildSiteHandler:ClosestBuildSpot(self, ud,  BUILD_SPREAD_DISTANCE)
+								p = self.ai.buildSiteHandler:closestBuildSpot(self, ud,  BUILD_SPREAD_DISTANCE)
 							else
-								p = self.ai.buildSiteHandler:ClosestFreeSpot(self, ud, p, true, "metal", self.unitDef, self.unitId)
+								
+								p = self.ai.buildSiteHandler:closestFreeSpot(self, ud, p, true, advMetal and "advMetal" or "metal", self.unitDef, self.unitId)
 							end
 						else
-							p = self.ai.buildSiteHandler:ClosestFreeSpot(self, ud, p, true, "geo", self.unitDef, self.unitId)
+							p = self.ai.buildSiteHandler:closestFreeSpot(self, ud, p, true, "geo", self.unitDef, self.unitId)
 						end
 						
 						if p ~= nil then
-							spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},{})
+							if ud.needGeo then
+								spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},{})
+							else
+								if (advMetal) then
+									spGiveOrderToUnit(self.unitId,setContains(unitTypeSets[TYPE_HAZMOHO],value) and CMD_UPGRADEMEX2 or CMD_UPGRADEMEX,{p.x,p.y,p.z,150},{})
+								else
+									spGiveOrderToUnit(self.unitId,CMD_AREAMEX,{p.x,p.y,p.z,150},{})
+									
+								end
+							end
+							
+							
+							-- assign high priority to AI normal priority builders building metal extractors, factories and fusion reactors
+							if not self.isHighPriorityBuilder then
+								spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{1},{})
+							end
 							success = true
 							self.progress = false
+							if ud.needGeo then
+								self.couldNotFindGeoSpot = false
+							else
+								self.couldNotFindMetalSpot = false
+							end 
 						else
+							--log(self.unitName.." at ( "..selfPos.x.." ; "..selfPos.z..") could not find build spot for "..value,self.ai)
+							if ud.needGeo then
+								self.couldNotFindGeoSpot = true
+							else
+								self.couldNotFindMetalSpot = true
+							end 
 							self.progress = true
 						end
 					elseif self.unitDef.isFactory then
@@ -514,10 +600,30 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 						spGiveOrderToUnit(self.unitId,-ud.id,{selfPos.x,selfPos.y,selfPos.z},{})
 						success = true
 						self.progress = false
+					elseif self.isStaticBuilder then
+						-- for construction towers building factories or defense
+						local spreadDistance = setContains(unitTypeSets[TYPE_L2_PLANT],value) and 0 or (BUILD_SPREAD_DISTANCE*0.7)
+						
+						p = self.ai.buildSiteHandler:staticClosestBuildSpot(self, ud, spreadDistance)
+						if p ~= nil then
+							spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},{})
+							
+							success = true
+						else
+							--log(self.unitName.." at ( "..selfPos.x.." ; "..selfPos.z..") could not find build spot for "..value,self.ai)
+							-- mark that the attempt failed
+							self:markBuildFailure(ud.name)
+							success = false
+						end
+						
+						self.progress = not success
 					else
+						self.couldNotFindGeoSpot = false
+						self.couldNotFindMetalSpot = false
+							
 						-- defense placement
 						if #ud.weapons > 0 and ud.isBuilding then
-							p = self.ai.buildSiteHandler:ClosestBuildSpot(self, ud,  BUILD_SPREAD_DISTANCE)
+							p = self.ai.buildSiteHandler:closestBuildSpot(self, ud,  BUILD_SPREAD_DISTANCE)
 							if p ~= nil then
 								spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},{})
 								success = true
@@ -529,9 +635,21 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 							if (not setContains(unitTypeSets[TYPE_SUPPORT],value) ) then
 								local spreadDistance = (setContains(unitTypeSets[TYPE_FUSION],value) and 0 or BUILD_SPREAD_DISTANCE) 
 								
-								p = self.ai.buildSiteHandler:ClosestBuildSpot(self, ud, spreadDistance)
+								p = self.ai.buildSiteHandler:closestBuildSpot(self, ud, spreadDistance)
 								if p ~= nil then
-									spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},{})
+									
+									
+									-- if it's a cheap multi-build structure, queue further orders
+									local shift = multiBuildBuildings[ud.name]
+									if (shift and shift > 0) then
+										--Spring.Echo("MULTIBUILD "..ud.name)
+										spGiveOrderToUnit(self.unitId,-ud.id,{p.x-shift,p.y,p.z-shift},{})
+										spGiveOrderToUnit(self.unitId,-ud.id,{p.x-shift,p.y,p.z+shift},CMD.OPT_SHIFT)
+										spGiveOrderToUnit(self.unitId,-ud.id,{p.x+shift,p.y,p.z-shift},CMD.OPT_SHIFT)
+										spGiveOrderToUnit(self.unitId,-ud.id,{p.x+shift,p.y,p.z+shift},CMD.OPT_SHIFT)
+									else
+										spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},{})
+									end
 									success = true
 								else
 									-- log(self.unitName.." at ( "..selfPos.x.." ; "..selfPos.z..") could not find build spot for "..value,self.ai)
@@ -542,14 +660,24 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 								success = true
 							end
 						end
+						
+						if (success) then
+							-- assign high priority to AI normal priority builders building metal extractors, factories and fusion reactors
+							if not self.isHighPriorityBuilder then
+								if setContains(unitTypeSets[TYPE_ECONOMY],value) or setContains(unitTypeSets[TYPE_PLANT],value) then
+									spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{1},{})
+								end
+							end
+						end
+						
 						self.progress = not success
 					end
 				else
 					self.progress = true
-					 --log("WARNING: bad task: "..self.unitName.." cannot build "..value, self.ai)
+					--log("WARNING: bad task: "..self.unitName.." cannot build "..value, self.ai)
 				end
 			else
-				--log("Cannot build:"..value..", couldn't grab the unit type from the engine", self.ai)
+				log("Cannot build:"..value..", couldn't grab the unit type from the engine", self.ai)
 				self.progress = true
 			end
 			if success then
@@ -565,16 +693,20 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 end
 
 
-function TaskQueueBehavior:Retreat()
+function TaskQueueBehavior:retreat()
 	local tmpFrame = spGetGameFrame()
 	
 	if (self.lastRetreatOrderFrame or 0) + ORDER_DELAY_FRAMES < tmpFrame then
 		local selfPos = self.pos
-	
+
+
 		if not self.isCommander and ( abs(selfPos.x - self.ai.unitHandler.basePos.x) > RETREAT_RADIUS or abs(selfPos.z - self.ai.unitHandler.basePos.z) > RETREAT_RADIUS  ) then
-			spGiveOrderToUnit(self.unitId,CMD.MOVE,{self.ai.unitHandler.basePos.x - BIG_RADIUS/2 + random( 1, BIG_RADIUS),0,self.ai.unitHandler.basePos.z - BIG_RADIUS/2 + random( 1, BIG_RADIUS)},{})
+			local px = self.ai.unitHandler.basePos.x - BIG_RADIUS/2 + random( 1, BIG_RADIUS)
+			local pz = self.ai.unitHandler.basePos.z - BIG_RADIUS/2 + random( 1, BIG_RADIUS)
+			
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{px,spGetGroundHeight(px,pz),pz},{})
 		else
-			self:EvadeIfNeeded()
+			self:evadeIfNeeded()
 		end
 
 		self.lastRetreatOrderFrame = tmpFrame
@@ -585,12 +717,12 @@ function TaskQueueBehavior:Retreat()
 end
 
 
-function TaskQueueBehavior:Activate()
+function TaskQueueBehavior:activate()
 	self.progress = true
 	self.active = true
 end
 
-function TaskQueueBehavior:Deactivate()
+function TaskQueueBehavior:deactivate()
 	self.active = false
 end
 

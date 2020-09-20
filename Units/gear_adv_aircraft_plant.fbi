@@ -18,7 +18,6 @@
 	//  External Specs
 	//******************
 	unitname=gear_adv_aircraft_plant;
-	unitnumber=78;
 	objectname=gear_adv_aircraft_plant.3do;
 	corpse=gear_adv_aircraft_plant_dead;
 	buildpic=gear_adv_aircraft_plant.png;
@@ -48,6 +47,7 @@
 	collisionVolumeScales=90 32 110;
 	collisionVolumeOffsets=0 0 0;
 	collisionVolumeTest = 1;
+	floater=1;
 
 	//************************************************************
 	//  Constructor
@@ -67,7 +67,6 @@
 	//  Movement
 	//************
 	maxslope=10;
-	maxwaterdepth=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -101,9 +100,10 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=gear_l1builder,gear_l2builder;
+	}
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:Nano;
@@ -113,4 +113,5 @@
 	buildcostenergy=8537;//#AUTO#
 	buildcostmetal=1707;//#AUTO#
 	buildtime=20346;//#AUTO#
+	mass=3388;//#AUTO#
 }

@@ -97,11 +97,13 @@
 	floater=1;
 	waterline=0;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=sphere_l2builder;
+	}
 
 	buildcostenergy=2213;//#AUTO#
 	buildcostmetal=442;//#AUTO#
 	buildtime=5276;//#AUTO#
+	mass=1418;//#AUTO#
 }

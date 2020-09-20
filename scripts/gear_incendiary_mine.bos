@@ -1,0 +1,55 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, top, bottom, center,missile,firept;
+
+
+
+
+Create()
+{
+	turn firept to x-axis <-90> now;
+	return (0);
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = firept;
+	return;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = firept;
+	return;
+}
+
+AimPrimary(heading,pitch)
+{
+	return(1);
+}
+
+FirePrimary()
+{
+	hide missile;
+	emit-sfx 1024 from firept;
+	sleep 300;
+	// selfdestruct after firing
+	get KILL_UNIT((get MY_ID),TRUE,FALSE);
+	return (0);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = top;
+	return (0);
+}
+
+Killed(severity, corpsetype)
+{
+	explode top type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+	explode bottom type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+	return (3);
+}

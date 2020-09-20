@@ -92,9 +92,13 @@
 	collisionVolumeScales =25 35 25;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
+
+	[CustomParams]
+	{
+		builtBy=aven_adv_kbot_lab;
+	}
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:BlueFlareBig;
@@ -102,4 +106,5 @@
 	buildcostenergy=3333;//#AUTO#
 	buildcostmetal=666;//#AUTO#
 	buildtime=7943;//#AUTO#
+	mass=672;//#AUTO#
 }

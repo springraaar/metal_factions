@@ -141,14 +141,15 @@
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=sphere_aircraft_factory,sphere_adv_aircraft_factory;
+	}
 	[SFXTypes]
 	{
 	}
 	buildcostenergy=2378;//#AUTO#
 	buildcostmetal=475;//#AUTO#
 	buildtime=5669;//#AUTO#
+	mass=141;//#AUTO#
 }

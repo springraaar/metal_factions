@@ -104,9 +104,11 @@
 	floater=1;
 	waterline=0;
 
-	//************************************************************
-	//  To be removed
-	//*****************
+	[customParams] 
+	{
+		builtBy=aven_l1builder,aven_l2builder;
+	}
+
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:redflare;
@@ -115,4 +117,5 @@
 	buildcostenergy=900;//#AUTO#
 	buildcostmetal=180;//#AUTO#
 	buildtime=2147;//#AUTO#
+	mass=694;//#AUTO#
 }

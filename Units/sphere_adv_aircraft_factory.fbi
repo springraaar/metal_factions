@@ -23,7 +23,6 @@
 	MaxDamage=4500;
 	FootprintX=10;
 	FootprintZ=10;
-	idleautoheal=5;
 
 
 	// ------------------- resources
@@ -37,7 +36,6 @@
 	WorkerTime=300;
 
 
-
 	// ------------------- abilities
 	canmove=1;
 	canpatrol=1;
@@ -46,12 +44,12 @@
 	// ------------------- movement
 	buildangle=1024;
 	YardMap=ccoooooocc ccoooooocc ooccccccoo ooccccccoo ooccccccoo ooccccccoo ooccccccoo ooccccccoo ccoooooocc ccoooooocc ; 
-	MaxWaterDepth=0;
 	MaxSlope=14;
 	collisionVolumeType = box;
 	collisionVolumeScales =150 38 150;
 	collisionVolumeOffsets=0 -5 0;
 	collisionVolumeTest = 1;
+	floater=1;
 
 	// ------------------- scout
 	sightdistance=500;
@@ -62,21 +60,15 @@
 	SelfDestructAs=LARGE_BUILDING;
 
 	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
 
 
 	// ------------------- misc
-	Version=3.1;
-	Designation=CA-lFCT;
-	BMcode=0;
-	ThreeD=1;
-	ZBuffer=1;
 	NoAutoFire=0;
-	downloadable=1;
 
+	[CustomParams]
+	{
+		builtBy=sphere_l1builder,sphere_l2builder;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:Nano;
@@ -84,4 +76,5 @@
 	buildcostenergy=8537;//#AUTO#
 	buildcostmetal=1707;//#AUTO#
 	buildtime=20346;//#AUTO#
+	mass=3388;//#AUTO#
 }

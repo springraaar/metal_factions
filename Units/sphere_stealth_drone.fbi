@@ -4,7 +4,7 @@
 	//  Unit Description
 	//********************
 	Side=Sphere;
-	name=Intelligence Drone;
+	name=Intelligence Drone / Scoper;
 	description=Provides Radar, Sonar and Radar Jammer;
 	icontype=mobileintel;
 
@@ -26,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1000;
+	maxdamage=600;
 	footprintx=2;
 	footprintz=2;
 
@@ -88,6 +88,8 @@
 	//************************************************************
 	//  Weapons
 	//***********
+	weapon1=scoper_beacon;
+	badtargetcategory1=VTOL;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
 
@@ -102,11 +104,6 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	maneuverleashlength=1280;
-	shootme=1;
-	steeringmode=1;
-	version=1.2;
-	zbuffer=1;
 	pieceTrailCEGTag=NanoDebree;
 	pieceTrailCEGRange = 2;
 	collide=1;
@@ -121,18 +118,21 @@
 	reclaimable=0;
 	capturable=0;
 	airhoverfactor=0.2;
+	airstrafe=0;
 	
 	[CustomParams]
 	{
 		isDrone=1;
 		evalfactor=0.5;
+		tip=Target a unit or position to reveal a 200 radius area around it. Obstructed by terrain and other obstacles.;
 	}
 
 	//************************************************************
 	//  To be removed
 	//*****************
 
-	buildcostenergy=2046;//#AUTO#
-	buildcostmetal=409;//#AUTO#
-	buildtime=4877;//#AUTO#
+	buildcostenergy=1560;//#AUTO#
+	buildcostmetal=312;//#AUTO#
+	buildtime=3720;//#AUTO#
+	mass=254;//#AUTO#
 }

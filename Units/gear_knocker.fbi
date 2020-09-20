@@ -114,21 +114,19 @@
 	airhoverfactor=-1;
 	bankingallowed=0;
 	upright=1;
-	
 	collide=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =30 15 30;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-
-	//************************************************************
-	//  To be removed
-	//*****************
+	[CustomParams]
+	{
+		builtBy=gear_aircraft_plant,gear_adv_aircraft_plant;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:glowsml;
@@ -136,4 +134,5 @@
 	buildcostenergy=1947;//#AUTO#
 	buildcostmetal=389;//#AUTO#
 	buildtime=4642;//#AUTO#
+	mass=152;//#AUTO#
 }

@@ -94,7 +94,7 @@
 	//  Weapons
 	//***********
 	weapon1=scoper_beacon;
-	badtargetcategory1=NOTAIR;
+	badtargetcategory1=VTOL;
 	explodeas=SMALL_UNITEX;
 	selfdestructas=SMALL_UNIT;
 
@@ -122,9 +122,9 @@
    
 	[CustomParams]
 	{
+		builtBy=sphere_aircraft_factory,sphere_adv_aircraft_factory;
 		tip=Target a unit or position to reveal a 200 radius area around it. Obstructed by terrain and other obstacles.;
 	}
-
 
 	buildcostenergy=2000;//#AUTO#
 	buildcostmetal=400;//#AUTO#

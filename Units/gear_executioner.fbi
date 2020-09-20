@@ -122,21 +122,19 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:yellowflarebig;
 	explosiongenerator1=custom:UNITFIRE;
 	}
-	[customParams] 
+	[CustomParams]
 	{
+		builtBy=gear_adv_shipyard;
 		canAreaAttack=1;
 		evalfactor=0.85;//SHIP
 	}
 	buildcostenergy=22791;//#AUTO#
 	buildcostmetal=4558;//#AUTO#
 	buildtime=54318;//#AUTO#
+	mass=4750;//#AUTO#
 }

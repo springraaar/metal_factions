@@ -98,16 +98,19 @@
 	pieceTrailCEGRange = 4;
 	waterline=0;
 	floater=1;
+	
+	[CustomParams]
+	{
+		builtBy=aven_l1builder,aven_l2builder;
+	}
 
-	//************************************************************
-	//  To be removed
-	//*****************
 	[SFXTypes]
 	{
 	explosiongenerator0=custom:Nano;
 	}
 
-	buildcostenergy=2479;//#AUTO#
-	buildcostmetal=495;//#AUTO#
-	buildtime=5910;//#AUTO#
+	buildcostenergy=2327;//#AUTO#
+	buildcostmetal=465;//#AUTO#
+	buildtime=5546;//#AUTO#
+	mass=1460;//#AUTO#
 }

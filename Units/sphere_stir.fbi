@@ -102,10 +102,10 @@
 	floater=1;
 	waterline=0;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=sphere_l1builder,sphere_l2builder;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:GLOWSML;
@@ -113,4 +113,5 @@
 	buildcostenergy=1135;//#AUTO#
 	buildcostmetal=227;//#AUTO#
 	buildtime=2706;//#AUTO#
+	mass=750;//#AUTO#
 }

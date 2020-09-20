@@ -117,10 +117,10 @@
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 
-	//************************************************************
-	//  To be removed
-	//*****************
-
+	[CustomParams]
+	{
+		builtBy=aven_adv_kbot_lab;
+	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:rocketflaresml;
@@ -129,4 +129,5 @@
 	buildcostenergy=2115;//#AUTO#
 	buildcostmetal=423;//#AUTO#
 	buildtime=5040;//#AUTO#
+	mass=428;//#AUTO#
 }
