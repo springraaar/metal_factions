@@ -468,7 +468,7 @@ function gadget:GameFrame(n)
 								spDestroyUnit(uId)
 								droneUnderConstruction[uId] = nil
 							elseif ( dist > droneLeashSQDistances[uName]) then
-								Spring.Echo("strayed too far "..n.." dist="..dist)
+								--Spring.Echo("strayed too far "..n.." dist="..dist)
 								spGiveOrderToUnit(uId, CMD.MOVE, { (x+ox)/2, 0, (z+oz)/2 }, {})
 							else
 								-- if idle, fight or patrol nearby position

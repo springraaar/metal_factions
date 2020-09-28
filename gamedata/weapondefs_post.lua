@@ -39,8 +39,8 @@ local noVerticalRangeBoostWeapons = {
 	gear_cube_flamethrower = true,
 	claw_sword_laser = true,
 	claw_u6commander_laser = true,
-	claw_knife_laser = true
-
+	claw_knife_laser = true,
+	gear_vector_flare = true
 }
 
 local function processSoundDefaults(wd)

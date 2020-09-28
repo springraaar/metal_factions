@@ -12,6 +12,8 @@ function AI.create(id, mode, strategyStr, allyId, mapHandler)
 	setmetatable(obj,AI)  -- make AI handle lookup
 	obj.id = id      -- initialize our object
 	obj.mode = mode
+	obj.isEasyMode = (mode == "easy")
+	obj.isBrutalMode = (mode == "brutal")
 	obj.originalStrategyStr = strategyStr
 	obj.currentStrategyStr = strategyStr
 	obj.originalStrategyName = nil
@@ -28,8 +30,8 @@ function AI.create(id, mode, strategyStr, allyId, mapHandler)
 	obj.beaconPos = nil
 	obj.allyId = allyId
 	obj.mapHandler = mapHandler
-   	obj.amphibiousStrategyOverride = false
-   	
+   	obj.strategyOverride = false
+	
 	obj.frameShift = 7*tonumber(id)	-- used to spread out processing from different AIs across multiple frames
 	obj.needStartPosAdjustment = false
 	obj.sentStartupHelpMsg = false
@@ -221,13 +223,106 @@ function AI:Init()
 			self[internalName] = newModule
 			table.insert(self.modules,newModule)
 			newModule:Init(self)
-			-- Echo("added "..newModule:Name().." module") --DEBUG
+			-- Echo("added "..newModule:name().." module") --DEBUG
 		end
 	end
 	
 	-- table with unit behaviors indexed by unitId
 	self.unitBehaviors = {}
 end
+
+
+function AI:addUnitBehavior(unitId,unitDefId)
+	-- add behavior
+	local beh = nil
+	un = UnitDefs[unitDefId].name
+	if UnitDefs[unitDefId].isBuilder or setContains(unitTypeSets[TYPE_SUPPORT],un) or taskQueues[un] ~= nil then
+ 		-- log("adding task queue behavior for unit "..un, self)
+		beh = TaskQueueBehavior.create()
+		beh:Init(self,unitId)
+	elseif setContains(unitTypeSets[TYPE_ATTACKER],un) then
+		-- log("adding attacker behavior for unit "..un, self)
+		beh = AttackerBehavior.create()
+		beh:Init(self,unitId)
+	end
+	self.unitBehaviors[unitId] = beh
+end
+
+function AI:messageAllies(msg)
+	Spring.SendMessageToAllyTeam(self.allyId,"--- AI "..self.id..": "..msg)
+	--Spring.SendMessage("--- AI "..self.id..": "..msg)
+end
+
+-- process external command
+function AI:processExternalCommand(msg,playerId,teamId,pName)
+	if (msg) then
+		local parameters = splitString(msg,"|")
+		local command = parameters[1] 
+		--Spring.Echo("command was: "..command)
+		if (command == EXTERNAL_CMD_SETBEACON) then
+			local px = tonumber(parameters[2])
+			local py = tonumber(parameters[3])
+			local pz = tonumber(parameters[4])
+			
+			-- remove existing marker if any
+			if (self.beaconPos ~= nil) then
+				spMarkerErasePosition(self.beaconPos.x,self.beaconPos.y,self.beaconPos.z)
+			end
+			
+			self.beaconSetPlayerId = playerId
+			self.beaconSetTeamId = teamId
+			self.beaconFrame = spGetGameFrame()
+			self.beaconPos = newPosition(px,py,pz)
+
+			local seconds = floor((self.beaconFrame + BEACON_DURATION_FRAMES) / 30) 
+			local hh = floor(seconds / 3600)
+			local mm = floor(seconds % 3600 / 60)
+			local ss = floor(seconds % 3600 % 60)
+   			hh = hh < 10 and "0"..hh or hh
+   			mm = mm < 10 and "0"..mm or mm
+   			ss = ss < 10 and "0"..ss or ss
+			
+			spMarkerAddPoint(px,py,pz,"AI BEACON\nuntil "..hh..":"..mm..":"..ss.."\n("..pName..")")
+
+		elseif (command == EXTERNAL_CMD_REMOVEBEACON) then
+			self.beaconSetPlayerId = playerId
+			self.beaconSetTeamId = teamId
+			
+			-- remove existing marker if any
+			if (self.beaconPos ~= nil) then
+				spMarkerErasePosition(self.beaconPos.x,self.beaconPos.y,self.beaconPos.z)
+			end
+			self.beaconFrame = nil
+			self.beaconPos = nil
+
+		elseif (command == EXTERNAL_CMD_STATUS) then
+			if self.useStrategies then
+				self:messageAllies("Current strategy : \""..self.currentStrategyStr.."\" : "..self.currentStrategyName)
+			else
+				self:messageAllies("Classic Mode")
+			end
+			self:messageAllies("Last 10 min efficiency : "..tostring(self.unitHandler.teamCombatEfficiency))
+		elseif (command == EXTERNAL_CMD_STRATEGY) then
+			local targetTeamId = tonumber(parameters[2])
+			local strategyStr = nil	
+			if (targetTeamId ~= nil) then
+				strategyStr = parameters[3]
+			else
+				strategyStr = parameters[2]
+			end 
+			
+			if (targetTeamId == nil or targetTeamId == self.id) then
+				if (strategyStr ~= nil and strategyTable[self.side.."_"..strategyStr]) then
+					self:setStrategy(self.side,strategyStr)
+				else
+					self:messageAllies("ERROR: strategy "..tostring(strategyStr).." not found for "..self.side)
+				end
+			end
+		end
+	end
+end
+
+----------------------- engine event handlers
 
 function AI:GameFrame(n)
 	if self.gameEnd == true then
@@ -241,10 +336,14 @@ function AI:GameFrame(n)
 		end
 		self:messageAllies("Use CTRL-ALT-CLICK to set AI beacon (RIGHT click to clear)")
 		self:messageAllies("Type #AI to view commands")
-		self:messageAllies("Current strategy : \""..self.currentStrategyStr.."\" : "..self.currentStrategyName)
-		self:messageAllies("Available strategies:")
-		for i,str in ipairs(availableStrategyIds) do
-			self:messageAllies(" "..str)
+		if self.useStrategies then
+			self:messageAllies("Current strategy : \""..self.currentStrategyStr.."\" : "..self.currentStrategyName)
+			self:messageAllies("Available strategies:")
+			for i,str in ipairs(availableStrategyIds) do
+				self:messageAllies(" "..str)
+			end
+		else
+			self:messageAllies("Classic Mode")
 		end
 
 		self.sentStartupHelpMsg = true
@@ -273,6 +372,14 @@ function AI:GameFrame(n)
 		end
 	end
 	
+	-- resource compensation for brutal mode
+	if (self.isBrutalMode) then
+		if fmod(n,15) == 0 then
+			local minutesPassed = floor(n/FRAMES_PER_MIN)
+			spAddTeamResource(self.id,"metal",BRUTAL_BASE_INCOME_METAL + minutesPassed * BRUTAL_BASE_INCOME_METAL_PER_MIN  )
+			spAddTeamResource(self.id,"energy",BRUTAL_BASE_INCOME_ENERGY + minutesPassed * BRUTAL_BASE_INCOME_ENERGY_PER_MIN )
+		end
+	end
 end
 
 function AI:UnitCreated(unitId, unitDefId, teamId, builderId)
@@ -388,7 +495,8 @@ function AI:UnitTaken(unitId, unitDefId, teamId, newTeamId)
 	if self.gameEnd == true then
 		return
 	end
-	 
+
+	--log("unit taken t="..teamId.." nt="..newTeamId,self.ai) --DEBUG
  	-- only relevant for own units
 	if (teamId == self.id and newTeamId ~= self.id) then
 		for i,m in ipairs(self.modules) do
@@ -412,6 +520,7 @@ function AI:UnitGiven(unitId, unitDefId, teamId, oldTeamId)
 		return
 	end
 
+	--log("unit given t="..teamId.." ot="..oldTeamId,self.ai) --DEBUG
 	-- only relevant for own units
 	if (teamId == self.id and self.modules ~= nil) then
 		for i,m in ipairs(self.modules) do
@@ -434,88 +543,3 @@ function AI:GameEnd()
 	end
 end
 
-
-function AI:addUnitBehavior(unitId,unitDefId)
-	-- add behavior
-	local beh = nil
-	un = UnitDefs[unitDefId].name
-	if UnitDefs[unitDefId].isBuilder or setContains(unitTypeSets[TYPE_SUPPORT],un) or taskQueues[un] ~= nil then
- 		-- log("adding task queue behavior for unit "..un, self)
-		beh = TaskQueueBehavior.create()
-		beh:Init(self,unitId)
-	elseif setContains(unitTypeSets[TYPE_ATTACKER],un) then
-		-- log("adding attacker behavior for unit "..un, self)
-		beh = AttackerBehavior.create()
-		beh:Init(self,unitId)
-	end
-	self.unitBehaviors[unitId] = beh
-end
-
-function AI:messageAllies(msg)
-	Spring.SendMessageToAllyTeam(self.allyId,"--- AI "..self.id..": "..msg)
-end
-
--- process external command
-function AI:processExternalCommand(msg,playerId,teamId,pName)
-	if (msg) then
-		local parameters = splitString(msg,"|")
-		local command = parameters[1] 
-		--Spring.Echo("command was: "..command)
-		if (command == EXTERNAL_CMD_SETBEACON) then
-			local px = tonumber(parameters[2])
-			local py = tonumber(parameters[3])
-			local pz = tonumber(parameters[4])
-			
-			-- remove existing marker if any
-			if (self.beaconPos ~= nil) then
-				spMarkerErasePosition(self.beaconPos.x,self.beaconPos.y,self.beaconPos.z)
-			end
-			
-			self.beaconSetPlayerId = playerId
-			self.beaconSetTeamId = teamId
-			self.beaconFrame = spGetGameFrame()
-			self.beaconPos = newPosition(px,py,pz)
-
-			local seconds = floor((self.beaconFrame + BEACON_DURATION_FRAMES) / 30) 
-			local hh = floor(seconds / 3600)
-			local mm = floor(seconds % 3600 / 60)
-			local ss = floor(seconds % 3600 % 60)
-   			hh = hh < 10 and "0"..hh or hh
-   			mm = mm < 10 and "0"..mm or mm
-   			ss = ss < 10 and "0"..ss or ss
-			
-			spMarkerAddPoint(px,py,pz,"AI BEACON\nuntil "..hh..":"..mm..":"..ss.."\n("..pName..")")
-
-		elseif (command == EXTERNAL_CMD_REMOVEBEACON) then
-			self.beaconSetPlayerId = playerId
-			self.beaconSetTeamId = teamId
-			
-			-- remove existing marker if any
-			if (self.beaconPos ~= nil) then
-				spMarkerErasePosition(self.beaconPos.x,self.beaconPos.y,self.beaconPos.z)
-			end
-			self.beaconFrame = nil
-			self.beaconPos = nil
-
-		elseif (command == EXTERNAL_CMD_STATUS) then
-			self:messageAllies("Current strategy : \""..self.currentStrategyStr.."\" : "..self.currentStrategyName)
-			self:messageAllies("Last 10 min efficiency : "..tostring(self.unitHandler.teamCombatEfficiency))
-		elseif (command == EXTERNAL_CMD_STRATEGY) then
-			local targetTeamId = tonumber(parameters[2])
-			local strategyStr = nil	
-			if (targetTeamId ~= nil) then
-				strategyStr = parameters[3]
-			else
-				strategyStr = parameters[2]
-			end 
-			
-			if (targetTeamId == nil or targetTeamId == self.id) then
-				if (strategyStr ~= nil and strategyTable[self.side.."_"..strategyStr]) then
-					self:setStrategy(self.side,strategyStr)
-				else
-					self:messageAllies("ERROR: strategy "..tostring(strategyStr).." not found for "..self.side)
-				end
-			end
-		end
-	end
-end

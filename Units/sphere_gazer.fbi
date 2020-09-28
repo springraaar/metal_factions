@@ -58,6 +58,7 @@
 	upright=1;
 	bankingallowed=0;
 	useSmoothMesh=1;
+	verticalSpeed=0.8;
 
 	// ------------------- scout
 	sightdistance=600;
@@ -104,9 +105,11 @@
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:redflare;
+		explosiongenerator1=custom:gazerglow1;
+		explosiongenerator2=custom:gazerglow2;
 	}
-	buildcostenergy=15301;//#AUTO#
-	buildcostmetal=3060;//#AUTO#
-	buildtime=36468;//#AUTO#
-	mass=4032;//#AUTO#
+	buildcostenergy=16019;//#AUTO#
+	buildcostmetal=3203;//#AUTO#
+	buildtime=38180;//#AUTO#
+	mass=4108;//#AUTO#
 }

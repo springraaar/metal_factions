@@ -9,7 +9,7 @@ function BuildSiteHandler.create()
    return obj
 end
 
-function BuildSiteHandler:Name()
+function BuildSiteHandler:name()
 	return "BuildSiteHandler"
 end
 
@@ -29,19 +29,6 @@ function BuildSiteHandler:Init(ai)
 	self.buildingOrderTable = {}
 	
 end
-
-function BuildSiteHandler:GameFrame(f)
-	-- cleanup build order table
-	if fmod(f,60) == 6 then
-		for k,v in pairs(self.buildingOrderTable) do
-			-- if expired, remove from table
-			if (f - v.frame > BUILD_ORDER_VALIDITY_FRAMES) then
-				self.buildingOrderTable[k] = nil
-			end
-		end
-	end	
-end
-
 
 function BuildSiteHandler:markBuildOrder(xi,zi,unitName,builderId)
 	local f = spGetGameFrame()
@@ -73,7 +60,6 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 	local zMax = searchPos.z + searchRadius
 	local step = 48
 	
-	
 	local radius = spGetUnitDefDimensions(ud.id).radius
 	-- built in sets of 4, assume double radius
 	if (multiBuildBuildings[ud.name]) then
@@ -97,6 +83,7 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 	local testRadius = minDistance+radius
 	local groundMetal = 0
 	local isMetalMap = self.ai.mapHandler.isMetalMap
+	local checkPos = newPosition(searchPos.x,searchPos.y,searchPos.z)
 	for x = xMin, xMax, step do
 		-- check x map bounds
 		if (x > self.mapMinX) and (x < self.mapMaxX) then
@@ -119,10 +106,6 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 					--if isStaticBuilder then
 					--	Spring.MarkerAddPoint(testPos.x,testPos.y,testPos.z,valid and "b" or "-") --DEBUG
 					--end
-					
-					-- if spot is underwater, skip
-					-- TODO support water maps properly
-					--if not ( self.waterDoesDamage and spGetGroundHeight(x,z) < 0) then
 					
 					if valid and (builderBehavior.isWaterMode or testPos.y >= 0) then
 						-- check if unit can be built
@@ -156,10 +139,26 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 
 									-- only test south exit if it isn't an air unit factory or upg center
 									if plantPFType ~= PF_UNIT_AIR then
-										buildTest = spTestBuildOrder(ud.id, testPos.x, testPos.y, testPos.z + 80,0)
+										buildTest = spTestBuildOrder(ud.id, testPos.x, testPos.y, testPos.z + 100,0)
 										if (buildTest ~= 1 and buildTest ~= 2) then
 											valid = false
 										end
+										
+										
+										-- test for metal spots as well to avoid the adv extractors blocking the factory
+										if ( valid == true ) then
+											if (isMetalMap == false and self.ai.mapHandler.allowBuildingOverMetalSpots == false) then
+												checkPos = newPosition(testPos.x,testPos.y,testPos.z+120)
+												-- check if unit violates minimum distance from nearby metal spots
+												for _,sPos in ipairs(mapCell.nearbyMetalSpots) do
+													if (checkWithinDistance(checkPos,sPos,200)) then
+														valid = false
+														break
+													end
+												end
+											end
+										end
+
 									end
 
 									if plantPFType then
@@ -174,9 +173,10 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 							end
 							if ( valid == true ) then
 								if (isMetalMap == false and self.ai.mapHandler.allowBuildingOverMetalSpots == false) then
+									local checkPos = newPosition(searchPos.x,searchPos.y,searchPos.z)
 									-- check if unit violates minimum distance from nearby metal spots
-									for _,sPos in ipairs(mapCell.metalSpots) do
-										if (checkWithinDistance(testPos,sPos,testRadius+100)) then
+									for _,sPos in ipairs(mapCell.nearbyMetalSpots) do
+										if (checkWithinDistance(testPos,sPos,testRadius+180)) then
 											valid = false
 											break
 										end
@@ -217,7 +217,7 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 							-- extra check to confirm that this isn't blocking any factory
 							--TODO this shouldn't be necessary at this point
 							if ( valid == true ) then
-								for _,uId in pairs(spGetUnitsInCylinder(x,z-80,80)) do
+								for _,uId in pairs(spGetUnitsInCylinder(x,z-80,160)) do
 									uDef = UnitDefs[spGetUnitDefID(uId)]
 									if uDef and setContains(unitTypeSets[TYPE_PLANT],uDef.name) then
 										valid = false
@@ -289,10 +289,13 @@ function BuildSiteHandler:closestBuildSpot(builderBehavior, ud, minimumDistance,
 				local searchRadius = BUILD_SEARCH_RADIUS * (floor(i/6)+1)
 				searchAngle = (i - 1) / 3 * math.pi
 				searchPos = newPosition()
-				searchPos.x = floor(targetPos.x + searchRadius * math.sin(searchAngle) / 16 + 0.5) * 16
-				searchPos.z = floor(targetPos.z + searchRadius * math.cos(searchAngle) / 16 + 0.5) * 16
+				searchPos.x = floor((targetPos.x + searchRadius * math.cos(searchAngle)) / 16 + 0.5) * 16
+				searchPos.z = floor((targetPos.z + searchRadius * math.sin(searchAngle)) / 16 + 0.5) * 16
 				searchPos.y = targetPos.y
 	
+				--if builderBehavior.unitName=='sphere_construction_vehicle' then
+				--	Spring.MarkerAddPoint(searchPos.x,500,searchPos.z,"r="..searchRadius) --DEBUG 
+				--end
 				-- test position
 				pos = self:findClosestBuildSite(ud, searchPos, searchRadius, minDistance, builderBehavior)	
 				if pos ~= nil then
@@ -306,12 +309,11 @@ function BuildSiteHandler:closestBuildSpot(builderBehavior, ud, minimumDistance,
 end
 
 -- return position where builder should attempt to build metal extractor or geothermal plant
-function BuildSiteHandler:closestFreeSpot(builderBehavior, ud, position, safety, type, builderDef, builderId)
+function BuildSiteHandler:closestFreeSpot(builderBehavior, ud, position, safety, type, builderDef)
 	local pos = nil
 	local bestDistance = INFINITY
 
  	-- check for armed enemy units nearby
-	local enemyUnitIds = self.ai.enemyUnitIds
 	local spots = {}
 	local isGeo = false
 	if (type == "metal" or type == "advMetal") then
@@ -330,7 +332,7 @@ function BuildSiteHandler:closestFreeSpot(builderBehavior, ud, position, safety,
 		-- don't add if it's already too high or can't move there
 		if dist < bestDistance and (builderDef.canFly or self.ai.mapHandler:checkConnection(position,p,builderBehavior.pFType)) then
 			-- now check if we can build there			
-			local units = spGetUnitsInCylinder(p.x,p.z,100)
+			local units = spGetUnitsInCylinder(p.x,p.z,110)
 			local vacant = true
 			
 			if not isGeo then
@@ -393,7 +395,6 @@ function BuildSiteHandler:getBuildSearchPos(builderBehavior,ud)
 	local distanceToSelf = 0
 	local distanceToBase = 0
 	local cost = getWeightedCost(ud)
-	
 
 	for _,cell in ipairs(self.ai.mapHandler.mapCellList) do
 		distanceToSelf = distance(cell.p,builderPos)
@@ -415,7 +416,7 @@ function BuildSiteHandler:getBuildSearchPos(builderBehavior,ud)
 							weightedDistance = distanceToSelf * 0.8 + distanceToVulnerable * 0.2
 						end
 					else
-						weightedDistance = distanceToSelf * 0.3 + distanceToSafe * 0.45 + distanceToBase * 0.25
+						weightedDistance = distanceToSelf * 0.3 + distanceToSafe * 0.15 + distanceToBase * 0.55
 					end					
 						
 				else
@@ -425,6 +426,10 @@ function BuildSiteHandler:getBuildSearchPos(builderBehavior,ud)
 				if(bestCell == nil or weightedDistance < bestDistance) then
 					bestCell = cell
 					bestDistance = weightedDistance
+					--if builderName=='sphere_construction_vehicle' then
+					--	Spring.MarkerAddPoint(bestCell.p.x,bestCell.p.y,bestCell.p.z,bestDistance) --DEBUG 
+					--	log("distanceToSelf="..tostring(distanceToSelf).." distanceToSafe="..tostring(distanceToSafe).." distanceToVulnerable="..tostring(distanceToVulnerable).." distanceToBase="..tostring(distanceToBase), self.ai) 
+					--end
 				end
 			end
 		end
@@ -443,4 +448,21 @@ function BuildSiteHandler:getBuildSearchPos(builderBehavior,ud)
 		return nil
 	end
 	return targetPos
+end
+
+
+
+----------------------- engine event handlers
+
+
+function BuildSiteHandler:GameFrame(f)
+	-- cleanup build order table
+	if fmod(f,60) == 6 then
+		for k,v in pairs(self.buildingOrderTable) do
+			-- if expired, remove from table
+			if (f - v.frame > BUILD_ORDER_VALIDITY_FRAMES) then
+				self.buildingOrderTable[k] = nil
+			end
+		end
+	end	
 end

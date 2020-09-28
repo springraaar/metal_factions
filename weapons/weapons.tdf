@@ -1771,7 +1771,7 @@
 	weapontype=Cannon;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	energypershot=0;
-	accuracy=350;
+	accuracy=300;
 	turret=1;
 	range=1330;
 	reloadtime=3.1;
@@ -2348,7 +2348,7 @@
 	areaofeffect=100;
 	soundstart=cannhvy5;
 	soundhit=xplomed2;
-	accuracy=260;
+	accuracy=250;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -4974,8 +4974,8 @@
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	soundstart=cannhvy2;
 	soundhit=xplomed4;
-	accuracy=350;
-	movingaccuracy=650;
+	accuracy=200;
+	movingaccuracy=500;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -5115,8 +5115,8 @@
 	areaofeffect=80;
 	soundstart=CANNHVY1;
 	soundhit=xplomed2;
-	accuracy=400;
-	movingaccuracy=800;
+	accuracy=200;
+	movingaccuracy=350;
 	size=3.4;
 	rgbcolor=0.9 0.7 0.3;
 	stages=4;
@@ -5549,8 +5549,8 @@
   	alphadecay=0.3;
   	sizedecay=-0.1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	accuracy=400;
-	movingaccuracy=700;
+	accuracy=200;
+	movingaccuracy=500;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -5587,8 +5587,8 @@
   	sizedecay=-0.1;
 	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	accuracy=400;
-	movingaccuracy=700;
+	accuracy=200;
+	movingaccuracy=300;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -6526,8 +6526,8 @@
 	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	energypershot=0;
-	accuracy=350;
-	movingaccuracy=700;
+	accuracy=300;
+	movingaccuracy=600;
 	turret=1;
 	range=780;
 	reloadtime=4.2;
@@ -6773,8 +6773,8 @@
 	reloadtime=3;
 	weaponvelocity=390;
 	areaofeffect=80;
-	accuracy=600;
-	movingaccuracy=1200;
+	accuracy=300;
+	movingaccuracy=600;
 	soundstart=cannon3;
 	soundhit=xplomed2;
 	tolerance=3000;
@@ -6938,7 +6938,7 @@
 	explosiongenerator=custom:FLAREBLASTWRAPPER;
 	model=weapon_flare.3do;
 	cegTag=FLARETRAIL;
-	range=400;
+	range=410;
 	turret=1;
 	reloadtime=1;
 	flighttime=4;
@@ -6962,6 +6962,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		evalfactor=1.4; // compensation for the evaluator's factor for non-hoverattack air types
 	}
 	[DAMAGE]
 	{
@@ -7318,6 +7319,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		evalfactor=1.25; // compensation for the evaluator's factor for non-hoverattack air types
 	}
 	[DAMAGE]
 	{
@@ -7421,8 +7423,8 @@
 	areaofeffect=80;
 	soundstart=CANNHVY1;
 	soundhit=xplomed2;
-	accuracy=400;
-	movingaccuracy=800;
+	accuracy=200;
+	movingaccuracy=350;
 	size=3.4;
 	rgbcolor=0.9 0.7 0.3;
 	stages=4;
@@ -7862,8 +7864,8 @@
 	weapontype=Cannon;
 	turret=1;
 	range=900;
-	accuracy=400;
-	movingaccuracy=800;
+	accuracy=200;
+	movingaccuracy=350;
 	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=1.32;
@@ -7899,8 +7901,8 @@
 	weapontype=Cannon;
 	turret=1;
 	range=1220;
-	accuracy=400;
-	movingaccuracy=800;
+	accuracy=200;
+	movingaccuracy=350;
 	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=1.1;
@@ -7936,8 +7938,8 @@
 	weapontype=Cannon;
 	turret=1;
 	range=700;
-	accuracy=300;
-	movingaccuracy=700;
+	accuracy=200;
+	movingaccuracy=500;
 	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=1.76;
@@ -8014,8 +8016,8 @@
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	soundstart=cannhvy1;
 	soundhit=xplomed2;
-	accuracy=400;
-	movingaccuracy=800;
+	accuracy=200;
+	movingaccuracy=500;
 	tolerance=3000;
 	size=3.4;
 	rgbcolor=0.9 0.7 0.3;
@@ -8091,8 +8093,8 @@
 	soundstart=cannon1;
 	soundhit=xplomed4;
 	tolerance=4000;
-	accuracy=1000;
-	movingaccuracy=1000;
+	accuracy=600;
+	movingaccuracy=600;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
 	stages=3;
@@ -8340,7 +8342,7 @@
   	separation=0.4;
   	alphadecay=0.24;
   	sizedecay=-0.1;
-	accuracy=260;
+	accuracy=240;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -8881,7 +8883,7 @@
 	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	energypershot=0;
-	accuracy=350;
+	accuracy=300;
 	turret=1;
 	range=1330;
 	reloadtime=3;
@@ -9055,8 +9057,8 @@
 	areaofeffect=80;
 	soundstart=CANNHVY1;
 	soundhit=xplomed2;
-	accuracy=300;
-	movingaccuracy=600;
+	accuracy=200;
+	movingaccuracy=300;
 	size=3.4;
 	rgbcolor=0.9 0.7 0.3;
 	stages=4;
@@ -9094,8 +9096,8 @@
 	areaofeffect=80;
 	soundstart=CANNHVY1;
 	soundhit=xplomed2;
-	accuracy=300;
-	movingaccuracy=600;
+	accuracy=200;
+	movingaccuracy=500;
 	size=3.4;
 	rgbcolor=0.9 0.7 0.3;
 	stages=4;
@@ -9307,7 +9309,7 @@
 	reloadtime=0.16;
 	weapontimer=1;
 	weaponvelocity=500;
-	accuracy=600;
+	accuracy=400;
 	areaofeffect=8;
 	soundstart=armsml2;
 	soundhit=emghit;
@@ -11309,7 +11311,7 @@
 	reloadtime=0.14;
 	weapontimer=0.8;
 	weaponvelocity=500;
-	accuracy=600;
+	accuracy=400;
 	areaofeffect=8;
 	soundstart=armsml3;
 	soundhit=emghit;
@@ -11512,9 +11514,9 @@
 	thickness=2.123;
 	turret=1;
 	corethickness=0.55;
-	range=460;
+	range=420;
 	minintensity=1.0;
-	reloadtime=0.25;
+	reloadtime=0.3;
 	weaponvelocity=1533;
 	energypershot=12;
 	areaofeffect=8;
@@ -11535,6 +11537,7 @@
 		hitpower=1;
 		reaimtime=1;
 		airLaser=1;
+		evalfactor=1.4; // compensation for the evaluator's factor for non-hoverattack air types
 	}
 	[DAMAGE]
 	{
@@ -12156,8 +12159,8 @@
 	areaofeffect=80;
 	soundstart=CANNHVY1;
 	soundhit=xplomed2;
-	accuracy=300;
-	movingaccuracy=600;
+	accuracy=200;
+	movingaccuracy=300;
 	size=3.4;
 	rgbcolor=0.9 0.7 0.3;
 	stages=4;
@@ -12194,8 +12197,8 @@
 	areaofeffect=80;
 	soundstart=CANNHVY1;
 	soundhit=xplomed2;
-	accuracy=400;
-	movingaccuracy=800;
+	accuracy=200;
+	movingaccuracy=350;
 	size=3.4;
 	rgbcolor=0.9 0.7 0.3;
 	stages=4;
@@ -12232,8 +12235,8 @@
 	soundstart=CANNHVY1;
 	soundhit=xplomed2;
 	tolerance=3000;
-	accuracy=400;
-	movingaccuracy=800;
+	accuracy=200;
+	movingaccuracy=350;
 	size=3.4;
 	rgbcolor=0.9 0.7 0.3;
 	stages=4;
@@ -14059,7 +14062,7 @@
 	thickness=2.123;
 	corethickness=0.55;
 	turret=1;
-	range=460;
+	range=430;
 	minintensity=1.0;
 	reloadtime=1;
 	beamburst=1;
@@ -14084,7 +14087,7 @@
 	{
 		hitpower=1;
 		restrictedAngle=1;
-		evalfactor=0.6;
+		evalfactor=0.7;
 		airLaser=1;
 	}
 	[DAMAGE]
@@ -14900,7 +14903,8 @@
 	areaofeffect=100;
 	soundstart=cannhvy5;
 	soundhit=xplomed2;
-	accuracy=450;
+	accuracy=200;
+	movingaccuracy=300;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -15355,7 +15359,8 @@
 	areaofeffect=64;
 	soundstart=cannon3;
 	soundhit=xplomed2;
-	accuracy=1000;
+	accuracy=400;
+	movingaccuracy=800;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -15409,43 +15414,6 @@
 		armor_light=80;//#AUTO#
 	}
 }
-[claw_grunt_cannon]
-{
-	name=Plasma Cannon;
-	weapontype=Cannon;
-	turret=1;
-	range=370;
-	accuracy=800;
-	movingaccuracy=1600;
-	reloadtime=2.8;
-	weaponvelocity=280;
-	cegTag=PLASMATRAIL1;
-	explosiongenerator=custom:STDBLASTWRAPPER;
-	areaofeffect=48;
-	soundstart=cannon1;
-	soundhit=xplomed3;
-	tolerance=3000;
-	size=3.2;
-	rgbcolor=0.7 0.6 0.3;
-	stages=3;
-  	separation=0.5;
-  	alphadecay=0.3;
-  	sizedecay=-0.1;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=2;
-		reaimtime=1;
-	}
-	[DAMAGE]
-	{
-		default=80;
-		armor_heavy=40;//#AUTO#
-		armor_medium=80;//#AUTO#
-		armor_light=80;//#AUTO#
-	}
-}
 [claw_armadon_cannon]
 {
 	name=Plasma Cannon;
@@ -15457,8 +15425,8 @@
 	reloadtime=1;
 	weaponvelocity=355;
 	areaofeffect=64;
-	accuracy=300;
-	movingaccuracy=600;
+	accuracy=200;
+	movingaccuracy=500;
 	soundstart=cannon3;
 	soundhit=xplomed2;
 	tolerance=3000;
@@ -15610,8 +15578,8 @@
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	soundstart=cannhvy2;
 	soundhit=xplomed4;
-	accuracy=350;
-	movingaccuracy=650;
+	accuracy=200;
+	movingaccuracy=350;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -15648,8 +15616,8 @@
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	soundstart=cannhvy2;
 	soundhit=xplomed4;
-	accuracy=350;
-	movingaccuracy=600;
+	accuracy=200;
+	movingaccuracy=350;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -15686,8 +15654,8 @@
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	soundstart=cannhvy2;
 	soundhit=xplomed2;
-	accuracy=350;
-	movingaccuracy=650;
+	accuracy=200;
+	movingaccuracy=500;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -15764,8 +15732,8 @@
   	separation=0.4;
   	alphadecay=0.24;
   	sizedecay=-0.1;
-	accuracy=600;
-	movingaccuracy=1200;
+	accuracy=200;
+	movingaccuracy=500;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -16361,8 +16329,8 @@
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	soundstart=cannon3;
 	soundhit=xplomed2;
-	accuracy=400;
-	movingaccuracy=800;
+	accuracy=200;
+	movingaccuracy=500;
 	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
@@ -16576,7 +16544,8 @@
 	soundstart=largegun2;
 	soundhit=xplolrg5;
 	firestarter=50;
-	accuracy=500;
+	accuracy=400;
+	movingaccuracy=800;
 	tolerance=3000;
 	edgeeffectiveness=0.1;
 	burnblow=1;
@@ -16991,14 +16960,15 @@
 	name=High Energy Laser;
 	weapontype=BeamLaser;
 	explosiongenerator=custom:REDLASERBLASTWRAPPER;
-	beamtime=0.25;
+	beamtime=0.35;
+	beamttl=2;
 	thickness=4.00;
 	corethickness=1.0;
 	intensity=0.9;
 	turret=1;
 	range=730;
 	minintensity=1.0;
-	reloadtime=3.6;
+	reloadtime=5.2;
 	energypershot=750;
 	weaponvelocity=1533;
 	areaofeffect=8;
@@ -17008,7 +16978,7 @@
 	texture1=largebeam;
 	scrollspeed=0;
 	pulsespeed=0;
-	rgbcolor=1.0 1.0 1.0;
+	rgbcolor=0.9 0.5 0.5;
 	rgbcolor2=0.5 0.0 0.0;
 	tolerance=3000;
 	impulsefactor=0.222;
@@ -17021,11 +16991,11 @@
 	}
 	[DAMAGE]
 	{
-		default=500;
+		default=700;
 		group_invincible=1;
-		armor_heavy=500;//#AUTO#
-		armor_medium=500;//#AUTO#
-		armor_light=500;//#AUTO#
+		armor_heavy=700;//#AUTO#
+		armor_medium=700;//#AUTO#
+		armor_light=700;//#AUTO#
 	}
 }
 [sphere_u6commander_cannon]
@@ -17347,8 +17317,8 @@
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	soundstart=cannon3;
 	soundhit=xplomed2;
-	accuracy=400;
-	movingaccuracy=800;
+	accuracy=200;
+	movingaccuracy=500;
 	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
@@ -17787,8 +17757,8 @@
 	weapontype=Cannon;
 	turret=1;
 	range=500;
-	accuracy=500;
-	movingaccuracy=800;
+	accuracy=200;
+	movingaccuracy=500;
 	reloadtime=2.35;
 	weaponvelocity=300;
 	cegTag=PLASMATRAIL2;
@@ -17824,8 +17794,8 @@
 	weapontype=Cannon;
 	turret=1;
 	range=500;
-	accuracy=240;
-	movingaccuracy=420;
+	accuracy=200;
+	movingaccuracy=500;
 	reloadtime=2.35;
 	weaponvelocity=300;
 	cegTag=PLASMATRAIL2;
@@ -18154,7 +18124,8 @@
 	areaofeffect=100;
 	soundstart=cannhvy5;
 	soundhit=xplomed2;
-	accuracy=400;
+	accuracy=200;
+	movingaccuracy=300;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -18333,7 +18304,7 @@
 	reloadtime=0.5;
 	weapontimer=1;
 	weaponvelocity=600;
-	accuracy=450;
+	accuracy=400;
 	areaofeffect=24;
 	soundstart=engcannon;
 	soundhit=xplomed5;
@@ -18459,6 +18430,7 @@
 	weapontimer=1;
 	weaponvelocity=500;
 	accuracy=300;
+	movingaccuracy=600;
 	areaofeffect=140;
 	soundstart=phofir00;
 	soundhit=xplochargedshot;
@@ -18814,8 +18786,8 @@
 	turret=1;
 	model=weapon_redrocket.3do;
 	range=1260;
-	accuracy=300;
-	movingaccuracy=600;
+	accuracy=200;
+	movingaccuracy=350;
 	burst=2;
 	burstrate=0.3;
 	reloadtime=10;
@@ -18855,7 +18827,7 @@
 	model=weapon_redrocket3.3do;
 	range=880;
 	accuracy=300;
-	movingaccuracy=600;
+	movingaccuracy=500;
 	burst=2;
 	burstrate=0.3;
 	reloadtime=6.4;
@@ -20513,7 +20485,7 @@
 	scrollspeed=3;
 	thickness=5;
 	beamtime=0.1;
-	range=460; 
+	range=420; 
 	reloadtime=0.1;
 	energypershot=4;
 	weaponvelocity=400;
@@ -20535,13 +20507,14 @@
 		hitpower=1;
 		reaimtime=1;
 		airLaser=1;
+		evalfactor=1.4; // compensation for the evaluator's factor for non-hoverattack air types
 	}
 	[DAMAGE]
 	{
-		default=10;
+		default=9;
 		armor_heavy=2;//#AUTO#
-		armor_medium=5;//#AUTO#
-		armor_light=10;//#AUTO#
+		armor_medium=4;//#AUTO#
+		armor_light=9;//#AUTO#
 	}
 }
 [sphere_blower_aabomb]
@@ -20881,14 +20854,15 @@
 	name=High Energy Laser;
 	weapontype=BeamLaser;
 	explosiongenerator=custom:REDLASERBLASTWRAPPER;
-	beamtime=0.25;
+	beamtime=0.35;
+	beamttl=2;
 	thickness=4.00;
 	corethickness=1.0;
 	intensity=0.9;
 	turret=1;
 	range=870;
 	minintensity=1.0;
-	reloadtime=5;
+	reloadtime=7;
 	energypershot=500;
 	weaponvelocity=1533;
 	areaofeffect=8;
@@ -20898,7 +20872,7 @@
 	texture1=largebeam;
 	scrollspeed=0;
 	pulsespeed=0;
-	rgbcolor=1.0 1.0 1.0;
+	rgbcolor=0.9 0.5 0.5;
 	rgbcolor2=0.5 0.0 0.0;
 	tolerance=3000;
 	impulsefactor=0.222;
@@ -20911,11 +20885,11 @@
 	}
 	[DAMAGE]
 	{
-		default=500;
+		default=700;
 		group_invincible=1;
-		armor_heavy=500;//#AUTO#
-		armor_medium=500;//#AUTO#
-		armor_light=500;//#AUTO#
+		armor_heavy=700;//#AUTO#
+		armor_medium=700;//#AUTO#
+		armor_light=700;//#AUTO#
 	}
 }
 [sphere_crab_torpedo]

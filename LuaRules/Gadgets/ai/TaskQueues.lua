@@ -31,23 +31,32 @@ function reclaimNearbyFeaturesIfNecessary(self)
 	local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
 	local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
 	
-	local wrecks = spGetFeaturesInCylinder(selfPos.x,selfPos.z, 500)
+	local radius = 500
+	if self.isStaticBuilder then
+		radius = self.buildRange * 0.9
+	end
+	
+	local wrecks = spGetFeaturesInCylinder(selfPos.x,selfPos.z, radius)
 	local featuresToReclaim = {}
 	if (#wrecks > 0) then
 		local metalAmount = 0
 		local energyAmount = 0
 		
 		for i,fId in ipairs(wrecks) do
-			local remainingM,_,remainingE,_,reclaimLeft,reclaimTime = spGetFeatureResources(fId)
-			local fd = FeatureDefs[spGetFeatureDefID(fId)]
-			if (fd and fd.reclaimable == true) then
-				if remainingM and remainingM > 0 and currentLevelM + metalAmount < 0.8*storageM  then
-					metalAmount = metalAmount + remainingM
-					featuresToReclaim[#featuresToReclaim+1] = fId
-				end
-				if remainingE and remainingE > 0 and currentLevelE + energyAmount < 0.5*storageE  then
-					energyAmount = energyAmount + remainingE
-					featuresToReclaim[#featuresToReclaim+1] = fId
+			local fPos = newPosition(spGetFeaturePosition(fId,false,false))
+			-- pathing check if necessary
+			if self.isStaticBuilder or self.ai.mapHandler:checkConnection(selfPos, fPos,self.pFType) then
+				local remainingM,_,remainingE,_,reclaimLeft,reclaimTime = spGetFeatureResources(fId)
+				local fd = FeatureDefs[spGetFeatureDefID(fId)]
+				if (fd and fd.reclaimable == true) then
+					if remainingM and remainingM > 0 and currentLevelM + metalAmount < 0.8*storageM  then
+						metalAmount = metalAmount + remainingM
+						featuresToReclaim[#featuresToReclaim+1] = fId
+					end
+					if remainingE and remainingE > 0 and currentLevelE + energyAmount < 0.5*storageE  then
+						energyAmount = energyAmount + remainingE
+						featuresToReclaim[#featuresToReclaim+1] = fId
+					end
 				end
 			end
 		end
@@ -155,31 +164,45 @@ function assistOtherBuilderIfNeeded(self)
 	return SKIP_THIS_TASK
 end
 
+-- repair nearby units, or assist nearby construction given some restrictions
+-- use the base position as reference
 function assistNearbyConstructionIfNeeded(self,includeMobiles,includeNonBuilders,radius)
 	local ownUnitIds = self.ai.ownUnitIds
 
-	local selfPos = self.pos
+	local basePos = self.ai.unitHandler.basePos
+	local selfPos = basePos --self.pos
 	local ud = nil
-	local units = spGetUnitsInCylinder(selfPos.x,selfPos.z,radius,self.ai.id)
+	local units = spGetUnitsInCylinder(selfPos.x,selfPos.z,radius)
+	local uPos = nil
+	local tId = nil
 	if (units ~= nil) then
 		--log("buildings :"..#units,self.ai) --DEBUG
 		for _,uId in pairs(units) do
-			ud = UnitDefs[spGetUnitDefID(uId)]
-			if ud ~= nil then
-				if includeMobiles or ud.speed == 0 then
-					if includeNonBuilders or ud.isBuilder then
-						un = ud.name
-						--if (un ~= nil and (constructionTowers[un] or setContains(unitTypeSets[TYPE_PLANT],un) )) then
-							local health,maxHealth,_,_,bp = spGetUnitHealth(uId)
-							if (bp < 1) then					
-								local uPos = newPosition(spGetUnitPosition(uId,false,false))
-								if self.ai.mapHandler:checkConnection(selfPos, uPos,self.pFType) then
-									--log("assisting nearby unit under construction",self.ai) --DEBUG
-									spGiveOrderToUnit(self.unitId,CMD.REPAIR,{uId},{})
-									return {action="wait_idle", frames=300}
-								end
+			tId = spGetUnitTeam(uId)
+			if (spAreTeamsAllied(tId,self.ai.id)) then
+				ud = UnitDefs[spGetUnitDefID(uId)]
+				if ud ~= nil then
+					local health,maxHealth,_,_,bp = spGetUnitHealth(uId)
+					uPos = newPosition(spGetUnitPosition(uId,false,false))
+					-- if fully built but needs repairs, repair it if you can
+					if (bp == 1) then	
+						if (health < 0.9*maxHealth) then
+							if self.ai.mapHandler:checkConnection(selfPos, uPos,self.pFType) then
+								--log("repairing nearby unit",self.ai) --DEBUG
+								spGiveOrderToUnit(self.unitId,CMD.REPAIR,{uId},{})
+								return {action="wait_idle", frames=300}
 							end
-						--end
+						end
+					-- if not fully built, assist if you can
+					elseif includeMobiles or ud.speed == 0 then
+						if includeNonBuilders or ud.isBuilder then
+							un = ud.name
+							if self.ai.mapHandler:checkConnection(selfPos, uPos,self.pFType) then
+								--log("assisting nearby unit under construction",self.ai) --DEBUG
+								spGiveOrderToUnit(self.unitId,CMD.REPAIR,{uId},{})
+								return {action="wait_idle", frames=300}
+							end
+						end
 					end
 				end
 			end
@@ -280,10 +303,11 @@ function metalExtractorNearbyIfSafe(self)
 	
 	local p = self.ai.buildSiteHandler:closestFreeSpot(self, UnitDefNames[unitName], self.pos, true, self.isAdvBuilder and "advMetal" or "metal", self.unitDef)
 	
-	if ( p ~= nil and distance(self.pos,p) < BIG_RADIUS) then	
+	if ( p ~= nil and distance(self.pos,p) < EXPANSION_SAFETY_RADIUS) then
+		self.nextMetalSpotPos = p	
 		return unitName
 	end
-
+	self.nextMetalSpotPos = nil
 	return SKIP_THIS_TASK
 end
 
@@ -472,7 +496,7 @@ function defendNearbyBuildingsIfNeeded(self,safeFraction)
 			local extractorCount = ownCell.extractorCount or 0
 			local buildingCount = ownCell.buildingCount or 0
 			local defenderCost = ownCell.defenderCost or 0
-			local underwaterDefenderCost = ownCell.defenderCost or 0
+			local underwaterDefenderCost = ownCell.underwaterDefenderCost or 0
 			
 			if buildingCount > 0 then
 				local valueToProtect = nearbyEconomyCost + 150 * extractorCount
@@ -670,8 +694,8 @@ function basePatrolIfNeeded(self)
 	
 		self.specialRole = UNIT_ROLE_BASE_PATROLLER
 		 
-		-- do it forever!
-		return {action="wait", frames=9999999}
+		-- do it for a few seconds
+		return {action="wait_idle", frames=300}
 	end
 	return SKIP_THIS_TASK
 end
@@ -680,7 +704,7 @@ end
 function briefAreaPatrol(self)
 	-- if unit is far away from base center, move to center and then retry
 	if farFromBaseCenter(self)  then
-		self:Retry()
+		self:retry()
 		return moveBaseCenter(self)
 	end
 	
@@ -820,7 +844,7 @@ function commanderRoam(self)
 	if (distance(self.pos,basePos) < HUGE_RADIUS) then
 		self:orderToClosestCellAlongPath(self.ai.unitHandler.raiderPath[PF_UNIT_AMPHIBIOUS], {CMD.MOVE,CMD.MOVE}, false, true)
 	else
-		self:orderToClosestCellAlongPath(self.ai.unitHandler.raiderPath[PF_UNIT_AMPHIBIOUS], {CMD.FIGHT,CMD.MOVE}, false, true)
+		self:orderToClosestCellAlongPath(self.ai.unitHandler.raiderPath[PF_UNIT_AMPHIBIOUS], {CMD.MOVE,CMD.MOVE}, false, true)
 	end
 	
 	return {action="wait_idle", frames=120}
@@ -842,11 +866,10 @@ function commanderPatrol(self)
 		roam = currentStrategy.stages[sStage].properties.roamingCommander or false
 	end
 	--Spring.Echo(spGetGameFrame().." raiders="..raidersStrength.." atk="..atkStrength)
-	if (roam or raidersStrength > atkStrength and not self.ai.unitHandler.baseUnderAttack) then
+	if (roam or (raidersStrength > atkStrength and (not self.ai.unitHandler.baseUnderAttack))) then
 		--Spring.Echo(spGetGameFrame().." following raiders")
 		return commanderRoam(self)
 	end
-	
 	
 	local p = newPosition()
 	p.y = 0
@@ -984,7 +1007,7 @@ function moveBaseCenter(self)
 		spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x - radius/2 + random( 1, radius),p.y,p.z - radius/2 + random( 1, radius)},CMD.OPT_SHIFT)
 	
 		-- wait a bit to let the move order finish
-		return {action="wait_idle", frames=1800}
+		return {action="wait_idle", frames=300}
 	end
 	
 	return SKIP_THIS_TASK
@@ -1066,6 +1089,7 @@ function storageIfNeeded(self)
 		end
 	end
 
+	log("STORAGE ? \""..tostring(unitName).."\"")
 	return unitName
 end
 
@@ -1165,7 +1189,7 @@ function scoutPadIfNeeded(self)
 	
 	-- if unit is far away from base center, move to center and then retry
 	if unitName ~= SKIP_THIS_TASK and farFromBaseCenter(self)  then
-		self:Retry()
+		self:retry()
 		return moveBaseCenter(self)
 	end	
 	
@@ -1195,7 +1219,7 @@ function lvl1PlantIfNeeded(self)
 	
 	-- if unit is far away from base center, move to center and then retry
 	if unitName ~= SKIP_THIS_TASK and farFromBaseCenter(self)  then
-		self:Retry()
+		self:retry()
 		return moveBaseCenter(self)
 	end	
 	
@@ -1223,7 +1247,7 @@ function lvl2PlantIfNeeded(self)
 
 	-- if unit is far away from base center, move to center and then retry
 	if unitName ~= SKIP_THIS_TASK and farFromBaseCenter(self)  then
-		self:Retry()
+		self:retry()
 		return moveBaseCenter(self)
 	end	
 	
@@ -1251,7 +1275,7 @@ function upgradeCenterIfNeeded(self)
 
 	-- if unit is far away from base center, move to center and then retry
 	if unitName ~= SKIP_THIS_TASK and farFromBaseCenter(self)  then
-		self:Retry()
+		self:retry()
 		return moveBaseCenter(self)
 	end	
 	
@@ -1273,7 +1297,7 @@ function lvl1WaterPlantIfNeeded(self)
 	
 	-- if unit is far away from base center, move to center and then retry
 	if unitName ~= SKIP_THIS_TASK and farFromBaseCenter(self)  then
-		self:Retry()
+		self:retry()
 		return moveBaseCenter(self)
 	end	
 	
@@ -1296,7 +1320,7 @@ function lvl2WaterPlantIfNeeded(self)
 
 	-- if unit is far away from base center, move to center and then retry
 	if unitName ~= SKIP_THIS_TASK and farFromBaseCenter(self)  then
-		self:Retry()
+		self:retry()
 		return moveBaseCenter(self)
 	end	
 	
@@ -1397,15 +1421,11 @@ end
 function fusionIfNeeded(self)
 	local unitName = SKIP_THIS_TASK
 
-	if (countOwnUnits(self, fusionByFaction[self.unitSide],1) > 0 ) then
-		unitName = buildWithMinimalMetalIncome(self,buildEnergyIfNeeded(self,fusionByFaction[self.unitSide]),60)
-	else
-		unitName = buildWithMinimalMetalIncome(self,fusionByFaction[self.unitSide],40)
-	end
+	unitName = buildWithMinimalMetalIncome(self,buildEnergyIfNeeded(self,fusionByFaction[self.unitSide]),40)
 		
 	-- if unit is far away from base center, move to center and then retry
 	if unitName ~= SKIP_THIS_TASK and farFromBaseCenter(self)  then
-		self:Retry()
+		self:retry()
 		return moveBaseCenter(self)
 	end	
 
@@ -1413,19 +1433,19 @@ function fusionIfNeeded(self)
 end
 
 
-function mmakerIfNeeded(self)
 
+function mmakerIfNeeded(self)
 	local unitName = SKIP_THIS_TASK
 
 	local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
 	
-	if (incomeE - expenseE > 500 and currentLevelE > 0.7 * storageE) then
+	if (incomeE > 1000 and currentLevelE > 0.5 * storageE) then
 		unitName = mmakerByFaction[self.unitSide]
 	end
 	
 	-- if unit is far away from base center, move to center and then retry
 	if unitName ~= SKIP_THIS_TASK and farFromBaseCenter(self)  then
-		self:Retry()
+		self:retry()
 		return moveBaseCenter(self)
 	end	
 
@@ -1452,7 +1472,7 @@ function roughFusionIfNeeded(self)
 
 	-- if unit is far away from base center, move to center and then retry
 	if unitName ~= SKIP_THIS_TASK and farFromBaseCenter(self)  then
-		self:Retry()
+		self:retry()
 		return moveBaseCenter(self)
 	end
 
@@ -1772,7 +1792,7 @@ end
 function L1EnergyGenerator(self)
 	-- if unit is far away from base center, move to center and then retry
 	if farFromBaseCenter(self)  then
-		self:Retry()
+		self:retry()
 		return moveBaseCenter(self)
 	end	
 
@@ -1866,6 +1886,7 @@ unblockableNuke = {
 }
 
 upgradeOffensive = {
+	"upgrade_green_3_regen",
 	"upgrade_red_1_damage",
 	"upgrade_red_1_damage",
 	"upgrade_red_1_range",
@@ -1874,11 +1895,11 @@ upgradeOffensive = {
 	"upgrade_red_2_commander_damage",
 	"upgrade_red_2_commander_range",
 	"upgrade_green_2_commander_regen",
-	"upgrade_green_3_regen",
 	{action = "wait", frames = 38}
 }
 
 upgradeDefensive = {
+	"upgrade_green_3_regen",
 	"upgrade_green_1_hp",
 	"upgrade_green_1_hp",
 	"upgrade_green_1_regen",
@@ -1887,11 +1908,11 @@ upgradeDefensive = {
 	"upgrade_green_2_commander_hp",
 	"upgrade_green_2_commander_regen",
 	"upgrade_green_2_commander_regen",
-	"upgrade_green_3_regen",
 	{action = "wait", frames = 38}
 }
 
 upgradeDefensiveRegen = {
+	"upgrade_green_3_regen",
 	"upgrade_green_1_regen",
 	"upgrade_green_1_regen",
 	"upgrade_green_1_regen",
@@ -1900,16 +1921,15 @@ upgradeDefensiveRegen = {
 	"upgrade_green_2_commander_hp",
 	"upgrade_green_2_commander_regen",
 	"upgrade_green_2_commander_regen",
-	"upgrade_green_3_regen",
 	{action = "wait", frames = 38}
 }
 
 upgradeSpeed = {
-	"upgrade_blue_1_speed",
-	"upgrade_blue_1_speed",
-	"upgrade_blue_1_speed",
 	"upgrade_green_1_regen",
 	"upgrade_green_1_regen",
+	"upgrade_blue_1_speed",
+	"upgrade_blue_1_speed",
+	"upgrade_blue_1_speed",
 	"upgrade_blue_2_commander_speed",
 	"upgrade_blue_2_commander_speed",
 	"upgrade_green_2_commander_regen",
@@ -1918,6 +1938,7 @@ upgradeSpeed = {
 }
 
 upgradeMixed = {
+	"upgrade_green_3_regen",
 	"upgrade_blue_1_speed",
 	"upgrade_green_1_regen",
 	"upgrade_blue_1_speed",
@@ -1926,11 +1947,11 @@ upgradeMixed = {
 	"upgrade_green_2_commander_regen",
 	"upgrade_red_2_commander_damage",
 	"upgrade_green_2_commander_hp",
-	"upgrade_green_3_regen",
 	{action = "wait", frames = 38}
 }
 
 upgradeMixedDronesUtility = {
+	"upgrade_green_3_regen",
 	"upgrade_blue_1_speed",
 	"upgrade_green_1_regen",
 	"upgrade_blue_1_speed",
@@ -1939,11 +1960,11 @@ upgradeMixedDronesUtility = {
 	"upgrade_blue_3_commander_stealth_drone",
 	"upgrade_blue_3_commander_builder_drone",
 	"upgrade_blue_3_commander_builder_drone",
-	"upgrade_green_3_regen",
 	{action = "wait", frames = 38}
 }
 
 upgradeMixedDronesCombat = {
+	"upgrade_green_3_regen",
 	"upgrade_blue_1_speed",
 	"upgrade_green_1_regen",
 	"upgrade_blue_1_speed",
@@ -1952,7 +1973,6 @@ upgradeMixedDronesCombat = {
 	"upgrade_blue_2_commander_light_drones",
 	"upgrade_blue_3_commander_medium_drone",
 	"upgrade_blue_3_commander_medium_drone",
-	"upgrade_green_3_regen",
 	{action = "wait", frames = 38}
 }
 
@@ -3624,11 +3644,7 @@ function stratCommanderAction(self)
 	local targetMetalIncome = currentStrategy.stages[sStage].economy.metalIncome
 	local targetEnergyIncome = currentStrategy.stages[sStage].economy.energyIncome
 	 
-	-- check if there's a nearby unit to assist
-	action = assistNearbyConstructionIfNeeded(self,false,true,1000)	-- exclude mobile units, include non-builders  
-	if ( action ~= SKIP_THIS_TASK) then
-		return action
-	end		
+
 
 	-- factories
 	local targetFactories = currentStrategy.stages[sStage].factories
@@ -3642,7 +3658,7 @@ function stratCommanderAction(self)
 		
 					-- if unit is far away from base center, move to center and then retry
 					if farFromBaseCenter(self)  then
-						self:Retry()
+						self:retry()
 						return moveBaseCenter(self)
 					end	
 					
@@ -3665,12 +3681,19 @@ function stratCommanderAction(self)
 			end
 		end
 	end	
+
 	if (incomeE < minEnergyIncome or currentLevelE < 0.25*storageE) then
 		action = L1EnergyGenerator(self)
 		if (action ~= SKIP_THIS_TASK) then
 			return action
 		end
 	end
+	
+	-- check if there's a nearby unit to assist
+	action = assistNearbyConstructionIfNeeded(self,false,true,1000)	-- exclude mobile units, include non-builders  
+	if ( action ~= SKIP_THIS_TASK) then
+		return action
+	end		
 	
 	-- set up minimal defense if necessary
 	action = defendNearbyBuildingsIfNeeded(self,0.1)
@@ -3729,7 +3752,7 @@ function stratStaticBuilderAction(self)
 	local action = SKIP_THIS_TASK
 	
 	-- reset priority
-	self:setHighPriorityState(0)
+	self:resetHighPriorityState()
 	
 	-- check if there's a nearby unit to assist
 	action = assistNearbyConstructionIfNeeded(self,false,false,self.buildRange * 0.9)	-- exclude mobile units and non-builders 
@@ -3810,19 +3833,31 @@ function stratMobileBuilderAction(self)
 		
 	local action = SKIP_THIS_TASK
 	
+	-- reset priority
+	self:resetHighPriorityState()
+
 	-- check if there's a nearby unit to assist
 	action = assistNearbyConstructionIfNeeded(self,false,true,1000)	-- exclude mobile units, include non-builders  
 	if ( action ~= SKIP_THIS_TASK) then
 		return action
 	end
+
+	-- prioritize building some defenses if base is under attack
+	if (self.ai.unitHandler.baseUnderAttack) then
+		action = defendNearbyBuildingsIfNeeded(self, 0.2)
+		if action ~= SKIP_THIS_TASK then
+			self:setHighPriorityState(1)
+			return action
+		end	
+	end
 	
 	-- for adv builders raise the min to trigger upgrading nearby extractors 
-	if (self.isAdvBuilder) then
-		minMetalIncome = minMetalIncome * 1.5
-		minEnergyIncome = minEnergyIncome * 1.5
+	if (self.isAdvBuilder and not self.ai.unitHandler.baseUnderAttack) then
+		minMetalIncome = targetMetalIncome
+		minEnergyIncome = targetEnergyIncome
 	end
 	-- metal and energy generation : try to reach min income
-	if (incomeM < minMetalIncome) then
+	if (incomeM < minMetalIncome and currentLevelE > 0.5*storageE) then
 		action = metalExtractorNearbyIfSafe(self)
 		if action ~= SKIP_THIS_TASK then
 			return action
@@ -3850,7 +3885,7 @@ function stratMobileBuilderAction(self)
 			end
 		end
 	end
-	
+
 	-- level 2 builder
 	if (self.isAdvBuilder) then
 		local stdQueueCount = self.ai.unitHandler.advancedStandardQueueCount or 0
@@ -3904,17 +3939,18 @@ function stratMobileBuilderAction(self)
 	
 				-- if unit is far away from base center, move to center and then retry
 				if farFromBaseCenter(self)  then
-					self:Retry()
+					self:retry()
 					return moveBaseCenter(self)
 				end	
-				
+
+				--log(self.unitName.." trying to build a factory : "..uName,self.ai) --DEBUG				
 				return uName
 			end
 		end
 	end
 	
 	-- set up minimal defense if necessary
-	action = defendNearbyBuildingsIfNeeded(self, 0.05)
+	action = defendNearbyBuildingsIfNeeded(self, 0.1)
 	if action ~= SKIP_THIS_TASK then
 		return action
 	end	
@@ -3926,47 +3962,24 @@ function stratMobileBuilderAction(self)
 	end
 	
 
-	--[[
-	-- defenses
-	if (self.isAdvBuilder) then
-		local unitName = heavyAAByFaction[self.unitSide][ random( 1, tableLength(heavyAAByFaction[self.unitSide]) ) ]
-		action = checkAreaLimit(self, unitName, self.unitId, 1*defenseDensityMult, BIG_RADIUS, TYPE_HEAVY_AA)
+	-- storage
+	if (sStage > 1) then
+		action = buildWithLimitedNumber(self, energyStorageByFaction[self.unitSide],sStage-1)
 		if action ~= SKIP_THIS_TASK then
 			return action
 		end
-	else
-		if (self.unitSide == "claw" or self.unitSide == "sphere") then
-			local unitName = mediumAAByFaction[self.unitSide]
-			action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, MED_RADIUS, TYPE_LIGHT_AA)
-			if action ~= SKIP_THIS_TASK then
-				return action
-			end
-		elseif(self.unitSide == "aven" or self.unitSide == "gear") then
-			local unitName = lev1HeavyDefenseByFaction[self.unitSide][ random( 1, tableLength(lev1HeavyDefenseByFaction[self.unitSide]) ) ]
-			action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, MED_RADIUS, TYPE_HEAVY_DEFENSE)
-			if action ~= SKIP_THIS_TASK then
-				return action
-			end
+		action = buildWithLimitedNumber(self, metalStorageByFaction[self.unitSide],1)
+		if action ~= SKIP_THIS_TASK then
+			return action
 		end
-		--local unitName = lev1HeavyDefenseByFaction[self.unitSide][ random( 1, tableLength(lev1HeavyDefenseByFaction[self.unitSide]) ) ]
-		--action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, MED_RADIUS, TYPE_HEAVY_DEFENSE)
-		--if action ~= SKIP_THIS_TASK then
-		--	return action
-		--end
 	end
-	]]--
-	
-	-- storage
-	action = storageIfNeeded(self)
-	if action ~= SKIP_THIS_TASK then
-		return action
-	end	
-	
+		
 	-- metal and energy generation : try to reach target income
 	if (incomeM < targetMetalIncome) then
 		if not self.couldNotFindMetalSpot then
 			local action = metalExtractorNearbyIfSafe(self)
 			if action ~= SKIP_THIS_TASK then
+				--log(self.unitName.." HERE MEX adv="..tostring(self.isAdvBuilder).." act="..action,self.ai) --DEBUG
 				return action
 			end
 		end
@@ -3997,12 +4010,12 @@ function stratMobileBuilderAction(self)
 		else
 			action = L1EnergyGenerator(self)
 			if (action ~= SKIP_THIS_TASK) then
+				--log(self.unitName.." HERE L1ENERGY adv="..tostring(self.isAdvBuilder).." act="..action,self.ai) --DEBUG
 				return action
 			end
 		end
 	end
-	
-	
+		
 	-- if unit is far away from base center, move to center
 	if farFromBaseCenter(self) then
 		return moveBaseCenter(self)
@@ -4024,7 +4037,8 @@ function stratPlantAction(self)
 	-- check recommended build options and build what it can
 	-- factories
 	local targetMobileUnits = currentStrategy.stages[sStage].mobileUnits
-	local mobileUnitCount = self.ai.unitHandler.mobileCount
+	local mobileUnitCount = self.ai.unitHandler.mobileCount 
+	--log("mobiles="..mobileUnitCount,self.ai) --DEBUG
 	if (targetMobileUnits and buildOptionsByPlant[self.unitName]) then
 		-- get total weight
 		local totalWeight = 0
@@ -4046,7 +4060,7 @@ function stratPlantAction(self)
 		if options then
 			for i,props in ipairs(targetMobileUnits) do
 				local uName = props.name
-				if options[uName] == true then
+				if options[uName] == true and props.weight > 0 then
 					local minCount = props.min 
 					
 					local currentCount =  countOwnUnits(self,uName, 9999, nil)
@@ -4060,8 +4074,8 @@ function stratPlantAction(self)
 							return uName
 						end
 						
-						if (currentCount < maxCount and currentCount < props.weight*mobileUnitCount/totalWeight) then
-							curFraction = currentCount / (props.weight*mobileUnitCount)
+						curFraction = currentCount / (props.weight*mobileUnitCount)
+						if (currentCount < maxCount and curFraction < 1.5) then
 							if (curFraction < lowestFraction) then
 								lowestFraction = curFraction
 								mostNeededUnit = uName

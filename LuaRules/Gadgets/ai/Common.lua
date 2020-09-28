@@ -164,10 +164,17 @@ THREAT_NORMAL = 0
 THREAT_AIR = 1
 THREAT_DEFENSE = 2
 THREAT_UNDERWATER = 3
+THREAT_ASSAULT = 4
 
+
+THREAT_ASSAULT_THRESHOLD = 0.35
 THREAT_AIR_THRESHOLD = 0.2
 THREAT_DEFENSE_THRESHOLD = 0.2
 THREAT_UNDERWATER_THRESHOLD = 0.2
+
+
+ASSAULT_HEALTH_COST_RATIO = 3.5
+ASSAULT_SPEED_THRESHOLD = 45
 
 -- special build conditions
 
@@ -247,7 +254,7 @@ FORCE_INCLUSION_RADIUS = 800
 FORCE_INCLUSION_RADIUS_AIR = 800
 FORCE_INCLUSION_RADIUS_RAIDERS = 500
 FORCE_TARGET_RADIUS = 500
-RETREAT_RADIUS = 900
+RETREAT_RADIUS = 500
 BRIEF_AREA_PATROL_RADIUS = 600
 BASE_AREA_PATROL_RADIUS = 900
 MAP_EDGE_MARGIN = 100
@@ -368,6 +375,8 @@ spGetUnitsInCylinder = Spring.GetUnitsInCylinder
 spMarkerAddPoint = Spring.MarkerAddPoint
 spMarkerErasePosition = Spring.MarkerErasePosition
 spGetUnitNearestEnemy = Spring.GetUnitNearestEnemy
+spGetUnitTeam = Spring.GetUnitTeam
+spAreTeamsAllied = Spring.AreTeamsAllied
 
 function splitString (input, sep)
 	if sep == nil then
@@ -1337,7 +1346,7 @@ unitTypeSets = {
 	[TYPE_HAZMOHO] = tableToSet(hazMexByFaction),
 	[TYPE_EXTRACTOR] = tableToSet({mexByFaction,hazMexByFaction,UWMexByFaction,mohoMineByFaction,UWMohoMineByFaction}),
 	[TYPE_ENERGYGENERATOR] = tableToSet({solarByFaction,windByFaction,geoByFaction,fusionByFaction,tidalByFaction,{"sphere_fusion_reactor","sphere_hardened_fission_reactor"}}),
-	[TYPE_ECONOMY] = tableToSet({mexByFaction,hazMexByFaction,mohoMineByFaction,mmakerByFaction,solarByFaction,windByFaction,geoByFaction,fusionByFaction,energyStorageByFaction,metalStorageByFaction,{"sphere_fusion_reactor","sphere_hardened_fission_reactor"}}),
+	[TYPE_ECONOMY] = tableToSet({tidalByFaction,mexByFaction,hazMexByFaction,mohoMineByFaction,mmakerByFaction,solarByFaction,windByFaction,geoByFaction,fusionByFaction,energyStorageByFaction,metalStorageByFaction,{"sphere_fusion_reactor","sphere_hardened_fission_reactor"}}),
 	[TYPE_PLANT] = tableToSet({lev1PlantByFaction,lev2PlantByFaction}),
 	[TYPE_UW_DEFENSE] = tableToSet({lev1TorpedoDefenseByFaction,lev2TorpedoDefenseByFaction}),		
 	[TYPE_ATTACKER] = listToSet({attackerList,airAttackerList,seaAttackerList}),
@@ -1355,5 +1364,5 @@ unitTypeSets = {
 	[TYPE_UPGRADED_COMMANDER] = tableToSet({commanderMorphByFaction}),
 	[TYPE_STRATEGIC] = tableToSet({lev1ArtilleryDefenseByFaction,lev2ArtilleryDefenseByFaction,lev2LongRangeArtilleryByFaction,mexByFaction, UWMexByFaction, mohoMineByFaction,UWMohoMineByFaction,fusionByFaction,UWFusionByFaction,rocketPlatformByFaction}),
 	[TYPE_UPGRADE_CENTER] = tableToSet(upgradeCenterByFaction),
-	[TYPE_HIGH_PRIORITY] = tableToSet({commanderByFaction,commanderMorphByFaction,respawnerByFaction,rocketPlatformByFaction}),
+	[TYPE_HIGH_PRIORITY] = tableToSet({commanderByFaction,commanderMorphByFaction,respawnerByFaction,rocketPlatformByFaction,upgradeCenterByFaction}),
 }

@@ -13,7 +13,7 @@ end
 -- set up inheritance
 setmetatable(TaskQueueBehavior,{__index = CommonUnitBehavior})
 
-function TaskQueueBehavior:Name()
+function TaskQueueBehavior:name()
 	return "TaskQueueBehavior"
 end
 
@@ -22,7 +22,7 @@ function TaskQueueBehavior:internalName()
 end
 
 function TaskQueueBehavior:Init(ai, uId)
-	self:CommonInit(ai, uId)
+	self:commonInit(ai, uId)
 	
 	-- state properties
 	self.active = false
@@ -42,9 +42,13 @@ function TaskQueueBehavior:Init(ai, uId)
 	self.assistUnitId = 0
 	self.cleanupMaxFeatures = 10
 	self.isDrone = self.unitDef.customParams and self.unitDef.customParams.isdrone
-	self.isAdvBuilder = (not self.isDrone) and self.isMobileBuilder and self.unitDef.modCategories["level2"]
+	
 	self.builderType = self.unitDef.customParams and self.unitDef.customParams.buildertype
 	self.isStaticBuilder = constructionTowers[self.unitName] ~= nil
+	self.isHighPriorityBuilder = setContains(unitTypeSets[TYPE_HIGH_PRIORITY],self.unitName)
+	self.isMobileBuilder = self.unitDef.isMobileBuilder
+	self.isAdvBuilder = (not self.isDrone) and self.isMobileBuilder and self.unitDef.modCategories["level2"]	
+	self.isBuilder = self.isStaticBuilder or self.isMobileBuilder  
 	self.buildRange = 0
 	if (self.isStaticBuilder) then
 		self.buildRange = self.unitDef.buildDistance
@@ -52,16 +56,18 @@ function TaskQueueBehavior:Init(ai, uId)
 	self.buildFailures = {} -- <unitName,lastAttemptFrame>
 	self.couldNotFindMetalSpot = false
 	self.couldNotFindGeoSpot = false
+	self.beingUselessCounter = 0
+	self.lastProgressFrame = 0
+	self.nextMetalSpotPos = nil
 	
 	-- load queue
-	if self:HasQueues() then
-		self.queue = self:GetQueue()
+	if self:hasQueues() then
+		self.queue = self:getQueue()
 	end
 	
 	self.briefAreaPatrolFrames = BRIEF_AREA_PATROL_FRAMES 
 	
 	self:activate()
-	self.ai.unitHandler.taskQueues[uId] = self
 end
 
 -- failed to build something, register the current frame and unit name
@@ -84,11 +90,11 @@ function TaskQueueBehavior:checkPreviousAttempts(uName)
 	return true
 end
 
-function TaskQueueBehavior:HasQueues()
+function TaskQueueBehavior:hasQueues()
 	return (taskQueues[self.unitName] ~= nil)
 end
 
-function TaskQueueBehavior:BuilderRoleStr()
+function TaskQueueBehavior:builderRoleStr()
 	if ((not self.isCommander) and self.isMobileBuilder and self.specialRole == 0) then
 		if (self.isAdvBuilder) then
 			return "advstd" 
@@ -112,6 +118,15 @@ function TaskQueueBehavior:BuilderRoleStr()
 	return "???"
 end
 
+function TaskQueueBehavior:resetHighPriorityState()
+	local desiredState = setContains(unitTypeSets[TYPE_HIGH_PRIORITY],self.unitName) and true or false
+	if (self.isHighPriorityBuilder ~= desiredState) then
+		self.isHighPriorityBuilder = desiredState
+		spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{state},{})
+	end
+end
+
+
 function TaskQueueBehavior:setHighPriorityState(state)
 	local desiredState = state == 1 and true or false
 	if (self.isHighPriorityBuilder ~= desiredState) then
@@ -121,55 +136,8 @@ function TaskQueueBehavior:setHighPriorityState(state)
 end
 
 
-function TaskQueueBehavior:UnitFinished(uId)
-	if not self.active then
-		return
-	end
-	if uId == self.unitId then
-		self.isFullyBuilt = true
-		self.progress = true
-	end
-end
-
-function TaskQueueBehavior:UnitIdle(uId)
-	if not self.active then
-		return
-	end
-	if uId == self.unitId then
-		self.idleFrame = spGetGameFrame()
-		if( self.currentProject ~= "paused" and not setContains(unitTypeSets[TYPE_EXTRACTOR],self.currentProject)) then
-			-- if unit was building an expensive base unit, and it is still alive and incomplete, repair it...
-			if setContains(unitTypeSets[TYPE_BASE],self.currentProject) then
-				local selfPos = self.pos
-				
-				for _,uId2 in ipairs(Spring.GetUnitsInCylinder(selfPos.x,selfPos.z,400)) do
-					local _,_,_,_,progress = spGetUnitHealth(uId2)
-					local targetPos = newPosition(spGetUnitPosition(uId2,false,false))
-				
-					if (progress < 1 and checkWithinDistance(targetPos,selfPos,ASSIST_UNIT_RADIUS)) then
-						-- order it to revert to resume previous queue item
-						self:Retry()
-						
-						-- assist building		
-						-- THIS THROWS AN ERROR : "GiveOrderToUnit() recursion is not permitted"
-						-- spGiveOrderToUnit(self.unitId,CMD.REPAIR,{uId2},{})
-						-- log(self.unitName.." resuming building "..self.currentProject.." at ("..targetPos.x..";"..targetPos.z..")") --DEBUG
-						-- return
-					end
-				end
-			end
-
-			--log("unit "..self.unitName.." is idle.", self.ai) --DEBUG
-			self.progress = true
-			self.currentProject = nil
-			self.waitLeft = 0
-			
-		end
-	end
-end
-
 -- sets the index back one item
-function TaskQueueBehavior:Retry()
+function TaskQueueBehavior:retry()
 	if (self.idx ~= nil) then
 		self.idx = self.idx - 1
 
@@ -179,36 +147,7 @@ function TaskQueueBehavior:Retry()
 	end
 end
 
-function TaskQueueBehavior:UnitDestroyed(uId)
-	if self.unitId ~= nil then
-		if uId == self.unitId then
-			self.unitId = nil
-
-			-- clear unitHandler's reference
-			self.ai.unitHandler.taskQueues[uId] = nil
-		end
-	end
-end
-
-function TaskQueueBehavior:UnitTaken(uId)
-	if self.unitId ~= nil then
-		if uId == self.unitId then
-			self.unitId = nil
-
-			-- clear unitHandler's reference
-			self.ai.unitHandler.taskQueues[uId] = nil
-		end
-	end
-end
-
-function TaskQueueBehavior:UnitDamaged(uId)
-	if uId == self.unitId then
-		local tmpFrame = spGetGameFrame()
-		self.underAttackFrame = tmpFrame
-	end
-end
-
-function TaskQueueBehavior:GetQueue(queue)
+function TaskQueueBehavior:getQueue(queue)
 	--log("queue is "..tostring(queue),self.ai)
 	q = queue or (self.ai.useStrategies and sTaskQueues[self.unitName] or nil) or taskQueues[self.unitName]
 	if type(q) == "function" then
@@ -219,7 +158,7 @@ function TaskQueueBehavior:GetQueue(queue)
 end
 
 function TaskQueueBehavior:changeQueue(queue)
-	self.queue = self:GetQueue(queue)
+	self.queue = self:getQueue(queue)
 	self.idx = nil
 	self.waitLeft = 0
 	self.noDelay = false
@@ -227,141 +166,10 @@ function TaskQueueBehavior:changeQueue(queue)
 	self.delayCounter = 0
 end
 
-function TaskQueueBehavior:GameFrame(f)
-	-- don't do anything until there has been one data collection
-	if not self.ai.unitHandler.collectedData then
-		return
-	end
-	
-	self.pos = newPosition(spGetUnitPosition(self.unitId,false,false))
-	
-	--[[
-    if (self.isMobileBuilder or self.isCommander) then
-		local cmds = spGetUnitCommands(self.unitId,3)
-		local cmdCount = 0
-		if (cmds and (#cmds >= 0)) then
-			cmdCount = #cmds
-		end
-		if (self.isCommander) then
-			Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(tostring(self.isAttackMode).." "..cmdCount.." "..tostring(self.currentProject))) --DEBUG
-		else
-			Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(self:BuilderRoleStr().." "..cmdCount.." "..tostring(self.currentProject))) --DEBUG
-		end
-	end
-	]]--
-	
-	-- check health and built status	
-	local health,maxHealth,_,_,bp = spGetUnitHealth(self.unitId)
-	self.isFullyBuilt = (bp >= 1)
-	if (health/maxHealth < UNIT_RETREAT_HEALTH) then
-		self.isSeriouslyDamaged = true
-		self.isFullHealth = false
-	else
-		self.isSeriouslyDamaged = false
-		if (health/maxHealth > 0.99) then
-			self.isFullHealth = true
-		end
-	end
 
-	-- not finished yet, wait
-	if (not self.isFullyBuilt) then
-		return
-	end
-
-	-- check water mode
-	if spGetGroundHeight(self.pos.x,self.pos.z) < -5 and not self.ai.mapHandler.waterDoesDamage then
-		self.isWaterMode = true
-		
-		-- if on water mode and game just started, override strategy to an amphibious one
-		-- do this only once
-		if (f < 100 and self.ai.useStrategies and (not self.ai.amphibiousStrategyOverride) and (self.ai.autoChangeStrategies) and (self.ai.currentStrategyStr ~= "amphibious")) then
-			viableStrategyStrList = {"amphibious"}
-			strategyStr = viableStrategyStrList[random( 1, #viableStrategyStrList)]
-			self.ai.amphibiousStrategyOverride = true
-			self.ai:setStrategy(self.unitSide,strategyStr,false)
-		end
-	else
-		self.isWaterMode = false
-	end
-			
-	if (self.waitLeft > 0 ) then
-		self.waitLeft = math.max(self.waitLeft - 1,0)
-		-- if self.waitLeft == 0 then
-			-- log("wait is over",self.ai)
-		-- end
-	end
-	
-	if(not self.unitDef.isBuilding) then
-		-- retreat if necessary
-		if (self.isSeriouslyDamaged or self.isCommander ) and f - self.underAttackFrame < UNDER_ATTACK_FRAMES  then
-			
-			-- retry current project when safe
-			if(self.currentProject ~= nil and self.currentProject ~= "paused" and self.currentProject ~= "custom") then
-				self:Retry()
-			end
-
-			-- check if you can engage
-			if (not self.isSeriouslyDamaged) and self.isArmed and self:engageIfNeeded() then
-				self.lastRetreatOrderFrame = f
-				self.progress = true
-				self.currentProject = "custom"
-				self.waitLeft = 200
-				return
-			end
-			-- evade or retreat
-			self:retreat()
-			return
-		end
-		
-		-- if is commander and base is under attack, go help!
-		if (self.isCommander and self.ai.unitHandler.baseUnderAttack) then
-			if countOwnUnits(self,nil,1,TYPE_PLANT) > 0  then
-				--spGiveOrderToUnit(self.unitId,CMD.STOP,{},{})
-				self:retreat()
-			end
-			--[[
-			if self.isAttackMode == false and (countOwnUnits(self,nil,1,TYPE_PLANT) > 0 ) then
-				spGiveOrderToUnit(self.unitId,CMD.STOP,{},{})
-				self:changeQueue(commanderAtkQueueByFaction[self.unitSide])
-				self.isAttackMode = true
-				--log("changed to attack commander!",self.ai)
-			end
-			]]--
-		end
-	end
-	
-	if self.isCommander or (fmod(f,10) == 9) then
-		if (self.waitLeft == 0) then
-			-- progress queue if unit is idle
-			if not self.progress and self.isFullyBuilt and (self.isMobileBuilder or self.isCommander or self.currentProject == nil) then
-				local cmds = spGetUnitCommands(self.unitId,3)
-				if (not cmds or #cmds <= 0) then
-					self.idleFrames = self.idleFrames + (self.isCommander and 1 or 10) 
-				
-					if (self.idleFrames > IDLE_FRAMES_PROGRESS_LIMIT) then
-						--Spring.Echo(self.unitName.." was weirdly idle for "..self.idleFrames.." , progressing queue",self.ai) --DEBUG
-						self.progress = true
-					end
-				else
-					self.idleFrames = 0
-				end
-			end
-		
-			if self.progress == true then
-				self.currentProject = nil
-				self.idleFrames = 0
-				-- log(self.unitName.." progressing queue",self.ai)
-				self:ProgressQueue()
-				
-				return
-			end
-		end		
-	end
-end
-
-
-function TaskQueueBehavior:ProgressQueue()
+function TaskQueueBehavior:progressQueue()
 	self.progress = false
+	self.lastProgressFrame = spGetGameFrame() 
 	
 	if self.queue ~= nil then
 		local idx, val = next(self.queue,self.idx)
@@ -389,21 +197,82 @@ function TaskQueueBehavior:ProgressQueue()
 			end
 		end
 	
-		--if (self.isCommander) then
-		--	log(idx.." : "..tostring(value),self.ai)
-		--end
-		
-		-- reset normal build priority for non-commander builders
-		if not self.isHighPriorityBuilder then
-			spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{0},{})
-		end
+		-- reset build priority
+		self:resetHighPriorityState()
 		
 		-- process queue item, check for low resources or nearby similar units being built
-		self:ProcessItem(value, DELAY_BUILDING_IF_LOW_RESOURCES, ASSIST_EXPENSIVE_BASE_UNITS)
+		self:processItem(value, DELAY_BUILDING_IF_LOW_RESOURCES, ASSIST_EXPENSIVE_BASE_UNITS)
+		
+		-- reset the mex building position
+		self.nextMetalSpotPos = nil
+		
+		if (self.isMobileBuilder and value ~= SKIP_THIS_TASK) then
+			local cmds = spGetUnitCommands(self.unitId,3)
+			local cmdCount = 0
+			if (cmds and (#cmds >= 0)) then
+				cmdCount = #cmds
+			end
+			--[[
+			if (self.isCommander) then
+				Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(tostring(self.isAttackMode).." "..cmdCount.." "..tostring(self.currentProject))) --DEBUG
+			else
+				Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(self:builderRoleStr().." "..cmdCount.." "..tostring(self.currentProject))) --DEBUG
+			end
+			]]--
+			-- if the unit processed something but is still with an empty command queue, do something!
+			--if self.currentProject ~= "waiting" and cmdCount == 0 then 
+			if self.currentProject ~= "waiting" and cmdCount == 0 then
+				local radius = MED_RADIUS
+				local basePos = self.ai.unitHandler.basePos
+				
+				self.beingUselessCounter = self.beingUselessCounter + 1
+				if ( basePos.x > 0 and basePos.z > 0) then
+					
+					-- if unit is "disconnected" from base, order it to move a bit
+					-- may be due to map hander's pathing map resolution being too low
+					if not self.ai.mapHandler:checkConnection(self.ai.unitHandler.basePos, self.pos,self.pFType) then									
+						--log(self.unitName.." is being useless, move (counter="..self.beingUselessCounter..")",self.ai) --DEBUG
+
+						p = newPosition()
+						p.x = basePos.x-radius/2+random(1,radius)
+						p.z = basePos.z-radius/2+random(1,radius)
+						p.y = spGetGroundHeight(p.x,p.z)
+						spGiveOrderToUnit(self.unitId,CMD.STOP,{p.x,p.y,p.z},{})
+						spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},CMD.OPT_SHIFT)
+						
+						-- add another order to queue in case the first is invalid
+						spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x - radius/2 + random( 1, radius),p.y,p.z - radius/2 + random( 1, radius)},CMD.OPT_SHIFT)
+					else
+					-- patrol a bit, do some good
+
+						--log(self.unitName.." is being useless, patrol (counter="..self.beingUselessCounter..")",self.ai) --DEBUG
+						p = newPosition()
+						p.x = basePos.x-radius/2+random(1,radius)
+						p.z = basePos.z-radius/2+random(1,radius)
+						p.y = spGetGroundHeight(p.x,p.z)
+						spGiveOrderToUnit(self.unitId,CMD.STOP,{p.x,p.y,p.z},{})
+						spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x,p.y,p.z},CMD.OPT_SHIFT)
+						
+						-- add another order to queue in case the first is invalid
+						spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x - radius/2 + random( 1, radius),p.y,p.z - radius/2 + random( 1, radius)},CMD.OPT_SHIFT)
+					end
+				
+					self.progress = true
+					self.currentProject = "custom"
+					self.waitLeft = 120		
+				end
+			else
+				--if (self.beingUselessCounter > 0 ) then
+				--	log(self.unitName.." is being useful??? (counter="..self.beingUselessCounter..") proj="..tostring(self.currentProject),self.ai) --DEBUG
+				--end
+				-- assume it's doing something
+				self.beingUselessCounter = 0
+			end
+		end
 	end
 end
 
-function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
+function TaskQueueBehavior:processItem(value, checkResources, checkAssistNearby)
 	local f = spGetGameFrame()
 	local success = false
 	local p = false
@@ -420,12 +289,12 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 	-- on easy mode, randomly waste time
 	if(self.isEasyMode and value ~= nil and type(value) ~= "table" and value ~= SKIP_THIS_TASK) then
 		if (random() < EASY_RANDOM_TIME_WASTE_PROBABILITY) then
-			self:Retry()
+			self:retry()
 			value = {action = "wait", frames = EASY_RANDOM_TIME_WASTE_FRAMES}
 		end
 	end
 	
-	if not self.ai.useStrategies and value ~= nil and type(value) ~= "table" and value ~= SKIP_THIS_TASK then
+	if (not self.ai.useStrategies) and value ~= nil and type(value) ~= "table" and value ~= SKIP_THIS_TASK then
 		ud = UnitDefNames[value]
 		if ud ~= nil then
 			-- if building a builder, check for unit limit
@@ -457,7 +326,7 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 					local stallingM = (incomeM - expenseM < 1) and (currentLevelM < 0.1 * storageM)
 
 					if check and ( (stallingM and (not setContains(unitTypeSets[TYPE_EXTRACTOR],value)) ) or (stallingE and (not setContains(unitTypeSets[TYPE_ENERGYGENERATOR],value)) ) ) then
-						self:Retry()
+						self:retry()
 									
 						if self.delayCounter > DELAY_BUILDING_IF_LOW_RESOURCES_LIMIT then
 							self.delayCounter = 0
@@ -503,7 +372,7 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 		-- wait until timer runs out, then progress
 		if action == "wait" then
 			self.waitLeft = value.frames
-			self.currentProject = "paused"
+			self.currentProject = "waiting"
 			self.progress = true
 			return
 		end
@@ -524,7 +393,7 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 			if (self.isCommander) then
 				Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(tostring(self.isAttackMode).." value="..tostring(value))) --DEBUG
 			else
-				Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(self:BuilderRoleStr().." value="..tostring(value))) --DEBUG
+				Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(self:builderRoleStr().." value="..tostring(value))) --DEBUG
 			end
 			]]--
 			if value ~= nil then
@@ -555,8 +424,11 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 							if (self.ai.mapHandler.isMetalMap == true) then
 								p = self.ai.buildSiteHandler:closestBuildSpot(self, ud,  BUILD_SPREAD_DISTANCE)
 							else
-								
-								p = self.ai.buildSiteHandler:closestFreeSpot(self, ud, p, true, advMetal and "advMetal" or "metal", self.unitDef, self.unitId)
+								if self.nextMetalSpotPos ~= nil then
+									p = self.nextMetalSpotPos
+								else
+									p = self.ai.buildSiteHandler:closestFreeSpot(self, ud, p, true, advMetal and "advMetal" or "metal", self.unitDef)
+								end
 							end
 						else
 							p = self.ai.buildSiteHandler:closestFreeSpot(self, ud, p, true, "geo", self.unitDef, self.unitId)
@@ -574,11 +446,9 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 								end
 							end
 							
-							
 							-- assign high priority to AI normal priority builders building metal extractors, factories and fusion reactors
-							if not self.isHighPriorityBuilder then
-								spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{1},{})
-							end
+							self:setHighPriorityState(1)
+
 							success = true
 							self.progress = false
 							if ud.needGeo then
@@ -663,10 +533,8 @@ function TaskQueueBehavior:ProcessItem(value, checkResources, checkAssistNearby)
 						
 						if (success) then
 							-- assign high priority to AI normal priority builders building metal extractors, factories and fusion reactors
-							if not self.isHighPriorityBuilder then
-								if setContains(unitTypeSets[TYPE_ECONOMY],value) or setContains(unitTypeSets[TYPE_PLANT],value) then
-									spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{1},{})
-								end
+							if setContains(unitTypeSets[TYPE_ECONOMY],value) or setContains(unitTypeSets[TYPE_PLANT],value) then
+								self:setHighPriorityState(1)
 							end
 						end
 						
@@ -720,9 +588,254 @@ end
 function TaskQueueBehavior:activate()
 	self.progress = true
 	self.active = true
+	-- add to unit handler
+	self.ai.unitHandler.taskQueues[self.unitId] = self
 end
 
 function TaskQueueBehavior:deactivate()
 	self.active = false
+	-- remove from unit handler
+	self.ai.unitHandler.taskQueues[self.unitId] = nil
 end
 
+----------------------- engine event handlers
+
+
+function TaskQueueBehavior:UnitDestroyed(uId)
+	if uId == self.unitId then
+		self:deactivate()
+	end
+end
+
+function TaskQueueBehavior:UnitTaken(uId)
+	if uId == self.unitId then
+		self:deactivate()
+	end
+end
+
+function TaskQueueBehavior:UnitDamaged(uId)
+	if uId == self.unitId then
+		local tmpFrame = spGetGameFrame()
+		self.underAttackFrame = tmpFrame
+	end
+end
+
+
+function TaskQueueBehavior:UnitFinished(uId)
+	if not self.active then
+		return
+	end
+	if uId == self.unitId then
+		self.isFullyBuilt = true
+		self.progress = true
+	end
+end
+
+function TaskQueueBehavior:UnitIdle(uId)
+	if not self.active then
+		return
+	end
+	if uId == self.unitId then
+		self.idleFrame = spGetGameFrame()
+		if( self.currentProject ~= "waiting" and not setContains(unitTypeSets[TYPE_EXTRACTOR],self.currentProject)) then
+			-- if unit was building an expensive base unit, and it is still alive and incomplete, repair it...
+			if setContains(unitTypeSets[TYPE_BASE],self.currentProject) then
+				local selfPos = self.pos
+				
+				for _,uId2 in ipairs(Spring.GetUnitsInCylinder(selfPos.x,selfPos.z,400)) do
+					local _,_,_,_,progress = spGetUnitHealth(uId2)
+					local targetPos = newPosition(spGetUnitPosition(uId2,false,false))
+				
+					if (progress < 1 and checkWithinDistance(targetPos,selfPos,ASSIST_UNIT_RADIUS)) then
+						-- order it to revert to resume previous queue item
+						self:retry()
+						
+						-- assist building		
+						-- THIS THROWS AN ERROR : "GiveOrderToUnit() recursion is not permitted"
+						-- spGiveOrderToUnit(self.unitId,CMD.REPAIR,{uId2},{})
+						-- log(self.unitName.." resuming building "..self.currentProject.." at ("..targetPos.x..";"..targetPos.z..")") --DEBUG
+						-- return
+					end
+				end
+			end
+
+			--log("unit "..self.unitName.." is idle.", self.ai) --DEBUG
+			self.progress = true
+			self.currentProject = nil
+			self.waitLeft = 0
+			
+		end
+	end
+end
+
+
+function TaskQueueBehavior:GameFrame(f)
+	-- don't do anything until there has been one data collection
+	if not self.ai.unitHandler.collectedData then
+		return
+	end
+	
+	self.pos = newPosition(spGetUnitPosition(self.unitId,false,false))
+	
+	--[[
+    if (self.isMobileBuilder) then
+		local cmds = spGetUnitCommands(self.unitId,3)
+		local cmdCount = 0
+		if (cmds and (#cmds >= 0)) then
+			cmdCount = #cmds
+		end
+		if (self.isCommander) then
+			Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(tostring(self.isAttackMode).." "..cmdCount.." "..tostring(self.currentProject))) --DEBUG
+		else
+			Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(self:builderRoleStr().." "..cmdCount.." "..tostring(self.currentProject))) --DEBUG
+		end
+	end
+	]]--
+	
+	-- check health and built status	
+	local health,maxHealth,_,_,bp = spGetUnitHealth(self.unitId)
+	self.isFullyBuilt = (bp >= 1)
+	if (health/maxHealth < UNIT_RETREAT_HEALTH) then
+		self.isSeriouslyDamaged = true
+		self.isFullHealth = false
+	else
+		self.isSeriouslyDamaged = false
+		if (health/maxHealth > 0.99) then
+			self.isFullHealth = true
+		end
+	end
+
+	-- not finished yet, wait
+	if (not self.isFullyBuilt) then
+		return
+	end
+
+	-- adjust strategy if started without land connection to enemies
+	if (f < 100 and self.ai.useStrategies and (not self.ai.strategyOverride)) then 
+		local enemyUnitIds = self.ai.enemyUnitIds
+		
+		local hasLandConnection = false
+		local hasAmphibiousConnection = false
+		if enemyUnitIds ~= nil then
+			local ePos = nil
+			for eId,_ in pairs (enemyUnitIds) do
+				ud = UnitDefs[spGetUnitDefID(eId)]
+				local eName = ud.name
+				if ( setContains(unitTypeSets[TYPE_COMMANDER],eName)) then
+					ePos = newPosition(spGetUnitPosition(eId,false,false))
+
+					if self.ai.mapHandler:checkConnection(self.pos, ePos,PF_UNIT_LAND) then			
+						hasLandConnection = true
+					end
+					if not self.ai.mapHandler.waterDoesDamage and self.ai.mapHandler:checkConnection(self.pos, ePos,PF_UNIT_AMPHIBIOUS) then			
+						hasAmphibiousConnection = true
+					end
+				end
+			end
+			
+			if (not hasLandConnection) and (not hasAmphibiousConnection) then
+				viableStrategyStrList = {"air"}
+				strategyStr = viableStrategyStrList[random( 1, #viableStrategyStrList)]
+				if self.ai.currentStrategyStr ~= strategyStr then
+					self.ai:messageAllies("no land or amphibious connection found to enemy commanders, change strategy to \""..strategyStr.."\"")
+					self.ai.strategyOverride = true
+					self.ai:setStrategy(self.unitSide,strategyStr,false)
+				end
+			elseif (not hasLandConnection) and hasAmphibiousConnection then
+				viableStrategyStrList = {"air","amphibious"}
+				strategyStr = viableStrategyStrList[random( 1, #viableStrategyStrList)]
+				if self.ai.currentStrategyStr ~= strategyStr then
+					self.ai:messageAllies("no land connection found to enemy commanders, change strategy to \""..strategyStr.."\"")
+					self.ai.strategyOverride = true
+					self.ai:setStrategy(self.unitSide,strategyStr,false)
+				end
+			end
+		end
+	end
+
+	-- check water mode
+	if spGetGroundHeight(self.pos.x,self.pos.z) < -5 and not self.ai.mapHandler.waterDoesDamage then
+		self.isWaterMode = true
+	else
+		self.isWaterMode = false
+	end
+
+	if (self.waitLeft > 0 ) then
+		self.waitLeft = math.max(self.waitLeft - 1,0)
+		if (self.waitLeft == 0) then
+			self.progress = true
+		end
+		--if self.isCommander and self.waitLeft == 0 then
+		--	log("wait is over, progress="..tostring(self.progress),self.ai) --DEBUG
+		--end
+	end
+	
+	if(not self.unitDef.isBuilding) then
+		-- retreat if necessary
+		if (self.isSeriouslyDamaged or self.isCommander ) and f - self.underAttackFrame < UNDER_ATTACK_FRAMES  then
+			
+			-- retry current project when safe
+			if(self.currentProject ~= nil and self.currentProject ~= "waiting" and self.currentProject ~= "custom") then
+				self:retry()
+			end
+
+			-- check if you can engage
+			if (not self.isSeriouslyDamaged) and self.isArmed and self:engageIfNeeded() then
+				self.lastRetreatOrderFrame = f
+				self.progress = true
+				self.currentProject = "custom"
+				self.waitLeft = 200
+				return
+			end
+			-- evade or retreat
+			self:retreat()
+			return
+		end
+		
+		-- if is commander and base is under attack, go help!
+		if (self.isCommander and self.ai.unitHandler.baseUnderAttack) then
+			if countOwnUnits(self,nil,1,TYPE_PLANT) > 0  then
+				--spGiveOrderToUnit(self.unitId,CMD.STOP,{},{})
+				self:retreat()
+			end
+			--[[
+			if self.isAttackMode == false and (countOwnUnits(self,nil,1,TYPE_PLANT) > 0 ) then
+				spGiveOrderToUnit(self.unitId,CMD.STOP,{},{})
+				self:changeQueue(commanderAtkQueueByFaction[self.unitSide])
+				self.isAttackMode = true
+				--log("changed to attack commander!",self.ai)
+			end
+			]]--
+		end
+	end
+	
+	if self.isCommander or (fmod(f,10) == 9) then
+		if (self.waitLeft == 0) then
+			-- progress queue if unit is supposed to be doing something but is actually idle
+			if not self.progress and self.isBuilder then
+				local cmds = spGetUnitCommands(self.unitId,3)
+				if (not cmds or #cmds <= 0) then
+					self.idleFrames = self.idleFrames + (self.isCommander and 1 or 10) 
+				
+					if (self.idleFrames > IDLE_FRAMES_PROGRESS_LIMIT) then
+						--log(self.unitName.." was weirdly idle for "..self.idleFrames.." , progressing queue",self.ai) --DEBUG
+						self.progress = true
+					end
+				else
+					if (f - self.lastProgressFrame > 1000 and self.isBuilder and (self.currentProject == nil or self.currentProject == "custom" or self.currentProject == "waiting")) then
+						--log(self.unitName.." stuck on patrol? frames="..(f - self.lastProgressFrame).." wait="..self.waitLeft.." progress="..tostring(self.progress).." currentProj="..tostring(self.currentProject),self.ai) --DEBUG		
+						self.progress = true
+					end
+					self.idleFrames = 0
+				end
+			end
+		 	
+			if self.progress == true then
+				self.currentProject = nil
+				self.idleFrames = 0
+				self:progressQueue()
+				return
+			end
+		end		
+	end
+end

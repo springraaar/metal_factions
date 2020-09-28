@@ -6,7 +6,7 @@
 #define HEADING_TOLERANCE	<25>
 #define PITCH_TOLERANCE		<15>
 
-piece ground, hips,torso,turret,sleeve,front, front2, front3, flare, sphere,shieldpt;
+piece ground, hips,torso,turret,sleeve,front, front2, front3,front4, flare, sphere,shieldpt;
 	
 static-var bMoving,bAiming;
 
@@ -16,16 +16,34 @@ static-var bMoving,bAiming;
 #define SIG_AIM				2
 
 
+aimingMode()
+{
+	while(TRUE)
+	{
+		if (bAiming) 
+		{
+			show front4;
+			hide front3;
+			emit-sfx 1024+1 from flare;
+		}
+		else
+		{
+			show front3;
+			hide front4;
+		}
+	
+		sleep 30;
+	}
+}
 
 Create()
 {
-	spin front2 around z-axis speed <240.000000>;
+	spin front2 around z-axis speed <140.000000>;
 	bMoving=FALSE;
 	bAiming=FALSE;
 	call-script stopAimHelper1(<1000>,<1000>);
+	start-script aimingMode();
 }
-
-
 
 SweetSpot(piecenum)
 {
@@ -34,7 +52,6 @@ SweetSpot(piecenum)
 
 RestoreAfterDelayWeapon()
 {
-	//aim1=FALSE;
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
 	call-script stopAimHelper1(<100>,<100>);
 	turn turret to y-axis <0.000000> speed <100.016484>;

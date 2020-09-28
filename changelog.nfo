@@ -1,3 +1,41 @@
+2020/09/27 ------------------ NOTES v1.41 ----------------------
+
+--- Balance / Mechanics
+
+- removed debug log that happened when drones moved away from the parent unit
+- reduced the vertical speed of SPHERE's slow flying spheres to match their movement speed
+
+- SPHERE "Gazer" flying sphere and commander forms now deal about 50% more damage per shot and have about 50% higher reload time
+(They also got new visuals. The commander got its HP reduced from 4600 to 4500 to compensate)
+
+- modified how the 360º weapons on strafing level 2 fighters are accounted for and slightly reduced their range and damage to compensate
+- GEAR "Vector"'s flare no longer gets cylindrical targetting with 2x height boost due to being a "missile" type
+(this was letting it outrange ground-based lasers too easily)
+
+- increased GEAR "Cascade" cost by 13%
+
+- reduced imprecision of most 500-1500 range plasma cannons by about half (this has a minor effect on unit costs, less than 3% in most cases)
+
+
+--- AI fixes
+
+- fixed AI sometimes still blocking its factories with other factories or advanced metal extractors
+- modified the AI upgrade paths so it starts with the major regen upgrade, for now
+ (simple change that helps it keep its armies repaired)
+- made AI more likely to build adv extractors sooner
+- AI builders will now prioritize repairing nearby damaged units instead of assisting construction
+- fixed AI not using units given to it
+- fixed "brutal" mode not getting the resource bonus when using strategies
+- AI is more likely to build construction units and change to advanced extractors
+- improved how AI detects if it should change to air only or amphibious strategy depending on starting positions
+- other miscellaneous AI fixes and improvements
+
+--- UI
+
+- slightly modified how chat messages from different sources are colored (again, to avoid white outline on some cases)
+
+
+
 2020/09/20 ------------------ NOTES v1.40 ----------------------
 
 --- new units

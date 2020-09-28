@@ -9,7 +9,7 @@ function MapHandler.create()
    return obj
 end
 
-function MapHandler:Name()
+function MapHandler:name()
 	return "MapHandler"
 end
 
@@ -87,7 +87,7 @@ function MapHandler:Init()
 	for i=0,(cellCountX - 1) do
 		self.mapCells[i] = {}
 		for j=0,(cellCountZ - 1) do
-			local newCell = { metalSpotCount = 0, nearbyLandMetalSpotCount = 0, nearbyWaterMetalSpotCount = 0, metalPotential = 0, isWater = false, isDeepWater = false, p = newPosition(), hasNearbyWater = false, metalSpots={}}
+			local newCell = { metalSpotCount = 0, nearbyLandMetalSpotCount = 0, nearbyWaterMetalSpotCount = 0, metalPotential = 0, isWater = false, isDeepWater = false, p = newPosition(), hasNearbyWater = false, metalSpots={}, nearbyMetalSpots={}}
 			self.mapCells[i][j] = newCell
 			
 			newCell.xIndex = i
@@ -234,15 +234,33 @@ function MapHandler:Init()
 	
 	-- add metal spot info to cells
 	local cell = nil
+	local xi,zi,xi2,zi2 = 0
 	for i,spot in ipairs(self.spots) do
 		xi,zi = getCellXZIndexesForPosition(spot)
 		cell = self.mapCells[xi][zi]
 		cell.metalSpotCount = cell.metalSpotCount + 1
 		cell.metalSpots[#cell.metalSpots + 1] = spot
+		cell.nearbyMetalSpots[#cell.nearbyMetalSpots + 1] = spot
+		
+		-- also register the spot on each adjacent cell
+		for dxi = -1, 1 do
+			for dzi = -1, 1 do
+				xi2 = xi + dxi
+				zi2 = zi + dzi
+				if (xi2 >=0) and (zi2 >= 0) and not (dxi == 0 and dzi == 0) then
+					if self.mapCells[xi2] then
+						if self.mapCells[xi2][zi2] then
+							local adjacentCell = self.mapCells[xi2][zi2]
+							adjacentCell.nearbyMetalSpots[#adjacentCell.nearbyMetalSpots + 1] = spot
+						end
+					end
+				end
+			end
+		end		
 	end
 	
 	-- add nearby metal spot info to cells
-	local xi,zi = 0
+	-- TODO review these, are they even useful?
 	for	i,cell in ipairs(self.mapCellList) do
 		-- check nearby cells
 		for dxi = -1, 1 do
@@ -382,6 +400,7 @@ local CHECKi1 = nil
 local CHECKi2 = nil
 function MapHandler:checkConnection(p1,p2,unitPathingType)
 	if (unitPathingType == PF_UNIT_AMPHIBIOUS_AT) or (unitPathingType == PF_UNIT_AIR) then
+		--TODO fails for lava
 		return true
 	end
 	
@@ -494,6 +513,7 @@ function MapHandler:checkAdjacentPFCellConnection(p1,p2,unitPathingType)
 		end
 	elseif unitPathingType == PF_UNIT_AMPHIBIOUS_AT then
 		-- nothing here, can go everywhere
+		--TODO not lava
 	elseif unitPathingType == PF_UNIT_WATER then
 		if max(h1,h2,h3) > -5 then
 			return math.huge

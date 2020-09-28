@@ -80,7 +80,7 @@
 	Weapon1=sphere_masher_rocket;
 	weaponmaindir1=0 1 0;
 	maxangledif1=280;
-	badtargetcategory1=VTOL;
+	onlytargetcategory1=NOTAIR;
 	NoChaseCategory=VTOL;
 	explodeas=SMALL_UNITEX;
 	selfdestructas=SMALL_UNIT;
@@ -125,8 +125,8 @@
 		explosiongenerator0=custom:rocketflaremed;
 	}
 
-	buildcostenergy=5515;//#AUTO#
-	buildcostmetal=1103;//#AUTO#
-	buildtime=13145;//#AUTO#
-	mass=717;//#AUTO#
+	buildcostenergy=5534;//#AUTO#
+	buildcostmetal=1106;//#AUTO#
+	buildtime=13189;//#AUTO#
+	mass=718;//#AUTO#
 }

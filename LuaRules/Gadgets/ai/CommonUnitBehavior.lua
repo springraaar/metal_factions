@@ -10,7 +10,7 @@ function CommonUnitBehavior.create()
 end
 
 
-function CommonUnitBehavior:CommonInit(ai, uId)
+function CommonUnitBehavior:commonInit(ai, uId)
 	self.ai = ai
 	self.isEasyMode = (self.ai.mode == "easy")
 	self.isBrutalMode = (self.ai.mode == "brutal")
@@ -40,11 +40,9 @@ function CommonUnitBehavior:CommonInit(ai, uId)
 	-- unit properties
 	self.isCommander = setContains(unitTypeSets[TYPE_COMMANDER],self.unitName)
 	self.isUpgradedCommander = setContains(unitTypeSets[TYPE_UPGRADED_COMMANDER],self.unitName)
-	self.isHighPriorityBuilder = setContains(unitTypeSets[TYPE_HIGH_PRIORITY],self.unitName)
-	
+
 	self.isArmed = #self.unitDef.weapons > 0
 	self.unitCost = getWeightedCostByName(self.unitName) 
-	self.isMobileBuilder = not self.isCommander and self.unitDef.isMobileBuilder
 	self.isFullHealth = true
 	self.isSeriouslyDamaged = false
 	self.isFullyBuilt = false	

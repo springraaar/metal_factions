@@ -3,46 +3,6 @@
 ------------------------------------ strategy definition
 local MANY = 100
 
---[[
-strategy = {
-	stages = {
-		1 = {
-			economy = {
-				minMetalIncome = 0
-				minEnergyIncome = 0
-				metalIncome = 20
-				energyIncome = 250
-			},
-			factories = {
-				aven_light_plant={min=1,max=2,weight=1}
-			},
-			mobileUnits = {
-				aven_wheeler={min=5,max=MANY,weight=0.5}
-				aven_trooper={min=5,max=MANY,weight=0.5}
-			}
-		},
-		2 = {
-			economy = {
-				minMetalIncome = 30
-				minEnergyIncome = 300
-				metalIncome = 80
-				energyIncome = 2500
-			},
-			factories = {
-				aven_adv_vehicle_plant={min=1,max=2,weight=1}
-			},
-			mobileUnits = {
-				aven_wheeler={min=5,max=MANY,weight=0.6}
-				aven_trooper={min=5,max=MANY,weight=0.6}
-				aven_centurion={min=5,max=MANY,weight=0.3}
-			}
-	
-		},
-		3 = ...
-	}
-}
-]]--
-
 
 -- upgrades options : "offensive", "defensive", "defensive_regen", "speed", "mixed", "mixed_drones_utility", "mixed_drones_combat"
 -- conditions : THREAT_AIR, THREAT_GROUND, THREAT_STATIC, THREAT_UNDERWATER
@@ -90,11 +50,11 @@ avenLandAssault = {
 				{name="aven_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_kbot",min=2,max=6,weight=0.1},
+				{name="aven_construction_kbot",min=2,max=6,weight=0.2},
 				{name="aven_trooper_laser",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
+				{name="aven_trooper_laser",min=0,max=MANY,weight=0.3},
 				{name="aven_wheeler",min=0,max=MANY,weight=0.3},
-				{name="aven_bold",min=0,max=MANY,weight=0.3},
-				{name="aven_trooper",min=0,max=MANY,weight=0.3}
+				{name="aven_bold",min=0,max=MANY,weight=0.3}
 			}
 		},
 		------------------ STAGE 2
@@ -134,9 +94,10 @@ avenLandAssault = {
 				{name="aven_upgrade_center",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_kbot",min=2,max=4,weight=0.1},
-				{name="aven_adv_construction_vehicle",min=1,max=3,weight=0.1},
+				{name="aven_construction_kbot",min=2,max=4,weight=0.2},
+				{name="aven_adv_construction_vehicle",min=1,max=3,weight=0.2},
 				{name="aven_trooper_laser",min=0,max=MANY,weight=0.2,includeConditions={THREAT_AIR}},
+				{name="aven_trooper_laser",min=0,max=MANY,weight=0.3},
 				{name="aven_kodiak",min=2,max=MANY,weight=0.4,includeConditions={THREAT_AIR}},
 				{name="aven_kodiak",min=0,max=MANY,weight=0.2},
 				{name="aven_centurion",min=3,max=MANY,weight=0.3},
@@ -175,7 +136,7 @@ avenLandAssault = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="aven_nano_tower",min=1,max=3},
+				{name="aven_nano_tower",min=1,max=4},
 				{name="aven_adv_vehicle_plant",min=1,max=2},
 				{name="aven_light_plant",min=1,max=1},				
 				{name="aven_commander_respawner",min=2,max=2},
@@ -184,8 +145,8 @@ avenLandAssault = {
 				{name="aven_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_kbot",min=2,max=6,weight=0.1},
-				{name="aven_adv_construction_vehicle",min=2,max=6,weight=0.1},
+				{name="aven_construction_kbot",min=2,max=6,weight=0.2},
+				{name="aven_adv_construction_vehicle",min=2,max=6,weight=0.2},
 				{name="aven_trooper_laser",min=1,max=MANY,weight=0.2,includeConditions={THREAT_AIR}},
 				{name="aven_centurion",min=0,max=MANY,weight=0.4},
 				{name="aven_kodiak",min=2,max=MANY,weight=1,includeConditions={THREAT_AIR}},
@@ -227,7 +188,7 @@ avenLandAssault = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="aven_nano_tower",min=1,max=3},
+				{name="aven_nano_tower",min=1,max=6},
 				{name="aven_adv_vehicle_plant",min=1,max=2},
 				{name="aven_light_plant",min=1,max=1},				
 				{name="aven_commander_respawner",min=2,max=2},
@@ -237,8 +198,8 @@ avenLandAssault = {
 				{name="aven_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_kbot",min=2,max=6,weight=0.1},
-				{name="aven_adv_construction_vehicle",min=2,max=6,weight=0.1},
+				{name="aven_construction_kbot",min=2,max=6,weight=0.2},
+				{name="aven_adv_construction_vehicle",min=2,max=6,weight=0.2},
 				{name="aven_trooper_laser",min=1,max=MANY,weight=0.4,includeConditions={THREAT_AIR}},
 				{name="aven_centurion",min=0,max=MANY,weight=0.4},
 				{name="aven_kodiak",min=0,max=MANY,weight=0.4},
@@ -293,8 +254,9 @@ avenLandSkirmisher = {
 				{name="aven_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_kbot",min=2,max=6,weight=0.1},
+				{name="aven_construction_kbot",min=2,max=6,weight=0.2},
 				{name="aven_trooper_laser",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
+				{name="aven_bold",min=1,max=MANY,weight=1,includeConditions={THREAT_ASSAULT}},
 				{name="aven_samson",min=0,max=MANY,weight=0.3},
 				{name="aven_duster",min=0,max=MANY,weight=0.3},
 				{name="aven_runner",min=0,max=MANY,weight=0.2},				
@@ -333,14 +295,16 @@ avenLandSkirmisher = {
 				{name="aven_nano_tower",min=1,max=3},
 				{name="aven_adv_kbot_lab",min=1,max=1},
 				{name="aven_light_plant",min=1,max=1},
+				{name="aven_aircraft_plant",min=1,max=1},
 				{name="aven_commander_respawner",min=1,max=2},
 				{name="aven_scout_pad",min=1,max=1},
 				{name="aven_upgrade_center",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_kbot",min=2,max=4,weight=0.1},
-				{name="aven_adv_construction_kbot",min=1,max=3,weight=0.1},
+				{name="aven_construction_kbot",min=2,max=4,weight=0.2},
+				{name="aven_adv_construction_kbot",min=1,max=3,weight=0.2},
 				{name="aven_trooper_laser",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
+				{name="aven_shocker",min=1,max=MANY,weight=1,includeConditions={THREAT_ASSAULT}},
 				{name="aven_weaver",min=3,max=MANY,weight=0.6},
 				{name="aven_sniper",min=3,max=MANY,weight=0.3},
 				{name="aven_bolter",min=3,max=MANY,weight=0.3},
@@ -348,7 +312,8 @@ avenLandSkirmisher = {
 				{name="aven_duster",min=0,max=MANY,weight=0.3},
 				{name="aven_samson",min=0,max=MANY,weight=0.3},
 				{name="aven_runner",min=0,max=MANY,weight=0.2},
-				{name="aven_stalker",min=0,max=MANY,weight=0.2}
+				{name="aven_stalker",min=0,max=MANY,weight=0.2},
+				{name="aven_scoper",min=1,max=1,weight=0.01}
 			}
 		},
 		------------------ STAGE 3
@@ -380,19 +345,21 @@ avenLandSkirmisher = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="aven_nano_tower",min=1,max=3},
+				{name="aven_nano_tower",min=1,max=4},
 				{name="aven_adv_kbot_lab",min=1,max=2},
-				{name="aven_light_plant",min=1,max=1},				
+				{name="aven_light_plant",min=1,max=1},
+				{name="aven_aircraft_plant",min=1,max=1},					
 				{name="aven_commander_respawner",min=2,max=2},
 				{name="aven_upgrade_center",min=1,max=1},
 				{name="aven_adv_vehicle_plant",min=1,max=1},
 				{name="aven_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_kbot",min=2,max=6,weight=0.1},
-				{name="aven_adv_construction_kbot",min=2,max=3,weight=0.1},
-				{name="aven_adv_construction_vehicle",min=2,max=3,weight=0.1},
+				{name="aven_construction_kbot",min=2,max=6,weight=0.2},
+				{name="aven_adv_construction_kbot",min=2,max=3,weight=0.2},
+				{name="aven_adv_construction_vehicle",min=2,max=3,weight=0.2},
 				{name="aven_trooper_laser",min=1,max=MANY,weight=1,includeConditions={THREAT_AIR}},
+				{name="aven_shocker",min=1,max=MANY,weight=1,includeConditions={THREAT_ASSAULT}},
 				{name="aven_weaver",min=3,max=MANY,weight=0.6},
 				{name="aven_sniper",min=3,max=MANY,weight=0.3},
 				{name="aven_merl",min=2,max=MANY,weight=0.4},
@@ -401,7 +368,8 @@ avenLandSkirmisher = {
 				{name="aven_duster",min=0,max=MANY,weight=0.3},
 				{name="aven_samson",min=0,max=MANY,weight=0.3},
 				{name="aven_runner",min=0,max=MANY,weight=0.2},
-				{name="aven_stalker",min=0,max=MANY,weight=0.2}				
+				{name="aven_stalker",min=0,max=MANY,weight=0.2},
+				{name="aven_scoper",min=1,max=1,weight=0.01}				
 			}
 		},
 		------------------ STAGE 4
@@ -433,7 +401,7 @@ avenLandSkirmisher = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="aven_nano_tower",min=1,max=3},
+				{name="aven_nano_tower",min=1,max=6},
 				{name="aven_adv_kbot_lab",min=1,max=2},
 				{name="aven_adv_vehicle_plant",min=1,max=2},
 				{name="aven_light_plant",min=1,max=1},				
@@ -444,9 +412,11 @@ avenLandSkirmisher = {
 				{name="aven_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_kbot",min=2,max=6,weight=0.1},
-				{name="aven_adv_construction_vehicle",min=2,max=6,weight=0.1},
+				{name="aven_construction_kbot",min=2,max=6,weight=0.2},
+				{name="aven_adv_construction_kbot",min=2,max=3,weight=0.2},
+				{name="aven_adv_construction_vehicle",min=2,max=6,weight=0.2},
 				{name="aven_trooper_laser",min=1,max=MANY,weight=1,includeConditions={THREAT_AIR}},
+				{name="aven_shocker",min=1,max=MANY,weight=1,includeConditions={THREAT_ASSAULT}},
 				{name="aven_weaver",min=3,max=MANY,weight=0.6},
 				{name="aven_sniper",min=3,max=MANY,weight=0.3},
 				{name="aven_merl",min=2,max=MANY,weight=0.4},
@@ -488,7 +458,7 @@ avenAir = {
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 2,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -505,7 +475,7 @@ avenAir = {
 				{name="aven_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_aircraft",min=1,max=6,weight=0.1},
+				{name="aven_construction_aircraft",min=1,max=6,weight=0.2},
 				{name="aven_swift",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="aven_twister",min=0,max=MANY,weight=0.5},
 				{name="aven_tornado",min=0,max=MANY,weight=0.3},
@@ -530,7 +500,7 @@ avenAir = {
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 2,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -550,8 +520,8 @@ avenAir = {
 				{name="aven_upgrade_center",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_aircraft",min=2,max=4,weight=0.1},
-				{name="aven_adv_construction_aircraft",min=1,max=3,weight=0.1},
+				{name="aven_construction_aircraft",min=2,max=4,weight=0.2},
+				{name="aven_adv_construction_aircraft",min=1,max=3,weight=0.2},
 				{name="aven_falcon",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="aven_falcon",min=1,max=MANY,weight=0.2},
 				{name="aven_icarus",min=1,max=MANY,weight=0.3},
@@ -579,7 +549,7 @@ avenAir = {
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 2,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -591,7 +561,7 @@ avenAir = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="aven_nano_tower",min=1,max=3},
+				{name="aven_nano_tower",min=1,max=4},
 				{name="aven_adv_aircraft_plant",min=1,max=2},
 				{name="aven_aircraft_plant",min=1,max=1},				
 				{name="aven_commander_respawner",min=2,max=2},
@@ -600,8 +570,8 @@ avenAir = {
 				{name="aven_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_aircraft",min=2,max=6,weight=0.1},
-				{name="aven_adv_construction_aircraft",min=2,max=5,weight=0.1},
+				{name="aven_construction_aircraft",min=2,max=6,weight=0.2},
+				{name="aven_adv_construction_aircraft",min=2,max=5,weight=0.2},
 				{name="aven_falcon",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="aven_falcon",min=1,max=MANY,weight=0.2},
 				{name="aven_icarus",min=1,max=MANY,weight=0.6},
@@ -629,7 +599,7 @@ avenAir = {
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 2,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -641,7 +611,7 @@ avenAir = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="aven_nano_tower",min=1,max=3},
+				{name="aven_nano_tower",min=1,max=6},
 				{name="aven_adv_aircraft_plant",min=2,max=3},
 				{name="aven_aircraft_plant",min=1,max=1},				
 				{name="aven_commander_respawner",min=2,max=2},
@@ -650,8 +620,8 @@ avenAir = {
 				{name="aven_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_aircraft",min=2,max=6,weight=0.1},
-				{name="aven_adv_construction_aircraft",min=2,max=5,weight=0.1},
+				{name="aven_construction_aircraft",min=2,max=6,weight=0.2},
+				{name="aven_adv_construction_aircraft",min=2,max=5,weight=0.2},
 				{name="aven_falcon",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="aven_falcon",min=1,max=MANY,weight=0.2},
 				{name="aven_icarus",min=1,max=MANY,weight=0.6},
@@ -686,11 +656,11 @@ avenAmphibious = {
 			properties = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
-				raiderSpeedThreshold = 75,
+				raiderSpeedThreshold = 90,
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
 				enemyThreatEstimationMult = 1.7,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -707,7 +677,7 @@ avenAmphibious = {
 				{name="aven_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_hovercraft",min=0,max=1,weight=0.1},
+				{name="aven_construction_hovercraft",min=0,max=1,weight=0.15},
 				{name="aven_swatter",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="aven_skimmer",min=0,max=MANY,weight=0.3},
 				{name="aven_slider",min=0,max=MANY,weight=0.3}
@@ -728,12 +698,12 @@ avenAmphibious = {
 			},
 			properties = {
 				commanderBuildsFactories = false,
-				roamingCommander = true,
-				raiderSpeedThreshold = 75,
+				roamingCommander = false,
+				raiderSpeedThreshold = 90,
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
-				enemyThreatEstimationMult = 1.7,
-				defenseDensityMult = 1,
+				enemyThreatEstimationMult = 1.3,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -752,7 +722,7 @@ avenAmphibious = {
 				{name="aven_upgrade_center",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_hovercraft",min=2,max=4,weight=0.1},
+				{name="aven_construction_hovercraft",min=2,max=4,weight=0.25},
 				{name="aven_swatter",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="aven_skimmer",min=0,max=MANY,weight=0.3},
 				{name="aven_slider",min=0,max=MANY,weight=0.6},
@@ -777,12 +747,12 @@ avenAmphibious = {
 			},
 			properties = {
 				commanderBuildsFactories = false,
-				roamingCommander = true,
+				roamingCommander = false,
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
-				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.7,
-				defenseDensityMult = 1,
+				raiderSpeedThreshold = 90,
+				enemyThreatEstimationMult = 1.3,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -794,7 +764,7 @@ avenAmphibious = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="aven_nano_tower",min=1,max=3},
+				{name="aven_nano_tower",min=1,max=4},
 				{name="aven_hovercraft_platform",min=1,max=2},
 				{name="aven_commander_respawner",min=2,max=2},
 				{name="aven_upgrade_center",min=1,max=1},
@@ -802,8 +772,8 @@ avenAmphibious = {
 				{name="aven_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_hovercraft",min=2,max=4,weight=0.1},
-				{name="aven_construction_aircraft",min=2,max=4,weight=0.1},
+				{name="aven_construction_hovercraft",min=2,max=4,weight=0.25},
+				{name="aven_construction_aircraft",min=2,max=4,weight=0.25},
 				{name="aven_swatter",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="aven_skimmer",min=0,max=MANY,weight=0.3},
 				{name="aven_slider",min=0,max=MANY,weight=0.6},
@@ -832,12 +802,12 @@ avenAmphibious = {
 			},
 			properties = {
 				commanderBuildsFactories = false,
-				roamingCommander = true,
+				roamingCommander = false,
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
-				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.7,
-				defenseDensityMult = 1,
+				raiderSpeedThreshold = 90,
+				enemyThreatEstimationMult = 1.3,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -849,7 +819,7 @@ avenAmphibious = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="aven_nano_tower",min=1,max=3},
+				{name="aven_nano_tower",min=1,max=6},
 				{name="aven_hovercraft_platform",min=1,max=2},
 				{name="aven_commander_respawner",min=2,max=2},
 				{name="aven_upgrade_center",min=1,max=1},
@@ -858,8 +828,8 @@ avenAmphibious = {
 				{name="aven_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_hovercraft",min=2,max=4,weight=0.1},
-				{name="aven_adv_construction_aircraft",min=2,max=4,weight=0.1},
+				{name="aven_construction_hovercraft",min=2,max=4,weight=0.3},
+				{name="aven_adv_construction_aircraft",min=2,max=4,weight=0.3},
 				{name="aven_swatter",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="aven_skimmer",min=0,max=MANY,weight=0.2},
 				{name="aven_slider",min=0,max=MANY,weight=0.6},
@@ -920,7 +890,7 @@ gearLandAssault = {
 				{name="gear_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_kbot",min=2,max=6,weight=0.1},
+				{name="gear_construction_kbot",min=2,max=6,weight=0.2},
 				{name="gear_crasher",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_instigator",min=0,max=MANY,weight=0.2},
 				{name="gear_assaulter",min=0,max=MANY,weight=0.4}
@@ -963,8 +933,8 @@ gearLandAssault = {
 				{name="gear_upgrade_center",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_kbot",min=2,max=4,weight=0.1},
-				{name="gear_adv_construction_vehicle",min=1,max=3,weight=0.1},
+				{name="gear_construction_kbot",min=2,max=4,weight=0.2},
+				{name="gear_adv_construction_vehicle",min=1,max=3,weight=0.2},
 				{name="gear_crasher",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_reaper",min=3,max=MANY,weight=0.3},
 				{name="gear_thresher",min=0,max=MANY,weight=0.2},
@@ -1003,7 +973,7 @@ gearLandAssault = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="gear_nano_tower",min=1,max=3},
+				{name="gear_nano_tower",min=1,max=4},
 				{name="gear_adv_vehicle_plant",min=1,max=2},
 				{name="gear_light_plant",min=1,max=1},				
 				{name="gear_commander_respawner",min=2,max=2},
@@ -1012,8 +982,8 @@ gearLandAssault = {
 				{name="gear_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_kbot",min=2,max=6,weight=0.1},
-				{name="gear_adv_construction_vehicle",min=2,max=6,weight=0.1},
+				{name="gear_construction_kbot",min=2,max=6,weight=0.2},
+				{name="gear_adv_construction_vehicle",min=2,max=6,weight=0.2},
 				{name="gear_crasher",min=1,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_reaper",min=3,max=MANY,weight=0.3},
 				{name="gear_deleter",min=1,max=1,weight=0.01},
@@ -1056,7 +1026,7 @@ gearLandAssault = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="gear_nano_tower",min=1,max=3},
+				{name="gear_nano_tower",min=1,max=6},
 				{name="gear_adv_vehicle_plant",min=1,max=2},
 				{name="gear_light_plant",min=1,max=1,weight=1},				
 				{name="gear_commander_respawner",min=2,max=2},
@@ -1066,8 +1036,9 @@ gearLandAssault = {
 				{name="gear_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_kbot",min=2,max=6,weight=0.1},
-				{name="gear_adv_construction_vehicle",min=2,max=6,weight=0.1},
+				{name="gear_construction_kbot",min=2,max=6,weight=0.2},
+				{name="gear_adv_construction_vehicle",min=2,max=6,weight=0.2},
+				{name="gear_adv_construction_aircraft",min=1,max=4,weight=0.2},
 				{name="gear_crasher",min=1,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_reaper",min=3,max=MANY,weight=0.3},
 				{name="gear_deleter",min=1,max=1,weight=0.01},
@@ -1125,9 +1096,10 @@ gearLandSkirmisher = {
 				{name="gear_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_kbot",min=2,max=6,weight=0.1},
+				{name="gear_construction_kbot",min=2,max=6,weight=0.2},
 				{name="gear_harasser",min=0,max=MANY,weight=0.2},
 				{name="gear_box",min=0,max=MANY,weight=0.5,includeConditions={THREAT_AIR}},
+				{name="gear_kano",min=0,max=MANY,weight=1,includeConditions={THREAT_ASSAULT}},
 				{name="gear_crasher",min=0,max=MANY,weight=0.6},
 				{name="gear_thud",min=0,max=MANY,weight=0.3}
 			}
@@ -1169,9 +1141,10 @@ gearLandSkirmisher = {
 				{name="gear_upgrade_center",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_kbot",min=2,max=4,weight=0.1},
-				{name="gear_adv_construction_kbot",min=1,max=3,weight=0.1},
+				{name="gear_construction_kbot",min=2,max=4,weight=0.2},
+				{name="gear_adv_construction_kbot",min=1,max=3,weight=0.2},
 				{name="gear_box",min=0,max=MANY,weight=0.6,includeConditions={THREAT_AIR}},
+				{name="gear_cube",min=0,max=MANY,weight=1,includeConditions={THREAT_ASSAULT}},
 				{name="gear_barrel",min=3,max=MANY,weight=0.4},
 				{name="gear_moe",min=3,max=MANY,weight=0.4},
 				{name="gear_big_bob",min=3,max=MANY,weight=0.3},
@@ -1211,7 +1184,7 @@ gearLandSkirmisher = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="gear_nano_tower",min=1,max=3},
+				{name="gear_nano_tower",min=1,max=4},
 				{name="gear_adv_kbot_lab",min=1,max=2},
 				{name="gear_light_plant",min=1,max=1},				
 				{name="gear_commander_respawner",min=2,max=2},
@@ -1220,10 +1193,11 @@ gearLandSkirmisher = {
 				{name="gear_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_kbot",min=2,max=6,weight=0.1},
-				{name="gear_adv_construction_kbot",min=2,max=3,weight=0.1},
-				{name="gear_adv_construction_vehicle",min=2,max=3,weight=0.1},
+				{name="gear_construction_kbot",min=2,max=6,weight=0.2},
+				{name="gear_adv_construction_kbot",min=2,max=3,weight=0.2},
+				{name="gear_adv_construction_vehicle",min=2,max=3,weight=0.2},
 				{name="gear_box",min=0,max=MANY,weight=0.6,includeConditions={THREAT_AIR}},
+				{name="gear_cube",min=0,max=MANY,weight=1,includeConditions={THREAT_ASSAULT}},
 				{name="gear_barrel",min=3,max=MANY,weight=0.4},
 				{name="gear_moe",min=3,max=MANY,weight=0.4},
 				{name="gear_big_bob",min=3,max=MANY,weight=0.3},
@@ -1266,7 +1240,7 @@ gearLandSkirmisher = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="gear_nano_tower",min=1,max=3},
+				{name="gear_nano_tower",min=1,max=6},
 				{name="gear_adv_kbot_lab",min=1,max=2},
 				{name="gear_adv_vehicle_plant",min=1,max=2},
 				{name="gear_light_plant",min=1,max=1},				
@@ -1277,10 +1251,12 @@ gearLandSkirmisher = {
 				{name="gear_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_kbot",min=2,max=6,weight=0.1},
-				{name="gear_adv_construction_kbot",min=2,max=3,weight=0.1},
-				{name="gear_adv_construction_vehicle",min=2,max=3,weight=0.1},
+				{name="gear_construction_kbot",min=2,max=6,weight=0.2},
+				{name="gear_adv_construction_kbot",min=1,max=3,weight=0.15},
+				{name="gear_adv_construction_vehicle",min=2,max=3,weight=0.2},
+				{name="gear_adv_construction_aircraft",min=2,max=3,weight=0.2},
 				{name="gear_box",min=0,max=MANY,weight=0.6,includeConditions={THREAT_AIR}},
+				{name="gear_cube",min=0,max=MANY,weight=1,includeConditions={THREAT_ASSAULT}},				
 				{name="gear_barrel",min=3,max=MANY,weight=0.4},
 				{name="gear_moe",min=3,max=MANY,weight=0.4},
 				{name="gear_big_bob",min=3,max=MANY,weight=0.3},
@@ -1325,7 +1301,7 @@ gearAir = {
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 2,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -1342,7 +1318,7 @@ gearAir = {
 				{name="gear_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_aircraft",min=1,max=6,weight=0.1},
+				{name="gear_construction_aircraft",min=1,max=6,weight=0.2},
 				{name="gear_zipper",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_dash",min=0,max=MANY,weight=0.6},
 				{name="gear_zipper",min=0,max=MANY,weight=0.6},
@@ -1367,7 +1343,7 @@ gearAir = {
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 2,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -1387,8 +1363,8 @@ gearAir = {
 				{name="gear_upgrade_center",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_aircraft",min=2,max=4,weight=0.1},
-				{name="gear_adv_construction_aircraft",min=1,max=3,weight=0.1},
+				{name="gear_construction_aircraft",min=2,max=4,weight=0.2},
+				{name="gear_adv_construction_aircraft",min=1,max=3,weight=0.2},
 				{name="gear_vector",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_vector",min=1,max=MANY,weight=0.2},
 				{name="gear_stratos",min=1,max=MANY,weight=0.3},
@@ -1415,7 +1391,7 @@ gearAir = {
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 2,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -1427,7 +1403,7 @@ gearAir = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="gear_nano_tower",min=1,max=3},
+				{name="gear_nano_tower",min=1,max=4},
 				{name="gear_adv_aircraft_plant",min=1,max=2},
 				{name="gear_aircraft_plant",min=1,max=1},				
 				{name="gear_commander_respawner",min=2,max=2},
@@ -1436,8 +1412,8 @@ gearAir = {
 				{name="gear_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_aircraft",min=2,max=6,weight=0.1},
-				{name="gear_adv_construction_aircraft",min=2,max=5,weight=0.1},
+				{name="gear_construction_aircraft",min=2,max=6,weight=0.2},
+				{name="gear_adv_construction_aircraft",min=2,max=5,weight=0.2},
 				{name="gear_vector",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_vector",min=1,max=MANY,weight=0.2},
 				{name="gear_stratos",min=1,max=MANY,weight=0.6},
@@ -1464,7 +1440,7 @@ gearAir = {
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 2,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -1476,7 +1452,7 @@ gearAir = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="gear_nano_tower",min=1,max=3},
+				{name="gear_nano_tower",min=1,max=6},
 				{name="gear_adv_aircraft_plant",min=2,max=3},
 				{name="gear_aircraft_plant",min=1,max=1},				
 				{name="gear_commander_respawner",min=2,max=2},
@@ -1485,8 +1461,8 @@ gearAir = {
 				{name="gear_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_aircraft",min=2,max=6,weight=0.1},
-				{name="gear_adv_construction_aircraft",min=2,max=5,weight=0.1},
+				{name="gear_construction_aircraft",min=2,max=6,weight=0.2},
+				{name="gear_adv_construction_aircraft",min=2,max=5,weight=0.2},
 				{name="gear_vector",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_vector",min=1,max=MANY,weight=0.2},
 				{name="gear_stratos",min=1,max=MANY,weight=0.6},
@@ -1524,7 +1500,7 @@ gearAmphibious = {
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
 				enemyThreatEstimationMult = 1.7,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -1541,7 +1517,7 @@ gearAmphibious = {
 				{name="gear_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_aircraft",min=1,max=2,weight=0.1},
+				{name="gear_construction_aircraft",min=1,max=2,weight=0.2},
 				{name="gear_zipper",min=0,max=MANY,weight=0.6},
 				{name="gear_knocker",min=0,max=MANY,weight=0.3}
 			}
@@ -1566,7 +1542,7 @@ gearAmphibious = {
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
 				enemyThreatEstimationMult = 1.7,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -1586,8 +1562,8 @@ gearAmphibious = {
 				{name="gear_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_aircraft",min=1,max=4,weight=0.1},
-				{name="gear_adv_construction_aircraft",min=1,max=4,weight=0.1},
+				{name="gear_construction_aircraft",min=1,max=4,weight=0.2},
+				{name="gear_adv_construction_aircraft",min=1,max=4,weight=0.2},
 				{name="gear_proteus",min=1,max=4,weight=0.4},
 				{name="gear_vector",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_whirlpool",min=2,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
@@ -1614,7 +1590,7 @@ gearAmphibious = {
 				amphibiousMainForce = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 1.7,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -1626,7 +1602,7 @@ gearAmphibious = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="gear_nano_tower",min=1,max=3},
+				{name="gear_nano_tower",min=1,max=4},
 				{name="gear_adv_aircraft_plant",min=1,max=2},
 				{name="gear_adv_shipyard",min=1,max=2,includeConditions={CONDITION_WATER}},
 				{name="gear_commander_respawner",min=1,max=2},
@@ -1634,8 +1610,8 @@ gearAmphibious = {
 				{name="gear_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_aircraft",min=2,max=4,weight=0.1},
-				{name="gear_adv_construction_aircraft",min=2,max=4,weight=0.1},
+				{name="gear_construction_aircraft",min=2,max=4,weight=0.2},
+				{name="gear_adv_construction_aircraft",min=2,max=4,weight=0.2},
 				{name="gear_proteus",min=1,max=4,weight=0.4},
 				{name="gear_vector",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_whirlpool",min=2,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
@@ -1662,7 +1638,7 @@ gearAmphibious = {
 				amphibiousMainForce = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 1.7,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -1674,7 +1650,7 @@ gearAmphibious = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="gear_nano_tower",min=1,max=3},
+				{name="gear_nano_tower",min=1,max=5},
 				{name="gear_adv_aircraft_plant",min=1,max=2},
 				{name="gear_commander_respawner",min=2,max=2},
 				{name="gear_upgrade_center",min=1,max=1},
@@ -1683,8 +1659,8 @@ gearAmphibious = {
 				{name="gear_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_aircraft",min=2,max=4,weight=0.1},
-				{name="gear_adv_construction_aircraft",min=2,max=4,weight=0.1},
+				{name="gear_construction_aircraft",min=2,max=4,weight=0.2},
+				{name="gear_adv_construction_aircraft",min=2,max=4,weight=0.2},
 				{name="gear_proteus",min=1,max=4,weight=0.4},
 				{name="gear_vector",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_whirlpool",min=2,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
@@ -1720,7 +1696,7 @@ clawLandAssault = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = math.huge,	-- no ground raider squad
 				enemyThreatEstimationMult = 2,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -1762,7 +1738,7 @@ clawLandAssault = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = math.huge,	-- no ground raider squad
 				enemyThreatEstimationMult = 2,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -1809,7 +1785,7 @@ clawLandAssault = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = math.huge,	-- no ground raider squad
 				enemyThreatEstimationMult = 2,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -1862,7 +1838,7 @@ clawLandAssault = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = math.huge,	-- no ground raider squad
 				enemyThreatEstimationMult = 2,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -1942,11 +1918,12 @@ clawLandSkirmisher = {
 				{name="claw_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="claw_construction_kbot",min=2,max=6,weight=0.1},
+				{name="claw_construction_kbot",min=2,max=6,weight=0.2},
 				{name="claw_knife",min=0,max=MANY,weight=0.2},
 				{name="claw_grunt",min=0,max=MANY,weight=0.5,includeConditions={THREAT_AIR}},
 				{name="claw_jester",min=0,max=MANY,weight=0.6},
 				{name="claw_roller",min=0,max=MANY,weight=0.3},
+				{name="claw_piston",min=0,max=MANY,weight=1,includeConditions={THREAT_ASSAULT}},				
 				{name="claw_piston",min=0,max=MANY,weight=0.3}
 			}
 		},
@@ -1987,9 +1964,10 @@ clawLandSkirmisher = {
 				{name="claw_upgrade_center",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="claw_construction_kbot",min=2,max=4,weight=0.1},
-				{name="claw_adv_construction_kbot",min=1,max=3,weight=0.1},
+				{name="claw_construction_kbot",min=2,max=4,weight=0.2},
+				{name="claw_adv_construction_kbot",min=1,max=3,weight=0.2},
 				{name="claw_grunt",min=0,max=MANY,weight=0.6,includeConditions={THREAT_AIR}},
+				{name="claw_brute",min=0,max=MANY,weight=1,includeConditions={THREAT_ASSAULT}},				
 				{name="claw_bishop",min=3,max=MANY,weight=0.4},
 				{name="claw_crawler",min=3,max=MANY,weight=0.4},
 				{name="claw_shrieker",min=3,max=MANY,weight=0.3},
@@ -2029,7 +2007,7 @@ clawLandSkirmisher = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="claw_nano_tower",min=1,max=3},
+				{name="claw_nano_tower",min=1,max=4},
 				{name="claw_adv_kbot_plant",min=1,max=2},
 				{name="claw_light_plant",min=1,max=1},				
 				{name="claw_commander_respawner",min=2,max=2},
@@ -2038,10 +2016,11 @@ clawLandSkirmisher = {
 				{name="claw_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="claw_construction_kbot",min=2,max=6,weight=0.1},
-				{name="claw_adv_construction_kbot",min=2,max=3,weight=0.1},
-				{name="claw_adv_construction_vehicle",min=2,max=3,weight=0.1},
+				{name="claw_construction_kbot",min=2,max=6,weight=0.2},
+				{name="claw_adv_construction_kbot",min=2,max=3,weight=0.2},
+				{name="claw_adv_construction_vehicle",min=2,max=3,weight=0.2},
 				{name="claw_brute",min=0,max=MANY,weight=0.6,includeConditions={THREAT_AIR}},
+				{name="claw_brute",min=0,max=MANY,weight=1,includeConditions={THREAT_ASSAULT}},				
 				{name="claw_bishop",min=3,max=MANY,weight=0.4},
 				{name="claw_crawler",min=3,max=MANY,weight=0.4},
 				{name="claw_shrieker",min=3,max=MANY,weight=0.3},
@@ -2083,7 +2062,7 @@ clawLandSkirmisher = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="claw_nano_tower",min=1,max=3},
+				{name="claw_nano_tower",min=1,max=6},
 				{name="claw_adv_kbot_plant",min=1,max=2},
 				{name="claw_adv_vehicle_plant",min=1,max=2},
 				{name="claw_light_plant",min=1,max=1},				
@@ -2094,10 +2073,11 @@ clawLandSkirmisher = {
 				{name="claw_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="claw_construction_kbot",min=2,max=6,weight=0.1},
-				{name="claw_adv_construction_kbot",min=2,max=3,weight=0.1},
-				{name="claw_adv_construction_vehicle",min=2,max=3,weight=0.1},
+				{name="claw_construction_kbot",min=2,max=6,weight=0.2},
+				{name="claw_adv_construction_kbot",min=2,max=3,weight=0.2},
+				{name="claw_adv_construction_vehicle",min=2,max=3,weight=0.2},
 				{name="claw_brute",min=0,max=MANY,weight=0.6,includeConditions={THREAT_AIR}},
+				{name="claw_armadon",min=0,max=MANY,weight=1,includeConditions={THREAT_ASSAULT}},
 				{name="claw_bishop",min=3,max=MANY,weight=0.4},
 				{name="claw_crawler",min=3,max=MANY,weight=0.4},
 				{name="claw_shrieker",min=3,max=MANY,weight=0.3},
@@ -2159,7 +2139,7 @@ clawAir = {
 				{name="claw_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="claw_construction_aircraft",min=1,max=6,weight=0.1},
+				{name="claw_construction_aircraft",min=1,max=6,weight=0.2},
 				{name="claw_hornet",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="claw_shredder",min=0,max=MANY,weight=0.6},
 				{name="claw_boomer_m",min=0,max=MANY,weight=0.6}
@@ -2203,8 +2183,8 @@ clawAir = {
 				{name="claw_upgrade_center",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="claw_construction_aircraft",min=2,max=4,weight=0.1},
-				{name="claw_adv_construction_aircraft",min=1,max=3,weight=0.1},
+				{name="claw_construction_aircraft",min=2,max=4,weight=0.2},
+				{name="claw_adv_construction_aircraft",min=1,max=3,weight=0.2},
 				{name="claw_x",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="claw_x",min=1,max=MANY,weight=0.2},
 				{name="claw_havoc",min=1,max=MANY,weight=0.3},
@@ -2244,7 +2224,7 @@ clawAir = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="claw_nano_tower",min=1,max=3},
+				{name="claw_nano_tower",min=1,max=4},
 				{name="claw_adv_aircraft_plant",min=1,max=2},
 				{name="claw_aircraft_plant",min=1,max=1},				
 				{name="claw_commander_respawner",min=2,max=2},
@@ -2253,8 +2233,8 @@ clawAir = {
 				{name="claw_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="claw_construction_aircraft",min=2,max=6,weight=0.1},
-				{name="claw_adv_construction_aircraft",min=2,max=5,weight=0.1},
+				{name="claw_construction_aircraft",min=2,max=6,weight=0.2},
+				{name="claw_adv_construction_aircraft",min=2,max=5,weight=0.2},
 				{name="claw_x",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="claw_x",min=1,max=MANY,weight=0.2},
 				{name="claw_havoc",min=1,max=MANY,weight=0.6},
@@ -2294,7 +2274,7 @@ clawAir = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="claw_nano_tower",min=1,max=3},
+				{name="claw_nano_tower",min=1,max=6},
 				{name="claw_adv_aircraft_plant",min=2,max=3},
 				{name="claw_aircraft_plant",min=1,max=1},				
 				{name="claw_commander_respawner",min=2,max=2},
@@ -2303,8 +2283,8 @@ clawAir = {
 				{name="claw_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="claw_construction_aircraft",min=2,max=6,weight=0.1},
-				{name="claw_adv_construction_aircraft",min=2,max=5,weight=0.1},
+				{name="claw_construction_aircraft",min=2,max=6,weight=0.2},
+				{name="claw_adv_construction_aircraft",min=2,max=5,weight=0.2},
 				{name="claw_x",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="claw_x",min=1,max=MANY,weight=0.2},
 				{name="claw_havoc",min=1,max=MANY,weight=0.6},
@@ -2360,7 +2340,7 @@ clawAmphibious = {
 				{name="claw_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="claw_adv_construction_spinbot",min=1,max=2,weight=0.1},
+				{name="claw_adv_construction_spinbot",min=1,max=2,weight=0.2},
 				{name="claw_dizzy",min=0,max=MANY,weight=0.6},
 				{name="claw_mace",min=1,max=MANY,weight=0.4,excludeConditions={THREAT_AIR}}
 			}
@@ -2380,7 +2360,7 @@ clawAmphibious = {
 			},
 			properties = {
 				commanderBuildsFactories = false,
-				roamingCommander = true,
+				roamingCommander = false,
 				raiderSpeedThreshold = 75,
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
@@ -2404,7 +2384,7 @@ clawAmphibious = {
 				{name="claw_upgrade_center",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="claw_adv_construction_spinbot",min=1,max=4,weight=0.1},
+				{name="claw_adv_construction_spinbot",min=1,max=4,weight=0.35},
 				{name="claw_dizzy",min=1,max=MANY,weight=0.4,includeConditions={THREAT_AIR}},
 				{name="claw_dizzy",min=1,max=MANY,weight=0.4},
 				{name="claw_mace",min=1,max=MANY,weight=0.4,excludeConditions={THREAT_AIR}},
@@ -2430,7 +2410,7 @@ clawAmphibious = {
 			},
 			properties = {
 				commanderBuildsFactories = false,
-				roamingCommander = true,
+				roamingCommander = false,
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
 				raiderSpeedThreshold = 75,
@@ -2447,7 +2427,7 @@ clawAmphibious = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="claw_nano_tower",min=1,max=3},
+				{name="claw_nano_tower",min=1,max=4},
 				{name="claw_adv_aircraft_plant",min=1,max=2},
 				{name="claw_spinbot_plant",min=1,max=2},
 				{name="claw_commander_respawner",min=1,max=2},
@@ -2456,9 +2436,9 @@ clawAmphibious = {
 				{name="claw_adv_shipyard",min=1,max=1,includeConditions={CONDITION_WATER}}
 			},
 			mobileUnits = {
-				{name="claw_construction_aircraft",min=2,max=4,weight=0.1},
-				{name="claw_adv_construction_aircraft",min=2,max=4,weight=0.1},
-				{name="claw_adv_construction_spinbot",min=1,max=2,weight=0.1},
+				{name="claw_construction_aircraft",min=2,max=4,weight=0.25},
+				{name="claw_adv_construction_aircraft",min=2,max=4,weight=0.25},
+				{name="claw_adv_construction_spinbot",min=1,max=2,weight=0.25},
 				{name="claw_dizzy",min=1,max=MANY,weight=0.4,includeConditions={THREAT_AIR}},
 				{name="claw_tempest",min=1,max=MANY,weight=0.4},
 				{name="claw_mace",min=1,max=MANY,weight=0.4,excludeConditions={THREAT_AIR}},
@@ -2489,7 +2469,7 @@ clawAmphibious = {
 			},
 			properties = {
 				commanderBuildsFactories = false,
-				roamingCommander = true,
+				roamingCommander = false,
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
 				raiderSpeedThreshold = 75,
@@ -2506,7 +2486,7 @@ clawAmphibious = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="claw_nano_tower",min=1,max=3},
+				{name="claw_nano_tower",min=1,max=6},
 				{name="claw_adv_aircraft_plant",min=1,max=2},
 				{name="claw_spinbot_plant",min=1,max=2},
 				{name="claw_commander_respawner",min=2,max=2},
@@ -2516,9 +2496,9 @@ clawAmphibious = {
 				{name="claw_adv_shipyard",min=1,max=1,includeConditions={CONDITION_WATER}}
 			},
 			mobileUnits = {
-				{name="claw_construction_aircraft",min=2,max=4,weight=0.1},
-				{name="claw_adv_construction_aircraft",min=2,max=4,weight=0.1},
-				{name="claw_adv_construction_spinbot",min=1,max=2,weight=0.1},
+				{name="claw_construction_aircraft",min=2,max=4,weight=0.25},
+				{name="claw_adv_construction_aircraft",min=2,max=4,weight=0.25},
+				{name="claw_adv_construction_spinbot",min=1,max=2,weight=0.25},
 				{name="claw_dizzy",min=1,max=MANY,weight=0.4,includeConditions={THREAT_AIR}},
 				{name="claw_tempest",min=1,max=MANY,weight=0.4},
 				{name="claw_mace",min=1,max=MANY,weight=0.4,excludeConditions={THREAT_AIR}},
@@ -2581,7 +2561,7 @@ sphereLandAssault = {
 				{name="sphere_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_vehicle",min=1,max=6,weight=0.1},
+				{name="sphere_construction_vehicle",min=1,max=6,weight=0.2},
 				{name="sphere_slicer",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="sphere_slicer",min=0,max=MANY,weight=0.2},
 				{name="sphere_crustle",min=0,max=MANY,weight=0.2},
@@ -2627,8 +2607,8 @@ sphereLandAssault = {
 				{name="sphere_upgrade_center",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_vehicle",min=2,max=4,weight=0.1},
-				{name="sphere_adv_construction_vehicle",min=1,max=3,weight=0.1},
+				{name="sphere_construction_vehicle",min=2,max=4,weight=0.2},
+				{name="sphere_adv_construction_vehicle",min=1,max=3,weight=0.2},
 				{name="sphere_slicer",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="sphere_trax",min=3,max=MANY,weight=0.3},
 				{name="sphere_bulk",min=3,max=MANY,weight=0.3},
@@ -2668,7 +2648,7 @@ sphereLandAssault = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="sphere_pole",min=1,max=3},
+				{name="sphere_pole",min=1,max=4},
 				{name="sphere_adv_vehicle_factory",min=1,max=2},
 				{name="sphere_light_factory",min=1,max=1},				
 				{name="sphere_commander_respawner",min=2,max=2},
@@ -2677,8 +2657,8 @@ sphereLandAssault = {
 				{name="sphere_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_vehicle",min=2,max=6,weight=0.1},
-				{name="sphere_adv_construction_vehicle",min=2,max=6,weight=0.1},
+				{name="sphere_construction_vehicle",min=2,max=6,weight=0.2},
+				{name="sphere_adv_construction_vehicle",min=2,max=6,weight=0.2},
 				{name="sphere_slicer",min=1,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="sphere_bulk",min=3,max=MANY,weight=0.3},
 				{name="sphere_concealer",min=1,max=1,weight=0.01},
@@ -2721,7 +2701,7 @@ sphereLandAssault = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="sphere_pole",min=1,max=3},
+				{name="sphere_pole",min=1,max=6},
 				{name="sphere_adv_vehicle_factory",min=1,max=2},
 				{name="sphere_light_factory",min=1,max=1,weight=1},				
 				{name="sphere_commander_respawner",min=2,max=2},
@@ -2731,8 +2711,8 @@ sphereLandAssault = {
 				{name="sphere_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_vehicle",min=2,max=6,weight=0.1},
-				{name="sphere_adv_construction_vehicle",min=2,max=6,weight=0.1},
+				{name="sphere_construction_vehicle",min=2,max=6,weight=0.2},
+				{name="sphere_adv_construction_vehicle",min=2,max=6,weight=0.2},
 				{name="sphere_slicer",min=1,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="sphere_bulk",min=3,max=MANY,weight=0.3},
 				{name="sphere_concealer",min=1,max=1,weight=0.01},
@@ -2790,7 +2770,7 @@ sphereLandSkirmisher = {
 				{name="sphere_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_vehicle",min=2,max=6,weight=0.1},
+				{name="sphere_construction_vehicle",min=2,max=6,weight=0.2},
 				{name="sphere_trike",min=0,max=MANY,weight=0.2},
 				{name="sphere_double",min=0,max=MANY,weight=0.2},
 				{name="sphere_slicer",min=0,max=MANY,weight=0.5,includeConditions={THREAT_AIR}},
@@ -2836,8 +2816,8 @@ sphereLandSkirmisher = {
 				{name="sphere_upgrade_center",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_vehicle",min=2,max=4,weight=0.1},
-				{name="sphere_adv_construction_kbot",min=1,max=3,weight=0.1},
+				{name="sphere_construction_vehicle",min=2,max=4,weight=0.2},
+				{name="sphere_adv_construction_kbot",min=1,max=3,weight=0.2},
 				{name="sphere_slicer",min=0,max=MANY,weight=0.6,includeConditions={THREAT_AIR}},
 				{name="sphere_masher",min=0,max=MANY,weight=0.4},
 				{name="sphere_ark",min=0,max=MANY,weight=0.4},
@@ -2877,7 +2857,7 @@ sphereLandSkirmisher = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="sphere_pole",min=1,max=3},
+				{name="sphere_pole",min=1,max=4},
 				{name="sphere_adv_kbot_factory",min=1,max=2},
 				{name="sphere_light_factory",min=1,max=1},				
 				{name="sphere_commander_respawner",min=2,max=2},
@@ -2886,9 +2866,9 @@ sphereLandSkirmisher = {
 				{name="sphere_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_vehicle",min=2,max=6,weight=0.1},
-				{name="sphere_adv_construction_kbot",min=2,max=3,weight=0.1},
-				{name="sphere_adv_construction_vehicle",min=2,max=3,weight=0.1},
+				{name="sphere_construction_vehicle",min=2,max=6,weight=0.2},
+				{name="sphere_adv_construction_kbot",min=2,max=3,weight=0.2},
+				{name="sphere_adv_construction_vehicle",min=2,max=3,weight=0.2},
 				{name="sphere_slicer",min=0,max=MANY,weight=0.6,includeConditions={THREAT_AIR}},
 				{name="sphere_ark",min=3,max=MANY,weight=0.4},
 				{name="sphere_masher",min=3,max=MANY,weight=0.4},
@@ -2931,7 +2911,7 @@ sphereLandSkirmisher = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="sphere_pole",min=1,max=3},
+				{name="sphere_pole",min=1,max=6},
 				{name="sphere_adv_kbot_factory",min=1,max=2},
 				{name="sphere_adv_vehicle_factory",min=1,max=2},
 				{name="sphere_light_factory",min=1,max=1},
@@ -2942,9 +2922,10 @@ sphereLandSkirmisher = {
 				{name="sphere_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_vehicle",min=2,max=6,weight=0.1},
-				{name="sphere_adv_construction_kbot",min=2,max=3,weight=0.1},
-				{name="sphere_adv_construction_vehicle",min=2,max=3,weight=0.1},
+				{name="sphere_construction_vehicle",min=2,max=6,weight=0.2},
+				{name="sphere_adv_construction_kbot",min=2,max=3,weight=0.2},
+				{name="sphere_adv_construction_vehicle",min=2,max=3,weight=0.2},
+				{name="sphere_adv_construction_aircraft",min=2,max=3,weight=0.2},
 				{name="sphere_slicer",min=0,max=MANY,weight=0.6,includeConditions={THREAT_AIR}},
 				{name="sphere_ark",min=3,max=MANY,weight=0.4},
 				{name="sphere_masher",min=3,max=MANY,weight=0.4},
@@ -2991,7 +2972,7 @@ sphereAir = {
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 2,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -3008,7 +2989,7 @@ sphereAir = {
 				{name="sphere_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_aircraft",min=1,max=6,weight=0.1},
+				{name="sphere_construction_aircraft",min=1,max=6,weight=0.2},
 				{name="sphere_moth",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="sphere_moth",min=0,max=MANY,weight=0.4},
 				{name="sphere_blower",min=0,max=MANY,weight=0.6},
@@ -3033,7 +3014,7 @@ sphereAir = {
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 2,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -3053,8 +3034,8 @@ sphereAir = {
 				{name="sphere_upgrade_center",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_aircraft",min=2,max=4,weight=0.1},
-				{name="sphere_adv_construction_aircraft",min=1,max=3,weight=0.1},
+				{name="sphere_construction_aircraft",min=2,max=4,weight=0.2},
+				{name="sphere_adv_construction_aircraft",min=1,max=3,weight=0.2},
 				{name="sphere_twilight",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="sphere_twilight",min=1,max=MANY,weight=0.4},
 				{name="sphere_meteor",min=1,max=MANY,weight=0.3},
@@ -3082,7 +3063,7 @@ sphereAir = {
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 2,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -3094,7 +3075,7 @@ sphereAir = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="sphere_pole",min=1,max=3},
+				{name="sphere_pole",min=1,max=4},
 				{name="sphere_adv_aircraft_factory",min=1,max=2},
 				{name="sphere_aircraft_factory",min=1,max=1},				
 				{name="sphere_commander_respawner",min=2,max=2},
@@ -3102,8 +3083,8 @@ sphereAir = {
 				{name="sphere_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_aircraft",min=2,max=6,weight=0.1},
-				{name="sphere_adv_construction_aircraft",min=2,max=5,weight=0.1},
+				{name="sphere_construction_aircraft",min=2,max=6,weight=0.2},
+				{name="sphere_adv_construction_aircraft",min=2,max=5,weight=0.2},
 				{name="sphere_twilight",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="sphere_twilight",min=1,max=MANY,weight=0.2},
 				{name="sphere_meteor",min=1,max=MANY,weight=0.6},
@@ -3131,7 +3112,7 @@ sphereAir = {
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 2,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -3143,7 +3124,7 @@ sphereAir = {
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="sphere_pole",min=1,max=3},
+				{name="sphere_pole",min=1,max=6},
 				{name="sphere_adv_aircraft_factory",min=2,max=3},
 				{name="sphere_aircraft_factory",min=1,max=1},				
 				{name="sphere_commander_respawner",min=2,max=2},
@@ -3152,8 +3133,8 @@ sphereAir = {
 				{name="sphere_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_aircraft",min=2,max=6,weight=0.1},
-				{name="sphere_adv_construction_aircraft",min=2,max=5,weight=0.1},
+				{name="sphere_construction_aircraft",min=2,max=6,weight=0.2},
+				{name="sphere_adv_construction_aircraft",min=2,max=5,weight=0.2},
 				{name="sphere_twilight",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="sphere_twilight",min=1,max=MANY,weight=0.2},
 				{name="sphere_meteor",min=1,max=MANY,weight=0.6},
@@ -3192,7 +3173,7 @@ sphereAmphibious = {
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
 				enemyThreatEstimationMult = 1.7,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -3209,7 +3190,7 @@ sphereAmphibious = {
 				{name="sphere_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_aircraft",min=1,max=2,weight=0.1},
+				{name="sphere_construction_aircraft",min=1,max=3,weight=0.2},
 				{name="sphere_nimbus",min=0,max=MANY,weight=0.6},
 				{name="sphere_aster",min=1,max=MANY,weight=0.2,includeConditions={THREAT_AIR}},
 				{name="sphere_aster",min=0,max=MANY,weight=0.2}
@@ -3235,7 +3216,7 @@ sphereAmphibious = {
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
 				enemyThreatEstimationMult = 1.7,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -3248,14 +3229,14 @@ sphereAmphibious = {
 			},
 			factories = {
 				{name="sphere_pole",min=1,max=3},
-				{name="sphere_sphere_factory",min=1,max=2},
+				{name="sphere_sphere_factory",min=1,max=1},
 				{name="sphere_commander_respawner",min=1,max=2},
 				{name="sphere_scout_pad",min=1,max=1},
 				{name="sphere_upgrade_center",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_aircraft",min=0,max=4,weight=0.1},
-				{name="sphere_construction_sphere",min=1,max=4,weight=0.1},
+				{name="sphere_construction_aircraft",min=0,max=4,weight=0.2},
+				{name="sphere_construction_sphere",min=1,max=4,weight=0.2},
 				{name="sphere_aster",min=1,max=MANY,weight=0.8,includeConditions={THREAT_AIR}},
 				{name="sphere_nimbus",min=1,max=MANY,weight=0.5},
 				{name="sphere_aster",min=1,max=MANY,weight=0.3},
@@ -3283,29 +3264,29 @@ sphereAmphibious = {
 				amphibiousMainForce = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 1.7,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
 				mexBuilders = 1,
 				basePatrollers = 0,
 				defenseBuilders = 0,
-				attackPatrollers = 0,
+				attackPatrollers = 2,
 				mexUpgraders = 1,
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="sphere_pole",min=1,max=3},
-				{name="sphere_adv_aircraft_factory",min=1,max=2},
-				{name="sphere_sphere_factory",min=1,max=2},
+				{name="sphere_pole",min=1,max=4},
+				{name="sphere_adv_aircraft_factory",min=1,max=1},
+				{name="sphere_sphere_factory",min=1,max=1},
 				{name="sphere_commander_respawner",min=1,max=2},
 				{name="sphere_scout_pad",min=1,max=1},
 				{name="sphere_upgrade_center",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_aircraft",min=2,max=4,weight=0.1},
-				{name="sphere_adv_construction_aircraft",min=2,max=4,weight=0.1},
-				{name="sphere_construction_sphere",min=1,max=2,weight=0.1},
+				{name="sphere_construction_aircraft",min=2,max=4,weight=0.2},
+				{name="sphere_adv_construction_aircraft",min=2,max=4,weight=0.2},
+				{name="sphere_construction_sphere",min=1,max=2,weight=0.2},
 				{name="sphere_aster",min=1,max=MANY,weight=0.8,includeConditions={THREAT_AIR}},
 				{name="sphere_aster",min=1,max=MANY,weight=0.4},
 				{name="sphere_gazer",min=1,max=MANY,weight=0.4},
@@ -3337,19 +3318,19 @@ sphereAmphibious = {
 				amphibiousMainForce = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 1.7,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
 				mexBuilders = 1,
 				basePatrollers = 0,
 				defenseBuilders = 0,
-				attackPatrollers = 0,
+				attackPatrollers = 3,
 				mexUpgraders = 1,
 				advancedDefenseBuilders = 0
 			},				
 			factories = {
-				{name="sphere_pole",min=1,max=4},
+				{name="sphere_pole",min=1,max=6},
 				{name="sphere_adv_aircraft_factory",min=1,max=2},
 				{name="sphere_sphere_factory",min=1,max=1},
 				{name="sphere_commander_respawner",min=2,max=2},
@@ -3358,9 +3339,9 @@ sphereAmphibious = {
 				{name="sphere_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_aircraft",min=2,max=4,weight=0.1},
-				{name="sphere_adv_construction_aircraft",min=2,max=4,weight=0.1},
-				{name="sphere_construction_sphere",min=1,max=2,weight=0.1},
+				{name="sphere_construction_aircraft",min=2,max=4,weight=0.2},
+				{name="sphere_adv_construction_aircraft",min=2,max=4,weight=0.2},
+				{name="sphere_construction_sphere",min=1,max=2,weight=0.2},
 				{name="sphere_aster",min=1,max=MANY,weight=0.8,includeConditions={THREAT_AIR}},
 				{name="sphere_aster",min=1,max=MANY,weight=0.4},
 				{name="sphere_gazer",min=1,max=MANY,weight=0.4},

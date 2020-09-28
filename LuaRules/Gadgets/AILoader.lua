@@ -64,12 +64,12 @@ function gadget:Initialize()
 				if (string.find(aiInfo,":") ~= nil) then
 					local strategyPos1,strategyPos2 = string.find(aiInfo," %(")
 					if (strategyPos1 ~= nil) then
-						mode = string.sub(aiInfo,8,strategyPos1)
+						mode = string.sub(aiInfo,8,strategyPos1-1)
 						strategyStr = string.match(aiInfo,"%((.-)%)")
 					else
 						mode = string.sub(aiInfo,8)
 					end
-					Echo("Player " .. teamList[i] .. " has mode = " .. mode.." strategy="..strategyStr)
+					Echo("Player " .. teamList[i] .. " has mode = \"" .. mode.."\" strategy=\""..strategyStr.."\"")
 				end 
 				
 				-- add AI object
@@ -198,7 +198,7 @@ end
 function gadget:UnitGiven(unitId, unitDefId, teamId, oldTeamId) 
 	-- for each AI...
     for _,thisAI in ipairs(mFAIs) do
-		thisAI:UnitTaken(unitId, unitDefId, teamId, oldTeamId)
+		thisAI:UnitGiven(unitId, unitDefId, teamId, oldTeamId)
 	end
 end
 
@@ -209,7 +209,7 @@ function gadget:RecvLuaMsg(msg, playerId)
 	-- exclude spectators
 	-- TODO allow cheats to override this
 	if (active and not spectator) then
-		Spring.Echo("pName="..pName.." teamId="..teamId.." allyId="..allyId)
+		--Spring.Echo("pName="..pName.." teamId="..teamId.." allyId="..allyId)
 		-- if it was a message to set or remove beacon, forward it to all AIs allied with the player
 		for _,thisAI in ipairs(mFAIs) do
 			if (thisAI.allyId == allyId) then

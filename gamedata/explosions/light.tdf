@@ -740,3 +740,127 @@
 		count=3;
 	}
 }
+
+
+
+[GAZERGLOW1]
+{
+	[GLOW1]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=1, r0.2, r0.2;
+			width=20;
+			length=20;
+			alpha=0.12;
+			alphadecay=0.02;
+			color=1, 0.1, 0.1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+	[GLOW2]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=r0.2, 1, r0.2;
+			width=20;
+			length=20;
+			alpha=0.12;
+			alphadecay=0.02;
+			color=1, 0.1, 0.1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+	[GLOW3]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=r0.2, r0.2, 1;
+			width=20;
+			length=20;
+			alpha=0.12;
+			alphadecay=0.02;
+			color=1, 0.1, 0.1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+}
+
+[GAZERGLOW2]
+{
+	[GLOW1]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=1, r0.2, r0.2;
+			width=35;
+			length=35;
+			alpha=0.12;
+			alphadecay=0.02;
+			color=1, 0.3, 0.3;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+	[GLOW2]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=r0.2, 1, r0.2;
+			width=35;
+			length=35;
+			alpha=0.12;
+			alphadecay=0.02;
+			color=1, 0.3, 0.3;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+	[GLOW3]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=r0.2, r0.2, 1;
+			width=35;
+			length=35;
+			alpha=0.12;
+			alphadecay=0.02;
+			color=1, 0.3, 0.3;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+}

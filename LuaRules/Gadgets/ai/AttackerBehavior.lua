@@ -13,7 +13,7 @@ end
 -- set up inheritance
 setmetatable(AttackerBehavior,{__index = CommonUnitBehavior})
 
-function AttackerBehavior:Name()
+function AttackerBehavior:name()
 	return "AttackerBehavior"
 end
 
@@ -23,54 +23,9 @@ end
 
 
 function AttackerBehavior:Init(ai, uId)
-	self:CommonInit(ai, uId)
+	self:commonInit(ai, uId)
 
 	self:activate()
-end
-
-function AttackerBehavior:UnitFinished(uId)
-	if uId == self.unitId then
-		if setContains(unitTypeSets[TYPE_AIR_ATTACKER],self.unitName) then
-			self.ai.unitHandler:addRecruit(self,UNIT_GROUP_AIR_ATTACKERS)
-		elseif setContains(unitTypeSets[TYPE_SEA_ATTACKER],self.unitName) then
-			self.ai.unitHandler:addRecruit(self,UNIT_GROUP_SEA_ATTACKERS)
-		else
-			self.ai.unitHandler:addRecruit(self,UNIT_GROUP_ATTACKERS)
-		end
-	end
-end
-
-
-function AttackerBehavior:UnitDestroyed(uId)
-	if uId == self.unitId then
-		self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_ATTACKERS)
-		self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_AIR_ATTACKERS)
-		self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_SEA_ATTACKERS)
-		self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_RAIDERS)
-	end
-end
-
-function AttackerBehavior:UnitTaken(uId)
-	if uId == self.unitId then
-		self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_ATTACKERS)
-		self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_AIR_ATTACKERS)
-		self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_SEA_ATTACKERS)
-		self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_RAIDERS)
-	end
-end
-
-function AttackerBehavior:UnitDamaged(uId)
-	if uId == self.unitId then
-		local tmpFrame = spGetGameFrame()
-		self.underAttackFrame = tmpFrame
-	end
-end
-
-
-function AttackerBehavior:UnitIdle(uId)
-	if uId == self.unitId then
-		-- do something here?
-	end
 end
 
 function AttackerBehavior:attackCell(centerPos, cell)
@@ -136,9 +91,13 @@ function AttackerBehavior:retreat()
 	
 	if (self.lastRetreatOrderFrame or 0) + ORDER_DELAY_FRAMES < tmpFrame then
 		local selfPos = self.pos
+		local basePos = self.ai.unitHandler.basePos
 	
-		if ( abs(selfPos.x - self.ai.unitHandler.basePos.x) > RETREAT_RADIUS or abs(selfPos.z - self.ai.unitHandler.basePos.z) > RETREAT_RADIUS  ) then
-			spGiveOrderToUnit(self.unitId,CMD.MOVE,{self.ai.unitHandler.basePos.x - BIG_RADIUS/2 + random( 1, BIG_RADIUS),0,self.ai.unitHandler.basePos.z - BIG_RADIUS/2 + random( 1, BIG_RADIUS)},{})
+		if ( abs(selfPos.x - basePos.x) > RETREAT_RADIUS or abs(selfPos.z - basePos.z) > RETREAT_RADIUS  ) then
+			local px = basePos.x - BIG_RADIUS/2 + random( 1, BIG_RADIUS)
+			local pz = basePos.z - BIG_RADIUS/2 + random( 1, BIG_RADIUS)
+			local h = spGetGroundHeight(px,pz)
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{px,h,pz},{})
 		else
 			self:evadeIfNeeded()
 		end
@@ -171,7 +130,64 @@ end
 
 function AttackerBehavior:activate()
 	self.active = true
+	-- add to unit handler
+	if setContains(unitTypeSets[TYPE_AIR_ATTACKER],self.unitName) then
+		self.ai.unitHandler:addRecruit(self,UNIT_GROUP_AIR_ATTACKERS)
+	elseif setContains(unitTypeSets[TYPE_SEA_ATTACKER],self.unitName) then
+		self.ai.unitHandler:addRecruit(self,UNIT_GROUP_SEA_ATTACKERS)
+	else
+		self.ai.unitHandler:addRecruit(self,UNIT_GROUP_ATTACKERS)
+	end	
 end
+
+
+function AttackerBehavior:deactivate()
+	self.active = false
+	-- remove from unit handler
+	self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_ATTACKERS)
+	self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_AIR_ATTACKERS)
+	self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_SEA_ATTACKERS)
+	self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_RAIDERS)	
+end
+
+
+
+-- to prevent artillery from chasing into enemy fire
+-- this will issue Hold Pos order to units that need it
+function AttackerBehavior:setMoveState()
+	if (self.unitDef.maxWeaponRange and tonumber(self.unitDef.maxWeaponRange) > 850 ) then
+		spGiveOrderToUnit(self.unitId,CMD.MOVE_STATE,{0}, {})
+	end
+end
+
+----------------------- engine event handlers
+
+function AttackerBehavior:UnitDestroyed(uId)
+	if uId == self.unitId then
+		self:deactivate()
+	end
+end
+
+function AttackerBehavior:UnitTaken(uId)
+	if uId == self.unitId then
+		self:deactivate()	
+	end
+end
+
+function AttackerBehavior:UnitDamaged(uId)
+	if uId == self.unitId then
+		local tmpFrame = spGetGameFrame()
+		self.underAttackFrame = tmpFrame
+	end
+end
+
+
+function AttackerBehavior:UnitIdle(uId)
+	if uId == self.unitId then
+		-- do something here?
+	end
+end
+
 
 function AttackerBehavior:GameFrame(f)
 	
@@ -194,13 +210,3 @@ function AttackerBehavior:GameFrame(f)
 		end
 	end	
 end
-
-
--- to prevent artillery from chasing into enemy fire
--- this will issue Hold Pos order to units that need it
-function AttackerBehavior:setMoveState()
-	if (self.unitDef.maxWeaponRange and tonumber(self.unitDef.maxWeaponRange) > 850 ) then
-		spGiveOrderToUnit(self.unitId,CMD.MOVE_STATE,{0}, {})
-	end
-end
-

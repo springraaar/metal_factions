@@ -209,10 +209,14 @@ function convertColor(colorarray)
 	local red = math_ceil(colorarray[1]*255) --+ 100
 	local green = math_ceil(colorarray[2]*255) --+ 100
 	local blue = math_ceil(colorarray[3]*255) --+ 100
-	if red + green < 255 then -- hack to avoid outline
-		red = red + 50
-		green = green + 50
-	end
+	-- hack to avoid outline
+	red = 50+red * 1.1
+	green = 50+green * 1.1
+	blue = 50+blue * 1.1
+	--if red + green < 255 then
+	--	red = red + 50
+	--	green = green + 50
+	--end
 	red = math_max( red, 1 )
 	green = math_max( green, 1 )
 	blue = math_max( blue, 1 )
