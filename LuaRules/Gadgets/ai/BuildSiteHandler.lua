@@ -79,11 +79,14 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 		step = 24
 		--Spring.SendCommands("clearmapmarks") 
 	end
+	local isExplosive = setContains(unitTypeSets[TYPE_FUSION],ud.name)
 	local buildTest = 0
 	local testRadius = minDistance+radius
 	local groundMetal = 0
 	local isMetalMap = self.ai.mapHandler.isMetalMap
 	local checkPos = newPosition(searchPos.x,searchPos.y,searchPos.z)
+	local testBuildOrder,blockingFId = 0
+	local dist = 0 -- currently checked only for static builders
 	for x = xMin, xMax, step do
 		-- check x map bounds
 		if (x > self.mapMinX) and (x < self.mapMaxX) then
@@ -96,7 +99,8 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 					valid = true
 					-- do a search radius test for static builders
 					if isStaticBuilder then
-						if not checkWithinDistance(testPos,searchPos,searchRadius) then
+						dist = distance(testPos,searchPos)
+						if dist > searchRadius then
 							valid = false
 						end
 					end
@@ -108,8 +112,10 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 					--end
 					
 					if valid and (builderBehavior.isWaterMode or testPos.y >= 0) then
+						testBuildOrder,blockingFId = spTestBuildOrder(ud.id, testPos.x, testPos.y, testPos.z,0)
+					
 						-- check if unit can be built
-						if spTestBuildOrder(ud.id, testPos.x, testPos.y, testPos.z,0) > 0 then
+						if testBuildOrder > 0 and ((not isStaticBuilder or dist < 80) or blockingFId == nil) then
 							valid = true
 
 							-- on metal maps, check if spot actually has metal
@@ -136,14 +142,15 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 								if ud.isBuilder then
 									local typeToTest = PF_UNIT_LAND
 									local plantPFType = pFConnectionRestrictionsByPlant[ud.name]
-
+									if plantPFType then
+										typeToTest = plantPFType
+									end
 									-- only test south exit if it isn't an air unit factory or upg center
-									if plantPFType ~= PF_UNIT_AIR then
+									if typeToTest ~= PF_UNIT_AIR then
 										buildTest = spTestBuildOrder(ud.id, testPos.x, testPos.y, testPos.z + 100,0)
 										if (buildTest ~= 1 and buildTest ~= 2) then
 											valid = false
 										end
-										
 										
 										-- test for metal spots as well to avoid the adv extractors blocking the factory
 										if ( valid == true ) then
@@ -151,18 +158,13 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 												checkPos = newPosition(testPos.x,testPos.y,testPos.z+120)
 												-- check if unit violates minimum distance from nearby metal spots
 												for _,sPos in ipairs(mapCell.nearbyMetalSpots) do
-													if (checkWithinDistance(checkPos,sPos,200)) then
+													if (checkWithinDistance(checkPos,sPos,160)) then
 														valid = false
 														break
 													end
 												end
 											end
 										end
-
-									end
-
-									if plantPFType then
-										typeToTest = plantPFType
 									end
 
 									-- check connection to base
@@ -173,10 +175,10 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 							end
 							if ( valid == true ) then
 								if (isMetalMap == false and self.ai.mapHandler.allowBuildingOverMetalSpots == false) then
-									local checkPos = newPosition(searchPos.x,searchPos.y,searchPos.z)
 									-- check if unit violates minimum distance from nearby metal spots
 									for _,sPos in ipairs(mapCell.nearbyMetalSpots) do
-										if (checkWithinDistance(testPos,sPos,testRadius+180)) then
+										--Spring.MarkerAddPoint(sPos.x,sPos.y,sPos.z,"SPOT") --DEBUG
+										if (checkWithinDistance(testPos,sPos,testRadius+150)) then
 											valid = false
 											break
 										end
@@ -205,6 +207,12 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 										if uDef.isBuilder then
 											uRadius = uRadius + 64
 										end
+										
+										-- if building a fusion avoid building near other fusions
+										if (isExplosive and setContains(unitTypeSets[TYPE_FUSION],uDef.name)) then
+											uRadius = uRadius + 250
+										end
+										
 										uPos = newPosition(spGetUnitPosition(uId,false,false))
 										if (checkWithinDistance(testPos,uPos,testRadius+uRadius)) then
 											valid = false
@@ -384,7 +392,7 @@ function BuildSiteHandler:getBuildSearchPos(builderBehavior,ud)
 	end
 	
 	-- target nearest cell, weighing in safety or vulnerability
-	local isArmed = #ud.weapons > 0
+	local isArmed = #ud.weapons > 0 and (not setContains(unitTypeSets[TYPE_FAKE_WEAPON],ud.name))
 	local isRadar = ud.radarRadius  > 1000 or ud.sonarRadius  > 800
 	local bestCell = nil
 	local targetPos = builderPos
@@ -416,7 +424,7 @@ function BuildSiteHandler:getBuildSearchPos(builderBehavior,ud)
 							weightedDistance = distanceToSelf * 0.8 + distanceToVulnerable * 0.2
 						end
 					else
-						weightedDistance = distanceToSelf * 0.3 + distanceToSafe * 0.15 + distanceToBase * 0.55
+						weightedDistance = distanceToSelf * 0.3 + distanceToSafe * 0.35 + distanceToBase * 0.45
 					end					
 						
 				else

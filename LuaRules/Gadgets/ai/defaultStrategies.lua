@@ -30,7 +30,7 @@ avenLandAssault = {
 			},
 			properties = {
 				commanderBuildsFactories = false,
-				raiderSpeedThreshold = math.huge,	-- no ground raider squad
+				raiderSpeedThreshold = 85,
 				enemyThreatEstimationMult = 2,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 0.5
@@ -54,7 +54,8 @@ avenLandAssault = {
 				{name="aven_trooper_laser",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="aven_trooper_laser",min=0,max=MANY,weight=0.3},
 				{name="aven_wheeler",min=0,max=MANY,weight=0.3},
-				{name="aven_bold",min=0,max=MANY,weight=0.3}
+				{name="aven_bold",min=0,max=MANY,weight=0.3},
+				{name="aven_runner",min=0,max=MANY,weight=0.2}
 			}
 		},
 		------------------ STAGE 2
@@ -72,7 +73,7 @@ avenLandAssault = {
 			},
 			properties = {
 				commanderBuildsFactories = false,
-				raiderSpeedThreshold = math.huge,	-- no ground raider squad
+				raiderSpeedThreshold = 85,
 				enemyThreatEstimationMult = 2,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 0.5
@@ -104,7 +105,9 @@ avenLandAssault = {
 				{name="aven_kodiak",min=0,max=MANY,weight=0.1},
 				{name="aven_jammer",min=1,max=1,weight=0.01},
 				{name="aven_bold",min=0,max=MANY,weight=0.6},
-				{name="aven_samson",min=0,max=MANY,weight=0.6}
+				{name="aven_samson",min=0,max=MANY,weight=0.6},
+				{name="aven_racer",min=0,max=MANY,weight=0.2},
+				{name="aven_runner",min=0,max=MANY,weight=0.3}
 			}
 		},
 		------------------ STAGE 3
@@ -122,7 +125,7 @@ avenLandAssault = {
 			},
 			properties = {
 				commanderBuildsFactories = false,
-				raiderSpeedThreshold = math.huge,	-- no ground raider squad
+				raiderSpeedThreshold = 85,
 				enemyThreatEstimationMult = 2,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 0.7
@@ -157,6 +160,8 @@ avenLandAssault = {
 				{name="aven_falcon",min=3,max=MANY,weight=0.3,includeConditions={THREAT_AIR}},
 				{name="aven_albatross",min=3,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
 				{name="aven_zephyr",min=1,max=1,weight=0.01},
+				{name="aven_racer",min=0,max=MANY,weight=0.2},
+				{name="aven_runner",min=0,max=MANY,weight=0.3}
 			}
 		},
 		------------------ STAGE 4
@@ -174,7 +179,7 @@ avenLandAssault = {
 			},
 			properties = {
 				commanderBuildsFactories = false,
-				raiderSpeedThreshold = math.huge,	-- no ground raider squad
+				raiderSpeedThreshold = 85,
 				enemyThreatEstimationMult = 2,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 0.7
@@ -185,7 +190,7 @@ avenLandAssault = {
 				defenseBuilders = 0,
 				attackPatrollers = 4,
 				mexUpgraders = 1,
-				advancedDefenseBuilders = 0
+				advancedDefenseBuilders = 1
 			},				
 			factories = {
 				{name="aven_nano_tower",min=1,max=6},
@@ -208,7 +213,9 @@ avenLandAssault = {
 				{name="aven_samson",min=0,max=MANY,weight=0.4},
 				{name="aven_falcon",min=3,max=MANY,weight=0.3,includeConditions={THREAT_AIR}},
 				{name="aven_albatross",min=3,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
-				{name="aven_zephyr",min=1,max=1,weight=0.01}
+				{name="aven_zephyr",min=1,max=1,weight=0.01},
+				{name="aven_racer",min=0,max=MANY,weight=0.2},
+				{name="aven_runner",min=0,max=MANY,weight=0.3}
 			}
 		},					
 	}
@@ -398,7 +405,7 @@ avenLandSkirmisher = {
 				defenseBuilders = 0,
 				attackPatrollers = 4,
 				mexUpgraders = 1,
-				advancedDefenseBuilders = 0
+				advancedDefenseBuilders = 1
 			},				
 			factories = {
 				{name="aven_nano_tower",min=1,max=6},
@@ -457,7 +464,7 @@ avenAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.5,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -499,7 +506,7 @@ avenAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.5,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -548,7 +555,7 @@ avenAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.5,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -598,7 +605,7 @@ avenAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.5,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -608,7 +615,7 @@ avenAir = {
 				defenseBuilders = 0,
 				attackPatrollers = 0,
 				mexUpgraders = 1,
-				advancedDefenseBuilders = 0
+				advancedDefenseBuilders = 1
 			},				
 			factories = {
 				{name="aven_nano_tower",min=1,max=6},
@@ -816,7 +823,7 @@ avenAmphibious = {
 				defenseBuilders = 0,
 				attackPatrollers = 4,
 				mexUpgraders = 1,
-				advancedDefenseBuilders = 0
+				advancedDefenseBuilders = 1
 			},				
 			factories = {
 				{name="aven_nano_tower",min=1,max=6},
@@ -871,7 +878,7 @@ gearLandAssault = {
 			},
 			properties = {
 				commanderBuildsFactories = false,
-				raiderSpeedThreshold = math.huge,	-- no ground raider squad
+				raiderSpeedThreshold = 85,
 				enemyThreatEstimationMult = 2,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
@@ -893,7 +900,8 @@ gearLandAssault = {
 				{name="gear_construction_kbot",min=2,max=6,weight=0.2},
 				{name="gear_crasher",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_instigator",min=0,max=MANY,weight=0.2},
-				{name="gear_assaulter",min=0,max=MANY,weight=0.4}
+				{name="gear_assaulter",min=0,max=MANY,weight=0.4},
+				{name="gear_harasser",min=0,max=MANY,weight=0.15}
 			}
 		},
 		------------------ STAGE 2
@@ -911,7 +919,7 @@ gearLandAssault = {
 			},
 			properties = {
 				commanderBuildsFactories = false,
-				raiderSpeedThreshold = math.huge,	-- no ground raider squad
+				raiderSpeedThreshold = 85,
 				enemyThreatEstimationMult = 2,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
@@ -941,7 +949,8 @@ gearLandAssault = {
 				{name="gear_thresher",min=1,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_deleter",min=1,max=1,weight=0.01},
 				{name="gear_assaulter",min=0,max=MANY,weight=0.6},
-				{name="gear_instigator",min=0,max=MANY,weight=0.6}
+				{name="gear_instigator",min=0,max=MANY,weight=0.6},
+				{name="gear_harasser",min=0,max=MANY,weight=0.3}				
 			}
 		},
 		------------------ STAGE 3
@@ -959,7 +968,7 @@ gearLandAssault = {
 			},
 			properties = {
 				commanderBuildsFactories = false,
-				raiderSpeedThreshold = math.huge,	-- no ground raider squad
+				raiderSpeedThreshold = 85,
 				enemyThreatEstimationMult = 2,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
@@ -995,6 +1004,7 @@ gearLandAssault = {
 				{name="gear_vector",min=3,max=MANY,weight=0.3,includeConditions={THREAT_AIR}},
 				{name="gear_whirlpool",min=3,max=MANY,weight=0.3,includeConditions={THREAT_UNDERWATER}},
 				{name="gear_firestorm",min=1,max=1,weight=0.1},
+				{name="gear_harasser",min=0,max=MANY,weight=0.3}				
 			}
 		},
 		------------------ STAGE 4
@@ -1012,7 +1022,7 @@ gearLandAssault = {
 			},
 			properties = {
 				commanderBuildsFactories = false,
-				raiderSpeedThreshold = math.huge,	-- no ground raider squad
+				raiderSpeedThreshold = 85,
 				enemyThreatEstimationMult = 2,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
@@ -1023,7 +1033,7 @@ gearLandAssault = {
 				defenseBuilders = 0,
 				attackPatrollers = 4,
 				mexUpgraders = 1,
-				advancedDefenseBuilders = 0
+				advancedDefenseBuilders = 1
 			},				
 			factories = {
 				{name="gear_nano_tower",min=1,max=6},
@@ -1049,7 +1059,8 @@ gearLandAssault = {
 				{name="gear_instigator",min=0,max=MANY,weight=0.6},
 				{name="gear_vector",min=3,max=MANY,weight=0.3,includeConditions={THREAT_AIR}},
 				{name="gear_whirlpool",min=3,max=MANY,weight=0.3,includeConditions={THREAT_UNDERWATER}},								
-				{name="gear_firestorm",min=1,max=1,weight=0.1}
+				{name="gear_firestorm",min=1,max=1,weight=0.1},
+				{name="gear_harasser",min=0,max=MANY,weight=0.3}
 			}
 		},					
 	}
@@ -1151,6 +1162,7 @@ gearLandSkirmisher = {
 				{name="gear_spectre",min=1,max=1,weight=0.01},
 				{name="gear_voyeur",min=1,max=1,weight=0.01},
 				{name="gear_crasher",min=0,max=MANY,weight=0.3},
+				{name="gear_thud",min=0,max=MANY,weight=0.3},
 				{name="gear_harasser",min=0,max=MANY,weight=0.2},
 				{name="gear_psycho",min=0,max=MANY,weight=0.2}
 			}
@@ -1237,7 +1249,7 @@ gearLandSkirmisher = {
 				defenseBuilders = 0,
 				attackPatrollers = 4,
 				mexUpgraders = 1,
-				advancedDefenseBuilders = 0
+				advancedDefenseBuilders = 1
 			},				
 			factories = {
 				{name="gear_nano_tower",min=1,max=6},
@@ -1300,7 +1312,7 @@ gearAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.5,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -1342,7 +1354,7 @@ gearAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.5,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -1390,7 +1402,7 @@ gearAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.5,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -1439,7 +1451,7 @@ gearAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.5,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -1449,7 +1461,7 @@ gearAir = {
 				defenseBuilders = 0,
 				attackPatrollers = 0,
 				mexUpgraders = 1,
-				advancedDefenseBuilders = 0
+				advancedDefenseBuilders = 1
 			},				
 			factories = {
 				{name="gear_nano_tower",min=1,max=6},
@@ -1557,6 +1569,7 @@ gearAmphibious = {
 				{name="gear_nano_tower",min=1,max=3},
 				{name="gear_adv_aircraft_plant",min=1,max=1},
 				{name="gear_adv_shipyard",min=1,max=1,includeConditions={CONDITION_WATER}},
+				{name="gear_adv_vehicle_plant",min=1,max=1,excludeConditions={CONDITION_WATER}},
 				{name="gear_commander_respawner",min=1,max=2},
 				{name="gear_upgrade_center",min=1,max=1},
 				{name="gear_scout_pad",min=1,max=1}
@@ -1564,7 +1577,7 @@ gearAmphibious = {
 			mobileUnits = {
 				{name="gear_construction_aircraft",min=1,max=4,weight=0.2},
 				{name="gear_adv_construction_aircraft",min=1,max=4,weight=0.2},
-				{name="gear_proteus",min=1,max=4,weight=0.4},
+				{name="gear_proteus",min=1,max=MANY,weight=0.4},
 				{name="gear_vector",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_whirlpool",min=2,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
 				{name="gear_stratos",min=1,max=MANY,weight=0.2}
@@ -1605,6 +1618,7 @@ gearAmphibious = {
 				{name="gear_nano_tower",min=1,max=4},
 				{name="gear_adv_aircraft_plant",min=1,max=2},
 				{name="gear_adv_shipyard",min=1,max=2,includeConditions={CONDITION_WATER}},
+				{name="gear_adv_vehicle_plant",min=1,max=1,excludeConditions={CONDITION_WATER}},
 				{name="gear_commander_respawner",min=1,max=2},
 				{name="gear_upgrade_center",min=1,max=1},
 				{name="gear_scout_pad",min=1,max=1}
@@ -1612,7 +1626,7 @@ gearAmphibious = {
 			mobileUnits = {
 				{name="gear_construction_aircraft",min=2,max=4,weight=0.2},
 				{name="gear_adv_construction_aircraft",min=2,max=4,weight=0.2},
-				{name="gear_proteus",min=1,max=4,weight=0.4},
+				{name="gear_proteus",min=1,max=MANY,weight=0.4},
 				{name="gear_vector",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_whirlpool",min=2,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
 				{name="gear_stratos",min=1,max=MANY,weight=0.4}
@@ -1647,7 +1661,7 @@ gearAmphibious = {
 				defenseBuilders = 0,
 				attackPatrollers = 4,
 				mexUpgraders = 1,
-				advancedDefenseBuilders = 0
+				advancedDefenseBuilders = 1
 			},				
 			factories = {
 				{name="gear_nano_tower",min=1,max=5},
@@ -1655,13 +1669,14 @@ gearAmphibious = {
 				{name="gear_commander_respawner",min=2,max=2},
 				{name="gear_upgrade_center",min=1,max=1},
 				{name="gear_adv_shipyard",min=1,max=2,includeConditions={CONDITION_WATER}},
+				{name="gear_adv_vehicle_plant",min=1,max=1,excludeConditions={CONDITION_WATER}},
 				{name="gear_long_range_rocket_platform",min=1,max=1},
 				{name="gear_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
 				{name="gear_construction_aircraft",min=2,max=4,weight=0.2},
 				{name="gear_adv_construction_aircraft",min=2,max=4,weight=0.2},
-				{name="gear_proteus",min=1,max=4,weight=0.4},
+				{name="gear_proteus",min=1,max=MANY,weight=0.4},
 				{name="gear_vector",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_whirlpool",min=2,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
 				{name="gear_stratos",min=1,max=MANY,weight=0.4}
@@ -1694,7 +1709,7 @@ clawLandAssault = {
 			},
 			properties = {
 				commanderBuildsFactories = false,
-				raiderSpeedThreshold = math.huge,	-- no ground raider squad
+				raiderSpeedThreshold = 78,
 				enemyThreatEstimationMult = 2,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
@@ -1718,7 +1733,8 @@ clawLandAssault = {
 				{name="claw_jester",min=0,max=MANY,weight=1},
 				{name="claw_grunt",min=0,max=MANY,weight=0.2},
 				{name="claw_piston",min=0,max=MANY,weight=0.2},
-				{name="claw_boar",min=0,max=MANY,weight=0.4}
+				{name="claw_boar",min=0,max=MANY,weight=0.4},
+				{name="claw_knife",min=0,max=MANY,weight=0.2}
 			}
 		},
 		------------------ STAGE 2
@@ -1736,7 +1752,7 @@ clawLandAssault = {
 			},
 			properties = {
 				commanderBuildsFactories = false,
-				raiderSpeedThreshold = math.huge,	-- no ground raider squad
+				raiderSpeedThreshold = 78,
 				enemyThreatEstimationMult = 2,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
@@ -1765,7 +1781,8 @@ clawLandAssault = {
 				{name="claw_ravager",min=1,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="claw_ravager",min=0,max=MANY,weight=0.4},
 				{name="claw_jammer",min=1,max=1,weight=0.01},
-				{name="claw_boar",min=0,max=MANY,weight=0.6}
+				{name="claw_boar",min=0,max=MANY,weight=0.6},
+				{name="claw_knife",min=0,max=MANY,weight=0.3}
 			}
 		},
 		------------------ STAGE 3
@@ -1783,7 +1800,7 @@ clawLandAssault = {
 			},
 			properties = {
 				commanderBuildsFactories = false,
-				raiderSpeedThreshold = math.huge,	-- no ground raider squad
+				raiderSpeedThreshold = 78,
 				enemyThreatEstimationMult = 2,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
@@ -1819,6 +1836,7 @@ clawLandAssault = {
 				{name="claw_x",min=3,max=MANY,weight=0.3,includeConditions={THREAT_AIR}},
 				{name="claw_trident",min=3,max=MANY,weight=0.3,includeConditions={THREAT_UNDERWATER}},
 				{name="claw_havoc",min=1,max=1,weight=0.1},
+				{name="claw_knife",min=0,max=MANY,weight=0.3}
 			}
 		},
 		------------------ STAGE 4
@@ -1836,7 +1854,7 @@ clawLandAssault = {
 			},
 			properties = {
 				commanderBuildsFactories = false,
-				raiderSpeedThreshold = math.huge,	-- no ground raider squad
+				raiderSpeedThreshold = 78,
 				enemyThreatEstimationMult = 2,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
@@ -1847,7 +1865,7 @@ clawLandAssault = {
 				defenseBuilders = 0,
 				attackPatrollers = 4,
 				mexUpgraders = 1,
-				advancedDefenseBuilders = 0
+				advancedDefenseBuilders = 1
 			},				
 			factories = {
 				{name="claw_nano_tower",min=1,max=3},
@@ -1871,7 +1889,8 @@ clawLandAssault = {
 				{name="claw_boar",min=0,max=MANY,weight=0.6},
 				{name="claw_x",min=3,max=MANY,weight=0.3,includeConditions={THREAT_AIR}},
 				{name="claw_trident",min=3,max=MANY,weight=0.3,includeConditions={THREAT_UNDERWATER}},								
-				{name="claw_havoc",min=1,max=1,weight=0.1}
+				{name="claw_havoc",min=1,max=1,weight=0.1},
+				{name="claw_knife",min=0,max=MANY,weight=0.4}
 			}
 		},					
 	}
@@ -2059,7 +2078,7 @@ clawLandSkirmisher = {
 				defenseBuilders = 0,
 				attackPatrollers = 4,
 				mexUpgraders = 1,
-				advancedDefenseBuilders = 0
+				advancedDefenseBuilders = 1
 			},				
 			factories = {
 				{name="claw_nano_tower",min=1,max=6},
@@ -2121,7 +2140,7 @@ clawAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.5,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
@@ -2162,7 +2181,7 @@ clawAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.5,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
@@ -2211,7 +2230,7 @@ clawAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.5,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
@@ -2261,7 +2280,7 @@ clawAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.5,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
@@ -2271,7 +2290,7 @@ clawAir = {
 				defenseBuilders = 0,
 				attackPatrollers = 0,
 				mexUpgraders = 1,
-				advancedDefenseBuilders = 0
+				advancedDefenseBuilders = 1
 			},				
 			factories = {
 				{name="claw_nano_tower",min=1,max=6},
@@ -2483,7 +2502,7 @@ clawAmphibious = {
 				defenseBuilders = 0,
 				attackPatrollers = 4,
 				mexUpgraders = 1,
-				advancedDefenseBuilders = 0
+				advancedDefenseBuilders = 1
 			},				
 			factories = {
 				{name="claw_nano_tower",min=1,max=6},
@@ -2698,7 +2717,7 @@ sphereLandAssault = {
 				defenseBuilders = 0,
 				attackPatrollers = 4,
 				mexUpgraders = 1,
-				advancedDefenseBuilders = 0
+				advancedDefenseBuilders = 1
 			},				
 			factories = {
 				{name="sphere_pole",min=1,max=6},
@@ -2706,7 +2725,7 @@ sphereLandAssault = {
 				{name="sphere_light_factory",min=1,max=1,weight=1},				
 				{name="sphere_commander_respawner",min=2,max=2},
 				{name="sphere_upgrade_center",min=1,max=1},
-				{name="sphere_adv_aircraft_plant",min=1,max=1},
+				{name="sphere_adv_aircraft_factory",min=1,max=1},
 				{name="sphere_scout_pad",min=1,max=1},
 				{name="sphere_long_range_rocket_platform",min=1,max=1}
 			},
@@ -2908,7 +2927,7 @@ sphereLandSkirmisher = {
 				defenseBuilders = 0,
 				attackPatrollers = 4,
 				mexUpgraders = 1,
-				advancedDefenseBuilders = 0
+				advancedDefenseBuilders = 1
 			},				
 			factories = {
 				{name="sphere_pole",min=1,max=6},
@@ -2971,7 +2990,7 @@ sphereAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.5,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -3013,7 +3032,7 @@ sphereAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.5,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -3062,7 +3081,7 @@ sphereAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.5,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -3111,7 +3130,7 @@ sphereAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.5,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -3121,7 +3140,7 @@ sphereAir = {
 				defenseBuilders = 0,
 				attackPatrollers = 0,
 				mexUpgraders = 1,
-				advancedDefenseBuilders = 0
+				advancedDefenseBuilders = 1
 			},				
 			factories = {
 				{name="sphere_pole",min=1,max=6},
@@ -3172,7 +3191,7 @@ sphereAmphibious = {
 				raiderSpeedThreshold = 75,
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
-				enemyThreatEstimationMult = 1.7,
+				enemyThreatEstimationMult = 1.4,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 0.7
 			},
@@ -3215,7 +3234,7 @@ sphereAmphibious = {
 				raiderSpeedThreshold = 75,
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
-				enemyThreatEstimationMult = 1.7,
+				enemyThreatEstimationMult = 1.4,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 0.7
 			},
@@ -3263,7 +3282,7 @@ sphereAmphibious = {
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.7,
+				enemyThreatEstimationMult = 1.4,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 0.7
 			},
@@ -3317,7 +3336,7 @@ sphereAmphibious = {
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.7,
+				enemyThreatEstimationMult = 1.4,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 0.7
 			},
@@ -3327,7 +3346,7 @@ sphereAmphibious = {
 				defenseBuilders = 0,
 				attackPatrollers = 3,
 				mexUpgraders = 1,
-				advancedDefenseBuilders = 0
+				advancedDefenseBuilders = 1
 			},				
 			factories = {
 				{name="sphere_pole",min=1,max=6},

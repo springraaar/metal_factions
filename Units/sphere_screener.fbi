@@ -125,8 +125,8 @@
 
 	[CustomParams]
 	{
-		builtBy=sphere_adv_shipyard;
-		evalfactor=0.85;//SHIP
+		builtBy=sphere_adv_shipyard,sphere_adv_vehicle_factory;
+		evalfactor=0.95;//AMPHIBSHIP
 		tip=33% slower on land. Can drain up to 2% charge/s from nearby large shields and 1% from small ones (max 3x regen);
 	}
 
@@ -140,8 +140,8 @@
 	explosiongenerator1=custom:UNITFIRE;
 	}
 
-	buildcostenergy=23184;//#AUTO#
-	buildcostmetal=4636;//#AUTO#
-	buildtime=55256;//#AUTO#
-	mass=4072;//#AUTO#
+	buildcostenergy=25912;//#AUTO#
+	buildcostmetal=5182;//#AUTO#
+	buildtime=61757;//#AUTO#
+	mass=4363;//#AUTO#
 }

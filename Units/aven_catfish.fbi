@@ -127,9 +127,9 @@
 
 	[CustomParams]
 	{
-		builtBy=aven_adv_shipyard;
+		builtBy=aven_adv_shipyard,aven_adv_vehicle_plant;
 		tip=33% slower on land;
-		evalfactor=0.85;//SHIP
+		evalfactor=0.95;//AMPHIBSHIP
 	}
 
 
@@ -140,8 +140,8 @@
 		explosiongenerator2=custom:redflare;
 	}
 
-	buildcostenergy=16457;//#AUTO#
-	buildcostmetal=3291;//#AUTO#
-	buildtime=39223;//#AUTO#
-	mass=3435;//#AUTO#
+	buildcostenergy=18393;//#AUTO#
+	buildcostmetal=3678;//#AUTO#
+	buildtime=43837;//#AUTO#
+	mass=3641;//#AUTO#
 }

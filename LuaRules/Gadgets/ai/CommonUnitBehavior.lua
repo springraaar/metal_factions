@@ -75,6 +75,84 @@ function CommonUnitBehavior:commonInit(ai, uId)
 	self.underAttackFrame = 0
 end
 
+function CommonUnitBehavior:avoidEnemyAndRetreat()
+	-- check if enemies are nearby
+	local enemiesNearby = false
+	local radius = 1500
+	for _,cell  in pairs(self.ai.unitHandler.enemyCellList) do
+		-- only check for armed units
+		if checkWithinDistance(cell.p,self.pos,radius) and (cell.attackerCost > 0 or cell.airAttackerCost > 0 or cell.defenderCost > 0) then
+			enemiesNearby = true
+		end
+	end
+	
+	-- if enemies nearby, avoid them, else retreat
+	if enemiesNearby then
+		local basePos = self.ai.unitHandler.basePos
+		local selfPos = self.pos
+		local threatCost = 0
+		local lowestThreatPos = nil
+		local lowestThreatCost = math.huge
+		local xIndex,zIndex = getCellXZIndexesForPosition(self.pos)
+		local cellCountX = self.ai.mapHandler.cellCountX
+		local cellCountZ = self.ai.mapHandler.cellCountZ 
+		local mapCell = nil
+		local sqDist = 0
+		-- find most threatening nearby enemy cell
+		local xi,zi = 0
+		local enemyCell = nil
+		-- check nearby cells
+		for dxi = -2, 2 do
+			for dzi = -2, 2 do
+				xi = xIndex + dxi
+				zi = zIndex + dzi
+				if (xi >=0) and (zi >= 0) and xi < cellCountX and zi < cellCountZ then
+					mapCell = self.ai.mapHandler.mapCells[xi][zi]
+					-- consider only cells you can move to
+					if self.ai.mapHandler:checkConnection(selfPos, mapCell.p,self.pFType) then
+						threatCost = 0
+						
+						--TODO test danger cells?
+						--dangerCell = getCellFromTableIfExists(dangerCells,xIndex,zIndex)
+						if self.ai.unitHandler.enemyCells[xi] then
+							enemyCell = self.ai.unitHandler.enemyCells[xi][zi]
+							
+							if enemyCell ~= nil then
+								threatCost = enemyCell.combinedThreatCost
+								if not threatCost then
+									threatCost = 0
+								end
+							end												
+						end
+						
+						-- increase threat cost the further away from base the cell is
+						sqDist = sqDistance(basePos.x,mapCell.p.x,basePos.z,mapCell.p.z)
+						threatCost = threatCost + sqDist * 0.001
+						
+						--Spring.MarkerAddPoint(mapCell.p.x,500,mapCell.p.z,threatCost) --DEBUG
+						
+						if (threatCost < lowestThreatCost ) then
+							lowestThreatPos = mapCell.p
+							lowestThreatCost = threatCost
+						end
+					end
+				end
+			end
+		end
+
+		-- move to lowest threat position
+		if (lowestThreatPos ~= nil) then
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{lowestThreatPos.x,spGetGroundHeight(lowestThreatPos.x,lowestThreatPos.z),lowestThreatPos.z},{})
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{lowestThreatPos.x-50,spGetGroundHeight(lowestThreatPos.x,lowestThreatPos.z),lowestThreatPos.z+50},CMD.OPT_SHIFT)
+		else
+			self:retreat()
+			--log("NOWHERE TO RUN!",self.ai) --DEBUG
+		end
+	else
+		self:retreat()
+	end
+end
+
 function CommonUnitBehavior:evadeIfNeeded()
 	local tmpFrame = spGetGameFrame()
 	
@@ -121,14 +199,16 @@ function CommonUnitBehavior:evadeIfNeeded()
 			end
 		end
 		-- if none nearby, run from biggest enemy cluster
-		for _,enemyCell in ipairs(self.ai.unitHandler.enemyCellList) do
-			threatCost = enemyCell.combinedThreatCost
-			if (threatCost > biggestThreatCost ) then
-				biggestThreatPos = enemyCell.p
-				biggestThreatCost = threatCost
-			end		
+		if biggestThreatCost == 0 then
+			for _,enemyCell in ipairs(self.ai.unitHandler.enemyCellList) do
+				threatCost = enemyCell.combinedThreatCost
+				if (threatCost > biggestThreatCost ) then
+					biggestThreatPos = enemyCell.p
+					biggestThreatCost = threatCost
+				end		
+			end
 		end
-
+		
 		--TODO bad logic? improve
 		if biggestThreatPos ~= nil then
 			-- if the threat is cheaper than armed unit, strafe only without backing				
@@ -407,27 +487,43 @@ function CommonUnitBehavior:orderToClosestCellAlongPath(cellList, order, reverse
 	local backTrack = false
 	local oldIdx = self.alongPathIdx
 	local newIdx = 1
-	--Spring.MarkerAddPoint(selfPos.x,500,selfPos.z,"UNIT!") --DEBUG
+	local selfXIndex,selfZIndex = getCellXZIndexesForPosition(selfPos)
+	
+	--Spring.SendCommands("ClearMapMarks")
 	
 	-- find the closest cell
 	for i,cell in ipairs(cellList) do
 		safe = true
+		d = 0
+		-- shift distances to try and ensure movement along the desired direction
+		if reverse then
+			if (i >= oldIdx) then
+				d = ALONG_PATH_REVERSE_SQ_DIST_PENALTY
+			end
+		else
+			if (i <= oldIdx) then
+				d = ALONG_PATH_REVERSE_SQ_DIST_PENALTY
+			end
+		end
+		
 		if ensureSafety then
 			-- if fails the safety test, skip	
 			xIndex, zIndex = getCellXZIndexesForPosition(cell.p)
-			enemyCell = getCellFromTableIfExists(enemyCells,xIndex,zIndex)
-			dangerCell = getCellFromTableIfExists(dangerCells,xIndex,zIndex)
-			if (enemyCell == nil and dangerCell == nil) or (enemyCell and self.isArmed and enemyCell.combinedThreatCost <= self.unitCost)  then
-				d = sqDistance(selfPos.x,cell.p.x,selfPos.z,cell.p.z)
-				if (d < minSQDistance) then
-					minSQDistance = d
-					idx = i
+			--if (selfXIndex ~= xIndex or selfZIndex ~= zIndex) then
+				enemyCell = getCellFromTableIfExists(enemyCells,xIndex,zIndex)
+				dangerCell = getCellFromTableIfExists(dangerCells,xIndex,zIndex)
+				if (enemyCell == nil and dangerCell == nil) or (enemyCell and self.isArmed and enemyCell.combinedThreatCost <= self.unitCost)  then
+					d = d + sqDistance(selfPos.x,cell.p.x,selfPos.z,cell.p.z)
+					if (d < minSQDistance) then
+						minSQDistance = d
+						idx = i
+					end
+				else
+					safe = false
 				end
-			else
-				safe = false
-			end
+			--end
 		else
-			d = sqDistance(selfPos.x,cell.p.x,selfPos.z,cell.p.z)
+			d = d + sqDistance(selfPos.x,cell.p.x,selfPos.z,cell.p.z)
 			if (d < minSQDistance) then
 				minSQDistance = d
 				idx = i
@@ -439,30 +535,33 @@ function CommonUnitBehavior:orderToClosestCellAlongPath(cellList, order, reverse
 	
 	if reverse then
 		-- move to the previous cell, up to start
-		nexIdx = max(idx-1,1)
-		orderCell = cellList[nexIdx]
+		--newIdx = max(idx-1,1)
+		newIdx = max(idx,1)
+		orderCell = cellList[newIdx]
 		
 		if (newIdx > oldIdx) then
 			backTrack = true
 		end
 	else
 		-- move to the next cell, up to goal
-		newIdx = min(idx+1,#cellList) 
+		--newIdx = min(idx+1,#cellList)
+		newIdx = min(idx,#cellList) 
 		orderCell = cellList[newIdx]
 
-		if (newIdx > oldIdx) then
+		if (newIdx < oldIdx) then
 			backTrack = true
 		end
 	end
 
 	-- if far from base and the closest cell is far away, path probably changed and now you're lost!
-	if minSQDistance > HUGE_RADIUS*HUGE_RADIUS and (not checkWithinDistance(selfPos,self.ai.unitHandler.basePos,HUGE_RADIUS)) then
-		-- go home
-		self:retreat()
+	if minSQDistance > ALONG_PATH_PANIC_SQ_DIST and (not checkWithinDistance(selfPos,self.ai.unitHandler.basePos,BIG_RADIUS)) then
+		self:avoidEnemyAndRetreat()
+		return true
 	end
  	
 	local pos = orderCell.p
 	if checkWithinDistance(selfPos,pos,CELL_SIZE) then
+		self.alongPathIdx = newIdx
 		if(progressOrder == CMD.FIGHT and (not backTrack)) then
 			-- just got in, patrol on it
 			spGiveOrderToUnit(self.unitId,CMD.PATROL,{pos.x,pos.y,pos.z},{})
@@ -489,8 +588,6 @@ function CommonUnitBehavior:orderToClosestCellAlongPath(cellList, order, reverse
 		self.currentProject = "custom"
 		self.waitLeft = 200
 	end
-		
-	self.alongPathIdx = newIdx
 	
 	return true
 end

@@ -31,6 +31,9 @@ function MapHandler:Init()
 	-- otherwise use higher resolution grid
 	self.spots = GG.metalSpots
 	self.isMetalMap = GG.isMetalMap
+	if (self.isMetalMap == nil) then
+		self.isMetalMap = false
+	end
 	
 	--log(#self.spots.." metal spots found!",self.ai) --DEBUG
 	self.geoSpots = GG.geoSpots

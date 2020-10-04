@@ -124,8 +124,8 @@
 
 	[CustomParams]
 	{
-		builtBy=sphere_adv_shipyard;
-		evalfactor=0.85;//SHIP
+		builtBy=sphere_adv_shipyard,sphere_adv_vehicle_factory;
+		evalfactor=0.95;//AMPHIBSHIP
 		tip=33% slower on land;
 	}
 	[SFXTypes]
@@ -134,8 +134,8 @@
 	explosiongenerator1=custom:UNITFIRE;
 	}
 
-	buildcostenergy=5979;//#AUTO#
-	buildcostmetal=1195;//#AUTO#
-	buildtime=14251;//#AUTO#
-	mass=1148;//#AUTO#
+	buildcostenergy=6682;//#AUTO#
+	buildcostmetal=1336;//#AUTO#
+	buildtime=15927;//#AUTO#
+	mass=1195;//#AUTO#
 }

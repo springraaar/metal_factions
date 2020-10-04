@@ -4762,7 +4762,7 @@
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
-	range=400;
+	range=380;
 	reloadtime=2;
 	flighttime=2.75;
 	weaponvelocity=700;
@@ -6938,7 +6938,7 @@
 	explosiongenerator=custom:FLAREBLASTWRAPPER;
 	model=weapon_flare.3do;
 	cegTag=FLARETRAIL;
-	range=410;
+	range=430;
 	turret=1;
 	reloadtime=1;
 	flighttime=4;
@@ -6946,7 +6946,8 @@
 	startvelocity=350;
 	weaponAcceleration=150;
 	turnrate=33000;
-	areaofeffect=48;
+	areaofeffect=32;
+	energypershot=50;
 	metalpershot=0;
 	soundstart=flarefire;
 	soundhit=flarehit;
@@ -6962,7 +6963,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
-		evalfactor=1.4; // compensation for the evaluator's factor for non-hoverattack air types
+		evalfactor=1.7; // compensation for the evaluator's factor for non-hoverattack air types
 	}
 	[DAMAGE]
 	{
@@ -7319,7 +7320,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
-		evalfactor=1.25; // compensation for the evaluator's factor for non-hoverattack air types
+		evalfactor=1.38; // compensation for the evaluator's factor for non-hoverattack air types
 	}
 	[DAMAGE]
 	{
@@ -8998,12 +8999,12 @@
 }
 [gear_dash_missile]
 {
-	name=Missiles;
+	name=Short Range Missiles;
 	weapontype=MissileLauncher;
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
-	range=400;
+	range=380;
 	reloadtime=2;
 	flighttime=2.75;
 	weaponvelocity=800;
@@ -11344,8 +11345,8 @@
 	burst=2;
 	burstrate=0.1;
 	weapontimer=5;
-	weaponvelocity=450;
-	startvelocity=320;
+	weaponvelocity=500;
+	startvelocity=400;
 	weaponAcceleration=131;
 	metalpershot=0;
 	turnrate=19680;
@@ -11388,9 +11389,9 @@
 	range=400;
 	reloadtime=2.3;
 	weapontimer=5;
-	weaponvelocity=430;
-	startvelocity=290;
-	weaponAcceleration=131;
+	weaponvelocity=500;
+	startvelocity=400;
+	weaponAcceleration=100;
 	metalpershot=0;
 	fixedlauncher=1;
 	turnrate=19680;
@@ -11537,7 +11538,7 @@
 		hitpower=1;
 		reaimtime=1;
 		airLaser=1;
-		evalfactor=1.4; // compensation for the evaluator's factor for non-hoverattack air types
+		evalfactor=1.7; // compensation for the evaluator's factor for non-hoverattack air types
 	}
 	[DAMAGE]
 	{
@@ -13226,9 +13227,9 @@
 	name=Railgun;
 	weapontype=LaserCannon;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
-	duration=0.25;
-	thickness=4;
-	corethickness=2;
+	duration=0.17;
+	thickness=3.2;
+	corethickness=1.5;
 	scrollspeed=0;
 	rgbcolor=1 0.3 0;
 	rgbcolor2=1 0.7 0.2;
@@ -13471,8 +13472,8 @@
 	range=400;
 	reloadtime=1.8;
 	flighttime=1.9;
-	weaponvelocity=450;
-	startvelocity=320;
+	weaponvelocity=500;
+	startvelocity=400;
 	projectiles=1;
 	weaponAcceleration=100;
 	areaofeffect=48;
@@ -13761,9 +13762,9 @@
 	name=Railgun;
 	weapontype=LaserCannon;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
-	duration=0.25;
-	thickness=4;
-	corethickness=2;
+	duration=0.15;
+	thickness=3;
+	corethickness=1.5;
 	scrollspeed=0;
 	rgbcolor=1 0.3 0;
 	rgbcolor2=1 0.7 0.2;
@@ -14216,6 +14217,7 @@
 	{
 		hitpower=1;
 		restrictedAngle=1;
+		airLaser=1;
 	}
 	[DAMAGE]
 	{
@@ -14272,9 +14274,9 @@
 	turret=1;
 	range=1250;
 	minintensity=1.0;
-	duration=0.25;
-	thickness=4;
-	corethickness=2;
+	duration=0.15;
+	thickness=3;
+	corethickness=1.5;
 	scrollspeed=0;
 	rgbcolor=1 0.3 0;
 	rgbcolor2=1 0.7 0.2;
@@ -14313,8 +14315,8 @@
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
 	intensity=1;
 	thickness=3;
-	corethickness=1.5;
-	duration=0.15;
+	corethickness=1;
+	duration=0.1;
 	texture1=railgunshot;
 	texture2=null;
 	texture3=null;
@@ -14395,9 +14397,9 @@
 	weapontype=LaserCannon;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
 	intensity=1;
-	duration=0.25;
-	thickness=4;
-	corethickness=2;
+	duration=0.15;
+	thickness=3;
+	corethickness=1.5;
 	scrollspeed=0;
 	rgbcolor=1 0.3 0;
 	rgbcolor2=1 0.7 0.2;
@@ -14438,9 +14440,9 @@
 	weapontype=LaserCannon;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
 	intensity=1;
-	duration=0.15;
+	duration=0.1;
 	thickness=3;
-	corethickness=1.5;
+	corethickness=1;
 	scrollspeed=0;
 	rgbcolor=1 0.3 0;
 	rgbcolor2=1 0.7 0.2;
@@ -14480,9 +14482,9 @@
 	weapontype=LaserCannon;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
 	intensity=1;
-	duration=0.15;
+	duration=0.10;
 	thickness=3;
-	corethickness=1.5;
+	corethickness=1;
 	scrollspeed=0;
 	rgbcolor=1 0.3 0;
 	rgbcolor2=1 0.7 0.2;
@@ -14523,9 +14525,9 @@
 	weapontype=LaserCannon;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
 	intensity=1;
-	duration=0.2;
-	thickness=5;
-	corethickness=2.5;
+	duration=0.18;
+	thickness=4.5;
+	corethickness=2.25;
 	scrollspeed=0;
 	rgbcolor=1 0.3 0;
 	rgbcolor2=1 0.7 0.2;
@@ -14564,7 +14566,7 @@
 	name=Heavy Railgun;
 	weapontype=LaserCannon;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
-	duration=0.2;
+	duration=0.17;
 	thickness=4;
 	corethickness=2;
 	scrollspeed=0;
@@ -15383,8 +15385,8 @@
 	weapontype=Cannon;
 	turret=1;
 	range=300;
-	accuracy=800;
-	movingaccuracy=1600;
+	accuracy=400;
+	movingaccuracy=800;
 	reloadtime=0.8;
 	weaponvelocity=320;
 	cegTag=PLASMATRAIL1;
@@ -16237,9 +16239,9 @@
 	weapontype=LaserCannon;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
 	intensity=1;
-	duration=0.25;
-	thickness=4;
-	corethickness=2;
+	duration=0.15;
+	thickness=3;
+	corethickness=1.5;
 	scrollspeed=0;
 	rgbcolor=1 0.3 0;
 	rgbcolor2=1 0.7 0.2;
@@ -17439,7 +17441,8 @@
 	projectiles=2;
 	weapontimer=1;
 	weaponvelocity=390;
-	accuracy=200;
+	accuracy=400;
+	movingaccuracy=800;
 	sprayangle=700;
 	areaofeffect=24;
 	soundstart=engcannon;
@@ -18866,18 +18869,15 @@
 	cegTag=ROCKETTRAIL1;
 	turret=0;
 	model=weapon_rocket2.3do;
-	range=420;
-	reloadtime=4.5;
+	range=400;
+	reloadtime=1.5;
 	flighttime=1.9;
 	fixedlauncher=1;
-	weaponvelocity=360;
-	startvelocity=360;
-	weaponAcceleration=30;
-	burst=3;
-	burstrate=0.2;
+	weaponvelocity=500;
+	startvelocity=400;
+	weaponAcceleration=100;
 	areaofeffect=48;
 	metalpershot=0;
-	sprayangle=300;
 	soundstart=rocklit1;
 	soundhit=xplosml2;
 	firestarter=70;
@@ -18888,7 +18888,6 @@
 	avoidfeature=0;
 	tracks=0;
 	turnrate=35000;
-	wobble=5500;
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
@@ -20441,7 +20440,7 @@
 	thickness=2.123;
 	corethickness=0.55;
 	turret=1;
-	range=480;
+	range=460;
 	minintensity=1.0;
 	reloadtime=0.2;
 	weaponvelocity=1533;
@@ -20507,7 +20506,7 @@
 		hitpower=1;
 		reaimtime=1;
 		airLaser=1;
-		evalfactor=1.4; // compensation for the evaluator's factor for non-hoverattack air types
+		evalfactor=1.7; // compensation for the evaluator's factor for non-hoverattack air types
 	}
 	[DAMAGE]
 	{

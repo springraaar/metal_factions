@@ -74,7 +74,7 @@
 	//*********************
 	sightdistance=500;
 	radardistance=0;
-	sonardistance=400;
+	sonardistance=600;
 
 	//************************************************************
 	//  Weapons
@@ -110,10 +110,11 @@
 	[CustomParams]
 	{
 		builtBy=claw_l1builder,claw_l2builder;
+		evalfactor=0.85;//SHIP
 	}
 
-	buildcostenergy=1986;//#AUTO#
-	buildcostmetal=397;//#AUTO#
-	buildtime=4734;//#AUTO#
-	mass=1164;//#AUTO#
+	buildcostenergy=1791;//#AUTO#
+	buildcostmetal=358;//#AUTO#
+	buildtime=4270;//#AUTO#
+	mass=1138;//#AUTO#
 }

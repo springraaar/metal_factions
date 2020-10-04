@@ -126,9 +126,9 @@
 
 	[CustomParams]
 	{
-		builtBy=claw_adv_shipyard;
+		builtBy=claw_adv_shipyard,claw_adv_vehicle_plant;
 		tip=33% slower on land;
-		evalfactor=0.85;//SHIP
+		evalfactor=0.95;//AMPHIBSHIP
 	}
 	//************************************************************
 	//  To be removed
@@ -141,8 +141,8 @@
 		explosiongenerator2=custom:rocketflaresml;
 	}
 
-	buildcostenergy=8933;//#AUTO#
-	buildcostmetal=1786;//#AUTO#
-	buildtime=21291;//#AUTO#
-	mass=2752;//#AUTO#
+	buildcostenergy=9984;//#AUTO#
+	buildcostmetal=1996;//#AUTO#
+	buildtime=23796;//#AUTO#
+	mass=2864;//#AUTO#
 }

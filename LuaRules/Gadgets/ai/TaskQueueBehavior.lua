@@ -119,19 +119,20 @@ function TaskQueueBehavior:builderRoleStr()
 end
 
 function TaskQueueBehavior:resetHighPriorityState()
-	local desiredState = setContains(unitTypeSets[TYPE_HIGH_PRIORITY],self.unitName) and true or false
-	if (self.isHighPriorityBuilder ~= desiredState) then
-		self.isHighPriorityBuilder = desiredState
-		spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{state},{})
+	local desiredStateNumber = self.isHighPriorityBuilder and 1 or 0
+	local desiredState = self.isHighPriorityBuilder
+	if (self.highPriorityBuilderState ~= desiredState) then
+		self.highPriorityBuilderState = desiredState
+		spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{desiredStateNumber},{})
 	end
 end
 
 
-function TaskQueueBehavior:setHighPriorityState(state)
-	local desiredState = state == 1 and true or false
-	if (self.isHighPriorityBuilder ~= desiredState) then
-		self.isHighPriorityBuilder = desiredState
-		spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{state},{})
+function TaskQueueBehavior:setHighPriorityState(desiredStateNumber)
+	local desiredState = desiredStateNumber == 1 and true or false
+	if (self.highPriorityBuilderState ~= desiredState) then
+		self.highPriorityBuilderState = desiredState
+		spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{desiredStateNumber},{})
 	end
 end
 
@@ -220,46 +221,48 @@ function TaskQueueBehavior:progressQueue()
 			end
 			]]--
 			-- if the unit processed something but is still with an empty command queue, do something!
-			--if self.currentProject ~= "waiting" and cmdCount == 0 then 
-			if self.currentProject ~= "waiting" and cmdCount == 0 then
+			if cmdCount == 0 then
 				local radius = MED_RADIUS
 				local basePos = self.ai.unitHandler.basePos
 				
 				self.beingUselessCounter = self.beingUselessCounter + 1
-				if ( basePos.x > 0 and basePos.z > 0) then
+				if (self.beingUselessCounter > 1) then
 					
-					-- if unit is "disconnected" from base, order it to move a bit
-					-- may be due to map hander's pathing map resolution being too low
-					if not self.ai.mapHandler:checkConnection(self.ai.unitHandler.basePos, self.pos,self.pFType) then									
-						--log(self.unitName.." is being useless, move (counter="..self.beingUselessCounter..")",self.ai) --DEBUG
-
-						p = newPosition()
-						p.x = basePos.x-radius/2+random(1,radius)
-						p.z = basePos.z-radius/2+random(1,radius)
-						p.y = spGetGroundHeight(p.x,p.z)
-						spGiveOrderToUnit(self.unitId,CMD.STOP,{p.x,p.y,p.z},{})
-						spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},CMD.OPT_SHIFT)
+					if ( basePos.x > 0 and basePos.z > 0) then
 						
-						-- add another order to queue in case the first is invalid
-						spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x - radius/2 + random( 1, radius),p.y,p.z - radius/2 + random( 1, radius)},CMD.OPT_SHIFT)
-					else
-					-- patrol a bit, do some good
+						-- if unit is "disconnected" from base, order it to move a bit
+						-- may be due to map hander's pathing map resolution being too low
+						if not self.ai.mapHandler:checkConnection(self.ai.unitHandler.basePos, self.pos,self.pFType) then									
 
-						--log(self.unitName.." is being useless, patrol (counter="..self.beingUselessCounter..")",self.ai) --DEBUG
-						p = newPosition()
-						p.x = basePos.x-radius/2+random(1,radius)
-						p.z = basePos.z-radius/2+random(1,radius)
-						p.y = spGetGroundHeight(p.x,p.z)
-						spGiveOrderToUnit(self.unitId,CMD.STOP,{p.x,p.y,p.z},{})
-						spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x,p.y,p.z},CMD.OPT_SHIFT)
-						
-						-- add another order to queue in case the first is invalid
-						spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x - radius/2 + random( 1, radius),p.y,p.z - radius/2 + random( 1, radius)},CMD.OPT_SHIFT)
+							--log(self.unitName.." is being useless, move (counter="..self.beingUselessCounter..")",self.ai) --DEBUG
+							p = newPosition()
+							p.x = basePos.x-radius/2+random(1,radius)
+							p.z = basePos.z-radius/2+random(1,radius)
+							p.y = spGetGroundHeight(p.x,p.z)
+							spGiveOrderToUnit(self.unitId,CMD.STOP,{p.x,p.y,p.z},{})
+							spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},CMD.OPT_SHIFT)
+							
+							-- add another order to queue in case the first is invalid
+							spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x - radius/2 + random( 1, radius),p.y,p.z - radius/2 + random( 1, radius)},CMD.OPT_SHIFT)
+						else
+						-- patrol a bit, do some good
+	
+							--log(self.unitName.." is being useless, patrol (counter="..self.beingUselessCounter..")",self.ai) --DEBUG
+							p = newPosition()
+							p.x = basePos.x-radius/2+random(1,radius)
+							p.z = basePos.z-radius/2+random(1,radius)
+							p.y = spGetGroundHeight(p.x,p.z)
+							spGiveOrderToUnit(self.unitId,CMD.STOP,{p.x,p.y,p.z},{})
+							spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x,p.y,p.z},CMD.OPT_SHIFT)
+							
+							-- add another order to queue in case the first is invalid
+							spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x - radius/2 + random( 1, radius),p.y,p.z - radius/2 + random( 1, radius)},CMD.OPT_SHIFT)
+						end
+					
+						self.progress = true
+						self.currentProject = "custom"
+						self.waitLeft = 120	
 					end
-				
-					self.progress = true
-					self.currentProject = "custom"
-					self.waitLeft = 120		
 				end
 			else
 				--if (self.beingUselessCounter > 0 ) then
@@ -788,7 +791,7 @@ function TaskQueueBehavior:GameFrame(f)
 				return
 			end
 			-- evade or retreat
-			self:retreat()
+			self:avoidEnemyAndRetreat()
 			return
 		end
 		

@@ -52,6 +52,7 @@ function initUnitCell()
  		airAttackerCost = 0, 
 		nearbyAttackerCost = 0, 
 		nearbyDefenderCost = 0,
+		nearbyUnderwaterDefenderCost = 0, -- only own cells
 		nearbyAirAttackerCost = 0, 
 		badAAAttackerCost = 0, -- only enemy cells
 		badAADefenderCost = 0,  -- only enemy cells
@@ -659,7 +660,7 @@ function UnitHandler:doTargetting(group)
 							-- retreat along raiding path
 							recruit:orderToClosestCellAlongPath(group.id == UNIT_GROUP_RAIDERS and self.raiderPath[amphibiousRaiders and PF_UNIT_AMPHIBIOUS or PF_UNIT_LAND] or self.raiderPath[PF_UNIT_AIR], CMD.MOVE, true, true)
 						else
-							recruit:retreat()
+							recruit:avoidEnemyAndRetreat()
 						end
 					end	
 				end
@@ -679,7 +680,7 @@ function UnitHandler:doTargetting(group)
 				end
 			else
 				if not recruit:attackRegroupCenterIfNeeded(group.centerPos, radius) then
-					recruit:retreat()
+					recruit:avoidEnemyAndRetreat()
 				end
 			end
 		end
@@ -697,7 +698,7 @@ function UnitHandler:doTargetting(group)
 				end
 			else
 				if not recruit:attackRegroupCenterIfNeeded(group.centerPos, radius) then
-					recruit:retreat()
+					recruit:avoidEnemyAndRetreat()
 				end
 			end
 		end
@@ -1377,6 +1378,7 @@ function UnitHandler:GameFrame(f)
 		-- load nearby cell data for each cell
 		local xi = 0
 		local zi = 0
+		local cellCheckRadius = 1
 		for i=1,#ownCellList do
 			local cell = ownCellList[i]
 			local mapCell = nil 
@@ -1384,8 +1386,8 @@ function UnitHandler:GameFrame(f)
 				mapCell = self.ai.mapHandler.mapCells[cell.xIndex][cell.zIndex]
 			end
 			-- check nearby cells
-			for dxi = -2, 2 do
-				for dzi = -2, 2 do
+			for dxi = -cellCheckRadius, cellCheckRadius do
+				for dzi = -cellCheckRadius, cellCheckRadius do
 					xi = cell.xIndex + dxi
 					zi = cell.zIndex + dzi
 					if (xi >=0) and (zi >= 0) and not (dxi == 0 and dzi == 0) then
@@ -1394,6 +1396,7 @@ function UnitHandler:GameFrame(f)
 								cell.nearbyAttackerCost = cell.nearbyAttackerCost + ownCells[xi][zi].attackerCost
 								cell.nearbyAirAttackerCost = cell.nearbyAirAttackerCost + ownCells[xi][zi].airAttackerCost
 								cell.nearbyDefenderCost = cell.nearbyDefenderCost + ownCells[xi][zi].defenderCost
+								cell.nearbyUnderwaterDefenderCost = cell.nearbyUnderwaterDefenderCost + ownCells[xi][zi].nearbyUnderwaterDefenderCost
 								cell.nearbyCost = cell.nearbyCost + ownCells[xi][zi].cost
 								cell.nearbyEconomyCost = cell.nearbyEconomyCost + ownCells[xi][zi].economyCost
 							end
@@ -1449,6 +1452,9 @@ function UnitHandler:GameFrame(f)
 				friendlyArmedMobilesWeightedCost = friendlyArmedMobilesWeightedCost + cost
 			elseif hasWeapons then
 				cell.defenderCost = cell.defenderCost + cost
+				if setContains(unitTypeSets[TYPE_UW_DEFENSE],tmpName) then
+					cell.underwaterDefenderCost = cell.underwaterDefenderCost + cost
+				end
 				cell.buildingCount = cell.buildingCount + 1 
 			elseif not ud.canMove then
 				cell.economyCost = cell.economyCost + cost
@@ -1467,11 +1473,12 @@ function UnitHandler:GameFrame(f)
 		-- load nearby cell data for each cell
 		xi = 0
 		zi = 0
+		cellCheckRadius = 1
 		for i=1,#friendlyCellList do
 			local cell = friendlyCellList[i]
 			-- check nearby cells
-			for dxi = -2, 2 do
-				for dzi = -2, 2 do
+			for dxi = -cellCheckRadius, cellCheckRadius do
+				for dzi = -cellCheckRadius, cellCheckRadius do
 					xi = cell.xIndex + dxi
 					zi = cell.zIndex + dzi
 					if (xi >=0) and (zi >= 0) and not (dxi == 0 and dzi == 0) then
@@ -1480,6 +1487,7 @@ function UnitHandler:GameFrame(f)
 								cell.nearbyAttackerCost = cell.nearbyAttackerCost + friendlyCells[xi][zi].attackerCost
 								cell.nearbyAirAttackerCost = cell.nearbyAirAttackerCost + friendlyCells[xi][zi].airAttackerCost
 								cell.nearbyDefenderCost = cell.nearbyDefenderCost + friendlyCells[xi][zi].defenderCost
+								cell.nearbyUnderwaterDefenderCost = cell.nearbyUnderwaterDefenderCost + friendlyCells[xi][zi].nearbyUnderwaterDefenderCost
 								cell.nearbyCost = cell.nearbyCost + friendlyCells[xi][zi].cost
 								cell.nearbyEconomyCost = cell.nearbyEconomyCost + friendlyCells[xi][zi].economyCost
 							end

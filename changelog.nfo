@@ -1,3 +1,44 @@
+2020/10/04 ------------------ NOTES v1.42 ----------------------
+
+--- Balance / Mechanics
+
+AIR
+- increase gear vector flare range by ~7% and energy cost to fire to 50E/s and adjusted cost
+- reduce sphere twilight laser range and adjusted cost
+- modified how weapons are evaluated and slightly reduced their range to make fast level 1 fighter aircraft cheaper relative to their level 2 counterparts
+(a fix to how CLAW Hornet's weapon is evaluated for consistency purposes actually makes it slighly more expensive)
+- increased projectile speed for AVEN, CLAW and SPHERE "M" damage type air-to-ground rockets and increased the unit costs by 5-10%
+- SPHERE "Tycho" : slightly reduced the weapon range and HP, removed 3-shot burst and increased maneuverability
+
+AMPHIBIOUS
+- AVEN, GEAR and CLAW level 1 floating torpedo launchers get the same discount as water-locked ships (15%)
+- CLAW "Sinker" gets the same 600 range sonar as the other L1 torpedo launchers
+- level 2 vehicle plants can now make amphibious boats but they only get 5% discount instead of the 15% discount water-locked ships get
+(they have a 33% speed penalty on land)
+
+OTHER
+- increased CLAW "Boar"'s precision and reduced SPHERE "Double"'s precision so it's the same (has a tiny impact on unit costs, < 2%)
+
+--- AI fixes
+
+- GEAR "Amphibious" strategy will try to make level2 vehicle plant to build "Proteus" on land
+- prioritize distance to "safe" location when building unarmed buildings a bit more
+- avoid building premium nuke if its combined army cost is below a certain threshold
+- improved premium nuke targetting
+- late stage non-classic AI strategies will try to field an advanced defense builder to get some long range static artillery
+- non-classic AI strategies will try to advanced radar,jammer and comsat stations and keep visibility of the biggest nearest threat
+- non-classic AI strategies build torpedo launchers on water
+- construction towers will avoid building factories obstructed by features (which might be out of range of the tower)
+- AVEN, GEAR and CLAW assault strategies will also build a few raiders
+- improved how units avoid enemies when retreating (most relevant for AI raiders and aircraft)
+
+
+--- VISUALS
+
+- reduced the size and length of the CLAW railgun projectiles
+
+
+
 2020/09/27 ------------------ NOTES v1.41 ----------------------
 
 --- Balance / Mechanics

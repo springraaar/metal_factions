@@ -194,7 +194,7 @@ function assistNearbyConstructionIfNeeded(self,includeMobiles,includeNonBuilders
 							end
 						end
 					-- if not fully built, assist if you can
-					elseif includeMobiles or ud.speed == 0 then
+					elseif includeMobiles or (ud.speed == 0 and (not setContains(unitTypeSets[TYPE_NUKE],ud.name))) then
 						if includeNonBuilders or ud.isBuilder then
 							un = ud.name
 							if self.ai.mapHandler:checkConnection(selfPos, uPos,self.pFType) then
@@ -276,11 +276,7 @@ function metalExtractorIfNeeded(self)
 	local friendlyExtractorCount = self.ai.unitHandler.friendlyExtractorCount or 0
 		
 	if friendlyExtractorCount < 2 or incomeM < 20 or (incomeM - expenseM < 2) then
-		if(self.isWaterMode == true) then
-			return UWMexByFaction[self.unitSide]
-		else
-			return mexByFaction[self.unitSide]
-		end
+		return mexByFaction[self.unitSide]
 	else
 		return SKIP_THIS_TASK
 	end
@@ -438,11 +434,7 @@ end
 function changeQueueToDefenseBuilderIfNeeded(self)
 
 	if self.ai.unitHandler.mostVulnerableCell ~= nil and self.ai.unitHandler.defenseBuilderCount < self.ai.unitHandler.defenseBuilderCountTarget then
-		if( self.isWaterMode == true) then
-			self:changeQueue(waterDefenseBuilderQueueByFaction[self.unitSide])
-		else
-			self:changeQueue(defenseBuilderQueueByFaction[self.unitSide])
-		end
+		self:changeQueue(defenseBuilderQueueByFaction[self.unitSide])
 		
 		self.ai.unitHandler.defenseBuilderCount = self.ai.unitHandler.defenseBuilderCount + 1
 		self.noDelay = false
@@ -455,11 +447,7 @@ end
 function changeQueueToAdvancedDefenseBuilderIfNeeded(self)
 
 	if self.ai.unitHandler.mostVulnerableCell ~= nil and self.ai.unitHandler.advancedDefenseBuilderCount < self.ai.unitHandler.advancedDefenseBuilderCountTarget then
-		if( self.isWaterMode == true) then
-			self:changeQueue(advancedWaterDefenseBuilderQueueByFaction[self.unitSide])
-		else
-			self:changeQueue(advancedDefenseBuilderQueueByFaction[self.unitSide])
-		end
+		self:changeQueue(advancedDefenseBuilderQueueByFaction[self.unitSide])
 
 		self.ai.unitHandler.advancedDefenseBuilderCount = self.ai.unitHandler.advancedDefenseBuilderCount + 1		
 		self.noDelay = false
@@ -495,8 +483,8 @@ function defendNearbyBuildingsIfNeeded(self,safeFraction)
 			local nearbyEconomyCost = ownCell.nearbyEconomyCost or 0
 			local extractorCount = ownCell.extractorCount or 0
 			local buildingCount = ownCell.buildingCount or 0
-			local defenderCost = ownCell.defenderCost or 0
-			local underwaterDefenderCost = ownCell.underwaterDefenderCost or 0
+			local defenderCost = ownCell.nearbyDefenderCost or 0
+			local underwaterDefenderCost = ownCell.nearbyUnderwaterDefenderCost or 0
 			
 			if buildingCount > 0 then
 				local valueToProtect = nearbyEconomyCost + 150 * extractorCount
@@ -509,50 +497,48 @@ function defendNearbyBuildingsIfNeeded(self,safeFraction)
 					defenseDensityMult = currentStrategy.stages[sStage].properties.defenseDensityMult or 1
 				end
 				
-				--if self.ai.id == 0 then log("defCost="..defenderCost.." valueToProtect="..valueToProtect,self.ai) end	--DEBUG
+				--if self.ai.id == 0 then log("watermode="..tostring(self.isWaterMode).." uwdefCost="..underwaterDefenderCost.." valueToProtect="..valueToProtect,self.ai) end	--DEBUG
 				
 				-- if there's important stuff here that hasn't been properly defended
-				if defenderCost < safeFraction * valueToProtect then
-					local HIGH_VALUE_THRESHOLD = 3000
-					if valueToProtect > HIGH_VALUE_THRESHOLD then
-						local action = SKIP_THIS_TASK
-						-- heavy defense	
-						if (self.isAdvBuilder) then
-							if(self.isWaterMode == true and underwaterDefenderCost == 0) then
-								return lev2TorpedoDefenseByFaction[self.unitSide] 
-							else
-								local unitName = heavyAAByFaction[self.unitSide][ random( 1, tableLength(heavyAAByFaction[self.unitSide]) ) ]
-								action = checkAreaLimit(self, unitName, self.unitId, (1+valueToProtect/HIGH_VALUE_THRESHOLD)*defenseDensityMult, BIG_RADIUS, TYPE_HEAVY_AA)
+				local HIGH_VALUE_THRESHOLD = 3000
+				if valueToProtect > HIGH_VALUE_THRESHOLD then
+					local action = SKIP_THIS_TASK
+					-- heavy defense	
+					if (self.isAdvBuilder) then
+						if(self.isWaterMode == true and underwaterDefenderCost < safeFraction * valueToProtect) then
+							return lev2TorpedoDefenseByFaction[self.unitSide] 
+						elseif (defenderCost < safeFraction * valueToProtect) then
+							local unitName = heavyAAByFaction[self.unitSide][ random( 1, tableLength(heavyAAByFaction[self.unitSide]) ) ]
+							action = checkAreaLimit(self, unitName, self.unitId, (1+valueToProtect/HIGH_VALUE_THRESHOLD)*defenseDensityMult, BIG_RADIUS, TYPE_HEAVY_AA)
+							if action ~= SKIP_THIS_TASK then
+								return action
+							end
+						end
+					else
+						if(self.isWaterMode == true and underwaterDefenderCost < safeFraction * valueToProtect) then
+							return lev1TorpedoDefenseByFaction[self.unitSide] 
+						elseif (defenderCost < safeFraction * valueToProtect) then
+							if (self.unitSide == "claw" or self.unitSide == "sphere") then
+								local unitName = mediumAAByFaction[self.unitSide]
+								action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, MED_RADIUS, TYPE_LIGHT_AA)
+								if action ~= SKIP_THIS_TASK then
+									return action
+								end
+							elseif(self.unitSide == "aven" or self.unitSide == "gear") then
+								local unitName = lev1HeavyDefenseByFaction[self.unitSide][ random( 1, tableLength(lev1HeavyDefenseByFaction[self.unitSide]) ) ]
+								action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, MED_RADIUS, TYPE_HEAVY_DEFENSE)
 								if action ~= SKIP_THIS_TASK then
 									return action
 								end
 							end
-						else
-							if(self.isWaterMode == true and underwaterDefenderCost == 0) then
-								return lev1TorpedoDefenseByFaction[self.unitSide] 
-							else
-								if (self.unitSide == "claw" or self.unitSide == "sphere") then
-									local unitName = mediumAAByFaction[self.unitSide]
-									action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, MED_RADIUS, TYPE_LIGHT_AA)
-									if action ~= SKIP_THIS_TASK then
-										return action
-									end
-								elseif(self.unitSide == "aven" or self.unitSide == "gear") then
-									local unitName = lev1HeavyDefenseByFaction[self.unitSide][ random( 1, tableLength(lev1HeavyDefenseByFaction[self.unitSide]) ) ]
-									action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, MED_RADIUS, TYPE_HEAVY_DEFENSE)
-									if action ~= SKIP_THIS_TASK then
-										return action
-									end
-								end
-							end
-						end					
-					else
-						-- light defense
-						if lightAAByFaction[self.unitSide] then
-							return lightAAByFaction[self.unitSide]
 						end
-						return mediumAAByFaction[self.unitSide]
+					end					
+				elseif (defenderCost < safeFraction * valueToProtect) then
+					-- light defense
+					if lightAAByFaction[self.unitSide] then
+						return lightAAByFaction[self.unitSide]
 					end
+					return mediumAAByFaction[self.unitSide]
 				end
 			end
 		end
@@ -1089,7 +1075,6 @@ function storageIfNeeded(self)
 		end
 	end
 
-	log("STORAGE ? \""..tostring(unitName).."\"")
 	return unitName
 end
 
@@ -1421,8 +1406,12 @@ end
 function fusionIfNeeded(self)
 	local unitName = SKIP_THIS_TASK
 
-	unitName = buildWithMinimalMetalIncome(self,buildEnergyIfNeeded(self,fusionByFaction[self.unitSide]),40)
-		
+	if self.ai.useStrategies then
+		unitName = buildWithMinimalMetalIncome(self,fusionByFaction[self.unitSide],40)
+	else
+		unitName = buildWithMinimalMetalIncome(self,buildEnergyIfNeeded(self,fusionByFaction[self.unitSide]),40)
+	end
+	
 	-- if unit is far away from base center, move to center and then retry
 	if unitName ~= SKIP_THIS_TASK and farFromBaseCenter(self)  then
 		self:retry()
@@ -1733,6 +1722,23 @@ function areaLimit_AdvRadar(self)
 	
 end
 
+function areaLimit_AdvSonar(self)
+	if self.unitId == nil then
+		return SKIP_THIS_TASK
+	end
+
+	return checkAreaLimit(self,advSonarByFaction[self.unitSide], self.unitId, 1, BIG_RADIUS, nil)
+	
+end
+
+function areaLimit_Jammer(self)
+	if self.unitId == nil then
+		return SKIP_THIS_TASK
+	end
+
+	return checkAreaLimit(self,jammerByFaction[self.unitSide], self.unitId, 1, BIG_RADIUS, nil)
+	
+end
 
 function areaLimit_Respawner(self)
 	if self.unitId == nil then
@@ -1775,6 +1781,16 @@ function choiceByType(self,airThreatChoice,defenseThreatChoice,normalThreatChoic
 end
 
 function longRangeRocketChoice(self)
+
+	-- avoid building nuke if your combined forces are relatively weak
+	local totalAttackerCost = 0
+	for gId,group in pairs(self.ai.unitHandler.unitGroups) do
+		totalAttackerCost = totalAttackerCost + group.totalCost
+	end
+	if totalAttackerCost < MIN_FORCE_COST_BUILD_NUKE_THRESHOLD then
+		return SKIP_THIS_TASK
+	end
+
 	-- TODO use other rockets
 	return unblockableNukeByFaction[self.unitSide]
 end
@@ -1782,10 +1798,84 @@ end
 function unblockableNukeTargetting(self)
 	local targetCell = self.ai.unitHandler.nukeTargetCell
 	if (targetCell ~= nil) then
-		-- TODO check best actual position to target
-		spGiveOrderToUnit(self.unitId,CMD.ATTACK,{targetCell.p.x,spGetGroundHeight(targetCell.p.x,targetCell.p.z),targetCell.p.z},{})
+		
+		local searchPos = targetCell.p
+		local xMin = searchPos.x - 500
+		local xMax = searchPos.x + 500
+		local zMin = searchPos.z - 500
+		local zMax = searchPos.z + 500
+		local step = 80
+		
+		local bestPos = newPosition(searchPos.x,searchPos.y,searchPos.z)
+		local bestValue = 0
+		local value = 0
+		local units = nil
+		local testPos = newPosition(searchPos.x,searchPos.y,searchPos.z)
+		for x = xMin, xMax, step do
+			-- check x map bounds
+			if (x > 0) and (x < Game.mapSizeX) then
+				testPos.x = x
+				for z = zMin, zMax, step do
+					-- check z map bounds
+					if (z > 0) and (z < Game.mapSizeZ) then
+						testPos.z = z
+						units = spGetUnitsInCylinder(testPos.x,testPos.z,300)
+						value = 0
+						if (units ~= nil) then
+							for _,uId in pairs(units) do
+								tId = spGetUnitTeam(uId)
+								if (not spAreTeamsAllied(tId,self.ai.id)) then
+									ud = UnitDefs[spGetUnitDefID(uId)]
+									if ud ~= nil then
+										if ud.speed == 0 then
+											value = value + getWeightedCost(ud)
+										elseif not ud.canFly then
+											value = value + getWeightedCost(ud)	/ 4	-- mobiles might dodge it
+										end
+									end
+								end
+							end
+						end
+						
+						if value > bestValue then
+							bestPos.x = testPos.x
+							bestPos.z = testPos.z
+							bestValue = value
+							
+						end
+						--Spring.MarkerAddPoint(testPos.x,500,testPos.z,value) --DEBUG
+					end
+				end
+			end
+		end
+		
+		-- launch nuke
+		spGiveOrderToUnit(self.unitId,CMD.ATTACK,{bestPos.x,spGetGroundHeight(bestPos.x,bestPos.z),bestPos.z},{})
+	end
+
+	return SKIP_THIS_TASK
+end
+
+function comsatTargetting(self)
+	local bestPos = nil
+	local basePos = self.ai.unitHandler.basePos
+	local value = 0
+	local bestValue = 0
+	-- target most threathening cell, prioritizing for proximity to base
+	for _,cell  in pairs(self.ai.unitHandler.enemyCellList) do
+		
+		value = (cell.attackerCost + cell.defenderCost + cell.airAttackerCost / 5) * (1500 / max(distance(basePos, cell.p),1500))
+
+		if (value > bestValue) then
+			bestValue = value
+			bestPos = cell.p
+		end		
 	end
 	
+	if bestPos ~= nil then
+		spGiveOrderToUnit(self.unitId,CMD.ATTACK,{bestPos.x,spGetGroundHeight(bestPos.x,bestPos.z),bestPos.z},{})
+	end
+
 	return SKIP_THIS_TASK
 end
 
@@ -1882,7 +1972,12 @@ lRRocketPlatform = {
 
 unblockableNuke = {
 	unblockableNukeTargetting,
-	{action = "wait", frames = 38}
+	{action = "wait", frames = 313}
+}
+
+comsatStation = {
+	comsatTargetting,
+	{action = "wait", frames = 313}
 }
 
 upgradeOffensive = {
@@ -2138,32 +2233,6 @@ avenLev1Con = {
 }
 
 
-avenLev1WaterCon = {
-	{action = "cleanup", frames = CLEANUP_FRAMES},
-	exitPlant,
-	setWaterMode,
-	metalExtractorNearbyIfSafe,
-	changeQueueToWaterMexBuilderIfNeeded,
-	basePatrolIfNeeded,
-	tidalIfNeeded,
-	metalExtractorNearbyIfSafe,
-	areaLimit_WaterL1HeavyDefense,
-	areaLimit_WaterLightAA,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	lvl1WaterPlantIfNeeded,
-	lvl2WaterPlantIfNeeded,
-	upgradeCenterIfNeeded,	
-	briefAreaPatrol,
-	metalExtractorNearbyIfSafe,
-	storageIfNeeded,
-	geoIfNeeded,
-	areaLimit_LightAA,
-	areaLimit_Respawner,	
-	moveBaseCenter
-}
-
 avenMexBuilder = {
 	"aven_metal_extractor",
 	"aven_metal_extractor",
@@ -2177,22 +2246,6 @@ avenMexBuilder = {
 	areaLimit_Radar,
 	restoreQueue	
 }
-
-avenWaterMexBuilder = {
-	setWaterMode,
-	"aven_underwater_metal_extractor",
-	"aven_underwater_metal_extractor",
-	areaLimit_WaterLightAA,
-	{action = "cleanup", frames = CLEANUP_FRAMES},
-	"aven_underwater_metal_extractor",
-	areaLimit_WaterLightAA,
-	"aven_underwater_metal_extractor",
-	areaLimit_WaterLightAA,
-	areaLimit_WaterRadar,
-	tidalIfNeeded,
-	restoreQueue
-}
-
 
 avenLev1DefenseBuilder = {
 	moveVulnerablePos,
@@ -2535,43 +2588,6 @@ gearLev1Con = {
 }
 
 
-gearLev1WaterCon = {
-	{action = "cleanup", frames = CLEANUP_FRAMES},
-	exitPlant,
-	setWaterMode,
-	metalExtractorNearbyIfSafe,
-	changeQueueToWaterMexBuilderIfNeeded,
-	basePatrolIfNeeded,
-	tidalIfNeeded,
-	metalExtractorNearbyIfSafe,
-	areaLimit_WaterL1HeavyDefense,
-	areaLimit_WaterLightAA,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	lvl1WaterPlantIfNeeded,
-	lvl2WaterPlantIfNeeded,
-	upgradeCenterIfNeeded,
-	metalExtractorNearbyIfSafe,
-	briefAreaPatrol,
-	areaLimit_L1ArtilleryDefense,
-	storageIfNeeded,
-	areaLimit_LightAA,
-	lvl1PlantIfNeeded,
-	lvl2PlantIfNeeded,
-	briefAreaPatrol,
-	windSolarIfNeeded,
-	areaLimit_L1HeavyDefense,
-	windSolarIfNeeded,
-	areaLimit_L1ArtilleryDefense,
-	areaLimit_Radar,
-	geoIfNeeded,
-	windSolarIfNeeded,
-	storageIfNeeded,
-	areaLimit_Respawner,	
-	moveBaseCenter
-}
-
 gearMexBuilder = {
 	"gear_metal_extractor",
 	"gear_metal_extractor",
@@ -2584,21 +2600,6 @@ gearMexBuilder = {
 	"gear_metal_extractor",
 	areaLimit_LightAA,
 	areaLimit_Radar,
-	restoreQueue
-}
-
-gearWaterMexBuilder = {
-	setWaterMode,
-	"gear_underwater_metal_extractor",
-	"gear_underwater_metal_extractor",
-	areaLimit_WaterLightAA,
-	"gear_underwater_metal_extractor",
-	{action = "cleanup", frames = CLEANUP_FRAMES},
-	areaLimit_WaterLightAA,
-	"gear_underwater_metal_extractor",
-	areaLimit_WaterLightAA,
-	areaLimit_WaterRadar,
-	tidalIfNeeded,
 	restoreQueue
 }
 
@@ -2933,37 +2934,6 @@ clawLev1Con = {
 }
 
 
-clawLev1WaterCon = {
-	{action = "cleanup", frames = CLEANUP_FRAMES},
-	exitPlant,
-	setWaterMode,
-	metalExtractorNearbyIfSafe,
-	changeQueueToWaterMexBuilderIfNeeded,
-	basePatrolIfNeeded,
-	tidalIfNeeded,
-	metalExtractorNearbyIfSafe,
-	areaLimit_WaterL1HeavyDefense,
-	areaLimit_WaterMediumAA,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	lvl1WaterPlantIfNeeded,
-	lvl2WaterPlantIfNeeded,
-	upgradeCenterIfNeeded,
-	metalExtractorNearbyIfSafe,
-	briefAreaPatrol,
-	areaLimit_L1ArtilleryDefense,
-	storageIfNeeded,
-	areaLimit_MediumAA,
-	geoIfNeeded,
-	lvl1PlantIfNeeded,
-	lvl2PlantIfNeeded,
-	briefAreaPatrol,
-	storageIfNeeded,
-	areaLimit_Respawner,	
-	moveBaseCenter
-}
-
 clawMexBuilder = {
 	"claw_metal_extractor",
 	"claw_metal_extractor",
@@ -2977,24 +2947,6 @@ clawMexBuilder = {
 	"claw_metal_extractor",
 	areaLimit_MediumAA,
 	areaLimit_Radar,
-	restoreQueue
-}
-
-clawWaterMexBuilder = {
-	setWaterMode,
-	"claw_metal_extractor",
-	"claw_metal_extractor",
-	"claw_metal_extractor",
-	"claw_metal_extractor",
-	{action = "cleanup", frames = CLEANUP_FRAMES},
-	areaLimit_WaterMediumAA,
-	"claw_metal_extractor",
-	"claw_metal_extractor",
-	"claw_metal_extractor",
-	"claw_metal_extractor",
-	areaLimit_WaterMediumAA,	
-	areaLimit_WaterRadar,
-	tidalIfNeeded,
 	restoreQueue
 }
 
@@ -3324,37 +3276,6 @@ sphereLev1Con = {
 	roughFusionIfNeeded,
 }
 
-
-sphereLev1WaterCon = {
-	{action = "cleanup", frames = CLEANUP_FRAMES},
-	exitPlant,
-	setWaterMode,
-	metalExtractorNearbyIfSafe,
-	changeQueueToWaterMexBuilderIfNeeded,
-	basePatrolIfNeeded,
-	tidalIfNeeded,
-	metalExtractorNearbyIfSafe,
-	areaLimit_WaterMediumAA,
-	geoIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	lvl1WaterPlantIfNeeded,
-	lvl2WaterPlantIfNeeded,
-	upgradeCenterIfNeeded,
-	metalExtractorNearbyIfSafe,
-	briefAreaPatrol,
-	areaLimit_L1ArtilleryDefense,
-	storageIfNeeded,
-	areaLimit_MediumAA,
-	lvl1PlantIfNeeded,
-	lvl2PlantIfNeeded,
-	briefAreaPatrol,
-	storageIfNeeded,
-	areaLimit_Respawner,	
-	moveBaseCenter
-}
-
 sphereMexBuilder = {
 	"sphere_metal_extractor",
 	"sphere_metal_extractor",
@@ -3371,26 +3292,6 @@ sphereMexBuilder = {
 	areaLimit_Radar,
 	restoreQueue
 }
-
-sphereWaterMexBuilder = {
-	setWaterMode,
-	"sphere_metal_extractor",
-	"sphere_metal_extractor",
-	"sphere_metal_extractor",
-	"sphere_metal_extractor",	
-	areaLimit_WaterMediumAA,
-	{action = "cleanup", frames = CLEANUP_FRAMES},
-	"sphere_metal_extractor",
-	"sphere_metal_extractor",
-	"sphere_metal_extractor",
-	"sphere_metal_extractor",
-	areaLimit_WaterMediumAA,
-	{action = "cleanup", frames = CLEANUP_FRAMES},
-	areaLimit_WaterRadar,
-	tidalIfNeeded,
-	restoreQueue
-}
-
 
 sphereLev1DefenseBuilder = {
 	moveVulnerablePos,
@@ -3579,8 +3480,6 @@ commanderWaterQueueByFaction = { [side1Name] = avenWaterCommander, [side2Name] =
 defenseBuilderQueueByFaction = { [side1Name] = avenLev1DefenseBuilder, [side2Name] = gearLev1DefenseBuilder, [side3Name] = clawLev1DefenseBuilder, [side4Name] = sphereLev1DefenseBuilder}
 advancedDefenseBuilderQueueByFaction = { [side1Name] = avenLev2DefenseBuilder, [side2Name] = gearLev2DefenseBuilder, [side3Name] = clawLev2DefenseBuilder, [side4Name] = sphereLev2DefenseBuilder}
 lightGroundRaiderQueueByFaction = { [side1Name] = avenL1GroundRaiders, [side2Name] = gearL1GroundRaiders, [side3Name] = clawL1GroundRaiders, [side4Name] = sphereL1GroundRaiders}
-waterDefenseBuilderQueueByFaction = { [side1Name] = avenLev1WaterDefenseBuilder, [side2Name] = gearLev1WaterDefenseBuilder, [side3Name] = clawLev1WaterDefenseBuilder, [side4Name] = sphereLev1WaterDefenseBuilder}
-advancedWaterDefenseBuilderQueueByFaction = { [side1Name] = avenLev2WaterDefenseBuilder, [side2Name] = gearLev2WaterDefenseBuilder, [side3Name] = clawLev2WaterDefenseBuilder, [side4Name] = sphereLev2WaterDefenseBuilder}
 attackPatrollerQueue = builderAtkPatroller
 upgradeQueueByPath = {offensive = upgradeOffensive, defensive = upgradeDefensive, defensive_regen = upgradeDefensiveRegen, speed = upgradeSpeed, mixed = upgradeMixed, mixed_drones_utility = upgradeMixedDronesUtility, mixed_drones_combat = upgradeMixedDronesCombat}
 
@@ -3625,6 +3524,15 @@ function stratCommanderAction(self)
 	local comMorphEnergyIncome = currentStrategy.stages[sStage].economy.comMorphEnergyIncome or 99999
 	local defenseDensityMult = currentStrategy.stages[sStage].properties.defenseDensityMult or 1
 	local action = SKIP_THIS_TASK
+	
+	if self.isBrutalMode then
+		local f = spGetGameFrame()
+		if f < BRUTAL_STRATEGY_STAGES_DELAY_FRAMES then
+			comMorphMetalIncome = comMorphMetalIncome * 6
+			comMorphEnergyIncome = comMorphEnergyIncome * 6
+			sStage = 1
+		end	
+	end
 	
 	-- current economy
 	local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
@@ -3751,11 +3659,18 @@ function stratStaticBuilderAction(self)
 	local defenseDensityMult = currentStrategy.stages[sStage].properties.defenseDensityMult or 1	
 	local action = SKIP_THIS_TASK
 	
+	if self.isBrutalMode then
+		local f = spGetGameFrame()
+		if f < BRUTAL_STRATEGY_STAGES_DELAY_FRAMES then
+			sStage = 1
+		end	
+	end
+	
 	-- reset priority
 	self:resetHighPriorityState()
 	
 	-- check if there's a nearby unit to assist
-	action = assistNearbyConstructionIfNeeded(self,false,false,self.buildRange * 0.9)	-- exclude mobile units and non-builders 
+	action = assistNearbyConstructionIfNeeded(self,false,false,self.buildRange * 0.8)	-- exclude mobile units and non-builders 
 	if ( action ~= SKIP_THIS_TASK) then
 		return action
 	end	
@@ -3833,15 +3748,26 @@ function stratMobileBuilderAction(self)
 		
 	local action = SKIP_THIS_TASK
 	
+	local brutalStartDelayActive = false
+	if self.isBrutalMode then
+		local f = spGetGameFrame()
+		if f < BRUTAL_STRATEGY_STAGES_DELAY_FRAMES then
+			brutalStartDelayActive = true
+			sStage = 1
+		end	
+	end
+	
 	-- reset priority
 	self:resetHighPriorityState()
 
-	-- check if there's a nearby unit to assist
-	action = assistNearbyConstructionIfNeeded(self,false,true,1000)	-- exclude mobile units, include non-builders  
-	if ( action ~= SKIP_THIS_TASK) then
-		return action
+	if (not self.isAdvBuilder or random() > 0.5) then
+		-- check if there's a nearby unit to assist
+		action = assistNearbyConstructionIfNeeded(self,false,true,1000)	-- exclude mobile units, include non-builders  
+		if ( action ~= SKIP_THIS_TASK) then
+			return action
+		end
 	end
-
+	
 	-- prioritize building some defenses if base is under attack
 	if (self.ai.unitHandler.baseUnderAttack) then
 		action = defendNearbyBuildingsIfNeeded(self, 0.2)
@@ -3852,7 +3778,7 @@ function stratMobileBuilderAction(self)
 	end
 	
 	-- for adv builders raise the min to trigger upgrading nearby extractors 
-	if (self.isAdvBuilder and not self.ai.unitHandler.baseUnderAttack) then
+	if (self.isAdvBuilder and (incomeE < 15*incomeM) and (not self.ai.unitHandler.baseUnderAttack)) then
 		minMetalIncome = targetMetalIncome
 		minEnergyIncome = targetEnergyIncome
 	end
@@ -3863,7 +3789,7 @@ function stratMobileBuilderAction(self)
 			return action
 		end
 	end	
-	if (incomeE < minEnergyIncome or currentLevelE < 0.5*storageE) then
+	if (incomeE < minEnergyIncome or currentLevelE < 0.5*storageE ) then
 		action = geoNearbyIfSafe(self)
 		if (action ~= SKIP_THIS_TASK) then
 			return action
@@ -3956,11 +3882,39 @@ function stratMobileBuilderAction(self)
 	end	
 	
 	-- support buildings
-	action = areaLimit_Radar(self)
-	if action ~= SKIP_THIS_TASK then
-		return action
+	if (self.isAdvBuilder) then
+		action = areaLimit_AdvRadar(self)
+		if action ~= SKIP_THIS_TASK then
+			return action
+		end
+		if (self.isWaterMode == true) then
+			action = areaLimit_AdvSonar(self)
+			if action ~= SKIP_THIS_TASK then
+				return action
+			end
+		end
+		action = areaLimit_Jammer(self)
+		if action ~= SKIP_THIS_TASK then
+			return action
+		end		
+	else
+		action = areaLimit_Radar(self)
+		if action ~= SKIP_THIS_TASK then
+			return action
+		end
+		if (self.isWaterMode == true) then
+			action = areaLimit_Sonar(self)
+			if action ~= SKIP_THIS_TASK then
+				return action
+			end
+		end
 	end
-	
+	if (incomeM > 50 and (not brutalStartDelayActive)) then
+		action = buildWithLimitedNumber(self, comsatByFaction[self.unitSide],min(1 + floor(incomeM/30),6))
+		if action ~= SKIP_THIS_TASK then
+			return action
+		end	
+	end
 
 	-- storage
 	if (sStage > 1) then
@@ -4075,7 +4029,7 @@ function stratPlantAction(self)
 						end
 						
 						curFraction = currentCount / (props.weight*mobileUnitCount)
-						if (currentCount < maxCount and curFraction < 1.5) then
+						if (currentCount < maxCount and curFraction < 5) then
 							if (curFraction < lowestFraction) then
 								lowestFraction = curFraction
 								mostNeededUnit = uName
@@ -4128,12 +4082,12 @@ taskQueues = {
 	aven_construction_vehicle = avenLev1Con,
 	aven_construction_kbot = avenLev1Con,
 	aven_construction_aircraft = avenLev1Con,
-	aven_construction_ship = avenLev1WaterCon,
+	aven_construction_ship = avenLev1Con,
 	aven_adv_construction_vehicle = avenLev2Con,
 	aven_adv_construction_kbot = avenLev2Con,
 	aven_construction_hovercraft = avenLev2Con,
 	aven_adv_construction_aircraft = avenLev2Con,	
-	aven_adv_construction_sub = avenLev2WaterCon,
+	aven_adv_construction_sub = avenLev2Con,
 	aven_nano_tower = staticBuilder,
 	aven_light_plant = avenLightPlant,
 	aven_aircraft_plant = avenAircraftPlant,
@@ -4155,6 +4109,7 @@ taskQueues = {
 	aven_peeper = airScout,
 	aven_long_range_rocket_platform = lRRocketPlatform,
 	aven_premium_nuclear_rocket = unblockableNuke,
+	aven_comsat_station = comsatStation,
 ------------------- GEAR
 	gear_commander_respawner = respawner,
 	gear_commander = gearCommander,
@@ -4167,11 +4122,11 @@ taskQueues = {
 	gear_construction_vehicle = gearLev1Con,
 	gear_construction_kbot = gearLev1Con,
 	gear_construction_aircraft = gearLev1Con,
-	gear_construction_ship = gearLev1WaterCon,
+	gear_construction_ship = gearLev1Con,
 	gear_adv_construction_vehicle = gearLev2Con,
 	gear_adv_construction_kbot = gearLev2Con,
 	gear_adv_construction_aircraft = gearLev2Con,	
-	gear_adv_construction_sub = gearLev2WaterCon,
+	gear_adv_construction_sub = gearLev2Con,
 	gear_nano_tower = staticBuilder,
 	gear_light_plant = gearLightPlant,
 	gear_aircraft_plant = gearAircraftPlant,
@@ -4190,6 +4145,7 @@ taskQueues = {
 	gear_fink = airScout,
 	gear_long_range_rocket_platform = lRRocketPlatform,
 	gear_premium_nuclear_rocket = unblockableNuke,
+	gear_comsat_station = comsatStation,
 ------------------- CLAW
 	claw_commander_respawner = respawner,
 	claw_commander = clawCommander,
@@ -4201,12 +4157,12 @@ taskQueues = {
 	claw_u6commander = clawUCommander,
 	claw_construction_kbot = clawLev1Con,
 	claw_construction_aircraft = clawLev1Con,
-	claw_construction_ship = clawLev1WaterCon,
+	claw_construction_ship = clawLev1Con,
 	claw_adv_construction_vehicle = clawLev2Con,
 	claw_adv_construction_kbot = clawLev2Con,
 	claw_adv_construction_aircraft = clawLev2Con,	
 	claw_adv_construction_spinbot = clawLev2Con,
-	claw_adv_construction_ship = clawLev2WaterCon,
+	claw_adv_construction_ship = clawLev2Con,
 	claw_nano_tower = staticBuilder,
 	claw_light_plant = clawPlant,
 	claw_aircraft_plant = clawAircraftPlant,
@@ -4227,6 +4183,7 @@ taskQueues = {
 	claw_spotter = airScout,
 	claw_long_range_rocket_platform = lRRocketPlatform,
 	claw_premium_nuclear_rocket = unblockableNuke,
+	claw_comsat_station = comsatStation,
 ------------------- SPHERE
 	sphere_commander_respawner = respawner,
 	sphere_commander = sphereCommander,
@@ -4238,12 +4195,12 @@ taskQueues = {
 	sphere_u6commander = sphereUCommander,
 	sphere_construction_vehicle = sphereLev1Con,
 	sphere_construction_aircraft = sphereLev1Con,
-	sphere_construction_ship = sphereLev1WaterCon,
+	sphere_construction_ship = sphereLev1Con,
 	sphere_adv_construction_vehicle = sphereLev2Con,
 	sphere_adv_construction_kbot = sphereLev2Con,
 	sphere_construction_sphere = atkPatroller,
 	sphere_adv_construction_aircraft = sphereLev2Con,	
-	sphere_adv_construction_sub = sphereLev2WaterCon,
+	sphere_adv_construction_sub = sphereLev2Con,
 	sphere_pole = staticBuilder,
 	sphere_light_factory = spherePlant,
 	sphere_aircraft_factory = sphereAircraftPlant,
@@ -4265,7 +4222,8 @@ taskQueues = {
 	sphere_resolver = atkSupporter,	
 	sphere_probe = airScout,
 	sphere_long_range_rocket_platform = lRRocketPlatform,
-	sphere_premium_nuclear_rocket = unblockableNuke
+	sphere_premium_nuclear_rocket = unblockableNuke,
+	sphere_comsat_station = comsatStation	
 }
 
 

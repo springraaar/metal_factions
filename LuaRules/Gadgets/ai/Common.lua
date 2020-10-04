@@ -48,6 +48,8 @@ BRUTAL_BASE_INCOME_ENERGY_PER_MIN = 5
 ALL_IN_ADVANTAGE_THRESHOLD = 1.4
 CELL_VALUE_RETARGET_PREFERENCE_FACTOR = 2
 ENGAGE_THREAT_FACTOR = 0.5
+MIN_FORCE_COST_BUILD_NUKE_THRESHOLD = 35000
+BRUTAL_STRATEGY_STAGES_DELAY_FRAMES = 7200 
 
 COMBAT_EFFICIENCY_HISTORY_STEP_FRAMES = 30*60
 COMBAT_EFFICIENCY_HISTORY_CHECK_STEPS = 10 
@@ -61,6 +63,8 @@ ENERGY_STORAGE_LIMIT = 3
 METAL_STORAGE_LIMIT = 2
 
 CELL_SIZE = 512
+ALONG_PATH_REVERSE_SQ_DIST_PENALTY = CELL_SIZE*CELL_SIZE*3
+ALONG_PATH_PANIC_SQ_DIST = 1300*1300
 PF_CELL_SIZE = 128
 PF_TYPE_LAND = 0
 PF_TYPE_LAND_SLOPE = 1
@@ -314,6 +318,8 @@ TYPE_RESPAWNER = 35
 TYPE_HAZMOHO = 36
 TYPE_HIGH_PRIORITY = 37
 TYPE_UW_DEFENSE = 38
+TYPE_FAKE_WEAPON = 39
+TYPE_NUKE = 40
 
 -- Taskqueuebehavior skips this name
 SKIP_THIS_TASK = "s"
@@ -1324,13 +1330,16 @@ waterLltByFaction = { [side1Name] = "aven_light_laser_tower", [side2Name] = "gea
 UWFusionByFaction = { [side1Name] = "aven_fusion_reactor", [side2Name] = "gear_fusion_power_plant", [side3Name] = "claw_adv_fusion_reactor", [side4Name] = "sphere_adv_fusion_reactor"}
 waterLightAAByFaction = { [side1Name] = "aven_defender", [side2Name] = "gear_pulverizer"}
 lev1WaterHeavyDefenseByFaction = {[side1Name] = {"aven_sentinel"}, [side2Name] = {"gear_blaze"}, [side3Name] = {"claw_piercer"}}
-lev1TorpedoDefenseByFaction = {[side1Name] = {"aven_torpedo_launcher"}, [side2Name] = {"gear_torpedo_launcher"}, [side3Name] = {"claw_sinker"}, [side4Name] = {"sphere_clam"}}
-lev2TorpedoDefenseByFaction = {[side1Name] = {"aven_advanced_torpedo_launcher"}, [side2Name] = {"gear_advanced_torpedo_launcher"}, [side3Name] = {"claw_sinker"}, [side4Name] = {"sphere_oyster"}}
+lev1TorpedoDefenseByFaction = {[side1Name] = "aven_torpedo_launcher", [side2Name] = "gear_torpedo_launcher", [side3Name] = "claw_sinker", [side4Name] = "sphere_clam"}
+lev2TorpedoDefenseByFaction = {[side1Name] = "aven_advanced_torpedo_launcher", [side2Name] = "gear_advanced_torpedo_launcher", [side3Name] = "claw_sinker", [side4Name] = "sphere_oyster"}
 waterRadarByFaction = { [side1Name] = "aven_radar_tower", [side2Name] = "gear_radar_tower", [side3Name] = "claw_radar_tower", [side4Name] = "sphere_radar_tower"}
 sonarByFaction = { [side1Name] = "aven_sonar_station", [side2Name] = "gear_sonar_station", [side3Name] = "claw_sonar_station", [side4Name] = "sphere_sonar_station"}
+advSonarByFaction = { [side1Name] = "aven_advanced_sonar_station", [side2Name] = "gear_advanced_sonar_station", [side3Name] = "claw_advanced_sonar_station", [side4Name] = "sphere_advanced_sonar_station"}
+jammerByFaction = { [side1Name] = "aven_radar_jamming_tower", [side2Name] = "gear_radar_jamming_tower", [side3Name] = "claw_radar_jamming_tower", [side4Name] = "sphere_radar_jamming_tower"}
 mmakerByFaction =  { [side1Name] = "aven_metal_maker", [side2Name] = "gear_metal_maker", [side3Name] = "claw_metal_maker", [side4Name] = "sphere_metal_maker"}
 rocketPlatformByFaction =  { [side1Name] = "aven_long_range_rocket_platform", [side2Name] = "gear_long_range_rocket_platform", [side3Name] = "claw_long_range_rocket_platform", [side4Name] = "sphere_long_range_rocket_platform"}
 unblockableNukeByFaction =  { [side1Name] = "aven_premium_nuclear_rocket", [side2Name] = "gear_premium_nuclear_rocket", [side3Name] = "claw_premium_nuclear_rocket", [side4Name] = "sphere_premium_nuclear_rocket"}
+comsatByFaction =  { [side1Name] = "aven_comsat_station", [side2Name] = "gear_comsat_station", [side3Name] = "claw_comsat_station", [side4Name] = "sphere_comsat_station"}
 
 unitTypeSets = {
 	[TYPE_LIGHT_DEFENSE] = tableToSet({lltByFaction,waterLltByFaction}),
@@ -1355,7 +1364,7 @@ unitTypeSets = {
 	[TYPE_AMPHIBIOUS_ATTACKER] = listToSet(seaAttackerList),
 	[TYPE_L1_CONSTRUCTOR] = listToSet(l1ConstructorList),		-- not used
 	[TYPE_L2_CONSTRUCTOR] = listToSet(l2ConstructorList),		-- not used
-	[TYPE_BASE] = tableToSet({mohoMineByFaction,geoByFaction,fusionByFaction,lvl1PlantByFaction,lvl2PlantByFaction,lev1HeavyDefenseByFaction,lev1ArtilleryDefenseByFaction,lev2ArtilleryDefenseByFaction,lev2LongRangeArtilleryByFaction,heavyAAByFaction}),
+	[TYPE_BASE] = tableToSet({mohoMineByFaction,geoByFaction,fusionByFaction,lvl1PlantByFaction,lvl2PlantByFaction,lev1HeavyDefenseByFaction,lev1ArtilleryDefenseByFaction,lev2ArtilleryDefenseByFaction,lev2LongRangeArtilleryByFaction,heavyAAByFaction,comsatByFaction}),
 	[TYPE_LIGHT_AA] = tableToSet(lightAAByFaction),
 	[TYPE_MEDIUM_AA] = tableToSet(mediumAAByFaction),
 	[TYPE_HEAVY_AA] = tableToSet(heavyAAByFaction),
@@ -1365,4 +1374,6 @@ unitTypeSets = {
 	[TYPE_STRATEGIC] = tableToSet({lev1ArtilleryDefenseByFaction,lev2ArtilleryDefenseByFaction,lev2LongRangeArtilleryByFaction,mexByFaction, UWMexByFaction, mohoMineByFaction,UWMohoMineByFaction,fusionByFaction,UWFusionByFaction,rocketPlatformByFaction}),
 	[TYPE_UPGRADE_CENTER] = tableToSet(upgradeCenterByFaction),
 	[TYPE_HIGH_PRIORITY] = tableToSet({commanderByFaction,commanderMorphByFaction,respawnerByFaction,rocketPlatformByFaction,upgradeCenterByFaction}),
+	[TYPE_FAKE_WEAPON] = tableToSet({comsatByFaction}),
+	[TYPE_NUKE] = tableToSet({unblockableNukeByFaction})
 }

@@ -126,9 +126,9 @@
 
 	[CustomParams]
 	{
-		builtBy=gear_adv_shipyard;
+		builtBy=gear_adv_shipyard,gear_adv_vehicle_plant;
 		tip=33% slower on land;
-		evalfactor=0.85;//SHIP
+		evalfactor=0.95;//AMPHIBSHIP
 	}
 
 	[SFXTypes]
@@ -138,8 +138,8 @@
 		explosiongenerator2=custom:rocketflaresml;
 	}
 
-	buildcostenergy=23698;//#AUTO#
-	buildcostmetal=4739;//#AUTO#
-	buildtime=56481;//#AUTO#
-	mass=5327;//#AUTO#
+	buildcostenergy=26486;//#AUTO#
+	buildcostmetal=5297;//#AUTO#
+	buildtime=63126;//#AUTO#
+	mass=5625;//#AUTO#
 }
