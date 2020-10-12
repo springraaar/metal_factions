@@ -182,7 +182,7 @@ function widget:GameProgress (n) -- happens every 300 frames
 	serverFrame = n
 	--Echo("progress "..n)
 	if (not gameProgressCalled) then
-		Echo("server at frame "..n)
+		--Echo("server at frame "..n)
 		gameProgressCalled = true
 	end
 end

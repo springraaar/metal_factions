@@ -1,4 +1,4 @@
-2020/10/11 ------------------ NOTES v1.43 ----------------------
+2020/10/11 ------------------ NOTES v1.44 ----------------------
 
 
 --- Balance / Mechanics
@@ -20,13 +20,13 @@ AIR
 - SPHERE "Endeavour" : modified model to have only one bigger barrel to better convey its role
 - GEAR "Enforcer" : modified model to have only one bigger barrel to better convey its role
 
-
 --- AI
 
 - reduced the stage 2 delay for brutal mode AI from 5 min to 90s
 - when beacon set to within 900 range of the AI's base center, AI will try to move, not "fight" towards the location. Useful for retreating.
 - added #AI COMPAD command : gets the AI to share a commander respawner pad to the player
 - beacon markers should now appear to allies and spectators only
+- check if the surrounding area is suitable for making factories when placing construction towers
 
 
 2020/10/04 ------------------ NOTES v1.42 ----------------------

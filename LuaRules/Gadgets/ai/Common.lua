@@ -340,6 +340,8 @@ WATER_TEST_UNIT = "gear_tidal_generator"
 DEEP_WATER_TEST_UNIT = "gear_shipyard"
 UNDERWATER_THRESHOLD = - 5
 
+NANO_TOWER_PLANT_TEST_DEF_ID = UnitDefNames["aven_aircraft_plant"].id
+
 -- side names
 side1Name = "aven"
 side2Name = "gear"
