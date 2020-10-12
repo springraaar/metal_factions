@@ -70,13 +70,14 @@
 	acceleration=0.2;
 	brakerate=0.1;
 	maxvelocity=1.8;
+	maxreversevelocity=0.9;
 	minwaterdepth=15;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
 	sightdistance=500;
-	sonardistance=950;
+	sonardistance=500;
 
 	//************************************************************
 	//  Weapons
@@ -122,8 +123,8 @@
 	{
 		builtBy=aven_adv_shipyard;
 	}
-	buildcostenergy=9357;//#AUTO#
-	buildcostmetal=1871;//#AUTO#
-	buildtime=22301;//#AUTO#
-	mass=1048;//#AUTO#
+	buildcostenergy=8285;//#AUTO#
+	buildcostmetal=1657;//#AUTO#
+	buildtime=19746;//#AUTO#
+	mass=977;//#AUTO#
 }

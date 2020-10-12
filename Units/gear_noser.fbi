@@ -70,13 +70,14 @@
 	acceleration=0.08;
 	brakerate=0.1;
 	maxvelocity=1.6;
+	maxreversevelocity=0.8;
 	minwaterdepth=15;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
 	sightdistance=500;
-	sonardistance=900;
+	sonardistance=500;
 
 	//************************************************************
 	//  Weapons
@@ -93,25 +94,12 @@
 	//  Orders
 	//**********
 	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=1;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=SBS-T2;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
 	waterline=50;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =35 18 49;
 	collisionVolumeOffsets = 0 0 0;
@@ -124,8 +112,8 @@
 		builtBy=gear_adv_shipyard;
 	}
 
-	buildcostenergy=10143;//#AUTO#
-	buildcostmetal=2028;//#AUTO#
-	buildtime=24175;//#AUTO#
-	mass=1138;//#AUTO#
+	buildcostenergy=9259;//#AUTO#
+	buildcostmetal=1851;//#AUTO#
+	buildtime=22068;//#AUTO#
+	mass=1079;//#AUTO#
 }

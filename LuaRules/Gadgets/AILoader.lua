@@ -223,23 +223,60 @@ end
 --------------------------------------------- UNSYNCED CODE
 else
 
---TODO use this eventually
--- register synced->unsynced communication of AI UI highlight events
-local function AIHighlightUpdateEventHandler(allyId,data)
-	if Script.LuaUI('AIHighlightUpdateUIEvent') then
-		Script.LuaUI.AIHighlightUpdateUIEvent(allyId,data)
+-- register synced->unsynced communication of AI UI events
+local function AIEventHandler(category,teamId,allyId,type,data)
+	--if Script.LuaUI('AIEvent') then
+		--Script.LuaUI.AIEvent(teamId,allyId,type,data)
+	--end
+	
+	local myPlayerId = Spring.GetLocalPlayerID()
+	
+	-- if the player is allied with the AI that triggered the event or is a spectator, update UI
+	local playerRoster = Spring.GetPlayerRoster()
+	for _,playerData in pairs(playerRoster) do
+		local pId = playerData[2]
+		local tId = playerData[3]
+		local aId = playerData[4]
+		local spec = playerData[5]
+		
+		if (pId == myPlayerId and (aId == allyId or spec)) then				
+			--Spring.Echo("AI EVENT : pId="..pId.." spec="..tostring(spec).." teamId="..teamId.." allyId="..allyId.." type="..type.." data="..data)
+			
+			if (data) then
+				local parameters = splitString(data,"|")
+
+				--Spring.Echo("command was: "..command)
+				if (type == EXTERNAL_RESPONSE_SETMARKER) then
+					local px = tonumber(parameters[1])
+					local py = tonumber(parameters[2])
+					local pz = tonumber(parameters[3])
+					local msg = parameters[4]
+					
+					spMarkerAddPoint(px,py,pz,msg, true)
+				elseif (type == EXTERNAL_RESPONSE_REMOVEMARKER) then
+					local px = tonumber(parameters[1])
+					local py = tonumber(parameters[2])
+					local pz = tonumber(parameters[3])
+					
+					spMarkerErasePosition(px,py,pz)
+				end
+			end
+			break
+		end
 	end
+	
 end
 
 
 function gadget:Initialize()
-	gadgetHandler:AddSyncAction("AIHighlightUpdateEvent",AIHighlightUpdateEventHandler)
+	gadgetHandler:AddSyncAction("AIEvent",AIEventHandler)
 end
 
 
 function gadget:Shutdown()
-	gadgetHandler:RemoveSyncAction("AIHighlightUpdateEvent",AIHighlightUpdateEventHandler)
+	gadgetHandler:RemoveSyncAction("AIEvent",AIEventHandler)
 end
+
 
 end
 

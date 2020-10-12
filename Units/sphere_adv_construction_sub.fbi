@@ -74,6 +74,7 @@
 	acceleration=0.1;
 	brakerate=0.08;
 	maxvelocity=1.9;
+	maxreversevelocity=0.95;
 	minwaterdepth=20;
 
 	//************************************************************
@@ -81,7 +82,7 @@
 	//*********************
 	sightdistance=500;
 	radardistance=0;
-	sonardistance=600;
+	sonardistance=500;
 
 	//************************************************************
 	//  Weapons
@@ -100,16 +101,7 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=CW-SA;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
 	waterline=40;
-	zbuffer=1;
 	pieceTrailCEGTag=NanoDebree;
 	pieceTrailCEGRange = 2;
 	collisionVolumeType = box;
@@ -128,8 +120,8 @@
 		explosiongenerator1=custom:UNITFIRE;
 	}
 
-	buildcostenergy=4978;//#AUTO#
-	buildcostmetal=995;//#AUTO#
-	buildtime=11866;//#AUTO#
-	mass=403;//#AUTO#
+	buildcostenergy=4820;//#AUTO#
+	buildcostmetal=964;//#AUTO#
+	buildtime=11489;//#AUTO#
+	mass=398;//#AUTO#
 }

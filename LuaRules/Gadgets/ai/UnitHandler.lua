@@ -217,6 +217,8 @@ function UnitHandler:Init(ai)
 	--printTable(self.badAAUnitNames)
 	
 	self.nukeTargetCell = nil
+	self.beaconAttack = true
+	self.beaconMode = nil --TODO make this work
 	
 	self.brutalPlantDone = false
 	self.brutalAirPlantDone = false	
@@ -1982,6 +1984,21 @@ function UnitHandler:GameFrame(f)
 		end
 	end
 	
+	
+	-- check whether units should attack or retreat towards beacon
+	if self.ai:isBeaconActive() then
+		local xIndex,zIndex = getCellXZIndexesForPosition(self.ai.beaconPos)
+		local cell = getCellFromTableIfExists(self.ai.mapHandler.mapCells,xIndex,zIndex)
+		
+		local d = distance(self.basePos,cell.p)
+		if d < BEACON_BASE_RETREAT_DISTANCE then
+			self.beaconAttack = false
+		else 
+			self.beaconAttack = true
+		end
+	end
+	
+	
 	-- define task for each group
 	if fmod(f,199) == 52 + self.ai.frameShift then
 		local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
@@ -2071,13 +2088,13 @@ function UnitHandler:GameFrame(f)
 				local wasAttacking = (task == TASK_ATTACK)
 				if (task == nil or (taskFrame + TASK_DELAY_FRAMES < f)) then
 					task = nil
-					if self.ai:isBeaconActive() or ((group.nearCenterCost > minForceCost) and bestValue > 0 ) then
+					if (self.ai:isBeaconActive() and self.beaconAttack) or ((group.nearCenterCost > minForceCost) and bestValue > 0 ) then
 						task = TASK_ATTACK
 						group.taskFrame = f
 						if (gId == UNIT_GROUP_ATTACKERS) then
 							self.lastMainForceAttackFrame = f
 						end
-					elseif ( wasAttacking and group.nearCenterCost < minForceCost) or bestValue < 0  then
+					elseif (self.ai:isBeaconActive() and (not self.beaconAttack)) or ( wasAttacking and group.nearCenterCost < minForceCost) or bestValue < 0  then
 						task = TASK_RETREAT
 						group.taskFrame = f
 					end

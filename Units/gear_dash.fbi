@@ -79,7 +79,7 @@
 	mygravity=0.4; //0.4
 	maxbank=0.8;	//0.8
 	maxpitch=0.45;	//0.45
-	turnradius=350; //500
+	turnradius=280; //500
 	maxaileron=0.015;	//0.015
 	maxelevator=0.015;	//0.01
 	maxrudder=0.015;  //0.004
@@ -138,12 +138,13 @@
 	[CustomParams]
 	{
 		builtBy=gear_aircraft_plant,gear_adv_aircraft_plant;
+		evalfactor=0.9;//L1FIGHTER
 	}
 	[SFXTypes]
 	{
 	}
-	buildcostenergy=1591;//#AUTO#
-	buildcostmetal=318;//#AUTO#
-	buildtime=3793;//#AUTO#
-	mass=106;//#AUTO#
+	buildcostenergy=1456;//#AUTO#
+	buildcostmetal=291;//#AUTO#
+	buildtime=3471;//#AUTO#
+	mass=102;//#AUTO#
 }

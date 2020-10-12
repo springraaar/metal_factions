@@ -67,9 +67,10 @@
 	//************
 	movementclass=BOATSUB5;
 	turnrate=400;
-	acceleration=0.06;
+	acceleration=0.1;
 	brakerate=0.1;
 	maxvelocity=1.4;
+	maxreversevelocity=0.7;
 	minwaterdepth=20;
 
 	//************************************************************
@@ -77,7 +78,7 @@
 	//*********************
 	sightdistance=500;
 	radardistance=0;
-	sonardistance=660;
+	sonardistance=500;
 
 	//************************************************************
 	//  Weapons
@@ -93,25 +94,12 @@
 	//  Orders
 	//**********
 	noautofire=0;
-	firestandorders=0;
-	mobilestandorders=1;
-	standingfireorder=1;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ASD-SM;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
 	waterline=55;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =45 22 45;
 	collisionVolumeOffsets = 0 0 0;
@@ -123,8 +111,8 @@
 	{
 		builtBy=claw_adv_shipyard;
 	}
-	buildcostenergy=8412;//#AUTO#
-	buildcostmetal=1682;//#AUTO#
-	buildtime=20049;//#AUTO#
-	mass=1060;//#AUTO#
+	buildcostenergy=8176;//#AUTO#
+	buildcostmetal=1635;//#AUTO#
+	buildtime=19486;//#AUTO#
+	mass=1045;//#AUTO#
 }

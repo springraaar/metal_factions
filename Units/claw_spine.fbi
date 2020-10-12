@@ -27,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=750;
+	maxdamage=950;
 	healtime=10;
 	footprintx=3;
 	footprintz=3;
@@ -36,8 +36,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.4;
-	energyuse=0.4;
+	energymake=0;
+	energyuse=0;
 	energystorage=0;
 
 	//************************************************************
@@ -69,7 +69,8 @@
 	turnrate=500;
 	acceleration=0.07;
 	brakerate=0.1;
-	maxvelocity=1.625;
+	maxvelocity=1.6;
+	maxreversevelocity=0.8;
 	minwaterdepth=20;
 
 	//************************************************************
@@ -77,7 +78,7 @@
 	//*********************
 	sightdistance=500;
 	radardistance=0;
-	sonardistance=600;
+	sonardistance=500;
 
 	//************************************************************
 	//  Weapons
@@ -93,25 +94,11 @@
 	//  Orders
 	//**********
 	noautofire=0;
-	firestandorders=0;
-	mobilestandorders=1;
-	standingfireorder=1;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ASD-SM;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
 	waterline=40;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =35 16 38;
 	collisionVolumeOffsets = 0 0 0;
@@ -124,8 +111,8 @@
 		builtBy=claw_shipyard,claw_adv_shipyard;
 	}
 
-	buildcostenergy=1900;//#AUTO#
-	buildcostmetal=380;//#AUTO#
-	buildtime=4529;//#AUTO#
-	mass=157;//#AUTO#
+	buildcostenergy=1947;//#AUTO#
+	buildcostmetal=389;//#AUTO#
+	buildtime=4641;//#AUTO#
+	mass=183;//#AUTO#
 }

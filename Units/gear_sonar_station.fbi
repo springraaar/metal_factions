@@ -18,7 +18,6 @@
 	//  External Specs
 	//******************
 	unitname=gear_sonar_station;
-	unitnumber=137;
 	objectname=gear_sonar_station.3do;
 	corpse=gear_sonar_station_dead;
 	buildpic=gear_sonar_station.png;
@@ -27,7 +26,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=352;
+	maxdamage=350;
 	footprintx=2;
 	footprintz=2;
 
@@ -69,7 +68,7 @@
 	//*********************
 	sightdistance=500;
 	radardistance=0;
-	sonardistance=1200;
+	sonardistance=1400;
 
 	//************************************************************
 	//  Weapons
@@ -85,14 +84,7 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=FS-4;
-	downloadable=1;
-	noshadow=1;
-	threed=1;
-	version=1.2;
 	waterline=27.5;
-	zbuffer=1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
@@ -106,8 +98,8 @@
 		explosiongenerator1=custom:Normallight;
 	}
 
-	buildcostenergy=494;//#AUTO#
-	buildcostmetal=98;//#AUTO#
-	buildtime=1178;//#AUTO#
-	mass=120;//#AUTO#
+	buildcostenergy=705;//#AUTO#
+	buildcostmetal=141;//#AUTO#
+	buildtime=1681;//#AUTO#
+	mass=134;//#AUTO#
 }

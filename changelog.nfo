@@ -1,3 +1,34 @@
+2020/10/11 ------------------ NOTES v1.43 ----------------------
+
+
+--- Balance / Mechanics
+
+WATER
+- increased range of level1 static sonar stations from 1200 to 1400
+- reduced sonar range of submarines (level1 and 2) from 600+ to 500
+(helps making them cheaper, but level 2 submarines now require external sonar)
+- all submarines can now reverse at half their normal maximum speed
+- modified AVEN "Crusader"'s cannon to have slightly less range, faster projectile and higher dmg/s with shorter reload time and M damage instead of H
+- made level 2 radar/sonar ships slower and reduced their HP to reduce costs
+
+AIR
+- increased AVEN "Swift", GEAR "Dash" and CLAW "Hornet" ranges to 400, restored the 280L damage burst with 4s reload, and gave them a special 10% discount
+- increased CLAW "X" energy cost to fire its forward facing lasers and slightly increased its HP
+
+--- Visual
+
+- SPHERE "Endeavour" : modified model to have only one bigger barrel to better convey its role
+- GEAR "Enforcer" : modified model to have only one bigger barrel to better convey its role
+
+
+--- AI
+
+- reduced the stage 2 delay for brutal mode AI from 5 min to 90s
+- when beacon set to within 900 range of the AI's base center, AI will try to move, not "fight" towards the location. Useful for retreating.
+- added #AI COMPAD command : gets the AI to share a commander respawner pad to the player
+- beacon markers should now appear to allies and spectators only
+
+
 2020/10/04 ------------------ NOTES v1.42 ----------------------
 
 --- Balance / Mechanics

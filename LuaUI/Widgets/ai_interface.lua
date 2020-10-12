@@ -135,7 +135,7 @@ function widget:AddConsoleLine(line)
 			end
 
 			if #tokens == 1 then
-				spSendMessageToPlayer(myPlayerId,"usage : #AI [<playerId>] <command> <parameters>\nAvailable commands :\nSTATUS : show current status\nSTRATEGY <strategyName> : change strategy")
+				spSendMessageToPlayer(myPlayerId,"usage : #AI [<playerId>] <command> <parameters>\nAvailable commands :\nSTATUS : show current status\nSTRATEGY <strategyName> : change strategy\nCOMPAD : give the player a commander pad")
 				return
 			end
 			
@@ -155,4 +155,3 @@ function widget:AddConsoleLine(line)
 		end
 	end
 end
-

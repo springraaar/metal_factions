@@ -6,9 +6,9 @@
 #define HEADING_TOLERANCE	<25>
 #define PITCH_TOLERANCE		<15>
 
-piece  flareb, base, turret, sleeve, barrel, flare, sleeve2, barrel2, flare2, wake1, wake2, fp31, bottom;
+piece  flareb, base, turret, sleeve, barrel, flare, wake1, wake2, fp31, bottom;
 
-static-var  gun_1, aimHeading, Static_Var_4, Static_Var_5;
+static-var  aimHeading, Static_Var_4, Static_Var_5;
 
 #include "aimhelper1.h"
 
@@ -132,9 +132,7 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 Create()
 {
 	hide flare;
-	hide flare2;
 	hide flareb;
-	gun_1 = [0];
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script SmokeUnit();
 	call-script RockZInit();
@@ -147,7 +145,6 @@ RestoreAfterDelay()
 	call-script stopAimHelper1(<80>,<80>);
 	turn turret to y-axis <0.000000> speed <80.000000>;
 	turn sleeve to x-axis <0.000000> speed <80.000000>;
-	turn sleeve2 to x-axis <0.000000> speed <80.000000>;
 	return (0);
 }
 
@@ -177,12 +174,10 @@ AimPrimary(heading, pitch)
 	set-signal-mask SIG_AIM;
 	turn turret to y-axis heading speed <100.000000>;
 	turn sleeve to x-axis <0.000000> - pitch speed <100.000000>;
-	turn sleeve2 to x-axis <0.000000> - pitch speed <100.000000>;
 	if (!aimReady1)
 	{
 		wait-for-turn turret around y-axis;
 		wait-for-turn sleeve around x-axis;
-		wait-for-turn sleeve2 around x-axis;
 	}
 	start-script RestoreAfterDelay();
 	aimHeading = heading;
@@ -206,24 +201,10 @@ TargetCleared(Func_Var_1)
 FirePrimary()
 {
 	start-script RockZ(-5,aimHeading);
-	if( gun_1 == [0] )
-	{
-		move barrel to z-axis [-7.500000] now;
-		emit-sfx 1024 + 0 from flare;
-		sleep 150;
-		gun_1 = [1];
-		move barrel to z-axis [0.000000] speed [7.500000];
-		return (0);
-	}
-	if( gun_1 == [1] )
-	{
-		move barrel2 to z-axis [-7.500000] now;
-		emit-sfx 1024 + 0 from flare2;
-		sleep 150;
-		gun_1 = [0];
-		move barrel2 to z-axis [0.000000] speed [7.500000];
-		return (0);
-	}
+	move barrel to z-axis [-5.000000] now;
+	emit-sfx 1024 + 0 from flare;
+	sleep 150;
+	move barrel to z-axis [0.000000] speed [15.500000];
 	return (0);
 }
 
@@ -240,14 +221,7 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if( gun_1 == [0] )
-	{
-		piecenum = flare;
-	}
-	if( gun_1 == [1] )
-	{
-		piecenum = flare2;
-	}
+	piecenum = flare;
 	return (0);
 }
 
@@ -272,40 +246,20 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
 
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
 		explode barrel type FALL | BITMAP1;
-		explode barrel2 type FALL | BITMAP2;
 		explode sleeve type FALL | BITMAP1;
-		explode sleeve2 type FALL | BITMAP2;
 		explode turret type SHATTER | BITMAP3;
 		explode base type SHATTER | BITMAP3;
-		return (0);
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode barrel type FALL | BITMAP1;
-		explode barrel2 type FALL | BITMAP2;
-		explode sleeve type FALL | BITMAP1;
-		explode sleeve2 type FALL | BITMAP2;
-		explode turret type SHATTER | BITMAP3;
-		explode base type SHATTER | BITMAP3;
-		return (0);
-	}
-	corpsetype = 3;
+	explode base type SHATTER;
+	explode bottom type SHATTER;
 	explode barrel type FALL | BITMAP1;
-	explode barrel2 type FALL | BITMAP2;
 	explode sleeve type FALL | BITMAP1;
-	explode sleeve2 type FALL | BITMAP2;
 	explode turret type SHATTER | BITMAP3;
 	explode base type SHATTER | BITMAP3;
-	return (0);
+	return (2);
 }

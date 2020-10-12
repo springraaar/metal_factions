@@ -6,9 +6,8 @@
 #define HEADING_TOLERANCE	<25>
 #define PITCH_TOLERANCE		<15>
 
-piece  base, hull, bottom, h2,turret, sleeve, barrel, b1, flash,barrel2, b2, flash2, wake1, wake2, depthcharge;
+piece  base, hull, bottom, h2,turret, sleeve, barrel, b1, flash, wake1, wake2, depthcharge;
 
-static-var  gun_1;
 
 #include "aimhelper1.h"
 
@@ -49,7 +48,6 @@ Create()
 {
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script SmokeUnit();
-	gun_1 = [0];
 	return (0);
 }
 
@@ -100,24 +98,11 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	if( gun_1 == [0])
-	{
-		move barrel to z-axis [-2.500000] now;
+		move barrel to z-axis [-5] now;
 		emit-sfx 1024+0 from flash;
 		sleep 100;
-		move barrel to z-axis [0.000000] speed [2.000000];
-		gun_1 = [1];
+		move barrel to z-axis [0.000000] speed [12.000000];
 		return (0);
-	}
-	if( gun_1 == [1])
-	{
-		move barrel2 to z-axis [-2.500000] now;
-		emit-sfx 1024+0 from flash2;
-		sleep 100;
-		move barrel2 to z-axis [0.000000] speed [2.000000];
-		gun_1 = [0];
-		return (0);
-	}
 }
 
 AimFromPrimary(piecenum)
@@ -128,14 +113,7 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if(gun_1 == [0])
-	{
-		piecenum = flash;
-	}
-	if(gun_1 == [1])
-	{
-		piecenum = flash2;
-	}	
+	piecenum = flash;
 	return (0);
 }
 
@@ -175,7 +153,6 @@ Killed(severity, corpsetype)
 	{
 		explode sleeve type SHATTER;
 		explode barrel type SHATTER;
-		explode barrel2 type SHATTER;
 		return (1);
 	}
 	explode hull type SHATTER;
@@ -184,6 +161,5 @@ Killed(severity, corpsetype)
 	explode h2 type SHATTER;
 	explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
 	explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-	explode barrel2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
 	return (2);
 }

@@ -74,6 +74,7 @@
 	acceleration=0.07;
 	brakerate=0.06;
 	maxvelocity=2.15;
+	maxreversevelocity=1.075;
 	minwaterdepth=20;
 
 	//************************************************************
@@ -81,7 +82,7 @@
 	//*********************
 	sightdistance=500;
 	radardistance=0;
-	sonardistance=600;
+	sonardistance=500;
 
 	//************************************************************
 	//  Weapons
@@ -93,23 +94,12 @@
 	//  Orders
 	//**********
 	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ARM-CSW2;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
 	waterline=30;
-	zbuffer=1;
 	pieceTrailCEGTag=NanoDebree;
 	pieceTrailCEGRange = 2;
 	collisionVolumeType = box;
@@ -126,8 +116,8 @@
 		explosiongenerator0=custom:Nano;
 		explosiongenerator1=custom:UNITFIRE;
 	}
-	buildcostenergy=6766;//#AUTO#
-	buildcostmetal=1353;//#AUTO#
-	buildtime=16125;//#AUTO#
-	mass=1013;//#AUTO#
+	buildcostenergy=6531;//#AUTO#
+	buildcostmetal=1306;//#AUTO#
+	buildtime=15566;//#AUTO#
+	mass=997;//#AUTO#
 }

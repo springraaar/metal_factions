@@ -3988,6 +3988,13 @@ function stratPlantAction(self)
 	local currentStrategyName = self.ai.currentStrategyName
 	local sStage = self.ai.currentStrategyStage
 	
+	if self.isBrutalMode then
+		local f = spGetGameFrame()
+		if f < BRUTAL_STRATEGY_STAGES_DELAY_FRAMES then
+			sStage = 1
+		end	
+	end
+	
 	-- check recommended build options and build what it can
 	-- factories
 	local targetMobileUnits = currentStrategy.stages[sStage].mobileUnits

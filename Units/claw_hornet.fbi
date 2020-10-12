@@ -76,7 +76,7 @@
 	mygravity=0.4; //0.4
 	maxbank=0.8;	//0.8
 	maxpitch=0.45;	//0.45
-	turnradius=350; //500
+	turnradius=280; //500
 	maxaileron=0.015;	//0.015
 	maxelevator=0.015;	//0.01
 	maxrudder=0.015;  //0.004
@@ -141,13 +141,14 @@
 	[CustomParams]
 	{
 		builtBy=claw_aircraft_plant,claw_adv_aircraft_plant;
+		evalfactor=0.9;//L1FIGHTER
 	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:emgflarefast;
 	}
-	buildcostenergy=1585;//#AUTO#
-	buildcostmetal=317;//#AUTO#
-	buildtime=3779;//#AUTO#
-	mass=105;//#AUTO#
+	buildcostenergy=1539;//#AUTO#
+	buildcostmetal=307;//#AUTO#
+	buildtime=3668;//#AUTO#
+	mass=103;//#AUTO#
 }

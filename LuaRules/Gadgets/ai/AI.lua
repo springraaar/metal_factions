@@ -253,6 +253,14 @@ function AI:messageAllies(msg)
 	--Spring.SendMessage("--- AI "..self.id..": "..msg)
 end
 
+function AI:markerAllies(x,y,z,msg)
+	SendToUnsynced("AIEvent",self.id,self.allyId,EXTERNAL_RESPONSE_SETMARKER,x.."|"..y.."|"..z.."|"..msg)
+end
+
+function AI:eraseMarkerAllies(x,y,z)
+	SendToUnsynced("AIEvent",self.id,self.allyId,EXTERNAL_RESPONSE_REMOVEMARKER,x.."|"..y.."|"..z)
+end
+
 -- process external command
 function AI:processExternalCommand(msg,playerId,teamId,pName)
 	if (msg) then
@@ -266,7 +274,8 @@ function AI:processExternalCommand(msg,playerId,teamId,pName)
 			
 			-- remove existing marker if any
 			if (self.beaconPos ~= nil) then
-				spMarkerErasePosition(self.beaconPos.x,self.beaconPos.y,self.beaconPos.z)
+				self:eraseMarkerAllies(self.beaconPos.x,self.beaconPos.y,self.beaconPos.z)
+				--spMarkerErasePosition(self.beaconPos.x,self.beaconPos.y,self.beaconPos.z)
 			end
 			
 			self.beaconSetPlayerId = playerId
@@ -282,7 +291,8 @@ function AI:processExternalCommand(msg,playerId,teamId,pName)
    			mm = mm < 10 and "0"..mm or mm
    			ss = ss < 10 and "0"..ss or ss
 			
-			spMarkerAddPoint(px,py,pz,"AI BEACON\nuntil "..hh..":"..mm..":"..ss.."\n("..pName..")")
+			--spMarkerAddPoint(px,py,pz,"AI BEACON\nuntil "..hh..":"..mm..":"..ss.."\n("..pName..")")
+			self:markerAllies(px,py,pz,"AI BEACON\nuntil "..hh..":"..mm..":"..ss.."\n("..pName..")")
 
 		elseif (command == EXTERNAL_CMD_REMOVEBEACON) then
 			self.beaconSetPlayerId = playerId
@@ -290,7 +300,8 @@ function AI:processExternalCommand(msg,playerId,teamId,pName)
 			
 			-- remove existing marker if any
 			if (self.beaconPos ~= nil) then
-				spMarkerErasePosition(self.beaconPos.x,self.beaconPos.y,self.beaconPos.z)
+				self:eraseMarkerAllies(self.beaconPos.x,self.beaconPos.y,self.beaconPos.z)
+				--spMarkerErasePosition(self.beaconPos.x,self.beaconPos.y,self.beaconPos.z)
 			end
 			self.beaconFrame = nil
 			self.beaconPos = nil
@@ -316,6 +327,32 @@ function AI:processExternalCommand(msg,playerId,teamId,pName)
 					self:setStrategy(self.side,strategyStr)
 				else
 					self:messageAllies("ERROR: strategy "..tostring(strategyStr).." not found for "..self.side)
+				end
+			end
+		elseif (command == EXTERNAL_CMD_COMPAD) then
+			local targetTeamId = tonumber(parameters[2])
+			
+			if (targetTeamId == nil or targetTeamId == self.id) then
+
+				-- get all the AI units, try to find a commander pad
+				local units = spGetTeamUnits(self.id)
+				local shareUId, ud, tmpName = nil
+				local shareX,shareZ = 0
+				for _,uId in pairs(units) do 
+					ud = UnitDefs[spGetUnitDefID(uId)]
+					tmpName = ud.name
+					if setContains(unitTypeSets[TYPE_RESPAWNER],tmpName) then
+						shareUId = uId
+						shareX,_,shareZ = spGetUnitPosition(uId,false,false)
+						break
+					end
+				end
+			
+				if (shareUId ~= nil) then
+					spTransferUnit(shareUId,teamId,true)
+					self:messageAllies("commander respawner pad shared at ("..floor(shareX)..","..floor(shareZ)..")")
+				else
+					self:messageAllies("no commander pad available, try again later...")
 				end
 			end
 		end

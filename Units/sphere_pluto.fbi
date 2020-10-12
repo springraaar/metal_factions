@@ -36,8 +36,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=10;
-	energyuse=10;
+	energymake=0;
+	energyuse=0;
 	energystorage=0;
 
 	//************************************************************
@@ -69,14 +69,15 @@
 	turnrate=270;
 	acceleration=0.07;
 	brakerate=0.01;
-	maxvelocity=1.525;
+	maxvelocity=1.4;
+	maxreversevelocity=0.7;
 	minwaterdepth=40;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
 	sightdistance=500;
-	sonardistance=1000;
+	sonardistance=500;
 
 	//************************************************************
 	//  Weapons
@@ -102,17 +103,7 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ASD-SK;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	onoffable=0;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
 	waterline=60;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =45 38 65;
 	collisionVolumeOffsets = 0 0 0;
@@ -128,8 +119,8 @@
 	{
 		explosiongenerator0=custom:ROCKETFLAREMED;
 	}
-	buildcostenergy=10367;//#AUTO#
-	buildcostmetal=2073;//#AUTO#
-	buildtime=24709;//#AUTO#
-	mass=3105;//#AUTO#
+	buildcostenergy=7950;//#AUTO#
+	buildcostmetal=1590;//#AUTO#
+	buildtime=18948;//#AUTO#
+	mass=2848;//#AUTO#
 }

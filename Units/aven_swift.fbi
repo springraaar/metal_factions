@@ -78,7 +78,7 @@
 	mygravity=0.4; //0.4
 	maxbank=0.8;	//0.8
 	maxpitch=0.45;	//0.45
-	turnradius=350; //500
+	turnradius=280; //500
 	maxaileron=0.015;	//0.015
 	maxelevator=0.015;	//0.01
 	maxrudder=0.015;  //0.004
@@ -138,14 +138,15 @@
 	[CustomParams]
 	{
 		builtBy=aven_aircraft_plant,aven_adv_aircraft_plant;
+		evalfactor=0.9;//L1FIGHTER
 	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:JETSML;
 	}
 
-	buildcostenergy=1651;//#AUTO#
-	buildcostmetal=330;//#AUTO#
-	buildtime=3936;//#AUTO#
-	mass=106;//#AUTO#
+	buildcostenergy=1517;//#AUTO#
+	buildcostmetal=303;//#AUTO#
+	buildtime=3617;//#AUTO#
+	mass=101;//#AUTO#
 }

@@ -4762,14 +4762,16 @@
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
-	range=380;
-	reloadtime=2;
+	range=400;
+	reloadtime=4;
 	flighttime=2.75;
 	weaponvelocity=700;
-	startvelocity=350;
+	startvelocity=450;
 	weaponAcceleration=130;
 	turnrate=34384;
 	areaofeffect=48;
+	burst=2;
+	burstrate=0.2;
 	metalpershot=0;
 	soundstart=Rocklit3;
 	soundhit=xplosml2;
@@ -5530,17 +5532,17 @@
 		armor_light=60;//#AUTO#
 	}
 }
-[aven_ROY]
+[aven_crusader_cannon]
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	turret=1;
-	range=660;
-	reloadtime=2.7;
-	weaponvelocity=380;
+	range=650;
+	reloadtime=1.6;
+	weaponvelocity=400;
 	areaofeffect=64;
-	soundstart=cannon3;
-	soundhit=xplomed2;
+	soundstart=cannon1;
+	soundhit=xplomed4;
 	tolerance=3000;
 	size=3.2;
 	rgbcolor=0.7 0.6 0.3;
@@ -5555,16 +5557,16 @@
 	avoidfeature=0;
 	[CUSTOMPARAMS]
 	{
-		hitpower=3;
+		hitpower=2;
 		reaimtime=1;
 	}
 	[DAMAGE]
 	{
-		default=210;
+		default=170;
 		group_invincible=1;
-		armor_heavy=210;//#AUTO#
-		armor_medium=210;//#AUTO#
-		armor_light=210;//#AUTO#
+		armor_heavy=85;//#AUTO#
+		armor_medium=170;//#AUTO#
+		armor_light=170;//#AUTO#
 	}
 }
 [aven_emperor_cannon2]
@@ -8015,7 +8017,7 @@
 	weaponvelocity=400;
 	areaofeffect=64;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	soundstart=cannhvy1;
+	soundstart=cannon3;
 	soundhit=xplomed2;
 	accuracy=200;
 	movingaccuracy=500;
@@ -9004,14 +9006,16 @@
 	explosiongenerator=custom:ROCKETBLASTWRAPPER;
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
-	range=380;
-	reloadtime=2;
+	range=400;
+	reloadtime=4;
 	flighttime=2.75;
 	weaponvelocity=800;
 	startvelocity=300;
 	weaponAcceleration=131;
 	turnrate=34384;
 	areaofeffect=48;
+	burst=2;
+	burstrate=0.2;
 	metalpershot=0;
 	soundstart=Rocklit3;
 	soundhit=xplosml2;
@@ -9149,6 +9153,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -14024,7 +14029,7 @@
 	beamburst=1;
 	burst=4;
 	burstrate=0.2;
-	energypershot=20;
+	energypershot=80;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundtrigger=0;
@@ -14193,11 +14198,11 @@
 	thickness=2.123;
 	corethickness=0.55;
 	turret=1;
-	range=350;
+	range=400;
 	minintensity=1.0;
-	reloadtime=2.5;
+	reloadtime=4;
 	beamburst=1;
-	burst=3;
+	burst=4;
 	burstrate=0.1;
 	weaponvelocity=1533;
 	areaofeffect=8;
@@ -14221,10 +14226,10 @@
 	}
 	[DAMAGE]
 	{
-		default=60;
-		armor_heavy=15;//#AUTO#
-		armor_medium=30;//#AUTO#
-		armor_light=60;//#AUTO#
+		default=70;
+		armor_heavy=17;//#AUTO#
+		armor_medium=35;//#AUTO#
+		armor_light=70;//#AUTO#
 	}
 }
 [claw_piercer_railgun_old]
@@ -17997,7 +18002,7 @@
 	CollideFriendly=1;
 	model=weapon_torpedo;
 	range=500;
-	reloadtime=3.8;
+	reloadtime=4;
 	FlightTime=4;
 	submissile=1;
 	weaponvelocity=250;
