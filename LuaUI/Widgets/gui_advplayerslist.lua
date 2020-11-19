@@ -657,6 +657,8 @@ function CreatePlayerFromTeam(teamID)
 		local aiInfo = Spring.GetTeamLuaAI(teamID)
 		if (aiInfo and string.sub(aiInfo,1,4) == "MFAI") then
 			tname = aiInfo
+			-- add the team id to the name
+			tname = tname:gsub( "MFAI", "["..teamID.."] MFAI")
 		else
 			if type(version) == "string" then
 				tname = "AI:" .. tname .. "-" .. version 

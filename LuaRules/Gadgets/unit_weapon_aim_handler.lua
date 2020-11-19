@@ -25,8 +25,7 @@ local spGetUnitHealth = Spring.GetUnitHealth
 
 local targetForUnitId = {}
 local trackedWeaponDefIds = {}
-
-local LOWEST_PRIORITY = 500000000
+local lastPriorityForUnitId = {}
 
 
 -- slave weapon indexes (master,slave)
@@ -35,11 +34,14 @@ local slaveWeaponIndexesByUnitDefId = {
 	[UnitDefNames["aven_commander"].id] = {3,1},
 	[UnitDefNames["aven_u1commander"].id] = {3,1},
 	[UnitDefNames["aven_u2commander"].id] = {3,1},
+	[UnitDefNames["aven_u5commander"].id] = {3,1},
 	[UnitDefNames["aven_warrior"].id] = {1,2},
 	[UnitDefNames["aven_magnum"].id] = {2,1},
 	-- GEAR	
 	[UnitDefNames["gear_commander"].id] = {3,1},
 	[UnitDefNames["gear_u3commander"].id] = {3,1},
+	-- CLAW
+	[UnitDefNames["claw_brute"].id] = {1,2},
 	-- SPHERE
 	[UnitDefNames["sphere_charger"].id] = {1,2},
 }
@@ -182,7 +184,13 @@ function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attac
 	
 	
 	if defaultPriority == nil then
-		defaultPriority = LOWEST_PRIORITY
+		if lastPriorityForUnitId[attackerID] then
+			defaultPriority = lastPriorityForUnitId[attackerID] 
+		else
+			defaultPriority = 1000
+		end
+	else
+		lastPriorityForUnitId[attackerID] = defaultPriority
 	end
 	
 	-- TODO : this is not working, probable engine bug (this was true on 104.0, check on 104.0.1)
@@ -255,7 +263,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
 			targetForUnitId[uId] = nil
 		end
 	end
-	
+
 	if slaveWeaponIndexesByUnitId[unitID] then
 		slaveWeaponIndexesByUnitId[unitID] = nil
 	end

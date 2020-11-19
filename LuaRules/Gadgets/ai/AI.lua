@@ -2,6 +2,7 @@ include("LuaRules/Gadgets/ai/common.lua")
 include("LuaRules/Gadgets/ai/modules.lua")
 include("LuaRules/Gadgets/ai/AttackerBehavior.lua")
 include("LuaRules/Gadgets/ai/TaskQueueBehavior.lua")
+include("LuaLibs/json.lua")
 
 AI = {}
 AI.__index = AI
@@ -31,6 +32,8 @@ function AI.create(id, mode, strategyStr, allyId, mapHandler)
 	obj.allyId = allyId
 	obj.mapHandler = mapHandler
    	obj.strategyOverride = false
+	obj.humanStrategyStr = nil
+	obj.humanDefenseDensityMult = nil
 	
 	obj.frameShift = 7*tonumber(id)	-- used to spread out processing from different AIs across multiple frames
 	obj.needStartPosAdjustment = false
@@ -39,7 +42,7 @@ function AI.create(id, mode, strategyStr, allyId, mapHandler)
 end
 
 -- pick a strategy, given its identifier and the side
-function AI:setStrategy(side,strategyStr,noMessage)
+function AI:setStrategy(side,strategyStr,noMessage,playerId)
 	
 	-- if "adaptable", pick one strategy depending on the map
 	if strategyStr == "adaptable" then
@@ -61,7 +64,12 @@ function AI:setStrategy(side,strategyStr,noMessage)
 		self.currentStrategyStr = strategyStr
 	end
 
-	local stratList = strategyTable[side.."_"..strategyStr]
+	local stratList = nil
+	if (playerId and playerId >=0) then
+		stratList = playerStrategyTable[playerId][side.."_"..strategyStr]
+	else
+		stratList = strategyTable[side.."_"..strategyStr]
+	end
 
 	if (stratList and #stratList > 0) then
 		self.currentStrategyStr = strategyStr 
@@ -261,16 +269,82 @@ function AI:eraseMarkerAllies(x,y,z)
 	SendToUnsynced("AIEvent",self.id,self.allyId,EXTERNAL_RESPONSE_REMOVEMARKER,x.."|"..y.."|"..z)
 end
 
+
+function AI:loadCustomStrategies(playerId,teamId,pName,strategyTextCompressed)
+	local resultMessage = ""
+	local resultStatus = false
+	
+	local sIds, sTable = nil
+	
+	-- if it was already set, return 
+	if playerStrategyTable[playerId] then
+		return resultMessage,resultStatus
+	end
+	
+	--Spring.Echo("STRATEGY COMPRESSED TEXT IS "..strategyTextCompressed)
+	--Spring.Echo("compressed len gadget "..string.len(strategyTextCompressed))
+	local strategyText = VFS.ZlibDecompress(strategyTextCompressed)
+	--Spring.Echo("len gadget "..string.len(strategyText))
+	
+	local valid = true
+	-- validate strategy text
+	--local textToCheck = 
+	--lines = {}
+	--for s in strategyText:gmatch("[^\r\n]+") do
+	    --table.insert(lines, s)
+	--end
+	--for _,line in pairs(lines) do
+	--	Spring.Echo(line)
+	--end
+	
+	-- replace constants
+	if (valid) then
+		for match,rep in pairs(strategyJsonReplacement) do
+			strategyText,_ = strategyText:gsub( '"'..match..'"', rep)
+		end
+	end
+ 
+	if (valid == true) then
+		local obj = Spring.Utilities.json.decode(strategyText)
+		sIds = obj.availableStrategyIds
+		sTable = obj.strategyTable 
+
+		playerAvailableStrategyOwner[playerId] = {pName,teamId}
+		playerAvailableStrategyIds[playerId] = sIds
+		playerStrategyTable[playerId] = sTable
+	
+		local stratIdListStr = "" 
+		local n=0
+		for _,str in pairs(sIds) do
+			if (n > 0) then
+				stratIdListStr=stratIdListStr..","
+			end
+			stratIdListStr=stratIdListStr..str
+		end
+	
+		resultMessage = stratIdListStr
+		resultStatus = true
+	end
+		
+	return resultMessage,resultStatus
+end
+
 -- process external command
 function AI:processExternalCommand(msg,playerId,teamId,pName)
 	if (msg) then
 		local parameters = splitString(msg,"|")
-		local command = parameters[1] 
+		local shift = 0
+		local targetTeamId = tonumber(parameters[1])
+		if targetTeamId ~= nil then
+			shift = 1
+		end
+		local msgFromAllies = spAreTeamsAllied(self.id,teamId)
+		local command = parameters[shift+1] 
 		--Spring.Echo("command was: "..command)
 		if (command == EXTERNAL_CMD_SETBEACON) then
-			local px = tonumber(parameters[2])
-			local py = tonumber(parameters[3])
-			local pz = tonumber(parameters[4])
+			local px = tonumber(parameters[shift+2])
+			local py = tonumber(parameters[shift+3])
+			local pz = tonumber(parameters[shift+4])
 			
 			-- remove existing marker if any
 			if (self.beaconPos ~= nil) then
@@ -314,24 +388,101 @@ function AI:processExternalCommand(msg,playerId,teamId,pName)
 			end
 			self:messageAllies("Last 10 min efficiency : "..tostring(self.unitHandler.teamCombatEfficiency))
 		elseif (command == EXTERNAL_CMD_STRATEGY) then
-			local targetTeamId = tonumber(parameters[2])
 			local strategyStr = nil	
-			if (targetTeamId ~= nil) then
-				strategyStr = parameters[3]
-			else
-				strategyStr = parameters[2]
-			end 
+			strategyStr = parameters[shift+2]
 			
-			if (targetTeamId == nil or targetTeamId == self.id) then
-				if (strategyStr ~= nil and strategyTable[self.side.."_"..strategyStr]) then
-					self:setStrategy(self.side,strategyStr)
+			if (( msgFromAllies and targetTeamId == nil) or targetTeamId == self.id) then
+				if not msgFromAllies then
+					Spring.Echo("AI "..self.id.." received strategy override from enemies : "..tostring(strategyStr))
+				end
+				-- try to get the player's custom strategy with that name, else check the default list
+				if (strategyStr ~= nil and playerStrategyTable[playerId][self.side.."_"..strategyStr]) then
+					self:setStrategy(self.side,strategyStr,false,playerId)
+					self.humanStrategyStr = strategyStr
+				elseif (strategyStr ~= nil and strategyTable[self.side.."_"..strategyStr]) then
+					self:setStrategy(self.side,strategyStr,false)
+					self.humanStrategyStr = strategyStr
 				else
 					self:messageAllies("ERROR: strategy "..tostring(strategyStr).." not found for "..self.side)
 				end
 			end
-		elseif (command == EXTERNAL_CMD_COMPAD) then
-			local targetTeamId = tonumber(parameters[2])
+		elseif (command == EXTERNAL_CMD_DEFMULT) then
+			local targetMultStr = nil
+			targetMultStr = parameters[shift+2]
+			local targetMult = tonumber(targetMultStr)
 			
+			if (targetTeamId == nil or targetTeamId == self.id) then
+				if (targetMult ~= nil and targetMult >= 0) then
+					self.humanDefenseDensityMult = targetMult
+					self:messageAllies("defense density multiplier set to "..targetMult)
+				else
+					self.humanDefenseDensityMult = nil
+					self:messageAllies("cleared defense density multiplier")
+				end
+			end
+		elseif (command == EXTERNAL_CMD_COMMORPH) then
+			if (targetTeamId == nil or targetTeamId == self.id) then
+				if (self.useStrategies) then
+					-- get all the AI units, try to find a commander 
+					local units = spGetTeamUnits(self.id)
+					local comUId, ud, tmpName = nil
+					local morphName = ""
+					local morphedComFound = false
+					local uX,uZ = 0
+					
+					
+					-- search AI's unit set for a basic commander to morph
+					for _,tq in pairs(self.unitHandler.taskQueues) do
+						uId = tq.unitId 
+						ud = UnitDefs[spGetUnitDefID(uId)]
+						tmpName = ud.name
+						
+						-- abort search if AI already has a morphed commander
+						if tq.isUpgradedCommander then
+							morphedComFound = true
+							break
+						end
+	
+						if tq.isCommander then
+							local cmds = Spring.GetUnitCmdDescs(uId)
+							comUId = uId
+							uX,_,uZ = spGetUnitPosition(uId,false,false)
+						
+							-- morph to a random form within the set of allowed forms
+							local currentStrategy = self.currentStrategy
+							local sStage = self.currentStrategyStage
+	
+							morphName = currentStrategy.commanderMorphs[ random( 1, #currentStrategy.commanderMorphs)] 
+							local morphCmd = false
+							local morphCmdIds = {}
+							for i,c in ipairs(cmds) do
+								if (c.action == "morph" and string.find(c.name, morphName)) then
+									--Spring.Echo(c.id.." ; "..c.name.." ; "..c.type.." ; "..c.action.." ; "..c.texture) --DEBUG
+									morphCmd = c.id
+									break
+								end
+							end
+	
+							spGiveOrderToUnit(comUId,morphCmd,{},{})
+							-- set "wait" action
+							tq.waitLeft = 30*300
+							tq.currentProject = "waiting"
+							tq.progress = true
+							break
+						end
+					end
+				end
+				if (comUId ~= nil) then
+					self:messageAllies("morphing commander at ("..floor(uX)..","..floor(uZ)..") to "..morphName)
+				else
+					if (morphedComFound) then
+						self:messageAllies("commander already morphed")
+					else
+						self:messageAllies("no commander available to morph, try again later...")
+					end
+				end
+			end
+		elseif (command == EXTERNAL_CMD_COMPAD) then
 			if (targetTeamId == nil or targetTeamId == self.id) then
 
 				-- get all the AI units, try to find a commander pad
@@ -354,6 +505,14 @@ function AI:processExternalCommand(msg,playerId,teamId,pName)
 				else
 					self:messageAllies("no commander pad available, try again later...")
 				end
+			end
+		elseif (command == EXTERNAL_CMD_LOADCUSTOMSTRATEGIES) then
+			-- extract text from message properly (compressed text may have the separator)
+			local strategyTextCompressed = string.sub(msg,string.len(EXTERNAL_CMD_LOADCUSTOMSTRATEGIES)+2)
+			
+			local resultMessage,resultStatus = self:loadCustomStrategies(playerId,teamId,pName,strategyTextCompressed)
+			if resultMessage then
+				self:messageAllies("registered strategies:\n"..resultMessage)
 			end
 		end
 	end
@@ -378,6 +537,17 @@ function AI:GameFrame(n)
 			self:messageAllies("Available strategies:")
 			for i,str in ipairs(availableStrategyIds) do
 				self:messageAllies(" "..str)
+			end
+			for playerId,sIds in pairs(playerAvailableStrategyIds) do
+				local pName = playerAvailableStrategyOwner[playerId][1]
+				local pTeamId = playerAvailableStrategyOwner[playerId][2]
+				if spAreTeamsAllied(self.id,pTeamId) == true then
+					for i,str in ipairs(sIds) do
+						if playerStrategyTable[playerId][self.side.."_"..str] then
+							self:messageAllies(" "..str.." ("..pName..")")
+						end
+					end	
+				end
 			end
 		else
 			self:messageAllies("Classic Mode")

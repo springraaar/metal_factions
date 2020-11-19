@@ -79,20 +79,20 @@ Shot1()
 {
 	if( gun_1 == [0] )
 	{
-		move barrel to z-axis [-4.000000] now;
+		move barrel to z-axis [-3.000000] now;
 		emit-sfx 1024 from flash;
 		sleep 100;
 		gun_1 = [1];
-		move barrel to z-axis [0.000000] speed [6.000000];
+		move barrel to z-axis [0.000000] speed [12.000000];
 		return (0);
 	}
 	if( gun_1 == [1] )
 	{
-		move barrel2 to z-axis [-4.000000] now;
+		move barrel2 to z-axis [-3.000000] now;
 		emit-sfx 1024 from flash2;
 		sleep 100;
 		gun_1 = [0];
-		move barrel2 to z-axis [0.000000] speed [6.000000];
+		move barrel2 to z-axis [0.000000] speed [12.000000];
 		return (0);
 	}
 }

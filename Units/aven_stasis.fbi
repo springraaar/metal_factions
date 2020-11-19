@@ -11,14 +11,13 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN LEVEL3 WEAPON NOTAIR NOTSUB;
+	category=AVEN LEVEL1 WEAPON NOTAIR NOTSUB;
 	tedclass=FORT;
 
 	//************************************************************
 	//  External Specs
 	//******************
 	unitname=aven_stasis;
-	unitnumber=5000;
 	objectname=aven_stasis.3do;
 	corpse=aven_stasis_dead;
 	buildpic=aven_stasis.png;
@@ -27,10 +26,10 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=5200;
+	maxdamage=4000;
 	healtime=11;
-	footprintx=4;
-	footprintz=4;
+	footprintx=3;
+	footprintz=3;
 
 	//************************************************************
 	//  Resources
@@ -43,9 +42,9 @@
 	//  Building
 	//************
 	buildangle=8192;
-	yardmap=oooo oooo oooo oooo;
+	yardmap=ooo ooo ooo ooo;
 	collisionVolumeType=CylY;
-	collisionVolumeScales=55 45 55;
+	collisionVolumeScales=35 55 35;
 	collisionVolumeOffsets=0 0 0;
 	collisionVolumeTest = 1;
 
@@ -66,7 +65,7 @@
 	//  Movement
 	//************
 	maxslope=20;
-	maxwaterdepth=11;
+	maxwaterdepth=14;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -79,8 +78,8 @@
 	//***********
 	weapon1=aven_stasis_disruptor;
 	badtargetcategory1=VTOL;
-	explodeas=LARGE_BUILDINGEX;
-	selfdestructas=LARGE_BUILDING;
+	explodeas=MEDIUM_BUILDINGEX;
+	selfdestructas=MEDIUM_BUILDING;
 
 	//************************************************************
 	//  Orders
@@ -108,15 +107,15 @@
 
 	[CustomParams]
 	{
-		builtBy=aven_l2builder;
+		builtBy=aven_l1builder,aven_l2builder;
 	}
 	[SFXTypes]
 	{
 		explosiongenerator0=custom:empflare;
 	}
 
-	buildcostenergy=13906;//#AUTO#
-	buildcostmetal=2781;//#AUTO#
-	buildtime=33144;//#AUTO#
-	mass=7126;//#AUTO#
+	buildcostenergy=4212;//#AUTO#
+	buildcostmetal=842;//#AUTO#
+	buildtime=10040;//#AUTO#
+	mass=4098;//#AUTO#
 }

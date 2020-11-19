@@ -5,11 +5,16 @@
 
 #define SPEEDUP_FACTOR 200
 
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
 piece  torso, ruparm, luparm, rfire, lfire, rloarm, lloarm, pelvis,
        front, f2, l2, l3, lbarrel,rbarrel, rleg, rfoot,r2,r3,
        lleg, lfoot, head, visor,lthigh, rthigh, ground, lspike, rspike;
 
 static-var  bMoving, bAiming, Static_Var_3, gun_1;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				4
@@ -489,6 +494,7 @@ Create()
 	bAiming = FALSE;
 	Static_Var_3 = 1;
 	gun_1 = [0];
+	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
 	start-script SmokeUnit();
 }
@@ -506,9 +512,10 @@ StopMoving()
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<90>,<90>);
 	turn torso to y-axis <0.000000> speed <90.016484>;
-	turn ruparm to x-axis <0.000000> speed <45.005495>;
-	turn luparm to x-axis <0.000000> speed <45.005495>;
+	turn ruparm to x-axis <0.000000> speed <95.005495>;
+	turn luparm to x-axis <0.000000> speed <95.005495>;
 	wait-for-turn torso around y-axis;
 	wait-for-turn ruparm around x-axis;
 	wait-for-turn luparm around x-axis;
@@ -534,6 +541,7 @@ QueryPrimary(piecenum)
 
 AimPrimary(heading, pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<100>,<100>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
@@ -541,12 +549,15 @@ AimPrimary(heading, pitch)
 	{
 		sleep 100;
 	}
-	turn torso to y-axis heading speed <100.016484>;
-	turn luparm to x-axis <0.000000> - pitch speed <85.005495>;
-	turn ruparm to x-axis <0.000000> - pitch speed <85.005495>;
-	wait-for-turn torso around y-axis;
-	wait-for-turn luparm around x-axis;
-	wait-for-turn ruparm around x-axis;
+	turn torso to y-axis heading speed <150.016484>;
+	turn luparm to x-axis <0.000000> - pitch speed <150.005495>;
+	turn ruparm to x-axis <0.000000> - pitch speed <150.005495>;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn luparm around x-axis;
+		wait-for-turn ruparm around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

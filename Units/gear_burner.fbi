@@ -27,11 +27,11 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=4000;
+	maxdamage=4600;
 	healtime=11;
 	footprintx=4;
 	footprintz=4;
-	damagemodifier=0.6;
+	damagemodifier=0.8;
 
 	//************************************************************
 	//  Resources
@@ -46,7 +46,7 @@
 	buildangle=8192;
 	yardmap=oooo oooo oooo oooo;
 	collisionVolumeType=CylY;
-	collisionVolumeScales=50 40 50;
+	collisionVolumeScales=50 35 50;
 	collisionVolumeOffsets=0 0 0;
 	collisionVolumeTest = 1;
 	
@@ -108,7 +108,7 @@
 	[CustomParams]
 	{
 		builtBy=gear_l1builder,gear_l2builder;
-		tip=Gains 40% dmg resistance when closed. Targets burn for 180(M) dmg over 6s;
+		tip=Gains 20% dmg resistance when closed. Targets burn for 180(M) dmg over 6s;
 	}
 
 	[SFXTypes]
@@ -116,8 +116,8 @@
 		explosiongenerator0=custom:UNITFIRE;
 		explosiongenerator1=custom:FireFlare;
 	}
-	buildcostenergy=2469;//#AUTO#
-	buildcostmetal=493;//#AUTO#
-	buildtime=5885;//#AUTO#
-	mass=3724;//#AUTO#
+	buildcostenergy=2363;//#AUTO#
+	buildcostmetal=472;//#AUTO#
+	buildtime=5632;//#AUTO#
+	mass=4182;//#AUTO#
 }

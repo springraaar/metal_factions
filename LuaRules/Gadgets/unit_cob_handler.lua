@@ -26,6 +26,7 @@ local spGetTeamList = Spring.GetTeamList
 local spGetUnitsInCylinder = Spring.GetUnitsInCylinder
 local spGetUnitsInRectangle = Spring.GetUnitsInRectangle
 local spGetUnitPosition = Spring.GetUnitPosition
+local spGetUnitTransporter = Spring.GetUnitTransporter
 local floor = math.floor
 
 -------------------------------------------------------------------------------------
@@ -88,6 +89,13 @@ end
 function delayReload(unitID, unitDefID, teamID, delay)
 	if delay and delay > 0 then
 		local ud = UnitDefs[unitDefID]
+
+		-- skip units being transported as the reloading is frozen		
+		local tId = spGetUnitTransporter(unitID)
+		if (tId ~= nil) then
+			return 0
+		end
+		
 		if ud.weapons and ud.weapons[1] and ud.weapons[1].weaponDef then
 			for wNum,w in pairs(ud.weapons) do
 				local weap=WeaponDefs[w.weaponDef]

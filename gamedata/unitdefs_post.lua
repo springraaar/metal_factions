@@ -197,11 +197,12 @@ if (true) then
   
 			-- disable speed penalty when turning
 			unitDef.turninplaceanglelimit = 90.0
-			unitDef.turninplacespeedlimit = mv / 1.5
+			unitDef.turninplacespeedlimit = mv / 1.3
 
 			-- make sure low acceleration units are able to beat drag
 			local minAcceleration = mv / 80
 			if ( tonumber(ac) < minAcceleration ) then
+				--Spring.Echo("increased acceleration of "..name.." from "..tonumber(ac).." to "..minAcceleration)
 				unitDef.acceleration = minAcceleration
 			end
 			

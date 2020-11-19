@@ -30,6 +30,10 @@ ChargeControl(healthPercent, oldHealthPercent)
 			sleep 100;
 		}
 		
+		while(( get TRANSPORT_ID ) > 0) {
+			sleep 100;
+		}
+		
 		if (isReady == FALSE) {
 			chargeState = [0];
 			sleep reloadTime / 5;
@@ -65,7 +69,7 @@ ChargeDisruptionControl(healthPercent, oldHealthPercent,oldHealthPercent2,oldHea
 		// taking 15% HP in damage or more within 3 seconds resets the charging process
 		healthPercent = get HEALTH;
 		
-		if( (oldHealthPercent3 - healthpercent) > 15 )
+		if( (oldHealthPercent3 - healthpercent) > 15 || ( get TRANSPORT_ID ) > 0 )
 		{
 			if (chargeState > [0] ) {
 				signal SIG_RESET; // kill charge updater

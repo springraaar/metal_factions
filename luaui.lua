@@ -43,7 +43,6 @@ do
   if (text == nil) then
     Script.Kill('Failed to load ' .. STARTUP_FILENAME)
   end
-  Spring.Echo("TEXT IS "..text)
   local chunk, err = loadstring(text)
   if (chunk == nil) then
     Script.Kill('Failed to load ' .. STARTUP_FILENAME .. ' (' .. err .. ')')

@@ -5,7 +5,7 @@ function widget:GetInfo()
     author    = "raaar",
     date      = "2020",
     license   = "PD",
-    layer     = 1000,
+    layer     = math.huge,
     enabled   = true
   }
 end
@@ -31,6 +31,8 @@ local NAME_PREFIX_PATTERNS		= {"%<", "%["}
 local NAME_POSTFIX_PATTERNS		= {"%> ", "%] "}
 
 local AI_MSG_PREFIX = "#AI"
+
+local customStrategiesChecked = false
 
 ---------- helper functions
 
@@ -82,13 +84,34 @@ function getPlayerIdFromName(playerName)
 	return playerId
 end
 
-
-
+local customStrategiesFile = "LuaUI/Configs/mf_strategies.json"
 
 ---------- callins
 
 function widget:Initialize()
+end
 
+function widget:GameFrame(n)
+	if ( customStrategiesChecked == false and n > 1 ) then
+		customStrategiesChecked = true
+		-- try to load custom strategies
+		if VFS.FileExists(customStrategiesFile) then
+			
+			local text = VFS.LoadFile(customStrategiesFile)
+			--Spring.Echo("len widget "..string.len(text))
+			local compressedText = VFS.ZlibCompress(text)
+			--Spring.Echo("compressed len widget "..string.len(compressedText))
+			local decText = VFS.ZlibDecompress(compressedText)
+			
+			--Spring.Echo("widget decompressed text :"..decText)
+			local str = "LOADCUSTOMSTRATEGIES|"..compressedText
+			
+			--Spring.Echo("custom strategies found for player "..str)
+			spSendLuaRulesMsg(str)
+		else
+			--Spring.Echo("no custom strategies found")
+		end
+	end
 end
 
 
@@ -135,7 +158,7 @@ function widget:AddConsoleLine(line)
 			end
 
 			if #tokens == 1 then
-				spSendMessageToPlayer(myPlayerId,"usage : #AI [<playerId>] <command> <parameters>\nAvailable commands :\nSTATUS : show current status\nSTRATEGY <strategyName> : change strategy\nCOMPAD : give the player a commander pad")
+				spSendMessageToPlayer(myPlayerId,"usage : #AI [<playerId>] <command> <parameters>\nAvailable commands :\nSTATUS : show current status\nSTRATEGY <strategyName> : change strategy\nCOMPAD : give the player a commander pad\nCOMMORPH : morph the commander immediately\nDEFMULT <N> : set defense density multiplier to N, 0 to disable defenses, -1 to reset")
 				return
 			end
 			

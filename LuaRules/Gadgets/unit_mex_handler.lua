@@ -28,6 +28,7 @@ local spAreTeamsAllied = Spring.AreTeamsAllied
 local spTestBuildOrder = Spring.TestBuildOrder
 local spIsPosInLos = Spring.IsPosInLos
 local spGetGroundHeight = Spring.GetGroundHeight
+local spGetUnitIsStunned = Spring.GetUnitIsStunned
 
 local MAP_EDGE_MARGIN = 50
 local mapMinX = MAP_EDGE_MARGIN
@@ -504,7 +505,9 @@ end
 function gadget:GameFrame(n)
 	for idx,cmdData in pairs(commandQueue) do
 		-- if shift was not used, stop current queue before adding orders
-		if (cmdData[6] and not cmdData[6].shift) then
+		local _,stunned,_ = spGetUnitIsStunned(cmdData[1])
+		-- stun check done to prevent this cancelling morph
+		if (cmdData[6] and (not cmdData[6].shift) and (not stunned)) then
 			spGiveOrderToUnit(cmdData[1],CMD.STOP,{},{})
 		end
 		processCommand(cmdData[1], cmdData[2], cmdData[3], cmdData[4], cmdData[5], cmdData[6])

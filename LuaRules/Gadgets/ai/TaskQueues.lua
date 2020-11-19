@@ -299,7 +299,17 @@ function metalExtractorNearbyIfSafe(self)
 	
 	local p = self.ai.buildSiteHandler:closestFreeSpot(self, UnitDefNames[unitName], self.pos, true, self.isAdvBuilder and "advMetal" or "metal", self.unitDef)
 	
-	if ( p ~= nil and distance(self.pos,p) < EXPANSION_SAFETY_RADIUS) then
+	local radius = EXPANSION_SAFETY_RADIUS
+	-- reduce expansion radius for slow commanders, especially if they're on "attack" mode
+	if self.isCommander then
+		if (self.isAttackMode) then
+			radius = max(500,EXPANSION_SAFETY_RADIUS * self.speed / 90)	
+		else
+			radius = max(500,EXPANSION_SAFETY_RADIUS * self.speed / 45)
+		end
+	end
+	
+	if ( p ~= nil and distance(self.pos,p) < radius) then
 		self.nextMetalSpotPos = p	
 		return unitName
 	end
@@ -495,6 +505,14 @@ function defendNearbyBuildingsIfNeeded(self,safeFraction)
 					local currentStrategyName = self.ai.currentStrategyName
 					local sStage = self.ai.currentStrategyStage
 					defenseDensityMult = currentStrategy.stages[sStage].properties.defenseDensityMult or 1
+					
+					if (self.ai.humanDefenseDensityMult ~= nil) then
+						if self.ai.humanDefenseDensityMult == 0 then
+							return SKIP_THIS_TASK
+						else
+							defenseDensityMult = self.ai.humanDefenseDensityMult
+						end
+					end
 				end
 				
 				--if self.ai.id == 0 then log("watermode="..tostring(self.isWaterMode).." uwdefCost="..underwaterDefenderCost.." valueToProtect="..valueToProtect,self.ai) end	--DEBUG
@@ -3656,7 +3674,11 @@ function stratStaticBuilderAction(self)
 	local minEnergyIncome = currentStrategy.stages[sStage].economy.minEnergyIncome
 	local targetMetalIncome = currentStrategy.stages[sStage].economy.metalIncome
 	local targetEnergyIncome = currentStrategy.stages[sStage].economy.energyIncome
-	local defenseDensityMult = currentStrategy.stages[sStage].properties.defenseDensityMult or 1	
+	local defenseDensityMult = currentStrategy.stages[sStage].properties.defenseDensityMult or 1
+	if (self.ai.humanDefenseDensityMult ~= nil) then
+		defenseDensityMult = self.ai.humanDefenseDensityMult
+	end
+		
 	local action = SKIP_THIS_TASK
 	
 	if self.isBrutalMode then
@@ -3691,22 +3713,24 @@ function stratStaticBuilderAction(self)
 	end
 
 	-- defense
-	if (self.unitSide == "claw" or self.unitSide == "sphere") then
-		local unitName = mediumAAByFaction[self.unitSide]
-		if self:checkPreviousAttempts(unitName) then
-			action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, MED_RADIUS, TYPE_LIGHT_AA)
-			if action ~= SKIP_THIS_TASK then
-				self:setHighPriorityState(1)
-				return action
+	if defenseDensityMult > 0 then
+		if (self.unitSide == "claw" or self.unitSide == "sphere") then
+			local unitName = mediumAAByFaction[self.unitSide]
+			if self:checkPreviousAttempts(unitName) then
+				action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, MED_RADIUS, TYPE_LIGHT_AA)
+				if action ~= SKIP_THIS_TASK then
+					self:setHighPriorityState(1)
+					return action
+				end
 			end
-		end
-	elseif(self.unitSide == "aven" or self.unitSide == "gear") then
-		local unitName = lev1HeavyDefenseByFaction[self.unitSide][ random( 1, tableLength(lev1HeavyDefenseByFaction[self.unitSide]) ) ]
-		if self:checkPreviousAttempts(unitName) then
-			action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, MED_RADIUS, TYPE_HEAVY_DEFENSE)
-			if action ~= SKIP_THIS_TASK then
-				self:setHighPriorityState(1)
-				return action
+		elseif(self.unitSide == "aven" or self.unitSide == "gear") then
+			local unitName = lev1HeavyDefenseByFaction[self.unitSide][ random( 1, tableLength(lev1HeavyDefenseByFaction[self.unitSide]) ) ]
+			if self:checkPreviousAttempts(unitName) then
+				action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, MED_RADIUS, TYPE_HEAVY_DEFENSE)
+				if action ~= SKIP_THIS_TASK then
+					self:setHighPriorityState(1)
+					return action
+				end
 			end
 		end
 	end
@@ -3745,7 +3769,10 @@ function stratMobileBuilderAction(self)
 	local targetMetalIncome = currentStrategy.stages[sStage].economy.metalIncome
 	local targetEnergyIncome = currentStrategy.stages[sStage].economy.energyIncome
 	local defenseDensityMult = currentStrategy.stages[sStage].properties.defenseDensityMult or 1
-		
+	if (self.ai.humanDefenseDensityMult ~= nil) then
+		defenseDensityMult = self.ai.humanDefenseDensityMult
+	end
+	
 	local action = SKIP_THIS_TASK
 	
 	local brutalStartDelayActive = false

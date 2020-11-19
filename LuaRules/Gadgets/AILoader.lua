@@ -37,7 +37,7 @@ function gadget:Initialize()
 
 	local numberOfmFAITeams = 0
 	local teamList = spGetTeamList()
-
+	local allyIdsWithHumans = {}
 	local mapHandler = nil	
 	for i=1,#teamList do
 		local id = teamList[i]
@@ -80,6 +80,8 @@ function gadget:Initialize()
 				showAIWarningMessage = 1
 				Echo("AI player " .. teamList[i] .. " is not supported, use MFAI instead.")
 			end
+		else
+			allyIdsWithHumans[allyId] = true
 		end
 	end
 
@@ -95,7 +97,9 @@ function gadget:Initialize()
 			end
 		end
 		
-		Echo("AI "..thisAI.id.." : allies="..#alliedTeamIds.." enemies="..#enemyTeamIds)
+		local hasHumanAllies = allyIdsWithHumans[thisAI.allyId] and true or false
+		Echo("AI "..thisAI.id.." : allies="..#alliedTeamIds.." enemies="..#enemyTeamIds.." hasHumanAllies="..tostring(hasHumanAllies))
+		thisAI.hasHumanAllies = hasHumanAllies
 		thisAI.alliedTeamIds = alliedTeamIds		
 		thisAI.enemyTeamIds = enemyTeamIds
 	end
@@ -210,9 +214,18 @@ function gadget:RecvLuaMsg(msg, playerId)
 	-- TODO allow cheats to override this
 	if (active and not spectator) then
 		--Spring.Echo("pName="..pName.." teamId="..teamId.." allyId="..allyId)
-		-- if it was a message to set or remove beacon, forward it to all AIs allied with the player
+		-- forward message to all AIs allied with the player
+
+		local enemyStrategyOverride = false
+		local includeEnemies = false
+		if (spGetGameFrame() < FULL_AI_TEAM_ENEMY_STRATEGY_OVERRIDE_FRAMES and string.find(msg,EXTERNAL_CMD_STRATEGY) ~= nil ) then
+			enemyStrategyOverride = true
+		end
+		if (string.find(msg,EXTERNAL_CMD_LOADCUSTOMSTRATEGIES) ~= nil ) then
+			includeEnemies = true
+		end
 		for _,thisAI in ipairs(mFAIs) do
-			if (thisAI.allyId == allyId) then
+			if (thisAI.allyId == allyId or includeEnemies or (enemyStrategyOverride and (not thisAI.hasHumanAllies))) then
 				thisAI:processExternalCommand(msg,playerId,teamId,pName)
 			end
 		end

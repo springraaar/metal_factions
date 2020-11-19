@@ -152,7 +152,7 @@ local allUnitIds = {}
 local autoBuildUnitIds = {}
 local latestHPByUnitId = {}
 local recentHPGainByUnitId = {}
-
+local lastCaptureStateByUnitId = {}
 
 function gadget:Initialize()
 	for _,ud in pairs(UnitDefs) do
@@ -379,6 +379,7 @@ function gadget:GameFrame(n)
 	
 	
 	-- unit hp regeneration
+	-- capture rate degeneration
 	if (n%REGEN_DELAY == 0) then
 		
 		-- zephyr aura regeneration 
@@ -441,6 +442,24 @@ function gadget:GameFrame(n)
 					end
 				end
 			end
+		end
+		
+		-- capture rate degeneration, if it didn't increase on the last second, the unit is not being captured
+		-- start degenerating immediately
+		local oldCaptureFraction = 0
+		for _,unitId in ipairs(allUnits) do
+			oldCaptureFraction = lastCaptureStateByUnitId[unitId]
+			if not oldCaptureFraction then
+				oldCaptureFraction = 0
+			end
+			
+			local health,maxHealth,_,cp,bp = spGetUnitHealth(unitId)
+			--Spring.Echo("uId="..unitId.." cp="..tostring(cp).." oldcp="..oldCaptureFraction)
+			if (cp and cp > 0 and cp <= oldCaptureFraction) then
+				cp = max(cp-0.01,0)
+				spSetUnitHealth(unitId, {capture = cp})
+			end
+			lastCaptureStateByUnitId[unitId] = cp
 		end
 	end
 	
@@ -581,6 +600,9 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam)
 	end
 	if lastDamageFrameUnitIds[unitId] then
 		lastDamageFrameUnitIds[unitId] = nil
+	end
+	if lastCaptureStateByUnitId[unitId] then
+		lastCaptureStateByUnitId[unitId] = nil
 	end	
 	if (magnetarIds[unitId]) then
 		magnetarIds[unitId] = nil

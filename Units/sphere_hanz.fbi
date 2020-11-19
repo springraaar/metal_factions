@@ -12,7 +12,6 @@
 
 	// ------------------- external specs
 	UnitName=sphere_hanz;
-	UnitNumber=10013;
 	Objectname=sphere_hanz.3do;
 	buildpic=sphere_hanz.png;
 	SoundCategory=SPHERE_BOTMED;
@@ -22,14 +21,14 @@
 	// ------------------- health/cost/size
 	FootprintX=3;
 	FootprintZ=3;
-	MaxDamage=3300;
+	MaxDamage=3600;
 
 
 	// ------------------- resources
-	EnergyUse=2;
+	EnergyUse=0;
 	EnergyStorage=0;
 	MetalStorage=0;
-	EnergyMake=2;
+	EnergyMake=0;
 
 	// ------------------- abilities
 	canmove=1;
@@ -42,10 +41,10 @@
 	// ------------------- movement
 	MaxWaterDepth=12;
 	MaxSlope=17;
-	MaxVelocity=1.35;
+	MaxVelocity=1.20;
 	BrakeRate=0.35;
 	Acceleration=0.15;
-	TurnRate=950;
+	TurnRate=850;
 	SteeringMode=2;
 	MovementClass=KBOTHT3;
 
@@ -83,7 +82,7 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 	collisionVolumeType = box;
-	collisionVolumeScales =38 38 38;
+	collisionVolumeScales =40 45 40;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
@@ -96,8 +95,8 @@
 		explosiongenerator0=custom:redflare;
 	}
 
-	buildcostenergy=4206;//#AUTO#
-	buildcostmetal=841;//#AUTO#
-	buildtime=10025;//#AUTO#
-	mass=1105;//#AUTO#
+	buildcostenergy=5132;//#AUTO#
+	buildcostmetal=1026;//#AUTO#
+	buildtime=12231;//#AUTO#
+	mass=1987;//#AUTO#
 }

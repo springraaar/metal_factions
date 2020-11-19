@@ -41,6 +41,7 @@ local spGetProjectileDamages = Spring.GetProjectileDamages
 local spSetProjectileDamages = Spring.SetProjectileDamages
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spSetUnitRulesParam = Spring.SetUnitRulesParam
+local spSetTeamRulesParam = Spring.SetTeamRulesParam
 local spGetProjectileTarget = Spring.GetProjectileTarget
 local spSetProjectileTarget = Spring.SetProjectileTarget
 local spGetProjectileTeamID = Spring.GetProjectileTeamID
@@ -57,6 +58,7 @@ local spSetUnitNoDraw = Spring.SetUnitNoDraw
 local spSetUnitNoSelect = Spring.SetUnitNoSelect
 local spSetUnitNoMinimap = Spring.SetUnitNoMinimap
 local spSetUnitRadiusAndHeight = Spring.SetUnitRadiusAndHeight
+local spGetTeamList = Spring.GetTeamList
 
 -- aim point over target when far from it
 local LONG_RANGE_ROCKET_FAR_FROM_TARGET_H = 1000		
@@ -313,6 +315,12 @@ function applyNonInteractiveProperties(uId)
 	spSetUnitRadiusAndHeight(uId,0,0)
 end
 
+
+--- update enemy launch counts
+local LATEST_LRR_LAUNCH_STREAK_FRAMES = 25*30
+local latestLRRLaunchesByTeamId = {}	-- frame,count 
+
+
 -------------------------- SYNCED CODE ONLY
 if (not gadgetHandler:IsSyncedCode()) then
 	return false
@@ -356,6 +364,18 @@ end
 
 -- execute action every frame for tracked projectiles, as necessary
 function gadget:GameFrame(n)
+	-- handle team rules for the nuke warning widget
+	for _,tId in pairs(spGetTeamList()) do
+		local lInfo = latestLRRLaunchesByTeamId[tId] 	
+		if (lInfo) then
+			-- streak expired, remove
+			if (n - lInfo.frame) > LATEST_LRR_LAUNCH_STREAK_FRAMES then
+				latestLRRLaunchesByTeamId[tId] = nil
+				spSetTeamRulesParam(tId,"latestLRRLaunches",0,{public=true})
+			end
+		end
+	end
+
 	-- explode disruptor wave effect projectiles
 	for id,ownerId in pairs(disruptorEffectProjectiles) do
 		-- explode projectile
@@ -709,6 +729,17 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		destructibleProjectiles[proID] = proOwnerID
 		spSetUnitRulesParam(proOwnerID,"destructible_projectile_id",proID,{public = true})
 		spUnitDetach(proOwnerID)
+		
+		-- mark projectile launch
+		local teamId = spGetUnitTeam(proOwnerID)
+		lInfo = latestLRRLaunchesByTeamId[teamId]
+		if not lInfo then
+			lInfo = {frame=0,count=0}
+		end
+		lInfo.frame = spGetGameFrame()
+		lInfo.count = lInfo.count+1
+		latestLRRLaunchesByTeamId[teamId] = lInfo
+		spSetTeamRulesParam(teamId,"latestLRRLaunches",lInfo.count,{public=true})
 		
 		local tType,tInfo = spGetProjectileTarget(proID)
 		if (tType == string.byte('u')) then

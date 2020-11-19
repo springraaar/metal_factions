@@ -5,7 +5,7 @@ local MANY = 100
 
 
 -- upgrades options : "offensive", "defensive", "defensive_regen", "speed", "mixed", "mixed_drones_utility", "mixed_drones_combat"
--- conditions : THREAT_AIR, THREAT_GROUND, THREAT_STATIC, THREAT_UNDERWATER
+-- conditions : THREAT_AIR, THREAT_GROUND, THREAT_STATIC, THREAT_UNDERWATER, CONDITION_WATER
 
 
 --------------------------------------- AVEN
@@ -50,7 +50,7 @@ avenLandAssault = {
 				{name="aven_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_kbot",min=2,max=6,weight=0.2},
+				{name="aven_construction_kbot",min=1,max=6,weight=0.2},
 				{name="aven_trooper_laser",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="aven_trooper_laser",min=0,max=MANY,weight=0.3},
 				{name="aven_wheeler",min=0,max=MANY,weight=0.3},
@@ -261,7 +261,7 @@ avenLandSkirmisher = {
 				{name="aven_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_kbot",min=2,max=6,weight=0.2},
+				{name="aven_construction_kbot",min=1,max=6,weight=0.2},
 				{name="aven_trooper_laser",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="aven_bold",min=1,max=MANY,weight=1,includeConditions={THREAT_ASSAULT}},
 				{name="aven_samson",min=0,max=MANY,weight=0.3},
@@ -897,7 +897,7 @@ gearLandAssault = {
 				{name="gear_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_kbot",min=2,max=6,weight=0.2},
+				{name="gear_construction_kbot",min=1,max=6,weight=0.2},
 				{name="gear_crasher",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_instigator",min=0,max=MANY,weight=0.2},
 				{name="gear_assaulter",min=0,max=MANY,weight=0.4},
@@ -1107,7 +1107,7 @@ gearLandSkirmisher = {
 				{name="gear_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_kbot",min=2,max=6,weight=0.2},
+				{name="gear_construction_kbot",min=1,max=6,weight=0.2},
 				{name="gear_harasser",min=0,max=MANY,weight=0.2},
 				{name="gear_box",min=0,max=MANY,weight=0.5,includeConditions={THREAT_AIR}},
 				{name="gear_kano",min=0,max=MANY,weight=1,includeConditions={THREAT_ASSAULT}},
@@ -1711,7 +1711,7 @@ clawLandAssault = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = 78,
 				enemyThreatEstimationMult = 2,
-				defenseDensityMult = 2,
+				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -1728,9 +1728,9 @@ clawLandAssault = {
 				{name="claw_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="claw_construction_kbot",min=2,max=6,weight=0.1},
-				{name="claw_grunt",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
-				{name="claw_jester",min=0,max=MANY,weight=1},
+				{name="claw_construction_kbot",min=1,max=6,weight=0.1},
+				{name="claw_grunt",min=0,max=MANY,weight=0.7,includeConditions={THREAT_AIR}},
+				{name="claw_jester",min=0,max=MANY,weight=0.7,includeConditions={THREAT_AIR}},
 				{name="claw_grunt",min=0,max=MANY,weight=0.2},
 				{name="claw_piston",min=0,max=MANY,weight=0.2},
 				{name="claw_boar",min=0,max=MANY,weight=0.4},
@@ -1754,7 +1754,7 @@ clawLandAssault = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = 78,
 				enemyThreatEstimationMult = 2,
-				defenseDensityMult = 2,
+				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -1802,7 +1802,7 @@ clawLandAssault = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = 78,
 				enemyThreatEstimationMult = 2,
-				defenseDensityMult = 2,
+				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -1856,7 +1856,7 @@ clawLandAssault = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = 78,
 				enemyThreatEstimationMult = 2,
-				defenseDensityMult = 2,
+				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -1937,7 +1937,7 @@ clawLandSkirmisher = {
 				{name="claw_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="claw_construction_kbot",min=2,max=6,weight=0.2},
+				{name="claw_construction_kbot",min=1,max=6,weight=0.2},
 				{name="claw_knife",min=0,max=MANY,weight=0.2},
 				{name="claw_grunt",min=0,max=MANY,weight=0.5,includeConditions={THREAT_AIR}},
 				{name="claw_jester",min=0,max=MANY,weight=0.6},
@@ -2789,7 +2789,7 @@ sphereLandSkirmisher = {
 				{name="sphere_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_vehicle",min=2,max=6,weight=0.2},
+				{name="sphere_construction_vehicle",min=1,max=6,weight=0.2},
 				{name="sphere_trike",min=0,max=MANY,weight=0.2},
 				{name="sphere_double",min=0,max=MANY,weight=0.2},
 				{name="sphere_slicer",min=0,max=MANY,weight=0.5,includeConditions={THREAT_AIR}},
@@ -3376,7 +3376,7 @@ sphereAmphibious = {
 	}
 }
 
-
+-- id strings for strategies available by default
 availableStrategyIds = {"assault","air","skirmisher","amphibious"}
 
 -- mapping between faction + strategy identifier string and set of strategies to use 
@@ -3406,3 +3406,10 @@ strategyTable = {
 	sphere_amphibious={sphereAmphibious}
 }
 
+playerAvailableStrategyOwner = {} -- name, allyId
+-- id strings for strategies available by for each player
+playerAvailableStrategyIds = {}
+
+-- mapping between player + faction + strategy identifier string and set of strategies to use
+-- players' custom strategies are stored here
+playerStrategyTable = {}

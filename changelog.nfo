@@ -1,3 +1,63 @@
+2020/11/19 ------------------ NOTES v1.45 ----------------------
+
+--- Balance / Mechanics
+
+- units that stop being captured start losing 1% of their capture status every second
+
+- reduced speed % drop ground units suffer while turning from 33% to about 25%
+(it should be 0 for soft turns but isn't due to an engine issue)
+
+- increased range of 600-800 range level 1 static defenses to 800-870 and adjusted costs
+(to make them more reliably able to hit air, commanders and skirmishers which got range upgrades)
+
+- fixed bug where commanders which were building and reloading when picked up would get progressively more negative reload %
+
+- AVEN "Knight" now has 5% faster projectile and about 17% extra range, but is about 20% more expensive
+- AVEN "Stasis" has a 560 range 400D dmg/s disruptor cannon and less hp but is much more affordable and available at Level 1
+
+- GEAR "Burner" got its damage per second reduced by about 10% and damage resistance lowered from 40% to 20% and hp increased by 15%
+- GEAR "Cube" got its HP increased by about 5% and adjusted cost
+- GEAR incendiary mines got their cost reduced from 90m to 85m
+
+- CLAW "Hazard" had range reduced from 550 to 450, M damage type, 33% reduced reload time and is now 10% cheaper
+- CLAW "Roller" rockets had damage and reload time increased by 50%
+- CLAW ring thrower units get their reload charge reset when they're picked up by air transports
+- CLAW "Nucleus" had its range and cost increased by about 25%
+- CLAW "Brute" had its cannon replaced with a M damage spreadshot WB cannon with faster projectiles, higher burst and aoe and adjusted cost
+- CLAW "Halberd" had it's missile dmg/s doubled, acceleration and brake rate reduced and cost adjusted 
+
+- SPHERE "Pulsar" had its range and cost increased by about 14%
+- SPHERE "Hanz" now has about 10% higher HP and H armor type, but is about 10% slower and 20% more expensive
+- SPHERE "Stout" now has a M damage type cannon with about 15% less range but 33% higher dmg/s and is about 13% cheaper
+- SPHERE "Helix" got about 10% higher dmg/s and 10% more range but is about 20% more expensive
+(the turret on the 3D model gets a bit bigger and more menacing)
+- SPHERE "Golem" is now 15% slower, has HP increased to 8000 and higher dmg/s on the missiles and is about 15% more expensive
+(the sound of the cannon also changed to differentiate it from charger's)
+
+- attempt to improve aiming for CLAW Brute and AVEN "Zeta form" commander
+(to avoid weapons locking up as they try to aim at different targets)
+
+--- UI / Visual
+
+- unit tip text for GEAR "Blazer Form" commander indicates the damage drop-off with range
+- MFAI player numbers are shown as prefix on the player list (they're relevant for targeted AI commands)
+- added visual warning indicating allied and enemy long range rocket launches (fades out 15-30s later)
+- prevented area-metal-extractor commands from cancelling morph
+
+--- AI
+
+- added #AI COMMORPH command : gets the AI to morph its basic commander immediately
+- added #AI DEFMULT <N> command : sets the AI defense density multiplier, -1 to reset
+- fixed player-specific AI commands not being processed properly
+- slightly tuned the early game builds for assault and skirmisher strategies to have less construction units and more attack units
+- slow commanders will stray away less from the main force to build metal extractors
+- added AI support for custom strategies
+ (these are loaded from LuaUI/Configs/mf_strategies.json on the user's Spring directory - check the strategy editor on the web site)
+- allow STRATEGY commands from enemies if specific player numbers were used, the AI has no human allies and only during the first minute
+(this can be useful for players to play against AI that use their own custom strategies)
+
+
+
 2020/10/11 ------------------ NOTES v1.44 ----------------------
 
 

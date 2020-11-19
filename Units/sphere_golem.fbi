@@ -22,14 +22,14 @@
 	// ------------------- health/cost/size
 	FootprintX=3;
 	FootprintZ=3;
-	MaxDamage=6000;
+	MaxDamage=8000;
 
 
 	// ------------------- resources
-	EnergyUse=4;
+	EnergyUse=0;
 	EnergyStorage=0;
 	MetalStorage=0;
-	EnergyMake=4;
+	EnergyMake=0;
 
 	// ------------------- abilities
 	canmove=1;
@@ -42,7 +42,7 @@
 	// ------------------- movement
 	MaxWaterDepth=12;
 	MaxSlope=17;
-	MaxVelocity=1.0;
+	MaxVelocity=0.85;
 	BrakeRate=0.25;
 	Acceleration=0.15;
 	TurnRate=650;
@@ -86,7 +86,7 @@
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 	collisionVolumeType = box;
-	collisionVolumeScales =50 50 50;
+	collisionVolumeScales =55 50 55;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
@@ -100,8 +100,8 @@
 		explosiongenerator1=custom:rocketflaresml;
 		
 	}
-	buildcostenergy=15129;//#AUTO#
-	buildcostmetal=3025;//#AUTO#
-	buildtime=36059;//#AUTO#
-	mass=4013;//#AUTO#
+	buildcostenergy=17708;//#AUTO#
+	buildcostmetal=3541;//#AUTO#
+	buildtime=42206;//#AUTO#
+	mass=5088;//#AUTO#
 }
