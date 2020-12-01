@@ -487,8 +487,8 @@
 {
 	name=Plasma Bolt;
 	weapontype=EmgCannon;
-	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
+	cegTag=PLASMATRAIL1;
 	turret=1;
 	range=470;
 	reloadtime=0.75;
@@ -561,7 +561,7 @@
 {
 	name=Torpedoes;
 	weapontype=TorpedoLauncher;
-    CollideFriendly=1;
+	CollideFriendly=1;
 	model=weapon_torpedo;
 	range=450;
 	reloadtime=4.0;
@@ -734,8 +734,8 @@
 	soundstart=lasfirerb;
 	soundhit=emphit;
 	explosionscar=0;
-	size=3.5;
-	rgbcolor=0 0.50 0.5;
+	size=3;
+	rgbcolor=0.5 0.6 0.7;
 	stages=4;
   	separation=0.66;
   	alphadecay=0.8;
@@ -875,6 +875,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -956,6 +957,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -997,6 +999,7 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -1068,7 +1071,7 @@
 	soundhit=emphit;
 	explosionscar=0;
 	size=2.45;
-	rgbcolor=0 0.50 0.5;
+	rgbcolor=0.5 0.6 0.7;
 	stages=4;
   	separation=0.66;
   	alphadecay=0.8;
@@ -1153,7 +1156,7 @@
 	soundhit=emphit;
 	explosionscar=0;
 	size=2.45;
-	rgbcolor=0 0.50 0.5;
+	rgbcolor=0.5 0.6 0.7;
 	stages=4;
   	separation=0.66;
   	alphadecay=0.8;
@@ -1295,6 +1298,7 @@
 	{
 		hitpower=2;
 		reaimtime=4;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -1336,6 +1340,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -1377,6 +1382,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -1417,6 +1423,7 @@
 		hitpower=1;
 		restrictedAngle=1;
 		airLaser=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -1457,6 +1464,7 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -1500,6 +1508,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -1540,6 +1549,7 @@
 	{
 		hitpower=2;
 		restrictedAngle=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -1807,11 +1817,12 @@
 		armor_light=750;//#AUTO#
 	}
 }
-[ARMAMB_GUN]
+[aven_gunner_cannon]
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	explosiongenerator=custom:STDBLASTWRAPPER;
+	cegTag=PLASMATRAIL2;
 	energypershot=0;
 	accuracy=300;
 	turret=1;
@@ -1871,6 +1882,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -2096,6 +2108,7 @@
 	{
 		hitpower=3;
 		restrictedAngle=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -2375,6 +2388,7 @@
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	explosiongenerator=custom:STDBLASTWRAPPER;
+	cegTag=PLASMATRAIL2;
 	energypershot=0;
 	size=3.4;
 	rgbcolor=0.9 0.7 0.3;
@@ -2411,6 +2425,7 @@
 	name=Plasma Bolt;
 	weapontype=EmgCannon;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
+	cegTag=PLASMATRAIL1;
 	turret=1;
 	range=500;
 	reloadtime=0.5;
@@ -2483,8 +2498,8 @@
 {
 	name=Plasma Bolt;
 	weapontype=EmgCannon;
-	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
+	cegTag=PLASMATRAIL1;
 	turret=1;
 	range=430;
 	reloadtime=1.2;
@@ -4378,6 +4393,7 @@
 	{
 		hitpower=2;
 		restrictedAngle=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -4520,6 +4536,7 @@
 	rgbcolor=0.1 0.1 0.71;
 	rgbcolor2=0.7 0.7 1.0;
 	explosiongenerator=custom:PURPLELASERBLASTWRAPPER;
+	cegTag=BLUEGLOWMED;
 	Texture1=purplelaser;
 	Texture2=null;
 	Texture3=null;
@@ -4531,6 +4548,7 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -4562,6 +4580,7 @@
 	rgbcolor=0.3 0.5 0.71;
 	rgbcolor2=0.8 0.8 1.0;
 	explosiongenerator=custom:PURPLELASERBLASTWRAPPER;
+	cegTag=BLUEGLOWMED;
 	Texture1=purplelaser;
 	Texture2=null;
 	Texture3=null;
@@ -4573,6 +4592,7 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -4604,6 +4624,7 @@
 	rgbcolor=0.1 0.15 1.0;
 	rgbcolor2=0.7 0.8 1.0;
 	explosiongenerator=custom:PURPLELASERBLASTWRAPPER;
+	cegTag=BLUEGLOWMED;
 	Texture1=purplelaser;
 	Texture2=null;
 	Texture3=null;
@@ -4614,6 +4635,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -4645,6 +4667,7 @@
 	rgbcolor=0.1 0.1 0.71;
 	rgbcolor2=0.7 0.7 1.0;
 	explosiongenerator=custom:PURPLELASERBLASTWRAPPER;
+	cegTag=BLUEGLOWMED;
 	Texture1=purplelaser;
 	Texture2=null;
 	Texture3=null;
@@ -4656,6 +4679,7 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -4771,8 +4795,8 @@
 	tracks=1;
 	fixedlauncher=1;
 	weaponvelocity=500;
-	weaponAcceleration=100;
-	startvelocity=100;
+	weaponAcceleration=150;
+	startvelocity=130;
 	turnrate=20000;
 	areaofeffect=64;
 	metalpershot=0;
@@ -4999,42 +5023,6 @@
 		armor_light=100;//#AUTO#
 	}
 }
-[aven_ARTILLERY] //Luger
-{
-	name=Plasma Cannon;
-	weapontype=Cannon;
-	turret=1;
-	range=1240;
-	size=3.4;
-	rgbcolor=0.9 0.7 0.3;
-	stages=4;
-  	separation=0.4;
-  	alphadecay=0.24;
-  	sizedecay=-0.1;
-	energypershot=0;
-	reloadtime=3;
-	weaponvelocity=450;
-	areaofeffect=80;
-	explosiongenerator=custom:STDBLASTWRAPPER;
-	soundstart=cannhvy2;
-	soundhit=xplomed4;
-	accuracy=200;
-	movingaccuracy=500;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=3;
-	}
-	[DAMAGE]
-	{
-		default=300;
-		group_invincible=1;
-		armor_heavy=300;//#AUTO#
-		armor_medium=300;//#AUTO#
-		armor_light=300;//#AUTO#
-	}
-}
 [aven_standoff_cannon]
 {
 	name=Energized Plasma Cannon;
@@ -5074,13 +5062,14 @@
 		armor_light=1500;//#AUTO#
 	}
 }
-[aven_BULL]
+[aven_centurion_cannon]
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	turret=1;
 	range=500;
 	explosiongenerator=custom:STDBLASTWRAPPER;
+	cegTag=PLASMATRAIL1;
 	reloadtime=2;
 	weaponvelocity=355;
 	areaofeffect=64;
@@ -5215,6 +5204,7 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -5255,6 +5245,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -5296,6 +5287,7 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -5337,6 +5329,7 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -5435,6 +5428,7 @@
 	tolerance=3000;
 	burnblow=1;
 	explosiongenerator=custom:FLAKBLASTWRAPPER;
+	cegTag=PLASMATRAIL1;
 	size=2;
 	rgbcolor=1 1 1;
 	stages=2;
@@ -5564,6 +5558,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -5593,6 +5588,7 @@
   	alphadecay=0.3;
   	sizedecay=-0.1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
+	cegTag=PLASMATRAIL1;
 	accuracy=200;
 	movingaccuracy=500;
 	InterceptedByShieldType=1;
@@ -5719,6 +5715,7 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -5781,6 +5778,33 @@
 		armor_heavy=1400;//#AUTO#
 		armor_medium=1400;//#AUTO#
 		armor_light=1400;//#AUTO#
+	}
+}
+[HAZ_BLAST]
+{
+	name=Medium Hazardous Unit Blast;
+	weapontype=Cannon;
+	turret=1;
+	range=480;
+	reloadtime=3.6;
+	weaponvelocity=250;
+	areaofeffect=300;
+	soundstart=largegun;
+	soundhit=xplolrg5;
+	explosiongenerator=custom:DEBRISBLASTWRAPPER;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=2;
+	}
+	[DAMAGE]
+	{
+		default=800;
+		group_invincible=1;
+		armor_heavy=400;//#AUTO#
+		armor_medium=800;//#AUTO#
+		armor_light=800;//#AUTO#
 	}
 }
 [PENETRATOR_BLAST]
@@ -6131,6 +6155,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -6199,6 +6224,7 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -6264,6 +6290,7 @@
 	rgbcolor=0.7 0.2 0.2;
 	rgbcolor2=0.7 0.2 0.2;
 	explosiongenerator=custom:REDLASERBLASTWRAPPER;
+	cegTag=REDGLOWMED;
 	Texture1=purplelaser;
 	Texture2=null;
 	Texture3=null;
@@ -6276,6 +6303,7 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -6284,6 +6312,48 @@
 		armor_heavy=650;//#AUTO#
 		armor_medium=650;//#AUTO#
 		armor_light=650;//#AUTO#
+	}
+}
+[gear_rager_laser]
+{
+	name=High Energy Bolt;
+	weapontype=LaserCannon;
+	turret=1;
+	range=600;
+	duration=0.07;
+	reloadtime=1.5;
+	energypershot=400;
+	weaponvelocity=1533;
+	areaofeffect=8;
+	soundstart=annigun3;
+	soundhit=xplolrg1;
+	firestarter=90;
+	rgbcolor=0.7 0.2 0.2;
+	rgbcolor2=0.7 0.2 0.2;
+	explosiongenerator=custom:REDLASERBLASTWRAPPER;
+	cegTag=REDGLOWMED;
+	Texture1=purplelaser;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	thickness=4;
+	impulsefactor=0.222;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+		reaimtime=1;
+		evalfactor=0.5; // slow stockpile
+		aarangeboost=1;
+	}
+	[DAMAGE]
+	{
+		default=400;
+		group_invincible=1;
+		armor_heavy=400;//#AUTO#
+		armor_medium=400;//#AUTO#
+		armor_light=400;//#AUTO#
 	}
 }
 [gear_u4commander_laser]
@@ -6318,6 +6388,7 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -6526,43 +6597,6 @@
 		armor_light=410;//#AUTO#
 	}
 }
-[gear_u2commander_flak]
-{
-	name=Flak Cannon;
-	weapontype=Cannon;
-	turret=1;
-	range=600;
-	reloadtime=0.5;
-	weaponvelocity=999;
-	areaofeffect=100;
-	soundstart=canlite2;
-	soundhit=xploflak1;
-	tolerance=3000;
-	burnblow=1;
-	explosiongenerator=custom:FLAKBLASTWRAPPER;
-	size=2;
-	rgbcolor=1 1 1;
-	stages=2;
-  	separation=0.0;
-  	alphadecay=0.8;
-  	sizedecay=-2;
-  	cratermult=0.125;
-	impulseboost=0.25;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=80;
-		group_invincible=1;
-		armor_heavy=20;//#AUTO#
-		armor_medium=40;//#AUTO#
-		armor_light=80;//#AUTO#
-	}
-}
 [gear_u2commander_cannon]
 {
 	name=Plasma Cannon;
@@ -6633,6 +6667,7 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -6660,6 +6695,7 @@
 	rgbcolor=0.1 0.1 0.71;
 	rgbcolor2=0.7 0.7 1.0;
 	explosiongenerator=custom:PURPLELASERBLASTWRAPPER;
+	cegTag=BLUEGLOWMED;
 	Texture1=purplelaser;
 	Texture2=null;
 	Texture3=null;
@@ -6672,6 +6708,7 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -6774,8 +6811,8 @@
 	edgeeffectiveness=0;
 	impulsefactor=0.1;
 	burnblow=1;
-	accuracy=300;
-	movingaccuracy=600;
+	accuracy=0;
+	movingaccuracy=0;
 	soundstart=fireballfire1;
 	soundhit=cannhvy4;
 	firestarter=70;
@@ -6894,7 +6931,7 @@
 	turret=1;
 	model=weapon_missile.3do;
 	Texture1=null; //flare//
-	range=660;
+	range=750;
 	burst=2;
 	burstrate=0.1;
 	reloadtime=2.75;
@@ -6928,6 +6965,51 @@
 		armor_heavy=27;//#AUTO#
 		armor_medium=55;//#AUTO#
 		armor_light=110;//#AUTO#
+	}
+}
+[gear_big_bob_missile2]
+{
+	name=Heavy Missiles;
+	weapontype=StarburstLauncher;
+  	explosiongenerator=custom:ROCKETBLASTWRAPPER;
+	model=weapon_gear_big_missile;
+	range=750;
+	cegTag=ROCKETTRAIL2;
+  	explosiongenerator=custom:ROCKETBLASTWRAPPER;
+	Texture1=null; //flare//
+	Texture2=null;//first segment of missiletrail//
+	Texture3=null;//flame//
+	Texture4=null;//unknown//
+	reloadtime=6;
+	weapontimer=0.5;
+	flighttime=8;
+	tracks=1;
+	fixedlauncher=1;
+	weaponvelocity=500;
+	weaponAcceleration=150;
+	startvelocity=130;
+	turnrate=20000;
+	areaofeffect=64;
+	metalpershot=0;
+	soundstart=rocklit1;
+	soundhit=xplomed4;
+	firestarter=100;
+	smoketrail=0;
+	tolerance=4000;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	avoidground=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=400;
+		group_invincible=1;
+		armor_heavy=400;//#AUTO#
+		armor_medium=400;//#AUTO#
+		armor_light=400;//#AUTO#
 	}
 }
 [gear_pulverizer_missile]
@@ -6982,7 +7064,7 @@
 	explosiongenerator=custom:FLAREBLASTWRAPPER;
 	model=weapon_flare.3do;
 	cegTag=FLARETRAIL;
-	range=430;
+	range=400;
 	turret=1;
 	reloadtime=1;
 	flighttime=4;
@@ -7007,7 +7089,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
-		evalfactor=1.7; // compensation for the evaluator's factor for non-hoverattack air types
+		evalfactor=1.82; // compensation for the evaluator's factor for non-hoverattack air types
 	}
 	[DAMAGE]
 	{
@@ -7290,6 +7372,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -7331,6 +7414,7 @@
 		hitpower=1;
 		restrictedAngle=1;
 		airLaser=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -7404,6 +7488,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -7564,6 +7649,7 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -7606,6 +7692,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -7648,6 +7735,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -7691,6 +7779,7 @@
 	{
 		hitpower=2;
 		restrictedAngle=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -7733,6 +7822,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -7776,6 +7866,7 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -7819,6 +7910,7 @@
 	{
 		hitpower=2;
 		restrictedAngle=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -7872,7 +7964,7 @@
 	turret=1;
 	range=400;
 	reloadtime=1.15;
-	cegTag=PLASMATRAIL2;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	weaponvelocity=300;
 	areaofeffect=48;
@@ -7908,10 +8000,10 @@
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	turret=1;
-	range=900;
+	range=1000;
 	accuracy=200;
 	movingaccuracy=350;
-	cegTag=PLASMATRAIL2;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=1.32;
 	weaponvelocity=400;
@@ -7948,7 +8040,7 @@
 	range=1220;
 	accuracy=200;
 	movingaccuracy=350;
-	cegTag=PLASMATRAIL2;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=1.1;
 	weaponvelocity=400;
@@ -7982,14 +8074,15 @@
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	turret=1;
-	range=700;
+	range=750;
 	accuracy=200;
-	movingaccuracy=500;
+	movingaccuracy=400;
 	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
-	reloadtime=1.76;
+	reloadtime=2.1;
 	weaponvelocity=400;
 	areaofeffect=64;
+	burnblow=1;
 	soundstart=cannon3;
 	soundhit=xplomed2;
 	size=3.2;
@@ -8014,7 +8107,7 @@
 		armor_light=300;//#AUTO#
 	}
 }
-[gear_REAP]
+[gear_reaper_cannon]
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
@@ -8022,6 +8115,7 @@
 	range=500;
 	reloadtime=1.8;
 	explosiongenerator=custom:STDBLASTWRAPPER;
+	cegTag=PLASMATRAIL1;
 	weaponvelocity=365;
 	areaofeffect=64;
 	soundstart=cannon3;
@@ -8059,6 +8153,7 @@
 	weaponvelocity=400;
 	areaofeffect=64;
 	explosiongenerator=custom:STDBLASTWRAPPER;
+	cegTag=PLASMATRAIL2;
 	soundstart=cannon3;
 	soundhit=xplomed2;
 	accuracy=200;
@@ -8129,14 +8224,14 @@
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	turret=1;
-	range=620;
-	reloadtime=2.3;
-	cegTag=PLASMATRAIL2;
+	range=420;
+	reloadtime=3;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	weaponvelocity=338;
-	areaofeffect=48;
-	soundstart=cannon1;
-	soundhit=xplomed4;
+	areaofeffect=64;
+	soundstart=cannon3;
+	soundhit=xplomed2;
 	tolerance=4000;
 	accuracy=600;
 	movingaccuracy=600;
@@ -8150,15 +8245,15 @@
 	avoidfeature=0;
 	[CUSTOMPARAMS]
 	{
-		hitpower=2;
+		hitpower=3;
 		restrictedAngle=1;
 	}
 	[DAMAGE]
 	{
-		default=150;
-		armor_heavy=75;//#AUTO#
-		armor_medium=150;//#AUTO#
-		armor_light=150;//#AUTO#
+		default=250;
+		armor_heavy=250;//#AUTO#
+		armor_medium=250;//#AUTO#
+		armor_light=250;//#AUTO#
 	}
 }
 [gear_thresher_cannon]
@@ -8177,6 +8272,7 @@
 	tolerance=3000;
 	burnblow=1;
 	explosiongenerator=custom:FLAKBLASTWRAPPER;
+	cegTag=PLASMATRAIL1;
 	size=2;
 	rgbcolor=1 1 1;
 	stages=2;
@@ -8272,6 +8368,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -8314,6 +8411,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -8356,6 +8454,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -8372,6 +8471,7 @@
 	weapontype=Cannon;
 	energypershot=0;
 	explosiongenerator=custom:STDBLASTWRAPPER;
+	cegTag=PLASMATRAIL2;
 	turret=1;
 	mygravity=0.1;
 	range=1800;
@@ -8754,6 +8854,7 @@
 		hitpower=1;
 		restrictedAngle=1;
 		airLaser=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -8850,9 +8951,9 @@
 	corethickness=0.8;
 	Intensity=0.9; 	
 	turret=1;
-	range=700;
+	range=750;
 	minintensity=1.0;
-	reloadtime=1.1;
+	reloadtime=1;
 	energypershot=110;
 	weaponvelocity=1533;
 	areaofeffect=12;
@@ -8870,6 +8971,7 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -8911,6 +9013,7 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -8925,8 +9028,8 @@
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
-	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
+	cegTag=PLASMATRAIL2;
 	energypershot=0;
 	accuracy=300;
 	turret=1;
@@ -10398,6 +10501,8 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -10438,6 +10543,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -10480,6 +10586,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -10523,6 +10630,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -10565,6 +10673,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -11543,6 +11652,7 @@
 		hitpower=1;
 		restrictedAngle=1;
 		airLaser=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -11562,7 +11672,7 @@
 	thickness=2.123;
 	turret=1;
 	corethickness=0.55;
-	range=420;
+	range=400;
 	minintensity=1.0;
 	reloadtime=0.3;
 	weaponvelocity=1533;
@@ -11585,7 +11695,8 @@
 		hitpower=1;
 		reaimtime=1;
 		airLaser=1;
-		evalfactor=1.7; // compensation for the evaluator's factor for non-hoverattack air types
+		aarangeboost=1;
+		evalfactor=1.82; // compensation for the evaluator's factor for non-hoverattack air types
 	}
 	[DAMAGE]
 	{
@@ -12231,11 +12342,11 @@
 		armor_light=400;//#AUTO#
 	}
 }
-[CONQ_GUN]
+[aven_conqueror_cannon]
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
-	cegTag=PLASMATRAIL3;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	energypershot=0;
 	turret=1;
@@ -12269,12 +12380,13 @@
 		armor_light=444;//#AUTO#
 	}
 }
-[EXEC_GUN]
+[gear_executioner_cannon]
 {
 	name=Plasma Cannon;
 	weapontype=Cannon;
 	energypershot=0;
 	explosiongenerator=custom:STDBLASTWRAPPER;
+	cegTag=PLASMATRAIL2;
 	turret=1;
 	range=1220;
 	reloadtime=2.9;
@@ -12402,11 +12514,11 @@
 	laserflaresize=8;
 	corethickness=1.5;
 	thickness=3;
-	beamtime=1.3;
+	beamtime=1;
 	beamdecay=0.8;
 	beamttl=5;
 	hardStop=0;
-	range=1000;
+	range=960;
 	reloadtime=4.5;
 	energypershot=700;
 	weaponvelocity=10000;
@@ -12430,6 +12542,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -12451,7 +12564,7 @@
 	laserflaresize=7;
 	corethickness=1.5;
 	thickness=3;
-	beamtime=1.3;
+	beamtime=1;
 	beamdecay=0.8;
 	beamttl=5;
 	hardStop=0;
@@ -12479,6 +12592,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -12528,6 +12642,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -12555,6 +12670,7 @@
 	rgbcolor=0.7 0.2 0.2;
 	rgbcolor2=0.7 0.2 0.2;
 	explosiongenerator=custom:REDLASERBLASTWRAPPER;
+	cegTag=REDGLOWMED;
 	Texture1=purplelaser;
 	Texture2=null;
 	Texture3=null;
@@ -12567,6 +12683,7 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -12616,6 +12733,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -12665,6 +12783,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -12673,50 +12792,6 @@
 		armor_heavy=4000;//#AUTO#
 		armor_medium=4000;//#AUTO#
 		armor_light=4000;//#AUTO#
-	}
-}
-[gear_doomsday_heatray]
-{
-	name=Heat Ray;
-	weapontype=BeamLaser;
-	turret=1;
-	SoundTrigger=1;
-	Intensity=0.9; 
-	minintensity=1.0; 
-	laserflaresize=10;
-	corethickness=1.5;
-	thickness=3;
-	beamtime=0.25;
-	beamdecay=0.9;
-	beamttl=20;
-	hardStop=0;
-	range=700;
-	reloadtime=2;
-	energypershot=500;
-	weaponvelocity=1000;
-	areaofeffect=100;
-	soundstart=flamhvy3;
-	soundhit=flamlit2;
-	firestarter=90;
-	scrollspeed=0;
-	pulsespeed=0;
-	rgbcolor=1 1 0;
-	rgbcolor2=1 0 0;
-	explosiongenerator=custom:heatrayboom;
-	minintensity=1.0; 
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=3;
-	}
-	[DAMAGE]
-	{
-		default=500;
-		group_invincible=1;
-		armor_heavy=500;//#AUTO#
-		armor_medium=500;//#AUTO#
-		armor_light=500;//#AUTO#
 	}
 }
 [gear_stratos_rocket]
@@ -12799,6 +12874,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -12867,6 +12943,7 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -12874,88 +12951,6 @@
 		armor_heavy=40;//#AUTO#
 		armor_medium=80;//#AUTO#
 		armor_light=80;//#AUTO#
-	}
-}
-[claw_commander_quadlaser]
-{
-	name=Quad laser burst;
-	weapontype=BeamLaser;
-	explosiongenerator=custom:BLUELASERBLASTWRAPPER;
-	intensity=0.85;
-	beamtime=0.15;
-	thickness=3.234;
-	corethickness=0.8;
-	turret=1;
-	range=380;
-	minintensity=1.0;
-	projectiles=4;
-	reloadtime=12;
-	weaponvelocity=1533;
-	energypershot=75;
-	areaofeffect=32;
-	edgeeffectiveness=0.8;
-	soundtrigger=1;
-	soundstart=lasrfir2;
-	soundhit=lasrhit1;
-	firestarter=50;
-	commandfire=1;
-	scrollspeed=0;
-	pulsespeed=0;
-	rgbcolor=0.6 0.8 1.0;
-	rgbcolor2=0.1 0.3 1.0;
-	tolerance=3000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=3;
-	}
-	[DAMAGE]
-	{
-		default=125;
-		armor_heavy=125;//#AUTO#
-		armor_medium=125;//#AUTO#
-		armor_light=125;//#AUTO#
-	}
-}
-[claw_commander_aeroblast]
-{
-	name=Aeroblast;
-	weapontype=LaserCannon;
-	explosiongenerator=custom:FLAKBLASTWRAPPER;
-	duration=0.08;
-	intensity=0.85;
-	thickness=1.5; 
-	corethickness=1.0; 
-	turret=1;
-	range=400;
-	projectiles=1;
-	reloadtime=12;
-	weaponvelocity=1533;
-	energypershot=300;
-	areaofeffect=200;
-	edgeeffectiveness=0.8;
-	impulsefactor=0.3;
-	soundtrigger=1;
-	soundstart=lghthvy2;
-	soundhit=xplosml1;
-	firestarter=50;
-	commandfire=1;
-	rgbcolor=0.0 0.0 0.0;
-	rgbcolor2=0.0 0.0 0.0;
-	tolerance=3000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=1;
-	}
-	[DAMAGE]
-	{
-		default=300;
-		armor_heavy=75;//#AUTO#
-		armor_medium=150;//#AUTO#
-		armor_light=300;//#AUTO#
 	}
 }
 [claw_commander_torpedo]
@@ -13026,6 +13021,7 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -13067,6 +13063,7 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -13272,15 +13269,15 @@
 [claw_u3commander_railgun]
 {
 	name=Railgun;
-	weapontype=LaserCannon;
+	weapontype=MissileLauncher;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
-	duration=0.17;
-	thickness=3.2;
-	corethickness=1.5;
-	scrollspeed=0;
-	rgbcolor=1 0.3 0;
-	rgbcolor2=1 0.7 0.2;
-	Texture1=railgunshot;
+	cegTag=RAILGUNTRAIL;
+	model=weapon_invisible;
+	turnrate=0;
+	tracks=0;
+	flighttime=1.5;
+	trajectoryheight=0.07;
+	Texture1=null;
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
@@ -13288,9 +13285,9 @@
 	turret=1;
 	range=650;
 	reloadtime=5.8;
-	weapontimer=1;
 	weaponvelocity=1532;
-	accuracy=10;
+	startvelocity=1532;
+	accuracy=0;
 	areaofeffect=24;
 	soundstart=krogun1;
 	soundhit=xplolrg2;
@@ -13302,6 +13299,7 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -13807,15 +13805,15 @@
 [claw_shrieker_railgun]
 {
 	name=Railgun;
-	weapontype=LaserCannon;
+	weapontype=MissileLauncher;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
-	duration=0.15;
-	thickness=3;
-	corethickness=1.5;
-	scrollspeed=0;
-	rgbcolor=1 0.3 0;
-	rgbcolor2=1 0.7 0.2;
-	Texture1=railgunshot;
+	cegTag=RAILGUNTRAIL;
+	model=weapon_invisible;
+	turnrate=0;
+	tracks=0;
+	flighttime=1.5;
+	trajectoryheight=0.07;
+	Texture1=null;
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
@@ -13825,7 +13823,8 @@
 	reloadtime=2;
 	weapontimer=1;
 	weaponvelocity=1532;
-	accuracy=10;
+	startvelocity=1532;
+	accuracy=0;
 	areaofeffect=24;
 	soundstart=krogun1;
 	soundhit=xplolrg2;
@@ -14005,6 +14004,7 @@
 	{
 		hitpower=3;
 		restrictedAngle=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -14046,6 +14046,7 @@
 	{
 		hitpower=2;
 		restrictedAngle=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -14091,6 +14092,7 @@
 		hitpower=1;
 		restrictedAngle=1;
 		airLaser=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -14110,7 +14112,7 @@
 	thickness=2.123;
 	corethickness=0.55;
 	turret=1;
-	range=430;
+	range=420;
 	minintensity=1.0;
 	reloadtime=1;
 	beamburst=1;
@@ -14135,8 +14137,9 @@
 	{
 		hitpower=1;
 		restrictedAngle=1;
-		evalfactor=0.7;
+		evalfactor=0.75;
 		airLaser=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -14265,6 +14268,7 @@
 		hitpower=1;
 		restrictedAngle=1;
 		airLaser=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -14317,29 +14321,29 @@
 [claw_piercer_railgun]
 {
 	name=Railgun;
-	weapontype=LaserCannon;
+	weapontype=MissileLauncher;
 	turret=1;
 	range=1250;
-	minintensity=1.0;
-	duration=0.15;
-	thickness=3;
-	corethickness=1.5;
-	scrollspeed=0;
-	rgbcolor=1 0.3 0;
-	rgbcolor2=1 0.7 0.2;
-	Texture1=railgunshot;
+	model=weapon_invisible;
+	turnrate=0;
+	tracks=0;
+	flighttime=1.5;
+	trajectoryheight=0.07;
+	Texture1=null;
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
 	reloadtime=4;
 	energypershot=200;
-	weaponvelocity=1533;
+	weaponvelocity=1532;
+	startvelocity=1532;
 	areaofeffect=24;
 	soundstart=krogun1;
 	soundhit=xplolrg2;
 	soundtrigger=1;
 	firestarter=90;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
+	cegTag=RAILGUNTRAIL;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -14358,66 +14362,24 @@
 [claw_grinder_railgun]
 {
 	name=Fast-Firing Rail Gun;
-	weapontype=LaserCannon;
+	weapontype=MissileLauncher;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
-	intensity=1;
-	thickness=3;
-	corethickness=1;
-	duration=0.1;
-	texture1=railgunshot;
-	texture2=null;
-	texture3=null;
-	texture4=null;
-	scrollspeed=0;
-	rgbcolor=1 0.3 0;
-	rgbcolor2=1 0.7 0.2;
+	cegTag=RAILGUNTRAILSML;
+	model=weapon_invisible;
+	turnrate=0;
+	tracks=0;
+	flighttime=0.9;
+	trajectoryheight=0.07;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
 	energypershot=80;
 	turret=1;
 	range=840;
 	reloadtime=0.25;
-	weapontimer=10;
-	weaponvelocity=1532;
-	accuracy=200;
-	areaofeffect=18;
-	soundstart=railgunsml;
-	soundhit=railgunhitsml;
-	soundtrigger=1;
-	tolerance=4000;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=3;
-	}
-	[DAMAGE]
-	{
-		default=140;
-		armor_heavy=140;//#AUTO#
-		armor_medium=140;//#AUTO#
-		armor_light=140;//#AUTO#
-	}
-}
-[claw_grinder_railgun_old]
-{
-	name=Fast-Firing Rail Gun;
-	weapontype=MissileLauncher;
-	model=weapon_railgunsml;
-	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
-	intensity=1;
-	size=1;
-	texture1=null;
-	texture2=railguntrailsml;
-	texture3=null;
-	texture4=null;
-	cegTag=RAILGUNTRAIL;
-	energypershot=70;
-	turret=1;
-	range=850;
-	reloadtime=0.23;
-	weapontimer=1;
 	weaponvelocity=1532;
 	startvelocity=1532;
-	smoketrail=1;
 	accuracy=200;
 	areaofeffect=18;
 	soundstart=railgunsml;
@@ -14441,16 +14403,15 @@
 [claw_wrecker_railgun]
 {
 	name=Railgun;
-	weapontype=LaserCannon;
+	weapontype=MissileLauncher;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
-	intensity=1;
-	duration=0.15;
-	thickness=3;
-	corethickness=1.5;
-	scrollspeed=0;
-	rgbcolor=1 0.3 0;
-	rgbcolor2=1 0.7 0.2;
-	Texture1=railgunshot;
+	cegTag=RAILGUNTRAIL;
+	model=weapon_invisible;
+	turnrate=0;
+	tracks=0;
+	flighttime=1.5;
+	trajectoryheight=0.07;
+	Texture1=null;
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
@@ -14458,9 +14419,9 @@
 	turret=1;
 	range=1200;
 	reloadtime=1.5;
-	weapontimer=1;
 	weaponvelocity=1532;
-	accuracy=10;
+	startvelocity=1532;
+	accuracy=0;
 	areaofeffect=24;
 	soundstart=krogun1;
 	soundhit=xplolrg2;
@@ -14484,16 +14445,15 @@
 [claw_drakkar_railgun]
 {
 	name=Fast-Firing Rail Gun;
-	weapontype=LaserCannon;
+	weapontype=MissileLauncher;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
-	intensity=1;
-	duration=0.1;
-	thickness=3;
-	corethickness=1;
-	scrollspeed=0;
-	rgbcolor=1 0.3 0;
-	rgbcolor2=1 0.7 0.2;
-	Texture1=railgunshot;
+	cegTag=RAILGUNTRAILSML;
+	model=weapon_invisible;
+	turnrate=0;
+	tracks=0;
+	flighttime=0.8;
+	trajectoryheight=0.07;
+	Texture1=null;
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
@@ -14501,8 +14461,8 @@
 	turret=1;
 	range=950;
 	reloadtime=0.5;
-	weapontimer=1;
 	weaponvelocity=1532;
+	startvelocity=1532;
 	accuracy=200;
 	areaofeffect=24;
 	soundstart=railgunsml;
@@ -14526,16 +14486,15 @@
 [claw_u5commander_railgun]
 {
 	name=Fast-Firing Rail Gun;
-	weapontype=LaserCannon;
+	weapontype=MissileLauncher;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
-	intensity=1;
-	duration=0.10;
-	thickness=3;
-	corethickness=1;
-	scrollspeed=0;
-	rgbcolor=1 0.3 0;
-	rgbcolor2=1 0.7 0.2;
-	Texture1=railgunshot;
+	cegTag=RAILGUNTRAILSML;
+	model=weapon_invisible;
+	turnrate=0;
+	tracks=0;
+	flighttime=0.8;
+	trajectoryheight=0.07;
+	Texture1=null;
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
@@ -14543,8 +14502,8 @@
 	turret=1;
 	range=570;
 	reloadtime=0.3;
-	weapontimer=1;
 	weaponvelocity=1532;
+	startvelocity=1532;
 	accuracy=250;
 	areaofeffect=24;
 	soundstart=railgunsml;
@@ -14567,6 +14526,48 @@
 	}
 }
 [claw_longhorn_railgun]
+{
+	name=Railgun;
+	weapontype=MissileLauncher;
+	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
+	cegTag=RAILGUNTRAILBIG2;
+	model=weapon_invisible;
+	Texture1=null;
+	Texture2=null;
+	Texture3=null;
+	Texture4=null;
+	energypershot=4300;
+	turret=1;
+	range=4500;
+	reloadtime=13.5;
+	weaponvelocity=2332;
+	startvelocity=2332;
+	turnrate=0;
+	tracks=0;
+	flighttime=2;
+	trajectoryheight=0.07;
+	accuracy=0;
+	areaofeffect=64;
+	soundstart=railgunbig;
+	soundhit=xplonuk1;
+	soundtrigger=1;
+	smoketrail=0;
+	tolerance=3000;
+	InterceptedByShieldType=1;
+	avoidfeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitpower=3;
+	}
+	[DAMAGE]
+	{
+		default=2500;
+		armor_heavy=2500;//#AUTO#
+		armor_medium=2500;//#AUTO#
+		armor_light=2500;//#AUTO#
+	}
+}
+[claw_longhorn_railgun_bolt]
 {
 	name=Long Range Railgun;
 	weapontype=LaserCannon;
@@ -14611,15 +14612,11 @@
 [claw_pike_railgun]
 {
 	name=Heavy Railgun;
-	weapontype=LaserCannon;
+	weapontype=MissileLauncher;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
-	duration=0.17;
-	thickness=4;
-	corethickness=2;
-	scrollspeed=0;
-	rgbcolor=1 0.3 0;
-	rgbcolor2=1 0.7 0.2;
-	Texture1=railgunshot;
+	cegTag=RAILGUNTRAILBIG;
+	model=weapon_invisible;
+	Texture1=null;
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
@@ -14627,9 +14624,13 @@
 	turret=1;
 	range=1500;
 	reloadtime=8;
-	weapontimer=1;
 	weaponvelocity=2132;
-	accuracy=10;
+	startvelocity=2132;
+	turnrate=0;
+	tracks=0;
+	flighttime=1.4;
+	trajectoryheight=0.07;
+	accuracy=0;
 	areaofeffect=48;
 	soundstart=railgunbig2;
 	soundhit=xplolrg5;
@@ -14640,6 +14641,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -14708,9 +14710,10 @@
 	turret=1;
 	range=560;
 	reloadtime=0.15;
-	accuracy=512;
+	accuracy=300;
+	predictboost=0.5;
 	weapontimer=1;
-	weaponvelocity=1532;
+	weaponvelocity=2032;
 	areaofeffect=8;
 	soundstart=armsml1;
 	soundhit=comfire1;
@@ -14721,6 +14724,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -14749,9 +14753,10 @@
 	turret=1;
 	range=450;
 	reloadtime=0.2;
-	accuracy=512;
+	accuracy=300;
+	predictboost=0.5;
 	weapontimer=1;
-	weaponvelocity=1532;
+	weaponvelocity=2032;
 	areaofeffect=8;
 	soundstart=armsml1;
 	soundhit=comfire1;
@@ -14762,6 +14767,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -14790,9 +14796,10 @@
 	turret=1;
 	range=520;
 	reloadtime=0.15;
-	accuracy=512;
+	accuracy=300;
+	predictboost=0.5;
 	weapontimer=1;
-	weaponvelocity=1532;
+	weaponvelocity=2032;
 	areaofeffect=8;
 	soundstart=armsml1;
 	soundhit=comfire1;
@@ -14804,6 +14811,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -14848,6 +14856,7 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -15128,6 +15137,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -15169,6 +15179,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -15210,6 +15221,7 @@
 		hitpower=1;
 		restrictedAngle=1;
 		airLaser=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -15250,6 +15262,8 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		aarangeboost=1;
+		reaimtime=1;
 	}
 	[DAMAGE]
 	{
@@ -15363,9 +15377,10 @@
 	turret=1;
 	range=500;
 	reloadtime=0.1;
-	accuracy=512;
+	accuracy=300;
+	predictboost=0.5;
 	weapontimer=1;
-	weaponvelocity=1532;
+	weaponvelocity=2032;
 	areaofeffect=8;
 	soundstart=armsml1;
 	soundhit=comfire1;
@@ -15377,6 +15392,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -15384,46 +15400,6 @@
 		armor_heavy=5;//#AUTO#
 		armor_medium=10;//#AUTO#
 		armor_light=20;//#AUTO#
-	}
-}
-[claw_brute_cannon_old]
-{
-	name=Plasma Cannon;
-	weapontype=Cannon;
-	cegTag=PLASMATRAIL2;
-	explosiongenerator=custom:STDBLASTWRAPPER;
-	energypershot=0;
-	size=3.2;
-	rgbcolor=0.7 0.6 0.3;
-	stages=3;
-  	separation=0.5;
-  	alphadecay=0.3;
-  	sizedecay=-0.1;
-	turret=1;
-	range=500;
-	reloadtime=2.75;
-	burst=2;
-	burstrate=0.2;
-	weaponvelocity=340;
-	areaofeffect=64;
-	soundstart=cannon3;
-	soundhit=xplomed2;
-	accuracy=400;
-	movingaccuracy=800;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=3;
-		reaimtime=1;
-	}
-	[DAMAGE]
-	{
-		default=210;
-		group_invincible=1;
-		armor_heavy=210;//#AUTO#
-		armor_medium=210;//#AUTO#
-		armor_light=210;//#AUTO#
 	}
 }
 [claw_brute_cannon]
@@ -15513,7 +15489,7 @@
 	weapontype=Cannon;
 	turret=1;
 	range=500;
-	cegTag=PLASMATRAIL2;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	reloadtime=1;
 	weaponvelocity=355;
@@ -15705,7 +15681,7 @@
 	reloadtime=3.5;
 	weaponvelocity=450;
 	areaofeffect=80;
-	cegTag=PLASMATRAIL3;
+	cegTag=PLASMATRAIL2;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	soundstart=cannhvy2;
 	soundhit=xplomed4;
@@ -15749,45 +15725,6 @@
 	soundhit=xplomed2;
 	accuracy=200;
 	movingaccuracy=500;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=3;
-		reaimtime=1;
-	}
-	[DAMAGE]
-	{
-		default=350;
-		group_invincible=1;
-		armor_heavy=350;//#AUTO#
-		armor_medium=350;//#AUTO#
-		armor_light=350;//#AUTO#
-	}
-}
-[claw_flail_cannon]
-{
-	name=Plasma Cannon;
-	weapontype=Cannon;
-	energypershot=0;
-	cegTag=PLASMATRAIL2;
-	explosiongenerator=custom:STDBLASTWRAPPER;
-	turret=1;
-	range=400;
-	reloadtime=3.5;
-	weaponvelocity=390;
-	areaofeffect=95;
-	soundstart=cannhvy2;
-	soundhit=xplomed2;
-	tolerance=3000;
-	size=3.4;
-	rgbcolor=0.9 0.7 0.3;
-	stages=4;
-  	separation=0.4;
-  	alphadecay=0.24;
-  	sizedecay=-0.1;
-	accuracy=800;
-	movingaccuracy=1500;
 	InterceptedByShieldType=1;
 	avoidfeature=0;
 	[CUSTOMPARAMS]
@@ -15856,7 +15793,7 @@
 	turret=1;
 	range=420;
 	minintensity=1.0;
-	reloadtime=1.8;
+	reloadtime=2;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundtrigger=1;
@@ -15875,13 +15812,14 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
-		default=200;
-		armor_heavy=200;//#AUTO#
-		armor_medium=200;//#AUTO#
-		armor_light=200;//#AUTO#
+		default=220;
+		armor_heavy=220;//#AUTO#
+		armor_medium=220;//#AUTO#
+		armor_light=220;//#AUTO#
 	}
 }
 [claw_scythe_laser]
@@ -15897,7 +15835,7 @@
 	turret=1;
 	range=640;
 	minintensity=1.0;
-	reloadtime=0.8;
+	reloadtime=0.9;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundtrigger=1;
@@ -15916,13 +15854,14 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
-		default=200;
-		armor_heavy=200;//#AUTO#
-		armor_medium=200;//#AUTO#
-		armor_light=200;//#AUTO#
+		default=220;
+		armor_heavy=220;//#AUTO#
+		armor_medium=220;//#AUTO#
+		armor_light=220;//#AUTO#
 	}
 }
 [claw_predator_laser]
@@ -15957,6 +15896,7 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -15998,6 +15938,7 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -16005,46 +15946,6 @@
 		armor_heavy=50;//#AUTO#
 		armor_medium=100;//#AUTO#
 		armor_light=100;//#AUTO#
-	}
-}
-[claw_cutter_laser_old]
-{
-	name=High Energy Laser;
-	weapontype=BeamLaser;
-	explosiongenerator=custom:BLUELASERBLASTWRAPPER;
-	intensity=0.85;
-	energypershot=70;
-	beamtime=0.15;
-	thickness=3.234;
-	corethickness=0.8;
-	turret=1;
-	range=420;
-	minintensity=1.0;
-	reloadtime=2;
-	weaponvelocity=1533;
-	areaofeffect=8;
-	soundtrigger=1;
-	soundstart=lasrfir2;
-	soundhit=lasrhit1;
-	firestarter=50;
-	scrollspeed=0;
-	pulsespeed=0;
-	rgbcolor=0.5 0.4 1.0;
-	rgbcolor2=0.1 0.3 1.0;
-	tolerance=3000;
-	impulsefactor=0.222;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=3;
-	}
-	[DAMAGE]
-	{
-		default=200;
-		armor_heavy=200;//#AUTO#
-		armor_medium=200;//#AUTO#
-		armor_light=200;//#AUTO#
 	}
 }
 [claw_medium_drone_laser]
@@ -16079,6 +15980,7 @@
 	{
 		hitpower=3;
 		restrictedAngle=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -16274,6 +16176,7 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -16315,6 +16218,7 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -16327,16 +16231,15 @@
 [claw_halberd_railgun]
 {
 	name=Railgun;
-	weapontype=LaserCannon;
+	weapontype=MissileLauncher;
 	explosiongenerator=custom:STDNARROWBLASTWRAPPER;
-	intensity=1;
-	duration=0.15;
-	thickness=3;
-	corethickness=1.5;
-	scrollspeed=0;
-	rgbcolor=1 0.3 0;
-	rgbcolor2=1 0.7 0.2;
-	Texture1=railgunshot;
+	cegTag=RAILGUNTRAIL;
+	model=weapon_invisible;
+	turnrate=0;
+	tracks=0;
+	flighttime=1.5;
+	trajectoryheight=0.07;
+	Texture1=null;
 	Texture2=null;
 	Texture3=null;
 	Texture4=null;
@@ -16346,7 +16249,8 @@
 	reloadtime=4;
 	weapontimer=1;
 	weaponvelocity=1532;
-	accuracy=10;
+	startvelocity=1532;
+	accuracy=0;
 	areaofeffect=24;
 	soundstart=krogun1;
 	soundhit=xplolrg2;
@@ -16637,8 +16541,8 @@
 	soundstart=largegun2;
 	soundhit=xplolrg5;
 	firestarter=50;
-	accuracy=400;
-	movingaccuracy=800;
+	accuracy=0;
+	movingaccuracy=0;
 	tolerance=3000;
 	edgeeffectiveness=0.1;
 	burnblow=1;
@@ -16880,6 +16784,7 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -16919,6 +16824,7 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -16960,6 +16866,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -16999,6 +16906,7 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -17040,6 +16948,7 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -17082,6 +16991,7 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -17856,7 +17766,7 @@
 	movingaccuracy=500;
 	reloadtime=2.35;
 	weaponvelocity=300;
-	cegTag=PLASMATRAIL2;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	areaofeffect=48;
 	soundstart=cannon1;
@@ -17893,7 +17803,7 @@
 	movingaccuracy=500;
 	reloadtime=2.35;
 	weaponvelocity=300;
-	cegTag=PLASMATRAIL2;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	areaofeffect=48;
 	soundstart=cannon1;
@@ -17951,6 +17861,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -17991,6 +17902,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -18032,6 +17944,7 @@
 		hitpower=1;
 		restrictedAngle=1;
 		airLaser=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -18072,6 +17985,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -18763,7 +18677,7 @@
 	turret=1;
 	range=420;
 	minintensity=1.0;
-	reloadtime=1.1;
+	reloadtime=1.35;
 	weaponvelocity=1533;
 	areaofeffect=8;
 	soundstart=lasrfir3;
@@ -18781,14 +18695,15 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
-		default=80;
+		default=100;
 		group_invincible=1;
-		armor_heavy=40;//#AUTO#
-		armor_medium=80;//#AUTO#
-		armor_light=80;//#AUTO#
+		armor_heavy=50;//#AUTO#
+		armor_medium=100;//#AUTO#
+		armor_light=100;//#AUTO#
 	}
 }
 [sphere_gaunt_laser]
@@ -18822,6 +18737,7 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -18863,6 +18779,7 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -19131,7 +19048,7 @@
 	turret=1;
 	range=500;
 	reloadtime=2;
-	cegTag=PLASMATRAIL2;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	weaponvelocity=340;
 	areaofeffect=48;
@@ -19200,7 +19117,7 @@
 	turret=1;
 	range=570;
 	reloadtime=0.8;
-	cegTag=PLASMATRAIL2;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	weaponvelocity=380;
 	areaofeffect=64;
@@ -19234,7 +19151,7 @@
 	turret=1;
 	range=500;
 	reloadtime=1.8;
-	cegTag=PLASMATRAIL2;
+	cegTag=PLASMATRAIL1;
 	explosiongenerator=custom:STDBLASTWRAPPER;
 	weaponvelocity=380;
 	areaofeffect=64;
@@ -19502,6 +19419,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -19543,6 +19461,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -19584,6 +19503,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -19625,6 +19545,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -19878,6 +19799,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -19919,6 +19841,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -19958,6 +19881,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -20000,6 +19924,7 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -20145,6 +20070,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -20183,6 +20109,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=2;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -20224,6 +20151,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitpower=3;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -20265,6 +20193,7 @@
 	{
 		hitpower=1;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -20304,6 +20233,7 @@
 	{
 		hitpower=2;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -20346,6 +20276,7 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -20515,48 +20446,6 @@
 		default=10;
 	}
 }
-[sphere_twilight_laser_old]
-{
-	name=Laser;
-	weapontype=BeamLaser;
-	explosiongenerator=custom:REDLASERBLASTWRAPPER;
-	beamtime=0.1;
-	thickness=2.888;
-	corethickness=0.6;
-	intensity=0.9;
-	turret=1;
-	range=600;
-	minintensity=1.0;
-	reloadtime=4;
-	weaponvelocity=1533;
-	energypershot=25;
-	areaofeffect=8;
-	soundstart=lasrfir3;
-	soundhit=lasrhit2;
-	firestarter=20;
-	scrollspeed=0;
-	pulsespeed=0;
-	rgbcolor=0.51 0.0 0.0;
-	rgbcolor2=1.0 0.4 0.4;
-	tolerance=8000;
-	impulsefactor=0.222;
-	targetmoveerror=0;
-	InterceptedByShieldType=1;
-	avoidfeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitpower=2;
-		restrictedAngle=1;
-	}
-	[DAMAGE]
-	{
-		default=150;
-		group_invincible=1;
-		armor_heavy=75;//#AUTO#
-		armor_medium=150;//#AUTO#
-		armor_light=150;//#AUTO#
-	}
-}
 [sphere_twilight_laser]
 {
 	name=Laser;
@@ -20589,6 +20478,7 @@
 		hitpower=1;
 		restrictedAngle=1;
 		airLaser=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -20610,7 +20500,7 @@
 	scrollspeed=3;
 	thickness=5;
 	beamtime=0.1;
-	range=420; 
+	range=400; 
 	reloadtime=0.1;
 	energypershot=4;
 	weaponvelocity=400;
@@ -20632,7 +20522,8 @@
 		hitpower=1;
 		reaimtime=1;
 		airLaser=1;
-		evalfactor=1.7; // compensation for the evaluator's factor for non-hoverattack air types
+		aarangeboost=1;
+		evalfactor=1.82; // compensation for the evaluator's factor for non-hoverattack air types
 	}
 	[DAMAGE]
 	{
@@ -20719,6 +20610,7 @@
 	{
 		hitpower=2;
 		restrictedAngle=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{
@@ -21007,6 +20899,7 @@
 	{
 		hitpower=3;
 		reaimtime=1;
+		aarangeboost=1;
 	}
 	[DAMAGE]
 	{

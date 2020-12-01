@@ -3,13 +3,13 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define SPEEDUP_FACTOR	150
+#define SPEEDUP_FACTOR	140
 
 
 #define HEADING_TOLERANCE	<25>
 #define PITCH_TOLERANCE		<15>
 
-piece  ground, torso, ruparm, luparm, rloarm, lloarm, rbarrel, lbarrel, rgf, lgf, rgun, lgun, a2, a1, pelvis, tr, tl, t2, rleg, rfoot, lleg, lfoot, head, lthigh, rthigh, rlauncher, rgun1, rgun2, rfirept1, rfirept2, llauncher, lgun1, lgun2, lfirept1, lfirept2;
+piece  ground, torso, ruparm, luparm, rloarm, lloarm, rbarrel, lbarrel, rgf, lgf, rgun, lgun, ar, al, pelvis, tr, tl, t2, rleg, rfoot, lleg, lfoot, head, lthigh, rthigh, rlauncher, rgun1, rgun2, rfirept1, rfirept2, llauncher, lgun1, lgun2, lfirept1, lfirept2,launcher,mfirept,missile;
 
 static-var  gun_1, gun_2, bMoving, bAiming, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
 
@@ -37,8 +37,8 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 		
 		
 		mAMoveSpd1 = [20.000000] * mASpdFactor / 100;
-		mATurnSpd1 = <315.000000> * (100 + mASpdFactor) / 200;
-		mATurnSpd2 = <200.000000> * (100 + mASpdFactor) / 200;
+		mATurnSpd1 = <305.000000> * (100 + mASpdFactor) / 200;
+		mATurnSpd2 = <180.000000> * (100 + mASpdFactor) / 200;
 		mATurnSpd3 = <50.000000> * (100 + mASpdFactor) / 200;
 
 		mAVertFactor = [0.000000]-[1.500000] * mASpdFactor / SPEEDUP_FACTOR;
@@ -366,20 +366,20 @@ FirePrimary()
 {
 	if( gun_1 == [0])
 	{
-		move a1 to z-axis [-5.000000] now;
+		move al to z-axis [-5.000000] now;
 		emit-sfx 1024+0 from lgf;
 		sleep 100;
 		gun_1 = [1];
-		move a1 to z-axis [0.000000] speed [10.000000];
+		move al to z-axis [0.000000] speed [10.000000];
 		return (0);
 	}
 	if( gun_1 == [1])
 	{
-		move a2 to z-axis [-5.000000] now;
+		move ar to z-axis [-5.000000] now;
 		emit-sfx 1024+0 from rgf;
 		sleep 100;
 		gun_1 = [0];
-		move a2 to z-axis [0.000000] speed [10.000000];
+		move ar to z-axis [0.000000] speed [10.000000];
 		return (0);
 	}
 }
@@ -462,6 +462,35 @@ Shot2()
 		gun_2 = [0];
 		return (0);
 	}		
+}
+
+
+AimTertiary(heading, pitch)
+{
+	return (1);
+}
+
+FireTertiary()
+{
+	emit-sfx 1024 from mfirept;
+	move missile to y-axis [-6] now;
+	sleep 3000;
+	move missile to y-axis [0] speed [12];
+	return (1);
+}
+
+
+AimFromTertiary(piecenum)
+{
+	piecenum = launcher;
+	return (0);
+}
+
+QueryTertiary(piecenum)
+{
+	piecenum = mfirept;
+
+	return (0);
 }
 
 Killed(severity, corpsetype)

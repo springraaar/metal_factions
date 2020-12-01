@@ -101,7 +101,15 @@ function checkMorph(self)
 						local comMorphEnergyIncome = currentStrategy.stages[sStage].economy.comMorphEnergyIncome or 99999
 						
 						if (incomeM > comMorphMetalIncome and incomeE > comMorphEnergyIncome) then
+							if (not currentStrategy.commanderMorphs or #currentStrategy.commanderMorphs == 0) then
+								self.ai:messageAllies("Invalid morph definitions for strategy "..self.ai.currentStrategyName)
+								return SKIP_THIS_TASK
+							end
 							local morphName = currentStrategy.commanderMorphs[ random( 1, #currentStrategy.commanderMorphs) ]
+							if not morphName then
+								self.ai:messageAllies("Invalid morph definitions for strategy "..self.ai.currentStrategyName)
+								return SKIP_THIS_TASK
+							end
 							local morphCmd = false
 							local morphCmdIds = {}
 							for i,c in ipairs(cmds) do
@@ -3787,7 +3795,7 @@ function stratMobileBuilderAction(self)
 	-- reset priority
 	self:resetHighPriorityState()
 
-	if (not self.isAdvBuilder or random() > 0.5) then
+	if (not self.isAdvBuilder) then
 		-- check if there's a nearby unit to assist
 		action = assistNearbyConstructionIfNeeded(self,false,true,1000)	-- exclude mobile units, include non-builders  
 		if ( action ~= SKIP_THIS_TASK) then
@@ -4081,6 +4089,32 @@ function stratPlantAction(self)
 	return SKIP_THIS_TASK
 end
 	
+function stratUpgradeCenterAction(self)
+	local currentStrategy = self.ai.currentStrategy
+	local currentStrategyName = self.ai.currentStrategyName
+	local sStage = self.ai.currentStrategyStage
+	
+	-- check recommended build options and build what it can
+	local targetUpgrades = currentStrategy.upgradeList
+	-- if upgrade list is undefined or empty, revert to "classic" upgrade behavior
+	if ((not targetUpgrades) or #targetUpgrades == 0) then
+		return selectUpgradeCenterQueue(self)
+	end
+	
+	if (targetUpgrades) then
+		for i,props in ipairs(targetUpgrades) do
+			local maxCount = tonumber(props.max)
+			local uName = props.name
+			local curCount = self.ai.upgradesBuiltByName[uName] or 0
+			if (curCount < maxCount) then
+				--log(self.unitName.." trying to build upgrade : "..uName.." curCount="..tostring(curCount),self.ai) --DEBUG				
+				return uName
+			end
+		end
+	end
+
+	return SKIP_THIS_TASK
+end
 	
 
 stratCommander = {
@@ -4102,6 +4136,10 @@ stratPlant = {
 	stratPlantAction
 }
 
+stratUpgradeCenter = {
+	stratUpgradeCenterAction,
+	{action = "wait", frames = 64}
+}
 
 taskQueues = {
 ------------------- AVEN
@@ -4289,6 +4327,7 @@ sTaskQueues = {
 	aven_adv_aircraft_plant = stratPlant,
 	aven_hovercraft_platform = stratPlant,
 	aven_adv_shipyard = stratPlant,
+	aven_upgrade_center = stratUpgradeCenter,
 ------------------- GEAR
 	gear_commander = stratCommander,
 	gear_u1commander = stratCommander,
@@ -4313,6 +4352,7 @@ sTaskQueues = {
 	gear_adv_vehicle_plant = stratPlant,
 	gear_adv_aircraft_plant = stratPlant,
 	gear_adv_shipyard = stratPlant,
+	gear_upgrade_center = stratUpgradeCenter,
 ------------------- CLAW
 	claw_commander = stratCommander,
 	claw_u1commander = stratCommander,
@@ -4338,6 +4378,7 @@ sTaskQueues = {
 	claw_adv_aircraft_plant = stratPlant,
 	claw_adv_shipyard = stratPlant,
 	claw_spinbot_plant = stratPlant,
+	claw_upgrade_center = stratUpgradeCenter,
 ------------------- SPHERE
 	sphere_commander = stratCommander,
 	sphere_u1commander = stratCommander,
@@ -4363,6 +4404,7 @@ sTaskQueues = {
 	sphere_adv_aircraft_factory = stratPlant,
 	sphere_sphere_factory = stratPlant,
 	sphere_adv_shipyard = stratPlant,
+	sphere_upgrade_center = stratUpgradeCenter,
 }
 
 -- include default strategies

@@ -67,7 +67,7 @@
 	turnrate=999;
 	acceleration=1.1;
 	brakerate=1.23105;
-	maxvelocity=1.65;
+	maxvelocity=1.5;
 	maxslope=14;
 	maxwaterdepth=12;
 
@@ -82,9 +82,9 @@
 	//***********
 	weapon1=gear_big_bob_cannon;
 	weapon2=gear_big_bob_missile;
+	weapon3=gear_big_bob_missile2;
 	nochasecategory=VTOL;
 	badtargetcategory1=VTOL;
-	onlytargetcategory1=NOTAIR;
 	badtargetcategory2=NOTAIR;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;
@@ -132,8 +132,8 @@
 		canAreaAttack=1;
 	}
 
-	buildcostenergy=13902;//#AUTO#
-	buildcostmetal=2780;//#AUTO#
-	buildtime=33133;//#AUTO#
-	mass=2226;//#AUTO#
+	buildcostenergy=17951;//#AUTO#
+	buildcostmetal=3590;//#AUTO#
+	buildtime=42785;//#AUTO#
+	mass=2496;//#AUTO#
 }

@@ -893,6 +893,7 @@ attackerList =
 
 	"gear_cube",
 	"gear_cloakable_cube",
+	"gear_rager",
 	"gear_moe",
 	"gear_psycho",
 	"gear_titan",

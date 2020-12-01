@@ -31,7 +31,7 @@ avenLandAssault = {
 			properties = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = 85,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.6,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 0.5
 			},
@@ -74,7 +74,7 @@ avenLandAssault = {
 			properties = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = 85,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.6,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 0.5
 			},
@@ -126,7 +126,7 @@ avenLandAssault = {
 			properties = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = 85,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.6,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 0.7
 			},
@@ -180,7 +180,7 @@ avenLandAssault = {
 			properties = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = 85,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.6,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 0.7
 			},
@@ -464,7 +464,7 @@ avenAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.5,
+				enemyThreatEstimationMult = 1.3,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -506,7 +506,7 @@ avenAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.5,
+				enemyThreatEstimationMult = 1.3,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -555,7 +555,7 @@ avenAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.5,
+				enemyThreatEstimationMult = 1.3,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -605,7 +605,7 @@ avenAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.5,
+				enemyThreatEstimationMult = 1.3,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -666,7 +666,7 @@ avenAmphibious = {
 				raiderSpeedThreshold = 90,
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
-				enemyThreatEstimationMult = 1.7,
+				enemyThreatEstimationMult = 1.4,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 0.7
 			},
@@ -879,7 +879,7 @@ gearLandAssault = {
 			properties = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = 85,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.6,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
@@ -920,7 +920,7 @@ gearLandAssault = {
 			properties = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = 85,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.6,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
@@ -969,7 +969,7 @@ gearLandAssault = {
 			properties = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = 85,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.6,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
@@ -1023,7 +1023,7 @@ gearLandAssault = {
 			properties = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = 85,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.6,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
@@ -1312,7 +1312,7 @@ gearAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.5,
+				enemyThreatEstimationMult = 1.3,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -1354,7 +1354,7 @@ gearAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.5,
+				enemyThreatEstimationMult = 1.3,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -1402,7 +1402,7 @@ gearAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.5,
+				enemyThreatEstimationMult = 1.3,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -1451,7 +1451,7 @@ gearAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.5,
+				enemyThreatEstimationMult = 1.3,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -1511,7 +1511,7 @@ gearAmphibious = {
 				raiderSpeedThreshold = 75,
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
-				enemyThreatEstimationMult = 1.7,
+				enemyThreatEstimationMult = 1.4,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 0.7
 			},
@@ -1553,7 +1553,7 @@ gearAmphibious = {
 				raiderSpeedThreshold = 75,
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
-				enemyThreatEstimationMult = 1.7,
+				enemyThreatEstimationMult = 1.4,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 0.7
 			},
@@ -1602,7 +1602,7 @@ gearAmphibious = {
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.7,
+				enemyThreatEstimationMult = 1.4,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 0.7
 			},
@@ -1651,7 +1651,7 @@ gearAmphibious = {
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.7,
+				enemyThreatEstimationMult = 1.4,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 0.7
 			},
@@ -1710,7 +1710,7 @@ clawLandAssault = {
 			properties = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = 78,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.6,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
@@ -1753,7 +1753,7 @@ clawLandAssault = {
 			properties = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = 78,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.6,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
@@ -1801,7 +1801,7 @@ clawLandAssault = {
 			properties = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = 78,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.6,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
@@ -1855,7 +1855,7 @@ clawLandAssault = {
 			properties = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = 78,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.6,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
@@ -2140,7 +2140,7 @@ clawAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.5,
+				enemyThreatEstimationMult = 1.3,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
@@ -2181,7 +2181,7 @@ clawAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.5,
+				enemyThreatEstimationMult = 1.3,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
@@ -2230,7 +2230,7 @@ clawAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.5,
+				enemyThreatEstimationMult = 1.3,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
@@ -2280,7 +2280,7 @@ clawAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.5,
+				enemyThreatEstimationMult = 1.3,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
@@ -2341,7 +2341,7 @@ clawAmphibious = {
 				raiderSpeedThreshold = 75,
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
-				enemyThreatEstimationMult = 1.7,
+				enemyThreatEstimationMult = 1.4,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 0.7
 			},
@@ -2383,7 +2383,7 @@ clawAmphibious = {
 				raiderSpeedThreshold = 75,
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
-				enemyThreatEstimationMult = 1.7,
+				enemyThreatEstimationMult = 1.4,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 0.7
 			},
@@ -2433,7 +2433,7 @@ clawAmphibious = {
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.7,
+				enemyThreatEstimationMult = 1.4,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 0.7
 			},
@@ -2492,7 +2492,7 @@ clawAmphibious = {
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.7,
+				enemyThreatEstimationMult = 1.4,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 0.7
 			},
@@ -2562,7 +2562,7 @@ sphereLandAssault = {
 			properties = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = 70,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.6,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
@@ -2605,7 +2605,7 @@ sphereLandAssault = {
 			properties = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = 70,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.6,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
@@ -2654,7 +2654,7 @@ sphereLandAssault = {
 			properties = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = 70,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.6,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
@@ -2707,7 +2707,7 @@ sphereLandAssault = {
 			properties = {
 				commanderBuildsFactories = false,
 				raiderSpeedThreshold = 70,
-				enemyThreatEstimationMult = 2,
+				enemyThreatEstimationMult = 1.6,
 				defenseDensityMult = 1,
 				forceSpreadFactor = 1
 			},
@@ -2990,7 +2990,7 @@ sphereAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.5,
+				enemyThreatEstimationMult = 1.3,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -3032,7 +3032,7 @@ sphereAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.5,
+				enemyThreatEstimationMult = 1.3,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -3081,7 +3081,7 @@ sphereAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.5,
+				enemyThreatEstimationMult = 1.3,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
@@ -3130,7 +3130,7 @@ sphereAir = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
-				enemyThreatEstimationMult = 1.5,
+				enemyThreatEstimationMult = 1.3,
 				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},

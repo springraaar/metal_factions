@@ -1,3 +1,61 @@
+2020/12/01 ------------------ NOTES v1.46 ----------------------
+
+--- new units
+
+- GEAR "Rager" : level 2 cloakable armored fire support robot
+
+
+--- Balance / Mechanics
+
+TARGETING / AIR
+- all lasers, heat rays, energy bolts and miniguns get +80 base range when firing at air units specifically
+(it only applies after the target has been acquired and reverts immediately once it dies or gets out of range)
+
+- slightly reduced the range of the 360º weapons on level 2 fighter aircraft
+(the evaluation formula was adjusted to increase their cost a bit so they end up about even)
+(they no longer outrange the forward weapons even if upgraded)
+
+- CLAW miniguns are slightly more efficient at hitting small strafing air targets
+- CLAW big railgun projectiles now keep going past their max range and have a slight arc to their trajectory
+(the visual changed slightly)
+
+OTHER
+- GEAR "Big Bob" now has a heavy missile launcher and has its 3 weapons with 750 range, but is about 10% slower and 30% more expensive
+(its cannon now explodes mid-air vs air targets)
+
+- GEAR "Infernal Form" commander and CLAW "Nucleus" now have perfect accuracy
+(this is a workaround to avoid an issue where the shots would explode mid-air on high trajectory mode)
+
+- increased GEAR "Moe" range and cost by about 10%
+
+- GEAR "Knocker" is bigger and tougher and has H dmg type cannon with 420 range (down from 620)
+
+- GEAR "Titan" gets slightly bigger and tougher (+HP, range, dmg/s), but also slower and more expensive
+
+- reduced GEAR "Blaze" and "Flareon" heat ray beam times from 1.3s to 1s (this raises their price by about 4%)
+- reduced GEAR "Blaze" range from 1000 to 960 and reduced cost by about 5%
+
+
+--- UI / Visual
+
+- renamed "PLANT" build tab to "FACTORY" and renamed the most factories as well
+- improved glow effects on most projectiles
+- modified aven disruptor cannon projectiles
+- improved the cannons on most GEAR 3D models
+- slightly improved SPHERE Helix and Screener models
+- fixed error messages related to AI using custom strategies with broken morph definitions
+(a warning message to allies is shown instead)
+
+
+--- AI
+
+- custom strategies allow using a custom upgrade list instead of the pre-built ones
+- lowered the enemy threat estimation thresholds (AI less scared to attack)
+- enemy threat estimation changes with measured efficiency more sharply
+- main attack force prioritizes engaging enemies near its base
+- L2 builders are a bit less likely to get distracted assisting other builders
+
+
 2020/11/19 ------------------ NOTES v1.45 ----------------------
 
 --- Balance / Mechanics

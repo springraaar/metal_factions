@@ -36,8 +36,8 @@
 	//  Resources
 	//*************
 	metalstorage=0;
-	energymake=0.8;
-	energyuse=0.8;
+	energymake=0.0;
+	energyuse=0.0;
 	energystorage=0;
 
 	//************************************************************
@@ -62,7 +62,7 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKBH4; //TANKBH3//
+	movementclass=TANKBH4;
 	turnrate=400;
 	acceleration=0.3625;
 	brakerate=0.0762939;
@@ -79,9 +79,8 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=aven_BULL;
+	weapon1=aven_centurion_cannon;
 	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
 	badtargetcategory1=VTOL;
 	explodeas=BIG_UNITEX;
 	selfdestructas=BIG_UNIT;

@@ -22,11 +22,16 @@ local spSetUnitTarget = Spring.SetUnitTarget
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetGameFrame = Spring.GetGameFrame
 local spGetUnitHealth = Spring.GetUnitHealth
+local spGetAllUnits = Spring.GetAllUnits
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spSetUnitWeaponState = Spring.SetUnitWeaponState
+local spSetUnitWeaponDamages = Spring.SetUnitWeaponDamages
 
 local targetForUnitId = {}
 local trackedWeaponDefIds = {}
 local lastPriorityForUnitId = {}
 
+local AA_FLAT_RANGE_EXTENSION = 80 
 
 -- slave weapon indexes (master,slave)
 local slaveWeaponIndexesByUnitDefId = {
@@ -52,6 +57,7 @@ local droneDefIds = {}
 -- unit ids with slaved weapons
 local slaveWeaponIndexesByUnitId = {}
 
+local airTargettingWeaponIndexesByUnitId = {}	-- [uId][wNum] = true/false	
 
 local torpedoWeaponIds = {
 	-- AVEN
@@ -128,6 +134,17 @@ local function trackWeapons(unitDefID)
 		    end
 		end
     end
+end
+
+
+-- updates weapon base range + upgrade modifiers on unit
+function updateUnitWeaponRange(unitId, wNum, range)
+	-- get modifier from upgrades
+	local modifier = spGetUnitRulesParam(unitId,"upgrade_range") or 0
+	
+	local modRange = range * (1 + modifier)
+	spSetUnitWeaponState(unitId,wNum,"range",modRange)
+	spSetUnitWeaponDamages(unitId,wNum,"dynDamageRange",modRange)
 end
 
 -------------------------- SYNCED CODE ONLY
@@ -267,6 +284,9 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam, attackerID, attackerD
 	if slaveWeaponIndexesByUnitId[unitID] then
 		slaveWeaponIndexesByUnitId[unitID] = nil
 	end
+	if airTargettingWeaponIndexesByUnitId[unitID] then
+		airTargettingWeaponIndexesByUnitId[unitID] = nil
+	end	
 end
 
 
@@ -284,11 +304,64 @@ function gadget:GameFrame(n)
 			--Spring.Echo("unit targets overridden, f="..n.." m="..tostring(masterTarget).." s="..tostring(slaveTarget))
 		end
 	end
+	
+	-- modify the range of certain weapons depending on whether they're targetting air units
+	for _,unitId in pairs(spGetAllUnits()) do
+		local unitDefId = spGetUnitDefID(unitId)
+		if (unitDefId ~= nil) then
+			local ud = UnitDefs[unitDefId]
+	
+			-- armed only
+			if ud.weapons and ud.weapons[1] and ud.weapons[1].weaponDef then
+				for wNum,w in pairs(ud.weapons) do
+					local wd=WeaponDefs[w.weaponDef]
+				    if wd.customParams and wd.customParams.aarangeboost == "1" then
+				    	if not airTargettingWeaponIndexesByUnitId[unitId] then
+				    		airTargettingWeaponIndexesByUnitId[unitId] = {}
+				    	end
+				    
+						local isAttackingAir = false
+						-- check if weapon is targetting air unit 
+						local tType,isUser,target = spGetUnitWeaponTarget(unitId,wNum)
+				    	--Spring.Echo(" type="..tType.." t="..tostring(target))
+						if tType and tType <= 1 and target then
+							local targetDef = UnitDefs[spGetUnitDefID(target)]
+							if (targetDef and targetDef.canFly) then
+								isAttackingAir = true
+							end 
+						end
+
+						-- started attacking air, update
+						if (isAttackingAir and (not airTargettingWeaponIndexesByUnitId[unitId][wNum])) then
+							airTargettingWeaponIndexesByUnitId[unitId][wNum] = true	
+							
+							-- increase range
+							updateUnitWeaponRange(unitId, wNum, wd.range + AA_FLAT_RANGE_EXTENSION)
+							--Spring.Echo(n.." increased range")
+						end
+						
+						-- stopped attacking air, update range
+						if ((not isAttackingAir) and airTargettingWeaponIndexesByUnitId[unitId][wNum] == true) then
+							airTargettingWeaponIndexesByUnitId[unitId][wNum] = false
+							
+							-- revert to default range
+							updateUnitWeaponRange(unitId, wNum, wd.range)
+							--Spring.Echo(n.." restored range")
+						end
+				    end
+				end
+			end			
+		end
+	end
+
 end
+
 
 
 function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 	if slaveWeaponIndexesByUnitDefId[unitDefID] then
 		slaveWeaponIndexesByUnitId[unitID] = slaveWeaponIndexesByUnitDefId[unitDefID]
 	end
+
+	airTargettingWeaponIndexesByUnitId[unitID] = {}
 end

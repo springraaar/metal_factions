@@ -197,7 +197,7 @@ FireSecondary()
 	if( gun_2 == [1])
 	{
 		move barrel22 to z-axis [-3.500000] now;
-		emit-sfx 1024+0 from flash22;
+		emit-sfx 1024+1 from flash22;
 		sleep 100;
 		move barrel22 to z-axis [0.000000] speed [4.000000];
 		gun_2 = [2];
@@ -206,7 +206,7 @@ FireSecondary()
 	if( gun_2 == [2])
 	{
 		move barrel23 to z-axis [-3.500000] now;
-		emit-sfx 1024+0 from flash23;
+		emit-sfx 1024+1 from flash23;
 		sleep 100;
 		move barrel23 to z-axis [0.000000] speed [4.000000];
 		gun_2 = [0];

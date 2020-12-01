@@ -49,7 +49,7 @@ local FILTER_OTHER = 3
 local FILTER_RED = 4
 local FILTER_GREEN = 5
 local FILTER_BLUE = 6
-local filterLabel = {"ENERGY / METAL","PLANT","OTHER","WEAPON","DEFENSE","UTILITY"}
+local filterLabel = {"ENERGY / METAL","FACTORY","OTHER","WEAPON","DEFENSE","UTILITY"}
 local filter = FILTER_ECO
 local hasOptions = {}
 local buildOptionsTable = {}
@@ -737,7 +737,7 @@ function widget:Initialize()
 					buildOptionsTable[FILTER_ECO][unitDef.name] = true
 					registered = true
 					break
-				elseif cat == "plant" or cat == "nanotower" then
+				elseif cat == "plant" or cat == "nanotower" or cat == "factory" then
 					buildOptionsTable[FILTER_PLANT][unitDef.name] = true
 					registered = true
 					break

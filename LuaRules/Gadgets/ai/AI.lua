@@ -34,6 +34,7 @@ function AI.create(id, mode, strategyStr, allyId, mapHandler)
    	obj.strategyOverride = false
 	obj.humanStrategyStr = nil
 	obj.humanDefenseDensityMult = nil
+	obj.upgradesBuiltByName = {}
 	
 	obj.frameShift = 7*tonumber(id)	-- used to spread out processing from different AIs across multiple frames
 	obj.needStartPosAdjustment = false
@@ -620,6 +621,15 @@ function AI:UnitFinished(unitId, unitDefId, teamId)
 	
 	-- only relevant for own units
 	if (teamId == self.id and self.modules ~= nil) then
+		-- mark when own upgrades finish
+		local ud = UnitDefs[unitDefId]
+		if (ud and ud.customParams.isupgrade == "1") then
+			if not self.upgradesBuiltByName[ud.name] then
+				self.upgradesBuiltByName[ud.name] = 0
+			end
+			self.upgradesBuiltByName[ud.name] = self.upgradesBuiltByName[ud.name] +1 
+		end
+	
 		for i,m in ipairs(self.modules) do
 			if (m.UnitFinished ~= nil) then
 				m:UnitFinished(unitId)

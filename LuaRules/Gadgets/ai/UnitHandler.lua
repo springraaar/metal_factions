@@ -324,10 +324,10 @@ function UnitHandler:getCellAttackValue(group, cell)
 	-- calculate distance to center of group or center of base (if under attack)
 	cellDistance = distance(group.centerPos,cell.p)
 	baseDistance = distance(self.basePos,cell.p)
-	
-	if (self.baseUnderAttack and (group.id == UNIT_GROUP_ATTACKERS) ) then
-		-- use devaluation based on distance to base instead of group if base under attack
-		cellDistance = baseDistance
+
+	-- main attack force uses devaluation based on distance to base as well	
+	if (group.id == UNIT_GROUP_ATTACKERS ) then
+		cellDistance = 0.7*baseDistance + 0.3*cellDistance
  	end
 
 	-- raiders and air far from base should not assist or expect assistance from allies, they're likely busy doing something
@@ -486,7 +486,7 @@ function UnitHandler:getCellAttackValue(group, cell)
 	threatEvaluationFactor = threatEvaluationFactor * (group.task == TASK_ATTACK and ATTACK_PERSISTENCE_THREAT_EVALUATION_FACTOR or 1) 
 
 	-- scale threat according to combat efficiency history
-	threatEvaluationFactor = threatEvaluationFactor * min(max(1/self.teamCombatEfficiency,COMBAT_EFFICIENCY_FORCE_SIZE_MOD_MIN),COMBAT_EFFICIENCY_FORCE_SIZE_MOD_MAX)
+	threatEvaluationFactor = threatEvaluationFactor * min(max(1/(math.pow(self.teamCombatEfficiency,1.2)),COMBAT_EFFICIENCY_FORCE_SIZE_MOD_MIN),COMBAT_EFFICIENCY_FORCE_SIZE_MOD_MAX)
 	
 	local cellValue = min(group.nearCenterCost * groupCostFactor + totalAssistCost - totalThreatCost * threatEvaluationFactor,cell.cost)
 	if (cellValue > 0) then
