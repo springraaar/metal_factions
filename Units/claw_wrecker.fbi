@@ -6,127 +6,106 @@
 	side=Claw;
 	name=Wrecker;
 	description=Battleship;
-	icontype=shipmulti;
+	iconType=shipmulti;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW SHIP LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=SHIP;
+	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_wrecker;
-	unitnumber=20000;
-	objectname=claw_wrecker.3do;
+	unitName=claw_wrecker;
+	objectName=claw_wrecker.3do;
 	corpse=claw_wrecker_dead;
-	buildpic=claw_wrecker.png;
-	soundcategory=gear_SHIP;
+	buildPic=claw_wrecker.png;
+	soundCategory=gear_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=12000;
-	healtime=30;
+	maxDamage=12000;
 	footprintx=8;
 	footprintz=8;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
-	windgenerator=0.001;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=LARGEBOAT;
-	turnrate=102;
+	movementClass=LARGEBOAT;
+	turnRate=102;
 	acceleration=0.01;
-	brakerate=0.003;
-	maxvelocity=0.9;
+	brakeRate=0.003;
+	maxVelocity=0.9;
 	minwaterdepth=15;
 	waterline=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_wrecker_cannon;
 	weapon2=claw_wrecker_railgun;
-	weaponmaindir2=0 0 1;
-	maxangledif2=310;
-	nochasecategory=WEAPON;
-	badtargetcategory1=VTOL;
-	badtargetcategory2=VTOL;
-	explodeas=HUGE_UNIT;
-	selfdestructas=ATOMIC_BLASTSML;
+	weaponMainDir2=0 0 1;
+	maxAngleDif2=310;
+	noChaseCategory=WEAPON;
+	badTargetCategory1=VTOL;
+	badTargetCategory2=VTOL;
+	explodeAs=HUGE_UNIT;
+	selfDestructAs=ATOMIC_BLASTSML;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ASD-SB;
-	downloadable=1;
-	maneuverleashlength=640;
 	scale=0.6;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =70 65 135;
 	collisionVolumeOffsets = 0 -20 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:yellowflarebig;
-	explosiongenerator1=custom:railgunflare;
-	explosiongenerator2=custom:UNITFIRE;
+	explosionGenerator0=custom:yellowflarebig;
+	explosionGenerator1=custom:railgunflare;
+	explosionGenerator2=custom:UNITFIRE;
 	}
 	[CustomParams]
 	{
@@ -134,8 +113,8 @@
 		canAreaAttack=1;
 		evalfactor=0.85;//SHIP
 	}
-	buildcostenergy=70080;//#AUTO#
-	buildcostmetal=14016;//#AUTO#
-	buildtime=167025;//#AUTO#
+	buildCostEnergy=70080;//#AUTO#
+	buildCostMetal=14016;//#AUTO#
+	buildTime=167025;//#AUTO#
 	mass=12275;//#AUTO#
 }

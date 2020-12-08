@@ -194,7 +194,8 @@ function AttackerBehavior:GameFrame(f)
 	self.pos = newPosition(spGetUnitPosition(self.unitId,false,false))
 
 	local health,maxHealth,_,_,_ = spGetUnitHealth(self.unitId)
-	if (health/maxHealth < UNIT_RETREAT_HEALTH) then
+	local retreatHealth = self.isAssault and self.ai.assaultRetreatHealth or self.ai.otherRetreatHealth
+	if (health/maxHealth < retreatHealth) then
 		self.isSeriouslyDamaged = true
 		self.isFullHealth = false
 	else

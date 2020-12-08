@@ -6,37 +6,35 @@
 	side=GEAR;
 	name=Knocker;
 	description=Flying Cannon;
-	icontype=airbomber;
+	iconType=airbomber;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=GEAR VTOL WEAPON NOTSUB;
-	tedclass=VTOL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_knocker;
-	objectname=gear_knocker.3do;
-	buildpic=gear_knocker.png;
-	soundcategory=aven_VTOL;
+	unitName=gear_knocker;
+	objectName=gear_knocker.3do;
+	buildPic=gear_knocker.png;
+	soundCategory=aven_VTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=900;
-	healtime=30;
+	maxDamage=900;
 	footprintx=3;
 	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -46,81 +44,63 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canfly=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	turnrate=600;
+	turnRate=600;
 	acceleration=0.17;
-	brakerate=0.16;
-	maxvelocity=3.6;
-	maxslope=10;
+	brakeRate=0.16;
+	maxVelocity=3.6;
+	maxSlope=10;
 	
-	cruisealt=120;
+	cruiseAlt=120;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
-	radardistance=0;
+	sightDistance=600;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_knocker_cannon;
-	onlytargetcategory1=NOTAIR;
-	WeaponMainDir1=0 -0.5 1;
-	MaxAngleDif1=100;       
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	badTargetCategory1=VTOL;
+	weaponMainDir1=0 -0 1;
+	maxAngleDif1=180;       
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=VTOL_standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bankscale=1;
-	bmcode=1;
-	designation=AFD-J17;
-	downloadable=1;
-	hoverattack=1;
-	maneuverleashlength=1280;
+	hoverAttack=1;
 	scale=1;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	airhoverfactor=-1;
+	airHoverFactor=-1;
 	bankingallowed=0;
 	upright=1;
 	collide=1;
-	minCollisionSpeed=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =35 16 35;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -128,10 +108,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:rocketflaremed;
+		explosionGenerator0=custom:rocketflaremed;
 	}
-	buildcostenergy=2095;//#AUTO#
-	buildcostmetal=419;//#AUTO#
-	buildtime=4993;//#AUTO#
+	buildCostEnergy=2095;//#AUTO#
+	buildCostMetal=419;//#AUTO#
+	buildTime=4993;//#AUTO#
 	mass=182;//#AUTO#
 }

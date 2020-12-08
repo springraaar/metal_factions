@@ -1,83 +1,67 @@
 [UNITINFO]
 	{
 	// ------------------- description
-	Side=Sphere;
+	side=Sphere;
 	Name=Crustle;
 	Description=Light Tank;
-	icontype=mobilefighter;
+	iconType=mobilefighter;
 
 	// ------------------- categories
-	Category=SPHERE TANK LEVEL1 WEAPON NOTAIR NOTSUB;
-	TEDClass=TANK;
+	Category=SPHERE LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	// ------------------- external specs
-	UnitName=sphere_crustle;
-	UnitNumber=10024;
-	Objectname=sphere_crustle.3do;
-	buildpic=sphere_crustle.png;
-	SoundCategory=SPHERE_TANKSML;
+	unitName=sphere_crustle;
+	objectName=sphere_crustle.3do;
+	buildPic=sphere_crustle.png;
+	soundCategory=SPHERE_TANKSML;
 	Corpse=sphere_crustle_dead;
 
 
 	// ------------------- health/cost/size
 	FootprintX=3;
 	FootprintZ=3;
-	MaxDamage=1250;
+	maxDamage=1250;
 
 
 	// ------------------- resources
-	EnergyUse=0;
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyMake=0;
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	canguard=1;
-	canattack=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
 	Builder=0;
 
 	// ------------------- movement
-	MaxWaterDepth=12;
-	MaxSlope=17;
-	MaxVelocity=2;
-	BrakeRate=0.04;
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=2;
+	brakeRate=0.04;
 	Acceleration=0.06;
-	TurnRate=450;
-	SteeringMode=1;
-	MovementClass=TANKSH3;
+	turnRate=450;
+	movementClass=TANKSH3;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 
 	// ------------------- weapons
 	Weapon1=sphere_crustle_laser;
-	badtargetcategory1=NOTAIR;
-	ExplodeAs=SMALL_UNITEX;
-	SelfDestructAs=SMALL_UNIT;
+	badTargetCategory1=NOTAIR;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 
 	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
 
 	// ------------------- misc
-	Version=3.1;
-	Designation=CA_Ik;
-	BMcode=1;
-	ThreeD=1;
-	ZBuffer=1;
-	NoAutoFire=0;
-	ShootMe=1;
-	DefaultMissionType=Standby;
-	maneuverleashlength=640;
-	Downloadable=1;
+	noAutoFire=0;
 
 	leavetracks=1;
 	trackoffset=8;
@@ -97,10 +81,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:GLOWSML;
+		explosionGenerator0=custom:GLOWSML;
 	}
-	buildcostenergy=944;//#AUTO#
-	buildcostmetal=188;//#AUTO#
-	buildtime=2251;//#AUTO#
+	buildCostEnergy=944;//#AUTO#
+	buildCostMetal=188;//#AUTO#
+	buildTime=2251;//#AUTO#
 	mass=375;//#AUTO#
 }

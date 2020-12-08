@@ -6,39 +6,36 @@
 	side=Claw;
 	name=Shade;
 	description=Cloakable All-terrain Radar Jammer Robot;
-	icontype=allterrainjammer;
+	iconType=allterrainjammer;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW KBOT LEVEL2 NOTAIR NOTSUB;
-	tedclass=KBOT;
+	category=CLAW LEVEL2 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_shade;
-	unitnumber=20000;
-	objectname=claw_shade.3do;
+	unitName=claw_shade;
+	objectName=claw_shade.3do;
 	corpse=claw_shade_dead;
-	buildpic=claw_shade.png;
-	soundcategory=gear_JAM;
+	buildPic=claw_shade.png;
+	soundCategory=gear_JAM;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1000;
-	healtime=30;
+	maxDamage=1000;
 	footprintx=3;
 	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=20;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=20;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,73 +45,56 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	cancloak=1;
-	onoffable=1;
-	activatewhenbuilt=1;
+	onOffable=1;
+	activateWhenBuilt=1;
 	
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTAT;
-	turnrate=920;
+	movementClass=KBOTAT;
+	turnRate=920;
 	acceleration=1.45;
-	brakerate=1.5;
-	maxvelocity=1.7;
-	maxwaterdepth=12;
+	brakeRate=1.5;
+	maxVelocity=1.7;
+	maxWaterDepth=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	radardistancejam=600;
+	sightDistance=500;
+	radarDistance=0;
+	radarDistanceJam=600;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	cloakcost=50;
-	cloakcostmoving=105;
-	mincloakdistance=150;
-	bmcode=1;
-	designation=ATAS;
-	downloadable=1;
-	maneuverleashlength=640;
-	noselfdamage=1;
-	paralyzetime=5;   
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=NanoDebree;
-	pieceTrailCEGRange = 1;
+	cloakCost=50;
+	cloakCostMoving=105;
+	minCloakDistance=150;
+	initCloaked=1;  
 	collisionVolumeType = box;
 	collisionVolumeScales =28 25 28;
 	collisionVolumeOffsets = 0 -1 0;
@@ -129,11 +109,11 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:blueflaresml;
+		explosionGenerator0=custom:blueflaresml;
 	}
 
-	buildcostenergy=2512;//#AUTO#
-	buildcostmetal=502;//#AUTO#
-	buildtime=5987;//#AUTO#
+	buildCostEnergy=2512;//#AUTO#
+	buildCostMetal=502;//#AUTO#
+	buildTime=5987;//#AUTO#
 	mass=208;//#AUTO#
 }

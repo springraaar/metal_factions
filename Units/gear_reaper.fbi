@@ -3,42 +3,39 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Reaper;
 	description=Amphibious Heavy Assault Tank;
-	icontype=amphibassault;
+	iconType=amphibassault;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR TANK LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=TANK;
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_reaper;
-	unitnumber=128;
-	objectname=gear_reaper.3do;
+	unitName=gear_reaper;
+	objectName=gear_reaper.3do;
 	corpse=gear_reaper_dead;
-	buildpic=gear_reaper.png;
-	soundcategory=gear_TANK;
+	buildPic=gear_reaper.png;
+	soundCategory=gear_TANK;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=4700;
-	healtime=30;
+	maxDamage=4700;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,76 +45,60 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKBH4; //TANKSH3//
-	turnrate=399;
+	movementClass=TANKBH4; //TANKSH3//
+	turnRate=399;
 	acceleration=0.28125;
-	brakerate=0.0762939;
-	maxvelocity=1.65;
-	maxslope=12;
+	brakeRate=0.0762939;
+	maxVelocity=1.65;
+	maxSlope=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_reaper_cannon;
-	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=TB-PS4;
-	downloadable=1;
 	leavetracks=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
 	trackoffset=8;
 	trackstrength=8;
 	trackstretch=1;
 	tracktype=StdTank;
 	trackwidth=40;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =40 25 40;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -125,10 +106,10 @@
 	}
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:yellowflaremed;
+	explosionGenerator0=custom:yellowflaremed;
 	}
-	buildcostenergy=7088;//#AUTO#
-	buildcostmetal=1417;//#AUTO#
-	buildtime=16894;//#AUTO#
+	buildCostEnergy=7088;//#AUTO#
+	buildCostMetal=1417;//#AUTO#
+	buildTime=16894;//#AUTO#
 	mass=2635;//#AUTO#
 }

@@ -6,39 +6,36 @@
 	side=Gear;
 	name=Luminator;
 	description=Long Range Heavy Fire Support Robot;
-	icontype=mobileheavyfs;
+	iconType=mobileheavyfs;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=KBOT;
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_luminator;
-	unitnumber=217;
-	objectname=gear_luminator.3do;
+	unitName=gear_luminator;
+	objectName=gear_luminator.3do;
 	corpse=gear_luminator_dead;
-	buildpic=gear_luminator.png;
-	soundcategory=GEAR_BOTBIG;
+	buildPic=gear_luminator.png;
+	soundCategory=GEAR_BOTBIG;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=4500;
-	healtime=30;
+	maxDamage=4500;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,70 +45,58 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTHT4;
-	turnrate=556;
+	movementClass=KBOTHT4;
+	turnRate=556;
 	acceleration=0.9;
-	brakerate=1;
-	maxvelocity=1.15;
-	maxslope=14;
-	maxwaterdepth=12;
+	brakeRate=1;
+	maxVelocity=1.15;
+	maxSlope=14;
+	maxWaterDepth=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_luminator_heatray;
-	nochasecategory=VTOL;
+	noChaseCategory=VTOL;
 	onlytargetcategory1=NOTAIR;
-	explodeas=PENETRATOR_BLAST;
-	selfdestructas=PENETRATOR_BLAST;
+	explodeAs=PENETRATOR_BLAST;
+	selfDestructAs=PENETRATOR_BLAST;
 
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=KA-PS6;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	smoothanim=1;
-	steeringmode=2;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =40 80 40;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -121,14 +106,14 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:yellowflaremed;
-		explosiongenerator1=custom:hrglowbig1;
-		explosiongenerator2=custom:hrglowbig2;
-		explosiongenerator3=custom:hrglowbig3;
+		explosionGenerator0=custom:yellowflaremed;
+		explosionGenerator1=custom:hrglowbig1;
+		explosionGenerator2=custom:hrglowbig2;
+		explosionGenerator3=custom:hrglowbig3;
 	}
 
-	buildcostenergy=33738;//#AUTO#
-	buildcostmetal=6747;//#AUTO#
-	buildtime=80410;//#AUTO#
+	buildCostEnergy=33738;//#AUTO#
+	buildCostMetal=6747;//#AUTO#
+	buildTime=80410;//#AUTO#
 	mass=3374;//#AUTO#
 }

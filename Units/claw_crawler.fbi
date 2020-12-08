@@ -1,87 +1,69 @@
 [UNITINFO]
 	{
 	// ------------------- description
-	Side=Claw;
+	side=Claw;
 	Name=Crawler;
 	Description=Amphibious Artillery Robot;
-	icontype=amphibartillery;
+	iconType=amphibartillery;
 
 	// ------------------- categories
-	Category=CLAW KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
-	TEDClass=KBOT;
+	Category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	// ------------------- external specs
-	UnitName=claw_crawler;
-	UnitNumber=20000;
-	Objectname=claw_crawler.3do;
-	buildpic=claw_crawler.png;
-	SoundCategory=CLAW_BOTBIG;
+	unitName=claw_crawler;
+	objectName=claw_crawler.3do;
+	buildPic=claw_crawler.png;
+	soundCategory=CLAW_BOTBIG;
 	Corpse=claw_crawler_dead;
 
 
 	// ------------------- health/cost/size
 	FootprintX=4;
 	FootprintZ=4;
-	MaxDamage=3800;
+	maxDamage=3800;
 
 
 	// ------------------- resources
-	EnergyUse=0;
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyMake=0;
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	canguard=1;
-	canattack=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
 	Builder=0;
 
 	// ------------------- movement
-	MaxVelocity=1.1;
-	BrakeRate=0.25;
+	maxVelocity=1.1;
+	brakeRate=0.25;
 	Acceleration=0.25;
-	TurnRate=450;
-	SteeringMode=2;
-	MovementClass=KBOTUW3;
+	turnRate=450;
+	movementClass=KBOTUW3;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
-	SonarDistance=250;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=250;
 
 
 	// ------------------- weapons
 	Weapon1=claw_crawler_cannon;
-	badtargetcategory1=VTOL;
-	NoChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
 	hightrajectory=2;	
-	ExplodeAs=BIG_UNITEX;
-	SelfDestructAs=BIG_UNIT;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 
 	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
 
 	// ------------------- misc
-	Version=3.1;
-	Designation=CA_Ik;
-	BMcode=1;
-	ThreeD=1;
-	ZBuffer=1;
-	NoAutoFire=0;
-	ShootMe=1;
-	DefaultMissionType=Standby;
-	maneuverleashlength=640;
+	noAutoFire=0;
 	Upright=0;
-	Downloadable=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	collisionVolumeType = box;
 	collisionVolumeScales =45 40 45;
 	collisionVolumeOffsets = 0 0 0;
@@ -92,10 +74,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:yellowflaremed;
+		explosionGenerator0=custom:yellowflaremed;
 	}
-	buildcostenergy=10985;//#AUTO#
-	buildcostmetal=2197;//#AUTO#
-	buildtime=26182;//#AUTO#
+	buildCostEnergy=10985;//#AUTO#
+	buildCostMetal=2197;//#AUTO#
+	buildTime=26182;//#AUTO#
 	mass=1682;//#AUTO#
 }

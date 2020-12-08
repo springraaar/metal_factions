@@ -6,44 +6,40 @@
 	side=Claw;
 	name=Hazard;
 	description=Disguised Pop-up Rocket Launcher;
-	icontype=staticartilleryfs;
+	iconType=staticartilleryfs;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=CLAW LEVEL1 WEAPON NOTAIR NOTSUB;
-	tedclass=FORT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_hazard;
-	unitnumber=20000;
-	objectname=claw_hazard.3do;
+	unitName=claw_hazard;
+	objectName=claw_hazard.3do;
 	corpse=claw_hazard_dead;
-	buildpic=claw_hazard.png;
-	soundcategory=GUARD;
+	buildPic=claw_hazard.png;
+	soundCategory=GUARD;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1500;
-	healtime=11;
+	maxDamage=1500;
 	footprintx=2;
 	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=8192;
-	yardmap=oo oo;
+	yardMap=oo oo;
 	collisionVolumeType=Box;
 	collisionVolumeScales=30 60 30;
 	collisionVolumeOffsets=0 20 0;
@@ -53,57 +49,45 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=20;
-	maxwaterdepth=11;
+	maxSlope=20;
+	maxWaterDepth=11;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_hazard_rocket;
 	onlytargetcategory1=NOTAIR;
-	explodeas=LARGE_BUILDINGEX;
-	selfdestructas=LARGE_BUILDING;
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
 	stealth=1;
 	damagemodifier=0.50;
-	designation=ARM-GUARD;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -113,10 +97,10 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:ROCKETFLARESML;
+		explosionGenerator0=custom:ROCKETFLARESML;
 	}
-	buildcostenergy=1389;//#AUTO#
-	buildcostmetal=277;//#AUTO#
-	buildtime=3312;//#AUTO#
+	buildCostEnergy=1389;//#AUTO#
+	buildCostMetal=277;//#AUTO#
+	buildTime=3312;//#AUTO#
 	mass=934;//#AUTO#
 }

@@ -6,28 +6,26 @@
 	side=Claw;
 	name=Adv. Construction Ship;
 	description=Tech Level 2;
-	icontype=shipbuilder2;
+	iconType=shipbuilder2;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW SHIP LEVEL2 CONSTR NOTAIR NOTSUB;
-	tedclass=SHIP;
+	category=CLAW LEVEL2 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_adv_construction_ship;
-	unitnumber=20000;
-	objectname=claw_adv_construction_ship.3do;
+	unitName=claw_adv_construction_ship;
+	objectName=claw_adv_construction_ship.3do;
 	corpse=claw_adv_construction_ship_dead;
-	buildpic=claw_adv_construction_ship.png;
-	soundcategory=aven_CSHIP;
+	buildPic=claw_adv_construction_ship.png;
+	soundCategory=aven_CSHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3000;
+	maxDamage=3000;
 	footprintx=3;
 	footprintz=3;
 
@@ -35,10 +33,10 @@
 	//  Resources
 	//*************
 	metalmake=0.0;
-	metalstorage=0;
-	energymake=18;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=18;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,72 +46,57 @@
 	//  Constructor
 	//***************
 	builder=1;
-	builddistance=200;
-	workertime=300;
-	RepairSpeed=300;
-	ReclaimSpeed=300;
-	TerraformSpeed=600;
+	buildDistance=200;
+	workerTime=300;
+	repairSpeed=300;
+	reclaimSpeed=300;
+	terraformSpeed=600;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canreclamate=1;
-	canstop=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=Smallboat;
-	turnrate=600;
+	movementClass=Smallboat;
+	turnRate=600;
 	acceleration=0.04;
-	brakerate=0.02;
-	maxvelocity=2.1;
+	brakeRate=0.02;
+	maxVelocity=2.1;
 	minwaterdepth=15;
 	waterline=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	sonardistance=250;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=250;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=NANO_UNITEX;
-	selfdestructas=NANO_UNIT;
+	explodeAs=NANO_UNITEX;
+	selfDestructAs=NANO_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ARM-CS1;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =35 35 60;
 	collisionVolumeOffsets = 0 -10 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=NanoDebree;
-	pieceTrailCEGRange = 2;
 
 	[customParams] 
 	{
@@ -123,12 +106,12 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:Nano;
-		explosiongenerator1=custom:UNITFIRE;
+		explosionGenerator0=custom:Nano;
+		explosionGenerator1=custom:UNITFIRE;
 	}
 
-	buildcostenergy=6034;//#AUTO#
-	buildcostmetal=1206;//#AUTO#
-	buildtime=14381;//#AUTO#
+	buildCostEnergy=6034;//#AUTO#
+	buildCostMetal=1206;//#AUTO#
+	buildTime=14381;//#AUTO#
 	mass=1152;//#AUTO#
 }

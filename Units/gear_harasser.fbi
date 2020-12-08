@@ -3,42 +3,39 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Harasser;
 	description=Light Scout/Raider Vehicle;
-	icontype=mobileraider;
+	iconType=mobileraider;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR TANK LEVEL1 WEAPON NOTAIR NOTSUB;
-	tedclass=TANK;
+	category=GEAR LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_harasser;
-	unitnumber=103;
-	objectname=gear_harasser.3do;
+	unitName=gear_harasser;
+	objectName=gear_harasser.3do;
 	corpse=gear_harasser_dead;
-	buildpic=gear_harasser.png;
-	soundcategory=gear_VEHICLE;
+	buildPic=gear_harasser.png;
+	soundCategory=gear_VEHICLE;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=720;
-	healtime=30;
+	maxDamage=720;
 	footprintx=2;
 	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,82 +45,66 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKSH3;
-	turnrate=650;
+	movementClass=TANKSH3;
+	turnRate=650;
 	acceleration=0.072;
-	brakerate=0.051;
-	maxvelocity=3.5;
-	maxslope=18;
-	maxwaterdepth=12;
+	brakeRate=0.051;
+	maxVelocity=3.5;
+	maxSlope=18;
+	maxWaterDepth=12;
 	turninplace=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_harasser_laser;
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=MA-L8;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=0;
 	collisionVolumeType = box;
 	collisionVolumeScales =22 16 28;
 	collisionVolumeOffsets = 0 0 3;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:GLOWSML;
+		explosionGenerator0=custom:GLOWSML;
 	}
 	[CustomParams]
 	{
 		builtBy=gear_light_plant,gear_adv_kbot_plant,gear_adv_vehicle_plant;
 		evalfactor=1;
 	}
-	buildcostenergy=679;//#AUTO#
-	buildcostmetal=135;//#AUTO#
-	buildtime=1618;//#AUTO#
+	buildCostEnergy=679;//#AUTO#
+	buildCostMetal=135;//#AUTO#
+	buildTime=1618;//#AUTO#
 	mass=112;//#AUTO#
 }

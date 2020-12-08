@@ -3,30 +3,30 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=CLAW;
+	side=CLAW;
 	name=Metal Maker;
 	description=Converts up to 360 E/s into 2.5 M/s;
-	icontype=metal;
+	iconType=metal;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=CLAW METAL LEVEL2 NOTAIR NOTSUB;
-	tedclass=METAL;
+	tedClass=METAL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_metal_maker;
-	objectname=claw_metal_maker.3do;
+	unitName=claw_metal_maker;
+	objectName=claw_metal_maker.3do;
 	corpse=claw_metal_maker_dead;
-	buildpic=claw_metal_maker.png;
-	soundcategory=aven_maker;
+	buildPic=claw_metal_maker.png;
+	soundCategory=aven_maker;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1500;
+	maxDamage=1500;
 	footprintx=6;
 	footprintz=6;
 	collisionVolumeType=CylY;
@@ -35,60 +35,53 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=360;
+	metalStorage=0;
+	energyUse=360;
 	makesmetal=2.5;
-	energystorage=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=65535;
-	yardmap=oooooo oooooo oooooo oooooo oooooo oooooo;
-	activatewhenbuilt=0;
+	yardMap=oooooo oooooo oooooo oooooo oooooo oooooo;
+	activateWhenBuilt=0;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=0;
+	onOffable=0;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=MMAKER_BUILDING;
-	selfdestructas=MMAKER_BUILDING;
+	explodeAs=MMAKER_BUILDING;
+	selfDestructAs=MMAKER_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AE-ESF;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 
@@ -98,7 +91,7 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:mmakersmoke;
+		explosionGenerator0=custom:mmakersmoke;
 	}
 	buildcostenergy=3000;//#AUTO#
 	buildcostmetal=600;//#AUTO#

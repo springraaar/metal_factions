@@ -2,26 +2,26 @@
 	{
 
 	// ------------------- description
-	Side=Aven;
+	side=Aven;
 	Name=Long Range Rocket Platform;
 	Description=Builds long range rockets;
-	icontype=rocket_platform;
+	iconType=rocket_platform;
 
 	// ------------------- categories
 	Category=AVEN PLANT LEVEL2 NOTAIR NOTSUB;
-	TEDClass=PLANT;
+	tedClass=PLANT;
 
 	// ------------------- external specs
-	UnitName=aven_long_range_rocket_platform;
+	unitName=aven_long_range_rocket_platform;
 	UnitNumber=10000;
-	Objectname=aven_long_range_rocket_platform.3do;
-	buildpic=aven_long_range_rocket_platform.png;
+	objectName=aven_long_range_rocket_platform.3do;
+	buildPic=aven_long_range_rocket_platform.png;
 	script=long_range_rocket_platform.cob;
-	SoundCategory=aven_HOVER_PLANT;
+	soundCategory=aven_HOVER_PLANT;
 	Corpse=aven_long_range_rocket_platform_dead;
 
 	// ------------------- health/cost/size
-	MaxDamage=3500;
+	maxDamage=3500;
 	BuildCostEnergy=17500;
 	BuildCostMetal=3500;
 	BuildTime=42000;
@@ -31,30 +31,30 @@
 
 
 	// ------------------- resources
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyUse=0;
 
 
 	// ------------------- constructor
 	Builder=1;
-	WorkerTime=300;
+	workerTime=300;
 	canBeAssisted=1;
 
 
 	// ------------------- abilities
-	canmove=0;
-	canpatrol=0;
-	canattack=0;
+	canMove=0;
+	canPatrol=0;
+	canAttack=0;
 	canfight=0;
-	canguard=0;
-	canstop=1;
+	canGuard=0;
+	canStop=1;
 	
 	// ------------------- movement
 	buildangle=1024;
-	YardMap=ooooooooo ooooooooo oocccccoo oocccccoo oocccccoo oocccccoo oocccccoo ooooooooo ooooooooo; 
+	yardMap=ooooooooo ooooooooo oocccccoo oocccccoo oocccccoo oocccccoo oocccccoo ooooooooo ooooooooo; 
 	
-	MaxSlope=30;
+	maxSlope=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =130 30 130;
 	collisionVolumeOffsets = 0 0 0;
@@ -62,12 +62,12 @@
 	modelCenterOffset=0 0 0;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	// ------------------- weapons
-	ExplodeAs=LARGE_BUILDING;
-	SelfDestructAs=LARGE_BUILDING;
+	explodeAs=LARGE_BUILDING;
+	selfDestructAs=LARGE_BUILDING;
 
 	// ------------------- orders
 
@@ -77,7 +77,7 @@
 	BMcode=0;
 	ThreeD=1;
 	ZBuffer=1;
-	NoAutoFire=0;
+	noAutoFire=0;
 	downloadable=1;
 	floater=1;
 	waterline=0;

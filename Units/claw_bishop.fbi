@@ -1,85 +1,69 @@
 [UNITINFO]
 	{
 	// ------------------- description
-	Side=Claw;
-	Name=Bishop;
-	Description=Long Range Missile Robot;
-	icontype=mobilefs;
+	side=Claw;
+	name=Bishop;
+	description=Long Range Missile Robot;
+	iconType=mobilefs;
 
 	// ------------------- categories
-	Category=CLAW KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
-	TEDClass=KBOT;
+	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	// ------------------- external specs
-	UnitName=claw_bishop;
-	UnitNumber=11000;
-	Objectname=claw_bishop.3do;
-	buildpic=claw_bishop.png;
-	SoundCategory=CLAW_BOTMED;
-	Corpse=claw_bishop_dead;
+	unitName=claw_bishop;
+	objectName=claw_bishop.3do;
+	buildPic=claw_bishop.png;
+	soundCategory=CLAW_BOTMED;
+	corpse=claw_bishop_dead;
 
 
 	// ------------------- health/cost/size
 	FootprintX=3;
 	FootprintZ=3;
-	MaxDamage=2000;
+	maxDamage=2000;
 
 
 	// ------------------- resources
-	EnergyUse=0;
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyMake=0;
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	canguard=1;
-	canattack=1;
-	Builder=0;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	builder=0;
 
 	// ------------------- movement
-	MaxWaterDepth=12;
-	MaxSlope=17;
-	MaxVelocity=1.30;
-	BrakeRate=0.1;
-	Acceleration=0.2;
-	TurnRate=850;
-	SteeringMode=2;
-	MovementClass=KBOTHT4;
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.30;
+	brakeRate=0.1;
+	acceleration=0.2;
+	turnRate=850;
+	movementClass=KBOTHT4;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 
 	// ------------------- weapons
 	Weapon1=claw_bishop_missile;
-	badtargetcategory1=VTOL;
-	NoChaseCategory=VTOL;
-	ExplodeAs=SMALL_UNITEX;
-	SelfDestructAs=SMALL_UNIT;
+	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 
 	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
 
 	// ------------------- misc
-	Version=3.1;
-	Designation=CA_Ik;
-	BMcode=1;
-	ThreeD=1;
-	ZBuffer=1;
-	NoAutoFire=0;
-	ShootMe=1;
-	DefaultMissionType=Standby;
-	maneuverleashlength=640;
-	Upright=1;
-	Downloadable=1;
+	noAutoFire=0;
+	upright=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =42 55 36;
 	collisionVolumeOffsets = 0 0 0;
@@ -90,10 +74,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:rocketflarebig;
+		explosionGenerator0=custom:rocketflarebig;
 	}
-	buildcostenergy=7264;//#AUTO#
-	buildcostmetal=1452;//#AUTO#
-	buildtime=17314;//#AUTO#
+	buildCostEnergy=7264;//#AUTO#
+	buildCostMetal=1452;//#AUTO#
+	buildTime=17314;//#AUTO#
 	mass=984;//#AUTO#
 }

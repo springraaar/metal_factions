@@ -6,39 +6,36 @@
 	side=Claw;
 	name=Sickle;
 	description=All-terrain Cloakable Assault Robot;
-	icontype=allterrainfighter;
+	iconType=allterrainfighter;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=KBOT;
+	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_sickle;
-	unitnumber=20000;
-	objectname=claw_sickle.3do;
+	unitName=claw_sickle;
+	objectName=claw_sickle.3do;
 	corpse=claw_sickle_dead;
-	buildpic=claw_sickle.png;
-	soundcategory=Spider;
+	buildPic=claw_sickle.png;
+	soundCategory=Spider;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1000;
-	healtime=30;
+	maxDamage=1000;
 	footprintx=3;
 	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,75 +45,59 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTAT;
-	turnrate=1020;
+	movementClass=KBOTAT;
+	turnRate=1020;
 	acceleration=1.52588;
-	brakerate=1.52588;
-	maxvelocity=1.7;
-	maxwaterdepth=12;
+	brakeRate=1.52588;
+	maxVelocity=1.7;
+	maxWaterDepth=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_sickle_laser;
-	weaponmaindir1=0 1 0;
-	maxangledif1=280;
-	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
+	weaponMainDir1=0 1 0;
+	maxAngleDif1=280;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	// ------------------- stealth
-	cloakcost=15;
-	cloakcostmoving=30;
-	mincloakdistance=80;
+	cloakCost=15;
+	cloakCostMoving=30;
+	minCloakDistance=80;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ATAS;
-	downloadable=1;
-	maneuverleashlength=640;
 	noselfdamage=1;
 	paralyzetime=5;   
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=NanoDebree;
-	pieceTrailCEGRange = 1;
 	collisionVolumeType = box;
 	collisionVolumeScales =28 23 28;
 	collisionVolumeOffsets = 0 -1 0;
@@ -128,11 +109,11 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:blueflaresml;
+		explosionGenerator0=custom:blueflaresml;
 	}
 
-	buildcostenergy=2014;//#AUTO#
-	buildcostmetal=402;//#AUTO#
-	buildtime=4801;//#AUTO#
+	buildCostEnergy=2014;//#AUTO#
+	buildCostMetal=402;//#AUTO#
+	buildTime=4801;//#AUTO#
 	mass=192;//#AUTO#
 }

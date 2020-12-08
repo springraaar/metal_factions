@@ -3,31 +3,31 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Sphere;
+	side=Sphere;
 	name=Large Fortification Gate;
 	description=Perimeter Defense;
-	icontype=walllarge;
+	iconType=walllarge;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW LEVEL2 NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=SPHERE LEVEL1 NOTAIR NOTSUB;
+	tedClass=FORT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_fortification_gate;
-	objectname=sphere_fortification_gate.3do;
+	unitName=sphere_fortification_gate;
+	objectName=sphere_fortification_gate.3do;
 	corpse=rock_gate;
 	script=fortification_gate.cob;
-	buildpic=sphere_fortification_gate.png;
-	soundcategory=gate;
+	buildPic=sphere_fortification_gate.png;
+	soundCategory=gate;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=7500;
+	maxDamage=7500;
 	buildcostmetal=650;
 	buildcostenergy=3250;
 	buildtime=7750;
@@ -37,16 +37,15 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=0;
-	yardmap=cccc cccc cccc cccc;
+	yardMap=cccc cccc cccc cccc;
 	collisionVolumeType = box;
 	collisionVolumeScales =64 170 64;
 	collisionVolumeOffsets = 0 0 0;
@@ -56,13 +55,13 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=1;
-	activatewhenbuilt=0;
+	onOffable=1;
+	activateWhenBuilt=0;
 	isfeature=0;
 	canSelfDestruct=0;
 	power=1;
@@ -70,24 +69,24 @@
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=32;
+	maxSlope=32;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=0;
-	radardistance=0;
+	sightDistance=0;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=WALLLARGE;
-	selfdestructas=WALLLARGE;
+	explodeAs=WALLLARGE;
+	selfDestructAs=WALLLARGE;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous

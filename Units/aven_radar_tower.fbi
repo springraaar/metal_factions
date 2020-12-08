@@ -3,93 +3,82 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Radar Tower;
 	description=Radar Tower;
-	icontype=staticradar;
+	iconType=staticradar;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN SPECIAL LEVEL1 NOTAIR NOTSUB;
-	tedclass=SPECIAL;
+	category=AVEN LEVEL1 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_radar_tower;
-	unitnumber=56;
-	objectname=aven_radar_tower.3do;
+	unitName=aven_radar_tower;
+	objectName=aven_radar_tower.3do;
 	corpse=aven_radar_tower_dead;
-	buildpic=aven_radar_tower.png;
-	soundcategory=aven_RADAR;
+	buildPic=aven_radar_tower.png;
+	soundCategory=aven_RADAR;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=600;
+	maxDamage=600;
 	footprintx=3;
 	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=15;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=15;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=8192;
-	yardmap=ooo ooo ooo;
-	activatewhenbuilt=1;
+	yardMap=ooo ooo ooo;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=1;
+	onOffable=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=2100;
+	sightDistance=500;
+	radarDistance=2100;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=SMALL_BUILDINGEX;
-	selfdestructas=SMALL_BUILDING;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AS-EWDL;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	collisionVolumeType=cyly;
 	collisionVolumeScales=46 60 42;
 	collisionVolumeOffsets=0 0 0;
@@ -101,8 +90,8 @@
 	{
 		builtBy=aven_l1builder,aven_l2builder;
 	}
-	buildcostenergy=632;//#AUTO#
-	buildcostmetal=126;//#AUTO#
-	buildtime=1507;//#AUTO#
+	buildCostEnergy=632;//#AUTO#
+	buildCostMetal=126;//#AUTO#
+	buildTime=1507;//#AUTO#
 	mass=192;//#AUTO#
 }

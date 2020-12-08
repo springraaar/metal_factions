@@ -1,78 +1,69 @@
 [UNITINFO]
 	{
 	// ------------------- description
-	Side=Sphere;
+	side=Sphere;
 	Name=Double;
 	Description=Raider Vehicle;
-	icontype=mobileraider;
+	iconType=mobileraider;
 
 	// ------------------- categories
-	Category=SPHERE TANK LEVEL1 WEAPON NOTAIR NOTSUB;
-	TEDClass=TANK;
+	Category=SPHERE LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	// ------------------- external specs
-	UnitName=sphere_double;
-	UnitNumber=10011;
-	Objectname=sphere_double.3do;
-	buildpic=sphere_double.png;
-	SoundCategory=SPHERE_TANKSML;
+	unitName=sphere_double;
+	objectName=sphere_double.3do;
+	buildPic=sphere_double.png;
+	soundCategory=SPHERE_TANKSML;
 	Corpse=sphere_double_dead;
 
 
 	// ------------------- health/cost/size
 	FootprintX=3;
 	FootprintZ=3;
-	MaxDamage=920;
+	maxDamage=920;
 
 
 	// ------------------- resources
-	EnergyUse=0;
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyMake=0;
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	canguard=1;
-	canattack=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
 	Builder=0;
 
 	// ------------------- movement
-	MaxWaterDepth=12;
-	MaxSlope=17;
-	MaxVelocity=2.9;
-	BrakeRate=0.06;
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=2.9;
+	brakeRate=0.06;
 	Acceleration=0.12;
-	TurnRate=650;
-	SteeringMode=1;
+	turnRate=650;
 	turninplace=0;
-	MovementClass=TANKSH3;
+	movementClass=TANKSH3;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 
 	// ------------------- weapons
 	Weapon1=sphere_double_blaster;
-	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
-	ExplodeAs=SMALL_UNITEX;
-	SelfDestructAs=SMALL_UNIT;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 
 	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
 
 	// ------------------- misc
-	Version=3.1;
-	NoAutoFire=0;
-	DefaultMissionType=Standby;
+	noAutoFire=0;
 	leavetracks=1;
 	trackoffset=8;
 	trackstrength=5;
@@ -90,10 +81,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:redflare;
+		explosionGenerator0=custom:redflare;
 	}
-	buildcostenergy=1128;//#AUTO#
-	buildcostmetal=225;//#AUTO#
-	buildtime=2689;//#AUTO#
+	buildCostEnergy=1128;//#AUTO#
+	buildCostMetal=225;//#AUTO#
+	buildTime=2689;//#AUTO#
 	mass=152;//#AUTO#
 }

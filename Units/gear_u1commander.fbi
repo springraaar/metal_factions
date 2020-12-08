@@ -3,32 +3,32 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Commander;
 	description=Raider Form;
-	icontype=gear_commander;
+	iconType=gear_commander;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=GEAR commander LEVEL1 WEAPON NOTAIR NOTSUB;
-	tedclass=COMMANDER;
+	tedClass=COMMANDER;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_u1commander;
+	unitName=gear_u1commander;
 	unitnumber=94;
-	objectname=gear_u1commander.3do;
-	buildpic=gear_u1commander.png;
-	soundcategory=gear_COM;
+	objectName=gear_u1commander.3do;
+	buildPic=gear_u1commander.png;
+	soundCategory=gear_COM;
 	corpse=gear_u1commander_dead;
 	script=gear_u1commander.cob;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3750;
+	maxDamage=3750;
 	healtime=100;
 	buildcostmetal=2000;
 	buildcostenergy=20000;
@@ -44,58 +44,58 @@
 	//  Resources
 	//*************
 	metalmake=2;
-	energymake=50;
-	energyuse=0;
+	energyMake=50;
+	energyUse=0;
 	metalStorage=0;
 	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=1;
-	builddistance=200;
-	workertime=300;
-        RepairSpeed=300;
-        ReclaimSpeed=300;
-        TerraformSpeed=600;
+	buildDistance=200;
+	workerTime=300;
+        repairSpeed=300;
+        reclaimSpeed=300;
+        terraformSpeed=600;
         capturespeed=200;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
+	canAttack=1;
 	cancapture=1;
 	candgun=0;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
 	canreclamate=1;
-	canstop=1;
+	canStop=1;
 	upright=1;
 	autoheal=12;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTDS2;
-	turnrate=1030;
+	movementClass=KBOTDS2;
+	turnRate=1030;
 	acceleration=0.36;
-	brakerate=0.32;
-	maxvelocity=2.26;
-	maxslope=20;
-	maxwaterdepth=35;
+	brakeRate=0.32;
+	maxVelocity=2.26;
+	maxSlope=20;
+	maxWaterDepth=35;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=800;
-	sonardistance=800;
+	sightDistance=500;
+	radarDistance=800;
+	sonarDistance=800;
 
 	//************************************************************
 	//  Weapons
@@ -104,12 +104,12 @@
 	weapon2=gear_u1commander_torpedo;
 	weapon3=gear_u1commander_missile;
 	slaveto1=3;
-	nochasecategory=WEAPON;
-	badtargetcategory1=VTOL;
+	noChaseCategory=WEAPON;
+	badTargetCategory1=VTOL;
 	onlytargetcategory2=NOTAIR;
-	badtargetcategory3=VTOL;
-	explodeas=gear_commander_nanoblast;
-	selfdestructas=gear_commander_nanoblast;
+	badTargetCategory3=VTOL;
+	explodeAs=gear_commander_nanoblast;
+	selfDestructAs=gear_commander_nanoblast;
 
 	//************************************************************
 	//  Orders
@@ -124,15 +124,15 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
-	cloakcost=50;
-	cloakcostmoving=150;
+	cloakCost=50;
+	cloakCostMoving=150;
 	commander=1;
 	designation=CX-D3;
 	downloadable=1;
 	hidedamage=0;
 	immunetoparalyzer=1;
 	maneuverleashlength=640;
-	mincloakdistance=170;
+	minCloakDistance=170;
 	norestrict=1;
 	shootme=1;
 	showplayername=1;
@@ -160,9 +160,9 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:rocketflaremed;
-		explosiongenerator1=custom:Nano;
-		explosiongenerator2=custom:FIREFLARE;
-		explosiongenerator3=custom:DGUNREADYFLARE;
+		explosionGenerator0=custom:rocketflaremed;
+		explosionGenerator1=custom:Nano;
+		explosionGenerator2=custom:FIREFLARE;
+		explosionGenerator3=custom:DGUNREADYFLARE;
 	}
 }

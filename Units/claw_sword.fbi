@@ -6,118 +6,98 @@
 	side=Claw;
 	name=Sword;
 	description=High-Damage Assault Ship;
-	icontype=shipassault;
+	iconType=shipassault;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW SHIP LEVEL1 WEAPON NOTAIR NOTSUB;
-	tedclass=SHIP;
+	category=CLAW LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_sword;
-	unitnumber=20000;
-	objectname=claw_sword.3do;
+	unitName=claw_sword;
+	objectName=claw_sword.3do;
 	corpse=claw_sword_dead;
-	buildpic=claw_sword.png;
-	soundcategory=gear_SHIP;
+	buildPic=claw_sword.png;
+	soundCategory=gear_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1750;
-	healtime=30;
+	maxDamage=1750;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=smallboat;
-	turnrate=450;
+	movementClass=smallboat;
+	turnRate=450;
 	acceleration=0.04;
-	brakerate=0.009;
-	maxvelocity=2.6;
+	brakeRate=0.009;
+	maxVelocity=2.6;
 	minwaterdepth=12;
 	waterline=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	sonardistance=250;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=250;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_sword_laser;
-	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=SA-AS4;
-	downloadable=1;
-	maneuverleashlength=640;
 	scale=0.6;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =30 35 50;
 	collisionVolumeOffsets = 0 -10 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -127,10 +107,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:yellowflaremed;
+		explosionGenerator0=custom:yellowflaremed;
 	}
-	buildcostenergy=2369;//#AUTO#
-	buildcostmetal=473;//#AUTO#
-	buildtime=5646;//#AUTO#
+	buildCostEnergy=2369;//#AUTO#
+	buildCostMetal=473;//#AUTO#
+	buildTime=5646;//#AUTO#
 	mass=595;//#AUTO#
 }

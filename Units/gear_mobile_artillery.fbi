@@ -6,39 +6,36 @@
 	side=Gear;
 	name=Barrager;
 	description=Fast-firing Artillery;
-	icontype=mobileartillery;
+	iconType=mobileartillery;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR TANK LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=TANK;
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_mobile_artillery;
-	unitnumber=117;
-	objectname=gear_mobile_artillery.3do;
+	unitName=gear_mobile_artillery;
+	objectName=gear_mobile_artillery.3do;
 	corpse=gear_mobile_artillery_dead;
-	buildpic=gear_mobile_artillery.png;
-	soundcategory=gear_TANK;
+	buildPic=gear_mobile_artillery.png;
+	soundCategory=gear_TANK;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=4100;
-	healtime=30;
+	maxDamage=4100;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,91 +45,76 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKSH4;
-	turnrate=400;
+	movementClass=TANKSH4;
+	turnRate=400;
 	acceleration=0.36;
-	brakerate=0.8;
-	maxvelocity=1;
-	maxslope=12;
-	maxwaterdepth=0;
+	brakeRate=0.8;
+	maxVelocity=1;
+	maxSlope=12;
+	maxWaterDepth=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_barrager_cannon;
-	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
-	explodeas=HUGE_UNIT;
-	selfdestructas=HUGE_UNIT;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=HUGE_UNIT;
+	selfDestructAs=HUGE_UNIT;
 	onlytargetcategory1=NOTAIR;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=MB-PS15;
-	downloadable=1;
 	hightrajectory=2;
 	leavetracks=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
 	trackoffset=7;
 	trackstrength=6;
 	trackstretch=1;
 	tracktype=StdTank;
 	trackwidth=42;
-	version=1.2;
 	collisionVolumeType = box;
 	collisionVolumeScales =50 40 45;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	scale=1.2;
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:yellowflaremed;
+		explosionGenerator0=custom:yellowflaremed;
 	}
 	[CustomParams]
 	{
 		builtBy=gear_adv_vehicle_plant;
 		canAreaAttack=1;
 	}
-	buildcostenergy=17552;//#AUTO#
-	buildcostmetal=3510;//#AUTO#
-	buildtime=41833;//#AUTO#
+	buildCostEnergy=17552;//#AUTO#
+	buildCostMetal=3510;//#AUTO#
+	buildTime=41833;//#AUTO#
 	mass=2195;//#AUTO#
 }

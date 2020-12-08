@@ -6,118 +6,97 @@
 	side=Sphere;
 	name=Stalwart;
 	description=Artillery Battleship;
-	icontype=shipartillery;
+	iconType=shipartillery;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE SHIP LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=SHIP;
+	category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_stalwart;
-	unitnumber=10000;
-	objectname=sphere_stalwart.3do;
+	unitName=sphere_stalwart;
+	objectName=sphere_stalwart.3do;
 	corpse=sphere_stalwart_dead;
-	buildpic=sphere_stalwart.png;
-	soundcategory=aven_SHIP;
+	buildPic=sphere_stalwart.png;
+	soundCategory=aven_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=14000;
-	healtime=30;
+	maxDamage=14000;
 	footprintx=8;
 	footprintz=8;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
-	windgenerator=0.001;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=LARGEBOAT;
-	turnrate=102;
+	movementClass=LARGEBOAT;
+	turnRate=102;
 	acceleration=0.01;
-	brakerate=0.003;
-	maxvelocity=0.9;
+	brakeRate=0.003;
+	maxVelocity=0.9;
 	minwaterdepth=10;
 	waterline=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=sphere_stalwart_cannon;
 	weapon2=sphere_stalwart_missile;
-	nochasecategory=WEAPON;
-	badtargetcategory1=VTOL;
-	explodeas=HUGE_UNIT;
-	selfdestructas=ATOMIC_BLASTSML;
+	noChaseCategory=WEAPON;
+	badTargetCategory1=VTOL;
+	explodeAs=HUGE_UNIT;
+	selfDestructAs=ATOMIC_BLASTSML;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ASD-SB;
-	downloadable=1;
-	maneuverleashlength=640;
 	scale=0.6;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =70 65 135;
 	collisionVolumeOffsets = 0 -20 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -128,13 +107,13 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:yellowflarebig;
-		explosiongenerator1=custom:rocketflaremed;
-		explosiongenerator2=custom:UNITFIRE;
+		explosionGenerator0=custom:yellowflarebig;
+		explosionGenerator1=custom:rocketflaremed;
+		explosionGenerator2=custom:UNITFIRE;
 	}
 
-	buildcostenergy=55209;//#AUTO#
-	buildcostmetal=11041;//#AUTO#
-	buildtime=131581;//#AUTO#
+	buildCostEnergy=55209;//#AUTO#
+	buildCostMetal=11041;//#AUTO#
+	buildTime=131581;//#AUTO#
 	mass=11488;//#AUTO#
 }

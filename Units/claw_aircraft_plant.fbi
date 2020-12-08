@@ -2,47 +2,44 @@
 	{
 
 	// ------------------- description
-	Side=Claw;
+	side=Claw;
 	Name=Aircraft Factory;
 	Description=Builds level1 aircraft;
-	icontype=plant;
+	iconType=plant;
 
 	// ------------------- categories
 	Category=CLAW PLANT LEVEL1 NOTAIR NOTSUB;
-	TEDClass=PLANT;
 
 	// ------------------- external specs
-	UnitName=claw_aircraft_plant;
-	UnitNumber=20000;
-	Objectname=claw_aircraft_plant.3do;
-	buildpic=claw_aircraft_plant.png;
-	SoundCategory=gear_HOVER_PLANT;
+	unitName=claw_aircraft_plant;
+	objectName=claw_aircraft_plant.3do;
+	buildPic=claw_aircraft_plant.png;
+	soundCategory=gear_HOVER_PLANT;
 	Corpse=claw_aircraft_plant_dead;
 
 	// ------------------- health/cost/size
-	MaxDamage=2900;
+	maxDamage=2900;
 	FootprintX=8;
 	FootprintZ=6;
 
 
 	// ------------------- resources
-	EnergyStorage=100;
-	MetalStorage=100;
-	EnergyUse=0;
+	energyStorage=100;
+	metalStorage=100;
+	energyUse=0;
 
 	// ------------------- constructor
 	Builder=1;
-	WorkerTime=200;
+	workerTime=200;
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	
 	// ------------------- movement
-	buildangle=1024;
-	YardMap=ooccccoo ooccccoo ooccccoo ooccccoo ooccccoo ooccccoo; 
-	MaxSlope=14;
+	yardMap=ooccccoo ooccccoo ooccccoo ooccccoo ooccccoo ooccccoo; 
+	maxSlope=14;
 	collisionVolumeType = box;
 	collisionVolumeScales =130 35 100;
 	collisionVolumeOffsets=0 -5 0;
@@ -50,29 +47,29 @@
 	floater=1;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	// ------------------- weapons
-	ExplodeAs=LARGE_BUILDINGEX;
-	SelfDestructAs=LARGE_BUILDING;
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
 
 	// ------------------- orders
 
 
 	// ------------------- misc
-	NoAutoFire=0;
+	noAutoFire=0;
 	[CustomParams]
 	{
 		builtBy=claw_l1builder,claw_l2builder;
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:Nano;
+		explosionGenerator0=custom:Nano;
 	}
 
-	buildcostenergy=4207;//#AUTO#
-	buildcostmetal=841;//#AUTO#
-	buildtime=6618;//#AUTO#
+	buildCostEnergy=4207;//#AUTO#
+	buildCostMetal=841;//#AUTO#
+	buildTime=6618;//#AUTO#
 	mass=2010;//#AUTO#
 }

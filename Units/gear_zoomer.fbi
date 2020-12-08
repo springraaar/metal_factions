@@ -6,27 +6,27 @@
 	side=GEAR;
 	name=Zoomer;
 	description=Air Scout / Long Range Scoper;
-	icontype=airscoper;
+	iconType=airscoper;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=GEAR VTOL LEVEL1 NOTSUB;
-	tedclass=VTOL;
+	tedClass=VTOL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_zoomer;
+	unitName=gear_zoomer;
 	unitnumber=10000;
-	objectname=gear_zoomer.3do;
-	buildpic=gear_zoomer.png;
-	soundcategory=gear_VTOL;
+	objectName=gear_zoomer.3do;
+	buildPic=gear_zoomer.png;
+	soundCategory=gear_VTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=300;
+	maxDamage=300;
 	healtime=30;
 	footprintx=3;
 	footprintz=3;
@@ -34,10 +34,10 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -47,57 +47,57 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canfly=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	turnrate=700;
+	turnRate=700;
 	acceleration=0.4;
-	brakerate=0.07;
-	maxvelocity=4.5;
-	maxslope=10;
+	brakeRate=0.07;
+	maxVelocity=4.5;
+	maxSlope=10;
 	
-	cruisealt=180;
+	cruiseAlt=180;
 
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
-	radardistance=0;
+	sightDistance=600;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=scoper_beacon;
-	badtargetcategory1=VTOL;
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
+	badTargetCategory1=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 	moveState=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
 	collide=1;
-	hoverattack=1;
-	airhoverfactor=1.1;
-	airstrafe=0;
+	hoverAttack=1;
+	airHoverFactor=1.1;
+	airStrafe=0;
 	upright=1;
 	minCollisionSpeed=30;
 	collisionVolumeType = box;

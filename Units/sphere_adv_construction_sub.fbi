@@ -6,29 +6,26 @@
 	side=Sphere;
 	name=Adv. Construction Sub;
 	description=Tech Level 2;
-	icontype=subbuilder2;
+	iconType=subbuilder2;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE UNDERWATER LEVEL2 CONSTR NOTAIR;
-	tedclass=SHIP;
+	category=SPHERE UNDERWATER LEVEL2 NOTAIR;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_adv_construction_sub;
-	unitnumber=10000;
-	objectname=sphere_adv_construction_sub.3do;
+	unitName=sphere_adv_construction_sub;
+	objectName=sphere_adv_construction_sub.3do;
 	corpse=sphere_adv_construction_sub_dead;
-	buildpic=sphere_adv_construction_sub.png;
-	soundcategory=gear_CSUB;
+	buildPic=sphere_adv_construction_sub.png;
+	soundCategory=gear_CSUB;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1900;
-	healtime=75;
+	maxDamage=1900;
 	footprintx=4;
 	footprintz=4;
 
@@ -36,10 +33,10 @@
 	//  Resources
 	//*************
 	metalmake=0.0;
-	metalstorage=0;
-	energymake=17;
-	energyuse=0.1;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=17;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -49,61 +46,55 @@
 	//  Constructor
 	//***************
 	builder=1;
-	builddistance=200;
-	workertime=300;
-        RepairSpeed=300;
-        ReclaimSpeed=300;
-        TerraformSpeed=600;
+	buildDistance=200;
+	workerTime=300;
+        repairSpeed=300;
+        reclaimSpeed=300;
+        terraformSpeed=600;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canreclamate=1;
-	canstop=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
 	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=BOATSUB;
-	turnrate=556;
+	movementClass=BOATSUB;
+	turnRate=556;
 	acceleration=0.1;
-	brakerate=0.08;
-	maxvelocity=1.9;
+	brakeRate=0.08;
+	maxVelocity=1.9;
 	maxreversevelocity=0.95;
 	minwaterdepth=20;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	sonardistance=500;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=500;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=NANO_UNITEX;
-	selfdestructas=NANO_UNIT;
+	explodeAs=NANO_UNITEX;
+	selfDestructAs=NANO_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
 	waterline=40;
-	pieceTrailCEGTag=NanoDebree;
-	pieceTrailCEGRange = 2;
 	collisionVolumeType = box;
 	collisionVolumeScales =40 20 52;
 	collisionVolumeOffsets = 0 0 0;
@@ -116,12 +107,12 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:Nano;
-		explosiongenerator1=custom:UNITFIRE;
+		explosionGenerator0=custom:Nano;
+		explosionGenerator1=custom:UNITFIRE;
 	}
 
-	buildcostenergy=4820;//#AUTO#
-	buildcostmetal=964;//#AUTO#
-	buildtime=11489;//#AUTO#
+	buildCostEnergy=4820;//#AUTO#
+	buildCostMetal=964;//#AUTO#
+	buildTime=11489;//#AUTO#
 	mass=398;//#AUTO#
 }

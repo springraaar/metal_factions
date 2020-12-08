@@ -46,8 +46,7 @@ avenLandAssault = {
 			factories = {
 				{name="aven_nano_tower",min=1,max=1},
 				{name="aven_light_plant",min=1,max=1},
-				{name="aven_commander_respawner",min=1,max=1},
-				{name="aven_scout_pad",min=1,max=1}
+				{name="aven_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
 				{name="aven_construction_kbot",min=1,max=6,weight=0.2},

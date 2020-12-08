@@ -3,42 +3,39 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Instigator;
 	description=Light Tank;
-	icontype=mobilefighter;
+	iconType=mobilefighter;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR TANK LEVEL1 WEAPON NOTAIR  NOTSUB;
-	tedclass=TANK;
+	category=GEAR LEVEL1 WEAPON NOTAIR  NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_instigator;
-	unitnumber=108;
-	objectname=gear_instigator.3do;
+	unitName=gear_instigator;
+	objectName=gear_instigator.3do;
 	corpse=gear_instigator_dead;
-	buildpic=gear_instigator.png;
-	soundcategory=gear_TANK;
+	buildPic=gear_instigator.png;
+	soundCategory=gear_TANK;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1100;
-	healtime=30;
+	maxDamage=1100;
 	footprintx=2;
 	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,76 +45,60 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKSH3;
-	turnrate=600;
+	movementClass=TANKSH3;
+	turnRate=600;
 	acceleration=0.3;
-	brakerate=0.0976563;
-	maxvelocity=2.15;
-	maxslope=10;
-	maxwaterdepth=12;
+	brakeRate=0.0976563;
+	maxVelocity=2.15;
+	maxSlope=10;
+	maxWaterDepth=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=GATOR_LASER;
-	badtargetcategory1=NOTAIR;
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
+	badTargetCategory1=NOTAIR;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=TA-PB4;
-	downloadable=1;
 	leavetracks=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
 	trackoffset=5;
 	trackstrength=5;
 	trackstretch=1;
 	tracktype=StdTank;
 	trackwidth=24;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =23 17 30;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -125,11 +106,11 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:GLOWSML;
+		explosionGenerator0=custom:GLOWSML;
 	}
 
-	buildcostenergy=998;//#AUTO#
-	buildcostmetal=199;//#AUTO#
-	buildtime=2378;//#AUTO#
+	buildCostEnergy=998;//#AUTO#
+	buildCostMetal=199;//#AUTO#
+	buildTime=2378;//#AUTO#
 	mass=341;//#AUTO#
 }

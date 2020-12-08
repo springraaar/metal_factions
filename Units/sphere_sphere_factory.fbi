@@ -2,51 +2,43 @@
 	{
 
 	// ------------------- description
-	Side=Sphere;
+	side=Sphere;
 	Name=Sphere Factory;
 	Description=Builds level 2 Flying Spheres;
-	icontype=plant2;
+	iconType=plant2;
 
 	// ------------------- categories
 	Category=SPHERE PLANT LEVEL2 NOTAIR NOTSUB;
-	TEDClass=PLANT;
 
 	// ------------------- external specs
-	UnitName=sphere_sphere_factory;
-	UnitNumber=10000;
-	Objectname=sphere_sphere_factory.3do;
-	buildpic=sphere_sphere_factory.png;
-	SoundCategory=gear_HOVER_PLANT;
+	unitName=sphere_sphere_factory;
+	objectName=sphere_sphere_factory.3do;
+	buildPic=sphere_sphere_factory.png;
+	soundCategory=gear_HOVER_PLANT;
 	Corpse=sphere_sphere_factory_dead;
 
 	// ------------------- health/cost/size
-	MaxDamage=4500;
+	maxDamage=4500;
 	FootprintX=10;
 	FootprintZ=10;
-	idleautoheal=5;
-
 
 	// ------------------- resources
-	EnergyStorage=100;
-	MetalStorage=100;
-	EnergyUse=0;
-
+	energyStorage=100;
+	metalStorage=100;
+	energyUse=0;
 
 	// ------------------- constructor
 	Builder=1;
-	WorkerTime=300;
-
-
+	workerTime=300;
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	
 	// ------------------- movement
-	buildangle=1024;
-	YardMap=ccoooooocc ccoooooocc ooccccccoo ooccccccoo ooccccccoo ooccccccoo ooccccccoo ooccccccoo ccoooooocc ccoooooocc ; 
-	MaxSlope=14;
+	yardMap=ccoooooocc ccoooooocc ooccccccoo ooccccccoo ooccccccoo ooccccccoo ooccccccoo ooccccccoo ccoooooocc ccoooooocc ; 
+	maxSlope=14;
 	collisionVolumeType = box;
 	collisionVolumeScales =150 50 150;
 	collisionVolumeOffsets = 0 -10 0;
@@ -54,28 +46,16 @@
 	floater=1;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	// ------------------- weapons
-	ExplodeAs=LARGE_BUILDINGEX;
-	SelfDestructAs=LARGE_BUILDING;
-
-	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
 
 
 	// ------------------- misc
-	Version=3.1;
-	Designation=CA-lFCT;
-	BMcode=0;
-	ThreeD=1;
-	ZBuffer=1;
-	NoAutoFire=0;
-	downloadable=1;
+	noAutoFire=0;
 
 	[CustomParams]
 	{
@@ -83,11 +63,11 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:Nano;
+		explosionGenerator0=custom:Nano;
 	}
 
-	buildcostenergy=8537;//#AUTO#
-	buildcostmetal=1707;//#AUTO#
-	buildtime=20346;//#AUTO#
+	buildCostEnergy=8537;//#AUTO#
+	buildCostMetal=1707;//#AUTO#
+	buildTime=20346;//#AUTO#
 	mass=3388;//#AUTO#
 }

@@ -3,42 +3,39 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Bold;
 	description=Light Tank;
-	icontype=mobileassault;
+	iconType=mobileassault;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN TANK LEVEL1 WEAPON NOTAIR NOTSUB;
-	tedclass=TANK;
+	category=AVEN LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_bold;
-	unitnumber=66;
-	objectname=aven_bold.3do;
+	unitName=aven_bold;
+	objectName=aven_bold.3do;
 	corpse=aven_bold_dead;
-	buildpic=aven_bold.png;
-	soundcategory=aven_TANK;
+	buildPic=aven_bold.png;
+	soundCategory=aven_TANK;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1450;
-	healtime=30;
+	maxDamage=1450;
 	footprintx=3;
 	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,77 +45,61 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKSH3;
-	turnrate=528;
+	movementClass=TANKSH3;
+	turnRate=528;
 	acceleration=0.24; 
-	brakerate=0.1;
-	maxvelocity=2;
-	maxslope=10;
-	maxwaterdepth=12;
+	brakeRate=0.1;
+	maxVelocity=2;
+	maxSlope=10;
+	maxWaterDepth=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=aven_LIGHTCANNON;
-	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ARM-FA5;
-	downloadable=1;
 	leavetracks=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
 	trackoffset=3;
 	trackstrength=6;
 	trackstretch=1;
 	tracktype=StdTank;
 	trackwidth=24;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =27 17 28;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -126,11 +107,11 @@
 	}
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:yellowflaresml;
+	explosionGenerator0=custom:yellowflaresml;
 	}
 
-	buildcostenergy=1113;//#AUTO#
-	buildcostmetal=222;//#AUTO#
-	buildtime=2654;//#AUTO#
+	buildCostEnergy=1113;//#AUTO#
+	buildCostMetal=222;//#AUTO#
+	buildTime=2654;//#AUTO#
 	mass=436;//#AUTO#
 }

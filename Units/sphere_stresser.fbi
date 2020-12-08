@@ -6,123 +6,103 @@
 	side=Sphere;
 	name=Stresser;
 	description=Shielded Missile Cruiser;
-	icontype=shipfs;
+	iconType=shipfs;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE SHIP LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=SHIP;
+	category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_stresser;
-	unitnumber=10000;
-	objectname=sphere_stresser.3do;
+	unitName=sphere_stresser;
+	objectName=sphere_stresser.3do;
 	corpse=sphere_stresser_dead;
-	buildpic=sphere_stresser.png;
-	soundcategory=aven_SHIP;
+	buildPic=sphere_stresser.png;
+	soundCategory=aven_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=6500;
-	healtime=30;
+	maxDamage=6500;
 	footprintx=6;
 	footprintz=6;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=25;
-	energyuse=15;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=25;
+	energyUse=15;
+	energyStorage=0;
 	windgenerator=0.0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=LARGEBOAT;
-	turnrate=152;
+	movementClass=LARGEBOAT;
+	turnRate=152;
 	acceleration=0.02;
-	brakerate=0.0045;
-	maxvelocity=1.45;
+	brakeRate=0.0045;
+	maxVelocity=1.45;
 	minwaterdepth=10;
 	waterline=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=sphere_stresser_missile;
-	weaponmaindir1=0 0 -1;
-	maxangledif1=300;
+	weaponMainDir1=0 0 -1;
+	maxAngleDif1=300;
 	weapon2=sphere_stresser_missile2;
-	weaponmaindir2=0 0 1;
-	maxangledif2=300;
+	weaponMainDir2=0 0 1;
+	maxAngleDif2=300;
 	weapon3=sphere_stresser_shield;
-	nochasecategory=WEAPON;
-	badtargetcategory1=NOTAIR;
-	badtargetcategory2=NOTAIR;
-	explodeas=HUGE_UNIT;
-	selfdestructas=ATOMIC_BLASTSML;
+	noChaseCategory=WEAPON;
+	badTargetCategory1=NOTAIR;
+	badTargetCategory2=NOTAIR;
+	explodeAs=HUGE_UNIT;
+	selfDestructAs=ATOMIC_BLASTSML;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ASD-SB;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =60 65 110;
 	collisionVolumeOffsets = 0 -20 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -131,12 +111,12 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:rocketflarebig;
-		explosiongenerator1=custom:rocketflaresml;
-		explosiongenerator2=custom:UNITFIRE;
+		explosionGenerator0=custom:rocketflarebig;
+		explosionGenerator1=custom:rocketflaresml;
+		explosionGenerator2=custom:UNITFIRE;
 	}
-	buildcostenergy=21869;//#AUTO#
-	buildcostmetal=4373;//#AUTO#
-	buildtime=52123;//#AUTO#
+	buildCostEnergy=21869;//#AUTO#
+	buildCostMetal=4373;//#AUTO#
+	buildTime=52123;//#AUTO#
 	mass=4932;//#AUTO#
 }

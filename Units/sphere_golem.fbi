@@ -1,90 +1,72 @@
 [UNITINFO]
 	{
 	// ------------------- description
-	Side=Sphere;
+	side=Sphere;
 	Name=Golem;
 	Description=Amphibious Shielded Armored Assault Robot;
-	icontype=amphibmulti;
+	iconType=amphibassault;
 
 	// ------------------- categories
-	Category=SPHERE KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
-	TEDClass=KBOT;
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	// ------------------- external specs
-	UnitName=sphere_golem;
-	UnitNumber=10020;
-	Objectname=sphere_golem.3do;
-	buildpic=sphere_golem.png;
-	SoundCategory=SPHERE_BOTBIG;
+	unitName=sphere_golem;
+	objectName=sphere_golem.3do;
+	buildPic=sphere_golem.png;
+	soundCategory=SPHERE_BOTBIG;
 	Corpse=sphere_golem_dead;
 
 
 	// ------------------- health/cost/size
 	FootprintX=3;
 	FootprintZ=3;
-	MaxDamage=8000;
+	maxDamage=8000;
 
 
 	// ------------------- resources
-	EnergyUse=0;
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyMake=0;
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	canguard=1;
-	canattack=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
 	Builder=0;
 
 	// ------------------- movement
-	MaxWaterDepth=12;
-	MaxSlope=17;
-	MaxVelocity=0.85;
-	BrakeRate=0.25;
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=0.85;
+	brakeRate=0.25;
 	Acceleration=0.15;
-	TurnRate=650;
-	SteeringMode=2;
-	MovementClass=KBOTUW4;
+	turnRate=650;
+	movementClass=KBOTUW4;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
-	sonardistance=250;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=250;
 
 
 	// ------------------- weapons
 	Weapon1=sphere_golem_cannon;
-	badtargetcategory1=VTOL;
+	badTargetCategory1=VTOL;
 	Weapon2=sphere_golem_missile;
-	NoChaseCategory=VTOL;
+	noChaseCategory=VTOL;
 	Weapon3=sphere_golem_shield;
-	ExplodeAs=BIG_UNITEX;
-	SelfDestructAs=BIG_UNIT;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 
 	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
 
 	// ------------------- misc
-	Version=3.1;
-	Designation=CA_Ik;
-	BMcode=1;
-	ThreeD=1;
-	ZBuffer=1;
-	NoAutoFire=0;
-	ShootMe=1;
-	DefaultMissionType=Standby;
-	maneuverleashlength=640;
+	noAutoFire=0;
 	Upright=0;
-	Downloadable=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	collisionVolumeType = box;
 	collisionVolumeScales =55 50 55;
 	collisionVolumeOffsets = 0 0 0;
@@ -96,12 +78,12 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:REDFLAREBIG;
-		explosiongenerator1=custom:rocketflaresml;
+		explosionGenerator0=custom:REDFLAREBIG;
+		explosionGenerator1=custom:rocketflaresml;
 		
 	}
-	buildcostenergy=17708;//#AUTO#
-	buildcostmetal=3541;//#AUTO#
-	buildtime=42206;//#AUTO#
+	buildCostEnergy=17708;//#AUTO#
+	buildCostMetal=3541;//#AUTO#
+	buildTime=42206;//#AUTO#
 	mass=5088;//#AUTO#
 }

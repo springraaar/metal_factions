@@ -7,12 +7,12 @@
 
 piece  base,torso, hips, l_thigh, r_thigh, left, right, rleg, rfoot, lleg, lfoot, canister, barrel, flare,c2,c3,c4;
 
-static-var  bMoving, bAiming, Static_Var_4, restore_delay, canAim;
+static-var  bMoving, bAiming, oldPitch, targetPitch;
 
 // Signal definitions
 #define SIG_AIM				2
 
-
+lua_turnToTarget() { return 0; }
 
 walklegs()
 {
@@ -296,22 +296,30 @@ MotionControl(moving, aiming, justmoved)
 	}
 }
 
+aimTracker() {
+	targetPitch = <0>;
+	while(TRUE) {
+		if (targetPitch > <-91>) {
+			if (targetPitch != oldPitch ) {
+				wait-for-turn canister around x-axis;
+				oldPitch = targetPitch;
+			}
+		}
+		sleep 30;
+	}
+}
+
 Create()
 {
 	hide flare;
 	turn canister to x-axis <-90.000000> now;
+	oldPitch = <90>;
+	targetPitch = <-91>;
 	bMoving = FALSE;
 	bAiming = FALSE;
-	canAim = TRUE;
-	Static_Var_4 = 0;
-	restore_delay = 3000;
+	start-script aimTracker();
 	start-script MotionControl();
 	start-script SmokeUnit();
-}
-
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
 }
 
 StartMoving()
@@ -327,9 +335,11 @@ StopMoving()
 
 RestoreAfterDelay()
 {
-	sleep restore_delay;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
 	turn canister to x-axis <-90.000000> speed <45.005495>;
 	wait-for-turn canister around x-axis;
+	oldPitch = <90>;
+	targetPitch = <-91>;
 	bAiming = FALSE;
 }
 
@@ -355,11 +365,24 @@ AimPrimary(heading, pitch)
 {
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	
+	targetPitch = pitch;
 	bAiming = TRUE;
+
+	// make unit turn to face target 	
+	while (heading < <-10> || heading > <10>) {
+		if (bMoving && (heading < <-15> || heading > <15>)) {
+			return (0);
+		}	
+		call-script lua_turnToTarget(1);
+		sleep 100;
+	}
+	
 	turn canister to x-axis <0.000000> - (pitch) speed <130.038462>;
-	wait-for-turn canister around x-axis;
+	if (get ABS (pitch - oldPitch) > <20>) {
+		wait-for-turn canister around x-axis;
+	}
 	start-script RestoreAfterDelay();
+	
 	return (1);
 }
 

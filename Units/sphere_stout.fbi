@@ -6,42 +6,40 @@
 	side=SPHERE;
 	name=Stout;
 	description=Armored Gun Turret;
-	icontype=staticassault;
+	iconType=staticassault;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=SPHERE LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_stout;
-	objectname=sphere_stout.3do;
+	unitName=sphere_stout;
+	objectName=sphere_stout.3do;
 	corpse=sphere_stout_dead;
-	buildpic=sphere_stout.png;
-	soundcategory=COR_KBOT;
+	buildPic=sphere_stout.png;
+	soundCategory=COR_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=4750;
+	maxDamage=4750;
 	footprintx=3;
 	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=2048;
-	yardmap=ooo ooo ooo;
+	yardMap=ooo ooo ooo;
 	collisionVolumeType=CylY;
 	collisionVolumeScales=50 50 50;
 	collisionVolumeOffsets=0 0 -5;
@@ -51,55 +49,43 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
-	maxwaterdepth=22;
+	maxSlope=10;
+	maxWaterDepth=22;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=sphere_stout_cannon;
-	badtargetcategory1=VTOL;
-	explodeas=MEDIUM_BUILDINGEX;
-	selfdestructas=MEDIUM_BUILDING;
+	badTargetCategory1=VTOL;
+	explodeAs=MEDIUM_BUILDINGEX;
+	selfDestructAs=MEDIUM_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=COR-PUN;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -108,11 +94,11 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:yellowflaresml;
+		explosionGenerator0=custom:yellowflaresml;
 	}
 
-	buildcostenergy=3429;//#AUTO#
-	buildcostmetal=685;//#AUTO#
-	buildtime=8172;//#AUTO#
+	buildCostEnergy=3429;//#AUTO#
+	buildCostMetal=685;//#AUTO#
+	buildTime=8172;//#AUTO#
 	mass=4530;//#AUTO#
 }

@@ -3,31 +3,29 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Beamer;
 	description=Pop-up Medium Laser Tower;
-	icontype=staticfs;
+	iconType=staticfs;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR WEAPON level1 NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=GEAR WEAPON LEVEL1 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_beamer;
-	objectname=gear_beamer.3do;
+	unitName=gear_beamer;
+	objectName=gear_beamer.3do;
 	corpse=gear_beamer_dead;
-	buildpic=gear_beamer.png;
-	soundcategory=LLT;
+	buildPic=gear_beamer.png;
+	soundCategory=LLT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1850;
-	healtime=11;
+	maxDamage=1850;
 	footprintx=3;
 	footprintz=3;
 	damageModifier=0.5;	
@@ -35,15 +33,14 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=32768;
-	yardmap=ooo ooo ooo;
+	yardMap=ooo ooo ooo;
 	collisionVolumeType = CylY;
 	collisionVolumeScales =38 63 38;
 	collisionVolumeOffsets = 0 8 0;
@@ -53,54 +50,42 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=20;
-	maxwaterdepth=2;
+	maxSlope=20;
+	maxWaterDepth=2;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_beamer_laser;
-	explodeas=MEDIUM_BUILDINGEX;
-	selfdestructas=MEDIUM_BUILDING;
+	explodeAs=MEDIUM_BUILDINGEX;
+	selfDestructAs=MEDIUM_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=F-L44;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -110,11 +95,11 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:GLOWSML;
+		explosionGenerator0=custom:GLOWSML;
 	}
 
-	buildcostenergy=4010;//#AUTO#
-	buildcostmetal=802;//#AUTO#
-	buildtime=9558;//#AUTO#
+	buildCostEnergy=4010;//#AUTO#
+	buildCostMetal=802;//#AUTO#
+	buildTime=9558;//#AUTO#
 	mass=1458;//#AUTO#
 }

@@ -1,84 +1,69 @@
 [UNITINFO]
 {
 	// ------------------- description
-	Side=Sphere;
+	side=Sphere;
 	Name=Quad;
 	Description=Medium Fast Attack Vehicle;
-	icontype=mobileraider;
+	iconType=mobileraider;
 
 	// ------------------- categories
-	Category=SPHERE TANK LEVEL2 WEAPON NOTAIR NOTSUB;
-	TEDClass=TANK;
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	// ------------------- external specs
-	UnitName=sphere_quad;
-	UnitNumber=10000;
-	Objectname=sphere_quad.3do;
-	buildpic=sphere_quad.png;
-	SoundCategory=SPHERE_TANKSML;
+	unitName=sphere_quad;
+	objectName=sphere_quad.3do;
+	buildPic=sphere_quad.png;
+	soundCategory=SPHERE_TANKSML;
 	Corpse=sphere_quad_dead;
 
 
 	// ------------------- health/cost/size
 	FootprintX=3;
 	FootprintZ=3;
-	MaxDamage=1000;
+	maxDamage=1000;
 
 
 	// ------------------- resources
-	EnergyUse=1;
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyMake=1;
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	canguard=1;
-	canattack=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
 	Builder=0;
 
 	// ------------------- movement
-	MaxWaterDepth=12;
-	MaxSlope=17;
-	MaxVelocity=3.0;
-	BrakeRate=0.1;
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=3.0;
+	brakeRate=0.1;
 	Acceleration=0.1;
-	TurnRate=650;
-	SteeringMode=1;
+	turnRate=650;
 	turninplace=0;
-	MovementClass=TANKSH3;
+	movementClass=TANKSH3;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 
 	// ------------------- weapons
 	Weapon1=sphere_quad_laser;
-	badtargetcategory1=NOTAIR;
-	NoChaseCategory=VTOL;
-	ExplodeAs=SMALL_UNITEX;
-	SelfDestructAs=SMALL_UNIT;
+	badTargetCategory1=NOTAIR;
+	noChaseCategory=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 
 	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
 
 	// ------------------- misc
-	Version=3.1;
-	Designation=CA_Ik;
-	BMcode=1;
-	ThreeD=1;
-	ZBuffer=1;
-	NoAutoFire=0;
-	ShootMe=1;
-	DefaultMissionType=Standby;
-	maneuverleashlength=640;
+	noAutoFire=0;
 
 	leavetracks=1;
 	trackoffset=8;
@@ -87,7 +72,6 @@
 	tracktype=StdTank;
 	trackwidth=35;
 
-	Downloadable=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =30 20 30;
 	collisionVolumeOffsets = 0 0 0;
@@ -99,10 +83,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:GLOWSML;
+		explosionGenerator0=custom:GLOWSML;
 	}
-	buildcostenergy=1523;//#AUTO#
-	buildcostmetal=304;//#AUTO#
-	buildtime=3631;//#AUTO#
+	buildCostEnergy=1523;//#AUTO#
+	buildCostMetal=304;//#AUTO#
+	buildTime=3631;//#AUTO#
 	mass=351;//#AUTO#
 }

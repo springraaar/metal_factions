@@ -3,40 +3,38 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Ghost;
 	description=Stealth Bomber;
-	icontype=airbomber;
+	iconType=airbomber;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN VTOL LEVEL2 WEAPON BOMB NOTSUB  ;
-	tedclass=VTOL;
+	category=AVEN VTOL LEVEL2 WEAPON NOTSUB  ;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_ghost;
-	objectname=aven_ghost.3do;
-	buildpic=aven_ghost.png;
-	soundcategory=aven_VTOL;
+	unitName=aven_ghost;
+	objectName=aven_ghost.3do;
+	buildPic=aven_ghost.png;
+	soundCategory=aven_VTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2500;
-	healtime=30;
+	maxDamage=2500;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=50;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=50;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -46,93 +44,83 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	candropflare=0;
-	canfly=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canDropFlare=0;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	turnrate=365;
+	turnRate=365;
 	acceleration=0.2;
-	brakerate=0.1;
-	maxvelocity=5.0;
-	maxslope=10;
-	maxwaterdepth=2;
-	cruisealt=250;
-	hoverattack=1;
+	brakeRate=0.1;
+	maxVelocity=5.0;
+	maxSlope=10;
+	maxWaterDepth=2;
+	cruiseAlt=230;
+	hoverAttack=1;
 	upright=1;
 
 	// flight behaviour
-	wingdrag=0.07;      //0.07
-	wingangle=0.08;	//0.08;
+	wingDrag=0.07;      //0.07
+	wingAngle=0.08;	//0.08;
 	drag=0.08;		//0.08
-	fronttospeed=0.1;  //0.1
-	speedtofront=0.07; //0.07
-	mygravity=0.4; //0.4
-	maxbank=0.8;	//0.8
-	maxpitch=0.45;	//0.45
-	turnradius=350; //500
-	maxaileron=0.01;	//0.015
-	maxelevator=0.01;	//0.01
-	maxrudder=0.01;  //0.004
+	frontToSpeed=0.1;  //0.1
+	speedToFront=0.07; //0.07
+	myGravity=0.4; //0.4
+	maxBank=0.8;	//0.8
+	maxPitch=0.45;	//0.45
+	turnRadius=350; //500
+	maxAileron=0.01;	//0.015
+	maxElevator=0.01;	//0.01
+	maxRudder=0.01;  //0.004
 	maxAcc=0.365; //0.065
 
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
-	radardistance=0;
-	radardistancejam=600;
+	sightDistance=600;
+	radarDistance=0;
+	radarDistanceJam=600;
 
 	// stealth
-	cloakcost=150;
-	cloakcostmoving=300;
-	mincloakdistance=250;
+	cloakCost=150;
+	cloakCostMoving=300;
+	minCloakDistance=250;
 
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=aven_ghost_bomb;
-	nochasecategory=UNDERWATER;
+	noChaseCategory=UNDERWATER;
 	onlytargetcategory1=NOTAIR;
-	explodeas=HBOMBER;
-	selfdestructas=HBOMBER;
+	explodeAs=HBOMBER;
+	selfDestructAs=HBOMBER;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	attackrunlength=225;
 	bankingallowed=0;
-	bmcode=1;
 	scale=1;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	collide=1;
-	minCollisionSpeed=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =70 15 40;
 	collisionVolumeOffsets = 0 0 0;
@@ -148,8 +136,8 @@
 	{
 	
 	}
-	buildcostenergy=17937;//#AUTO#
-	buildcostmetal=3587;//#AUTO#
-	buildtime=42750;//#AUTO#
+	buildCostEnergy=17937;//#AUTO#
+	buildCostMetal=3587;//#AUTO#
+	buildTime=42750;//#AUTO#
 	mass=910;//#AUTO#
 }

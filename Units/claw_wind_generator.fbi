@@ -6,44 +6,41 @@
 	side=Claw;
 	name=Wind Generator;
 	description=Produces Energy;
-	icontype=energy;
+	iconType=energy;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=CLAW ENERGY LEVEL1 NOTAIR NOTSUB;
-	tedclass=ENERGY;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_wind_generator;
-	unitnumber=20000;
-	objectname=claw_wind_generator.3do;
+	unitName=claw_wind_generator;
+	objectName=claw_wind_generator.3do;
 	corpse=claw_wind_generator_dead;
-	buildpic=claw_wind_generator.png;
-	soundcategory=aven_WIND;
+	buildPic=claw_wind_generator.png;
+	soundCategory=aven_WIND;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=420;
+	maxDamage=420;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=8192;
-	yardmap=ooooo ooooo ooooo ooooo ooooo;
-	activatewhenbuilt=1;
+	yardMap=ooooo ooooo ooooo ooooo ooooo;
+	activateWhenBuilt=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =52 101 49;
 	collisionVolumeOffsets = 0 -2 -6;
@@ -53,7 +50,7 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
@@ -62,46 +59,38 @@
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
-	maxwaterdepth=36;
+	maxSlope=10;
+	maxWaterDepth=36;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_BUILDING;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AE-WPG;
-	downloadable=1;
-	threed=1;
-	version=1.2;
 	windgenerator=40;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
 		builtBy=claw_l1builder,claw_l2builder;
 	}
 
-	buildcostenergy=560;//#AUTO#
-	buildcostmetal=112;//#AUTO#
-	buildtime=1336;//#AUTO#
+	buildCostEnergy=560;//#AUTO#
+	buildCostMetal=112;//#AUTO#
+	buildTime=1336;//#AUTO#
 	mass=142;//#AUTO#
 }

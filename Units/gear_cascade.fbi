@@ -3,41 +3,38 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Cascade;
 	description=Heavy Carpet Bomber;
-	icontype=airbomber;
+	iconType=airbomber;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR VTOL LEVEL2 WEAPON  NOTSUB;
-	tedclass=VTOL;
+	category=GEAR VTOL LEVEL2 WEAPON NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_cascade;
-	unitnumber=112;
-	objectname=gear_cascade.3do;
-	buildpic=gear_cascade.png;
-	soundcategory=gear_VTOL;
+	unitName=gear_cascade;
+	objectName=gear_cascade.3do;
+	buildPic=gear_cascade.png;
+	soundCategory=gear_VTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3800;
-	healtime=30;
+	maxDamage=3800;
 	footprintx=6;
 	footprintz=6;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.6;
-	energyuse=0.6;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -47,92 +44,73 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	candropflare=0;
-	canfly=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canDropFlare=0;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	turnrate=256;
+	turnRate=256;
 	acceleration=0.1;
-	brakerate=0.03;
-	maxvelocity=8.1;
-	maxslope=10;
+	brakeRate=0.03;
+	maxVelocity=8.1;
+	maxSlope=10;
 	
-	cruisealt=230;
+	cruiseAlt=210;
 
 	// flight behaviour
-	wingdrag=0.07;      //0.07
-	wingangle=0.08;	//0.08;
+	wingDrag=0.07;      //0.07
+	wingAngle=0.08;	//0.08;
 	drag=0.08;		//0.08
-	fronttospeed=0.1;  //0.1
-	speedtofront=0.07; //0.07
-	mygravity=0.4; //0.4
-	maxbank=0.8;	//0.8
-	maxpitch=0.45;	//0.45
-	turnradius=350; //500
-	maxaileron=0.01;	//0.015
-	maxelevator=0.01;	//0.01
-	maxrudder=0.01;  //0.004
+	frontToSpeed=0.1;  //0.1
+	speedToFront=0.07; //0.07
+	myGravity=0.4; //0.4
+	maxBank=0.8;	//0.8
+	maxPitch=0.45;	//0.45
+	turnRadius=350; //500
+	maxAileron=0.01;	//0.015
+	maxElevator=0.01;	//0.01
+	maxRudder=0.01;  //0.004
 	maxAcc=0.125; //0.065
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
-	radardistance=0;
+	sightDistance=600;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_cascade_bomb;
-	nochasecategory=UNDERWATER;
+	noChaseCategory=UNDERWATER;
 	onlytargetcategory1=NOTAIR;
-	explodeas=HBOMBER;
-	selfdestructas=HBOMBER;
+	explodeAs=HBOMBER;
+	selfDestructAs=HBOMBER;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=VTOL_standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	altfromsealevel=1;
-	attackrunlength=290;
-	bmcode=1;
-	designation=VA-B3;
-	downloadable=1;
 	flaredelay=0.3;
 	flaredropvector=0 0 -1;
 	flareefficieny=0.25;
 	flarereload=3;
-	maneuverleashlength=1280;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	collide=1;
-	minCollisionSpeed=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =70 15 55;
 	collisionVolumeOffsets = 0 0 0;
@@ -145,8 +123,8 @@
 	[SFXTypes]
 	{
 	}
-	buildcostenergy=18076;//#AUTO#
-	buildcostmetal=3615;//#AUTO#
-	buildtime=43082;//#AUTO#
+	buildCostEnergy=18076;//#AUTO#
+	buildCostMetal=3615;//#AUTO#
+	buildTime=43082;//#AUTO#
 	mass=1077;//#AUTO#
 }

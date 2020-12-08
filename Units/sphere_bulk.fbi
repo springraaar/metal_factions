@@ -1,90 +1,74 @@
 [UNITINFO]
 	{
 	// ------------------- description
-	Side=Sphere;
+	side=Sphere;
 	Name=Bulk;
 	Description=Amphibious Heavy Assault Tank;
-	icontype=amphibassault;
+	iconType=amphibassault;
 
 	// ------------------- categories
-	Category=SPHERE TANK LEVEL2 WEAPON NOTAIR NOTSUB;
-	TEDClass=TANK;
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	// ------------------- external specs
-	UnitName=sphere_bulk;
-	UnitNumber=10025;
-	Objectname=sphere_bulk.3do;
-	buildpic=sphere_bulk.png;
-	SoundCategory=gear_TANK;
+	unitName=sphere_bulk;
+	objectName=sphere_bulk.3do;
+	buildPic=sphere_bulk.png;
+	soundCategory=gear_TANK;
 	Corpse=sphere_bulk_dead;
 
 
 	// ------------------- health/cost/size
 	FootprintX=3;
 	FootprintZ=3;
-	MaxDamage=5500;
+	maxDamage=5500;
 
 
 	// ------------------- resources
-	EnergyUse=0;
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyMake=0;
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	canguard=1;
-	canattack=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
 	Builder=0;
 
 	// ------------------- movement
-	MaxWaterDepth=12;
-	MaxSlope=17;
-	MaxVelocity=1.4;
-	BrakeRate=0.04;
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.4;
+	brakeRate=0.04;
 	Acceleration=0.05;
-	TurnRate=350;
-	SteeringMode=1;
-	MovementClass=TANKDH3;
+	turnRate=350;
+	movementClass=TANKDH3;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
+	sightDistance=500;
+	radarDistance=0;
 	sonarDistance=250;
 
 	// ------------------- weapons
 	Weapon1=sphere_bulk_cannon;
-	badtargetcategory1=VTOL;
-	NoChaseCategory=VTOL;
-	ExplodeAs=BIG_UNITEX;
-	SelfDestructAs=BIG_UNIT;
+	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 
 	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
 
 	// ------------------- misc
-	Version=3.1;
-	Designation=CA_Ik;
-	BMcode=1;
-	ThreeD=1;
-	ZBuffer=1;
-	NoAutoFire=0;
-	ShootMe=1;
+	noAutoFire=0;
 	leavetracks=1;
 	trackoffset=8;
 	trackstrength=5;
 	trackstretch=1;
 	tracktype=StdTank;
 	trackwidth=50;
-	DefaultMissionType=Standby;
-	maneuverleashlength=640;
-	Downloadable=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =40 25 40;
 	collisionVolumeOffsets = 0 0 0;
@@ -96,10 +80,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:yellowflaresml;
+		explosionGenerator0=custom:yellowflaresml;
 	}
-	buildcostenergy=7019;//#AUTO#
-	buildcostmetal=1403;//#AUTO#
-	buildtime=16730;//#AUTO#
+	buildCostEnergy=7019;//#AUTO#
+	buildCostMetal=1403;//#AUTO#
+	buildTime=16730;//#AUTO#
 	mass=2948;//#AUTO#
 }

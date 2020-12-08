@@ -6,52 +6,49 @@
 	side=Sphere;
 	name=Aegis;
 	description=Base Defense Shield;
-	icontype=building;
+	iconType=building;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE LEVEL3 NOTAIR NOTSUB;
-	tedclass=ENERGY;
+	category=SPHERE LEVEL2 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_aegis;
-	unitnumber=1004;
-	objectname=sphere_aegis.3do;
-	//objectname=sphere_ruby_sphere.3do;
+	unitName=sphere_aegis;
+	objectName=sphere_aegis.3do;
+	//objectName=sphere_ruby_sphere.3do;
 	//script=sphere_ruby_sphere.cob;
 	corpse=sphere_aegis_dead;
-	buildpic=sphere_aegis.png;
-	soundcategory=aven_ESTOR;
+	buildPic=sphere_aegis.png;
+	soundCategory=aven_ESTOR;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=6000;
+	maxDamage=6000;
 	footprintx=6;
 	footprintz=6;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=1000;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=1000;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=65535;
-	yardmap=oooooo oooooo oooooo oooooo oooooo oooooo;
-	activatewhenbuilt=1;
+	yardMap=oooooo oooooo oooooo oooooo oooooo oooooo;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
@@ -60,44 +57,33 @@
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon2=sphere_aegis_shield;
-	ExplodeAs=STATIC_SHIELD_BLAST;
-	SelfDestructAs=STATIC_SHIELD_BLAST;
+	explodeAs=STATIC_SHIELD_BLAST;
+	selfDestructAs=STATIC_SHIELD_BLAST;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AE-ESF;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =80 60 80;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -107,10 +93,10 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:Glow;
+		explosionGenerator0=custom:Glow;
 	}
-	buildcostenergy=18951;//#AUTO#
-	buildcostmetal=3790;//#AUTO#
-	buildtime=45167;//#AUTO#
+	buildCostEnergy=18951;//#AUTO#
+	buildCostMetal=3790;//#AUTO#
+	buildTime=45167;//#AUTO#
 	mass=8842;//#AUTO#
 }

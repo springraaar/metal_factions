@@ -6,38 +6,35 @@
 	side=Claw;
 	name=Trident;
 	description=Ground/Sea Attack Aircraft. Can hit underwater units;
-	icontype=airbomber;
+	iconType=airbomber;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=CLAW VTOL LEVEL2 WEAPON NOTSUB;
-	tedclass=VTOL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_trident;
-	unitnumber=20000;
-	objectname=claw_trident.3do;
-	buildpic=claw_trident.png;
-	soundcategory=aven_SEAPLN;
+	unitName=claw_trident;
+	objectName=claw_trident.3do;
+	buildPic=claw_trident.png;
+	soundCategory=aven_SEAPLN;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1300;
-	healtime=30;
+	maxDamage=1300;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -47,74 +44,57 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canfly=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	turnrate=600;
+	turnRate=600;
 	acceleration=0.2;
-	brakerate=2;
-	maxvelocity=5.3;
-	maxslope=10;
-	cruisealt=110;
+	brakeRate=2;
+	maxVelocity=5.3;
+	maxSlope=10;
+	cruiseAlt=110;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
-	sonardistance=600;
-	radardistance=0;
+	sightDistance=600;
+	sonarDistance=600;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_trident_rocket;
-	nochasecategory=VTOL;
+	noChaseCategory=VTOL;
 	onlytargetcategory1=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=MEDIUM_UNIT;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=MEDIUM_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=VTOL_standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ARM-SGB;
-	downloadable=1;
-	hoverattack=1;
+	hoverAttack=1;
 	hoverradius=10;
-	maneuverleashlength=1280;
 	moverate1=8;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	collide=1;
-	minCollisionSpeed=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =45 20 45;
 	collisionVolumeOffsets = 0 0 0;
@@ -126,10 +106,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:ROCKETFLARESML;
+		explosionGenerator0=custom:ROCKETFLARESML;
 	}
-	buildcostenergy=6775;//#AUTO#
-	buildcostmetal=1355;//#AUTO#
-	buildtime=16147;//#AUTO#
+	buildCostEnergy=6775;//#AUTO#
+	buildCostMetal=1355;//#AUTO#
+	buildTime=16147;//#AUTO#
 	mass=388;//#AUTO#
 }

@@ -3,47 +3,45 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Solar Collector;
 	description=Produces 20 E/s;
-	icontype=energy;
+	iconType=energy;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=AVEN ENERGY LEVEL1 NOTAIR NOTSUB;
-	tedclass=ENERGY;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_solar_collector;
-	unitnumber=63;
-	objectname=aven_solar_collector.3do;
+	unitName=aven_solar_collector;
+	objectName=aven_solar_collector.3do;
 	corpse=aven_solar_collector_dead;
-	buildpic=aven_solar_collector.png;
-	soundcategory=aven_SOLAR;
+	buildPic=aven_solar_collector.png;
+	soundCategory=aven_SOLAR;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=560;
+	maxDamage=560;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=-20;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=20;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
-	yardmap=ooooo ooooo ooooo ooooo ooooo;
-	activatewhenbuilt=1;
+	yardMap=ooooo ooooo ooooo ooooo ooooo;
+	activateWhenBuilt=1;
 	collisionvolumetype=box;
 	collisionVolumeScales=70 12 70;
 	collisionVolumeOffsets=0 0 1;
@@ -53,54 +51,46 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=1;
+	onOffable=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
-	maxwaterdepth=2;
+	maxSlope=10;
+	maxWaterDepth=2;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=SMALL_BUILDINGEX;
-	selfdestructas=SMALL_BUILDING;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AE-SC;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=NanoDebree;
-	pieceTrailCEGRange = 1;
 
 	[CustomParams]
 	{
 		builtBy=aven_l1builder,aven_l2builder;
 	}
-	buildcostenergy=681;//#AUTO#
-	buildcostmetal=136;//#AUTO#
-	buildtime=1623;//#AUTO#
+	buildCostEnergy=681;//#AUTO#
+	buildCostMetal=136;//#AUTO#
+	buildTime=1623;//#AUTO#
 	mass=184;//#AUTO#
 }

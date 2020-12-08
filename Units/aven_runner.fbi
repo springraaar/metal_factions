@@ -6,38 +6,36 @@
 	side=Aven;
 	name=Runner;
 	description=Fast Scout/Raider Robot;
-	icontype=mobileraider;
+	iconType=mobileraider;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=AVEN LEVEL1 WEAPON NOTAIR NOTSUB;
-	tedclass=KBOT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_runner;
-	unitnumber=5000;
-	objectname=aven_runner.3do;
+	unitName=aven_runner;
+	objectName=aven_runner.3do;
 	corpse=aven_runner_dead;
-	buildpic=aven_runner.png;
-	soundcategory=CORAK;
+	buildPic=aven_runner.png;
+	soundCategory=CORAK;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=700;
+	maxDamage=700;
 	footprintx=2;
 	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -47,70 +45,54 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTHT2;
-	turnrate=790;
+	movementClass=KBOTHT2;
+	turnRate=790;
 	acceleration=0.8;
-	brakerate=0.8;
-	maxvelocity=3.0;
-	maxslope=20;
-	maxwaterdepth=12;
+	brakeRate=0.8;
+	maxVelocity=3.0;
+	maxSlope=20;
+	maxWaterDepth=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=aven_runner_laser;
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=HAK-32;
-	maneuverleashlength=640;
-	shootme=1;
-	smoothanim=1;
-	steeringmode=2;
-	threed=1;
-	version=1;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =15 36 15;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[customParams] 
 	{
@@ -118,11 +100,11 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:GLOWSML;
+		explosionGenerator0=custom:GLOWSML;
 	}
 
-	buildcostenergy=724;//#AUTO#
-	buildcostmetal=144;//#AUTO#
-	buildtime=1726;//#AUTO#
+	buildCostEnergy=724;//#AUTO#
+	buildCostMetal=144;//#AUTO#
+	buildTime=1726;//#AUTO#
 	mass=111;//#AUTO#
 }

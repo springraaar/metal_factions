@@ -6,38 +6,35 @@
 	side=Sphere;
 	name=Tycho;
 	description=Tough Ground Attack Aircraft;
-	icontype=airassault;
+	iconType=airassault;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE VTOL LEVEL1 WEAPON  NOTSUB;
-	tedclass=VTOL;
+	category=SPHERE VTOL LEVEL1 WEAPON NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_tycho;
-	unitnumber=10000;
-	objectname=sphere_tycho.3do;
-	buildpic=sphere_tycho.png;
-	soundcategory=aven_VTOL;
+	unitName=sphere_tycho;
+	objectName=sphere_tycho.3do;
+	buildPic=sphere_tycho.png;
+	soundCategory=aven_VTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1500;
-	healtime=30;
+	maxDamage=1500;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -47,81 +44,65 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canfly=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	turnrate=650;
-	acceleration=0.35;
-	brakerate=0.35;
-	maxvelocity=2.8;
-	maxslope=10;
-	maxwaterdepth=10;
-	cruisealt=190;
+	turnRate=550;
+	acceleration=0.25;
+	brakeRate=0.08;
+	maxVelocity=2.8;
+	maxSlope=10;
+	maxWaterDepth=10;
+	cruiseAlt=170;
 
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
-	sonardistance=0;
-	radardistance=0;
+	sightDistance=600;
+	sonarDistance=0;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=sphere_tycho_rocket;
-	weaponmaindir1=0 -1 0.2;
-	maxangledif1=160;
+	weaponMainDir1=0 0 1;
+	maxAngleDif1=180;
 	onlytargetcategory1=NOTAIR;
-	explodeas=BIG_UNIT;
-	selfdestructas=BIG_UNIT;
+	explodeAs=BIG_UNIT;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=VTOL_standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bankscale=1;
-	bmcode=1;
-	designation=AFD-J17;
-	downloadable=1;
-	hoverattack=1;
-	airstrafe=1;
+	hoverAttack=1;
+	airStrafe=1;
 	upright=1;
 	bankingAllowed=0;
-	airhoverfactor=-1;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
+	airHoverFactor=-1;
 	collide=1;
 	collisionVolumeType = sphere;
 	collisionVolumeScales =45 30 45;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -129,10 +110,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:glowsml;
+		explosionGenerator0=custom:glowsml;
 	}
-	buildcostenergy=2380;//#AUTO#
-	buildcostmetal=476;//#AUTO#
-	buildtime=5674;//#AUTO#
-	mass=266;//#AUTO#
+	buildCostEnergy=2690;//#AUTO#
+	buildCostMetal=538;//#AUTO#
+	buildTime=6413;//#AUTO#
+	mass=277;//#AUTO#
 }

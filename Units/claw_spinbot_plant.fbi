@@ -2,51 +2,47 @@
 	{
 
 	// ------------------- description
-	Side=Claw;
+	side=Claw;
 	Name=Advanced Amphibious Spinbot Factory;
 	Description=Builds Level 2 Amphibious Spinbots;
-	icontype=plant2;
+	iconType=plant2;
 
 	// ------------------- categories
 	Category=CLAW PLANT LEVEL2 NOTAIR NOTSUB;
-	TEDClass=PLANT;
 
 	// ------------------- external specs
-	UnitName=claw_spinbot_plant;
-	UnitNumber=10021;
-	Objectname=claw_spinbot_plant.3do;
-	buildpic=claw_spinbot_plant.png;
-	SoundCategory=gear_HOVER_PLANT;
+	unitName=claw_spinbot_plant;
+	objectName=claw_spinbot_plant.3do;
+	buildPic=claw_spinbot_plant.png;
+	soundCategory=gear_HOVER_PLANT;
 	Corpse=claw_spinbot_plant_dead;
 
 	// ------------------- health/cost/size
-	MaxDamage=4500;
+	maxDamage=4500;
 	FootprintX=8;
 	FootprintZ=8;
-	idleautoheal=5;
 
 
 	// ------------------- resources
-	EnergyStorage=100;
-	MetalStorage=100;
-	EnergyUse=0;
+	energyStorage=100;
+	metalStorage=100;
+	energyUse=0;
 
 
 	// ------------------- constructor
 	Builder=1;
-	WorkerTime=300;
+	workerTime=300;
 
 
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	
 	// ------------------- movement
-	buildangle=1024;
-	YardMap=oooooooo oooooooo oooooooo oooooooo ooccccoo ooccccoo ooccccoo ooccccoo; 
-	MaxSlope=14;
+	yardMap=oooooooo oooooooo oooooooo oooooooo ooccccoo ooccccoo ooccccoo ooccccoo; 
+	maxSlope=14;
 	waterline=4;
 	collisionVolumeType = box;
 	collisionVolumeScales =140 70 120;
@@ -54,33 +50,23 @@
 	collisionVolumeTest = 1;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	// ------------------- weapons
-	ExplodeAs=LARGE_BUILDINGEX;
-	SelfDestructAs=LARGE_BUILDING;
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
 
 	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
 
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:Nano;
+		explosionGenerator0=custom:Nano;
 	}
 
 	// ------------------- misc
-	Version=3.1;
-	Designation=CA-lFCT;
-	BMcode=0;
-	ThreeD=1;
-	ZBuffer=1;
-	NoAutoFire=0;
-	downloadable=1;
+	noAutoFire=0;
 
 	[CustomParams]
 	{
@@ -88,8 +74,8 @@
 	}
 
 
-	buildcostenergy=8537;//#AUTO#
-	buildcostmetal=1707;//#AUTO#
-	buildtime=20346;//#AUTO#
+	buildCostEnergy=8537;//#AUTO#
+	buildCostMetal=1707;//#AUTO#
+	buildTime=20346;//#AUTO#
 	mass=3388;//#AUTO#
 }

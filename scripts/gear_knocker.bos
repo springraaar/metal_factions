@@ -132,11 +132,17 @@ AimPrimary(heading, pitch)
 	{
 		return (0);
 	}
-	turn sleeve to x-axis <0.000000> - pitch speed <70.005495>;
+	
+	while (heading < <-20> || heading > <20>) {
+			sleep 100;
+	}
+	
+	turn sleeve to x-axis <0.000000> - pitch speed <270.005495>;
 	wait-for-turn sleeve around x-axis;
 	start-script RestoreAfterDelay();
 	return (1);
 }
+
 FirePrimary()
 {
 	move b2 to z-axis [-16.000000] speed [40.000000];

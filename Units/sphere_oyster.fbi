@@ -6,29 +6,26 @@
 	side=Sphere;
 	name=Oyster;
 	description=Underwater Energy Torpedo Launcher;
-	icontype=staticartilleryfs;
+	iconType=staticartilleryfs;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE SPECIAL WEAPON LEVEL2 NOTAIR;
-	tedclass=WATER;
+	category=SPHERE WEAPON LEVEL2 NOTAIR;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_oyster;
-	unitnumber=10000;
-	objectname=sphere_oyster.3do;
+	unitName=sphere_oyster;
+	objectName=sphere_oyster.3do;
 	corpse=sphere_oyster_dead;
-	buildpic=sphere_oyster.png;
-	soundcategory=aven_SHIP;
+	buildPic=sphere_oyster.png;
+	soundCategory=aven_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2000;
-	healtime=30;
+	maxDamage=2000;
 	footprintx=4;
 	footprintz=4;
 	damagemodifier=0.50;
@@ -36,17 +33,16 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.1;
-	energyuse=0.1;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=32768;
-	yardmap=wwww wwww wwww wwww;
-	activatewhenbuilt=1;
+	yardMap=wwww wwww wwww wwww;
+	activateWhenBuilt=1;
 	collisionvolumetype=cyly;
 	collisionVolumeScales=40 30 40;
 	collisionVolumeOffsets=0 0 0;
@@ -56,57 +52,45 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
 	minwaterdepth=30;
-	maxslope=15;
+	maxSlope=15;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	sonardistance=600;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=600;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=sphere_oyster_torpedo;
 	onlytargetcategory1=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AS-TDS;
-	downloadable=1;
 	noshadow=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -114,8 +98,8 @@
 		tip=Gains 50% dmg resistance when closed;
 	}
 
-	buildcostenergy=8373;//#AUTO#
-	buildcostmetal=1674;//#AUTO#
-	buildtime=19956;//#AUTO#
+	buildCostEnergy=8373;//#AUTO#
+	buildCostMetal=1674;//#AUTO#
+	buildTime=19956;//#AUTO#
 	mass=2116;//#AUTO#
 }

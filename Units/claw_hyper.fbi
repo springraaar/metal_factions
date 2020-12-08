@@ -6,44 +6,40 @@
 	side=Claw;
 	name=Hyper;
 	description=Advanced Pop-up Missile Battery;
-	icontype=staticfs;
+	iconType=staticfs;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=FORT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_hyper;
-	unitnumber=20000;
-	objectname=claw_hyper.3do;
+	unitName=claw_hyper;
+	objectName=claw_hyper.3do;
 	corpse=claw_hyper_dead;
-	buildpic=claw_hyper.png;
-	soundcategory=GUARD;
+	buildPic=claw_hyper.png;
+	soundCategory=GUARD;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1800;
-	healtime=11;
+	maxDamage=1800;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=8192;
-	yardmap=oooo oooo oooo oooo;
+	yardMap=oooo oooo oooo oooo;
 	collisionVolumeType=Box;
 	collisionVolumeScales=60 30 60;
 	collisionVolumeTest = 1;
@@ -52,57 +48,45 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=20;
-	maxwaterdepth=11;
+	maxSlope=20;
+	maxWaterDepth=11;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_hyper_missile;
-	badtargetcategory1=NOTAIR;
-	explodeas=LARGE_BUILDINGEX;
-	selfdestructas=LARGE_BUILDING;
+	badTargetCategory1=NOTAIR;
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
 	damagemodifier=0.50;
-	designation=ARM-GUARD;
 	digger=1;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -113,10 +97,10 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:ROCKETFLAREMED;
+		explosionGenerator0=custom:ROCKETFLAREMED;
 	}
-	buildcostenergy=7670;//#AUTO#
-	buildcostmetal=1534;//#AUTO#
-	buildtime=18281;//#AUTO#
+	buildCostEnergy=7670;//#AUTO#
+	buildCostMetal=1534;//#AUTO#
+	buildTime=18281;//#AUTO#
 	mass=1922;//#AUTO#
 }

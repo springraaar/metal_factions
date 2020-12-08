@@ -1,88 +1,70 @@
 [UNITINFO]
 	{
 	// ------------------- description
-	Side=Claw;
+	side=Claw;
 	Name=Cutter;
 	Description=Amphibious Attack Robot;
-	icontype=amphibfighter;
+	iconType=amphibfighter;
 
 	// ------------------- categories
-	Category=CLAW KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
-	TEDClass=KBOT;
+	Category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	// ------------------- external specs
-	UnitName=claw_cutter;
-	UnitNumber=20000;
-	Objectname=claw_cutter.3do;
-	buildpic=claw_cutter.png;
-	SoundCategory=CLAW_BOTMED;
+	unitName=claw_cutter;
+	objectName=claw_cutter.3do;
+	buildPic=claw_cutter.png;
+	soundCategory=CLAW_BOTMED;
 	Corpse=claw_cutter_dead;
 
 
 	// ------------------- health/cost/size
 	FootprintX=3;
 	FootprintZ=3;
-	MaxDamage=1600;
+	maxDamage=1600;
 
 
 	// ------------------- resources
-	EnergyUse=1;
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyMake=1;
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	canguard=1;
-	canattack=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
 	Builder=0;
 
 	// ------------------- movement
-	MaxVelocity=1.5;
-	BrakeRate=0.35;
+	maxVelocity=1.5;
+	brakeRate=0.35;
 	Acceleration=0.35;
-	TurnRate=550;
-	SteeringMode=2;
-	MovementClass=KBOTUW3;
+	turnRate=550;
+	movementClass=KBOTUW3;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
-	SonarDistance=400;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=400;
 
 	// ------------------- weapons
 	Weapon1=claw_cutter_laser;
 	Weapon2=claw_cutter_rocket;
 	onlytargetcategory2=NOTAIR;
-	badtargetcategory1=VTOL;
-	NoChaseCategory=VTOL;
-	ExplodeAs=BIG_UNITEX;
-	SelfDestructAs=BIG_UNIT;
+	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 
 	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	// ------------------- misc
-	Version=3.1;
-	Designation=CA_Ik;
-	BMcode=1;
-	ThreeD=1;
-	ZBuffer=1;
-	NoAutoFire=0;
-	ShootMe=1;
-	DefaultMissionType=Standby;
-	maneuverleashlength=640;
+	noAutoFire=0;
 	Upright=0;
-	Downloadable=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	collisionVolumeType = box;
 	collisionVolumeScales =30 25 30;
 	collisionVolumeOffsets = 0 0 0;
@@ -94,11 +76,11 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:blueflaresml;
-		explosiongenerator1=custom:rocketflaresml;
+		explosionGenerator0=custom:blueflaresml;
+		explosionGenerator1=custom:rocketflaresml;
 	}
-	buildcostenergy=3156;//#AUTO#
-	buildcostmetal=631;//#AUTO#
-	buildtime=7522;//#AUTO#
+	buildCostEnergy=3156;//#AUTO#
+	buildCostMetal=631;//#AUTO#
+	buildTime=7522;//#AUTO#
 	mass=610;//#AUTO#
 }

@@ -1,90 +1,72 @@
 [UNITINFO]
 	{
 	// ------------------- description
-	Side=Claw;
-	Name=Brute;
-	Description=Heavy Assault Robot;
-	icontype=mobileassault;
+	side=Claw;
+	name=Brute;
+	description=Heavy Assault Robot;
+	iconType=mobileassault;
 
 	// ------------------- categories
-	Category=CLAW KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
-	TEDClass=KBOT;
+	Category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	// ------------------- external specs
-	UnitName=claw_brute;
-	UnitNumber=20000;
-	Objectname=claw_brute.3do;
-	buildpic=claw_brute.png;
-	SoundCategory=CLAW_BOTBIG;
-	Corpse=claw_brute_dead;
+	unitName=claw_brute;
+	objectName=claw_brute.3do;
+	buildPic=claw_brute.png;
+	soundCategory=CLAW_BOTBIG;
+	corpse=claw_brute_dead;
 
 
 	// ------------------- health/cost/size
-	FootprintX=3;
-	FootprintZ=3;
-	MaxDamage=4500;
+	footprintX=3;
+	footprintZ=3;
+	maxDamage=4500;
 
 
 	// ------------------- resources
-	EnergyUse=0;
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyMake=0;
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	canguard=1;
-	canattack=1;
-	Builder=0;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	builder=0;
 
 	// ------------------- movement
-	MaxWaterDepth=12;
-	MaxSlope=17;
-	MaxVelocity=1.0;
-	BrakeRate=0.25;
-	Acceleration=0.15;
-	TurnRate=650;
-	SteeringMode=2;
-	MovementClass=KBOTHT4;
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.0;
+	brakeRate=0.25;
+	acceleration=0.15;
+	turnRate=650;
+	movementClass=KBOTHT4;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 
 	// ------------------- weapons
-	Weapon1=claw_brute_cannon;
-	badtargetcategory1=VTOL;
-	Weapon2=claw_brute_gun;
-	badtargetcategory2=VTOL;
-	badtargetcategory1=VTOL;
-	NoChaseCategory=VTOL;
-	ExplodeAs=BIG_UNITEX;
-	SelfDestructAs=BIG_UNIT;
+	weapon1=claw_brute_cannon;
+	badTargetCategory1=VTOL;
+	weapon2=claw_brute_gun;
+	badTargetCategory2=VTOL;
+	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 
 	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
 
 	// ------------------- misc
-	Version=3.1;
-	Designation=CA_Ik;
-	BMcode=1;
-	ThreeD=1;
-	ZBuffer=1;
-	NoAutoFire=0;
-	ShootMe=1;
-	DefaultMissionType=Standby;
-	maneuverleashlength=640;
-	Upright=1;
-	Downloadable=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
+	noAutoFire=0;
+	upright=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =40 44 35;
 	collisionVolumeOffsets = 0 0 0;
@@ -95,12 +77,12 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:yellowflarebig;
-		explosiongenerator1=custom:railgunflaresml;
+		explosionGenerator0=custom:yellowflarebig;
+		explosionGenerator1=custom:railgunflaresml;
 		
 	}
-	buildcostenergy=7673;//#AUTO#
-	buildcostmetal=1534;//#AUTO#
-	buildtime=18288;//#AUTO#
+	buildCostEnergy=7673;//#AUTO#
+	buildCostMetal=1534;//#AUTO#
+	buildTime=18288;//#AUTO#
 	mass=2618;//#AUTO#
 }

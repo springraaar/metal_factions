@@ -10,11 +10,15 @@
 
 piece  base, flare, turret, sleeve, barrel, t1,t2,t1cover,t2cover,body,left,right,b2, turret2,sleeve2,barrel2,flare2;
 
+static-var oldPitch1, targetPitch1;
+
 #include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				2
 #define SIG_AIM2			4
+
+lua_turnToTarget() { return 0; }
 
 #include "tankthreads.h"
 
@@ -46,9 +50,26 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 	return (0);
 }
 
+
+aimTracker() {
+	targetPitch1 = <0>;
+	while(TRUE) {
+		if (targetPitch1 > <-91>) {
+			if (targetPitch1 != oldPitch1 ) {
+				wait-for-turn sleeve around x-axis;
+				oldPitch1 = targetPitch1;
+			}
+		}
+		sleep 30;
+	}
+}
+
 Create()
 {
 	hide flare;
+	oldPitch1 = <0>;
+	targetPitch1 = <-91>;
+	start-script aimTracker();
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script SmokeUnit();
 	start-script AnimateTracks();
@@ -61,6 +82,8 @@ RestoreAfterDelay()
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
 	turn turret to y-axis <0.000000> speed <120.000000>;
 	turn sleeve to x-axis <0.000000> speed <120.000000>;
+	oldPitch1 = <0>;
+	targetPitch1 = <-91>;
 	return (0);
 }
 
@@ -78,17 +101,23 @@ AimPrimary(heading, pitch)
 {
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	//if ( get ABS(heading)  > <10>)
-	//{
-		//sleep 10000;
-		//turn turret to y-axis <0> speed <60.000000>;
-		//return(0);
-	//}
+	targetPitch1 = pitch;
+	
+	// make unit turn to face target 	
+	while (heading < <-5> || heading > <5>) {
+		if (bMoving && (heading < <-15> || heading > <15>)) {
+			return (0);
+		}
+		call-script lua_turnToTarget(1);
+		sleep 100;
+	}
 
 	turn turret to y-axis heading speed <60.000000>;
 	turn sleeve to x-axis <0.000000> - pitch speed <120.000000>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn sleeve around x-axis;
+	if (get ABS (pitch - oldPitch1) > <20>) {
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
 	start-script RestoreAfterDelay();
 	return (1);
 }

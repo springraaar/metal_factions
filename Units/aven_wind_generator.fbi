@@ -3,47 +3,44 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Wind Generator;
 	description=Produces Energy;
-	icontype=energy;
+	iconType=energy;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=AVEN ENERGY LEVEL1 NOTAIR NOTSUB;
-	tedclass=ENERGY;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_wind_generator;
-	unitnumber=76;
-	objectname=aven_wind_generator.3do;
+	unitName=aven_wind_generator;
+	objectName=aven_wind_generator.3do;
 	corpse=aven_wind_generator_dead;
-	buildpic=aven_wind_generator.png;
-	soundcategory=aven_WIND;
+	buildPic=aven_wind_generator.png;
+	soundCategory=aven_WIND;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=400;
+	maxDamage=400;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=8192;
-	yardmap=ooooo ooooo ooooo ooooo ooooo;
-	activatewhenbuilt=1;
+	yardMap=ooooo ooooo ooooo ooooo ooooo;
+	activateWhenBuilt=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =52 101 49;
 	collisionVolumeOffsets = 0 -2 -6;
@@ -53,7 +50,7 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
@@ -62,46 +59,38 @@
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
-	maxwaterdepth=36;
+	maxSlope=10;
+	maxWaterDepth=36;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_BUILDING;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AE-WPG;
-	downloadable=1;
-	threed=1;
-	version=1.2;
 	windgenerator=40;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
 		builtBy=aven_l1builder,aven_l2builder;
 	}
 
-	buildcostenergy=553;//#AUTO#
-	buildcostmetal=110;//#AUTO#
-	buildtime=1318;//#AUTO#
+	buildCostEnergy=553;//#AUTO#
+	buildCostMetal=110;//#AUTO#
+	buildTime=1318;//#AUTO#
 	mass=136;//#AUTO#
 }

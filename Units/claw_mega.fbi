@@ -6,39 +6,36 @@
 	side=Claw;
 	name=Mega;
 	description=Amphibious Very Heavy Riot Tank;
-	icontype=amphibmulti;
+	iconType=amphibmulti;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW TANK LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=TANK;
+	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_mega;
-	unitnumber=20000;
-	objectname=claw_mega.3do;
+	unitName=claw_mega;
+	objectName=claw_mega.3do;
 	corpse=claw_mega_dead;
-	buildpic=claw_mega.png;
-	soundcategory=aven_TANK;
+	buildPic=claw_mega.png;
+	soundCategory=aven_TANK;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=8500;
-	healtime=30;
+	maxDamage=8500;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=3;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=3;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,77 +45,61 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKDH5;
-	turnrate=210;
+	movementClass=TANKDH5;
+	turnRate=210;
 	acceleration=0.2;
-	brakerate=0.06;
-	maxvelocity=1.1;
+	brakeRate=0.06;
+	maxVelocity=1.1;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	sonardistance=250;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=250;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_mega_cannon;
-	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
-	explodeas=BIG_UNIT;
-	selfdestructas=BIG_UNIT;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=BIG_UNIT;
+	selfDestructAs=BIG_UNIT;
 	
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ARM-MRA;
-	downloadable=1;
 	leavetracks=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
 	trackoffset=5;
 	trackstrength=6;
 	trackstretch=1;
 	tracktype=StdTank;
 	trackwidth=33;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =60 30 70;
 	collisionVolumeOffsets = 0 -1 -5;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -126,10 +107,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:yellowflarebig;
+		explosionGenerator0=custom:yellowflarebig;
 	}
-	buildcostenergy=24717;//#AUTO#
-	buildcostmetal=4943;//#AUTO#
-	buildtime=58910;//#AUTO#
+	buildCostEnergy=24717;//#AUTO#
+	buildCostMetal=4943;//#AUTO#
+	buildTime=58910;//#AUTO#
 	mass=6036;//#AUTO#
 }

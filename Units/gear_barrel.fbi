@@ -7,116 +7,100 @@
 	side=Gear;
 	name=Barrel;
 	description=Amphibious Missile Robot;
-	icontype=amphibfs;
+	iconType=amphibfs;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=KBOT;
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_barrel;
-	unitnumber=10000;
-	objectname=gear_barrel.3do;
+	unitName=gear_barrel;
+	objectName=gear_barrel.3do;
 	corpse=gear_barrel_dead;
-	buildpic=gear_barrel.png;
-	soundcategory=COR_KBOT;
+	buildPic=gear_barrel.png;
+	soundCategory=COR_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2500;
+	maxDamage=2500;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKHOVER4;
-	turnrate=645;
+	movementClass=TANKHOVER4;
+	turnRate=645;
 	acceleration=0.13;
-	brakerate=0.3;
-	maxvelocity=1.1;
-	maxwaterdepth=1000;
+	brakeRate=0.3;
+	maxVelocity=1.1;
+	maxWaterDepth=1000;
 	turninplace=1;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	sonardistance=250;
-	radardistance=0;
+	sightDistance=500;
+	sonarDistance=250;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_barrel_missile;
-	nochasecategory=VTOL;
-	badtargetcategory1=NOTAIR;
+	noChaseCategory=VTOL;
+	badTargetCategory1=NOTAIR;
 	weapon2=gear_barrel_missile2;
-	badtargetcategory2=NOTAIR;
-	explodeas=GEAR_CANISTER;
-	selfdestructas=GEAR_CANISTER;
+	badTargetCategory2=NOTAIR;
+	explodeAs=GEAR_CANISTER;
+	selfDestructAs=GEAR_CANISTER;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ASD-SC;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =36 40 36;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	waterline=15;
 	[CustomParams]
 	{
@@ -126,12 +110,12 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:rocketflaremed;
-		explosiongenerator1=custom:UNITFIRE;
+		explosionGenerator0=custom:rocketflaremed;
+		explosionGenerator1=custom:UNITFIRE;
 	}
 
-	buildcostenergy=6005;//#AUTO#
-	buildcostmetal=1201;//#AUTO#
-	buildtime=14313;//#AUTO#
+	buildCostEnergy=6005;//#AUTO#
+	buildCostMetal=1201;//#AUTO#
+	buildTime=14313;//#AUTO#
 	mass=1025;//#AUTO#
 }

@@ -3,31 +3,31 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Commander;
 	description=Builder Form;
-	icontype=aven_commander;
+	iconType=aven_commander;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN commander LEVEL1 WEAPON NOTAIR NOTSUB;
-	tedclass=COMMANDER;
+	category=AVEN COMMANDER LEVEL1 WEAPON NOTAIR NOTSUB;
+	tedClass=COMMANDER;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_u4commander;
+	unitName=aven_u4commander;
 	unitnumber=21;
-	objectname=aven_u4commander.3do;
-	buildpic=aven_u4commander.png;
+	objectName=aven_u4commander.3do;
+	buildPic=aven_u4commander.png;
 	corpse=aven_u4commander_dead;
-	soundcategory=aven_COM;
+	soundCategory=aven_COM;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3920;
+	maxDamage=3920;
 	buildcostmetal=2000;
 	buildcostenergy=20000;
 	buildtime=30000;
@@ -43,70 +43,70 @@
 	//*************
 	metalmake=2;
 	metalStorage=0;
-	energymake=50;
-	energyuse=0;
+	energyMake=50;
+	energyUse=0;
 	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=1;
-	builddistance=250;
-	workertime=600;
-        RepairSpeed=600;
-        ReclaimSpeed=600;
+	buildDistance=250;
+	workerTime=600;
+        repairSpeed=600;
+        reclaimSpeed=600;
         ResurrectSpeed=0;
-        TerraformSpeed=1200;
+        terraformSpeed=1200;
         capturespeed=400;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
+	canAttack=1;
 	canResurrect=0;
 	cancapture=1;
 	candgun=0;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
 	canreclamate=1;
-	canstop=1;
+	canStop=1;
 	upright=1;
 	autoheal=12;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTDS2;
-	turnrate=1044;
+	movementClass=KBOTDS2;
+	turnRate=1044;
 	acceleration=0.3;
-	brakerate=0.4;
-	maxvelocity=2.08;
-	maxslope=20;
-	maxwaterdepth=35;
+	brakeRate=0.4;
+	maxVelocity=2.08;
+	maxSlope=20;
+	maxWaterDepth=35;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=800;
-	sonardistance=800;
+	sightDistance=500;
+	radarDistance=800;
+	sonarDistance=800;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=aven_u4commander_laser;
 	weapon2=aven_u4commander_torpedo;
-	nochasecategory=WEAPON;
+	noChaseCategory=WEAPON;
 	onlytargetcategory2=NOTAIR;
-	badtargetcategory1=VTOL;
-	explodeas=aven_commander_nanoblast;
-	selfdestructas=aven_commander_nanoblast;
+	badTargetCategory1=VTOL;
+	explodeAs=aven_commander_nanoblast;
+	selfDestructAs=aven_commander_nanoblast;
 
 	//************************************************************
 	//  Orders
@@ -121,8 +121,8 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
-	cloakcost=50;
-	cloakcostmoving=150;
+	cloakCost=50;
+	cloakCostMoving=150;
 	commander=1;
 	designation=ARM-WM;
 	downloadable=1;
@@ -130,7 +130,7 @@
 	immunetoparalyzer=1;
 	leavetracks=1;
 	maneuverleashlength=640;
-	mincloakdistance=170;
+	minCloakDistance=170;
 	norestrict=1;
 	shootme=1;
 	showplayername=1;
@@ -157,9 +157,9 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:GLOWSML;
-		explosiongenerator1=custom:Nano;
-		explosiongenerator3=custom:DGUNREADYFLARE;
+		explosionGenerator0=custom:GLOWSML;
+		explosionGenerator1=custom:Nano;
+		explosionGenerator3=custom:DGUNREADYFLARE;
 	}
 
 }

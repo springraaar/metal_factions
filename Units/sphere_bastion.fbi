@@ -6,43 +6,40 @@
 	side=Sphere;
 	name=Bastion;
 	description=Armored Precise Long Range Plasma Cannon;
-	icontype=staticartillery;
+	iconType=staticartillery;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE LEVEL3 WEAPON NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_bastion;
-	unitnumber=10000;
-	objectname=sphere_bastion.3do;
+	unitName=sphere_bastion;
+	objectName=sphere_bastion.3do;
 	corpse=sphere_bastion_dead;
-	buildpic=sphere_bastion.png;
-	soundcategory=COR_INT;
+	buildPic=sphere_bastion.png;
+	soundCategory=COR_INT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=7000;
-	healtime=11;
+	maxDamage=7000;
 	footprintx=6;
 	footprintz=6;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	yardmap=cooooc oooooo oooooo oooooo oooooo cooooc;
+	yardMap=cooooc oooooo oooooo oooooo oooooo cooooc;
 	collisionVolumeType=CylY;
 	collisionVolumeScales=90 60 90;
 	collisionVolumeOffsets=0 0 0;
@@ -52,68 +49,56 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
-	maxwaterdepth=33;
+	maxSlope=10;
+	maxWaterDepth=33;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=sphere_bastion_cannon;
-	badtargetcategory1=VTOL;
+	badTargetCategory1=VTOL;
 	onlytargetcategory1=NOTAIR;
-	explodeas=ATOMIC_BLASTSML;
-	selfdestructas=ATOMIC_BLAST;
+	explodeAs=ATOMIC_BLASTSML;
+	selfDestructAs=ATOMIC_BLAST;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=F-PS2;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:yellowflarebig;
+		explosionGenerator0=custom:yellowflarebig;
 	}
 	[CustomParams]
 	{
 		builtBy=sphere_l2builder;
 		canAreaAttack=1;
 	}
-	buildcostenergy=57343;//#AUTO#
-	buildcostmetal=11468;//#AUTO#
-	buildtime=136668;//#AUTO#
+	buildCostEnergy=57343;//#AUTO#
+	buildCostMetal=11468;//#AUTO#
+	buildTime=136668;//#AUTO#
 	mass=17832;//#AUTO#
 }

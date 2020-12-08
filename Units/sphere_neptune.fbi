@@ -6,38 +6,35 @@
 	side=Sphere;
 	name=Neptune;
 	description=Shielded Anti-Sub Aircraft;
-	icontype=airbomber;
+	iconType=airbomber;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE VTOL LEVEL2 WEAPON  NOTSUB;
-	tedclass=VTOL;
+	category=SPHERE VTOL LEVEL2 WEAPON NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_neptune;
-	unitnumber=10000;
-	objectname=sphere_neptune.3do;
-	buildpic=sphere_neptune.png;
-	soundcategory=aven_VTOL;
+	unitName=sphere_neptune;
+	objectName=sphere_neptune.3do;
+	buildPic=sphere_neptune.png;
+	soundCategory=aven_VTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2300;
-	healtime=30;
+	maxDamage=2300;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -47,83 +44,67 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canfly=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	turnrate=450;
+	turnRate=450;
 	acceleration=0.06;
-	brakerate=0.04;
-	maxvelocity=3.5;
-	maxslope=10;
-	maxwaterdepth=10;
-	cruisealt=130;
+	brakeRate=0.04;
+	maxVelocity=3.5;
+	maxSlope=10;
+	maxWaterDepth=10;
+	cruiseAlt=130;
 
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
-	sonardistance=600;
-	radardistance=0;
+	sightDistance=600;
+	sonarDistance=600;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=sphere_neptune_torpedo;
-	weaponmaindir1=0 -1 0.2;
-	maxangledif1=120;
+	weaponMainDir1=0 -1 0.2;
+	maxAngleDif1=120;
 	weapon2=sphere_neptune_shield;
 	onlytargetcategory1=NOTAIR;
-	explodeas=BIG_UNIT;
-	selfdestructas=BIG_UNIT;
+	explodeAs=BIG_UNIT;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=VTOL_standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bankscale=1;
-	bmcode=1;
-	designation=AFD-J17;
-	downloadable=1;
-	hoverattack=1;
-	airstrafe=1;
+	hoverAttack=1;
+	airStrafe=1;
 	upright=1;
 	bankingAllowed=0;
-	airhoverfactor=-1;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
+	airHoverFactor=-1;
 	
 	collide=1;
 	collisionVolumeType = sphere;
 	collisionVolumeScales =60 25 60;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -131,10 +112,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:rocketflaremed;
+		explosionGenerator0=custom:rocketflaremed;
 	}
-	buildcostenergy=8903;//#AUTO#
-	buildcostmetal=1780;//#AUTO#
-	buildtime=21219;//#AUTO#
+	buildCostEnergy=8903;//#AUTO#
+	buildCostMetal=1780;//#AUTO#
+	buildTime=21219;//#AUTO#
 	mass=584;//#AUTO#
 }

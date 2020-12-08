@@ -3,50 +3,47 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Big Fusion Reactor;
 	description=Produces 600 E/s;
-	icontype=energy;
+	iconType=energy;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN ENERGY LEVEL3 NOTAIR NOTSUB;
-	tedclass=ENERGY;
+	category=AVEN ENERGY LEVEL2 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_fusion_reactor;
-	unitnumber=33;
-	objectname=aven_fusion_reactor.3do;
+	unitName=aven_fusion_reactor;
+	objectName=aven_fusion_reactor.3do;
 	corpse=aven_fusion_reactor_dead;
-	buildpic=aven_fusion_reactor.png;
-	soundcategory=aven_FUS;
+	buildPic=aven_fusion_reactor.png;
+	soundCategory=aven_FUS;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=4100;
+	maxDamage=4100;
 	footprintx=8;
 	footprintz=8;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=600;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=600;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
-	yardmap=oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo;
-	activatewhenbuilt=1;
+	yardMap=oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo;
+	activateWhenBuilt=1;
 	collisionVolumeType=Box;
-	collisionVolumeScales=90 74 90;
+	collisionVolumeScales=100 90 100;
 	collisionVolumeOffsets=0 0 0;
 	collisionVolumeTest = 1;
 
@@ -54,7 +51,7 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
@@ -63,51 +60,43 @@
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
-	maxwaterdepth=99999;
+	maxSlope=10;
+	maxWaterDepth=99999;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=FUSION_BUILDING_BIG;
-	selfdestructas=FUSION_BUILDING_BIG;
+	explodeAs=FUSION_BUILDING_BIG;
+	selfDestructAs=FUSION_BUILDING_BIG;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AE-FPF;
-	downloadable=1;
 	leavetracks=1;
-	threed=1;
 	trackoffset=9;
 	trackstrength=12;
 	trackstretch=1;
 	tracktype=StdTank;
 	trackwidth=50;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
 		builtBy=aven_fusion_reactor;
 	}
 
-	buildcostenergy=12303;//#AUTO#
-	buildcostmetal=2460;//#AUTO#
-	buildtime=29322;//#AUTO#
-	mass=5904;//#AUTO#
+	buildCostEnergy=13058;//#AUTO#
+	buildCostMetal=2611;//#AUTO#
+	buildTime=31122;//#AUTO#
+	mass=6064;//#AUTO#
 }

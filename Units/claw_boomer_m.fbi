@@ -6,38 +6,35 @@
 	side=Claw;
 	name=Boomer (M);
 	description=Ground Attack Aircraft;
-	icontype=airbomber;
+	iconType=airbomber;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=CLAW VTOL LEVEL1 WEAPON NOTSUB;
-	tedclass=VTOL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_boomer_m;
-	unitnumber=20000;
-	objectname=claw_boomer_m.3do;
-	buildpic=claw_boomer_m.png;
-	soundcategory=aven_SEAPLN;
+	unitName=claw_boomer_m;
+	objectName=claw_boomer_m.3do;
+	buildPic=claw_boomer_m.png;
+	soundCategory=aven_SEAPLN;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=640;
-	healtime=30;
+	maxDamage=640;
 	footprintx=3;
 	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -47,73 +44,56 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canfly=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	turnrate=800;
+	turnRate=800;
 	acceleration=0.3;
-	brakerate=3;
-	maxvelocity=4.2;
-	maxslope=10;
-	cruisealt=90;
+	brakeRate=3;
+	maxVelocity=4.2;
+	maxSlope=10;
+	cruiseAlt=90;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_boomer_m_rocket;
-	nochasecategory=VTOL;
+	noChaseCategory=VTOL;
 	onlytargetcategory1=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=MEDIUM_UNIT;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=MEDIUM_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=VTOL_standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ARM-SGB;
-	downloadable=1;
-	hoverattack=1;
+	hoverAttack=1;
 	hoverradius=10;
-	maneuverleashlength=1280;
 	moverate1=8;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	collide=1;
-	minCollisionSpeed=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =30 16 30;
 	collisionVolumeOffsets = 0 0 0;
@@ -125,10 +105,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:ROCKETFLAREMED;
+		explosionGenerator0=custom:ROCKETFLAREMED;
 	}
-	buildcostenergy=1852;//#AUTO#
-	buildcostmetal=370;//#AUTO#
-	buildtime=4414;//#AUTO#
+	buildCostEnergy=1852;//#AUTO#
+	buildCostMetal=370;//#AUTO#
+	buildTime=4414;//#AUTO#
 	mass=141;//#AUTO#
 }

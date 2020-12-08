@@ -6,91 +6,80 @@
 	side=Claw;
 	name=Advanced Metal Extractor;
 	description=Extraction rate x2.5, drains 60 E/s;
-	icontype=metal;
+	iconType=metal;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=CLAW METAL LEVEL3 NOTAIR NOTSUB;
-	tedclass=METAL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_moho_mine;
-	unitnumber=10018;
-	objectname=claw_moho_mine.3do;
+	unitName=claw_moho_mine;
+	objectName=claw_moho_mine.3do;
 	corpse=claw_moho_mine_dead;
-	buildpic=claw_moho_mine.png;
-	soundcategory=aven_MOHO;
+	buildPic=claw_moho_mine.png;
+	soundCategory=aven_MOHO;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2600;
+	maxDamage=2600;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=60;
-	energystorage=0;
-	extractsmetal=0.0025;
+	metalStorage=0;
+	energyUse=60;
+	energyStorage=0;
+	extractsMetal=0.0025;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=2048;
-	yardmap=ooooooooooooooooooooooooo;
-	activatewhenbuilt=1;
+	yardMap=ooooooooooooooooooooooooo;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=1;
+	onOffable=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 	
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=MEDIUM_BUILDINGEX;
-	selfdestructas=MEDIUM_BUILDING;
+	explodeAs=MEDIUM_BUILDINGEX;
+	selfDestructAs=MEDIUM_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AM-MME;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	collisionVolumeType = box;
 	collisionVolumeScales =80 55 80;
 	collisionVolumeOffsets = 0 0 0;
@@ -100,8 +89,8 @@
 	{
 		builtBy=claw_l2builder;
 	}
-	buildcostenergy=6755;//#AUTO#
-	buildcostmetal=1351;//#AUTO#
-	buildtime=16099;//#AUTO#
+	buildCostEnergy=6755;//#AUTO#
+	buildCostMetal=1351;//#AUTO#
+	buildTime=16099;//#AUTO#
 	mass=2200;//#AUTO#
 }

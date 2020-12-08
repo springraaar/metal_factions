@@ -3,81 +3,76 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Edge;
 	description=Battleship;
-	icontype=shipmulti;
+	iconType=shipmulti;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR SHIP LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=SHIP;
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_edge;
-	unitnumber=89;
-	objectname=gear_edge.3do;
+	unitName=gear_edge;
+	objectName=gear_edge.3do;
 	corpse=gear_edge_dead;
-	buildpic=gear_edge.png;
-	soundcategory=gear_SHIP;
+	buildPic=gear_edge.png;
+	soundCategory=gear_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=13500;
-	healtime=30;
+	maxDamage=13500;
 	footprintx=8;
 	footprintz=8;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
-	windgenerator=0.001;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=LARGEBOAT;
-	turnrate=107;
+	movementClass=LARGEBOAT;
+	turnRate=107;
 	acceleration=0.009;
-	brakerate=0.00383106;
-	maxvelocity=0.9;
+	brakeRate=0.00383106;
+	maxVelocity=0.9;
 	minwaterdepth=10;
 	waterline=2;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
@@ -86,56 +81,40 @@
 	weapon2=gear_edge_laser2;
 	weapon3=gear_edge_laser;
 	weapon4=gear_edge_laser;
-	weaponmaindir2=0 0 1;
-	maxangledif2=270;
-	weaponmaindir3=1 0 0.2;
-	maxangledif3=220;
-	weaponmaindir4=-1 0 0.2;
-	maxangledif4=220;
-	nochasecategory=WEAPON;
-	badtargetcategory1=VTOL;
-	badtargetcategory2=VTOL;
-	badtargetcategory3=NOTAIR;
-	badtargetcategory4=NOTAIR;
-	explodeas=HUGE_UNIT;
-	selfdestructas=ATOMIC_BLASTSML;
+	weaponMainDir2=0 0 1;
+	maxAngleDif2=270;
+	weaponMainDir3=1 0 0.2;
+	maxAngleDif3=220;
+	weaponMainDir4=-1 0 0.2;
+	maxAngleDif4=220;
+	noChaseCategory=WEAPON;
+	badTargetCategory1=VTOL;
+	badTargetCategory2=VTOL;
+	badTargetCategory3=NOTAIR;
+	badTargetCategory4=NOTAIR;
+	explodeAs=HUGE_UNIT;
+	selfDestructAs=ATOMIC_BLASTSML;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=SB-AS6;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =70 65 135;
 	collisionVolumeOffsets = 0 -20 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:yellowflarebig;
-		explosiongenerator1=custom:redflare;
-		explosiongenerator2=custom:redflare;
-		explosiongenerator3=custom:UNITFIRE;
+		explosionGenerator0=custom:yellowflarebig;
+		explosionGenerator1=custom:redflare;
+		explosionGenerator2=custom:redflare;
+		explosionGenerator3=custom:UNITFIRE;
 	}
 	[CustomParams]
 	{
@@ -143,8 +122,8 @@
 		evalfactor=0.85;//SHIP
 		canAreaAttack=1;
 	}
-	buildcostenergy=56397;//#AUTO#
-	buildcostmetal=11279;//#AUTO#
-	buildtime=134414;//#AUTO#
+	buildCostEnergy=56397;//#AUTO#
+	buildCostMetal=11279;//#AUTO#
+	buildTime=134414;//#AUTO#
 	mass=11415;//#AUTO#
 }

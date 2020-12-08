@@ -3,42 +3,39 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Kit;
 	description=Fast Rocket Robot;
-	icontype=mobileartilleryfs;
+	iconType=mobileartilleryfs;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN KBOT LEVEL1 WEAPON NOTAIR NOTSUB;
-	tedclass=KBOT;
+	category=AVEN LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_kit;
-	unitnumber=58;
-	objectname=aven_kit.3do;
+	unitName=aven_kit;
+	objectName=aven_kit.3do;
 	corpse=aven_kit_dead;
-	buildpic=aven_kit.png;
-	soundcategory=aven_KBOT;
+	buildPic=aven_kit.png;
+	soundCategory=aven_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=750;
-	healtime=30;
+	maxDamage=750;
 	footprintx=2;
 	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,73 +45,56 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTHT2;
-	turnrate=1005;
+	movementClass=KBOTHT2;
+	turnRate=1005;
 	acceleration=1.0;
-	brakerate=1.5;
-	maxvelocity=2.35;
-	maxslope=14;
-	maxwaterdepth=12;
+	brakeRate=1.5;
+	maxVelocity=2.35;
+	maxSlope=14;
+	maxWaterDepth=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=aven_kit_rocket;
-	nochasecategory=VTOL;
+	noChaseCategory=VTOL;
 	onlytargetcategory1=NOTAIR;
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ARM-KRL;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	smoothanim=1;
-	steeringmode=2;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =18 33 18;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[customParams] 
 	{
@@ -122,10 +102,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:rocketflaresml;
+		explosionGenerator0=custom:rocketflaresml;
 	}
-	buildcostenergy=905;//#AUTO#
-	buildcostmetal=181;//#AUTO#
-	buildtime=2159;//#AUTO#
+	buildCostEnergy=905;//#AUTO#
+	buildCostMetal=181;//#AUTO#
+	buildTime=2159;//#AUTO#
 	mass=123;//#AUTO#
 }

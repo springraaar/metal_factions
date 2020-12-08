@@ -158,7 +158,7 @@ function widget:AddConsoleLine(line)
 			end
 
 			if #tokens == 1 then
-				spSendMessageToPlayer(myPlayerId,"usage : #AI [<playerId>] <command> <parameters>\nAvailable commands :\nSTATUS : show current status\nSTRATEGY <strategyName> : change strategy\nCOMPAD : give the player a commander pad\nCOMMORPH : morph the commander immediately\nDEFMULT <N> : set defense density multiplier to N, 0 to disable defenses, -1 to reset")
+				spSendMessageToPlayer(myPlayerId,"usage : #AI [<playerId>] <command> <parameters>\nAvailable commands :\nSTATUS : show current status\nSTRATEGY <strategyName> : change strategy\nCOMPAD : give the player a commander pad\nCOMMORPH : morph the commander immediately\nDEFMULT <N> : set defense density multiplier to N, 0 to disable defenses, -1 to reset\nBEACONTYPE all|raiders|main : set which squads follow the beacon")
 				return
 			end
 			

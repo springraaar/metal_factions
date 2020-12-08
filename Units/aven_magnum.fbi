@@ -3,42 +3,39 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Magnum;
 	description=Elite Infantry Robot;
-	icontype=mobilefighter;
+	iconType=mobilefighter;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=KBOT;
+	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_magnum;
-	unitnumber=235;
-	objectname=aven_magnum.3do;
+	unitName=aven_magnum;
+	objectName=aven_magnum.3do;
 	corpse=aven_magnum_dead;
-	buildpic=aven_magnum.png;
-	soundcategory=MAVERICK;
+	buildPic=aven_magnum.png;
+	soundCategory=MAVERICK;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=4500;
-	healtime=30;
+	maxDamage=4500;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.4;
-	energyuse=0.4;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,34 +45,34 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTHT4;
-	turnrate=1016;
+	movementClass=KBOTHT4;
+	turnRate=1016;
 	acceleration=1.0;
-	brakerate=1.5;
-	maxvelocity=1.9;
-	maxslope=14;
-	maxwaterdepth=0;
+	brakeRate=1.5;
+	maxVelocity=1.9;
+	maxSlope=14;
+	maxWaterDepth=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
@@ -83,41 +80,24 @@
 	weapon1=aven_magnum_laser;
 	weapon2=aven_magnum_cannon;
 	slaveto1=2;
-	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
-	badtargetcategory2=VTOL;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	badTargetCategory2=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ARM-SS;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	smoothanim=1;
-	steeringmode=2;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =45 60 35;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[customParams] 
 	{
@@ -125,12 +105,12 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:snipeflare;
-		explosiongenerator1=custom:emgflarefast;
+		explosionGenerator0=custom:snipeflare;
+		explosionGenerator1=custom:emgflarefast;
 	}
 
-	buildcostenergy=16665;//#AUTO#
-	buildcostmetal=3333;//#AUTO#
-	buildtime=39719;//#AUTO#
+	buildCostEnergy=16665;//#AUTO#
+	buildCostMetal=3333;//#AUTO#
+	buildTime=39719;//#AUTO#
 	mass=2236;//#AUTO#
 }

@@ -6,43 +6,40 @@
 	side=Claw;
 	name=Massacre;
 	description=Very Heavy Plasma Mortar;
-	icontype=staticartillery;
+	iconType=staticartillery;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW LEVEL3 WEAPON NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_massacre;
-	unitnumber=20000;
-	objectname=claw_massacre.3do;
+	unitName=claw_massacre;
+	objectName=claw_massacre.3do;
 	corpse=claw_massacre_dead;
-	buildpic=claw_massacre.png;
-	soundcategory=COR_INT;
+	buildPic=claw_massacre.png;
+	soundCategory=COR_INT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3750;
-	healtime=11;
+	maxDamage=3750;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	yardmap=ooooo ooooo ooooo ooooo ooooo;
+	yardMap=ooooo ooooo ooooo ooooo ooooo;
 	collisionVolumeType=CylY;
 	collisionVolumeScales=70 50 70;
 	collisionVolumeOffsets=0 0 0;
@@ -52,57 +49,45 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
-	maxwaterdepth=33;
+	maxSlope=10;
+	maxWaterDepth=33;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_massacre_cannon;
-	badtargetcategory1=VTOL;
+	badTargetCategory1=VTOL;
 	onlytargetcategory1=NOTAIR;
-	explodeas=ATOMIC_BLASTSML;
-	selfdestructas=ATOMIC_BLAST;
+	explodeAs=ATOMIC_BLASTSML;
+	selfDestructAs=ATOMIC_BLAST;
 
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=F-PS2;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	//************************************************************
 	//  To be removed
@@ -110,7 +95,7 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:yellowflarebig;
+		explosionGenerator0=custom:yellowflarebig;
 	}
 	[CustomParams]
 	{
@@ -118,8 +103,8 @@
 		canAreaAttack=1;
 		tip=High trajectory only;
 	}
-	buildcostenergy=18754;//#AUTO#
-	buildcostmetal=3750;//#AUTO#
-	buildtime=44697;//#AUTO#
+	buildCostEnergy=18754;//#AUTO#
+	buildCostMetal=3750;//#AUTO#
+	buildTime=44697;//#AUTO#
 	mass=7000;//#AUTO#
 }

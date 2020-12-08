@@ -6,42 +6,40 @@
 	side=SPHERE;
 	name=Obsidian Sphere;
 	description=Shielded Armored Energy Weapon;
-	icontype=staticassault;
+	iconType=staticassault;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE LEVEL3 NOTAIR WEAPON NOTSUB;
-	tedclass=FORT;
+	category=SPHERE LEVEL2 NOTAIR WEAPON NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_obsidian_sphere;
-	objectname=sphere_obsidian_sphere.3do;
+	unitName=sphere_obsidian_sphere;
+	objectName=sphere_obsidian_sphere.3do;
 	corpse=sphere_obsidian_sphere_dead;
-	buildpic=sphere_obsidian_sphere.png;
-	soundcategory=COR_DOOM;
+	buildPic=sphere_obsidian_sphere.png;
+	soundCategory=COR_DOOM;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=6000;
+	maxDamage=6000;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=2048;
-	yardmap=oooo oooo oooo oooo;
+	yardMap=oooo oooo oooo oooo;
 	collisionVolumeType=cyly;
 	collisionVolumeScales=50 60 50;
 	collisionVolumeOffsets=0 0 0;
@@ -51,56 +49,44 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=20;
-	maxwaterdepth=22;
+	maxSlope=20;
+	maxWaterDepth=22;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=sphere_obsidian_sphere_beam;
-	wpribadtargetcategory1=VTOL;
+	wpribadTargetCategory1=VTOL;
 	weapon2=sphere_sphere_shield;
-	explodeas=LARGE_BUILDINGEX;
-	selfdestructas=LARGE_BUILDING;
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=COR-PUN;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -108,10 +94,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:obsidianglow;
+		explosionGenerator0=custom:obsidianglow;
 	}
-	buildcostenergy=16053;//#AUTO#
-	buildcostmetal=3210;//#AUTO#
-	buildtime=38261;//#AUTO#
+	buildCostEnergy=16053;//#AUTO#
+	buildCostMetal=3210;//#AUTO#
+	buildTime=38261;//#AUTO#
 	mass=8224;//#AUTO#
 }

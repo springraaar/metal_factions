@@ -6,40 +6,40 @@
 	side=GEAR;
 	name=Incendiary Land mine;
 	description=Perimeter defense;
-	icontype=staticmine;
+	iconType=staticmine;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR NOTAIR NOTSUB;
-	tedclass=MINE;
+	category=GEAR LEVEL1 NOTAIR NOTSUB;
+	tedClass=MINE;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_incendiary_mine;
-	objectname=gear_incendiary_mine.3do;
-	buildpic=gear_incendiary_mine.png;
-	soundcategory=MINE;
+	unitName=gear_incendiary_mine;
+	objectName=gear_incendiary_mine.3do;
+	buildPic=gear_incendiary_mine.png;
+	soundCategory=MINE;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=100;
+	maxDamage=100;
 	footprintx=2;
 	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	YardMap=yy yy;
+	yardMap=yy yy;
 	levelground=0;
 	upright=0;
 	collisionVolumeType=CylY;
@@ -51,44 +51,44 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canmove=0;
-	canpatrol=0;
-	canstop=1;
+	canAttack=1;
+	canMove=0;
+	canPatrol=0;
+	canStop=1;
 	stealth=1;
-	canguard=1;
+	canGuard=1;
 	sonarStealth=1;
 	
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=30;
-	maxwaterdepth=100;
+	maxSlope=30;
+	maxWaterDepth=100;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=250;
-	radardistance=0;
+	sightDistance=250;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_incendiary_mine_missile;
-	badtargetcategory1=NOTAIR;
-	explodeas=small_unitex;
-	selfdestructas=small_unitex;
+	badTargetCategory1=NOTAIR;
+	explodeAs=small_unitex;
+	selfDestructAs=small_unitex;
 	selfdestructcountdown=0;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 	firestandorders=1;
 	standingfireorder=2;
 	defaultmissiontype=Standby_Mine;
@@ -98,9 +98,9 @@
 	//*****************
 	bmcode=0;
 	cancloak=1;
-	cloakcost=5;
-	initcloaked=1;
-	mincloakdistance=20;
+	cloakCost=5;
+	initCloaked=1;
+	minCloakDistance=20;
 	threed=1;
 	version=1.2;
 	zbuffer=1;

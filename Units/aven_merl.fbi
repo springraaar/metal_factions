@@ -3,42 +3,39 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Merl;
 	description=Mobile Rocket Launcher;
-	icontype=mobileartillery;
+	iconType=mobileartillery;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN TANK LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=TANK;
+	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_merl;
-	unitnumber=47;
-	objectname=aven_merl.3do;
+	unitName=aven_merl;
+	objectName=aven_merl.3do;
 	corpse=aven_merl_dead;
-	buildpic=aven_merl.png;
-	soundcategory=aven_VEHICLE;
+	buildPic=aven_merl.png;
+	soundCategory=aven_VEHICLE;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1200;
-	healtime=30;
+	maxDamage=1200;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,52 +45,47 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKSH3;
-	turnrate=330;
+	movementClass=TANKSH3;
+	turnRate=330;
 	acceleration=0.03;
-	brakerate=0.27;
-	maxvelocity=1.5;
-	maxslope=16;
-	maxwaterdepth=4;
+	brakeRate=0.27;
+	maxVelocity=1.5;
+	maxSlope=16;
+	maxWaterDepth=4;
 	turninplace=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=aven_merl_rocket;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 	onlytargetcategory1=NOTAIR;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
@@ -108,8 +100,6 @@
 	collisionVolumeScales =42 20 50;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	damageModifier=0.8;
 
 	[customParams] 
@@ -119,8 +109,8 @@
 		tip=Gains 20% damage resistance when closed;
 	}
 
-	buildcostenergy=6001;//#AUTO#
-	buildcostmetal=1200;//#AUTO#
-	buildtime=14302;//#AUTO#
+	buildCostEnergy=6001;//#AUTO#
+	buildCostMetal=1200;//#AUTO#
+	buildTime=14302;//#AUTO#
 	mass=350;//#AUTO#
 }

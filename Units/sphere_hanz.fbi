@@ -1,86 +1,69 @@
 [UNITINFO]
 	{
 	// ------------------- description
-	Side=Sphere;
+	side=Sphere;
 	Name=Hanz;
 	Description=Armored Assault Robot;
-	icontype=mobileassault;
+	iconType=mobileassault;
 
 	// ------------------- categories
-	Category=SPHERE KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
-	TEDClass=KBOT;
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	// ------------------- external specs
-	UnitName=sphere_hanz;
-	Objectname=sphere_hanz.3do;
-	buildpic=sphere_hanz.png;
-	SoundCategory=SPHERE_BOTMED;
+	unitName=sphere_hanz;
+	objectName=sphere_hanz.3do;
+	buildPic=sphere_hanz.png;
+	soundCategory=SPHERE_BOTMED;
 	Corpse=sphere_hanz_dead;
 
 
 	// ------------------- health/cost/size
 	FootprintX=3;
 	FootprintZ=3;
-	MaxDamage=3600;
+	maxDamage=3600;
 
 
 	// ------------------- resources
-	EnergyUse=0;
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyMake=0;
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	canguard=1;
-	canattack=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
 	Builder=0;
 
 	// ------------------- movement
-	MaxWaterDepth=12;
-	MaxSlope=17;
-	MaxVelocity=1.20;
-	BrakeRate=0.35;
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.20;
+	brakeRate=0.35;
 	Acceleration=0.15;
-	TurnRate=850;
-	SteeringMode=2;
-	MovementClass=KBOTHT3;
+	turnRate=850;
+	movementClass=KBOTHT3;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 
 	// ------------------- weapons
 	Weapon1=sphere_hanz_blaster;
-	badtargetcategory1=VTOL;
-	NoChaseCategory=VTOL;
-	ExplodeAs=BIG_UNITEX;
-	SelfDestructAs=BIG_UNIT;
+	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 
 	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
 
 	// ------------------- misc
-	Version=3.1;
-	Designation=CA_Ik;
-	BMcode=1;
-	ThreeD=1;
-	ZBuffer=1;
-	NoAutoFire=0;
-	ShootMe=1;
-	DefaultMissionType=Standby;
-	maneuverleashlength=640;
+	noAutoFire=0;
 	Upright=0;
-	Downloadable=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	collisionVolumeType = box;
 	collisionVolumeScales =40 45 40;
 	collisionVolumeOffsets = 0 0 0;
@@ -92,11 +75,11 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:redflare;
+		explosionGenerator0=custom:redflare;
 	}
 
-	buildcostenergy=5132;//#AUTO#
-	buildcostmetal=1026;//#AUTO#
-	buildtime=12231;//#AUTO#
+	buildCostEnergy=5132;//#AUTO#
+	buildCostMetal=1026;//#AUTO#
+	buildTime=12231;//#AUTO#
 	mass=1987;//#AUTO#
 }

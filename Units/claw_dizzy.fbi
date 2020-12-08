@@ -7,117 +7,97 @@
 	side=Claw;
 	name=Dizzy;
 	description=Fast Attack Spinbot;
-	icontype=amphibraider;
+	iconType=amphibraider;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW SHIP LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=SHIP;
+	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_dizzy;
-	unitnumber=20000;
-	objectname=claw_dizzy.3do;
+	unitName=claw_dizzy;
+	objectName=claw_dizzy.3do;
 	corpse=claw_dizzy_dead;
-	buildpic=claw_dizzy.png;
-	soundcategory=CLAW_BOTSML;
+	buildPic=claw_dizzy.png;
+	soundCategory=CLAW_BOTSML;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1100;
-	healtime=30;
+	maxDamage=1100;
 	footprintx=2;
 	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKHOVER3;
-	turnrate=1155;
+	movementClass=TANKHOVER3;
+	turnRate=1155;
 	acceleration=0.12;
-	brakerate=0.05;
-	maxvelocity=2.0;
+	brakeRate=0.05;
+	maxVelocity=2.0;
 	turninplace=1;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	sonardistance=250;
-	radardistance=0;
+	sightDistance=500;
+	sonarDistance=250;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_dizzy_laser;
-	nochasecategory=VTOL;
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
+	noChaseCategory=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ASD-SC;
-	downloadable=1;
-	maneuverleashlength=640;
 	scale=0.5;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =25 40 25;
 	collisionVolumeOffsets = 0 -3 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	waterline=6;
 	
 
@@ -128,11 +108,11 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:glowsml;
+		explosionGenerator0=custom:glowsml;
 	}
 
-	buildcostenergy=1864;//#AUTO#
-	buildcostmetal=372;//#AUTO#
-	buildtime=4444;//#AUTO#
+	buildCostEnergy=1864;//#AUTO#
+	buildCostMetal=372;//#AUTO#
+	buildTime=4444;//#AUTO#
 	mass=399;//#AUTO#
 }

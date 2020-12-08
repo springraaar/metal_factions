@@ -3,42 +3,39 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Tremor;
 	description=Amphibious Very Heavy Assault Tank;
-	icontype=amphibassault;
+	iconType=amphibassault;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR TANK LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=TANK;
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_tremor;
-	unitnumber=110;
-	objectname=gear_tremor.3do;
+	unitName=gear_tremor;
+	objectName=gear_tremor.3do;
 	corpse=gear_tremor_dead;
-	buildpic=gear_tremor.png;
-	soundcategory=gear_TANK;
+	buildPic=gear_tremor.png;
+	soundCategory=gear_TANK;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=11000;
-	healtime=30;
+	maxDamage=11000;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,77 +45,61 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKBH4; //TANKSH4//
-	turnrate=219;
+	movementClass=TANKBH4; //TANKSH4//
+	turnRate=219;
 	acceleration=0.2;
-	brakerate=0.3;
-	maxvelocity=1;
-	maxslope=16;
+	brakeRate=0.3;
+	maxVelocity=1;
+	maxSlope=16;
 
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_tremor_cannon;
-	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
-	explodeas=HUGE_UNIT;
-	selfdestructas=ATOMIC_BLASTSML;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=HUGE_UNIT;
+	selfDestructAs=ATOMIC_BLASTSML;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=PS20;
-	downloadable=1;
 	leavetracks=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
 	trackoffset=8;
 	trackstrength=10;
 	trackstretch=1;
 	tracktype=StdTank;
 	trackwidth=48;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =66 33 66;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -126,12 +107,12 @@
 	}
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:yellowflarebig;
-	explosiongenerator1=custom:redflare;
-	explosiongenerator2=custom:UnitFire;
+	explosionGenerator0=custom:yellowflarebig;
+	explosionGenerator1=custom:redflare;
+	explosionGenerator2=custom:UnitFire;
 	}
-	buildcostenergy=17338;//#AUTO#
-	buildcostmetal=3467;//#AUTO#
-	buildtime=41324;//#AUTO#
+	buildCostEnergy=17338;//#AUTO#
+	buildCostMetal=3467;//#AUTO#
+	buildTime=41324;//#AUTO#
 	mass=6249;//#AUTO#
 }

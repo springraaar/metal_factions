@@ -6,29 +6,26 @@
 	side=Claw;
 	name=Construction Robot;
 	description=Tech Level 1;
-	icontype=mobilebuilder;
+	iconType=mobilebuilder;
 	
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW KBOT LEVEL1 CONSTR NOTAIR NOTSUB;
-	tedclass=KBOT;
+	category=CLAW LEVEL1 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_construction_kbot;
-	unitnumber=20000;
-	objectname=claw_construction_kbot.3do;
+	unitName=claw_construction_kbot;
+	objectName=claw_construction_kbot.3do;
 	corpse=claw_construction_kbot_dead;
-	buildpic=claw_construction_kbot.png;
-	soundcategory=aven_CKBOT;
+	buildPic=claw_construction_kbot.png;
+	soundCategory=aven_CKBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=700;
-	healtime=27;
+	maxDamage=700;
 	footprintx=2;
 	footprintz=2;
 
@@ -36,10 +33,10 @@
 	//  Resources
 	//*************
 	metalmake=0.0;
-	metalstorage=0;
-	energymake=4;
-	energyuse=0.1;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=4;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -49,72 +46,56 @@
 	//  Constructor
 	//***************
 	builder=1;
-	builddistance=200;
-	workertime=150;
-	RepairSpeed=150;
-	ReclaimSpeed=150;
-	TerraformSpeed=300;
+	buildDistance=200;
+	workerTime=150;
+	repairSpeed=150;
+	reclaimSpeed=150;
+	terraformSpeed=300;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canreclamate=1;
-	canstop=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTHT2;
-	turnrate=1020;
+	movementClass=KBOTHT2;
+	turnRate=1020;
 	acceleration=1.6;
-	brakerate=12.0;
-	maxvelocity=1.6;
-	maxslope=20;
-	maxwaterdepth=25;
+	brakeRate=12.0;
+	maxVelocity=1.6;
+	maxSlope=20;
+	maxWaterDepth=25;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=NANO_UNITEX;
-	selfdestructas=NANO_UNIT;
+	explodeAs=NANO_UNITEX;
+	selfDestructAs=NANO_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ARM-CK1;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	smoothanim=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =20 30 20;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=NanoDebree;
-	pieceTrailCEGRange = 2;
 
 	[CustomParams]
 	{
@@ -123,10 +104,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:Nano;
+		explosionGenerator0=custom:Nano;
 	}
-	buildcostenergy=1608;//#AUTO#
-	buildcostmetal=321;//#AUTO#
-	buildtime=3832;//#AUTO#
+	buildCostEnergy=1608;//#AUTO#
+	buildCostMetal=321;//#AUTO#
+	buildTime=3832;//#AUTO#
 	mass=141;//#AUTO#
 }

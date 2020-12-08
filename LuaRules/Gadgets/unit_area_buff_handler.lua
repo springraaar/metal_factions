@@ -482,7 +482,7 @@ function gadget:GameFrame(n)
 			if (r > 0 and steps > 0) then
 				health,maxHealth,_,_,bp = spGetUnitHealth(unitId)
 				
-				if (bp and bp < 1) then
+				if (bp and bp < 1 and health > 0) then
 					local newBp = bp + r
 					local newHp = health + r * maxHealth
 					if newBp > 1 then

@@ -1,3 +1,70 @@
+2020/12/08 ------------------ NOTES v1.47 ----------------------
+
+
+--- Balance / Mechanics
+
+TARGETTING
+- replaced cylinder targetting for missiles with spherical targetting (still stretched vertically 2x)
+- removed height range bonus from cannon type weapons
+(this slightly reduces the range of cannon and missiles fired from aircraft at ground targets and makes relative ranges of missile and cannon artillery more consistent)
+- removed the 33% vertical range stretch from laser/beam weapons 
+(they'd fire and apparently hit but deal no damage past their normal max range)
+
+- GEAR and CLAW pop-up static defenses will now open up if enemy long range rockets get within ~150% of their range
+(the ones that can hit air well)
+
+- fixed issue that caused railgun projectiles to overshoot targets
+
+AIR
+- GEAR "Knocker" now tries to attack air units as well (cannon projectiles explode mid-air)
+- increased the turn rate of several air-to-ground rockets
+- slightly increased the missile range on AVEN and GEAR L2 fighter aircraft
+- SPHERE "Tycho" can now turn its body and fire regardless of where it's moving but is a little less maneuverable and about 13% more expensive
+- AVEN "Gale" and SPHERE "Blower" had the AOE reduced from 150 to 130 but have about 20% higher dmg/s and 4% increased cost
+- reduced the cruise altitude for several figher and bomber aircraft by about 10%
+
+OTHER
+- normalized the footprint and collision size for fusion reactors
+
+- fixed canister not firing at targets in some positions
+(now it'll also try to turn towards the target more precisely)
+- SPHERE "Nova" form commander no longer ignores terrain while firing
+- modified GEAR "Rhino" cannon aiming to align itself better with its targets
+
+- GEAR "Pulverizer" missiles are now a bit faster and wobble a bit less to hit incoming rockets more effectively
+(they still suck at it)
+
+- increased the speed at which stuck targets slide down cliffs
+
+- cloakable radar jammers are cloaked by default
+
+- removed 100 energy and metal storage from commander pads
+
+- increased cost of L2 fusion reactors by 6%
+
+--- UI / Visual
+
+- slightly improved the turret hinges on some GEAR models
+- railgun projectiles are no longer visible by enemies outside of LOS coverage
+(a known issue is that now they're also not visible by allies outside of LOS and should be)
+
+- fixed DC rocket auto-build green effect sometimes persisting if the unit is destroyed while the auto-build buff is still active
+
+- reduced the cost of hypersonic nukes from 25k to 24k metal and increased the maximum damage from 12000 to 13000
+
+--- AI
+
+- when attack units are not "seriously damaged", evasion maneuvers are done towards the enemies instead of away from them
+- added "retreat health fraction" parameters for commanders/assaults/other for custom strategies
+- added #AI BEACONTYPE all|raiders|main to set which unit groups follow the beacon
+- when assisting attack parties, commander is more likely to move to the front line
+- when the force is not attacking, it's more likely to patrol and do something useful (repair/reclaim)
+- will try to move its commander around a bit more when it thinks it might be stuck 
+(to avoid self-destructing near cliff edges in some cases)
+- fixed the message when AI responds to COMMORPH commands
+
+
+
 2020/12/01 ------------------ NOTES v1.46 ----------------------
 
 --- new units

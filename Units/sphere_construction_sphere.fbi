@@ -1,100 +1,84 @@
 [UNITINFO]
 {
 	// ------------------- description
-	Side=Sphere;
+	side=Sphere;
 	Name=Advanced Construction Sphere;
 	Description=Tech Level 2;
-	icontype=fspherebuilder2;
+	iconType=fspherebuilder2;
 	
 	// ------------------- categories
-	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
-	TEDClass=COMMANDER;
+	Category=SPHERE LEVEL2 NOTAIR NOTSUB;
 
 
 	// ------------------- external specs
-	UnitName=sphere_construction_sphere;
-	UnitNumber=10000;
-	Objectname=sphere_construction_sphere.3do;
+	unitName=sphere_construction_sphere;
+	objectName=sphere_construction_sphere.3do;
 	Corpse=sphere_construction_sphere_dead;
-	buildpic=sphere_construction_sphere.png;
-	SoundCategory=SPHERE_SPHEREBIG;
+	buildPic=sphere_construction_sphere.png;
+	soundCategory=SPHERE_SPHEREBIG;
 
 	// ------------------- health/cost/size
-	MaxDamage=6000;
+	maxDamage=6000;
 	FootprintX=4;
 	FootprintZ=4;
 	autoheal=30;
 	
 	// ------------------- resources
-	EnergyMake=10;
+	energyMake=10;
 	metalmake=0.0;
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyUse=0;
 
 	// ------------------- constructor
 	builder=1;
-	builddistance=250;
-	workertime=300;
-        RepairSpeed=300;
-        ReclaimSpeed=300;
-        TerraformSpeed=600;
-
+	buildDistance=250;
+	workerTime=300;
+	repairSpeed=300;
+	reclaimSpeed=300;
+	terraformSpeed=600;
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	canguard=1;
-	canattack=0;
-	onoffable=0;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=0;
+	onOffable=0;
 
 
 	// ------------------- movement
-	canfly=1;
-	MaxVelocity=0.8;
-	BrakeRate=0.03;
+	canFly=1;
+	maxVelocity=0.8;
+	brakeRate=0.03;
 	Acceleration=0.03;
-	TurnRate=632;
-	SteeringMode=2;
-	cruisealt=100;
-	hoverattack=1;
-	airstrafe=0;
-	airhoverfactor=0.1;
+	turnRate=632;
+	cruiseAlt=100;
+	hoverAttack=1;
+	airStrafe=0;
+	airHoverFactor=0.1;
 	upright=1;
 	bankingallowed=0;
 	useSmoothMesh=1;
 	verticalSpeed=0.8;
 
 	// ------------------- scout
-	sightdistance=600;
-	RadarDistance=0;
-	SonarDistance=0;
+	sightDistance=600;
+	radarDistance=0;
+	sonarDistance=0;
 
 	// ------------------- weapons
 	Weapon1=sphere_construction_sphere_shield;
-	badtargetcategory1=VTOL;
-	NoChaseCategory=VTOL;
-	ExplodeAs=NANO_UNIT;
-	SelfDestructAs=NANO_UNIT;
+	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
+	explodeAs=NANO_UNIT;
+	selfDestructAs=NANO_UNIT;
 
 	// ------------------- orders
 	movestate=0;
 
-	// ------------------- stealth
-	//cloakcost=200;
-	//cloakcostmoving=750;
-	//mincloakdistance=170;
-
 	// ------------------- misc
-	Designation=c-s;
-	BMcode=1;
-	ThreeD=1;
-	ZBuffer=1;
-	ShootMe=1;
-	maneuverleashlength=640;
-	Version=1;
-	activatewhenbuilt=0;
+	activateWhenBuilt=0;
 	collisionVolumeType = sphere;
 	collisionVolumeScales =45 45 45;
 	collisionVolumeOffsets = 0 0 0;
@@ -111,10 +95,10 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:buildglow;
+		explosionGenerator0=custom:buildglow;
 	}
-	buildcostenergy=10643;//#AUTO#
-	buildcostmetal=2128;//#AUTO#
-	buildtime=25367;//#AUTO#
+	buildCostEnergy=10643;//#AUTO#
+	buildCostMetal=2128;//#AUTO#
+	buildTime=25367;//#AUTO#
 	mass=3534;//#AUTO#
 }

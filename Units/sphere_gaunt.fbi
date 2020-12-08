@@ -1,85 +1,69 @@
 [UNITINFO]
 	{
 	// ------------------- description
-	Side=Sphere;
+	side=Sphere;
 	Name=Gaunt;
 	Description=Light Sniper Robot;
-	icontype=mobilefs;
+	iconType=mobilefs;
 
 	// ------------------- categories
-	Category=SPHERE KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
-	TEDClass=KBOT;
+	Category=SPHERE LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	// ------------------- external specs
-	UnitName=sphere_gaunt;
-	UnitNumber=10007;
-	Objectname=sphere_gaunt.3do;
-	buildpic=sphere_gaunt.png;
-	SoundCategory=SPHERE_BOTSML;
+	unitName=sphere_gaunt;
+	objectName=sphere_gaunt.3do;
+	buildPic=sphere_gaunt.png;
+	soundCategory=SPHERE_BOTSML;
 	Corpse=sphere_gaunt_dead;
 
 
 	// ------------------- health/cost/size
 	FootprintX=2;
 	FootprintZ=2;
-	MaxDamage=875;
+	maxDamage=875;
 
 
 	// ------------------- resources
-	EnergyUse=0;
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyMake=0;
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	canguard=1;
-	canattack=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
 	Builder=0;
 
 	// ------------------- movement
-	MaxWaterDepth=12;
-	MaxSlope=17;
-	MaxVelocity=1.25;
-	BrakeRate=0.35;
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.25;
+	brakeRate=0.35;
 	Acceleration=0.15;
-	TurnRate=750;
-	SteeringMode=2;
-	MovementClass=KBOTHT3;
+	turnRate=750;
+	movementClass=KBOTHT3;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 
 	// ------------------- weapons
 	Weapon1=sphere_gaunt_laser;
-	badtargetcategory1=VTOL;
-	NoChaseCategory=VTOL;
-	ExplodeAs=SMALL_UNITEX;
-	SelfDestructAs=SMALL_UNIT;
+	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 
 	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
 
 	// ------------------- misc
-	Version=3.1;
-	Designation=CA_Ik;
-	BMcode=1;
-	ThreeD=1;
-	ZBuffer=1;
-	NoAutoFire=0;
-	ShootMe=1;
-	DefaultMissionType=Standby;
-	maneuverleashlength=640;
+	noAutoFire=0;
 	Upright=1;
-	Downloadable=1;
 	collisionVolumeType = box;
 	collisionVolumeScales=20 32 20;
 	collisionVolumeOffsets= 0 0 0;
@@ -91,10 +75,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:redflare;
+		explosionGenerator0=custom:redflare;
 	}
-	buildcostenergy=1231;//#AUTO#
-	buildcostmetal=246;//#AUTO#
-	buildtime=2934;//#AUTO#
+	buildCostEnergy=1231;//#AUTO#
+	buildCostMetal=246;//#AUTO#
+	buildTime=2934;//#AUTO#
 	mass=150;//#AUTO#
 }

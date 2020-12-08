@@ -3,32 +3,29 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Adv. Construction Vehicle;
 	description=Tech Level 2;
-	icontype=mobilebuilder2;	
+	iconType=mobilebuilder2;	
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=GEAR TANK LEVEL2 CONSTR NOTAIR NOTSUB;
-	tedclass=CNSTR;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_adv_construction_vehicle;
-	unitnumber=81;
-	objectname=gear_adv_construction_vehicle.3do;
+	unitName=gear_adv_construction_vehicle;
+	objectName=gear_adv_construction_vehicle.3do;
 	corpse=gear_adv_construction_vehicle_dead;
-	buildpic=gear_adv_construction_vehicle.png;
-	soundcategory=gear_CVEHICLE;
+	buildPic=gear_adv_construction_vehicle.png;
+	soundCategory=gear_CVEHICLE;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=4000;
-	healtime=67;
+	maxDamage=4000;
 	footprintx=3;
 	footprintz=3;
 
@@ -36,10 +33,10 @@
 	//  Resources
 	//*************
 	metalmake=0.0;
-	metalstorage=0;
-	energymake=17;
-	energyuse=0.1;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=17;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -49,72 +46,57 @@
 	//  Constructor
 	//***************
 	builder=1;
-	builddistance=200;
-	workertime=300;
-        RepairSpeed=300;
-        ReclaimSpeed=300;
-        TerraformSpeed=600;
+	buildDistance=200;
+	workerTime=300;
+        repairSpeed=300;
+        reclaimSpeed=300;
+        terraformSpeed=600;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canreclamate=1;
-	canstop=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKSH3;
-	turnrate=315;
+	movementClass=TANKSH3;
+	turnRate=315;
 	acceleration=0.16;
-	brakerate=0.3;
-	maxvelocity=1.4;
-	maxslope=16;
-	maxwaterdepth=18;
+	brakeRate=0.3;
+	maxVelocity=1.4;
+	maxSlope=16;
+	maxWaterDepth=18;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=NANO_UNITEX;
-	selfdestructas=NANO_UNIT;
+	explodeAs=NANO_UNITEX;
+	selfDestructAs=NANO_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=COR-CV1;
-	downloadable=1;
 	leavetracks=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
 	trackoffset=8;
 	trackstrength=6;
 	trackstretch=1;
 	tracktype=StdTank;
 	trackwidth=34;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=NanoDebree;
-	pieceTrailCEGRange = 2;
 	collisionVolumeType = box;
 	collisionVolumeScales =33 35 50;
 	collisionVolumeOffsets = 0 0 0;
@@ -128,11 +110,11 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:Nano;
+		explosionGenerator0=custom:Nano;
 	}
 
-	buildcostenergy=7607;//#AUTO#
-	buildcostmetal=1521;//#AUTO#
-	buildtime=18130;//#AUTO#
+	buildCostEnergy=7607;//#AUTO#
+	buildCostMetal=1521;//#AUTO#
+	buildTime=18130;//#AUTO#
 	mass=2411;//#AUTO#
 }

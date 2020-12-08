@@ -3,47 +3,43 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Adv. Robot Factory;
 	description=Produces Level 2 Robots;
-	icontype=plant2;
+	iconType=plant2;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=GEAR PLANT LEVEL2 NOTAIR NOTSUB;
-	tedclass=PLANT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_adv_kbot_lab;
-	unitnumber=83;
-	objectname=gear_adv_kbot_lab.3do;
+	unitName=gear_adv_kbot_lab;
+	objectName=gear_adv_kbot_lab.3do;
 	corpse=gear_adv_kbot_lab_dead;
-	buildpic=gear_adv_kbot_lab.png;
-	soundcategory=KBOTPLANT;
+	buildPic=gear_adv_kbot_lab.png;
+	soundCategory=KBOTPLANT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=4500;
-	healtime=30;
+	maxDamage=4500;
 	footprintx=10;
 	footprintz=7;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=100;
-	energyuse=0;
-	energystorage=100;
+	metalStorage=100;
+	energyUse=0;
+	energyStorage=100;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=1024;
-	yardmap=oooccccooo oooccccooo oooccccooo oooccccooo oooccccooo oooccccooo oooccccooo;
+	yardMap=oooccccooo oooccccooo oooccccooo oooccccooo oooccccooo oooccccooo oooccccooo;
 	collisionVolumeType=Box;
 	collisionVolumeScales=142 50 90;
 	collisionVolumeOffsets=0 -5 0;
@@ -53,53 +49,41 @@
 	//  Constructor
 	//***************
 	builder=1;
-	workertime=300;
+	workerTime=300;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
-	maxwaterdepth=11;
+	maxSlope=10;
+	maxWaterDepth=11;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=LARGE_BUILDINGEX;
-	selfdestructas=LARGE_BUILDING;
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=2;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=COR-KL2;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -107,12 +91,12 @@
 	}
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Nano;
-	explosiongenerator1=custom:WhiteLight;
+	explosionGenerator0=custom:Nano;
+	explosionGenerator1=custom:WhiteLight;
 	}
 
-	buildcostenergy=8537;//#AUTO#
-	buildcostmetal=1707;//#AUTO#
-	buildtime=20346;//#AUTO#
+	buildCostEnergy=8537;//#AUTO#
+	buildCostMetal=1707;//#AUTO#
+	buildTime=20346;//#AUTO#
 	mass=3388;//#AUTO#
 }

@@ -1822,7 +1822,7 @@ function UnitHandler:GameFrame(f)
 			self.nukeTargetCell = getCellFromTableIfExists(self.ai.mapHandler.mapCells,bestNukeCell.xIndex,bestNukeCell.zIndex)
 		end		
 		-- AI beacon override
-		if self.ai:isBeaconActive() then
+		if self.ai:isBeaconActive(UNIT_GROUP_RAIDERS) then
 			local xIndex,zIndex = getCellXZIndexesForPosition(self.ai.beaconPos)
 			goal = getCellFromTableIfExists(self.ai.mapHandler.mapCells,xIndex,zIndex)
 		end
@@ -2039,7 +2039,7 @@ function UnitHandler:GameFrame(f)
 			local bestCellThreatAlongPath = 0
 			
 			-- AI beacon override
-			if self.ai:isBeaconActive() then
+			if self.ai:isBeaconActive(group.id) then
 				local xIndex,zIndex = getCellXZIndexesForPosition(self.ai.beaconPos)
 				local cell = getCellFromTableIfExists(self.ai.mapHandler.mapCells,xIndex,zIndex)
 				local value, threatAlongPath = self:getCellAttackValue(group,cell)
@@ -2088,13 +2088,13 @@ function UnitHandler:GameFrame(f)
 				local wasAttacking = (task == TASK_ATTACK)
 				if (task == nil or (taskFrame + TASK_DELAY_FRAMES < f)) then
 					task = nil
-					if (self.ai:isBeaconActive() and self.beaconAttack) or ((group.nearCenterCost > minForceCost) and bestValue > 0 ) then
+					if (self.ai:isBeaconActive(group.id) and self.beaconAttack) or ((group.nearCenterCost > minForceCost) and bestValue > 0 ) then
 						task = TASK_ATTACK
 						group.taskFrame = f
 						if (gId == UNIT_GROUP_ATTACKERS) then
 							self.lastMainForceAttackFrame = f
 						end
-					elseif (self.ai:isBeaconActive() and (not self.beaconAttack)) or ( wasAttacking and group.nearCenterCost < minForceCost) or bestValue < 0  then
+					elseif (self.ai:isBeaconActive(group.id) and (not self.beaconAttack)) or ( wasAttacking and group.nearCenterCost < minForceCost) or bestValue < 0  then
 						task = TASK_RETREAT
 						group.taskFrame = f
 					end

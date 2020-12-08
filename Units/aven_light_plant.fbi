@@ -3,47 +3,43 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Light Factory;
 	description=Produces level1 Robots and Vehicles;
-	icontype=plant;
+	iconType=plant;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=AVEN PLANT LEVEL1 NOTAIR NOTSUB;
-	tedclass=PLANT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_light_plant;
-	unitnumber=75;
-	objectname=aven_light_plant.3do;
+	unitName=aven_light_plant;
+	objectName=aven_light_plant.3do;
 	corpse=aven_light_plant_dead;
-	buildpic=aven_light_plant.png;
-	soundcategory=TANKPLANT;
+	buildPic=aven_light_plant.png;
+	soundCategory=TANKPLANT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2580;
-	healtime=30;
+	maxDamage=2580;
 	footprintx=7;
 	footprintz=6;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=100;
-	energyuse=0;
-	energystorage=100;
+	metalStorage=100;
+	energyUse=0;
+	energyStorage=100;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=1024;
-	yardmap=ooooooo oocccoo oocccoo oocccoo oocccoo yocccoy;
+	yardMap=ooooooo oocccoo oocccoo oocccoo oocccoo yocccoy;
 	collisionVolumeType=Box;
 	collisionVolumeScales=110 43 92;
 	collisionVolumeOffsets=0 -5 0;
@@ -53,54 +49,41 @@
 	//  Constructor
 	//***************
 	builder=1;
-	workertime=200;
+	workerTime=200;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
-	maxwaterdepth=11;
+	maxSlope=10;
+	maxWaterDepth=11;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=LARGE_BUILDINGEX;
-	selfdestructas=LARGE_BUILDING;
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=2;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=ARM-VCF;
-	downloadable=1;
-	sortbias=0;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[customParams] 
 	{
@@ -109,10 +92,10 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:Nano;
+		explosionGenerator0=custom:Nano;
 	}
-	buildcostenergy=3993;//#AUTO#
-	buildcostmetal=798;//#AUTO#
-	buildtime=6281;//#AUTO#
+	buildCostEnergy=3993;//#AUTO#
+	buildCostMetal=798;//#AUTO#
+	buildTime=6281;//#AUTO#
 	mass=1822;//#AUTO#
 }

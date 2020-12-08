@@ -3,128 +3,109 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Piranha;
 	description=Submarine Killer;
-	icontype=subartilleryfs;
+	iconType=subartilleryfs;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=AVEN UNDERWATER LEVEL2 WEAPON NOTAIR;
-	tedclass=WATER;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_piranha;
-	unitnumber=68;
-	objectname=aven_piranha.3do;
+	unitName=aven_piranha;
+	objectName=aven_piranha.3do;
 	corpse=aven_piranha_dead;
-	buildpic=aven_piranha.png;
-	soundcategory=aven_SUB;
+	buildPic=aven_piranha.png;
+	soundCategory=aven_SUB;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1700;
-	healtime=10;
+	maxDamage=1700;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
 	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=BOATSUB5;
-	turnrate=389;
+	movementClass=BOATSUB5;
+	turnRate=389;
 	acceleration=0.2;
-	brakerate=0.1;
-	maxvelocity=1.8;
+	brakeRate=0.1;
+	maxVelocity=1.8;
 	maxreversevelocity=0.9;
 	minwaterdepth=15;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	sonardistance=500;
+	sightDistance=500;
+	sonarDistance=500;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=aven_piranha_torpedo;
 	onlytargetcategory1=NOTAIR;
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
-   	WeaponMainDir1=0 0 1;
-   	MaxAngleDif1=120;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+   	weaponMainDir1=0 0 1;
+   	maxAngleDif1=120;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=1;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ASD-SK;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
 	waterline=40;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =35 18 49;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[customParams] 
 	{
 		builtBy=aven_adv_shipyard;
 	}
-	buildcostenergy=8285;//#AUTO#
-	buildcostmetal=1657;//#AUTO#
-	buildtime=19746;//#AUTO#
+	buildCostEnergy=8285;//#AUTO#
+	buildCostMetal=1657;//#AUTO#
+	buildTime=19746;//#AUTO#
 	mass=977;//#AUTO#
 }

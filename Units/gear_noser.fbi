@@ -6,94 +6,91 @@
 	side=Gear;
 	name=Noser;
 	description=Heavy Attack Submarine;
-	icontype=subartilleryfs;
+	iconType=subartilleryfs;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=GEAR UNDERWATER LEVEL2 WEAPON NOTAIR;
-	tedclass=SHIP;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_noser;
-	unitnumber=134;
-	objectname=gear_noser.3do;
+	unitName=gear_noser;
+	objectName=gear_noser.3do;
 	corpse=gear_noser_dead;
-	buildpic=gear_noser.png;
-	soundcategory=gear_SUB;
+	buildPic=gear_noser.png;
+	soundCategory=gear_SUB;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1850;
-	healtime=10;
+	maxDamage=1850;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
 	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=BOATSUB5;
-	turnrate=353;
+	movementClass=BOATSUB5;
+	turnRate=353;
 	acceleration=0.08;
-	brakerate=0.1;
-	maxvelocity=1.6;
+	brakeRate=0.1;
+	maxVelocity=1.6;
 	maxreversevelocity=0.8;
 	minwaterdepth=15;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	sonardistance=500;
+	sightDistance=500;
+	sonarDistance=500;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_noser_torpedo;
 	onlytargetcategory1=NOTAIR;
-	badtargetcategory1=NOTSUB;
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
-   	WeaponMainDir1=0 0 1;
-   	MaxAngleDif1=120;
+	badTargetCategory1=NOTSUB;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+   	weaponMainDir1=0 0 1;
+   	maxAngleDif1=120;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 
 	//************************************************************
@@ -104,16 +101,14 @@
 	collisionVolumeScales =35 18 49;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
 		builtBy=gear_adv_shipyard;
 	}
 
-	buildcostenergy=9259;//#AUTO#
-	buildcostmetal=1851;//#AUTO#
-	buildtime=22068;//#AUTO#
+	buildCostEnergy=9259;//#AUTO#
+	buildCostMetal=1851;//#AUTO#
+	buildTime=22068;//#AUTO#
 	mass=1079;//#AUTO#
 }

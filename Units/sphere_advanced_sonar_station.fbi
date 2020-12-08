@@ -6,46 +6,43 @@
 	side=Sphere;
 	name=Advanced Sonar Station;
 	description=Advanced sonar;
-	icontype=staticradar;
+	iconType=staticradar;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE SPECIAL SONAR LEVEL2 NOTAIR NOTSUB;
-	tedclass=WATER;
+	category=SPHERE LEVEL2 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_advanced_sonar_station;
-	unitnumber=10000;
-	objectname=sphere_advanced_sonar_station.3do;
+	unitName=sphere_advanced_sonar_station;
+	objectName=sphere_advanced_sonar_station.3do;
 	corpse=sphere_advanced_sonar_station_dead;
-	buildpic=sphere_advanced_sonar_station.png;
-	soundcategory=aven_SONAR;
+	buildPic=sphere_advanced_sonar_station.png;
+	soundCategory=aven_SONAR;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1100;
+	maxDamage=1100;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=40;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=40;
+	energyStorage=0;
 	windgenerator=0.0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=8192;
-	yardmap=wwww wwww wwww wwww;
-	activatewhenbuilt=1;
+	yardMap=wwww wwww wwww wwww;
+	activateWhenBuilt=1;
 	collisionvolumetype=cyly;
 	collisionVolumeScales=53 40 53;
 	collisionVolumeOffsets=0 0 0;
@@ -55,51 +52,43 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=1;
+	onOffable=1;
 	stealth=0;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 	minwaterdepth=26;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	sonardistance=2800;
+	sightDistance=500;
+	sonarDistance=2800;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=SMALL_BUILDINGEX;
-	selfdestructas=SMALL_BUILDING;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
 	damagemodifier=0.46;
-	designation=AS-ERS;
-	downloadable=1;
 	noshadow=1;
-	threed=1;
-	version=1.2;
 	waterline=0;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -108,12 +97,12 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:Normallight;
-		explosiongenerator1=custom:Normallight;
+		explosionGenerator0=custom:Normallight;
+		explosionGenerator1=custom:Normallight;
 	}
 
-	buildcostenergy=4226;//#AUTO#
-	buildcostmetal=845;//#AUTO#
-	buildtime=10072;//#AUTO#
+	buildCostEnergy=4226;//#AUTO#
+	buildCostMetal=845;//#AUTO#
+	buildTime=10072;//#AUTO#
 	mass=556;//#AUTO#
 }

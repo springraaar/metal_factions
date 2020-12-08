@@ -3,30 +3,30 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Carrier B;
 	description=Big Air Transport;
-	icontype=air;
+	iconType=air;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR VTOL TPORT LEVEL2 NOTSUB;
-	tedclass=VTOL;
+	category=GEAR VTOL LEVEL2 NOTSUB;
+	tedClass=VTOL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_carrier_b;
+	unitName=gear_carrier_b;
 	unitnumber=9000;
-	objectname=gear_carrier_b.3do;
-	buildpic=gear_carrier_b.png;
-	soundcategory=gear_VTOL;
+	objectName=gear_carrier_b.3do;
+	buildPic=gear_carrier_b.png;
+	soundCategory=gear_VTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2000;
+	maxDamage=2000;
 	buildcostmetal=1400;
 	buildcostenergy=7000;
 	buildtime=16800;
@@ -36,10 +36,10 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=3;
-	energyuse=3;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=3;
+	energyUse=3;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -49,45 +49,45 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canfly=1;
-	canguard=1;
+	canFly=1;
+	canGuard=1;
 	canload=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	turnrate=580;
+	turnRate=580;
 	acceleration=0.2;
-	brakerate=0.4;
-	maxvelocity=6.5;
-	maxslope=10;
-	cruisealt=150;
+	brakeRate=0.4;
+	maxVelocity=6.5;
+	maxSlope=10;
+	cruiseAlt=150;
 	cansubmerge=1;	
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
-	radardistance=0;
+	sightDistance=600;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 	firestandorders=0;
 	mobilestandorders=0;
 	standingmoveorder=1;
@@ -125,6 +125,6 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:TRANSPORTTRAIL4;
+		explosionGenerator0=custom:TRANSPORTTRAIL4;
 	}
 }

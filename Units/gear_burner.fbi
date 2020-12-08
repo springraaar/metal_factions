@@ -3,32 +3,29 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Burner;
 	description=Armored Flame Thrower Tower;
-	icontype=staticassault;
+	iconType=staticassault;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR WEAPON LEVEL2 NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=GEAR WEAPON LEVEL1 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_burner;
-	unitnumber=124;
-	objectname=gear_burner.3do;
+	unitName=gear_burner;
+	objectName=gear_burner.3do;
 	corpse=gear_burner_dead;
-	buildpic=gear_burner.png;
-	soundcategory=COR_KBOT;
+	buildPic=gear_burner.png;
+	soundCategory=COR_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=4600;
-	healtime=11;
+	maxDamage=4600;
 	footprintx=4;
 	footprintz=4;
 	damagemodifier=0.8;
@@ -36,15 +33,14 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=8192;
-	yardmap=oooo oooo oooo oooo;
+	yardMap=oooo oooo oooo oooo;
 	collisionVolumeType=CylY;
 	collisionVolumeScales=50 35 50;
 	collisionVolumeOffsets=0 0 0;
@@ -54,56 +50,44 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
-	maxwaterdepth=0;
+	maxSlope=10;
+	maxWaterDepth=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_burner_flamethrower;
-	badtargetcategory1=VTOL;
+	badTargetCategory1=VTOL;
 	onlytargetcategory1=NOTAIR;
-	explodeas=MEDIUM_BUILDINGEX;
-	selfdestructas=MEDIUM_BUILDING;
+	explodeAs=MEDIUM_BUILDINGEX;
+	selfDestructAs=MEDIUM_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=COR-PLAS;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=3;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -113,11 +97,11 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:UNITFIRE;
-		explosiongenerator1=custom:FireFlare;
+		explosionGenerator0=custom:UNITFIRE;
+		explosionGenerator1=custom:FireFlare;
 	}
-	buildcostenergy=2363;//#AUTO#
-	buildcostmetal=472;//#AUTO#
-	buildtime=5632;//#AUTO#
+	buildCostEnergy=2363;//#AUTO#
+	buildCostMetal=472;//#AUTO#
+	buildTime=5632;//#AUTO#
 	mass=4182;//#AUTO#
 }

@@ -3,95 +3,83 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Radar Jamming Tower;
 	description=Hides your Radar blips from the enemy;
-	icontype=staticjammer;
+	iconType=staticjammer;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR SPECIAL LEVEL1 NOTAIR NOTSUB;
-	tedclass=SPECIAL;
+	category=GEAR LEVEL2 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_radar_jamming_tower;
-	unitnumber=1126;
-	objectname=gear_radar_jamming_tower.3do;
+	unitName=gear_radar_jamming_tower;
+	objectName=gear_radar_jamming_tower.3do;
 	corpse=gear_radar_jamming_tower_dead;
-	buildpic=gear_radar_jamming_tower.png;
-	soundcategory=gear_JAM;
+	buildPic=gear_radar_jamming_tower.png;
+	soundCategory=gear_JAM;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1170;
+	maxDamage=1170;
 	footprintx=3;
 	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=30;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=30;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
-	yardmap=ooo ooo ooo;
-	activatewhenbuilt=1;
+	yardMap=ooo ooo ooo;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=1;
+	onOffable=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	sonardistance=0;
-	radardistancejam=882;
+	sightDistance=500;
+	sonarDistance=0;
+	radarDistanceJam=882;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=SMALL_BUILDINGEX;
-	selfdestructas=SMALL_BUILDING;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=FR-34;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	collisionVolumeType=cily;
 	collisionVolumeScales=30 60 30;
 	collisionVolumeOffsets=0 0 0;
@@ -103,8 +91,8 @@
 	{
 		builtBy=gear_l2builder;
 	}
-	buildcostenergy=1586;//#AUTO#
-	buildcostmetal=317;//#AUTO#
-	buildtime=3781;//#AUTO#
+	buildCostEnergy=1586;//#AUTO#
+	buildCostMetal=317;//#AUTO#
+	buildTime=3781;//#AUTO#
 	mass=398;//#AUTO#
 }

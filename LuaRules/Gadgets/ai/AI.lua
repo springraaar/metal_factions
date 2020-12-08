@@ -29,12 +29,18 @@ function AI.create(id, mode, strategyStr, allyId, mapHandler)
 	obj.beaconSetTeamId = nil
 	obj.beaconFrame = nil
 	obj.beaconPos = nil
+	obj.beaconType = "all"
 	obj.allyId = allyId
 	obj.mapHandler = mapHandler
    	obj.strategyOverride = false
 	obj.humanStrategyStr = nil
 	obj.humanDefenseDensityMult = nil
 	obj.upgradesBuiltByName = {}
+	
+	
+	obj.commanderRetreatHealth = UNIT_RETREAT_HEALTH
+	obj.assaultRetreatHealth = ASSAULT_RETREAT_HEALTH
+	obj.otherRetreatHealth = UNIT_RETREAT_HEALTH
 	
 	obj.frameShift = 7*tonumber(id)	-- used to spread out processing from different AIs across multiple frames
 	obj.needStartPosAdjustment = false
@@ -85,8 +91,18 @@ function AI:setStrategy(side,strategyStr,noMessage,playerId)
 		self.autoChangeStrategies = nil
 	end
 	
+	-- override certain properties
 	if (self.currentStrategy and self.currentStrategy.upgrades) then
 		self.upgradePath = self.currentStrategy.upgrades
+	end
+	if (self.currentStrategy and self.currentStrategy.commanderRetreatHealth) then
+		self.commanderRetreatHealth = self.currentStrategy.commanderRetreatHealth
+	end
+	if (self.currentStrategy and self.currentStrategy.assaultRetreatHealth) then
+		self.assaultRetreatHealth = self.currentStrategy.assaultRetreatHealth
+	end		
+	if (self.currentStrategy and self.currentStrategy.otherRetreatHealth) then
+		self.otherRetreatHealth = self.currentStrategy.otherRetreatHealth
 	end
 end
 
@@ -102,12 +118,14 @@ function AI:updateSideStrategy(side)
 end
 
 
-function AI:isBeaconActive()
+function AI:isBeaconActive(groupId)
 	if self.beaconFrame ~=nil then
 		local f = spGetGameFrame()
 
 		if f - self.beaconFrame < BEACON_DURATION_FRAMES then
-			return true
+			if not groupId or (self.beaconType == "all" or (self.beaconType == "raiders" and (groupId == UNIT_GROUP_RAIDERS or groupId == UNIT_GROUP_AIR_ATTACKERS)) or (self.beaconType == "main" and (groupId == UNIT_GROUP_ATTACKERS or groupId == UNIT_GROUP_SEA_ATTACKERS)) ) then
+				return true
+			end
 		else
 			-- beacon expired, remove marker
 			spMarkerErasePosition(self.beaconPos.x,self.beaconPos.y,self.beaconPos.z)
@@ -321,6 +339,7 @@ function AI:loadCustomStrategies(playerId,teamId,pName,strategyTextCompressed)
 				stratIdListStr=stratIdListStr..","
 			end
 			stratIdListStr=stratIdListStr..str
+			n=n+1
 		end
 	
 		resultMessage = stratIdListStr
@@ -388,6 +407,7 @@ function AI:processExternalCommand(msg,playerId,teamId,pName)
 				self:messageAllies("Classic Mode")
 			end
 			self:messageAllies("Last 10 min efficiency : "..tostring(self.unitHandler.teamCombatEfficiency))
+			self:messageAllies("Beacon Type : \""..self.beaconType.."\"")
 		elseif (command == EXTERNAL_CMD_STRATEGY) then
 			local strategyStr = nil	
 			strategyStr = parameters[shift+2]
@@ -423,14 +443,13 @@ function AI:processExternalCommand(msg,playerId,teamId,pName)
 			end
 		elseif (command == EXTERNAL_CMD_COMMORPH) then
 			if (targetTeamId == nil or targetTeamId == self.id) then
+				local comUId, ud, tmpName = nil
+				local morphName = ""
+				local morphedComFound = false
+				local uX,uZ = 0
 				if (self.useStrategies) then
 					-- get all the AI units, try to find a commander 
 					local units = spGetTeamUnits(self.id)
-					local comUId, ud, tmpName = nil
-					local morphName = ""
-					local morphedComFound = false
-					local uX,uZ = 0
-					
 					
 					-- search AI's unit set for a basic commander to morph
 					for _,tq in pairs(self.unitHandler.taskQueues) do
@@ -515,6 +534,18 @@ function AI:processExternalCommand(msg,playerId,teamId,pName)
 			if resultMessage then
 				self:messageAllies("registered strategies:\n"..resultMessage)
 			end
+		elseif (command == EXTERNAL_CMD_BEACONTYPE) then
+			local targetType = parameters[shift+2]
+			
+			if targetType and ( targetTeamId == nil or targetTeamId == self.id) then
+				if (targetType == "all" or targetType == "raiders" or targetType == "main") then
+					self.beaconType = targetType
+					self:messageAllies("beacon type set to \""..targetType.."\"")
+				else
+					self.humanDefenseDensityMult = nil
+					self:messageAllies("reset beacon type to \"all\"")
+				end
+			end			
 		end
 	end
 end

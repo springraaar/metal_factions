@@ -3,30 +3,30 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Zephyr;
 	description=Airborne Radar/Area Support;
-	icontype=zephyr;
+	iconType=zephyr;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=AVEN VTOL LEVEL2 WEAPON NOTSUB;
-	tedclass=VTOL;
+	tedClass=VTOL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_zephyr;
+	unitName=aven_zephyr;
 	unitnumber=3000;
-	objectname=aven_zephyr.3do;
-	buildpic=aven_zephyr.png;
-	soundcategory=aven_MAKER;
+	objectName=aven_zephyr.3do;
+	buildPic=aven_zephyr.png;
+	soundCategory=aven_MAKER;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3000;
+	maxDamage=3000;
 	healtime=30;
 	footprintx=5;
 	footprintz=5;
@@ -34,8 +34,8 @@
 	//************************************************************
 	//  Resources
 	//*************
-	energymake=0;
-	energyuse=150;
+	energyMake=0;
+	energyUse=150;
 
 	//************************************************************
 	//  Building
@@ -48,38 +48,38 @@
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	candropflare=0;
-	canfly=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canDropFlare=0;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	stealth=0;
-	onoffable=1;
+	onOffable=1;
 
 	//************************************************************
 	//  Movement
 	//************
 	acceleration=0.15;
-	brakerate=0.1;
-	maxvelocity=5.3;
-	maxwaterdepth=5;
-	cruisealt=220;
-	turnrate=400;
+	brakeRate=0.1;
+	maxVelocity=5.3;
+	maxWaterDepth=5;
+	cruiseAlt=220;
+	turnRate=400;
 
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
-	radardistance=2000;
+	sightDistance=600;
+	radarDistance=2000;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=ESTOR_BUILDING;
-	selfdestructas=ESTOR_BUILDING;
+	explodeAs=ESTOR_BUILDING;
+	selfDestructAs=ESTOR_BUILDING;
 
 
 	//************************************************************
@@ -98,11 +98,11 @@
 	bmcode=1;
 	designation=AFD-J9;
 	downloadable=1;
-	hoverattack=1;
+	hoverAttack=1;
 	bankingAllowed=0;
-	airhoverfactor=2.4;
+	airHoverFactor=2.4;
 	upright=1;
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	shootme=1;
 	steeringmode=1;
@@ -135,7 +135,7 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:zephyr;
+		explosionGenerator0=custom:zephyr;
 	}
 	buildcostenergy=15000;
 	buildcostmetal=3000;

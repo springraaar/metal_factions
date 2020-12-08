@@ -1,97 +1,87 @@
 [UNITINFO]
 {
 	// ------------------- description
-	Side=Sphere;
+	side=Sphere;
 	Name=Nimbus;
 	Description=Small Skirmisher Sphere;
-	icontype=fsphereartilleryfs;
+	iconType=fsphereartilleryfs;
 
 	// ------------------- categories
 	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
-	TEDClass=COMMANDER;
 
 
 	// ------------------- external specs
-	UnitName=sphere_nimbus;
-	UnitNumber=10000;
-	Objectname=sphere_nimbus.3do;
+	unitName=sphere_nimbus;
+	objectName=sphere_nimbus.3do;
 	Corpse=sphere_nimbus_dead;
-	buildpic=sphere_nimbus.png;
-	SoundCategory=SPHERE_SPHERESML;
+	buildPic=sphere_nimbus.png;
+	soundCategory=SPHERE_SPHERESML;
 
 	// ------------------- health/cost/size
-	MaxDamage=3000;
+	maxDamage=3000;
 	FootprintX=4;
 	FootprintZ=4;
 	
 	// ------------------- resources
-	EnergyMake=0;
+	energyMake=0;
 	MetalMake=0;
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyUse=0;
 
 	// ------------------- constructor
 	builder=0;
 
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	canguard=1;
-	canattack=1;
-	onoffable=0;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	onOffable=0;
 
 
 	// ------------------- movement
-	canfly=1;
-	MaxVelocity=1.2;
-	BrakeRate=0.03;
+	canFly=1;
+	maxVelocity=1.2;
+	brakeRate=0.03;
 	Acceleration=0.03;
-	TurnRate=632;
-	SteeringMode=2;
-	cruisealt=100;
-	hoverattack=1;
-	airstrafe=0;
-	airhoverfactor=0.1;
+	turnRate=632;
+	cruiseAlt=100;
+	hoverAttack=1;
+	airStrafe=0;
+	airHoverFactor=0.1;
 	upright=1;
 	bankingallowed=0;
 	useSmoothMesh=1;
 	verticalSpeed=1.2;
 
 	// ------------------- scout
-	sightdistance=600;
-	RadarDistance=0;
-	SonarDistance=0;
+	sightDistance=600;
+	radarDistance=0;
+	sonarDistance=0;
 
 	// ------------------- weapons
 	Weapon1=sphere_nimbus_rocket;
 	Weapon2=sphere_nimbus_missile;
 	onlytargetcategory1=NOTAIR;
-	badtargetcategory2=NOTAIR;
-	NoChaseCategory=VTOL;
-	ExplodeAs=big_unit;
-	SelfDestructAs=big_unit;
+	badTargetCategory2=NOTAIR;
+	noChaseCategory=VTOL;
+	explodeAs=big_unit;
+	selfDestructAs=big_unit;
 
 	// ------------------- orders
 	movestate=0;
 
 	// ------------------- stealth
-	//cloakcost=200;
-	//cloakcostmoving=750;
-	//mincloakdistance=170;
+	//cloakCost=200;
+	//cloakCostMoving=750;
+	//minCloakDistance=170;
 
 	// ------------------- misc
-	Designation=gazer;
-	BMcode=1;
-	ThreeD=1;
-	ZBuffer=1;
-	ShootMe=1;
-	maneuverleashlength=640;
-	Version=1;
 	minAirbasePower=99999;
-	activatewhenbuilt=0;
+	activateWhenBuilt=0;
 	collisionVolumeType = sphere;
 	collisionVolumeScales =40 40 40;
 	collisionVolumeOffsets = 0 0 0;
@@ -105,10 +95,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:rocketflaresml;
+		explosionGenerator0=custom:rocketflaresml;
 	}
-	buildcostenergy=4088;//#AUTO#
-	buildcostmetal=817;//#AUTO#
-	buildtime=9743;//#AUTO#
+	buildCostEnergy=4088;//#AUTO#
+	buildCostMetal=817;//#AUTO#
+	buildTime=9743;//#AUTO#
 	mass=1022;//#AUTO#
 }

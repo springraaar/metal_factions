@@ -224,7 +224,7 @@ local function updateUnitPhysics(unitId)
 			if (y > 0) then
 				spSetUnitPosition(unitId,x+nx,y,z+nz)
 			else
-				Spring.AddUnitImpulse(unitId,2*nx,0,2*nz)
+				Spring.AddUnitImpulse(unitId,4*nx,0.1,4*nz)
 			end
 		end
 	end

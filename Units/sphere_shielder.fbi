@@ -1,88 +1,73 @@
 [UNITINFO]
 	{
 	// ------------------- description
-	Side=Sphere;
+	side=Sphere;
 	Name=Shielder;
 	Description=Amphibious Mobile Shield Generator;
-	icontype=amphib;
+	iconType=amphib;
 
 	// ------------------- categories
-	Category=SPHERE TANK LEVEL2 WEAPON NOTAIR NOTSUB;
-	TEDClass=TANK;
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	// ------------------- external specs
-	UnitName=sphere_shielder;
-	Objectname=sphere_shielder.3do;
-	buildpic=sphere_shielder.png;
-	SoundCategory=CORAK;
+	unitName=sphere_shielder;
+	objectName=sphere_shielder.3do;
+	buildPic=sphere_shielder.png;
+	soundCategory=CORAK;
 	Corpse=sphere_shielder_dead;
 
 
 	// ------------------- health/cost/size
 	FootprintX=4;
 	FootprintZ=4;
-	MaxDamage=3800;
+	maxDamage=3800;
 
 
 	// ------------------- resources
-	EnergyUse=0;
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyMake=0;
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	canguard=1;
-	canattack=0;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=0;
 	Builder=0;
 
 	// ------------------- movement
-	MaxWaterDepth=12;
-	MaxSlope=17;
-	MaxVelocity=1.2;
-	BrakeRate=0.04;
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.2;
+	brakeRate=0.04;
 	Acceleration=0.05;
-	TurnRate=350;
-	SteeringMode=1;
-	MovementClass=TANKBH4;
+	turnRate=350;
+	movementClass=TANKBH4;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 
 	// ------------------- weapons
 	Weapon1=sphere_shielder_shield;
-	NoChaseCategory=VTOL;
-	ExplodeAs=MOBILE_SHIELD_BLAST;
-	SelfDestructAs=MOBILE_SHIELD_BLAST;
+	noChaseCategory=VTOL;
+	explodeAs=MOBILE_SHIELD_BLAST;
+	selfDestructAs=MOBILE_SHIELD_BLAST;
 
 
 	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
 
 	// ------------------- misc
-	Version=3.1;
-	Designation=CA_Ik;
-	BMcode=1;
-	ThreeD=1;
-	ZBuffer=1;
-	NoAutoFire=0;
-	ShootMe=1;
+	noAutoFire=0;
 	leavetracks=1;
 	trackoffset=8;
 	trackstrength=5;
 	trackstretch=1;
 	tracktype=StdTank;
 	trackwidth=50;
-	DefaultMissionType=Standby;
-	maneuverleashlength=640;
-	Downloadable=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =45 35 45;
 	collisionVolumeOffsets = 0 0 0;
@@ -96,10 +81,10 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:emgflarefast;
+		explosionGenerator0=custom:emgflarefast;
 	}
-	buildcostenergy=18808;//#AUTO#
-	buildcostmetal=3761;//#AUTO#
-	buildtime=44826;//#AUTO#
+	buildCostEnergy=18808;//#AUTO#
+	buildCostMetal=3761;//#AUTO#
+	buildTime=44826;//#AUTO#
 	mass=3525;//#AUTO#
 }

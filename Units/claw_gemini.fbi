@@ -6,42 +6,40 @@
 	side=CLAW;
 	name=Gemini;
 	description=Medium Missile Turret;
-	icontype=staticfs;
+	iconType=staticfs;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=CLAW LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_gemini;
-	objectname=claw_gemini.3do;
+	unitName=claw_gemini;
+	objectName=claw_gemini.3do;
 	corpse=claw_gemini_dead;
-	buildpic=claw_gemini.png;
-	soundcategory=COR_KBOT;
+	buildPic=claw_gemini.png;
+	soundCategory=COR_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1750;
+	maxDamage=1750;
 	footprintx=3;
 	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=2048;
-	yardmap=ooo ooo ooo;
+	yardMap=ooo ooo ooo;
 	collisionVolumeType=CylY;
 	collisionVolumeScales=40 62 40;
 	collisionVolumeOffsets=0 0 0;
@@ -51,54 +49,42 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_gemini_missile;
-	nochasecategory=VTOL;
-	explodeas=SMALL_BUILDINGEX;
-	selfdestructas=SMALL_BUILDING;
+	noChaseCategory=VTOL;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=COR-PUN;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	floater=1;
 	waterline=0;
 
@@ -108,11 +94,11 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:rocketflaresml;
+		explosionGenerator0=custom:rocketflaresml;
 	}
 
-	buildcostenergy=3063;//#AUTO#
-	buildcostmetal=612;//#AUTO#
-	buildtime=7300;//#AUTO#
+	buildCostEnergy=3063;//#AUTO#
+	buildCostMetal=612;//#AUTO#
+	buildTime=7300;//#AUTO#
 	mass=1282;//#AUTO#
 }

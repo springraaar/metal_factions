@@ -6,39 +6,36 @@
 	side=Claw;
 	name=Pike;
 	description=Mobile Heavy Railgun;
-	icontype=mobileheavyfs;
+	iconType=mobileheavyfs;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW TANK LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=TANK;
+	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_pike;
-	unitnumber=20000;
-	objectname=claw_pike.3do;
+	unitName=claw_pike;
+	objectName=claw_pike.3do;
 	corpse=claw_pike_dead;
-	buildpic=claw_pike.png;
-	soundcategory=aven_TANK;
+	buildPic=claw_pike.png;
+	soundCategory=aven_TANK;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3000;
-	healtime=30;
+	maxDamage=3000;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,78 +45,62 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKSH4;
-	turnrate=300;
+	movementClass=TANKSH4;
+	turnRate=300;
 	acceleration=0.3;
-	brakerate=0.8;
-	maxvelocity=1.0;
-	maxslope=12;
-	maxwaterdepth=0;
+	brakeRate=0.8;
+	maxVelocity=1.0;
+	maxSlope=12;
+	maxWaterDepth=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_pike_railgun;
-	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
-	explodeas=PIKE_BLAST;
-	selfdestructas=PIKE_BLAST;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=PIKE_BLAST;
+	selfDestructAs=PIKE_BLAST;
 	onlytargetcategory1=NOTAIR;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ARM-MRA;
-	downloadable=1;
 	leavetracks=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
 	trackoffset=5;
 	trackstrength=6;
 	trackstretch=1;
 	tracktype=StdTank;
 	trackwidth=33;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales = 40 50 65;
 	collisionVolumeOffsets = 0 -1 -5;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -127,11 +108,11 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:railgunflarebig;
+		explosionGenerator0=custom:railgunflarebig;
 	}
 
-	buildcostenergy=30419;//#AUTO#
-	buildcostmetal=6083;//#AUTO#
-	buildtime=72500;//#AUTO#
+	buildCostEnergy=30419;//#AUTO#
+	buildCostMetal=6083;//#AUTO#
+	buildTime=72500;//#AUTO#
 	mass=2777;//#AUTO#
 }

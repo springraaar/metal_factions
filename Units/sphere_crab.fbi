@@ -1,89 +1,71 @@
 [UNITINFO]
 	{
 	// ------------------- description
-	Side=Sphere;
+	side=Sphere;
 	Name=Crab;
 	Description=Amphibious Armored Anti-Sub Robot;
-	icontype=amphibmulti;
+	iconType=amphibmulti;
 
 	// ------------------- categories
-	Category=SPHERE KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
-	TEDClass=KBOT;
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	// ------------------- external specs
-	UnitName=sphere_crab;
-	UnitNumber=10020;
-	Objectname=sphere_crab.3do;
-	buildpic=sphere_crab.png;
-	SoundCategory=SPHERE_BOTBIG;
+	unitName=sphere_crab;
+	objectName=sphere_crab.3do;
+	buildPic=sphere_crab.png;
+	soundCategory=SPHERE_BOTBIG;
 	Corpse=sphere_crab_dead;
 
 
 	// ------------------- health/cost/size
 	FootprintX=3;
 	FootprintZ=3;
-	MaxDamage=4500;
+	maxDamage=4500;
 
 
 	// ------------------- resources
-	EnergyUse=3;
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyMake=3;
+	energyUse=3;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=3;
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	canguard=1;
-	canattack=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
 	Builder=0;
 
 	// ------------------- movement
-	MaxWaterDepth=12;
-	MaxSlope=17;
-	MaxVelocity=1.15;
-	BrakeRate=0.25;
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.15;
+	brakeRate=0.25;
 	Acceleration=0.15;
-	TurnRate=700;
-	SteeringMode=2;
-	MovementClass=KBOTUW4;
+	turnRate=700;
+	movementClass=KBOTUW4;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
-	sonardistance=600;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=600;
 
 
 	// ------------------- weapons
 	Weapon1=sphere_crab_torpedo;
-	badtargetcategory1=VTOL;
+	badTargetCategory1=VTOL;
 	Weapon2=sphere_crab_laser;
-	NoChaseCategory=VTOL;
-	ExplodeAs=BIG_UNITEX;
-	SelfDestructAs=BIG_UNIT;
+	noChaseCategory=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 
 	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
 
 	// ------------------- misc
-	Version=3.1;
-	Designation=CA_Ik;
-	BMcode=1;
-	ThreeD=1;
-	ZBuffer=1;
-	NoAutoFire=0;
-	ShootMe=1;
-	DefaultMissionType=Standby;
-	maneuverleashlength=640;
+	noAutoFire=0;
 	Upright=0;
-	Downloadable=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	collisionVolumeType = box;
 	collisionVolumeScales =40 40 40;
 	collisionVolumeOffsets = 0 0 0;
@@ -96,11 +78,11 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:rocketflaresml;
-		explosiongenerator1=custom:GLOWSML;
+		explosionGenerator0=custom:rocketflaresml;
+		explosionGenerator1=custom:GLOWSML;
 	}
-	buildcostenergy=11566;//#AUTO#
-	buildcostmetal=2313;//#AUTO#
-	buildtime=27567;//#AUTO#
+	buildCostEnergy=11566;//#AUTO#
+	buildCostMetal=2313;//#AUTO#
+	buildTime=27567;//#AUTO#
 	mass=3033;//#AUTO#
 }

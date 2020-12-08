@@ -6,103 +6,92 @@
 	side=Sphere;
 	name=Advanced Radar Tower;
 	description=Advanced Radar Tower;
-	icontype=staticradar;
+	iconType=staticradar;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE SPECIAL LEVEL2 NOTAIR NOTSUB;
-	tedclass=SPECIAL;
+	category=SPHERE LEVEL2 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_adv_radar_tower;
-	unitnumber=10027;
-	objectname=sphere_adv_radar_tower.3do;
+	unitName=sphere_adv_radar_tower;
+	objectName=sphere_adv_radar_tower.3do;
 	corpse=sphere_adv_radar_tower_dead;
-	buildpic=sphere_adv_radar_tower.png;
-	soundcategory=aven_ADVRADAR;
+	buildPic=sphere_adv_radar_tower.png;
+	soundCategory=aven_ADVRADAR;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2000;
+	maxDamage=2000;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=40;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=40;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=8192;
-	yardmap=oooo oooo oooo oooo;
+	yardMap=oooo oooo oooo oooo;
 	collisionvolumetype=cyly;
 	collisionVolumeScales=50 70 50;
 	collisionVolumeOffsets=0 0 0;
 	collisionVolumeTest = 1;
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=1;
+	onOffable=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
-	maxwaterdepth=22;
+	maxSlope=10;
+	maxWaterDepth=22;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=4200;
+	sightDistance=500;
+	radarDistance=4200;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=SMALL_BUILDINGEX;
-	selfdestructas=SMALL_BUILDING;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AS-EWDL;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
 		builtBy=sphere_l2builder;
 	}
 
-	buildcostenergy=4229;//#AUTO#
-	buildcostmetal=845;//#AUTO#
-	buildtime=10079;//#AUTO#
+	buildCostEnergy=4229;//#AUTO#
+	buildCostMetal=845;//#AUTO#
+	buildTime=10079;//#AUTO#
 	mass=1562;//#AUTO#
 }

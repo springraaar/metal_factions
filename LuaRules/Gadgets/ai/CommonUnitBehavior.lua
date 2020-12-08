@@ -65,8 +65,10 @@ function CommonUnitBehavior:commonInit(ai, uId)
 		self.minRange = 500
 	end
 	
-	-- last minute hack to make assaults assault
-	self.noEvadeUnit = not self.isCommander and (self.unitDef.health / self.unitCost > 5)
+	self.isAssault = (self.unitDef.health / self.unitCost > ASSAULT_HEALTH_COST_RATIO)
+	--self.noEvadeUnit = (not self.isCommander) and self.isAssault
+	-- evade! always evade!
+	self.noEvadeUnit = false
 	
 	self.noEngageUnit = false --might be useful
 	self.stuckCounter = 0
@@ -212,7 +214,8 @@ function CommonUnitBehavior:evadeIfNeeded()
 		--TODO bad logic? improve
 		if biggestThreatPos ~= nil then
 			-- if the threat is cheaper than armed unit, strafe only without backing				
-			self:evade(biggestThreatPos, (biggestThreatCost > self.unitCost or (not self.isArmed) ) and UNIT_EVADE_DISTANCE or 100)
+			--self:evade(biggestThreatPos, (biggestThreatCost > self.unitCost or (not self.isArmed) ) and UNIT_EVADE_DISTANCE or 100)
+			self:evade(biggestThreatPos,preemptivelyEvade and UNIT_EVADE_DISTANCE or (self.isSeriouslyDamaged and UNIT_EVADE_DISTANCE or -UNIT_EVADE_DISTANCE) )
 			
 			return true
 		end

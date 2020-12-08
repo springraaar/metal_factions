@@ -3,129 +3,108 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Conqueror;
 	description=Cruiser/Artillery Ship;
-	icontype=shipartillery;
+	iconType=shipartillery;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN SHIP LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=SHIP;
+	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_conqueror;
-	unitnumber=23;
-	objectname=aven_conqueror.3do;
+	unitName=aven_conqueror;
+	objectName=aven_conqueror.3do;
 	corpse=aven_conqueror_dead;
-	buildpic=aven_conqueror.png;
-	soundcategory=aven_SHIP;
+	buildPic=aven_conqueror.png;
+	soundCategory=aven_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=5000;
-	healtime=30;
+	maxDamage=5000;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
-	windgenerator=0.001;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=MEDIUMBOAT;
-	turnrate=184;
+	movementClass=MEDIUMBOAT;
+	turnRate=184;
 	acceleration=0.01;
-	brakerate=0.005;
-	maxvelocity=1.8;
+	brakeRate=0.005;
+	maxVelocity=1.8;
 	minwaterdepth=30;
 	waterline=2;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	sonardistance=400;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=400;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=aven_conqueror_cannon;
 	weapon2=COREDEPTHCHARGE;
-	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
 	onlytargetcategory2=NOTAIR;
-	explodeas=HUGE_UNIT;
-	selfdestructas=CRAWL_BLASTSML;
+	explodeAs=HUGE_UNIT;
+	selfDestructAs=CRAWL_BLASTSML;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ASD-SC;
-	downloadable=1;
-	maneuverleashlength=640;
 	scale=0.5;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =45 55 100;
 	collisionVolumeOffsets = 0 -10 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:yellowflarebig;
-	explosiongenerator1=custom:UNITFIRE;
+	explosionGenerator0=custom:yellowflarebig;
+	explosionGenerator1=custom:UNITFIRE;
 	}
 	[customParams] 
 	{
@@ -133,8 +112,8 @@
 		evalfactor=0.85;//SHIP
 		canAreaAttack=1;
 	}
-	buildcostenergy=21011;//#AUTO#
-	buildcostmetal=4202;//#AUTO#
-	buildtime=50076;//#AUTO#
+	buildCostEnergy=21011;//#AUTO#
+	buildCostMetal=4202;//#AUTO#
+	buildTime=50076;//#AUTO#
 	mass=4241;//#AUTO#
 }

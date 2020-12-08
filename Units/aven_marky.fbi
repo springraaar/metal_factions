@@ -3,123 +3,104 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Marky;
 	description=Mobile Radar Robot;
-	icontype=mobileradar;
+	iconType=mobileradar;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=AVEN KBOT LEVEL2 NOTAIR NOTSUB;
-	tedclass=KBOT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_marky;
-	unitnumber=168;
-	objectname=aven_marky.3do;
+	unitName=aven_marky;
+	objectName=aven_marky.3do;
 	corpse=aven_marky_dead;
-	buildpic=aven_marky.png;
-	soundcategory=aven_KBOT;
+	buildPic=aven_marky.png;
+	soundCategory=aven_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=600;
-	healtime=30;
+	maxDamage=600;
 	footprintx=2;
 	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=20;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=20;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	onoffable=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	onOffable=1;
 	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTHT2;
-	turnrate=1010;
+	movementClass=KBOTHT2;
+	turnRate=1010;
 	acceleration=0.45;
-	brakerate=0.18;
-	maxvelocity=1.722;
-	maxslope=32;
-	maxwaterdepth=0;
+	brakeRate=0.18;
+	maxVelocity=1.722;
+	maxSlope=32;
+	maxWaterDepth=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=1600;
+	sightDistance=500;
+	radarDistance=1600;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	ai_limit=limit ARMMARK 2;
-	bmcode=1;
-	designation=ARM-MRB;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	smoothanim=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =25 32 25;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[customParams] 
 	{
 		builtBy=aven_adv_kbot_lab;
 	}
 
-	buildcostenergy=945;//#AUTO#
-	buildcostmetal=189;//#AUTO#
-	buildtime=2253;//#AUTO#
+	buildCostEnergy=945;//#AUTO#
+	buildCostMetal=189;//#AUTO#
+	buildTime=2253;//#AUTO#
 	mass=106;//#AUTO#
 }

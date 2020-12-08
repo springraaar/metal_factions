@@ -3,42 +3,39 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Flareon;
 	description=Amphibious Very Heavy Skirmisher Tank;
-	icontype=amphibmulti;
+	iconType=amphibmulti;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR TANK LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=TANK;
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_flareon;
-	unitnumber=128;
-	objectname=gear_flareon.3do;
+	unitName=gear_flareon;
+	objectName=gear_flareon.3do;
 	corpse=gear_flareon_dead;
-	buildpic=gear_flareon.png;
-	soundcategory=gear_TANK;
+	buildPic=gear_flareon.png;
+	soundCategory=gear_TANK;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=6000;
-	healtime=30;
+	maxDamage=6000;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.8;
-	energyuse=0.8;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,79 +45,63 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKBH4;
-	turnrate=299;
+	movementClass=TANKBH4;
+	turnRate=299;
 	acceleration=0.08125;
-	brakerate=0.0762939;
-	maxvelocity=1.3;
-	maxslope=12;
-	maxwaterdepth=100;
+	brakeRate=0.0762939;
+	maxVelocity=1.3;
+	maxSlope=12;
+	maxWaterDepth=100;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	sonardistance=250;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=250;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_flareon_heatray;
-	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
 	weapon2=gear_flareon_laser;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=TB-PS4;
-	downloadable=1;
 	leavetracks=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
 	trackoffset=8;
 	trackstrength=8;
 	trackstretch=1;
 	tracktype=StdTank;
 	trackwidth=40;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =50 32 50;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -130,14 +111,14 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:yellowflaresml;
-		explosiongenerator1=custom:GLOWSML;
-		explosiongenerator2=custom:hrglowsml1;
-		explosiongenerator3=custom:hrglowsml2;
-		explosiongenerator4=custom:hrglowsml3;
+		explosionGenerator0=custom:yellowflaresml;
+		explosionGenerator1=custom:GLOWSML;
+		explosionGenerator2=custom:hrglowsml1;
+		explosionGenerator3=custom:hrglowsml2;
+		explosionGenerator4=custom:hrglowsml3;
 	}
-	buildcostenergy=18394;//#AUTO#
-	buildcostmetal=3678;//#AUTO#
-	buildtime=43839;//#AUTO#
+	buildCostEnergy=18394;//#AUTO#
+	buildCostMetal=3678;//#AUTO#
+	buildTime=43839;//#AUTO#
 	mass=4361;//#AUTO#
 }

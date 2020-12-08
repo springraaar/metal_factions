@@ -6,50 +6,47 @@
 	side=Sphere;
 	name=Metal Storage;
 	description=Increases Metal Storage by 4000;
-	icontype=metal;
+	iconType=metal;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE METAL LEVEL1 NOTAIR NOTSUB STORAGE;
-	tedclass=METAL;
+	category=SPHERE METAL LEVEL1 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_metal_storage;
-	unitnumber=10002;
-	objectname=sphere_metal_storage.3do;
+	unitName=sphere_metal_storage;
+	objectName=sphere_metal_storage.3do;
 	corpse=sphere_metal_storage_dead;
-	buildpic=sphere_metal_storage.png;
-	soundcategory=aven_MSTOR;
+	buildPic=sphere_metal_storage.png;
+	soundCategory=aven_MSTOR;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3000;
+	maxDamage=3000;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=4000;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=4000;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=4096;
-	yardmap=oooo oooo oooo oooo;
-	activatewhenbuilt=1;
+	yardMap=oooo oooo oooo oooo;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
@@ -58,49 +55,41 @@
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 	
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=LARGE_BUILDINGEX;
-	selfdestructas=LARGE_BUILDING;
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AM-MSF;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =60 50 60;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
 		builtBy=sphere_l1builder,sphere_l2builder;
 	}
 
-	buildcostenergy=2797;//#AUTO#
-	buildcostmetal=559;//#AUTO#
-	buildtime=6667;//#AUTO#
+	buildCostEnergy=2797;//#AUTO#
+	buildCostMetal=559;//#AUTO#
+	buildTime=6667;//#AUTO#
 	mass=1872;//#AUTO#
 }

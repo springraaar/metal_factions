@@ -3,32 +3,32 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Fortification Wall;
 	description=Perimeter Defense;
-	icontype=wall;
+	iconType=wall;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN LEVEL2 NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=AVEN LEVEL1 NOTAIR NOTSUB;
+	tedClass=FORT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_fortification_wall;
+	unitName=aven_fortification_wall;
 	unitnumber=167;
-	objectname=aven_fortification_wall.3do;
+	objectName=aven_fortification_wall.3do;
 	corpse=rock_fort;
 	script=fortification_wall.cob;
-	buildpic=aven_fortification_wall.png;
-	soundcategory=;
+	buildPic=aven_fortification_wall.png;
+	soundCategory=;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2500;
+	maxDamage=2500;
 	buildcostmetal=70;
 	buildcostenergy=350;
 	buildtime=1550;
@@ -38,16 +38,16 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
 	buildangle=0;
-	yardmap=oo oo;
+	yardMap=oo oo;
 	collisionVolumeType = box;
 	collisionVolumeScales =32 90 32;
 	collisionVolumeOffsets = 0 0 0;
@@ -57,7 +57,7 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
@@ -69,24 +69,24 @@
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=32;
+	maxSlope=32;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=0;
-	radardistance=0;
+	sightDistance=0;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=WALL;
-	selfdestructas=WALL;
+	explodeAs=WALL;
+	selfDestructAs=WALL;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous

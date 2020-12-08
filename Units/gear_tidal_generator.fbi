@@ -3,55 +3,51 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Tidal Generator;
 	description=Produces Energy;
-	icontype=energy;
+	iconType=energy;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=GEAR ENERGY LEVEL1 NOTAIR NOTSUB;
-	tedclass=WATER;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_tidal_generator;
-	unitnumber=143;
-	objectname=gear_tidal_generator.3do;
+	unitName=gear_tidal_generator;
+	objectName=gear_tidal_generator.3do;
 	corpse=gear_tidal_generator_dead;
-	buildpic=gear_tidal_generator.png;
-	soundcategory=gear_TIDE;
+	buildPic=gear_tidal_generator.png;
+	soundCategory=gear_TIDE;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=520;
+	maxDamage=520;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
-	windgenerator=0.001;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 	tidalgenerator=1;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=4096;
-	yardmap=wwww wwww wwww wwww;
-	activatewhenbuilt=1;
+	yardMap=wwww wwww wwww wwww;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
@@ -60,40 +56,33 @@
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 	minwaterdepth=20;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	sonardistance=0;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=SMALL_BUILDINGEX;
-	selfdestructas=SMALL_BUILDING;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	downloadable=1;
 	noshadow=1;
 	scale=0.5;
-	threed=1;
-	version=1.2;
 	waterline=14;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	collisionVolumeType=box;
 	collisionVolumeScales=43 31 43;
 	collisionVolumeOffsets=0 0 0;
@@ -104,8 +93,8 @@
 		builtBy=gear_l1builder,gear_l2builder;
 	}
 
-	buildcostenergy=619;//#AUTO#
-	buildcostmetal=123;//#AUTO#
-	buildtime=1476;//#AUTO#
+	buildCostEnergy=619;//#AUTO#
+	buildCostMetal=123;//#AUTO#
+	buildTime=1476;//#AUTO#
 	mass=170;//#AUTO#
 }

@@ -3,41 +3,38 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Fink;
 	description=Air Scout;
-	icontype=air;
+	iconType=air;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=GEAR VTOL LEVEL1 NOTSUB;
-	tedclass=VTOL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_fink;
-	unitnumber=105;
-	objectname=gear_fink.3do;
-	buildpic=gear_fink.png;
-	soundcategory=gear_VTOL;
+	unitName=gear_fink;
+	objectName=gear_fink.3do;
+	buildPic=gear_fink.png;
+	soundCategory=gear_VTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=110;
-	healtime=30;
+	maxDamage=110;
 	footprintx=2;
 	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -47,81 +44,64 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canfly=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	stealth=0;
 
 	//************************************************************
 	//  Movement
 	//************
-	turnrate=700;
+	turnRate=700;
 	acceleration=0.4;
-	brakerate=0.09;
-	maxvelocity=8.0;
-	maxslope=10;
+	brakeRate=0.09;
+	maxVelocity=8.0;
+	maxSlope=10;
 	
-	cruisealt=200;
+	cruiseAlt=200;
 
 	// flight behaviour
-	wingdrag=0.07;      //0.07
-	wingangle=0.08;	//0.08;
+	wingDrag=0.07;      //0.07
+	wingAngle=0.08;	//0.08;
 	drag=0.08;		//0.08
-	fronttospeed=0.2;  //0.1
-	speedtofront=0.14; //0.07
-	mygravity=0.4; //0.4
-	maxbank=0.8;	//0.8
-	maxpitch=0.45;	//0.45
-	turnradius=350; //350
-	maxaileron=0.02;	//0.01
-	maxelevator=0.02;	//0.01
-	maxrudder=0.02;  //0.01
+	frontToSpeed=0.2;  //0.1
+	speedToFront=0.14; //0.07
+	myGravity=0.4; //0.4
+	maxBank=0.8;	//0.8
+	maxPitch=0.45;	//0.45
+	turnRadius=350; //350
+	maxAileron=0.02;	//0.01
+	maxElevator=0.02;	//0.01
+	maxRudder=0.02;  //0.01
 	maxAcc=1.20; //0.065
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
+	sightDistance=600;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=VTOL_standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bankscale=1;
-	bmcode=1;
-	designation=VA-8-T;
-	downloadable=1;
-	maneuverleashlength=1280;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collide=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
-	minCollisionSpeed=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =20 10 20;
 	collisionVolumeOffsets = 0 0 0;
@@ -133,8 +113,8 @@
 		evalfactor=0.8;
 	}
 
-	buildcostenergy=365;//#AUTO#
-	buildcostmetal=73;//#AUTO#
-	buildtime=870;//#AUTO#
+	buildCostEnergy=365;//#AUTO#
+	buildCostMetal=73;//#AUTO#
+	buildTime=870;//#AUTO#
 	mass=25;//#AUTO#
 }

@@ -6,29 +6,26 @@
 	side=Claw;
 	name=Shipyard;
 	description=Produces Ships;
-	icontype=plant;
+	iconType=plant;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=CLAW PLANT LEVEL1 NOTAIR NOTSUB;
-	tedclass=PLANT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_shipyard;
-	unitnumber=10000;
-	objectname=claw_shipyard.3do;
+	unitName=claw_shipyard;
+	objectName=claw_shipyard.3do;
 	corpse=claw_shipyard_dead;
-	buildpic=claw_shipyard.png;
-	soundcategory=SHIPYARD;
+	buildPic=claw_shipyard.png;
+	soundCategory=SHIPYARD;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2800;
-	healtime=30;
+	maxDamage=2800;
 	footprintx=8;
 	footprintz=8;
 
@@ -36,28 +33,27 @@
 	//  Resources
 	//*************
 	metalmake=0;
-	metalstorage=100;
-	energyuse=0;
-	energystorage=100;
-	windgenerator=0.001;
+	metalStorage=100;
+	energyUse=0;
+	energyStorage=100;
 
 	//************************************************************
 	//  Building
 	//************
-	yardmap=wCCCCCCw wCCCCCCw wCCCCCCw wCCCCCCw wCCCCCCw wCCCCCCw wCCCCCCw wCCCCCCw;
+	yardMap=wCCCCCCw wCCCCCCw wCCCCCCw wCCCCCCw wCCCCCCw wCCCCCCw wCCCCCCw wCCCCCCw;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=1;
-	workertime=200;
+	workerTime=200;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
@@ -67,37 +63,25 @@
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=LARGE_BUILDINGEX;
-	selfdestructas=LARGE_BUILDING;
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=2;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=ARM-SCF;
-	downloadable=1;
 	noshadow=1;
-	threed=1;
-	version=1.2;
 	waterline=32;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	collisionVolumeType = box;
 	collisionVolumeScales =120 50 110;
 	collisionVolumeOffsets = 0 0 0;
@@ -109,12 +93,12 @@
 	}
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Nano;
-	explosiongenerator1=custom:Normallight;
-	explosiongenerator2=custom:UNITFIRE;
+	explosionGenerator0=custom:Nano;
+	explosionGenerator1=custom:Normallight;
+	explosionGenerator2=custom:UNITFIRE;
 	}
-	buildcostenergy=4141;//#AUTO#
-	buildcostmetal=828;//#AUTO#
-	buildtime=6514;//#AUTO#
+	buildCostEnergy=4141;//#AUTO#
+	buildCostMetal=828;//#AUTO#
+	buildTime=6514;//#AUTO#
 	mass=1952;//#AUTO#
 }

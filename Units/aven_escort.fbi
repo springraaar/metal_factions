@@ -3,116 +3,98 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Escort;
 	description=Radar Jammer Ship;
-	icontype=shipjammer;
+	iconType=shipjammer;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN SHIP LEVEL2 NOTAIR NOTSUB;
-	tedclass=SHIP;
+	category=AVEN LEVEL2 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_escort;
-	unitnumber=163;
-	objectname=aven_escort.3do;
+	unitName=aven_escort;
+	objectName=aven_escort.3do;
 	corpse=aven_escort_dead;
-	buildpic=aven_escort.png;
-	soundcategory=aven_SHIP;
+	buildPic=aven_escort.png;
+	soundCategory=aven_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1150;
-	healtime=30;
+	maxDamage=1150;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=20;
-	energystorage=0;
-	windgenerator=0.001;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=20;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
-	onoffable=1;
+	onOffable=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=Smallboat;
-	turnrate=400;
+	movementClass=Smallboat;
+	turnRate=400;
 	acceleration=0.015;
-	brakerate=0.009;
-	maxvelocity=2.5;
+	brakeRate=0.009;
+	maxVelocity=2.5;
 	minwaterdepth=6;
 	waterline=0.5;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	sonardistance=0;
-	radardistancejam=680;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=0;
+	radarDistanceJam=680;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=BIG_UNITEX;
-	selfdestructas=MEDIUM_UNIT;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=MEDIUM_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ASD-SS;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =30 25 60;
 	collisionVolumeOffsets = 0 -10 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[customParams] 
 	{
@@ -121,10 +103,10 @@
 	}
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:UNITFIRE;
+	explosionGenerator0=custom:UNITFIRE;
 	}
-	buildcostenergy=2550;//#AUTO#
-	buildcostmetal=510;//#AUTO#
-	buildtime=6079;//#AUTO#
+	buildCostEnergy=2550;//#AUTO#
+	buildCostMetal=510;//#AUTO#
+	buildTime=6079;//#AUTO#
 	mass=228;//#AUTO#
 }

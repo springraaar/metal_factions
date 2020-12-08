@@ -3,31 +3,31 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Bass;
 	description=Mobile Mass Disruptor;
-	icontype=mobilefs;
+	iconType=mobilefs;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN TANK LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=TANK;
+	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB;
+	tedClass=TANK;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_bass;
+	unitName=aven_bass;
 	unitnumber=20000;
-	objectname=aven_bass.3do;
+	objectName=aven_bass.3do;
 	corpse=aven_bass_dead;
-	buildpic=aven_bass.png;
-	soundcategory=aven_TANK;
+	buildPic=aven_bass.png;
+	soundCategory=aven_TANK;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3000;
+	maxDamage=3000;
 	healtime=30;
 	footprintx=4;
 	footprintz=4;
@@ -35,10 +35,10 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,47 +48,47 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKBH4; //TANKBH3//
-	turnrate=300;
+	movementClass=TANKBH4; //TANKBH3//
+	turnRate=300;
 	acceleration=0.125;
-	brakerate=0.1;
-	maxvelocity=1.3;
-	maxslope=12;
-	maxwaterdepth=10;
+	brakeRate=0.1;
+	maxVelocity=1.3;
+	maxSlope=12;
+	maxWaterDepth=10;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=aven_bass_disruptor;
-	badtargetcategory1=VTOL;
-	nochasecategory=VTOL;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 	firestandorders=1;
 	mobilestandorders=1;
 	standingfireorder=2;
@@ -128,7 +128,7 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:disrwavefire;
+	explosionGenerator0=custom:disrwavefire;
 	}
 	buildcostenergy=12500;//#AUTO#
 	buildcostmetal=2500;//#AUTO#

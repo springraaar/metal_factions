@@ -7,119 +7,99 @@
 	side=Claw;
 	name=Tempest;
 	description=Heavy Missile Skirmisher Spinbot;
-	icontype=amphibfs;
+	iconType=amphibfs;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW SHIP LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=SHIP;
+	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_tempest;
-	unitnumber=20000;
-	objectname=claw_tempest.3do;
+	unitName=claw_tempest;
+	objectName=claw_tempest.3do;
 	corpse=claw_tempest_dead;
-	buildpic=claw_tempest.png;
-	soundcategory=CLAW_BOTMED;
+	buildPic=claw_tempest.png;
+	soundCategory=CLAW_BOTMED;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3000;
-	healtime=30;
+	maxDamage=3000;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKHOVER4;
-	turnrate=445;
+	movementClass=TANKHOVER4;
+	turnRate=445;
 	acceleration=0.09;
-	brakerate=0.05;
-	maxvelocity=1.3;
+	brakeRate=0.05;
+	maxVelocity=1.3;
 	turninplace=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	sonardistance=300;
-	radardistance=0;
+	sightDistance=500;
+	sonarDistance=300;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_tempest_missile;
 	weapon2=claw_tempest_missile;
-	nochasecategory=VTOL;
-	badtargetcategory1=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	noChaseCategory=VTOL;
+	badTargetCategory1=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ASD-SC;
-	downloadable=1;
-	maneuverleashlength=640;
 	scale=0.5;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =55 65 40;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	waterline=8;
 	
 
@@ -130,12 +110,12 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:rocketflaresml;
-		explosiongenerator1=custom:UNITFIRE;
+		explosionGenerator0=custom:rocketflaresml;
+		explosionGenerator1=custom:UNITFIRE;
 	}
 
-	buildcostenergy=11782;//#AUTO#
-	buildcostmetal=2356;//#AUTO#
-	buildtime=28082;//#AUTO#
+	buildCostEnergy=11782;//#AUTO#
+	buildCostMetal=2356;//#AUTO#
+	buildTime=28082;//#AUTO#
 	mass=1535;//#AUTO#
 }

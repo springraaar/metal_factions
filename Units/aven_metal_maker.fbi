@@ -3,30 +3,30 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Metal Maker;
 	description=Converts up to 360 E/s into 2.5 M/s;
-	icontype=metal;
+	iconType=metal;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=AVEN METAL LEVEL2 NOTAIR NOTSUB;
-	tedclass=METAL;
+	tedClass=METAL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_metal_maker;
-	objectname=aven_metal_maker.3do;
+	unitName=aven_metal_maker;
+	objectName=aven_metal_maker.3do;
 	corpse=aven_metal_maker_dead;
-	buildpic=aven_metal_maker.png;
-	soundcategory=aven_maker;
+	buildPic=aven_metal_maker.png;
+	soundCategory=aven_maker;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1500;
+	maxDamage=1500;
 	footprintx=6;
 	footprintz=6;
 	collisionVolumeType=CylY;
@@ -35,50 +35,50 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=360;
-	makesmetal=2.5;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=360;
+	makesMetal=2.5;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
 	buildangle=65535;
-	yardmap=oooooo oooooo oooooo oooooo oooooo oooooo;
-	activatewhenbuilt=0;
+	yardMap=oooooo oooooo oooooo oooooo oooooo oooooo;
+	activateWhenBuilt=0;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=0;
+	onOffable=0;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=MMAKER_BUILDING;
-	selfdestructas=MMAKER_BUILDING;
+	explodeAs=MMAKER_BUILDING;
+	selfDestructAs=MMAKER_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
@@ -99,7 +99,7 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:mmakersmoke;
+		explosionGenerator0=custom:mmakersmoke;
 	}
 	buildcostenergy=3000;//#AUTO#
 	buildcostmetal=600;//#AUTO#

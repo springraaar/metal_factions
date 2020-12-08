@@ -6,44 +6,40 @@
 	side=Gear;
 	name=Missilator;
 	description=Advanced Pop-up Missile Battery;
-	icontype=staticfs;
+	iconType=staticfs;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=FORT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_missilator;
-	unitnumber=20000;
-	objectname=gear_missilator.3do;
+	unitName=gear_missilator;
+	objectName=gear_missilator.3do;
 	corpse=gear_missilator_dead;
-	buildpic=gear_missilator.png;
-	soundcategory=GUARD;
+	buildPic=gear_missilator.png;
+	soundCategory=GUARD;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2400;
-	healtime=11;
+	maxDamage=2400;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=8192;
-	yardmap=oooo oooo oooo oooo;
+	yardMap=oooo oooo oooo oooo;
 	collisionVolumeType=Box;
 	collisionVolumeScales=60 40 60;
 	collisionVolumeTest = 1;
@@ -52,57 +48,45 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=20;
-	maxwaterdepth=5;
+	maxSlope=20;
+	maxWaterDepth=5;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_missilator_missile;
-	badtargetcategory1=NOTAIR;
-	explodeas=LARGE_BUILDINGEX;
-	selfdestructas=LARGE_BUILDING;
+	badTargetCategory1=NOTAIR;
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
 	damagemodifier=0.5;
-	designation=ARM-GUARD;
 	digger=1;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -112,10 +96,10 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:ROCKETFLAREMED;
+		explosionGenerator0=custom:ROCKETFLAREMED;
 	}
-	buildcostenergy=8483;//#AUTO#
-	buildcostmetal=1696;//#AUTO#
-	buildtime=20218;//#AUTO#
+	buildCostEnergy=8483;//#AUTO#
+	buildCostMetal=1696;//#AUTO#
+	buildTime=20218;//#AUTO#
 	mass=2330;//#AUTO#
 }

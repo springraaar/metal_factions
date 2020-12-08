@@ -6,39 +6,36 @@
 	side=Aven;
 	name=Shocker;
 	description=Assault Robot;
-	icontype=mobileassault;
+	iconType=mobileassault;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=KBOT;
+	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_shocker;
-	unitnumber=77;
-	objectname=aven_shocker.3do;
+	unitName=aven_shocker;
+	objectName=aven_shocker.3do;
 	corpse=aven_shocker_dead;
-	buildpic=aven_shocker.png;
-	soundcategory=aven_KBOT;
+	buildPic=aven_shocker.png;
+	soundCategory=aven_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3200;
-	healtime=30;
+	maxDamage=3200;
 	footprintx=3;
 	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,69 +45,52 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTHT3;
-	turnrate=960;
+	movementClass=KBOTHT3;
+	turnRate=960;
 	acceleration=0.9;
-	brakerate=1.7;
-	maxvelocity=1.25;
-	maxslope=17;
-	maxwaterdepth=12;
+	brakeRate=1.7;
+	maxVelocity=1.25;
+	maxSlope=17;
+	maxWaterDepth=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=aven_shocker_disruptor;
-	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ARM-KL;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	smoothanim=1;
-	steeringmode=2;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=NanoDebree;
-	pieceTrailCEGRange = 1;
 	collisionVolumeType = box;
 	collisionVolumeScales =34 42 32;
 	collisionVolumeOffsets = 0 0 0;
@@ -122,10 +102,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:ElectricFlare;
+		explosionGenerator0=custom:ElectricFlare;
 	}
-	buildcostenergy=4996;//#AUTO#
-	buildcostmetal=999;//#AUTO#
-	buildtime=11908;//#AUTO#
+	buildCostEnergy=4996;//#AUTO#
+	buildCostMetal=999;//#AUTO#
+	buildTime=11908;//#AUTO#
 	mass=1812;//#AUTO#
 }

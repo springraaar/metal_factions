@@ -115,12 +115,24 @@ SweetSpot(piecenum)
 	return (0);
 }
 
-AimPrimary()
+restoreAfterDelay()
 {
+	sleep 3000;
+	turn base to y-axis <0> speed <200>;
+}
+
+AimPrimary(heading,pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
 	if(!isFlying)
 	{
 		return (0);
 	}
+	
+	turn base to y-axis heading speed <200>;
+	wait-for-turn base around y-axis;
+	start-script restoreAfterDelay();
 	return (1);
 }
 

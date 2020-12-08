@@ -3,42 +3,39 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Canister;
 	description=Incendiary Robot;
-	icontype=mobileartillery;
+	iconType=mobileartillery;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR KBOT LEVEL1 WEAPON NOTAIR NOTSUB;
-	tedclass=KBOT;
+	category=GEAR LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_canister;
-	unitnumber=15000;
-	objectname=gear_canister.3do;
+	unitName=gear_canister;
+	objectName=gear_canister.3do;
 	corpse=gear_canister_dead;
-	buildpic=gear_canister.png;
-	soundcategory=CORAK;
+	buildPic=gear_canister.png;
+	soundCategory=CORAK;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=900;
-	healtime=30;
+	maxDamage=900;
 	footprintx=2;
 	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,74 +45,62 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTHT2;
-	turnrate=800;
+	movementClass=KBOTHT2;
+	turnRate=800;
 	acceleration=0.715527;
-	brakerate=1.53105;
-	maxvelocity=1.50;
-	maxslope=17;
-	maxwaterdepth=25;
+	brakeRate=1.53105;
+	maxVelocity=1.50;
+	maxSlope=17;
+	maxWaterDepth=25;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_canister_fireball;
 	onlytargetcategory1=NOTAIR;
-	weaponmaindir1=0 0 1;
-	maxangledif1=60;
+	weaponMainDir1=0 0 1;
+	maxAngleDif1=180;
 	highTrajectory=1;
-	explodeas=GEAR_CANISTER;
-	selfdestructas=GEAR_CANISTER;
+	explodeAs=GEAR_CANISTER;
+	selfDestructAs=GEAR_CANISTER;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 	moveState=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=KA-L4;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	smoothanim=1;
-	steeringmode=2;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =20 40 20;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:yellowflaremed;
+		explosionGenerator0=custom:yellowflaremed;
 	}
 
 	[CustomParams]
@@ -125,8 +110,8 @@
 		evalfactor=1;
 	}
 
-	buildcostenergy=1383;//#AUTO#
-	buildcostmetal=276;//#AUTO#
-	buildtime=3296;//#AUTO#
+	buildCostEnergy=1383;//#AUTO#
+	buildCostMetal=276;//#AUTO#
+	buildTime=3296;//#AUTO#
 	mass=158;//#AUTO#
 }

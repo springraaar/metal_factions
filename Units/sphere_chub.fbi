@@ -1,82 +1,67 @@
 [UNITINFO]
 	{
 	// ------------------- description
-	Side=Sphere;
+	side=Sphere;
 	Name=Chub;
 	Description=Armored Anti Air Robot;
-	icontype=mobilefs;
+	iconType=mobilefs;
 
 	// ------------------- categories
-	Category=SPHERE KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
-	TEDClass=KBOT;
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	// ------------------- external specs
-	UnitName=sphere_chub;
-	UnitNumber=10014;
-	Objectname=sphere_chub.3do;
-	buildpic=sphere_chub.png;
-	SoundCategory=SPHERE_BOTMED;
+	unitName=sphere_chub;
+	objectName=sphere_chub.3do;
+	buildPic=sphere_chub.png;
+	soundCategory=SPHERE_BOTMED;
 	Corpse=sphere_chub_dead;
 
 
 	// ------------------- health/cost/size
 	FootprintX=3;
 	FootprintZ=3;
-	MaxDamage=3200;
+	maxDamage=3200;
 
 	// ------------------- resources
-	EnergyUse=1;
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyMake=1;
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	canguard=1;
-	canattack=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
 	Builder=0;
 
 	// ------------------- movement
-	MaxWaterDepth=12;
-	MaxSlope=17;
-	MaxVelocity=1.15;
-	BrakeRate=0.35;
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.15;
+	brakeRate=0.35;
 	Acceleration=0.15;
-	TurnRate=950;
-	MovementClass=KBOTHT3;
+	turnRate=950;
+	movementClass=KBOTHT3;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 
 	// ------------------- weapons
 	Weapon1=sphere_chub_missile;
-	nochasecategory=VTOL;
-	badtargetcategory1=NOTAIR;
-	ExplodeAs=SMALL_UNITEX;
-	SelfDestructAs=SMALL_UNIT;
+	noChaseCategory=VTOL;
+	badTargetCategory1=NOTAIR;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
 
 	// ------------------- misc
-	Version=3.1;
-	Designation=CA_Ik;
-	BMcode=1;
-	ThreeD=1;
-	ZBuffer=1;
-	NoAutoFire=0;
-	ShootMe=1;
-	DefaultMissionType=Standby;
-	maneuverleashlength=640;
+	noAutoFire=0;
 	Upright=0;
-	Downloadable=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =30 40 30;
 	collisionVolumeOffsets = 0 0 0;
@@ -88,11 +73,11 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:rocketflaresml;
+		explosionGenerator0=custom:rocketflaresml;
 	}
 
-	buildcostenergy=3864;//#AUTO#
-	buildcostmetal=772;//#AUTO#
-	buildtime=9210;//#AUTO#
+	buildCostEnergy=3864;//#AUTO#
+	buildCostMetal=772;//#AUTO#
+	buildTime=9210;//#AUTO#
 	mass=1057;//#AUTO#
 }

@@ -11,6 +11,7 @@ static-var gun_1, isOpen, isFloating;
 #define SIG_AIM				2
 
 lua_stopFiring() { return 0; }
+lua_checkIncomingMissile() { return 0; }
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
@@ -116,6 +117,44 @@ checkClose(fireState,previousFireState)
 	}
 }
 
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+
+	if(!isOpen)
+	{
+		call-script open();
+	}
+	
+	turn turret to y-axis heading speed <400.071429>;
+	turn llauncher to x-axis <0.000000> - pitch speed <400.038462>;
+	turn rlauncher to x-axis <0.000000> - pitch speed <400.038462>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn llauncher around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+
+checkIncomingMissile(fireState, needToOpen) {
+	needToOpen = FALSE;
+	while (TRUE) {
+		fireState = (get STANDINGFIREORDERS);
+		
+		if (fireState > 0) {
+			call-script lua_checkIncomingMissile(1200);
+			needToOpen = get LUA1;
+			if (needToOpen == 1) {
+				start-script AimPrimary(<0>,<0>);
+				sleep DEFAULT_WEAPON_RESTORE_DELAY;
+			}
+		}
+		sleep 500;
+	}
+}
+
 Create()
 {
 	move aimpt to y-axis [40.000000] now;
@@ -137,28 +176,10 @@ Create()
 	start-script close();
 	start-script SmokeUnit();
 	start-script checkClose();
+	start-script checkIncomingMissile();
 	return (0);
 }
 
-
-
-AimPrimary(heading, pitch)
-{
-	signal SIG_AIM;
-	set-signal-mask SIG_AIM;
-	if(!isOpen)
-	{
-		call-script open();
-	}
-	
-	turn turret to y-axis heading speed <400.071429>;
-	turn llauncher to x-axis <0.000000> - pitch speed <400.038462>;
-	turn rlauncher to x-axis <0.000000> - pitch speed <400.038462>;
-	wait-for-turn turret around y-axis;
-	wait-for-turn llauncher around x-axis;
-	start-script RestoreAfterDelay();
-	return (1);
-}
 
 QueryPrimary(piecenum)
 {

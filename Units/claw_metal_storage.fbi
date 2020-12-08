@@ -6,49 +6,47 @@
 	side=Claw;
 	name=Metal Storage;
 	description=Increases Metal Storage by 4000;
-	icontype=metal;
+	iconType=metal;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW METAL LEVEL1  NOTAIR NOTSUB STORAGE;
-	tedclass=METAL;
+	category=CLAW METAL LEVEL1 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_metal_storage;
-	unitnumber=20000;
-	objectname=claw_metal_storage.3do;
+	unitName=claw_metal_storage;
+	objectName=claw_metal_storage.3do;
 	corpse=claw_metal_storage_dead;
-	buildpic=claw_metal_storage.png;
-	soundcategory=gear_MSTOR;
+	buildPic=claw_metal_storage.png;
+	soundCategory=gear_MSTOR;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3000;
+	maxDamage=3000;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=4000;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=4000;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	yardmap=ooooo ooooo ooooo ooooo ooooo;
-	activatewhenbuilt=1;
+	yardMap=ooooo ooooo ooooo ooooo ooooo;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
@@ -57,37 +55,29 @@
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 	
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=LARGE_BUILDINGEX;
-	selfdestructas=LARGE_BUILDING;
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=MS-4;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	collisionVolumeType = box;
 	collisionVolumeScales = 50 60 50;
 	collisionVolumeOffsets = 0 0 0;
@@ -97,8 +87,8 @@
 	{
 		builtBy=claw_l1builder,claw_l2builder;
 	}
-	buildcostenergy=2797;//#AUTO#
-	buildcostmetal=559;//#AUTO#
-	buildtime=6667;//#AUTO#
+	buildCostEnergy=2797;//#AUTO#
+	buildCostMetal=559;//#AUTO#
+	buildTime=6667;//#AUTO#
 	mass=1872;//#AUTO#
 }

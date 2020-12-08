@@ -16,29 +16,40 @@ static-var bMoving,bAiming;
 #define SIG_AIM				2
 
 
-aimingMode()
+aimingMode(built)
 {
+	built = FALSE;
 	while(TRUE)
 	{
-		if (bAiming) 
+		if( get BUILD_PERCENT_LEFT )
 		{
-			show front4;
-			hide front3;
-			emit-sfx 1024+1 from flare;
-		}
-		else
-		{
-			show front3;
-			hide front4;
-		}
+			built = FALSE;
+			sleep 100;
+		} else {
+			if (!built) 
+			{
+				spin front2 around z-axis speed <140.000000>;
+				built = TRUE;				
+			}
 	
+			if (bAiming) 
+			{
+				show front4;
+				hide front3;
+				emit-sfx 1024+1 from flare;
+			}
+			else
+			{
+				show front3;
+				hide front4;
+			}
+		}
 		sleep 30;
 	}
 }
 
 Create()
 {
-	spin front2 around z-axis speed <140.000000>;
 	bMoving=FALSE;
 	bAiming=FALSE;
 	call-script stopAimHelper1(<1000>,<1000>);

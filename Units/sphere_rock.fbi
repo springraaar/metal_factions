@@ -1,85 +1,66 @@
 [UNITINFO]
 	{
 	// ------------------- description
-	Side=Sphere;
+	side=Sphere;
 	Name=Rock;
 	Description=Armored Assault Robot;
-	icontype=mobileassault;
+	iconType=mobileassault;
 
 	// ------------------- categories
-	Category=SPHERE KBOT LEVEL1 WEAPON NOTAIR NOTSUB;
-	TEDClass=KBOT;
+	category=SPHERE LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	// ------------------- external specs
-	UnitName=sphere_rock;
-	UnitNumber=10009;
-	Objectname=sphere_rock.3do;
-	buildpic=sphere_rock.png;
-	SoundCategory=SPHERE_BOTMED;
-	Corpse=sphere_rock_dead;
-
+	unitName=sphere_rock;
+	objectName=sphere_rock.3do;
+	buildPic=sphere_rock.png;
+	soundCategory=SPHERE_BOTMED;
+	corpse=sphere_rock_dead;
 
 	// ------------------- health/cost/size
 	FootprintX=3;
 	FootprintZ=3;
-	MaxDamage=2000;
-
+	maxDamage=2000;
 
 	// ------------------- resources
-	EnergyUse=1;
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyMake=1;
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	canguard=1;
-	canattack=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
 	Builder=0;
 
 	// ------------------- movement
-	MaxWaterDepth=12;
-	MaxSlope=17;
-	MaxVelocity=1.10;
-	BrakeRate=0.35;
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.10;
+	brakeRate=0.35;
 	Acceleration=0.15;
-	TurnRate=950;
-	SteeringMode=2;
-	MovementClass=KBOTHT3;
+	turnRate=950;
+	movementClass=KBOTHT3;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
-
+	sightDistance=500;
+	radarDistance=0;
 
 	// ------------------- weapons
 	Weapon1=sphere_rock_cannon;
-	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
-	ExplodeAs=SMALL_UNITEX;
-	SelfDestructAs=SMALL_UNIT;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 	hightrajectory=2;
 
 	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
 
 	// ------------------- misc
-	Version=3.1;
-	Designation=CA_Ik;
-	BMcode=1;
-	ThreeD=1;
-	ZBuffer=1;
-	NoAutoFire=0;
-	ShootMe=1;
-	DefaultMissionType=Standby;
-	maneuverleashlength=640;
-	Upright=0;
-	Downloadable=1;
+	noAutoFire=0;
+	upright=0;
 	collisionVolumeType = box;
 	collisionVolumeScales =28 32 28;
 	collisionVolumeOffsets = 0 0 0;
@@ -92,11 +73,11 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:YELLOWFLARESML;
+		explosionGenerator0=custom:YELLOWFLARESML;
 	}
 
-	buildcostenergy=1113;//#AUTO#
-	buildcostmetal=222;//#AUTO#
-	buildtime=2652;//#AUTO#
+	buildCostEnergy=1113;//#AUTO#
+	buildCostMetal=222;//#AUTO#
+	buildTime=2652;//#AUTO#
 	mass=574;//#AUTO#
 }

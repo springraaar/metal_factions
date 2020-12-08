@@ -6,42 +6,40 @@
 	side=SPHERE;
 	name=Banger;
 	description=Shielded Rocket Artillery Turret;
-	icontype=staticartillery;
+	iconType=staticartillery;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE LEVEL3 WEAPON NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_banger;
-	objectname=sphere_banger.3do;
+	unitName=sphere_banger;
+	objectName=sphere_banger.3do;
 	corpse=sphere_banger_dead;
-	buildpic=sphere_banger.png;
-	soundcategory=COR_KBOT;
+	buildPic=sphere_banger.png;
+	soundCategory=COR_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2400;
+	maxDamage=2400;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=2048;
-	yardmap=oooo oooo oooo oooo;
+	yardMap=oooo oooo oooo oooo;
 	collisionVolumeType=CylY;
 	collisionVolumeScales=50 60 50;
 	collisionVolumeOffsets=0 0 0;
@@ -51,69 +49,57 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
-	maxwaterdepth=22;
+	maxSlope=10;
+	maxWaterDepth=22;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=sphere_banger_rocket;
-	badtargetcategory1=VTOL;
+	badTargetCategory1=VTOL;
 	onlytargetcategory1=NOTAIR;
 	weapon2=sphere_banger_shield;
-	explodeas=MEDIUM_BUILDINGEX;
-	selfdestructas=MEDIUM_BUILDING;
+	explodeAs=MEDIUM_BUILDINGEX;
+	selfDestructAs=MEDIUM_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=COR-PUN;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:rocketflaremed;
+		explosionGenerator0=custom:rocketflaremed;
 	}
 	[CustomParams]
 	{
 		builtBy=sphere_l2builder;
 		canAreaAttack=1;
 	}
-	buildcostenergy=17209;//#AUTO#
-	buildcostmetal=3441;//#AUTO#
-	buildtime=41016;//#AUTO#
+	buildCostEnergy=17209;//#AUTO#
+	buildCostMetal=3441;//#AUTO#
+	buildTime=41016;//#AUTO#
 	mass=3494;//#AUTO#
 }

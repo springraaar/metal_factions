@@ -1,85 +1,69 @@
 [UNITINFO]
 	{
 	// ------------------- description
-	Side=Sphere;
+	side=Sphere;
 	Name=Slammer;
 	Description=Rocket Artillery;
-	icontype=mobileartillery;
+	iconType=mobileartillery;
 
 	// ------------------- categories
-	Category=SPHERE TANK LEVEL2 WEAPON NOTAIR NOTSUB;
-	TEDClass=TANK;
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	// ------------------- external specs
-	UnitName=sphere_slammer;
-	UnitNumber=10023;
-	Objectname=sphere_slammer.3do;
-	buildpic=sphere_slammer.png;
-	SoundCategory=gear_TANK;
+	unitName=sphere_slammer;
+	objectName=sphere_slammer.3do;
+	buildPic=sphere_slammer.png;
+	soundCategory=gear_TANK;
 	Corpse=sphere_slammer_dead;
 
 
 	// ------------------- health/cost/size
 	FootprintX=3;
 	FootprintZ=3;
-	MaxDamage=1350;
+	maxDamage=1350;
 
 
 	// ------------------- resources
-	EnergyUse=1;
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyMake=1;
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	canguard=1;
-	canattack=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
 	Builder=0;
 
 	// ------------------- movement
-	MaxWaterDepth=12;
-	MaxSlope=17;
-	MaxVelocity=1.15;
-	BrakeRate=0.04;
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.15;
+	brakeRate=0.04;
 	Acceleration=0.05;
-	TurnRate=350;
-	SteeringMode=1;
-	MovementClass=TANKSH3;
+	turnRate=350;
+	movementClass=TANKSH3;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 
 	// ------------------- weapons
 	Weapon1=sphere_slammer_rocket;
-	badtargetcategory1=VTOL;
+	badTargetCategory1=VTOL;
 	onlytargetcategory1=NOTAIR;
-	NoChaseCategory=VTOL;
-	ExplodeAs=BIG_UNITEX;
-	SelfDestructAs=BIG_UNIT;
+	noChaseCategory=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 
 	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
 
 	// ------------------- misc
-	Version=3.1;
-	Designation=CA_Ik;
-	BMcode=1;
-	ThreeD=1;
-	ZBuffer=1;
-	NoAutoFire=0;
-	ShootMe=1;
-	DefaultMissionType=Standby;
-	maneuverleashlength=640;
-	Downloadable=1;
+	noAutoFire=0;
 
 	leavetracks=1;
 	trackoffset=8;
@@ -99,10 +83,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:yellowflaresml;
+		explosionGenerator0=custom:yellowflaresml;
 	}
-	buildcostenergy=7338;//#AUTO#
-	buildcostmetal=1467;//#AUTO#
-	buildtime=17491;//#AUTO#
+	buildCostEnergy=7338;//#AUTO#
+	buildCostMetal=1467;//#AUTO#
+	buildTime=17491;//#AUTO#
 	mass=826;//#AUTO#
 }

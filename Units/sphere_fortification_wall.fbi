@@ -6,29 +6,28 @@
 	side=Sphere;
 	name=Fortification Wall;
 	description=Perimeter Defense;
-	icontype=wall;
+	iconType=wall;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE LEVEL2 NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=SPHERE LEVEL1 NOTAIR NOTSUB;
+	tedClass=FORT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_fortification_wall;
-	unitnumber=10029;
-	objectname=sphere_fortification_wall.3do;
+	unitName=sphere_fortification_wall;
+	objectName=sphere_fortification_wall.3do;
 	corpse=rock_fort;
-	buildpic=sphere_fortification_wall.png;
+	buildPic=sphere_fortification_wall.png;
 	script=fortification_wall.cob;
-	soundcategory=;
+	soundCategory=;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2500;
+	maxDamage=2500;
 	buildcostmetal=70;
 	buildcostenergy=350;
 	buildtime=1550;
@@ -39,16 +38,15 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=0;
-	yardmap=ff ff;
+	yardMap=ff ff;
 	collisionVolumeType = box;
 	collisionVolumeScales =32 90 32;
 	collisionVolumeOffsets = 0 0 0;
@@ -58,7 +56,7 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
@@ -70,34 +68,28 @@
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=32;
+	maxSlope=32;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=0;
-	radardistance=0;
+	sightDistance=0;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=WALL;
-	selfdestructas=WALL;
+	explodeAs=WALL;
+	selfDestructAs=WALL;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=A-102-C;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 

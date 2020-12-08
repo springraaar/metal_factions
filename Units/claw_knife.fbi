@@ -6,39 +6,36 @@
 	side=Claw;
 	name=Knife;
 	description=Scout/Raider Robot;
-	icontype=mobileraider;
+	iconType=mobileraider;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW KBOT LEVEL1 WEAPON NOTAIR NOTSUB;
-	tedclass=KBOT;
+	category=CLAW LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_knife;
-	unitnumber=20000;
-	objectname=claw_knife.3do;
+	unitName=claw_knife;
+	objectName=claw_knife.3do;
 	corpse=claw_knife_dead;
-	buildpic=claw_knife.png;
-	soundcategory=CLAW_BOTSML;
+	buildPic=claw_knife.png;
+	soundCategory=CLAW_BOTSML;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=580;
-	healtime=30;
+	maxDamage=580;
 	footprintx=2;
 	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,74 +45,57 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	upright=0;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTHT2;
-	turnrate=910;
+	movementClass=KBOTHT2;
+	turnRate=910;
 	acceleration=0.35;
-	brakerate=0.5;
-	maxvelocity=2.7;
-	maxslope=17;
-	maxwaterdepth=25;
+	brakeRate=0.5;
+	maxVelocity=2.7;
+	maxSlope=17;
+	maxWaterDepth=25;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_knife_laser;
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=KA-L4;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	smoothanim=1;
-	steeringmode=2;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =20 20 20;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:GLOWSML;
+		explosionGenerator0=custom:GLOWSML;
 	}
 
 	[CustomParams]
@@ -125,8 +105,8 @@
 		tip=Loses up to 30% weapon damage over its range;
 	}
 
-	buildcostenergy=511;//#AUTO#
-	buildcostmetal=102;//#AUTO#
-	buildtime=1219;//#AUTO#
+	buildCostEnergy=511;//#AUTO#
+	buildCostMetal=102;//#AUTO#
+	buildTime=1219;//#AUTO#
 	mass=89;//#AUTO#
 }

@@ -3,42 +3,39 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Turbulence;
 	description=Heavy Skirmisher Hovercraft;
-	icontype=amphibmulti;
+	iconType=amphibmulti;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN HOVER WEAPON LEVEL2 NOTAIR NOTSUB;
-	tedclass=TANK;
+	category=AVEN WEAPON LEVEL2 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_turbulence;
-	unitnumber=174;
-	objectname=aven_turbulence.3do;
+	unitName=aven_turbulence;
+	objectName=aven_turbulence.3do;
 	corpse=aven_turbulence_dead;
-	buildpic=aven_turbulence.png;
-	soundcategory=aven_HOVER_MID;
+	buildPic=aven_turbulence.png;
+	soundCategory=aven_HOVER_MID;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=6000;
-	healtime=30;
+	maxDamage=6000;
 	footprintx=6;
 	footprintz=6;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,35 +45,35 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
+	canAttack=1;
+	canGuard=1;
 	canhover=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKHOVER5;
-	turnrate=270;
+	movementClass=TANKHOVER5;
+	turnRate=270;
 	acceleration=0.02;
-	brakerate=0.02;
-	maxvelocity=1.9;
-	maxslope=16;
-	maxwaterdepth=0;
+	brakeRate=0.02;
+	maxVelocity=1.9;
+	maxSlope=16;
+	maxWaterDepth=0;
 	turnInPlace=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
@@ -84,43 +81,27 @@
 	weapon1=aven_turbulence_missile;
 	weapon2=aven_turbulence_laser;
 	weapon3=aven_turbulence_laser;
-	weaponmaindir2=1.2 0 1;
-	maxangledif2=260;
-	weaponmaindir3=-1.2 0 1;
-	maxangledif3=260;
-	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	weaponMainDir2=1.2 0 1;
+	maxAngleDif2=260;
+	weaponMainDir3=-1.2 0 1;
+	maxAngleDif3=260;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ARM-HG;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =55 40 65;
 	collisionVolumeOffsets = 0 5 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -128,12 +109,12 @@
 	}
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:rocketflaremed;
-	explosiongenerator1=custom:redflare;
+	explosionGenerator0=custom:rocketflaremed;
+	explosionGenerator1=custom:redflare;
 	}
 
-	buildcostenergy=19383;//#AUTO#
-	buildcostmetal=3876;//#AUTO#
-	buildtime=46198;//#AUTO#
+	buildCostEnergy=19383;//#AUTO#
+	buildCostMetal=3876;//#AUTO#
+	buildTime=46198;//#AUTO#
 	mass=2792;//#AUTO#
 }

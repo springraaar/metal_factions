@@ -3,47 +3,45 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Solar Collector;
 	description=Produces 20 E/s;
-	icontype=energy;
+	iconType=energy;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR ENERGY LEVEL1  NOTAIR NOTSUB;
-	tedclass=ENERGY;
+	category=GEAR ENERGY LEVEL1 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_solar_collector;
-	unitnumber=136;
-	objectname=gear_solar_collector.3do;
+	unitName=gear_solar_collector;
+	objectName=gear_solar_collector.3do;
 	corpse=gear_solar_collector_dead;
-	buildpic=gear_solar_collector.png;
-	soundcategory=gear_SOLAR;
+	buildPic=gear_solar_collector.png;
+	soundCategory=gear_SOLAR;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=850;
+	maxDamage=850;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=-20;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=20;	
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=32768;
-	yardmap=ooooo ooooo ooooo ooooo ooooo;
-	activatewhenbuilt=1;
+	yardMap=ooooo ooooo ooooo ooooo ooooo;
+	activateWhenBuilt=1;
 	collisionvolumetype=box;
 	collisionVolumeScales=75 17 75;
 	collisionVolumeOffsets=0 0 0;
@@ -57,43 +55,35 @@
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=1;
+	onOffable=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
-	maxwaterdepth=11;
+	maxSlope=10;
+	maxWaterDepth=11;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=SMALL_BUILDINGEX;
-	selfdestructas=SMALL_BUILDING;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
 	damagemodifier=0.50;
-	designation=ES-22;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=NanoDebree;
-	pieceTrailCEGRange = 1;
 
 	[CustomParams]
 	{
@@ -101,8 +91,8 @@
 		tip=Gains 50% dmg resistance when closed;
 	}
 
-	buildcostenergy=854;//#AUTO#
-	buildcostmetal=170;//#AUTO#
-	buildtime=2036;//#AUTO#
+	buildCostEnergy=854;//#AUTO#
+	buildCostMetal=170;//#AUTO#
+	buildTime=2036;//#AUTO#
 	mass=268;//#AUTO#
 }

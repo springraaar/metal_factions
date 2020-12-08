@@ -3,47 +3,44 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Aircraft Factory;
 	description=Produces Level 1 Aircraft;
-	icontype=plant;
+	iconType=plant;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=AVEN PLANT LEVEL1 NOTAIR NOTSUB;
-	tedclass=PLANT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_aircraft_plant;
-	unitnumber=8;
-	objectname=aven_aircraft_plant.3do;
+	unitName=aven_aircraft_plant;
+	objectName=aven_aircraft_plant.3do;
 	corpse=aven_aircraft_plant_dead;
-	buildpic=aven_aircraft_plant.png;
-	soundcategory=AIRPLANT;
+	buildPic=aven_aircraft_plant.png;
+	soundCategory=AIRPLANT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2850;
-	healtime=30;
+	maxDamage=2850;
 	footprintx=7;
 	footprintz=9;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=100;
-	energyuse=0;
-	energystorage=100;
+	metalStorage=100;
+	energyUse=0;
+	energyStorage=100;
 
 	//************************************************************
 	//  Building
 	//************
-	yardmap=ooooooo ooooooo occccco occccco occccco occccco occccco occccco ooooooo;
-	activatewhenbuilt=0;
+	yardMap=ooooooo ooooooo occccco occccco occccco occccco occccco occccco ooooooo;
+	activateWhenBuilt=0;
 	collisionVolumeType=Box;
 	collisionVolumeScales=95 40 121;
 	collisionVolumeOffsets=0 -5 0;
@@ -54,48 +51,42 @@
 	//  Constructor
 	//***************
 	builder=1;
-	workertime=200;
+	workerTime=200;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	onoffable=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	onOffable=0;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=LARGE_BUILDINGEX;
-	selfdestructas=LARGE_BUILDING;
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=2;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -104,11 +95,11 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Nano;
-	explosiongenerator1=custom:Normallight;
+	explosionGenerator0=custom:Nano;
+	explosionGenerator1=custom:Normallight;
 	}
-	buildcostenergy=4174;//#AUTO#
-	buildcostmetal=834;//#AUTO#
-	buildtime=6566;//#AUTO#
+	buildCostEnergy=4174;//#AUTO#
+	buildCostMetal=834;//#AUTO#
+	buildTime=6566;//#AUTO#
 	mass=1980;//#AUTO#
 }

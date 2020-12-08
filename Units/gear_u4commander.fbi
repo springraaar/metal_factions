@@ -3,32 +3,32 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Commander;
 	description=Builder Form;
-	icontype=gear_commander;
+	iconType=gear_commander;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=GEAR commander LEVEL1 WEAPON NOTAIR NOTSUB;
-	tedclass=COMMANDER;
+	tedClass=COMMANDER;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_u4commander;
+	unitName=gear_u4commander;
 	unitnumber=94;
-	objectname=gear_u4commander.3do;
-	buildpic=gear_u4commander.png;
-	soundcategory=gear_COM;
+	objectName=gear_u4commander.3do;
+	buildPic=gear_u4commander.png;
+	soundCategory=gear_COM;
 	corpse=gear_u4commander_dead;
 	script=gear_u4commander.cob;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=4150;
+	maxDamage=4150;
 	healtime=100;
 	buildcostmetal=2000;
 	buildcostenergy=20000;
@@ -44,58 +44,58 @@
 	//  Resources
 	//*************
 	metalmake=2;
-	energymake=50;
-	energyuse=0;
+	energyMake=50;
+	energyUse=0;
 	metalStorage=0;
 	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=1;
-	builddistance=250;
-	workertime=600;
-        RepairSpeed=600;
-        ReclaimSpeed=600;
-        TerraformSpeed=1200;
+	buildDistance=250;
+	workerTime=600;
+        repairSpeed=600;
+        reclaimSpeed=600;
+        terraformSpeed=1200;
         capturespeed=400;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
+	canAttack=1;
 	cancapture=1;
 	candgun=0;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
 	canreclamate=1;
-	canstop=1;
+	canStop=1;
 	upright=1;
 	autoheal=12;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTDS2;
-	turnrate=1030;
+	movementClass=KBOTDS2;
+	turnRate=1030;
 	acceleration=0.36;
-	brakerate=0.32;
-	maxvelocity=1.78;
-	maxslope=20;
-	maxwaterdepth=35;
+	brakeRate=0.32;
+	maxVelocity=1.78;
+	maxSlope=20;
+	maxWaterDepth=35;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=800;
-	sonardistance=800;
+	sightDistance=500;
+	radarDistance=800;
+	sonarDistance=800;
 
 	//************************************************************
 	//  Weapons
@@ -103,11 +103,11 @@
 	weapon1=gear_u4commander_laser;
 	weapon2=gear_u4commander_torpedo;
 	onlytargetcategory2=NOTAIR;
-	nochasecategory=WEAPON;
-	badtargetcategory1=VTOL;
+	noChaseCategory=WEAPON;
+	badTargetCategory1=VTOL;
 	onlytargetcategory2=NOTAIR;
-	explodeas=gear_commander_nanoblast;
-	selfdestructas=gear_commander_nanoblast;
+	explodeAs=gear_commander_nanoblast;
+	selfDestructAs=gear_commander_nanoblast;
 
 	//************************************************************
 	//  Orders
@@ -122,15 +122,15 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
-	cloakcost=50;
-	cloakcostmoving=150;
+	cloakCost=50;
+	cloakCostMoving=150;
 	commander=1;
 	designation=CX-D3;
 	downloadable=1;
 	hidedamage=0;
 	immunetoparalyzer=1;
 	maneuverleashlength=640;
-	mincloakdistance=170;
+	minCloakDistance=170;
 	norestrict=1;
 	shootme=1;
 	showplayername=1;
@@ -157,9 +157,9 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:glowsml;
-		explosiongenerator1=custom:Nano;
-		explosiongenerator2=custom:UNITFIRE;
-		explosiongenerator3=custom:DGUNREADYFLARE;
+		explosionGenerator0=custom:glowsml;
+		explosionGenerator1=custom:Nano;
+		explosionGenerator2=custom:UNITFIRE;
+		explosionGenerator3=custom:DGUNREADYFLARE;
 	}
 }

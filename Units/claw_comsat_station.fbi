@@ -3,97 +3,88 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Claw;
+	side=Claw;
 	name=COMSAT Station;
 	description=Surveillance Satellite Communications Platform;
-	icontype=building;
+	iconType=building;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=FORT;
+	tedClass=FORT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_comsat_station;
-	objectname=claw_comsat_station.3do;
+	unitName=claw_comsat_station;
+	objectName=claw_comsat_station.3do;
 	corpse=claw_comsat_station_dead;
-	buildpic=claw_comsat_station.png;
-	soundcategory=gear_RADAR;
+	buildPic=claw_comsat_station.png;
+	soundCategory=gear_RADAR;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1500;
+	maxDamage=1500;
 	footprintx=6;
 	footprintz=6;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
 	buildangle=16384;
-	yardmap=oooooo oooooo oooooo oooooo oooooo oooooo;
+	yardMap=oooooo oooooo oooooo oooooo oooooo oooooo;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=20;
-	maxwaterdepth=22;
+	maxSlope=20;
+	maxWaterDepth=22;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=comsat_beacon;
-	badtargetcategory1=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	badTargetCategory1=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
+
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=ARM-SRDS;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =70 50 70;
 	collisionVolumeOffsets = 0 0 0;
@@ -109,7 +100,7 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:glowsml;
+		explosionGenerator0=custom:glowsml;
 	}
 	buildcostenergy=7500;//#AUTO#
 	buildcostmetal=1500;//#AUTO#

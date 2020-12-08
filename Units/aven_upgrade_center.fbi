@@ -1,56 +1,53 @@
 [UNITINFO]
-	{
+{
 
 	// ------------------- description
-	Side=Aven;
-	Name=Upgrade Center;
-	Description=Builds Upgrade Modules;
-	icontype=upgrade_center;
+	side=Aven;
+	name=Upgrade Center;
+	description=Builds Upgrade Modules;
+	iconType=upgrade_center;
 
 	// ------------------- categories
-	Category=AVEN PLANT LEVEL1 NOTAIR NOTSUB;
-	TEDClass=PLANT;
+	category=AVEN PLANT LEVEL1 NOTAIR NOTSUB;
+	tedClass=PLANT;
 
 	// ------------------- external specs
-	UnitName=aven_upgrade_center;
+	unitName=aven_upgrade_center;
 	UnitNumber=10000;
-	Objectname=aven_upgrade_center.3do;
-	buildpic=aven_upgrade_center.png;
-	SoundCategory=aven_HOVER_PLANT;
-	Corpse=aven_upgrade_center_dead;
+	objectName=aven_upgrade_center.3do;
+	buildPic=aven_upgrade_center.png;
+	soundCategory=aven_HOVER_PLANT;
+	corpse=aven_upgrade_center_dead;
 
 	// ------------------- health/cost/size
-	MaxDamage=2250;
+	maxDamage=2250;
 	BuildCostEnergy=4500;
 	BuildCostMetal=900;
 	BuildTime=10800;
 	FootprintX=6;
 	FootprintZ=6;
-	idleautoheal=5;
 
 
 	// ------------------- resources
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyUse=0;
-
+	energyStorage=0;
+	metalStorage=0;
+	energyUse=0;
 
 	// ------------------- constructor
 	Builder=1;
-	WorkerTime=150;
+	workerTime=150;
 	canBeAssisted=0;
 
-
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	
 	// ------------------- movement
 	buildangle=1024;
-	YardMap=oooooo ooccoo ooccoo ooccoo ooccoo oooooo; 
+	yardMap=oooooo ooccoo ooccoo ooccoo ooccoo oooooo; 
 	
-	MaxSlope=30;
+	maxSlope=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =80 60 80;
 	collisionVolumeOffsets = 0 0 0;
@@ -58,27 +55,16 @@
 	modelCenterOffset=0 0 0;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	// ------------------- weapons
-	ExplodeAs=SMALL_BUILDINGEX;
-	SelfDestructAs=SMALL_BUILDING;
-
-	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
 
 
 	// ------------------- misc
-	Version=3.1;
-	BMcode=0;
-	ThreeD=1;
-	ZBuffer=1;
-	NoAutoFire=0;
-	downloadable=1;
+	noAutoFire=0;
 
 	[CustomParams]
 	{

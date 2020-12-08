@@ -3,32 +3,32 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=TARGET;
 	description=Target dummy;
-	icontype=metal;
+	iconType=metal;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=GEAR METAL LEVEL1  NOTAIR NOTSUB STORAGE;
-	tedclass=METAL;
+	tedClass=METAL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=target;
+	unitName=target;
 	unitnumber=122;
-	objectname=gear_metal_storage.3do;
+	objectName=gear_metal_storage.3do;
 	corpse=gear_metal_storage_dead;
-	buildpic=gear_metal_storage.png;
+	buildPic=gear_metal_storage.png;
 	script=gear_metal_storage.cob;
-	soundcategory=gear_MSTOR;
+	soundCategory=gear_MSTOR;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=99999999;
+	maxDamage=99999999;
 	footprintx=5;
 	footprintz=5;
 	power=1;
@@ -39,23 +39,23 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=40000;
-	energyuse=0;
-	energystorage=40000;
-	energymake=10000;
+	metalStorage=40000;
+	energyUse=0;
+	energyStorage=40000;
+	energyMake=10000;
 	metalmake=10000;
 
 	//************************************************************
 	//  Building
 	//************
-	yardmap=ooooo ooooo  ooooo ooooo ooooo;
-	activatewhenbuilt=1;
+	yardMap=ooooo ooooo  ooooo ooooo ooooo;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
@@ -64,45 +64,35 @@
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
-	maxwaterdepth=999;
+	maxSlope=10;
+	maxWaterDepth=999;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=ESTOR_BUILDINGEX;
-	selfdestructas=ESTOR_BUILDINGEX;
+	explodeAs=ESTOR_BUILDINGEX;
+	selfDestructAs=ESTOR_BUILDINGEX;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=MS-4;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	pieceTrailCEGTag=Debree;
 	pieceTrailCEGRange = 4;
 	collisionVolumeType=Box;
 	collisionVolumeScales=70 50 60;
 	collisionVolumeOffsets=0 -1 0;
 	collisionVolumeTest = 1;
-	
-	//************************************************************
-	//  To be removed
-	//*****************
 
 	buildcostenergy=2116;//#AUTO#
 	buildcostmetal=423;//#AUTO#

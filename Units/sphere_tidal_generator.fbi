@@ -6,52 +6,48 @@
 	side=Sphere;
 	name=Tidal Generator;
 	description=Produces Energy;
-	icontype=energy;
+	iconType=energy;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=SPHERE ENERGY LEVEL1 NOTAIR NOTSUB;
-	tedclass=WATER;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_tidal_generator;
-	unitnumber=10000;
-	objectname=sphere_tidal_generator.3do;
+	unitName=sphere_tidal_generator;
+	objectName=sphere_tidal_generator.3do;
 	corpse=sphere_tidal_generator_dead;
-	buildpic=sphere_tidal_generator.png;
-	soundcategory=gear_TIDE;
+	buildPic=sphere_tidal_generator.png;
+	soundCategory=gear_TIDE;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=550;
+	maxDamage=550;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
-	windgenerator=0.001;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 	tidalgenerator=1;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=4096;
-	yardmap=wwww wwww wwww wwww;
-	activatewhenbuilt=1;
+	yardMap=wwww wwww wwww wwww;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
@@ -60,40 +56,33 @@
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 	minwaterdepth=20;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	sonardistance=0;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=SMALL_BUILDINGEX;
-	selfdestructas=SMALL_BUILDING;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	downloadable=1;
 	noshadow=1;
 	scale=0.5;
-	threed=1;
-	version=1.2;
 	waterline=14;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	collisionVolumeType=CylY;
 	collisionVolumeScales=50 31 50;
 	collisionVolumeOffsets=0 0 0;
@@ -103,8 +92,8 @@
 	{
 		builtBy=sphere_l1builder,sphere_l2builder;
 	}
-	buildcostenergy=629;//#AUTO#
-	buildcostmetal=125;//#AUTO#
-	buildtime=1500;//#AUTO#
+	buildCostEnergy=629;//#AUTO#
+	buildCostMetal=125;//#AUTO#
+	buildTime=1500;//#AUTO#
 	mass=178;//#AUTO#
 }

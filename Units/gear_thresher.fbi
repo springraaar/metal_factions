@@ -3,41 +3,39 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Thresher;
 	description=Amphibious Heavy Riot Tank;
-	icontype=amphibfighter;
+	iconType=amphibfighter;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR TANK LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=TANK;
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_thresher;
-	objectname=gear_thresher.3do;
+	unitName=gear_thresher;
+	objectName=gear_thresher.3do;
 	corpse=gear_thresher_dead;
-	buildpic=gear_thresher.png;
-	soundcategory=gear_TANK;
+	buildPic=gear_thresher.png;
+	soundCategory=gear_TANK;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3000;
-	healtime=30;
+	maxDamage=3000;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -47,75 +45,59 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKBH4;
-	turnrate=420;
+	movementClass=TANKBH4;
+	turnRate=420;
 	acceleration=0.28125;
-	brakerate=0.0762939;
-	maxvelocity=1.75;
-	maxslope=12;
+	brakeRate=0.0762939;
+	maxVelocity=1.75;
+	maxSlope=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_thresher_cannon;
-	badtargetcategory1=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	badTargetCategory1=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=TB-PS4;
-	downloadable=1;
 	leavetracks=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
 	trackoffset=8;
 	trackstrength=8;
 	trackstretch=1;
 	tracktype=StdTank;
 	trackwidth=40;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =35 28 40;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -123,10 +105,10 @@
 	}
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:yellowflaresml;
+	explosionGenerator0=custom:yellowflaresml;
 	}
-	buildcostenergy=6443;//#AUTO#
-	buildcostmetal=1288;//#AUTO#
-	buildtime=15356;//#AUTO#
+	buildCostEnergy=6443;//#AUTO#
+	buildCostMetal=1288;//#AUTO#
+	buildTime=15356;//#AUTO#
 	mass=1886;//#AUTO#
 }

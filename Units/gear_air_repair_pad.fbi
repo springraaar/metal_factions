@@ -3,48 +3,45 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Air Repair Pad;
 	description=Automatically repairs aircraft;
-	icontype=building;
+	iconType=building;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR REPAIRPAD LEVEL2 NOTAIR NOTSUB;
-	tedclass=SPECIAL;
+	category=GEAR LEVEL1 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_air_repair_pad;
-	unitnumber=155;
-	objectname=gear_air_repair_pad.3do;
+	unitName=gear_air_repair_pad;
+	objectName=gear_air_repair_pad.3do;
 	corpse=gear_air_repair_pad_dead;
-	buildpic=gear_air_repair_pad.png;
-	soundcategory=AIRPLANT;
+	buildPic=gear_air_repair_pad.png;
+	soundCategory=AIRPLANT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2800;
+	maxDamage=2800;
 	footprintx=7;
 	footprintz=7;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=1024;
-	yardmap=ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo;
-	activatewhenbuilt=1;
+	yardMap=ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo;
+	activateWhenBuilt=1;
 	collisionVolumeType=Box;
 	collisionVolumeScales=72 28 72;
 	collisionVolumeTest = 1;
@@ -53,50 +50,41 @@
 	//  Constructor
 	//***************
 	builder=1;
-	builddistance=200;
-	workertime=600;
+	buildDistance=200;
+	workerTime=600;
 
 	//************************************************************
 	//  Abilities
 	//*************
 	isairbase=1;
-	onoffable=1;
+	onOffable=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 	
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=ARM-SP1;
-	downloadable=1;
-	sortbias=0;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	waterline=0;
 	floater=1;
 
@@ -106,11 +94,11 @@
 	}
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Nano;
+	explosionGenerator0=custom:Nano;
 	}
 
-	buildcostenergy=2563;//#AUTO#
-	buildcostmetal=512;//#AUTO#
-	buildtime=6110;//#AUTO#
-	mass=1740;//#AUTO#
+	buildCostEnergy=2398;//#AUTO#
+	buildCostMetal=479;//#AUTO#
+	buildTime=5716;//#AUTO#
+	mass=1718;//#AUTO#
 }

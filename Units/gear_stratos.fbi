@@ -3,39 +3,36 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Stratos;
 	description=Heavy Ground Attack Aircraft;
-	icontype=airbomber;
+	iconType=airbomber;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=GEAR VTOL LEVEL2 WEAPON NOTSUB;
-	tedclass=VTOL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_stratos;
-	unitnumber=4000;
-	objectname=gear_stratos.3do;
-	buildpic=gear_stratos.png;
-	soundcategory=gear_VTOL;
+	unitName=gear_stratos;
+	objectName=gear_stratos.3do;
+	buildPic=gear_stratos.png;
+	soundCategory=gear_VTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=4400;
-	healtime=30;
+	maxDamage=4400;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	energymake=0;
-	energyuse=0;
+	energyMake=0;
+	energyUse=0;
 
 	//************************************************************
 	//  Building
@@ -48,31 +45,31 @@
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	candropflare=0;
-	canfly=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canDropFlare=0;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	stealth=0;
 
 	//************************************************************
 	//  Movement
 	//************
 	acceleration=0.1;
-	brakerate=0.1;
-	maxvelocity=4.4;
+	brakeRate=0.1;
+	maxVelocity=4.4;
 	
-	cruisealt=130;
-	turnrate=400;
+	cruiseAlt=130;
+	turnRate=400;
 
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
-	radardistance=0;
+	sightDistance=600;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
@@ -80,49 +77,32 @@
 	weapon1=gear_stratos_rocket;
 	weapon2=gear_stratos_laser;
 	onlytargetcategory1=NOTAIR;
-	badtargetcategory2=NOTAIR;
-	explodeas=HBOMBER;
-	selfdestructas=HBOMBER;
-	WeaponMainDir1=0 -1 1;
-	MaxAngleDif1=90; 
-	WeaponMainDir2=0 1 0;
-	MaxAngleDif1=200;    
+	badTargetCategory2=NOTAIR;
+	explodeAs=HBOMBER;
+	selfDestructAs=HBOMBER;
+	weaponMainDir1=0 -1 1;
+	maxAngleDif1=90; 
+	weaponMainDir2=0 1 0;
+	maxAngleDif1=200;    
 
 
 	//************************************************************
 	//  Orders
 	//**********
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=VTOL_standby;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bankscale=1;
-	bmcode=1;
-	designation=AFD-J9;
-	downloadable=1;
-	hoverattack=1;
-	airstrafe=1;
-	airhoverfactor=-1;
+	hoverAttack=1;
+	airStrafe=1;
+	airHoverFactor=-1;
 	bankingAllowed=0;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	CanLoopbackAttack=0;
 	collide=1;
-	minCollisionSpeed=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =60 20 55;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -130,11 +110,11 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:GLOWSML;
-		explosiongenerator1=custom:rocketflaresml;
+		explosionGenerator0=custom:GLOWSML;
+		explosionGenerator1=custom:rocketflaresml;
 	}
-	buildcostenergy=15468;//#AUTO#
-	buildcostmetal=3093;//#AUTO#
-	buildtime=36867;//#AUTO#
-	mass=1065;//#AUTO#
+	buildCostEnergy=16428;//#AUTO#
+	buildCostMetal=3285;//#AUTO#
+	buildTime=39154;//#AUTO#
+	mass=1097;//#AUTO#
 }

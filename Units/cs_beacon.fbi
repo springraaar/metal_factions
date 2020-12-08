@@ -3,28 +3,28 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=All;
+	side=All;
 	name=CS Beacon;
 	description=Air Scout;
-	icontype=invisible;
+	iconType=invisible;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=VTOL LEVEL2 NOTSUB;
-	tedclass=VTOL;
+	tedClass=VTOL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=cs_beacon;
-	objectname=cs_beacon.3do;
-	buildpic=cs_beacon.png;
+	unitName=cs_beacon;
+	objectName=cs_beacon.3do;
+	buildPic=cs_beacon.png;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=9999999;
+	maxDamage=9999999;
 	healtime=30;
 	footprintx=1;
 	footprintz=1;
@@ -32,10 +32,10 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0.0;
+	energyUse=0.0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -45,33 +45,33 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canfly=1;
-	canguard=0;
-	canmove=1;
-	canpatrol=0;
-	canstop=1;
-	cloakable=1;
+	canFly=1;
+	canGuard=0;
+	canMove=1;
+	canPatrol=0;
+	canStop=1;
+	canCloak=1;
 	initCloaked=1;
-	cloakcost=0;
-	cloakcostmoving=0;
+	cloakCost=0;
+	cloakCostMoving=0;
 	stealth=1;
 	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	turnrate=800;
+	turnRate=800;
 	acceleration=0.5;
-	brakerate=0.09;
-	maxvelocity=0;
-	maxslope=10;
+	brakeRate=0.09;
+	maxVelocity=0;
+	maxSlope=10;
 	
-	cruisealt=500;
+	cruiseAlt=500;
 	verticalSpeed=0;
 	myGravity=0;
 
@@ -80,7 +80,7 @@
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
+	sightDistance=600;
 
 	//************************************************************
 	//  Weapons
@@ -90,15 +90,12 @@
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=VTOL_standby;
+	noAutoFire=0;
+
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	maneuverleashlength=1280;
 	collide=0;
 	minCollisionSpeed=30;
 	collisionVolumeType = -1;

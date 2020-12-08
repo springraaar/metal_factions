@@ -546,13 +546,13 @@ function defendNearbyBuildingsIfNeeded(self,safeFraction)
 						elseif (defenderCost < safeFraction * valueToProtect) then
 							if (self.unitSide == "claw" or self.unitSide == "sphere") then
 								local unitName = mediumAAByFaction[self.unitSide]
-								action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, MED_RADIUS, TYPE_LIGHT_AA)
+								action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, BIG_RADIUS, TYPE_LIGHT_AA)
 								if action ~= SKIP_THIS_TASK then
 									return action
 								end
 							elseif(self.unitSide == "aven" or self.unitSide == "gear") then
 								local unitName = lev1HeavyDefenseByFaction[self.unitSide][ random( 1, tableLength(lev1HeavyDefenseByFaction[self.unitSide]) ) ]
-								action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, MED_RADIUS, TYPE_HEAVY_DEFENSE)
+								action = checkAreaLimit(self,unitName, self.unitId, 1*defenseDensityMult, BIG_RADIUS, TYPE_HEAVY_DEFENSE)
 								if action ~= SKIP_THIS_TASK then
 									return action
 								end
@@ -863,12 +863,41 @@ function commanderRoam(self)
 end
 
 
+-- build forward defense, maybe
+function commanderForwardDefense(self)
+	-- non-classic mode only
+	if (self.ai.useStrategies) then
+		local currentStrategy = self.ai.currentStrategy
+		local sStage = self.ai.currentStrategyStage
+		roam = currentStrategy.stages[sStage].properties.roamingCommander or false
+
+		local attackerGroup = self.ai.unitHandler.unitGroups[UNIT_GROUP_ATTACKERS]
+		local atkPos = attackerGroup.centerPos
+		local atkStrength = attackerGroup.nearCenterCost
+		local raidersStrength = self.ai.unitHandler.unitGroups[UNIT_GROUP_RAIDERS].nearCenterCost
+
+		-- do this only if roaming
+		if (roam or (raidersStrength > atkStrength and (not self.ai.unitHandler.baseUnderAttack))) then
+			action = defendNearbyBuildingsIfNeeded(self,0.1)
+			if action ~= SKIP_THIS_TASK then
+				return action
+			end	
+		end
+	end
+	
+	
+	
+	return SKIP_THIS_TASK
+end
+
 function commanderPatrol(self)
 	local radius = MED_RADIUS
-	local atkPos = self.ai.unitHandler.unitGroups[UNIT_GROUP_ATTACKERS].centerPos
-	local atkStrength = self.ai.unitHandler.unitGroups[UNIT_GROUP_ATTACKERS].nearCenterCost
-	local raidersPos = self.ai.unitHandler.unitGroups[UNIT_GROUP_RAIDERS].centerPos
+	local attackerGroup = self.ai.unitHandler.unitGroups[UNIT_GROUP_ATTACKERS]
+	local atkPos = attackerGroup.centerPos
+	local atkStrength = attackerGroup.nearCenterCost
+	--local raidersPos = self.ai.unitHandler.unitGroups[UNIT_GROUP_RAIDERS].centerPos
 	local raidersStrength = self.ai.unitHandler.unitGroups[UNIT_GROUP_RAIDERS].nearCenterCost
+	local enemyPos = attackerGroup.targetPos
 	local basePos = self.ai.unitHandler.basePos
 	local roam = false
 	
@@ -885,7 +914,7 @@ function commanderPatrol(self)
 	
 	local p = newPosition()
 	p.y = 0
-		
+
 	if ( atkPos.x > 0 and atkPos.z >0) then
 		p.x = atkPos.x-radius/2+random(1,radius)
 		p.z = atkPos.z-radius/2+random(1,radius)
@@ -913,38 +942,60 @@ function commanderPatrol(self)
 			-- probably fell into a hole, selfdestruct!
 			spGiveOrderToUnit(self.unitId,CMD.SELFD,{},{})
 		else
-			spGiveOrderToUnit(self.unitId,CMD.MOVE,{self.pos.x  - 60 + random( 1, 120),self.pos.y,self.pos.z - 60 + random( 1, 120)},{})	
-			spGiveOrderToUnit(self.unitId,CMD.PATROL,{self.pos.x - 60 + random( 1, 120),0,self.pos.z -60 + random( 1, 120)},CMD.OPT_SHIFT)
-			spGiveOrderToUnit(self.unitId,CMD.PATROL,{self.pos.x - 60 + random( 1, 120),0,self.pos.z -60 + random( 1, 120)},CMD.OPT_SHIFT)
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{self.pos.x  - 120 + random( 1, 240),self.pos.y,self.pos.z - 120 + random( 1, 240)},{})	
+			spGiveOrderToUnit(self.unitId,CMD.PATROL,{self.pos.x - 120 + random( 1, 240),self.pos.y,self.pos.z -120 + random( 1, 240)},CMD.OPT_SHIFT)
+			spGiveOrderToUnit(self.unitId,CMD.PATROL,{self.pos.x - 120 + random( 1, 240),self.pos.y,self.pos.z -120 + random( 1, 240)},CMD.OPT_SHIFT)
 		end
 	else
 		self.stuckCounter = 0
-		-- get a position to patrol 
-		patrolPos = newPosition()
-		patrolPos.x = p.x - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS)
-		patrolPos.z = p.z - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS)
-		patrolPos.y = spGetGroundHeight(patrolPos.x,patrolPos.z)
-		 
-		-- test if that position is reachable
-		if self.ai.mapHandler:checkConnection(self.pos, p,self.pFType) and self.ai.mapHandler:checkConnection(self.pos, patrolPos,self.pFType) then
-			spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},{})
-			spGiveOrderToUnit(self.unitId,CMD.PATROL,{patrolPos.x,patrolPos.y,patrolPos.z},CMD.OPT_SHIFT)
+		
+		-- group attacking, move to the front line
+		if (attackerGroup.task == TASK_ATTACK ) then
+			-- multiple waypoints for zigzaggy behavior
+			local altPos1 = newPosition()
+			altPos1.x = (0.7*p.x+0.3*enemyPos.x) - COMMANDER_ATTACK_ZIGZAG_DISTANCE/2 + random( 1, COMMANDER_ATTACK_ZIGZAG_DISTANCE)
+			altPos1.z = (0.7*p.z+0.3*enemyPos.z) - COMMANDER_ATTACK_ZIGZAG_DISTANCE/2 + random( 1, COMMANDER_ATTACK_ZIGZAG_DISTANCE)
+			altPos1.y = spGetGroundHeight(altPos1.x,altPos1.z)
+
+			local altPos2 = newPosition()
+			altPos2.x = (0.6*p.x+0.4*enemyPos.x) - COMMANDER_ATTACK_ZIGZAG_DISTANCE/2 + random( 1, COMMANDER_ATTACK_ZIGZAG_DISTANCE)
+			altPos2.z = (0.6*p.z+0.4*enemyPos.z) - COMMANDER_ATTACK_ZIGZAG_DISTANCE/2 + random( 1, COMMANDER_ATTACK_ZIGZAG_DISTANCE)
+			altPos2.y = spGetGroundHeight(altPos2.x,altPos2.z)
+			
+			local altPos3 = newPosition()
+			altPos3.x = (0.5*p.x+0.5*enemyPos.x) - COMMANDER_ATTACK_ZIGZAG_DISTANCE/2 + random( 1, COMMANDER_ATTACK_ZIGZAG_DISTANCE)
+			altPos3.z = (0.5*p.z+0.5*enemyPos.z) - COMMANDER_ATTACK_ZIGZAG_DISTANCE/2 + random( 1, COMMANDER_ATTACK_ZIGZAG_DISTANCE)
+			altPos3.y = spGetGroundHeight(altPos3.x,altPos3.z)
+			
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{altPos1.x,altPos1.y,altPos1.z},{})
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{altPos2.x,altPos2.y,altPos2.z},CMD.OPT_SHIFT)
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{altPos3.x,altPos3.y,altPos3.z},CMD.OPT_SHIFT)
 		else
-			-- if not just patrol in place
-			spGiveOrderToUnit(self.unitId,CMD.MOVE,{self.pos.x  - 60 + random( 1, 120),self.pos.y,self.pos.z - 60 + random( 1, 120)},{})
-			spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x - 60 + random( 1, 120),p.y,p.z- 60 + random( 1, 120)},CMD.OPT_SHIFT)
-			spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x - 60 + random( 1, 120),p.y,p.z- 60 + random( 1, 120)},CMD.OPT_SHIFT)
+		-- patrol/repair
+			local firstCmd = CMD.PATROL
+			-- move there or patrol if already nearby	
+			if distance(self.pos,p) > BIG_RADIUS then
+				firstCmd = CMD.MOVE
+			end
+				
+			-- get a position to patrol 
+			patrolPos = newPosition()
+			patrolPos.x = p.x - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS)
+			patrolPos.z = p.z - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS)
+			patrolPos.y = spGetGroundHeight(patrolPos.x,patrolPos.z)
+			 
+			-- test if that position is reachable
+			if self.ai.mapHandler:checkConnection(self.pos, p,self.pFType) and self.ai.mapHandler:checkConnection(self.pos, patrolPos,self.pFType) then
+				spGiveOrderToUnit(self.unitId,firstCmd,{p.x,p.y,p.z},{})
+				spGiveOrderToUnit(self.unitId,CMD.PATROL,{patrolPos.x,patrolPos.y,patrolPos.z},CMD.OPT_SHIFT)
+			else
+				-- if not just patrol in place
+				spGiveOrderToUnit(self.unitId,CMD.PATROL,{self.pos.x  - 60 + random( 1, 120),self.pos.y,self.pos.z - 60 + random( 1, 120)},{})
+				spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x - 60 + random( 1, 120),p.y,p.z- 60 + random( 1, 120)},CMD.OPT_SHIFT)
+				spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x - 60 + random( 1, 120),p.y,p.z- 60 + random( 1, 120)},CMD.OPT_SHIFT)
+			end
 		end
-		 	
-		-- do not give the orders if already there
-		--if (distance(self.pos,p) > BIG_RADIUS) then
-		--	spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},{})			
-		--	spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS),0,p.z - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS)},CMD.OPT_SHIFT)
-		--elseif (f - self.idleFrame < 90 or self.distance(self.pos,p) > MED_RADIUS) then
-		--elseif (true) then
-		--	spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x,p.y,p.z},{})			
-		--	spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS),0,p.z - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS)},CMD.OPT_SHIFT)
-		--end
+
 	end
 	
 	return {action="wait", frames=120}
@@ -2198,7 +2249,8 @@ avenUCommander = {
 	changeQueueToRoamingCommanderIfNeeded,
 	reclaimNearbyFeaturesIfNecessary,
 	metalExtractorNearbyIfSafe,
-	commanderPatrol
+	commanderPatrol,
+	commanderForwardDefense
 }
 
 avenURoamingCommander = {
@@ -2552,7 +2604,8 @@ gearUCommander = {
 	changeQueueToRoamingCommanderIfNeeded,
 	reclaimNearbyFeaturesIfNecessary,
 	metalExtractorNearbyIfSafe,
-	commanderPatrol
+	commanderPatrol,
+	commanderForwardDefense
 }
 
 gearURoamingCommander = {
@@ -2897,7 +2950,8 @@ clawUCommander = {
 	changeQueueToRoamingCommanderIfNeeded,
 	reclaimNearbyFeaturesIfNecessary,
 	metalExtractorNearbyIfSafe,
-	commanderPatrol
+	commanderPatrol,
+	commanderForwardDefense
 }
 
 
@@ -3249,7 +3303,8 @@ sphereUCommander = {
 	changeQueueToRoamingCommanderIfNeeded,
 	reclaimNearbyFeaturesIfNecessary,
 	metalExtractorNearbyIfSafe,
-	commanderPatrol
+	commanderPatrol,
+	commanderForwardDefense
 }
 
 sphereURoamingCommander = {

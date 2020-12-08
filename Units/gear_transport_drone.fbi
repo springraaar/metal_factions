@@ -3,30 +3,30 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Transporter Drone;
 	description=Air Transport;
-	icontype=air;
+	iconType=air;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR VTOL TPORT LEVEL2 NOTSUB;
-	tedclass=VTOL;
+	category=GEAR VTOL LEVEL1 NOTSUB;
+	tedClass=VTOL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_transport_drone;
+	unitName=gear_transport_drone;
 	unitnumber=9000;
-	objectname=gear_transport_drone.3do;
-	buildpic=gear_transport_drone.png;
-	soundcategory=aven_VTOL;
+	objectName=gear_transport_drone.3do;
+	buildPic=gear_transport_drone.png;
+	soundCategory=aven_VTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=800;
+	maxDamage=800;
 	buildcostmetal=600;
 	buildcostenergy=3000;
 	buildtime=7200;
@@ -36,10 +36,10 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -49,45 +49,45 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canfly=1;
-	canguard=1;
+	canFly=1;
+	canGuard=1;
 	canload=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	turnrate=512;
+	turnRate=512;
 	acceleration=0.2;
-	brakerate=1;
-	maxvelocity=4.0;
-	maxslope=10;
-	cruisealt=150;
+	brakeRate=1;
+	maxVelocity=4.0;
+	maxSlope=10;
+	cruiseAlt=150;
 	cansubmerge=1;	
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
-	radardistance=0;
+	sightDistance=600;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 	firestandorders=0;
 	mobilestandorders=0;
 	standingmoveorder=1;
@@ -113,7 +113,7 @@
 	collisionVolumeTest = 1;
 	reclaimable=0;
 	capturable=0;
-	airhoverfactor=0.2;
+	airHoverFactor=0.2;
 
 	[CustomParams]
 	{
@@ -122,6 +122,6 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:TRANSPORTTRAIL4;
+		explosionGenerator0=custom:TRANSPORTTRAIL4;
 	}
 }

@@ -120,24 +120,19 @@ for wdName, wd in pairs(WeaponDefs) do
 			wd.heightmod = 1
 			wd.heightboostfactor = 0
 		elseif (wd.weapontype == "BeamLaser") then
-			--wd.cylindertargeting = 2
-			wd.heightmod = 0.75		-- default was 1.0
+			wd.heightmod = 1.0		-- default was 1.0
 		elseif (wd.weapontype == "LaserCannon") then
-			wd.heightmod = 1.0		-- default was 1.0?
-			--wd.heightboostfactor = 1.1
+			wd.heightmod = 1.0		-- default was 1.0
 		elseif (wd.weapontype == "Cannon" or wd.weapontype == "EmgCannon" ) then
 			if wd.range and tonumber(wd.range) > 380 then
+				--wd.cylindertargeting = 20
 				wd.heightmod = 0.5			-- default was 0.8
 			end
-			wd.heightboostfactor = 1.1		-- default was -1.0
+			wd.heightboostfactor = 0.0		-- default was -1.0
 		elseif (wd.weapontype == "MissileLauncher" or wd.weapontype == "StarburstLauncher" ) then
-			wd.cylindertargeting = 2
-			wd.heightboostfactor = 1.1		-- default was -1.0
+			--wd.cylindertargeting = 20
+			wd.heightmod = 0.5			-- default was 0.8
 		end
-		
-		--wd.heightmod=0.01
-		--wd.cylindertargeting=5
-		--wd.heightboostfactor = 15.0
 		
 		-- override mygravity for cannons if not specified
 		if (wd.weapontype == "Cannon") then

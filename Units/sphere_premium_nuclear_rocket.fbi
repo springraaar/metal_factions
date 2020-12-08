@@ -6,7 +6,7 @@
 	side=SPHERE;
 	name=Hypersonic Tactical Nuke;
 	description=Long Range Nuclear Missile;
-	icontype=fnuke;
+	iconType=fnuke;
 
 	//************************************************************
 	//  Categories
@@ -17,25 +17,25 @@
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_premium_nuclear_rocket;
-	objectname=sphere_premium_nuclear_rocket.3do;
+	unitName=sphere_premium_nuclear_rocket;
+	objectName=sphere_premium_nuclear_rocket.3do;
 	script=long_range_premium_rocket.cob;
-	buildpic=sphere_premium_nuclear_rocket.png;
-	soundcategory=MINE;
+	buildPic=sphere_premium_nuclear_rocket.png;
+	soundCategory=MINE;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2000;
+	maxDamage=2000;
 	footprintx=2;
 	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -50,39 +50,39 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canmove=0;
-	canpatrol=0;
-	canstop=0;
+	canAttack=1;
+	canMove=0;
+	canPatrol=0;
+	canStop=0;
 	kamikaze=0;
 	stealth=0;
-	canguard=0;
+	canGuard=0;
 	canRepeat=0;
 	canwait=0;
-	canstop=0;
+	canStop=0;
 	canfight=0;
 	sonarStealth=0;
-	canfly=1;
+	canFly=1;
 
 
 	
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=30;
-	maxwaterdepth=100;
-	maxvelocity=0;
+	maxSlope=30;
+	maxWaterDepth=100;
+	maxVelocity=0;
 	acceleration=0;
-	brakerate=0;
-	turnrate=900;
+	brakeRate=0;
+	turnRate=900;
 	blocking=0;
 	usesmoothmesh=0;
-	mygravity=0;
+	myGravity=0;
 	hoverAttack=1;
 	airHoverFactor=0.01;
 	airStrafe=0;
@@ -93,16 +93,16 @@
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
-	radardistance=0;
+	sightDistance=600;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=sphere_premium_nuclear_rocket;
 	onlytargetcategory1=NOTAIR;
-	explodeas=sphere_premium_nuclear_rocket;
-	selfdestructas=sphere_premium_nuclear_rocket;
+	explodeAs=sphere_premium_nuclear_rocket;
+	selfDestructAs=sphere_premium_nuclear_rocket;
 	selfdestructcountdown=0;
 	fireState=0;
 
@@ -113,7 +113,7 @@
 	}
 
 
-	buildcostenergy=125000;//#AUTO#
-	buildcostmetal=25000;//#AUTO#
-	buildtime=300000;//#AUTO#
+	buildcostenergy=120000;//#AUTO#
+	buildcostmetal=24000;//#AUTO#
+	buildtime=288000;//#AUTO#
 }

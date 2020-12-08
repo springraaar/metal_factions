@@ -6,29 +6,29 @@
 	side=Claw;
 	name=Commander;
 	description=Assassin Form;
-	icontype=claw_commander;
+	iconType=claw_commander;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=CLAW commander LEVEL1 WEAPON NOTAIR NOTSUB;
-	tedclass=COMMANDER;
+	tedClass=COMMANDER;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_u3commander;
+	unitName=claw_u3commander;
 	unitnumber=20000;
-	objectname=claw_u3commander.3do;
-	buildpic=claw_u3commander.png;
-	soundcategory=claw_COM;
+	objectName=claw_u3commander.3do;
+	buildPic=claw_u3commander.png;
+	soundCategory=claw_COM;
 	corpse=claw_u3commander_dead;
 	script=claw_u3commander.cob;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3000;
+	maxDamage=3000;
 	healtime=100;
 	buildcostmetal=2000;
 	buildcostenergy=20000;
@@ -44,70 +44,70 @@
 	//  Resources
 	//*************
 	metalmake=2;
-	energymake=50;
-	energyuse=0;
+	energyMake=50;
+	energyUse=0;
 	metalStorage=0;
 	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=1;
-	builddistance=200;
-	workertime=300;
-        RepairSpeed=300;
-        ReclaimSpeed=300;
-        TerraformSpeed=600;
+	buildDistance=200;
+	workerTime=300;
+        repairSpeed=300;
+        reclaimSpeed=300;
+        terraformSpeed=600;
         capturespeed=200;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
+	canAttack=1;
 	cancapture=1;
 	candgun=0;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
 	canreclamate=1;
-	canstop=1;
+	canStop=1;
 	upright=1;
 	autoheal=12;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTDS2;
-	turnrate=1200;
+	movementClass=KBOTDS2;
+	turnRate=1200;
 	acceleration=1.0;
-	brakerate=1.0;
-	maxvelocity=1.9;
-	maxslope=20;
-	maxwaterdepth=35;
+	brakeRate=1.0;
+	maxVelocity=1.9;
+	maxSlope=20;
+	maxWaterDepth=35;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=800;
-	sonardistance=800;
+	sightDistance=500;
+	radarDistance=800;
+	sonarDistance=800;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_u3commander_railgun;
 	weapon2=claw_u3commander_torpedo;
-	nochasecategory=WEAPON;
-	badtargetcategory1=VTOL;
+	noChaseCategory=WEAPON;
+	badTargetCategory1=VTOL;
 	onlytargetcategory2=NOTAIR;
-	badtargetcategory3=VTOL;
-	explodeas=claw_commander_nanoblast;
-	selfdestructas=claw_commander_nanoblast;
+	badTargetCategory3=VTOL;
+	explodeAs=claw_commander_nanoblast;
+	selfDestructAs=claw_commander_nanoblast;
 
 	//************************************************************
 	//  Orders
@@ -122,15 +122,15 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
-	cloakcost=50;
-	cloakcostmoving=150;
+	cloakCost=50;
+	cloakCostMoving=150;
 	commander=1;
 	designation=CX-D3;
 	downloadable=1;
 	hidedamage=0;
 	immunetoparalyzer=1;
 	maneuverleashlength=640;
-	mincloakdistance=170;
+	minCloakDistance=170;
 	norestrict=1;
 	shootme=1;
 	showplayername=1;
@@ -158,9 +158,9 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:railgunflare;
-		explosiongenerator1=custom:Nano;
-		explosiongenerator2=custom:emgflarefast;
-		explosiongenerator3=custom:DGUNREADYFLARE;
+		explosionGenerator0=custom:railgunflare;
+		explosionGenerator1=custom:Nano;
+		explosionGenerator2=custom:emgflarefast;
+		explosionGenerator3=custom:DGUNREADYFLARE;
 	}
 }

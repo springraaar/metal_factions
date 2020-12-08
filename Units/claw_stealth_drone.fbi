@@ -3,29 +3,28 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Claw;
+	side=Claw;
 	name=Cloakable Intelligence Drone;
 	description=Provides Radar, Sonar and Radar Jammer;
-	icontype=mobileintel;
+	iconType=mobileintel;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=CLAW VTOL LEVEL2 NOTSUB;
-	tedclass=VTOL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_stealth_drone;
-	objectname=claw_stealth_drone.3do;
-	buildpic=claw_stealth_drone.png;
-	soundcategory=aven_JAM;
+	unitName=claw_stealth_drone;
+	objectName=claw_stealth_drone.3do;
+	buildPic=claw_stealth_drone.png;
+	soundCategory=aven_JAM;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=500;
+	maxDamage=500;
 	footprintx=2;
 	footprintz=2;
 
@@ -33,10 +32,10 @@
 	//  Resources
 	//*************
 	metalmake=0.0;
-	metalstorage=0;
-	energymake=0;
-	energyuse=75.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=75.0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -46,85 +45,73 @@
 	//  Constructor
 	//***************
 	builder=0;
-	builddistance=0;
-	workertime=0;
-        RepairSpeed=0;
-        ReclaimSpeed=0;
-        TerraformSpeed=0;//speed up terraforming
+	buildDistance=0;
+	workerTime=0;
+        repairSpeed=0;
+        reclaimSpeed=0;
+        terraformSpeed=0;//speed up terraforming
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canfly=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canreclamate=1;
-	canstop=1;
-	onoffable=1;
-	activatewhenbuilt=1;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	onOffable=1;
+	activateWhenBuilt=1;
 	cancloak=1;
-	cloakcost=30;
-	cloakcostmoving=60;
-	mincloakdistance=90;
+	cloakCost=30;
+	cloakCostMoving=60;
+	minCloakDistance=90;
 	initCloaked=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	turnrate=420;
+	turnRate=420;
 	acceleration=0.28;
-	brakerate=1.5;
-	maxvelocity=3.0;
-	maxslope=10;
+	brakeRate=1.5;
+	maxVelocity=3.0;
+	maxSlope=10;
 	
-	cruisealt=80;
+	cruiseAlt=80;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
-	radardistance=1100;
-	radardistancejam=500;
-	sonardistance=900;
+	sightDistance=600;
+	radarDistance=1100;
+	radarDistanceJam=500;
+	sonarDistance=900;
 
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=VTOL_standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	maneuverleashlength=1280;
-	shootme=1;
-	steeringmode=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=NanoDebree;
-	pieceTrailCEGRange = 2;
 	collide=1;
-	minCollisionSpeed=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =25 13 25;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	hoverattack=1;
+	hoverAttack=1;
 	upright=1;
 	bankingAllowed=0;
 	reclaimable=0;
 	capturable=0;
-	airhoverfactor=0.2;
+	airHoverFactor=0.2;
 	
 	[CustomParams]
 	{
@@ -136,8 +123,8 @@
 	//  To be removed
 	//*****************
 
-	buildcostenergy=1634;//#AUTO#
-	buildcostmetal=326;//#AUTO#
-	buildtime=3895;//#AUTO#
+	buildCostEnergy=1634;//#AUTO#
+	buildCostMetal=326;//#AUTO#
+	buildTime=3895;//#AUTO#
 	mass=116;//#AUTO#
 }

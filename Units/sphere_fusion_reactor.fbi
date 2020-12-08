@@ -6,52 +6,49 @@
 	side=Sphere;
 	name=Small Fission Reactor;
 	description=Produces 100 E/s but consumes 0.5 M/s;
-	icontype=energy;
+	iconType=energy;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=SPHERE ENERGY LEVEL1 NOTAIR NOTSUB;
-	tedclass=ENERGY;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_fusion_reactor;
-	unitnumber=10005;
-	objectname=sphere_fusion_reactor.3do;
+	unitName=sphere_fusion_reactor;
+	objectName=sphere_fusion_reactor.3do;
 	corpse=sphere_fusion_reactor_dead;
-	buildpic=sphere_fusion_reactor.png;
-	soundcategory=gear_FUS;
+	buildPic=sphere_fusion_reactor.png;
+	soundCategory=gear_FUS;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1400;
+	maxDamage=1400;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=100;
+	metalStorage=0;
+	energyMake=100;
 	metaluse=0.5;
-	energyuse=0;
-	energystorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
-	yardmap=ooooo ooooo ooooo ooooo ooooo;
-	activatewhenbuilt=1;
+	yardMap=ooooo ooooo ooooo ooooo ooooo;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
@@ -60,37 +57,29 @@
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 	
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=FUSION_BUILDING_MED;
-	selfdestructas=FUSION_BUILDING_MED;
+	explodeAs=FUSION_BUILDING_MED;
+	selfDestructAs=FUSION_BUILDING_MED;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=EF-5;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	collisionVolumeType = cyly;
 	collisionVolumeScales = 70 45 70;
 	collisionVolumeOffsets = 0 0 0;
@@ -104,8 +93,8 @@
 	{
 	}
 
-	buildcostenergy=2223;//#AUTO#
-	buildcostmetal=444;//#AUTO#
-	buildtime=5299;//#AUTO#
+	buildCostEnergy=2223;//#AUTO#
+	buildCostMetal=444;//#AUTO#
+	buildTime=5299;//#AUTO#
 	mass=996;//#AUTO#
 }

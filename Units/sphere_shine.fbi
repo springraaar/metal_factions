@@ -6,42 +6,40 @@
 	side=SPHERE;
 	name=Shine;
 	description=Medium Laser Tower;
-	icontype=staticfs;
+	iconType=staticfs;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=SPHERE LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_shine;
-	objectname=sphere_shine.3do;
+	unitName=sphere_shine;
+	objectName=sphere_shine.3do;
 	corpse=sphere_shine_dead;
-	buildpic=sphere_shine.png;
-	soundcategory=COR_KBOT;
+	buildPic=sphere_shine.png;
+	soundCategory=COR_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1500;
+	maxDamage=1500;
 	footprintx=3;
 	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=2048;
-	yardmap=ooo ooo ooo;
+	yardMap=ooo ooo ooo;
 	collisionVolumeType=CylY;
 	collisionVolumeScales=45 70 45;
 	collisionVolumeOffsets=0 0 0;
@@ -51,53 +49,41 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=20;
+	maxSlope=20;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=sphere_shine_laser;
-	explodeas=SMALL_BUILDINGEX;
-	selfdestructas=SMALL_BUILDING;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=COR-PUN;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	floater=1;
 	waterline=0;
 
@@ -108,10 +94,10 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:redflare;
+		explosionGenerator0=custom:redflare;
 	}
-	buildcostenergy=2697;//#AUTO#
-	buildcostmetal=539;//#AUTO#
-	buildtime=6427;//#AUTO#
+	buildCostEnergy=2697;//#AUTO#
+	buildCostMetal=539;//#AUTO#
+	buildTime=6427;//#AUTO#
 	mass=1108;//#AUTO#
 }

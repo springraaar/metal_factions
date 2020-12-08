@@ -3,47 +3,43 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Toaster;
 	description=Pop-up Artillery Cannon;
-	icontype=staticartillery;
+	iconType=staticartillery;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=GEAR LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_toaster;
-	unitnumber=201;
-	objectname=gear_toaster.3do;
+	unitName=gear_toaster;
+	objectName=gear_toaster.3do;
 	corpse=gear_toaster_dead;
-	buildpic=gear_toaster.png;
-	soundcategory=GUARD;
+	buildPic=gear_toaster.png;
+	soundCategory=GUARD;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3097;
-	healtime=11;
+	maxDamage=3097;
 	footprintx=3;
 	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=8192;
-	yardmap=ooo ooo ooo;
+	yardMap=ooo ooo ooo;
 	collisionVolumeType=Box;
 	collisionVolumeScales=44 35 44;
 	collisionVolumeOffsets=0 0 0;
@@ -53,59 +49,47 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=20;
-	maxwaterdepth=0;
+	maxSlope=20;
+	maxWaterDepth=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_toaster_cannon;
-	badtargetcategory1=VTOL;
-	badtargetcategory1=VTOL;
+	badTargetCategory1=VTOL;
+	badTargetCategory1=VTOL;
 	onlytargetcategory1=NOTAIR;
-	explodeas=LARGE_BUILDINGEX;
-	selfdestructas=LARGE_BUILDING;
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
 	damagemodifier=0.5;
-	designation=ARM-GUARD;
 	digger=1;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -115,10 +99,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:YELLOWFLAREMED;
+		explosionGenerator0=custom:YELLOWFLAREMED;
 	}
-	buildcostenergy=6800;//#AUTO#
-	buildcostmetal=1360;//#AUTO#
-	buildtime=16208;//#AUTO#
+	buildCostEnergy=6800;//#AUTO#
+	buildCostMetal=1360;//#AUTO#
+	buildTime=16208;//#AUTO#
 	mass=2454;//#AUTO#
 }

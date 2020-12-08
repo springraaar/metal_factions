@@ -2,50 +2,45 @@
 	{
 
 	// ------------------- description
-	Side=Sphere;
+	side=Sphere;
 	Name=Aircraft Factory;
 	Description=Builds Level 1 Aircraft;
-	icontype=plant;
+	iconType=plant;
 
 	// ------------------- categories
 	Category=SPHERE PLANT LEVEL1 NOTAIR NOTSUB;
-	TEDClass=PLANT;
 
 	// ------------------- external specs
-	UnitName=sphere_aircraft_factory;
-	UnitNumber=10000;
-	Objectname=sphere_aircraft_factory.3do;
-	buildpic=sphere_aircraft_factory.png;
-	SoundCategory=gear_HOVER_PLANT;
+	unitName=sphere_aircraft_factory;
+	objectName=sphere_aircraft_factory.3do;
+	buildPic=sphere_aircraft_factory.png;
+	soundCategory=gear_HOVER_PLANT;
 	Corpse=sphere_aircraft_factory_dead;
 
 	// ------------------- health/cost/size
-	MaxDamage=2500;
+	maxDamage=2500;
 	FootprintX=10;
 	FootprintZ=6;
 
 
 	// ------------------- resources
-	EnergyStorage=100;
-	MetalStorage=100;
-	EnergyUse=0;
+	energyStorage=100;
+	metalStorage=100;
+	energyUse=0;
 
 
 	// ------------------- constructor
 	Builder=1;
-	WorkerTime=200;
-
-
+	workerTime=200;
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	
 	// ------------------- movement
-	buildangle=1024;
-	YardMap=ccoooooocc oooccccooo oooccccooo oooccccooo oooccccooo ccoooooocc; 
-	MaxSlope=14;
+	yardMap=ccoooooocc oooccccooo oooccccooo oooccccooo oooccccooo ccoooooocc; 
+	maxSlope=14;
 	collisionVolumeType=box;
 	collisionVolumeScales=130 35 80;
 	collisionVolumeOffsets=0 -5 0;
@@ -53,18 +48,15 @@
 	floater=1;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	// ------------------- weapons
-	ExplodeAs=LARGE_BUILDINGEX;
-	SelfDestructAs=LARGE_BUILDING;
-
-	// ------------------- orders
-
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
 
 	// ------------------- misc
-	NoAutoFire=0;
+	noAutoFire=0;
 
 	[CustomParams]
 	{
@@ -72,11 +64,11 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:Nano;
+		explosionGenerator0=custom:Nano;
 	}
 
-	buildcostenergy=3939;//#AUTO#
-	buildcostmetal=787;//#AUTO#
-	buildtime=6196;//#AUTO#
+	buildCostEnergy=3939;//#AUTO#
+	buildCostMetal=787;//#AUTO#
+	buildTime=6196;//#AUTO#
 	mass=1774;//#AUTO#
 }

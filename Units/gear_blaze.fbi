@@ -3,47 +3,43 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Blaze;
 	description=Heat Ray Tower;
-	icontype=staticheavyfs;
+	iconType=staticheavyfs;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR defensive WEAPON level2 NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=GEAR WEAPON LEVEL1 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_blaze;
-	unitnumber=111;
-	objectname=gear_blaze.3do;
+	unitName=gear_blaze;
+	objectName=gear_blaze.3do;
 	corpse=gear_blaze_dead;
-	buildpic=gear_blaze.png;
-	soundcategory=HLT;
+	buildPic=gear_blaze.png;
+	soundCategory=HLT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2500;
-	healtime=11;
+	maxDamage=2500;
 	footprintx=3;
 	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=200;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=200;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=4096;
-	yardmap=yoy ooo yoy;
+	yardMap=yoy ooo yoy;
 	collisionVolumeType=CylY;
 	collisionVolumeScales=43 80 43;
 	//collisionVolumeOffsets=0 0 0;
@@ -53,54 +49,42 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_blaze_heatray;
-	badtargetcategory1=VTOL;
-	explodeas=MEDIUM_BUILDINGEX;
-	selfdestructas=MEDIUM_BUILDING;
+	badTargetCategory1=VTOL;
+	explodeAs=MEDIUM_BUILDINGEX;
+	selfDestructAs=MEDIUM_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=F-ML21;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	floater=1;
 	waterline=0;
 
@@ -112,13 +96,13 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:yellowflaresml;
-		explosiongenerator1=custom:hrglowsml1;
-		explosiongenerator2=custom:hrglowsml2;
-		explosiongenerator3=custom:hrglowsml3;
+		explosionGenerator0=custom:yellowflaresml;
+		explosionGenerator1=custom:hrglowsml1;
+		explosionGenerator2=custom:hrglowsml2;
+		explosionGenerator3=custom:hrglowsml3;
 	}
-	buildcostenergy=6721;//#AUTO#
-	buildcostmetal=1344;//#AUTO#
-	buildtime=16018;//#AUTO#
+	buildCostEnergy=6721;//#AUTO#
+	buildCostMetal=1344;//#AUTO#
+	buildTime=16018;//#AUTO#
 	mass=2146;//#AUTO#
 }

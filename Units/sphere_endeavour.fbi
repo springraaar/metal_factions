@@ -6,120 +6,100 @@
 	side=Sphere;
 	name=Endeavour;
 	description=Destroyer;
-	icontype=shipartilleryfs;
+	iconType=shipartilleryfs;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE SHIP LEVEL1 WEAPON NOTAIR NOTSUB;
-	tedclass=SHIP;
+	category=SPHERE LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_endeavour;
-	unitnumber=10000;
-	objectname=sphere_endeavour.3do;
+	unitName=sphere_endeavour;
+	objectName=sphere_endeavour.3do;
 	corpse=sphere_endeavour_dead;
-	buildpic=sphere_endeavour.png;
-	soundcategory=gear_SHIP;
+	buildPic=sphere_endeavour.png;
+	soundCategory=gear_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3500;
-	healtime=30;
+	maxDamage=3500;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=1.9;
-	energyuse=1.9;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=smallboat;
-	turnrate=384;
+	movementClass=smallboat;
+	turnRate=384;
 	acceleration=0.027;
-	brakerate=0.009;
-	maxvelocity=2.25;
+	brakeRate=0.009;
+	maxVelocity=2.25;
 	minwaterdepth=12;
 	waterline=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	sonardistance=500;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=500;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=sphere_endeavour_cannon;
 	weapon2=sphere_endeavour_depthcharge;
-	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
 	onlytargetcategory2=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=SA-AS4;
-	downloadable=1;
-	maneuverleashlength=640;
 	scale=0.6;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =30 30 60;
 	collisionVolumeOffsets = 0 -10 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -129,10 +109,10 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:yellowflaremed;
+		explosionGenerator0=custom:yellowflaremed;
 	}
-	buildcostenergy=5412;//#AUTO#
-	buildcostmetal=1082;//#AUTO#
-	buildtime=12900;//#AUTO#
+	buildCostEnergy=5412;//#AUTO#
+	buildCostMetal=1082;//#AUTO#
+	buildTime=12900;//#AUTO#
 	mass=1235;//#AUTO#
 }

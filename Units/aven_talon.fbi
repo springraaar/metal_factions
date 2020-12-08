@@ -3,39 +3,36 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Talon;
 	description=Fighter/Bomber;
-	icontype=airfighter;
+	iconType=airfighter;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=AVEN VTOL LEVEL2 WEAPON NOTSUB;
-	tedclass=VTOL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_talon;
-	unitnumber=38;
-	objectname=aven_talon.3do;
-	buildpic=aven_talon.png;
-	soundcategory=aven_VTOL;
+	unitName=aven_talon;
+	objectName=aven_talon.3do;
+	buildPic=aven_talon.png;
+	soundCategory=aven_VTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1280;
-	healtime=30;
+	maxDamage=1280;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	energymake=0;
-	energyuse=0;
+	energyMake=0;
+	energyUse=0;
 
 	//************************************************************
 	//  Building
@@ -48,45 +45,45 @@
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	candropflare=0;
-	canfly=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canDropFlare=0;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	stealth=0;
 
 	//************************************************************
 	//  Movement
 	//************
 	acceleration=1.0;
-	brakerate=0.08;
-	maxvelocity=6.2;
-	maxwaterdepth=5;
-	cruisealt=230;
+	brakeRate=0.08;
+	maxVelocity=6.2;
+	maxWaterDepth=5;
+	cruiseAlt=210;
 
 	// flight behaviour
-	wingdrag=0.07;      //0.07
-	wingangle=0.08;	//0.08;
+	wingDrag=0.07;      //0.07
+	wingAngle=0.08;	//0.08;
 	drag=0.08;		//0.08
-	fronttospeed=0.2;  //0.1
-	speedtofront=0.14; //0.07
-	mygravity=0.4; //0.4
-	maxbank=0.8;	//0.8
-	maxpitch=0.45;	//0.45
-	turnradius=350; //350
-	maxaileron=0.02;	//0.01
-	maxelevator=0.02;	//0.01
-	maxrudder=0.02;  //0.01
+	frontToSpeed=0.2;  //0.1
+	speedToFront=0.14; //0.07
+	myGravity=0.4; //0.4
+	maxBank=0.8;	//0.8
+	maxPitch=0.45;	//0.45
+	turnRadius=350; //350
+	maxAileron=0.02;	//0.01
+	maxElevator=0.02;	//0.01
+	maxRudder=0.02;  //0.01
 	maxAcc=1.20; //0.065
 	attackSafetyDistance=400;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
-	radardistance=0;
+	sightDistance=600;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
@@ -95,48 +92,30 @@
 	weapon2=aven_falcon_missile;
 	weapon3=aven_falcon_missile;
 	onlytargetcategory1=NOTAIR;
-	badtargetcategory2=NOTAIR;
-	badtargetcategory3=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	badTargetCategory2=NOTAIR;
+	badTargetCategory3=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=VTOL_standby;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bankscale=1;
-	bmcode=1;
-	designation=AFD-J9;
-	downloadable=1;
 	flaredelay=0.3;
 	flaredropvector=0 0 -1;
 	flareefficieny=0.3;
 	flarereload=5;
-	hoverattack=0;
-	maneuverleashlength=1280;
+	hoverAttack=0;
 	moverate1=8;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	CanLoopbackAttack=0;
 	collide=1;
-	minCollisionSpeed=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =45 16 40;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;	
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -144,11 +123,11 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:rocketflaresml;
-		explosiongenerator1=custom:rocketflaresml;
+		explosionGenerator0=custom:rocketflaresml;
+		explosionGenerator1=custom:rocketflaresml;
 	}
-	buildcostenergy=7462;//#AUTO#
-	buildcostmetal=1492;//#AUTO#
-	buildtime=17786;//#AUTO#
-	mass=408;//#AUTO#
+	buildCostEnergy=7661;//#AUTO#
+	buildCostMetal=1532;//#AUTO#
+	buildTime=18260;//#AUTO#
+	mass=415;//#AUTO#
 }

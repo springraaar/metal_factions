@@ -3,31 +3,28 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Construction Aircraft;
 	description=Tech Level 1;
-	icontype=airbuilder;
+	iconType=airbuilder;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN VTOL LEVEL1 CONSTR  NOTSUB;
-	tedclass=VTOL;
+	category=AVEN VTOL LEVEL1 CONSTR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_construction_aircraft;
-	unitnumber=18;
-	objectname=aven_construction_aircraft.3do;
-	buildpic=aven_construction_aircraft.png;
-	soundcategory=aven_CVTOL;
+	unitName=aven_construction_aircraft;
+	objectName=aven_construction_aircraft.3do;
+	buildPic=aven_construction_aircraft.png;
+	soundCategory=aven_CVTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=480;
-	healtime=17;
+	maxDamage=480;
 	footprintx=2;
 	footprintz=2;
 
@@ -35,10 +32,10 @@
 	//  Resources
 	//*************
 	metalmake=0.0;
-	metalstorage=0;
-	energymake=5.5;
-	energyuse=0.1;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=5.5;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,72 +45,55 @@
 	//  Constructor
 	//***************
 	builder=1;
-	builddistance=200;
-	workertime=150;
-	RepairSpeed=150;
-	ReclaimSpeed=150;
-	TerraformSpeed=150;
+	buildDistance=200;
+	workerTime=150;
+	repairSpeed=150;
+	reclaimSpeed=150;
+	terraformSpeed=150;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canfly=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canreclamate=1;
-	canstop=1;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	turnrate=450;
+	turnRate=450;
 	acceleration=0.18;
-	brakerate=1.5;
-	maxvelocity=5.3;
-	maxslope=10;
-	maxwaterdepth=0;
-	cruisealt=90;
+	brakeRate=1.5;
+	maxVelocity=5.3;
+	maxSlope=10;
+	maxWaterDepth=0;
+	cruiseAlt=90;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
-	radardistance=0;
+	sightDistance=600;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=NANO_UNITEX;
-	selfdestructas=NANO_UNIT;
+	explodeAs=NANO_UNITEX;
+	selfDestructAs=NANO_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=VTOL_standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bankscale=1.5;
-	bmcode=1;
-	designation=ARM-CA1;
-	downloadable=1;
-	maneuverleashlength=1280;
 	scale=0.8;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=NanoDebree;
-	pieceTrailCEGRange = 2;
 	
 	collide=1;
-	minCollisionSpeed=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =30 10 30;
 	collisionVolumeOffsets = 0 0 0;
@@ -125,8 +105,8 @@
 		builtBy=aven_aircraft_plant,aven_adv_aircraft_plant;
 	}
 
-	buildcostenergy=3564;//#AUTO#
-	buildcostmetal=712;//#AUTO#
-	buildtime=8495;//#AUTO#
+	buildCostEnergy=3564;//#AUTO#
+	buildCostMetal=712;//#AUTO#
+	buildTime=8495;//#AUTO#
 	mass=178;//#AUTO#
 }

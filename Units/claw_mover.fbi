@@ -6,27 +6,27 @@
 	side=Claw;
 	name=Mover;
 	description=Air Transport;
-	icontype=air;
+	iconType=air;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW VTOL TPORT LEVEL1 NOTSUB;
-	tedclass=VTOL;
+	category=CLAW VTOL LEVEL1 NOTSUB;
+	tedClass=VTOL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_mover;
+	unitName=claw_mover;
 	unitnumber=11000;
-	objectname=claw_mover.3do;
-	buildpic=claw_mover.png;
-	soundcategory=gear_VTOL;
+	objectName=claw_mover.3do;
+	buildPic=claw_mover.png;
+	soundCategory=gear_VTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1000;
+	maxDamage=1000;
 	buildcostmetal=500;
 	buildcostenergy=2500;
 	buildtime=6000;
@@ -36,10 +36,10 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.7;
-	energyuse=0.7;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0.7;
+	energyUse=0.7;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -49,45 +49,45 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canfly=1;
-	canguard=1;
+	canFly=1;
+	canGuard=1;
 	canload=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	turnrate=580;
+	turnRate=580;
 	acceleration=0.1;
-	brakerate=4;
-	maxvelocity=5.5;
-	maxslope=10;
-	cruisealt=130;
+	brakeRate=4;
+	maxVelocity=5.5;
+	maxSlope=10;
+	cruiseAlt=130;
 	cansubmerge=1;	
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
-	radardistance=0;
+	sightDistance=600;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 	firestandorders=0;
 	mobilestandorders=0;
 	standingmoveorder=1;
@@ -127,6 +127,6 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:TRANSPORTTRAIL3;
+		explosionGenerator0=custom:TRANSPORTTRAIL3;
 	}
 }

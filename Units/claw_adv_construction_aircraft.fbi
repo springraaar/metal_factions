@@ -6,27 +6,25 @@
 	side=Claw;
 	name=Adv. Construction Aircraft;
 	description=Tech Level 2;
-	icontype=airbuilder2;
+	iconType=airbuilder2;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW VTOL LEVEL2 CONSTR NOTSUB;
-	tedclass=CNSTR;
+	category=CLAW VTOL LEVEL2 NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_adv_construction_aircraft;
-	unitnumber=20000;
-	objectname=claw_adv_construction_aircraft.3do;
-	buildpic=claw_adv_construction_aircraft.png;
-	soundcategory=aven_CVTOL;
+	unitName=claw_adv_construction_aircraft;
+	objectName=claw_adv_construction_aircraft.3do;
+	buildPic=claw_adv_construction_aircraft.png;
+	soundCategory=aven_CVTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1800;
+	maxDamage=1800;
 	footprintx=4;
 	footprintz=4;
 
@@ -34,10 +32,10 @@
 	//  Resources
 	//*************
 	metalmake=0.0;
-	metalstorage=0;
-	energymake=12;
-	energyuse=0.1;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=12;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -47,72 +45,55 @@
 	//  Constructor
 	//***************
 	builder=1;
-	builddistance=200;
-	workertime=300;
-	RepairSpeed=300;
-	ReclaimSpeed=300;
-	TerraformSpeed=600;
+	buildDistance=200;
+	workerTime=300;
+	repairSpeed=300;
+	reclaimSpeed=300;
+	terraformSpeed=600;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canfly=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canreclamate=1;
-	canstop=1;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	turnrate=620;
+	turnRate=620;
 	acceleration=0.18;
-	brakerate=1.5;
-	maxvelocity=4.5;
-	maxslope=10;
+	brakeRate=1.5;
+	maxVelocity=4.5;
+	maxSlope=10;
 	
-	cruisealt=140;
+	cruiseAlt=140;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
-	radardistance=0;
+	sightDistance=600;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=NANO_UNITEX;
-	selfdestructas=NANO_UNIT;
+	explodeAs=NANO_UNITEX;
+	selfDestructAs=NANO_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=VTOL_standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bankscale=1.5;
-	bmcode=1;
-	designation=ARM-CA1;
-	downloadable=1;
-	maneuverleashlength=1280;
 	scale=0.8;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=NanoDebree;
-	pieceTrailCEGRange = 2;
 
 	collide=1;
-	minCollisionSpeed=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =35 15 35;
 	collisionVolumeOffsets = 0 0 0;
@@ -123,8 +104,8 @@
 		buildertype=claw_l2builder;
 		builtBy=claw_adv_aircraft_plant;
 	}
-	buildcostenergy=9272;//#AUTO#
-	buildcostmetal=1854;//#AUTO#
-	buildtime=22098;//#AUTO#
+	buildCostEnergy=9272;//#AUTO#
+	buildCostMetal=1854;//#AUTO#
+	buildTime=22098;//#AUTO#
 	mass=534;//#AUTO#
 }

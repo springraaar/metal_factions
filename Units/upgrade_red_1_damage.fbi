@@ -3,7 +3,7 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=ALL;
+	side=ALL;
 	name=Heavier Weaponry;
 	description=MINOR Upgrade Module : +6% damage, -2% speed (max x3);
 
@@ -15,18 +15,18 @@
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=upgrade_red_1_damage;
+	unitName=upgrade_red_1_damage;
 	unitnumber=21;
-	objectname=upgrade_red.3do;
-	buildpic=upgrade_red_1_damage.png;
+	objectName=upgrade_red.3do;
+	buildPic=upgrade_red_1_damage.png;
 	script=upgrade.cob;
-	soundcategory=aven_COM;
+	soundCategory=aven_COM;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
 
-	maxdamage=999999;
+	maxDamage=999999;
 	healtime=100;
 	buildcostmetal=250;
 	buildcostenergy=2500;
@@ -41,64 +41,64 @@
 	//  Resources
 	//*************
 	metalmake=0;
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=1;
-	builddistance=0;
-	workertime=0;
-        RepairSpeed=0;
-        ReclaimSpeed=0;
+	buildDistance=0;
+	workerTime=0;
+        repairSpeed=0;
+        reclaimSpeed=0;
         //ResurrectSpeed=0;
-        TerraformSpeed=0;
+        terraformSpeed=0;
         capturespeed=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
+	canAttack=1;
 	cancapture=1;
 	candgun=0;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
 	canreclamate=1;
-	canstop=1;
+	canStop=1;
 	upright=1;
 	autoheal=10;
 	
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTDS2;
-	turnrate=1044;
+	movementClass=KBOTDS2;
+	turnRate=1044;
 	acceleration=0.3;
-	brakerate=0.4;
-	maxvelocity=0.1;
-	maxslope=20;
-	maxwaterdepth=35;
+	brakeRate=0.4;
+	maxVelocity=0.1;
+	maxSlope=20;
+	maxWaterDepth=35;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
+	sightDistance=500;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	nochasecategory=WEAPON;
-	explodeas=UPGRADE_RED;
-	selfdestructas=UPGRADE_RED;
+	noChaseCategory=WEAPON;
+	explodeAs=UPGRADE_RED;
+	selfDestructAs=UPGRADE_RED;
 
 	//************************************************************
 	//  Orders

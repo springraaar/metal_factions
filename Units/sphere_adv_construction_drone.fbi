@@ -3,30 +3,28 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Sphere;
+	side=Sphere;
 	name=Adv. Construction Drone;
 	description=Tech Level 2;
-	icontype=airbuilder2;
+	iconType=airbuilder2;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE VTOL LEVEL2 CONSTR NOTSUB;
-	tedclass=CNSTR;
+	category=SPHERE VTOL LEVEL2 NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_adv_construction_drone;
-	unitnumber=2;
-	objectname=sphere_adv_construction_drone.3do;
-	buildpic=sphere_adv_construction_drone.png;
-	soundcategory=gear_CVTOL;
+	unitName=sphere_adv_construction_drone;
+	objectName=sphere_adv_construction_drone.3do;
+	buildPic=sphere_adv_construction_drone.png;
+	soundCategory=gear_CVTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=450;
+	maxDamage=450;
 	footprintx=2;
 	footprintz=2;
 
@@ -34,10 +32,10 @@
 	//  Resources
 	//*************
 	metalmake=0.0;
-	metalstorage=0;
-	energymake=5;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=5;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -47,75 +45,63 @@
 	//  Constructor
 	//***************
 	builder=1;
-	builddistance=200;
-	workertime=150;
-        RepairSpeed=150;
-        ReclaimSpeed=150;
-        TerraformSpeed=300;//speed up terraforming
+	buildDistance=200;
+	workerTime=150;
+        repairSpeed=150;
+        reclaimSpeed=150;
+        terraformSpeed=300;//speed up terraforming
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canfly=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canreclamate=1;
-	canstop=1;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	turnrate=620;
+	turnRate=620;
 	acceleration=0.18;
-	brakerate=1.5;
-	maxvelocity=2.4;
-	maxslope=10;
+	brakeRate=1.5;
+	maxVelocity=2.4;
+	maxSlope=10;
 	
-	cruisealt=80;
+	cruiseAlt=80;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
-	radardistance=0;
+	sightDistance=600;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=NANO_UNITEX;
-	selfdestructas=NANO_UNIT;
+	explodeAs=NANO_UNITEX;
+	selfDestructAs=NANO_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=VTOL_standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	maneuverleashlength=1280;
-	shootme=1;
-	steeringmode=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=NanoDebree;
-	pieceTrailCEGRange = 2;
 	collide=1;
-	minCollisionSpeed=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =25 13 25;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	//hoverattack=1;
+	//hoverAttack=1;
 	//upright=1;
 	//bankingAllowed=0;
 	reclaimable=0;
 	capturable=0;
-	//airhoverfactor=0.2;
+	//airHoverFactor=0.2;
 	
 	[CustomParams]
 	{
@@ -124,8 +110,8 @@
 		evalfactor=0.5;
 	}
 
-	buildcostenergy=1153;//#AUTO#
-	buildcostmetal=230;//#AUTO#
-	buildtime=2748;//#AUTO#
+	buildCostEnergy=1153;//#AUTO#
+	buildCostMetal=230;//#AUTO#
+	buildTime=2748;//#AUTO#
 	mass=94;//#AUTO#
 }

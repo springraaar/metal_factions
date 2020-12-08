@@ -6,39 +6,36 @@
 	side=Sphere;
 	name=Skiff;
 	description=Scout Ship;
-	icontype=shipraider;
+	iconType=shipraider;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE SHIP LEVEL1 WEAPON NOTAIR NOTSUB;
-	tedclass=SHIP;
+	category=SPHERE LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_skiff;
-	unitnumber=10000;
-	objectname=sphere_skiff.3do;
+	unitName=sphere_skiff;
+	objectName=sphere_skiff.3do;
 	corpse=sphere_skiff_dead;
-	buildpic=sphere_skiff.png;
-	soundcategory=gear_SHIP;
+	buildPic=sphere_skiff.png;
+	soundCategory=gear_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=550;
-	healtime=30;
+	maxDamage=550;
 	footprintx=2;
 	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.23;
-	energyuse=0.23;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 
 	//************************************************************
@@ -49,73 +46,56 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=smallboat;
-	turnrate=549;
+	movementClass=smallboat;
+	turnRate=549;
 	acceleration=0.2;
-	brakerate=0.01;
-	maxvelocity=3;
+	brakeRate=0.01;
+	maxVelocity=3;
 	minwaterdepth=6;
 	waterline=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	sonardistance=250;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=250;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=sphere_skiff_laser;
-	badtargetcategory2=VTOL;
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
+	badTargetCategory2=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ASD-SS;
-	downloadable=1;
-	maneuverleashlength=1280;
-	ovradjust=1;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =15 25 30;
 	collisionVolumeOffsets = 0 -10 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -124,10 +104,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:GLOWSML;
+		explosionGenerator0=custom:GLOWSML;
 	}
-	buildcostenergy=556;//#AUTO#
-	buildcostmetal=111;//#AUTO#
-	buildtime=1325;//#AUTO#
+	buildCostEnergy=556;//#AUTO#
+	buildCostMetal=111;//#AUTO#
+	buildTime=1325;//#AUTO#
 	mass=87;//#AUTO#
 }

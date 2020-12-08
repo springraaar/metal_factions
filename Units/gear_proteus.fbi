@@ -4,124 +4,104 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Proteus;
 	description=Amphibious Boat;
-	icontype=amphibmulti;
+	iconType=amphibmulti;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR SHIP LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=SHIP;
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_proteus;
-	unitnumber=6000;
-	objectname=gear_proteus.3do;
+	unitName=gear_proteus;
+	objectName=gear_proteus.3do;
 	corpse=gear_proteus_dead;
-	buildpic=gear_proteus.png;
-	soundcategory=gear_SHIP;
+	buildPic=gear_proteus.png;
+	soundCategory=gear_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=7000;
-	healtime=30;
+	maxDamage=7000;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=5;
-	energyuse=5;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=5;
+	energyUse=5;
+	energyStorage=0;
 
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKHOVER5;
-	turnrate=125;
+	movementClass=TANKHOVER5;
+	turnRate=125;
 	acceleration=0.03;
-	brakerate=0.02;
-	maxvelocity=1.4;
+	brakeRate=0.02;
+	maxVelocity=1.4;
 	turninplace=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	sonardistance=500;
-	radardistance=0;
+	sightDistance=500;
+	sonarDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_proteus_cannon;
 	weapon2=gear_proteus_missile;
-	weaponmaindir2=0 0 1;
-	maxangledif2=320;
-	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
-	badtargetcategory2=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	weaponMainDir2=0 0 1;
+	maxAngleDif2=320;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	badTargetCategory2=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ASD-SC;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =45 45 90;
 	collisionVolumeOffsets = 0 -15 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	waterline=9;
 
 	[CustomParams]
@@ -133,13 +113,13 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:yellowflaremed;
-		explosiongenerator1=custom:UNITFIRE;
-		explosiongenerator2=custom:rocketflaresml;
+		explosionGenerator0=custom:yellowflaremed;
+		explosionGenerator1=custom:UNITFIRE;
+		explosionGenerator2=custom:rocketflaresml;
 	}
 
-	buildcostenergy=26486;//#AUTO#
-	buildcostmetal=5297;//#AUTO#
-	buildtime=63126;//#AUTO#
+	buildCostEnergy=26486;//#AUTO#
+	buildCostMetal=5297;//#AUTO#
+	buildTime=63126;//#AUTO#
 	mass=5625;//#AUTO#
 }

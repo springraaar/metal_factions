@@ -3,47 +3,43 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Punisher;
 	description=Plasma Artillery Battery;
-	icontype=staticartillery;
+	iconType=staticartillery;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR LEVEL3 WEAPON NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_punisher;
-	unitnumber=124;
-	objectname=gear_punisher.3do;
+	unitName=gear_punisher;
+	objectName=gear_punisher.3do;
 	corpse=gear_punisher_dead;
-	buildpic=gear_punisher.png;
-	soundcategory=COR_KBOT;
+	buildPic=gear_punisher.png;
+	soundCategory=COR_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=4445;
-	healtime=11;
+	maxDamage=4445;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=200;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=200;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=2048;
-	yardmap=oooo oooo oooo oooo;
+	yardMap=oooo oooo oooo oooo;
 	collisionVolumeType=Box;
 	collisionVolumeScales=55 33 55;
 	collisionVolumeOffsets=0 0 0;
@@ -53,68 +49,56 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
-	maxwaterdepth=22;
+	maxSlope=10;
+	maxWaterDepth=22;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_punisher_cannon;
-	badtargetcategory1=VTOL;
+	badTargetCategory1=VTOL;
 	onlytargetcategory1=NOTAIR;
-	explodeas=MEDIUM_BUILDINGEX;
-	selfdestructas=MEDIUM_BUILDING;
+	explodeAs=MEDIUM_BUILDINGEX;
+	selfDestructAs=MEDIUM_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=COR-PUN;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:yellowflarebig;
+		explosionGenerator0=custom:yellowflarebig;
 	}
 	[CustomParams]
 	{
 		builtBy=gear_l2builder;
 		canAreaAttack=1;
 	}
-	buildcostenergy=14940;//#AUTO#
-	buildcostmetal=2988;//#AUTO#
-	buildtime=35609;//#AUTO#
+	buildCostEnergy=14940;//#AUTO#
+	buildCostMetal=2988;//#AUTO#
+	buildTime=35609;//#AUTO#
 	mass=4214;//#AUTO#
 }

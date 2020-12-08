@@ -6,120 +6,100 @@
 	side=Sphere;
 	name=Echo;
 	description=Advanced Radar/Sonar Ship;
-	icontype=shipradar;
+	iconType=shipradar;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE SHIP LEVEL2 SPECIAL WEAPON NOTAIR NOTSUB;
-	tedclass=SHIP;
+	category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_echo;
-	unitnumber=10000;
-	objectname=sphere_echo.3do;
+	unitName=sphere_echo;
+	objectName=sphere_echo.3do;
 	corpse=sphere_echo_dead;
-	buildpic=sphere_echo.png;
-	soundcategory=gear_SHIP;
+	buildPic=sphere_echo.png;
+	soundCategory=gear_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=4000;
-	healtime=30;
+	maxDamage=4000;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=50;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=50;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
-	onoffable=1;
+	onOffable=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=smallboat;
-	turnrate=284;
+	movementClass=smallboat;
+	turnRate=284;
 	acceleration=0.027;
-	brakerate=0.009;
-	maxvelocity=1.45;
+	brakeRate=0.009;
+	maxVelocity=1.45;
 	minwaterdepth=12;
 	waterline=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=2500;
-	sonardistance=1600;
+	sightDistance=500;
+	radarDistance=2500;
+	sonarDistance=1600;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=sphere_echo_laser;
-	nochasecategory=VTOL;
-	WeaponMainDir1=0 0 1;  //x:0 y:0 z:1 => that's forward!
-	MaxAngleDif1=300;       //300deg from side to side, or 150deg from center to each direction
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	noChaseCategory=VTOL;
+	weaponMainDir1=0 0 1;  //x:0 y:0 z:1 => that's forward!
+	maxAngleDif1=300;       //300deg from side to side, or 150deg from center to each direction
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=SA-AS4;
-	downloadable=1;
-	maneuverleashlength=640;
 	scale=0.6;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =30 30 60;
 	collisionVolumeOffsets = 0 -10 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -128,10 +108,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:redflare;
+		explosionGenerator0=custom:redflare;
 	}
-	buildcostenergy=9425;//#AUTO#
-	buildcostmetal=1885;//#AUTO#
-	buildtime=22463;//#AUTO#
+	buildCostEnergy=9425;//#AUTO#
+	buildCostMetal=1885;//#AUTO#
+	buildTime=22463;//#AUTO#
 	mass=1628;//#AUTO#
 }

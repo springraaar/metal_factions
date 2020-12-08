@@ -3,39 +3,36 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Icarus;
 	description=Heavy Bomber;
-	icontype=airbomber;
+	iconType=airbomber;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=AVEN VTOL LEVEL2 WEAPON NOTSUB;
-	tedclass=VTOL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_icarus;
-	unitnumber=3600;
-	objectname=aven_icarus.3do;
-	buildpic=aven_icarus.png;
-	soundcategory=aven_VTOL;
+	unitName=aven_icarus;
+	objectName=aven_icarus.3do;
+	buildPic=aven_icarus.png;
+	soundCategory=aven_VTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=4200;
-	healtime=30;
+	maxDamage=4200;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	energymake=1;
-	energyuse=1;
+	energyMake=0;
+	energyUse=0;
 
 	//************************************************************
 	//  Building
@@ -48,31 +45,31 @@
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	candropflare=0;
-	canfly=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canDropFlare=0;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	stealth=0;
 
 	//************************************************************
 	//  Movement
 	//************
 	acceleration=0.1;
-	brakerate=0.08;
-	maxvelocity=5.1;
-	maxwaterdepth=5;
-	cruisealt=240;
-	turnrate=400;
+	brakeRate=0.08;
+	maxVelocity=5.1;
+	maxWaterDepth=5;
+	cruiseAlt=220;
+	turnRate=400;
 
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
-	radardistance=0;
+	sightDistance=600;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
@@ -80,51 +77,34 @@
 	weapon1=aven_icarus_bomb;
 	weapon2=aven_icarus_missile;
 	onlytargetcategory1=NOTAIR;
-	badtargetcategory2=NOTAIR;
-	explodeas=HBOMBER;
-	selfdestructas=HBOMBER;
-	WeaponMainDir1=0 -1 0;  //x:0 y:0 z:1 => that's forward!
-	MaxAngleDif1=190;
+	badTargetCategory2=NOTAIR;
+	explodeAs=HBOMBER;
+	selfDestructAs=HBOMBER;
+	weaponMainDir1=0 -1 0;  //x:0 y:0 z:1 => that's forward!
+	maxAngleDif1=190;
 
 
 	//************************************************************
 	//  Orders
 	//**********
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=VTOL_standby;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bankscale=1;
-	bmcode=1;
-	designation=AFD-J9;
-	downloadable=1;
-	hoverattack=1;
-	airstrafe=1;
+	hoverAttack=1;
+	airStrafe=1;
 //	isbomber=1;
 	bankingAllowed=0;
-	airhoverfactor=-1;
+	airHoverFactor=-1;
 //	maneuverleashlength=180;
 	upright=1;
 
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	CanLoopbackAttack=0;
 	collide=1;
-	minCollisionSpeed=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =55 15 50;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[customParams] 
 	{
@@ -133,10 +113,10 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:rocketflaresml;
+		explosionGenerator0=custom:rocketflaresml;
 	}
-	buildcostenergy=16053;//#AUTO#
-	buildcostmetal=3210;//#AUTO#
-	buildtime=38260;//#AUTO#
+	buildCostEnergy=16053;//#AUTO#
+	buildCostMetal=3210;//#AUTO#
+	buildTime=38260;//#AUTO#
 	mass=1060;//#AUTO#
 }

@@ -6,95 +6,83 @@
 	side=Claw;
 	name=Sonar Station;
 	description=Sonar Station;
-	icontype=staticradar;
+	iconType=staticradar;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW SPECIAL SONAR LEVEL2 NOTAIR NOTSUB;
-	tedclass=WATER;
+	category=CLAW LEVEL1 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_sonar_station;
-	unitnumber=20000;
-	objectname=claw_sonar_station.3do;
+	unitName=claw_sonar_station;
+	objectName=claw_sonar_station.3do;
 	corpse=claw_sonar_station_dead;
-	buildpic=claw_sonar_station.png;
-	soundcategory=gear_SONAR;
+	buildPic=claw_sonar_station.png;
+	soundCategory=gear_SONAR;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=352;
+	maxDamage=352;
 	footprintx=2;
 	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=15;
-	energystorage=0;
-	windgenerator=0.001;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=15;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=8192;
-	yardmap=wwww;
-	activatewhenbuilt=1;
+	yardMap=wwww;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=1;
+	onOffable=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 	minwaterdepth=20;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	sonardistance=1400;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=1400;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=SMALL_BUILDINGEX;
-	selfdestructas=SMALL_BUILDING;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=FS-4;
-	downloadable=1;
 	noshadow=1;
-	threed=1;
-	version=1.2;
 	waterline=0;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -102,12 +90,12 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:Nano;
-		explosiongenerator1=custom:Normallight;
+		explosionGenerator0=custom:Nano;
+		explosionGenerator1=custom:Normallight;
 	}
 
-	buildcostenergy=706;//#AUTO#
-	buildcostmetal=141;//#AUTO#
-	buildtime=1682;//#AUTO#
+	buildCostEnergy=706;//#AUTO#
+	buildCostMetal=141;//#AUTO#
+	buildTime=1682;//#AUTO#
 	mass=134;//#AUTO#
 }

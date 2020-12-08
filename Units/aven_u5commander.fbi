@@ -3,31 +3,31 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Commander;
 	description=Zeta Form;
-	icontype=aven_commander;
+	iconType=aven_commander;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN commander LEVEL1 WEAPON NOTAIR NOTSUB;
-	tedclass=COMMANDER;
+	category=AVEN COMMANDER LEVEL1 WEAPON NOTAIR NOTSUB;
+	tedClass=COMMANDER;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_u5commander;
+	unitName=aven_u5commander;
 	unitnumber=21;
-	objectname=aven_u5commander.3do;
-	buildpic=aven_u5commander.png;
+	objectName=aven_u5commander.3do;
+	buildPic=aven_u5commander.png;
 	corpse=aven_u5commander_dead;
-	soundcategory=aven_COM;
+	soundCategory=aven_COM;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3000;
+	maxDamage=3000;
 	buildcostmetal=2000;
 	buildcostenergy=20000;
 	buildtime=30000;
@@ -43,59 +43,59 @@
 	//*************
 	metalmake=2;
 	metalStorage=0;
-	energymake=50;
-	energyuse=0;
+	energyMake=50;
+	energyUse=0;
 	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=1;
-	builddistance=200;
-	workertime=200;
-        RepairSpeed=200;
-        ReclaimSpeed=200;
+	buildDistance=200;
+	workerTime=200;
+        repairSpeed=200;
+        reclaimSpeed=200;
         ResurrectSpeed=0;
-        TerraformSpeed=400;
+        terraformSpeed=400;
         capturespeed=133;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
+	canAttack=1;
 	canResurrect=0;
 	cancapture=1;
 	candgun=0;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
 	canreclamate=1;
-	canstop=1;
+	canStop=1;
 	upright=1;
 	autoheal=12;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTDS2;
-	turnrate=1044;
+	movementClass=KBOTDS2;
+	turnRate=1044;
 	acceleration=0.3;
-	brakerate=0.1;
-	maxvelocity=3.2;
-	maxslope=20;
-	maxwaterdepth=35;
+	brakeRate=0.1;
+	maxVelocity=3.2;
+	maxSlope=20;
+	maxWaterDepth=35;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=800;
-	sonardistance=800;
+	sightDistance=500;
+	radarDistance=800;
+	sonarDistance=800;
 
 	//************************************************************
 	//  Weapons
@@ -104,12 +104,12 @@
 	weapon2=aven_u5commander_torpedo;
 	weapon3=aven_u5commander_laser2;
 	slaveto1=3;
-	nochasecategory=WEAPON;
-	badtargetcategory1=VTOL;
+	noChaseCategory=WEAPON;
+	badTargetCategory1=VTOL;
 	onlytargetcategory2=NOTAIR;
-	badtargetcategory3=VTOL;
-	explodeas=aven_commander_nanoblast;
-	selfdestructas=aven_commander_nanoblast;
+	badTargetCategory3=VTOL;
+	explodeAs=aven_commander_nanoblast;
+	selfDestructAs=aven_commander_nanoblast;
 
 	//************************************************************
 	//  Orders
@@ -124,8 +124,8 @@
 	//  Miscellaneous
 	//*****************
 	bmcode=1;
-	cloakcost=50;
-	cloakcostmoving=150;
+	cloakCost=50;
+	cloakCostMoving=150;
 	commander=1;
 	designation=ARM-WM;
 	downloadable=1;
@@ -133,7 +133,7 @@
 	immunetoparalyzer=1;
 	leavetracks=1;
 	maneuverleashlength=640;
-	mincloakdistance=170;
+	minCloakDistance=170;
 	norestrict=1;
 	shootme=1;
 	showplayername=1;
@@ -159,10 +159,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:GLOWSML;
-		explosiongenerator1=custom:Nano;
-		explosiongenerator2=custom:GLOWSML;
-		explosiongenerator3=custom:DGUNREADYFLARE;
+		explosionGenerator0=custom:GLOWSML;
+		explosionGenerator1=custom:Nano;
+		explosionGenerator2=custom:GLOWSML;
+		explosionGenerator3=custom:DGUNREADYFLARE;
 	}
 
 }

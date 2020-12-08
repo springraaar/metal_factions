@@ -6,120 +6,101 @@
 	side=Claw;
 	name=Revealer;
 	description=Mobile Radar Robot;
-	icontype=mobileradar;
+	iconType=mobileradar;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW KBOT LEVEL2 NOTAIR NOTSUB;
-	tedclass=KBOT;
+	category=CLAW LEVEL2 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_revealer;
-	unitnumber=20000;
-	objectname=claw_revealer.3do;
+	unitName=claw_revealer;
+	objectName=claw_revealer.3do;
 	corpse=claw_revealer_dead;
-	buildpic=claw_revealer.png;
-	soundcategory=COR_KBOT;
+	buildPic=claw_revealer.png;
+	soundCategory=COR_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=600;
-	healtime=30;
+	maxDamage=600;
 	footprintx=2;
 	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=30;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=30;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	onoffable=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	onOffable=1;
 	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTHT2;
-	turnrate=1060;
+	movementClass=KBOTHT2;
+	turnRate=1060;
 	acceleration=0.41;
-	brakerate=0.12;
-	maxvelocity=1.3;
-	maxslope=32;
-	maxwaterdepth=0;
+	brakeRate=0.12;
+	maxVelocity=1.3;
+	maxSlope=32;
+	maxWaterDepth=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=2000;
+	sightDistance=500;
+	radarDistance=2000;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	ai_limit=limit CORVOYR 2;
-	bmcode=1;
-	designation=KB-MR4;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	smoothanim=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =25 35 25;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
 		builtBy=claw_adv_robot_plant;
 	}
 
-	buildcostenergy=1182;//#AUTO#
-	buildcostmetal=236;//#AUTO#
-	buildtime=2818;//#AUTO#
+	buildCostEnergy=1182;//#AUTO#
+	buildCostMetal=236;//#AUTO#
+	buildTime=2818;//#AUTO#
 	mass=114;//#AUTO#
 }

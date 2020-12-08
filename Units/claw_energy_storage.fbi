@@ -6,44 +6,41 @@
 	side=Claw;
 	name=Energy Storage;
 	description=Increases Energy Storage by 15000;
-	icontype=energy;
+	iconType=energy;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW ENERGY LEVEL1  NOTAIR NOTSUB STORAGE;
-	tedclass=ENERGY;
+	category=CLAW ENERGY LEVEL1 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_energy_storage;
-	unitnumber=20000;
-	objectname=claw_energy_storage.3do;
+	unitName=claw_energy_storage;
+	objectName=claw_energy_storage.3do;
 	corpse=claw_energy_storage_dead;
-	buildpic=claw_energy_storage.png;
-	soundcategory=gear_ESTOR;
+	buildPic=claw_energy_storage.png;
+	soundCategory=gear_ESTOR;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1070;
+	maxDamage=1070;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=15000;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=15000;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=8196;
-	yardmap=yooy oooo oooo yooy;
-	activatewhenbuilt=1;
+	yardMap=yooy oooo oooo yooy;
+	activateWhenBuilt=1;
 	collisionVolumeType=CylY;
 	collisionVolumeScales=60 32 60;
 
@@ -51,7 +48,7 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
@@ -60,37 +57,29 @@
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 	
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=ESTOR_BUILDINGEX;
-	selfdestructas=ESTOR_BUILDING;
+	explodeAs=ESTOR_BUILDINGEX;
+	selfDestructAs=ESTOR_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=ES-22;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	collisionVolumeType = box;
 	collisionVolumeScales = 50 60 50;
 	collisionVolumeOffsets = 0 0 0;
@@ -103,10 +92,10 @@
 
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:Glow;
+	explosionGenerator0=custom:Glow;
 	}
-	buildcostenergy=2684;//#AUTO#
-	buildcostmetal=536;//#AUTO#
-	buildtime=6398;//#AUTO#
+	buildCostEnergy=2684;//#AUTO#
+	buildCostMetal=536;//#AUTO#
+	buildTime=6398;//#AUTO#
 	mass=892;//#AUTO#
 }

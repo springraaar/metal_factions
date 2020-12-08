@@ -3,47 +3,44 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Metal Storage;
 	description=Increases Metal Storage by 4000;
-	icontype=metal;
+	iconType=metal;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN METAL LEVEL1  NOTAIR NOTSUB STORAGE;
-	tedclass=METAL;
+	category=AVEN METAL LEVEL1 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_metal_storage;
-	unitnumber=51;
-	objectname=aven_metal_storage.3do;
+	unitName=aven_metal_storage;
+	objectName=aven_metal_storage.3do;
 	corpse=aven_metal_storage_dead;
-	buildpic=aven_metal_storage.png;
-	soundcategory=aven_MSTOR;
+	buildPic=aven_metal_storage.png;
+	soundCategory=aven_MSTOR;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2500;
+	maxDamage=2500;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=4000;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=4000;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=4096;
-	yardmap=ooooo ooooo ooooo ooooo ooooo;
-	activatewhenbuilt=1;
+	yardMap=ooooo ooooo ooooo ooooo ooooo;
+	activateWhenBuilt=1;
 	collisionVolumeType=CylY;
 	collisionVolumeScales=60 32 62;
 	collisionVolumeOffsets=0 0 0;
@@ -53,7 +50,7 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
@@ -62,36 +59,28 @@
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=LARGE_BUILDINGEX;
-	selfdestructas=LARGE_BUILDING;
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AM-MSF;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	collisionVolumeType = cyly;
 	collisionVolumeScales =70 55 70;
 	collisionVolumeOffsets = 0 0 0;
@@ -101,8 +90,8 @@
 	{
 		builtBy=aven_l1builder,aven_l2builder;
 	}
-	buildcostenergy=2604;//#AUTO#
-	buildcostmetal=520;//#AUTO#
-	buildtime=6208;//#AUTO#
+	buildCostEnergy=2604;//#AUTO#
+	buildCostMetal=520;//#AUTO#
+	buildTime=6208;//#AUTO#
 	mass=1596;//#AUTO#
 }

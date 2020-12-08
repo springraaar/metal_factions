@@ -3,50 +3,45 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Torpedo Launcher;
 	description=Torpedo Launcher;
-	icontype=staticartilleryfs;
+	iconType=staticartilleryfs;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR SPECIAL WEAPON LEVEL1 NOTAIR NOTSUB;
-	tedclass=WATER;
+	category=GEAR WEAPON LEVEL1 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_torpedo_launcher;
-	unitnumber=145;
-	objectname=gear_torpedo_launcher.3do;
+	unitName=gear_torpedo_launcher;
+	objectName=gear_torpedo_launcher.3do;
 	corpse=gear_torpedo_launcher_dead;
-	buildpic=gear_torpedo_launcher.png;
-	soundcategory=gear_SHIP;
+	buildPic=gear_torpedo_launcher.png;
+	soundCategory=gear_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1450;
-	healtime=30;
+	maxDamage=1450;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.2;
-	energyuse=0.2;
-	energystorage=0;
-	windgenerator=0.001;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
-	yardmap=wwww wwww wwww wwww;
-	activatewhenbuilt=1;
+	yardMap=wwww wwww wwww wwww;
+	activateWhenBuilt=1;
 	collisionvolumetype=cyly;
 	collisionVolumeScales=40 25 40;
 	collisionVolumeOffsets=0 0 0;
@@ -56,64 +51,54 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 	minwaterdepth=11;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	sonardistance=600;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=600;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_tl_torpedo;
 	onlytargetcategory1=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	downloadable=1;
 	noshadow=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
 	waterline=12.6;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
 		builtBy=gear_l1builder,gear_l2builder;
 		evalfactor=0.85;//SHIP
 	}
-	buildcostenergy=1632;//#AUTO#
-	buildcostmetal=326;//#AUTO#
-	buildtime=3890;//#AUTO#
+	buildCostEnergy=1632;//#AUTO#
+	buildCostMetal=326;//#AUTO#
+	buildTime=3890;//#AUTO#
 	mass=942;//#AUTO#
 }

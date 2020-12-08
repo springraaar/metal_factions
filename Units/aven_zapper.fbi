@@ -3,106 +3,90 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Zapper;
 	description=Anti-Armor Sniper Tower;
-	icontype=staticheavyfs;
+	iconType=staticheavyfs;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN SPECIAL WEAPON LEVEL3 NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=AVEN WEAPON LEVEL2 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_zapper;
-	unitnumber=7;
-	objectname=aven_zapper.3do;
+	unitName=aven_zapper;
+	objectName=aven_zapper.3do;
 	corpse=aven_zapper_dead;
-	buildpic=aven_zapper.png;
-	soundcategory=aven_ANNI;
+	buildPic=aven_zapper.png;
+	soundCategory=aven_ANNI;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=4000;
-	healtime=11;
+	maxDamage=4000;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=40000;
-	yardmap=ooooo ooooo ooooo ooooo ooooo;
-	activatewhenbuilt=0;
+	yardMap=ooooo ooooo ooooo ooooo ooooo;
+	activateWhenBuilt=0;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
-	maxwaterdepth=10;
+	maxSlope=10;
+	maxWaterDepth=10;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=aven_zapper_laser;
-	badtargetcategory1=VTOL;
-	explodeas=ZAPPER_BLAST;
-	selfdestructas=ZAPPER_BLAST;
+	badTargetCategory1=VTOL;
+	explodeAs=ZAPPER_BLAST;
+	selfDestructAs=ZAPPER_BLAST;
 
 	//************************************************************
 	//  Orders
 	//**********
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=ARM-ANN1;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =55 55 55;
 	collisionVolumeOffsets = 0 4 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -110,11 +94,11 @@
 	}
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:snipeflare;
+	explosionGenerator0=custom:snipeflare;
 	}
 
-	buildcostenergy=23509;//#AUTO#
-	buildcostmetal=4701;//#AUTO#
-	buildtime=56032;//#AUTO#
+	buildCostEnergy=23509;//#AUTO#
+	buildCostMetal=4701;//#AUTO#
+	buildTime=56032;//#AUTO#
 	mass=5134;//#AUTO#
 }

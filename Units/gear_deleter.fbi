@@ -3,87 +3,84 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Deleter;
 	description=Mobile Radar Jammer;
-	icontype=mobilejammer;
+	iconType=mobilejammer;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR TANK LEVEL2 NOTAIR NOTSUB;
-	tedclass=TANK;
+	category=GEAR LEVEL2 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_deleter;
-	unitnumber=102;
-	objectname=gear_deleter.3do;
+	unitName=gear_deleter;
+	objectName=gear_deleter.3do;
 	corpse=gear_deleter_dead;
-	buildpic=gear_deleter.png;
-	soundcategory=gear_JAM;
+	buildPic=gear_deleter.png;
+	soundCategory=gear_JAM;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1170;
-	healtime=30;
+	maxDamage=1170;
 	footprintx=3;
 	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=25;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=25;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	onoffable=1;
-	canattack=0;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	onOffable=1;
+	canAttack=0;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKSH3;
-	turnrate=512;
+	movementClass=TANKSH3;
+	turnRate=512;
 	acceleration=0.31;
-	brakerate=0.14;
-	maxvelocity=2.1;
-	maxslope=16;
-	maxwaterdepth=0;
+	brakeRate=0.14;
+	maxVelocity=2.1;
+	maxSlope=16;
+	maxWaterDepth=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistancejam=630;
+	sightDistance=500;
+	radarDistanceJam=630;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
-	canattack=0; //added
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+	canAttack=0; //added
 
 	//************************************************************
 	//  Orders
@@ -95,36 +92,24 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=MB-2-S;
 	leavetracks=1;
-	maneuverleashlength=100; //640//
-	ovradjust=1;
-	shootme=1;
-	smoothanim=1;
-	steeringmode=1;
-	threed=1;
 	trackoffset=6;
 	trackstrength=5;
 	trackstretch=1;
 	tracktype=StdTank;
 	trackwidth=24;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =25 25 40;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
 		builtBy=gear_adv_vehicle_plant;
 	}
 
-	buildcostenergy=2439;//#AUTO#
-	buildcostmetal=487;//#AUTO#
-	buildtime=5813;//#AUTO#
+	buildCostEnergy=2439;//#AUTO#
+	buildCostMetal=487;//#AUTO#
+	buildTime=5813;//#AUTO#
 	mass=227;//#AUTO#
 }

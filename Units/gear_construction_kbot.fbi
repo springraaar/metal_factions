@@ -3,32 +3,29 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Construction Robot;
 	description=Tech Level 1;
-	icontype=mobilebuilder;
+	iconType=mobilebuilder;
 	
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR KBOT LEVEL1 CONSTR NOTAIR NOTSUB;
-	tedclass=CNSTR;
+	category=GEAR LEVEL1 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_construction_kbot;
-	unitnumber=93;
-	objectname=gear_construction_kbot.3do;
+	unitName=gear_construction_kbot;
+	objectName=gear_construction_kbot.3do;
 	corpse=gear_construction_kbot_dead;
-	buildpic=gear_construction_kbot.png;
-	soundcategory=COR_CKBOT;
+	buildPic=gear_construction_kbot.png;
+	soundCategory=COR_CKBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=680;
-	healtime=27;
+	maxDamage=680;
 	footprintx=2;
 	footprintz=2;
 
@@ -36,10 +33,10 @@
 	//  Resources
 	//*************
 	metalmake=0;
-	metalstorage=0;
-	energymake=4.25;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=4.25;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -49,68 +46,52 @@
 	//  Constructor
 	//***************
 	builder=1;
-	builddistance=200;
-	workertime=150;
-        RepairSpeed=150;
-        ReclaimSpeed=150;
-        TerraformSpeed=300;
+	buildDistance=200;
+	workerTime=150;
+        repairSpeed=150;
+        reclaimSpeed=150;
+        terraformSpeed=300;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canreclamate=1;
-	canstop=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTHT2;
-	turnrate=965;
+	movementClass=KBOTHT2;
+	turnRate=965;
 	acceleration=1.07;
-	brakerate=13.5;
-	maxvelocity=1.6;
-	maxslope=20;
-	maxwaterdepth=25;
+	brakeRate=13.5;
+	maxVelocity=1.6;
+	maxSlope=20;
+	maxWaterDepth=25;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=NANO_UNITEX;
-	selfdestructas=NANO_UNIT;
+	explodeAs=NANO_UNITEX;
+	selfDestructAs=NANO_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=CKA-23;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	smoothanim=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=NanoDebree;
-	pieceTrailCEGRange = 2;
 	collisionVolumeType = box;
 	collisionVolumeScales =20 30 20;
 	collisionVolumeOffsets = 0 -1 0;
@@ -123,11 +104,11 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:Nano;
+		explosionGenerator0=custom:Nano;
 	}
 
-	buildcostenergy=1608;//#AUTO#
-	buildcostmetal=321;//#AUTO#
-	buildtime=3833;//#AUTO#
+	buildCostEnergy=1608;//#AUTO#
+	buildCostMetal=321;//#AUTO#
+	buildTime=3833;//#AUTO#
 	mass=138;//#AUTO#
 }

@@ -27,6 +27,12 @@ local spGetUnitsInCylinder = Spring.GetUnitsInCylinder
 local spGetUnitsInRectangle = Spring.GetUnitsInRectangle
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitTransporter = Spring.GetUnitTransporter
+local spGetUnitWeaponTarget = Spring.GetUnitWeaponTarget
+local spSetUnitDirection = Spring.SetUnitDirection
+local spSetUnitRotation = Spring.SetUnitRotation
+local spGetUnitDirection = Spring.GetUnitDirection
+local spAreTeamsAllied = Spring.AreTeamsAllied
+local spGetUnitTeam = Spring.GetUnitTeam
 local floor = math.floor
 
 -------------------------------------------------------------------------------------
@@ -48,6 +54,25 @@ local comsatAllowIdThisFrameByAllyIdAndPosition = {}
 
 local comsatBeaconDefId = UnitDefNames["cs_beacon"].id
  
+local missileDefIds = {
+	[UnitDefNames["aven_premium_nuclear_rocket"].id] = true,
+	[UnitDefNames["aven_nuclear_rocket"].id] = true,
+	[UnitDefNames["aven_dc_rocket"].id] = true,
+	[UnitDefNames["aven_lightning_rocket"].id] = true,
+	[UnitDefNames["gear_premium_nuclear_rocket"].id] = true,
+	[UnitDefNames["gear_nuclear_rocket"].id] = true,
+	[UnitDefNames["gear_dc_rocket"].id] = true,
+	[UnitDefNames["gear_pyroclasm_rocket"].id] = true,
+	[UnitDefNames["claw_premium_nuclear_rocket"].id] = true,
+	[UnitDefNames["claw_nuclear_rocket"].id] = true,
+	[UnitDefNames["claw_dc_rocket"].id] = true,
+	[UnitDefNames["claw_impaler_rocket"].id] = true,
+	[UnitDefNames["sphere_premium_nuclear_rocket"].id] = true,
+	[UnitDefNames["sphere_nuclear_rocket"].id] = true,
+	[UnitDefNames["sphere_dc_rocket"].id] = true,
+	[UnitDefNames["sphere_meteorite_rocket"].id] = true
+}
+
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
 
@@ -192,7 +217,6 @@ end
 -- marks that a unit fired at a target
 function checkLockTarget(unitID, unitDefID, teamID, targetID)
 	local f = spGetGameFrame()
-	local result = 1
 	
 	if targetID and tonumber(targetID) > 0 then
 		local defId = spGetUnitDefID(targetID)
@@ -282,7 +306,6 @@ end
 -- marks that a comsat fired at a target position or unit
 function checkComsatLockTarget(unitID, unitDefID, teamID, targetID)
 	local f = spGetGameFrame()
-	local result = 1
 	local allyId = spGetUnitAllyTeam(unitID)
 	if targetID and tonumber(targetID) > 0 then
 		local px,py,pz = spGetUnitPosition(targetID)
@@ -318,6 +341,65 @@ function disableEnemyTargetting(unitID, unitDefID, teamID)
 end
 
 
+
+-- turns the unit to face a target of a weapon
+function turnToTarget(unitID, unitDefID, teamID, wNum)
+	local allyId = spGetUnitAllyTeam(unitID)
+	
+	local px, py, pz = spGetUnitPosition(unitID)
+	local tx, ty, tz = 0
+ 	local dx, dy, dz = spGetUnitDirection(unitID)
+ 	
+	local tType,isUser,target = spGetUnitWeaponTarget(unitID,wNum)
+	--Spring.Echo(" type="..tType.." t="..tostring(target))
+	if tType and tType <= 1 and target then
+		tx,ty,tz = spGetUnitPosition(target)
+	else
+		if type(target) == "table" then
+			tx = target[1]
+			ty = target[2]
+			tz = target[3]
+		end 
+	end
+	
+	-- turn to target
+	if (px and tx and dx and pz and tz and dz) then
+		
+		-- replace target position by target direction
+		tx = tx-px 
+		tz = tz-pz
+		local norm = math.sqrt(math.pow(tx,2)+math.pow(tz,2))
+		tx = tx / norm
+		tz = tz / norm
+		
+		local newDx = 0.9*dx + 0.1*tx
+		local newDz = 0.9*dz + 0.1*tz
+		
+		spSetUnitDirection(unitID,newDx,dy,newDz)
+		--local rotSpd = math.acos(newDx*dx + newDz*dz)	-- not working properly
+		--spSetUnitRotation(unitID,0,rotSpd,0)
+		
+		--Spring.Echo(f.." direction updated to "..(newDx)..","..(newDz).." spd="..rotSpd)
+	end
+	
+end
+
+
+-- incoming missile check 
+-- returns 1 if there's a missile incoming within radius, 0 otherwise
+function checkIncomingMissile(unitID, unitDefID, teamID, radius)
+	local px, _, pz = spGetUnitPosition(unitID)
+ 	
+ 	for _,uId in pairs(spGetUnitsInCylinder(px,pz,radius)) do
+ 		if missileDefIds[spGetUnitDefID(uId)] then
+ 			if not spAreTeamsAllied(spGetUnitTeam(uId),teamID) then
+				return 1 			
+ 			end
+ 		end
+ 	end
+ 	
+ 	return 0
+end
 
 ---------------------------------------- CALLINS
 
@@ -372,3 +454,5 @@ gadgetHandler:RegisterGlobal("checkAllowFiring", checkAllowFiring)
 gadgetHandler:RegisterGlobal("checkLockTarget", checkLockTarget)
 gadgetHandler:RegisterGlobal("setMobility", setMobility)
 gadgetHandler:RegisterGlobal("disableEnemyTargetting", disableEnemyTargetting)
+gadgetHandler:RegisterGlobal("turnToTarget", turnToTarget)
+gadgetHandler:RegisterGlobal("checkIncomingMissile", checkIncomingMissile)

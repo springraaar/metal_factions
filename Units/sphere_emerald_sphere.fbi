@@ -6,42 +6,40 @@
 	side=SPHERE;
 	name=Emerald Sphere;
 	description=Shielded Armored Anti Air Beam Tower;
-	icontype=staticassault;
+	iconType=staticassault;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE LEVEL3 NOTAIR WEAPON NOTSUB;
-	tedclass=FORT;
+	category=SPHERE LEVEL2 NOTAIR WEAPON NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_emerald_sphere;
-	objectname=sphere_emerald_sphere.3do;
+	unitName=sphere_emerald_sphere;
+	objectName=sphere_emerald_sphere.3do;
 	corpse=sphere_emerald_sphere_dead;
-	buildpic=sphere_emerald_sphere.png;
-	soundcategory=COR_DOOM;
+	buildPic=sphere_emerald_sphere.png;
+	soundCategory=COR_DOOM;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=6000;
+	maxDamage=6000;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=2048;
-	yardmap=oooo oooo oooo oooo;
+	yardMap=oooo oooo oooo oooo;
 	collisionVolumeType=cyly;
 	collisionVolumeScales=50 60 50;
 	collisionVolumeOffsets=0 0 0;
@@ -51,26 +49,26 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=20;
-	maxwaterdepth=22;
+	maxSlope=20;
+	maxWaterDepth=22;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
@@ -80,29 +78,17 @@
 	weapon3=sphere_emerald_sphere_beam;
 	weapon4=sphere_emerald_sphere_beam;
 
-	explodeas=LARGE_BUILDINGEX;
-	selfdestructas=LARGE_BUILDING;
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=COR-PUN;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -110,10 +96,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:opalglow;
+		explosionGenerator0=custom:opalglow;
 	}
-	buildcostenergy=9784;//#AUTO#
-	buildcostmetal=1956;//#AUTO#
-	buildtime=23319;//#AUTO#
+	buildCostEnergy=9784;//#AUTO#
+	buildCostMetal=1956;//#AUTO#
+	buildTime=23319;//#AUTO#
 	mass=6886;//#AUTO#
 }

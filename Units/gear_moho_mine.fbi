@@ -3,93 +3,82 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Advanced Metal Extractor;
 	description=Extraction rate x2.5, drains 60 E/s;
-	icontype=metal;
+	iconType=metal;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR METAL LEVEL3 NOTAIR NOTSUB;
-	tedclass=METAL;
+	category=GEAR METAL LEVEL2 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_moho_mine;
-	unitnumber=120;
-	objectname=gear_moho_mine.3do;
+	unitName=gear_moho_mine;
+	objectName=gear_moho_mine.3do;
 	corpse=gear_moho_mine_dead;
-	buildpic=gear_moho_mine.png;
-	soundcategory=gear_MOHO;
+	buildPic=gear_moho_mine.png;
+	soundCategory=gear_MOHO;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3000;
+	maxDamage=3000;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=60;
-	energystorage=0;
-	extractsmetal=0.0025;
+	metalStorage=0;
+	energyUse=60;
+	energyStorage=0;
+	extractsMetal=0.0025;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=2048;
-	yardmap=yoooy ooooo ooooo ooooo yoooy;
-	activatewhenbuilt=1;
+	yardMap=yoooy ooooo ooooo ooooo yoooy;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=1;
+	onOffable=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=15;
+	maxSlope=15;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=MEDIUM_BUILDINGEX;
-	selfdestructas=MEDIUM_BUILDING;
+	explodeAs=MEDIUM_BUILDINGEX;
+	selfDestructAs=MEDIUM_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=MD-2;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	collisionVolumeType = cyly;
 	collisionVolumeScales =80 55 80;
 	collisionVolumeOffsets = 0 0 0;
@@ -100,8 +89,8 @@
 		builtBy=gear_l2builder;
 	}
 
-	buildcostenergy=6995;//#AUTO#
-	buildcostmetal=1399;//#AUTO#
-	buildtime=16671;//#AUTO#
-	mass=2432;//#AUTO#
+	buildCostEnergy=6912;//#AUTO#
+	buildCostMetal=1382;//#AUTO#
+	buildTime=16475;//#AUTO#
+	mass=2420;//#AUTO#
 }

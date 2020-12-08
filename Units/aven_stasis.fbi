@@ -3,46 +3,43 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Stasis;
 	description=Armored Anti-Swarm Disruptor Turret;
-	icontype=staticassault;
+	iconType=staticassault;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=AVEN LEVEL1 WEAPON NOTAIR NOTSUB;
-	tedclass=FORT;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_stasis;
-	objectname=aven_stasis.3do;
+	unitName=aven_stasis;
+	objectName=aven_stasis.3do;
 	corpse=aven_stasis_dead;
-	buildpic=aven_stasis.png;
-	soundcategory=GUARD;
+	buildPic=aven_stasis.png;
+	soundCategory=GUARD;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=4000;
-	healtime=11;
+	maxDamage=4000;
 	footprintx=3;
 	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=8192;
-	yardmap=ooo ooo ooo ooo;
+	yardMap=ooo ooo ooo;
 	collisionVolumeType=CylY;
 	collisionVolumeScales=35 55 35;
 	collisionVolumeOffsets=0 0 0;
@@ -52,58 +49,46 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=20;
-	maxwaterdepth=14;
+	maxSlope=20;
+	maxWaterDepth=14;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=aven_stasis_disruptor;
-	badtargetcategory1=VTOL;
-	explodeas=MEDIUM_BUILDINGEX;
-	selfdestructas=MEDIUM_BUILDING;
+	badTargetCategory1=VTOL;
+	explodeAs=MEDIUM_BUILDINGEX;
+	selfDestructAs=MEDIUM_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=ARM-GUARD;
 	digger=1;
-	downloadable=1;
-	shootme=1;
-	threed=1;
 	noselfdamage=1;
 	paralyzetime=5;   
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -111,11 +96,11 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:empflare;
+		explosionGenerator0=custom:empflare;
 	}
 
-	buildcostenergy=4212;//#AUTO#
-	buildcostmetal=842;//#AUTO#
-	buildtime=10040;//#AUTO#
+	buildCostEnergy=4212;//#AUTO#
+	buildCostMetal=842;//#AUTO#
+	buildTime=10040;//#AUTO#
 	mass=4098;//#AUTO#
 }

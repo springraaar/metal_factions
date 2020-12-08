@@ -6,36 +6,33 @@
 	side=Claw;
 	name=Blizzard;
 	description=Heavy Laser Aircraft;
-	icontype=airfighter;
+	iconType=airfighter;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=CLAW VTOL LEVEL2 WEAPON NOTSUB ;
-	tedclass=VTOL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_blizzard;
-	unitnumber=20000;
-	objectname=claw_blizzard.3do;
-	buildpic=claw_blizzard.png;
-	soundcategory=aven_VTOL;
+	unitName=claw_blizzard;
+	objectName=claw_blizzard.3do;
+	buildPic=claw_blizzard.png;
+	soundCategory=aven_VTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2500;
-	healtime=30;
+	maxDamage=2500;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	energymake=0;
-	energyuse=0;
+	energyMake=0;
+	energyUse=0;
 
 	//************************************************************
 	//  Building
@@ -48,82 +45,64 @@
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	candropflare=0;
-	canfly=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canDropFlare=0;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	stealth=0;
 
 	//************************************************************
 	//  Movement
 	//************
 	acceleration=0.25;
-	brakerate=1;
-	maxvelocity=4.0;
+	brakeRate=1;
+	maxVelocity=4.0;
 	
-	cruisealt=130;
-	turnrate=700;
+	cruiseAlt=130;
+	turnRate=700;
 
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
-	radardistance=0;
+	sightDistance=600;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_blizzard_laser1;
 	weapon2=claw_blizzard_laser2;
-	badtargetcategory2=NOTAIR;
-	explodeas=BIG_UNIT;
-	selfdestructas=BIG_UNIT;
-	WeaponMainDir1=0 0 1;  //x:0 y:0 z:1 => that's forward!
-	MaxAngleDif1=80;       //60deg from side to side, or 30deg from center to each direction
-	WeaponMainDir2=0 0 1;  //x:0 y:0 z:1 => that's forward!
-	MaxAngleDif2=80;       //60deg from side to side, or 30deg from center to each direction
+	badTargetCategory2=NOTAIR;
+	explodeAs=BIG_UNIT;
+	selfDestructAs=BIG_UNIT;
+	weaponMainDir1=0 0 1;  //x:0 y:0 z:1 => that's forward!
+	maxAngleDif1=80;       //60deg from side to side, or 30deg from center to each direction
+	weaponMainDir2=0 0 1;  //x:0 y:0 z:1 => that's forward!
+	maxAngleDif2=80;       //60deg from side to side, or 30deg from center to each direction
 
 
 	//************************************************************
 	//  Orders
 	//**********
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=VTOL_standby;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bankscale=1;
-	bmcode=1;
-	designation=AFD-J9;
-	downloadable=1;
-	hoverattack=1;
-	airstrafe=1;
+	hoverAttack=1;
+	airStrafe=1;
 	bankingAllowed=0;
-	airhoverfactor=-1;
+	airHoverFactor=-1;
 	upright=0;
-	maneuverleashlength=1280;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	CanLoopbackAttack=0;
 	collide=1;
-	minCollisionSpeed=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =55 15 50;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -131,10 +110,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:emgflarefast;
+		explosionGenerator0=custom:emgflarefast;
 	}
-	buildcostenergy=12477;//#AUTO#
-	buildcostmetal=2495;//#AUTO#
-	buildtime=29738;//#AUTO#
+	buildCostEnergy=12477;//#AUTO#
+	buildCostMetal=2495;//#AUTO#
+	buildTime=29738;//#AUTO#
 	mass=728;//#AUTO#
 }

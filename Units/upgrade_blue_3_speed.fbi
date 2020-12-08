@@ -3,30 +3,29 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=ALL;
+	side=ALL;
 	name=Speed;
 	description=MAJOR Upgrade Module : +10% Speed;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=LEVEL10 UPGRADE_BLUE NOTAIR NOTSUB;
+	category=LEVEL1 UPGRADE_BLUE NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=upgrade_blue_3_speed;
-	unitnumber=21;
-	objectname=upgrade_blue.3do;
-	buildpic=upgrade_blue_3_speed.png;
+	unitName=upgrade_blue_3_speed;
+	objectName=upgrade_blue.3do;
+	buildPic=upgrade_blue_3_speed.png;
 	script=upgrade.cob;
-	soundcategory=aven_COM;
+	soundCategory=aven_COM;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
 
-	maxdamage=999999;
+	maxDamage=999999;
 	healtime=100;
 	buildcostmetal=1000;
 	buildcostenergy=10000;
@@ -41,95 +40,66 @@
 	//  Resources
 	//*************
 	metalmake=0;
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=1;
-	builddistance=0;
-	workertime=0;
-        RepairSpeed=0;
-        ReclaimSpeed=0;
-        //ResurrectSpeed=0;
-        TerraformSpeed=0;
-        capturespeed=0;
+	buildDistance=0;
+	workerTime=0;
+	repairSpeed=0;
+	reclaimSpeed=0;
+	terraformSpeed=0;
+	capturespeed=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
+	canAttack=1;
 	cancapture=1;
 	candgun=0;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canreclamate=1;
-	canstop=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	upright=1;
 	autoheal=10;
 	
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTDS2;
-	turnrate=1044;
+	movementClass=KBOTDS2;
+	turnRate=1044;
 	acceleration=0.3;
-	brakerate=0.4;
-	maxvelocity=0.1;
-	maxslope=20;
-	maxwaterdepth=35;
+	brakeRate=0.4;
+	maxVelocity=0.1;
+	maxSlope=20;
+	maxWaterDepth=35;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
+	sightDistance=500;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	nochasecategory=WEAPON;
-	explodeas=UPGRADE_BLUE;
-	selfdestructas=UPGRADE_BLUE;
-
-	//************************************************************
-	//  Orders
-	//**********
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=0;
-	defaultmissiontype=Standby;
-
+	noChaseCategory=WEAPON;
+	explodeAs=UPGRADE_BLUE;
+	selfDestructAs=UPGRADE_BLUE;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	commander=1;
-	designation=ARM-WM;
-	downloadable=1;
-	hidedamage=0;
-	immunetoparalyzer=1;
-	leavetracks=0;
-	maneuverleashlength=640;
-	norestrict=1;
-	shootme=1;
-	showplayername=1;
-	smoothanim=1;
-	steeringmode=2;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	MinCollisionSpeed=2.5;//weight
 	collisionVolumeType = box;
 	collisionVolumeScales =20 5 20;
 	collisionVolumeOffsets = 0 0 0;

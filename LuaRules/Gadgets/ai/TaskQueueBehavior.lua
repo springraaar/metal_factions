@@ -698,7 +698,8 @@ function TaskQueueBehavior:GameFrame(f)
 	-- check health and built status	
 	local health,maxHealth,_,_,bp = spGetUnitHealth(self.unitId)
 	self.isFullyBuilt = (bp >= 1)
-	if (health/maxHealth < UNIT_RETREAT_HEALTH) then
+	local retreatHealth = self.isCommander and self.ai.commanderRetreatHealth or (self.isAssault and self.ai.assaultRetreatHealth or self.ai.otherRetreatHealth)
+	if (health/maxHealth < retreatHealth) then
 		self.isSeriouslyDamaged = true
 		self.isFullHealth = false
 	else

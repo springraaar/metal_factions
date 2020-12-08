@@ -6,39 +6,36 @@
 	side=Claw;
 	name=Grunt;
 	description=Infantry Robot;
-	icontype=mobilefighter;
+	iconType=mobilefighter;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW KBOT LEVEL1 WEAPON NOTAIR NOTSUB;
-	tedclass=KBOT;
+	category=CLAW LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_grunt;
-	unitnumber=20000;
-	objectname=claw_grunt.3do;
+	unitName=claw_grunt;
+	objectName=claw_grunt.3do;
 	corpse=claw_grunt_dead;
-	buildpic=claw_grunt.png;
-	soundcategory=CLAW_BOTSML;
+	buildPic=claw_grunt.png;
+	soundCategory=CLAW_BOTSML;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=850;
-	healtime=30;
+	maxDamage=850;
 	footprintx=2;
 	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,77 +45,60 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTHT2;
-	turnrate=1110;
+	movementClass=KBOTHT2;
+	turnRate=1110;
 	acceleration=1.0;
-	brakerate=0.1;
-	maxvelocity=1.5;
-	maxslope=17;
-	maxwaterdepth=25;
+	brakeRate=0.1;
+	maxVelocity=1.5;
+	maxSlope=17;
+	maxWaterDepth=25;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_grunt_laser;
-	badtargetcategory1=NOTAIR;
-	nochasecategory=VTOL;
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
+	badTargetCategory1=NOTAIR;
+	noChaseCategory=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=KA-L4;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	smoothanim=1;
-	steeringmode=2;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =20 30 20;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:glowsml;
-		explosiongenerator1=custom:yellowflaresml;
+		explosionGenerator0=custom:glowsml;
+		explosionGenerator1=custom:yellowflaresml;
 	}
 
 	[CustomParams]
@@ -126,8 +106,8 @@
 		builtBy=claw_light_plant,claw_adv_kbot_plant;
 	}
 
-	buildcostenergy=703;//#AUTO#
-	buildcostmetal=140;//#AUTO#
-	buildtime=1677;//#AUTO#
+	buildCostEnergy=703;//#AUTO#
+	buildCostMetal=140;//#AUTO#
+	buildTime=1677;//#AUTO#
 	mass=129;//#AUTO#
 }

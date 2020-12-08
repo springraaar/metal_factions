@@ -6,114 +6,95 @@
 	side=Sphere;
 	name=Mist;
 	description=Radar Jammer Ship;
-	icontype=shipjammer;
+	iconType=shipjammer;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE SHIP LEVEL2 NOTAIR NOTSUB;
-	tedclass=SHIP;
+	category=SPHERE LEVEL2 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_mist;
-	unitnumber=10000;
-	objectname=sphere_mist.3do;
+	unitName=sphere_mist;
+	objectName=sphere_mist.3do;
 	corpse=sphere_mist_dead;
-	buildpic=sphere_mist.png;
-	soundcategory=gear_SHIP;
+	buildPic=sphere_mist.png;
+	soundCategory=gear_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2250;
-	healtime=30;
+	maxDamage=2250;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=25;
-	energystorage=0;
-	windgenerator=0.001;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=25;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
-	onoffable=1;
+	onOffable=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=Smallboat;
-	turnrate=345;
+	movementClass=Smallboat;
+	turnRate=345;
 	acceleration=0.04;
-	brakerate=0.005;
-	maxvelocity=2.0;
+	brakeRate=0.005;
+	maxVelocity=2.0;
 	minwaterdepth=6;
 	waterline=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	sonardistance=0;
-	radardistancejam=650;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=0;
+	radarDistanceJam=650;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=BIG_UNITEX;
-	selfdestructas=MEDIUM_UNIT;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=MEDIUM_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	ai_limit=limit CORSJAM 2;
-	bmcode=1;
-	designation=SA-AR2;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =30 30 60;
 	collisionVolumeOffsets = 0 -10 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -122,10 +103,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:UNITFIRE;
+		explosionGenerator0=custom:UNITFIRE;
 	}
-	buildcostenergy=3357;//#AUTO#
-	buildcostmetal=671;//#AUTO#
-	buildtime=8002;//#AUTO#
+	buildCostEnergy=3357;//#AUTO#
+	buildCostMetal=671;//#AUTO#
+	buildTime=8002;//#AUTO#
 	mass=786;//#AUTO#
 }

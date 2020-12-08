@@ -11,6 +11,7 @@ static-var gun_1, isOpen;
 #define SIG_AIM				2
 
 lua_stopFiring() { return 0; }
+lua_checkIncomingMissile() { return 0; }
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
@@ -115,16 +116,6 @@ checkClose(fireState,previousFireState)
 	}
 }
 
-Create()
-{
-	move aimpt to y-axis [45.000000] now;
-	turn turret to y-axis <45.000000> now;
-	isOpen = FALSE;
-	gun_1 = [0];
-	start-script close();
-	start-script SmokeUnit();
-	start-script checkClose();
-}
 
 AimPrimary(heading, pitch)
 {
@@ -141,6 +132,36 @@ AimPrimary(heading, pitch)
 	wait-for-turn sleeve around x-axis;
 	start-script RestoreAfterDelay();
 	return (1);
+}
+
+
+checkIncomingMissile(fireState, needToOpen) {
+	needToOpen = FALSE;
+	while (TRUE) {
+		fireState = (get STANDINGFIREORDERS);
+		
+		if (fireState > 0) {
+			call-script lua_checkIncomingMissile(1200);
+			needToOpen = get LUA1;
+			if (needToOpen == 1) {
+				start-script AimPrimary(<0>,<0>);
+				sleep DEFAULT_WEAPON_RESTORE_DELAY;
+			}
+		}
+		sleep 500;
+	}
+}
+
+Create()
+{
+	move aimpt to y-axis [45.000000] now;
+	turn turret to y-axis <45.000000> now;
+	isOpen = FALSE;
+	gun_1 = [0];
+	start-script close();
+	start-script SmokeUnit();
+	start-script checkClose();
+	start-script checkIncomingMissile();
 }
 
 FirePrimary()

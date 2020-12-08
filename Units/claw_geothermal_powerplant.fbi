@@ -6,46 +6,43 @@
 	side=Claw;
 	name=Geothermal Powerplant;
 	description=Produces 250 E/s and 3 M/s;
-	icontype=energy;
+	iconType=energy;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW ENERGY GEOTHERMAL LEVEL2 NOTAIR NOTSUB;
-	tedclass=ENERGY;
+	category=CLAW ENERGY LEVEL1 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_geothermal_powerplant;
-	unitnumber=20000;
-	objectname=claw_geothermal_powerplant.3do;
+	unitName=claw_geothermal_powerplant;
+	objectName=claw_geothermal_powerplant.3do;
 	corpse=claw_geothermal_powerplant_dead;
-	buildpic=claw_geothermal_powerplant.png;
-	soundcategory=aven_GEO;
+	buildPic=claw_geothermal_powerplant.png;
+	soundCategory=aven_GEO;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1300;
+	maxDamage=1300;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=250;
+	metalStorage=0;
+	energyMake=250;
 	metalmake=3;
-	energyuse=0;
-	energystorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=32768;
-	yardmap=GGGGG GGGGG GGGGG GGGGG GGGGG;
-	activatewhenbuilt=1;
+	yardMap=GGGGG GGGGG GGGGG GGGGG GGGGG;
+	activateWhenBuilt=1;
 	collisionVolumeType=Box;
 	collisionVolumeScales=60 50 60;
 	collisionVolumeOffsets=0 -2 0;
@@ -55,7 +52,7 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
@@ -64,44 +61,36 @@
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=30;
+	maxSlope=30;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=GEO_BLAST;
-	selfdestructas=GEO_BLAST;
+	explodeAs=GEO_BLAST;
+	selfDestructAs=GEO_BLAST;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AE-GPG;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
 		builtBy=claw_l1builder,claw_l2builder;
 	}
 
-	buildcostenergy=4812;//#AUTO#
-	buildcostmetal=962;//#AUTO#
-	buildtime=11468;//#AUTO#
+	buildCostEnergy=4812;//#AUTO#
+	buildCostMetal=962;//#AUTO#
+	buildTime=11468;//#AUTO#
 	mass=1290;//#AUTO#
 }

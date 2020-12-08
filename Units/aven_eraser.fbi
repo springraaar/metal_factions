@@ -3,121 +3,103 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Eraser;
 	description=Cloakable Radar Jammer;
-	icontype=mobilejammer;
+	iconType=mobilejammer;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN KBOT LEVEL2 NOTAIR NOTSUB;
-	tedclass=KBOT;
+	category=AVEN LEVEL2 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_eraser;
-	unitnumber=10;
-	objectname=aven_eraser.3do;
+	unitName=aven_eraser;
+	objectName=aven_eraser.3do;
 	corpse=aven_eraser_dead;
-	buildpic=aven_eraser.png;
-	soundcategory=aven_JAM;
+	buildPic=aven_eraser.png;
+	soundCategory=aven_JAM;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=750;
-	healtime=30;
+	maxDamage=750;
 	footprintx=2;
 	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=20;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=20;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	onoffable=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	onOffable=1;
 	cancloak=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTHT2;
-	turnrate=950;
+	movementClass=KBOTHT2;
+	turnRate=950;
 	acceleration=1;
-	brakerate=1.0;
-	maxvelocity=2.2;
-	maxslope=32;
-	maxwaterdepth=10;
+	brakeRate=1.0;
+	maxVelocity=2.2;
+	maxSlope=32;
+	maxWaterDepth=10;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	radardistancejam=600;
+	sightDistance=500;
+	radarDistance=0;
+	radarDistanceJam=600;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
-	canattack=0;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+	canAttack=0;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	cloakcost=50;
-	cloakcostmoving=105;
-	mincloakdistance=150;
-	bmcode=1;
-	designation=ARM-CB;
-	downloadable=1;
-	maneuverleashlength=100; //640//
-	ovradjust=1;
-	shootme=1;
-	smoothanim=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
+	cloakCost=50;
+	cloakCostMoving=105;
+	minCloakDistance=150;
+	initCloaked=1;
 	upright=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =25 30 25;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -126,8 +108,8 @@
 		tip=Becomes fully invisible when ON and cloaked;
 	}
 
-	buildcostenergy=2686;//#AUTO#
-	buildcostmetal=537;//#AUTO#
-	buildtime=6403;//#AUTO#
+	buildCostEnergy=2686;//#AUTO#
+	buildCostMetal=537;//#AUTO#
+	buildTime=6403;//#AUTO#
 	mass=183;//#AUTO#
 }

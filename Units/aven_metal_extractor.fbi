@@ -3,48 +3,45 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Metal Extractor;
 	description=Extraction rate x1;
-	icontype=metal;
+	iconType=metal;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=AVEN METAL LEVEL1 NOTAIR NOTSUB;
-	tedclass=METAL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_metal_extractor;
-	unitnumber=48;
-	objectname=aven_metal_extractor.3do;
+	unitName=aven_metal_extractor;
+	objectName=aven_metal_extractor.3do;
 	corpse=aven_metal_extractor_dead;
-	buildpic=aven_metal_extractor.png;
-	soundcategory=aven_MEX;
+	buildPic=aven_metal_extractor.png;
+	soundCategory=aven_MEX;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=450;
+	maxDamage=450;
 	footprintx=3;
 	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=3;
-	energystorage=0;
-	extractsmetal=0.001;
+	metalStorage=0;
+	energyUse=3;
+	energyStorage=0;
+	extractsMetal=0.001;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=32768;
-	yardmap=ooooooooo;
-	activatewhenbuilt=1;
+	yardMap=ooooooooo;
+	activateWhenBuilt=1;
 	collisionvolumetype=cyly;
 	collisionVolumeScales=45 45 34;
 	collisionVolumeOffsets=0 0 0;
@@ -54,56 +51,48 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=1;
+	onOffable=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=20;
+	maxSlope=20;
 
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=SMALL_BUILDINGEX;
-	selfdestructas=SMALL_BUILDINGEX;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDINGEX;
 	selfdestructcountdown=0;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AM-BME1;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[customParams] 
 	{
 		builtBy=aven_l1builder,aven_l2builder;
 	}
 
-	buildcostenergy=650;//#AUTO#
-	buildcostmetal=130;//#AUTO#
-	buildtime=1551;//#AUTO#
+	buildCostEnergy=650;//#AUTO#
+	buildCostMetal=130;//#AUTO#
+	buildTime=1551;//#AUTO#
 	mass=154;//#AUTO#
 }

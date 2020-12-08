@@ -6,42 +6,40 @@
 	side=CLAW;
 	name=Drill;
 	description=Minigun Turret;
-	icontype=staticfighter;
+	iconType=staticfighter;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=CLAW LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_drill;
-	objectname=claw_drill.3do;
+	unitName=claw_drill;
+	objectName=claw_drill.3do;
 	corpse=claw_drill_dead;
-	buildpic=claw_drill.png;
-	soundcategory=COR_KBOT;
+	buildPic=claw_drill.png;
+	soundCategory=COR_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1250;
+	maxDamage=1250;
 	footprintx=3;
 	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=2048;
-	yardmap=ooo ooo ooo;
+	yardMap=ooo ooo ooo;
 	collisionVolumeType=CylY;
 	collisionVolumeScales=30 60 30;
 	collisionVolumeOffsets=0 0 0;
@@ -51,54 +49,42 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=20;
+	maxSlope=20;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_drill_gun;
-	badtargetcategory1=VTOL;
-	explodeas=SMALL_BUILDINGEX;
-	selfdestructas=SMALL_BUILDING;
+	badTargetCategory1=VTOL;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=COR-PUN;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	floater=1;
 	waterline=0;
 
@@ -108,10 +94,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:railgunflaresml;
+		explosionGenerator0=custom:railgunflaresml;
 	}
-	buildcostenergy=1322;//#AUTO#
-	buildcostmetal=264;//#AUTO#
-	buildtime=3151;//#AUTO#
+	buildCostEnergy=1322;//#AUTO#
+	buildCostMetal=264;//#AUTO#
+	buildTime=3151;//#AUTO#
 	mass=800;//#AUTO#
 }

@@ -3,54 +3,51 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Big Fusion Power Plant;
 	description=Produces 600 E/s;
-	icontype=energy;
+	iconType=energy;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR ENERGY LEVEL3 NOTAIR NOTSUB;
-	tedclass=ENERGY;
+	category=GEAR ENERGY LEVEL2 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_fusion_power_plant;
-	unitnumber=106;
-	objectname=gear_fusion_power_plant.3do;
+	unitName=gear_fusion_power_plant;
+	objectName=gear_fusion_power_plant.3do;
 	corpse=gear_fusion_power_plant_dead;
-	buildpic=gear_fusion_power_plant.png;
-	soundcategory=gear_FUS;
+	buildPic=gear_fusion_power_plant.png;
+	soundCategory=gear_FUS;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=4300;
-	footprintx=7;
-	footprintz=7;
+	maxDamage=4300;
+	footprintx=8;
+	footprintz=8;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=600;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=600;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
-	yardmap=ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo;
-	activatewhenbuilt=1;
+	yardMap=oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
@@ -59,38 +56,30 @@
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=FUSION_BUILDING_BIG;
-	selfdestructas=FUSION_BUILDING_BIG;
+	explodeAs=FUSION_BUILDING_BIG;
+	selfDestructAs=FUSION_BUILDING_BIG;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=EF-5;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	collisionVolumeType = box;
-	collisionVolumeScales =110 100 110;
+	collisionVolumeScales =100 90 100;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	
@@ -102,8 +91,8 @@
 	{
 	}
 
-	buildcostenergy=12462;//#AUTO#
-	buildcostmetal=2492;//#AUTO#
-	buildtime=29701;//#AUTO#
-	mass=6098;//#AUTO#
+	buildCostEnergy=13221;//#AUTO#
+	buildCostMetal=2644;//#AUTO#
+	buildTime=31510;//#AUTO#
+	mass=6260;//#AUTO#
 }

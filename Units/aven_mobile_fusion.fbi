@@ -3,42 +3,39 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Light Mobile Fusion;
 	description=Produces 260 E/s;
-	icontype=energy;
+	iconType=energy;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=AVEN ENERGY LEVEL2 NOTAIR NOTSUB;
-	tedclass=ENERGY;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_mobile_fusion;
-	unitnumber=513;
-	objectname=aven_mobile_fusion.3do;
+	unitName=aven_mobile_fusion;
+	objectName=aven_mobile_fusion.3do;
 	corpse=aven_mobile_fusion_dead;
-	buildpic=aven_mobile_fusion.png;
-	soundcategory=aven_FUS;
+	buildPic=aven_mobile_fusion.png;
+	soundCategory=aven_FUS;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2100;
-	healtime=30;
+	maxDamage=2100;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=260;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=260;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,80 +45,66 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKSH4;
-	turnrate=200;
+	movementClass=TANKSH4;
+	turnRate=200;
 	acceleration=0.34;
-	brakerate=0.2;
-	maxvelocity=1.4;
-	maxslope=10;
-	maxwaterdepth=12;
+	brakeRate=0.2;
+	maxVelocity=1.4;
+	maxSlope=10;
+	maxWaterDepth=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	nochasecategory=VTOL;
-	explodeas=MOBILE_FUSION;
-	selfdestructas=MOBILE_FUSION;
+	noChaseCategory=VTOL;
+	explodeAs=MOBILE_FUSION;
+	selfDestructAs=MOBILE_FUSION;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ongabongabong;
-	downloadable=1;
 	leavetracks=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
 	trackoffset=10;
 	trackstrength=10;
 	trackstretch=1;
 	tracktype=StdTank;
 	trackwidth=50;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =55 30 66;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[customParams] 
 	{
 		builtBy=aven_adv_vehicle_plant;
 	}
 
-	buildcostenergy=7502;//#AUTO#
-	buildcostmetal=1500;//#AUTO#
-	buildtime=17881;//#AUTO#
+	buildCostEnergy=7502;//#AUTO#
+	buildCostMetal=1500;//#AUTO#
+	buildTime=17881;//#AUTO#
 	mass=1025;//#AUTO#
 }

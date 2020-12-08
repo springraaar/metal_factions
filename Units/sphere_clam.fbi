@@ -6,29 +6,26 @@
 	side=Sphere;
 	name=Clam;
 	description=Underwater Torpedo Launcher;
-	icontype=staticartilleryfs;
+	iconType=staticartilleryfs;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=SPHERE WEAPON LEVEL1 NOTAIR;
-	tedclass=WATER;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_clam;
-	unitnumber=10000;
-	objectname=sphere_clam.3do;
+	unitName=sphere_clam;
+	objectName=sphere_clam.3do;
 	corpse=sphere_clam_dead;
-	buildpic=sphere_clam.png;
-	soundcategory=aven_SHIP;
+	buildPic=sphere_clam.png;
+	soundCategory=aven_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1100;
-	healtime=30;
+	maxDamage=1100;
 	footprintx=3;
 	footprintz=3;
 	damagemodifier=0.5;
@@ -36,17 +33,16 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.1;
-	energyuse=0.1;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=32768;
-	yardmap=wwwwwwwww;
-	activatewhenbuilt=1;
+	yardMap=wwwwwwwww;
+	activateWhenBuilt=1;
 	collisionvolumetype=cyly;
 	collisionVolumeScales=40 30 40;
 	collisionVolumeOffsets=0 0 0;
@@ -56,57 +52,45 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
 	minwaterdepth=25;
-	maxslope=15;
+	maxSlope=15;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	sonardistance=600;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=600;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=sphere_clam_torpedo;
 	onlytargetcategory1=NOTAIR;
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AS-TDS;
-	downloadable=1;
 	noshadow=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -114,8 +98,8 @@
 		tip=Gains 50% dmg resistance when closed;
 	}
 
-	buildcostenergy=1613;//#AUTO#
-	buildcostmetal=322;//#AUTO#
-	buildtime=3844;//#AUTO#
+	buildCostEnergy=1613;//#AUTO#
+	buildCostMetal=322;//#AUTO#
+	buildTime=3844;//#AUTO#
 	mass=764;//#AUTO#
 }

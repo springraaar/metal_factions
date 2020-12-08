@@ -6,41 +6,41 @@
 	side=GEAR;
 	name=Land mine;
 	description=Perimeter defense;
-	icontype=staticmine;
+	iconType=staticmine;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR NOTAIR NOTSUB;
-	tedclass=MINE;
+	category=GEAR LEVEL1 NOTAIR NOTSUB;
+	tedClass=MINE;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_mine;
+	unitName=gear_mine;
 	unitnumber=223;
-	objectname=gear_mine.3do;
-	buildpic=gear_mine.png;
-	soundcategory=MINE;
+	objectName=gear_mine.3do;
+	buildPic=gear_mine.png;
+	soundCategory=MINE;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=100;
+	maxDamage=100;
 	footprintx=2;
 	footprintz=2;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	YardMap=yy yy;
+	yardMap=yy yy;
 	levelground=0;
 	upright=0;
 	collisionVolumeType=CylY;
@@ -52,43 +52,43 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=0;
-	canmove=0;
-	canpatrol=0;
-	canstop=0;
+	canAttack=0;
+	canMove=0;
+	canPatrol=0;
+	canStop=0;
 	kamikaze=1;
 	stealth=1;
-	canguard=0;
+	canGuard=0;
 	sonarStealth=1;
 	
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=30;
-	maxwaterdepth=100;
+	maxSlope=30;
+	maxWaterDepth=100;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=250;
-	radardistance=0;
+	sightDistance=250;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=gear_mine_blast;
-	selfdestructas=gear_mine_blast;
+	explodeAs=gear_mine_blast;
+	selfDestructAs=gear_mine_blast;
 	selfdestructcountdown=0;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 	firestandorders=1;
 	standingfireorder=2;
 	defaultmissiontype=Standby_Mine;
@@ -96,15 +96,11 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	cancloak=1;
-	cloakcost=5;
-	initcloaked=1;
-	kamikazedistance=50;
-	mincloakdistance=20;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
+	canCloak=1;
+	cloakCost=5;
+	initCloaked=1;
+	kamikazeDistance=50;
+	minCloakDistance=20;
 
 	[CustomParams]
 	{

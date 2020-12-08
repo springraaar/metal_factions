@@ -6,39 +6,36 @@
 	side=Claw;
 	name=Centaur;
 	description=Medium Fast Attack Robot;
-	icontype=mobileraider;
+	iconType=mobileraider;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW KBOT LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=KBOT;
+	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_centaur;
-	unitnumber=20000;
-	objectname=claw_centaur.3do;
+	unitName=claw_centaur;
+	objectName=claw_centaur.3do;
 	corpse=claw_centaur_dead;
-	buildpic=claw_centaur.png;
-	soundcategory=CLAW_BOTMED;
+	buildPic=claw_centaur.png;
+	soundCategory=CLAW_BOTMED;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1500;
-	healtime=30;
+	maxDamage=1500;
 	footprintx=3;
 	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,82 +45,65 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	upright=0;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=KBOTHT4;
-	turnrate=890;
+	movementClass=KBOTHT4;
+	turnRate=890;
 	acceleration=0.1;
-	brakerate=0.4;
-	maxvelocity=2.7;
-	maxslope=17;
-	maxwaterdepth=25;
+	brakeRate=0.4;
+	maxVelocity=2.7;
+	maxSlope=17;
+	maxWaterDepth=25;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_centaur_laser;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=KA-L4;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	smoothanim=1;
-	steeringmode=2;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =25 40 30;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	[CustomParams]
 	{
 		builtBy=claw_adv_kbot_plant;
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:blueflaresml;
+		explosionGenerator0=custom:blueflaresml;
 	}
 
-	buildcostenergy=3624;//#AUTO#
-	buildcostmetal=724;//#AUTO#
-	buildtime=8639;//#AUTO#
+	buildCostEnergy=3624;//#AUTO#
+	buildCostMetal=724;//#AUTO#
+	buildTime=8639;//#AUTO#
 	mass=616;//#AUTO#
 }

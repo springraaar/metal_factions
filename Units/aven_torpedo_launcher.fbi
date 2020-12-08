@@ -3,50 +3,45 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Torpedo Launcher;
 	description=Torpedo Launcher;
-	icontype=staticartilleryfs;
+	iconType=staticartilleryfs;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN SPECIAL WEAPON LEVEL1 NOTAIR NOTSUB;
-	tedclass=WATER;
+	category=AVEN WEAPON LEVEL1 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_torpedo_launcher;
-	unitnumber=72;
-	objectname=aven_torpedo_launcher.3do;
+	unitName=aven_torpedo_launcher;
+	objectName=aven_torpedo_launcher.3do;
 	corpse=aven_torpedo_launcher_dead;
-	buildpic=aven_torpedo_launcher.png;
-	soundcategory=aven_SHIP;
+	buildPic=aven_torpedo_launcher.png;
+	soundCategory=aven_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1500;
-	healtime=30;
+	maxDamage=1500;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.1;
-	energyuse=0.1;
-	energystorage=0;
-	windgenerator=0.001;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=32768;
-	yardmap=wwww wwww wwww wwww;
-	activatewhenbuilt=1;
+	yardMap=wwww wwww wwww wwww;
+	activateWhenBuilt=1;
 	collisionvolumetype=cyly;
 	collisionVolumeScales=40 25 40;
 	collisionVolumeOffsets=0 0 0;
@@ -56,14 +51,14 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
@@ -73,40 +68,28 @@
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	sonardistance=600;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=600;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=aven_tl_torpedo;
 	onlytargetcategory1=NOTAIR;
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AS-TDS;
-	downloadable=1;
 	noshadow=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
 	waterline=14.8;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -114,8 +97,8 @@
 		evalfactor=0.85;//SHIP
 	}
 
-	buildcostenergy=1656;//#AUTO#
-	buildcostmetal=331;//#AUTO#
-	buildtime=3947;//#AUTO#
+	buildCostEnergy=1656;//#AUTO#
+	buildCostMetal=331;//#AUTO#
+	buildTime=3947;//#AUTO#
 	mass=970;//#AUTO#
 }

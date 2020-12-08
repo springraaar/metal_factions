@@ -3,42 +3,39 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Swatter;
 	description=Anti-Air Hovercraft;
-	icontype=amphibfs;
+	iconType=amphibfs;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN HOVER WEAPON LEVEL2 NOTAIR NOTSUB;
-	tedclass=TANK;
+	category=AVEN WEAPON LEVEL2 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_swatter;
-	unitnumber=284;
-	objectname=aven_swatter.3do;
+	unitName=aven_swatter;
+	objectName=aven_swatter.3do;
 	corpse=aven_swatter_dead;
-	buildpic=aven_swatter.png;
-	soundcategory=aven_HOVER_MID;
+	buildPic=aven_swatter.png;
+	soundCategory=aven_HOVER_MID;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1200;
-	healtime=30;
+	maxDamage=1200;
 	footprintx=3;
 	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -48,72 +45,56 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
+	canAttack=1;
+	canGuard=1;
 	canhover=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKHOVER3;
-	turnrate=700;
+	movementClass=TANKHOVER3;
+	turnRate=700;
 	acceleration=0.5;
-	brakerate=0.02;
-	maxvelocity=2.9;
-	maxslope=16;
-	maxwaterdepth=0;
+	brakeRate=0.02;
+	maxVelocity=2.9;
+	maxSlope=16;
+	maxWaterDepth=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=aven_swatter_missile;
-	nochasecategory=NOTAIR;
-	badtargetcategory1=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	noChaseCategory=NOTAIR;
+	badTargetCategory1=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ARM-HAA;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =44 22 44;
 	collisionVolumeOffsets = 0 5 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -121,11 +102,11 @@
 	}
 	[SFXTypes]
 	{
-	explosiongenerator0=custom:rocketflaresml;
-	explosiongenerator1=custom:rocketflaresml;
+	explosionGenerator0=custom:rocketflaresml;
+	explosionGenerator1=custom:rocketflaresml;
 	}
-	buildcostenergy=3386;//#AUTO#
-	buildcostmetal=677;//#AUTO#
-	buildtime=8071;//#AUTO#
+	buildCostEnergy=3386;//#AUTO#
+	buildCostMetal=677;//#AUTO#
+	buildTime=8071;//#AUTO#
 	mass=525;//#AUTO#
 }

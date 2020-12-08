@@ -3,55 +3,51 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Tidal Generator;
 	description=Produces Energy;
-	icontype=energy;
+	iconType=energy;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=AVEN ENERGY LEVEL1 NOTAIR NOTSUB;
-	tedclass=WATER;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_tidal_generator;
-	unitnumber=71;
-	objectname=aven_tidal_generator.3do;
+	unitName=aven_tidal_generator;
+	objectName=aven_tidal_generator.3do;
 	corpse=aven_tidal_generator_dead;
-	buildpic=aven_tidal_generator.png;
-	soundcategory=aven_TIDE;
+	buildPic=aven_tidal_generator.png;
+	soundCategory=aven_TIDE;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=480;
+	maxDamage=480;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
-	windgenerator=0.001;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 	tidalgenerator=1;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=8192;
-	yardmap=wwww wwww wwww wwww;
-	activatewhenbuilt=1;
+	yardMap=wwww wwww wwww wwww;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
@@ -60,40 +56,32 @@
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 	minwaterdepth=20;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	sonardistance=0;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=SMALL_BUILDINGEX;
-	selfdestructas=SMALL_BUILDING;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AE-TPG;
-	downloadable=1;
 	noshadow=1;
-	threed=1;
-	version=1.2;
 	waterline=8;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	collisionVolumeType=box;
 	collisionVolumeScales=35 30 50;
 	collisionVolumeOffsets=0 0 0;
@@ -103,8 +91,8 @@
 	{
 		builtBy=aven_l1builder,aven_l2builder;
 	}
-	buildcostenergy=605;//#AUTO#
-	buildcostmetal=121;//#AUTO#
-	buildtime=1442;//#AUTO#
+	buildCostEnergy=605;//#AUTO#
+	buildCostMetal=121;//#AUTO#
+	buildTime=1442;//#AUTO#
 	mass=160;//#AUTO#
 }

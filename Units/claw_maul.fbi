@@ -6,119 +6,99 @@
 	side=Claw;
 	name=Maul;
 	description=Artillery Ship;
-	icontype=shipartillery;
+	iconType=shipartillery;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW SHIP LEVEL2 WEAPON NOTAIR NOTSUB;
-	tedclass=SHIP;
+	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_maul;
-	unitnumber=20000;
-	objectname=claw_maul.3do;
+	unitName=claw_maul;
+	objectName=claw_maul.3do;
 	corpse=claw_maul_dead;
-	buildpic=claw_maul.png;
-	soundcategory=gear_SHIP;
+	buildPic=claw_maul.png;
+	soundCategory=gear_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1800;
-	healtime=30;
+	maxDamage=1800;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=5;
-	energyuse=5;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=5;
+	energyUse=5;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=LARGEBOAT;
-	turnrate=250;
+	movementClass=LARGEBOAT;
+	turnRate=250;
 	acceleration=0.007;
-	brakerate=0.009;
-	maxvelocity=1.6;
+	brakeRate=0.009;
+	maxVelocity=1.6;
 	minwaterdepth=16;
 	waterline=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	sonardistance=250;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=250;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_maul_cannon;
-	nochasecategory=VTOL;
-	badtargetcategory1=VTOL;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 	hightrajectory=2;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=SA-AS4;
-	downloadable=1;
-	maneuverleashlength=640;
 	scale=1;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =60 45 70;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -127,10 +107,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:yellowflaremed;
+		explosionGenerator0=custom:yellowflaremed;
 	}
-	buildcostenergy=13022;//#AUTO#
-	buildcostmetal=2604;//#AUTO#
-	buildtime=31037;//#AUTO#
+	buildCostEnergy=13022;//#AUTO#
+	buildCostMetal=2604;//#AUTO#
+	buildTime=31037;//#AUTO#
 	mass=1318;//#AUTO#
 }

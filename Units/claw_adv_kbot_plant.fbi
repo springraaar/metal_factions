@@ -2,76 +2,66 @@
 	{
 
 	// ------------------- description
-	Side=Claw;
+	side=Claw;
 	Name=Advanced Robot Factory;
 	Description=Builds Level 2 Robots;
-	icontype=plant2;
+	iconType=plant2;
 
 	// ------------------- categories
 	Category=CLAW PLANT LEVEL2 NOTAIR NOTSUB;
-	TEDClass=PLANT;
 
 	// ------------------- external specs
-	UnitName=claw_adv_kbot_plant;
-	UnitNumber=10021;
-	Objectname=claw_adv_kbot_plant.3do;
-	buildpic=claw_adv_kbot_plant.png;
-	SoundCategory=gear_HOVER_PLANT;
+	unitName=claw_adv_kbot_plant;
+	objectName=claw_adv_kbot_plant.3do;
+	buildPic=claw_adv_kbot_plant.png;
+	soundCategory=gear_HOVER_PLANT;
 	Corpse=claw_adv_kbot_plant_dead;
 
 	// ------------------- health/cost/size
-	MaxDamage=4500;
+	maxDamage=4500;
 	FootprintX=8;
 	FootprintZ=8;
-	idleautoheal=5;
 
 
 	// ------------------- resources
-	EnergyStorage=100;
-	MetalStorage=100;
-	EnergyUse=0;
+	energyStorage=100;
+	metalStorage=100;
+	energyUse=0;
 
 
 	// ------------------- constructor
 	Builder=1;
-	WorkerTime=300;
+	workerTime=300;
 
 
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	
 	// ------------------- movement
-	buildangle=1024;
-	YardMap=oooooooo oooooooo oooooooo oooooooo ooccccoo ooccccoo ooccccoo ooccccoo; 
-	MaxWaterDepth=0;
-	MaxSlope=14;
+	yardMap=oooooooo oooooooo oooooooo oooooooo ooccccoo ooccccoo ooccccoo ooccccoo; 
+	maxWaterDepth=0;
+	maxSlope=14;
 	collisionVolumeType = box;
 	collisionVolumeScales =120 40 110;
 	collisionVolumeOffsets=0 -5 0;
 	collisionVolumeTest = 1;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	// ------------------- weapons
-	ExplodeAs=LARGE_BUILDINGEX;
-	SelfDestructAs=LARGE_BUILDING;
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
 
 	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
 
 
 	// ------------------- misc
-	Version=3.1;
-	Designation=CA-lFCT;
-	NoAutoFire=0;
+	noAutoFire=0;
 
 	[CustomParams]
 	{
@@ -79,11 +69,11 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:Nano;
+		explosionGenerator0=custom:Nano;
 	}
 
-	buildcostenergy=8537;//#AUTO#
-	buildcostmetal=1707;//#AUTO#
-	buildtime=20346;//#AUTO#
+	buildCostEnergy=8537;//#AUTO#
+	buildCostMetal=1707;//#AUTO#
+	buildTime=20346;//#AUTO#
 	mass=3388;//#AUTO#
 }

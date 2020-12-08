@@ -3,39 +3,36 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Firestorm;
 	description=Incendiary Riot Aircraft;
-	icontype=airmulti;
+	iconType=airmulti;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=GEAR VTOL LEVEL2 WEAPON NOTSUB;
-	tedclass=VTOL;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_firestorm;
-	unitnumber=4000;
-	objectname=gear_firestorm.3do;
-	buildpic=gear_firestorm.png;
-	soundcategory=gear_VTOL;
+	unitName=gear_firestorm;
+	objectName=gear_firestorm.3do;
+	buildPic=gear_firestorm.png;
+	soundCategory=gear_VTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=3000;
-	healtime=30;
+	maxDamage=3000;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	energymake=0;
-	energyuse=0;
+	energyMake=0;
+	energyUse=0;
 
 	//************************************************************
 	//  Building
@@ -48,79 +45,62 @@
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	candropflare=0;
-	canfly=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canDropFlare=0;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	stealth=0;
 
 	//************************************************************
 	//  Movement
 	//************
 	acceleration=0.1;
-	brakerate=0.1;
-	maxvelocity=3.7;
-	cruisealt=120;
-	turnrate=600;
+	brakeRate=0.1;
+	maxVelocity=3.7;
+	cruiseAlt=120;
+	turnRate=600;
 
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=600;
-	radardistance=0;
+	sightDistance=600;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_firestorm_missile;
-	explodeas=BIG_UNIT;
-	selfdestructas=BIG_UNIT;
-	//weaponmaindir1=0 -1 0.2;
-	//maxangledif1=140;
+	explodeAs=BIG_UNIT;
+	selfDestructAs=BIG_UNIT;
+	//weaponMainDir1=0 -1 0.2;
+	//maxAngleDif1=140;
 
 
 	//************************************************************
 	//  Orders
 	//**********
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=VTOL_standby;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bankscale=1;
-	bmcode=1;
-	designation=AFD-J9;
-	downloadable=1;
-	hoverattack=1;
-	airstrafe=1;
+	hoverAttack=1;
+	airStrafe=1;
 //	isbomber=1;
 	upright=1;
-	airhoverfactor=-1;
+	airHoverFactor=-1;
 //	maneuverleashlength=180;
 	bankingAllowed=0;
 
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	CanLoopbackAttack=0;
 	collide=1;
-	minCollisionSpeed=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =55 15 50;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -130,11 +110,11 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:GLOWSML;
-		explosiongenerator1=custom:rocketflaresml;
+		explosionGenerator0=custom:GLOWSML;
+		explosionGenerator1=custom:rocketflaresml;
 	}
-	buildcostenergy=14223;//#AUTO#
-	buildcostmetal=2844;//#AUTO#
-	buildtime=33900;//#AUTO#
+	buildCostEnergy=14223;//#AUTO#
+	buildCostMetal=2844;//#AUTO#
+	buildTime=33900;//#AUTO#
 	mass=849;//#AUTO#
 }

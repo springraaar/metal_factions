@@ -3,125 +3,108 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Seer;
 	description=Mobile Radar;
-	icontype=mobileradar;
+	iconType=mobileradar;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN TANK LEVEL2 NOTAIR NOTSUB;
-	tedclass=TANK;
+	category=AVEN LEVEL2 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_seer;
-	unitnumber=61;
-	objectname=aven_seer.3do;
+	unitName=aven_seer;
+	objectName=aven_seer.3do;
 	corpse=aven_seer_dead;
-	buildpic=aven_seer.png;
-	soundcategory=aven_VEHICLE;
+	buildPic=aven_seer.png;
+	soundCategory=aven_VEHICLE;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=880;
-	healtime=30;
+	maxDamage=880;
 	footprintx=3;
 	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=30;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=30;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	onoffable=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	onOffable=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=TANKSH3;
-	turnrate=500;
+	movementClass=TANKSH3;
+	turnRate=500;
 	acceleration=0.32;
-	brakerate=0.12;
-	maxvelocity=2.4;
-	maxslope=16;
-	maxwaterdepth=0;
+	brakeRate=0.12;
+	maxVelocity=2.4;
+	maxSlope=16;
+	maxWaterDepth=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=2000;
+	sightDistance=500;
+	radarDistance=2000;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	mobilestandorders=1;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=ARM-MRJ;
-	downloadable=1;
 	leavetracks=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
 	trackoffset=3;
 	trackstrength=6;
 	trackstretch=1;
 	tracktype=StdTank;
 	trackwidth=24;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =24 23 34;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
 		builtBy=aven_adv_vehicle_plant;
 	}
-	buildcostenergy=2040;//#AUTO#
-	buildcostmetal=408;//#AUTO#
-	buildtime=4864;//#AUTO#
+	buildCostEnergy=2040;//#AUTO#
+	buildCostMetal=408;//#AUTO#
+	buildTime=4864;//#AUTO#
 	mass=178;//#AUTO#
 }

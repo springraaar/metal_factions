@@ -3,124 +3,110 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Snake;
 	description=Attack Sub;
-	icontype=subartilleryfs;
+	iconType=subartilleryfs;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=GEAR UNDERWATER LEVEL1 WEAPON NOTAIR;
-	tedclass=SHIP;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_snake;
-	objectname=gear_snake.3do;
+	unitName=gear_snake;
+	objectName=gear_snake.3do;
 	corpse=gear_snake_dead;
-	buildpic=gear_snake.png;
-	soundcategory=gear_SUB;
+	buildPic=gear_snake.png;
+	soundCategory=gear_SUB;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1000;
-	healtime=10;
+	maxDamage=1000;
 	footprintx=3;
 	footprintz=3;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0.0;
-	energyuse=0.0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
 	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=BOATSUB;
-	turnrate=350;
+	movementClass=BOATSUB;
+	turnRate=350;
 	acceleration=0.16;
-	brakerate=0.1;
-	maxvelocity=1.65;
+	brakeRate=0.1;
+	maxVelocity=1.65;
 	maxreversevelocity=0.82;
 	minwaterdepth=20;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	sonardistance=500;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=500;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_snake_torpedo;
-   	WeaponMainDir1=0 0 1;
-   	MaxAngleDif1=120;
+   	weaponMainDir1=0 0 1;
+   	maxAngleDif1=120;
 	onlytargetcategory1=NOTAIR;
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=SAS-T4;
-	downloadable=1;
-	maneuverleashlength=640;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
 	waterline=40;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =35 18 38;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
 		builtBy=gear_shipyard,gear_adv_shipyard;
 	}
-	buildcostenergy=1627;//#AUTO#
-	buildcostmetal=325;//#AUTO#
-	buildtime=3879;//#AUTO#
+	buildCostEnergy=1627;//#AUTO#
+	buildCostMetal=325;//#AUTO#
+	buildTime=3879;//#AUTO#
 	mass=179;//#AUTO#
 }

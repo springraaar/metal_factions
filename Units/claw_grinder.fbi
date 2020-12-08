@@ -6,42 +6,40 @@
 	side=CLAW;
 	name=Grinder;
 	description=Advanced Fast-Firing Railgun Turret;
-	icontype=staticheavyfs;
+	iconType=staticheavyfs;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW LEVEL3 WEAPON NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_grinder;
-	objectname=claw_grinder.3do;
+	unitName=claw_grinder;
+	objectName=claw_grinder.3do;
 	corpse=claw_grinder_dead;
-	buildpic=claw_grinder.png;
-	soundcategory=COR_KBOT;
+	buildPic=claw_grinder.png;
+	soundCategory=COR_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=4000;
+	maxDamage=4000;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=2048;
-	yardmap=oooo oooo oooo oooo;
+	yardMap=oooo oooo oooo oooo;
 	collisionVolumeType=CylY;
 	collisionVolumeScales=50 70 50;
 	collisionVolumeOffsets=0 0 0;
@@ -51,55 +49,43 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=20;
-	maxwaterdepth=22;
+	maxSlope=20;
+	maxWaterDepth=22;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_grinder_railgun;
-	badtargetcategory1=VTOL;
-	explodeas=LARGE_BUILDINGEX;
-	selfdestructas=LARGE_BUILDING;
+	badTargetCategory1=VTOL;
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=COR-PUN;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -107,10 +93,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:railgunflare;
+		explosionGenerator0=custom:railgunflare;
 	}
-	buildcostenergy=17217;//#AUTO#
-	buildcostmetal=3443;//#AUTO#
-	buildtime=41035;//#AUTO#
+	buildCostEnergy=17217;//#AUTO#
+	buildCostMetal=3443;//#AUTO#
+	buildTime=41035;//#AUTO#
 	mass=6872;//#AUTO#
 }

@@ -3,123 +3,103 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Monitor;
 	description=Advanced Radar/Sonar Ship;
-	icontype=shipradar;
+	iconType=shipradar;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR SHIP LEVEL2 SPECIAL WEAPON NOTAIR NOTSUB;
-	tedclass=SHIP;
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_monitor;
-	unitnumber=4000;
-	objectname=gear_monitor.3do;
+	unitName=gear_monitor;
+	objectName=gear_monitor.3do;
 	corpse=gear_monitor_dead;
-	buildpic=gear_monitor.png;
-	soundcategory=gear_SHIP;
+	buildPic=gear_monitor.png;
+	soundCategory=gear_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2500;
-	healtime=30;
+	maxDamage=2500;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=50;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=50;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
-	onoffable=1;
+	onOffable=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=smallboat;
-	turnrate=300;
+	movementClass=smallboat;
+	turnRate=300;
 	acceleration=0.026;
-	brakerate=0.012;
-	maxvelocity=1.8;
+	brakeRate=0.012;
+	maxVelocity=1.8;
 	minwaterdepth=12;
 	waterline=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=2500;
-	sonardistance=1600;
+	sightDistance=500;
+	radarDistance=2500;
+	sonarDistance=1600;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_monitor_laser;
-	nochasecategory=VTOL;
-	WeaponMainDir1=0 0 1;  //x:0 y:0 z:1 => that's forward!
-	MaxAngleDif1=300;       //300deg from side to side, or 150deg from center to each direction
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	noChaseCategory=VTOL;
+	weaponMainDir1=0 0 1;  //x:0 y:0 z:1 => that's forward!
+	maxAngleDif1=300;       //300deg from side to side, or 150deg from center to each direction
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	mobilestandorders=1;
-	standingfireorder=2;
-	standingmoveorder=1;
-	defaultmissiontype=Standby;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
-	designation=SA-AS4;
-	downloadable=1;
-	maneuverleashlength=640;
 	scale=0.6;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =30 30 70;
 	collisionVolumeOffsets = 0 -10 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -128,10 +108,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:redflare;
+		explosionGenerator0=custom:redflare;
 	}
-	buildcostenergy=9226;//#AUTO#
-	buildcostmetal=1845;//#AUTO#
-	buildtime=21990;//#AUTO#
+	buildCostEnergy=9226;//#AUTO#
+	buildCostMetal=1845;//#AUTO#
+	buildTime=21990;//#AUTO#
 	mass=1240;//#AUTO#
 }

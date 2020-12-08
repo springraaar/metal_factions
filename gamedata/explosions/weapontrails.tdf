@@ -1524,7 +1524,7 @@ usedefaultexplosions=0;
 [FASTROCKETTRAIL]
 {
 	usedefaultexplosions=0;	
-
+	[_glow]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=35;explosionGenerator=custom:DYNPROJGLOW;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 	[groundflash]
    	{
       		flashSize = 20;
@@ -2852,13 +2852,13 @@ usedefaultexplosions=0;
 	          	frontOffset=0;
 			sideTexture=railgunshot2; //muzzleside;
 	          	frontTexture=null;
-			alwaysvisible=1;
+			alwaysvisible=0;
 		}
 		water=1;
 		air=1;
 		underwater=1;
 		ground=1;
-		alwaysvisible=1;
+		alwaysvisible=0;
 		count=1;
 	}
 	[outerspike]
@@ -2875,13 +2875,13 @@ usedefaultexplosions=0;
 	          	frontOffset=0;
 			sideTexture=railguntrail2; //muzzleside;
 	          	frontTexture=null;
-			alwaysvisible=1;
+			alwaysvisible=0;
 		}
 		water=1;
 		air=1;
 		underwater=1;
 		ground=1;
-		alwaysvisible=1;
+		alwaysvisible=0;
 		count=1;
 	}
 	
@@ -2921,13 +2921,13 @@ usedefaultexplosions=0;
 	          	frontOffset=0;
 			sideTexture=railgunshot2; //muzzleside;
 	          	frontTexture=null;
-			alwaysvisible=1;
+			alwaysvisible=0;
 		}
 		water=1;
 		air=1;
 		underwater=1;
 		ground=1;
-		alwaysvisible=1;
+		alwaysvisible=0;
 		count=1;
 	}
 	[outerspike]
@@ -2944,13 +2944,13 @@ usedefaultexplosions=0;
 	          	frontOffset=0;
 			sideTexture=railguntrail2; //muzzleside;
 	          	frontTexture=null;
-			alwaysvisible=1;
+			alwaysvisible=0;
 		}
 		water=1;
 		air=1;
 		underwater=1;
 		ground=1;
-		alwaysvisible=1;
+		alwaysvisible=0;
 		count=1;
 	}
 	
@@ -2991,13 +2991,13 @@ usedefaultexplosions=0;
 	          	frontOffset=0;
 			sideTexture=railgunshot2; //muzzleside;
 	          	frontTexture=null;
-			alwaysvisible=1;
+			alwaysvisible=0;
 		}
 		water=1;
 		air=1;
 		underwater=1;
 		ground=1;
-		alwaysvisible=1;
+		alwaysvisible=0;
 		count=1;
 	}
 	[outerspike]
@@ -3014,13 +3014,13 @@ usedefaultexplosions=0;
 	          	frontOffset=0;
 			sideTexture=railguntrail2; //muzzleside;
 	          	frontTexture=null;
-			alwaysvisible=1;
+			alwaysvisible=0;
 		}
 		water=1;
 		air=1;
 		underwater=1;
 		ground=1;
-		alwaysvisible=1;
+		alwaysvisible=0;
 		count=1;
 	}
 	
@@ -3061,13 +3061,13 @@ usedefaultexplosions=0;
 	          	frontOffset=0;
 			sideTexture=railgunshot2; //muzzleside;
 	          	frontTexture=null;
-			alwaysvisible=1;
+			alwaysvisible=0;
 		}
 		water=1;
 		air=1;
 		underwater=1;
 		ground=1;
-		alwaysvisible=1;
+		alwaysvisible=0;
 		count=1;
 	}
 	[outerspike]
@@ -3084,13 +3084,13 @@ usedefaultexplosions=0;
 	          	frontOffset=0;
 			sideTexture=railguntrail2; //muzzleside;
 	          	frontTexture=null;
-			alwaysvisible=1;
+			alwaysvisible=0;
 		}
 		water=1;
 		air=1;
 		underwater=1;
 		ground=1;
-		alwaysvisible=1;
+		alwaysvisible=0;
 		count=1;
 	}
 }

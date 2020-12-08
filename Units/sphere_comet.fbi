@@ -1,92 +1,85 @@
 [UNITINFO]
 {
 	// ------------------- description
-	Side=Sphere;
+	side=Sphere;
 	Name=Comet;
 	Description=Energy-intensive Fast Assault Sphere;
-	icontype=fsphereraider;
+	iconType=fsphereraider;
 
 	// ------------------- categories
 	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
-	TEDClass=COMMANDER;
 
 
 	// ------------------- external specs
-	UnitName=sphere_comet;
-	UnitNumber=10000;
-	Objectname=sphere_comet.3do;
+	unitName=sphere_comet;
+	objectName=sphere_comet.3do;
 	Corpse=sphere_comet_dead;
-	buildpic=sphere_comet.png;
-	SoundCategory=SPHERE_SPHEREBIG;
+	buildPic=sphere_comet.png;
+	soundCategory=SPHERE_SPHEREBIG;
 
 	// ------------------- health/cost/size
-	MaxDamage=8000;
+	maxDamage=8000;
 	FootprintX=4;
 	FootprintZ=4;
 	
 	// ------------------- resources
-	EnergyMake=0;
+	energyMake=0;
 	MetalMake=0;
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyUse=0;
 
 	// ------------------- constructor
 	builder=0;
 
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
-	canguard=1;
-	canattack=1;
-	onoffable=0;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	onOffable=0;
 
 
 	// ------------------- movement
-	canfly=1;
-	MaxVelocity=2.8;
-	BrakeRate=0.03;
+	canFly=1;
+	maxVelocity=2.8;
+	brakeRate=0.03;
 	Acceleration=0.03;
-	TurnRate=632;
-	SteeringMode=2;
-	cruisealt=100;
-	hoverattack=1;
-	airstrafe=0;
-	airhoverfactor=0.1;
+	turnRate=632;
+	cruiseAlt=100;
+	hoverAttack=1;
+	airStrafe=0;
+	airHoverFactor=0.1;
 	upright=1;
 	bankingallowed=0;
 	useSmoothMesh=1;
 
 	// ------------------- scout
-	sightdistance=600;
-	RadarDistance=0;
-	SonarDistance=0;
+	sightDistance=600;
+	radarDistance=0;
+	sonarDistance=0;
 
 	// ------------------- weapons
 	Weapon1=sphere_comet_cannon;
 	Weapon2=sphere_comet_shield;
-	badtargetcategory1=VTOL;
-	NoChaseCategory=VTOL;
-	ExplodeAs=BIG_SPHERE_BLAST;
-	SelfDestructAs=BIG_SPHERE_BLAST;
+	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
+	explodeAs=BIG_SPHERE_BLAST;
+	selfDestructAs=BIG_SPHERE_BLAST;
 
 	// ------------------- orders
 	movestate=0;
 
 	// ------------------- stealth
-	//cloakcost=200;
-	//cloakcostmoving=750;
-	//mincloakdistance=170;
+	//cloakCost=200;
+	//cloakCostMoving=750;
+	//minCloakDistance=170;
 
 	// ------------------- misc
-	Designation=comet;
-	ShootMe=1;
-	maneuverleashlength=640;
-	Version=1;
 	minAirbasePower=99999;
-	activatewhenbuilt=0;
+	activateWhenBuilt=0;
 	collisionVolumeType = sphere;
 	collisionVolumeScales =65 65 65;
 	collisionVolumeOffsets = 0 0 0;
@@ -100,11 +93,11 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:rocketflarebig;
-		explosiongenerator1=custom:comettrail;
+		explosionGenerator0=custom:rocketflarebig;
+		explosionGenerator1=custom:comettrail;
 	}
-	buildcostenergy=23339;//#AUTO#
-	buildcostmetal=4667;//#AUTO#
-	buildtime=55626;//#AUTO#
+	buildCostEnergy=23339;//#AUTO#
+	buildCostMetal=4667;//#AUTO#
+	buildTime=55626;//#AUTO#
 	mass=5689;//#AUTO#
 }

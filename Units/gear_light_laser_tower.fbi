@@ -3,32 +3,29 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Gear;
+	side=Gear;
 	name=Light Laser Tower;
 	description=Pop-up Light Laser Tower;
-	icontype=staticfighter;
+	iconType=staticfighter;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR defensive WEAPON level2 NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=GEAR WEAPON LEVEL1 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=gear_light_laser_tower;
-	unitnumber=115;
-	objectname=gear_light_laser_tower.3do;
+	unitName=gear_light_laser_tower;
+	objectName=gear_light_laser_tower.3do;
 	corpse=gear_light_laser_tower_dead;
-	buildpic=gear_light_laser_tower.png;
-	soundcategory=LLT;
+	buildPic=gear_light_laser_tower.png;
+	soundCategory=LLT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1150;
-	healtime=11;
+	maxDamage=1150;
 	footprintx=3;
 	footprintz=3;
 	damageModifier=0.5;	
@@ -36,15 +33,14 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=32768;
-	yardmap=ooo ooo ooo;
+	yardMap=ooo ooo ooo;
 	collisionVolumeType = CylY;
 	collisionVolumeScales =28 63 28;
 	collisionVolumeOffsets = 0 8 0;
@@ -54,54 +50,42 @@
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=20;
+	maxSlope=20;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=gear_llt_laser;
-	badtargetcategory1=VTOL;
-	explodeas=MEDIUM_BUILDINGEX;
-	selfdestructas=MEDIUM_BUILDING;
+	badTargetCategory1=VTOL;
+	explodeAs=MEDIUM_BUILDINGEX;
+	selfDestructAs=MEDIUM_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=F-L44;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	floater=1;
 	waterline=0;
 
@@ -113,11 +97,11 @@
 
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:GLOWSML;
+		explosionGenerator0=custom:GLOWSML;
 	}
 
-	buildcostenergy=1221;//#AUTO#
-	buildcostmetal=244;//#AUTO#
-	buildtime=2910;//#AUTO#
+	buildCostEnergy=1221;//#AUTO#
+	buildCostMetal=244;//#AUTO#
+	buildTime=2910;//#AUTO#
 	mass=736;//#AUTO#
 }

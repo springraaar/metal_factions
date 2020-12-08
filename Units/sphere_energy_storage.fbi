@@ -6,50 +6,47 @@
 	side=Sphere;
 	name=Energy Storage;
 	description=Increases Energy Storage by 15000;
-	icontype=energy;
+	iconType=energy;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=SPHERE ENERGY LEVEL1 NOTAIR NOTSUB STORAGE;
-	tedclass=ENERGY;
+	category=SPHERE ENERGY LEVEL1 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=sphere_energy_storage;
-	unitnumber=1004;
-	objectname=sphere_energy_storage.3do;
+	unitName=sphere_energy_storage;
+	objectName=sphere_energy_storage.3do;
 	corpse=sphere_energy_storage_dead;
-	buildpic=sphere_energy_storage.png;
-	soundcategory=aven_ESTOR;
+	buildPic=sphere_energy_storage.png;
+	soundCategory=aven_ESTOR;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=1500;
+	maxDamage=1500;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=15000;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=15000;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=65535;
-	yardmap=oooooooooooooooo;
-	activatewhenbuilt=1;
+	yardMap=oooooooooooooooo;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
@@ -58,41 +55,33 @@
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
+	maxSlope=10;
 	
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=ESTOR_BUILDINGEX;
-	selfdestructas=ESTOR_BUILDING;
+	explodeAs=ESTOR_BUILDINGEX;
+	selfDestructAs=ESTOR_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=AE-ESF;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =60 50 60;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
@@ -100,10 +89,10 @@
 	}
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:Glow;
+		explosionGenerator0=custom:Glow;
 	}
-	buildcostenergy=2953;//#AUTO#
-	buildcostmetal=590;//#AUTO#
-	buildtime=7038;//#AUTO#
+	buildCostEnergy=2953;//#AUTO#
+	buildCostMetal=590;//#AUTO#
+	buildTime=7038;//#AUTO#
 	mass=1142;//#AUTO#
 }

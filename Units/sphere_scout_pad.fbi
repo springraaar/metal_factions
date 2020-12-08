@@ -2,52 +2,47 @@
 	{
 
 	// ------------------- description
-	Side=Sphere;
+	side=Sphere;
 	Name=Scout Pad;
 	Description=Builds Air Scouts;
-	icontype=building;
+	iconType=building;
 
 	// ------------------- categories
 	Category=SPHERE PLANT LEVEL1 NOTAIR NOTSUB;
-	TEDClass=PLANT;
 
 	// ------------------- external specs
-	UnitName=sphere_scout_pad;
-	UnitNumber=10000;
-	Objectname=sphere_scout_pad.3do;
-	buildpic=sphere_scout_pad.png;
-	SoundCategory=gear_HOVER_PLANT;
+	unitName=sphere_scout_pad;
+	objectName=sphere_scout_pad.3do;
+	buildPic=sphere_scout_pad.png;
+	soundCategory=gear_HOVER_PLANT;
 	Corpse=sphere_scout_pad_dead;
 
 	// ------------------- health/cost/size
-	MaxDamage=700;
+	maxDamage=700;
 	FootprintX=4;
 	FootprintZ=4;
-	idleautoheal=5;
-
 
 	// ------------------- resources
-	EnergyStorage=0;
-	MetalStorage=0;
-	EnergyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyUse=0;
 
 
 	// ------------------- constructor
 	Builder=1;
-	WorkerTime=80;
+	workerTime=80;
 	canBeAssisted=1;
 
 
 	// ------------------- abilities
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	
 	// ------------------- movement
-	buildangle=1024;
-	YardMap=cccc cccc cccc cccc; 
+	yardMap=cccc cccc cccc cccc; 
 	
-	MaxSlope=30;
+	maxSlope=30;
 	collisionVolumeType = box;
 	collisionVolumeScales =60 10 60;
 	collisionVolumeOffsets = 0 0 0;
@@ -55,29 +50,23 @@
 	modelCenterOffset=0 0 0;
 
 	// ------------------- scout
-	sightdistance=500;
-	RadarDistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	// ------------------- weapons
-	ExplodeAs=SMALL_BUILDINGEX;
-	SelfDestructAs=SMALL_BUILDING;
-
-	// ------------------- orders
-	firestandorders=1;
-	StandingFireOrder=2;
-	mobilestandorders=1;
-	StandingMoveOrder=1;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
 
 	// ------------------- misc
-	NoAutoFire=0;
+	noAutoFire=0;
 
 	[CustomParams]
 	{
 		builtBy=sphere_l1builder,sphere_l2builder;
 	}
 
-	buildcostenergy=978;//#AUTO#
-	buildcostmetal=195;//#AUTO#
-	buildtime=1539;//#AUTO#
+	buildCostEnergy=978;//#AUTO#
+	buildCostMetal=195;//#AUTO#
+	buildTime=1539;//#AUTO#
 	mass=240;//#AUTO#
 }

@@ -6,44 +6,42 @@
 	side=Claw;
 	name=Solar Collector;
 	description=Produces 20 E/s;
-	icontype=energy;
+	iconType=energy;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW ENERGY LEVEL1  NOTAIR NOTSUB;
-	tedclass=ENERGY;
+	category=CLAW ENERGY LEVEL1 NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_solar_collector;
-	unitnumber=20000;
-	objectname=claw_solar_collector.3do;
+	unitName=claw_solar_collector;
+	objectName=claw_solar_collector.3do;
 	corpse=claw_solar_collector_dead;
-	buildpic=claw_solar_collector.png;
-	soundcategory=gear_SOLAR;
+	buildPic=claw_solar_collector.png;
+	soundCategory=gear_SOLAR;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=700;
+	maxDamage=700;
 	footprintx=5;
 	footprintz=5;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=-20;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=20;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=32768;
-	yardmap=ccccc coooc coooc coooc ccccc;
-	activatewhenbuilt=1;
+	yardMap=ccccc coooc coooc coooc ccccc;
+	activateWhenBuilt=1;
 	collisionvolumetype=box;
 	collisionVolumeScales=70 28 70;
 	collisionVolumeOffsets=0 0 0;
@@ -57,43 +55,35 @@
 	//************************************************************
 	//  Abilities
 	//*************
-	onoffable=1;
+	onOffable=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=10;
-	maxwaterdepth=11;
+	maxSlope=10;
+	maxWaterDepth=11;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeas=SMALL_BUILDINGEX;
-	selfdestructas=SMALL_BUILDING;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
 	damagemodifier=0.50;
-	designation=ES-22;
-	downloadable=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=NanoDebree;
-	pieceTrailCEGRange = 1;
 
 
 	[CustomParams]
@@ -106,8 +96,8 @@
 	//  To be removed
 	//*****************
 
-	buildcostenergy=798;//#AUTO#
-	buildcostmetal=159;//#AUTO#
-	buildtime=1902;//#AUTO#
+	buildCostEnergy=798;//#AUTO#
+	buildCostMetal=159;//#AUTO#
+	buildTime=1902;//#AUTO#
 	mass=228;//#AUTO#
 }

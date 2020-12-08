@@ -3,105 +3,89 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	Side=Aven;
+	side=Aven;
 	name=Warden;
 	description=Advanced Missile Tower;
-	icontype=staticfs;
+	iconType=staticfs;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN defensive LEVEL3 WEAPON NOTAIR NOTSUB;
-	tedclass=FORT;
+	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=aven_warden;
-	unitnumber=1234567;
-	objectname=aven_warden.3do;
+	unitName=aven_warden;
+	objectName=aven_warden.3do;
 	corpse=aven_warden_dead;
-	buildpic=aven_warden.png;
-	soundcategory=aven_KBOT;
+	buildPic=aven_warden.png;
+	soundCategory=aven_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2000;
-	healtime=11;
+	maxDamage=2000;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	buildangle=16384;
-	yardmap=oooo oooo oooo oooo;
+	yardMap=oooo oooo oooo oooo;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	maxslope=20;
-	maxwaterdepth=22;
+	maxSlope=20;
+	maxWaterDepth=22;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
+	sightDistance=500;
+	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=aven_warden_missile;
-	badtargetcategory1=NOTAIR;
-	explodeas=BIG_UNITEX;
-	selfdestructas=BIG_UNIT;
+	badTargetCategory1=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=ARM-SRDS;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =48 50 48;
 	collisionVolumeOffsets = 0 1 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	[CustomParams]
 	{
 		builtBy=aven_l2builder;
@@ -113,10 +97,10 @@
 	//*****************
 	[SFXTypes]
 	{
-		explosiongenerator0=custom:rocketflaremed;
+		explosionGenerator0=custom:rocketflaremed;
 	}
-	buildcostenergy=5179;//#AUTO#
-	buildcostmetal=1035;//#AUTO#
-	buildtime=12345;//#AUTO#
+	buildCostEnergy=5179;//#AUTO#
+	buildCostMetal=1035;//#AUTO#
+	buildTime=12345;//#AUTO#
 	mass=1690;//#AUTO#
 }

@@ -6,94 +6,91 @@
 	side=Claw;
 	name=Monster;
 	description=Heavy Attack Sub;
-	icontype=subartilleryfs;
+	iconType=subartilleryfs;
 
 	//************************************************************
 	//  Categories
 	//**************
 	category=CLAW UNDERWATER LEVEL2 WEAPON NOTAIR;
-	tedclass=WATER;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitname=claw_monster;
-	unitnumber=20000;
-	objectname=claw_monster.3do;
+	unitName=claw_monster;
+	objectName=claw_monster.3do;
 	corpse=claw_monster_dead;
-	buildpic=claw_monster.png;
-	soundcategory=aven_SUB;
+	buildPic=claw_monster.png;
+	soundCategory=aven_SUB;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxdamage=2000;
-	healtime=10;
+	maxDamage=2000;
 	footprintx=4;
 	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalstorage=0;
-	energymake=0;
-	energyuse=0;
-	energystorage=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
-	activatewhenbuilt=1;
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
 	//***************
 	builder=0;
-	workertime=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
-	canattack=1;
-	canguard=1;
-	canmove=1;
-	canpatrol=1;
-	canstop=1;
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
 	floater=1;
 	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementclass=BOATSUB5;
-	turnrate=400;
+	movementClass=BOATSUB5;
+	turnRate=400;
 	acceleration=0.1;
-	brakerate=0.1;
-	maxvelocity=1.4;
+	brakeRate=0.1;
+	maxVelocity=1.4;
 	maxreversevelocity=0.7;
 	minwaterdepth=20;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightdistance=500;
-	radardistance=0;
-	sonardistance=500;
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=500;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_monster_torpedo;
 	onlytargetcategory1=NOTAIR;
-	explodeas=SMALL_UNITEX;
-	selfdestructas=SMALL_UNIT;
-   	WeaponMainDir1=0 0 1;
-   	MaxAngleDif1=120;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+   	weaponMainDir1=0 0 1;
+   	maxAngleDif1=120;
 
 	//************************************************************
 	//  Orders
 	//**********
-	noautofire=0;
+	noAutoFire=0;
 
 
 	//************************************************************
@@ -104,15 +101,13 @@
 	collisionVolumeScales =45 22 45;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{
 		builtBy=claw_adv_shipyard;
 	}
-	buildcostenergy=8176;//#AUTO#
-	buildcostmetal=1635;//#AUTO#
-	buildtime=19486;//#AUTO#
+	buildCostEnergy=8176;//#AUTO#
+	buildCostMetal=1635;//#AUTO#
+	buildTime=19486;//#AUTO#
 	mass=1045;//#AUTO#
 }
