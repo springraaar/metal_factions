@@ -120,39 +120,21 @@ AimFromPrimary(piecenum)
 Killed(severity, corpsetype)
 {
 	hide flare;
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
 		corpsetype = 2;
-		explode tl type SHATTER | BITMAP3;
-		explode tr type SHATTER | BITMAP3;
-		explode base type SHATTER | BITMAP3;
-		explode logo type SHATTER | BITMAP3;
-		explode sleeve type SHATTER | BITMAP3;
-		explode turret type SHATTER | BITMAP3;
-		return (0);
+		explode tl type SHATTER;
+		explode tr type SHATTER;
+		explode logo type SHATTER;
+		explode sleeve type SHATTER;
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode tl type SHATTER | BITMAP3;
-		explode tr type SHATTER | BITMAP3;
-		explode base type SHATTER | BITMAP3;
-		explode logo type SHATTER | BITMAP3;
-		explode sleeve type SHATTER | BITMAP3;
-		explode turret type SHATTER | BITMAP3;
-		return (0);
-	}
-	corpsetype = 3;
-	explode tl type SHATTER | BITMAP3;
-	explode tr type SHATTER | BITMAP3;
-	explode base type SHATTER | BITMAP3;
-	explode logo type SHATTER | BITMAP3;
-	explode sleeve type SHATTER | BITMAP3;
-	explode turret type SHATTER | BITMAP3;
-	return (0);
+
+	explode tl type SHATTER;
+	explode tr type SHATTER;
+	explode base type SHATTER;
+	explode logo type SHATTER;
+	explode sleeve type SHATTER;
+	explode turret type SHATTER;
+	return (2);
 }

@@ -89,29 +89,23 @@
 	//  Orders
 	//**********
 	noAutoFire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=Standby_Mine;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
 	cancloak=1;
 	cloakCost=5;
 	initCloaked=1;
 	minCloakDistance=20;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 
 	[CustomParams]
 	{
 		builtBy=gear_l1builder,gear_l2builder;
 		tip=Burns ground for 20s, dealing up to 20(M) dmg/s. Affected units burn for 180(M) dmg over 6s;
+		offensiveExplosion=1;
 	}
 
-	buildcostenergy=425;//#AUTO#
-	buildcostmetal=85;//#AUTO#
-	buildtime=1020;//#AUTO#
+	buildcostenergy=400;//#AUTO#
+	buildcostmetal=80;//#AUTO#
+	buildtime=960;//#AUTO#
 }

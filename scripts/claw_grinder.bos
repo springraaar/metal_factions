@@ -173,15 +173,13 @@ Killed(severity, corpsetype)
 	hide flash;
 	if( severity <= 50 )
 	{
-		corpsetype = 1;
 		explode left type SHATTER;		
 		explode right type SHATTER;		
 		explode routercover type SHATTER;
 		explode loutercover type SHATTER;
 		explode turret type SHATTER | EXPLODE_ON_HIT;
-		return (0);
+		return (1);
 	}
-	corpsetype = 3;
 	explode holder type SHATTER;		
 	explode sleeve type SHATTER;		
 	explode left type SHATTER;		
@@ -189,4 +187,5 @@ Killed(severity, corpsetype)
 	explode routercover type SHATTER;
 	explode loutercover type SHATTER;
 	explode turret type SHATTER | EXPLODE_ON_HIT;
+	return (2);
 }

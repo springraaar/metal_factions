@@ -18,7 +18,6 @@
 	//  External Specs
 	//******************
 	unitName=claw_transport_drone;
-	unitnumber=9000;
 	objectName=claw_transport_drone.3do;
 	buildPic=claw_transport_drone.png;
 	soundCategory=aven_VTOL;
@@ -97,11 +96,8 @@
 	transmaxunits=1;
 	transportcapacity=1;
 	transportmass=3000;
-	transportsize=4;
+	transportsize=6;
 	verticalspeed=10.0;
-
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	releaseHeld=1;
 	collide=1;
 	minCollisionSpeed=30;

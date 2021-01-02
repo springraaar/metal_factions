@@ -18,7 +18,6 @@
 	//  External Specs
 	//******************
 	unitName=claw_mover_b;
-	unitnumber=11000;
 	objectName=claw_mover_b.3do;
 	buildPic=claw_mover_b.png;
 	soundCategory=gear_VTOL;
@@ -37,8 +36,8 @@
 	//  Resources
 	//*************
 	metalStorage=0;
-	energyMake=3;
-	energyUse=3;
+	energyMake=0;
+	energyUse=0;
 	energyStorage=0;
 
 	//************************************************************
@@ -88,35 +87,20 @@
 	//  Orders
 	//**********
 	noAutoFire=0;
-	firestandorders=0;
-	mobilestandorders=0;
-	standingmoveorder=1;
-	defaultmissiontype=VTOL_standby;
+
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bankscale=1;
-	bmcode=1;
-	designation=VA-14-T;
-	downloadable=1;
-	maneuverleashlength=1280;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
 	transportcapacity=1;
 	transportmass=3000;
-	transportsize=4;
+	transportsize=6;
 	verticalspeed=10.0;
 	releaseHeld=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =40 15 40;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 
 	[CustomParams]
 	{

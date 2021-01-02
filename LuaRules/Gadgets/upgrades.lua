@@ -22,7 +22,6 @@ local limitsByType = {
 	[TYPE_MAJOR] = 1
 }
 
-
 -- colors, for tooltip strings
 local COLOR_RED = "\255\255\100\100"
 local COLOR_GREEN = "\255\180\255\180"
@@ -35,13 +34,13 @@ local modifierTypes = {"damage","range","hp","speed","hp","regen","php_regen","l
 local modifiersByUpgrade = {
 -- weapon / red
 	
-	upgrade_red_1_damage = { damage = 0.06, speed = -0.02, restrictions = "armed", limit = 3, type = TYPE_MINOR },
+	upgrade_red_1_damage = { damage = 0.07, speed = -0.02, restrictions = "armed", limit = 3, type = TYPE_MINOR },
 	upgrade_red_1_range = { range = 0.035, speed = -0.02, restrictions = "armed", limit = 3, type = TYPE_MINOR },
 
 	upgrade_red_2_commander_damage = { damage = 0.2, restrictions = "commander", limit = 2, type = TYPE_COMMANDER },
 	upgrade_red_2_commander_range = { range = 0.1, restrictions = "commander", limit = 1, type = TYPE_COMMANDER },
 	
-	upgrade_red_3_damage = { damage = 0.1, restrictions = "armed", limit = 1, type = TYPE_MAJOR },
+	upgrade_red_3_damage = { damage = 0.13, restrictions = "armed", limit = 1, type = TYPE_MAJOR },
 
 -- armor / green
 
@@ -100,6 +99,12 @@ local floor = math.floor
 local ceil = math.ceil
 local modf = math.modf
 local fmod = math.fmod
+
+
+local noUpgradeUnitDefIds = {
+	[UnitDefNames["cs_beacon"].id] = true,
+	[UnitDefNames["scoper_beacon"].id] = true
+}
 
 -- checks if unit is an upgrade module
 function isUpgrade(unitDefId)
@@ -329,6 +334,7 @@ function updateUnitModifiers(unitId, unitDefId, teamId)
 	
 	if unitMods then
 		local hasRange = false
+		local hasDamage = false
 		-- set unit rules parameters for use by other gadgets
 		for modName,modValue in pairs(unitMods) do
 			spSetUnitRulesParam(unitId,"upgrade_"..modName,modValue,{public = true})
@@ -336,12 +342,18 @@ function updateUnitModifiers(unitId, unitDefId, teamId)
 			if (modName == "range") then
 				hasRange = true
 				updateUnitWeaponRange(unitId, modValue)
+			elseif (modName == "damage") then
+				hasDamage = true
+				updateUnitWeaponDamage(unitId, modValue)
 			end
 		end
 		
 		if ( not hasRange ) then
 			updateUnitWeaponRange(unitId, 0)
 		end
+		if (not hasDamage) then
+			updateUnitWeaponDamage(unitId, 0)
+		end 
 	end
 end
 
@@ -363,6 +375,45 @@ function updateUnitWeaponRange(unitId, modifier)
 					--Spring.Echo("range changed to "..range)
 			    end
 			end
+	    end
+	end
+end
+-- applies weapon damage modifier on unit
+function updateUnitWeaponDamage(unitId, modifier)
+	local unitDefId = spGetUnitDefId(unitId)
+	if (unitDefId ~= nil) then
+		local ud = UnitDefs[unitDefId]
+
+		-- update damage for all non-shield weapons, if any
+		if ud.weapons and ud.weapons[1] and ud.weapons[1].weaponDef then
+			for wNum,w in pairs(ud.weapons) do
+				local wd=WeaponDefs[w.weaponDef]
+			    if wd.isShield == false and wd.description ~= "No Weapon" then
+					for aNum,aType in pairs (Game.armorTypes) do
+						local originalDamage = wd.damages[aNum] or wd.damages[0]
+						--Spring.Echo(ud.name.." W"..wNum.." vs "..aType.." dmg="..originalDamage*(1+modifier))
+						
+						spSetUnitWeaponDamages(unitId,wNum,aNum,originalDamage*(1+modifier))	
+					end
+			    end
+			end
+	    end
+	    
+	    -- if unit has offensive explosion, boost its damage as well
+	    if ud.customParams and ud.customParams.offensiveexplosion == "1" then
+	    	local selfDName = ud.selfDExplosion
+	    	local deathName = ud.deathExplosion
+	    	local selfDWD = WeaponDefNames[selfDName]
+	    	local deathWD = WeaponDefNames[deathName]
+	    	local originalDamage = 0
+	    	for aNum,aType in pairs (Game.armorTypes) do
+	    		originalDamage = selfDWD.damages[aNum] or selfDWD.damages[0]
+	    		spSetUnitWeaponDamages(unitId,"selfDestruct",aNum,originalDamage*(1+modifier))
+				--Spring.Echo(ud.name.." selfD vs "..aType.." dmg="..originalDamage*(1+modifier))
+	    		originalDamage = deathWD.damages[aNum] or deathWD.damages[0]
+	    		spSetUnitWeaponDamages(unitId,"explode",aNum,originalDamage*(1+modifier))
+	    		--Spring.Echo(ud.name.." death vs "..aType.." dmg="..originalDamage*(1+modifier))
+	    	end
 	    end
 	end
 end
@@ -439,6 +490,10 @@ function gadget:Initialize()
 end
 
 function gadget:UnitCreated(unitId, unitDefId, teamId)
+	if (noUpgradeUnitDefIds[unitDefId]) then
+		return
+	end
+	
 	local name = UnitDefs[unitDefId].name
 	local n = 0
 
@@ -491,10 +546,6 @@ function gadget:UnitFinished(unitId, unitDefId, teamId)
 			processedUpgradeIds[unitId] = true
 		end
 	end
-end
-
-function gadget:UnitDestroyed(unitId, unitDefId, teamId)
-	local name = UnitDefs[unitDefId].name
 end
 
 -- blocks upgrade transfers between players

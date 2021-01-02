@@ -1,3 +1,65 @@
+2021/01/02 ------------------ NOTES v1.48 ----------------------
+
+
+--- Balance / Mechanics
+
+- doubled AVEN "Twister"'s laser rate of fire and slightly reduced the rate of fire for the EMG and increased cost by 14%
+- AVEN "Tornado" has 12% less speed but 10% higher dmg/s and HP and is ~3% more expensive
+
+- fixed CLAW "Jester" not prioritizing air targets by default
+
+- fixed AVEN construction ship "built by" reference to the hovercraft factory (this affected AI only)
+
+- fixed lots of relatively expensive buildings leaving the full wreck regardless of how violently they were destroyed
+(this makes nukes more effective)
+
+- increased the footprint of many small units (namely robots) from 2x2 to 3x3 to reduce clumping
+
+- increased AVEN and GEAR level 1 missile tower range very slightly 820 -> 830 and adjusted cost
+
+- GEAR "Igniter" got about 25% faster and more maneuverable but lost 15% range (the missile is also a bit slower)
+- GEAR incendiary mine got its cost reduced from 85m to 80m, range reduced from 500 to 400 and initial impact damage increased from 250 to 350
+
+- increased max footprint for air transports to avoid issues where they're unable to pick up large units
+
+- units with 4x4 and larger footprint (most relatively big L2 units) are now more consistently able to crush small wreckages
+
+- increased the damage bonus on minor and major damage upgrades from 6/10 to 7/13 per module
+
+- increased amount of metal on stage 2 wrecks from 4.5% to 9% of the original unit's cost
+- increase the 3d model size of stage 2 wrecks
+
+SHIELDS
+- increased costs of area shields by about 10%
+- fixed an issue that made large shields ignore damage boosts to weapons hitting them
+(as a side effect, weapon damage upgrades also make explosions look slightly bigger visually)
+
+
+LONG RANGE ROCKETS
+- rocket platform cost increased from 3500m to 4200m
+- terminal phase distance reduced from 900 to 800
+- faction-themed rocket costs reduced by 50m
+
+--- Performance
+
+- optimized outline widget (very noticeable difference when zoomed out)
+- optimized the logic that extended range for lasers shooting at air (noticeable impact when many units are present)
+- fixed serious issue related with scoper usage that over time could lead to out-of-mem errors and to being unable to build units
+
+--- UI / Visual
+
+- replaced the mouse cursors for various orders
+- moved basic commands to a separate build/orders menu panel with icons instead of text labels that match the new mouse cursors
+- increased the number of build order icons that fit each page from 5x3 to 7x3
+- build order icons are now sorted by price (the construction units are shown first)
+- changed the build spacing options from 0,1,3,6,12,20 to 0,1,10,20
+- build tab shows current and max number of active tabs
+- added support for mf-specific simplified custom keybinds 
+- removed the "land at X" order from aircraft (it's useless at the moment)
+- updated the engine compatibility recommendation to "105"
+
+
+
 2020/12/08 ------------------ NOTES v1.47 ----------------------
 
 

@@ -5,7 +5,7 @@ function gadget:GetInfo()
       author = "raaar",
       date = "2018",
       license = "PD",
-      layer = 1,
+      layer = 10,
       enabled = true,
    }
 end
@@ -57,6 +57,8 @@ local droneDefIds = {}
 -- unit ids with slaved weapons
 local slaveWeaponIndexesByUnitId = {}
 
+
+local airTargettingWeaponIndexesByUnitDefId = {}
 local airTargettingWeaponIndexesByUnitId = {}	-- [uId][wNum] = true/false	
 
 local torpedoWeaponIds = {
@@ -160,11 +162,26 @@ function gadget:Initialize()
 		Script.SetWatchWeapon(id,true)
 		--Spring.Echo("WEAPON "..id.." BLOCKED")
 	end
-	-- drone unit defs
+
+	-- find unit defs for some types
 	for id,ud in pairs(UnitDefs) do
+		-- drones
 		if (ud.customParams and ud.customParams.isdrone) then
 			droneDefIds[ud.id] = true
 			--Spring.Echo(ud.name.." is drone")
+		end
+		
+		-- units with aaRangeBoosted weapons 
+		if ud.weapons and ud.weapons[1] and ud.weapons[1].weaponDef then
+			for wNum,w in pairs(ud.weapons) do
+				local wd=WeaponDefs[w.weaponDef]
+				if wd.customParams and wd.customParams.aarangeboost == "1" then
+					if not airTargettingWeaponIndexesByUnitDefId[id] then
+						airTargettingWeaponIndexesByUnitDefId[id] = {}
+					end
+					airTargettingWeaponIndexesByUnitDefId[id][wNum] = wd.range
+				end
+			end
 		end
 	end
 end
@@ -198,7 +215,6 @@ end
 function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attackerWeaponDefID, defaultPriority)
 	--Spring.Echo(attackerID.." ALLOWTARGET "..targetID.." ? prio="..tostring(defaultPriority))
 	--Spring.Echo(attackerID.." has line of fire to "..targetID.." ? "..tostring(Spring.GetUnitWeaponHaveFreeLineOfFire(attackerID,attackerWeaponNum,targetID)))
-	
 	
 	if defaultPriority == nil then
 		if lastPriorityForUnitId[attackerID] then
@@ -305,55 +321,43 @@ function gadget:GameFrame(n)
 		end
 	end
 	
+	local unitDefId, ud, targetDef, isAttackingAir, tType,isUser,target = 0
 	-- modify the range of certain weapons depending on whether they're targetting air units
-	for _,unitId in pairs(spGetAllUnits()) do
-		local unitDefId = spGetUnitDefID(unitId)
+	for unitId,wTable in pairs(airTargettingWeaponIndexesByUnitId) do
+		unitDefId = spGetUnitDefID(unitId)
 		if (unitDefId ~= nil) then
-			local ud = UnitDefs[unitDefId]
-	
-			-- armed only
-			if ud.weapons and ud.weapons[1] and ud.weapons[1].weaponDef then
-				for wNum,w in pairs(ud.weapons) do
-					local wd=WeaponDefs[w.weaponDef]
-				    if wd.customParams and wd.customParams.aarangeboost == "1" then
-				    	if not airTargettingWeaponIndexesByUnitId[unitId] then
-				    		airTargettingWeaponIndexesByUnitId[unitId] = {}
-				    	end
-				    
-						local isAttackingAir = false
-						-- check if weapon is targetting air unit 
-						local tType,isUser,target = spGetUnitWeaponTarget(unitId,wNum)
-				    	--Spring.Echo(" type="..tType.." t="..tostring(target))
-						if tType and tType <= 1 and target then
-							local targetDef = UnitDefs[spGetUnitDefID(target)]
-							if (targetDef and targetDef.canFly) then
-								isAttackingAir = true
-							end 
-						end
-
-						-- started attacking air, update
-						if (isAttackingAir and (not airTargettingWeaponIndexesByUnitId[unitId][wNum])) then
-							airTargettingWeaponIndexesByUnitId[unitId][wNum] = true	
-							
-							-- increase range
-							updateUnitWeaponRange(unitId, wNum, wd.range + AA_FLAT_RANGE_EXTENSION)
-							--Spring.Echo(n.." increased range")
-						end
-						
-						-- stopped attacking air, update range
-						if ((not isAttackingAir) and airTargettingWeaponIndexesByUnitId[unitId][wNum] == true) then
-							airTargettingWeaponIndexesByUnitId[unitId][wNum] = false
-							
-							-- revert to default range
-							updateUnitWeaponRange(unitId, wNum, wd.range)
-							--Spring.Echo(n.." restored range")
-						end
-				    end
+			for wNum,wRange in pairs(airTargettingWeaponIndexesByUnitDefId[unitDefId]) do
+			    isAttackingAir = false
+				-- check if weapon is targetting air unit 
+				tType,isUser,target = spGetUnitWeaponTarget(unitId,wNum)
+		    	--Spring.Echo(" type="..tType.." t="..tostring(target))
+				if tType and tType <= 1 and target then
+					targetDef = UnitDefs[spGetUnitDefID(target)]
+					if (targetDef and targetDef.canFly) then
+						isAttackingAir = true
+					end
 				end
-			end			
+
+				-- started attacking air, update
+				if (isAttackingAir and (not wTable[wNum])) then
+					wTable[wNum] = true	
+					
+					-- increase range
+					updateUnitWeaponRange(unitId, wNum, wRange + AA_FLAT_RANGE_EXTENSION)
+					--Spring.Echo(n.." increased range")
+				end
+				
+				-- stopped attacking air, update range
+				if ((not isAttackingAir) and wTable[wNum] == true) then
+					wTable[wNum] = false
+					
+					-- revert to default range
+					updateUnitWeaponRange(unitId, wNum, wRange)
+					--Spring.Echo(n.." restored range")
+				end
+		    end
 		end
 	end
-
 end
 
 
@@ -362,6 +366,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 	if slaveWeaponIndexesByUnitDefId[unitDefID] then
 		slaveWeaponIndexesByUnitId[unitID] = slaveWeaponIndexesByUnitDefId[unitDefID]
 	end
-
-	airTargettingWeaponIndexesByUnitId[unitID] = {}
+	if airTargettingWeaponIndexesByUnitDefId[unitDefID] then
+		airTargettingWeaponIndexesByUnitId[unitID] = {}	
+	end
 end

@@ -5,7 +5,7 @@
 
 piece  base, pad, beam1, beam2, side1, door1, plate1, nano2, nano1, post1, post2, floater;
 
-static-var  Static_Var_1, Static_Var_2, Static_Var_3, Static_Var_4, bBuilding;
+static-var  nanoPt, statechg_DesiredState, statechg_StateChanging, bBuilding;
 
 
 Build()
@@ -144,34 +144,34 @@ Stop()
 
 InitState()
 {
-	Static_Var_3 = 1;
-	Static_Var_4 = 0;
+	statechg_DesiredState = 1;
+	statechg_StateChanging = 0;
 }
 
 RequestState(requestedstate, currentstate)
 {
-	if( Static_Var_4 )
+	if( statechg_StateChanging )
 	{
-		Static_Var_3 = requestedstate;
+		statechg_DesiredState = requestedstate;
 		return (0);
 	}
-	Static_Var_4 = 1;
-	currentstate = Static_Var_3;
-	Static_Var_3 = requestedstate;
-	while( Static_Var_3 != currentstate )
+	statechg_StateChanging = 1;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
 	{
-		if( Static_Var_3 == 0 )
+		if( statechg_DesiredState == 0 )
 		{
 			call-script Go();
 			currentstate = 0;
 		}
-		if( Static_Var_3 == 1 )
+		if( statechg_DesiredState == 1 )
 		{
 			call-script Stop();
 			currentstate = 1;
 		}
 	}
-	Static_Var_4 = 0;
+	statechg_StateChanging = 0;
 }
 
 Create()
@@ -181,8 +181,7 @@ Create()
 	{
 		show floater;
 	}
-	Static_Var_2 = 0;
-	Static_Var_1 = 0;
+	nanoPt = 0;
 	call-script InitState();
 	start-script SmokeUnit();
 	start-script Build();
@@ -190,21 +189,17 @@ Create()
 
 QueryNanoPiece(piecenum)
 {
-	if( Static_Var_1 == 0 )
+	if( nanoPt == 0 )
 	{
 		piecenum = beam1;
 	}
-	if( Static_Var_1 != 0 )
+	if( nanoPt != 0 )
 	{
 		piecenum = beam2;
 	}
-	Static_Var_1 = !Static_Var_1;
+	nanoPt = !nanoPt;
 }
 
-Demo()
-{
-	Static_Var_2 = 1;
-}
 
 Activate()
 {
@@ -216,10 +211,7 @@ Deactivate()
 {
 	signal 2;
 	set-signal-mask 2;
-	if( !Static_Var_2 )
-	{
-		sleep 5000;
-	}
+	sleep 5000;
 	set-signal-mask 0;
 	start-script RequestState(1);
 }
@@ -246,51 +238,22 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode base type BITMAPONLY | BITMAP1;
-		explode door1 type BITMAPONLY | BITMAP5;
-		explode nano1 type BITMAPONLY | BITMAP1;
-		explode nano2 type BITMAPONLY | BITMAP2;
-		explode pad type BITMAPONLY | BITMAP3;
-		explode plate1 type BITMAPONLY | BITMAP4;
-		explode post1 type BITMAPONLY | BITMAP1;
-		explode post2 type BITMAPONLY | BITMAP2;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode base type BITMAPONLY | BITMAP1;
-		explode door1 type BITMAPONLY | BITMAP5;
-		explode nano1 type BITMAPONLY | BITMAP1;
-		explode nano2 type FALL | BITMAP2;
-		explode pad type BITMAPONLY | BITMAP3;
-		explode plate1 type SHATTER | BITMAP4;
-		explode post2 type FALL | BITMAP2;
-		return (0);
+		explode door1 type SHATTER;
+		explode nano1 type SHATTER;
+		explode nano2 type SHATTER;
+		explode pad type SHATTER;
+		explode plate1 type SHATTER;
+		explode post2 type SHATTER;
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode base type BITMAPONLY | BITMAP1;
-		explode door1 type BITMAPONLY | BITMAP5;
-		explode nano1 type BITMAPONLY | BITMAP1;
-		explode nano2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-		explode pad type BITMAPONLY | BITMAP3;
-		explode plate1 type SHATTER | BITMAP4;
-		explode post1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode post2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-		return (0);
-	}
-	corpsetype = 3;
-	explode base type BITMAPONLY | BITMAP1;
-	explode door1 type BITMAPONLY | BITMAP5;
-	explode nano1 type BITMAPONLY | BITMAP1;
-	explode nano2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-	explode pad type BITMAPONLY | BITMAP3;
-	explode plate1 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-	explode post1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-	explode post2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode door1 type SHATTER;
+	explode nano1 type SHATTER;
+	explode nano2 type SHATTER;
+	explode pad type SHATTER;
+	explode plate1 type SHATTER;
+	explode post1 type SHATTER;
+	explode post2 type SHATTER;
+	return (2);
 }

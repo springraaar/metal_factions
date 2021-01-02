@@ -80,9 +80,17 @@ Create()
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 70 )
+	if( severity <= 50 )
 	{
+		explode b8 type SHATTER;
 		return (1);
 	}
+	explode base type SHATTER;
+	explode b2 type SHATTER;
+	explode b3 type SHATTER;
+	explode press type SHATTER;
+	explode pressbase type SHATTER;
+	explode b8 type SHATTER;
 	return (2);
+
 }

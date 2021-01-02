@@ -6892,7 +6892,7 @@
 	turret=1;
 	model=weapon_missile.3do;
 	texture1=null; //flare//
-	range=820;
+	range=830;
 	burst=2;
 	burstRate=0.1;
 	reloadTime=2.75;
@@ -8205,7 +8205,7 @@
 		armor_light=360;//#AUTO#
 	}
 }
-[CORFAST_WEAPON]
+[gear_psycho_laser]
 {
 	name=Rapid Fire Laser;
 	weaponType=BeamLaser;
@@ -8706,13 +8706,13 @@
 	energyPerShot=0;
 	areaOfEffect=8;
 	soundTrigger=1;
-	soundStart=lasrfir3;
+	soundStart=lasrfir1;
 	soundHit=lasrhit2;
 	fireStarter=30;
 	scrollSpeed=0;
 	pulseSpeed=0;
-	rgbColor=0.51 0.0 0.0;
-	rgbColor2=1.0 0.4 0.4;
+	rgbColor=0.6 0.4 0.1;
+	rgbColor2=1 0.8 0.4;
 	tolerance=12000;
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -10122,12 +10122,12 @@
 	cegTag=ROCKETTRAIL1;
 	turret=1;
 	model=weapon_incrocket.3do;
-	range=460;
+	range=400;
 	reloadTime=11;
-	trajectoryHeight=0.1;
+	trajectoryHeight=0.3;
 	flightTime=2.6;
 	fixedLauncher=1;
-	weaponVelocity=550;
+	weaponVelocity=450;
 	startVelocity=300;
 	weaponAcceleration=50;
 	areaOfEffect=120;
@@ -10241,7 +10241,7 @@
 	explosionGenerator=custom:fireballboommed;
 	model=weapon_incrocket2.3do;
 	cegTag=ROCKETTRAIL2B;
-	range=500;
+	range=400;
 	reloadTime=999;
 	weapontimer=0.4;
 	fixedLauncher=1;
@@ -10275,10 +10275,10 @@
 	}
 	[DAMAGE]
 	{
-		default=250;
-		armor_heavy=62;//#AUTO#
-		armor_medium=125;//#AUTO#
-		armor_light=250;//#AUTO#
+		default=350;
+		armor_heavy=87;//#AUTO#
+		armor_medium=175;//#AUTO#
+		armor_light=350;//#AUTO#
 	}
 }
 [FMD_ROCKET]
@@ -11397,7 +11397,7 @@
 	weaponType=MissileLauncher;
 	model=weapon_rocket2.3do;
 	range=400;
-	reloadTime=2.3;
+	reloadTime=2.1;
 	weaponVelocity=500;
 	startVelocity=400;
 	weaponAcceleration=100;
@@ -11448,7 +11448,7 @@
   	sizeDecay=-0.1;
 	turret=0;
 	range=380;
-	reloadTime=0.2;
+	reloadTime=0.25;
 	weaponVelocity=500;
 	accuracy=400;
 	areaOfEffect=8;
@@ -11483,18 +11483,18 @@
 	coreThickness=0.55;
 	range=390;
 	minIntensity=1.0;
-	reloadTime=2;
+	reloadTime=1;
 	weaponVelocity=1533;
 	energyPerShot=0;
 	areaOfEffect=8;
 	soundTrigger=1;
-	soundStart=lasrfir3;
+	soundStart=lasrfir1;
 	soundHit=lasrhit2;
 	fireStarter=30;
 	scrollSpeed=0;
 	pulseSpeed=0;
-	rgbColor=0.51 0.0 0.0;
-	rgbColor2=1.0 0.4 0.4;
+	rgbColor=0.6 0.4 0.1;
+	rgbColor2=1 0.8 0.4;
 	tolerance=12000;
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -11565,7 +11565,7 @@
 	model=weapon_missile.3do;
 	explosionGenerator=custom:ROCKETBLASTWRAPPER;
 	texture1=null; //flare//
-	range=820;
+	range=830;
 	reloadTime=1.5;
 	flightTime=3.75;
 	weaponVelocity=800;

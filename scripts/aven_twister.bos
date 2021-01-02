@@ -5,17 +5,10 @@
 
 piece  base, rwing, lwing, tail, jet, weapon,sleeve, barrel,flare, base2, base3,weapon21,weapon22,flare21,flare22, jp1;
 
-static-var  statechg_DesiredState, statechg_StateChanging, Static_Var_5, isFlying, gun_2;
+static-var  statechg_DesiredState, statechg_StateChanging, isFlying, gun_2;
 
 
-Crashing(Func_Var_1)
-{
-	Func_Var_1 = get HEALTH;
-	if( Func_Var_1 < 0 )
-	{
-		Static_Var_5 = 2;
-	}
-}
+
 
 activatescr()
 {
@@ -106,7 +99,6 @@ Create()
 	gun_2 = [0];
 	call-script InitState();
 	start-script SmokeUnit();
-	start-script Crashing();
 }
 
 Activate()
@@ -182,8 +174,6 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	//start-script Crashing();
-
 	corpsetype = 3;
 	explode base2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
 	explode lwing type SHATTER | EXPLODE_ON_HIT | BITMAP5;

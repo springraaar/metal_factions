@@ -36,8 +36,8 @@
 	//  Resources
 	//*************
 	metalStorage=0;
-	energyMake=0.7;
-	energyUse=0.7;
+	energyMake=0.0;
+	energyUse=0.0;
 	energyStorage=0;
 
 	//************************************************************
@@ -94,11 +94,8 @@
 	//*****************
 	transportcapacity=1;
 	transportmass=1200;
-	transportsize=3;
+	transportsize=6;
 	verticalspeed=10.0;
-
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	releaseHeld=1;	
 	collide=1;
 	minCollisionSpeed=30;

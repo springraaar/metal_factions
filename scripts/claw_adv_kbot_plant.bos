@@ -5,7 +5,7 @@
 
 piece  base, pad, beam1, platform1, spinner, nano1, nano2, beam2, a1, a2,spike1,spike2, xl,xr, llogo, rlogo, a3,a4, spike3,spike4, spikebase, llogo2,rlogo2,lspike1,lspike2,rspike1,rspike2;
 
-static-var  Static_Var_1, bBuilding, statechg_DesiredState, statechg_StateChanging;
+static-var  nanoPt, bBuilding, statechg_DesiredState, statechg_StateChanging;
 
 // Signal definitions
 #define SIG_ACTIVATE			2
@@ -138,7 +138,7 @@ RequestState(requestedstate, currentstate)
 Create()
 {
 	bBuilding = FALSE;
-	Static_Var_1 = 111;
+	nanoPt = 111;
 	call-script InitState();
 	start-script SmokeUnit();
 	start-script Build();
@@ -146,16 +146,16 @@ Create()
 
 QueryNanoPiece(piecenum)
 {
-	if( Static_Var_1 == 111 )
+	if( nanoPt == 111 )
 	{
 		piecenum = beam1;
-		Static_Var_1 = 222;
+		nanoPt = 222;
 		return (0);
 	}
-	if( Static_Var_1 == 222 )
+	if( nanoPt == 222 )
 	{
 		piecenum = beam2;
-		Static_Var_1 = 111;
+		nanoPt = 111;
 		return (0);
 	}
 
@@ -198,52 +198,24 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode base type BITMAPONLY | BITMAP1;
-		explode beam1 type BITMAPONLY | BITMAP2;
-		explode beam2 type BITMAPONLY | BITMAP3;
-		explode pad type BITMAPONLY | BITMAP1;
-		explode xr type BITMAPONLY | BITMAP2;
-		explode xl type BITMAPONLY | BITMAP3;
-		explode platform1 type BITMAPONLY | BITMAP4;
-		explode spinner type BITMAPONLY | BITMAP5;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode base type BITMAPONLY | BITMAP1;
-		explode beam1 type FALL | BITMAP2;
-		explode beam2 type FALL | BITMAP3;
-		explode pad type BITMAPONLY | BITMAP1;
-		explode xr type FALL | BITMAP2;
-		explode xl type FALL | BITMAP3;
-		explode platform1 type FALL | BITMAP4;
-		explode spinner type SHATTER | BITMAP5;
-		return (0);
+		explode nano1 type SHATTER;
+		explode nano2 type SHATTER;
+		explode platform1 type SHATTER;
+		explode spinner type SHATTER;
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode base type BITMAPONLY | BITMAP1;
-		explode beam1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP2;
-		explode beam2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP3;
-		explode pad type BITMAPONLY | BITMAP1;
-		explode xr type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP2;
-		explode xl type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP3;
-		explode platform1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP4;
-		explode spinner type SHATTER | BITMAP5;
-		return (0);
-	}
-	corpsetype = 3;
-	explode base type BITMAPONLY | BITMAP1;
-	explode beam1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP2;
-	explode beam2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP3;
-	explode pad type BITMAPONLY | BITMAP1;
-	explode xr type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP2;
-	explode xl type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP3;
-	explode platform1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP4;
-	explode spinner type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+
+	explode a1 type SHATTER;
+	explode a2 type SHATTER;
+	explode platform1 type SHATTER;
+	explode a3 type SHATTER;
+	explode a4 type SHATTER;
+	explode rlogo type SHATTER;
+	explode llogo type SHATTER;
+	explode nano1 type SHATTER;
+	explode nano2 type SHATTER;
+	explode spinner type SHATTER;
+	return (2);
 }

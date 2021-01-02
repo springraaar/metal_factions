@@ -5,7 +5,7 @@
 
 piece  base, pad, platform11, platform12, platform13, platform14, platform21, platform22, platform23, platform24, nano11, nano12, nano13,nano14, nano21,nano22,nano23,nano24, beam11,beam12,beam13,beam14,beam21,beam22,beam23,beam24, a1, a2,a11,a21;
 
-static-var  nanoPt, bBuilding, unitviewer, statechg_DesiredState, statechg_StateChanging;
+static-var  nanoPt, bBuilding, statechg_DesiredState, statechg_StateChanging;
 
 // Signal definitions
 #define SIG_ACTIVATE			2
@@ -212,7 +212,6 @@ RequestState(requestedstate, currentstate)
 
 Create()
 {
-	unitviewer = FALSE;
 	nanoPt = [0];
 	bBuilding = FALSE;
 	call-script InitState();
@@ -272,11 +271,6 @@ QueryNanoPiece(piecenum)
 	}
 }
 
-Demo()
-{
-	unitviewer = TRUE;
-}
-
 Activate()
 {
 	signal SIG_ACTIVATE;
@@ -287,10 +281,7 @@ Deactivate()
 {
 	signal SIG_ACTIVATE;
 	set-signal-mask SIG_ACTIVATE;
-	if( !unitviewer )
-	{
-		sleep 5000;
-	}
+	sleep 5000;
 	set-signal-mask 0;
 	start-script RequestState(1);
 }
@@ -317,45 +308,32 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode platform11 type SHATTER | BITMAP5;
-		explode platform12 type SHATTER | BITMAP5;
-		explode platform13 type SHATTER | BITMAP5;
-		explode platform14 type SHATTER | BITMAP5;
-		explode platform21 type SHATTER | BITMAP5;
-		explode platform22 type SHATTER | BITMAP5;
-		explode platform23 type SHATTER | BITMAP5;
-		explode platform24 type SHATTER | BITMAP5;
+		explode platform11 type SHATTER;
+		explode platform12 type SHATTER;
+		explode platform13 type SHATTER;
+		explode platform14 type SHATTER;
+		explode platform21 type SHATTER;
+		explode platform22 type SHATTER;
+		explode platform23 type SHATTER;
+		explode platform24 type SHATTER;
 		
-		return (0);
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode platform11 type SHATTER | BITMAP5;
-		explode platform12 type SHATTER | BITMAP5;
-		explode platform13 type SHATTER | BITMAP5;
-		explode platform14 type SHATTER | BITMAP5;
-		explode platform21 type SHATTER | BITMAP5;
-		explode platform22 type SHATTER | BITMAP5;
-		explode platform23 type SHATTER | BITMAP5;
-		explode platform24 type SHATTER | BITMAP5;
-		return (0);
-	}
-	corpsetype = 3;
-	explode platform11 type SHATTER | BITMAP5;
-	explode platform12 type SHATTER | BITMAP5;
-	explode platform13 type SHATTER | BITMAP5;
-	explode platform14 type SHATTER | BITMAP5;
-	explode platform21 type SHATTER | BITMAP5;
-	explode platform22 type SHATTER | BITMAP5;
-	explode platform23 type SHATTER | BITMAP5;
-	explode platform24 type SHATTER | BITMAP5;
+	explode base type SHATTER;
+	explode pad type SHATTER;
+	explode a1 type SHATTER;
+	explode a2 type SHATTER;
+	explode a11 type SHATTER;
+	explode a21 type SHATTER;
+	explode platform11 type SHATTER;
+	explode platform12 type SHATTER;
+	explode platform13 type SHATTER;
+	explode platform14 type SHATTER;
+	explode platform21 type SHATTER;
+	explode platform22 type SHATTER;
+	explode platform23 type SHATTER;
+	explode platform24 type SHATTER;
+	return (2);
 }

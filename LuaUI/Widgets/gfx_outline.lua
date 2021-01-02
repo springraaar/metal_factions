@@ -16,11 +16,11 @@ function widget:GetInfo()
   return {
     name      = "Outline",
     desc      = "Displays a nice cartoon like outline around units.",
-    author    = "jK",
+    author    = "jK, modified by raaar",
     date      = "Dec 06, 2007",
     license   = "GNU GPL, v2 or later",
     layer     = -10,
-    enabled   = true
+    enabled   = false
   }
 end
 
@@ -57,7 +57,11 @@ local GL_DEPTH_COMPONENT32 = 0x81A7
 
 --// speed ups
 local ALL_UNITS       = Spring.ALL_UNITS
-local GetVisibleUnits = Spring.GetVisibleUnits
+local spGetVisibleUnits = Spring.GetVisibleUnits
+local spGetGameFrame = Spring.GetGameFrame
+local spGetUnitViewPosition = Spring.GetUnitViewPosition 
+local spGetCameraPosition = Spring.GetCameraPosition
+local spGetUnitDefID = Spring.GetUnitDefID
 
 local GL_MODELVIEW  = GL.MODELVIEW
 local GL_PROJECTION = GL.PROJECTION
@@ -83,11 +87,20 @@ local glPushMatrix    = gl.PushMatrix
 local glLoadIdentity  = gl.LoadIdentity
 local glPopMatrix     = gl.PopMatrix
 
-local spGetUnitDefID = Spring.GetUnitDefID
+
 
 local noOutlineUnitDefIds = {
-	[UnitDefNames["sphere_magnetar"].id] = true
+	[UnitDefNames["sphere_magnetar"].id] = true,
+	[UnitDefNames["cs_beacon"].id] = true,
+	[UnitDefNames["scoper_beacon"].id] = true
 }
+
+local lastVisibleFrame = -1000
+local latestVisibleUnits = {} 
+local VISIBLE_VALIDITY_FRAMES = 30	-- cache visible unit list for 1s
+
+local OUTLINE_MIN_DISTANCE = 1000
+local OUTLINE_MIN_SQDISTANCE = OUTLINE_MIN_DISTANCE * OUTLINE_MIN_DISTANCE
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -282,12 +295,32 @@ end
 --------------------------------------------------------------------------------
 
 local function DrawVisibleUnits()
-  local visibleUnits = GetVisibleUnits(ALL_UNITS,nil,true)
-  for i=1,#visibleUnits do  
-    if not noOutlineUnitDefIds[spGetUnitDefID(visibleUnits[i])] then
-      glUnit(visibleUnits[i],true)
-    end
-  end
+	local f = spGetGameFrame()
+	if (f - lastVisibleFrame > VISIBLE_VALIDITY_FRAMES) then
+		latestVisibleUnits = {}
+		local ux, uy, uz
+		local dx, dy, dz, dist		
+		local units = spGetVisibleUnits(ALL_UNITS,nil,false)
+		local cx,cy,cz = spGetCameraPosition()
+		local uId = 0
+		for i=1,#units do
+			uId = units[i]
+			if not noOutlineUnitDefIds[spGetUnitDefID(uId)] then
+				ux, uy, uz = spGetUnitViewPosition(uId)
+				dx, dy, dz = ux-cx, uy-cy, uz-cz
+				dist = dx*dx + dy*dy + dz*dz
+				--Spring.Echo(dist)
+				if (dist > OUTLINE_MIN_SQDISTANCE) then
+					latestVisibleUnits[#latestVisibleUnits+1] = uId
+				end
+			end
+		end
+		lastVisibleFrame = f
+	end
+  
+	for i=1,#latestVisibleUnits do  
+		glUnit(latestVisibleUnits[i],true)
+	end
 end
 
 local MyDrawVisibleUnits = function()
@@ -321,9 +354,9 @@ function widget:DrawWorldPreUnit()
     if (vsx==1) or (vsy==1) then return end
     glUseShader(depthShader)
     glUniform(uniformScreenXY,   vsx,vsy )
-     glUseShader(blurShader_h)
+    glUseShader(blurShader_h)
     glUniformInt(uniformScreenX, vsx )
-     glUseShader(blurShader_v)
+    glUseShader(blurShader_v)
     glUniformInt(uniformScreenY, vsy )
   end
 

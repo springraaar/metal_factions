@@ -35,6 +35,14 @@ local PARALYZE_MISSING_HP_FACTOR = 2.0 -- how much paralyze damage is amplified 
 local DAMAGE_REPAIR_DISRUPT_FRAMES = 60 
 local SELF_DAMAGE_FACTOR = 0.33
 
+local ARMOR_L = 1
+local ARMOR_M = 2
+local ARMOR_H = 3
+local POWER_L = 1
+local POWER_M = 2
+local POWER_H = 3
+
+
 --local projectileHitShield = {}
 local weaponDefIdByNameTable = {}
 local weaponHitpowerTable = {}
@@ -112,6 +120,14 @@ local disruptorWaveUnitDefId = UnitDefNames["aven_bass"].id
 local magnetarUnitDefId = UnitDefNames["sphere_magnetar"].id
 local magnetarWeaponDefId = WeaponDefNames["sphere_magnetar_blast"].id
 local magnetarAuraWeaponDefId = WeaponDefNames["sphere_magnetar_aura_blast"].id
+
+local notDirectlyUpgradedWeaponDefIds = {
+	[-1] = true,		-- burning damage
+	[WeaponDefNames["sphere_magnetar_aura_blast"].id] = true,
+	[WeaponDefNames["aven_bass_disruptor_effect"].id] = true,
+	[WeaponDefNames["gear_fire_effect"].id] = true,
+	[WeaponDefNames["gear_fire_effect2"].id] = true
+}
 
 local scoperBeaconDefIds = {
 	[UnitDefNames["cs_beacon"].id] = true,
@@ -250,24 +266,22 @@ function gadget:Initialize()
     		largeShieldUnits[ud.id] = true
     	end
     	
-		local armorTypeStr = "L"
-        if ( Game.armorTypes[ud.armorType] == "armor_heavy" ) then armorTypeStr = "H"
-        elseif ( Game.armorTypes[ud.armorType] == "armor_medium" ) then armorTypeStr = "M" end
+		local armorType = ARMOR_L
+        if ( Game.armorTypes[ud.armorType] == "armor_heavy" ) then armorType = ARMOR_H
+        elseif ( Game.armorTypes[ud.armorType] == "armor_medium" ) then armorType = ARMOR_M end
 
-		unitArmorTypeTable[ud.id] = armorTypeStr
+		unitArmorTypeTable[ud.id] = armorType
     end
 
 	-- find weapon hitpower and paralyzer status
     for _,wd in pairs(WeaponDefs) do        
-		local hitpowerStr = "L"
-		if ( wd.damages[Game.armorTypes.default] == wd.damages[Game.armorTypes.armor_heavy] ) then
-    		hitpowerStr = "H"
-		elseif ( wd.damages[Game.armorTypes.default] == wd.damages[Game.armorTypes.armor_medium] ) then
-    		hitpowerStr = "M"
-    	end
-    	
+		local hitpower = POWER_L
+		if wd.customParams and wd.customParams.hitpower then
+			hitpower = tonumber(wd.customParams.hitpower)
+		end
+ 	
     	weaponDefIdByNameTable[wd.name] = wd.id
-    	weaponHitpowerTable[wd.id] = hitpowerStr
+    	weaponHitpowerTable[wd.id] = hitpower
     	weaponParalyzerTable[wd.id] = wd.paralyzer
     	
     	-- track all projectiles
@@ -367,7 +381,7 @@ function gadget:GameFrame(n)
 		if y and y > -10 then
 			-- apply damage
 			local armorType = unitArmorTypeTable[data.unitDefID]
-			if (armorType == "H") then
+			if (armorType == ARMOR_H) then
 				dmg = FIRE_DMG_PER_STEP_HEAVY
 			else
 				dmg = FIRE_DMG_PER_STEP
@@ -482,6 +496,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 	end
 end
 
+
 -- if unit has active shield with power > 0, drain damage from shield first instead of going directly to hp
 function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
 	-- disable scoper damage
@@ -553,8 +568,9 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	end
 
 	-- increase damage based on attacker's damage modifiers, if any
+	-- do this only for weapons which weren't directly upgraded
 	dmgMod = 0
-	if attackerID and attackerID > 0 then 
+	if attackerID and attackerID > 0  and notDirectlyUpgradedWeaponDefIds[weaponDefID] then 
 		if dmgModDeadUnits[attackerID] then
 			dmgMod = dmgModDeadUnits[attackerID]
 		else
@@ -614,11 +630,11 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		local factor = 1
 		
 		if (hitPower ~= nil and armorType ~= nil) then
-			if (hitPower == "L" and armorType == "H") then
+			if (hitPower == POWER_L and armorType == ARMOR_H) then
 		    	factor = 4
-			elseif (hitPower == "L" and armorType == "M") then
+			elseif (hitPower == POWER_L and armorType == ARMOR_M) then
 				factor = 2
-			elseif (hitPower == "M" and armorType == "H") then
+			elseif (hitPower == POWER_M and armorType == ARMOR_H) then
 				factor = 2
 			end
 			correctedDamage = damage * factor

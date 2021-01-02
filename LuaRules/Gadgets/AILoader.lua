@@ -98,7 +98,7 @@ function gadget:Initialize()
 		end
 		
 		local hasHumanAllies = allyIdsWithHumans[thisAI.allyId] and true or false
-		Echo("AI "..thisAI.id.." : allies="..#alliedTeamIds.." enemies="..#enemyTeamIds.." hasHumanAllies="..tostring(hasHumanAllies))
+		Echo("AI "..thisAI.id.." : allies="..tableLength(alliedTeamIds).." enemies="..tableLength(enemyTeamIds).." hasHumanAllies="..tostring(hasHumanAllies))
 		thisAI.hasHumanAllies = hasHumanAllies
 		thisAI.alliedTeamIds = alliedTeamIds		
 		thisAI.enemyTeamIds = enemyTeamIds

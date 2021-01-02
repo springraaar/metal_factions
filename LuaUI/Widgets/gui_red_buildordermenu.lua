@@ -6,7 +6,7 @@ function widget:GetInfo()
 	author    = "Regret, modified by raaar",
 	date      = "August 9, 2009", --modified by raaar, sep 2015
 	license   = "GNU GPL, v2 or later",
-	layer     = 0,
+	layer     = 11,
 	enabled   = true,
 	handler   = true,
 	}
@@ -54,54 +54,117 @@ local filter = FILTER_ECO
 local hasOptions = {}
 local buildOptionsTable = {}
 local latestBuildCmds = {}
+local scale = 1			--- gui scale
 
+local ICON_FLAT_HEIGHT = 15
 local ICON_SML_HEIGHT = 32
-local ICON_NORMAL_HEIGHT = 48
+local ICON_NORMAL_HEIGHT = 41.142857
 
 local updateHax = false
 local updateHax2 = true
 local firstUpdate = true
 
+-- custom commands
+local CMD_UPGRADEMEX = 31244
+local CMD_UPGRADEMEX2 = 31245
+local CMD_AREAMEX = 31246  
+
+local iconCmdPosition = {
+	[CMD.ATTACK] = 1,
+	[CMD.FIGHT] = 2,
+	[CMD.MOVE] = 3,
+	[CMD.PATROL] = 4,
+	[CMD.GUARD] = 5,	
+	[CMD.WAIT] = 6,
+	[CMD.STOP] = 7,
+	[CMD.LOAD_UNITS] = 8,
+	[CMD.UNLOAD_UNITS] = 9,
+	[CMD.REPAIR] = 10,
+	[CMD.RECLAIM] = 11,
+	[CMD.RESTORE] = 12,
+	[CMD.CAPTURE] = 13,
+	[CMD_AREAMEX] = 14,
+	[CMD_UPGRADEMEX] = 15,
+	[CMD_UPGRADEMEX2] = 16
+}
+
+local iconCmdTex = {
+	[CMD.MOVE] = "icon_move.png",
+	[CMD.ATTACK] = "icon_attack.png",
+	[CMD.FIGHT] = "icon_fight.png",
+	[CMD.REPAIR] = "icon_repair.png",
+	[CMD.PATROL] = "icon_patrol.png",
+	[CMD.GUARD] = "icon_guard.png",
+	[CMD.RESTORE] = "icon_restore.png",
+	[CMD.RECLAIM] = "icon_reclaim.png",
+	[CMD.CAPTURE] = "icon_capture.png",
+	[CMD.STOP] = "icon_stop.png",
+	[CMD.WAIT] = "icon_wait.png",
+	[CMD.LOAD_UNITS] = "icon_load.png",
+	[CMD.UNLOAD_UNITS] = "icon_unload.png",
+	[CMD_UPGRADEMEX] = "",
+	[CMD_UPGRADEMEX2] = "",
+	[CMD_AREAMEX] = ""
+}
 
 
-local spacingList = {0,1,3,6,12,20}
+local spacingList = {0,1,10,20}
+
+-- gets tooltip hotkey string
+local function tooltipHotkey(key, action)
+	if (WG.unboundDefKeys and WG.unboundDefKeys[key]) then
+		key = nil
+	end
+	if (WG.customHotkeys and WG.customHotkeys[action]) then
+		key = WG.customHotkeys[action]
+	end
+	if key ~= nil then
+		return "\255\100\255\100 Hotkey \""..string.upper(key).."\""
+	end
+	return ""
+end
 
 -- adds relevant information for some tooltip texts like default hotkeys
-local function tooltipExtension(tooltip)
+local function tooltipExtension(tooltip,cmdAction)
 	if (tooltip) then
-		if string.match(tooltip, "Move:") then
-			tooltip = tooltip .. ".\255\100\255\100 Hotkey \"M\", click-drag to move in line formation"
-		elseif string.match(tooltip, "Guard:") then
-			tooltip = tooltip .. ".\255\100\255\100 Hotkey \"G\""
-		elseif string.match(tooltip, "Stop:") then
-			tooltip = tooltip .. ".\255\100\255\100 Hotkey \"S\""
-		elseif string.match(tooltip, "Wait:") then
-			tooltip = tooltip .. ".\255\100\255\100 Hotkey \"W\""
-		elseif string.match(tooltip, "Attack:") then
-			tooltip = tooltip .. ".\255\100\255\100 Hotkey \"A\", click-drag to attack targets within an area"
-		elseif string.match(tooltip, "Fight:") then
-			tooltip = tooltip .. ".\255\100\255\100 Hotkey \"F\", click-drag for line formation"
-		elseif string.match(tooltip, "Patrol:") then
-			tooltip = tooltip .. ".\255\100\255\100 Hotkey \"P\", click-drag for line formation"
-		elseif string.match(tooltip, "Repair:") then
-			tooltip = tooltip .. ".\255\100\255\100 Hotkey \"R\", click-drag to repair targets within an area"
-		elseif string.match(tooltip, "Reclaim:") then
-			tooltip = tooltip .. ".\255\100\255\100 Hotkey \"E\", click-drag to reclaim targets within an area"
-		elseif string.match(tooltip, "Cloak state:") then
-			tooltip = tooltip .. ".\255\100\255\100 Hotkey \"K\" (also toggles fire state)"
+		if cmdAction == "move" then
+			tooltip = tooltip .. ". Click-drag to move in line formation."..tooltipHotkey("m","move")
+		elseif cmdAction == "guard" then
+			tooltip = tooltip .. "."..tooltipHotkey("g","guard")
+		elseif cmdAction == "stop" then
+			tooltip = tooltip .. "."..tooltipHotkey("s","stop")
+		elseif cmdAction == "wait" then
+			tooltip = tooltip .. "."..tooltipHotkey("w","wait")
+		elseif cmdAction == "attack" then
+			tooltip = tooltip .. ". Click-drag to attack targets within an area."..tooltipHotkey("a","attack")
+		elseif cmdAction == "fight" then
+			tooltip = tooltip .. ". Click-drag for line formation."..tooltipHotkey("f","fight")
+		elseif cmdAction == "patrol" then
+			tooltip = tooltip .. ". Click-drag for line formation."..tooltipHotkey("p","patrol")
+		elseif cmdAction == "repair" then
+			tooltip = tooltip .. ". Click-drag to repair targets within an area."..tooltipHotkey("r","repair")
+		elseif cmdAction == "reclaim" then
+			tooltip = tooltip .. ". Click-drag to reclaim targets within an area."..tooltipHotkey("e","reclaim")
+		elseif cmdAction == "cloak" then
+			tooltip = tooltip .. ". Also toggles fire state."..tooltipHotkey("k","cloak")
+		elseif cmdAction == "areamex" then
+			tooltip = tooltip .. "."..tooltipHotkey(nil,"areamex")
+		elseif cmdAction == "areamex2" then
+			tooltip = tooltip .. "."..tooltipHotkey(nil,"areamex2")
+		elseif cmdAction == "areamex2h" then
+			tooltip = tooltip .. "."..tooltipHotkey(nil,"areamex2h")
 		end
 	end
-	
 	
 	return tooltip
 end
 
 local Config = {
 	buildMenu = {
-		px = 0,py = CanvasY - 380,
+		px = 0,py = CanvasY - 350,
 		
 		isx = ICON_NORMAL_HEIGHT,isy = ICON_NORMAL_HEIGHT, --icon size
-		ix = 5,iy = 3, --icons x/y
+		ix = 7,iy = 3, --icons x/y
 		iSpreadX=0,iSpreadY=0, --space between icons
 		
 		margin = 5, --distance from background border
@@ -113,18 +176,18 @@ local Config = {
 		cborder = {0,0,0,1},
 		cbuttonBackground = {0.1,0.1,0.1,1},
 		
-		dragButton = {2}, --middle mouse button
+		--dragButton = {2}, --middle mouse button
 		tooltip = {
-			background = "Hold \255\255\255\1middle mouse button\255\255\255\255 to drag the buildMenu around.",
+			background = "Build orders menu",
+			--background = "Hold \255\255\255\1middle mouse button\255\255\255\255 to drag the buildMenu around.",
 		},
 		showFilter = true
 	},
-	
 	orderMenu = {
-		px = 0,py = CanvasY -523,
+		px = 0,py = CanvasY -445,
 		
 		isx = ICON_NORMAL_HEIGHT,isy = ICON_SML_HEIGHT,
-		ix = 5,iy = 3,
+		ix = 7,iy = 2,
 		
 		iSpreadX=0,iSpreadY=0,
 		
@@ -137,12 +200,37 @@ local Config = {
 		cborder = {0,0,0,1},
 		cbuttonBackground={0.1,0.1,0.1,1},
 		
-		dragButton = {2}, --middle mouse button
+		--dragButton = {2}, --middle mouse button
 		tooltip = {
-			background = "Hold \255\255\255\1middle mouse button\255\255\255\255 to drag the orderMenu around.",
+			background = "State / Morph orders menu",
+			--background = "Hold \255\255\255\1middle mouse button\255\255\255\255 to drag the orderMenu around.",
 		},
 		showFilter = false
 	},
+	iconOrderMenu = {
+		px = 0,py = CanvasY -545,
+		
+		isx = ICON_SML_HEIGHT,isy = ICON_SML_HEIGHT,
+		ix = 9,iy = 2,
+		
+		iSpreadX=0,iSpreadY=0,
+		
+		margin = 5,
+		
+		fadeTime = 0.25,
+		
+		ctext = {0.9,0.9,0.9,1},
+		cbackground = {0,0,0,0.5},
+		cborder = {0,0,0,1},
+		cbuttonBackground={0.1,0.1,0.1,1},
+		
+		--dragButton = {2}, --middle mouse button
+		tooltip = {
+			background = "Orders menu",
+			--background = "Hold \255\255\255\1middle mouse button\255\255\255\255 to drag the orderMenu around.",
+		},
+		showFilter = false
+	},	
 }
 
 local function IncludeRedUIFrameworkFunctions()
@@ -185,7 +273,7 @@ local function AutoResizeObjects() --autoresize v2
 	--local vsx,vsy = 3940,2160
 	if ((lx ~= vsx) or (ly ~= vsy)) then
 		local objects = GetWidgetObjects(widget)
-		local scale = vsy/ly
+		scale = vsy/ly
 		local skippedObjects = {}
 		for i=1,#objects do
 			local o = objects[i]
@@ -220,8 +308,9 @@ local function AutoResizeObjects() --autoresize v2
 		LastAutoResizeX,LastAutoResizeY = vsx,vsy
 	end
 end
-local function CalcGridHeight(r)
-	local result = r.isy*(r.iy) + ICON_SML_HEIGHT + r.iSpreadY * (r.iy) + r.margin*2
+local function CalcGridHeight(r,rows,hasPages)
+
+	local result = r.isy*(rows) + (hasPages and ICON_FLAT_HEIGHT or 0)+ r.iSpreadY * (rows) + r.margin*2
 	if (r.showFilter) then
 		result = result + r.isy + r.iSpreadY
 	end
@@ -241,10 +330,15 @@ local function GetSpacingIndex()
 end
 
 local function CreateGrid(r)
+	-- default to full table
+	local rows = r.iy
+	local columns = r.ix
+	local hasPages = true
+		
 	local background = {"rectangle",
 		px=r.px,py=r.py,
-		sx=r.isx*r.ix+r.iSpreadX*(r.ix-1) +r.margin*2,
-		sy=CalcGridHeight(r),
+		sx=r.isx*columns+r.iSpreadX*(columns-1) +r.margin*2,
+		sy=CalcGridHeight(r,rows,hasPages),
 		color=r.cbackground,
 		border=r.cborder,
 		movable=r.dragButton,
@@ -286,12 +380,11 @@ local function CreateGrid(r)
 	heldHighlightWide.sx=r.isx*2
 
 	local selectHighlightFlat = Copy(selectHighlight,true)
-	selectHighlightFlat.sy=ICON_SML_HEIGHT
+	selectHighlightFlat.sy=ICON_FLAT_HEIGHT
 	local mouseOverHighlightFlat = Copy(mouseOverHighlight,true)
-	mouseOverHighlightFlat.sy=ICON_SML_HEIGHT
+	mouseOverHighlightFlat.sy=ICON_FLAT_HEIGHT
 	local heldHighlightFlat = Copy(heldHighlight,true)
-	heldHighlightFlat.sy=ICON_SML_HEIGHT
-
+	heldHighlightFlat.sy=ICON_FLAT_HEIGHT
 	
 	local icon = {"rectangle",
 		px=0,py=0,
@@ -316,14 +409,13 @@ local function CreateGrid(r)
 			mouseOverHighlight.px = self.px
 			mouseOverHighlight.py = self.py
 			mouseOverHighlight.active = nil
-			
-			SetTooltip(tooltipExtension(self.tooltip))
+			SetTooltip(tooltipExtension(self.tooltip,self.cmdAction))
 		end,
 		
 		onUpdate=function(self)
 			local _,_,_,curCmdName = sGetActiveCommand()
 			if (curCmdName ~= nil) then
-				if (self.cmdname == curCmdName) then
+				if (self.cmdName == curCmdName) then
 					selectHighlight.px = self.px
 					selectHighlight.py = self.py
 					selectHighlight.active = nil
@@ -366,33 +458,32 @@ local function CreateGrid(r)
 			
 			SetTooltip(self.tooltip)
 		end
-	iconFlat.sy=ICON_SML_HEIGHT
-	
+	iconFlat.sy=ICON_FLAT_HEIGHT
 	New(background)
 	
 	local backward = New(Copy(iconFlat,true))
 	backward.tooltip = "Show Previous Page"
-	backward.texture = ":n:"..LUAUI_DIRNAME.."Images/buildMenu/prev.png"
+	backward.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/prev.png"
 	local forward = New(Copy(iconFlat,true))
 	forward.tooltip = "Show Next Page (hotkey \"N\" on build orders menu)"
-	forward.texture = ":n:"..LUAUI_DIRNAME.."Images/buildMenu/next.png"
+	forward.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/next.png"
 	local tspacing = New(Copy(icon,true))
-	--tspacing.texture = ":n:"..LUAUI_DIRNAME.."Images/buildMenu/spacing"..GetSpacingIndex()..".png"
-	tspacing.texture = ":n:"..LUAUI_DIRNAME.."Images/buildMenu/spacing.png"
+	--tspacing.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/spacing"..GetSpacingIndex()..".png"
+	tspacing.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/spacing.png"
 	tspacing.caption = "    "..spacingList[GetSpacingIndex()].."    "
 	tspacing.tooltip = "Build Spacing State : spacing is applied on shift-click-drag\n\n\n(click to change)"
 	local tfacing = New(Copy(icon,true))
-	tfacing.texture = ":n:"..LUAUI_DIRNAME.."Images/buildMenu/facing"..Spring.GetBuildFacing()..".png"
+	tfacing.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/facing"..Spring.GetBuildFacing()..".png"
 	tfacing.tooltip = "Build Orientation State\n\n\n(click to change)"
 	local tfilter = New(Copy(iconWide,true))
 	tfilter.tooltip = "Build Options Filter\n\n\n(click to change, or press \"B\")"
-	tfilter.texture = ":n:"..LUAUI_DIRNAME.."Images/buildMenu/filter.png"
+	tfilter.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/filter.png"
 	
 	local indicator = New({"rectangle",
 		px=0,py=0,
-		sx=r.isx,sy=ICON_SML_HEIGHT,
+		sx=r.isx,sy=ICON_FLAT_HEIGHT,
 		captionColor=r.ctext,
-		maxFontsize = 20 * maxFontSizeFactor,
+		maxFontsize = 17 * maxFontSizeFactor,
 		options = "n",
 		
 		effects = background.effects,
@@ -454,7 +545,10 @@ local function CreateGrid(r)
 	background.mouseOver = function(mx,my,self) SetTooltip(r.tooltip.background) end
 	
 	return {
+		["stateRect"] = stateRect,
+		--["stateRectangles"] = stateRectangles,
 		["background"] = background,
+		["r"] = r,
 		["icons"] = icons,
 		["backward"] = backward,
 		["forward"] = forward,
@@ -462,8 +556,6 @@ local function CreateGrid(r)
 		["tfacing"] = tfacing,
 		["tspacing"] = tspacing,
 		["tfilter"] = tfilter,
-		["stateRectangles"] = stateRectangles,
-		["stateRect"] = stateRect,
 	}
 end
 
@@ -513,47 +605,59 @@ end
 
 
 local function UpdateGrid(g,cmds,orderType)
-	if (#cmds==0) then
+	local nCommands = #cmds
+	if (nCommands==0) then
 		g.background.active = false
 	else
 		g.background.active = nil
 	end
 
-	local curpage = g.page
+	local curPage = g.page
 	local icons = g.icons
 	local page = {{}}
 	
-	for i=1,#cmds do
+	for i=1,nCommands do
 		local index = i-(#page-1)*#icons
 		page[#page][index] = cmds[i]
-		if ((i == (#icons*#page)) and (i~=#cmds)) then
+		if ((i == (#icons*#page)) and (i~=nCommands)) then
 			page[#page+1] = {}
 		end
 	end
 	g.pageCount = #page
 	
-	if (curpage > g.pageCount) then
-		curpage = 1
+	if (curPage > g.pageCount) then
+		curPage = 1
 	end
 	
-	local iconsleft = (#icons-#page[curpage])
+	-- update background size
+	local r = g.r
+	local rows = r.iy
+	local columns = r.ix
+	if nCommands then
+		rows = math.min(r.iy, 1+math.floor((nCommands-1)/r.ix))
+		columns = math.min(nCommands,r.ix)
+	end
+	local hasPages = g.pageCount > 1	
+	if (orderType ~= 1) then
+		g.background.sx = (r.isx*columns+r.iSpreadX*(columns-1) +r.margin*2) * scale
+	end 
+	g.background.sy = CalcGridHeight(r,rows,hasPages)*scale
+	--Spring.Echo(" isy="..icons[1].sy.." r.isy="..r.isy*scale)
+	
+	local iconsleft = (#icons-#page[curPage])
 	if (iconsleft > 0) then
-		for i=iconsleft+#page[curpage],#page[curpage]+1,-1 do
+		for i=iconsleft+#page[curPage],#page[curPage]+1,-1 do
 			icons[i].active = false --deactivate
 		end
 	end
 	
-	for i=1,#g.stateRectangles do
-		g.stateRectangles[i].active = false
-	end
-	local usedstateRectangles = 0
-	
-	for i=1,#page[curpage] do
-		local cmd = page[curpage][i]
+	for i=1,#page[curPage] do
+		local cmd = page[curPage][i]
 		local icon = icons[i]
 		icon.tooltip = cmd.tooltip
 		icon.active = nil --activate
-		icon.cmdname = cmd.name
+		icon.cmdName = cmd.name
+		icon.cmdAction = cmd.action
 		
 		icon.texture = nil
 		if (cmd.texture) then
@@ -577,6 +681,7 @@ local function UpdateGrid(g,cmds,orderType)
 		}
 		
 		if (orderType == 1) then --build orders
+			icon.nonInteractiveChilds = {}
 			icon.texture = "#"..cmd.id*-1
 			if (cmd.params[1]) then
 				icon.caption = "\n\n"..cmd.params[1].."          "
@@ -584,7 +689,7 @@ local function UpdateGrid(g,cmds,orderType)
 				icon.caption = nil
 			end
 			if (cmd.disabled) then
-				icon.texture = ":n:"..LUAUI_DIRNAME.."Images/buildMenu/disabled.png"
+				icon.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/disabled.png"
 			end
 		else
 			if (cmd.type == 5) then --state cmds (fire at will, etc)
@@ -592,16 +697,12 @@ local function UpdateGrid(g,cmds,orderType)
 				
 				local stateCount = #cmd.params-1 --number of states for the cmd
 				local curState = cmd.params[1]+1
-				
+
+				local stateRects = {}			
 				for i=1,stateCount do
-					usedstateRectangles = usedstateRectangles + 1
-					local s = g.stateRectangles[usedstateRectangles]
-					if (s == nil) then
-						s = New(Copy(g.stateRect,true))
-						g.stateRectangles[usedstateRectangles] = s
-						table.insert(g.background.movableSlaves,s)
-					end
-					s.active = nil --activate
+					local s = New(Copy(g.stateRect,true))
+					stateRects[#stateRects+1] = s
+					s.active = false
 					
 					local spread = 2
 					s.sx = (icon.sx-(spread*(stateCount-1+2)))/stateCount
@@ -629,8 +730,16 @@ local function UpdateGrid(g,cmds,orderType)
 						s.color = nil
 					end
 				end
+				icon.nonInteractiveChilds = stateRects
 			else
-				icon.caption = " "..cmd.name.." "
+				icon.nonInteractiveChilds = {}
+				if (iconCmdTex[cmd.id]) then
+					if not icon.texture then 
+						icon.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/"..iconCmdTex[cmd.id]
+					end
+				else
+					icon.caption = " "..cmd.name.." "
+				end
 			end
 		end
 	end
@@ -657,14 +766,14 @@ local function UpdateGrid(g,cmds,orderType)
 		g.backward.active = nil --activate
 		g.forward.active = nil
 		g.indicator.active = nil
-		g.indicator.caption = "    "..curpage.." / "..g.pageCount.."    "
+		g.indicator.caption = "    "..curPage.." / "..g.pageCount.."    "
 	else
 		g.backward.active = false
 		g.forward.active = false
 		g.indicator.active = false
 	end
 
-	if (#cmds > 0 and orderType == 1) then --build orders
+	if (nCommands > 0 and orderType == 1) then --build orders
 		g.tspacing.mouseClick={
 			{1,function(mx,my,self)
 				local val = GetSpacingIndex()
@@ -696,12 +805,35 @@ local function UpdateGrid(g,cmds,orderType)
 				updateHax = true
 			end},
 		}
+		
+		-- number of active filters
+		local activeTabs = 0
+		local curTab = 0
+		for i=1,#hasOptions do
+			if hasOptions[i] == true then
+				activeTabs = activeTabs + 1 
+			end
+			
+			if i == filter then
+				curTab = activeTabs
+			end
+		end
+
 		g.tspacing.active = nil --activate
 		g.tfacing.active = nil
 		g.tfilter.active = nil
-		g.tfilter.caption = "    "..filterLabel[filter].."    "
-		g.tfacing.texture = ":n:"..LUAUI_DIRNAME.."Images/buildMenu/facing"..Spring.GetBuildFacing()..".png"
-		--g.tspacing.texture = ":n:"..LUAUI_DIRNAME.."Images/buildMenu/spacing.png"
+		
+		if (activeTabs > 1) then
+			g.tfilter.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/filter"..filter..".png"
+			g.tfilter.caption = "\n    "..curTab.." / "..activeTabs.."    "
+		else
+			g.tfilter.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/filter.png"
+			g.tfilter.caption = "    "..filterLabel[filter].."    "
+		end
+		
+		
+		g.tfacing.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/facing"..Spring.GetBuildFacing()..".png"
+		--g.tspacing.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/spacing.png"
 		g.tspacing.caption = "    "..spacingList[GetSpacingIndex()].."    "
 	else
 		g.tspacing.active = false
@@ -767,22 +899,26 @@ function widget:Initialize()
 		
 	buildMenu = CreateGrid(Config.buildMenu)
 	orderMenu = CreateGrid(Config.orderMenu)
+	iconOrderMenu = CreateGrid(Config.iconOrderMenu)
 	
 	buildMenu.page = 1
 	orderMenu.page = 1
+	iconOrderMenu.page = 1
 	
 	AutoResizeObjects() --fix for displacement on crash issue
 end
 
-local function onNewCommands(buildCmds,otherCmds)
+local function onNewCommands(buildCmds,otherCmds,iconOtherCmds)
 	if (SelectedUnitsCount==0) then
 		buildMenu.page = 1
 		orderMenu.page = 1
+		iconOrderMenu.page = 1
 	end
-
 	
 	UpdateGrid(buildMenu,buildCmds,1)
-	UpdateGrid(orderMenu,otherCmds,2)
+	UpdateGrid(orderMenu,otherCmds,2)	
+	UpdateGrid(iconOrderMenu,iconOtherCmds,2)
+	
 	latestBuildCmds = buildCmds
 end
 
@@ -803,6 +939,9 @@ function widget:GetConfigData() --save config
 		Config.buildMenu.py = buildMenu.background.py * unscale
 		Config.orderMenu.px = orderMenu.background.px * unscale
 		Config.orderMenu.py = orderMenu.background.py * unscale
+		Config.iconOrderMenu.px = iconOrderMenu.background.px * unscale
+		Config.iconOrderMenu.py = iconOrderMenu.background.py * unscale
+
 		return {Config=Config}
 	end
 end
@@ -812,6 +951,8 @@ function widget:SetConfigData(data) --load config
 		Config.buildMenu.py = data.Config.buildMenu.py
 		Config.orderMenu.px = data.Config.orderMenu.px
 		Config.orderMenu.py = data.Config.orderMenu.py
+		Config.iconOrderMenu.px = data.Config.iconOrderMenu.px
+		Config.iconOrderMenu.py = data.Config.iconOrderMenu.py
 	end
 end
 ]]
@@ -826,21 +967,25 @@ function widget:Shutdown()
 	end
 end
 local function GetCommands()
-	local hiddenCmds = {
+	local isHiddenCmd = {
 		[76] = true, --load units clone
 		[65] = true, --selfd
 		[9] = true, --gatherwait
 		[8] = true, --squadwait
 		[7] = true, --deathwait
 		[6] = true, --timewait
+		[135] = true, --autorepairlevel
 	}
+	
 	local buildCmds = {}
-	local statecmds = {}
+	local stateCmds = {}
 	local otherCmds = {}
+	local iconOtherCmds = {}
 	local buildCmdsCount = 0
 	local stateCmdsCount = 0
 	local otherCmdsCount = 0
-
+	local iconOtherCmdsCount = 0
+	
 	-- reset build filter category option flags
 	for i,_ in ipairs(filterLabel) do
 		hasOptions[i] = false
@@ -849,10 +994,12 @@ local function GetCommands()
 	local uName = ""
 	for index,cmd in pairs(sGetActiveCmdDescs()) do
 		if (type(cmd) == "table") then
+			--Spring.Echo("id="..cmd.id.." type="..cmd.type.." action="..cmd.action)
+		
 			if (
-			(not hiddenCmds[cmd.id]) and
+			(not isHiddenCmd[cmd.id]) and
 			(cmd.action ~= nil) and
-			--(not cmd.disabled) and
+			-- (not cmd.disabled) and
 			(cmd.type ~= 21) and
 			(cmd.type ~= 18) and
 			(cmd.type ~= 17)
@@ -860,15 +1007,20 @@ local function GetCommands()
 				if ((cmd.type == 20) --build building
 				or (ssub(cmd.action,1,10) == "buildunit_")) then
 						uName = ssub(cmd.action,11)
-						 
+						cmd.cost = UnitDefNames[uName].metalCost
+						cmd.isBuilder = UnitDefNames[uName].buildSpeed > 0
 						-- update build filter category option flags
 						checkEnableCategory(uName)
 						
 						buildCmdsCount = buildCmdsCount + 1
 						buildCmds[buildCmdsCount] = cmd
+				elseif (iconCmdTex[cmd.id]) then
+					cmd.position = iconCmdPosition[cmd.id]
+					iconOtherCmdsCount = iconOtherCmdsCount + 1
+					iconOtherCmds[iconOtherCmdsCount] = cmd
 				elseif (cmd.type == 5) then
 					stateCmdsCount = stateCmdsCount + 1
-					statecmds[stateCmdsCount] = cmd
+					stateCmds[stateCmdsCount] = cmd
 				else
 					otherCmdsCount = otherCmdsCount + 1
 					otherCmds[otherCmdsCount] = cmd
@@ -889,9 +1041,10 @@ local function GetCommands()
 		end
 	end
 	
+	-- put state commands ahead on the list of "other" commands
 	local tempCmds = {}
 	for i=1,stateCmdsCount do
-		tempCmds[i] = statecmds[i]
+		tempCmds[i] = stateCmds[i]
 	end
 	for i=1,otherCmdsCount do
 		tempCmds[i+stateCmdsCount] = otherCmds[i]
@@ -899,7 +1052,27 @@ local function GetCommands()
 	otherCmdsCount = otherCmdsCount + stateCmdsCount
 	otherCmds = tempCmds
 	
-	return filteredBuildCmds,otherCmds
+	-- sort command tables
+	table.sort(filteredBuildCmds, function(a,b) 
+		if a and b then
+			if a.isBuilder ~= b.isBuilder then
+				return a.isBuilder and (not b.isBuilder)
+			elseif a.cost < b.cost then
+				return true
+			end
+		end
+		return false
+	end)
+	table.sort(iconOtherCmds, function(a,b) 
+		if a and b then
+			if a.position < b.position then
+				return true
+			end
+		end
+		return false
+	end)
+	
+	return filteredBuildCmds,otherCmds,iconOtherCmds
 end
 local hijackAttempts = 0
 local layoutPing = 54352 --random number
@@ -946,7 +1119,7 @@ function widget:Update()
 	end
 	if (updateHax2) then
 		if (SelectedUnitsCount == 0) then
-			onNewCommands({},{}) --flush
+			onNewCommands({},{},{}) --flush
 			updateHax2 = false
 		end
 	end

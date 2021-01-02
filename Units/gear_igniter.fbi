@@ -60,10 +60,10 @@
 	//  Movement
 	//************
 	movementClass=TANKSH3;
-	turnRate=650;
-	acceleration=0.1;
-	brakeRate=0.051;
-	maxVelocity=2.8;
+	turnRate=830;
+	acceleration=0.2;
+	brakeRate=0.1;
+	maxVelocity=3.5;
 	maxSlope=18;
 	maxWaterDepth=12;
 	turninplace=0;
@@ -103,8 +103,8 @@
 		builtBy=gear_light_plant,gear_adv_vehicle_plant;
 		tip=Burns ground for 20s, dealing up to 20(M) dmg/s. Affected units burn for 180(M) dmg over 6s;
 	}
-	buildCostEnergy=1894;//#AUTO#
-	buildCostMetal=378;//#AUTO#
-	buildTime=4514;//#AUTO#
-	mass=178;//#AUTO#
+	buildCostEnergy=1945;//#AUTO#
+	buildCostMetal=389;//#AUTO#
+	buildTime=4635;//#AUTO#
+	mass=179;//#AUTO#
 }

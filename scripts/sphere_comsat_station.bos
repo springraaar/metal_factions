@@ -116,23 +116,19 @@ Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		corpsetype = 1;
-		explode dish type SHATTER | BITMAP4;
-		explode lightbase type SHATTER | BITMAP4;
-		explode dish2 type SHATTER | BITMAP4;
-		explode lightoff type SHATTER | BITMAP4;
+		explode dish type SHATTER;
+		explode lightbase type SHATTER;
+		explode dish2 type SHATTER;
+		explode lightoff type SHATTER;
 
-		return (0);
+		return (1);
 	}
-	corpsetype = 2;
-	explode dish type SHATTER | BITMAP4;
-	explode lightbase type SHATTER | BITMAP4;
-	explode dish2 type SHATTER | BITMAP4;
-	explode lightoff type SHATTER | BITMAP4;
-
-	explode b3 type SHATTER | BITMAP4;
-	explode b4 type SHATTER | BITMAP4;
-	explode b5 type SHATTER | BITMAP4;
-
-	return (0);
+	explode dish type SHATTER;
+	explode lightbase type SHATTER;
+	explode dish2 type SHATTER;
+	explode lightoff type SHATTER;
+	explode b3 type SHATTER;
+	explode b4 type SHATTER;
+	explode b5 type SHATTER;
+	return (2);
 }

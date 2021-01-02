@@ -18,7 +18,6 @@
 	//  External Specs
 	//******************
 	unitName=gear_carrier;
-	unitnumber=147;
 	objectName=gear_carrier.3do;
 	buildPic=gear_carrier.png;
 	soundCategory=gear_VTOL;
@@ -37,8 +36,8 @@
 	//  Resources
 	//*************
 	metalStorage=0;
-	energyMake=0.7;
-	energyUse=0.7;
+	energyMake=0;
+	energyUse=0;
 	energyStorage=0;
 
 	//************************************************************
@@ -88,30 +87,15 @@
 	//  Orders
 	//**********
 	noAutoFire=0;
-	firestandorders=0;
-	mobilestandorders=0;
-	standingmoveorder=1;
-	defaultmissiontype=VTOL_standby;
+
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bankscale=1;
-	bmcode=1;
-	designation=VA-14-T;
-	downloadable=1;
-	maneuverleashlength=1280;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
 	transportcapacity=1;
 	transportmass=1200;
-	transportsize=3;
+	transportsize=6;
 	verticalspeed=10.0;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	releaseHeld=1;	
 	collide=1;
 	minCollisionSpeed=30;

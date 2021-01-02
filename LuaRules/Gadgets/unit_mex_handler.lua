@@ -77,24 +77,23 @@ local commandQueue = {}
 local areaMexCmdDesc = { 
   id      = CMD_AREAMEX, 
   type    = CMDTYPE.ICON_UNIT_OR_AREA, 
-  name    = ' ', -- 'Area Mex', 
-  cursor  = 'Attack', 
+  name    = 'Area Metal Extractor', 
+  cursor  = 'Areamex', 
   action  = 'areamex',
   texture = ":n:Luarules/Images/menu/areamex.png",
-  tooltip = 'Click-drag to build Metal Extractors in an area.', 
+  tooltip = 'Click-drag to build Metal Extractors in an area', 
   hidden  = false, 
   params  = {} 
 } 
 
-
 local upgradeMexCmdDesc = { 
   id      = CMD_UPGRADEMEX, 
   type    = CMDTYPE.ICON_UNIT_OR_AREA, 
-  name    = '  ', -- 'Upgrade Mex Safe', 
-  cursor  = 'Attack', 
-  action  = 'upgrademoho',
-  texture = ":n:Luarules/Images/menu/mexupg.png",
-  tooltip = 'Click-drag to upgrade an area to Advanced Metal Extractors. Safe, but relatively expensive.', 
+  name    = 'Area Metal Extractor Level 2', 
+  cursor  = 'Areamex2', 
+  action  = 'areamex2',
+  texture = ":n:Luarules/Images/menu/areamex2.png",
+  tooltip = 'Click-drag to build Advanced Metal Extractors in an area', 
   hidden  = false, 
   params  = {} 
 } 
@@ -102,11 +101,11 @@ local upgradeMexCmdDesc = {
 local upgradeMex2CmdDesc = { 
   id      = CMD_UPGRADEMEX2, 
   type    = CMDTYPE.ICON_UNIT_OR_AREA, 
-  name    = '   ', -- 'Upgrade Mex Hazardous', 
-  cursor  = 'Attack', 
-  action  = 'upgradeexploiter',
-  texture = ":n:Luarules/Images/menu/mexupg2.png",
-  tooltip = 'Click-drag to upgrade an area to Exploiter Metal Extractors. Hazardous!', 
+  name    = 'Area Metal Extractor Level 2 - Hazardous', 
+  cursor  = 'Areamex2h', 
+  action  = 'areamex2h',
+  texture = ":n:Luarules/Images/menu/areamex2h.png",
+  tooltip = 'Click-drag to build Exploiter Metal Extractors in an area. Higher output, but hazardous', 
   hidden  = false, 
   params  = {} 
 } 
@@ -456,6 +455,9 @@ function gadget:Initialize()
 	registerUnits()  
 	
 	Spring.LoadSoundDef("LuaRules/Configs/sound_defs.lua")
+	Spring.AssignMouseCursor("Areamex", "cursorareamex", true, true)
+	Spring.AssignMouseCursor("Areamex2", "cursorareamex2", true, true)
+	Spring.AssignMouseCursor("Areamex2h", "cursorareamex2h", true, true)
 end 
 
 

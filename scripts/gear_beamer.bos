@@ -219,36 +219,20 @@ Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		corpsetype = 1;
-		explode sleeve type SHATTER | BITMAP4;
-		explode barrel2 type SHATTER | BITMAP4;
-		explode barrel1 type SHATTER | BITMAP4;
-		explode s22 type SHATTER | BITMAP4;
-		explode s32 type SHATTER | BITMAP4;		
-		return (0);
+		explode sleeve type SHATTER;
+		explode barrel2 type SHATTER;
+		explode barrel1 type SHATTER;
+		explode s22 type SHATTER;
+		explode s32 type SHATTER;		
+		return (1);
 	}
-	if( severity <= 60 )
-	{
-		corpsetype = 2;
-		explode base type SHATTER | BITMAP4;
-		explode stand type SHATTER | BITMAP4;
-		explode turret type SHATTER | BITMAP4;
-		explode sleeve type SHATTER | BITMAP4;
-		explode barrel2 type SHATTER | BITMAP4;
-		explode barrel1 type SHATTER | BITMAP4;
-		explode ldoor type SHATTER | BITMAP4;
-		explode rdoor type SHATTER | BITMAP4;
-
-		return (0);
-	}
-	corpsetype = 3;
-	explode base type SHATTER | BITMAP4;
-	explode stand type SHATTER | BITMAP4;
-	explode turret type SHATTER | BITMAP4;
-	explode sleeve type SHATTER | BITMAP4;
-	explode barrel2 type SHATTER | BITMAP4;
-	explode barrel1 type SHATTER | BITMAP4;
-	explode ldoor type SHATTER | BITMAP4;
-	explode rdoor type SHATTER | BITMAP4;
-	return (0);
+	explode base type SHATTER;
+	explode stand type SHATTER;
+	explode turret type SHATTER;
+	explode sleeve type SHATTER;
+	explode barrel2 type SHATTER;
+	explode barrel1 type SHATTER;
+	explode ldoor type SHATTER;
+	explode rdoor type SHATTER;
+	return (2);
 }

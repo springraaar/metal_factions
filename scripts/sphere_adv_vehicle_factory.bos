@@ -242,48 +242,32 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode platform1 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		explode platform2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-
-		explode platform1 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		explode platform2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		explode a1 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		explode a2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		explode pad type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		explode ctower type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		explode ct2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		explode ct3 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+		explode platform1 type SHATTER;
+		explode platform2 type SHATTER;
+		explode a1 type SHATTER;
+		explode a2 type SHATTER;
+		explode pad type SHATTER;
+		explode ct2 type SHATTER;
+		explode ct3 type SHATTER;
+		return (1);
+	}
 	
-		return (0);
-	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode platform1 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		explode platform2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		explode a1 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		explode a2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		explode pad type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		explode ctower type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		explode ct2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		explode ct3 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		return (0);
-	}
-	corpsetype = 3;
-	explode platform1 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-	explode platform2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-	explode a1 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-	explode a2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-	explode pad type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-	explode ctower type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-	explode ct2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-	explode ct3 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode platform1 type SHATTER;
+	explode platform2 type SHATTER;
+	explode a1 type SHATTER;
+	explode a2 type SHATTER;
+	explode pad type SHATTER;
+	explode ctower type SHATTER;
+	explode ltower type SHATTER;
+	explode rtower type SHATTER;
+	explode ct2 type SHATTER;
+	explode ct3 type SHATTER;
+	
+	explode ltube type SHATTER;
+	explode rtube type SHATTER;
+	explode ltube2 type SHATTER;
+	explode rtube2 type SHATTER;
+	return (2);
 }

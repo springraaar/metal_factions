@@ -18,7 +18,6 @@
 	//  External Specs
 	//******************
 	unitName=aven_transport_drone;
-	unitnumber=9000;
 	objectName=aven_transport_drone.3do;
 	buildPic=aven_transport_drone.png;
 	soundCategory=aven_VTOL;
@@ -88,32 +87,17 @@
 	//  Orders
 	//**********
 	noAutoFire=0;
-	firestandorders=0;
-	mobilestandorders=0;
-	standingmoveorder=1;
-	defaultmissiontype=VTOL_standby;
+
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bankscale=1;
-	bmcode=1;
-	designation=AFD-T3;
-	downloadable=1;
-	maneuverleashlength=1280;
-	scale=0.8;
-	shootme=1;
-	steeringmode=1;
-	threed=1;
+
 	transmaxunits=1;
 	transportcapacity=1;
 	transportmass=3000;
-	transportsize=4;
+	transportsize=6;
 	verticalspeed=10.0;
-	version=1.2;
-	zbuffer=1;
-	pieceTrailCEGTag=Debree;
-	pieceTrailCEGRange = 4;
 	releaseHeld=1;
 	collide=1;
 	minCollisionSpeed=30;

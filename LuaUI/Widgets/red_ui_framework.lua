@@ -159,6 +159,15 @@ local F = {
 	if (border) then --todo: border styles
 		Border(px,py,sx,sy,o.borderwidth,border)
 	end
+	
+	-- if it has child rects, draw them too
+	if o.nonInteractiveChilds and #o.nonInteractiveChilds > 0 then
+		for i=1,#o.nonInteractiveChilds do
+			local c = o.nonInteractiveChilds[i]
+			--Spring.Echo(i.."="..c[2])
+			drawChild(c)
+		end
+	end
 end,
 
 [2] = function(o) --text
@@ -207,6 +216,10 @@ local otypes = {
 	["area"] = 3,
 }
 -------------------------
+
+function drawChild(c)
+	F[c[2]](c)
+end
 
 local function processEffects(o,CurClock)
 	local e = o.effects

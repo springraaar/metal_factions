@@ -13,7 +13,7 @@ end
 
 local showWarningMessage = 0
 local currentEngineVersion = "???"
-local recommendedEngineVersion = "104.0.1-1553-gd3c0012 maintenance"
+local recommendedEngineVersion = "105"
 
 --SYNCED CODE
 if (gadgetHandler:IsSyncedCode()) then
@@ -25,7 +25,7 @@ function gadget:Initialize()
 		currentEngineVersion = Game.version
 	end
 	
-	if (not string.find(currentEngineVersion,"104.0.1-1")) or (not string.find(currentEngineVersion,"maintenance"))   then
+	if (not string.find(currentEngineVersion,"105"))   then
 		showWarningMessage = 1
 	end 
 end

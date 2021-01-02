@@ -401,17 +401,22 @@ function gadget:GameFrame(n)
 	
 	-- increment counter for comsat beacons, remove the ones that expired
 	for uId,frames in pairs(comsatBeacons) do
-		comsatBeacons[uId] = comsatBeacons[uId] + 1
-		
-		if (comsatBeacons[uId] > COMSAT_SCAN_DURATION_FRAMES) then
+		if (frames >= COMSAT_SCAN_DURATION_FRAMES) then
 			spDestroyUnit(uId,false,true)
+			comsatBeacons[uId] = nil
+		else
+			comsatBeacons[uId] = frames + 1
 		end
 	end
 	for uId,frames in pairs(scoperBeacons) do
-		scoperBeacons[uId] = scoperBeacons[uId] + 1
+		--local ud = UnitDefs[spGetUnitDefID(uId)]
+		--Spring.Echo(uId.." "..(ud and ud.name or "dead")) 
 		
-		if (scoperBeacons[uId] > SCOPER_SCAN_DURATION_FRAMES) then
+		if (frames >= SCOPER_SCAN_DURATION_FRAMES) then
 			spDestroyUnit(uId,false,true)
+			scoperBeacons[uId] = nil
+		else 
+			scoperBeacons[uId] = frames + 1
 		end
 	end
 	
@@ -565,6 +570,9 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 	if comsatBeacons[unitId] then
 		comsatBeacons[unitId] = nil
 	end
+	if scoperBeacons[unitId] then
+		scoperBeacons[unitId] = nil
+	end	
 	
 	if aircraftMovementFixUnitIds[unitId] then
 		aircraftMovementFixUnitIds[unitId] = nil

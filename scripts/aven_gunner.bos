@@ -109,33 +109,16 @@ SweetSpot(piecenum)
 Killed(severity, corpsetype)
 {
 	hide flare;
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode base type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode gun type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode g2 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode barrel type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		return (0);
+		explode gun type SHATTER;
+		explode barrel type SHATTER;
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode base type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode gun type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode g2 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode barrel type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		return (0);
-	}
-	corpsetype = 4;
-	explode base type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-	explode gun type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-	explode g2 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-	explode barrel type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-	return (0);
+
+	explode base type SHATTER;
+	explode turret type SHATTER;
+	explode gun type SHATTER;
+	explode barrel type SHATTER;
+	return (2);
 }

@@ -240,33 +240,21 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode a1 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode a2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode a3 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode a4 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		return (0);
+		explode a1 type SHATTER;
+		explode a2 type SHATTER;
+		explode a3 type SHATTER;
+		explode a4 type SHATTER;
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode a1 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode a2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode a3 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode a4 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		return (0);
-	}
-	corpsetype = 3;
-	explode a1 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-	explode a2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-	explode a3 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-	explode a4 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-	return (0);
+	explode left type SHATTER;
+	explode leftbottom type SHATTER;
+	explode right type SHATTER;
+	explode rightbottom type SHATTER;
+	explode a1 type SHATTER;
+	explode a2 type SHATTER;
+	explode a3 type SHATTER;
+	explode a4 type SHATTER;
+	return (2);
 }

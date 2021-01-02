@@ -60,6 +60,19 @@ local myAllyTeamID
 local nameByTeamID = {}
 local addedBrightness = 0.2
 
+-- get build hotkey
+local function buildHotkey(uName)
+	local key = nil
+	if (WG.customHotkeys and WG.customHotkeys["build_"..uName]) then
+		key = WG.customHotkeys["build_"..uName]
+	end
+	if key ~= nil then
+		return "      \255\100\255\100 Hotkey \""..string.upper(key).."\""
+	end
+	return ""
+end
+
+
 -- make text brighter to avoid white outline
 local function convertColor(r,g,b,a)
 	local red = r + addedBrightness
@@ -301,7 +314,9 @@ end
 function GetTooltipTransportability(ud)
 	if ud.speed > 0 then
 		local transpStr = ""
-		if ud.mass < TRANSPORT_MASS_LIMIT_LIGHT then
+		if ud.cantBeTransported  then 
+			transpStr = "no transport"
+		elseif ud.mass < TRANSPORT_MASS_LIMIT_LIGHT then
 			transpStr = "light"
 		elseif ud.mass < TRANSPORT_MASS_LIMIT_HEAVY then
 			transpStr = "heavy"
@@ -437,7 +452,7 @@ function GenerateNewTooltip()
 			
 			-- old build time expression : floor((29+floor(31+fud.buildTime/(buildpower/32)))/30)
 			local buildTimeStr = FormatNbr(fud.buildTime/buildpower,2)
-			NewTooltip = NewTooltip.."\n"..unitpre.."\n"..fud.humanName.." ("..fud.tooltip..")\n"..
+			NewTooltip = NewTooltip.."\n"..unitpre.."\n"..fud.humanName.." ("..fud.tooltip..")"..buildHotkey(fud.name).."\n"..
 				"\255\200\200\200Metal: "..unitmetalcost.."    \255\255\255\0Energy: "..unitenergycost..""..
 				"\255\213\213\255".."    Build time: ".."\255\170\170\255"..
 				buildTimeStr.."s".."    "..GetTooltipTransportability(fud).."\n"..

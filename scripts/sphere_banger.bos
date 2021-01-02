@@ -176,40 +176,24 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		
-		explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode top type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode left type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode right type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode sleeve type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode sleeve2 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode sleeve3 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode sleeve4 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode top type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode left type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode right type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-	
-		return (0);
+		explode sleeve type SHATTER;
+		explode sleeve2 type SHATTER;
+		explode sleeve3 type SHATTER;
+		explode sleeve4 type SHATTER;
+		return (1);
 	}
-	corpsetype = 3;
-	explode sleeve type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-	explode sleeve2 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-	explode sleeve3 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-	explode sleeve4 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-	explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-	explode top type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-	explode left type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-	explode right type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-	return (0);
 
-
+	explode turret type SHATTER;
+	explode top type SHATTER;
+	explode base type SHATTER;
+	explode base2 type SHATTER;
+	explode left type SHATTER;
+	explode right type SHATTER;
+	explode sleeve type SHATTER;
+	explode sleeve2 type SHATTER;
+	explode sleeve3 type SHATTER;
+	explode sleeve4 type SHATTER;
+	return (2);
 }
