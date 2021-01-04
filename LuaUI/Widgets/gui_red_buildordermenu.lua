@@ -54,15 +54,21 @@ local filter = FILTER_ECO
 local hasOptions = {}
 local buildOptionsTable = {}
 local latestBuildCmds = {}
+local latestUnfilteredBuildCmds = {}
 local scale = 1			--- gui scale
 
 local ICON_FLAT_HEIGHT = 15
-local ICON_SML_HEIGHT = 32
-local ICON_NORMAL_HEIGHT = 41.142857
+local ICON_FLAT2_HEIGHT = 32
+local ICON_SML_HEIGHT = 40
+local ICON_NORMAL_HEIGHT = 45.7142857
 
 local updateHax = false
 local updateHax2 = true
 local firstUpdate = true
+
+local TYPE_BUILD = 1
+local TYPE_ORDER = 2
+local TYPE_ICONORDER = 3 
 
 -- custom commands
 local CMD_UPGRADEMEX = 31244
@@ -161,12 +167,12 @@ end
 
 local Config = {
 	buildMenu = {
-		px = 0,py = CanvasY - 350,
+		px = 0,py = CanvasY - 340,
 		
 		isx = ICON_NORMAL_HEIGHT,isy = ICON_NORMAL_HEIGHT, --icon size
 		ix = 7,iy = 3, --icons x/y
 		iSpreadX=0,iSpreadY=0, --space between icons
-		
+		maxFontsize=28,
 		margin = 5, --distance from background border
 		
 		fadeTime = 0.25, --fade effect time, in seconds
@@ -184,13 +190,13 @@ local Config = {
 		showFilter = true
 	},
 	orderMenu = {
-		px = 0,py = CanvasY -445,
+		px = 0,py = CanvasY -435,
 		
-		isx = ICON_NORMAL_HEIGHT,isy = ICON_SML_HEIGHT,
+		isx = ICON_NORMAL_HEIGHT,isy = ICON_FLAT2_HEIGHT,
 		ix = 7,iy = 2,
 		
 		iSpreadX=0,iSpreadY=0,
-		
+		maxFontsize=15,
 		margin = 5,
 		
 		fadeTime = 0.25,
@@ -211,10 +217,10 @@ local Config = {
 		px = 0,py = CanvasY -545,
 		
 		isx = ICON_SML_HEIGHT,isy = ICON_SML_HEIGHT,
-		ix = 9,iy = 2,
+		ix = 8,iy = 2,
 		
 		iSpreadX=0,iSpreadY=0,
-		
+		maxFontsize=15,
 		margin = 5,
 		
 		fadeTime = 0.25,
@@ -391,7 +397,7 @@ local function CreateGrid(r)
 		sx=r.isx,sy=r.isy,
 		color=r.cbuttonBackground,
 		border=r.cborder,
-		maxFontsize=15 * maxFontSizeFactor,
+		maxFontsize = r.maxFontsize * maxFontSizeFactor,
 		options="n", --disable colorcodes
 		captionColor=r.ctext,
 		
@@ -428,6 +434,7 @@ local function CreateGrid(r)
 		active=false,
 	}
 	local iconWide = Copy(icon,true)
+	iconWide.maxFontsize = 15 * maxFontSizeFactor
 	iconWide.mouseHeld={
 			{1,function(mx,my,self)
 				heldHighlightWide.px = self.px
@@ -444,6 +451,7 @@ local function CreateGrid(r)
 		end
 	iconWide.sx=r.isx*2
 	local iconFlat = Copy(icon,true)
+	iconFlat.maxFontsize = 15 * maxFontSizeFactor
 	iconFlat.mouseHeld={
 			{1,function(mx,my,self)
 				heldHighlightFlat.px = self.px
@@ -463,21 +471,27 @@ local function CreateGrid(r)
 	
 	local backward = New(Copy(iconFlat,true))
 	backward.tooltip = "Show Previous Page"
-	backward.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/prev.png"
+	backward.texture = LUAUI_DIRNAME.."Images/buildmenu/prev.png"
 	local forward = New(Copy(iconFlat,true))
 	forward.tooltip = "Show Next Page (hotkey \"N\" on build orders menu)"
-	forward.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/next.png"
+	forward.texture = LUAUI_DIRNAME.."Images/buildmenu/next.png"
 	local tspacing = New(Copy(icon,true))
 	--tspacing.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/spacing"..GetSpacingIndex()..".png"
 	tspacing.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/spacing.png"
 	tspacing.caption = "    "..spacingList[GetSpacingIndex()].."    "
 	tspacing.tooltip = "Build Spacing State : spacing is applied on shift-click-drag\n\n\n(click to change)"
+	tspacing.maxFontsize = 15 * maxFontSizeFactor
 	local tfacing = New(Copy(icon,true))
-	tfacing.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/facing"..Spring.GetBuildFacing()..".png"
+	tfacing.texture = LUAUI_DIRNAME.."Images/buildmenu/facing"..Spring.GetBuildFacing()..".png"
 	tfacing.tooltip = "Build Orientation State\n\n\n(click to change)"
 	local tfilter = New(Copy(iconWide,true))
 	tfilter.tooltip = "Build Options Filter\n\n\n(click to change, or press \"B\")"
-	tfilter.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/filter.png"
+	tfilter.texture = LUAUI_DIRNAME.."Images/buildmenu/filter.png"
+
+	local tqueue = New(Copy(icon,true))
+	tqueue.maxFontsize = 25 * maxFontSizeFactor
+	tqueue.texture = LUAUI_DIRNAME.."Images/buildmenu/queue.png"
+	tqueue.tooltip = "Total Queue Size\n\n\n(right-click to reset)"
 	
 	local indicator = New({"rectangle",
 		px=0,py=0,
@@ -488,7 +502,7 @@ local function CreateGrid(r)
 		
 		effects = background.effects,
 	})
-	background.movableSlaves={backward,forward,indicator,tspacing,tfacing,tfilter}
+	background.movableSlaves={backward,forward,indicator,tspacing,tfacing,tfilter,tqueue}
 	
 	local icons = {}
 	for y=1,r.iy do
@@ -511,6 +525,7 @@ local function CreateGrid(r)
 
 				tfacing.px = icons[#icons-r.ix+1].px
 				tspacing.px = icons[#icons].px
+				tqueue.px = icons[#icons-1].px
 				tfilter.px = (tfacing.px + tspacing.px)/2 - r.isx/2
 				
 				backward.py = icons[#icons].py + r.isy + r.iSpreadY
@@ -519,6 +534,7 @@ local function CreateGrid(r)
 
 				tfacing.py = background.py + r.margin
 				tspacing.py = background.py + r.margin
+				tqueue.py = background.py + r.margin
 				tfilter.py = background.py + r.margin
 			end
 		end
@@ -529,7 +545,6 @@ local function CreateGrid(r)
 		
 		effects = background.effects,
 	}
-	local stateRectangles = {}
 	
 	New(selectHighlight)
 	New(mouseOverHighlight)
@@ -546,7 +561,6 @@ local function CreateGrid(r)
 	
 	return {
 		["stateRect"] = stateRect,
-		--["stateRectangles"] = stateRectangles,
 		["background"] = background,
 		["r"] = r,
 		["icons"] = icons,
@@ -555,6 +569,7 @@ local function CreateGrid(r)
 		["indicator"] = indicator,
 		["tfacing"] = tfacing,
 		["tspacing"] = tspacing,
+		["tqueue"] = tqueue,
 		["tfilter"] = tfilter,
 	}
 end
@@ -604,7 +619,7 @@ end
 
 
 
-local function UpdateGrid(g,cmds,orderType)
+local function UpdateGrid(g,cmds,orderType,unfilteredCmds)
 	local nCommands = #cmds
 	if (nCommands==0) then
 		g.background.active = false
@@ -616,6 +631,15 @@ local function UpdateGrid(g,cmds,orderType)
 	local icons = g.icons
 	local page = {{}}
 	
+	local totalBuildQueueSize = 0
+	if (orderType == TYPE_BUILD and unfilteredCmds) then --build orders
+		for i=1,#unfilteredCmds do
+			local cmd = unfilteredCmds[i]
+			if (cmd.params[1]) then
+				totalBuildQueueSize = totalBuildQueueSize +cmd.params[1]
+			end
+		end
+	end		
 	for i=1,nCommands do
 		local index = i-(#page-1)*#icons
 		page[#page][index] = cmds[i]
@@ -638,7 +662,7 @@ local function UpdateGrid(g,cmds,orderType)
 		columns = math.min(nCommands,r.ix)
 	end
 	local hasPages = g.pageCount > 1	
-	if (orderType ~= 1) then
+	if (orderType ~= TYPE_BUILD) then
 		g.background.sx = (r.isx*columns+r.iSpreadX*(columns-1) +r.margin*2) * scale
 	end 
 	g.background.sy = CalcGridHeight(r,rows,hasPages)*scale
@@ -651,6 +675,7 @@ local function UpdateGrid(g,cmds,orderType)
 		end
 	end
 	
+
 	for i=1,#page[curPage] do
 		local cmd = page[curPage][i]
 		local icon = icons[i]
@@ -665,12 +690,7 @@ local function UpdateGrid(g,cmds,orderType)
 				icon.texture = cmd.texture
 			end
 		end
-		if (cmd.disabled) then		-- TODO apparently this does nothing
-			icon.texturecolor = {0.5,0.5,0.5,1}	
-		else
-			icon.texturecolor = {1,1,1,1}
-		end
-		
+
 		icon.mouseClick = {
 			{1,function(mx,my,self)
 				Spring.SetActiveCommand(Spring.GetCmdDescIndex(cmd.id),1,true,false,Spring.GetModKeyState())
@@ -680,21 +700,22 @@ local function UpdateGrid(g,cmds,orderType)
 			end},
 		}
 		
-		if (orderType == 1) then --build orders
+		if (orderType == TYPE_BUILD) then --build orders
 			icon.nonInteractiveChilds = {}
 			icon.texture = "#"..cmd.id*-1
 			if (cmd.params[1]) then
-				icon.caption = "\n\n"..cmd.params[1].."          "
+				icon.caption = " "..cmd.params[1].." "
+				icon.textureColor = {0.5,0.5,0.5,1}
 			else
+				icon.textureColor = {1,1,1,1}
 				icon.caption = nil
 			end
 			if (cmd.disabled) then
-				icon.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/disabled.png"
+				icon.texture = LUAUI_DIRNAME.."Images/buildmenu/disabled.png"
 			end
 		else
 			if (cmd.type == 5) then --state cmds (fire at will, etc)
 				icon.caption = " "..(cmd.params[cmd.params[1]+2] or cmd.name).." "
-				
 				local stateCount = #cmd.params-1 --number of states for the cmd
 				local curState = cmd.params[1]+1
 
@@ -735,10 +756,16 @@ local function UpdateGrid(g,cmds,orderType)
 				icon.nonInteractiveChilds = {}
 				if (iconCmdTex[cmd.id]) then
 					if not icon.texture then 
-						icon.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/"..iconCmdTex[cmd.id]
+						icon.texture = LUAUI_DIRNAME.."Images/buildmenu/"..iconCmdTex[cmd.id]
 					end
 				else
-					icon.caption = " "..cmd.name.." "
+					local caption = cmd.name
+					-- remove the "Form" from morph options
+					local idx = string.find(caption, ' Form', 1, true)
+					if idx then
+						caption = string.sub(caption,1,idx-1)
+					end
+					icon.caption = " "..caption.." "
 				end
 			end
 		end
@@ -751,7 +778,7 @@ local function UpdateGrid(g,cmds,orderType)
 				if (g.page > g.pageCount) then
 					g.page = 1
 				end
-				UpdateGrid(g,cmds,orderType)
+				UpdateGrid(g,cmds,orderType,unfilteredCmds)
 			end},
 		}
 		g.backward.mouseClick={
@@ -760,7 +787,7 @@ local function UpdateGrid(g,cmds,orderType)
 				if (g.page < 1) then
 					g.page = g.pageCount
 				end
-				UpdateGrid(g,cmds,orderType)
+				UpdateGrid(g,cmds,orderType,unfilteredCmds)
 			end},
 		}
 		g.backward.active = nil --activate
@@ -773,7 +800,7 @@ local function UpdateGrid(g,cmds,orderType)
 		g.indicator.active = false
 	end
 
-	if (nCommands > 0 and orderType == 1) then --build orders
+	if (nCommands > 0 and orderType == TYPE_BUILD) then --build orders
 		g.tspacing.mouseClick={
 			{1,function(mx,my,self)
 				local val = GetSpacingIndex()
@@ -783,7 +810,7 @@ local function UpdateGrid(g,cmds,orderType)
 				else
 					Spring.SetBuildSpacing(spacingList[1])
 				end
-				UpdateGrid(g,cmds,orderType)
+				UpdateGrid(g,cmds,orderType,unfilteredCmds)
 			end},
 		}
 		
@@ -796,9 +823,17 @@ local function UpdateGrid(g,cmds,orderType)
 					Spring.SetBuildFacing(0)
 				end
 				
-				UpdateGrid(g,cmds,orderType)
+				UpdateGrid(g,cmds,orderType,unfilteredCmds)
 			end},
 		}
+		g.tqueue.mouseClick={
+			{3,function(mx,my,self)
+				for i=1,#unfilteredCmds do
+					local cmd = unfilteredCmds[i]
+					Spring.SetActiveCommand(Spring.GetCmdDescIndex(cmd.id),3,false,true,false,true,false,true)
+				end
+			end},
+		}		
 		g.tfilter.mouseClick={
 			{1,function(mx,my,self)
 				updateFilter(true)
@@ -821,23 +856,29 @@ local function UpdateGrid(g,cmds,orderType)
 
 		g.tspacing.active = nil --activate
 		g.tfacing.active = nil
+		g.tqueue.active = nil
 		g.tfilter.active = nil
 		
 		if (activeTabs > 1) then
-			g.tfilter.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/filter"..filter..".png"
+			g.tfilter.texture = LUAUI_DIRNAME.."Images/buildmenu/filter"..filter..".png"
 			g.tfilter.caption = "\n    "..curTab.." / "..activeTabs.."    "
 		else
-			g.tfilter.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/filter.png"
+			g.tfilter.texture = LUAUI_DIRNAME.."Images/buildmenu/filter.png"
 			g.tfilter.caption = "    "..filterLabel[filter].."    "
 		end
 		
 		
-		g.tfacing.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/facing"..Spring.GetBuildFacing()..".png"
-		--g.tspacing.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/spacing.png"
+		g.tfacing.texture = LUAUI_DIRNAME.."Images/buildmenu/facing"..Spring.GetBuildFacing()..".png"
 		g.tspacing.caption = "    "..spacingList[GetSpacingIndex()].."    "
+		if (totalBuildQueueSize > 0) then
+			g.tqueue.caption = "\n "..totalBuildQueueSize.." "
+		else
+			g.tqueue.active = false
+		end
 	else
 		g.tspacing.active = false
 		g.tfacing.active = false
+		g.tqueue.active = false
 		g.tfilter.active = false
 	end	
 end
@@ -850,7 +891,7 @@ function nextBuildOptionsPage()
 		if (g.page > g.pageCount) then
 			g.page = 1
 		end
-		UpdateGrid(g,latestBuildCmds,1)
+		UpdateGrid(g,latestBuildCmds,TYPE_BUILD,latestUnfilteredBuildCmds)
 	end				
 end
 
@@ -908,18 +949,19 @@ function widget:Initialize()
 	AutoResizeObjects() --fix for displacement on crash issue
 end
 
-local function onNewCommands(buildCmds,otherCmds,iconOtherCmds)
+local function onNewCommands(filteredBuildCmds,buildCmds,otherCmds,iconOtherCmds)
 	if (SelectedUnitsCount==0) then
 		buildMenu.page = 1
 		orderMenu.page = 1
 		iconOrderMenu.page = 1
 	end
 	
-	UpdateGrid(buildMenu,buildCmds,1)
-	UpdateGrid(orderMenu,otherCmds,2)	
-	UpdateGrid(iconOrderMenu,iconOtherCmds,2)
+	UpdateGrid(buildMenu,filteredBuildCmds,TYPE_BUILD,buildCmds)
+	UpdateGrid(orderMenu,otherCmds,TYPE_ORDER)	
+	UpdateGrid(iconOrderMenu,iconOtherCmds,TYPE_ICONORDER)
 	
-	latestBuildCmds = buildCmds
+	latestBuildCmds = filteredBuildCmds
+	latestUnfilteredBuildCmds = buildCmds
 end
 
 local function onWidgetUpdate() --function widget:Update()
@@ -1072,7 +1114,7 @@ local function GetCommands()
 		return false
 	end)
 	
-	return filteredBuildCmds,otherCmds,iconOtherCmds
+	return filteredBuildCmds,buildCmds,otherCmds,iconOtherCmds
 end
 local hijackAttempts = 0
 local layoutPing = 54352 --random number
@@ -1119,7 +1161,7 @@ function widget:Update()
 	end
 	if (updateHax2) then
 		if (SelectedUnitsCount == 0) then
-			onNewCommands({},{},{}) --flush
+			onNewCommands({},{},{},{}) --flush
 			updateHax2 = false
 		end
 	end

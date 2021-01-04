@@ -212,7 +212,7 @@ SweetSpot(piecenum) {
 }
 
 Killed(severity, corpsetype) {
-	if( severity <= 150 )
+	if( severity <= 50 )
 	{
 		if (isFloating) 
 		{
@@ -230,6 +230,9 @@ Killed(severity, corpsetype) {
 	}
 
 	corpsetype = 3;
+	explode pad type SHATTER;
+	explode b2 type SHATTER;
+	explode nano type SHATTER;
 	explode base1 type SHATTER;
 	explode base2 type SHATTER;
 	explode base3 type SHATTER;

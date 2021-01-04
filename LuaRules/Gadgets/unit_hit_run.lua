@@ -79,8 +79,8 @@ local hitNRunCmdDesc = {
 	name    = 'Production',
 	cursor  = 'Production',
 	action  = 'Production',
-	tooltip = 'Hit-and-Run mode : after firing, skip attack orders and retreat or keep moving',
-	params  = { '0', 'Keep Attacking', 'Hit-n-Run'}
+	tooltip = 'Attack Mode : after firing, keep attacking or skip attack orders and retreat/keep moving',
+	params  = { '0', 'Normal', 'Hit-n-Run'}
 }
   
 --------------------------------------------------------------------------------

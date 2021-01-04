@@ -63,10 +63,10 @@ local highPriorityNames = {
 local buildPriorityCmdDesc = {
 	id      = CMD_BUILDPRIORITY,
 	type    = CMDTYPE.ICON_MODE,
-	name    = 'Production',
-	cursor  = 'Production',
-	action  = 'Production',
-	tooltip = 'Orders: Production Priority',
+	name    = 'priority',
+	cursor  = 'Priority',
+	action  = 'priority',
+	tooltip = 'Orders: Resource access priority for construction-related activities',
 	params  = { '0', 'Normal', 'High'}
 }
   

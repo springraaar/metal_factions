@@ -37,7 +37,6 @@ local function removeComments(s)
 		return string.sub(s,1,idx-1)
 	end
 	return s
-	--return string.sub(s,1,2) == "//"
 end
 
 local function unbindKey(key)
@@ -118,6 +117,11 @@ function widget:Initialize()
 								Spring.SendCommands("bind Shift+"..key.." buildunit_"..u)
 								WG.customHotkeys["build_"..u] = key
 							end
+						else
+							unbindKey(key)
+							Spring.SendCommands("bind "..key.." "..action)
+							Spring.SendCommands("bind Shift+"..key.." "..action)
+							WG.customHotkeys[action] = key
 						end
 					else
 						-- regular binding						
