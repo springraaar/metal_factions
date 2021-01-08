@@ -28,14 +28,15 @@ include("keysym.h.lua")
 
 local NeededFrameworkVersion = 8.1
 local CanvasX,CanvasY = 1272,734 --resolution in which the widget was made (for 1:1 size)
+--TODO review this, use numbers that make more sense
 --1272,734 == 1280,768 windowed
 local vsx, vsy = gl.GetViewSizes()
 local maxFontSizeFactor = 1
-if (vsy > 1800) then
-	maxFontSizeFactor = 1.4
-elseif (vsy > 1200) then
-	maxFontSizeFactor = 1.2
-end	
+--if (vsy > 1800) then
+--	maxFontSizeFactor = 1.45
+--elseif (vsy > 1200) then
+--	maxFontSizeFactor = 1.2
+--end	
 local sGetSelectedUnitsCount = Spring.GetSelectedUnitsCount
 local sGetActiveCommand = Spring.GetActiveCommand
 local sGetActiveCmdDescs = Spring.GetActiveCmdDescs
@@ -59,8 +60,8 @@ local scale = 1			--- gui scale
 
 local ICON_FLAT_HEIGHT = 15
 local ICON_FLAT2_HEIGHT = 32
-local ICON_SML_HEIGHT = 40
-local ICON_NORMAL_HEIGHT = 45.7142857
+local ICON_SML_HEIGHT = 36
+local ICON_NORMAL_HEIGHT = 42
 
 local updateHax = false
 local updateHax2 = true
@@ -170,7 +171,7 @@ local Config = {
 		px = 0,py = CanvasY - 340,
 		
 		isx = ICON_NORMAL_HEIGHT,isy = ICON_NORMAL_HEIGHT, --icon size
-		ix = 7,iy = 3, --icons x/y
+		ix = 6,iy = 3, --icons x/y
 		iSpreadX=0,iSpreadY=0, --space between icons
 		maxFontsize=28,
 		margin = 5, --distance from background border
@@ -193,7 +194,7 @@ local Config = {
 		px = 0,py = CanvasY -435,
 		
 		isx = ICON_NORMAL_HEIGHT,isy = ICON_FLAT2_HEIGHT,
-		ix = 7,iy = 2,
+		ix = 6,iy = 2,
 		
 		iSpreadX=0,iSpreadY=0,
 		maxFontsize=15,
@@ -214,10 +215,10 @@ local Config = {
 		showFilter = false
 	},
 	iconOrderMenu = {
-		px = 0,py = CanvasY -545,
+		px = 0,py = CanvasY -538,
 		
 		isx = ICON_SML_HEIGHT,isy = ICON_SML_HEIGHT,
-		ix = 8,iy = 2,
+		ix = 7,iy = 2,
 		
 		iSpreadX=0,iSpreadY=0,
 		maxFontsize=15,
@@ -269,6 +270,57 @@ local function RedUIchecks()
 	return true
 end
 
+-- adjust Y offsets of grids to attach them to each other
+local function adjustGridYOffsets()
+	local buildMenuH = buildMenu.background.sy
+	local orderMenuH = orderMenu.background.sy
+	local iconOrderMenuH = iconOrderMenu.background.sy
+
+	local oldBuildMenuY = buildMenu.background.py
+	local oldOrderMenuY = orderMenu.background.py
+	local oldIconOrderMenuY = iconOrderMenu.background.py
+
+	local gap = 5 * scale
+	local topOffset = 210 * scale
+	iconOrderMenu.background.py = topOffset 
+	orderMenu.background.py = topOffset + iconOrderMenuH + gap	
+	buildMenu.background.py = topOffset + orderMenuH + iconOrderMenuH + gap*2
+	
+	local buildMenuYShift = buildMenu.background.py - oldBuildMenuY
+	local orderMenuYShift = orderMenu.background.py - oldOrderMenuY
+	local iconOrderMenuYShift = iconOrderMenu.background.py - oldIconOrderMenuY
+	
+	local slaves = buildMenu.background.movableSlaves
+	local o,c,niChilds = nil
+	if (slaves and #slaves > 0) then
+		for i=1,#slaves do
+			o = slaves[i]
+			o.py = o.py + buildMenuYShift
+		end
+	end
+	slaves = orderMenu.background.movableSlaves
+	if (slaves and #slaves > 0) then
+		for i=1,#slaves do
+			o = slaves[i]
+			o.py = o.py + orderMenuYShift
+			niChilds = o.nonInteractiveChilds
+			if (niChilds and #niChilds > 0) then
+				for j=1,#niChilds do
+					c = niChilds[j]
+					c.py = c.py + orderMenuYShift
+				end
+			end
+		end
+	end
+	slaves = iconOrderMenu.background.movableSlaves
+	if (slaves and #slaves > 0) then
+		for i=1,#slaves do
+			o = slaves[i]
+			o.py = o.py + iconOrderMenuYShift
+		end
+	end
+end
+
 local function AutoResizeObjects() --autoresize v2
 	if (LastAutoResizeX==nil) then
 		LastAutoResizeX = CanvasX
@@ -280,6 +332,7 @@ local function AutoResizeObjects() --autoresize v2
 	if ((lx ~= vsx) or (ly ~= vsy)) then
 		local objects = GetWidgetObjects(widget)
 		scale = vsy/ly
+		maxFontSizeFactor = scale
 		local skippedObjects = {}
 		for i=1,#objects do
 			local o = objects[i]
@@ -313,6 +366,8 @@ local function AutoResizeObjects() --autoresize v2
 		end
 		LastAutoResizeX,LastAutoResizeY = vsx,vsy
 	end
+	
+	adjustGridYOffsets()
 end
 local function CalcGridHeight(r,rows,hasPages)
 
@@ -616,7 +671,6 @@ function updateFilter(next)
 		end	
 	end
 end
-
 
 
 local function UpdateGrid(g,cmds,orderType,unfilteredCmds)
@@ -949,6 +1003,8 @@ function widget:Initialize()
 	AutoResizeObjects() --fix for displacement on crash issue
 end
 
+
+
 local function onNewCommands(filteredBuildCmds,buildCmds,otherCmds,iconOtherCmds)
 	if (SelectedUnitsCount==0) then
 		buildMenu.page = 1
@@ -960,6 +1016,7 @@ local function onNewCommands(filteredBuildCmds,buildCmds,otherCmds,iconOtherCmds
 	UpdateGrid(orderMenu,otherCmds,TYPE_ORDER)	
 	UpdateGrid(iconOrderMenu,iconOtherCmds,TYPE_ICONORDER)
 	
+	adjustGridYOffsets()
 	latestBuildCmds = filteredBuildCmds
 	latestUnfilteredBuildCmds = buildCmds
 end

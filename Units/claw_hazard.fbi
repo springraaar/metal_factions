@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=1500;
+	maxDamage=2000;
 	footprintx=2;
 	footprintz=2;
 
@@ -87,20 +87,20 @@
 	//  Miscellaneous
 	//*****************
 	stealth=1;
-	damagemodifier=0.50;
+	damagemodifier=0.66;
 
 	[CustomParams]
 	{
 		builtBy=claw_l1builder,claw_l2builder;
-		tip=Gains 50% dmg resistance when closed;
+		tip=Gains 33% dmg resistance when closed;
 	}
 
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:ROCKETFLARESML;
 	}
-	buildCostEnergy=1389;//#AUTO#
-	buildCostMetal=277;//#AUTO#
-	buildTime=3312;//#AUTO#
-	mass=934;//#AUTO#
+	buildCostEnergy=1747;//#AUTO#
+	buildCostMetal=349;//#AUTO#
+	buildTime=4165;//#AUTO#
+	mass=1972;//#AUTO#
 }

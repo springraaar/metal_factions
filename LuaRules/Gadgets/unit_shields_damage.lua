@@ -91,7 +91,7 @@ local random = math.random
 local STEP_DELAY = 6 		-- process steps every N frames
 local FIRE_DMG_PER_STEP = 6	-- 6 dmg every 6 frames, 30 frames per second -> 30 dps
 local FIRE_DMG_PER_STEP_HEAVY = 3	-- 3 dmg every 6 frames, 30 frames per second -> 15 dps to heavy armor
-local FIRE_DMG_STEPS = 30  -- 6 seconds
+local FIRE_DMG_STEPS = 35  -- 6 seconds
 local FIRE_AOE_DMG_MAX_PER_STEP = 40 --- 200 dps
 
 local BURNING_CEG = "burneffect"

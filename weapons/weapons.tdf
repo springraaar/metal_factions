@@ -147,7 +147,7 @@
 	name=Torpedoes;
 	weaponType=TorpedoLauncher;
 	model=weapon_torpedo;
-	range=660;
+	range=650;
 	reloadTime=4;
 	turret=1;
 	flightTime=4;
@@ -219,7 +219,7 @@
 	name=Torpedoes;
 	weaponType=TorpedoLauncher;
 	model=weapon_torpedo;
-	range=610;
+	range=660;
 	reloadTime=4;
 	turret=1;
 	flightTime=6;
@@ -242,11 +242,11 @@
 	}
 	[DAMAGE]
 	{
-		default=430;
+		default=415;
 		group_invincible=1;
-		armor_heavy=430;//#AUTO#
-		armor_medium=430;//#AUTO#
-		armor_light=430;//#AUTO#
+		armor_heavy=415;//#AUTO#
+		armor_medium=415;//#AUTO#
+		armor_light=415;//#AUTO#
 	}
 }
 [aven_u5commander_torpedo]
@@ -600,8 +600,8 @@
   	separation=0.1;
   	alphaDecay=0.9;
   	sizeDecay=-0.2;
-	range=720;
-	reloadTime=3.8;
+	range=680;
+	reloadTime=3.7;
 	weaponVelocity=450;
 	energyPerShot=250;
 	accuracy=150;
@@ -635,7 +635,7 @@
 	turret=1;
 	model=weapon_missile.3do;
 	texture1=null; //flare//
-	range=720;
+	range=680;
 	reloadTime=1.0;
 	flightTime=4;
 	trajectoryHeight=0.2;
@@ -662,10 +662,10 @@
 	}
 	[DAMAGE]
 	{
-		default=110;
-		armor_heavy=27;//#AUTO#
-		armor_medium=55;//#AUTO#
-		armor_light=110;//#AUTO#
+		default=130;
+		armor_heavy=32;//#AUTO#
+		armor_medium=65;//#AUTO#
+		armor_light=130;//#AUTO#
 	}
 }
 [aven_u3commander_emg]
@@ -960,18 +960,18 @@
 	weaponType=BeamLaser;
 	explosionGenerator=custom:GREENLASERBLASTWRAPPER;
 	beamTime=0.15;
-	thickness=3.234;
-	coreThickness=0.8;
+	thickness=3.534;
+	coreThickness=0.9;
 	scrollSpeed=0;
 	pulseSpeed=0;
 	rgbColor=0.0 0.61 0.0;   
 	rgbColor2=0.5 1.0 0.5;
 	intensity=1.0;
 	turret=1;
-	range=680;
+	range=690;
 	minIntensity=1.0;
 	reloadTime=2.35;
-	energyPerShot=150;
+	energyPerShot=240;
 	weaponVelocity=1533;
 	areaOfEffect=8;
 	soundStart=lasrhvy3;
@@ -989,11 +989,11 @@
 	}
 	[DAMAGE]
 	{
-		default=360;
+		default=400;
 		group_invincible=1;
-		armor_heavy=360;//#AUTO#
-		armor_medium=360;//#AUTO#
-		armor_light=360;//#AUTO#
+		armor_heavy=400;//#AUTO#
+		armor_medium=400;//#AUTO#
+		armor_light=400;//#AUTO#
 	}
 }
 [aven_dazer_disruptor]
@@ -6440,7 +6440,7 @@
 	weaponType=TorpedoLauncher;
 	collideFriendly=1;
 	model=weapon_torpedo;
-	range=650;
+	range=660;
 	reloadTime=3.0;
 	turret=1;
 	flightTime=6;
@@ -6719,7 +6719,7 @@
 	name=Heavy Plasma Cannon;
 	weaponType=Cannon;
 	turret=1;
-	range=530;
+	range=580;
 	cegTag=PLASMATRAIL2;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	reloadTime=3;
@@ -12464,7 +12464,7 @@
 	beamDecay=0.8;
 	beamTTL=5;
 	hardStop=0;
-	range=690;
+	range=700;
 	reloadTime=3.4;
 	energyPerShot=450;
 	weaponVelocity=1000;
@@ -12985,11 +12985,11 @@
 	}
 	[DAMAGE]
 	{
-		default=270;
+		default=275;
 		group_invincible=1;
-		armor_heavy=270;//#AUTO#
-		armor_medium=270;//#AUTO#
-		armor_light=270;//#AUTO#
+		armor_heavy=275;//#AUTO#
+		armor_medium=275;//#AUTO#
+		armor_light=275;//#AUTO#
 	}
 }
 [claw_u6commander_torpedo]
@@ -13038,7 +13038,7 @@
 	turret=1;
 	model=weapon_missile.3do;
 	texture1=null; //flare//
-	range=700;
+	range=690;
 	reloadTime=0.9;
 	flightTime=3.75;
 	projectiles=2;
@@ -13066,10 +13066,10 @@
 	}
 	[DAMAGE]
 	{
-		default=128;
+		default=130;
 		armor_heavy=32;//#AUTO#
-		armor_medium=64;//#AUTO#
-		armor_light=128;//#AUTO#
+		armor_medium=65;//#AUTO#
+		armor_light=130;//#AUTO#
 	}
 }
 [claw_u2commander_torpedo]
@@ -16833,7 +16833,7 @@
 	weaponType=Cannon;
 	turret=1;
 	range=620;
-	reloadTime=6.7;
+	reloadTime=6.55;
 	weaponVelocity=330;
 	areaOfEffect=240;
 	soundStart=novafire;
@@ -17097,7 +17097,7 @@
 	weaponType=TorpedoLauncher;
 	collideFriendly=1;
 	model=weapon_torpedo;
-	range=550;
+	range=540;
 	reloadTime=3.0;
 	turret=1;
 	flightTime=4;
