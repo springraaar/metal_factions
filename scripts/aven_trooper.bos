@@ -72,7 +72,7 @@ aimPose(heading, pitch)
 		turn hand to y-axis <70.000000> speed <300.000000>;
 		turn rarm to z-axis <-30.000000> speed <300.000000>;
 
-		turn torso to y-axis <-30>+heading speed <280.000000>;
+		turn torso to y-axis <-30>+heading speed <380.000000>;
 		turn ruparm to x-axis <-90.000000> - pitch speed <400.000000>;
 		if ( !aimReady1)
 		{
@@ -89,7 +89,7 @@ aimPose(heading, pitch)
 		turn hand to y-axis <0.000000> speed <300.000000>;
 		turn rarm to z-axis <0.000000> speed <300.000000>;
 
-		turn torso to y-axis heading speed <280.000000>;
+		turn torso to y-axis heading speed <380.000000>;
 		turn ruparm to x-axis <-90.000000> - pitch speed <400.000000>;
 		if ( !aimReady1)
 		{
@@ -392,7 +392,7 @@ FirePrimary()
 
 AimPrimary(heading, pitch)
 {
-	call-script updateAimHelper1(heading,pitch + <90.000000>,<280>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	call-script updateAimHelper1(heading,pitch + <90.000000>,<380>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;

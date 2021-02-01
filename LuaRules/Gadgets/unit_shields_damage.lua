@@ -72,6 +72,7 @@ local spSetUnitExperience = Spring.SetUnitExperience
 local spGetGroundHeight = Spring.GetGroundHeight
 local spGetUnitDirection = Spring.GetUnitDirection
 local spSetUnitVelocity = Spring.SetUnitVelocity
+local spAddUnitImpulse = Spring.AddUnitImpulse
 local spGetUnitIsStunned = Spring.GetUnitIsStunned
 local spAreTeamsAllied = Spring.AreTeamsAllied
 local spSetUnitDirection = Spring.SetUnitDirection
@@ -181,19 +182,7 @@ local upgradeFinishedDefIds = {
 	[WeaponDefNames["upgrade_blue"].id] = true
 }
 
-local continuousBeamWeaponDefIds = {
-	[WeaponDefNames["sphere_commander_beam"].id] = true,
-	[WeaponDefNames["sphere_u1commander_beam"].id] = true,
-	[WeaponDefNames["sphere_u2commander_beam"].id] = true,
-	[WeaponDefNames["sphere_u3commander_beam"].id] = true,
-	[WeaponDefNames["sphere_u4commander_beam"].id] = true,
-	[WeaponDefNames["sphere_emerald_sphere_beam"].id] = true,
-	[WeaponDefNames["sphere_ruby_sphere_beam"].id] = true,
-	[WeaponDefNames["sphere_obsidian_sphere_beam"].id] = true,
-	[WeaponDefNames["sphere_chroma_beam1"].id] = true,
-	[WeaponDefNames["sphere_chroma_beam2"].id] = true,
-	[WeaponDefNames["sphere_chroma_beam3"].id] = true
-}
+local expDmgScalingWeaponDefIds = {}
 
 local reducedDamageLongRangeRocketsWeaponDefIds = {
 	[WeaponDefNames["aven_nuclear_rocket_d"].id] = true,
@@ -273,13 +262,16 @@ function gadget:Initialize()
 		unitArmorTypeTable[ud.id] = armorType
     end
 
-	-- find weapon hitpower and paralyzer status
+	-- find weapon hitpower, paralyzer status and
     for _,wd in pairs(WeaponDefs) do        
 		local hitpower = POWER_L
 		if wd.customParams and wd.customParams.hitpower then
 			hitpower = tonumber(wd.customParams.hitpower)
 		end
- 	
+ 		
+ 		if wd.customParams and wd.customParams.expdmgscaling then
+ 			expDmgScalingWeaponDefIds[wd.id] = true
+ 		end
     	weaponDefIdByNameTable[wd.name] = wd.id
     	weaponHitpowerTable[wd.id] = hitpower
     	weaponParalyzerTable[wd.id] = wd.paralyzer
@@ -322,7 +314,8 @@ end
 function gadget:GameFrame(n)
 	
 	-- make stunned aircraft fall
-	local x,y,z,h,dx,dy,dz, factor = 0
+	-- TODO this should be reviewed and moved to unit physics handler
+	local x,y,z,h,dx,dy,dz, vx,vy,vz,factor = 0
 	for unitId,_ in pairs(stunnedAircraftTable) do  
 		x,y,z = spGetUnitPosition(unitId)
 		h = spGetGroundHeight(x,z)
@@ -330,11 +323,17 @@ function gadget:GameFrame(n)
 		factor = math.min((y - h) / 70,3)
 		if (y > (h+70)) then
 			dx,dy,dz = spGetUnitDirection(unitId)
-			spSetUnitVelocity(unitId,dx * factor,dy-1 * factor,dz * factor)
+			vx,vy,vz,v = spGetUnitVelocity(unitId)
+			-- not moving much, push them down
+			if (vx and vy >= -0.1 and v < 0.2) then
+				spAddUnitImpulse(unitId,dx * factor,dy-1 * factor,dz * factor)
+			end
+			
+			--spSetUnitVelocity(unitId,dx * factor,dy-1 * factor,dz * factor)
 		else
-			dx,dy,dz = spGetUnitDirection(unitId)
-			spSetUnitVelocity(unitId,0,0,0)
-			spSetUnitDirection(unitId,dx,0,dz)
+			--dx,dy,dz = spGetUnitDirection(unitId)
+			--spSetUnitVelocity(unitId,0,0,0)
+			--spSetUnitDirection(unitId,dx,0,dz)
 		end
 	end
 
@@ -553,10 +552,10 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		end
 	end
 	 
-	-- increase damage due to veteran status for continuous beam weapons
+	-- increase damage due to veteran status for most weapons
 	-- to compensate for not getting reload time reduction
 	local dmgMod = 0 
-	if (continuousBeamWeaponDefIds[weaponDefID]) then
+	if (expDmgScalingWeaponDefIds[weaponDefID]) then
 		if attackerID and attackerID > 0 then
 			local xp = spGetUnitExperience(attackerID)
 			local xpMod = 1

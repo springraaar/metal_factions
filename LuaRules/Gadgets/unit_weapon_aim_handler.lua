@@ -268,6 +268,13 @@ function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attac
 					--Spring.Echo("f="..f.."unit "..attackerID.." refuses to aim at target "..tostring(targetID))
 					return false,defaultPriority
 				end
+			elseif (GG.okpIncendiaryWeaponDefIds[attackerWeaponDefID]) then
+				local f = spGetGameFrame()
+				local lastFireFrame = GG.unitFireFrameByTargetIdIncendiary[targetID]
+				if ( lastFireFrame and (f - lastFireFrame < GG.OKP_FRAMES) ) then
+					--Spring.Echo("f="..f.."unit "..attackerID.." refuses to aim at target "..tostring(targetID))
+					return false,defaultPriority
+				end
 			end 
 			
 			if (droneDefIds[defId]) then

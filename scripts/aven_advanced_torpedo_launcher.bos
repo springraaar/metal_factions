@@ -67,47 +67,24 @@ QueryPrimary(piecenum)
 	piecenum = flare;
 }
 
-SweetSpot(piecenum)
+FirePrimary() 
 {
-	piecenum = base;
+	emit-sfx 1024+0 from flare;
 }
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode base type BITMAPONLY | BITMAP1;
-		explode flare type BITMAPONLY | BITMAP2;
-		explode gun type BITMAPONLY | BITMAP3;
-		explode fb1 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
-		explode center type SHATTER | EXPLODE_ON_HIT | BITMAP3;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode base type BITMAPONLY | BITMAP1;
-		explode flare type FALL | BITMAP2;
-		explode gun type SHATTER | BITMAP3;
-		explode fb1 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
-		explode center type SHATTER | EXPLODE_ON_HIT | BITMAP3;
-		return (0);
+		explode gun type SHATTER;
+		explode fb1 type SHATTER;
+		explode launcher type SHATTER;
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode base type BITMAPONLY | BITMAP1;
-		explode flare type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-		explode gun type SHATTER | BITMAP3;
-		explode fb1 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
-		explode center type SHATTER | EXPLODE_ON_HIT | BITMAP3;
-		return (0);
-	}
-	corpsetype = 3;
-	explode base type BITMAPONLY | BITMAP1;
-	explode flare type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-	explode gun type SHATTER | EXPLODE_ON_HIT | BITMAP3;
-	explode fb1 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
-	explode center type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+	explode gun type SHATTER;
+	explode fb1 type SHATTER;
+	explode floatbase type SHATTER;
+	explode center type SHATTER;
+	explode launcher type SHATTER;
+	return (2);
 }

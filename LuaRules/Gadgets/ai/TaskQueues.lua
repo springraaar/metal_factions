@@ -2514,7 +2514,7 @@ avenHovercraftPlant = {
 -- choices by threat type : AIR, DEFENSES, NORMAL[, UNDERWATER]
 
 function gearL2KbotChoice(self) return choiceByType(self,{"gear_titan","gear_barrel"},{"gear_big_bob","gear_moe","gear_moe","gear_luminator"},{"gear_big_bob","gear_pyro","gear_moe","gear_psycho","gear_titan","gear_barrel"}) end
-function gearL1LightChoice(self) return choiceByType(self,"gear_crasher",{"gear_assaulter","gear_thud","gear_thud"},{"gear_crasher","gear_kano","gear_box","gear_instigator","gear_aggressor"}) end
+function gearL1LightChoice(self) return choiceByType(self,"gear_crasher",{"gear_assaulter","gear_thud","gear_thud"},{"gear_crasher","gear_kano","gear_box","gear_instigator","gear_pinion"}) end
 function gearL2VehicleChoice(self) return choiceByType(self,"gear_marauder",{"gear_mobile_artillery","gear_reaper","gear_eruptor"},{"gear_reaper","gear_marauder","gear_rhino","gear_flareon"}) end
 function gearL2AirChoice(self) return choiceByType(self,"gear_vector",{"gear_stratos","gear_firestorm"},{"gear_vector","gear_stratos","gear_firestorm"},"gear_whirlpool") end
 function gearL2KbotRadar(self) return buildWithLimitedNumber(self,"gear_voyeur",1) end
@@ -2752,7 +2752,7 @@ gearLightPlant = {
 	"gear_harasser",
 	"gear_construction_kbot",
 	{action = "randomness", probability = 0.5, value = "gear_construction_kbot"},
-	"gear_aggressor",
+	"gear_pinion",
 	changeQueueToLightGroundRaidersIfNeeded,
 	gearL1LightChoice,
 	gearL1LightChoice,

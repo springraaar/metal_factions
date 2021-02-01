@@ -40,10 +40,10 @@
 	// ------------------- movement
 	maxWaterDepth=12;
 	maxSlope=17;
-	maxVelocity=2;
-	brakeRate=0.04;
-	Acceleration=0.06;
-	turnRate=450;
+	maxVelocity=2.1;
+	brakeRate=0.09;
+	Acceleration=0.1;
+	turnRate=500;
 	movementClass=TANKSH3;
 
 	// ------------------- scout
@@ -83,8 +83,8 @@
 	{
 		explosionGenerator0=custom:GLOWSML;
 	}
-	buildCostEnergy=944;//#AUTO#
-	buildCostMetal=188;//#AUTO#
-	buildTime=2251;//#AUTO#
-	mass=375;//#AUTO#
+	buildCostEnergy=961;//#AUTO#
+	buildCostMetal=192;//#AUTO#
+	buildTime=2291;//#AUTO#
+	mass=376;//#AUTO#
 }

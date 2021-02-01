@@ -137,7 +137,7 @@ local magnetarDefIds = {
 }
 local magnetarIds = {}
 local magnetarAuraWeaponId = WeaponDefNames["sphere_magnetar_aura_blast"].id
-local magnetarAuraEPerProjectile = 40 
+local magnetarAuraEPerProjectile = 80 
 
 local speedModifierUnitIds = {} -- (unitId,modifier)
 

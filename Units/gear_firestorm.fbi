@@ -24,7 +24,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=3000;
+	maxDamage=4500;
 	footprintx=5;
 	footprintz=5;
 
@@ -59,7 +59,7 @@
 	//************
 	acceleration=0.1;
 	brakeRate=0.1;
-	maxVelocity=3.7;
+	maxVelocity=3.3;
 	cruiseAlt=120;
 	turnRate=600;
 
@@ -98,7 +98,7 @@
 	CanLoopbackAttack=0;
 	collide=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =55 15 50;
+	collisionVolumeScales =65 22 60;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
@@ -113,8 +113,8 @@
 		explosionGenerator0=custom:GLOWSML;
 		explosionGenerator1=custom:rocketflaresml;
 	}
-	buildCostEnergy=14223;//#AUTO#
-	buildCostMetal=2844;//#AUTO#
-	buildTime=33900;//#AUTO#
-	mass=849;//#AUTO#
+	buildCostEnergy=16716;//#AUTO#
+	buildCostMetal=3343;//#AUTO#
+	buildTime=39840;//#AUTO#
+	mass=1119;//#AUTO#
 }

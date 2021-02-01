@@ -64,6 +64,9 @@ local spGetTeamList = Spring.GetTeamList
 local LONG_RANGE_ROCKET_FAR_FROM_TARGET_H = 1000		
 local LONG_RANGE_ROCKET_FAR_TARGET_DIST = 900			
 
+local HIGH_ANGLE_DESCENT_FAR_FROM_TARGET_H = 500
+local HIGH_ANGLE_DESCENT_FAR_TARGET_DIST = 250
+
 -- terminal phase
 local LONG_RANGE_ROCKET_TERMINAL_DIST = 800
 local LONG_RANGE_ROCKET_SUBMUNITION_DIST = 600
@@ -97,7 +100,7 @@ local max = math.max
 local min = math.min
 local STEP_DELAY = 6 		-- process steps every N frames
 local FIRE_AOE_STEPS = 100	-- 20 seconds
-local FIRE_AOE_STEPS_AIR = 25	-- 5 seconds
+local FIRE_AOE_STEPS_AIR = 35	-- 7 seconds
 local FIRE_AOE_STEPS_AIR_H = 100
 
 local projectileWasUnderwater = {}
@@ -234,6 +237,11 @@ local destructibleWeaponIds = {
 	[WeaponDefNames["sphere_meteorite_rocket"].id]=true
 }
 
+local highAngleDescentWeaponIds = {
+	-- AVEN
+	[WeaponDefNames["aven_merl_rocket"].id]=true,
+	[WeaponDefNames["aven_ranger_rocket"].id]=true
+}
 
 local premiumRocketWeaponIds = {
 	-- AVEN
@@ -255,6 +263,8 @@ local dcRocketSpawnWeaponIds = {
 
 
 local longRangeRocketOriginalTargetsById = {}
+local highAngleDescentProjectiles = {}
+local highAngleDescentOriginalTargetsById = {}
 local disruptorProjectiles = {}
 local disruptorEffectProjectiles = {}
 local torpedoProjectiles = {}
@@ -275,8 +285,8 @@ local dynamoProjectiles = {}
 dcRocketSpawn = {}
 
 -- is close enough on x-z plane to start diving toward target
-function isCloseToTarget(px,pz,tx,tz)
-	if (abs(px-tx) < LONG_RANGE_ROCKET_FAR_TARGET_DIST) and (abs(pz-tz) < LONG_RANGE_ROCKET_FAR_TARGET_DIST) then
+function isCloseToTarget(px,pz,tx,tz,dist)
+	if (abs(px-tx) < dist) and (abs(pz-tz) < dist) then
 		return true
 	end 
 	return false
@@ -357,6 +367,11 @@ function gadget:Initialize()
 
 	-- track destructible projectiles
 	for id,_ in pairs(destructibleWeaponIds) do
+		Script.SetWatchWeapon(id,true)
+	end
+	
+	-- track destructible projectiles
+	for id,_ in pairs(highAngleDescentWeaponIds) do
 		Script.SetWatchWeapon(id,true)
 	end
 end
@@ -457,10 +472,29 @@ function gadget:GameFrame(n)
 		end
 	end
 	
-	-- handle destructible long range projectiles
+	-- handle high angle descent projectiles
 	local px,py,pz = 0
 	local ot = nil
 	local tType,st = nil
+	for id,ownerId in pairs(highAngleDescentProjectiles) do
+		px,py,pz = spGetProjectilePosition(id)
+		ot = highAngleDescentOriginalTargetsById[id]
+		tType,st = spGetProjectileTarget(id)
+		
+		if (px and ot) then
+			if (tType == string.byte('u') or tType == string.byte('f')) then
+				st = ot
+			end
+			
+			if (isCloseToTarget(px,pz,st[1],st[3],HIGH_ANGLE_DESCENT_FAR_TARGET_DIST)) then
+				-- if close to original target, go towards it
+				spSetProjectileTarget(id,ot[1],ot[2],ot[3])
+			end
+		end
+	
+	end
+	
+	-- handle destructible long range projectiles
 	local nearCollision = false
 	for id,ownerId in pairs(destructibleProjectiles) do
 		px,py,pz = spGetProjectilePosition(id)
@@ -539,7 +573,7 @@ function gadget:GameFrame(n)
 				--Spring.Echo("projectile velocity sq = "..tostring(sqV))
 			end
 			
-			if (isCloseToTarget(px,pz,st[1],st[3])) then
+			if (isCloseToTarget(px,pz,st[1],st[3],LONG_RANGE_ROCKET_FAR_TARGET_DIST)) then
 				-- if close to original target, go towards it
 				spSetProjectileTarget(id,ot[1],ot[2],ot[3])
 				
@@ -725,6 +759,31 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		torpedoProjectiles[proID] = true
 		return
 	end
+	if highAngleDescentWeaponIds[weaponDefID] then
+		highAngleDescentProjectiles[proID] = proOwnerID
+		
+		local tType,tInfo = spGetProjectileTarget(proID)
+		if (tType == string.byte('u')) then
+			 local x,y,z = spGetUnitPosition(tInfo)
+			 if (x) then
+			 	highAngleDescentOriginalTargetsById[proID] = {x,y,z}
+			 	tInfo = {x,y,z}
+			 end
+		elseif (tType == string.byte('f')) then
+			 local x,y,z = spGetFeaturePosition(tInfo)
+			 if (x) then
+			 	highAngleDescentOriginalTargetsById[proID] = {x,y,z}
+			 	tInfo = {x,y,z}
+			 end
+		else
+			highAngleDescentOriginalTargetsById[proID] = tInfo
+		end
+		
+		-- if far from original target, go towards the point high above it, randomly offset to spread out
+		spSetProjectileTarget(proID,tInfo[1]+50-random(100),tInfo[2]+HIGH_ANGLE_DESCENT_FAR_FROM_TARGET_H,tInfo[3]+50-random(100))
+		return
+	end
+	
 	if destructibleWeaponIds[weaponDefID] then
 		destructibleProjectiles[proID] = proOwnerID
 		spSetUnitRulesParam(proOwnerID,"destructible_projectile_id",proID,{public = true})
@@ -806,6 +865,10 @@ end
 function gadget:ProjectileDestroyed(proID)
 	if smartTrackingProjectiles[proID] then
 		smartTrackingProjectiles[proID] = nil
+	end
+	if highAngleDescentProjectiles[proID] then
+		highAngleDescentProjectiles[proID] = nil
+		highAngleDescentOriginalTargetsById[proID] = nil
 	end
 	if destructibleProjectiles[proID] then
 		-- if was a DC rocket, exploding near the ground

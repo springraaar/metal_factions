@@ -120,6 +120,7 @@ FirePrimary()
 	if (gun_1 == [0])
 	{
 		move torp1 to z-axis [-3.000000] now;
+		emit-sfx 1024+0 from flash1;
 		sleep 300;
 		gun_1 = [1];
 		sleep 3000;
@@ -130,6 +131,7 @@ FirePrimary()
 	if (gun_1 == [1])
 	{
 		move torp2 to z-axis [-3.000000] now;
+		emit-sfx 1024+0 from flash2;
 		sleep 300;
 		gun_1 = [0];
 		sleep 3000;		
@@ -156,47 +158,20 @@ QueryPrimary(piecenum)
 	}
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-}
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode barrel1 type BITMAPONLY | BITMAP1;
-		explode sleeve type BITMAPONLY | BITMAP1;
-		explode base type BITMAPONLY | BITMAP2;
-		explode flash1 type BITMAPONLY | BITMAP3;
-		explode turret type BITMAPONLY | BITMAP4;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode barrel1 type FALL | BITMAP1;
-		explode sleeve type FALL | BITMAP1;
-		explode base type BITMAPONLY | BITMAP2;
-		explode flash1 type FALL | BITMAP3;
-		explode turret type SHATTER | BITMAP4;
-		return (0);
+		explode turret type SHATTER;
+		explode slpt type SHATTER;
+		explode sleeve type SHATTER;
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode barrel1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode base type BITMAPONLY | BITMAP2;
-		explode flash1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-		explode turret type SHATTER | BITMAP4;
-		return (0);
-	}
-	corpsetype = 3;
-	explode barrel1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-	explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-	explode base type BITMAPONLY | BITMAP2;
-	explode flash1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-	explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode base type SHATTER;
+	explode base2 type SHATTER;
+	explode turret type SHATTER;
+	explode slpt type SHATTER;
+	explode sleeve type SHATTER;
+	return (2);
 }

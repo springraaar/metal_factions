@@ -84,7 +84,7 @@ Shot1()
 	if(gun_1 == [0])
 	{
 		emit-sfx 1024+1 from firept1;
-		move mis1 to z-axis [-3.000000] now;
+		move mis1 to z-axis [-5.000000] now;
 		sleep 100;
 		gun_1 = [1];
 		sleep 1000;
@@ -94,7 +94,7 @@ Shot1()
 	if(gun_1 == [1])
 	{
 		emit-sfx 1024+1 from firept2;
-		move mis2 to z-axis [-3.000000] now;
+		move mis2 to z-axis [-5.000000] now;
 		sleep 100;
 		gun_1 = [0];
 		sleep 1000;

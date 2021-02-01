@@ -39,8 +39,7 @@ local noVerticalRangeBoostWeapons = {
 	gear_cube_flamethrower = true,
 	claw_sword_laser = true,
 	claw_u6commander_laser = true,
-	claw_knife_laser = true,
-	gear_vector_flare = true
+	claw_knife_laser = true
 }
 
 local function processSoundDefaults(wd)
@@ -104,7 +103,7 @@ for wdName, wd in pairs(WeaponDefs) do
 			wd.weapontype = "Cannon"
 		end
 	end
-
+	
 	-- reduce cratering
 	if (not wd.cratermult) then
 		wd.cratermult = 0.1
@@ -116,11 +115,17 @@ for wdName, wd in pairs(WeaponDefs) do
 			wd.weapontype = "Cannon"
 		end
 		
+		
 		if (noVerticalRangeBoostWeapons[wdName]) then
 			wd.heightmod = 1
 			wd.heightboostfactor = 0
 		elseif (wd.weapontype == "BeamLaser") then
 			wd.heightmod = 1.0		-- default was 1.0
+			-- fading effect for beams proportional to damage
+			if wd.damage and wd.damage.default then
+				local defaultDamage = tonumber(wd.damage.default)
+				wd.beamttl = 3 + defaultDamage / 150
+			end
 		elseif (wd.weapontype == "LaserCannon") then
 			wd.heightmod = 1.0		-- default was 1.0
 		elseif (wd.weapontype == "Cannon" or wd.weapontype == "EmgCannon" ) then

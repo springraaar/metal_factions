@@ -61,7 +61,7 @@
 	//  Movement
 	//************
 	movementClass=KBOTHT4;
-	turnRate=556;
+	turnRate=700;
 	acceleration=0.9;
 	brakeRate=1;
 	maxVelocity=1.15;
@@ -88,7 +88,7 @@
 	//  Orders
 	//**********
 	noAutoFire=0;
-
+	moveState=0;
 
 	//************************************************************
 	//  Miscellaneous
@@ -112,8 +112,8 @@
 		explosionGenerator3=custom:hrglowbig3;
 	}
 
-	buildCostEnergy=33738;//#AUTO#
-	buildCostMetal=6747;//#AUTO#
-	buildTime=80410;//#AUTO#
-	mass=3374;//#AUTO#
+	buildCostEnergy=34799;//#AUTO#
+	buildCostMetal=6959;//#AUTO#
+	buildTime=82937;//#AUTO#
+	mass=3444;//#AUTO#
 }

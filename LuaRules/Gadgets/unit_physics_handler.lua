@@ -83,6 +83,7 @@ local waterCollisionSound = "Sounds/SPLSLRG.wav"
 
 local nanoExplosionCEG = "NANOFRAMEBLAST"
 local nanoExplosionSound = "Sounds/NECRNAN2.wav"
+local extraDeathEffectsCEG = "EXTRADEATHEFFECTS"
 
 local MOVING_CHECK_DELAY = 10
 local COLLISION_SPEED_THRESHOLD = 5
@@ -640,7 +641,7 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 			end
 		end
 	-- unit was not fully built but leaves wreckage		
-	elseif (ud and (not isDrone(ud)) and (not isFeatureSpawner(ud)) and (tostring(ud.wreckName) ~= '') and bp > 0.5 and bp < 1 and attackerId ~= nil) then
+	elseif (ud and (not isDrone(ud)) and (not isFeatureSpawner(ud)) and (tostring(ud.wreckName) ~= '')  and attackerId ~= nil) then
 		--Spring.Echo("attackerId="..tostring(attackerId).." attackerDefId="..tostring(attackerDefId).." attackerTeamId="..tostring(attackerTeamId))
 		
 		local physics = unitPhysicsById[unitId]
@@ -652,41 +653,46 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 			
 			-- bigger effect for expensive units
 			radius = radius + ud.metalCost / 100 
+
 			
-			spSpawnCEG(nanoExplosionCEG, physics[1],physics[2],physics[3],0,1,0,radius,radius)
-			spPlaySoundFile(nanoExplosionSound, math.min(1,math.max(0.2,radius/50)), physics[1], physics[2], physics[3])
-			
-			
-			local dir = 0
-			if abs(dx) > abs(dz) then
-				if dx > 0 then
-					dir = 1
-				else 
-					dir = 3
+			if (bp > 0.5) then
+				-- under construction but past halfway, spawn explosion and wreck
+				if (bp < 1) then
+					local dir = 0
+					if abs(dx) > abs(dz) then
+						if dx > 0 then
+							dir = 1
+						else 
+							dir = 3
+						end
+					else
+						if dz > 0 then
+							dir = 0
+						else 
+							dir = 2
+						end
+					end
+					--Spring.Echo("dir="..dir)
+					
+					-- create actual explosion
+					local createdId = spSpawnProjectile(WeaponDefNames[ud.deathExplosion].id,{
+						["pos"] = {physics[1],physics[2]+radius/3,physics[3]},
+						["end"] = {physics[1],physics[2]+radius/3,physics[3]},
+						["speed"] = {0,1,0},
+						["owner"] = unitTeam
+					})
+					if (createdId) then
+						spSetProjectileCollision(createdId)
+					end
+					
+					-- create feature
+					fId = spCreateFeature(ud.wreckName,physics[1],physics[2],physics[3],dir)
 				end
-			else
-				if dz > 0 then
-					dir = 0
-				else 
-					dir = 2
-				end
+				
+				-- spawn extra death effects
+				spSpawnCEG(extraDeathEffectsCEG, physics[1],physics[2],physics[3],0,1,0,radius,radius)
 			end
-			--Spring.Echo("dir="..dir)
-			
-			-- create actual explosion
-			local createdId = spSpawnProjectile(WeaponDefNames[ud.deathExplosion].id,{
-				["pos"] = {physics[1],physics[2]+radius/3,physics[3]},
-				["end"] = {physics[1],physics[2]+radius/3,physics[3]},
-				["speed"] = {0,1,0},
-				["owner"] = unitTeam
-			})
-			if (createdId) then
-				spSetProjectileCollision(createdId)
-			end
-			
-			-- create feature
-			fId = spCreateFeature(ud.wreckName,physics[1],physics[2],physics[3],dir)
-		end		
+		end	
 	end
 
 

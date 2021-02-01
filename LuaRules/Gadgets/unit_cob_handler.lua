@@ -47,7 +47,17 @@ end
 GG.unitFireFrameByTargetId = {}
 GG.lessThan500HPTargetDefIds = {}
 GG.OKP_FRAMES = 90		-- 3 seconds
+GG.OKP_FRAMES_INCENDIARY = 150		-- 5 seconds
 GG.mobilityModifier = {}
+
+GG.okpIncendiaryWeaponDefIds = {
+	[WeaponDefNames["gear_incendiary_mine_missile"].id]=true
+}
+GG.unitFireFrameByTargetIdIncendiary = {}
+
+local OKP_TYPE_DEFAULT = 0
+local OKP_TYPE_INCENDIARY = 1
+
 local COMSAT_OKP_FRAMES = 30*30 -- 30s
 local comsatFireFrameByAllyIdAndPosition = {}
 local comsatAllowIdThisFrameByAllyIdAndPosition = {}
@@ -194,19 +204,30 @@ end
 
 -- checks if a unit is allowed to fire at a target
 -- returns 0 (deny) or 1 (allow) 
-function checkAllowFiring(unitID, unitDefID, teamID, wNum, targetID)
+function checkAllowFiring(unitID, unitDefID, teamID, wNum, targetID, type)
 	local f = spGetGameFrame()
 	local result = 1
 	
+	if not type then
+		type = OKP_TYPE_DEFAULT
+	end
 	if targetID and tonumber(targetID) > 0 then
-		local defId = spGetUnitDefID(targetID)
-		if (defId and GG.lessThan500HPTargetDefIds[defId]) then
-			local lastFireFrame = GG.unitFireFrameByTargetId[targetID]
-			if ( lastFireFrame and (f - lastFireFrame < GG.OKP_FRAMES) ) then
+		if (type == OKP_TYPE_DEFAULT) then
+			local defId = spGetUnitDefID(targetID)
+			if (defId and GG.lessThan500HPTargetDefIds[defId]) then
+				local lastFireFrame = GG.unitFireFrameByTargetId[targetID]
+				if ( lastFireFrame and (f - lastFireFrame < GG.OKP_FRAMES) ) then
+					--Spring.Echo("f="..f.."unit "..unitID.." prevented from firing weapon "..wNum.." at target "..tostring(targetID))
+					result = 0
+				end
+			end 
+		elseif (type == OKP_TYPE_INCENDIARY) then
+			local lastFireFrame = GG.unitFireFrameByTargetIdIncendiary[targetID]
+			if ( lastFireFrame and (f - lastFireFrame < GG.OKP_FRAMES_INCENDIARY) ) then
 				--Spring.Echo("f="..f.."unit "..unitID.." prevented from firing weapon "..wNum.." at target "..tostring(targetID))
 				result = 0
 			end
-		end 
+		end
 	end
 
 	--Spring.Echo("f="..f.." unit "..unitID.." checking if fire weapon "..wNum.." at target "..tostring(targetID).." : "..(result==1 and "YES" or "NO" ))
@@ -215,14 +236,22 @@ end
 
 
 -- marks that a unit fired at a target
-function checkLockTarget(unitID, unitDefID, teamID, targetID)
+function checkLockTarget(unitID, unitDefID, teamID, targetID, type)
 	local f = spGetGameFrame()
 	
+	if not type then
+		type = OKP_TYPE_DEFAULT
+	end
 	if targetID and tonumber(targetID) > 0 then
-		local defId = spGetUnitDefID(targetID)
-		if (defId and GG.lessThan500HPTargetDefIds[defId]) then
-			GG.unitFireFrameByTargetId[targetID] = f
-		end 
+	
+		if (type == OKP_TYPE_DEFAULT) then
+			local defId = spGetUnitDefID(targetID)
+			if (defId and GG.lessThan500HPTargetDefIds[defId]) then
+				GG.unitFireFrameByTargetId[targetID] = f
+			end
+		elseif (type == OKP_TYPE_INCENDIARY) then
+			GG.unitFireFrameByTargetIdIncendiary[targetID] = f
+		end
 	end
 	
 	--Spring.Echo("f="..f.." unit "..unitID.." fired at target "..tostring(targetID))
@@ -427,6 +456,11 @@ function gadget:GameFrame(n)
    			GG.unitFireFrameByTargetId[k] = nil
    		end
     end
+    for k,v in pairs(GG.unitFireFrameByTargetIdIncendiary) do
+   		if (n-v > 2*GG.OKP_FRAMES ) then
+   			GG.unitFireFrameByTargetIdIncendiary[k] = nil
+   		end
+    end    
 
 	-- clean up comsat okp map
     for _,allyId in pairs(spGetAllyTeamList()) do

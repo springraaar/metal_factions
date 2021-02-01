@@ -50,7 +50,6 @@
 	sightDistance=500;
 	radarDistance=0;
 
-
 	// ------------------- weapons
 	Weapon1=claw_bishop_missile;
 	badTargetCategory1=VTOL;
@@ -58,8 +57,8 @@
 	explodeAs=SMALL_UNITEX;
 	selfDestructAs=SMALL_UNIT;
 
-
 	// ------------------- orders
+	moveState=0;
 
 	// ------------------- misc
 	noAutoFire=0;

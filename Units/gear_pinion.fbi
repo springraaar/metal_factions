@@ -4,7 +4,7 @@
 	//  Unit Description
 	//********************
 	side=Gear;
-	name=Aggressor;
+	name=Pinion;
 	description=Infantry Robot;
 	iconType=mobilefighter;
 
@@ -16,10 +16,10 @@
 	//************************************************************
 	//  External Specs
 	//******************
-	unitName=gear_aggressor;
-	objectName=gear_aggressor.3do;
-	corpse=gear_aggressor_dead;
-	buildPic=gear_aggressor.png;
+	unitName=gear_pinion;
+	objectName=gear_pinion.3do;
+	corpse=gear_pinion_dead;
+	buildPic=gear_pinion.png;
 	soundCategory=CORAK;
 
 	//************************************************************
@@ -77,7 +77,7 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=gear_aggressor_laser;
+	weapon1=gear_pinion_laser;
 	badTargetCategory1=NOTAIR;
 	explodeAs=SMALL_UNITEX;
 	selfDestructAs=SMALL_UNIT;
@@ -104,8 +104,8 @@
 		explosionGenerator0=custom:GLOWSML;
 	}
 
-	buildCostEnergy=556;//#AUTO#
-	buildCostMetal=111;//#AUTO#
-	buildTime=1325;//#AUTO#
-	mass=96;//#AUTO#
+	buildCostEnergy=588;//#AUTO#
+	buildCostMetal=117;//#AUTO#
+	buildTime=1403;//#AUTO#
+	mass=97;//#AUTO#
 }

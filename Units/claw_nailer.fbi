@@ -1,0 +1,104 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Nailer;
+	description=Underwater Fast Torpedo Launcher;
+	iconType=staticartilleryfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW WEAPON LEVEL2 NOTAIR UNDERWATER;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_nailer;
+	objectName=claw_nailer.3do;
+	corpse=claw_nailer_dead;
+	buildPic=claw_nailer.png;
+	soundCategory=ADV_TORPLAUNCH;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=2000;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=wwww wwww wwww wwww;
+	activateWhenBuilt=1;
+	collisionvolumetype=cyly;
+	collisionVolumeScales=50 25 50;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	minwaterdepth=20;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=600;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_nailer_torpedo;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	noshadow=1;
+
+	[CustomParams]
+	{
+		builtBy=claw_l2builder;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflaresml;
+	}
+	buildCostEnergy=9607;//#AUTO#
+	buildCostMetal=1921;//#AUTO#
+	buildTime=22896;//#AUTO#
+	mass=2280;//#AUTO#
+}

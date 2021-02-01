@@ -13,7 +13,6 @@
 
 	// ------------------- external specs
 	unitName=sphere_magnetar;
-	UnitNumber=10000;
 	objectName=sphere_magnetar.3do;
 	corpse=sphere_magnetar_dead;
 	buildPic=sphere_magnetar.png;
@@ -66,7 +65,7 @@
 	// ------------------- scout
 	sightDistance=600;
 	radarDistance=0;
-	radarDistanceJam=500;
+	radarDistanceJam=700;
 	sonarDistance=0;
 
 
@@ -101,15 +100,15 @@
 	[CustomParams]
 	{
 		builtBy=sphere_sphere_factory;
-		energyCostMoving=280;
-		tip=Requires 280E/s to move. Regenerates 250HP/s. If charged, 400 range aura pulls and deals 220(L) disruptor dmg/s; 
+		energyCostMoving=320;
+		tip=Requires 320E/s to move. Regenerates 250HP/s. If charged, 440 range aura pulls and deals 400(L) disruptor dmg/s; 
 	}
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:magnetar;
 		explosionGenerator1=custom:magnetaraura;
 	}
-	buildcostenergy=30000;//#AUTO#
-	buildcostmetal=6000;//#AUTO#
-	buildtime=72000;//#AUTO#
+	buildcostenergy=50000;//#AUTO#
+	buildcostmetal=10000;//#AUTO#
+	buildtime=120000;//#AUTO#
 }

@@ -4273,10 +4273,27 @@
 		class=CSpherePartSpawner;
 		[properties]
 		{
-			ttl=10;
-			alpha=0.05;
-			expansionSpeed=30;
+			ttl=12;
+			alpha=0.12;
+			expansionSpeed=31;
 			color=1.0, 1, 1;
+		}
+		ground=1;
+		air=1;
+		count=1;
+		unit=1;
+   		water=1;
+		alwaysVisible=1;
+	}
+	[windsphere2]
+	{
+		class=CSpherePartSpawner;
+		[properties]
+		{
+			ttl=12;
+			alpha=0.12;
+			expansionSpeed=28;
+			color=0, 1, 1;
 		}
 		ground=1;
 		air=1;

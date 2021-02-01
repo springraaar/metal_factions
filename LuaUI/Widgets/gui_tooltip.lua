@@ -231,9 +231,9 @@ function GetTooltipWeaponData(ud, xpMod, rangeMod, dmgMod)
 			local weap=WeaponDefs[w.weaponDef]
 			if weap.isShield == false and weap.description ~= "No Weapon" then
 				local weapon_action="Dmg/s"
-				local reloadTime = weap.reload / xpMod
+				local reloadTime = weap.reload
 				local isBeamLaser = weap.type == "BeamLaser"
-				local damage = dmgMod * (weap.damages[Game.armorTypes.default] * (weap.projectiles*weap.salvoSize)) 
+				local damage = dmgMod * (weap.damages[Game.armorTypes.default] * (weap.projectiles*weap.salvoSize)) * xpMod 
 				local dps = damage / reloadTime
 				local energyPerSecond = (weap.energyCost * (weap.salvoSize)) / reloadTime
 				local isDisruptor = false

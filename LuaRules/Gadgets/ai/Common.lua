@@ -877,7 +877,7 @@ attackerList =
 
 ------------------------------------------------ GEAR
 ----------- l1
-	"gear_aggressor",
+	"gear_pinion",
 	"gear_thud",
 	"gear_kano",
 	"gear_crasher",
@@ -1109,6 +1109,7 @@ unitAbleToHitUnderwater = {
 	claw_dancer = true,
 	claw_cutter = true,
 	claw_trident = true,
+	claw_nailer = true,	
 ------------------------------------------------ SPHERE
 	sphere_commander = true,
 	sphere_u1commander = true,
@@ -1364,7 +1365,7 @@ UWFusionByFaction = { [side1Name] = "aven_fusion_reactor", [side2Name] = "gear_f
 waterLightAAByFaction = { [side1Name] = "aven_defender", [side2Name] = "gear_pulverizer"}
 lev1WaterHeavyDefenseByFaction = {[side1Name] = {"aven_sentinel"}, [side2Name] = {"gear_blaze"}, [side3Name] = {"claw_piercer"}}
 lev1TorpedoDefenseByFaction = {[side1Name] = "aven_torpedo_launcher", [side2Name] = "gear_torpedo_launcher", [side3Name] = "claw_sinker", [side4Name] = "sphere_clam"}
-lev2TorpedoDefenseByFaction = {[side1Name] = "aven_advanced_torpedo_launcher", [side2Name] = "gear_advanced_torpedo_launcher", [side3Name] = "claw_sinker", [side4Name] = "sphere_oyster"}
+lev2TorpedoDefenseByFaction = {[side1Name] = "aven_advanced_torpedo_launcher", [side2Name] = "gear_advanced_torpedo_launcher", [side3Name] = "claw_nailer", [side4Name] = "sphere_oyster"}
 waterRadarByFaction = { [side1Name] = "aven_radar_tower", [side2Name] = "gear_radar_tower", [side3Name] = "claw_radar_tower", [side4Name] = "sphere_radar_tower"}
 sonarByFaction = { [side1Name] = "aven_sonar_station", [side2Name] = "gear_sonar_station", [side3Name] = "claw_sonar_station", [side4Name] = "sphere_sonar_station"}
 advSonarByFaction = { [side1Name] = "aven_advanced_sonar_station", [side2Name] = "gear_advanced_sonar_station", [side3Name] = "claw_advanced_sonar_station", [side4Name] = "sphere_advanced_sonar_station"}

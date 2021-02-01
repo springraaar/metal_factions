@@ -97,9 +97,12 @@
 		builtBy=sphere_l2builder;
 		tip=Gains 50% dmg resistance when closed;
 	}
-
-	buildCostEnergy=8373;//#AUTO#
-	buildCostMetal=1674;//#AUTO#
-	buildTime=19956;//#AUTO#
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflaresml;
+	}
+	buildCostEnergy=8375;//#AUTO#
+	buildCostMetal=1675;//#AUTO#
+	buildTime=19961;//#AUTO#
 	mass=2116;//#AUTO#
 }

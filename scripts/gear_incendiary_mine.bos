@@ -3,9 +3,12 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
+#define LOCK_INCENDIARY	1
+
 piece  base, top, bottom, center,missile,firept;
 
-
+lua_checkAllowFiring() { return 0; }
+lua_checkLockTarget() { return 0; }
 
 
 Create()
@@ -26,13 +29,24 @@ QueryPrimary(piecenum)
 	return;
 }
 
-AimPrimary(heading,pitch)
+AimPrimary(heading,pitch,canFire)
 {
+	// overkill prevention check
+	canFire = (get GAME_FRAME) - (get WEAPON_RELOADSTATE(1)) > 0;
+	if (canFire) {
+		call-script lua_checkAllowFiring(1,(get TARGET_ID(1)),LOCK_INCENDIARY);
+		canFire = get LUA1;
+	}
+	if (!canFire) {
+		return (0);
+	}
+
 	return(1);
 }
 
 FirePrimary()
 {
+	call-script lua_checkLockTarget(get TARGET_ID(1),LOCK_INCENDIARY);
 	hide missile;
 	emit-sfx 1024 from firept;
 	sleep 300;

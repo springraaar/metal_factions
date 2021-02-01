@@ -60,7 +60,7 @@
 	//  Movement
 	//************
 	movementClass=TANKSH4;
-	turnRate=400;
+	turnRate=480;
 	acceleration=0.2;
 	brakeRate=0.5;
 	maxVelocity=1.35;
@@ -87,6 +87,7 @@
 	//  Orders
 	//**********
 	noAutoFire=0;
+	moveState=0;
 
 	//************************************************************
 	//  Miscellaneous
@@ -119,8 +120,8 @@
 		explosionGenerator5=custom:nanoframeblast;
 	}
 
-	buildCostEnergy=20714;//#AUTO#
-	buildCostMetal=4142;//#AUTO#
-	buildTime=49370;//#AUTO#
-	mass=1980;//#AUTO#
+	buildCostEnergy=21577;//#AUTO#
+	buildCostMetal=4315;//#AUTO#
+	buildTime=51425;//#AUTO#
+	mass=2038;//#AUTO#
 }

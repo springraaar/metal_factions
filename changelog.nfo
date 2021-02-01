@@ -1,3 +1,89 @@
+2021/01/31 ------------------ NOTES v1.51 ----------------------
+
+
+--- new units
+
+- added CLAW "Nailer" : level 2 underwater fast torpedo launcher
+
+--- Balance / Mechanics
+
+ENERGY WEAPONS
+- modified how energy costs to fire affect weapon value and unit costs, increasing costs of all such units by 0-10%
+
+
+OTHER
+- slightly increased the range of "Trooper", "Bit", "Grunt" and "Pinion" to 420
+- increased AVEN "Trooper"'s damage per second to 72 and adjusted cost
+- AVEN "Knight" gets cost increased by about 10% but has an energized plasma cannon with slightly higher dmg/s, projectile speed and area of effect
+- AVEN "Javelin" has slightly higher acceleration and turn rate
+- AVEN "Merl" and "Ranger" rockets now fly at a point above the actual target before making a terminal dive, to bypass walls and other obstacles
+- AVEN "Gunner" has a taller base and a higher firing point
+- AVEN "Warrior" gets double damage on the EMG but 30% higher cost
+
+- reduced triggering radius of GEAR mines from 50 to 35
+- GEAR "Vector" flares get the same vertical range scaling as other missile-type weapons
+- GEAR flamethrower units other than the commander got range increased from 200-260 to 260-320, projectile speed increased and costs adjusted (about +10%)
+(the flamethrower sounds and visual effects have also been improved)
+- fixed flamethrower damage not scaling with unit experience
+- GEAR mines no longer require flattening the ground below
+- renamed GEAR "Aggressor" to "Pinion" to avoid confusion with the CLAW commander's morph form
+- GEAR "Might" lasers have range increased from 450 to 550
+- GEAR "Dominator" form cannons now explode mid-air vs air targets
+- GEAR "Punisher" has a taller model with higher firing point
+- GEAR incendiary mines can no longer be built underwater
+- GEAR incendiary mines now have 5s overkill prevention to avoid triggering many mines on the same unit
+- GEAR incendiary area of effect duration in air increased from 5 to 7s
+- GEAR "Firestorm" looks slightly bigger and fatter, reduced speed by 10%, increased hp by 50% and adjusted cost
+- GEAR "Luminator" got its turn rate increased
+- GEAR "Toaster" pops up further and gets a higher firing point
+
+- CLAW "Bullfrog" got cannon range increased from 600 to 750 and adjusted cost
+- CLAW "Mace"'s armor type changed from M to H, cannon replaced by a M damage spreadshot cannon (similar to brute's), speed reduced by 20% and adjusted cost
+- CLAW "Dynamo" has slightly higher turn rate
+- CLAW "Hammer"'s armor type changed from M to H and cost increased by 12%
+- CLAW "Longhorn" gets +200 range so it outranges the other t2 long range cannons unless upgrades are involved and 3% increased cost
+
+- SPHERE medium lasers had their damage per shot normalized at 150 and get a unique firing sound (thanks Thor)
+- SPHERE "Magnetar" got cost increased to 10000m but reload time halved and aura damage doubled
+- SPHERE "Crustle" got slightly higher speed and maneuverability
+
+- increased speed of "Instigator", "Bold" and "Assaulter" and "Boar" by about 2%
+
+- increased cost of Intelligence drone upgrade from 1000m to 1500m and reduced the jamming radius from 500 to 420
+
+- units now get increased damage/s on weapons from experience as a damage per shot boost instead of reload time reduction
+
+- fixed some units with rapid-fire weapons getting a faster fire rate (and dps) than they should (notably Trooper and Skimmer)
+
+- changed commander death blast damage type from H to M
+
+- fixed metal extractors always spawning the first wreck stage regardless of how violently they were destroyed
+
+- most level 2 artillery and ~1000 range fire support units are now set to "hold position" by default
+
+- very slightly lowered cost of (~2%) units with an armored state
+
+- reduced firing tolerance fighter aircraft's forward-facing missiles for "Falcon", "Talon" and "Vector"
+- increased firing tolerance fighter aircraft's forward-facing missiles for "Dash" and "Swift"
+
+- slightly lowered the cost of relatively slow (<2.1), low HP (<2500m) , short ranged (<500) armed units
+(this effect stacks on top of previous modifications so some of them actually had their price slightly increased)
+
+--- UI / Visual / Audio
+
+- all lasers now leave a fading effect when they fire, proportional to damage per shot
+
+- shortened the sound of SPHERE lightning beams to avoid saturating the sound channels
+
+- modified the color and sound of CLAW light lasers to differentiate them from the M and H ones
+
+- modified AVEN EMG sounds
+
+- added more glow and smoke effects when units are destroyed
+
+
+
+
 2021/01/07 ------------------ NOTES v1.50 ----------------------
 
 --- Balance / Mechanics

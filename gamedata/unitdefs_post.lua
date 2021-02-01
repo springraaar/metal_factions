@@ -159,8 +159,9 @@ if (true) then
 			unitDef.airsightdistance = sd
 
 			-- level ground beneath structures
-			unitDef.levelground = true
-
+			if (not noDecalUnits[name]) then
+				unitDef.levelground = true
+			end
 			-- disable radar inaccuracy
 			unitDef.istargetingupgrade = true
 		end

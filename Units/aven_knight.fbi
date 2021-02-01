@@ -58,7 +58,7 @@
 	selfDestructAs=BIG_UNIT;
 
 	// ------------------- orders
-	movestate=0;
+	moveState=0;
 
 	// ------------------- misc
 	noAutoFire=0;
@@ -75,10 +75,10 @@
 	}
 	[SFXTypes]
 	{
-		explosionGenerator0=custom:yellowflarebig;
+		explosionGenerator0=custom:BLUEFLAREBIG;
 	}
-	buildCostEnergy=5820;//#AUTO#
-	buildCostMetal=1164;//#AUTO#
-	buildTime=13872;//#AUTO#
-	mass=1225;//#AUTO#
+	buildCostEnergy=6304;//#AUTO#
+	buildCostMetal=1260;//#AUTO#
+	buildTime=15025;//#AUTO#
+	mass=1257;//#AUTO#
 }
