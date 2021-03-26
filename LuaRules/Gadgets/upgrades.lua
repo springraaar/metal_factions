@@ -65,6 +65,8 @@ local modifiersByUpgrade = {
 	upgrade_blue_3_commander_medium_drone = { medium_drone = 1, restrictions = "commander", limit = 3, type = TYPE_COMMANDER },
 	upgrade_blue_3_commander_transport_drone = { transport_drone = 1, restrictions = "commander", limit = 3, type = TYPE_COMMANDER },
 	
+	upgrade_blue_3_commander_jump = { jump = 1, restrictions = "commander", limit = 3, type = TYPE_COMMANDER },
+	
 	upgrade_blue_3_speed = { speed=0.10, limit = 1, type = TYPE_MAJOR }
 }
 
@@ -232,6 +234,10 @@ function updatePlayerModifiers(teamId)
 				modStr = COLOR_BLUE.."medium drone"
 			elseif (modName == "stealth_drone") then
 				modStr = COLOR_BLUE.."stealth drone"
+			elseif (modName == "transport_drone") then
+				modStr = COLOR_BLUE.."transport drone"				
+			elseif (modName == "jump") then
+				modStr = COLOR_BLUE.."jump thrusters"				
 			else
 				modStr = modName
 			end

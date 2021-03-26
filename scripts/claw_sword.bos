@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, hull, turret, l1,l2,l3,l4, sleeve, barrel, flash, wake1, wake2, front, fbottom, back, bbottom;
+piece  base, hull, turret, l1,l2,l3,l4, sleeve, barrel, flash, wake1, wake2, front, fbottom, back, bbottom, chargept;
 
 
 // Signal definitions
@@ -109,6 +109,28 @@ QueryPrimary(piecenum)
 }
 
 
+AimSecondary(heading, pitch)
+{
+	return (1);
+}
+
+FireSecondary()
+{
+	return (0);
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = chargept;
+	return (0);
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = chargept;
+}
+
+
 
 SweetSpot(piecenum)
 {
@@ -120,20 +142,12 @@ Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		corpsetype = 1;
-		
-		explode turret type SHATTER;
-		explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-		explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-		return (0);
+		explode hull type SHATTER;
+		return (1);
 	}
-	corpsetype = 3;
-
 	explode hull type SHATTER;
 	explode front type SHATTER;
 	explode back type SHATTER;
-	explode turret type SHATTER;
-	explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-	explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-	return (0);
+	explode bbottom type SHATTER;
+	return (2);
 }

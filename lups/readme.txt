@@ -27,13 +27,13 @@ the core uses the following:
  lups/*
  bitmaps/GPL/lups/*
  LuaUI/Widgets/lups_wrapper.lua
- LuaRules/Gadgets/lups_wrapper.lua (only if you want synced
+ luarules/gadgets/lups_wrapper.lua (only if you want synced
 	FX like shockwaves/nanolasers)
 and there are the managers:
  LuaUI/Widgets/gfx_lups_manager.lua
- LuaRules/Gadgets/gfx_lups_manager.lua
+ luarules/gadgets/gfx_lups_manager.lua
 the shockwaves gadget:
- LuaRules/Gadgets/lups_shockwaves.lua
+ luarules/gadgets/lups_shockwaves.lua
 
 
 

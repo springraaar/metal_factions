@@ -26,6 +26,9 @@ local xpArr = {
 "\255\240\240\200IX",
 "\255\255\255\200X"
 }
+
+local TIP_COLOR_PREFIX = "\255\180\180\0"
+
 local tempTooltip = nil
 local min = math.min
 local max = math.max
@@ -494,7 +497,7 @@ function GenerateNewTooltip()
 			end
 			
 			if fud.customParams.tip then
-				NewTooltip = NewTooltip.."\n\255\180\180\180"..fud.customParams.tip.."\255\255\255\255\n"
+				NewTooltip = NewTooltip.."\n"..TIP_COLOR_PREFIX..fud.customParams.tip.."\255\255\255\255\n"
 			end
 		else
 			local buildTimeStr = FormatNbr(ud.buildTime/buildpower,2)
@@ -723,7 +726,7 @@ function GenerateNewTooltip()
 			end
  						
 			if ud.customParams.tip then
-				NewTooltip = NewTooltip.."\n\255\180\180\180"..ud.customParams.tip.."\255\255\255\255\n"
+				NewTooltip = NewTooltip.."\n"..TIP_COLOR_PREFIX..ud.customParams.tip.."\255\255\255\255\n"
 			end
  
 			FoundTooltipType="liveunit"

@@ -695,7 +695,7 @@ function widget:SetConfigData(data) -- Loading
 end
 
 function widget:Initialize()
-	Spring.LoadSoundDef("LuaRules/Configs/sound_defs.lua")
+	Spring.LoadSoundDef("luarules/configs/sound_defs.lua")
 end
 
 ---------------------------------------------------------------------------------------------------------

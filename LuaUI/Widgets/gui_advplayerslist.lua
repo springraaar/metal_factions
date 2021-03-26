@@ -117,8 +117,8 @@ local sidePicsWO      = {}  -- loaded in Sem_sidePics function
 -- Fonts
 --------------------------------------------------------------------------------
 
-local font            = "LuaUI/Fonts/FreeSansBold_14"
-local fontWOutline    = "LuaUI/Fonts/FreeSansBoldWOutline_14"     -- White outline for font (special font set)
+local font            = "luaui/fonts/FreeSansBold_14"
+local fontWOutline    = "luaui/fonts/FreeSansBoldWOutline_14"     -- White outline for font (special font set)
 
 
 --------------------------------------------------------------------------------
@@ -1297,9 +1297,9 @@ function DrawRank(skill, posY, dark)
 
 --  rank
 --	if rank < 8 then
---		DrawRankImage("LuaUI/Images/advplayerslist/Ranks/rank"..rank..".png", posY)
+--		DrawRankImage("luaui/images/advplayerslist/ranks/rank"..rank..".png", posY)
 --	else
---		DrawRankImage("LuaUI/Images/advplayerslist/Ranks/rank_unknown.png", posY)
+--		DrawRankImage("luaui/images/advplayerslist/ranks/rank_unknown.png", posY)
 --	end
 	
 	--  show TS skill value instead, if available
@@ -1603,27 +1603,27 @@ function SetSidePics()
 			end
 		end
 		
-		if VFS.FileExists(LUAUI_DIRNAME.."Images/Advplayerslist/"..teamside..".png") then
-			sidePics[team] = ":n:LuaUI/Images/Advplayerslist/"..teamside..".png"
-			if VFS.FileExists(LUAUI_DIRNAME.."Images/Advplayerslist/"..teamside.."WO.png") then
-				sidePicsWO[team] = ":n:LuaUI/Images/Advplayerslist/"..teamside.."WO.png"
+		if VFS.FileExists(LUAUI_DIRNAME.."images/advplayerslist/"..teamside..".png") then
+			sidePics[team] = ":n:luaui/images/advplayerslist/"..teamside..".png"
+			if VFS.FileExists(LUAUI_DIRNAME.."images/advplayerslist/"..teamside.."WO.png") then
+				sidePicsWO[team] = ":n:luaui/images/advplayerslist/"..teamside.."WO.png"
 			else
-				sidePicsWO[team] = ":n:LuaUI/Images/Advplayerslist/noWO.png"
+				sidePicsWO[team] = ":n:luaui/images/advplayerslist/noWO.png"
 			end
 		else
-			if VFS.FileExists(LUAUI_DIRNAME.."Images/Advplayerslist/"..teamside.."_default.png") then
-				sidePics[team] = ":n:LuaUI/Images/Advplayerslist/"..teamside.."_default.png"
-				if VFS.FileExists(LUAUI_DIRNAME.."Images/Advplayerslist/"..teamside.."WO_default.png") then
-					sidePicsWO[team] = ":n:LuaUI/Images/Advplayerslist/"..teamside.."WO_default.png"
+			if VFS.FileExists(LUAUI_DIRNAME.."images/advplayerslist/"..teamside.."_default.png") then
+				sidePics[team] = ":n:luaui/images/advplayerslist/"..teamside.."_default.png"
+				if VFS.FileExists(LUAUI_DIRNAME.."images/advplayerslist/"..teamside.."WO_default.png") then
+					sidePicsWO[team] = ":n:luaui/images/advplayerslist/"..teamside.."WO_default.png"
 				else
-					sidePicsWO[team] = ":n:LuaUI/Images/Advplayerslist/noWO.png"
+					sidePicsWO[team] = ":n:luaui/images/advplayerslist/noWO.png"
 				end
 			else
 				if teamside ~= "" then
 					Echo("Image missing for side "..teamside..", using default.")
 				end
-				sidePics[team] = ":n:"..LUAUI_DIRNAME.."Images/Advplayerslist/default.png"
-				sidePicsWO[team] = ":n:"..LUAUI_DIRNAME.."Images/Advplayerslist/defaultWO.png"
+				sidePics[team] = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/default.png"
+				sidePicsWO[team] = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/defaultWO.png"
 			end
 		end
 	end
@@ -2279,6 +2279,7 @@ function CheckPlayersChange()
 			if player[i].spec == false then
 				if (tonumber(player[i].ping) > PLAYER_LAG_WARNING_THRESHOLD_MS and (f > 0 and (not latestLagWarningByPlayer[i] or f - latestLagWarningByPlayer[i] > PLAYER_LAG_WARNING_DELAY_F ))) then
 					Spring.SendMessageToPlayer(myPlayerID,"WARNING: <PLAYER"..i.."> is lagging behind "..(math.floor(tonumber(player[i].ping)/1000)).."s" )
+					Spring.SendCommands("pause 1") -- pause the game
 					latestLagWarningByPlayer[i] = f
 				end
 			end

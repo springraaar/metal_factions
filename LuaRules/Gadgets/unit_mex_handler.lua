@@ -63,14 +63,12 @@ local hazardousMexDefIds = {
 	[UnitDefNames['sphere_exploiter'].id] = true
 }
 
+include("lualibs/custom_cmd.lua")
+
 local CMD_RECLAIM = CMD.RECLAIM 
 local CMD_STOP = CMD.STOP 
 local CMD_INSERT = CMD.INSERT 
 local CMD_OPT_INTERNAL = CMD.OPT_INTERNAL 
-
-local CMD_UPGRADEMEX = 31244
-local CMD_UPGRADEMEX2 = 31245
-local CMD_AREAMEX = 31246  
 
 local commandQueue = {}
 

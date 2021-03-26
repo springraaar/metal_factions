@@ -122,11 +122,19 @@
 	{
 		buildertype=sphere_l1builder;
 		isCommander=1;
+		canJump=1;
+		jumpType=commander;
+		jumpMod=0.95;
 	}
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:orangeglow;
 		explosionGenerator1=custom:buildglow;
 		explosionGenerator2=custom:Nano;
+		explosionGenerator3=custom:rocketflaresml;
+		explosionGenerator4=custom:JUMPASC;
+		explosionGenerator5=custom:JUMPASC2;
+		explosionGenerator6=custom:JUMPDESC;
+		explosionGenerator7=custom:JUMPDESC2;
 	}
 }

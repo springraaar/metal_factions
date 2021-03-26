@@ -72,31 +72,31 @@ local TYPE_ORDER = 2
 local TYPE_ICONORDER = 3 
 
 -- custom commands
-local CMD_UPGRADEMEX = 31244
-local CMD_UPGRADEMEX2 = 31245
-local CMD_AREAMEX = 31246  
+VFS.Include("lualibs/custom_cmd.lua")
 
 local iconCmdPosition = {
 	[CMD.ATTACK] = 1,
 	[CMD.FIGHT] = 2,
 	[CMD.MOVE] = 3,
-	[CMD.PATROL] = 4,
-	[CMD.GUARD] = 5,	
-	[CMD.WAIT] = 6,
-	[CMD.STOP] = 7,
-	[CMD.LOAD_UNITS] = 8,
-	[CMD.UNLOAD_UNITS] = 9,
-	[CMD.REPAIR] = 10,
-	[CMD.RECLAIM] = 11,
-	[CMD.RESTORE] = 12,
-	[CMD.CAPTURE] = 13,
-	[CMD_AREAMEX] = 14,
-	[CMD_UPGRADEMEX] = 15,
-	[CMD_UPGRADEMEX2] = 16
+	[CMD_JUMP] = 4,
+	[CMD.PATROL] = 5,
+	[CMD.GUARD] = 6,	
+	[CMD.WAIT] = 7,
+	[CMD.STOP] = 8,
+	[CMD.LOAD_UNITS] = 9,
+	[CMD.UNLOAD_UNITS] = 10,
+	[CMD.REPAIR] = 11,
+	[CMD.RECLAIM] = 12,
+	[CMD.RESTORE] = 13,
+	[CMD.CAPTURE] = 14,
+	[CMD_AREAMEX] = 15,
+	[CMD_UPGRADEMEX] = 16,
+	[CMD_UPGRADEMEX2] = 17
 }
 
 local iconCmdTex = {
 	[CMD.MOVE] = "icon_move.png",
+	[CMD_JUMP] = "icon_jump.png",
 	[CMD.ATTACK] = "icon_attack.png",
 	[CMD.FIGHT] = "icon_fight.png",
 	[CMD.REPAIR] = "icon_repair.png",

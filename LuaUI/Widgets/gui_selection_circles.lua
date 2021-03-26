@@ -41,6 +41,7 @@ local spGetUnitViewPosition  = Spring.GetUnitViewPosition
 local spIsUnitSelected       = Spring.IsUnitSelected
 local spIsUnitVisible        = Spring.IsUnitVisible
 local spSendCommands         = Spring.SendCommands
+local spGetUnitRulesParam    = Spring.GetUnitRulesParam
 
 
 --------------------------------------------------------------------------------
@@ -172,12 +173,13 @@ function widget:DrawWorldPreUnit()
   glLineWidth(2.0)
   local alpha = 0.1
   glColor(0, 1, 0, alpha)
-
   for _,unitID in ipairs(spGetSelectedUnits()) do
     local udid = spGetUnitDefID(unitID)
     local radius = GetUnitDefRealRadius(udid)
     if (radius) then
-      if (trackSlope and (not UnitDefs[udid].canFly) and (not UnitDefs[udid].floatOnWater)) then
+      local isJumping = spGetUnitRulesParam(unitID,"is_jumping")
+      isJumping = (isJumping and isJumping == 1)
+      if (trackSlope and (not UnitDefs[udid].canFly) and (not UnitDefs[udid].floatOnWater) and (not isJumping) ) then
         local x, y, z = spGetUnitBasePosition(unitID)
         local gx, gy, gz = spGetGroundNormal(x, z)
         local degrot = math.acos(gy) * 180 / math.pi

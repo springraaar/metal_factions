@@ -1,7 +1,7 @@
-include("LuaRules/Gadgets/ai/common.lua")
-include("LuaRules/Gadgets/ai/modules.lua")
-include("LuaRules/Gadgets/ai/AttackerBehavior.lua")
-include("LuaRules/Gadgets/ai/TaskQueueBehavior.lua")
+include("luarules/gadgets/ai/common.lua")
+include("luarules/gadgets/ai/modules.lua")
+include("luarules/gadgets/ai/AttackerBehavior.lua")
+include("luarules/gadgets/ai/TaskQueueBehavior.lua")
 include("LuaLibs/json.lua")
 
 AI = {}

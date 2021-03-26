@@ -163,6 +163,7 @@ local burningEffectWeaponDefIds = {
 	[WeaponDefNames["gear_pyroclasm_submunition"].id] = true,
 	[WeaponDefNames["gear_canister"].id] = true,
 	[WeaponDefNames["gear_eruptor"].id] = true,
+	[WeaponDefNames["gear_mass_burner"].id] = true,
 	[WeaponDefNames["gear_fire_effect"].id] = true,
 	[WeaponDefNames["gear_fire_effect2"].id] = true
 }
@@ -230,6 +231,12 @@ local longRangeRocketsDefIds = {
 	[UnitDefNames["sphere_meteorite_rocket"].id] = true
 }
 
+local deathFireballDefIds = {
+	[UnitDefNames["gear_canister"].id] = "gear_canister_fireball",
+	[UnitDefNames["gear_eruptor"].id] = "gear_eruptor_fireball",
+	[UnitDefNames["gear_mass_burner"].id] = "gear_eruptor_fireball"
+
+}
 
 local targetDefId = UnitDefNames["target"].id
 local targetDamage = 0
@@ -466,26 +473,14 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 		cloakDisruptedUnitFrameTable[unitID] = nil
 	end
 	
-	-- spawn a fireball when canister dies
-	if UnitDefs[unitDefID].name == "gear_canister" then
+	-- spawn a fireball when some units die	
+	local fireballName = deathFireballDefIds[unitDefID]
+	if fireballName then
 		local x,y,z = spGetUnitPosition(unitID)
 		local _,_,_,_,bp = spGetUnitHealth(unitID)
 
 		if bp > 0.999 then
-			local createdId = Spring.SpawnProjectile(WeaponDefNames["gear_canister_fireball"].id,{
-				["pos"] = {x,y,z},
-				["end"] = {x,0,z},
-				["speed"] = {0,-5,0},
-				["owner"] = unitID
-			})
-		end
-	-- spawn a fireball when eruptor dies
-	elseif UnitDefs[unitDefID].name == "gear_eruptor" then
-		local x,y,z = spGetUnitPosition(unitID)
-		local _,_,_,_,bp = spGetUnitHealth(unitID)
-
-		if bp > 0.999 then
-			local createdId = Spring.SpawnProjectile(WeaponDefNames["gear_eruptor_fireball"].id,{
+			local createdId = Spring.SpawnProjectile(WeaponDefNames[fireballName].id,{
 				["pos"] = {x,y,z},
 				["end"] = {x,0,z},
 				["speed"] = {0,-5,0},
@@ -791,6 +786,11 @@ function gadget:AllowUnitCloak(unitId,enemyId)
 	x,y,z = spGetUnitPosition(unitId)
 	h = spGetGroundHeight(x,z)
 	if ( h < -5 and y < 0) then
+		return false
+	end
+
+	local jumpState = spGetUnitRulesParam(unitId, "is_jumping")
+	if jumpState and jumpState == 1 then
 		return false
 	end
 	

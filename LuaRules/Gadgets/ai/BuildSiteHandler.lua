@@ -1,4 +1,4 @@
-include("LuaRules/Gadgets/ai/common.lua")
+include("luarules/gadgets/ai/common.lua")
 
 BuildSiteHandler = {}
 BuildSiteHandler.__index = BuildSiteHandler

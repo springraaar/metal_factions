@@ -11,6 +11,7 @@
 		}
 	air=1;
 	water=1;
+	underwater=1;
 	ground=1;
 	count=1;
 	}
@@ -25,6 +26,7 @@
 		}
 	air=1;
 	water=1;
+	underwater=1;
 	ground=1;
 	count=3;
 	}
@@ -40,6 +42,7 @@
 		}
 	air=1;
 	water=1;
+	underwater=1;
 	ground=1;
 	count=5;
 	}
@@ -59,6 +62,7 @@
 		}
 	air=1;
 	water=1;
+	underwater=1;
 	ground=1;
 	count=1;
 	}
@@ -73,6 +77,7 @@
 		}
 	air=1;
 	water=1;
+	underwater=1;
 	ground=1;
 	count=2;
 	}
@@ -88,6 +93,7 @@
 		}
 	air=1;
 	water=1;
+	underwater=1;
 	ground=1;
 	count=3;
 	}
@@ -112,16 +118,17 @@
 		class=explspike;
 		[properties]
 		{
-			dir=-180 r360,-180 r360,-180 r360;
+			dir=-18 r36,-18 r36,-18 r36;
 			width=1;
 			length=5;
 			alpha=0.35;
 			alphadecay=0.1;
-		color = 0.12, 0.3, 1;
+			color = 0.12, 0.3, 1;
 
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=3; 
 	}
@@ -140,8 +147,9 @@
       		speed = -0.4 r0.8, -0.2 r0.4, -0.4 r0.8;
       		pos = 0.8 r-1.6, 3.0 r-0.4, 0.8 r-1.6;
       		}
-	air=1;
+		air=1;
       	water=1;
+		underwater=1;
       	ground=1;
       	count=1;
 	}
@@ -155,7 +163,7 @@
 		sizeMod=1.0;
 		pos=0, 0, 0; 
 		emitVector=0, 1, 0;
-	      gravity=0, -0.45, 0;  
+		gravity=0, -0.45, 0;  
 		colorMap=1 1 1 0.01   1 0.7 0.2 0.01   0 0 0 0.01;
 		Texture=flamespark;
 		airdrag=0.95;
@@ -173,6 +181,7 @@
 		}
 	air=1;
 	water=1;
+	underwater=1;
 	ground=1;
 	count=1;
 	}
@@ -191,6 +200,7 @@
 		}
 	air=1;
 	water=1;
+	underwater=1;
 	ground=1;
 	count=7;
 	}
@@ -209,6 +219,7 @@
 		}
 	air=1;
 	water=1;
+	underwater=1;
 	ground=1;
 	count=1;
 	}
@@ -224,6 +235,7 @@
 		}
 	air=1;
 	water=1;
+	underwater=1;
 	ground=1;
 	count=2;
 	}

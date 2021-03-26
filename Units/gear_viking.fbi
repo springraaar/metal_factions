@@ -1,48 +1,100 @@
 [UNITINFO]
-	{
-	unitName=gear_viking;
+{
+	//************************************************************
+	//  Unit Description
+	//********************
 	side=Gear;
-	objectName=gear_viking;
 	name=Viking;
-	description=Multi-Purpose Patrol Frigate;
+	description=Anti-Sub Skirmisher Ship;
+	iconType=shipartilleryfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_viking;
+	objectName=gear_viking;
+	corpse=gear_viking_dead;
 	buildPic=gear_viking.png;
+	soundCategory=gear_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1580;
 	FootprintX=3;
 	FootprintZ=3;
-	maxDamage=1580;
+
+
+	//************************************************************
+	//  Resources
+	//*************
 	energyUse=0;
-	workerTime=0;
-	builder=0;
-	noAutoFire=0;
-	sightDistance=500;
-	sonarDistance=400; 
-	radarDistance=0;
-	soundCategory=gear_SHIP;
+	energyMake=0;
 	energyStorage=0;
 	metalStorage=0;
-	explodeAs=SMALL_UNITEX;
-	selfDestructAs=SMALL_UNIT;
-	category=GEAR LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	workerTime=0;
+	builder=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
 	canMove=1;
 	canPatrol=1;
 	canStop=1;
 	canGuard=1;
-	maxVelocity=2.4;
-	brakeRate=0.022;
-	Acceleration=0.05;
-	turnRate=456;
-	energyMake=0;
-	movementClass=smallboat;
-	iconType=shipfighter;
-	weapon1=gear_viking_laser;
-	weapon2=gear_viking_missile;
-	weapon3=gear_viking_depthcharge;
-	onlytargetcategory3=NOTAIR;
 	canAttack=1;
-	activateWhenBuilt=1;
-	minWaterDepth=12;
+
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=smallboat;
+	maxVelocity=2.1;
+	brakeRate=0.022;
+	Acceleration=0.1;
+	turnRate=556;
 	floater=1;
 	waterline=1;
-	corpse=gear_viking_dead;
+	minWaterDepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	sonarDistance=500; 
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_viking_laser;
+	weapon2=gear_viking_torpedo;
+	onlytargetcategory2=NOTAIR;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
 	collisionVolumeType = box;
 	collisionVolumeScales =25 30 50;
 	collisionVolumeOffsets = 0 -10 0;
@@ -57,10 +109,9 @@
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:GLOWSML;
-		explosionGenerator1=custom:rocketflaresml;
 	}
-	buildCostEnergy=2223;//#AUTO#
-	buildCostMetal=444;//#AUTO#
-	buildTime=5298;//#AUTO#
-	mass=543;//#AUTO#
-	}
+	buildCostEnergy=3581;//#AUTO#
+	buildCostMetal=716;//#AUTO#
+	buildTime=8536;//#AUTO#
+	mass=633;//#AUTO#
+}

@@ -5,7 +5,7 @@
 	//********************
 	side=Claw;
 	name=Commander;
-	description=Breaker Form;
+	description=Brawler Form;
 	iconType=claw_commander;
 
 	//************************************************************
@@ -156,6 +156,9 @@
 	{
 		buildertype=claw_l1builder;
 		isCommander=1;
+		canJump=1;
+		jumpType=commander;
+		jumpMod=1.05;
 	}
 
 	[SFXTypes]
@@ -164,5 +167,9 @@
 		explosionGenerator1=custom:Nano;
 		explosionGenerator2=custom:emgflarefast;
 		explosionGenerator3=custom:DGUNREADYFLARE;
+		explosionGenerator4=custom:JUMPASC;
+		explosionGenerator5=custom:JUMPASC2;
+		explosionGenerator6=custom:JUMPDESC;
+		explosionGenerator7=custom:JUMPDESC2;
 	}
 }

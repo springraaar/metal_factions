@@ -156,6 +156,9 @@
 		buildertype=claw_l1builder;
 		isCommander=1;
 		tip=Laser Cutter loses up to 30% damage over its range;
+		canJump=1;
+		jumpType=commander;
+		jumpMod=1.11;
 	}
 
 	[SFXTypes]
@@ -163,5 +166,9 @@
 		explosionGenerator0=custom:rocketflaresml;
 		explosionGenerator1=custom:Nano;
 		explosionGenerator2=custom:yellowflaremed;
+		explosionGenerator3=custom:JUMPASC;
+		explosionGenerator4=custom:JUMPASC2;
+		explosionGenerator5=custom:JUMPDESC;
+		explosionGenerator6=custom:JUMPDESC2;
 	}
 }

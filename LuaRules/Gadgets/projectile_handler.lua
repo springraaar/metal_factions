@@ -127,6 +127,7 @@ local fireAOEWeaponIds = {
 	-- GEAR
 	[WeaponDefNames["gear_canister"].id]=true,
 	[WeaponDefNames["gear_eruptor"].id]=true,
+	[WeaponDefNames["gear_mass_burner"].id]=true,
 	[WeaponDefNames["gear_canister_fireball"].id]=true,
 	[WeaponDefNames["gear_eruptor_fireball"].id]=true,
 	[WeaponDefNames["gear_firestorm_missile"].id]=true,
@@ -139,65 +140,8 @@ local fireAOEWeaponIds = {
 	[WeaponDefNames["gear_u5commander_fireball"].id]=true
 }
 
-local torpedoWeaponIds = {
-	-- AVEN
-	[WeaponDefNames["aven_u1commander_torpedo"].id]=true,
-	[WeaponDefNames["aven_u2commander_torpedo"].id]=true,
-	[WeaponDefNames["aven_u3commander_torpedo"].id]=true,
-	[WeaponDefNames["aven_u4commander_torpedo"].id]=true,
-	[WeaponDefNames["aven_u5commander_torpedo"].id]=true,
-	[WeaponDefNames["aven_u6commander_torpedo"].id]=true,
-	[WeaponDefNames["aven_commander_torpedo"].id]=true,
-	[WeaponDefNames["aven_lurker_torpedo"].id]=true,
-	[WeaponDefNames["aven_piranha_torpedo"].id]=true,
-	[WeaponDefNames["aven_tl_torpedo"].id]=true,
-	[WeaponDefNames["aven_rush_depthcharge"].id]=true,
-	[WeaponDefNames["aven_vanguard_depthcharge"].id]=true,
-	[WeaponDefNames["armdepthcharge"].id]=true,
-	[WeaponDefNames["aven_slider_s_depthcharge"].id]=true,
-	[WeaponDefNames["aven_adv_torpedo_launcher_torpedo"].id]=true,
-	
-	-- GEAR
-	[WeaponDefNames["gear_commander_torpedo"].id]=true,
-	[WeaponDefNames["gear_u1commander_torpedo"].id]=true,
-	[WeaponDefNames["gear_u2commander_torpedo"].id]=true,
-	[WeaponDefNames["gear_u3commander_torpedo"].id]=true,
-	[WeaponDefNames["gear_u4commander_torpedo"].id]=true,
-	[WeaponDefNames["gear_u5commander_torpedo"].id]=true,
-	[WeaponDefNames["gear_u6commander_torpedo"].id]=true,
-	[WeaponDefNames["gear_snake_torpedo"].id]=true,
-	[WeaponDefNames["gear_noser_torpedo"].id]=true,
-	[WeaponDefNames["gear_adv_torpedo_launcher_torpedo"].id]=true,
-	[WeaponDefNames["gear_tl_torpedo"].id]=true,
-	[WeaponDefNames["coredepthcharge"].id]=true,
-	[WeaponDefNames["gear_viking_depthcharge"].id]=true,
-	-- CLAW
-	[WeaponDefNames["claw_commander_torpedo"].id]=true,
-	[WeaponDefNames["claw_u1commander_torpedo"].id]=true,
-	[WeaponDefNames["claw_u2commander_torpedo"].id]=true,
-	[WeaponDefNames["claw_u3commander_torpedo"].id]=true,
-	[WeaponDefNames["claw_u4commander_torpedo"].id]=true,
-	[WeaponDefNames["claw_u5commander_torpedo"].id]=true,
-	[WeaponDefNames["claw_u6commander_torpedo"].id]=true,
-	[WeaponDefNames["claw_spine_torpedo"].id]=true,
-	[WeaponDefNames["claw_monster_torpedo"].id]=true,
-	[WeaponDefNames["claw_sinker_torpedo"].id]=true,
-	[WeaponDefNames["claw_drakkar_depthcharge"].id]=true,
-	-- SPHERE
-	[WeaponDefNames["sphere_commander_torpedo"].id]=true,
-	[WeaponDefNames["sphere_u1commander_torpedo"].id]=true,
-	[WeaponDefNames["sphere_u2commander_torpedo"].id]=true,
-	[WeaponDefNames["sphere_u3commander_torpedo"].id]=true,
-	[WeaponDefNames["sphere_u4commander_torpedo"].id]=true,
-	[WeaponDefNames["sphere_u5commander_torpedo"].id]=true,
-	[WeaponDefNames["sphere_u6commander_torpedo"].id]=true,
-	[WeaponDefNames["sphere_crab_torpedo"].id]=true,
-	[WeaponDefNames["sphere_carp_torpedo"].id]=true,
-	[WeaponDefNames["sphere_pluto_torpedo"].id]=true,
-	[WeaponDefNames["sphere_clam_torpedo"].id]=true,
-	[WeaponDefNames["sphere_endeavour_depthcharge"].id]=true,
-	[WeaponDefNames["sphere_oyster_torpedo"].id]=true
-}
+local torpedoWeaponIds = {}
+
 
 
 local smartTrackingWeaponIds = {
@@ -212,7 +156,6 @@ local smartTrackingWeaponIds = {
 	-- SPHERE
 	[WeaponDefNames["sphere_blower_aabomb"].id]=true
 }
-
 
 local destructibleWeaponIds = {
 	-- AVEN
@@ -338,6 +281,12 @@ end
 
 
 function gadget:Initialize()
+    for _,wd in pairs(WeaponDefs) do  
+		if wd and wd.type == "TorpedoLauncher" then
+			torpedoWeaponIds[wd.id] = true
+		end
+	end 
+
 	-- track disruptor wave projectiles
 	Script.SetWatchWeapon(disruptorWeaponId,true)
 	
@@ -601,6 +550,8 @@ function gadget:GameFrame(n)
 	-- TODO maybe this isn't really necessary...
 	-- explode torpedos if they stray too high out of the water to prevent exploits
 	local px,py,pz = 0
+	local tx,ty,tz = 0
+	local vx,vy,vz = 0
 	local wasUnderwater = 0
 	local h = 0
 	for projID,_ in pairs(torpedoProjectiles) do
@@ -610,7 +561,18 @@ function gadget:GameFrame(n)
 		if (py < -5) then
 			projectileWasUnderwater[projID] = n
 			-- Echo("projectile "..projID.." was underwater")
-			return
+		end
+		
+		
+		-- if near target, pop out of water
+		-- do this to hit hovercraft
+		local _,targetId = spGetProjectileTarget(projID)
+		if (type(targetId) == "number" and targetId > 0) then
+			tx,ty,tz = spGetUnitPosition(targetId)
+			if ty and ty >= 0 and ty < 20 and isCloseToTarget(px,pz,tx,tz,20) then
+				vx,vy,vz = spGetProjectileVelocity(projID)
+				spSetProjectileVelocity( projID, vx,5,vz)
+			end
 		end
 		
 		-- test underwater projectiles (entries are only valid for 60 seconds)

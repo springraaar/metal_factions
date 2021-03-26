@@ -153,6 +153,9 @@
 		buildertype=gear_l1builder;
 		isCommander=1;
 		tip=Heat Ray loses up to 30% weapon damage over its range;
+		canJump=1;
+		jumpType=commander;
+		jumpMod=1.0;
 	}
 	[SFXTypes]
 	{
@@ -162,5 +165,9 @@
 		explosionGenerator3=custom:hrglowsml1;
 		explosionGenerator4=custom:hrglowsml2;
 		explosionGenerator5=custom:hrglowsml3;
+		explosionGenerator6=custom:JUMPASC;
+		explosionGenerator7=custom:JUMPASC2;
+		explosionGenerator8=custom:JUMPDESC;
+		explosionGenerator9=custom:JUMPDESC2;
 	}
 }

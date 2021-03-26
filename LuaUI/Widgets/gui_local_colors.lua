@@ -27,11 +27,11 @@ options = {
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-if VFS.FileExists("Luaui/Configs/LocalColors.lua") then -- user override
-	colorCFG = VFS.Include("Luaui/Configs/LocalColors.lua")
+if VFS.FileExists("luaui/Configs/LocalColors.lua") then -- user override
+	colorCFG = VFS.Include("luaui/configs/LocalColors.lua")
 	Spring.Echo("Loaded local team color config.")
-elseif VFS.FileExists("Luaui/Configs/ZKTeamColors.lua") then
-	colorCFG = VFS.Include("Luaui/Configs/ZKTeamColors.lua")
+elseif VFS.FileExists("luaui/configs/ZKTeamColors.lua") then
+	colorCFG = VFS.Include("luaui/configs/ZKTeamColors.lua")
 else
 	error("missing file: Luaui/Configs/LocalColors.lua")
 end

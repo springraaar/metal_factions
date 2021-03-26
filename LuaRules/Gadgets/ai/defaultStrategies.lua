@@ -1690,7 +1690,7 @@ gearAmphibious = {
 
 clawLandAssault = {
 	name = "clawLandAssault",
-	commanderMorphs = { "Breaker Form","Grinder Form","Assassin Form" },
+	commanderMorphs = { "Brawler Form","Grinder Form","Assassin Form" },
 	upgrades = "speed",
 	stages = {
 		------------------ STAGE 1
@@ -2119,7 +2119,7 @@ clawLandSkirmisher = {
 
 clawAir = {
 	name = "clawAir",
-	commanderMorphs = { "Aggressor Form","Breaker Form" },
+	commanderMorphs = { "Aggressor Form","Brawler Form" },
 	upgrades = "defensive",
 	stages = {
 		------------------ STAGE 1
@@ -2318,7 +2318,7 @@ clawAir = {
 
 clawAmphibious = {
 	name = "clawAmphibious",
-	commanderMorphs = { "Aggressor Form","Breaker Form" },
+	commanderMorphs = { "Aggressor Form","Brawler Form" },
 	upgrades = "offensive",
 	stages = {
 		------------------ STAGE 1

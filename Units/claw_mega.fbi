@@ -25,16 +25,17 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=8500;
+	maxDamage=13600;
 	footprintx=5;
 	footprintz=5;
+//	autoHeal=40;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalStorage=0;
 	energyMake=0;
-	energyUse=3;
+	energyUse=0;
 	energyStorage=0;
 
 	//************************************************************
@@ -63,7 +64,7 @@
 	turnRate=210;
 	acceleration=0.2;
 	brakeRate=0.06;
-	maxVelocity=1.1;
+	maxVelocity=0.9;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -109,8 +110,8 @@
 	{
 		explosionGenerator0=custom:yellowflarebig;
 	}
-	buildCostEnergy=25282;//#AUTO#
-	buildCostMetal=5056;//#AUTO#
-	buildTime=60256;//#AUTO#
-	mass=6096;//#AUTO#
+	buildCostEnergy=49151;//#AUTO#
+	buildCostMetal=9830;//#AUTO#
+	buildTime=117143;//#AUTO#
+	mass=10682;//#AUTO#
 }

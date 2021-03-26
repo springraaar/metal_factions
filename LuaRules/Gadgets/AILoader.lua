@@ -26,9 +26,9 @@ GG.mFAIStartPosByTeamId = {}
 
 local showAIWarningMessage = 0
 
-include("LuaRules/Gadgets/ai/common.lua")
-include("LuaRules/Gadgets/ai/AI.lua")
-include("LuaRules/Gadgets/ai/MapHandler.lua")
+include("luarules/gadgets/ai/common.lua")
+include("luarules/gadgets/ai/AI.lua")
+include("luarules/gadgets/ai/MapHandler.lua")
 
 --SYNCED CODE
 if (gadgetHandler:IsSyncedCode()) then

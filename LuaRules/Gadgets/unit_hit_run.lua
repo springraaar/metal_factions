@@ -46,7 +46,7 @@ local max = math.max
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-CMD_HITNRUN = 33456
+include("lualibs/custom_cmd.lua")
 
 local enableHitNRunList = {}
 local unitIdsThatFiredRecently = {}

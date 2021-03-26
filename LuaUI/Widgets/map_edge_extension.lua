@@ -23,7 +23,7 @@ local spGetGroundHeight = Spring.GetGroundHeight
 local spTraceScreenRay = Spring.TraceScreenRay
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-local gridTex = "LuaUI/Images/vr_grid_large_dark.dds"
+local gridTex = "luaui/images/vr_grid_large_dark.dds"
 --local gridTex = "bitmaps/PD/shield3hex.png"
 local realTex = '$grass'
 

@@ -194,7 +194,7 @@ AimSecondary(heading, pitch)
 
 FirePrimary()
 {
-	start-script RockZ(-5,bAiming);
+	//start-script RockZ(-5,bAiming);
 	if( gun_1 == 0 )
 	{
 		move barrel1 to z-axis [-3.500000] now;

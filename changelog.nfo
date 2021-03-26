@@ -1,3 +1,99 @@
+2021/03/26 ------------------ NOTES v1.52 ----------------------
+
+
+--- new units
+
+- added "jump Thrusters" commander upgrade : allows all commanders to perform a ~400 range jump every 15s
+(further upgrades reduce the reload time and increase the attributes)
+
+- added CLAW "Breaker" : L2 heavy assault/raider tank
+
+- added AVEN Trooper "H.E.M.G" : L1 slower and tougher fire support trooper with a relatively long range high dps/cost E.M.G
+
+- added AVEN "Stinger" : L1 Small stunner/raider submarine
+
+- added GEAR "Blowfish" : L1 Kamikaze sub
+
+- added CLAW "Hunter" : L1 raider/anti-sub ship
+
+- added SPHERE "Targe" : L1 skirmisher/anti-sub ship
+
+- added AVEN "Pelter" : L1 Amphibious guided bomb launcher
+- added GEAR "Lobber" : L1 Amphibious guided bomb launcher
+- added CLAW "Cache" : L1 Amphibious guided bomb launcher
+- added SPHERE "Slugger" : L1 Amphibious guided bomb launcher
+
+
+ECONOMY
+- added AVEN "Bio Dome" : delayed return energy/metal generator
+- added GEAR "Mass Burner" : consumes 0.2 metal/s and generates 80 E/s, hazardous
+- added SPHERE "Hardened Wind Generator" : a relatively tough but also relatively expensive wind generator
+
+
+--- Balance / Mechanics
+
+- modified how weapon efficiency scales with projectile speed to benefit non-tracking weapons with projectile speeds that are relatively fast but not guaranteed to hit
+- weapon efficiency ratings now also take into account area of effect and "burn blow" ability 
+- reduced the cost of weapons with relatively high area of effect and reduced the scaling associated with high edge effectiveness
+- units with tracking weapons get slightly more expensive
+
+- increased cost of innate regen on units (the only affected unit atm is the sphere construction sphere)
+
+- fixed AVEN "Albatross" firing its laser in weird angles and modified its targetting priorities to properly engage enemy aircraft
+
+- CLAW "Mega" : significantly increased HP, range, area of effect and damage/s, but doubled cost
+
+- GEAR "Toaster" changed HP from 3097 to 3000
+- GEAR flamethrower weapons had their damage reduced to about 70% but deal M damage instead of L
+
+- increased range of AVEN "Excalibur" by 80 and reload time by 10% and adjusted cost
+
+- normalized the flight altitude for air scouts at 200, reduced their turn radius and doubled their vertical speed
+(this should make them more responsive to commands to move nearby)
+
+- made all the "spidery" all-terrain units amphibious as well
+
+- increased the fire rate of GEAR "Crasher" and CLAW "Jester" to differentiate them more from their single-barreled counterparts
+- slightly reduced the collision size for SPHERE "Needles"
+
+- renamed CLAW "Breaker" commander form to "Brawler"
+- increased range of CLAW "Pike" by 50 and adjusted cost
+
+- SPHERE "Ark" and "Stalwart" missiles are now labeled "Anti-Armor" to match their H damage type
+
+ECONOMY
+- reduced cost of L2 adv. metal extractors by 10% and L2 exploiter metal extractors by 20%
+- reduced cost of GEAR "L2" construction robot by about 20%
+
+NAVY
+- AVEN "Skeeter" now has 900 HP and 50M dmg/s depth charges instead of the EMG
+- CLAW "Sword" now also has 70M dmg/s depth charges and has forward facing +/- 25% damage resistance
+- reduced the movement speed and increased range of AVEN "Crusader", GEAR "Enforcer" and SPHERE "Endeavour"
+- GEAR "Searcher" is now slightly bigger, slower, 1000M HP, with increased damage/s and range on the weapons
+- GEAR "Viking" had its missiles and depth charges replaced by a 650 range 60H dmg/s torpedo launcher
+- SPHERE construction ship got HP increased and armor type changed from L to M
+- SPHERE "Skiff" is now slightly bigger, slower, 1000M HP with increased range on the laser and a 45M dmg/s depth charge weapon
+
+- L1 "destroyer" ships got the label changed to "gun boats"
+- modified the trajectory of most land and sea torpedoes and depth charges to be more confined to water while still being able to hit hovercraft
+
+
+--- UI / Visual / Audio
+
+- settings widget enables ground decals as the game starts (required to show metal spots on many maps)
+
+- whenever a player is detected as lagging behind 5+ seconds, also pause the game
+
+- remove shockwave from small explosions (light missiles and cannons) for performance reasons
+
+- improved the on-fire visual effects
+
+- fixed an issue where ships would sometimes stop displaying water trails when moving
+
+- slightly modified some sounds, visual effects and 3D models for a few AVEN units
+
+
+
 2021/01/31 ------------------ NOTES v1.51 ----------------------
 
 

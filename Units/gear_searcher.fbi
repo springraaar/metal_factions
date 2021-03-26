@@ -5,7 +5,7 @@
 	//********************
 	side=Gear;
 	name=Searcher;
-	description=Scout Ship;
+	description=Fast Attack Ship;
 	iconType=shipfs;
 
 	//************************************************************
@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=600;
+	maxDamage=1000;
 	footprintx=3;
 	footprintz=3;
 
@@ -61,10 +61,10 @@
 	//  Movement
 	//************
 	movementClass=smallboat;
-	turnRate=519;
+	turnRate=619;
 	acceleration=0.2;
 	brakeRate=0.01;
-	maxVelocity=3;
+	maxVelocity=2.8;
 	minwaterdepth=6;
 	waterline=0.5;
 
@@ -93,7 +93,7 @@
 	//  Miscellaneous
 	//*****************
 	collisionVolumeType = box;
-	collisionVolumeScales =17 25 33;
+	collisionVolumeScales =17 25 38;
 	collisionVolumeOffsets = 0 -10 0;
 	collisionVolumeTest = 1;
 
@@ -107,8 +107,8 @@
 		explosionGenerator0=custom:GLOWSML;
 		explosionGenerator1=custom:rocketflaresml;
 	}
-	buildCostEnergy=689;//#AUTO#
-	buildCostMetal=137;//#AUTO#
-	buildTime=1642;//#AUTO#
-	mass=97;//#AUTO#
+	buildCostEnergy=1506;//#AUTO#
+	buildCostMetal=301;//#AUTO#
+	buildTime=3590;//#AUTO#
+	mass=350;//#AUTO#
 }

@@ -14,9 +14,8 @@ include("keysym.h.lua")
 
 
 -- custom commands
-local CMD_UPGRADEMEX = 31244
-local CMD_UPGRADEMEX2 = 31245
-local CMD_AREAMEX = 31246 
+VFS.Include("lualibs/custom_cmd.lua")
+
 
 local menuSecond = -1
 WG.menuShown = false
@@ -25,7 +24,7 @@ WG.unboundDefKeys = {}
 local shouldShowMenu = false
 local shouldSelectCom = false
 
-local customKeybindsFile = "LuaUI/Configs/mf_keys.txt"
+local customKeybindsFile = "luaui/configs/mf_keys.txt"
 
 local function trim(s)
 	return string.match(s,"[%s\t\n\v\f\r]*(.-)[%s\t\n\v\f\r]*$")
@@ -132,6 +131,16 @@ function widget:Initialize()
 		end
 	else
 		Spring.Echo("no custom keybinds found")
+	end
+	
+	-- default key overrides
+	if (not WG.unboundDefKeys or not WG.unboundDefKeys["j"]) then
+		if (not WG.customHotkeys["jump"]) then
+			unbindKey("j")
+			Spring.SendCommands("bind j jump")
+			Spring.SendCommands("bind Shift+j jump")
+			WG.customHotkeys["jump"] = j
+		end
 	end
 end
 

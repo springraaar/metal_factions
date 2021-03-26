@@ -1,5 +1,5 @@
-include("LuaRules/Gadgets/ai/common.lua")
-include("LuaRules/Gadgets/ai/CommonUnitBehavior.lua")
+include("luarules/gadgets/ai/common.lua")
+include("luarules/gadgets/ai/CommonUnitBehavior.lua")
  
 AttackerBehavior = {}
 AttackerBehavior.__index = AttackerBehavior

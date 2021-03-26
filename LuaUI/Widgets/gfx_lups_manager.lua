@@ -54,8 +54,8 @@ function MergeTable(table1,table2)
   return result
 end
 
-include("Configs/lupsfxs.lua")
-include("Configs/lupsunitfxs.lua")
+include("configs/lupsfxs.lua")
+include("configs/lupsunitfxs.lua")
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

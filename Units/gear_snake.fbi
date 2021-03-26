@@ -105,8 +105,13 @@
 	{
 		builtBy=gear_shipyard,gear_adv_shipyard;
 	}
-	buildCostEnergy=1627;//#AUTO#
-	buildCostMetal=325;//#AUTO#
-	buildTime=3879;//#AUTO#
-	mass=179;//#AUTO#
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:ROCKETFLARESML;
+	}
+
+	buildCostEnergy=1673;//#AUTO#
+	buildCostMetal=334;//#AUTO#
+	buildTime=3989;//#AUTO#
+	mass=180;//#AUTO#
 }

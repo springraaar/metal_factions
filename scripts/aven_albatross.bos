@@ -7,6 +7,8 @@ piece  base, rwing, lwing, tail, jet, weapon, weapon21, weapon22,barrel1, flare1
 
 static-var  statechg_DesiredState, statechg_StateChanging, Static_Var_5, isFlying, gun_2;
 
+#define SIG_AIM 	2
+
 
 Crashing(Func_Var_1)
 {
@@ -119,12 +121,19 @@ Deactivate()
 	start-script RequestState(1);
 }
 
-AimPrimary()
+AimPrimary(heading,pitch)
 {
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
 	if(!isFlying)
 	{
 		return (0);
 	}
+	
+	while (heading < <-20> || heading > <20>) {
+		sleep 100;
+	}
+	
 	return (1);
 }
 

@@ -48,7 +48,8 @@ local spGetMyTeamID = Spring.GetMyTeamID
 local spGetTeamRulesParam = Spring.GetTeamRulesParam
 local spSendLuaRulesMsg = Spring.SendLuaRulesMsg
 local spGetSpectatingState = Spring.GetSpectatingState
-local CMD_ENERGYCONVERT	= 39310
+
+VFS.Include("lualibs/custom_cmd.lua")
 local displayWindow = true
 --------------------------------------------------------------------------------
 -- Funcs

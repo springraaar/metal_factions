@@ -42,7 +42,7 @@ local spGetUnitIsBuilding = Spring.GetUnitIsBuilding
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-CMD_BUILDPRIORITY = 33455
+include("lualibs/custom_cmd.lua")
 
 local buildSpeedList = {}
 local buildPriorityList = {}

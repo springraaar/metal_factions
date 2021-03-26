@@ -51,8 +51,8 @@ local fontSize = 11
 local fontSpace = 5
 local yStep = fontSize + fontSpace
 
-local entryFont  = "LuaUI/Fonts/FreeMonoBold_12"
-local headerFont  = "LuaUI/Fonts/FreeMonoBold_12"
+local entryFont  = "luaui/fonts/FreeMonoBold_12"
+local headerFont  = "luaui/fonts/FreeMonoBold_12"
 --local headerFont = "LuaUI/Fonts/FreeMonoBold_16"
 --local entryFont  = "LuaUI/Fonts/mephisto_12"
 --local entryFont  = "LuaUI/Fonts/VeraMoBd_12"

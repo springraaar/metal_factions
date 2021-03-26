@@ -85,7 +85,7 @@ local barColors = {
   build   = { 0.75,0.75,0.75,barAlpha },
   stock   = { 0.50,0.50,0.50,barAlpha },
   reload  = { 0.00,0.60,0.60,barAlpha },
-  jump    = { 0.10,0.80,0.50,barAlpha },
+  jump    = { 0.0,0.50,0.00,barAlpha },
   shield  = { 0.20,0.60,0.60,barAlpha },
 
   resurrect = { 1.00,0.50,0.00,featureBarAlpha },
@@ -377,7 +377,7 @@ do
   function DrawStockpile(numStockpiled,numStockpileQued)
     --// DRAW STOCKPILED MISSLES
     glColor(1,1,1,1)
-    glTexture("LuaUI/Images/nuke.png")
+    glTexture("luaui/images/nuke.png")
     local xoffset = barWidth+16
     for i=1,((numStockpiled>3) and 3) or numStockpiled do
       glTexRect(xoffset,-(11*barHeight-2)-stockpileH,xoffset-stockpileW,-(11*barHeight-2))
@@ -800,7 +800,7 @@ do
       glTexGen(GL_S, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR)
       v = cvs.forward
       glTexGen(GL_S, GL_EYE_PLANE, v[1]*0.008,v[2]*0.008,v[3]*0.008, shift)
-      glTexture("LuaUI/Images/paralyzed.png")
+      glTexture("luaui/images/paralyzed.png")
 
       glColor(0,1,1,alpha*1.1)
       for i=1,#paraUnits do

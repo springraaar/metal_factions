@@ -1,5 +1,5 @@
-include("LuaRules/Gadgets/ai/taskQueues.lua")
-include("LuaRules/Gadgets/ai/CommonUnitBehavior.lua")
+include("luarules/gadgets/ai/taskQueues.lua")
+include("luarules/gadgets/ai/CommonUnitBehavior.lua")
  
 TaskQueueBehavior = {}
 TaskQueueBehavior.__index = TaskQueueBehavior

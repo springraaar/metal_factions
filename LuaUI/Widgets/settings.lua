@@ -44,5 +44,8 @@ function widget:Initialize()
 
 	-- enforce hardware cursor	
 	Spring.SendCommands("HardwareCursor 1")
+	
+	-- enforce ground decals
+	Spring.SendCommands("grounddecals 1")
 end
 

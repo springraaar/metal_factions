@@ -225,15 +225,13 @@ MAP_PROFILE_AIRONLY = 4
 
 
 -- commands
+include("lualibs/custom_cmd.lua")
+
 --CMD.MOVE = 10
 --CMD_PATROL = 15
 --CMD_FIGHT = 16
 --CMD_RECLAIM = 10	 --FIXME
 --CMD_REPAIR = 10	 --FIXME
-CMD_BUILDPRIORITY = 33455
-CMD_UPGRADEMEX = 31244
-CMD_UPGRADEMEX2 = 31245
-CMD_AREAMEX = 31246  
 CMD_FEATURE_ID_OFFSET = Game.maxUnits
 
 -- external commands
@@ -828,6 +826,7 @@ attackerList =
 	"aven_runner",
 	"aven_trooper",
 	"aven_trooper_laser",
+	"aven_trooper_hemg",
 	"aven_wheeler",
 	"aven_kit",
 	"aven_warrior",
@@ -943,6 +942,7 @@ attackerList =
       "claw_bullfrog",
       "claw_mega",
       "claw_ravager",
+      "claw_breaker",
       "claw_halberd",
       "claw_crawler",
       "claw_cutter",
@@ -1077,6 +1077,8 @@ unitAbleToHitUnderwater = {
 	aven_u5commander = true,
 	aven_u6commander = true,
 	aven_lurker = true,
+	aven_stinger = true,
+	aven_skeeter = true,
 	aven_torpedo_launcher = true,
 	aven_piranha = true,
 	aven_slider_s = true,
@@ -1091,6 +1093,7 @@ unitAbleToHitUnderwater = {
 	gear_u5commander = true,
 	gear_u6commander = true,
 	gear_snake = true,
+	gear_viking = true,
 	gear_torpedo_launcher = true,
 	gear_noser = true,
 	gear_advanced_torpedo_launcher = true,
@@ -1119,6 +1122,8 @@ unitAbleToHitUnderwater = {
 	sphere_u5commander = true,
 	sphere_u6commander = true,
 	sphere_carp = true,
+	sphere_skiff = true,
+	sphere_targe = true,
 	sphere_clam = true,
 	sphere_pluto = true,
 	sphere_oyster = true,
@@ -1136,6 +1141,7 @@ seaAttackerList =
 	"aven_crusader",
 	"aven_vanguard",
 	"aven_lurker",
+	"aven_stinger",
 ----------- l2
 	"aven_conqueror",
 	"aven_piranha",
@@ -1149,6 +1155,7 @@ seaAttackerList =
 	"gear_enforcer",
 	"gear_viking",
 	"gear_snake",
+	"gear_blowfish",
 
 ----------- l2
 
@@ -1163,6 +1170,7 @@ seaAttackerList =
       "claw_striker",
       "claw_sword",
       "claw_spine",
+      "claw_hunter",
 ----------- l2
       "claw_drakkar",
       "claw_monster",
@@ -1174,6 +1182,7 @@ seaAttackerList =
       "sphere_endeavour",
       "sphere_carp",
       "sphere_reacher",
+      "sphere_targe",
 ----------- l2
       "sphere_pluto",
       "sphere_stalwart",
@@ -1338,7 +1347,7 @@ respawnerByFaction = {[side1Name] = "aven_commander_respawner", [side2Name] = "g
 lev1PlantByFaction = {[side1Name] = {"aven_light_plant","aven_aircraft_plant"}, [side2Name] = {"gear_light_plant","gear_aircraft_plant"}, [side3Name] = {"claw_light_plant","claw_aircraft_plant"}, [side4Name] = {"sphere_light_factory","sphere_aircraft_factory"}}
 lev2PlantByFaction = {[side1Name] = {"aven_adv_kbot_lab","aven_adv_vehicle_plant","aven_hovercraft_platform","aven_adv_aircraft_plant"}, [side2Name] = {"gear_adv_kbot_lab","gear_adv_vehicle_plant","gear_adv_aircraft_plant"}, [side3Name] = {"claw_adv_kbot_plant","claw_adv_vehicle_plant","claw_spinbot_plant","claw_adv_aircraft_plant"}, [side4Name] = {"sphere_adv_vehicle_factory","sphere_adv_kbot_factory","sphere_sphere_factory","sphere_adv_aircraft_factory"}}
 solarByFaction = { [side1Name] = "aven_solar_collector", [side2Name] = "gear_solar_collector", [side3Name] = "claw_solar_collector"}
-windByFaction = { [side1Name] = "aven_wind_generator", [side2Name] = "gear_wind_generator", [side3Name] = "claw_wind_generator"}
+windByFaction = { [side1Name] = "aven_wind_generator", [side2Name] = "gear_wind_generator", [side3Name] = "claw_wind_generator", [side4Name] = "sphere_wind_generator"}
 geoByFaction = { [side1Name] = "aven_geothermal_powerplant", [side2Name] = "gear_geothermal_powerplant", [side3Name] = "claw_geothermal_powerplant", [side4Name] = "sphere_geothermal_powerplant"}
 energyStorageByFaction = { [side1Name] = "aven_energy_storage", [side2Name] = "gear_energy_storage", [side3Name] = "claw_energy_storage", [side4Name] = "sphere_energy_storage"}
 metalStorageByFaction = { [side1Name] = "aven_metal_storage", [side2Name] = "gear_metal_storage", [side3Name] = "claw_metal_storage", [side4Name] = "sphere_metal_storage"}
@@ -1388,7 +1397,7 @@ unitTypeSets = {
 	[TYPE_MOHO] = tableToSet({mohoMineByFaction,UWMohoMineByFaction,hazMexByFaction}),
 	[TYPE_HAZMOHO] = tableToSet(hazMexByFaction),
 	[TYPE_EXTRACTOR] = tableToSet({mexByFaction,hazMexByFaction,UWMexByFaction,mohoMineByFaction,UWMohoMineByFaction}),
-	[TYPE_ENERGYGENERATOR] = tableToSet({solarByFaction,windByFaction,geoByFaction,fusionByFaction,tidalByFaction,{"sphere_fusion_reactor","sphere_hardened_fission_reactor"}}),
+	[TYPE_ENERGYGENERATOR] = tableToSet({solarByFaction,windByFaction,geoByFaction,fusionByFaction,tidalByFaction,{"sphere_fusion_reactor","sphere_hardened_fission_reactor","aven_bio_dome","gear_mass_burner"}}),
 	[TYPE_ECONOMY] = tableToSet({tidalByFaction,mexByFaction,hazMexByFaction,mohoMineByFaction,mmakerByFaction,solarByFaction,windByFaction,geoByFaction,fusionByFaction,energyStorageByFaction,metalStorageByFaction,{"sphere_fusion_reactor","sphere_hardened_fission_reactor"}}),
 	[TYPE_PLANT] = tableToSet({lev1PlantByFaction,lev2PlantByFaction}),
 	[TYPE_UW_DEFENSE] = tableToSet({lev1TorpedoDefenseByFaction,lev2TorpedoDefenseByFaction}),		

@@ -33,6 +33,7 @@ local spSetUnitRotation = Spring.SetUnitRotation
 local spGetUnitDirection = Spring.GetUnitDirection
 local spAreTeamsAllied = Spring.AreTeamsAllied
 local spGetUnitTeam = Spring.GetUnitTeam
+local spAddUnitResource = Spring.AddUnitResource
 local floor = math.floor
 
 -------------------------------------------------------------------------------------
@@ -97,6 +98,18 @@ function checkEnergy(unitID, unitDefID, teamID, data)
 	end
 
 	-- else return 0
+	return 0
+end
+
+-- energy transaction
+function energyTransaction(unitID, unitDefID, teamID, amount)
+	spAddUnitResource(unitID, "e", amount)
+	return 0
+end
+
+-- metal transaction  (amount received from unit script is *20)
+function metalTransaction(unitID, unitDefID, teamID, amount)
+	spAddUnitResource(unitID, "m", amount/20)
 	return 0
 end
 
@@ -476,6 +489,8 @@ end
 
 gadgetHandler:RegisterGlobal("cobDebug", cobDebug)
 gadgetHandler:RegisterGlobal("checkEnergy", checkEnergy)
+gadgetHandler:RegisterGlobal("energyTransaction", energyTransaction)
+gadgetHandler:RegisterGlobal("metalTransaction", metalTransaction)
 gadgetHandler:RegisterGlobal("resetReload", resetReload)
 gadgetHandler:RegisterGlobal("delayReload", delayReload)
 gadgetHandler:RegisterGlobal("getBuildPt", getBuildPt)

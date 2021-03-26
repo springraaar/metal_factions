@@ -1,0 +1,96 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Bio Dome;
+	description=Delayed return energy/metal generator;
+	iconType=energy;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN ENERGY LEVEL1 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_bio_dome;
+	objectName=aven_bio_dome.3do;
+	corpse=aven_bio_dome_dead;
+	buildPic=aven_bio_dome.png;
+	soundCategory=aven_SOLAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1200;
+	footprintx=8;
+	footprintz=8;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=15;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo;
+	activateWhenBuilt=1;
+	collisionvolumetype=box;
+	collisionVolumeScales=100 35 100;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onOffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+
+	[CustomParams]
+	{
+		builtBy=aven_l1builder,aven_l2builder;
+		tip=Income grows by +0.1 M/s and +10 E/s every 4 minutes, maxing out after 20 min;
+	}
+	buildCostEnergy=2000;
+	buildCostMetal=400;
+	buildTime=4800;
+	mass=500;
+}

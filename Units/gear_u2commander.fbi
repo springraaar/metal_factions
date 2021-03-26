@@ -153,11 +153,18 @@
 	{
 		buildertype=gear_l1builder;
 		isCommander=1;
+		canJump=1;
+		jumpType=commander;
+		jumpMod=1.0;
 	}
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:yellowflaremed;
 		explosionGenerator1=custom:Nano;
-		explosionGenerator3=custom:DGUNREADYFLARE;
+		explosionGenerator2=custom:rocketflaresml;
+		explosionGenerator3=custom:JUMPASC;
+		explosionGenerator4=custom:JUMPASC2;
+		explosionGenerator5=custom:JUMPDESC;
+		explosionGenerator6=custom:JUMPDESC2;
 	}
 }

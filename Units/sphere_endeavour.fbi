@@ -5,7 +5,7 @@
 	//********************
 	side=Sphere;
 	name=Endeavour;
-	description=Destroyer;
+	description=Gun Boat;
 	iconType=shipartilleryfs;
 
 	//************************************************************
@@ -63,9 +63,9 @@
 	//************
 	movementClass=smallboat;
 	turnRate=384;
-	acceleration=0.027;
+	acceleration=0.03;
 	brakeRate=0.009;
-	maxVelocity=2.25;
+	maxVelocity=1.9;
 	minwaterdepth=12;
 	waterline=0;
 
@@ -95,7 +95,6 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	scale=0.6;
 	collisionVolumeType = box;
 	collisionVolumeScales =30 30 60;
 	collisionVolumeOffsets = 0 -10 0;
@@ -111,8 +110,8 @@
 	{
 		explosionGenerator0=custom:yellowflaremed;
 	}
-	buildCostEnergy=5412;//#AUTO#
-	buildCostMetal=1082;//#AUTO#
-	buildTime=12900;//#AUTO#
-	mass=1235;//#AUTO#
+	buildCostEnergy=4891;//#AUTO#
+	buildCostMetal=978;//#AUTO#
+	buildTime=11657;//#AUTO#
+	mass=1201;//#AUTO#
 }

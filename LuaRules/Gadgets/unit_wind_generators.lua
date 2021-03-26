@@ -33,7 +33,7 @@ local spGetUnitHealth = Spring.GetUnitHealth
 -- load wind gen unitdef ids
 function gadget:Initialize()
 	for _,ud in pairs(UnitDefs) do
-		if ud.name == "aven_wind_generator" or ud.name == "gear_wind_generator" or ud.name == "claw_wind_generator" then
+		if ud.name == "aven_wind_generator" or ud.name == "gear_wind_generator" or ud.name == "claw_wind_generator" or ud.name == "sphere_wind_generator" then
 			windGeneratorUnitDefIds[ud.id] = true
 		end
 	end

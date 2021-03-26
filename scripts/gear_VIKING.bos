@@ -7,7 +7,7 @@
 #define PITCH_TOLERANCE		<15>
 
 
-piece  base, turret1, sleeve, barrel, flare, turret2, flare2,  holder2, wake1, wake2, torpedodrop;
+piece  base, turret1, sleeve, barrel, flare, turret2, flare2,  holder2, wake1, wake2;
 
 #include "aimhelper1.h"
 #include "aimhelper2.h"
@@ -115,18 +115,11 @@ AimSecondary(heading, pitch)
 	signal SIG_AIM_2;
 	set-signal-mask SIG_AIM_2;
 	turn turret2 to y-axis heading speed <350.000000>;
-	turn holder2 to x-axis <0.000000> - pitch speed <350.000000>;
 	if (!aimReady2)
 	{
 		wait-for-turn turret2 around y-axis;
-		wait-for-turn holder2 around x-axis;
 	}
 	start-script RestoreAfterDelay2();
-	return (1);
-}
-
-AimWeapon3(Func_Var_1, Func_Var_2)
-{
 	return (1);
 }
 
@@ -138,10 +131,6 @@ FirePrimary()
 FireSecondary()
 {
 	emit-sfx 1024+1 from flare2;
-}
-
-FireWeapon3()
-{
 }
 
 AimFromPrimary(piecenum)
@@ -156,11 +145,6 @@ AimFromSecondary(piecenum)
 	return (0);
 }
 
-AimFromWeapon3(piecenum)
-{
-	piecenum = torpedodrop;
-	return (0);
-}
 
 QueryPrimary(piecenum)
 {
@@ -174,17 +158,6 @@ QuerySecondary(piecenum)
 	return (0);
 }
 
-QueryWeapon3(piecenum)
-{
-	piecenum = torpedodrop;
-	return (0);
-}
-
-SweetSpot(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
 
 Killed(severity, corpsetype)
 {

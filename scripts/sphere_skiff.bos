@@ -6,7 +6,7 @@
 #define HEADING_TOLERANCE	<25>
 #define PITCH_TOLERANCE		<15>
 
-piece  base, hull, bottom, h2,turret, sleeve, barrel, flash, wake1;
+piece  base, hull, bottom, h2,turret, sleeve, barrel, flash, wake1, chargept;
 
 #include "aimhelper1.h"
 
@@ -113,11 +113,28 @@ QueryPrimary(piecenum)
 
 
 
-SweetSpot(piecenum)
+AimSecondary(heading, pitch)
 {
-	piecenum = turret;
+	return (1);
+}
+
+FireSecondary()
+{
 	return (0);
 }
+
+AimFromSecondary(piecenum)
+{
+	piecenum = chargept;
+	return (0);
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = chargept;
+	return (0);
+}
+
 
 Killed(severity, corpsetype)
 {

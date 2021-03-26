@@ -153,13 +153,19 @@
 	{
 		buildertype=aven_l1builder;
 		isCommander=1;
+		canJump=1;
+		jumpType=commander;
+		jumpMod=1.08;
 	}
 
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:GLOWSML;
 		explosionGenerator1=custom:Nano;
-		explosionGenerator3=custom:DGUNREADYFLARE;
+		explosionGenerator2=custom:JUMPASC;
+		explosionGenerator3=custom:JUMPASC2;
+		explosionGenerator4=custom:JUMPDESC;
+		explosionGenerator5=custom:JUMPDESC2;
 	}
 
 }

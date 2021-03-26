@@ -1,4 +1,4 @@
-include("LuaRules/Gadgets/ai/common.lua")
+include("luarules/gadgets/ai/common.lua")
  
 UnitHandler = {}
 UnitHandler.__index = UnitHandler

@@ -200,7 +200,7 @@ TargetCleared(Func_Var_1)
 
 FirePrimary()
 {
-	start-script RockZ(-5,aimHeading);
+	//start-script RockZ(-5,aimHeading);
 	move barrel to z-axis [-5.000000] now;
 	emit-sfx 1024 + 0 from flare;
 	sleep 150;

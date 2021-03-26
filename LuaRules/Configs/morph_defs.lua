@@ -133,10 +133,10 @@ local morphDefs = {
 		{
 			into = 'claw_u1commander',
 			time = 30,
-			cmdname = 'Breaker Form',
+			cmdname = 'Brawler Form',
 			energy = 10000,
 			metal = 1500,
-			text = 'Morph to Breaker Form : Increased HP and greatly increased firepower against heavy units. Slightly slower speed.'
+			text = 'Morph to Brawler Form : Increased HP and greatly increased firepower against heavy units. Slightly slower speed.'
 		},
 		{
 			into = 'claw_u2commander',

@@ -80,8 +80,7 @@
 	//***********
 	weapon1=aven_albatross_laser;
 	weapon2=aven_albatross_torpedo;
-	noChaseCategory=VTOL;
-	badTargetCategory1=VTOL;
+	badTargetCategory1=NOTAIR;
 	onlytargetcategory2=NOTAIR;
 	explodeAs=BIG_UNITEX;
 	selfDestructAs=MEDIUM_UNIT;
@@ -108,8 +107,8 @@
 	{
 		builtBy=aven_adv_aircraft_plant;
 	}
-	buildCostEnergy=6423;//#AUTO#
-	buildCostMetal=1284;//#AUTO#
-	buildTime=15310;//#AUTO#
+	buildCostEnergy=6425;//#AUTO#
+	buildCostMetal=1285;//#AUTO#
+	buildTime=15313;//#AUTO#
 	mass=339;//#AUTO#
 }

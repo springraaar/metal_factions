@@ -2,7 +2,7 @@
  Task Queues!
 ]]--
 
-include("LuaRules/Gadgets/ai/common.lua")
+include("luarules/gadgets/ai/common.lua")
 
 function farFromBaseCenter(self, radius)
 	if self.unitId == nil then
@@ -4463,4 +4463,4 @@ sTaskQueues = {
 }
 
 -- include default strategies
-include("LuaRules/Gadgets/ai/defaultStrategies.lua")
+include("luarules/gadgets/ai/defaultStrategies.lua")

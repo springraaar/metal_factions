@@ -28,7 +28,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=4100;
+	maxDamage=4150;
 	buildcostmetal=2000;
 	buildcostenergy=20000;
 	buildtime=30000;
@@ -153,10 +153,18 @@
 		isCommander=1;
 		tip=Burns ground for 20s, dealing up to 60(M) dmg/s. Affected units burn for 210(M) dmg over 7s;
 		canAreaAttack=1;
+		canJump=1;
+		jumpType=commander;
+		jumpMod=0.88;
 	}
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:yellowflaremed;
 		explosionGenerator1=custom:Nano;
+		explosionGenerator2=custom:rocketflaresml;
+		explosionGenerator3=custom:JUMPASC;
+		explosionGenerator4=custom:JUMPASC2;
+		explosionGenerator5=custom:JUMPDESC;
+		explosionGenerator6=custom:JUMPDESC2;
 	}
 }

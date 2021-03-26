@@ -40,18 +40,7 @@ local echo  = Spring.Echo
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --
---  Proposed Command ID Ranges:
---
---    all negative:  Engine (build commands)
---       0 -   999:  Engine
---    1000 -  9999:  Group AI
---   10000 - 19999:  LuaUI
---   20000 - 29999:  LuaCob
---   30000 - 39999:  LuaRules
---
-
-local CMD_MORPH_STOP = 32410
-local CMD_MORPH = 31410
+include("lualibs/custom_cmd.lua")
 
 local MAX_MORPH = 0 --// will increase dynamically
 
@@ -108,7 +97,7 @@ if (gadgetHandler:IsSyncedCode()) then
 --  SYNCED
 --------------------------------------------------------------------------------
 
-include("LuaRules/colors.h.lua")
+include("luaRules/colors.h.lua")
 
 local stopPenalty  = 0.667
 local morphPenalty = 1.0

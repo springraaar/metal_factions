@@ -29,9 +29,9 @@ handler.verbose = false or true
 
 if LUA_NAME == "LuaUI" then
 	--// Config & Widget Locations
-	ORDER_FILENAME  = LUAUI_DIRNAME .. 'Config/' .. Game.modShortName .. '_order.lua'
-	CONFIG_FILENAME = LUAUI_DIRNAME .. 'Config/' .. Game.modShortName .. '_data.lua'
-	KNOWN_FILENAME  = LUAUI_DIRNAME .. 'Config/' .. Game.modShortName .. '_known.lua'
+	ORDER_FILENAME  = LUAUI_DIRNAME .. 'config/' .. Game.modShortName .. '_order.lua'
+	CONFIG_FILENAME = LUAUI_DIRNAME .. 'config/' .. Game.modShortName .. '_data.lua'
+	KNOWN_FILENAME  = LUAUI_DIRNAME .. 'config/' .. Game.modShortName .. '_known.lua'
 
 	ADDON_DIRS     = {
 		LUA_DIRNAME .. 'addons/';
@@ -42,7 +42,7 @@ if LUA_NAME == "LuaUI" then
 	}
 
 	--// Create the "LuaUI/Config" directory
-	Spring.CreateDir(LUAUI_DIRNAME .. 'Config')
+	Spring.CreateDir(LUAUI_DIRNAME .. 'config')
 
 	handler:Load(LUAUI_DIRNAME .. "SystemWidgets/BlockUserWidgets.lua" --[[, VFS.ZIP]])
 else

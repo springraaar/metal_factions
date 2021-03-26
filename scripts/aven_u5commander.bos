@@ -9,7 +9,7 @@
 #define SPEEDUP_FACTOR	230
 #define RESTORE_DELAY	3000
 
-piece  torso, ruparm, luparm, rbigflash, nanospray, pelvis, lfirept, head, lthigh, rthigh, lloarm, rloarm, rleg, lleg, rfoot,lfoot, torpgun,torpedo, lfirept2, h2, nano, lemg, rgun, t2,t3,t4,lshoulder,rshoulder;
+piece  torso, ruparm, luparm, rbigflash, nanospray, pelvis, lfirept, head, lthigh, rthigh, lloarm, rloarm, rleg, lleg, rfoot,lfoot, torpgun,torpedo, lfirept2, h2, nano, lemg, rgun, t2,t3,t4,lshoulder,rshoulder,jumpback,jbwings,lbjetpt,rbjetpt,jumpjets,lfjet,rfjet,lfjetpt,rfjetpt;
 
 static-var  bMoving, bBuilding, bDgunning,bAiming, Static_Var_6, bUnderwater, canAim1, canAim2, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1,mAVertFactor, legAngle1, legAngle2, legAngle3, shouldRun;
 
@@ -20,6 +20,55 @@ static-var  bMoving, bBuilding, bDgunning,bAiming, Static_Var_6, bUnderwater, ca
 
 lua_cobDebug() { return 0; }
 lua_delayReload() { return 0; }
+
+
+
+#include "jumpvars.h"
+
+
+showJumpGear() {
+	hide t3;
+	show jumpback;
+	show jbwings;
+	show jumpjets;
+	show lfjet;
+	show rfjet;
+}
+
+hideJumpGear() {
+	show t3;
+	hide jumpback;
+	hide jbwings;
+	hide jumpjets;
+	hide lfjet;
+	hide rfjet;
+}
+
+showJumpEffects(descending, frames) {
+	if (descending) {
+		emit-sfx 1024+7 from lfjetpt;
+		emit-sfx 1024+7 from rfjetpt;
+		emit-sfx 1024+6 from lbjetpt;
+		emit-sfx 1024+6 from rbjetpt;
+		if (frames == JUMP_SND_FRAMES) {
+			play-sound( "jumpdesc", 1 );
+		}
+	} else {
+		if (frames == 0 ) {
+			play-sound( "jumpstart", 1 );
+		} else {
+			if (frames == JUMP_SND_FRAMES) {
+				play-sound( "jumpasc", 1 );
+			}
+		}
+		emit-sfx 1024+5 from lfjetpt;
+		emit-sfx 1024+5 from rfjetpt;
+		emit-sfx 1024+4 from lbjetpt;
+		emit-sfx 1024+4 from rbjetpt;
+	}
+}
+
+#include "jump.h"
 
 MotionSpeedControl(maxSpeed,currentSpeed)
 {
@@ -185,9 +234,23 @@ walk()
 	slowTurnSpd = mATurnSpd2 / 2;
 	slowTurnSpd2 = mATurnSpd2 / 6;
 	
+	if (isJumping) {
+		move pelvis to y-axis [0.000000] speed [35.000000];
+		turn pelvis to x-axis <0.000000> speed <30.000000>;
+		turn rthigh to x-axis <0.000000> speed <300.000000>;
+		turn rleg to x-axis <0.000000> speed <300.000000>;
+		turn lthigh to x-axis <0.000000> speed <300.000000>;
+		turn lleg to x-axis <0.000000> speed <300.000000>;
+		turn rfoot to x-axis <0.000000> speed <300.000000>;
+		turn lfoot to x-axis <0.000000> speed <300.000000>;
+		move rleg to y-axis [0.000000] speed [25.000000];
+		move lleg to y-axis [0.000000] speed [25.000000];		
+		sleep 100;
+		return;
+	}
 	
 	// back contact point : right foot behind, left foot forward
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		turn lthigh to x-axis <0.000000>-legAngle1 speed mATurnSpd1;
 		turn lleg to x-axis legAngle2 speed mATurnSpd2;
@@ -217,14 +280,14 @@ walk()
 	}
 
 	// intermediate pose 2 : left stomp ground
-	if( bMoving)
+	if( bMoving && !isJumping)
 	{
 		turn lfoot to x-axis legAngle3 speed mATurnSpd1*3;
 		wait-for-turn lfoot around x-axis;
 	}
 
 	// passing pose 2 : right foot raising, left foot on the ground
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		turn lthigh to x-axis <0.000000> speed mATurnSpd2;
 		turn lleg to x-axis <0.000000> speed mATurnSpd2;
@@ -256,7 +319,7 @@ walk()
 	}
 	
 	// forward contact point : right foot forward, left foot behind
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		turn lthigh to x-axis legAngle2 speed mATurnSpd2;
 		turn lleg to x-axis legAngle3 speed mATurnSpd2;
@@ -286,14 +349,14 @@ walk()
 	}
 
 	// intermediate pose 1 : right stomp ground
-	if( bMoving)
+	if( bMoving && !isJumping)
 	{
 		turn rfoot to x-axis legAngle3 speed mATurnSpd1*3;
 		wait-for-turn rfoot around x-axis;
 	}
 
 	// passing pose 1 : right foot on ground, left foot raising
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		turn lthigh to x-axis <-20.000000> speed mATurnSpd2;
 		turn lleg to x-axis <30.000000> speed mATurnSpd2;
@@ -330,7 +393,22 @@ walk()
 
 run()
 {
-	if( !bAiming )
+	if (isJumping) {
+		move pelvis to y-axis [0.000000] speed [35.000000];
+		turn pelvis to x-axis <0.000000> speed <30.000000>;
+		turn rthigh to x-axis <0.000000> speed <300.000000>;
+		turn rleg to x-axis <0.000000> speed <300.000000>;
+		turn lthigh to x-axis <0.000000> speed <300.000000>;
+		turn lleg to x-axis <0.000000> speed <300.000000>;
+		turn rfoot to x-axis <0.000000> speed <300.000000>;
+		turn lfoot to x-axis <0.000000> speed <300.000000>;
+		move rleg to y-axis [0.000000] speed [25.000000];
+		move lleg to y-axis [0.000000] speed [25.000000];		
+		sleep 100;
+		return;
+	}
+	
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [-0.625000] now;
 		move pelvis to z-axis [-1.500000] now;
@@ -348,7 +426,7 @@ run()
 		turn lloarm to x-axis <-36.571429> now;
 		sleep 41;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [-0.312500] now;
 		move pelvis to z-axis [-1.250000] now;
@@ -363,7 +441,7 @@ run()
 		turn lloarm to x-axis <-24.780220> now;
 		sleep 28;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [0.000000] now;
 		move pelvis to z-axis [-1.000000] now;
@@ -378,7 +456,7 @@ run()
 		turn lloarm to x-axis <-13.005495> now;
 		sleep 28;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [0.625000] now;
 		move pelvis to z-axis [-0.500000] now;
@@ -394,7 +472,7 @@ run()
 		turn lloarm to x-axis <-12.824176> now;
 		sleep 27;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [1.250000] now;
 		move pelvis to z-axis [0.000000] now;
@@ -410,7 +488,7 @@ run()
 		turn lloarm to x-axis <-12.659341> now;
 		sleep 29;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [0.625000] now;
 		move pelvis to z-axis [2.187485] now;
@@ -426,7 +504,7 @@ run()
 		turn lloarm to x-axis <-20.923077> now;
 		sleep 29;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [0.000000] now;
 		move pelvis to z-axis [4.374985] now;
@@ -442,7 +520,7 @@ run()
 		turn lloarm to x-axis <-29.181319> now;
 		sleep 13;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [-1.187485] now;
 		move pelvis to z-axis [5.187500] now;
@@ -459,7 +537,7 @@ run()
 		turn lloarm to x-axis <-23.736264> now;
 		sleep 13;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping)
 	{
 		move pelvis to y-axis [-2.374985] now;
 		move pelvis to z-axis [6.000000] now;
@@ -475,7 +553,7 @@ run()
 		turn lloarm to x-axis <-18.280220> now;
 		sleep 28;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [-1.937485] now;
 		move pelvis to z-axis [4.062500] now;
@@ -492,7 +570,7 @@ run()
 		turn lloarm to x-axis <-14.934066> now;
 		sleep 27;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [-1.499985] now;
 		move pelvis to z-axis [2.125000] now;
@@ -509,7 +587,7 @@ run()
 		turn lloarm to x-axis <-11.604396> now;
 		sleep 29;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [-1.062485] now;
 		move pelvis to z-axis [0.312500] now;
@@ -525,7 +603,7 @@ run()
 		turn lloarm to x-axis <-11.071429> now;
 		sleep 28;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [-0.625000] now;
 		move pelvis to z-axis [-1.500000] now;
@@ -542,7 +620,7 @@ run()
 		turn lloarm to x-axis <-10.549451> now;
 		sleep 43;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [-0.312500] now;
 		move pelvis to z-axis [-1.250000] now;
@@ -557,7 +635,7 @@ run()
 		turn lloarm to x-axis <-16.879121> now;
 		sleep 28;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [0.000000] now;
 		move pelvis to z-axis [-1.000000] now;
@@ -572,7 +650,7 @@ run()
 		turn lloarm to x-axis <-23.203297> now;
 		sleep 28;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [0.625000] now;
 		move pelvis to z-axis [-0.500000] now;
@@ -589,7 +667,7 @@ run()
 		turn lloarm to x-axis <-24.258242> now;
 		sleep 28;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [1.250000] now;
 		move pelvis to z-axis [0.000000] now;
@@ -606,7 +684,7 @@ run()
 		turn lloarm to x-axis <-25.313187> now;
 		sleep 29;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [0.625000] now;
 		move pelvis to z-axis [2.187500] now;
@@ -624,7 +702,7 @@ run()
 		turn lloarm to x-axis <-45.538462> now;
 		sleep 28;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [0.000000] now;
 		move pelvis to z-axis [4.375000] now;
@@ -641,7 +719,7 @@ run()
 		turn lloarm to x-axis <-65.758242> now;
 		sleep 14;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [-1.187485] now;
 		move pelvis to z-axis [5.187500] now;
@@ -658,7 +736,7 @@ run()
 		turn lloarm to x-axis <-72.791209> now;
 		sleep 13;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [-2.374985] now;
 		move pelvis to z-axis [6.000000] now;
@@ -675,7 +753,7 @@ run()
 		turn lloarm to x-axis <-79.813187> now;
 		sleep 28;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [-1.937485] now;
 		move pelvis to z-axis [4.062500] now;
@@ -692,7 +770,7 @@ run()
 		turn lloarm to x-axis <-71.736264> now;
 		sleep 27;
 	}
-	if( !bAiming )
+	if( !bAiming && !isJumping )
 	{
 		move pelvis to y-axis [-1.499985] now;
 		move pelvis to z-axis [2.125000] now;
@@ -732,7 +810,22 @@ run()
 
 runLegs()
 {
-	if( bMoving )
+	if (isJumping) {
+		move pelvis to y-axis [0.000000] speed [35.000000];
+		turn pelvis to x-axis <0.000000> speed <30.000000>;
+		turn rthigh to x-axis <0.000000> speed <300.000000>;
+		turn rleg to x-axis <0.000000> speed <300.000000>;
+		turn lthigh to x-axis <0.000000> speed <300.000000>;
+		turn lleg to x-axis <0.000000> speed <300.000000>;
+		turn rfoot to x-axis <0.000000> speed <300.000000>;
+		turn lfoot to x-axis <0.000000> speed <300.000000>;
+		move rleg to y-axis [0.000000] speed [25.000000];
+		move lleg to y-axis [0.000000] speed [25.000000];		
+		sleep 100;
+		return;
+	}
+	
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [-0.625000] now;
 		move pelvis to z-axis [-1.500000] now;
@@ -745,7 +838,7 @@ runLegs()
 		turn lleg to x-axis <43.604396> now;
 		sleep 41;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [-0.312500] now;
 		move pelvis to z-axis [-1.250000] now;
@@ -755,7 +848,7 @@ runLegs()
 		turn lleg to x-axis <43.604396> now;
 		sleep 28;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [0.000000] now;
 		move pelvis to z-axis [-1.000000] now;
@@ -765,7 +858,7 @@ runLegs()
 		turn lleg to x-axis <43.604396> now;
 		sleep 28;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [0.625000] now;
 		move pelvis to z-axis [-0.500000] now;
@@ -776,7 +869,7 @@ runLegs()
 		turn lleg to x-axis <37.269231> now;
 		sleep 27;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [1.250000] now;
 		move pelvis to z-axis [0.000000] now;
@@ -787,7 +880,7 @@ runLegs()
 		turn lleg to x-axis <30.945055> now;
 		sleep 30;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [0.625000] now;
 		move pelvis to z-axis [2.187485] now;
@@ -798,7 +891,7 @@ runLegs()
 		turn lleg to x-axis <26.016484> now;
 		sleep 28;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [0.000000] now;
 		move pelvis to z-axis [4.374985] now;
@@ -809,7 +902,7 @@ runLegs()
 		turn lleg to x-axis <21.093407> now;
 		sleep 13;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [-1.187485] now;
 		move pelvis to z-axis [5.187500] now;
@@ -822,7 +915,7 @@ runLegs()
 		turn lleg to x-axis <21.269231> now;
 		sleep 13;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [-2.374985] now;
 		move pelvis to z-axis [6.000000] now;
@@ -834,7 +927,7 @@ runLegs()
 		turn lleg to x-axis <21.445055> now;
 		sleep 28;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [-1.937485] now;
 		move pelvis to z-axis [4.062500] now;
@@ -846,7 +939,7 @@ runLegs()
 		turn lleg to x-axis <11.247253> now;
 		sleep 27;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [-1.499985] now;
 		move pelvis to z-axis [2.125000] now;
@@ -858,7 +951,7 @@ runLegs()
 		turn lleg to x-axis <1.049451> now;
 		sleep 29;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [-1.062485] now;
 		move pelvis to z-axis [0.312500] now;
@@ -869,7 +962,7 @@ runLegs()
 		turn lleg to x-axis <10.192308> now;
 		sleep 28;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [-0.625000] now;
 		move pelvis to z-axis [-1.500000] now;
@@ -881,7 +974,7 @@ runLegs()
 		turn lleg to x-axis <19.335165> now;
 		sleep 43;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [-0.312500] now;
 		move pelvis to z-axis [-1.250000] now;
@@ -891,7 +984,7 @@ runLegs()
 		turn lleg to x-axis <21.093407> now;
 		sleep 28;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [0.000000] now;
 		move pelvis to z-axis [-1.000000] now;
@@ -901,7 +994,7 @@ runLegs()
 		turn lleg to x-axis <22.857143> now;
 		sleep 28;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [0.625000] now;
 		move pelvis to z-axis [-0.500000] now;
@@ -913,7 +1006,7 @@ runLegs()
 		turn lleg to x-axis <25.313187> now;
 		sleep 28;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [1.250000] now;
 		move pelvis to z-axis [0.000000] now;
@@ -925,7 +1018,7 @@ runLegs()
 		turn lleg to x-axis <27.780220> now;
 		sleep 30;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [0.625000] now;
 		move pelvis to z-axis [2.187500] now;
@@ -938,7 +1031,7 @@ runLegs()
 		turn lleg to x-axis <25.489011> now;
 		sleep 28;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [0.000000] now;
 		move pelvis to z-axis [4.375000] now;
@@ -950,7 +1043,7 @@ runLegs()
 		turn lleg to x-axis <23.203297> now;
 		sleep 14;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [-1.187485] now;
 		move pelvis to z-axis [5.187500] now;
@@ -962,7 +1055,7 @@ runLegs()
 		turn lleg to x-axis <48.170330> now;
 		sleep 13;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [-2.374985] now;
 		move pelvis to z-axis [6.000000] now;
@@ -974,7 +1067,7 @@ runLegs()
 		turn lleg to x-axis <73.137363> now;
 		sleep 28;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [-1.937485] now;
 		move pelvis to z-axis [4.062500] now;
@@ -986,7 +1079,7 @@ runLegs()
 		turn lleg to x-axis <58.368132> now;
 		sleep 27;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [-1.499985] now;
 		move pelvis to z-axis [2.125000] now;
@@ -998,7 +1091,7 @@ runLegs()
 		turn lleg to x-axis <43.604396> now;
 		sleep 29;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		move pelvis to y-axis [-1.062485] now;
 		move pelvis to z-axis [0.312500] now;
@@ -1095,6 +1188,7 @@ Create()
 	canAim2 = FALSE;
 	shouldRun = FALSE;
 	call-script stopAimHelper1(<1000>,<1000>);
+	start-script initJump();
 	start-script MotionSpeedControl();
 	start-script MotionControl();
 	start-script Build();

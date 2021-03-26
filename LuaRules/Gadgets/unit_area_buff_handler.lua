@@ -640,7 +640,9 @@ function updateUnitSpeedModifier(unitId, modifier)
 		if (modifier == 0) then
 			turnRate = 0
 		end
-		
+		--local isJumping = spGetUnitRulesParam(unitId,"is_jumping")
+		--isJumping = isJumping and (isJumping == 1)
+		 
 		-- strafe air
 		if (ud.canFly and ud.isStrafingAirUnit and not ud.hoverAttack) then 
 			spSetAirMoveTypeData(unitId,{maxSpeed=spd,maxWantedSpeed=spd})
@@ -655,7 +657,9 @@ function updateUnitSpeedModifier(unitId, modifier)
 			--enforceSpeedChange(unitId,spd)
 		-- ground
 		elseif (ud.canMove and not ud.isBuilding) then	
-			spSetGroundMoveTypeData(unitId,{maxSpeed=spd,maxWantedSpeed=spd,turnRate=turnRate})
+			--if not isJumping then 
+				spSetGroundMoveTypeData(unitId,{maxSpeed=spd,maxWantedSpeed=spd,turnRate=turnRate})
+			--end
 			--spSetGroundMoveTypeData(unitId,"useWantedSpeed[0]",false)
 			--spSetGroundMoveTypeData(unitId,"useWantedSpeed[1]",false)
 			--enforceSpeedChange(unitId,spd)

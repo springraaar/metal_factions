@@ -5,7 +5,7 @@
 	//********************
 	side=Sphere;
 	name=Skiff;
-	description=Scout Ship;
+	description=Fast Raider/Anti-Sub Ship;
 	iconType=shipraider;
 
 	//************************************************************
@@ -25,9 +25,9 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=550;
-	footprintx=2;
-	footprintz=2;
+	maxDamage=1000;
+	footprintx=3;
+	footprintz=3;
 
 	//************************************************************
 	//  Resources
@@ -65,7 +65,7 @@
 	turnRate=549;
 	acceleration=0.2;
 	brakeRate=0.01;
-	maxVelocity=3;
+	maxVelocity=2.9;
 	minwaterdepth=6;
 	waterline=0;
 
@@ -74,13 +74,15 @@
 	//*********************
 	sightDistance=500;
 	radarDistance=0;
-	sonarDistance=250;
+	sonarDistance=400;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=sphere_skiff_laser;
-	badTargetCategory2=VTOL;
+	weapon2=sphere_skiff_depthcharge;
+	badTargetCategory1=NOTAIR;
+	onlyTargetCategory2=NOTAIR;
 	explodeAs=SMALL_UNITEX;
 	selfDestructAs=SMALL_UNIT;
 
@@ -93,7 +95,7 @@
 	//  Miscellaneous
 	//*****************
 	collisionVolumeType = box;
-	collisionVolumeScales =15 25 30;
+	collisionVolumeScales =16 25 40;
 	collisionVolumeOffsets = 0 -10 0;
 	collisionVolumeTest = 1;
 
@@ -106,8 +108,8 @@
 	{
 		explosionGenerator0=custom:GLOWSML;
 	}
-	buildCostEnergy=556;//#AUTO#
-	buildCostMetal=111;//#AUTO#
-	buildTime=1325;//#AUTO#
-	mass=87;//#AUTO#
+	buildCostEnergy=1615;//#AUTO#
+	buildCostMetal=323;//#AUTO#
+	buildTime=3849;//#AUTO#
+	mass=357;//#AUTO#
 }

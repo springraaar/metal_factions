@@ -104,8 +104,13 @@
 	{
 		builtBy=aven_adv_shipyard;
 	}
-	buildCostEnergy=8285;//#AUTO#
-	buildCostMetal=1657;//#AUTO#
-	buildTime=19746;//#AUTO#
-	mass=977;//#AUTO#
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:ROCKETFLARESML;
+	}
+
+	buildCostEnergy=8352;//#AUTO#
+	buildCostMetal=1670;//#AUTO#
+	buildTime=19906;//#AUTO#
+	mass=981;//#AUTO#
 }

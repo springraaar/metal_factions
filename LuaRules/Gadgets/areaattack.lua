@@ -10,11 +10,12 @@ function gadget:GetInfo()
 	}
 end
 
-local CMD_AREAATTACK = 39954
+include("lualibs/custom_cmd.lua")
 
 if (gadgetHandler:IsSyncedCode()) then
 
 --SYNCED
+
 
 
 ----------- Following bugs fixed by anonymous person ----------------

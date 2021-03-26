@@ -898,9 +898,10 @@
       			speed = 0, 0, 0;
 	      		pos = 0, 1, 0;
       		}
-		air=1;
+			air=1;
 	      	water=1;
 	      	ground=1;
+	      	underwater=1;
 	      	count=2;
 	} 
 	[smoke]
@@ -915,9 +916,10 @@
          		pos = 5 r-5, -0.35 r-5, 5 r-5;
          		speed=0, 0.3, 0.0;
       		}
-		air=1;
+			air=1;
       		water=1;
 	      	ground=1;
+	      	underwater=1;
 	      	count=3;
    	}
 	[burnstuff]
@@ -948,6 +950,7 @@
 	air=1;
 	water=1;
 	ground=1;
+	underwater=1;
 	count=1;
 	}
 	[heatcloud2]
@@ -955,7 +958,7 @@
 		class=heatcloud;
       		[properties]
       		{
-		Texture=lightweb1;
+			Texture=lightweb1;
       		heat = 15;
       		maxheat = 15;
       		heatFalloff = 1.1;
@@ -966,8 +969,9 @@
       		speed = -0.4 r0.8, -0.1 r0.8, -0.4 r0.8;
       		pos = 0.8 r-1.6, 3.0 r-0.4, 0.8 r-1.6;
       		}
-	air=1;
+		air=1;
       	water=1;
+      	underwater=1;
       	ground=1;
       	count=1;
 	}
@@ -987,6 +991,7 @@
 		air=1;
 		water=1;
 		ground=1;
+		underwater=1;
   		count=8;
 	}
 }
@@ -1018,9 +1023,10 @@
       			speed = 0, 0, 0;
 	      		pos = 0, 1, 0;
       		}
-		air=1;
+			air=1;
 	      	water=1;
 	      	ground=1;
+	      	underwater=1;
 	      	count=2;
 	} 
 	[smoke]
@@ -1035,11 +1041,12 @@
          		pos = 5 r-5, -0.35 r-5, 5 r-5;
          		speed=0, 0.3, 0.0;
       		}
-		air=1;
+			air=1;
 	      	water=1;
 	      	ground=1;
+	      	underwater=1;
 	      	count=2;
-		unit=1;
+			unit=1;
    	}
 	[burnstuff]
 	{
@@ -1069,6 +1076,7 @@
 	air=1;
 	water=1;
 	ground=1;
+	underwater=1;
 	count=1;
 	}
 	[heatcloud2]
@@ -1087,11 +1095,12 @@
       			speed = -0.4 r0.8, -0.1 r0.8, -0.4 r0.8;
       			pos = 0.8 r-1.6, 3.0 r-0.4, 0.8 r-1.6;
 	      	}
-		air=1;
+			air=1;
       		water=1;
 	      	ground=1;
+	      	underwater=1;
       		count=1;
-		unit=1;
+			unit=1;
 	}
 	// main explosion spikes
 	[blobs]
@@ -1108,6 +1117,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=8;
 	}
@@ -2243,6 +2253,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=5; 
 	}
@@ -2265,7 +2276,7 @@
 		class=explspike;
 		[properties]
 		{
-			dir=-45 r90,-45 r90,-45 r90;
+			dir=-25 r50,-25 r50,-25 r50;
 			width=0.9 r3;
 			length=6;
 			alpha=0.4 r0.45;
@@ -2275,6 +2286,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=5; 
 	}
@@ -2287,27 +2299,27 @@
 		sizeGrowth=0.1;
 		sizeMod=1.0;
 		pos=3 r-3, 1 r-2, 3 r-3;  
-		gravity=0, 0, 0;
+		gravity=0, 0.1, 0;
 	
-		colorMap=0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.5 0.1 0.1 0.1 0.0;
+		colorMap=0.4 0.6 0.6 0.2  0.3 0.3 0.4 0.1  0.1 0.1 0.1 0.1  0.0 0.0 0.0 0.0;
 
 
 		Texture=smoke;
-		airdrag=0.7;
+		airdrag=0.4;
 		
 		particleLifeSpread=10; 
-		particleSpeedSpread=9;  
+		particleSpeedSpread=4;  
 		particleSizeSpread=10;   
 		
 		particleLife=30; 
 		numParticles=8; 
-		particleSpeed=3; 
-		particleSize=18;
+		particleSpeed=9; 
+		particleSize=14;
 		
 		
 		emitVector=0, 1, 0; 
-		emitRot=80;
-		emitRotSpread=5; 
+		emitRot=45;
+		emitRotSpread=15; 
 		directional=1; 
 
 		}
@@ -2315,6 +2327,7 @@
 	water=1;
 	ground=1;
 	count=1;
+	underwater=1;
 	}
 	[_sparks]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;explosionGenerator=custom:ELECTRICSEQUENCESML;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
@@ -2338,6 +2351,7 @@
 		water=1;
 		ground=1;
   		count=5; 
+  		underwater=1;
 	}
 	[WIndsphere]
 	{
@@ -2384,6 +2398,7 @@
 		water=1;
 		ground=1;
   		count=5; 
+  		underwater=1;
 	}
 
 	[G_blast2]//base explo// 
@@ -2422,6 +2437,7 @@
 	water=1;
 	ground=1;
 	count=1;
+	underwater=1;
 	}
 	[_sparks]{class=CExpGenSpawner;[properties]{pos=-60 r120,0,-60 r120;delay=r20;explosionGenerator=custom:ELECTRICSEQUENCE;}air=1;ground=1;water=1;underwater=1;unit=1;count=6;}
 }
@@ -2444,6 +2460,7 @@
 		air=1;
 		water=1;
 		ground=1;
+		underwater=1;
   		count=3; 
 	}
 	[Flakspikes]
@@ -2462,6 +2479,7 @@
 		air=1;
 		water=1;
 		ground=1;
+		underwater=1;
   		count=3; 
 	}
 
@@ -2500,6 +2518,7 @@
 	air=1;
 	water=1;
 	ground=1;
+	underwater=1;
 	count=1;
 	}
 	[_sparks]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;explosionGenerator=custom:sparks;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}

@@ -106,8 +106,13 @@
 	{
 		builtBy=claw_adv_shipyard;
 	}
-	buildCostEnergy=8176;//#AUTO#
-	buildCostMetal=1635;//#AUTO#
-	buildTime=19486;//#AUTO#
-	mass=1045;//#AUTO#
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:ROCKETFLARESML;
+	}
+
+	buildCostEnergy=8352;//#AUTO#
+	buildCostMetal=1670;//#AUTO#
+	buildTime=19906;//#AUTO#
+	mass=1056;//#AUTO#
 }

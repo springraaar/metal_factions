@@ -84,7 +84,7 @@ function getPlayerIdFromName(playerName)
 	return playerId
 end
 
-local customStrategiesFile = "LuaUI/Configs/mf_strategies.json"
+local customStrategiesFile = "luaui/configs/mf_strategies.json"
 
 ---------- callins
 

@@ -9,7 +9,7 @@
 #define HEADING_TOLERANCE	<25>
 #define PITCH_TOLERANCE		<15>
 
-piece  torso, luparm, larm, lgun, lnanospray, lg1,lflare1,lg2,lflare2, l1,l2,l3, ruparm, rarm, rgun, rnanospray, rg1, rflare1, rg2, rflare2, r1,r2,r3, pelvis, head, spike1,spike2,spike3, lthigh, rthigh, rleg, lleg, lfoot, rfoot, ltorpgun, ltorpflare,rtorpgun,rtorpflare, lknee,rknee, emit3, lnano, rnano;
+piece  torso, luparm, larm, lgun, lnanospray, lg1,lflare1,lg2,lflare2, l1,l2,l3, ruparm, rarm, rgun, rnanospray, rg1, rflare1, rg2, rflare2, r1,r2,r3, pelvis, head, spike1,spike2,spike3, lthigh, rthigh, rleg, lleg, lfoot, rfoot, ltorpgun, ltorpflare,rtorpgun,rtorpflare, lknee,rknee, emit3, lnano, rnano,jumpback,jbl,jbr,jb,lbjetpt,rbjetpt,jumpjets,lfjet,rfjet,lfjetpt,rfjetpt;
 
 static-var  bMoving, bBuilding, bAiming, Static_Var_5, Static_Var_6, bDgunning, bUnderwater, canAim1, canAim2, firept1, firept2, firept3, nanopt1, mASpdFactor, moveSpd1, turnSpd1, turnSpd2, turnSpd3;
 
@@ -19,6 +19,55 @@ static-var  bMoving, bBuilding, bAiming, Static_Var_5, Static_Var_6, bDgunning, 
 #define SIG_AIM		2
 
 lua_delayReload() { return 0; }
+
+#include "jumpvars.h"
+
+
+showJumpGear() {
+	show jumpback;
+	show jb;
+	show jbl;
+	show jbr;
+	show jumpjets;
+	show lfjet;
+	show rfjet;
+}
+
+hideJumpGear() {
+	hide jumpback;
+	hide jb;
+	hide jbl;
+	hide jbr;
+	hide jumpjets;
+	hide lfjet;
+	hide rfjet;
+}
+
+showJumpEffects(descending, frames) {
+	if (descending) {
+		emit-sfx 1024+7 from lfjetpt;
+		emit-sfx 1024+7 from rfjetpt;
+		emit-sfx 1024+6 from lbjetpt;
+		emit-sfx 1024+6 from rbjetpt;
+		if (frames == JUMP_SND_FRAMES) {
+			play-sound( "jumpdesc", 1 );
+		}
+	} else {
+		if (frames == 0 ) {
+			play-sound( "jumpstart", 1 );
+		} else {
+			if (frames == JUMP_SND_FRAMES) {
+				play-sound( "jumpasc", 1 );
+			}
+		}
+		emit-sfx 1024+5 from lfjetpt;
+		emit-sfx 1024+5 from rfjetpt;
+		emit-sfx 1024+4 from lbjetpt;
+		emit-sfx 1024+4 from rbjetpt;
+	}
+}
+
+#include "jump.h"
 
 
 MotionSpeedControl(maxSpeed,currentSpeed)
@@ -171,7 +220,18 @@ checkUnderwater()
 
 walk()
 {
-	if( bMoving )
+	if (isJumping) {
+		turn pelvis to x-axis <0.000000> speed <200.000000>;
+		move pelvis to y-axis [0.000000] speed [20.500000];
+		turn rthigh to x-axis <0.000000> speed <200.000000>;
+		turn rleg to x-axis <0.000000> speed <200.000000>;
+		turn lthigh to x-axis <0.000000> speed <200.000000>;
+		turn lleg to x-axis <0.000000> speed <200.000000>;
+		sleep 100;
+		return;
+	}
+	
+	if( bMoving && !isJumping)
 	{
 		move pelvis to y-axis [-1.750000] speed moveSpd1;
 		move head to y-axis [0.000000] speed moveSpd1;
@@ -198,7 +258,7 @@ walk()
 		}
 		sleep 40 * 100 / mASpdFactor;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping)
 	{
 		move pelvis to y-axis [-1.500000] speed moveSpd1;
 		turn pelvis to x-axis <5.291209> speed turnSpd3;
@@ -213,7 +273,7 @@ walk()
 		}
 		sleep 100 * 100 / mASpdFactor;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping)
 	{
 		move pelvis to y-axis [-0.750000] speed moveSpd1;
 		turn pelvis to x-axis <4.593407> speed turnSpd3;
@@ -228,7 +288,7 @@ walk()
 		}
 		sleep 90 * 100 / mASpdFactor;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping)
 	{
 		move pelvis to y-axis [0.000000] speed moveSpd1;
 		turn pelvis to x-axis <3.500000> speed turnSpd3;
@@ -243,7 +303,7 @@ walk()
 		}
 		sleep 90 * 100 / mASpdFactor;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping)
 	{
 		move pelvis to y-axis [-0.500000] speed moveSpd1;
 		turn pelvis to x-axis <4.593407> speed turnSpd3;
@@ -258,7 +318,7 @@ walk()
 		}
 		sleep 80 * 100 / mASpdFactor;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping)
 	{
 		move pelvis to y-axis [-0.750000] speed moveSpd1;
 		turn lthigh to x-axis <13.000000> speed turnSpd2;
@@ -271,7 +331,7 @@ walk()
 		}
 		sleep 70 * 100 / mASpdFactor;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping)
 	{
 		move pelvis to y-axis [-1.000000] speed moveSpd1;
 		turn pelvis to x-axis <5.291209> speed turnSpd3;
@@ -286,7 +346,7 @@ walk()
 		}
 		sleep 80 * 100 / mASpdFactor;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping)
 	{
 		move pelvis to y-axis [-1.750000] speed moveSpd1;
 		turn pelvis to x-axis <6.692308> speed turnSpd3;
@@ -301,7 +361,7 @@ walk()
 		}
 		sleep 40 * 100 / mASpdFactor;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping)
 	{
 		if (!bAiming) {
 			turn ruparm to x-axis <13.390110> speed turnSpd3;
@@ -309,7 +369,7 @@ walk()
 		}
 		sleep 40 * 100 / mASpdFactor;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping)
 	{
 		move pelvis to y-axis [-1.500000] speed moveSpd1;
 		turn pelvis to x-axis <5.291209> speed turnSpd3;
@@ -323,7 +383,7 @@ walk()
 		}
 		sleep 100 * 100 / mASpdFactor;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping)
 	{
 		move pelvis to y-axis [-0.750000] speed moveSpd1;
 		turn pelvis to x-axis <4.593407> speed turnSpd3;
@@ -337,7 +397,7 @@ walk()
 		}
 		sleep 90 * 100 / mASpdFactor;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping)
 	{
 		move pelvis to y-axis [0.000000] speed moveSpd1;
 		turn pelvis to x-axis <3.500000> speed turnSpd3;
@@ -352,7 +412,7 @@ walk()
 		}
 		sleep 80 * 100 / mASpdFactor;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping)
 	{
 		move pelvis to y-axis [-0.500000] speed moveSpd1;
 		turn pelvis to x-axis <4.593407> speed turnSpd3;
@@ -367,7 +427,7 @@ walk()
 		}
 		sleep 80 * 100 / mASpdFactor;
 	}
-	if( bMoving )
+	if( bMoving && !isJumping)
 	{
 		move pelvis to y-axis [-0.750000] speed moveSpd1;
 		turn lthigh to x-axis <-43.890110> speed turnSpd2;
@@ -380,7 +440,7 @@ walk()
 		}
 		sleep 70 * 100 / mASpdFactor;
 	}
-	if (bMoving) {
+	if (bMoving && !isJumping) {
 		move pelvis to y-axis [-1.000000] speed moveSpd1;
 		turn pelvis to x-axis <5.291209> speed turnSpd3;
 		turn lthigh to x-axis <-43.890110> speed turnSpd2;
@@ -448,6 +508,7 @@ Create()
 	firept3 = [0];
 	nanopt1 = [0];
 	call-script stopAimHelper1(<1000>,<1000>);
+	start-script initJump();
 	start-script MotionSpeedControl();
 	start-script MotionControl();
 	start-script Build();

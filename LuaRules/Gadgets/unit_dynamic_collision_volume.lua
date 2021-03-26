@@ -23,7 +23,7 @@ local spSetUnitBlocking = Spring.SetUnitBlocking
 local spGetUnitBlocking = Spring.GetUnitBlocking
 
 local popupUnits = {}		--list of pop-up style units
-local unitCollisionVolume = include("LuaRules/Configs/CollisionVolumes.lua")	--pop-up style unit collision volume definitions
+local unitCollisionVolume = include("luaRules/configs/collision_volumes.lua")	--pop-up style unit collision volume definitions
 local unitXYZSizeOffset = {}     -- <uId,{sizeX,sizeY,sizeZ,offsetX,offsetY,offsetZ}>
 local unitBlocking = {} --   <uId,{isBlocking, isSolidObjectCollidable,isProjectileCollidable,isRaySegmentCollidable,crushable,blockEnemyPushing,blockHeightChanges}>
 
@@ -33,10 +33,12 @@ local BP_SIZE_MULTIPLIER = 1 / BP_SIZE_LIMIT
 
 local submarines = {
 	aven_lurker = true,
+	aven_stinger = true,
 	aven_piranha = true,
 	aven_adv_construction_sub = true,
 	gear_snake = true,
 	gear_noser = true,
+	gear_blowfish = true,
 	gear_adv_construction_sub = true,
 	claw_spine = true,
 	claw_monster = true,

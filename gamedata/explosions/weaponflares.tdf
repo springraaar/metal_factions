@@ -49,6 +49,7 @@
 		air=1;
 		water=1;
 		ground=1;
+		underwater=1;
 		count=1;
 	}
 	[GLOWCENTER]
@@ -66,6 +67,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -85,6 +87,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -141,6 +144,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
 		count=1;
 	}
@@ -159,6 +163,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -215,6 +220,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
 		count=1;
 	}
@@ -233,6 +239,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -289,6 +296,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
 		count=1;
 	}
@@ -307,6 +315,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -352,6 +361,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -370,6 +380,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -424,6 +435,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -442,6 +454,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -497,6 +510,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -514,6 +528,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -531,6 +546,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -549,6 +565,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -567,6 +584,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -585,6 +603,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -834,6 +853,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=3; 
 	}
@@ -852,6 +872,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=6; 
 	}
@@ -908,6 +929,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -926,6 +948,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -980,6 +1003,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -998,6 +1022,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -1022,17 +1047,17 @@
 	{
 		class = CBitmapMuzzleFlame;
 		[properties]
-      	{
+      		{
          		dir = dir;
 	         	colorMap=1.0 0.8 0.8 0.01 0.9 0.7 0.7 0.01 0.7 0.4 0.4 0.01; 
 	          	size=20;
-      	    	length=60;
+	      	    	length=60;
 	          	sizeGrowth=0;
 	          	ttl=1;
-      	    	frontOffset=0.2;
+	      	    	frontOffset=0.2;
 	          	sideTexture=muzzleside;
-      	    	frontTexture=muzzlefront;
-      	}
+      		    	frontTexture=muzzlefront;
+	      	}
 		water=1;
 		air=1;
 		underwater=1;
@@ -1053,6 +1078,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -1071,6 +1097,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -1125,6 +1152,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -1143,6 +1171,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -1198,6 +1227,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -1216,6 +1246,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -1238,17 +1269,17 @@
 	{
 		class = CBitmapMuzzleFlame;
 		[properties]
-      	{
+	      	{
          		dir = dir;
 	         	colorMap=1.0 0.6 1.0 0.01 0.9 0.4 0.9 0.01 0.7 0.2 0.7 0.01; 
 	          	size=11;
-      	    	length=60;
+      		    	length=60;
 	          	sizeGrowth=0;
 	          	ttl=1;
-      	    	frontOffset=0.2;
+      	    		frontOffset=0.2;
 	          	sideTexture=muzzleside;
-      	    	frontTexture=muzzlefront;
-      	}
+	      	    	frontTexture=muzzlefront;
+	      	}
 		water=1;
 		air=1;
 		underwater=1;
@@ -1269,6 +1300,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -1287,6 +1319,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -1312,7 +1345,7 @@
 	class = CBitmapMuzzleFlame;
       
 	[properties]
-      {
+	{
          	dir = dir;
          	colorMap=0.8 0.8 0.4 0.01 0.8 0.7 0.3 0.01 0.8 0.6 0.2 0.01; 
           	size=9;
@@ -1322,13 +1355,13 @@
           	frontOffset=0;
           	sideTexture=muzzleside;
           	frontTexture=muzzlefront;
-      }
-   water=1;
-   air=1;
-   underwater=1;
-   ground=1;
-   count=1;
-   }
+	}
+	water=1;
+	air=1;
+	underwater=1;
+	ground=1;
+	count=1;
+	}
 	[RealFlare]
 	{
 		class=CSimpleParticleSystem;
@@ -1355,6 +1388,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
 		count=1;
 	}
@@ -1373,6 +1407,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -1398,12 +1433,12 @@
           	sideTexture=muzzleside;
           	frontTexture=muzzlefront;
       	}
-   water=1;
-   air=1;
-   underwater=1;
-   ground=1;
-   count=1;
-   }
+	water=1;
+	air=1;
+	underwater=1;
+	ground=1;
+	count=1;
+	}
 	[RealFlare]
 	{
 		class=CSimpleParticleSystem;
@@ -1430,6 +1465,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
 		count=1;
 	}
@@ -1448,6 +1484,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -1457,28 +1494,28 @@
 {
    usedefaultexplosions=1;	
 
-   [LARGEFLASH]
-   {
-	class = CBitmapMuzzleFlame;
+	[LARGEFLASH]
+	{
+		class = CBitmapMuzzleFlame;
       
-	[properties]
-      	{
-         	dir = dir;
-         	colorMap=1.0 0.8 0.9 0.01 0.8 0.6 0.7 0.01 0.8 0.5 0.5 0.01; 
-          	size=12;
-          	length=35;
-          	sizeGrowth=0;
-          	ttl=1;
-          	frontOffset=0;
-          	sideTexture=muzzleside;
-          	frontTexture=muzzlefront;
-      	}
-   water=1;
-   air=1;
-   underwater=1;
-   ground=1;
-   count=1;
-   }
+		[properties]
+	      	{
+	         	dir = dir;
+	         	colorMap=1.0 0.8 0.9 0.01 0.8 0.6 0.7 0.01 0.8 0.5 0.5 0.01; 
+	          	size=12;
+	          	length=35;
+	          	sizeGrowth=0;
+	          	ttl=1;
+	          	frontOffset=0;
+	          	sideTexture=muzzleside;
+	          	frontTexture=muzzlefront;
+	      	}
+		water=1;
+		air=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
 	[GLOW]
 	{
 		class=CExploSpikeProjectile;
@@ -1494,6 +1531,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -1511,6 +1549,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -1519,28 +1558,28 @@
 {
    usedefaultexplosions=1;	
 
-   [LARGEFLASH]
-   {
-	class = CBitmapMuzzleFlame;
+	[LARGEFLASH]
+	{
+		class = CBitmapMuzzleFlame;
       
-	[properties]
-      	{
-         	dir = dir;
-         	colorMap=1.0 0.8 0.9 0.01 0.8 0.6 0.7 0.01 0.8 0.5 0.5 0.01; 
-          	size=6;
-          	length=15;
-          	sizeGrowth=0;
-          	ttl=1;
-          	frontOffset=0;
-          	sideTexture=muzzleside;
-          	frontTexture=muzzlefront;
-      	}
-   water=1;
-   air=1;
-   underwater=1;
-   ground=1;
-   count=1;
-   }
+		[properties]
+	      	{
+	         	dir = dir;
+	         	colorMap=1.0 0.8 0.9 0.01 0.8 0.6 0.7 0.01 0.8 0.5 0.5 0.01; 
+	          	size=6;
+	          	length=15;
+	          	sizeGrowth=0;
+	          	ttl=1;
+	          	frontOffset=0;
+	          	sideTexture=muzzleside;
+	          	frontTexture=muzzlefront;
+	      	}
+		water=1;
+		air=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
 	[GLOW]
 	{
 		class=CExploSpikeProjectile;
@@ -1556,6 +1595,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -1571,17 +1611,17 @@
 	{
 		class = CBitmapMuzzleFlame;
 		[properties]
-      	{
+      		{
          		dir = dir;
 	         	colorMap=0.2 0.5 0.7 0.01 0.2 0.4 0.5 0.01 0.1 0.2 0.3 0.01; 
 	          	size=10;
-      	    	length=30;
+      	    		length=30;
 	          	sizeGrowth=0;
 	          	ttl=1;
-      	    	frontOffset=0.2;
+	      	    	frontOffset=0.2;
 	          	sideTexture=muzzleside;
-      	    	frontTexture=muzzlefront;
-      	}
+      		    	frontTexture=muzzlefront;
+	      	}
 		water=1;
 		air=1;
 		underwater=1;
@@ -1602,6 +1642,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -1620,6 +1661,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -1638,30 +1680,30 @@
 
 [RAILGUNFLAREBIG]
 {
-   usedefaultexplosions=1;	
+	usedefaultexplosions=1;	
 
-   [LARGEFLASH]
-   {
-	class = CBitmapMuzzleFlame;
+	[LARGEFLASH]
+	{
+		class = CBitmapMuzzleFlame;
       
-	[properties]
-      	{
-         	dir = dir;
-         	colorMap=1.0 0.8 0.9 0.01 0.8 0.6 0.7 0.01 0.8 0.5 0.5 0.01; 
-          	size=16;
-          	length=45;
-          	sizeGrowth=0;
-          	ttl=1;
-          	frontOffset=0;
-          	sideTexture=muzzleside;
-          	frontTexture=muzzlefront;
-      	}
-   water=1;
-   air=1;
-   underwater=1;
-   ground=1;
-   count=1;
-   }
+		[properties]
+      		{
+         		dir = dir;
+	         	colorMap=1.0 0.8 0.9 0.01 0.8 0.6 0.7 0.01 0.8 0.5 0.5 0.01; 
+	          	size=16;
+	          	length=45;
+	          	sizeGrowth=0;
+	          	ttl=1;
+	          	frontOffset=0;
+	          	sideTexture=muzzleside;
+	          	frontTexture=muzzlefront;
+      		}
+		water=1;
+		air=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
 	[GLOW]
 	{
 		class=CExploSpikeProjectile;
@@ -1677,6 +1719,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}
@@ -1694,6 +1737,7 @@
 		}
 		air=1;
 		water=1;
+		underwater=1;
 		ground=1;
   		count=1; 
 	}

@@ -155,6 +155,9 @@
 	{
 		buildertype=gear_l1builder;
 		isCommander=1;
+		canJump=1;
+		jumpType=commander;
+		jumpMod=0.88;
 	}
 	[SFXTypes]
 	{
@@ -162,5 +165,9 @@
 		explosionGenerator1=custom:Nano;
 		explosionGenerator2=custom:greenflare;
 		explosionGenerator3=custom:DGUNREADYFLARE;
+		explosionGenerator4=custom:JUMPASC;
+		explosionGenerator5=custom:JUMPASC2;
+		explosionGenerator6=custom:JUMPDESC;
+		explosionGenerator7=custom:JUMPDESC2;
 	}
 }

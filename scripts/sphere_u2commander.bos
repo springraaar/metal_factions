@@ -1,4 +1,4 @@
-#define TA			// This is a TA script
+#define TAK			// This is a TAK script
 
 #include "sfxtype.h"
 #include "exptype.h"
@@ -8,7 +8,7 @@
 #define HEADING_TOLERANCE	<30>
 #define PITCH_TOLERANCE		<20>
 
-piece ground, hips,legs,rmidleg,rmid2,rfrontleg,rfront2,rbackleg,rback2,lbackleg,lback2,lmidleg,lmid2,lfrontleg,lfront2,torso,turret2,sleeve2,arc2, weapon2,flare2,torpedo,nanospinner,p1,p2,p3,p4,p5,p6, sphere, turret1, sleeve1, flare1, turret3, sleeve3, flare3, shieldpt;
+piece ground, hips,legs,rmidleg,rmid2,rfrontleg,rfront2,rbackleg,rback2,lbackleg,lback2,lmidleg,lmid2,lfrontleg,lfront2,torso,turret2,sleeve2,arc2, weapon2,flare2,torpedo,nanospinner,p1,p2,p3,p4,p5,p6, sphere, turret1, sleeve1, flare1, turret3, sleeve3, flare3, shieldpt,jumpback,ljumpjets,rjumpjets,rbjetpt,rfjetpt,lbjetpt,lfjetpt;
 
 static-var bMoving,bAiming,bUnderwater, canAim1, canAim2, bBuilding, nanoPt, mASpdFactor;
 
@@ -20,8 +20,47 @@ static-var bMoving,bAiming,bUnderwater, canAim1, canAim2, bBuilding, nanoPt, mAS
 #define SIG_BUILD			4
 #define SIG_AIM2			8
 
-
 lua_delayReload() { return 0; }
+
+#include "jumpvars.h"
+
+showJumpGear() {
+	show jumpback;
+	show ljumpjets;
+	show rjumpjets;
+}
+
+hideJumpGear() {
+	hide jumpback;
+	hide ljumpjets;
+	hide rjumpjets;
+}
+
+showJumpEffects(descending, frames) {
+	if (descending) {
+		emit-sfx 1024+6 from lfjetpt;
+		emit-sfx 1024+6 from rfjetpt;
+		emit-sfx 1024+6 from lbjetpt;
+		emit-sfx 1024+6 from rbjetpt;
+		if (frames == JUMP_SND_FRAMES) {
+			play-sound( "jumpdesc", 1 );
+		}
+	} else {
+		if (frames == 0 ) {
+			play-sound( "jumpstart", 1 );
+		} else {
+			if (frames == JUMP_SND_FRAMES) {
+				play-sound( "jumpasc", 1 );
+			}
+		}
+		emit-sfx 1024+4 from lfjetpt;
+		emit-sfx 1024+4 from rfjetpt;
+		emit-sfx 1024+4 from lbjetpt;
+		emit-sfx 1024+4 from rbjetpt;
+	}
+}
+
+#include "jump.h"
 
 MotionSpeedControl(minSpeed, maxSpeed,currentSpeed)
 {
@@ -121,9 +160,39 @@ checkUnderwater()
 	return 0;	
 }
 
+StopPosition()
+{
+	turn hips to z-axis <0.000000> speed <7.000000>;
+	turn hips to x-axis <0.000000> speed <7.000000>;
+	turn lfrontleg to y-axis <0.000000> speed <237.000000>;
+	turn lfrontleg to z-axis <0.000000> speed <237.000000>;
+	turn lmidleg to y-axis <0.000000> speed <237.000000>;
+	turn lmidleg to z-axis <0.000000> speed <237.000000>;
+	turn lbackleg to y-axis <0.000000> speed <237.000000>;
+	turn lbackleg to z-axis <0.000000> speed <237.000000>;
+	turn rbackleg to y-axis <0.000000> speed <237.000000>;
+	turn rbackleg to z-axis <0.000000> speed <237.000000>;
+	turn rmidleg to y-axis <0.000000> speed <237.000000>;
+	turn rmidleg to z-axis <0.000000> speed <237.000000>;
+	turn rfrontleg to y-axis <0.000000> speed <237.000000>;
+	turn rfrontleg to z-axis <0.000000> speed <237.000000>;
+	turn lbackleg to y-axis <25.000000> speed <300.000000>;
+	turn rbackleg to y-axis <-25.000000> speed <300.000000>;
+	turn rfrontleg to y-axis <25.000000> speed <300.000000>;
+	turn lfrontleg to y-axis <-25.000000> speed <300.000000>;
+	
+	turn rmid2 to z-axis <20.000000> speed <80.000000> * mASpdFactor / 100;
+	turn lmid2 to z-axis <-20.000000> speed <80.000000> * mASpdFactor / 100;
+}
+
 walk()
 {
-	if( bMoving )
+	if (isJumping) {
+		call-script StopPosition();
+		sleep 100;
+		return;
+	}
+	if( bMoving && !isJumping)
 	{
 		turn rmid2 to z-axis <0.000000> speed <80.000000> * mASpdFactor / 100;
 		turn lmid2 to z-axis <0.000000> speed <80.000000> * mASpdFactor / 100;
@@ -154,7 +223,7 @@ walk()
 	}
 
 	// only vertical
-	if( bMoving )
+	if( bMoving && !isJumping)
 	{
 		//turn lfrontleg to z-axis <-15.016484> speed <60.104396> * mASpdFactor / 100;
 
@@ -172,7 +241,7 @@ walk()
 	}
 	
 	
-	if( bMoving )
+	if( bMoving && !isJumping)
 	{
 		turn hips to x-axis <-2.000000> speed <20.000000> * mASpdFactor / 100;
 		turn hips to z-axis <1.000000> speed <15.000000> * mASpdFactor / 100;
@@ -199,7 +268,7 @@ walk()
 	}
 	
 	// only vertical
-	if( bMoving )
+	if( bMoving && !isJumping)
 	{
 		turn rmid2 to z-axis <0.000000> speed <80.000000> * mASpdFactor / 100;
 		turn lmid2 to z-axis <0.000000> speed <80.000000> * mASpdFactor / 100;
@@ -222,31 +291,6 @@ walk()
 	
 }
 
-
-StopPosition()
-{
-	turn hips to z-axis <0.000000> speed <7.000000>;
-	turn hips to x-axis <0.000000> speed <7.000000>;
-	turn lfrontleg to y-axis <0.000000> speed <237.000000>;
-	turn lfrontleg to z-axis <0.000000> speed <237.000000>;
-	turn lmidleg to y-axis <0.000000> speed <237.000000>;
-	turn lmidleg to z-axis <0.000000> speed <237.000000>;
-	turn lbackleg to y-axis <0.000000> speed <237.000000>;
-	turn lbackleg to z-axis <0.000000> speed <237.000000>;
-	turn rbackleg to y-axis <0.000000> speed <237.000000>;
-	turn rbackleg to z-axis <0.000000> speed <237.000000>;
-	turn rmidleg to y-axis <0.000000> speed <237.000000>;
-	turn rmidleg to z-axis <0.000000> speed <237.000000>;
-	turn rfrontleg to y-axis <0.000000> speed <237.000000>;
-	turn rfrontleg to z-axis <0.000000> speed <237.000000>;
-	turn lbackleg to y-axis <25.000000> speed <300.000000>;
-	turn rbackleg to y-axis <-25.000000> speed <300.000000>;
-	turn rfrontleg to y-axis <25.000000> speed <300.000000>;
-	turn lfrontleg to y-axis <-25.000000> speed <300.000000>;
-	
-	turn rmid2 to z-axis <20.000000> speed <80.000000> * mASpdFactor / 100;
-	turn lmid2 to z-axis <-20.000000> speed <80.000000> * mASpdFactor / 100;
-}
 
 MotionControl(moving, aiming, justmoved)
 {
@@ -315,6 +359,7 @@ Create()
 
 	call-script stopAimHelper1(<1000>,<1000>);	
 	call-script stopAimHelper2(<1000>,<1000>);	
+	start-script initJump();
 	start-script MotionSpeedControl();
 	start-script MotionControl();
 	start-script checkUnderwater();

@@ -371,11 +371,13 @@ function gadget:Initialize()
 end
 
 function gadget:UnitCreated(unitId, unitDefId, unitTeam)
-	if UnitDefs[unitDefId].isGroundUnit and not UnitDefs[unitDefId].isBuilding and not UnitDefs[unitDefId].isImmobile then
+	local ud = UnitDefs[unitDefId]
+
+	if (ud.isGroundUnit) and (not ud.isBuilding) and (not ud.isImmobile) then
 		moveAnimationUnitIds[unitId] = true
 	end
 	
-	if UnitDefs[unitDefId].name == "sphere_magnetar" then
+	if ud.name == "sphere_magnetar" then
 		magnetarUnitIds[unitId] = true
 	end
 
@@ -423,7 +425,8 @@ function gadget:GameFrame(n)
 	
 	-- check unit physics
 	for unitId,oldPhysics in pairs(unitPhysicsById) do
-	
+		local defId = spGetUnitDefID(unitId)
+		
 		-- get updated physics
 		updateUnitPhysics(unitId)
 		
@@ -440,7 +443,7 @@ function gadget:GameFrame(n)
 		if moveAnimationUnitIds[unitId] then
 			if (n%MOVING_CHECK_DELAY == 0) then
 				if abs(vx) > 0.1 or abs(vz) > 0.1 then
-					if abs(h) < 3 then
+					if abs(h) < 3 or y <= 0 then
 						spCallCOBScript(unitId,"StartMoving",0)
 					end
 				else
@@ -464,9 +467,14 @@ function gadget:GameFrame(n)
 			end
 		else
 			-- check for high speed water impact
-			if oldPhysics[2] > 0 and y <= 0 then
+			if (oldPhysics[2] > 0 and y <= 0) or (oldPhysics[2] <= 0 and y > 0 ) then
 				if abs(oldPhysics[5]) > COLLISION_SPEED_THRESHOLD then
 					local radius = spGetUnitRadius(unitId) * 2 * (1 + COLLISION_SPEED_MOD * abs(oldPhysics[5]))
+					-- ascending collision is less intense
+					if oldPhysics[5] > 0 then
+						radius = radius * 0.66
+					end
+					
 					--Spring.Echo("unit "..unitId.." water collision at frame "..n.." radius="..radius)
 					spSpawnCEG(waterCollisionCEG, x,3,z,0,1,0,radius,radius)
 					spPlaySoundFile(waterCollisionSound, math.min(1,math.max(0.2,radius/50)), x, y, z)
@@ -476,7 +484,6 @@ function gadget:GameFrame(n)
 		end
 	
 		-- check if unit is stuck
-		local defId = spGetUnitDefID(unitId)
 		if (checkStuck(defId,x,y,z,v)) then
 			if not stuckGroundUnitIds[unitId] then
 				--Spring.Echo(unitId.." is stuck!")
