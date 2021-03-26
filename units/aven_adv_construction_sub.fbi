@@ -1,0 +1,117 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Adv. Construction Sub;
+	description=Tech Level 2;
+	iconType=subbuilder2;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN UNDERWATER LEVEL2 NOTAIR;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_adv_construction_sub;
+	objectName=aven_adv_construction_sub.3do;
+	corpse=aven_adv_construction_sub_dead;
+	buildPic=aven_adv_construction_sub.png;
+	soundCategory=aven_CSUB;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=2250;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=0.0;
+	metalStorage=0;
+	energyMake=17;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	buildDistance=200;
+	workerTime=300;
+	repairSpeed=300;
+	reclaimSpeed=300;
+	terraformSpeed=600;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	floater=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=BOATSUB;
+	turnRate=456;
+	acceleration=0.07;
+	brakeRate=0.06;
+	maxVelocity=2.15;
+	maxreversevelocity=1.075;
+	minwaterdepth=20;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=500;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=NANO_UNITEX;
+	selfDestructAs=NANO_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	waterline=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 18 52;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	[CustomParams]
+	{
+		buildertype=aven_l2builder;
+		builtBy=aven_adv_shipyard;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:Nano;
+		explosionGenerator1=custom:UNITFIRE;
+	}
+	buildCostEnergy=6531;//#AUTO#
+	buildCostMetal=1306;//#AUTO#
+	buildTime=15566;//#AUTO#
+	mass=997;//#AUTO#
+}

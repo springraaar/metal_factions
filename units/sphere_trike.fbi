@@ -1,0 +1,89 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	side=Sphere;
+	Name=Trike;
+	Description=Light Scout/Raider Vehicle;
+	iconType=mobileraider;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=sphere_trike;
+	objectName=sphere_trike.3do;
+	buildPic=sphere_trike.png;
+	soundCategory=SPHERE_TANKSML;
+	Corpse=sphere_trike_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=2;
+	FootprintZ=2;
+	maxDamage=580;
+
+
+	// ------------------- resources
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	Builder=0;
+
+	// ------------------- movement
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=3.1;
+	brakeRate=0.06;
+	Acceleration=0.12;
+	turnRate=650;
+	turninplace=0;
+	movementClass=TANKSH3;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_trike_laser;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+
+	// ------------------- orders
+
+	// ------------------- misc
+	noAutoFire=0;
+	leavetracks=1;
+	trackoffset=8;
+	trackstrength=5;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=35;
+	collisionVolumeType = box;
+	collisionVolumeScales =20 15 25;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_light_factory,sphere_adv_vehicle_factory,sphere_adv_kbot_factory;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:GLOWSML;
+	}
+
+	buildCostEnergy=597;//#AUTO#
+	buildCostMetal=119;//#AUTO#
+	buildTime=1425;//#AUTO#
+	mass=92;//#AUTO#
+}

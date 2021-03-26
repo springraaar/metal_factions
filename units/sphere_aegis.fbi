@@ -1,0 +1,102 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Aegis;
+	description=Base Defense Shield;
+	iconType=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE LEVEL2 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_aegis;
+	objectName=sphere_aegis.3do;
+	//objectName=sphere_ruby_sphere.3do;
+	//script=sphere_ruby_sphere.cob;
+	corpse=sphere_aegis_dead;
+	buildPic=sphere_aegis.png;
+	soundCategory=aven_ESTOR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=6000;
+	footprintx=6;
+	footprintz=6;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=1000;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=oooooo oooooo oooooo oooooo oooooo oooooo;
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon2=sphere_aegis_shield;
+	explodeAs=STATIC_SHIELD_BLAST;
+	selfDestructAs=STATIC_SHIELD_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =80 60 80;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_l2builder;
+		tip=Can drain up to 2% charge/s from nearby large shields and 1% from small ones (max 3x regen);
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:Glow;
+	}
+	buildCostEnergy=21210;//#AUTO#
+	buildCostMetal=4242;//#AUTO#
+	buildTime=50550;//#AUTO#
+	mass=9324;//#AUTO#
+}

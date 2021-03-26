@@ -1,0 +1,57 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 170
+
+piece base, hips,torso,nanospinner,p1,p2,p3,p4,p5,p6,p7,p8;
+
+
+Effect(buildpercent)
+{
+	while(TRUE)
+	{
+		buildpercent = get BUILD_PERCENT_LEFT;
+		
+		if( Rand( 1, 100 ) > buildpercent )
+		{
+			emit-sfx 1024+1 from p7;
+			emit-sfx 1024+1 from p8;
+		}
+		if( Rand( 1, 100 ) > buildpercent )
+		{
+			emit-sfx 1024+0 from p1;
+			emit-sfx 1024+0 from p2;
+		}
+		if( Rand( 1, 100 ) > buildpercent )
+		{
+			emit-sfx 1024+0 from p3;
+			emit-sfx 1024+0 from p4;
+		}
+		if( Rand( 1, 100 ) > buildpercent )
+		{
+			emit-sfx 1024+0 from p5;
+			emit-sfx 1024+0 from p6;
+		}
+
+		sleep 60;
+	}
+}
+
+
+
+Create()
+{
+	spin nanospinner around y-axis speed <720.000000>;
+	spin nanospinner around z-axis speed <1440.000000>;
+	start-script Effect();
+}
+
+
+
+Killed(severity, corpsetype)
+{
+	corpsetype = 3;
+}
+

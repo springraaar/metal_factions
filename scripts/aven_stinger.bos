@@ -1,0 +1,89 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  flare, base, tail, aimh, aimv, jet,turret,front,turbase,pack;
+
+static-var  gun_1;
+
+// Signal definitions
+#define SIG_MOVE			2
+#define SIG_AIM				4
+
+Create()
+{
+	gun_1 = [0];
+	return (0);
+}
+
+StartMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while( TRUE )
+	{
+		emit-sfx 256 | 3 from jet;
+		sleep 100;
+	}
+	return (0);
+}
+
+StopMoving()
+{
+	signal SIG_MOVE;
+	return (0);
+}
+
+RestoreAfterDelay()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn turret to y-axis <0.000000> speed <200.000000>;
+}
+
+
+FirePrimary()
+{
+	emit-sfx 1024+0 from flare;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	
+	turn turret to y-axis heading speed <280.000000>;
+	wait-for-turn turret around y-axis;
+	
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+
+AimFromPrimary( piecenum)
+{
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare;
+	return (0);
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		explode front type SHATTER;
+		explode turbase type SHATTER;
+		explode turret type SHATTER;
+		explode pack type SHATTER;
+		return (1);
+	}
+	explode front type SHATTER;
+	explode turbase type SHATTER;
+	explode turret type SHATTER;
+	explode pack type SHATTER;
+	return (2);
+}

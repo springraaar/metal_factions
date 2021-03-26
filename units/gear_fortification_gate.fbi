@@ -1,0 +1,105 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Large Fortification Gate;
+	description=Perimeter Defense;
+	iconType=walllarge;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL1 NOTAIR NOTSUB;
+	tedClass=FORT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_fortification_gate;
+	objectName=gear_fortification_gate.3do;
+	corpse=rock_gate;
+	script=fortification_gate.cob;
+	buildPic=gear_fortification_gate.png;
+	soundCategory=gate;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=7500;
+	buildcostmetal=650;
+	buildcostenergy=3250;
+	buildtime=7750;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=0;
+	yardMap=cccc cccc cccc cccc;
+	collisionVolumeType = box;
+	collisionVolumeScales =64 170 64;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onOffable=1;
+	activateWhenBuilt=0;
+	isfeature=0;
+	canSelfDestruct=0;
+	power=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=32;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=0;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=WALLLARGE;
+	selfDestructAs=WALLLARGE;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	[customParams]
+	{
+		tip=Use ON/OFF to open/close;
+	}
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	[CustomParams]
+	{
+		builtBy=gear_l1builder,gear_l2builder;
+	}
+}

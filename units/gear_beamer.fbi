@@ -1,0 +1,105 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Beamer;
+	description=Pop-up Medium Laser Tower;
+	iconType=staticfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR WEAPON LEVEL1 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_beamer;
+	objectName=gear_beamer.3do;
+	corpse=gear_beamer_dead;
+	buildPic=gear_beamer.png;
+	soundCategory=LLT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1850;
+	footprintx=3;
+	footprintz=3;
+	damageModifier=0.5;	
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=ooo ooo ooo;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =38 63 38;
+	collisionVolumeOffsets = 0 8 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=20;
+	maxWaterDepth=2;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_beamer_laser;
+	explodeAs=MEDIUM_BUILDINGEX;
+	selfDestructAs=MEDIUM_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+
+	[CustomParams]
+	{
+		builtBy=gear_l1builder,gear_l2builder;
+		tip=Gains 50% dmg resistance when closed;
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:GLOWSML;
+	}
+
+	buildCostEnergy=4069;//#AUTO#
+	buildCostMetal=813;//#AUTO#
+	buildTime=9699;//#AUTO#
+	mass=1466;//#AUTO#
+}

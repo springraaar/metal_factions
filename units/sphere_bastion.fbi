@@ -1,0 +1,104 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Bastion;
+	description=Armored Precise Long Range Plasma Cannon;
+	iconType=staticartillery;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_bastion;
+	objectName=sphere_bastion.3do;
+	corpse=sphere_bastion_dead;
+	buildPic=sphere_bastion.png;
+	soundCategory=COR_INT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=7000;
+	footprintx=6;
+	footprintz=6;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=cooooc oooooo oooooo oooooo oooooo cooooc;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=90 60 90;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+	maxWaterDepth=33;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=sphere_bastion_cannon;
+	badTargetCategory1=VTOL;
+	onlytargetcategory1=NOTAIR;
+	explodeAs=ATOMIC_BLASTSML;
+	selfDestructAs=ATOMIC_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:yellowflarebig;
+	}
+	[CustomParams]
+	{
+		builtBy=sphere_l2builder;
+		canAreaAttack=1;
+	}
+	buildCostEnergy=52213;//#AUTO#
+	buildCostMetal=10442;//#AUTO#
+	buildTime=124442;//#AUTO#
+	mass=16738;//#AUTO#
+}

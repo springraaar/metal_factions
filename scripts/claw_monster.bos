@@ -1,0 +1,175 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  torp1, torp2, torp3, torp4, torp5, torp6, torp7, torp8,base, wake, wake2, lprop, rprop, lpod, rpod, h2, front, back, barrel1, barrel2, barrel3, barrel4, barrel5, barrel6, barrel7, barrel8, aimh, aimv, nose, l1,l2,l3,l4, lpropback, rpropback, lpad, lp1,lp2,lp3,rpad,rp1,rp2,rp3;
+
+static-var  gun_1;
+
+// Signal definitions
+#define SIG_MOVE			2
+#define SIG_AIM				4
+
+Create()
+{
+	gun_1 = [0];
+	return (0);
+}
+
+StartMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while( TRUE )
+	{
+		emit-sfx 256 | 3 from wake;
+		emit-sfx 256 | 3 from wake2;
+		sleep 350;
+	}
+	return (0);
+}
+
+StopMoving()
+{
+	signal SIG_MOVE;
+	return (0);
+}
+
+RestoreAfterDelay()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn aimh to y-axis <0.000000> speed <80.000000>;
+	turn aimv to x-axis <0.000000> speed <80.000000>;	
+	
+}
+
+
+
+FirePrimary()
+{
+	return(0);
+}
+
+AimPrimary(heading, pitch)
+{
+	// heading and pitch check
+	if(heading > <60.000000> || heading < <-60.000000>)
+	{
+		return (0);
+	}
+	if(pitch > <60.000000> || pitch < <-60.000000>)
+	{
+		return (0);
+	}
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	
+	turn aimh to y-axis heading speed <80.000000>;
+	turn aimv to x-axis <0.000000>-pitch speed <80.000000>;
+	wait-for-turn aimh around y-axis;
+	wait-for-turn aimv around x-axis;
+	
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+AimFromPrimary( piecenum)
+{
+	piecenum = aimh;
+}
+
+QueryPrimary(piecenum)
+{
+	if(gun_1 == [0])
+	{
+		piecenum = torp1;
+		gun_1 = [1];
+		return;
+	}
+	if(gun_1 == [1])
+	{
+		piecenum = torp2;
+		gun_1 = [2];
+		return;
+	}
+	if(gun_1 == [2])
+	{
+		piecenum = torp3;
+		gun_1 = [3];
+		return;
+	}
+	if(gun_1 == [3])
+	{
+		piecenum = torp4;
+		gun_1 = [4];
+		return;
+	}
+	if(gun_1 == [4])
+	{
+		piecenum = torp5;
+		gun_1 = [5];
+		return;
+	}
+	if(gun_1 == [5])
+	{
+		piecenum = torp6;
+		gun_1 = [6];
+		return;
+	}
+	if(gun_1 == [6])
+	{
+		piecenum = torp7;
+		gun_1 = [7];
+		return;
+	}
+	if(gun_1 == [7])
+	{
+		piecenum = torp8;
+		gun_1 = [0];
+		return;
+	}
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+	return (0);
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP1;
+		explode torp1 type BITMAPONLY | BITMAP2;
+		explode torp2 type BITMAPONLY | BITMAP3;
+		explode wake type BITMAPONLY | BITMAP4;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP1;
+		explode torp1 type BITMAPONLY | BITMAP2;
+		explode torp2 type BITMAPONLY | BITMAP3;
+		explode wake type BITMAPONLY | BITMAP4;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type BITMAPONLY | BITMAP1;
+		explode torp1 type BITMAPONLY | BITMAP2;
+		explode torp2 type BITMAPONLY | BITMAP3;
+		explode wake type BITMAPONLY | BITMAP4;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP1;
+	explode torp1 type BITMAPONLY | BITMAP2;
+	explode torp2 type BITMAPONLY | BITMAP3;
+	explode wake type BITMAPONLY | BITMAP4;
+	return (0);
+}

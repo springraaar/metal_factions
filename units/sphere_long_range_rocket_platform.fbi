@@ -1,0 +1,78 @@
+[UNITINFO]
+	{
+
+	// ------------------- description
+	side=Sphere;
+	name=Long Range Rocket Platform;
+	description=Builds long range rockets;
+	iconType=rocket_platform;
+
+	// ------------------- categories
+	category=SPHERE PLANT LEVEL2 NOTAIR NOTSUB;
+	tedClass=PLANT;
+
+	// ------------------- external specs
+	unitName=sphere_long_range_rocket_platform;
+	UnitNumber=10000;
+	objectName=sphere_long_range_rocket_platform.3do;
+	buildPic=sphere_long_range_rocket_platform.png;
+	script=long_range_rocket_platform.cob;
+	soundCategory=aven_HOVER_PLANT;
+	corpse=sphere_long_range_rocket_platform_dead;
+
+	// ------------------- health/cost/size
+	maxDamage=3500;
+	buildCostEnergy=21000;
+	buildCostMetal=4200;
+	buildTime=50400;
+	footprintX=9;
+	footprintZ=9;
+
+	// ------------------- resources
+	energyStorage=0;
+	metalStorage=0;
+	energyUse=0;
+
+	// ------------------- constructor
+	builder=1;
+	workerTime=300;
+	canBeAssisted=1;
+
+	// ------------------- abilities
+	canMove=0;
+	canPatrol=0;
+	canAttack=0;
+	canfight=0;
+	canGuard=0;
+	canStop=1;
+	
+	// ------------------- movement
+	buildangle=1024;
+	yardMap=ooooooooo ooooooooo oocccccoo oocccccoo oocccccoo oocccccoo oocccccoo ooooooooo ooooooooo; 
+	
+	maxSlope=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =130 30 130;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	modelCenterOffset=0 0 0;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+	// ------------------- weapons
+	explodeAs=LARGE_BUILDING;
+	selfDestructAs=LARGE_BUILDING;
+
+
+	// ------------------- misc
+	noAutoFire=0;
+	floater=1;
+	waterline=0;
+
+	[CustomParams]
+	{
+		builtBy=sphere_l1builder,sphere_l2builder;
+	}
+}

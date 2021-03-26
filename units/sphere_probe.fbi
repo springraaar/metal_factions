@@ -1,0 +1,122 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Probe;
+	description=Air Scout;
+	iconType=air;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE VTOL LEVEL1 NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_probe;
+	objectName=sphere_probe.3do;
+	buildPic=sphere_probe.png;
+	soundCategory=gear_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=110;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	stealth=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnRate=800;
+	acceleration=0.5;
+	brakeRate=0.09;
+	maxVelocity=8;
+	maxSlope=10;
+	verticalSpeed=6;
+	
+	cruiseAlt=200;
+
+	// flight behaviour
+	wingDrag=0.07;      //0.07
+	wingAngle=0.08;	//0.08;
+	drag=0.08;		//0.08
+	frontToSpeed=0.2;  //0.1
+	speedToFront=0.14; //0.07
+	myGravity=0.4; //0.4
+	maxBank=0.8;	//0.8
+	maxPitch=0.45;	//0.45
+	turnRadius=35; //350
+	maxAileron=0.02;	//0.01
+	maxElevator=0.02;	//0.01
+	maxRudder=0.02;  //0.01
+	maxAcc=1.20; //0.065
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collide=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =17 10 17;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+   
+	[CustomParams]
+	{
+		builtBy=sphere_scout_pad,sphere_aircraft_factory,sphere_adv_aircraft_factory;
+		evalfactor=0.8;
+	}
+
+
+	buildCostEnergy=376;//#AUTO#
+	buildCostMetal=75;//#AUTO#
+	buildTime=897;//#AUTO#
+	mass=26;//#AUTO#
+}

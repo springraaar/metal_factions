@@ -1,0 +1,108 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Oyster;
+	description=Underwater Energy Torpedo Launcher;
+	iconType=staticartilleryfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE WEAPON LEVEL2 NOTAIR;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_oyster;
+	objectName=sphere_oyster.3do;
+	corpse=sphere_oyster_dead;
+	buildPic=sphere_oyster.png;
+	soundCategory=aven_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=2000;
+	footprintx=4;
+	footprintz=4;
+	damagemodifier=0.50;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=wwww wwww wwww wwww;
+	activateWhenBuilt=1;
+	collisionvolumetype=cyly;
+	collisionVolumeScales=40 30 40;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	minwaterdepth=30;
+	maxSlope=15;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=600;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=sphere_oyster_torpedo;
+	onlytargetcategory1=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	noshadow=1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_l2builder;
+		tip=Gains 50% dmg resistance when closed;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflaresml;
+	}
+	buildCostEnergy=8468;//#AUTO#
+	buildCostMetal=1693;//#AUTO#
+	buildTime=20182;//#AUTO#
+	mass=2128;//#AUTO#
+}

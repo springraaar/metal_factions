@@ -1,0 +1,128 @@
+
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Bullfrog;
+	description=Amphibious Boat;
+	iconType=amphibmulti;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_bullfrog;
+	objectName=claw_bullfrog.3do;
+	corpse=claw_bullfrog_dead;
+	buildPic=claw_bullfrog.png;
+	soundCategory=gear_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=4500;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	floater=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=TANKHOVER4;
+	turnRate=125;
+	acceleration=0.03;
+	brakeRate=0.02;
+	maxVelocity=1.55;
+	turninplace=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	sonarDistance=400;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_bullfrog_cannon;
+	weaponMainDir1=0 0 1;
+	maxAngleDif1=270;
+	weapon2=claw_bullfrog_missile;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	badTargetCategory2=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =45 45 90;
+	collisionVolumeOffsets = 0 -15 0;
+	collisionVolumeTest = 1;
+	waterline=9;
+
+	[CustomParams]
+	{
+		builtBy=claw_adv_shipyard,claw_adv_vehicle_plant;
+		tip=33% slower on land;
+		evalfactor=0.95;//AMPHIBSHIP
+	}
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:yellowflaremed;
+		explosionGenerator1=custom:UNITFIRE;
+		explosionGenerator2=custom:rocketflaresml;
+	}
+
+	buildCostEnergy=11066;//#AUTO#
+	buildCostMetal=2213;//#AUTO#
+	buildTime=26374;//#AUTO#
+	mass=2980;//#AUTO#
+}

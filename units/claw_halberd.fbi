@@ -1,0 +1,119 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Halberd;
+	description=Amphibious Heavy Skirmisher Tank;
+	iconType=mobileheavyfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_halberd;
+	objectName=claw_halberd.3do;
+	corpse=claw_halberd_dead;
+	buildPic=claw_halberd.png;
+	soundCategory=aven_TANK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=3800;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=TANKBH4;
+	turnRate=500;
+	acceleration=0.05;
+	brakeRate=0.06;
+	maxVelocity=1.4;
+	maxSlope=12;
+	maxWaterDepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_halberd_railgun;
+	weapon2=claw_halberd_missile;
+	noChaseCategory=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+	
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	leavetracks=1;
+	trackoffset=5;
+	trackstrength=6;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=33;
+	collisionVolumeType = box;
+	collisionVolumeScales =45 26 50;
+	collisionVolumeOffsets = 0 -4 -9;
+	collisionVolumeTest = 1;
+
+
+	[CustomParams]
+	{
+		builtBy=claw_adv_vehicle_plant;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:railgunflare;
+		explosionGenerator1=custom:rocketflaresml;
+	}
+	buildCostEnergy=15146;//#AUTO#
+	buildCostMetal=3029;//#AUTO#
+	buildTime=36100;//#AUTO#
+	mass=3135;//#AUTO#
+}

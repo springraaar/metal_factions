@@ -1,0 +1,90 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, flare, gun, launcher, floatbase, fb1, center;
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+Create()
+{
+	start-script SmokeUnit();
+}
+
+RestoreAfterDelay()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn gun to y-axis <0> speed <80.000000>;
+	turn launcher to x-axis <0> speed <80.000000>;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal 2;
+	set-signal-mask 2;
+	turn gun to y-axis heading speed <120.000000>;
+	turn launcher to x-axis <0> - pitch speed <120.000000>;
+	wait-for-turn gun around y-axis;
+	wait-for-turn launcher around y-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = base;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare;
+}
+
+FirePrimary() 
+{
+	emit-sfx 1024+0 from flare;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		explode gun type SHATTER;
+		explode fb1 type SHATTER;
+		explode launcher type SHATTER;
+		return (1);
+	}
+	explode gun type SHATTER;
+	explode fb1 type SHATTER;
+	explode floatbase type SHATTER;
+	explode center type SHATTER;
+	explode launcher type SHATTER;
+	return (2);
+}

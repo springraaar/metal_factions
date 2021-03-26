@@ -1,0 +1,122 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Icarus;
+	description=Heavy Bomber;
+	iconType=airbomber;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN VTOL LEVEL2 WEAPON NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_icarus;
+	objectName=aven_icarus.3do;
+	buildPic=aven_icarus.png;
+	soundCategory=aven_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=4200;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	energyMake=0;
+	energyUse=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canDropFlare=0;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	stealth=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	acceleration=0.1;
+	brakeRate=0.08;
+	maxVelocity=5.1;
+	maxWaterDepth=5;
+	cruiseAlt=220;
+	turnRate=400;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_icarus_bomb;
+	weapon2=aven_icarus_missile;
+	onlytargetcategory1=NOTAIR;
+	badTargetCategory2=NOTAIR;
+	explodeAs=HBOMBER;
+	selfDestructAs=HBOMBER;
+	weaponMainDir1=0 -1 0;  //x:0 y:0 z:1 => that's forward!
+	maxAngleDif1=190;
+
+
+	//************************************************************
+	//  Orders
+	//**********
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	hoverAttack=1;
+	airStrafe=1;
+//	isbomber=1;
+	bankingAllowed=0;
+	airHoverFactor=-1;
+//	maneuverleashlength=180;
+	upright=1;
+
+	CanLoopbackAttack=0;
+	collide=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =55 15 50;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[customParams] 
+	{
+		builtBy=aven_adv_aircraft_plant;
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflaresml;
+	}
+	buildCostEnergy=15353;//#AUTO#
+	buildCostMetal=3070;//#AUTO#
+	buildTime=36592;//#AUTO#
+	mass=1036;//#AUTO#
+}

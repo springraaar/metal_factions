@@ -1,0 +1,83 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	side=Sphere;
+	Name=Needles;
+	Description=Missile Robot;
+	iconType=mobilefs;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=sphere_needles;
+	objectName=sphere_needles.3do;
+	buildPic=sphere_needles.png;
+	soundCategory=SPHERE_BOTSML;
+	Corpse=sphere_needles_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=2;
+	FootprintZ=2;
+	maxDamage=700;
+
+
+	// ------------------- resources
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	Builder=0;
+
+	// ------------------- movement
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.35;
+	brakeRate=0.35;
+	Acceleration=0.15;
+	turnRate=950;
+	movementClass=KBOTHT2;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_needles_missile;
+	noChaseCategory=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+
+	// ------------------- orders
+
+	// ------------------- misc
+	noAutoFire=0;
+	Upright=0;
+	collisionVolumeType = box;
+	collisionVolumeScales =18 26 18;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	
+	[CustomParams]
+	{
+		builtBy=sphere_light_factory,sphere_adv_kbot_factory;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflaresml;
+	}
+	buildCostEnergy=671;//#AUTO#
+	buildCostMetal=134;//#AUTO#
+	buildTime=1599;//#AUTO#
+	mass=109;//#AUTO#
+}

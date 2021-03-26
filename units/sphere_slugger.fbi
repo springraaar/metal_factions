@@ -1,0 +1,107 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Slugger;
+	description=Amphibious Bomb Launcher;
+	iconType=staticartilleryfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_slugger;
+	objectName=sphere_slugger.3do;
+	corpse=sphere_slugger_dead;
+	buildPic=sphere_slugger.png;
+	soundCategory=LLT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1200;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=oooo;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =28 55 28;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=14;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=500;
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=sphere_slugger_missile;
+	onlyTargetCategory1=NOTAIR;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	floater=1;
+	waterline=0;
+
+	[customParams] 
+	{
+		builtBy=sphere_l1builder,sphere_l2builder;
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflaremed;
+	}
+
+	buildCostEnergy=945;//#AUTO#
+	buildCostMetal=189;//#AUTO#
+	buildTime=2252;//#AUTO#
+	mass=726;//#AUTO#
+}

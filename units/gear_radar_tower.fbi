@@ -1,0 +1,98 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Radar Tower;
+	description=Radar Tower;
+	iconType=staticradar;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL1 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_radar_tower;
+	objectName=gear_radar_tower.3do;
+	corpse=gear_radar_tower_dead;
+	buildPic=gear_radar_tower.png;
+	soundCategory=gear_RADAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=500;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=15;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=ooo ooo ooo;
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onOffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=2100;
+	sonarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType=cily;
+	collisionVolumeScales=30 75 30;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+	floater=1;
+	waterline=0;
+
+	[CustomParams]
+	{
+		builtBy=gear_l1builder,gear_l2builder;
+	}
+	buildCostEnergy=601;//#AUTO#
+	buildCostMetal=120;//#AUTO#
+	buildTime=1434;//#AUTO#
+	mass=164;//#AUTO#
+}

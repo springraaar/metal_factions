@@ -1,0 +1,131 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Vector;
+	description=Advanced Fighter;
+	iconType=airfighter;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR VTOL LEVEL2 WEAPON NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_vector;
+	objectName=gear_vector.3do;
+	buildPic=gear_vector.png;
+	soundCategory=gear_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1250;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canDropFlare=0;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	stealth=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	acceleration=1.2;
+	brakeRate=0.08;
+	maxVelocity=6.8;
+	cruiseAlt=190;
+
+	// flight behaviour
+	wingDrag=0.14;      //0.07
+	wingAngle=0.16;	//0.08;
+	drag=0.16;		//0.08
+	frontToSpeed=0.2;  //0.1
+	speedToFront=0.14; //0.07
+	myGravity=0.4; //0.4
+	maxBank=0.8;	//0.8
+	maxPitch=0.45;	//0.45
+	turnRadius=250; //350
+	maxAileron=0.02;	//0.01
+	maxElevator=0.02;	//0.01
+	maxRudder=0.02;  //0.01
+	maxAcc=1.20; //0.065
+	attackSafetyDistance=400;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_vector_missile;
+	weapon2=gear_vector_flare;
+	badTargetCategory1=NOTAIR;
+	badTargetCategory2=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	flaredelay=0.3;
+	flaredropvector=0 0 -1;
+	flareefficieny=1.0;
+	flarereload=0.1;
+	hoverAttack=0;
+	CanLoopbackAttack=0;
+	collide=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 12 40;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=gear_adv_aircraft_plant;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:glowsml;
+		explosionGenerator1=custom:rocketflaresml;
+	}
+	buildCostEnergy=6666;//#AUTO#
+	buildCostMetal=1333;//#AUTO#
+	buildTime=15887;//#AUTO#
+	mass=378;//#AUTO#
+}

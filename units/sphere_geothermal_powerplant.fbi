@@ -1,0 +1,96 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Geothermal Powerplant;
+	description=Produces 250 E/s and 3 M/s;
+	iconType=energy;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE ENERGY LEVEL1 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_geothermal_powerplant;
+	objectName=sphere_geothermal_powerplant.3do;
+	corpse=sphere_geothermal_powerplant_dead;
+	buildPic=sphere_geothermal_powerplant.png;
+	soundCategory=aven_GEO;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=2000;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=250;
+	metalmake=3;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=GGGGG GGGGG GGGGG GGGGG GGGGG;
+	activateWhenBuilt=1;
+	collisionVolumeType=Box;
+	collisionVolumeScales=60 50 60;
+	collisionVolumeOffsets=0 -2 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=30;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=GEO_BLAST;
+	selfDestructAs=GEO_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+
+	[CustomParams]
+	{
+		builtBy=sphere_l1builder,sphere_l2builder;
+	}
+
+	buildCostEnergy=5410;//#AUTO#
+	buildCostMetal=1082;//#AUTO#
+	buildTime=12895;//#AUTO#
+	mass=1720;//#AUTO#
+}

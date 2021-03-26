@@ -1,0 +1,101 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Hovercraft Factory;
+	description=Builds Level 2 Hovercraft;
+	iconType=plant2;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN PLANT LEVEL2 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_hovercraft_platform;
+	objectName=aven_hovercraft_platform.3do;
+	corpse=aven_hovercraft_platform_dead;
+	buildPic=aven_hovercraft_platform.png;
+	soundCategory=aven_HOVER_PLANT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=4500;
+	footprintx=10;
+	footprintz=7;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=100;
+	energyUse=0;
+	energyStorage=100;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=ooccccccoo ooccccccoo ooccccccoo ooccccccoo ooccccccoo ooccccccoo ooccccccoo;
+	collisionVolumeType=Box;
+	collisionVolumeScales=138 30 106;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	workerTime=300;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+	waterline=4.9;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+
+	[customParams] 
+	{
+		builtBy=aven_l1builder,aven_l2builder;
+	}
+	[SFXTypes]
+	{
+	explosionGenerator0=custom:Nano;
+	explosionGenerator1=custom:UNITFIRE;
+	}
+	buildCostEnergy=8540;//#AUTO#
+	buildCostMetal=1708;//#AUTO#
+	buildTime=20353;//#AUTO#
+	mass=3388;//#AUTO#
+}

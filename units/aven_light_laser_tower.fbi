@@ -1,0 +1,105 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Light Laser Tower;
+	description=Light Laser Tower;
+	iconType=staticfighter;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_light_laser_tower;
+	objectName=aven_light_laser_tower.3do;
+	corpse=aven_light_laser_tower_dead;
+	buildPic=aven_light_laser_tower.png;
+	soundCategory=LLT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1150;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=oooo;
+	collisionVolumeType = CylY;
+	collisionVolumeScales =28 55 28;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=14;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_LIGHTLASER;
+	badTargetCategory1=VTOL;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	floater=1;
+	waterline=0;
+
+	[customParams] 
+	{
+		builtBy=aven_l1builder,aven_l2builder;
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:redflare;
+	}
+
+	buildCostEnergy=963;//#AUTO#
+	buildCostMetal=192;//#AUTO#
+	buildTime=2295;//#AUTO#
+	mass=702;//#AUTO#
+}

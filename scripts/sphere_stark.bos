@@ -1,0 +1,127 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, base2, turret, sleeve, barrel, flare, tl, tr, tl2,tl3, tr2,tr3;
+
+static-var  restore_delay;
+
+// Signal definitions
+#define SIG_AIM				2
+
+lua_checkAllowFiring() { return 0; }
+lua_checkLockTarget() { return 0; }
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+
+Create()
+{
+	restore_delay = 10000;
+	start-script SmokeUnit();
+}
+
+SetMaxReloadTime(Func_Var_1)
+{
+	restore_delay = Func_Var_1 * 2;
+}
+
+RestoreAfterDelay()
+{
+	sleep restore_delay;
+	turn turret to y-axis <0.000000> speed <160.016484>;
+	turn sleeve to x-axis <0.000000> speed <160.005495>;
+}
+
+
+AimPrimary(heading, pitch, canFire)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn sleeve to x-axis <0.000000> - pitch speed <300.000000>;
+	turn turret to y-axis heading speed <300.000000>;
+	wait-for-turn sleeve around x-axis;
+	wait-for-turn turret around y-axis;
+	start-script RestoreAfterDelay();
+	
+	// overkill prevention check
+	canFire = (get GAME_FRAME) - (get WEAPON_RELOADSTATE(1)) > 0;
+	if (canFire) {
+		call-script lua_checkAllowFiring(1,(get TARGET_ID(1)));
+		canFire = get LUA1;
+	}
+	if (!canFire) {
+		return (0);
+	}
+	return (1);
+}
+
+FirePrimary()
+{
+	call-script lua_checkLockTarget(get TARGET_ID(1));
+}
+
+Shot1()
+{
+	emit-sfx 1024 from flare;
+}
+
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+
+	if( severity <= 50 )
+	{
+		explode sleeve type SHATTER;
+		return (1);
+	}
+	explode base type SHATTER;
+	explode base2 type SHATTER;
+	explode turret type SHATTER;	
+	explode sleeve type SHATTER;
+	explode tl type SHATTER;
+	explode tr type SHATTER;
+	return (2);
+}

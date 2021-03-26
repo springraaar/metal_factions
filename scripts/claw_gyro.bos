@@ -1,0 +1,463 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 100
+
+piece  base, pivot, wake1, wake2, turret, spinner, bottom, b2, d2, s1, s2,s3,d3, base1, base2,base3, flare, ringholder,ring1,ring2,ring3,ring4, tbase2, tbase3, ringfx;
+
+static-var  bAiming, bSwimming, reloadTime, terrainStatus, waterSpeed, landSpeed, isReady, chargeState;
+
+// Signal definitions
+#define SIG_MOVE			2
+#define SIG_AIM				4
+#define SIG_RESET			8
+
+#include "spinbot.h"
+
+lua_resetReload() { return 0; }
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	var Func_Var_4;
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from turret;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+	return (0);
+}
+
+stopWheels()
+{
+	if (get BUILD_PERCENT_LEFT) 
+	{
+		stop-spin spinner around y-axis;
+		return (0);
+	}
+	spin spinner around y-axis speed <200.000000>;
+	return (0);
+}
+
+
+walk(last)
+{
+	last = 0;
+	while ( TRUE )
+	{
+		
+		if ( last != (wheelSpeed / 8) )
+		{
+			spin spinner around y-axis speed <200.000000> + wheelSpeed; // accelerate wheelAcceleration;
+			last = wheelSpeed / 8;
+		}
+		turn pivot to x-axis pivotAngle speed <30.000000>;
+		sleep 100;
+	}
+	return (0);
+}
+
+
+
+closelegs()
+{
+	// nothing to do here
+	call-script stopWheels();
+	sleep 100;
+	return (0);
+}
+
+openlegs()
+{
+	// nothing to do here
+	sleep 100;
+
+	return (0);
+}
+
+swim()
+{
+	sleep 500;
+	call-script closelegs();
+	return (0);
+}
+
+MotionControl(justMoved)
+{
+	justMoved = TRUE;
+	while( TRUE )
+	{
+		// over water
+		if( ( !bSwimming ) AND (terrainStatus == 2 OR terrainStatus == 1))
+		{
+			call-script closelegs();
+			bSwimming = TRUE;
+			justMoved = TRUE;
+		}
+		// over land
+		if( bSwimming AND terrainStatus == 4 )
+		{
+			call-script openlegs();
+			bSwimming = FALSE;
+			justMoved = TRUE;
+		}
+		if( bMoving )
+		{
+			if( bSwimming )
+			{
+				//set MAX_SPEED to waterSpeed; // REPLACED BY GADGET
+				//set UPRIGHT to TRUE;
+				call-script walk();
+			}
+			if( !bSwimming )
+			{
+				//set MAX_SPEED to landSpeed; // REPLACED BY GADGET
+				//set UPRIGHT to FALSE;
+				call-script walk();
+			}
+			justMoved = TRUE;
+		}
+		if( !bMoving )
+		{
+			if( justMoved AND ( !bSwimming ) )
+			{
+				call-script stopWheels();
+	
+				justMoved = FALSE;
+			}
+			sleep 100;
+		}
+	}
+	return (0);
+}
+
+
+SetMaxReloadTime(time)
+{
+	reloadTime = time;
+	return (0);
+}
+
+
+ChargeControl(healthPercent, oldHealthPercent)
+{
+	set-signal-mask SIG_RESET;
+	while(TRUE) {
+		while( get BUILD_PERCENT_LEFT )
+		{
+			chargeState = [0];
+			sleep 100;
+		}
+
+		while(( get TRANSPORT_ID ) > 0) {
+			sleep 100;
+		}
+		
+		if (isReady == FALSE) {
+			chargeState = [0];
+			sleep reloadTime / 5;
+			chargeState = [1];
+			sleep reloadTime / 5;
+			chargeState = [2];
+			sleep reloadTime / 5;
+			chargeState = [3];
+			sleep reloadTime / 5;
+			chargeState = [4];
+			sleep reloadTime / 5;
+			isReady = TRUE;
+		}
+		sleep 100;
+	}
+}
+
+ChargeDisruptionControl(healthPercent, oldHealthPercent,oldHealthPercent2,oldHealthPercent3,oldHealthPercent4,oldHealthPercent5,oldHealthPercent6)
+{
+	oldHealthPercent = 100;
+	oldHealthPercent2 = 100;
+	oldHealthPercent3 = 100;
+	oldHealthPercent4 = 100;
+	oldHealthPercent5 = 100;
+	oldHealthPercent6 = 100;
+	
+	
+	while(TRUE) {
+		while( get BUILD_PERCENT_LEFT )
+		{
+			sleep 100;
+		}
+
+		// taking 25% HP in damage or more within 3 seconds resets the charging process
+		healthPercent = get HEALTH;
+		if( (oldHealthPercent6 - healthpercent) > 25 || ( get TRANSPORT_ID ) > 0)
+		{
+			if (chargeState > [0] ) {
+				signal SIG_RESET; // kill charge updater
+				chargeState = [0];
+				isReady = FALSE;
+				set CEG_DAMAGE to 20;
+				emit-sfx 1024+5 from flare;
+				stop-spin ringholder around y-axis;
+				hide ring1;
+				hide ring2;
+				hide ring3;
+				hide ring4;
+				call-script lua_resetReload();
+				start-script ChargeControl(); // restore charge updater
+			}
+		}
+		
+		oldHealthPercent6 = oldHealthPercent5;
+		oldHealthPercent5 = oldHealthPercent4;
+		oldHealthPercent4 = oldHealthPercent3;
+		oldHealthPercent3 = oldHealthPercent2;
+		oldHealthPercent2 = oldHealthPercent;
+		oldHealthPercent = healthPercent;
+		sleep 500;
+	}
+}
+
+
+ChargeFX(previousState) {
+
+	while(TRUE) {
+		
+		if (chargeState == [0]) {
+			if (previousState != chargeState) {
+				stop-spin ringholder around y-axis;
+				hide ring1;
+				hide ring2;
+				hide ring3;
+				hide ring4;
+			}
+		}
+		if (chargeState == [1]) {
+			if (previousState != chargeState) {
+				emit-sfx 1024+4 from flare;
+				emit-sfx 1024+4 from ring1;
+				emit-sfx 1024+4 from ring2;
+				emit-sfx 1024+4 from ring3;
+				emit-sfx 1024+4 from ring4;
+				sleep 100;
+				spin ringholder around y-axis speed <200>;
+				show ring1;
+				hide ring2;
+				hide ring3;
+				hide ring4;
+				spin ring1 around y-axis speed <200>;
+			}
+			emit-sfx 1024 + 0 from ringfx;
+		}
+		if (chargeState == [2]) {
+			if (previousState != chargeState) {
+				spin ringholder around y-axis speed <400>;
+				hide ring1;
+				show ring2;
+				hide ring3;
+				hide ring4;
+				spin ring2 around y-axis speed <400>;
+			}
+			emit-sfx 1024 + 1 from ringfx;
+		}		
+		if (chargeState == [3]) {
+			if (previousState != chargeState) {
+				spin ringholder around y-axis speed <600>;
+				hide ring1;
+				hide ring2;
+				show ring3;
+				hide ring4;
+				spin ring3 around y-axis speed <600>;
+			}
+			emit-sfx 1024 + 2 from ringfx;
+		}
+		if (chargeState == [4]) {~
+			if (previousState != chargeState) {
+				spin ringholder around y-axis speed <800>;
+				hide ring1;
+				hide ring2;
+				hide ring3;
+				show ring4;
+				spin ring4 around y-axis speed <800>;
+			}
+			emit-sfx 1024 + 3 from ringfx;
+		}
+		previousState = chargeState;
+		sleep 30;
+	}
+
+}
+
+resetReload() {
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 30;
+	}
+	call-script lua_resetReload();
+}
+
+Create()
+{
+	hide ring1;
+	hide ring2;
+	hide ring3;
+	hide ring4;
+	landSpeed = get MAX_SPEED;
+	waterSpeed = landSpeed * 100/150;
+	
+	bMoving = FALSE;
+	bAiming = FALSE;
+	bSwimming = FALSE;
+	isReady = FALSE;
+	chargeState = [0];
+	reloadTime = 10000;
+	start-script MotionControl();
+	start-script WheelSpeedControl();
+	start-script ChargeDisruptionControl();
+	start-script ChargeControl();
+	start-script ChargeFX();
+	start-script SmokeUnit();
+	start-script resetReload();
+	return (0);
+}
+
+StartMoving()
+{
+	bMoving = TRUE;
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while( TRUE )
+	{
+		if( terrainStatus == 2 )
+		{
+			emit-sfx 2 from wake1;
+			emit-sfx 2 from wake2;
+		}
+		if( terrainStatus == 1 )
+		{
+			emit-sfx 2 from wake1;
+			emit-sfx 2 from wake2;
+		}
+		sleep 250;
+	}
+	return (0);
+}
+
+StopMoving()
+{
+	bMoving = FALSE;
+	signal SIG_MOVE;
+	return (0);
+}
+
+setSFXoccupy(Func_Var_1)
+{
+	terrainStatus = Func_Var_1;
+	return (0);
+}
+
+
+RestoreAfterDelay()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn turret to y-axis <0.000000> speed <60.000000>;
+	turn flare to x-axis <0.000000> now;
+	return (0);
+}
+
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	
+	while (!isReady) {
+		sleep 100;
+	}
+	turn turret to y-axis heading speed <940.000000>;
+	turn flare to x-axis <0.000000> - pitch now;
+	wait-for-turn turret around y-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+
+FirePrimary()
+{
+	chargeState = [0];
+	hide ring1;
+	hide ring2;
+	hide ring3;
+	hide ring4;
+	isReady = FALSE;
+	stop-spin ring1 around y-axis;
+	stop-spin ring2 around y-axis;
+	stop-spin ring3 around y-axis;
+	stop-spin ring4 around y-axis;
+	stop-spin ringholder around y-axis;
+	turn ringholder to y-axis <0> now;
+	emit-sfx 1024+4 from flare;
+	return (1);
+}
+
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+	return (0);
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare;
+	return (0);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = turret;
+	return (0);
+}
+
+
+
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		corpsetype = 1;
+		
+		explode ringholder type SHATTER;
+		explode turret type SHATTER;
+		explode base2 type SHATTER;
+		return (0);
+	}
+	corpsetype = 2;
+
+	explode base2 type SHATTER;
+	explode base1 type SHATTER;
+	explode turret type SHATTER;
+	explode ringholder type SHATTER;
+	explode tbase2 type SHATTER;
+	
+	return (0);
+}

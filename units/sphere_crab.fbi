@@ -1,0 +1,88 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	side=Sphere;
+	Name=Crab;
+	Description=Amphibious Armored Anti-Sub Robot;
+	iconType=amphibmulti;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=sphere_crab;
+	objectName=sphere_crab.3do;
+	buildPic=sphere_crab.png;
+	soundCategory=SPHERE_BOTBIG;
+	Corpse=sphere_crab_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=3;
+	FootprintZ=3;
+	maxDamage=4500;
+
+
+	// ------------------- resources
+	energyUse=3;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=3;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	Builder=0;
+
+	// ------------------- movement
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.15;
+	brakeRate=0.25;
+	Acceleration=0.15;
+	turnRate=700;
+	movementClass=KBOTUW4;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=600;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_crab_torpedo;
+	badTargetCategory1=VTOL;
+	Weapon2=sphere_crab_laser;
+	noChaseCategory=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+
+	// ------------------- orders
+
+	// ------------------- misc
+	noAutoFire=0;
+	Upright=0;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 40 40;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	activatewhenbuilt = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_adv_kbot_factory;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflaresml;
+		explosionGenerator1=custom:GLOWSML;
+	}
+	buildCostEnergy=12006;//#AUTO#
+	buildCostMetal=2401;//#AUTO#
+	buildTime=28614;//#AUTO#
+	mass=3080;//#AUTO#
+}

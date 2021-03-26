@@ -1,0 +1,161 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, flare, turret, barrel,sleeve, front, f2,stand, tl,tr,logo, floatbase, fb2,fb3;
+
+static-var isFiring, isFloating, fireHeat;
+
+// Signal definitions
+#define SIG_AIM				2
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+	return (0);
+}
+
+Create()
+{
+	isFiring = FALSE;
+	start-script SmokeUnit();
+	fireHeat = 0;
+	hide floatbase;
+	hide fb2;
+	hide fb3;
+	isFloating = FALSE;
+	if ( GET GROUND_WATER_HEIGHT(GET UNIT_XZ) < [0])
+	{
+		isFloating = TRUE;
+		show floatbase;
+		show fb2;
+		show fb3;
+	}
+
+	return (0);
+}
+
+RestoreAfterDelay()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn turret to y-axis <0.000000> speed <50.038462>;
+	turn sleeve to x-axis <0.000000> speed <50.038462>;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	if (isFiring) {
+		return (0);
+	}	
+	turn turret to y-axis heading speed <200.038462>;
+	turn sleeve to x-axis <0.000000> - pitch speed <200.038462>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn sleeve around x-axis;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary(Func_Var_1)
+{
+	emit-sfx 1024 from flare;
+	isFiring = TRUE;
+	fireHeat = 40;
+	while( fireHeat > 0 )
+	{
+		fireHeat = fireHeat - 1;
+		if (fireHeat < 10) 
+		{
+			isFiring = FALSE;
+		}
+		
+		if (fireHeat > 20) 
+		{
+			emit-sfx 1024+1 from flare;
+		}
+		else if (fireHeat > 10) 
+		{
+			emit-sfx 1024+2 from flare;
+		}
+		else
+		{
+			emit-sfx 1024+3 from flare;
+		}
+		sleep 60;
+	}
+	return (0);
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare;
+	return (0);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = turret;
+	return (0);
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = sleeve;
+	return (0);
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		if (isFloating) 
+		{
+			corpsetype = 1;
+		}
+		if (!isFloating) 
+		{
+			corpsetype = 2;
+		}
+		explode tl type SHATTER | BITMAP3;
+		explode tr type SHATTER | BITMAP3;
+		explode base type SHATTER | BITMAP3;
+		explode logo type SHATTER | BITMAP3;
+		explode sleeve type SHATTER | BITMAP3;
+		explode turret type SHATTER | BITMAP3;
+		return corpsetype;
+	}
+
+	corpsetype = 3;
+	explode tl type SHATTER | BITMAP3;
+	explode tr type SHATTER | BITMAP3;
+	explode base type SHATTER | BITMAP3;
+	explode logo type SHATTER | BITMAP3;
+	explode sleeve type SHATTER | BITMAP3;
+	explode turret type SHATTER | BITMAP3;
+	return corpsetype;
+}

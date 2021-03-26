@@ -1,0 +1,84 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	side=Claw;
+	Name=Crawler;
+	Description=Amphibious Artillery Robot;
+	iconType=amphibartillery;
+
+	// ------------------- categories
+	Category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=claw_crawler;
+	objectName=claw_crawler.3do;
+	buildPic=claw_crawler.png;
+	soundCategory=CLAW_BOTBIG;
+	Corpse=claw_crawler_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=4;
+	FootprintZ=4;
+	maxDamage=3800;
+
+
+	// ------------------- resources
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	Builder=0;
+
+	// ------------------- movement
+	maxVelocity=1.1;
+	brakeRate=0.25;
+	Acceleration=0.25;
+	turnRate=450;
+	movementClass=KBOTUW3;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=250;
+
+
+	// ------------------- weapons
+	Weapon1=claw_crawler_cannon;
+	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
+	hightrajectory=2;	
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+
+	// ------------------- orders
+	moveState=0;
+
+	// ------------------- misc
+	noAutoFire=0;
+	Upright=0;
+	collisionVolumeType = box;
+	collisionVolumeScales =45 40 45;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	[CustomParams]
+	{
+		builtBy=claw_adv_kbot_plant;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:yellowflaremed;
+	}
+	buildCostEnergy=9635;//#AUTO#
+	buildCostMetal=1927;//#AUTO#
+	buildTime=22964;//#AUTO#
+	mass=1592;//#AUTO#
+}

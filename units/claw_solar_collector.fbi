@@ -1,0 +1,103 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Solar Collector;
+	description=Produces 20 E/s;
+	iconType=energy;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW ENERGY LEVEL1 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_solar_collector;
+	objectName=claw_solar_collector.3do;
+	corpse=claw_solar_collector_dead;
+	buildPic=claw_solar_collector.png;
+	soundCategory=gear_SOLAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=700;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=20;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=ccccc coooc coooc coooc ccccc;
+	activateWhenBuilt=1;
+	collisionvolumetype=box;
+	collisionVolumeScales=70 28 70;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onOffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+	maxWaterDepth=11;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	damagemodifier=0.50;
+
+
+	[CustomParams]
+	{
+		builtBy=claw_l1builder,claw_l2builder;
+		tip=Gains 50% dmg resistance when closed;
+	}
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildCostEnergy=788;//#AUTO#
+	buildCostMetal=157;//#AUTO#
+	buildTime=1878;//#AUTO#
+	mass=226;//#AUTO#
+}

@@ -1,0 +1,116 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Crusader;
+	description=Gun Boat;
+	iconType=shipartilleryfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_crusader;
+	objectName=aven_crusader.3do;
+	corpse=aven_crusader_dead;
+	buildPic=aven_crusader.png;
+	soundCategory=aven_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=2750;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	floater=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=Smallboat;
+	turnRate=263;
+	acceleration=0.04;
+	brakeRate=0.008;
+	maxVelocity=2.2;
+	minwaterdepth=12;
+	waterline=1;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=500;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_crusader_cannon;
+	weapon2=ARMDEPTHCHARGE;
+	onlytargetcategory2=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	scale=0.5;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 30 60;
+	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeTest = 1;
+
+	[customParams] 
+	{
+		builtBy=aven_shipyard,aven_adv_shipyard;
+		evalfactor=0.85;//SHIP
+	}
+	[SFXTypes]
+	{
+	explosionGenerator0=custom:yellowflaremed;
+	explosionGenerator1=custom:UNITFIRE;
+	}
+	buildCostEnergy=4682;//#AUTO#
+	buildCostMetal=936;//#AUTO#
+	buildTime=11160;//#AUTO#
+	mass=999;//#AUTO#
+}

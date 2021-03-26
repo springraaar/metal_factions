@@ -1,0 +1,119 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Sickle;
+	description=All-terrain Cloakable Assault Robot;
+	iconType=allterrainfighter;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_sickle;
+	objectName=claw_sickle.3do;
+	corpse=claw_sickle_dead;
+	buildPic=claw_sickle.png;
+	soundCategory=Spider;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1000;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=KBOTATUW;
+	turnRate=1020;
+	acceleration=1.52588;
+	brakeRate=1.52588;
+	maxVelocity=1.7;
+	maxWaterDepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_sickle_laser;
+	weaponMainDir1=0 1 0;
+	maxAngleDif1=280;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	// ------------------- stealth
+	cloakCost=15;
+	cloakCostMoving=30;
+	minCloakDistance=80;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	noselfdamage=1;
+	paralyzetime=5;   
+	collisionVolumeType = box;
+	collisionVolumeScales =28 23 28;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=claw_adv_kbot_plant;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:blueflaresml;
+	}
+
+	buildCostEnergy=2016;//#AUTO#
+	buildCostMetal=403;//#AUTO#
+	buildTime=4804;//#AUTO#
+	mass=192;//#AUTO#
+}

@@ -1,0 +1,116 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Magnum;
+	description=Elite Infantry Robot;
+	iconType=mobilefighter;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_magnum;
+	objectName=aven_magnum.3do;
+	corpse=aven_magnum_dead;
+	buildPic=aven_magnum.png;
+	soundCategory=MAVERICK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=4500;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=KBOTHT4;
+	turnRate=1016;
+	acceleration=1.0;
+	brakeRate=1.5;
+	maxVelocity=1.9;
+	maxSlope=14;
+	maxWaterDepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_magnum_laser;
+	weapon2=aven_magnum_cannon;
+	slaveto1=2;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	badTargetCategory2=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =45 60 35;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+
+	[customParams] 
+	{
+		builtBy=aven_adv_kbot_lab;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:snipeflare;
+		explosionGenerator1=custom:emgflarefast;
+	}
+
+	buildCostEnergy=16044;//#AUTO#
+	buildCostMetal=3208;//#AUTO#
+	buildTime=38239;//#AUTO#
+	mass=2194;//#AUTO#
+}

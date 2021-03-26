@@ -1,0 +1,103 @@
+[UNITINFO]
+{
+	// ------------------- description
+	side=Sphere;
+	Name=Astra;
+	Description=Missile Sphere;
+	iconType=fspherefs;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+
+	// ------------------- external specs
+	unitName=sphere_aster;
+	objectName=sphere_aster.3do;
+	Corpse=sphere_aster_dead;
+	buildPic=sphere_aster.png;
+	soundCategory=SPHERE_SPHEREBIG;
+
+	// ------------------- health/cost/size
+	maxDamage=6000;
+	FootprintX=4;
+	FootprintZ=4;
+	
+	// ------------------- resources
+	energyMake=0;
+	MetalMake=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyUse=0;
+
+	// ------------------- constructor
+	builder=0;
+
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	onOffable=0;
+
+
+	// ------------------- movement
+	canFly=1;
+	maxVelocity=0.8;
+	brakeRate=0.03;
+	Acceleration=0.03;
+	turnRate=632;
+	cruiseAlt=100;
+	hoverAttack=1;
+	airStrafe=0;
+	airHoverFactor=0.1;
+	upright=1;
+	bankingallowed=0;
+	useSmoothMesh=1;
+	verticalSpeed=0.8;
+
+	// ------------------- scout
+	sightDistance=600;
+	radarDistance=0;
+	sonarDistance=0;
+
+	// ------------------- weapons
+	Weapon1=sphere_aster_missile;
+	Weapon2=sphere_aster_shield;
+	badTargetCategory1=NOTAIR;
+	noChaseCategory=VTOL;
+	explodeAs=big_unit;
+	selfDestructAs=big_unit;
+
+	// ------------------- orders
+	movestate=0;
+
+	// ------------------- stealth
+	//cloakCost=200;
+	//cloakCostMoving=750;
+	//minCloakDistance=170;
+
+	// ------------------- misc
+	minAirbasePower=99999;
+	activateWhenBuilt=0;
+	collisionVolumeType = sphere;
+	collisionVolumeScales =50 50 50;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_sphere_factory;
+		energyCostMoving=120;
+		tip=Requires 120E/s to move;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflaresml;
+	}
+	buildCostEnergy=12319;//#AUTO#
+	buildCostMetal=2463;//#AUTO#
+	buildTime=29362;//#AUTO#
+	mass=3713;//#AUTO#
+}

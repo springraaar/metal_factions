@@ -1,0 +1,207 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, plate, arm, turret, nano1, beam1, nano2, beam2, exhaust, door1, door2, aimh, aimv,front,front2,back,back2,back3,nose,lpod,rpod,lprop,wake,rprop,wake2,boxbase,boxr,boxl,boxback,boxfront,stabilizer;
+
+static-var  Static_Var_1, isOpen, bBuilding, nanoPiece;
+
+// Signal definitions
+#define SIG_MOVE			2
+#define SIG_BUILD			4
+
+Build()
+{
+	while (TRUE)
+	{
+		if( bBuilding == TRUE )
+		{
+			emit-sfx 1024 + 0 from beam1;
+			emit-sfx 1024 + 0 from beam2;
+		}
+		sleep 100;
+	}
+	return (0);
+}
+
+
+activatescr()
+{
+	if( !isOpen )
+	{
+		turn door1 to z-axis <-90.000000> speed <270.000000>;
+		turn door2 to z-axis <90.000000> speed <270.000000>;
+		wait-for-turn door1 around z-axis;
+		move door1 to y-axis [-6.000000] speed [20.000000];
+		move door2 to y-axis [-6.000000] speed [20.000000];
+		wait-for-move door1 along y-axis;
+		move plate to y-axis [4.000000] speed [10.000000];
+		move arm to y-axis [4.000000] speed [10.000000];
+		wait-for-move arm along y-axis;
+		isOpen = TRUE;
+	}
+	sleep 100;
+	return (0);
+}
+
+deactivatescr()
+{
+	if( isOpen )
+	{
+		isOpen = FALSE;
+		turn turret to y-axis <0.000000> speed <160.038462>;
+		wait-for-turn turret around y-axis;
+		move plate to y-axis [0.000000] speed [10.000000];
+		move arm to y-axis [0.000000] speed [10.000000];
+		wait-for-move arm along y-axis;
+		move door1 to y-axis [0.000000] speed [10.000000];
+		move door2 to y-axis [0.000000] speed [10.000000];
+		wait-for-move door1 along y-axis;
+		sleep 250;
+		turn door1 to z-axis <0.000000> speed <270.000000>;
+		turn door2 to z-axis <0.000000> speed <270.000000>;
+		sleep 400;
+	}
+	sleep 120;
+	return (0);
+}
+
+StartMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while( TRUE )
+	{
+		emit-sfx 256 | 3 from wake;
+		emit-sfx 256 | 3 from wake2;
+		sleep 350;
+	}
+	return (0);
+}
+
+StopMoving()
+{
+	signal SIG_MOVE;
+	return (0);
+}
+
+Go()
+{
+	call-script activatescr();
+	turn turret to y-axis Static_Var_1 speed <160.038462>;
+	wait-for-turn turret around y-axis;
+	set INBUILDSTANCE to 1;
+	return (0);
+}
+
+Stop()
+{
+	set INBUILDSTANCE to 0;
+	turn turret to y-axis <0.000000> speed <160.038462>;
+	wait-for-turn turret around y-axis;
+	call-script deactivatescr();
+	return (0);
+}
+
+
+
+Create()
+{
+	Static_Var_1 = 0;
+	isOpen = FALSE;
+	start-script Build();
+	return (0);
+}
+
+StartBuilding(Func_Var_1)
+{
+	signal SIG_BUILD;
+	Static_Var_1 = Func_Var_1;
+	bBuilding = TRUE;
+	call-script Go();
+	return (0);
+}
+
+StopBuilding()
+{
+	set INBUILDSTANCE to 0;
+	set-signal-mask SIG_BUILD;
+	bBuilding = FALSE;
+	Sleep DEFAULT_BUILDER_RESTORE_DELAY;
+	call-script Stop();
+	return (0);
+}
+
+QueryNanoPiece(piecenum)
+{
+	if( nanoPiece == [0] )
+	{
+		piecenum = beam1;
+		nanoPiece = [1];
+		return (0);
+	}
+	if( nanoPiece == [1] )
+	{
+		piecenum = beam2;
+		nanoPiece = [0];
+		return (0);
+	}
+}
+
+TargetHeading(Func_Var_1)
+{
+	Static_Var_1 = 0 - Func_Var_1;
+	return (0);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+	return (0);
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode back type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode boxl type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode boxr type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode door1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
+		explode door2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode back type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode boxl type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode boxr type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode door1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
+		explode door2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode back type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode boxl type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode boxr type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+		explode door1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
+		explode door2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
+		return (0);
+	}
+	corpsetype = 3;
+	explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+	explode back type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+	explode boxl type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+	explode boxr type SHATTER | EXPLODE_ON_HIT | BITMAP2;
+	explode door1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
+	explode door2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
+	return (0);
+}

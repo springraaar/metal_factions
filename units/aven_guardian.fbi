@@ -1,0 +1,108 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Guardian;
+	description=Plasma Artillery Battery;
+	iconType=staticartillery;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_guardian;
+	objectName=aven_guardian.3do;
+	corpse=aven_guardian_dead;
+	buildPic=aven_guardian.png;
+	soundCategory=GUARD;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=4330;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=200;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=oooo oooo oooo oooo;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=62 36 62;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+	maxWaterDepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_guardian_cannon;
+	badTargetCategory1=VTOL;
+	onlytargetcategory1=NOTAIR;
+	explodeAs=MEDIUM_BUILDINGEX;
+	selfDestructAs=MEDIUM_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[SFXTypes]
+	{
+	explosionGenerator0=custom:yellowflarebig;
+	}
+	[customParams] 
+	{
+		builtBy=aven_l2builder;
+		canAreaAttack=1;
+	}
+	buildCostEnergy=13673;//#AUTO#
+	buildCostMetal=2734;//#AUTO#
+	buildTime=32587;//#AUTO#
+	mass=3986;//#AUTO#
+}

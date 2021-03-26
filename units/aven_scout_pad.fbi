@@ -1,0 +1,75 @@
+[UNITINFO]
+	{
+
+	// ------------------- description
+	side=Aven;
+	Name=Scout Pad;
+	Description=Builds Air Scouts;
+	iconType=building;
+
+	// ------------------- categories
+	Category=AVEN PLANT LEVEL1 NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=aven_scout_pad;
+	objectName=aven_scout_pad.3do;
+	buildPic=aven_scout_pad.png;
+	soundCategory=gear_HOVER_PLANT;
+	Corpse=aven_scout_pad_dead;
+
+	// ------------------- health/cost/size
+	maxDamage=700;
+	FootprintX=4;
+	FootprintZ=4;
+
+
+	// ------------------- resources
+	energyStorage=0;
+	metalStorage=0;
+	energyUse=0;
+
+
+	// ------------------- constructor
+	Builder=1;
+	workerTime=80;
+	canBeAssisted=1;
+
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	
+	// ------------------- movement
+	yardMap=cccc cccc cccc cccc; 
+	
+	maxSlope=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =60 10 60;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	modelCenterOffset=0 0 0;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+	// ------------------- weapons
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
+
+	// ------------------- orders
+
+	// ------------------- misc
+	noAutoFire=0;
+	[CustomParams]
+	{
+		builtBy=aven_l1builder,aven_l2builder;
+	}
+
+
+	buildCostEnergy=979;//#AUTO#
+	buildCostMetal=195;//#AUTO#
+	buildTime=1540;//#AUTO#
+	mass=240;//#AUTO#
+}

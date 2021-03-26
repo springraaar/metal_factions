@@ -1,0 +1,134 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Ace;
+	description=Very Fast Assassination Bomber;
+	iconType=airfighter;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN VTOL LEVEL2 WEAPON NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_ace;
+	objectName=aven_ace.3do;
+	buildPic=aven_ace.png;
+	soundCategory=aven_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1400;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canDropFlare=0;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnRate=505;
+	acceleration=0.75;
+	brakeRate=0.1;
+	maxVelocity=18;
+	maxSlope=10;
+	maxWaterDepth=2;
+	cruiseAlt=210;
+
+	// flight behaviour
+	wingDrag=0.07;      //0.07
+	wingAngle=0.08;	//0.08;
+	drag=0.08;		//0.08
+	frontToSpeed=0.1;  //0.1
+	speedToFront=0.07; //0.07
+	myGravity=0.4; //0.4
+	maxBank=0.8;	//0.8
+	maxPitch=0.45;	//0.45
+	turnRadius=350; //500
+	maxAileron=0.01;	//0.015
+	maxElevator=0.01;	//0.01
+	maxRudder=0.01;  //0.004
+	maxAcc=0.765; //0.065
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_ace_laser;
+	noChaseCategory=UNDERWATER;
+	badTargetCategory1=VTOL;
+	weaponMainDir1=0 0 1;  //x:0 y:0 z:1 => that's forward!
+	maxAngleDif1=60;       //60deg from side to side, or 30deg from center to each direction
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collide=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =50 15 40;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=aven_adv_aircraft_plant;
+		energyCostMoving=300;
+		tip=Requires 300E/s to move;
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflaresml;
+		explosionGenerator1=custom:acetrail;
+	}
+	buildCostEnergy=9401;//#AUTO#
+	buildCostMetal=1880;//#AUTO#
+	buildTime=22406;//#AUTO#
+	mass=488;//#AUTO#
+}

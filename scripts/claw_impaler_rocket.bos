@@ -1,0 +1,75 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, a1,a2,a3,a4,a5,a6, turret, firept,firept2;
+
+static-var alreadyFired;
+
+
+Create()
+{
+	alreadyFired = FALSE;
+	turn turret to x-axis <-90> now;
+	return (0);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+	return (0);
+}
+
+AimFromPrimary(piecenum) {
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum) {
+	piecenum = firept;
+}
+
+AimPrimary() {
+	if (alreadyFired) {
+		return(0);
+	}
+	Return(1);
+}
+
+FirePrimary() {
+	alreadyFired = TRUE;
+	// hide missile model (it's replaced by the projectile model)
+	hide base;
+	hide a1;
+	hide a2;
+	hide a3;
+	hide a4;
+	hide a5;
+	hide a6;
+	Return(1);
+}
+
+
+AimFromSecondary(piecenum) {
+	piecenum = firept2;
+}
+
+QuerySecondary(piecenum) {
+	piecenum = firept2;
+}
+
+AimSecondary() {
+	Return(0);
+}
+
+FireSecondary() {
+	// show effect
+	Return(1);
+}
+
+Killed(severity, corpsetype)
+{
+
+	corpsetype = 3;
+	return (0);
+}

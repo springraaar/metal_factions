@@ -1,0 +1,113 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Construction Robot;
+	description=Tech Level 1;
+	iconType=mobilebuilder;
+	
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL1 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_construction_kbot;
+	objectName=aven_construction_kbot.3do;
+	corpse=aven_construction_kbot_dead;
+	buildPic=aven_construction_kbot.png;
+	soundCategory=aven_CKBOT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=550;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=0.0;
+	metalStorage=0;
+	energyMake=4;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	buildDistance=200;
+	workerTime=150;
+	repairSpeed=150;
+	reclaimSpeed=150;
+	terraformSpeed=300;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=KBOTHT2;
+	turnRate=1020;
+	acceleration=1.2;
+	brakeRate=12.0;
+	maxVelocity=1.8;
+	maxSlope=20;
+	maxWaterDepth=25;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=NANO_UNITEX;
+	selfDestructAs=NANO_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =18 30 18;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		buildertype=aven_l1builder;
+		builtBy=aven_light_plant,aven_adv_kbot_lab,aven_adv_vehicle_plant;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:Nano;
+	}
+	buildCostEnergy=1600;//#AUTO#
+	buildCostMetal=320;//#AUTO#
+	buildTime=3814;//#AUTO#
+	mass=122;//#AUTO#
+}

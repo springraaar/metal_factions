@@ -1,0 +1,87 @@
+[UNITINFO]
+	{
+
+	// ------------------- description
+	side=Sphere;
+	Name=Upgrade Center;
+	Description=Builds Upgrade Modules;
+	iconType=upgrade_center;
+
+	// ------------------- categories
+	Category=SPHERE PLANT LEVEL1 NOTAIR NOTSUB;
+	tedClass=PLANT;
+
+	// ------------------- external specs
+	unitName=sphere_upgrade_center;
+	UnitNumber=10000;
+	objectName=sphere_upgrade_center.3do;
+	buildPic=sphere_upgrade_center.png;
+	soundCategory=aven_HOVER_PLANT;
+	Corpse=sphere_upgrade_center_dead;
+
+	// ------------------- health/cost/size
+	maxDamage=2250;
+	BuildCostEnergy=4500;
+	BuildCostMetal=900;
+	BuildTime=10800;
+	FootprintX=6;
+	FootprintZ=6;
+	idleautoheal=5;
+
+
+	// ------------------- resources
+	energyStorage=0;
+	metalStorage=0;
+	energyUse=0;
+
+
+	// ------------------- constructor
+	Builder=1;
+	workerTime=150;
+	canBeAssisted=0;
+
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	
+	// ------------------- movement
+	buildangle=1024;
+	yardMap=oooooo ooccoo ooccoo ooccoo ooccoo oooooo; 
+	
+	maxSlope=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =80 60 80;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	modelCenterOffset=0 0 0;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+	// ------------------- weapons
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
+
+	// ------------------- orders
+	firestandorders=1;
+	StandingFireOrder=2;
+	mobilestandorders=1;
+	StandingMoveOrder=1;
+
+
+	// ------------------- misc
+	Version=3.1;
+	BMcode=0;
+	ThreeD=1;
+	ZBuffer=1;
+	noAutoFire=0;
+	downloadable=1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_l1builder,sphere_l2builder;
+	}
+}

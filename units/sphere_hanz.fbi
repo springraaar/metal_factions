@@ -1,0 +1,85 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	side=Sphere;
+	Name=Hanz;
+	Description=Armored Assault Robot;
+	iconType=mobileassault;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=sphere_hanz;
+	objectName=sphere_hanz.3do;
+	buildPic=sphere_hanz.png;
+	soundCategory=SPHERE_BOTMED;
+	Corpse=sphere_hanz_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=3;
+	FootprintZ=3;
+	maxDamage=3600;
+
+
+	// ------------------- resources
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	Builder=0;
+
+	// ------------------- movement
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.20;
+	brakeRate=0.35;
+	Acceleration=0.15;
+	turnRate=850;
+	movementClass=KBOTHT3;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_hanz_blaster;
+	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+
+	// ------------------- orders
+
+	// ------------------- misc
+	noAutoFire=0;
+	Upright=0;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 45 40;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_adv_kbot_factory;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:redflare;
+	}
+
+	buildCostEnergy=4639;//#AUTO#
+	buildCostMetal=927;//#AUTO#
+	buildTime=11057;//#AUTO#
+	mass=1934;//#AUTO#
+}

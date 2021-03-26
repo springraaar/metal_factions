@@ -1,0 +1,97 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Advanced Radar Tower;
+	description=Advanced Radar Tower;
+	iconType=staticradar;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE LEVEL2 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_adv_radar_tower;
+	objectName=sphere_adv_radar_tower.3do;
+	corpse=sphere_adv_radar_tower_dead;
+	buildPic=sphere_adv_radar_tower.png;
+	soundCategory=aven_ADVRADAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=2000;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=40;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=oooo oooo oooo oooo;
+	collisionvolumetype=cyly;
+	collisionVolumeScales=50 70 50;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onOffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+	maxWaterDepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=4200;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+
+	[CustomParams]
+	{
+		builtBy=sphere_l2builder;
+	}
+
+	buildCostEnergy=4229;//#AUTO#
+	buildCostMetal=845;//#AUTO#
+	buildTime=10080;//#AUTO#
+	mass=1562;//#AUTO#
+}

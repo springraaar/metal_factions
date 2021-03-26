@@ -1,0 +1,60 @@
+[UNITINFO]
+	{
+	unitName=aven_rush;
+	side=AVEN;
+	objectName=aven_rush;
+	name=Rush;
+	description=Fast Ship/Sub Killer;
+	buildPic=aven_rush.png;
+	FootprintX=4;
+	FootprintZ=4;
+	maxDamage=1300;
+	energyUse=0;
+	workerTime=0;
+	builder=0;
+	sightDistance=500;
+	sonarDistance=400; 
+	radarDistance=0;
+	soundCategory=aven_SHIP;
+	energyStorage=0;
+	metalStorage=0;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB ;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	maxVelocity=3.93;
+	brakeRate=0.019;
+	acceleration=0.22;
+	turnRate=500;
+	energyMake=0;
+	movementClass=Smallboat;
+	iconType=shipraider;
+	weapon1=aven_rush_depthcharge;
+	onlytargetcategory1=NOTAIR;
+	canAttack=1;
+	activateWhenBuilt=1;
+	minWaterDepth=12;
+	waterline=1;
+	floater=1;
+	Corpse=aven_rush_dead;
+	[customParams] 
+	{
+		builtBy=aven_adv_shipyard;
+		evalfactor=0.85;//SHIP
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflaresml;
+	}
+	collisionVolumeType = box;
+	collisionVolumeScales =25 35 50;
+	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeTest = 1;
+	buildCostEnergy=3515;//#AUTO#
+	buildCostMetal=703;//#AUTO#
+	buildTime=8379;//#AUTO#
+	mass=559;//#AUTO#
+	}

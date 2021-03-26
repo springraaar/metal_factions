@@ -1,0 +1,111 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Shredder;
+	description=Anti Swarm Attack Aircraft;
+	iconType=airfighter;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW VTOL LEVEL1 WEAPON NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_shredder;
+	objectName=claw_shredder.3do;
+	buildPic=claw_shredder.png;
+	soundCategory=aven_SEAPLN;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=980;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnRate=800;
+	acceleration=0.3;
+	brakeRate=3;
+	maxVelocity=3.8;
+	maxSlope=10;
+	cruiseAlt=120;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_shredder_cannon;
+	badTargetCategory1=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=MEDIUM_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	hoverAttack=1;
+	hoverradius=10;
+	collide=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 20 40;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	
+	[CustomParams]
+	{
+		builtBy=claw_aircraft_plant,claw_adv_aircraft_plant;
+	}	
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:ROCKETFLAREMED;
+	}
+	buildCostEnergy=3447;//#AUTO#
+	buildCostMetal=689;//#AUTO#
+	buildTime=8216;//#AUTO#
+	mass=237;//#AUTO#
+}

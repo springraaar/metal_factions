@@ -1,0 +1,111 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Kit;
+	description=Fast Rocket Robot;
+	iconType=mobileartilleryfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_kit;
+	objectName=aven_kit.3do;
+	corpse=aven_kit_dead;
+	buildPic=aven_kit.png;
+	soundCategory=aven_KBOT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=750;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=KBOTHT2;
+	turnRate=1005;
+	acceleration=1.0;
+	brakeRate=1.5;
+	maxVelocity=2.35;
+	maxSlope=14;
+	maxWaterDepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_kit_rocket;
+	noChaseCategory=VTOL;
+	onlytargetcategory1=NOTAIR;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =18 33 18;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+
+	[customParams] 
+	{
+		builtBy=aven_light_plant,aven_adv_kbot_lab;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflaresml;
+	}
+	buildCostEnergy=824;//#AUTO#
+	buildCostMetal=164;//#AUTO#
+	buildTime=1964;//#AUTO#
+	mass=121;//#AUTO#
+}

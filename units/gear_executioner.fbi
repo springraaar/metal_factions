@@ -1,0 +1,120 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Executioner;
+	description=Cruiser/Artillery Ship;
+	iconType=shipartillery;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_executioner;
+	objectName=gear_executioner.3do;
+	corpse=gear_executioner_dead;
+	buildPic=gear_executioner.png;
+	soundCategory=gear_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=5800;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	floater=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=MEDIUMBOAT;
+	turnRate=164;
+	acceleration=0.01;
+	brakeRate=0.005;
+	maxVelocity=1.75;
+	minwaterdepth=30;
+	waterline=1;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=600;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_executioner_cannon;
+	weapon3=COREDEPTHCHARGE;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	onlytargetcategory3=NOTAIR;
+	explodeAs=HUGE_UNIT;
+	selfDestructAs=CRAWL_BLASTSML;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	moveState=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	scale=0.5;
+	collisionVolumeType = box;
+	collisionVolumeScales =45 50 90;
+	collisionVolumeOffsets = 0 -14 0;
+	collisionVolumeTest = 1;
+
+	[SFXTypes]
+	{
+	explosionGenerator0=custom:yellowflarebig;
+	explosionGenerator1=custom:UNITFIRE;
+	}
+	[CustomParams]
+	{
+		builtBy=gear_adv_shipyard;
+		canAreaAttack=1;
+		evalfactor=0.85;//SHIP
+	}
+	buildCostEnergy=20738;//#AUTO#
+	buildCostMetal=4147;//#AUTO#
+	buildTime=49427;//#AUTO#
+	mass=4531;//#AUTO#
+}

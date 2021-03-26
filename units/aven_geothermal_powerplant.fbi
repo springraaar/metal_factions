@@ -1,0 +1,96 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Geothermal Powerplant;
+	description=Produces 250 E/s and 3 M/s;
+	iconType=energy;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN ENERGY LEVEL1 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_geothermal_powerplant;
+	objectName=aven_geothermal_powerplant.3do;
+	corpse=aven_geothermal_powerplant_dead;
+	buildPic=aven_geothermal_powerplant.png;
+	soundCategory=aven_GEO;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1300;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=250;
+	metalmake=3;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=GGGGG GGGGG GGGGG GGGGG GGGGG;
+	activateWhenBuilt=1;
+	collisionVolumeType=Box;
+	collisionVolumeScales=60 50 60;
+	collisionVolumeOffsets=0 -2 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=30;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=GEO_BLAST;
+	selfDestructAs=GEO_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+
+	[CustomParams]
+	{
+		builtBy=aven_geothermal_powerplant;
+	}
+
+	buildCostEnergy=4881;//#AUTO#
+	buildCostMetal=976;//#AUTO#
+	buildTime=11634;//#AUTO#
+	mass=1300;//#AUTO#
+}

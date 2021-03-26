@@ -1,0 +1,101 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Advanced Sonar Station;
+	description=Advanced sonar;
+	iconType=staticradar;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL2 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_advanced_sonar_station;
+	objectName=gear_advanced_sonar_station.3do;
+	corpse=gear_advanced_sonar_station_dead;
+	buildPic=gear_advanced_sonar_station.png;
+	soundCategory=gear_SONAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=800;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=40;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=www www www;
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onOffable=1;
+	stealth=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+	minwaterdepth=21;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	sonarDistance=2800;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	noshadow=1;
+	waterline=42;
+
+	[CustomParams]
+	{
+		builtBy=gear_l2builder;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:Nano;
+		explosionGenerator1=custom:Normallight;
+	}
+
+	buildCostEnergy=3669;//#AUTO#
+	buildCostMetal=733;//#AUTO#
+	buildTime=8744;//#AUTO#
+	mass=444;//#AUTO#
+}

@@ -1,0 +1,117 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Carp;
+	description=Attack Sub;
+	iconType=subartilleryfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE UNDERWATER LEVEL1 WEAPON NOTAIR;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_carp;
+	objectName=sphere_carp.3do;
+	corpse=sphere_carp_dead;
+	buildPic=sphere_carp.png;
+	soundCategory=aven_SUB;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1400;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	floater=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=BOATSUB;
+	turnRate=512;
+	acceleration=0.1;
+	brakeRate=0.01;
+	maxVelocity=1.5;
+	maxreversevelocity=0.75;
+	minwaterdepth=30;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=500;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=sphere_carp_torpedo;
+	onlytargetcategory1=NOTAIR;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+   	weaponMainDir1=0 0 1;
+   	maxAngleDif1=120;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	waterline=40;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 18 38;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_shipyard,sphere_adv_shipyard;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:ROCKETFLARESML;
+	}
+
+	buildCostEnergy=1827;//#AUTO#
+	buildCostMetal=365;//#AUTO#
+	buildTime=4356;//#AUTO#
+	mass=235;//#AUTO#
+}

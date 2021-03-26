@@ -1,0 +1,827 @@
+[aven_commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=aven_commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=3000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=aven_commander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[aven_u1commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=aven_u1commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=aven_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[aven_u2commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=aven_u2commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=aven_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[aven_u3commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=aven_u3commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 20 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=aven_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[aven_u4commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=aven_u4commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=aven_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[aven_u5commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=aven_u5commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=aven_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[aven_u6commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=aven_u6commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=aven_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[aven_commander_heap]
+{
+	world=All Worlds;
+	description=Rubble;
+	category=heaps;
+	object=4x4a;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	metal=250;
+	energy=0;
+	damage=2000;
+	reclaimTime=5000;
+	collisionVolumeType=box;
+	collisionVolumeScales=35 6 35;
+	collisionVolumeOffsets=0 0 0;
+}
+
+[aven_ucommander_heap]
+{
+	world=All Worlds;
+	description=Rubble;
+	category=heaps;
+	object=4x4a;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	metal=333;
+	energy=0;
+	damage=2000;
+	reclaimTime=5000;
+	collisionVolumeType=box;
+	collisionVolumeScales=35 6 35;
+	collisionVolumeOffsets=0 0 0;
+}
+
+[gear_commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=gear_commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=3000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=gear_commander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[gear_u1commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=gear_u1commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=gear_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[gear_u2commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=gear_u2commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=gear_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[gear_u3commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=gear_u3commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=gear_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[gear_u4commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=gear_u4commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=gear_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[gear_u5commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=gear_u5commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=gear_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[gear_u6commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=gear_u6commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=gear_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[gear_commander_heap]
+{
+	world=All Worlds;
+	description=Rubble;
+	category=heaps;
+	object=4x4a;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	metal=250;
+	energy=0;
+	damage=2000;
+	reclaimTime=5000;
+	collisionVolumeType=box;
+	collisionVolumeScales=35 6 35;
+	collisionVolumeOffsets=0 0 0;
+}
+
+[gear_ucommander_heap]
+{
+	world=All Worlds;
+	description=Rubble;
+	category=heaps;
+	object=4x4a;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	metal=333;
+	energy=0;
+	damage=2000;
+	reclaimTime=5000;
+	collisionVolumeType=box;
+	collisionVolumeScales=35 6 35;
+	collisionVolumeOffsets=0 0 0;
+}
+
+[claw_commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=claw_commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=3000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=claw_commander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[claw_u1commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=claw_u1commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=claw_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[claw_u2commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=claw_u2commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=claw_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[claw_u3commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=claw_u3commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=claw_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[claw_u4commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=claw_u4commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=claw_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[claw_u5commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=claw_u5commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=claw_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[claw_u6commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=claw_u6commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=claw_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[claw_commander_heap]
+{
+	world=All Worlds;
+	description=Rubble;
+	category=heaps;
+	object=4x4a;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	metal=250;
+	energy=0;
+	damage=2000;
+	reclaimTime=5000;
+	collisionVolumeType=box;
+	collisionVolumeScales=35 6 35;
+	collisionVolumeOffsets=0 0 0;
+}
+
+[claw_ucommander_heap]
+{
+	world=All Worlds;
+	description=Rubble;
+	category=heaps;
+	object=4x4a;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	metal=333;
+	energy=0;
+	damage=2000;
+	reclaimTime=5000;
+	collisionVolumeType=box;
+	collisionVolumeScales=35 6 35;
+	collisionVolumeOffsets=0 0 0;
+}
+
+[sphere_commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=sphere_commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=3000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 15 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=sphere_commander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[sphere_u1commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=sphere_u1commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 25 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=sphere_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[sphere_u2commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=sphere_u2commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 25 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=sphere_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[sphere_u3commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=sphere_u3commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 25 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=sphere_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[sphere_u4commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=sphere_u4commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 25 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=sphere_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[sphere_u5commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=sphere_u5commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 25 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=sphere_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[sphere_u6commander_dead]
+{
+	world=allworld;
+	description=Commander Wreckage;
+	category=commanders;
+	object=sphere_u6commander_dead;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	metal=500;
+	damage=5000;
+	reclaimTime=10000;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 25 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	reclaimable=1;
+	autoreclaimable=1;
+	featuredead=sphere_ucommander_heap;
+	seqnamereclamate=tree1reclamate;
+}
+[sphere_commander_heap]
+{
+	world=All Worlds;
+	description=Rubble;
+	category=heaps;
+	object=4x4a;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	metal=250;
+	energy=0;
+	damage=2000;
+	reclaimTime=5000;
+	collisionVolumeType=box;
+	collisionVolumeScales=35 6 35;
+	collisionVolumeOffsets=0 0 0;
+}
+
+[sphere_ucommander_heap]
+{
+	world=All Worlds;
+	description=Rubble;
+	category=heaps;
+	object=4x4a;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	reclaimable=1;
+	featurereclamate=smudge01;
+	seqnamereclamate=tree1reclamate;
+	metal=333;
+	energy=0;
+	damage=2000;
+	reclaimTime=5000;
+	collisionVolumeType=box;
+	collisionVolumeScales=35 6 35;
+	collisionVolumeOffsets=0 0 0;
+}

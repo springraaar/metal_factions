@@ -1,0 +1,106 @@
+[UNITINFO]
+{
+	// ------------------- description
+	side=Sphere;
+	Name=Atom;
+	Description=Energy-intensive Fast Bomber Sphere;
+	iconType=fspherebomber;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+
+	// ------------------- external specs
+	unitName=sphere_atom;
+	objectName=sphere_atom.3do;
+	Corpse=sphere_atom_dead;
+	buildPic=sphere_atom.png;
+	soundCategory=SPHERE_SPHERESML;
+
+	// ------------------- health/cost/size
+	maxDamage=3000;
+	FootprintX=3;
+	FootprintZ=3;
+	
+	// ------------------- resources
+	energyMake=0;
+	MetalMake=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyUse=0;
+
+	// ------------------- constructor
+	builder=0;
+
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	onOffable=0;
+
+
+	// ------------------- movement
+	canFly=1;
+	maxVelocity=2.8;
+	brakeRate=0.06;
+	Acceleration=0.06;
+	turnRate=632;
+	cruiseAlt=100;
+	hoverAttack=1;
+	airStrafe=0;
+	airHoverFactor=0.1;
+	upright=1;
+	bankingallowed=0;
+	useSmoothMesh=1;
+
+	// ------------------- scout
+	sightDistance=600;
+	radarDistance=0;
+	sonarDistance=0;
+
+	// ------------------- weapons
+	Weapon1=sphere_atom_cannon;
+	Weapon2=sphere_atom_shield;
+	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
+	explodeAs=BIG_SPHERE_BLAST;
+	selfDestructAs=BIG_SPHERE_BLAST;
+
+	// ------------------- orders
+	movestate=0;
+
+	// ------------------- stealth
+	//cloakCost=200;
+	//cloakCostMoving=750;
+	//minCloakDistance=170;
+
+	// ------------------- misc
+	minAirbasePower=99999;
+	activateWhenBuilt=0;
+	collisionVolumeType = sphere;
+	collisionVolumeScales =42 42 42;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_sphere_factory;
+		energyCostMoving=250;
+		tip=Requires 250E/s to move. Depletes own shield when it fires.;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflaremed;
+		explosionGenerator1=custom:comettrail;
+		explosionGenerator2=custom:atomcharge1;
+		explosionGenerator3=custom:atomcharge2;
+		explosionGenerator4=custom:atomfirewave;
+	}
+	buildCostEnergy=8472;//#AUTO#
+	buildCostMetal=1694;//#AUTO#
+	buildTime=20193;//#AUTO#
+	mass=1314;//#AUTO#
+}

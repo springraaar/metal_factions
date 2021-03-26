@@ -1,0 +1,100 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Tidal Generator;
+	description=Produces Energy;
+	iconType=energy;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR ENERGY LEVEL1 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_tidal_generator;
+	objectName=gear_tidal_generator.3do;
+	corpse=gear_tidal_generator_dead;
+	buildPic=gear_tidal_generator.png;
+	soundCategory=gear_TIDE;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=520;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
+	tidalgenerator=1;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=wwww wwww wwww wwww;
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+	minwaterdepth=20;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	noshadow=1;
+	scale=0.5;
+	waterline=14;
+	collisionVolumeType=box;
+	collisionVolumeScales=43 31 43;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+	
+	[CustomParams]
+	{
+		builtBy=gear_l1builder,gear_l2builder;
+	}
+
+	buildCostEnergy=619;//#AUTO#
+	buildCostMetal=123;//#AUTO#
+	buildTime=1476;//#AUTO#
+	mass=170;//#AUTO#
+}

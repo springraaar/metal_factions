@@ -1,0 +1,114 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Thresher;
+	description=Amphibious Heavy Riot Tank;
+	iconType=amphibfighter;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_thresher;
+	objectName=gear_thresher.3do;
+	corpse=gear_thresher_dead;
+	buildPic=gear_thresher.png;
+	soundCategory=gear_TANK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=3000;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=TANKBH4;
+	turnRate=420;
+	acceleration=0.28125;
+	brakeRate=0.0762939;
+	maxVelocity=1.75;
+	maxSlope=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_thresher_cannon;
+	badTargetCategory1=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	leavetracks=1;
+	trackoffset=8;
+	trackstrength=8;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=40;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 28 40;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=gear_adv_vehicle_plant;
+	}
+	[SFXTypes]
+	{
+	explosionGenerator0=custom:yellowflaresml;
+	}
+	buildCostEnergy=5975;//#AUTO#
+	buildCostMetal=1195;//#AUTO#
+	buildTime=14241;//#AUTO#
+	mass=1837;//#AUTO#
+}

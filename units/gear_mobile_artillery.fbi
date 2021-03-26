@@ -1,0 +1,121 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Barrager;
+	description=Fast-firing Artillery;
+	iconType=mobileartillery;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_mobile_artillery;
+	objectName=gear_mobile_artillery.3do;
+	corpse=gear_mobile_artillery_dead;
+	buildPic=gear_mobile_artillery.png;
+	soundCategory=gear_TANK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=4100;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=TANKSH4;
+	turnRate=400;
+	acceleration=0.36;
+	brakeRate=0.8;
+	maxVelocity=1;
+	maxSlope=12;
+	maxWaterDepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_barrager_cannon;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=HUGE_UNIT;
+	selfDestructAs=HUGE_UNIT;
+	onlytargetcategory1=NOTAIR;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	moveState=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	hightrajectory=2;
+	leavetracks=1;
+	trackoffset=7;
+	trackstrength=6;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=42;
+	collisionVolumeType = box;
+	collisionVolumeScales =50 40 45;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	scale=1.2;
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:yellowflaremed;
+	}
+	[CustomParams]
+	{
+		builtBy=gear_adv_vehicle_plant;
+		canAreaAttack=1;
+	}
+	buildCostEnergy=16022;//#AUTO#
+	buildCostMetal=3204;//#AUTO#
+	buildTime=38188;//#AUTO#
+	mass=2093;//#AUTO#
+}

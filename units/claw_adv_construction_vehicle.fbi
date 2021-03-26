@@ -1,0 +1,119 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Adv. Construction Vehicle;
+	description=Tech Level 2;
+	iconType=mobilebuilder2;
+	
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW LEVEL2 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_adv_construction_vehicle;
+	objectName=claw_adv_construction_vehicle.3do;
+	corpse=claw_adv_construction_vehicle_dead;
+	buildPic=claw_adv_construction_vehicle.png;
+	soundCategory=aven_CVEHICLE;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=4000;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=0.0;
+	metalStorage=0;
+	energyMake=21;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	buildDistance=200;
+	workerTime=300;
+	repairSpeed=300;
+	reclaimSpeed=300;
+	terraformSpeed=600;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=TANKSH3;
+	turnRate=360;
+	acceleration=0.18;
+	brakeRate=0.36;
+	maxVelocity=1.8;
+	maxSlope=16;
+	maxWaterDepth=18;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=NANO_UNITEX;
+	selfDestructAs=NANO_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	leavetracks=1;
+	trackoffset=6.5;
+	trackstrength=6;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=34;
+	collisionVolumeType = box;
+	collisionVolumeScales =33 30 50;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		buildertype=claw_l2builder;
+		builtBy=claw_adv_vehicle_plant;
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:Nano;
+	}
+	buildCostEnergy=7662;//#AUTO#
+	buildCostMetal=1532;//#AUTO#
+	buildTime=18261;//#AUTO#
+	mass=1510;//#AUTO#
+}

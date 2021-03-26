@@ -1,0 +1,110 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Runner;
+	description=Fast Scout/Raider Robot;
+	iconType=mobileraider;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_runner;
+	objectName=aven_runner.3do;
+	corpse=aven_runner_dead;
+	buildPic=aven_runner.png;
+	soundCategory=CORAK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=700;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=KBOTHT2;
+	turnRate=790;
+	acceleration=0.8;
+	brakeRate=0.8;
+	maxVelocity=3.0;
+	maxSlope=20;
+	maxWaterDepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_runner_laser;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =15 36 15;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+
+	[customParams] 
+	{
+		builtBy=aven_light_plant,aven_adv_kbot_lab;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:GLOWSML;
+	}
+
+	buildCostEnergy=723;//#AUTO#
+	buildCostMetal=144;//#AUTO#
+	buildTime=1724;//#AUTO#
+	mass=111;//#AUTO#
+}

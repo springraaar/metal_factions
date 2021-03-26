@@ -1,0 +1,104 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Sinker;
+	description=Torpedo Launcher;
+	iconType=staticartilleryfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW WEAPON LEVEL1 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_sinker;
+	objectName=claw_sinker.3do;
+	corpse=claw_sinker_dead;
+	buildPic=claw_sinker.png;
+	soundCategory=aven_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1800;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=wwww wwww wwww wwww;
+	activateWhenBuilt=1;
+	collisionvolumetype=cyly;
+	collisionVolumeScales=50 35 50;
+	collisionVolumeOffsets=0 -7 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	minwaterdepth=10;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=600;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_sinker_torpedo;
+	onlytargetcategory1=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	noshadow=1;
+	waterline=0;
+
+	[CustomParams]
+	{
+		builtBy=claw_l1builder,claw_l2builder;
+		evalfactor=0.85;//SHIP
+	}
+
+	buildCostEnergy=1864;//#AUTO#
+	buildCostMetal=372;//#AUTO#
+	buildTime=4443;//#AUTO#
+	mass=1148;//#AUTO#
+}

@@ -1,0 +1,62 @@
+[UNITINFO]
+	{
+	unitName=aven_VANGUARD;
+	side=Aven;
+	objectName=aven_VANGUARD;
+	name=Vanguard;
+	Description=Multi-Purpose Patrol Frigate;
+	buildPic=aven_vanguard.png;
+	footprintx=3;
+	footprintz=3;
+	maxDamage=1450;
+	energyUse=0;
+	workerTime=0;
+	builder=0;
+
+	sightDistance=500;
+	sonarDistance=400; 
+	radarDistance=0;
+	soundCategory=aven_SHIP;
+	energyStorage=0;
+	metalStorage=0;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+	category=AVEN LEVEL1 WEAPON NOTAIR NOTSUB;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	maxVelocity=2.53;
+	brakeRate=0.019;
+	acceleration=0.07;
+	turnRate=500;
+	energyMake=0;
+	movementClass=Smallboat;
+	iconType=shipfs;
+	Weapon1=aven_vanguard_missile;
+	Weapon2=aven_vanguard_depthcharge;
+	onlytargetcategory2=NOTAIR;
+	canAttack=1;
+	activateWhenBuilt=1;
+	minWaterDepth=12;
+	waterline=1;
+	floater=1;
+	Corpse=aven_VANGUARD_dead;
+	[CustomParams]
+	{
+		builtBy=aven_shipyard,aven_adv_shipyard;
+		evalfactor=0.85;//SHIP
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflaresml;
+	}
+	collisionVolumeType = box;
+	collisionVolumeScales =25 35 50;
+	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeTest = 1;
+	buildCostEnergy=2320;//#AUTO#
+	buildCostMetal=464;//#AUTO#
+	buildTime=5530;//#AUTO#
+	mass=517;//#AUTO#
+	}

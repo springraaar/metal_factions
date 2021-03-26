@@ -1,0 +1,103 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=SPHERE;
+	name=Obsidian Sphere;
+	description=Shielded Armored Energy Weapon;
+	iconType=staticassault;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE LEVEL2 NOTAIR WEAPON NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_obsidian_sphere;
+	objectName=sphere_obsidian_sphere.3do;
+	corpse=sphere_obsidian_sphere_dead;
+	buildPic=sphere_obsidian_sphere.png;
+	soundCategory=COR_DOOM;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=6000;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=oooo oooo oooo oooo;
+	collisionVolumeType=cyly;
+	collisionVolumeScales=50 60 50;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=20;
+	maxWaterDepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=sphere_obsidian_sphere_beam;
+	wpribadTargetCategory1=VTOL;
+	weapon2=sphere_sphere_shield;
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+
+	[CustomParams]
+	{
+		builtBy=sphere_l1builder,sphere_l2builder;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:obsidianglow;
+	}
+	buildCostEnergy=16746;//#AUTO#
+	buildCostMetal=3349;//#AUTO#
+	buildTime=39912;//#AUTO#
+	mass=8372;//#AUTO#
+}

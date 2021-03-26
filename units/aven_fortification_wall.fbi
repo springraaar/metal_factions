@@ -1,0 +1,108 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Fortification Wall;
+	description=Perimeter Defense;
+	iconType=wall;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL1 NOTAIR NOTSUB;
+	tedClass=FORT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_fortification_wall;
+	unitnumber=167;
+	objectName=aven_fortification_wall.3do;
+	corpse=rock_fort;
+	script=fortification_wall.cob;
+	buildPic=aven_fortification_wall.png;
+	soundCategory=;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=2500;
+	buildcostmetal=70;
+	buildcostenergy=350;
+	buildtime=1550;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=0;
+	yardMap=oo oo;
+	collisionVolumeType = box;
+	collisionVolumeScales =32 90 32;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	isfeature=0;
+	canSelfDestruct=0;
+	power=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=32;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=0;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=WALL;
+	selfDestructAs=WALL;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=A-102-C;
+	downloadable=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	[CustomParams]
+	{
+		builtBy=aven_l1builder,aven_l2builder;
+	}
+
+}

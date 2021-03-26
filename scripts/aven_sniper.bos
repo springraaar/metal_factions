@@ -1,0 +1,393 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 200
+
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
+piece  torso,head,v1, pelvis, flash, rthigh, lthigh, lleg, rleg, lfoot,rfoot,ruparm,
+       luparm, larm, lloarm, lhand, rloarm, gun, ground,support,handle,support2;
+
+static-var  bMoving, bAiming, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
+
+#include "aimhelper1.h"
+
+// Signal definitions
+#define SIG_AIM				2
+
+
+MotionSpeedControl(maxSpeed,currentSpeed)
+{
+	maxSpeed = get MAX_SPEED;
+	currentSpeed = 0;
+	mASpdFactor = SPEEDUP_FACTOR;
+	
+	while(TRUE)
+	{
+		currentSpeed = get CURRENT_SPEED;
+		mASpdFactor = SPEEDUP_FACTOR * currentSpeed / maxSpeed;
+
+		//call-script lua_cobDebug(mASpdFactor);
+		if ( mASpdFactor < SPEEDUP_FACTOR/2 )
+		{
+			mASpdFactor = SPEEDUP_FACTOR/2;
+		}
+		
+		
+		mAMoveSpd1 = [20.000000] * mASpdFactor / 100;
+		mATurnSpd1 = <315.000000> * (100 + mASpdFactor) / 200;
+		mATurnSpd2 = <200.000000> * (100 + mASpdFactor) / 200;
+		mATurnSpd3 = <50.000000> * (100 + mASpdFactor) / 200;
+
+		mAVertFactor = [0.000000]-[1.500000] * mASpdFactor / SPEEDUP_FACTOR;
+		legAngle1 = <40.000000>;
+		legAngle2 = <30.000000>;
+		legAngle3 = <15.000000>;
+		if ( mASpdFactor < SPEEDUP_FACTOR )
+		{
+			legAngle1 = legAngle1 * (SPEEDUP_FACTOR + mASpdFactor) / (2*SPEEDUP_FACTOR);
+			legAngle2 = legAngle2 * (SPEEDUP_FACTOR + mASpdFactor) / (2*SPEEDUP_FACTOR);
+			legAngle3 = legAngle3 * (SPEEDUP_FACTOR + mASpdFactor) / (2*SPEEDUP_FACTOR);
+
+		}
+	
+		sleep 60;
+	}
+}
+
+walk()
+{
+	var slowTurnSpd, slowTurnSpd2;
+
+	slowTurnSpd = mATurnSpd2 / 2;
+	slowTurnSpd2 = mATurnSpd2 / 6;
+	
+	
+	// back contact point : right foot behind, left foot forward
+	if( bMoving )
+	{
+		turn lthigh to x-axis <0.000000>-legAngle1 speed mATurnSpd1;
+		turn lleg to x-axis legAngle2 speed mATurnSpd2;
+		turn lfoot to x-axis <0> speed mATurnSpd3;
+
+		turn rthigh to x-axis legAngle2 speed mATurnSpd2;
+		turn rleg to x-axis legAngle3 speed mATurnSpd2;
+		turn rfoot to x-axis <0.000000>-legAngle2 speed mATurnSpd1;
+
+		move pelvis to y-axis mAVertFactor speed mAMoveSpd1;
+		turn pelvis to x-axis <4.000000> speed slowTurnSpd2;
+		if(!bAiming)
+		{
+			// turn torso left, right arm forward
+			turn torso to y-axis <10.000000> speed slowTurnSpd2;
+			turn luparm to x-axis <10.000000> speed slowTurnSpd;
+			turn lloarm to x-axis <-10.000000> speed slowTurnSpd2;
+
+			turn ruparm to x-axis <0.000000> speed slowTurnSpd;
+		}
+		
+		wait-for-turn lthigh around x-axis;
+		wait-for-turn rthigh around x-axis;
+		wait-for-turn lleg around x-axis;
+		wait-for-turn rleg around x-axis;
+	}
+
+	// intermediate pose 2 : left stomp ground
+	if( bMoving)
+	{
+		turn lfoot to x-axis legAngle3 speed mATurnSpd1*3;
+		wait-for-turn lfoot around x-axis;
+	}
+
+	// passing pose 2 : right foot raising, left foot on the ground
+	if( bMoving )
+	{
+		turn lthigh to x-axis <0.000000> speed mATurnSpd2;
+		turn lleg to x-axis <0.000000> speed mATurnSpd2;
+		turn lfoot to x-axis <0.000000> speed mATurnSpd3;
+
+		turn rthigh to x-axis <-20.000000> speed mATurnSpd2;
+		turn rleg to x-axis <30.000000> speed mATurnSpd2;
+		turn rfoot to x-axis <10.000000> speed mATurnSpd1;
+
+		if(!bAiming)
+		{
+			// restore position
+			turn torso to y-axis <0.000000> speed slowTurnSpd2;
+			turn luparm to x-axis <-15.000000> speed slowTurnSpd;
+			turn lloarm to x-axis <-15.000000> speed slowTurnSpd2;
+			turn ruparm to x-axis <10.000000> speed slowTurnSpd;
+		}
+
+		move pelvis to y-axis [0.000000] speed mAMoveSpd1;
+		turn pelvis to x-axis <0.000000> speed slowTurnSpd2;		
+		
+		wait-for-turn lthigh around x-axis;
+		wait-for-turn rthigh around x-axis;
+		wait-for-turn lleg around x-axis;
+		wait-for-turn rleg around x-axis;
+
+	}
+	
+	// forward contact point : right foot forward, left foot behind
+	if( bMoving )
+	{
+		turn lthigh to x-axis legAngle2 speed mATurnSpd2;
+		turn lleg to x-axis legAngle3 speed mATurnSpd2;
+		turn lfoot to x-axis <0>-legAngle2 speed mATurnSpd1;
+
+		turn rthigh to x-axis <0>-legAngle1 speed mATurnSpd1;
+		turn rleg to x-axis legAngle2 speed mATurnSpd2;
+		turn rfoot to x-axis <0> speed mATurnSpd3;
+		
+		move pelvis to y-axis mAVertFactor speed mAMoveSpd1;
+		turn pelvis to x-axis <4.000000> speed slowTurnSpd2;
+		
+		if(!bAiming)
+		{
+			// turn torso right, left arm forward
+			turn torso to y-axis <-10.000000> speed slowTurnSpd2;
+			turn luparm to x-axis <-40.000000> speed slowTurnSpd;
+			turn lloarm to x-axis <-20.000000> speed slowTurnSpd2;
+			turn ruparm to x-axis <20.000000> speed slowTurnSpd;
+		}
+
+		wait-for-turn lthigh around x-axis;
+		wait-for-turn rthigh around x-axis;
+		wait-for-turn lleg around x-axis;
+		wait-for-turn rleg around x-axis;
+	}
+
+	// intermediate pose 1 : right stomp ground
+	if( bMoving)
+	{
+		turn rfoot to x-axis legAngle3 speed mATurnSpd1*3;
+		wait-for-turn rfoot around x-axis;
+	}
+
+	// passing pose 1 : right foot on ground, left foot raising
+	if( bMoving )
+	{
+		turn lthigh to x-axis <-20.000000> speed mATurnSpd2;
+		turn lleg to x-axis <30.000000> speed mATurnSpd2;
+		turn lfoot to x-axis <10.000000> speed mATurnSpd1;
+		
+		turn rthigh to x-axis <0.000000> speed mATurnSpd2;
+		turn rleg to x-axis <0.000000> speed mATurnSpd2;
+		turn rfoot to x-axis <0.000000> speed mATurnSpd3;
+
+		
+		if(!bAiming)
+		{
+			// restore position
+			turn torso to y-axis <0.000000> speed slowTurnSpd2;
+			turn luparm to x-axis <-15.000000> speed slowTurnSpd;
+			turn lloarm to x-axis <-15.000000> speed slowTurnSpd2;
+			turn ruparm to x-axis <10.000000> speed slowTurnSpd;
+		}
+		
+		move pelvis to y-axis [0.000000] speed mAMoveSpd1;
+		turn pelvis to x-axis <0.000000> speed slowTurnSpd2;
+		
+		wait-for-turn lthigh around x-axis;
+		wait-for-turn rthigh around x-axis;
+		wait-for-turn lleg around x-axis;
+		wait-for-turn rleg around x-axis;
+	}
+	
+	return;
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from torso;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+MotionControl(moving, aiming, justmoved)
+{
+	justmoved = TRUE;
+	while( TRUE )
+	{
+		moving = bMoving;
+		aiming = bAiming;
+		if( moving )
+		{
+			call-script walk();
+			justmoved = TRUE;
+		}
+		if( !moving )
+		{
+			if( justmoved )
+			{
+				move pelvis to y-axis [0.000000] speed [25.000000];
+				turn pelvis to x-axis <0.000000> speed <20.000000>;
+				turn rthigh to x-axis <0.000000> speed <200.000000>;
+				turn rleg to x-axis <0.000000> speed <200.000000>;
+				turn lthigh to x-axis <0.000000> speed <200.000000>;
+				turn lleg to x-axis <0.000000> speed <200.000000>;
+				turn rfoot to x-axis <0.000000> speed <200.000000>;
+				turn lfoot to x-axis <0.000000> speed <200.000000>;
+				if( !aiming )
+				{
+					turn torso to y-axis <0.000000> speed <90.016484>;
+					turn luparm to x-axis <-10.000000> speed <150.000000>;
+					turn ruparm to x-axis <0.000000> speed <100.000000>;
+					turn lloarm to x-axis <-20.000000> speed <150.000000>;					
+				}
+				justmoved = FALSE;
+			}
+			sleep 100;
+		}
+	}
+}
+
+Create()
+{
+	bMoving = FALSE;
+	bAiming = FALSE;
+	call-script stopAimHelper1(<1000>,<1000>);
+	start-script MotionSpeedControl();
+	start-script MotionControl();
+	start-script SmokeUnit();
+}
+
+StartMoving()
+{
+	bMoving = TRUE;
+}
+
+StopMoving()
+{
+	bMoving = FALSE;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = torso;
+}
+
+RestoreAfterDelay()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<90>,<90>);
+	turn torso to y-axis <0.000000> speed <90.016484>;
+	turn ruparm to x-axis <0.000000> speed <90.016484>;
+	wait-for-turn torso around y-axis;
+	wait-for-turn ruparm around x-axis;
+	bAiming = FALSE;
+}
+
+AimPrimary(heading, pitch)
+{
+	call-script updateAimHelper1(heading,pitch,<70>,<70>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	turn torso to y-axis heading speed <70.016484>;
+	turn ruparm to x-axis <0.000000> - pitch speed <70.016484>;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn ruparm around x-axis;
+	}
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = torso;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flash;
+}
+
+FirePrimary()
+{
+	emit-sfx 1024 + 0 from flash;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode torso type SHATTER | BITMAP1;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode gun type FALL | BITMAP4;
+		explode larm type FALL | BITMAP5;
+		explode lhand type FALL | BITMAP1;
+		explode lleg type FALL | BITMAP2;
+		explode lloarm type FALL | BITMAP3;
+		explode lthigh type FALL | BITMAP4;
+		explode luparm type FALL | BITMAP5;
+		explode rleg type FALL | BITMAP2;
+		explode rloarm type FALL | BITMAP3;
+		explode rthigh type FALL | BITMAP4;
+		explode ruparm type FALL | BITMAP5;
+		explode torso type SHATTER | BITMAP1;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode gun type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode larm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode lhand type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode lleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode lloarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode lthigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode luparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode rleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode rloarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode rthigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode ruparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode torso type SHATTER | BITMAP1;
+		return (0);
+	}
+	corpsetype = 3;
+	explode flash type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode gun type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode larm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode lhand type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode lleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode lloarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode lthigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode luparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode rleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode rloarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode rthigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode ruparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode torso type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+}

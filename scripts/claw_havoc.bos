@@ -1,0 +1,163 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base,hull,bwingl,bwingr,fwingl,fwingr, weapon1, front,flare1, ljet,rjet,cjet,l2,r2,bl2,br2,ljp,rjp,cjp,jp1,jp2,jp3,jp4;
+
+static-var  Static_Var_2, statechg_DesiredState, statechg_StateChanging,canaim;
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+	return (0);
+	// Build by COBBLER Ver4.0 Copyright @1998 DIGITAL CONCEPT SOFTWARE (MANU@inext.fr) / http://www.annihilationcenter.com/DCS/  
+}
+
+Takeoff()
+{
+	canaim = TRUE;
+}
+
+Landing()
+{
+	canaim = FALSE;
+}
+
+InitState()
+{
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState == 0 )
+		{
+			start-script Takeoff();
+			currentstate = 0;
+		}
+		if( statechg_DesiredState == 1 )
+		{
+			start-script Landing();
+			currentstate = 1;
+		}
+	}
+	statechg_StateChanging = FALSE;
+}
+
+
+
+Create()
+{
+	canaim = TRUE;
+	turn flare1 to x-axis <90.000000> now;
+	turn jp1 to x-axis <-90.000000> now;
+	turn jp2 to x-axis <-90.000000> now;
+	turn jp3 to x-axis <-90.000000> now;	
+	turn jp4 to x-axis <-90.000000> now;
+	Static_Var_2 = 0;
+	call-script InitState();
+	start-script SmokeUnit();
+}
+
+Activate()
+{
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	start-script RequestState(1);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Shot1()
+{
+	return (0);
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare1;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = flare1;
+	return (0);
+}
+
+AimPrimary(heading, pitch)
+{
+	if(!canaim)
+	{
+		return (0);
+	}
+	return (1);
+}
+
+
+
+FireTertiary()
+{
+	return 0;
+}
+
+
+Killed(severity, corpsetype)
+{
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP1;
+	explode weapon1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode hull type BITMAPONLY | BITMAP3;
+	explode bwingr type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode bwingl type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode fwingr type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode fwingl type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode ljet type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode rjet type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode cjet type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode l2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode r2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode bl2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode br2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+
+}

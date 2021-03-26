@@ -1,0 +1,117 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=COMSAT Station;
+	description=Surveillance Satellite Communications Platform;
+	iconType=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE LEVEL1 WEAPON NOTAIR NOTSUB;
+	tedClass=FORT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_comsat_station;
+	objectName=sphere_comsat_station.3do;
+	corpse=sphere_comsat_station_dead;
+	buildPic=sphere_comsat_station.png;
+	soundCategory=gear_RADAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1500;
+	footprintx=6;
+	footprintz=6;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	yardMap=oooooo oooooo oooooo oooooo oooooo oooooo;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=20;
+	maxWaterDepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=comsat_beacon;
+	badTargetCategory1=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	firestandorders=1;
+	standingfireorder=2;
+	defaultmissiontype=GUARD_NOMOVE;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	bmcode=0;
+	designation=ARM-SRDS;
+	downloadable=1;
+	shootme=1;
+	threed=1;
+	version=1.2;
+	zbuffer=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =70 50 70;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	[CustomParams]
+	{
+		builtBy=sphere_l1builder,sphere_l2builder;
+		tip=Manually target a position to reveal a 720 radius area around it for 30 seconds;
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:glowsml;
+	}
+	buildcostenergy=7500;//#AUTO#
+	buildcostmetal=1500;//#AUTO#
+	buildtime=17880;//#AUTO#
+}

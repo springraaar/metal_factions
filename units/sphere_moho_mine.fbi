@@ -1,0 +1,97 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Advanced Metal Extractor;
+	description=Extraction rate x2.5, drains 60 E/s;
+	iconType=metal;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE METAL LEVEL2 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_moho_mine;
+	objectName=sphere_moho_mine.3do;
+	corpse=sphere_moho_mine_dead;
+	buildPic=sphere_moho_mine.png;
+	soundCategory=aven_MOHO;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=3300;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyUse=60;
+	energyStorage=0;
+	extractsMetal=0.0025;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=ooooooooooooooooooooooooo;
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onOffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+	
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=MEDIUM_BUILDINGEX;
+	selfDestructAs=MEDIUM_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = cyly;
+	collisionVolumeScales =80 55 80;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	
+	[CustomParams]
+	{
+		builtBy=sphere_l2builder;
+	}
+
+	buildCostEnergy=6413;//#AUTO#
+	buildCostMetal=1282;//#AUTO#
+	buildTime=15284;//#AUTO#
+	mass=2504;//#AUTO#
+}

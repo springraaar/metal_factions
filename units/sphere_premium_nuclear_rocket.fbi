@@ -1,0 +1,119 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=SPHERE;
+	name=Hypersonic Tactical Nuke;
+	description=Long Range Nuclear Missile;
+	iconType=fnuke;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE VTOL NOTSUB;
+
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_premium_nuclear_rocket;
+	objectName=sphere_premium_nuclear_rocket.3do;
+	script=long_range_premium_rocket.cob;
+	buildPic=sphere_premium_nuclear_rocket.png;
+	soundCategory=MINE;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=2000;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	upright=0;
+	collisionVolumeType=Sphere;
+	collisionVolumeScales=40 40 40;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canMove=0;
+	canPatrol=0;
+	canStop=0;
+	kamikaze=0;
+	stealth=0;
+	canGuard=0;
+	canRepeat=0;
+	canwait=0;
+	canStop=0;
+	canfight=0;
+	sonarStealth=0;
+	canFly=1;
+
+
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=30;
+	maxWaterDepth=100;
+	maxVelocity=0;
+	acceleration=0;
+	brakeRate=0;
+	turnRate=900;
+	blocking=0;
+	usesmoothmesh=0;
+	myGravity=0;
+	hoverAttack=1;
+	airHoverFactor=0.01;
+	airStrafe=0;
+	bankingallowed=0;
+	damagemodifier=0.01;
+	collide=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=sphere_premium_nuclear_rocket;
+	onlytargetcategory1=NOTAIR;
+	explodeAs=sphere_premium_nuclear_rocket;
+	selfDestructAs=sphere_premium_nuclear_rocket;
+	selfdestructcountdown=0;
+	fireState=0;
+
+	[CustomParams]
+	{
+		builtBy=sphere_long_range_rocket_platform;
+		tip=Cannot be shot down after 5s in flight;
+	}
+
+
+	buildcostenergy=120000;//#AUTO#
+	buildcostmetal=24000;//#AUTO#
+	buildtime=288000;//#AUTO#
+}

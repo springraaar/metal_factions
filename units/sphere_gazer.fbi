@@ -1,0 +1,100 @@
+[UNITINFO]
+{
+	// ------------------- description
+	side=Sphere;
+	name=Gazer;
+	description=Sniper Sphere;
+	iconType=fsphereheavyfs;
+
+	// ------------------- categories
+	category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+
+	// ------------------- external specs
+	unitName=sphere_gazer;
+	objectName=sphere_gazer.3do;
+	Corpse=sphere_gazer_dead;
+	buildPic=sphere_gazer.png;
+	soundCategory=SPHERE_SPHEREBIG;
+
+	// ------------------- health/cost/size
+	maxDamage=6000;
+	FootprintX=4;
+	FootprintZ=4;
+	
+	// ------------------- resources
+	energyMake=0;
+	MetalMake=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyUse=0;
+
+	// ------------------- constructor
+	builder=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	onOffable=0;
+
+
+	// ------------------- movement
+	canFly=1;
+	maxVelocity=0.8;
+	brakeRate=0.03;
+	Acceleration=0.03;
+	turnRate=632;
+	cruiseAlt=100;
+	hoverAttack=1;
+	airStrafe=0;
+	airHoverFactor=0.1;
+	upright=1;
+	bankingallowed=0;
+	useSmoothMesh=1;
+	verticalSpeed=0.8;
+
+	// ------------------- scout
+	sightDistance=600;
+	radarDistance=0;
+	sonarDistance=0;
+
+	// ------------------- weapons
+	weapon1=sphere_gazer_laser;
+	weapon2=sphere_gazer_shield;
+	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
+	explodeAs=PENETRATOR_BLAST;
+	selfDestructAs=PENETRATOR_BLAST;
+
+	// ------------------- orders
+	moveState=0;
+
+
+	// ------------------- misc
+	minAirbasePower=99999;
+	activateWhenBuilt=0;
+	collisionVolumeType = sphere;
+	collisionVolumeScales =50 50 50;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_sphere_factory;
+		energyCostMoving=120;
+		tip=Requires 120E/s to move;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:redflare;
+		explosionGenerator1=custom:gazerglow1;
+		explosionGenerator2=custom:gazerglow2;
+	}
+	buildCostEnergy=16628;//#AUTO#
+	buildCostMetal=3325;//#AUTO#
+	buildTime=39630;//#AUTO#
+	mass=4173;//#AUTO#
+}

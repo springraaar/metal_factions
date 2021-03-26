@@ -1,0 +1,168 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, rwing, lwing, tail, jet, ljp, jet2, rjp, weapon,barrel,flare, base2, base3;
+
+static-var  statechg_DesiredState, statechg_StateChanging, isFlying;
+
+#define SIG_AIM 2
+
+
+takeoff()
+{
+	if( !isFlying)
+	{
+		move weapon to y-axis [-2.000000] speed [10.000000];
+		wait-for-move weapon along y-axis;
+		sleep 100;
+		isFlying = TRUE;
+	}
+	sleep 66;
+}
+
+
+landing()
+{
+	if( isFlying )
+	{
+		isFlying = FALSE;
+		turn weapon to y-axis <0> speed <300>;
+		wait-for-turn weapon around y-axis;
+		sleep 1000;
+		move weapon to y-axis [0.000000] speed [10.000000];
+		sleep 100;
+	}
+	sleep 66;
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+InitState()
+{
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState == 0 )
+		{
+			start-script takeoff();
+			currentstate = 0;
+		}
+		if( statechg_DesiredState == 1 )
+		{
+			start-script landing();
+			currentstate = 1;
+		}
+	}
+	statechg_StateChanging = FALSE;
+}
+
+
+Create()
+{
+	isFlying = FALSE;
+	call-script InitState();
+	start-script SmokeUnit();
+}
+
+Activate()
+{
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	start-script RequestState(1);
+}
+
+
+RestoreAfterDelay()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn weapon to y-axis <0> speed <300>;
+}
+
+
+AimFromPrimary(piecenum)
+{
+	piecenum = weapon;
+}
+AimPrimary(heading,pitch)
+{
+	if(!isFlying)
+	{
+		return (0);
+	}
+	signal SIG_AIM;
+	turn weapon to y-axis heading speed <300>;
+	wait-for-turn weapon around y-axis;
+	
+	start-script RestoreAfterDelay();
+	return (1);
+
+}
+
+FirePrimary()
+{
+	//emit-sfx 1024 from flare;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	//start-script Crashing();
+
+	corpsetype = 3;
+	explode base2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode lwing type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode rwing type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode base3 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+}

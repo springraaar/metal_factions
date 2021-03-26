@@ -1,0 +1,98 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Big Fusion Power Plant;
+	description=Produces 600 E/s;
+	iconType=energy;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR ENERGY LEVEL2 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_fusion_power_plant;
+	objectName=gear_fusion_power_plant.3do;
+	corpse=gear_fusion_power_plant_dead;
+	buildPic=gear_fusion_power_plant.png;
+	soundCategory=gear_FUS;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=4300;
+	footprintx=8;
+	footprintz=8;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=600;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo;
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=FUSION_BUILDING_BIG;
+	selfDestructAs=FUSION_BUILDING_BIG;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =100 90 100;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	
+	[CustomParams]
+	{
+		builtBy=gear_l2builder;
+	}
+	[SFXTypes]
+	{
+	}
+
+	buildCostEnergy=13276;//#AUTO#
+	buildCostMetal=2655;//#AUTO#
+	buildTime=31642;//#AUTO#
+	mass=6272;//#AUTO#
+}

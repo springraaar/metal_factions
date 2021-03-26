@@ -1,0 +1,115 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Carrier B;
+	description=Big Air Transport;
+	iconType=air;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR VTOL LEVEL2 NOTSUB;
+	tedClass=VTOL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_carrier_b;
+	objectName=gear_carrier_b.3do;
+	buildPic=gear_carrier_b.png;
+	soundCategory=gear_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=2000;
+	buildcostmetal=1400;
+	buildcostenergy=7000;
+	buildtime=16800;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canFly=1;
+	canGuard=1;
+	canload=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnRate=580;
+	acceleration=0.2;
+	brakeRate=0.4;
+	maxVelocity=6.5;
+	maxSlope=10;
+	cruiseAlt=150;
+	cansubmerge=1;	
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	transportcapacity=1;
+	transportmass=3000;
+	transportsize=6;
+	verticalspeed=10.0;
+	releaseHeld=1;
+	collide=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =45 15 45;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	[CustomParams]
+	{
+		builtBy=gear_adv_aircraft_plant;
+		tip=Transport weight limit : HEAVY;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:TRANSPORTTRAIL4;
+	}
+}

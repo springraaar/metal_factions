@@ -1,0 +1,118 @@
+
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Dizzy;
+	description=Fast Attack Spinbot;
+	iconType=amphibraider;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_dizzy;
+	objectName=claw_dizzy.3do;
+	corpse=claw_dizzy_dead;
+	buildPic=claw_dizzy.png;
+	soundCategory=CLAW_BOTSML;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1100;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	floater=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=TANKHOVER3;
+	turnRate=1155;
+	acceleration=0.12;
+	brakeRate=0.05;
+	maxVelocity=2.0;
+	turninplace=1;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	sonarDistance=250;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_dizzy_laser;
+	noChaseCategory=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	scale=0.5;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 40 25;
+	collisionVolumeOffsets = 0 -3 0;
+	collisionVolumeTest = 1;
+	waterline=6;
+	
+
+	[CustomParams]
+	{
+		builtBy=claw_spinbot_plant;
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:glowsml;
+	}
+
+	buildCostEnergy=1834;//#AUTO#
+	buildCostMetal=366;//#AUTO#
+	buildTime=4372;//#AUTO#
+	mass=397;//#AUTO#
+}

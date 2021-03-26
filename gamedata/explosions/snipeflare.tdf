@@ -1,0 +1,149 @@
+[SNIPEFLARE]
+{
+	usedefaultexplosions=1;	
+
+   [LARGEFLASH]
+   {
+	class = CBitmapMuzzleFlame;
+      
+	[properties]
+      	{
+         	dir = dir;
+         	colorMap=0.11 0.033 0.5 0.01 0.11 0.033 0.5 0.01 0 0 0 0.01; 
+          	size=12;
+          	length=99;
+          	sizeGrowth=-0.1;
+          	ttl=45;
+          	frontOffset=0;
+          	sideTexture=muzzleside;
+          	frontTexture=muzzlefront;
+      	}
+   water=1;
+   air=1;
+   underwater=1;
+   ground=1;
+   count=1;
+   }
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-25 r50,-25 r50,-25 r50;
+			width=22;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.18;
+			color=0.22, 0.066, 1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=4; 
+	}
+	[smoke_Back]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.5;
+			sizeMod=1.0;
+			pos=0, 1, 3;
+			emitVector=dir;
+			gravity=0, 0.05, 0;
+			colorMap=0.055 0.0165 0.25 0.05 0 0 0 0.01;
+			Texture=smoke;
+			airdrag=0.8;
+			particleLife=50;
+			particleLifeSpread=5;
+			numParticles=20;
+			particleSpeed=1;
+			particleSpeedSpread=12;
+			particleSize=0.4;
+			particleSizeSpread=0.1;
+			emitRot=0;
+			emitRotSpread=10;
+			directional=0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+}
+
+[HOVERSNIPEFLARE]
+{
+	usedefaultexplosions=1;	
+
+   [LARGEFLASH]
+   {
+	class = CBitmapMuzzleFlame;
+      
+	[properties]
+      	{
+         	dir = dir;
+         	colorMap=0.4 0.6 0.7 0.01 0.2 0.4 0.6 0.01 0 0 0 0.01; 
+          	size=14;
+          	length=120;
+          	sizeGrowth=-0.1;
+          	ttl=45;
+          	frontOffset=0;
+          	sideTexture=muzzleside;
+          	frontTexture=muzzlefront;
+      	}
+   water=1;
+   air=1;
+   underwater=1;
+   ground=1;
+   count=1;
+   }
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-25 r50,-25 r50,-25 r50;
+			width=26;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.18;
+			color=0.22, 0.066, 1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=4; 
+	}
+	[smoke_Back]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.5;
+			sizeMod=1.0;
+			pos=0, 1, 3;
+			emitVector=dir;
+			gravity=0, 0.05, 0;
+			colorMap=0.055 0.0165 0.25 0.05 0 0 0 0.01;
+			Texture=smoke;
+			airdrag=0.8;
+			particleLife=50;
+			particleLifeSpread=5;
+			numParticles=20;
+			particleSpeed=1;
+			particleSpeedSpread=12;
+			particleSize=0.4;
+			particleSizeSpread=0.1;
+			emitRot=0;
+			emitRotSpread=10;
+			directional=0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+}

@@ -1,0 +1,117 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Viking;
+	description=Anti-Sub Skirmisher Ship;
+	iconType=shipartilleryfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_viking;
+	objectName=gear_viking;
+	corpse=gear_viking_dead;
+	buildPic=gear_viking.png;
+	soundCategory=gear_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1580;
+	FootprintX=3;
+	FootprintZ=3;
+
+
+	//************************************************************
+	//  Resources
+	//*************
+	energyUse=0;
+	energyMake=0;
+	energyStorage=0;
+	metalStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	workerTime=0;
+	builder=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=smallboat;
+	maxVelocity=2.1;
+	brakeRate=0.022;
+	Acceleration=0.1;
+	turnRate=556;
+	floater=1;
+	waterline=1;
+	minWaterDepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	sonarDistance=500; 
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_viking_laser;
+	weapon2=gear_viking_torpedo;
+	onlytargetcategory2=NOTAIR;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =25 30 50;
+	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=gear_shipyard,gear_adv_shipyard;
+		evalfactor=0.85;//SHIP
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:GLOWSML;
+	}
+	buildCostEnergy=3581;//#AUTO#
+	buildCostMetal=716;//#AUTO#
+	buildTime=8536;//#AUTO#
+	mass=633;//#AUTO#
+}

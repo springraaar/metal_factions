@@ -1,0 +1,79 @@
+[UNITINFO]
+	{
+
+	// ------------------- description
+	side=Claw;
+	Name=Advanced Vehicle Factory;
+	Description=Builds Level 2 Vehicles;
+	iconType=plant2;
+
+	// ------------------- categories
+	Category=CLAW PLANT LEVEL2 NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=claw_adv_vehicle_plant;
+	objectName=claw_adv_vehicle_plant.3do;
+	buildPic=claw_adv_vehicle_plant.png;
+	soundCategory=gear_HOVER_PLANT;
+	Corpse=claw_adv_vehicle_plant_dead;
+
+	// ------------------- health/cost/size
+	maxDamage=4500;
+	FootprintX=9;
+	FootprintZ=8;
+
+
+	// ------------------- resources
+	energyStorage=100;
+	metalStorage=100;
+	energyUse=0;
+
+
+	// ------------------- constructor
+	Builder=1;
+	workerTime=300;
+
+
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	
+	// ------------------- movement
+	yardMap=oocccccoo oocccccoo oocccccoo oocccccoo oocccccoo oocccccoo oocccccoo oocccccoo; 
+	maxWaterDepth=0;
+	maxSlope=14;
+	collisionVolumeType = box;
+	collisionVolumeScales =140 55 110;
+	collisionVolumeOffsets=0 -5 0;
+	collisionVolumeTest = 1;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+	// ------------------- weapons
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
+
+	// ------------------- orders
+
+
+	// ------------------- misc
+	noAutoFire=0;
+
+	[CustomParams]
+	{
+		builtBy=claw_l1builder,claw_l2builder;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:Nano;
+	}
+
+	buildCostEnergy=8540;//#AUTO#
+	buildCostMetal=1708;//#AUTO#
+	buildTime=20353;//#AUTO#
+	mass=3388;//#AUTO#
+}

@@ -1,0 +1,722 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 280
+
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
+
+piece  turret, front,back,ruparm, luparm, pelvis, lthigh,
+       rthigh, rleg, rfoot, lleg, lfoot, lloarm, lhand, rloarm,turbase,faxis,baxis,
+       rhand, ground, luparm2,ruparm2,larm,rarm,lgun,rgun,lg,rg,lflare,rflare,lspike,rspike, backhead;
+
+static-var  firePt, bMoving, bAiming, mAVertFactor, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mADelay1, legAngle1, legAngle2, legAngle3, legAngle4, shouldRun;
+
+#include "aimhelper1.h"
+
+// Signal definitions
+#define SIG_MOVE			2
+#define SIG_AIM				4
+
+
+
+MotionSpeedControl(maxSpeed,currentSpeed)
+{
+	maxSpeed = get MAX_SPEED;
+	currentSpeed = 0;
+	mASpdFactor = SPEEDUP_FACTOR;
+	
+	while(TRUE)
+	{
+		currentSpeed = get CURRENT_SPEED;
+		mASpdFactor = SPEEDUP_FACTOR * currentSpeed / maxSpeed;
+
+		shouldRun = FALSE;
+		//call-script lua_cobDebug(mASpdFactor);
+		if ( mASpdFactor < 3 * SPEEDUP_FACTOR / 4 )
+		{
+			mASpdFactor = 3 * SPEEDUP_FACTOR / 4;
+		}
+		
+		// disable this for now..
+		//if ( mASpdFactor > 6 * SPEEDUP_FACTOR /4 ) {
+			//shouldRun = TRUE;
+		//}
+		
+		
+		mAMoveSpd1 = [20.000000] * mASpdFactor / 100;
+		mATurnSpd1 = <475.000000> * (100 + mASpdFactor) / 200;
+		mATurnSpd2 = <300.000000> * (100 + mASpdFactor) / 200;
+		mATurnSpd3 = <150.000000> * (100 + mASpdFactor) / 200;
+
+		mAVertFactor = [0.000000]-[3.000000] * mASpdFactor / SPEEDUP_FACTOR;
+		legAngle1 = <45.000000>;
+		legAngle2 = <35.000000>;
+		legAngle3 = <15.000000>;
+		legAngle4 = <0.000000>;
+		if ( mASpdFactor < SPEEDUP_FACTOR )
+		{
+			legAngle1 = legAngle1 * (SPEEDUP_FACTOR + mASpdFactor) / (2*SPEEDUP_FACTOR);
+			legAngle2 = legAngle2 * (SPEEDUP_FACTOR + mASpdFactor) / (2*SPEEDUP_FACTOR);
+			legAngle3 = legAngle3 * (SPEEDUP_FACTOR + mASpdFactor) / (2*SPEEDUP_FACTOR);
+			legAngle4 = legAngle4 * (SPEEDUP_FACTOR + mASpdFactor) / (2*SPEEDUP_FACTOR);
+		}
+	
+		sleep 30;
+	}
+}
+
+
+walk()
+{
+	var slowTurnSpd, slowTurnSpd2;
+
+	slowTurnSpd = mATurnSpd2 / 4;
+	slowTurnSpd2 = mATurnSpd2 / 6;
+	
+	
+	// back contact point : right foot behind, left foot forward
+	if( bMoving )
+	{
+		//turn lthigh to x-axis <0.000000>-legAngle4 speed mATurnSpd1;
+		//turn lleg to x-axis <0> speed mATurnSpd2;
+		//turn lfoot to x-axis <0> speed mATurnSpd1;
+		turn lthigh to x-axis <0.000000>-legAngle2 speed mATurnSpd1;
+		turn lleg to x-axis legAngle2 speed mATurnSpd2;
+		turn lfoot to x-axis legAngle3 speed mATurnSpd1;
+
+		//turn rthigh to x-axis legAngle1 speed mATurnSpd2;
+		turn rthigh to x-axis legAngle2 speed mATurnSpd2;
+		turn rleg to x-axis <0>-legAngle3 speed mATurnSpd2;
+		turn rfoot to x-axis <0.000000>-legAngle3 speed mATurnSpd1;
+
+		// front legs, opposite
+		turn ruparm to x-axis <-10.000000>-legAngle1 speed mATurnSpd1;
+		turn rloarm to x-axis legAngle2 speed mATurnSpd2;
+		turn rhand to x-axis legAngle3 speed mATurnSpd1;
+
+		turn luparm to x-axis legAngle3 speed mATurnSpd2;
+		turn lloarm to x-axis legAngle3 speed mATurnSpd2;
+		turn lhand to x-axis <0.000000>-legAngle2 speed mATurnSpd1;
+		
+		//move pelvis to y-axis mAVertFactor speed mAMoveSpd1;
+		//move pelvis to y-axis [0.000000] speed mAMoveSpd1;
+		move pelvis to z-axis [0.000000] speed mAMoveSpd1;
+		turn pelvis to x-axis <6.000000> speed slowTurnSpd2;
+
+		if(!bAiming)
+		{
+			// turn turret right, left arm forward
+			//turn turret to y-axis <-10.000000> speed slowTurnSpd2;
+		}
+		
+		wait-for-turn lthigh around x-axis;
+		wait-for-turn rthigh around x-axis;
+		wait-for-turn lleg around x-axis;
+		wait-for-turn rleg around x-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn luparm around x-axis;
+		wait-for-turn lloarm around x-axis;
+		wait-for-turn rloarm around x-axis;
+	}
+
+	// passing pose 2 : right foot raising, left foot on the ground
+	if( bMoving )
+	{
+		turn lthigh to x-axis <0.000000> speed mATurnSpd2;
+		turn lleg to x-axis <0.000000> speed mATurnSpd2;
+		turn lfoot to x-axis <10.000000> speed mATurnSpd3;
+
+		turn rthigh to x-axis <35.000000> speed mATurnSpd1;
+		turn rleg to x-axis <20.000000> speed mATurnSpd1;
+		turn rfoot to x-axis <10.000000> speed mATurnSpd1;
+
+		// front legs, opposite
+		turn ruparm to x-axis <0.000000> speed mATurnSpd2;
+		turn rloarm to x-axis <0.000000> speed mATurnSpd2;
+		turn rhand to x-axis <10.000000> speed mATurnSpd3;
+
+		turn luparm to x-axis <30.000000> speed mATurnSpd1;
+		turn lloarm to x-axis <-45.000000> speed mATurnSpd1;
+		turn lhand to x-axis <10.000000> speed mATurnSpd1;
+		
+				
+		if(!bAiming)
+		{
+			// restore position
+			turn turret to y-axis <0.000000> speed slowTurnSpd2;
+		}
+
+		sleep mADelay1;
+		//move pelvis to y-axis [2.000000] speed mAMoveSpd1;
+		move pelvis to z-axis [0.000000] speed mAMoveSpd1;
+		turn pelvis to x-axis <0.000000> speed slowTurnSpd2;
+		
+		wait-for-turn lthigh around x-axis;
+		wait-for-turn rthigh around x-axis;
+		wait-for-turn lleg around x-axis;
+		wait-for-turn rleg around x-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn luparm around x-axis;
+		wait-for-turn lloarm around x-axis;
+		wait-for-turn rloarm around x-axis;		
+	}
+	
+	// forward contact point : right foot forward, left foot behind
+	if( bMoving )
+	{
+		//turn lthigh to x-axis legAngle1 speed mATurnSpd2;
+		turn lthigh to x-axis legAngle2 speed mATurnSpd2;
+		turn lleg to x-axis <0>-legAngle3 speed mATurnSpd2;
+		turn lfoot to x-axis <0>-legAngle3 speed mATurnSpd1;
+
+		//turn rthigh to x-axis <0>-legAngle4 speed mATurnSpd1;
+		//turn rleg to x-axis <0> speed mATurnSpd2;
+		//turn rfoot to x-axis <0> speed mATurnSpd1;
+		turn rthigh to x-axis <0>-legAngle2 speed mATurnSpd2;
+		turn rleg to x-axis legAngle2 speed mATurnSpd2;
+		turn rfoot to x-axis legAngle3 speed mATurnSpd1;
+		
+		
+		// front legs, opposite
+		turn ruparm to x-axis legAngle3 speed mATurnSpd2;
+		turn rloarm to x-axis legAngle3 speed mATurnSpd2;
+		turn rhand to x-axis <0>-legAngle2 speed mATurnSpd1;
+
+		turn luparm to x-axis <-10.000000>-legAngle1 speed mATurnSpd1;
+		turn lloarm to x-axis legAngle2 speed mATurnSpd2;
+		turn lhand to x-axis legAngle3 speed mATurnSpd1;
+				
+		
+		move pelvis to y-axis [0.000000] speed mAMoveSpd1;
+		move pelvis to z-axis [0.000000] speed mAMoveSpd1;
+		turn pelvis to x-axis <6.000000> speed slowTurnSpd2;
+		
+		if(!bAiming)
+		{
+			// turn turret left, right arm forward
+			//turn turret to y-axis <10.000000> speed slowTurnSpd2;
+		}
+
+		sleep mADelay1;
+		wait-for-turn lthigh around x-axis;
+		wait-for-turn rthigh around x-axis;
+		wait-for-turn lleg around x-axis;
+		wait-for-turn rleg around x-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn luparm around x-axis;
+		wait-for-turn lloarm around x-axis;
+		wait-for-turn rloarm around x-axis;		
+	}
+
+	// passing pose 1 : right foot on ground, left foot raising
+	if( bMoving )
+	{
+		turn lthigh to x-axis <35.000000> speed mATurnSpd1;
+		turn lleg to x-axis <20.000000> speed mATurnSpd1;
+		turn lfoot to x-axis <10.000000> speed mATurnSpd1;
+		
+		turn rthigh to x-axis <0.000000> speed mATurnSpd2;
+		turn rleg to x-axis <0.000000> speed mATurnSpd2;
+		turn rfoot to x-axis <10.000000> speed mATurnSpd3;
+
+		// front legs, opposite
+		turn ruparm to x-axis <30.000000> speed mATurnSpd1;
+		turn rloarm to x-axis <-45.000000> speed mATurnSpd1;
+		turn rhand to x-axis <10.000000> speed mATurnSpd1;
+		
+		turn luparm to x-axis <0.000000> speed mATurnSpd2;
+		turn lloarm to x-axis <0.000000> speed mATurnSpd2;
+		turn lhand to x-axis <10.000000> speed mATurnSpd3;
+		
+		if(!bAiming)
+		{
+			// restore position
+			turn turret to y-axis <0.000000> speed slowTurnSpd2;
+		}
+		
+		sleep mADelay1;
+		//move pelvis to y-axis [2.000000] speed mAMoveSpd1;
+		move pelvis to z-axis [0.000000] speed mAMoveSpd1;
+		turn pelvis to x-axis <0.000000> speed slowTurnSpd2;
+		
+		wait-for-turn lthigh around x-axis;
+		wait-for-turn rthigh around x-axis;
+		wait-for-turn lleg around x-axis;
+		wait-for-turn rleg around x-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn luparm around x-axis;
+		wait-for-turn lloarm around x-axis;
+		wait-for-turn rloarm around x-axis;		
+	}
+	
+	return;
+}
+
+// gallop-ish
+run()
+{
+	var slowTurnSpd, slowTurnSpd2;
+
+	slowTurnSpd = mATurnSpd2 / 2;
+	slowTurnSpd2 = mATurnSpd2 / 6;
+	
+	// back impulse 
+	if( bMoving )
+	{
+		turn lthigh to x-axis <40.000000> speed mATurnSpd2;
+		turn lleg to x-axis <0> speed mATurnSpd2;
+		turn lfoot to x-axis <20> speed mATurnSpd3;
+
+		turn rthigh to x-axis <40.000000> speed mATurnSpd2;
+		turn rleg to x-axis <0.000000> speed mATurnSpd2;
+		turn rfoot to x-axis <20.000000> speed mATurnSpd3;
+
+		// front legs, opposite
+		turn ruparm to x-axis <-35.000000> speed mATurnSpd2;
+		turn rloarm to x-axis <45.000000> speed mATurnSpd2;
+		turn rhand to x-axis <0.000000> speed mATurnSpd3;
+
+		turn luparm to x-axis <-35.000000> speed mATurnSpd2;
+		turn lloarm to x-axis <45.000000> speed mATurnSpd2;
+		turn lhand to x-axis <0.000000> speed mATurnSpd3;
+		
+		//move pelvis to y-axis mAVertFactor speed mAMoveSpd1;
+		move pelvis to y-axis [0.000000] speed mAMoveSpd1;
+		move pelvis to z-axis [0.000000] speed mAMoveSpd1;
+		turn pelvis to x-axis <-10.000000> speed slowTurnSpd;
+
+		if(!bAiming)
+		{
+			// turn turret right, left arm forward
+			//turn turret to y-axis <-10.000000> speed slowTurnSpd2;
+		}
+		
+		wait-for-turn lthigh around x-axis;
+		wait-for-turn rthigh around x-axis;
+		wait-for-turn lleg around x-axis;
+		wait-for-turn rleg around x-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn luparm around x-axis;
+		wait-for-turn lloarm around x-axis;
+		wait-for-turn rloarm around x-axis;
+		wait-for-turn pelvis around x-axis;
+	}
+
+	// passing pose 1
+	if( bMoving )
+	{
+		turn lthigh to x-axis <20.000000> speed mATurnSpd2;
+		turn lleg to x-axis <0> speed mATurnSpd2;
+		turn lfoot to x-axis <0> speed mATurnSpd2;
+
+		turn rthigh to x-axis <20.000000> speed mATurnSpd2;
+		turn rleg to x-axis <0.000000> speed mATurnSpd2;
+		turn rfoot to x-axis <0.000000> speed mATurnSpd2;
+
+		// front legs, opposite
+		turn ruparm to x-axis <-35.000000> speed mATurnSpd2;
+		turn rloarm to x-axis <15.000000> speed mATurnSpd2;
+		turn rhand to x-axis <0.000000> speed mATurnSpd2;
+
+		turn luparm to x-axis <-35.000000> speed mATurnSpd2;
+		turn lloarm to x-axis <15.000000> speed mATurnSpd2;
+		turn lhand to x-axis <0.000000> speed mATurnSpd2;
+		
+		//move pelvis to y-axis mAVertFactor speed mAMoveSpd1;
+		move pelvis to y-axis [3.000000] speed mAMoveSpd1;
+		move pelvis to z-axis [0.000000] speed mAMoveSpd1;
+		turn pelvis to x-axis <0.000000> speed slowTurnSpd;
+
+		if(!bAiming)
+		{
+			// turn turret right, left arm forward
+			//turn turret to y-axis <-10.000000> speed slowTurnSpd2;
+		}
+		
+		wait-for-turn lthigh around x-axis;
+		wait-for-turn rthigh around x-axis;
+		wait-for-turn lleg around x-axis;
+		wait-for-turn rleg around x-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn luparm around x-axis;
+		wait-for-turn lloarm around x-axis;
+		wait-for-turn rloarm around x-axis;
+		wait-for-turn pelvis around x-axis;
+	}
+
+	// front land
+	if( bMoving )
+	{
+		turn lthigh to x-axis <-25.000000> speed mATurnSpd2;
+		turn lleg to x-axis <0> speed mATurnSpd3;
+		turn lfoot to x-axis <0> speed mATurnSpd3;
+
+		turn rthigh to x-axis <-25.000000> speed mATurnSpd2;
+		turn rleg to x-axis <0.000000> speed mATurnSpd3;
+		turn rfoot to x-axis <0.000000> speed mATurnSpd3;
+
+		// front legs, opposite
+		turn ruparm to x-axis <-15.000000> speed mATurnSpd2;
+		turn rloarm to x-axis <0.000000> speed mATurnSpd2;
+		turn rhand to x-axis <0.000000> speed mATurnSpd2;
+
+		turn luparm to x-axis <-15.000000> speed mATurnSpd2;
+		turn lloarm to x-axis <0.000000> speed mATurnSpd2;
+		turn lhand to x-axis <0.000000> speed mATurnSpd2;
+		
+		//move pelvis to y-axis mAVertFactor speed mAMoveSpd1;
+		move pelvis to y-axis [2.000000] speed mAMoveSpd1;
+		move pelvis to z-axis [0.000000] speed mAMoveSpd1;
+		turn pelvis to x-axis <6.500000> speed slowTurnSpd;
+
+		if(!bAiming)
+		{
+			// turn turret right, left arm forward
+			//turn turret to y-axis <-10.000000> speed slowTurnSpd2;
+		}
+		
+		wait-for-turn lthigh around x-axis;
+		wait-for-turn rthigh around x-axis;
+		wait-for-turn lleg around x-axis;
+		wait-for-turn rleg around x-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn luparm around x-axis;
+		wait-for-turn lloarm around x-axis;
+		wait-for-turn rloarm around x-axis;
+		wait-for-turn pelvis around x-axis;
+	}
+
+	// passing pose 2
+	if( bMoving )
+	{
+		turn lthigh to x-axis <20.000000> speed mATurnSpd2;
+		turn lleg to x-axis <0> speed mATurnSpd3;
+		turn lfoot to x-axis <0> speed mATurnSpd3;
+
+		turn rthigh to x-axis <20.000000> speed mATurnSpd2;
+		turn rleg to x-axis <0.000000> speed mATurnSpd3;
+		turn rfoot to x-axis <0.000000> speed mATurnSpd3;
+
+		// front legs, opposite
+		turn ruparm to x-axis <10.000000> speed mATurnSpd2;
+		turn rloarm to x-axis <0.000000> speed mATurnSpd3;
+		turn rhand to x-axis <0.000000> speed mATurnSpd3;
+
+		turn luparm to x-axis <10.000000> speed mATurnSpd2;
+		turn lloarm to x-axis <0.000000> speed mATurnSpd3;
+		turn lhand to x-axis <0.000000> speed mATurnSpd3;
+		
+		//move pelvis to y-axis mAVertFactor speed mAMoveSpd1;
+		move pelvis to y-axis [0.000000] speed mAMoveSpd1;
+		move pelvis to z-axis [0.000000] speed mAMoveSpd1;
+		turn pelvis to x-axis <0.000000> speed slowTurnSpd;
+
+		if(!bAiming)
+		{
+			// turn turret right, left arm forward
+			//turn turret to y-axis <-10.000000> speed slowTurnSpd2;
+		}
+		
+		wait-for-turn lthigh around x-axis;
+		wait-for-turn rthigh around x-axis;
+		wait-for-turn lleg around x-axis;
+		wait-for-turn rleg around x-axis;
+		wait-for-turn ruparm around x-axis;
+		wait-for-turn luparm around x-axis;
+		wait-for-turn lloarm around x-axis;
+		wait-for-turn rloarm around x-axis;
+		wait-for-turn pelvis around x-axis;
+	}
+	
+	return;
+}
+
+
+stand()
+{
+	move pelvis to y-axis [0.000000] speed [10.000000];
+	turn pelvis to z-axis <0.000000> speed <95.000000> * SPEEDUP_FACTOR / 100;
+	turn pelvis to x-axis <0.000000> speed <95.000000> * SPEEDUP_FACTOR / 100;
+	turn front to z-axis <0.000000> speed <95.000000> * SPEEDUP_FACTOR / 100;
+	
+	turn rthigh to x-axis <10.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
+	turn rleg to x-axis <0.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
+	turn rfoot to x-axis <-10.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
+	
+	turn lthigh to x-axis <10.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
+	turn lleg to x-axis <0.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
+	turn lfoot to x-axis <-10.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
+	
+	turn luparm to x-axis <-10.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
+	turn lloarm to x-axis <0.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
+	turn lhand to x-axis <10.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
+	
+	turn ruparm to x-axis <-10.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
+	turn rloarm to x-axis <0.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
+	turn rhand to x-axis <10.000000> speed <360.000000> * SPEEDUP_FACTOR / 100;
+	sleep 50;
+}
+
+
+
+MotionControl(moving, aiming, justmoved)
+{
+	justmoved = TRUE;
+	while( TRUE )
+	{
+		moving = bMoving;
+		aiming = bAiming;
+		if( moving )
+		{
+			justmoved = TRUE;
+			if (!shouldRun) {
+				call-script walk();
+			}
+			if (shouldRun) {
+				call-script run();
+			}
+		}
+		if( !moving )
+		{
+			if( justMoved )
+			{
+				call-script stand();
+				
+				if( !aiming )
+				{
+					turn turret to y-axis <0.000000> speed <200.000000>;
+				}
+
+				justMoved = FALSE;
+			}
+			sleep 100;
+		}
+	}
+	return (0);
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from front;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+	return (0);
+}
+
+
+
+Create()
+{
+	hide lflare;
+	hide rflare;
+	bMoving = FALSE;
+	bAiming = FALSE;
+	firePt = [0];
+	shouldRun = FALSE;
+	call-script stopAimHelper1(<1000>,<1000>);
+	start-script MotionControl();
+	start-script SmokeUnit();
+	start-script MotionSpeedControl();
+	return (0);
+}
+
+
+StartMoving()
+{
+	bMoving = TRUE;
+	return (0);
+}
+
+StopMoving()
+{
+	bMoving = FALSE;
+	return (0);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = turret;
+	return (0);
+}
+
+RestoreAfterDelay()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
+	turn turret to y-axis <0.000000> speed <100.000000>;
+	turn luparm2 to x-axis <0.000000> speed <100.000000>;
+	turn ruparm2 to x-axis <0.000000> speed <100.000000>;
+	wait-for-turn turret around y-axis;
+	wait-for-turn luparm2 around x-axis;
+	wait-for-turn ruparm2 around x-axis;
+	bAiming = FALSE;
+	return (0);
+}
+
+AimPrimary(heading, pitch)
+{
+	call-script updateAimHelper1(heading,pitch,<300>,<300>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	turn turret to y-axis heading speed <300.000000>;
+	turn luparm2 to x-axis <0.000000> - pitch speed <300.000000>;
+	turn ruparm2 to x-axis <0.000000> - pitch speed <300.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn luparm2 around x-axis;
+		wait-for-turn ruparm2 around x-axis;
+	}
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+	return (0);
+}
+
+
+FirePrimary()
+{
+	if( firePt == [0])
+	{
+		emit-sfx 1024 + 0 from lflare;
+		sleep 150;
+		firePt=[1];
+		return (1);
+	}
+	if( firePt == [1])
+	{
+		emit-sfx 1024 + 0 from rflare;
+		sleep 150;
+		firePt=[0];
+		return (1);
+	}
+}
+
+
+QueryPrimary(piecenum)
+{
+	if(firePt == [0])
+	{
+		piecenum = lflare;
+	}
+	if(firePt == [1])
+	{
+		piecenum = rflare;
+	}	
+}
+
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode lgun type FALL | BITMAP1;
+		explode rgun type SHATTER | BITMAP2;
+		explode ground type FALL | BITMAP3;
+		explode lfoot type FALL | BITMAP4;
+		explode lhand type FALL | BITMAP5;
+		explode rloarm type FALL | BITMAP4;
+		explode rthigh type FALL | BITMAP5;
+		explode ruparm type FALL | BITMAP1;
+		explode front type BITMAPONLY | BITMAP2;
+		explode turret type BITMAPONLY | BITMAP3;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode lgun type FALL | BITMAP1;
+		explode rgun type SHATTER | BITMAP2;
+		explode ground type FALL | BITMAP3;
+		explode lfoot type FALL | BITMAP4;
+		explode lhand type FALL | BITMAP5;
+		explode lleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode lloarm type FALL | BITMAP2;
+		explode lthigh type FALL | BITMAP3;
+		explode luparm type FALL | BITMAP4;
+		explode pelvis type BITMAPONLY | BITMAP5;
+		explode rfoot type FALL | BITMAP1;
+		explode rhand type FALL | BITMAP2;
+		explode rleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode rloarm type FALL | BITMAP4;
+		explode rthigh type FALL | BITMAP5;
+		explode ruparm type FALL | BITMAP1;
+		explode front type BITMAPONLY | BITMAP2;
+		explode turret type BITMAPONLY | BITMAP3;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode lgun type FALL | BITMAP1;
+		explode rgun type SHATTER | BITMAP2;
+		explode ground type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode lfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode lhand type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode lleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode lloarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode lthigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode luparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode pelvis type BITMAPONLY | BITMAP5;
+		explode rfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode rhand type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode rleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode rloarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode rthigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode ruparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+		explode front type BITMAPONLY | BITMAP2;
+		explode turret type BITMAPONLY | BITMAP3;
+		return (0);
+	}
+	corpsetype = 3;
+	explode lgun type FALL | BITMAP1;
+	explode rgun type SHATTER | BITMAP2;
+	explode ground type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode lfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode lhand type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode lleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode lloarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode lthigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode luparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode pelvis type BITMAPONLY | BITMAP5;
+	explode rfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode rhand type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode rleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode rloarm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode rthigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode ruparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode front type BITMAPONLY | BITMAP2;
+	explode turret type BITMAPONLY | BITMAP3;
+	return (0);
+}

@@ -1,0 +1,117 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Havoc;
+	description=Heavy Bomber;
+	iconType=airbomber;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW VTOL LEVEL2 WEAPON NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_havoc;
+	objectName=claw_havoc.3do;
+	buildPic=claw_havoc.png;
+	soundCategory=aven_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=5000;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnRate=300; //300
+	acceleration=0.1;  //0.1
+	brakeRate=0.07;
+	maxVelocity=3.6; // was 3.8
+	maxSlope=10;
+	cruiseAlt=230;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_havoc_bomb;
+	noChaseCategory=VTOL;
+	onlytargetcategory1=NOTAIR;
+	weaponMainDir1=0 -1 0;
+	maxAngleDif1=190;
+	explodeAs=HBOMBER;
+	selfDestructAs=HBOMBER;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	hoverAttack=1;
+	hoverradius=10;
+	airStrafe=1;
+	upright=1;
+	bankingAllowed=0;
+	collide=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =70 25 60;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	
+	[CustomParams]
+	{
+		builtBy=claw_adv_aircraft_plant;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:ROCKETFLAREMED;
+	}
+	buildCostEnergy=19110;//#AUTO#
+	buildCostMetal=3822;//#AUTO#
+	buildTime=45545;//#AUTO#
+	mass=1262;//#AUTO#
+}

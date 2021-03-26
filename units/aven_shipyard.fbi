@@ -1,0 +1,104 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Ship Factory;
+	description=Produces Ships;
+	iconType=plant;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN PLANT LEVEL1 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_shipyard;
+	objectName=aven_shipyard.3do;
+	corpse=aven_shipyard_dead;
+	buildPic=aven_shipyard.png;
+	soundCategory=SHIPYARD;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=2750;
+	footprintx=8;
+	footprintz=8;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=0.0;
+	metalStorage=100;
+	energyUse=0;
+	energyStorage=100;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=wCCCCCCw wCCCCCCw wCCCCCCw wCCCCCCw wCCCCCCw wCCCCCCw wCCCCCCw wCCCCCCw;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	workerTime=200;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	minwaterdepth=30;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	noshadow=1;
+	waterline=25;
+	collisionVolumeType = box;
+	collisionVolumeScales =120 50 110;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=aven_l1builder,aven_l2builder;
+	}
+	[SFXTypes]
+	{
+	explosionGenerator0=custom:Nano;
+	explosionGenerator1=custom:Normallight;
+	explosionGenerator2=custom:UNITFIRE;
+	}
+	buildCostEnergy=4110;//#AUTO#
+	buildCostMetal=822;//#AUTO#
+	buildTime=6466;//#AUTO#
+	mass=1922;//#AUTO#
+}

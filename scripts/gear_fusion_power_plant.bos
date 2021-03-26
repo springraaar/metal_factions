@@ -1,0 +1,50 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  b2,b3,b4,b5,b6;
+
+static-var  Static_Var_1;
+
+
+
+Activate()
+{
+	return (0);
+}
+
+Deactivate()
+{
+	return (0);
+}
+
+
+Create()
+{
+	Static_Var_1 = 0;
+	return (0);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = b3;
+	return (0);
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		explode b4 type SHATTER;
+		explode b5 type SHATTER;
+		return (1);
+	}
+
+	explode b2 type SHATTER;
+	explode b3 type SHATTER;
+	explode b4 type SHATTER;
+	explode b5 type SHATTER;
+	explode b6 type SHATTER;
+	return (2);
+}

@@ -1,0 +1,130 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Blower;
+	description=Anti Swarm Fighter/Bomber;
+	iconType=airfighter;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE VTOL LEVEL1 WEAPON NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_blower;
+	objectName=sphere_blower.3do;
+	buildPic=sphere_blower.png;
+	soundCategory=aven_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1020;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnRate=420;
+	acceleration=0.1;
+	brakeRate=0.15;
+	maxVelocity=3.8;
+	maxSlope=10;
+	
+	cruiseAlt=190;
+	hoverAttack=1;
+	upright=1;
+
+	//Flight Behavior
+	wingDrag=0.07;      //0.07
+	wingAngle=0.08;	//0.08;
+	drag=0.08;		//0.08
+	frontToSpeed=0.1;  //0.1
+	speedToFront=0.07; //0.07
+	myGravity=0.4; //0.4
+	maxBank=0.8;	//0.8
+	maxPitch=0.45;	//0.45
+	turnRadius=350; //500
+	maxAileron=0.01;	//0.015
+	maxElevator=0.01;	//0.01
+	maxRudder=0.01;  //0.004
+	maxAcc=0.065; //0.065
+
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=sphere_blower_aabomb;
+	noChaseCategory=UNDERWATER;
+	badTargetCategory1=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collide=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =45 22 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	upright=1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_aircraft_factory,sphere_adv_aircraft_factory;
+	}
+	[SFXTypes]
+	{
+	}
+	buildCostEnergy=3460;//#AUTO#
+	buildCostMetal=692;//#AUTO#
+	buildTime=8247;//#AUTO#
+	mass=242;//#AUTO#
+}

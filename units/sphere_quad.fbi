@@ -1,0 +1,92 @@
+[UNITINFO]
+{
+	// ------------------- description
+	side=Sphere;
+	Name=Quad;
+	Description=Medium Fast Attack Vehicle;
+	iconType=mobileraider;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=sphere_quad;
+	objectName=sphere_quad.3do;
+	buildPic=sphere_quad.png;
+	soundCategory=SPHERE_TANKSML;
+	Corpse=sphere_quad_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=3;
+	FootprintZ=3;
+	maxDamage=1000;
+
+
+	// ------------------- resources
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	Builder=0;
+
+	// ------------------- movement
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=3.0;
+	brakeRate=0.1;
+	Acceleration=0.1;
+	turnRate=650;
+	turninplace=0;
+	movementClass=TANKSH3;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_quad_laser;
+	badTargetCategory1=NOTAIR;
+	noChaseCategory=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+
+	// ------------------- orders
+
+	// ------------------- misc
+	noAutoFire=0;
+
+	leavetracks=1;
+	trackoffset=8;
+	trackstrength=5;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=35;
+
+	collisionVolumeType = box;
+	collisionVolumeScales =30 20 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_adv_vehicle_factory;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:GLOWSML;
+	}
+	buildCostEnergy=1602;//#AUTO#
+	buildCostMetal=320;//#AUTO#
+	buildTime=3819;//#AUTO#
+	mass=356;//#AUTO#
+}

@@ -1,0 +1,252 @@
+#define TAK			// This is a TAK script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 	80
+
+#define HEADING_TOLERANCE	<30>
+#define PITCH_TOLERANCE		<20>
+
+
+piece  base, turret, sleeve, barrel, flare, t1,t2,t1cover,t2cover,body,left,right,l1,r1,b2, tur2, tur3, turret2, sleeves2, barrel21, barrel22, flare21, flare22, front;
+
+static-var  gun_2, bAiming2, isFiring, unitFireHeading, fireHeading, fireHeat;
+
+#include "aimhelper1.h"
+
+#define SIG_AIM		2
+#define SIG_AIM2	4
+
+#include "tankthreads.h"
+
+RestoreAfterDelay1(setMask)
+{
+	if (setMask) {
+		set-signal-mask SIG_AIM;
+	}
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn turret to y-axis <0.000000> speed <90.021978>;
+	turn sleeve to x-axis <0.000000> speed <50.010989>;
+	if(!bAiming2)
+	{
+		turn turret2 to y-axis <0.000000> speed <90.021978>;
+	}
+	return;
+}
+
+RestoreAfterDelay2()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
+	turn turret2 to y-axis <0.000000> speed <100.021978>;
+	turn sleeves2 to x-axis <0.000000> speed <100.010989>;
+	bAiming2 = FALSE;
+	return;
+}
+DamageControl(Func_Var_1)
+{
+	while( TRUE )
+	{
+		Func_Var_1 = get HEALTH;
+		if( Func_Var_1 < 50 )
+		{
+			emit-sfx 256 | 1 from sleeve;
+			if( Func_Var_1 < 25 )
+			{
+				emit-sfx 256 | 2 from turret;
+			}
+		}
+		sleep 1000;
+	}
+	return;
+}
+
+
+AimLock() 
+{
+	var heading;
+	while(TRUE) {
+		// override aim when firing to compensate for the body orientation if the unit turns
+		if (isFiring) {
+			heading = (get HEADING);
+			if (heading != unitFireHeading) {
+				turn turret to y-axis (fireHeading - heading + unitFireHeading) speed <360.000000>;
+				start-script RestoreAfterDelay1(TRUE);
+			}
+		}
+		sleep 30;
+	}
+}
+AimFromWeapon1(piecenum)
+{
+	piecenum = turret;
+	return;
+}
+
+QueryWeapon1(piecenum)
+{
+	piecenum = flare;
+	return;
+}
+
+AimWeapon1(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	
+	if(isFiring)
+	{
+		return (0);
+	}
+	turn turret to y-axis heading speed <100.021978>;
+	turn sleeve to x-axis <0.000000> - pitch speed <100.010989>;
+	if(!bAiming2)
+	{
+		turn turret2 to y-axis heading speed <100.021978>;
+	}
+	wait-for-turn turret around y-axis;
+	wait-for-turn sleeve around x-axis;
+	fireHeading = heading;
+	start-script RestoreAfterDelay1();
+	return (1);
+}
+
+FirePrimary()
+{
+	emit-sfx 1024 from flare;
+	unitFireHeading = get HEADING;
+	isFiring = TRUE;
+	fireHeat = 35;
+	while( fireHeat > 0 )
+	{
+		fireHeat = fireHeat - 1;
+		if (fireHeat < 10) 
+		{
+			isFiring = FALSE;
+		}
+		
+		if (fireHeat > 20) 
+		{
+			emit-sfx 1024+2 from flare;
+		}
+		else if (fireHeat > 10) 
+		{
+			emit-sfx 1024+3 from flare;
+		}
+		else
+		{
+			emit-sfx 1024+4 from flare;
+		}
+		sleep 60;
+	}
+	return;
+}
+
+
+
+AimFromWeapon2(piecenum)
+{
+	piecenum = turret2;
+	return;
+}
+
+QueryWeapon2(piecenum)
+{
+	if (gun_2 == [0])
+	{
+		piecenum = flare21;
+		return;
+	}
+	if (gun_2 == [1])
+	{
+		piecenum = flare22;
+		return;
+	}
+}
+
+AimWeapon2(heading, pitch)
+{
+	call-script updateAimHelper1(heading,pitch,<250>,<250>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM2;
+	set-signal-mask SIG_AIM2;
+	bAiming2 = TRUE;
+	turn turret2 to y-axis heading speed <250.021978>;
+	turn sleeves2 to x-axis <0.000000> - pitch speed <250.010989>;
+	if (!aimReady1)
+	{
+		wait-for-turn turret2 around y-axis;
+		wait-for-turn sleeves2 around x-axis;
+	}
+	start-script RestoreAfterDelay2();
+	return (1);
+}
+
+Shot2()
+{
+	if( gun_2 == [0] )
+	{
+		emit-sfx 1024+1 from flare21;
+		sleep 100;
+		gun_2 = [1];
+		return (0);
+	}
+	if (gun_2 == [1])
+	{
+		emit-sfx 1024+1 from flare22;
+		sleep 100;
+		gun_2 = [0];
+		return (0);
+	}
+	return (0);
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity >= 0 AND severity < 25 )
+	{
+		corpsetype = 1;
+		explode sleeve type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode barrel type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode front type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode tur2 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode tur3 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	}
+	else
+	{
+		corpsetype = 2;
+		explode sleeve type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode barrel type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode front type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode tur2 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode tur3 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode body type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode t1cover type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode t2cover type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode l1 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode r1 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode left type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		explode right type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	}
+	return;
+}
+
+Create()
+{
+	gun_2 = [0];
+	bAiming2 = FALSE;
+	isFiring = FALSE;
+	fireHeat = 0;
+	fireHeading = <0>;
+	unitFireHeading = <0>;
+	
+	call-script stopAimHelper1(<1000>,<1000>);
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 250;
+	}
+	start-script DamageControl();
+	start-script AnimateTracks();
+	start-script AimLock();
+	return;
+}

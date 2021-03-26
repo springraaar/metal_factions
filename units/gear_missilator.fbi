@@ -1,0 +1,105 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Missilator;
+	description=Advanced Pop-up Missile Battery;
+	iconType=staticfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_missilator;
+	objectName=gear_missilator.3do;
+	corpse=gear_missilator_dead;
+	buildPic=gear_missilator.png;
+	soundCategory=GUARD;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=2400;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=oooo oooo oooo oooo;
+	collisionVolumeType=Box;
+	collisionVolumeScales=60 40 60;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=20;
+	maxWaterDepth=5;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_missilator_missile;
+	badTargetCategory1=NOTAIR;
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	damagemodifier=0.5;
+	digger=1;
+
+	[CustomParams]
+	{
+		builtBy=gear_l2builder;
+		tip=Very effective against air units. Gains 50% dmg resistance when closed;
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:ROCKETFLAREMED;
+	}
+	buildCostEnergy=8333;//#AUTO#
+	buildCostMetal=1666;//#AUTO#
+	buildTime=19862;//#AUTO#
+	mass=2310;//#AUTO#
+}

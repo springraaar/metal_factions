@@ -1,0 +1,113 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Striker;
+	description=Attack Ship;
+	iconType=shipfighter;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_striker;
+	objectName=claw_striker.3do;
+	corpse=claw_striker_dead;
+	buildPic=claw_striker.png;
+	soundCategory=gear_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1150;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	floater=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=smallboat;
+	turnRate=549;
+	acceleration=0.08;
+	brakeRate=0.01;
+	maxVelocity=2.0;
+	minwaterdepth=6;
+	waterline=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=250;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_striker_laser;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =25 35 33;
+	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=claw_shipyard,claw_adv_shipyard;
+		evalfactor=0.85;//SHIP
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:blueflaresml;
+	}
+	buildCostEnergy=1191;//#AUTO#
+	buildCostMetal=238;//#AUTO#
+	buildTime=2839;//#AUTO#
+	mass=366;//#AUTO#
+}

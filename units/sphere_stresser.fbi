@@ -1,0 +1,122 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Stresser;
+	description=Shielded Missile Cruiser;
+	iconType=shipfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_stresser;
+	objectName=sphere_stresser.3do;
+	corpse=sphere_stresser_dead;
+	buildPic=sphere_stresser.png;
+	soundCategory=aven_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=6500;
+	footprintx=6;
+	footprintz=6;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=25;
+	energyUse=15;
+	energyStorage=0;
+	windgenerator=0.0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	floater=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=LARGEBOAT;
+	turnRate=152;
+	acceleration=0.02;
+	brakeRate=0.0045;
+	maxVelocity=1.45;
+	minwaterdepth=10;
+	waterline=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=sphere_stresser_missile;
+	weaponMainDir1=0 0 -1;
+	maxAngleDif1=300;
+	weapon2=sphere_stresser_missile2;
+	weaponMainDir2=0 0 1;
+	maxAngleDif2=300;
+	weapon3=sphere_stresser_shield;
+	noChaseCategory=WEAPON;
+	badTargetCategory1=NOTAIR;
+	badTargetCategory2=NOTAIR;
+	explodeAs=HUGE_UNIT;
+	selfDestructAs=ATOMIC_BLASTSML;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =60 65 110;
+	collisionVolumeOffsets = 0 -20 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_adv_ship_factory;
+		evalfactor=0.85;//SHIP
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflarebig;
+		explosionGenerator1=custom:rocketflaresml;
+		explosionGenerator2=custom:UNITFIRE;
+	}
+	buildCostEnergy=21864;//#AUTO#
+	buildCostMetal=4372;//#AUTO#
+	buildTime=52111;//#AUTO#
+	mass=4931;//#AUTO#
+}

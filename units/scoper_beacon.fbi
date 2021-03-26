@@ -1,0 +1,113 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=All;
+	name=Scoper Beacon;
+	description=Air Scout;
+	iconType=invisible;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=VTOL LEVEL2 NOTSUB;
+	tedClass=VTOL;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=scoper_beacon;
+	objectName=scoper_beacon.3do;
+	buildPic=scoper_beacon.png;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=9999999;
+	healtime=30;
+	footprintx=1;
+	footprintz=1;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0.0;
+	energyUse=0.0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canFly=1;
+	canGuard=0;
+	canMove=1;
+	canPatrol=0;
+	canStop=1;
+	cloakable=1;
+	initCloaked=1;
+	cloakCost=0;
+	cloakCostMoving=0;
+	stealth=1;
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnRate=800;
+	acceleration=0.5;
+	brakeRate=0.09;
+	maxVelocity=0;
+	maxSlope=10;
+	
+	cruiseAlt=200;
+	verticalSpeed=0;
+	myGravity=0;
+
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=200;
+
+	//************************************************************
+	//  Weapons
+	//***********
+
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collide=0;
+	minCollisionSpeed=30;
+	collisionVolumeType = -1;
+	collisionVolumeScales =0 0 0;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 0;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+	hoverAttack=1;
+	airHoverFactor=0.01;
+ 
+
+	buildcostenergy=0;//#AUTO#
+	buildcostmetal=0;//#AUTO#
+	buildtime=10000;//#AUTO#
+}

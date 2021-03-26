@@ -1,0 +1,111 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Construction Aircraft;
+	description=Tech Level 1;
+	iconType=airbuilder;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR VTOL LEVEL1 NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_construction_aircraft;
+	objectName=gear_construction_aircraft.3do;
+	buildPic=gear_construction_aircraft.png;
+	soundCategory=gear_CVTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=480;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=0.0;
+	metalStorage=0;
+	energyMake=5;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	buildDistance=200;
+	workerTime=150;
+	repairSpeed=150;
+	reclaimSpeed=150;
+	terraformSpeed=300;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnRate=480;
+	acceleration=0.15;
+	brakeRate=1.7;
+	maxVelocity=5.0;
+	maxSlope=10;
+	maxWaterDepth=0;
+	cruiseAlt=75;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=NANO_UNITEX;
+	selfDestructAs=NANO_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	scale=0.8;
+	collide=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 13 25;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		buildertype=gear_l1builder;
+		builtBy=gear_aircraft_plant,gear_adv_aircraft_plant;
+	}
+
+	buildCostEnergy=3424;//#AUTO#
+	buildCostMetal=684;//#AUTO#
+	buildTime=8161;//#AUTO#
+	mass=174;//#AUTO#
+}

@@ -1,0 +1,84 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	side=Sphere;
+	Name=Bit;
+	Description=Infantry Robot;
+	iconType=mobileartilleryfs;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=sphere_bit;
+	objectName=sphere_bit.3do;
+	buildPic=sphere_bit.png;
+	soundCategory=SPHERE_BOTSML;
+	Corpse=sphere_bit_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=2;
+	FootprintZ=2;
+	maxDamage=680;
+
+
+	// ------------------- resources
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	Builder=0;
+
+	// ------------------- movement
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.65;
+	brakeRate=0.45;
+	Acceleration=0.85;
+	turnRate=950;
+	movementClass=KBOTHT2;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_bit_blaster;
+	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+
+	// ------------------- orders
+
+	// ------------------- misc
+	noAutoFire=0;
+	Upright=1;
+	collisionVolumeType = box;
+	collisionVolumeScales=16 33 16;
+	collisionVolumeOffsets= 0 0 0;
+	collisionVolumeTest= 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_light_factory,sphere_adv_kbot_factory;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:redflare;
+	}
+	buildCostEnergy=438;//#AUTO#
+	buildCostMetal=87;//#AUTO#
+	buildTime=1044;//#AUTO#
+	mass=99;//#AUTO#
+}

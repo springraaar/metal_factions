@@ -1,0 +1,91 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Dragon's Teeth;
+	description=Perimeter Defense;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW LEVEL1 NOTAIR NOTSUB;
+	tedClass=FORT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_dragons_teeth;
+	objectName=claw_dragons_teeth.3do;
+	corpse=claw_dragons_teeth_dead;
+	buildPic=claw_dragons_teeth.png;
+	soundCategory=;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1400;
+	buildcostmetal=8;
+	buildcostenergy=25;
+	buildtime=200;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=ff ff;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	isfeature=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=32;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=;
+	selfDestructAs=;
+
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	levelground=0;
+
+	[CustomParams]
+	{
+		builtBy=claw_l1builder,claw_l2builder;
+	}
+}

@@ -1,0 +1,388 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 120
+
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
+
+piece  firept, turret, gunbase, pelvis, lleg, rleg, gun1,gun2, gun3, ground, spinner;
+
+static-var  gun_1, bMoving, bAiming;
+
+#include "aimhelper1.h"
+
+// Signal definitions
+#define SIG_MOVE			2
+#define SIG_AIM				4
+
+
+walk()
+{
+	if( bMoving )
+	{
+		move rleg to y-axis [0.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to z-axis [-4.375000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to y-axis [0.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to z-axis [3.500000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		turn pelvis to x-axis <1.104396> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn rleg to x-axis <-2.104396> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn lleg to x-axis <-2.104396> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		sleep 30 * 100 / SPEEDUP_FACTOR;
+	}
+	if( bMoving )
+	{
+		turn pelvis to x-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn rleg to x-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn lleg to x-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		sleep 15 * 100 / SPEEDUP_FACTOR;
+	}
+	if( bMoving )
+	{
+		move pelvis to y-axis [0.500000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to y-axis [0.499985] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to z-axis [-3.750000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to y-axis [-0.500000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to z-axis [2.500000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		turn pelvis to x-axis <-0.549451> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn rleg to x-axis <0.000000> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn lleg to x-axis <1.401099> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		sleep 45 * 100 / SPEEDUP_FACTOR;
+	}
+	if( bMoving )
+	{
+		move pelvis to y-axis [1.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to y-axis [1.124985] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to z-axis [-2.500000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to y-axis [-1.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to z-axis [1.750000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		turn pelvis to x-axis <-1.104396> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn lleg to x-axis <2.104396> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		sleep 40 * 100 / SPEEDUP_FACTOR;
+	}
+	if( bMoving )
+	{
+		move pelvis to y-axis [1.750000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to z-axis [-1.250000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to y-axis [-1.750000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to z-axis [1.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		turn pelvis to x-axis <-1.559341> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn rleg to x-axis <-4.560440> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn lleg to x-axis <3.516484> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		sleep 35 * 100 / SPEEDUP_FACTOR;
+	}
+	if( bMoving )
+	{
+		move pelvis to y-axis [2.875000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to y-axis [1.499985] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to z-axis [0.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to y-axis [-2.875000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to z-axis [0.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		turn pelvis to x-axis <-2.2571429> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn rleg to x-axis <-5.626374> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn lleg to x-axis <4.571429> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		sleep 35 * 100 / SPEEDUP_FACTOR;
+	}
+	if( bMoving )
+	{
+		move pelvis to y-axis [1.999985] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to z-axis [1.250000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to y-axis [-2.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to z-axis [-1.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		turn pelvis to x-axis <-2.114286> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn rleg to x-axis <-19.335165> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn lleg to x-axis <4.214286> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		sleep 35 * 100 / SPEEDUP_FACTOR;
+	}
+	if( bMoving )
+	{
+		move pelvis to y-axis [1.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to y-axis [2.624985] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to z-axis [3.250000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to y-axis [-1.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to z-axis [-4.375000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		turn pelvis to x-axis <-1.104396> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn lleg to x-axis <2.104396> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		sleep 35 * 100 / SPEEDUP_FACTOR;
+	}
+	if( bMoving )
+	{
+		move pelvis to y-axis [0.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to y-axis [0.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to z-axis [4.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to y-axis [0.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		turn pelvis to x-axis <1.104396> speed [20.000000] * SPEEDUP_FACTOR / 100;
+		turn rleg to x-axis <-1.747253> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn lleg to x-axis <-2.104396> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		sleep 30 * 100 / SPEEDUP_FACTOR;
+	}
+	if( bMoving )
+	{
+		turn pelvis to x-axis <0.000000> speed [20.000000] * SPEEDUP_FACTOR / 100;
+		turn rleg to x-axis <0.000000> speed [20.000000] * SPEEDUP_FACTOR / 100;
+		turn lleg to x-axis <0.000000> speed [20.000000] * SPEEDUP_FACTOR / 100;
+		sleep 15 * 100 / SPEEDUP_FACTOR;
+	}
+	if( bMoving )
+	{
+		move pelvis to y-axis [0.500000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to y-axis [-0.500000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to z-axis [2.500000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to y-axis [0.499985] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to z-axis [-3.875000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		turn pelvis to x-axis <-0.549451> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn rleg to x-axis <1.049451> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		sleep 45 * 100 / SPEEDUP_FACTOR;
+	}
+	if( bMoving )
+	{
+		move pelvis to y-axis [1.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to y-axis [-1.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to z-axis [1.750000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to y-axis [1.124985] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to z-axis [-2.500000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		turn pelvis to x-axis <-1.104396> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn rleg to x-axis <2.456044> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		sleep 40 * 100 / SPEEDUP_FACTOR;
+	}
+	if( bMoving )
+	{
+		move pelvis to y-axis [1.749985] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to y-axis [-1.750000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to z-axis [1.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to y-axis [1.499985] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to z-axis [-1.249985] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		turn pelvis to x-axis <-1.559341> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn rleg to x-axis <3.159341> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn lleg to x-axis <-4.560440> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		sleep 35 * 100 / SPEEDUP_FACTOR;
+	}
+	if( bMoving )
+	{
+		move pelvis to y-axis [2.875000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to y-axis [-2.750000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to z-axis [0.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to y-axis [1.499985] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to z-axis [0.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		turn pelvis to x-axis <-2.523077> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn rleg to x-axis <4.923077> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn lleg to x-axis <-5.626374> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		sleep 35 * 100 / SPEEDUP_FACTOR;
+	}
+	if( bMoving )
+	{
+		move pelvis to y-axis [2.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to y-axis [-2.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move rleg to z-axis [-1.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		move lleg to z-axis [1.250000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+		turn pelvis to x-axis <-2.114286> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn rleg to x-axis <4.214286> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		turn lleg to x-axis <-19.335165> speed <100.000000> * SPEEDUP_FACTOR / 100;
+		sleep 35 * 100 / SPEEDUP_FACTOR;
+	}
+	move pelvis to y-axis [1.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+	move rleg to y-axis [-1.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+	move rleg to z-axis [-4.375000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+	move lleg to y-axis [2.624985] speed [20.000000] * SPEEDUP_FACTOR / 100;
+	move lleg to z-axis [3.250000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+	turn pelvis to x-axis <1.104396> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn rleg to x-axis <-2.104396> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	turn lleg to x-axis <-19.335165> speed <100.000000> * SPEEDUP_FACTOR / 100;
+	sleep 35 * 100 / SPEEDUP_FACTOR;
+	return (0);
+}
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from turret;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+	return (0);
+}
+
+
+StartMoving()
+{
+	bMoving = TRUE;
+}
+
+StopMoving()
+{
+	bMoving = FALSE;
+}
+
+
+MotionControl(moving, aiming, justmoved)
+{
+	while( TRUE )
+	{
+		justmoved = TRUE;
+		while( TRUE )
+		{
+			moving = bMoving;
+			aiming = bAiming;
+			if( moving )
+			{
+				if( aiming )
+				{
+					call-script walk();
+				}
+				if( !aiming )
+				{
+					call-script walk();
+				}
+				justmoved = TRUE;
+			}
+			if( !moving )
+			{
+				if( justmoved )
+				{
+					move lleg to z-axis [0.000000] speed [20.000000];
+					move rleg to z-axis [0.000000] speed [20.000000];
+					move lleg to y-axis [0.000000] speed [20.000000];
+					move rleg to y-axis [0.000000] speed [20.000000];
+					turn lleg to x-axis <0.000000> speed <200.000000>;
+					turn rleg to x-axis <0.000000> speed <200.000000>;
+					if( !aiming )
+					{
+						turn gunbase to x-axis <0.000000> speed <200.038462>;
+					}
+					justmoved = FALSE;
+				}
+				sleep 100;
+			}
+		}
+	}
+}
+
+
+Create()
+{
+	gun_1 = [0];
+	call-script stopAimHelper1(<1000>,<1000>);
+	start-script MotionControl();
+	start-script SmokeUnit();
+	return (0);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = pelvis;
+	return (0);
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+	return (0);
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = firept;
+	return (0);
+}
+
+RestoreAfterDelay()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<80>,<80>);
+	turn turret to y-axis <0.000000> speed <80.000000>;
+	turn gunbase to x-axis <0.000000> speed <80.000000>;
+	return (0);
+}
+
+AimPrimary(heading, pitch)
+{
+	call-script updateAimHelper1(heading,pitch,<90>,<90>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn turret to y-axis heading speed <90.000000>;
+	turn gunbase to x-axis <0> - pitch speed <90.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn gunbase around x-axis;
+	}
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	emit-sfx 1024+0 from firept;
+	if( gun_1 == [0] )
+	{
+		move gun1 to z-axis [-5.000000] now;
+		sleep 100;
+		gun_1 = [1];
+		move gun1 to z-axis [0.000000] speed [10.000000];
+		turn spinner to z-axis <120.027473> speed <600.093407>;
+		return (0);
+	}
+	if( gun_1 == [1] )
+	{
+		move gun2 to z-axis [-5.000000] now;
+		sleep 100;
+		gun_1 = [2];
+		move gun2 to z-axis [0.000000] speed [10.000000];
+		turn spinner to z-axis <240.000000> speed <600.093407>;
+		return (0);
+	}
+	if( gun_1 == [2] )
+	{
+		move gun3 to z-axis [-5.000000] now;
+		sleep 100;
+		gun_1 = [0];
+		move gun3 to z-axis [0.000000] speed [10.000000];
+		turn spinner to z-axis <361.000000> speed <600.093407>;
+		return (0);
+	}
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		explode gun1 type FALL | BITMAP4;
+		explode gun2 type FALL | BITMAP5;
+		explode gunbase type BITMAPONLY | BITMAP1;
+		explode lleg type FALL | BITMAP2;
+		explode pelvis type BITMAPONLY | BITMAP3;
+		explode rleg type FALL | BITMAP4;
+		explode turret type BITMAPONLY | BITMAP5;
+		return (1);
+	}
+	explode gun1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode gun2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode gunbase type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode lleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode pelvis type SHATTER;
+	explode rleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode turret type SHATTER;
+	return (2);
+}

@@ -1,0 +1,105 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=SPHERE;
+	name=Ruby Sphere;
+	description=Shielded Armored Energy Weapon;
+	iconType=staticassault;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE LEVEL2 NOTAIR WEAPON NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_ruby_sphere;
+	objectName=sphere_ruby_sphere.3do;
+	corpse=sphere_ruby_sphere_dead;
+	buildPic=sphere_ruby_sphere.png;
+	soundCategory=COR_DOOM;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=6000;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=oooo oooo oooo oooo;
+	collisionVolumeType=cyly;
+	collisionVolumeScales=50 60 50;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=20;
+	maxWaterDepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=sphere_ruby_sphere_beam;
+	weapon2=sphere_sphere_shield;
+	weapon3=sphere_ruby_sphere_beam;
+	badTargetCategory1=VTOL;
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+
+	[CustomParams]
+	{
+		builtBy=sphere_l2builder;
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rubyglow;
+	}
+	buildCostEnergy=13642;//#AUTO#
+	buildCostMetal=2728;//#AUTO#
+	buildTime=32515;//#AUTO#
+	mass=7708;//#AUTO#
+}

@@ -1,0 +1,115 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Eraser;
+	description=Cloakable Radar Jammer;
+	iconType=mobilejammer;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL2 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_eraser;
+	objectName=aven_eraser.3do;
+	corpse=aven_eraser_dead;
+	buildPic=aven_eraser.png;
+	soundCategory=aven_JAM;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=750;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=20;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	onOffable=1;
+	cancloak=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=KBOTHT2;
+	turnRate=950;
+	acceleration=1;
+	brakeRate=1.0;
+	maxVelocity=2.2;
+	maxSlope=32;
+	maxWaterDepth=10;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	radarDistanceJam=600;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+	canAttack=0;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	cloakCost=50;
+	cloakCostMoving=105;
+	minCloakDistance=150;
+	initCloaked=1;
+	upright=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 30 25;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=aven_adv_kbot_lab;
+		evalFactor=1.25;
+		tip=Becomes fully invisible when ON and cloaked;
+	}
+
+	buildCostEnergy=2687;//#AUTO#
+	buildCostMetal=537;//#AUTO#
+	buildTime=6404;//#AUTO#
+	mass=183;//#AUTO#
+}

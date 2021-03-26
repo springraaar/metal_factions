@@ -1,0 +1,110 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Hunter;
+	description=Fast Raider/Anti-Sub Ship;
+	iconType=shipraider;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_hunter;
+	objectName=claw_hunter.3do;
+	corpse=claw_hunter_dead;
+	buildPic=claw_hunter.png;
+	soundCategory=gear_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1200;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	floater=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=smallboat;
+	turnRate=650;
+	acceleration=0.8;
+	brakeRate=0.015;
+	maxVelocity=2.9;
+	minwaterdepth=12;
+	waterline=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=450;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_hunter_depthcharge;
+	onlyTargetCategory1=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =20 25 40;
+	collisionVolumeOffsets = 0 -7 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=claw_shipyard,claw_adv_shipyard;
+		evalfactor=0.85;//SHIP
+	}
+
+	buildCostEnergy=2195;//#AUTO#
+	buildCostMetal=439;//#AUTO#
+	buildTime=5232;//#AUTO#
+	mass=446;//#AUTO#
+}

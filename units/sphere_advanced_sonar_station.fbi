@@ -1,0 +1,108 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Advanced Sonar Station;
+	description=Advanced sonar;
+	iconType=staticradar;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE LEVEL2 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_advanced_sonar_station;
+	objectName=sphere_advanced_sonar_station.3do;
+	corpse=sphere_advanced_sonar_station_dead;
+	buildPic=sphere_advanced_sonar_station.png;
+	soundCategory=aven_SONAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1100;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=40;
+	energyStorage=0;
+	windgenerator=0.0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=wwww wwww wwww wwww;
+	activateWhenBuilt=1;
+	collisionvolumetype=cyly;
+	collisionVolumeScales=53 40 53;
+	collisionVolumeOffsets=0 0 0;
+	//collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onOffable=1;
+	stealth=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+	minwaterdepth=26;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	sonarDistance=2800;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	damagemodifier=0.46;
+	noshadow=1;
+	waterline=0;
+
+	[CustomParams]
+	{
+		builtBy=sphere_l2builder;
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:Normallight;
+		explosionGenerator1=custom:Normallight;
+	}
+
+	buildCostEnergy=4179;//#AUTO#
+	buildCostMetal=835;//#AUTO#
+	buildTime=9961;//#AUTO#
+	mass=552;//#AUTO#
+}

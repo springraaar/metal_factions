@@ -1,0 +1,99 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Tidal Generator;
+	description=Produces Energy;
+	iconType=energy;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE ENERGY LEVEL1 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_tidal_generator;
+	objectName=sphere_tidal_generator.3do;
+	corpse=sphere_tidal_generator_dead;
+	buildPic=sphere_tidal_generator.png;
+	soundCategory=gear_TIDE;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=550;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
+	tidalgenerator=1;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=wwww wwww wwww wwww;
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+	minwaterdepth=20;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	noshadow=1;
+	scale=0.5;
+	waterline=14;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=50 31 50;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+	
+	[CustomParams]
+	{
+		builtBy=sphere_l1builder,sphere_l2builder;
+	}
+	buildCostEnergy=629;//#AUTO#
+	buildCostMetal=125;//#AUTO#
+	buildTime=1500;//#AUTO#
+	mass=178;//#AUTO#
+}

@@ -1,0 +1,84 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	side=Claw;
+	Name=Nucleus;
+	Description=Heavy Artillery Robot;
+	iconType=mobileartilleryfs;
+
+	// ------------------- categories
+	Category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=claw_nucleus;
+	objectName=claw_nucleus.3do;
+	buildPic=claw_nucleus.png;
+	soundCategory=CLAW_BOTMED;
+	Corpse=claw_nucleus_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=3;
+	FootprintZ=3;
+	maxDamage=2500;
+
+
+	// ------------------- resources
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	Builder=0;
+
+	// ------------------- movement
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.0;
+	brakeRate=0.25;
+	Acceleration=0.15;
+	turnRate=650;
+	movementClass=KBOTHT3;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=claw_nucleus_cannon;
+	hightrajectory=2;
+	badTargetCategory1=VTOL;
+	explodeAs=BIG_UNIT;
+	selfDestructAs=BIG_UNIT;
+
+
+	// ------------------- orders
+
+	// ------------------- misc
+	noAutoFire=0;
+	Upright=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 40 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=claw_adv_kbot_plant;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:yellowflarebig;
+	}
+	buildCostEnergy=7872;//#AUTO#
+	buildCostMetal=1574;//#AUTO#
+	buildTime=18763;//#AUTO#
+	mass=1149;//#AUTO#
+}

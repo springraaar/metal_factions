@@ -1,0 +1,83 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	side=Sphere;
+	Name=Rock;
+	Description=Armored Assault Robot;
+	iconType=mobileassault;
+
+	// ------------------- categories
+	category=SPHERE LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=sphere_rock;
+	objectName=sphere_rock.3do;
+	buildPic=sphere_rock.png;
+	soundCategory=SPHERE_BOTMED;
+	corpse=sphere_rock_dead;
+
+	// ------------------- health/cost/size
+	FootprintX=3;
+	FootprintZ=3;
+	maxDamage=2000;
+
+	// ------------------- resources
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	Builder=0;
+
+	// ------------------- movement
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.10;
+	brakeRate=0.35;
+	Acceleration=0.15;
+	turnRate=950;
+	movementClass=KBOTHT3;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+	// ------------------- weapons
+	Weapon1=sphere_rock_cannon;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+	hightrajectory=2;
+
+	// ------------------- orders
+
+	// ------------------- misc
+	noAutoFire=0;
+	upright=0;
+	collisionVolumeType = box;
+	collisionVolumeScales =28 32 28;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	TransportByEnemy=0;
+
+	[CustomParams]
+	{
+		builtBy=sphere_light_factory,sphere_adv_kbot_factory;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:YELLOWFLARESML;
+	}
+
+	buildCostEnergy=1138;//#AUTO#
+	buildCostMetal=227;//#AUTO#
+	buildTime=2712;//#AUTO#
+	mass=575;//#AUTO#
+}

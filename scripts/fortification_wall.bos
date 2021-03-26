@@ -1,0 +1,22 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base;
+
+
+Create()
+{
+	return(1);
+}
+
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 70 )
+	{
+		return (1);
+	}
+	return (2);
+}

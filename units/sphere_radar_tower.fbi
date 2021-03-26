@@ -1,0 +1,98 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Radar Tower;
+	description=Radar Tower;
+	iconType=staticradar;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE LEVEL1 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_radar_tower;
+	objectName=sphere_radar_tower.3do;
+	corpse=sphere_radar_tower_dead;
+	buildPic=sphere_radar_tower.png;
+	soundCategory=aven_RADAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1100;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=15;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=ooo ooo ooo;
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onOffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=2100;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType=cily;
+	collisionVolumeScales=30 60 30;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+	floater=1;
+	waterline=0;
+
+	[CustomParams]
+	{
+		builtBy=sphere_l1builder,sphere_l2builder;
+	}
+
+	buildCostEnergy=776;//#AUTO#
+	buildCostMetal=155;//#AUTO#
+	buildTime=1851;//#AUTO#
+	mass=326;//#AUTO#
+}

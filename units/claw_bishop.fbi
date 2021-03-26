@@ -1,0 +1,82 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	side=Claw;
+	name=Bishop;
+	description=Long Range Missile Robot;
+	iconType=mobilefs;
+
+	// ------------------- categories
+	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=claw_bishop;
+	objectName=claw_bishop.3do;
+	buildPic=claw_bishop.png;
+	soundCategory=CLAW_BOTMED;
+	corpse=claw_bishop_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=3;
+	FootprintZ=3;
+	maxDamage=2000;
+
+
+	// ------------------- resources
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	builder=0;
+
+	// ------------------- movement
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.30;
+	brakeRate=0.1;
+	acceleration=0.2;
+	turnRate=850;
+	movementClass=KBOTHT4;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+	// ------------------- weapons
+	Weapon1=claw_bishop_missile;
+	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+	// ------------------- orders
+	moveState=0;
+
+	// ------------------- misc
+	noAutoFire=0;
+	upright=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =42 55 36;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	[CustomParams]
+	{
+		builtBy=claw_adv_kbot_plant;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflarebig;
+	}
+	buildCostEnergy=7200;//#AUTO#
+	buildCostMetal=1440;//#AUTO#
+	buildTime=17160;//#AUTO#
+	mass=980;//#AUTO#
+}

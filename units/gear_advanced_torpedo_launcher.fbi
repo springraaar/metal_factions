@@ -1,0 +1,105 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Advanced Torpedo Launcher;
+	description=Underwater Heavy Torpedo Launcher;
+	iconType=staticartilleryfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR WEAPON LEVEL2 NOTAIR UNDERWATER;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_advanced_torpedo_launcher;
+	objectName=gear_advanced_torpedo_launcher.3do;
+	corpse=gear_advanced_torpedo_launcher_dead;
+	buildPic=gear_advanced_torpedo_launcher.png;
+	soundCategory=ADV_TORPLAUNCH;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=2200;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=wwww wwww wwww wwww;
+	activateWhenBuilt=1;
+	collisionvolumetype=cyly;
+	collisionVolumeScales=50 25 50;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	minwaterdepth=20;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=500;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_adv_torpedo_launcher_torpedo;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=MEDIUM_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	noshadow=1;
+
+	[CustomParams]
+	{
+		builtBy=gear_l2builder;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflaresml;
+	}
+
+	buildCostEnergy=6464;//#AUTO#
+	buildCostMetal=1292;//#AUTO#
+	buildTime=15407;//#AUTO#
+	mass=1960;//#AUTO#
+}

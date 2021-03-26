@@ -1,0 +1,103 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Mass Burner;
+	description=Produces 80 E/s but consumes 0.2 M/s;
+	iconType=energy;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR ENERGY LEVEL1 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_mass_burner;
+	objectName=gear_mass_burner.3do;
+	corpse=gear_mass_burner_dead;
+	buildPic=gear_mass_burner.png;
+	soundCategory=gear_FUS;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1500;
+	footprintx=7;
+	footprintz=7;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=80;
+	metaluse=0.2;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo;
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+	maxWaterDepth=3;
+	
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=GEAR_MASS_BURNER;
+	selfDestructAs=GEAR_MASS_BURNER;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales = 90 45 90;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	
+	[CustomParams]
+	{
+		builtBy=gear_l1builder,gear_l2builder;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:mburnersmoke1;
+		explosionGenerator1=custom:mburnersmoke2;
+	}
+
+	buildCostEnergy=2241;//#AUTO#
+	buildCostMetal=448;//#AUTO#
+	buildTime=5342;//#AUTO#
+	mass=1048;//#AUTO#
+}

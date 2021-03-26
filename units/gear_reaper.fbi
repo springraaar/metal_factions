@@ -1,0 +1,115 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Reaper;
+	description=Amphibious Heavy Assault Tank;
+	iconType=amphibassault;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_reaper;
+	objectName=gear_reaper.3do;
+	corpse=gear_reaper_dead;
+	buildPic=gear_reaper.png;
+	soundCategory=gear_TANK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=4700;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=TANKBH4; //TANKSH3//
+	turnRate=399;
+	acceleration=0.28125;
+	brakeRate=0.0762939;
+	maxVelocity=1.65;
+	maxSlope=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_reaper_cannon;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	leavetracks=1;
+	trackoffset=8;
+	trackstrength=8;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=40;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 25 40;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=gear_adv_vehicle_plant;
+	}
+	[SFXTypes]
+	{
+	explosionGenerator0=custom:yellowflaremed;
+	}
+	buildCostEnergy=6719;//#AUTO#
+	buildCostMetal=1343;//#AUTO#
+	buildTime=16013;//#AUTO#
+	mass=2596;//#AUTO#
+}

@@ -1,0 +1,95 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Metal Storage;
+	description=Increases Metal Storage by 4000;
+	iconType=metal;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE METAL LEVEL1 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_metal_storage;
+	objectName=sphere_metal_storage.3do;
+	corpse=sphere_metal_storage_dead;
+	buildPic=sphere_metal_storage.png;
+	soundCategory=aven_MSTOR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=3000;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=4000;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=oooo oooo oooo oooo;
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+	
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =60 50 60;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_l1builder,sphere_l2builder;
+	}
+
+	buildCostEnergy=2800;//#AUTO#
+	buildCostMetal=560;//#AUTO#
+	buildTime=6674;//#AUTO#
+	mass=1872;//#AUTO#
+}

@@ -1,0 +1,107 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Solaris;
+	description=Advanced Heat Ray Tower;
+	iconType=staticheavyfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR WEAPON LEVEL2 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_solaris;
+	objectName=gear_solaris.3do;
+	corpse=gear_solaris_dead;
+	buildPic=gear_solaris.png;
+	soundCategory=HLT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=5000;
+	footprintx=6;
+	footprintz=6;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=cooooc oooooo oooooo oooooo oooooo cooooc;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=73 80 73;
+	//collisionVolumeOffsets=0 0 0;
+	//collisionVolumeTest = 0;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+	maxWaterDepth=5;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_solaris_heatray;
+	badTargetCategory1=VTOL;
+	explodeAs=CRAWL_BLAST;
+	selfDestructAs=CRAWL_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+
+	[CustomParams]
+	{
+		builtBy=gear_l2builder;
+		tip=Loses up to 30% weapon damage over its range;
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:yellowflaremed;
+		explosionGenerator1=custom:hrglowbig1;
+		explosionGenerator2=custom:hrglowbig2;
+		explosionGenerator3=custom:hrglowbig3;
+	}
+	buildCostEnergy=37475;//#AUTO#
+	buildCostMetal=7495;//#AUTO#
+	buildTime=89316;//#AUTO#
+	mass=7496;//#AUTO#
+}

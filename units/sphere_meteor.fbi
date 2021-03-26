@@ -1,0 +1,121 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Meteor;
+	description=Shielded Heavy Bomber;
+	iconType=airbomber;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE VTOL LEVEL2 WEAPON NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_meteor;
+	objectName=sphere_meteor.3do;
+	buildPic=sphere_meteor.png;
+	soundCategory=aven_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=5000;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnRate=450;
+	acceleration=0.1;
+	brakeRate=0.07;
+	maxVelocity=3.8;
+	maxSlope=10;
+	maxWaterDepth=10;
+	cruiseAlt=230;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=sphere_meteor_bomb;
+	weaponMainDir1=0 -1 0;
+	maxAngleDif1=190;
+	weapon2=sphere_meteor_shield;
+	noChaseCategory=VTOL;
+	onlytargetcategory1=NOTAIR;
+	explodeAs=HBOMBER;
+	selfDestructAs=HBOMBER;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	hoverAttack=1;
+	airStrafe=1;
+	upright=1;
+	bankingAllowed=0;
+	airHoverFactor=-1;
+	
+	collide=1;
+	collisionVolumeType = box;
+	collisionVolumeScales = 65 20 65;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_adv_aircraft_factory;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflaremed;
+	}
+	buildCostEnergy=16742;//#AUTO#
+	buildCostMetal=3348;//#AUTO#
+	buildTime=39903;//#AUTO#
+	mass=1183;//#AUTO#
+}

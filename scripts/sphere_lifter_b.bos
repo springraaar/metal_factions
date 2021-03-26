@@ -1,0 +1,224 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, link, magnet, arm1, arm2, arm3, arm4, thrust1,thrust2,thrust3,thrust4, b2, base2, ljp,rjp,cjp,tp1,tp2,tp3,tp4;
+
+static-var  bMoving, unitviewer, statechg_DesiredState, statechg_StateChanging, bTransporting;
+
+
+activatescr()
+{
+		
+	sleep 200;
+	bTransporting = TRUE;
+	return (0);
+}
+
+deactivatescr()
+{
+	sleep 200;
+	bTransporting = FALSE;
+	return (0);
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+	return (0);
+}
+
+
+ProcessFlames()
+{
+	while( TRUE )
+	{
+		if( bMoving || bTransporting )
+		{
+			if(bTransporting)
+			{
+				emit-sfx 1024 + 0 from thrust1;
+				emit-sfx 1024 + 0 from thrust2;
+				emit-sfx 1024 + 0 from thrust3;
+				emit-sfx 1024 + 0 from thrust4;				
+			}
+		}
+		sleep 10;
+	}
+	return (0);
+}
+
+InitState()
+{
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+	return (0);
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState == 0 )
+		{
+			call-script activatescr();
+			currentstate = 0;
+		}
+		if( statechg_DesiredState == 1 )
+		{
+			call-script deactivatescr();
+			currentstate = 1;
+		}
+	}
+	statechg_StateChanging = FALSE;
+	return (0);
+}
+
+Create()
+{
+	hide thrust1;
+	hide thrust2;
+	hide thrust3;
+	hide thrust4;
+	turn thrust1 to x-axis <90.000000> now;
+	turn thrust2 to x-axis <90.000000> now;
+	turn thrust3 to x-axis <90.000000> now;
+	turn thrust4 to x-axis <90.000000> now;
+	turn tp1 to x-axis <-90.000000> now;
+	turn tp2 to x-axis <-90.000000> now;
+	turn tp3 to x-axis <-90.000000> now;
+	turn tp4 to x-axis <-90.000000> now;
+
+	bMoving = FALSE;
+	bTransporting = FALSE;
+	call-script InitState();
+	start-script SmokeUnit();
+	start-script ProcessFlames();
+	return (0);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+	return (0);
+}
+
+QueryTransport(Func_Var_1)
+{
+	Func_Var_1 = 1;
+	return (0);
+}
+
+Activate()
+{
+	if( unitviewer )
+	{
+		start-script RequestState(0);
+	}
+	return (0);
+}
+
+BeginTransport(Func_Var_1)
+{
+	move link to y-axis [0.000000] - Func_Var_1 now;
+	start-script RequestState(0);
+	return (0);
+}
+
+Deactivate()
+{
+	start-script RequestState(1);
+	return (0);
+}
+
+EndTransport()
+{
+	start-script RequestState(1);
+	return (0);
+}
+
+
+StopMoving()
+{
+	bMoving = FALSE;
+	return (0);
+}
+
+StartMoving()
+{
+	bMoving = TRUE;
+	return (0);
+}
+
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode arm1 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode arm2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode arm3 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode arm4 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode base2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode arm1 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode arm2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode arm3 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode arm4 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode base2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode arm1 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode arm2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode arm3 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode arm4 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		explode base2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+		return (0);
+	}
+	corpsetype = 3;
+	explode arm1 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+	explode arm2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+	explode arm3 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+	explode arm4 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+	explode base2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
+	return (0);
+}

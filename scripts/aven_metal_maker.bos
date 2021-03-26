@@ -1,0 +1,98 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, b2,b3,b4,b8,pressbase,press,pressoff,emit1,emit2,emit3;
+
+static-var isOpen, isRaised, isActive;
+
+MMStatus(state)
+{
+	isActive = state;
+}
+
+stopWorking()
+{
+	isRaised = FALSE;
+	move pressbase to y-axis [0] speed [5];
+	wait-for-move pressbase along y-axis;
+	show pressoff;
+	hide press;
+}
+
+work()
+{
+	show press;
+	hide pressoff;
+	if (isRaised) 
+	{
+		move pressbase to y-axis [1] speed [5];
+		wait-for-move pressbase along y-axis;
+		isRaised = FALSE;
+		if (isActive)
+		{
+			sleep 100;
+			emit-sfx 1024+0 from emit1;
+			emit-sfx 1024+0 from emit2;
+			emit-sfx 1024+0 from emit3;
+			sleep 600;
+		}
+	}
+	else
+	{
+		move pressbase to y-axis [12] speed [15];
+		wait-for-move pressbase along y-axis;
+		isRaised = TRUE;
+	}
+}
+
+
+animate()
+{
+	while (TRUE)	
+	{
+		// if active, progressively open the gate
+		if (isActive)
+		{
+			call-script work();
+		}
+		// if not active, progressively close the gate
+		else 
+		{
+			call-script stopWorking();
+		}
+		sleep 100;		
+	}
+}
+
+Create()
+{
+	hide press;
+	show pressoff;
+	isRaised = FALSE;
+	isActive = FALSE;
+	while (GET BUILD_PERCENT_LEFT) {
+		sleep 100;
+	}
+	start-script animate();
+	return(1);
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		explode b4 type SHATTER;
+		explode b8 type SHATTER;
+		return (1);
+	}
+	explode base type SHATTER;
+	explode b2 type SHATTER;
+	explode b3 type SHATTER;
+	explode press type SHATTER;
+	explode pressbase type SHATTER;
+	explode b4 type SHATTER;
+	explode b8 type SHATTER;
+	return (2);
+}

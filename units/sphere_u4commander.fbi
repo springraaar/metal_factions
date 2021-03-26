@@ -1,0 +1,141 @@
+[UNITINFO]
+{
+	// ------------------- description
+	side=Sphere;
+	Name=Commander;
+	Description=Builder Form;
+	iconType=sphere_commander;
+
+	// ------------------- categories
+	Category=SPHERE COMMANDER LEVEL1 WEAPON NOTAIR NOTSUB;
+	tedClass=COMMANDER;
+
+
+	// ------------------- external specs
+	unitName=sphere_u4commander;
+	UnitNumber=10000;
+	objectName=sphere_u4commander.3do;
+	buildPic=sphere_u4commander.png;
+	corpse=sphere_u4commander_dead;
+	soundCategory=SPHERE_COM;
+
+	// ------------------- health/cost/size
+	maxDamage=4500;
+	buildcostmetal=2000;
+	buildcostenergy=20000;
+	buildtime=30000;
+	FootprintX=3;
+	FootprintZ=3;
+	autoheal=12;
+	mass=2000;
+	reclaimable=0;
+	capturable=0;
+	power=3750;
+
+	// ------------------- resources
+	energyMake=50;
+	MetalMake=2;
+	energyStorage=0;
+	metalStorage=0;
+	energyUse=0;
+
+	// ------------------- constructor
+	builder=1;
+	buildDistance=250;
+	workerTime=600;
+      repairSpeed=600;
+      reclaimSpeed=600;
+      //ResurrectSpeed=0;
+      terraformSpeed=1200;
+      capturespeed=400;
+
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	CanReclamate=1;
+	CanCapture=1;
+
+
+	// ------------------- movement
+	maxVelocity=1.42;
+	brakeRate=0.9;
+	Acceleration=1.00;
+	turnRate=632;
+	SteeringMode=2;
+	movementClass=KBOTATUW;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=800;
+	sonarDistance=800;
+
+	// ------------------- weapons
+	Weapon1=sphere_u4commander_beam;
+	Weapon2=sphere_u4commander_torpedo;
+	Weapon3=sphere_u1commander_shield;
+	weaponMainDir1=0 1 0;
+	maxAngleDif1=270;
+	weaponMainDir2=0 1 0;
+	maxAngleDif2=270;
+	badTargetCategory1=VTOL;
+	onlytargetcategory2=NOTAIR;
+	noChaseCategory=VTOL;
+	explodeAs=sphere_commander_nanoblast;
+	selfDestructAs=sphere_commander_nanoblast;
+
+	// ------------------- orders
+	firestandorders=1;
+	mobilestandorders=1;
+	StandingFireOrder=2;
+	StandingMoveOrder=0;
+	DefaultMissionType=Standby;
+
+	// ------------------- stealth
+	//cloakCost=200;
+	//cloakCostMoving=750;
+	//minCloakDistance=170;
+
+	// ------------------- misc
+	commander=1;
+	Designation=S-Com;
+	showplayername=1;
+	BMcode=1;
+	ThreeD=1;
+	ZBuffer=1;
+	ShootMe=1;
+	maneuverleashlength=640;
+	hidedamage=0;
+	ImmuneToParalyzer=1;
+	downloadable=1;		
+	norestrict=1;
+	Version=1;
+	activateWhenBuilt=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =36 40 36;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		buildertype=sphere_l1builder;
+		isCommander=1;
+		canJump=1;
+		jumpType=commander;
+		jumpMod=1.02;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:orangeglow;
+		explosionGenerator1=custom:buildglow;
+		explosionGenerator2=custom:Nano;
+		explosionGenerator3=custom:rocketflaresml;
+		explosionGenerator4=custom:JUMPASC;
+		explosionGenerator5=custom:JUMPASC2;
+		explosionGenerator6=custom:JUMPDESC;
+		explosionGenerator7=custom:JUMPDESC2;
+	}
+}

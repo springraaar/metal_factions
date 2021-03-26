@@ -1,0 +1,115 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Samson;
+	description=Missile Launcher;
+	iconType=mobilefs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_samson;
+	objectName=aven_samson.3do;
+	corpse=aven_samson_dead;
+	buildPic=aven_samson.png;
+	soundCategory=aven_VEHICLE;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=820;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=TANKSH3;
+	turnRate=611;
+	acceleration=0.4;
+	brakeRate=0.12;
+	maxVelocity=2.0;
+	maxSlope=16;
+	maxWaterDepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_samson_missile;
+	badTargetCategory1=NOTAIR;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	leavetracks=1;
+	trackoffset=8;
+	trackstrength=5;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=26;
+	collisionVolumeType = box;
+	collisionVolumeScales =20 23 38;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	[customParams] 
+	{
+		builtBy=aven_light_plant,aven_adv_vehicle_plant;
+	}
+
+	[SFXTypes]
+	{
+	explosionGenerator0=custom:rocketflaresml;
+	}
+	buildCostEnergy=937;//#AUTO#
+	buildCostMetal=187;//#AUTO#
+	buildTime=2234;//#AUTO#
+	mass=133;//#AUTO#
+}

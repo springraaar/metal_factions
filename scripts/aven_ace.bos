@@ -1,0 +1,187 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, rwing, lwing, tail, ljet, rjet, ljp, rjp, base2, base3, center, weapon,barrel,flare, front;
+
+static-var  statechg_DesiredState, statechg_StateChanging, isFlying, bMoving, energyBoostedMovement;
+
+lua_checkEnergy() { return 0; }
+
+
+MotionControl(hasEnergy)
+{
+	hasEnergy = 1;
+	while (TRUE)
+	{
+		bMoving = ((get CURRENT_SPEED) * 100 / (get MAX_SPEED)) > 70;
+
+		// lua check for energy availability		
+		call-script lua_checkEnergy(2000);
+		hasEnergy = get LUA1;
+		
+		// update speed and activation state
+		if (bMoving && hasEnergy)
+		{
+			energyBoostedMovement = TRUE;
+		}
+		if (!bMoving || !hasEnergy)
+		{
+			energyBoostedMovement = FALSE;
+		}
+
+		sleep 60;
+	}
+}
+
+
+Effect()
+{
+	while (TRUE)
+	{
+		if (energyBoostedMovement)
+		{
+			emit-sfx 1024+1 from barrel;
+		}
+
+		sleep 30;
+	}
+}
+
+activatescr()
+{
+	if( !isFlying)
+	{
+		sleep 500;
+		isFlying = TRUE;
+	}
+	sleep 66;
+}
+
+
+deactivatescr()
+{
+	if( isFlying )
+	{
+		isFlying = FALSE;
+		sleep 500;
+	}
+	sleep 66;
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+InitState()
+{
+	statechg_DesiredState = 1;
+	statechg_StateChanging = 0;
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = 1;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState == 0 )
+		{
+			call-script activatescr();
+			currentstate = 0;
+		}
+		if( statechg_DesiredState == 1 )
+		{
+			call-script deactivatescr();
+			currentstate = 1;
+		}
+	}
+	statechg_StateChanging = 0;
+}
+
+
+Create()
+{
+	energyBoostedMovement = FALSE;
+	bMoving=FALSE;
+	isFlying = FALSE;
+	call-script InitState();
+	start-script MotionControl();
+	start-script SmokeUnit();
+	start-script Effect();
+}
+
+Activate()
+{
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	start-script RequestState(1);
+}
+
+AimPrimary()
+{
+	if(!isFlying)
+	{
+		return (0);
+	}
+	return (1);
+}
+
+FirePrimary()
+{
+	emit-sfx 1024+0 from flare;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	corpsetype = 3;
+	explode base2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode lwing type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode rwing type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode base3 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode front type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode center type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+}

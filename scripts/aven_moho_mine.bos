@@ -1,0 +1,221 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, spinner, s1, s2, s3, watercover, waterspinner, emit1, emit2, emit3, b2, b3,b4,b5;
+
+static-var  statechg_DesiredState, statechg_StateChanging, bUnderwater, rotSpeed;
+
+// signal definitions
+#define SIG_ACTIVATE 	2
+
+
+checkUnderwater()
+{
+	var currentHeight, oldState;
+	while(TRUE)
+	{   
+ 		currentHeight = GET GROUND_WATER_HEIGHT(GET UNIT_XZ);
+ 		oldState = bUnderwater;
+		
+		// check current state
+		if ( currentHeight < [-30])
+ 		{
+ 			bUnderwater = TRUE;
+		
+ 		}
+ 		if (currentHeight >= [-30])
+ 		{
+ 			bUnderwater = FALSE;
+ 		}
+ 		
+ 		// handle state changes
+ 		if (oldState != bUnderwater)
+ 		{
+			if(bUnderwater)
+			{
+				// hide land stuff
+				hide spinner;				
+				hide s1;
+				hide s2;
+				hide s3;
+				// show water stuff
+ 				show waterspinner;
+ 				show watercover;
+
+				sleep 200;
+			}
+			if(!bUnderwater)
+			{
+				// hide water stuff
+ 				hide watercover;
+ 				hide waterspinner;
+
+				//show land stuff 			
+				show spinner;
+				show s1;
+ 				show s2;
+ 				show s3;
+ 				sleep 200;	
+			}
+ 		}
+ 		sleep 500;
+	}
+	return 0;	
+}
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+	return (0);
+	// Build by COBBLER Ver4.0 Copyright @1998 DIGITAL CONCEPT SOFTWARE (MANU@inext.fr) / http://www.annihilationcenter.com/DCS/  
+}
+
+Go()
+{
+	if (bUnderwater)
+	{
+		spin waterspinner around y-axis speed rotSpeed accelerate <30.032967>;
+		return (0);
+	}
+	spin spinner around y-axis speed rotSpeed accelerate <30.032967>;
+	return (0);
+}
+
+Stop()
+{
+	if (bUnderwater)
+	{
+		stop-spin waterspinner around y-axis decelerate <20.000000>;
+		wait-for-turn waterspinner around y-axis;
+		return (0);
+	}
+	stop-spin spinner around y-axis decelerate <20.000000>;
+	wait-for-turn spinner around y-axis;
+	return (0);
+}
+
+InitState()
+{
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+	return (0);
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState == 0 )
+		{
+			call-script Go();
+			currentstate = 0;
+		}
+		if( statechg_DesiredState == 1 )
+		{
+			call-script Stop();
+			currentstate = 1;
+		}
+	}
+	statechg_StateChanging = FALSE;
+	return (0);
+}
+
+Create()
+{
+	bUnderwater = FALSE;
+	hide waterspinner;
+	hide watercover;
+	start-script checkUnderwater();
+	call-script InitState();
+	start-script SmokeUnit();
+	return (0);
+}
+
+Activate()
+{
+	start-script RequestState(0);
+	signal SIG_ACTIVATE;
+	set-signal-mask SIG_ACTIVATE;
+
+	while( TRUE )
+	{
+		if(bUnderwater)
+		{
+			emit-sfx 256 | 3 from emit1;
+			emit-sfx 256 | 3 from emit2;
+			emit-sfx 256 | 3 from emit3;
+		}
+		sleep 250;
+	}
+	return (0);
+}
+
+Deactivate()
+{
+	start-script RequestState(1);
+	signal SIG_ACTIVATE;
+	return (0);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+	return (0);
+}
+
+SetSpeed(var1)
+{
+	rotSpeed = var1 * 13;
+	return (0);
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		explode spinner type SHATTER;
+		return (1);
+	}
+	
+	explode base type SHATTER;
+	explode spinner type SHATTER;
+	explode s1 type SHATTER;
+	explode s2 type SHATTER;
+	explode b2 type SHATTER;
+	explode b3 type SHATTER;
+	explode b4 type SHATTER;
+	return (2);
+}

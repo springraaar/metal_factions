@@ -1,0 +1,93 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	side=Sphere;
+	Name=Slammer;
+	Description=Rocket Artillery;
+	iconType=mobileartillery;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=sphere_slammer;
+	objectName=sphere_slammer.3do;
+	buildPic=sphere_slammer.png;
+	soundCategory=gear_TANK;
+	Corpse=sphere_slammer_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=3;
+	FootprintZ=3;
+	maxDamage=1350;
+
+
+	// ------------------- resources
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	Builder=0;
+
+	// ------------------- movement
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.15;
+	brakeRate=0.04;
+	Acceleration=0.05;
+	turnRate=350;
+	movementClass=TANKSH3;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_slammer_rocket;
+	badTargetCategory1=VTOL;
+	onlytargetcategory1=NOTAIR;
+	noChaseCategory=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+
+	// ------------------- orders
+	moveState=0;
+
+	// ------------------- misc
+	noAutoFire=0;
+
+	leavetracks=1;
+	trackoffset=8;
+	trackstrength=5;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=35;
+
+	collisionVolumeType = box;
+	collisionVolumeScales =40 25 42;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_adv_vehicle_factory;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:yellowflaresml;
+	}
+	buildCostEnergy=6356;//#AUTO#
+	buildCostMetal=1271;//#AUTO#
+	buildTime=15149;//#AUTO#
+	mass=761;//#AUTO#
+}

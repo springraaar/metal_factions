@@ -1,0 +1,112 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Construction Aircraft;
+	description=Tech Level 1;
+	iconType=airbuilder;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN VTOL LEVEL1 CONSTR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_construction_aircraft;
+	objectName=aven_construction_aircraft.3do;
+	buildPic=aven_construction_aircraft.png;
+	soundCategory=aven_CVTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=480;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=0.0;
+	metalStorage=0;
+	energyMake=5.5;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	buildDistance=200;
+	workerTime=150;
+	repairSpeed=150;
+	reclaimSpeed=150;
+	terraformSpeed=150;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnRate=450;
+	acceleration=0.18;
+	brakeRate=1.5;
+	maxVelocity=5.3;
+	maxSlope=10;
+	maxWaterDepth=0;
+	cruiseAlt=90;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=NANO_UNITEX;
+	selfDestructAs=NANO_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	scale=0.8;
+	
+	collide=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 10 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		buildertype=aven_l1builder;
+		builtBy=aven_aircraft_plant,aven_adv_aircraft_plant;
+	}
+
+	buildCostEnergy=3564;//#AUTO#
+	buildCostMetal=712;//#AUTO#
+	buildTime=8495;//#AUTO#
+	mass=178;//#AUTO#
+}

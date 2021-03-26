@@ -1,0 +1,120 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Firestorm;
+	description=Incendiary Riot Aircraft;
+	iconType=airmulti;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR VTOL LEVEL2 WEAPON NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_firestorm;
+	objectName=gear_firestorm.3do;
+	buildPic=gear_firestorm.png;
+	soundCategory=gear_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=4500;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	energyMake=0;
+	energyUse=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canDropFlare=0;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	stealth=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	acceleration=0.1;
+	brakeRate=0.1;
+	maxVelocity=3.3;
+	cruiseAlt=120;
+	turnRate=600;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_firestorm_missile;
+	explodeAs=BIG_UNIT;
+	selfDestructAs=BIG_UNIT;
+	//weaponMainDir1=0 -1 0.2;
+	//maxAngleDif1=140;
+
+
+	//************************************************************
+	//  Orders
+	//**********
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	hoverAttack=1;
+	airStrafe=1;
+//	isbomber=1;
+	upright=1;
+	airHoverFactor=-1;
+//	maneuverleashlength=180;
+	bankingAllowed=0;
+
+	CanLoopbackAttack=0;
+	collide=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =65 22 60;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=gear_adv_aircraft_plant;
+		tip=Burns ground for 20s, dealing up to 20(M) dmg/s. Affected units burn for 210(M) dmg over 7s;
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:GLOWSML;
+		explosionGenerator1=custom:rocketflaresml;
+	}
+	buildCostEnergy=16058;//#AUTO#
+	buildCostMetal=3211;//#AUTO#
+	buildTime=38273;//#AUTO#
+	mass=1097;//#AUTO#
+}

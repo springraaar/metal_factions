@@ -1,0 +1,45 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base;
+
+static-var  statechg_DesiredState, statechg_StateChanging;
+
+
+activatescr()
+{
+	sleep 60;
+}
+
+deactivatescr()
+{
+	sleep 60;
+}
+
+
+Create()
+{
+	
+}
+
+Activate()
+{
+
+}
+
+Deactivate()
+{
+	
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	
+}

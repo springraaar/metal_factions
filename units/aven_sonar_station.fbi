@@ -1,0 +1,100 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Sonar Station;
+	description=Locates Water Units;
+	iconType=staticradar;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL1 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_sonar_station;
+	objectName=aven_sonar_station.3do;
+	corpse=aven_sonar_station_dead;
+	buildPic=aven_sonar_station.png;
+	soundCategory=aven_SONAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=350;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=15;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=wwww;
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onOffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+	minwaterdepth=20;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	sonarDistance=1400;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	noshadow=1;
+	waterline=24;
+
+	[CustomParams]
+	{
+		builtBy=aven_l1builder,aven_l2builder;
+	}
+	[SFXTypes]
+	{
+	explosionGenerator0=custom:Nano;
+	explosionGenerator1=custom:Normallight;
+	}
+
+	buildCostEnergy=705;//#AUTO#
+	buildCostMetal=141;//#AUTO#
+	buildTime=1681;//#AUTO#
+	mass=134;//#AUTO#
+}

@@ -1,0 +1,103 @@
+[UNITINFO]
+{
+	// ------------------- description
+	side=Sphere;
+	Name=Comet;
+	Description=Energy-intensive Fast Assault Sphere;
+	iconType=fsphereraider;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+
+	// ------------------- external specs
+	unitName=sphere_comet;
+	objectName=sphere_comet.3do;
+	Corpse=sphere_comet_dead;
+	buildPic=sphere_comet.png;
+	soundCategory=SPHERE_SPHEREBIG;
+
+	// ------------------- health/cost/size
+	maxDamage=8000;
+	FootprintX=4;
+	FootprintZ=4;
+	
+	// ------------------- resources
+	energyMake=0;
+	MetalMake=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyUse=0;
+
+	// ------------------- constructor
+	builder=0;
+
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	onOffable=0;
+
+
+	// ------------------- movement
+	canFly=1;
+	maxVelocity=2.8;
+	brakeRate=0.03;
+	Acceleration=0.03;
+	turnRate=632;
+	cruiseAlt=100;
+	hoverAttack=1;
+	airStrafe=0;
+	airHoverFactor=0.1;
+	upright=1;
+	bankingallowed=0;
+	useSmoothMesh=1;
+
+	// ------------------- scout
+	sightDistance=600;
+	radarDistance=0;
+	sonarDistance=0;
+
+	// ------------------- weapons
+	Weapon1=sphere_comet_cannon;
+	Weapon2=sphere_comet_shield;
+	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
+	explodeAs=BIG_SPHERE_BLAST;
+	selfDestructAs=BIG_SPHERE_BLAST;
+
+	// ------------------- orders
+	movestate=0;
+
+	// ------------------- stealth
+	//cloakCost=200;
+	//cloakCostMoving=750;
+	//minCloakDistance=170;
+
+	// ------------------- misc
+	minAirbasePower=99999;
+	activateWhenBuilt=0;
+	collisionVolumeType = sphere;
+	collisionVolumeScales =65 65 65;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_sphere_factory;
+		energyCostMoving=1000;
+		tip=Requires 1000E/s to move;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflarebig;
+		explosionGenerator1=custom:comettrail;
+	}
+	buildCostEnergy=22506;//#AUTO#
+	buildCostMetal=4501;//#AUTO#
+	buildTime=53640;//#AUTO#
+	mass=5600;//#AUTO#
+}

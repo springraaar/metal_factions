@@ -1,0 +1,94 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Metal Storage;
+	description=Increases Metal Storage by 4000;
+	iconType=metal;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW METAL LEVEL1 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_metal_storage;
+	objectName=claw_metal_storage.3do;
+	corpse=claw_metal_storage_dead;
+	buildPic=claw_metal_storage.png;
+	soundCategory=gear_MSTOR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=3000;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=4000;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=ooooo ooooo ooooo ooooo ooooo;
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+	
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales = 50 60 50;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	
+	[CustomParams]
+	{
+		builtBy=claw_l1builder,claw_l2builder;
+	}
+	buildCostEnergy=2800;//#AUTO#
+	buildCostMetal=560;//#AUTO#
+	buildTime=6674;//#AUTO#
+	mass=1872;//#AUTO#
+}

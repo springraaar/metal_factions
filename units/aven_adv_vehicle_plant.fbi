@@ -1,0 +1,105 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Adv. Vehicle Factory;
+	description=Produces Level 2 Vehicles;
+	iconType=plant2;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN PLANT LEVEL2 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_adv_vehicle_plant;
+	objectName=aven_adv_vehicle_plant.3do;
+	corpse=aven_adv_vehicle_plant_dead;
+	buildPic=aven_adv_vehicle_plant.png;
+	soundCategory=TANKPLANT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=4500;
+	footprintx=10;
+	footprintz=9;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=100;
+	energyUse=0;
+	energyStorage=100;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=oooooooooo oooooooooo oooccccooo oooccccooo oooccccooo oooccccooo oooccccooo oooccccooo oooccccooo;
+	collisionVolumeType=Box;
+	collisionVolumeScales=120 40 105;
+	collisionVolumeOffsets=0 -5 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	workerTime=300;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+	maxWaterDepth=11;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	[customParams] 
+	{
+		builtBy=aven_l1builder,aven_l2builder;
+		tip=Can build mobile small fusion reactors (check the ENERGY tab);
+	}
+	[SFXTypes]
+	{
+	explosionGenerator0=custom:Nano;
+	}
+	buildCostEnergy=8540;//#AUTO#
+	buildCostMetal=1708;//#AUTO#
+	buildTime=20353;//#AUTO#
+	mass=3388;//#AUTO#
+}

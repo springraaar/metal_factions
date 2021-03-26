@@ -1,0 +1,117 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Merl;
+	description=Mobile Rocket Launcher;
+	iconType=mobileartillery;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_merl;
+	objectName=aven_merl.3do;
+	corpse=aven_merl_dead;
+	buildPic=aven_merl.png;
+	soundCategory=aven_VEHICLE;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1200;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=TANKSH3;
+	turnRate=330;
+	acceleration=0.03;
+	brakeRate=0.27;
+	maxVelocity=1.5;
+	maxSlope=16;
+	maxWaterDepth=4;
+	turninplace=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_merl_rocket;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+	onlytargetcategory1=NOTAIR;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	moveState=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	leavetracks=1;
+	trackoffset=6;
+	trackstrength=5;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=35;
+	collisionVolumeType = box;
+	collisionVolumeScales =42 20 50;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	damageModifier=0.8;
+
+	[customParams] 
+	{
+		builtBy=aven_adv_vehicle_plant;
+		canAreaAttack=1;
+		tip=Gains 20% damage resistance when closed;
+	}
+
+	buildCostEnergy=6211;//#AUTO#
+	buildCostMetal=1242;//#AUTO#
+	buildTime=14805;//#AUTO#
+	mass=357;//#AUTO#
+}

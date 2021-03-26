@@ -1,0 +1,114 @@
+[UNITINFO]
+{
+	// ------------------- description
+	side=Sphere;
+	name=Magnetar;
+	description=Area-denial / Radar Jammer Sphere;
+	iconType=magnetar;
+
+	// ------------------- categories
+	category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+	tedClass=COMMANDER;
+
+
+	// ------------------- external specs
+	unitName=sphere_magnetar;
+	objectName=sphere_magnetar.3do;
+	corpse=sphere_magnetar_dead;
+	buildPic=sphere_magnetar.png;
+	soundCategory=SPHERE_SPHEREBIG;
+
+	// ------------------- health/cost/size
+	maxDamage=15000;
+	FootprintX=4;
+	FootprintZ=4;
+	mass=15000;
+	autoheal=250;
+	pushResistant=1;
+	
+	// ------------------- resources
+	energyMake=0;
+	MetalMake=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyUse=0;
+
+	// ------------------- constructor
+	builder=0;
+
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	onOffable=1;
+
+
+	// ------------------- movement
+	canFly=1;
+	maxVelocity=0.8;
+	brakeRate=0.02;
+	acceleration=0.02;
+	turnRate=632;
+	SteeringMode=2;
+	cruiseAlt=100;
+	hoverAttack=1;
+	airStrafe=0;
+	airHoverFactor=0.1;
+	upright=1;
+	bankingallowed=0;
+	useSmoothMesh=1;
+	verticalSpeed=0.8;
+
+	// ------------------- scout
+	sightDistance=600;
+	radarDistance=0;
+	radarDistanceJam=700;
+	sonarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_magnetar_blast;
+	//Weapon2=sphere_magnetar_shield;
+	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
+	explodeAs=MAGNETAR_DEATH;
+	selfDestructAs=MAGNETAR_DEATH;
+
+	// ------------------- orders
+	fireState=0;
+	mobilestandorders=1;
+	StandingFireOrder=2;
+	StandingMoveOrder=0;
+	DefaultMissionType=Standby;
+
+	// ------------------- stealth
+	//cloakCost=200;
+	//cloakCostMoving=750;
+	//minCloakDistance=170;
+
+	// ------------------- misc
+	minAirbasePower=99999;
+	activateWhenBuilt=0;
+	collisionVolumeType = sphere;
+	collisionVolumeScales =80 80 80;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_sphere_factory;
+		energyCostMoving=320;
+		tip=Requires 320E/s to move. Regenerates 250HP/s. If charged, 440 range aura pulls and deals 400(L) disruptor dmg/s; 
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:magnetar;
+		explosionGenerator1=custom:magnetaraura;
+	}
+	buildcostenergy=50000;//#AUTO#
+	buildcostmetal=10000;//#AUTO#
+	buildtime=120000;//#AUTO#
+}

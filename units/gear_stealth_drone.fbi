@@ -1,0 +1,129 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Cloakable Intelligence Drone;
+	description=Provides Radar, Sonar and Radar Jammer;
+	iconType=mobileintel;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR VTOL LEVEL2 NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_stealth_drone;
+	objectName=gear_stealth_drone.3do;
+	buildPic=gear_stealth_drone.png;
+	soundCategory=gear_JAM;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=440;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=0.0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=75.0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	buildDistance=0;
+	workerTime=0;
+	repairSpeed=0;
+	reclaimSpeed=0;
+	terraformSpeed=0;//speed up terraforming
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	onOffable=1;
+	activateWhenBuilt=1;
+	cancloak=1;
+	cloakCost=30;
+	cloakCostMoving=60;
+	minCloakDistance=90;
+	initCloaked=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnRate=820;
+	acceleration=0.48;
+	brakeRate=1.5;
+	maxVelocity=3.2;
+	maxSlope=10;
+	cruiseAlt=80;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+	radarDistance=1100;
+	radarDistanceJam=420;
+	sonarDistance=900;
+
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collide=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 13 25;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	hoverAttack=1;
+	upright=1;
+	bankingAllowed=0;
+	reclaimable=0;
+	capturable=0;
+	airHoverFactor=0.2;
+	
+	[CustomParams]
+	{
+		isDrone=1;
+		evalfactor=0.5;
+	}
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildCostEnergy=1499;//#AUTO#
+	buildCostMetal=299;//#AUTO#
+	buildTime=3574;//#AUTO#
+	mass=104;//#AUTO#
+}

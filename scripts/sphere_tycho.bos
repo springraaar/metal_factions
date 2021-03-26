@@ -1,0 +1,200 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, basetop,basetop2,basebottom, launcher,m1,m2,m3, wing1, wing2, shieldpt, w1, w2, jetsup, jetsup2, barrel1, barrel2, barrel3, flare1, flare2, flare3,ljp,rjp,bjp;
+
+static-var  statechg_DesiredState, statechg_StateChanging, gun_1, isFlying;
+
+// Signal definitions
+#define SIG_AIM				2
+
+activatescr()
+{
+	sleep 100;
+	isFlying = TRUE;
+	return (0);
+	// Build by COBBLER Ver4.0 Copyright @1998 DIGITAL CONCEPT SOFTWARE (MANU@inext.fr) / http://www.annihilationcenter.com/DCS/  
+}
+
+deactivatescr()
+{
+	sleep 100;
+	isFlying = FALSE;
+	return (0);
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+	return (0);
+}
+
+InitState()
+{
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+	return (0);
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState == 0 )
+		{
+			call-script activatescr();
+			currentstate = 0;
+		}
+		if( statechg_DesiredState == 1 )
+		{
+			call-script deactivatescr();
+			currentstate = 1;
+		}
+	}
+	statechg_StateChanging = FALSE;
+	return (0);
+}
+
+Create()
+{
+	gun_1 = [0];
+	isFlying = FALSE;
+	turn bjp to x-axis <-90.000000> now;
+	call-script InitState();
+	start-script SmokeUnit();
+	return (0);
+}
+
+Activate()
+{
+	start-script RequestState(0);
+	return (0);
+}
+
+Deactivate()
+{
+	start-script RequestState(1);
+	return (0);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+	return (0);
+}
+
+restoreAfterDelay()
+{
+	sleep 3000;
+	turn base to y-axis <0> speed <200>;
+}
+
+AimPrimary(heading,pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	if(!isFlying)
+	{
+		return (0);
+	}
+	
+	turn base to y-axis heading speed <200>;
+	wait-for-turn base around y-axis;
+	start-script restoreAfterDelay();
+	return (1);
+}
+
+Shot1()
+{
+	return 0;
+}
+
+FirePrimary()
+{
+	if (gun_1 == [0]) {
+		emit-sfx 1024+0 from flare1;
+		sleep 50;
+		gun_1 = [1];
+		return (0);
+	}
+	if (gun_1 == [1]) {
+		emit-sfx 1024+0 from flare2;
+		sleep 50;
+		gun_1 = [2];
+		return (0);
+	}
+	if (gun_1 == [2]) {
+		emit-sfx 1024+0 from flare3;
+		sleep 50;
+		gun_1 = [0];
+		return (0);
+	}	
+	return (0);
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = launcher;
+}
+
+QueryPrimary(piecenum)
+{
+	if (gun_1 == [0]) {
+		piecenum = flare1;
+	}
+	if (gun_1 == [1]) {
+		piecenum = flare2;
+	}
+	if (gun_1 == [2]) {
+		piecenum = flare3;
+	}
+}
+
+
+
+
+Killed(severity, corpsetype)
+{
+	corpsetype = 3;
+	explode w1 type SHATTER | BITMAP2;
+	explode w2 type SHATTER | BITMAP2;
+	explode basebottom type SHATTER | BITMAP3;
+	explode basetop type SHATTER | BITMAP2;
+	explode launcher type SHATTER | BITMAP3;
+	explode basetop2 type SHATTER | BITMAP2;
+	explode jetsup type SHATTER | BITMAP2;
+	explode jetsup2 type SHATTER | BITMAP2;
+	return (0);
+}

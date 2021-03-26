@@ -1,0 +1,119 @@
+
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Predator;
+	description=Heavy Infantry Spinbot;
+	iconType=amphibfighter;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_predator;
+	objectName=claw_predator.3do;
+	corpse=claw_predator_dead;
+	buildPic=claw_predator.png;
+	soundCategory=CLAW_BOTMED;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=2800;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	floater=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=TANKHOVER4;
+	turnRate=945;
+	acceleration=0.09;
+	brakeRate=0.03;
+	maxVelocity=1.4;
+	turninplace=1;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	sonarDistance=250;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_predator_laser;
+	weapon2=claw_predator_laser2;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	scale=0.5;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 60 40;
+	collisionVolumeOffsets = 0 -5 0;
+	collisionVolumeTest = 1;
+	waterline=8;
+	
+	[CustomParams]
+	{
+		builtBy=claw_spinbot_plant;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:blueflaresml;
+		explosionGenerator1=custom:UNITFIRE;
+	}
+
+	buildCostEnergy=9159;//#AUTO#
+	buildCostMetal=1831;//#AUTO#
+	buildTime=21829;//#AUTO#
+	mass=1310;//#AUTO#
+}

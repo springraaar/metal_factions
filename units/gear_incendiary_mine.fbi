@@ -1,0 +1,111 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=GEAR;
+	name=Incendiary Land mine;
+	description=Perimeter defense;
+	iconType=staticmine;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL1 NOTAIR NOTSUB;
+	tedClass=MINE;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_incendiary_mine;
+	objectName=gear_incendiary_mine.3do;
+	buildPic=gear_incendiary_mine.png;
+	soundCategory=MINE;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=100;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=yy yy;
+	levelground=0;
+	upright=0;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=15 8 15;
+	collisionVolumeOffsets=0 -2 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canMove=0;
+	canPatrol=0;
+	canStop=1;
+	stealth=1;
+	canGuard=1;
+	sonarStealth=1;
+	
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=30;
+	maxWaterDepth=1;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=250;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_incendiary_mine_missile;
+	badTargetCategory1=NOTAIR;
+	explodeAs=small_unitex;
+	selfDestructAs=small_unitex;
+	selfdestructcountdown=0;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	cancloak=1;
+	cloakCost=5;
+	initCloaked=1;
+	minCloakDistance=20;
+
+	[CustomParams]
+	{
+		builtBy=gear_l1builder,gear_l2builder;
+		tip=Burns ground for 20s, dealing up to 20(M) dmg/s. Affected units burn for 210(M) dmg over 7s;
+		offensiveExplosion=1;
+	}
+
+	buildcostenergy=400;//#AUTO#
+	buildcostmetal=80;//#AUTO#
+	buildtime=960;//#AUTO#
+}

@@ -1,0 +1,135 @@
+[resources]
+{
+	[graphics]
+	{
+		[smoke]
+		{
+			smoke00=smoke/smoke00.tga;
+			smoke01=smoke/smoke01.tga;
+			smoke02=smoke/smoke02.tga;
+			smoke03=smoke/smoke03.tga;
+			smoke04=smoke/smoke04.tga;
+			smoke05=smoke/smoke05.tga;
+			smoke06=smoke/smoke06.tga;
+			smoke07=smoke/smoke07.tga;
+			smoke08=smoke/smoke08.tga;
+			smoke09=smoke/smoke09.tga;
+			smoke10=smoke/smoke10.tga;
+			smoke11=smoke/smoke11.tga;
+		}
+		[scars]
+		{
+			scar1=scars/scar1.bmp;
+			scar2=scars/scar2.bmp;
+			scar3=scars/scar3.bmp;
+			scar4=scars/scar4.bmp;
+		}
+		[trees]
+		{
+			bark=Bark.bmp;
+			leaf=bleaf.bmp;
+			gran1=gran.bmp;
+			gran2=gran2.bmp;
+			birch1=birch1.bmp;
+			birch2=birch2.bmp;
+			birch3=birch3.bmp;
+		}
+		[maps]
+		{
+			detailtex=detailtex2.bmp;
+			watertex=ocean.jpg;
+		}
+		[groundfx]
+		{
+			groundflash=groundflash.png;
+			groundring=groundring.tga;
+			groundstdexplosion=stdexplosion.png;
+			seismic=circles.tga;
+		}
+		[projectiletextures]
+		{
+			//TODO: REMOVE UNUSED ENTRIES
+			gfxtexture=nano.tga;
+			circularthingy=circularthingy.tga;
+			laserend=laserend.tga;
+			laserfalloff=laserfalloff.tga;
+			randdots=randdots.tga;
+			smoketrail=smoketrail.tga;
+			wake=wake.png;
+			flare=flare.tga;		
+			explo=explo.tga;
+			explofade=smoke/smoke05.tga;
+			heatcloud=explo.tga;
+			firecloud=groundring.tga;
+			flame=flame.tga;
+			flamecloud=explo.bmp;
+			flamer=flamethrower.png;
+			purplecloud=snipe2.jpg;
+			flamespark=simplespark_1.5.tga;
+			emg=emg.tga;
+			emgmed=emg_med.tga;
+			
+			muzzleside=muzzleside.tga;
+			muzzlefront=muzzlefront.tga;
+			largebeam=largelaserfalloff.tga;
+
+			YELLOWBLAST=explo.bmp;
+			YELLOWBLAST1=explo.bmp;
+			YELLOWBLAST2=explo.bmp;
+			YELLOWBLAST3=explo.bmp;
+			lightweb2=G_LightningCentral2.tga;
+			lightweb1=G_lighningCentral.tga; 
+			firecloud1=vtoltrail.tga;//also front
+			firecloud2=vtoltrail.tga;//also front
+			firecloud3=vtoltrail.tga;//also front
+			light=light.bmp;//also front
+			yellowlight=lighty.bmp;//also front
+			whitelight=lightw.bmp;//also front
+			water=G_warp.tga;//also front
+			Bubble=bubble.tga;
+			lesslag=smoke/smoke05.tga;
+			
+			smoke=GenericSmokeCloud.tga;
+			antilagsmoke=minismoke.png;
+	
+			
+			splash=splash.tga;//From Unknown Source, Not originally from NOTA
+			diamondstar=diamondstar.tga;
+			fireball=fireball.tga;
+			smokesmall=GenericSmokeCloud.tga;
+			R1=r1.jpg;//reactors
+			R3=r3.jpg;
+			R2=r2.jpg;
+			purplelaser=purplelaser.jpg;
+			heatray1=heatray1.jpg;
+			heatray2=heatray2.jpg;
+			railgunshot=railgunshot.jpg;
+			railguntrailsml=railguntrailsml.png;
+			railguntrail=railguntrail.tga;
+			railguntrailbig=railguntrailbig.tga;
+			railgunshot2=railgunshot2.png;
+			railguntrail2=railguntrail2.png;
+			gfxtexture=nano.tga;
+			lightning=lightning2.jpg;
+			lightning2=lightning3.jpg;
+
+			// misc
+			dust=dust.png;
+			dustcloud=dustcloud.png;
+			dustcloudbig=dustcloud_big.png;
+			waterdropcloud=waterdropcloud.png;
+			stdexplosion=stdexplosion.png;
+			waterdisturbance=waterdisturbance.tga;
+
+			// energy cannon explosions
+			bluefirecloud=bluefirecloud.tga;
+
+			// logo heat clouds
+			avenlogocloud=aven_commander.tga;
+			gearlogocloud=gear_commander.tga;
+			clawlogocloud=claw_commander.tga;
+			spherelogocloud=sphere_commander.tga;
+
+		}
+	}
+}

@@ -1,0 +1,111 @@
+
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Haze;
+	description=Intelligence Spinbot. Provides radar, sonar and radar jammer;
+	iconType=amphibintel;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW LEVEL2 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_haze;
+	objectName=claw_haze.3do;
+	corpse=claw_haze_dead;
+	buildPic=claw_haze.png;
+	soundCategory=aven_JAM;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1100;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=70;
+	energyStorage=0;
+
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	floater=1;
+	onOffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=TANKHOVER4;
+	turnRate=945;
+	acceleration=0.09;
+	brakeRate=0.03;
+	maxVelocity=1.4;
+	turninplace=1;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=2000;
+	sonarDistance=1000;
+	radarDistanceJam=600;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	scale=0.5;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 50 30;
+	collisionVolumeOffsets = 0 -5 0;
+	collisionVolumeTest = 1;
+	waterline=8;
+	
+	[CustomParams]
+	{
+		builtBy=claw_spinbot_plant;
+	}
+	buildCostEnergy=3489;//#AUTO#
+	buildCostMetal=697;//#AUTO#
+	buildTime=8317;//#AUTO#
+	mass=253;//#AUTO#
+}

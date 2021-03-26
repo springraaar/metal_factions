@@ -1,0 +1,112 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Escort;
+	description=Radar Jammer Ship;
+	iconType=shipjammer;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL2 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_escort;
+	objectName=aven_escort.3do;
+	corpse=aven_escort_dead;
+	buildPic=aven_escort.png;
+	soundCategory=aven_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1150;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=20;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	floater=1;
+	onOffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=Smallboat;
+	turnRate=400;
+	acceleration=0.015;
+	brakeRate=0.009;
+	maxVelocity=2.5;
+	minwaterdepth=6;
+	waterline=0.5;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=0;
+	radarDistanceJam=680;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=MEDIUM_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =30 25 60;
+	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeTest = 1;
+
+	[customParams] 
+	{
+		builtBy=aven_adv_shipyard;
+		evalfactor=0.85;//SHIP
+	}
+	[SFXTypes]
+	{
+	explosionGenerator0=custom:UNITFIRE;
+	}
+	buildCostEnergy=2551;//#AUTO#
+	buildCostMetal=510;//#AUTO#
+	buildTime=6080;//#AUTO#
+	mass=228;//#AUTO#
+}

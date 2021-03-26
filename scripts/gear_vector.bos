@@ -1,0 +1,178 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, lwing, rwing, lbody, rbody, lw2, rw2, center, weapon1, firept1, weapon2, firept2, ljet, rjet, b2, ljet2, rjet2, ljp,rjp,ljp2,rjp2,flarepod,flarefirept;
+
+static-var  isFlying, statechg_DesiredState, statechg_StateChanging, gun_1;
+
+
+
+activatescr()
+{
+	sleep 100;
+	isFlying = TRUE;
+}
+
+
+deactivatescr()
+{
+	sleep 100;
+	isFlying = FALSE;
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+InitState()
+{
+	statechg_DesiredState = 1;
+	statechg_StateChanging = 0;
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = 1;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState == 0 )
+		{
+			call-script activatescr();
+			currentstate = 0;
+		}
+		if( statechg_DesiredState == 1 )
+		{
+			call-script deactivatescr();
+			currentstate = 1;
+		}
+	}
+	statechg_StateChanging = 0;
+}
+
+
+Create()
+{
+	isFlying = FALSE;
+	gun_1 = 0;
+	turn flarefirept to x-axis <90> now;
+	call-script InitState();
+	start-script SmokeUnit();
+}
+
+Activate()
+{
+	start-script RequestState(0);
+}
+
+Deactivate()
+{
+	start-script RequestState(1);
+}
+
+AimPrimary()
+{
+	if(!isFlying)
+	{
+		return (0);
+	}
+	return (1);
+}
+
+FirePrimary()
+{
+	if (gun_1 == 0) {
+		emit-sfx 1024 from firept1;
+		sleep 100;
+		gun_1 = 1;
+		return (0);
+	}
+	if (gun_1 == 1) {
+		emit-sfx 1024 from firept2;
+		sleep 100;
+		gun_1 = 0;
+		return (0);
+	}
+}
+
+QueryPrimary(piecenum)
+{
+	if (gun_1 == 0) {
+		piecenum = firept1;
+		return (0);
+	}
+	if (gun_1 == 1) {
+		piecenum = firept2;
+		return (0);
+	}
+}
+
+AimFromSecondary(piecenum) 
+{
+	piecenum = flarepod;
+	return (0);
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = flarefirept;
+}
+
+AimSecondary()
+{
+	if(!isFlying)
+	{
+		return (0);
+	}
+	return (1);
+}
+
+FireSecondary()
+{
+	emit-sfx 1024+1 from flarefirept;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	corpsetype = 3;
+	explode center type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode lwing type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode rwing type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+
+}

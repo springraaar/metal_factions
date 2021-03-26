@@ -1,0 +1,216 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, h1,h2,h3, wingsup, wing1, wing2, shieldpt, wsup, emg, emgflare, emgcover, r1, rotor,ljp,rjp;
+
+static-var  statechg_DesiredState, statechg_StateChanging, isFlying;
+#define SIG_AIM		2
+
+activatescr()
+{
+	sleep 500;
+	spin rotor around z-axis speed <120.000000>;
+	isFlying = TRUE;
+	return (0);
+	// Build by COBBLER Ver4.0 Copyright @1998 DIGITAL CONCEPT SOFTWARE (MANU@inext.fr) / http://www.annihilationcenter.com/DCS/  
+}
+
+deactivatescr()
+{
+	sleep 500;
+	stop-spin rotor around z-axis;
+	isFlying = FALSE;
+	return (0);
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+	return (0);
+}
+
+InitState()
+{
+	statechg_DesiredState = TRUE;
+	statechg_StateChanging = FALSE;
+	return (0);
+}
+
+RequestState(requestedstate, currentstate)
+{
+	if( statechg_StateChanging )
+	{
+		statechg_DesiredState = requestedstate;
+		return (0);
+	}
+	statechg_StateChanging = TRUE;
+	currentstate = statechg_DesiredState;
+	statechg_DesiredState = requestedstate;
+	while( statechg_DesiredState != currentstate )
+	{
+		if( statechg_DesiredState == 0 )
+		{
+			call-script activatescr();
+			currentstate = 0;
+		}
+		if( statechg_DesiredState == 1 )
+		{
+			call-script deactivatescr();
+			currentstate = 1;
+		}
+	}
+	statechg_StateChanging = FALSE;
+	return (0);
+}
+
+Create()
+{
+	isFlying = FALSE;
+	call-script InitState();
+	start-script SmokeUnit();
+	return (0);
+}
+
+Activate()
+{
+	start-script RequestState(0);
+	return (0);
+}
+
+Deactivate()
+{
+	start-script RequestState(1);
+	return (0);
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+	return (0);
+}
+
+RestoreAfterDelay()
+{
+	set-signal-mask SIG_AIM;
+	sleep 2500;
+	spin rotor around z-axis speed <120.000000>;
+}
+
+AimPrimary()
+{
+	if(!isFlying)
+	{
+		return (0);
+	}
+	return (1);
+}
+
+Shot1()
+{
+	signal SIG_AIM;
+	emit-sfx 1024 from emgflare;
+	spin rotor around z-axis speed <500.000000>;
+	start-script RestoreAfterDelay();
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = emgflare;
+
+	return (0);
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = wsup;
+	return (0);
+}
+
+
+QuerySecondary(piecenum)
+{
+	piecenum = shieldpt;
+	return (0);
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = shieldpt;
+	return (0);
+}
+
+AimSecondary(heading, pitch)
+{
+	return (1);
+}
+Killed(severity, corpsetype)
+{
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode base type BITMAPONLY | BITMAP1;
+		explode h1 type BITMAPONLY | BITMAP2;
+		explode h2 type BITMAPONLY | BITMAP3;
+		explode wingsup type BITMAPONLY | BITMAP1;
+		explode wing1 type SHATTER;
+		explode wing2 type SHATTER;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode base type BITMAPONLY | BITMAP1;
+		explode h1 type FALL | BITMAP2;
+		explode h2 type FALL | BITMAP3;
+		explode h3 type FALL | BITMAP4;
+		explode wingsup type FALL | BITMAP5;
+		explode wing1 type SHATTER;
+		explode wing2 type SHATTER;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode base type BITMAPONLY | BITMAP1;
+		explode h1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+		explode h2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+		explode h3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+		explode wingsup type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode wing1 type SHATTER;
+		explode wing2 type SHATTER;
+		return (0);
+	}
+	corpsetype = 3;
+	explode base type BITMAPONLY | BITMAP1;
+	explode h1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode h2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode h3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode wingsup type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode wing1 type SHATTER;
+	explode wing2 type SHATTER;
+	return (0);
+}

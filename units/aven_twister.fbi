@@ -1,0 +1,112 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Twister;
+	description=Light Gunship;
+	iconType=airfighter;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN VTOL LEVEL1 WEAPON NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_twister;
+	objectName=aven_twister.3do;
+	buildPic=aven_twister.png;
+	soundCategory=aven_SEAPLN;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=400;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnRate=768;
+	acceleration=0.4;
+	brakeRate=4;
+	maxVelocity=6.0;
+	maxSlope=10;
+	
+	cruiseAlt=110;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_twister_emg;
+	weapon2=aven_twister_laser;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNITEX;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	hoverAttack=1;
+	moverate1=8;
+	collide=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =23 10 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=aven_aircraft_plant,aven_adv_aircraft_plant;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:GLOWSML;
+	}
+	buildCostEnergy=1596;//#AUTO#
+	buildCostMetal=319;//#AUTO#
+	buildTime=3804;//#AUTO#
+	mass=103;//#AUTO#
+}

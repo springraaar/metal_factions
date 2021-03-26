@@ -1,0 +1,121 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Sword;
+	description=High-Damage Assault Ship;
+	iconType=shipassault;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_sword;
+	objectName=claw_sword.3do;
+	corpse=claw_sword_dead;
+	buildPic=claw_sword.png;
+	soundCategory=gear_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1750;
+	footprintx=4;
+	footprintz=4;
+	flankingBonusMode=3;
+	flankingBonusMax=1.33;
+	flankingBonusMin=0.75;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	floater=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=smallboat;
+	turnRate=450;
+	acceleration=0.04;
+	brakeRate=0.009;
+	maxVelocity=2.6;
+	minwaterdepth=12;
+	waterline=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=450;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_sword_laser;
+	weapon2=claw_sword_depthcharge;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	onlyTargetCategory2=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	scale=0.6;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 35 50;
+	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=claw_shipyard,claw_adv_shipyard;
+		tip=+25% dmg resistance on front, -25% when hit from behind. Laser Cutter loses up to 30% damage over its range;
+		evalfactor=0.85;//SHIP
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:yellowflaremed;
+	}
+	buildCostEnergy=3302;//#AUTO#
+	buildCostMetal=660;//#AUTO#
+	buildTime=7870;//#AUTO#
+	mass=657;//#AUTO#
+}

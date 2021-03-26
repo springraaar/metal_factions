@@ -1,0 +1,114 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Albatross;
+	description=Anti-Sub Gunship;
+	iconType=airmulti;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN VTOL LEVEL2 WEAPON NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_albatross;
+	objectName=aven_albatross.3do;
+	buildPic=aven_albatross.png;
+	soundCategory=aven_SEAPLN;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1000;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	amphibious=1;
+	canAttack=1;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnRate=678;
+	acceleration=0.27;
+	brakeRate=0.1;
+	maxVelocity=5.5;
+	maxSlope=10;
+	maxWaterDepth=2;
+	cruiseAlt=120;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+	radarDistance=0;
+	sonarDistance=550;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_albatross_laser;
+	weapon2=aven_albatross_torpedo;
+	badTargetCategory1=NOTAIR;
+	onlytargetcategory2=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=MEDIUM_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	hoverAttack=1;
+	moverate1=8;
+  	canSubmerge=1;
+
+	collide=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =30 18 40;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	
+	[CustomParams]
+	{
+		builtBy=aven_adv_aircraft_plant;
+	}
+	buildCostEnergy=6425;//#AUTO#
+	buildCostMetal=1285;//#AUTO#
+	buildTime=15313;//#AUTO#
+	mass=339;//#AUTO#
+}

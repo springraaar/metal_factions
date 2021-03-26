@@ -1,0 +1,75 @@
+[UNITINFO]
+	{
+
+	// ------------------- description
+	side=Claw;
+	Name=Aircraft Factory;
+	Description=Builds level1 aircraft;
+	iconType=plant;
+
+	// ------------------- categories
+	Category=CLAW PLANT LEVEL1 NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=claw_aircraft_plant;
+	objectName=claw_aircraft_plant.3do;
+	buildPic=claw_aircraft_plant.png;
+	soundCategory=gear_HOVER_PLANT;
+	Corpse=claw_aircraft_plant_dead;
+
+	// ------------------- health/cost/size
+	maxDamage=2900;
+	FootprintX=8;
+	FootprintZ=6;
+
+
+	// ------------------- resources
+	energyStorage=100;
+	metalStorage=100;
+	energyUse=0;
+
+	// ------------------- constructor
+	Builder=1;
+	workerTime=200;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	
+	// ------------------- movement
+	yardMap=ooccccoo ooccccoo ooccccoo ooccccoo ooccccoo ooccccoo; 
+	maxSlope=14;
+	collisionVolumeType = box;
+	collisionVolumeScales =130 35 100;
+	collisionVolumeOffsets=0 -5 0;
+	collisionVolumeTest = 1;
+	floater=1;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+	// ------------------- weapons
+	explodeAs=LARGE_BUILDINGEX;
+	selfDestructAs=LARGE_BUILDING;
+
+	// ------------------- orders
+
+
+	// ------------------- misc
+	noAutoFire=0;
+	[CustomParams]
+	{
+		builtBy=claw_l1builder,claw_l2builder;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:Nano;
+	}
+
+	buildCostEnergy=4210;//#AUTO#
+	buildCostMetal=842;//#AUTO#
+	buildTime=6623;//#AUTO#
+	mass=2010;//#AUTO#
+}

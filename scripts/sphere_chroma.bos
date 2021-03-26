@@ -1,0 +1,221 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define HEADING_TOLERANCE	<35>
+#define PITCH_TOLERANCE		<35>
+
+
+piece ground, hips,torso,turret1,sleeve1,flare1,turret2,sleeve2,flare2,turret3,sleeve3,flare3, sphere, shieldpt;
+	
+static-var bMoving,bAiming;
+
+#include "aimhelper1.h"
+#include "aimhelper2.h"
+#include "aimhelper3.h"
+
+// Signal definitions
+#define SIG_AIM					2
+#define SIG_AIM2				4
+#define SIG_AIM3				8
+
+
+
+
+
+Create()
+{
+	call-script stopAimHelper1(<1000>,<1000>);
+	call-script stopAimHelper2(<1000>,<1000>);
+	call-script stopAimHelper3(<1000>,<1000>);
+	bMoving=FALSE;
+	bAiming=FALSE;
+}
+
+
+
+SweetSpot(piecenum)
+{
+	piecenum = sphere;
+}
+
+RestoreAfterDelayWeapon1()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
+	turn turret1 to y-axis <0.000000> speed <100>;
+	turn sleeve1 to x-axis <0.000000> speed <100>;
+}
+RestoreAfterDelayWeapon3()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper2(<100>,<100>);
+	turn turret2 to y-axis <0.000000> speed <100>;
+	turn sleeve2 to x-axis <0.000000> speed <100>;
+}
+RestoreAfterDelayWeapon4()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper3(<100>,<100>);
+	turn turret3 to y-axis <0.000000> speed <100>;
+	turn sleeve3 to x-axis <0.000000> speed <100>;
+}
+
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret1;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare1;
+}
+
+FirePrimary()
+{
+	emit-sfx 1024 + 0 from flare1;
+	return 1;
+}
+
+
+AimPrimary(heading, pitch)
+{
+	call-script updateAimHelper1(heading,pitch,<300>,<300>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+		
+	turn turret1 to y-axis heading speed <300.027473>;
+	turn sleeve1 to x-axis <0.000000> - pitch speed <300.038462>;
+	if ( !aimReady1 )
+	{
+		wait-for-turn turret1 around y-axis;
+		wait-for-turn sleeve1 around x-axis;
+	}
+	
+	start-script RestoreAfterDelayWeapon1();
+	return (1);
+}
+
+
+
+QuerySecondary(piecenum)
+{
+	piecenum = shieldpt;
+	return (0);
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = shieldpt;
+	return (0);
+}
+
+AimSecondary(heading, pitch)
+{
+	return (1);
+}
+
+
+AimFromWeapon3(piecenum)
+{
+	piecenum = turret2;
+}
+
+QueryWeapon3(piecenum)
+{
+	piecenum = flare2;
+}
+
+FireWeapon3()
+{
+	emit-sfx 1024 + 1 from flare2;
+	return 1;
+}
+
+
+AimWeapon3(heading, pitch)
+{
+	call-script updateAimHelper2(heading,pitch,<400>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM2;
+	set-signal-mask SIG_AIM2;
+		
+	turn turret2 to y-axis heading speed <400.027473>;
+	turn sleeve2 to x-axis <0.000000> - pitch speed <400.038462>;
+	if ( !aimReady2 )
+	{
+		wait-for-turn turret2 around y-axis;
+		wait-for-turn sleeve2 around x-axis;
+	}
+
+	start-script RestoreAfterDelayWeapon3();
+	return (1);
+}
+
+AimFromWeapon4(piecenum)
+{
+	piecenum = turret3;
+}
+
+QueryWeapon4(piecenum)
+{
+	piecenum = flare3;
+}
+
+FireWeapon4()
+{
+	emit-sfx 1024 + 2 from flare3;
+	return 1;
+}
+
+
+AimWeapon4(heading, pitch)
+{
+	call-script updateAimHelper3(heading,pitch,<600>,<600>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM3;
+	set-signal-mask SIG_AIM3;
+		
+	turn turret3 to y-axis heading speed <600.027473>;
+	turn sleeve3 to x-axis <0.000000> - pitch speed <600.038462>;
+	if ( !aimReady3 )
+	{
+		wait-for-turn turret3 around y-axis;
+		wait-for-turn sleeve3 around x-axis;
+	}
+
+	start-script RestoreAfterDelayWeapon4();
+	return (1);
+}
+
+
+Killed(severity, corpsetype)
+{
+	
+	if( severity <= 25 )
+	{
+		corpsetype = 1;
+		explode sphere type SHATTER | BITMAP4;
+		explode sphere type SHATTER | BITMAP4;
+		return (0);
+	}
+	if( severity <= 50 )
+	{
+		corpsetype = 2;
+		explode sphere type SHATTER | BITMAP4;
+		explode sphere type SHATTER | BITMAP4;
+		return (0);
+	}
+	if( severity <= 99 )
+	{
+		corpsetype = 3;
+		explode sphere type SHATTER | BITMAP4;
+		explode sphere type SHATTER | BITMAP4;
+		return (0);
+	}
+	corpsetype = 3;
+	explode sphere type SHATTER | BITMAP4;
+	explode sphere type SHATTER | BITMAP4;
+		
+}
+

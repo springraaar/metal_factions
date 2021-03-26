@@ -1,0 +1,123 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=CLAW;
+	name=Medium Drone;
+	description=Medium Drone;
+	iconType=airfighter;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW VTOL WEAPON NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_medium_drone;
+	objectName=claw_medium_drone.3do;
+	buildPic=claw_medium_drone.png;
+	soundCategory=aven_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=400;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnRate=500;
+	acceleration=0.32;
+	brakeRate=0.3;
+	maxVelocity=2.4;
+	maxSlope=10;
+	
+	cruiseAlt=120;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_medium_drone_laser;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	hoverAttack=1;
+	moverate1=8;
+	scale=1;
+	reclaimable=0;
+	capturable=0;
+	airHoverFactor=0.2;
+	
+	collide=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =25 15 25;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	
+
+
+	[CustomParams]
+	{
+		isDrone=1;
+		evalfactor=0.5;
+	}
+
+	//************************************************************
+	//  To be removed
+	//*****************
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:glowsml;
+	}
+	buildCostEnergy=1379;//#AUTO#
+	buildCostMetal=275;//#AUTO#
+	buildTime=3287;//#AUTO#
+	mass=95;//#AUTO#
+}

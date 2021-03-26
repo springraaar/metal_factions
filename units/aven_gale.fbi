@@ -1,0 +1,127 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Gale;
+	description=Anti-Swarm Fighter/Bomber;
+	iconType=airfighter;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN VTOL LEVEL1 WEAPON NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_gale;
+	objectName=aven_gale.3do;
+	buildPic=aven_gale.png;
+	soundCategory=aven_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=880;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnRate=370;
+	acceleration=0.25;
+	brakeRate=0.15;
+	maxVelocity=4.2;
+	maxSlope=10;
+	
+	cruiseAlt=190;
+	hoverAttack=1;
+	upright=1;
+
+	// flight behaviour
+	wingDrag=0.07;      //0.07
+	wingAngle=0.08;	//0.08;
+	drag=0.08;		//0.08
+	frontToSpeed=0.1;  //0.1
+	speedToFront=0.07; //0.07
+	myGravity=0.4; //0.4
+	maxBank=0.8;	//0.8
+	maxPitch=0.45;	//0.45
+	turnRadius=350; //500
+	maxAileron=0.01;	//0.015
+	maxElevator=0.01;	//0.01
+	maxRudder=0.01;  //0.004
+	maxAcc=0.065; //0.065
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_gale_aabomb;
+	badTargetCategory1=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collide=1;
+	collisionVolumeType = box;
+	collisionVolumeScales = 40 20 45;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=aven_aircraft_plant,aven_adv_aircraft_plant;
+	}
+	[SFXTypes]
+	{
+	}
+	buildCostEnergy=3503;//#AUTO#
+	buildCostMetal=700;//#AUTO#
+	buildTime=8350;//#AUTO#
+	mass=226;//#AUTO#
+}

@@ -1,0 +1,109 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=COMSAT Station;
+	description=Surveillance Satellite Communications Platform;
+	iconType=building;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB;
+	tedClass=FORT;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_comsat_station;
+	objectName=aven_comsat_station.3do;
+	corpse=aven_comsat_station_dead;
+	buildPic=aven_comsat_station.png;
+	soundCategory=aven_RADAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1500;
+	footprintx=6;
+	footprintz=6;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	buildangle=16384;
+	yardMap=oooooo oooooo oooooo oooooo oooooo oooooo;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=20;
+	maxWaterDepth=22;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=comsat_beacon;
+	badTargetCategory1=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+
+	collisionVolumeType = box;
+	collisionVolumeScales =70 50 70;
+	collisionVolumeOffsets = 0 1 0;
+	collisionVolumeTest = 1;
+	pieceTrailCEGTag=Debree;
+	pieceTrailCEGRange = 4;
+
+	[CustomParams]
+	{
+		builtBy=aven_l1builder,aven_l2builder;
+		tip=Manually target a position to reveal a 720 radius area around it for 30 seconds;
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:glowsml;
+	}
+	buildcostenergy=7500;//#AUTO#
+	buildcostmetal=1500;//#AUTO#
+	buildtime=17880;//#AUTO#
+}

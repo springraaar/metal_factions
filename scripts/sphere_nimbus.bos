@@ -1,0 +1,202 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<35>
+
+piece ground, hips,torso,left,right,lflare1,lflare2,rflare1,sphere,shieldpt,mis;
+
+static-var bMoving,bAiming, firept2, isOpen;
+
+#include "aimhelper1.h"
+
+// Signal definitions
+#define SIG_AIM				2
+
+Open()
+{
+	set ARMORED to FALSE;
+	move left to x-axis [-3.700000] speed [10.000000];
+	move right to x-axis [3.700000] speed [10.000000];
+	wait-for-move left along x-axis;
+
+	move mis to z-axis [0.000000] speed [8.000000];
+	isOpen = TRUE;
+	return (0);
+}
+
+Close()
+{
+	isOpen = FALSE;
+	move mis to z-axis [-3.800000] speed [8.000000];
+	wait-for-move mis along z-axis;
+	
+	move left to x-axis [0.000000] speed [20.000000];
+	move right to x-axis [0.000000] speed [20.000000];
+	wait-for-move left along x-axis;
+
+	set ARMORED to TRUE;
+	return (0); 
+}
+
+
+Create()
+{
+	move mis to z-axis [-5.500000] now;
+
+	isOpen = FALSE;
+	firept2 = [0];
+	bMoving=FALSE;
+	bAiming=FALSE;
+	call-script stopAimHelper1(<1000>,<1000>);
+}
+
+
+
+SweetSpot(piecenum)
+{
+	piecenum = sphere;
+}
+
+RestoreAfterDelayWeapon()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
+	turn torso to y-axis <0.000000> speed <100.016484>;
+	bAiming = FALSE;
+	call-script Close();
+}
+
+
+
+
+AimFromPrimary(piecenum)
+{
+	piecenum = torso;
+}
+
+
+QueryPrimary(piecenum)
+{
+	piecenum = rflare1;
+	return;
+}
+
+
+FirePrimary()
+{
+	emit-sfx 1024 + 0 from rflare1;
+	move mis to z-axis [-4.00000] now;
+	sleep 2000;
+	move mis to z-axis [0.000000] speed [8.000000];
+	return (0);
+}
+
+
+
+AimPrimary(heading, pitch)
+{
+	if( ! isOpen)
+	{
+		call-script Open();
+	}
+	call-script updateAimHelper1(heading,pitch,<150>,<1500>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	
+	turn torso to y-axis heading speed <150.027473>;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+	}
+	start-script RestoreAfterDelayWeapon();
+	return (1);
+}
+
+
+
+AimFromSecondary(piecenum)
+{
+	piecenum = torso;
+}
+
+
+QuerySecondary(piecenum)
+{
+	if(firept2 == [0])
+	{
+		piecenum = lflare1;
+		return;
+	}
+	if(firept2 == [1])
+	{
+		piecenum = lflare2;
+		return;
+	}
+}
+
+
+FireSecondary()
+{
+
+	if( firept2==[0] )
+	{
+		emit-sfx 1024 + 0 from lflare1;
+		sleep 50;
+		firept2=[1];
+		return (0);
+	}
+	if( firept2==[1] )
+	{
+		emit-sfx 1024 + 0 from lflare2;
+		firept2=[0];
+		return (0);
+	}
+}
+
+
+
+AimSecondary(heading, pitch)
+{
+	if( ! isOpen)
+	{
+		call-script Open();
+	}
+
+	call-script updateAimHelper1(heading,pitch,<150>,<1500>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	
+	turn torso to y-axis heading speed <150.027473>;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+	}
+	start-script RestoreAfterDelayWeapon();
+	return (1);
+}
+
+
+
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		corpsetype = 1;
+		explode sphere type SHATTER | BITMAP4;
+		explode left type SHATTER | BITMAP4;
+		explode right type SHATTER | BITMAP4;
+		return (1);
+	}
+	explode sphere type SHATTER | BITMAP4;
+	explode sphere type SHATTER | BITMAP4;
+	explode left type SHATTER | BITMAP4;
+	explode right type SHATTER | BITMAP4;
+	return (2);
+}
+
