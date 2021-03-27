@@ -17,6 +17,9 @@ lua_metalTransaction() { return 0; }
 energyTransactions() {
 	// send resources every half second
 	while (TRUE) {
+		while( get BUILD_PERCENT_LEFT ) {
+			sleep 100;
+		}
 		call-script lua_energyTransaction(5*activationLevel);  // divided by 20 on the gadget
 		call-script lua_metalTransaction(1*activationLevel);   
 		sleep 467;		// 15 frames
@@ -27,6 +30,9 @@ energyTransactions() {
 updateActivationLevel() {
 	hide clighton;
 	show clightoff;
+	while( get BUILD_PERCENT_LEFT ) {
+		sleep 100;
+	}
 	activationLevel = 1;
 	show lon1;
 	hide loff1;
@@ -41,6 +47,9 @@ updateActivationLevel() {
 	hide lon6;
 	show loff6;
 	sleep ACTIVATION_STEP_MS;
+	while( get BUILD_PERCENT_LEFT ) {
+		sleep 100;
+	}
 	activationLevel = 2;
 	show lon1;
 	hide loff1;
@@ -55,6 +64,9 @@ updateActivationLevel() {
 	hide lon6;
 	show loff6;
 	sleep ACTIVATION_STEP_MS;
+	while( get BUILD_PERCENT_LEFT ) {
+		sleep 100;
+	}
 	activationLevel = 3;
 	show lon1;
 	hide loff1;
@@ -69,6 +81,9 @@ updateActivationLevel() {
 	hide lon6;
 	show loff6;
 	sleep ACTIVATION_STEP_MS;
+	while( get BUILD_PERCENT_LEFT ) {
+		sleep 100;
+	}
 	activationLevel = 4;
 	show lon1;
 	hide loff1;
@@ -83,6 +98,9 @@ updateActivationLevel() {
 	hide lon6;
 	show loff6;
 	sleep ACTIVATION_STEP_MS;
+	while( get BUILD_PERCENT_LEFT ) {
+		sleep 100;
+	}
 	activationLevel = 5;
 	show lon1;
 	hide loff1;
@@ -97,6 +115,9 @@ updateActivationLevel() {
 	hide lon6;
 	show loff6;
 	sleep ACTIVATION_STEP_MS;
+	while( get BUILD_PERCENT_LEFT ) {
+		sleep 100;
+	}
 	activationLevel = 6;
 	show lon1;
 	hide loff1;

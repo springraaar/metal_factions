@@ -389,8 +389,8 @@
   	alphaDecay=0.5;
   	sizeDecay=-0.2;
 	turret=1;
-	range=440;
-	reloadTime=0.2;
+	range=430;
+	reloadTime=0.25;
 	predictBoost=0.27;
 	weaponVelocity=550;
 	sprayAngle=400;
@@ -5556,6 +5556,33 @@
 		armor_light=1400;//#AUTO#
 	}
 }
+[EXPLOSIVE_UNIT_BLAST]
+{
+	name=Explosive Unit Blast;
+	weaponType=Cannon;
+	turret=1;
+	range=480;
+	reloadTime=3.6;
+	weaponVelocity=250;
+	areaOfEffect=300;
+	soundStart=largegun;
+	soundHit=xplolrg5;
+	explosionGenerator=custom:LARGEBLASTWRAPPER1;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+	}
+	[DAMAGE]
+	{
+		default=1100;
+		group_invincible=1;
+		armor_heavy=550;//#AUTO#
+		armor_medium=1100;//#AUTO#
+		armor_light=1100;//#AUTO#
+	}
+}
 [MOBILE_SHIELD_BLAST]
 {
 	name=Mobile Area Shield Blast;
@@ -7508,9 +7535,9 @@
 	name=Medium Laser;
 	weaponType=BeamLaser;
 	turret=1;
-	range=500;
+	range=480;
 	minIntensity=1.0;
-	reloadTime=1.3;
+	reloadTime=1.7;
 	weaponVelocity=1533;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
 	tolerance=3000;
@@ -13658,8 +13685,8 @@
 	turret=1;
 	model=weapon_missile.3do;
 	texture1=null; //flare//
-	range=600;
-	reloadTime=7.3;
+	range=620;
+	reloadTime=5;
 	flightTime=3.75;
 	trajectoryHeight=0.1;
 	weaponVelocity=760;
@@ -13683,10 +13710,10 @@
 	}
 	[DAMAGE]
 	{
-		default=110;
-		armor_heavy=27;//#AUTO#
-		armor_medium=55;//#AUTO#
-		armor_light=110;//#AUTO#
+		default=120;
+		armor_heavy=30;//#AUTO#
+		armor_medium=60;//#AUTO#
+		armor_light=120;//#AUTO#
 	}
 }
 [claw_shrieker_railgun]

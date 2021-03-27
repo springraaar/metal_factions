@@ -79,8 +79,8 @@
 	weapon1=claw_mega_cannon;
 	noChaseCategory=VTOL;
 	badTargetCategory1=VTOL;
-	explodeAs=BIG_UNIT;
-	selfDestructAs=BIG_UNIT;
+	explodeAs=EXPLOSIVE_UNIT_BLAST;
+	selfDestructAs=EXPLOSIVE_UNIT_BLAST;
 	
 
 	//************************************************************
@@ -110,8 +110,8 @@
 	{
 		explosionGenerator0=custom:yellowflarebig;
 	}
-	buildCostEnergy=49151;//#AUTO#
-	buildCostMetal=9830;//#AUTO#
-	buildTime=117143;//#AUTO#
-	mass=10682;//#AUTO#
+	buildCostEnergy=49060;//#AUTO#
+	buildCostMetal=9812;//#AUTO#
+	buildTime=116928;//#AUTO#
+	mass=10673;//#AUTO#
 }

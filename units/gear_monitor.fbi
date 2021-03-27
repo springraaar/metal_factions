@@ -5,7 +5,7 @@
 	//********************
 	side=Gear;
 	name=Monitor;
-	description=Advanced Radar/Sonar Ship;
+	description=Radar/Sonar Ship;
 	iconType=shipradar;
 
 	//************************************************************
@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=2500;
+	maxDamage=2200;
 	footprintx=5;
 	footprintz=5;
 
@@ -34,7 +34,7 @@
 	//*************
 	metalStorage=0;
 	energyMake=0;
-	energyUse=50;
+	energyUse=30;
 	energyStorage=0;
 
 	//************************************************************
@@ -74,8 +74,8 @@
 	//  Sight/Radar/Sonar
 	//*********************
 	sightDistance=500;
-	radarDistance=2500;
-	sonarDistance=1600;
+	radarDistance=2000;
+	sonarDistance=1200;
 
 	//************************************************************
 	//  Weapons
@@ -103,15 +103,15 @@
 
 	[CustomParams]
 	{
-		builtBy=gear_adv_shipyard;
+		builtBy=gear_shipyard,gear_adv_shipyard;
 		evalfactor=0.85;//SHIP
 	}
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:redflare;
 	}
-	buildCostEnergy=9326;//#AUTO#
-	buildCostMetal=1865;//#AUTO#
-	buildTime=22228;//#AUTO#
-	mass=1246;//#AUTO#
+	buildCostEnergy=5915;//#AUTO#
+	buildCostMetal=1183;//#AUTO#
+	buildTime=14099;//#AUTO#
+	mass=944;//#AUTO#
 }

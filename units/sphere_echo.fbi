@@ -5,7 +5,7 @@
 	//********************
 	side=Sphere;
 	name=Echo;
-	description=Advanced Radar/Sonar Ship;
+	description=Radar/Sonar Ship;
 	iconType=shipradar;
 
 	//************************************************************
@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=4000;
+	maxDamage=3500;
 	footprintx=5;
 	footprintz=5;
 
@@ -34,7 +34,7 @@
 	//*************
 	metalStorage=0;
 	energyMake=0;
-	energyUse=50;
+	energyUse=30;
 	energyStorage=0;
 
 	//************************************************************
@@ -74,8 +74,8 @@
 	//  Sight/Radar/Sonar
 	//*********************
 	sightDistance=500;
-	radarDistance=2500;
-	sonarDistance=1600;
+	radarDistance=2000;
+	sonarDistance=1200;
 
 	//************************************************************
 	//  Weapons
@@ -103,15 +103,15 @@
 
 	[CustomParams]
 	{
-		builtBy=sphere_adv_shipyard;
+		builtBy=sphere_shipyard,sphere_adv_shipyard;
 		evalfactor=0.85;//SHIP
 	}
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:redflare;
 	}
-	buildCostEnergy=9424;//#AUTO#
-	buildCostMetal=1884;//#AUTO#
-	buildTime=22461;//#AUTO#
-	mass=1628;//#AUTO#
+	buildCostEnergy=6223;//#AUTO#
+	buildCostMetal=1244;//#AUTO#
+	buildTime=14833;//#AUTO#
+	mass=1289;//#AUTO#
 }

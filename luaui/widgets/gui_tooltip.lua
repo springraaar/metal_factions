@@ -11,6 +11,9 @@ function widget:GetInfo()
 	}
 end
 
+
+VFS.Include("lualibs/constants.lua")
+
 local frameSkip = 4       -- draw once every frameSkip+1 frames 
 local counter = 0
 local xpArr = {
@@ -51,6 +54,8 @@ local TRANSPORT_MASS_LIMIT_LIGHT = 1200
 local TRANSPORT_MASS_LIMIT_HEAVY = 3000  
 local PARALYZE_DAMAGE_FACTOR = 0.33 -- paralyze damage adds this fraction as normal damage
 local ONCE_RELOAD_THRESHOLD = 999
+
+local windGroundMin,windGroundMax,windGroundRef = 0
 
 local noDamageWeaponDefIds = {
 	[WeaponDefNames["comsat_beacon"].id] = true,
@@ -101,6 +106,10 @@ function widget:Initialize()
 		local shieldDefID = ud.shieldWeaponDef
 		ud.shieldPower = ((shieldDefID)and(WeaponDefs[shieldDefID].shieldPower))or(-1)
 	end
+	
+	windGroundMin, windGroundMax = Spring.GetGroundExtremes()
+	windGroundMin, windGroundMax = math.max(windGroundMin,0), math.max(windGroundMax,1)
+	windGroundRef = 0.25*windGroundMax + 0.75*windGroundMin
 	
 	-- get players and teams info
 	myPlayerID = Spring.GetLocalPlayerID()
@@ -489,9 +498,29 @@ function GenerateNewTooltip()
 			FoundTooltipType="knownbuildbutton"
 			
 			if fud.windGenerator > 1 then
-			   	local minWindE = FormatNbr((fud.windGenerator/25)*Game.windMin,0)
-				local maxWindE = FormatNbr((fud.windGenerator/25)*Game.windMax,0)
-				NewTooltip = NewTooltip.."Generates \255\255\255\0"..minWindE.."-"..maxWindE.." E/s\255\255\255\255 (up to +20% on higher ground) \n"
+				
+				local minWindE = WIND_INCOME_MULTIPLIER * math.min(Game.windMin,WIND_STR_CAP)
+				local maxWindE = WIND_INCOME_MULTIPLIER * math.min(Game.windMax,WIND_STR_CAP)
+				local avgWindE = (minWindE + maxWindE) / 2
+
+			   	local factor = 1
+			   	if gy then
+				   	if gy >= windGroundMax then
+						factor = 1 + WIND_ALTITUDE_EXTRA_INCOME_FRACTION
+					elseif gy < windGroundRef then
+						factor = 1
+					else
+						factor = 1 + ((gy-windGroundRef) / (windGroundMax-windGroundRef)) * WIND_ALTITUDE_EXTRA_INCOME_FRACTION
+					end
+				end
+				minWindE = minWindE * factor 
+				maxWindE = maxWindE * factor
+				avgWindE = avgWindE * factor
+			   	minWindE = FormatNbr(minWindE,0)
+			   	maxWindE = FormatNbr(maxWindE,0)
+			   	avgWindE = FormatNbr(avgWindE,0)
+				
+				NewTooltip = NewTooltip.."Generates \255\255\255\0"..minWindE.."-"..maxWindE.." E/s (avg "..avgWindE..")\255\155\155\155 (Altitude Bonus: +"..FormatNbr((factor-1)*100,1).."%)\255\255\255\255  \n"
 			elseif fud.tidalGenerator == 1 then
 				NewTooltip = NewTooltip.."Generates \255\255\255\0"..Game.tidal.." E/s\255\255\255\255\n"
 			end
@@ -675,6 +704,14 @@ function GenerateNewTooltip()
 				NewTooltip = NewTooltip.."    \255\200\200\200Metal: \255\0\255\0+"..FormatNbr(metalMake,1).."\255\255\255\255/\255\255\0\0"..FormatNbr(-metalUse,1)
 				NewTooltip = NewTooltip.."    \255\255\255\0Energy: \255\0\255\0+"..FormatNbr(energyMake,1).."\255\255\255\255/\255\255\0\0"..FormatNbr(-energyUse,1)
 				-- NewTooltip=NewTooltip.."\255\255\255\0     +E/M ratio: "..FormatNbr(energyMake / ud.metalCost,4).."\n"
+
+				if ud.windGenerator > 1 then
+					local eMade = spGetUnitRulesParam(u,"energy_made")
+					local eMadeFrames = spGetUnitRulesParam(u,"energy_made_frames")
+					if (eMadeFrames and eMadeFrames > 0) then
+						NewTooltip = NewTooltip.."\n\255\255\255\0Avg E/s produced: "..FormatNbr(eMade*30 / eMadeFrames,2).."\255\255\255\255\n"
+					end
+				end
 			end
 		
 			-- weapons

@@ -141,7 +141,7 @@ local jumpCmdDesc = {
 	name    = 'Jump',
 	cursor  = 'Jump', -- add with LuaUI? No.
 	action  = 'jump',
-	tooltip = 'Jump to selected position.',
+	tooltip = 'Jump to selected position',
 }
 
 

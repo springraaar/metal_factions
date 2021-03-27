@@ -659,7 +659,7 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 			--Spring.Echo("dx="..tostring(dx).." dz="..tostring(dz))
 			
 			-- bigger effect for expensive units
-			radius = radius + ud.metalCost / 100 
+			radius = radius + ud.metalCost / 1000 
 
 			
 			if (bp > 0.5) then
@@ -711,7 +711,7 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 			local radius = spGetUnitRadius(unitId)
 			
 			-- bigger effect for expensive units
-			radius = radius + ud.metalCost / 100 
+			radius = radius + ud.metalCost / 1000 
 			
 			spSpawnCEG(nanoExplosionCEG, physics[1],physics[2],physics[3],0,1,0,radius,radius)
 			spPlaySoundFile(nanoExplosionSound, math.min(1,math.max(0.2,radius/50)), physics[1], physics[2], physics[3])

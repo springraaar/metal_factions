@@ -187,7 +187,11 @@ if (true) then
 		if (unitDef.energymake and math.abs(tonumber(unitDef.energyuse)) < 3) then
 			unitDef.energyuse = 0
 		end
-		
+		-- activate units with builtin radar or sonar by default
+		if (unitDef.radardistance and tonumber(unitDef.radardistance) > 0) or (unitDef.sonardistance and tonumber(unitDef.sonardistance) > 0) then
+			unitDef.activatewhenbuilt = true
+		end
+
 		if (mv and tonumber(mv) > 0) then
 			mv = tonumber(mv)
 			-- disable transporting enemy units

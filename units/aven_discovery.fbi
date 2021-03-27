@@ -5,7 +5,7 @@
 	//********************
 	side=Aven;
 	name=Discovery;
-	description=Advanced Radar/Sonar Ship;
+	description=Radar/Sonar Ship;
 	iconType=shipradar;
 
 	//************************************************************
@@ -34,7 +34,7 @@
 	//*************
 	metalStorage=0;
 	energyMake=0;
-	energyUse=50;
+	energyUse=30;
 	energyStorage=0;
 
 	//************************************************************
@@ -74,8 +74,8 @@
 	//  Sight/Radar/Sonar
 	//*********************
 	sightDistance=500;
-	radarDistance=2500;
-	sonarDistance=1600;
+	radarDistance=2000;
+	sonarDistance=1200;
 
 	//************************************************************
 	//  Weapons
@@ -103,15 +103,15 @@
 
 	[customParams] 
 	{
-		builtBy=aven_adv_shipyard;
+		builtBy=aven_shipyard,aven_adv_shipyard;
 		evalfactor=0.85;//SHIP
 	}
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:EmgFlareMED;
 	}
-	buildCostEnergy=7448;//#AUTO#
-	buildCostMetal=1489;//#AUTO#
-	buildTime=17752;//#AUTO#
-	mass=971;//#AUTO#
+	buildCostEnergy=4928;//#AUTO#
+	buildCostMetal=985;//#AUTO#
+	buildTime=11746;//#AUTO#
+	mass=803;//#AUTO#
 }

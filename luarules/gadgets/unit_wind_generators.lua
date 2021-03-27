@@ -17,18 +17,25 @@ if (not gadgetHandler:IsSyncedCode()) then
     return
 end
 
+include("lualibs/constants.lua")
 
-local WIND_EXTRA_INCOME_MULTIPLIER = 0.6
-local WIND_ALTITUDE_EXTRA_INCOME_MULTIPLIER = 0.53 -- up to 20% more total output due to altitude 
 local windGeneratorIds = {}
 local windGeneratorUnitDefIds = {}
-local INCOME_DELAY = 15
+local INCOME_DELAY_FRAMES = 15
+local EXCESS_WIND_REDUCTION_MULT = 0.85 
 
-local groundMin,groundMax = 0
+local groundMin,groundMax,groundRef = 0
 local spGetWind = Spring.GetWind
 local spAddUnitResource = Spring.AddUnitResource
+local spGetUnitResources = Spring.GetUnitResources
 local spGetGroundHeight = Spring.GetGroundHeight
 local spGetUnitHealth = Spring.GetUnitHealth
+local spSetUnitRulesParam = Spring.SetUnitRulesParam 
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spGetUnitPosition = Spring.GetUnitPosition
+
+local totalWindStrength = 0
+local totalWindStrFrames = 0
 
 -- load wind gen unitdef ids
 function gadget:Initialize()
@@ -41,6 +48,7 @@ function gadget:Initialize()
 	-- make wind generation depend on ground height and map profile?
 	groundMin, groundMax = Spring.GetGroundExtremes()
 	groundMin, groundMax = math.max(groundMin,0), math.max(groundMax,1)
+	groundRef = 0.25*groundMax + 0.75*groundMin
 end
 
 -- mark wind generators
@@ -53,13 +61,21 @@ end
 
 -- extra income for wind generators
 function gadget:GameFrame(n)
-	if (n%INCOME_DELAY ~= 0) then
+	if (n%INCOME_DELAY_FRAMES ~= 0) then
 		return
 	end
 
 	local _, _, _, windStrength, x, _, z = spGetWind()
-	windStrength = (windStrength / 2) * WIND_EXTRA_INCOME_MULTIPLIER
-	local factor = 1
+	windStrength = (math.min(windStrength,WIND_STR_CAP) / 2)
+	
+	-- reduce wind strength to match the actual average it's supposed to have
+	windStrength = windStrength * EXCESS_WIND_REDUCTION_MULT
+
+	totalWindStrength = totalWindStrength + windStrength
+	totalWindStrFrames = totalWindStrFrames + INCOME_DELAY_FRAMES
+	--Spring.Echo(n.." avg wind="..(totalWindStrength * 30/totalWindStrFrames))
+	
+	local frac = 0
 	local x,y,z = 0
 	for unitID,_ in pairs(windGeneratorIds) do
 		factor = 1
@@ -67,20 +83,32 @@ function gadget:GameFrame(n)
 		local _,_,_,_,bp = spGetUnitHealth(unitID)
 		if bp >= 1 then
 			if y >= groundMax then
-				factor = 1 + WIND_ALTITUDE_EXTRA_INCOME_MULTIPLIER
-			elseif y < groundMin then
-				factor = 1
+				frac =  WIND_ALTITUDE_EXTRA_INCOME_FRACTION
+			elseif y < groundRef then
+				frac = 0
 			else
-				factor = 1 + (y / groundMax) * WIND_ALTITUDE_EXTRA_INCOME_MULTIPLIER
+				frac = ((y-groundRef) / (groundMax-groundRef)) * WIND_ALTITUDE_EXTRA_INCOME_FRACTION
 			end
+			spSetUnitRulesParam(unitID,"wind_altitude_frac",frac)
 			
-			--Spring.Echo("alt="..string.format("%.0f",y).." factor="..string.format("%.2f",factor).." windStrength="..string.format("%.1f",windStrength))
+			-- also add the (MFmultiplier -1)*windStrength to account for the base output of windgens not actually being scaled by the engine
+			-- multiply it again by x to account for the fact that the base value already received through builtin engine behavior is also higher than it should
+			-- 1.6 * windS = (1.6 - 1) * x * windS + windS / EXCESS_WIND_REDUCTION_MULT
+			-- 1.6 = 0.6x + 1.18  ---> x = 0.7
+			spAddUnitResource(unitID, "e", (WIND_INCOME_MULTIPLIER -1) * 0.7 * windStrength + windStrength * WIND_INCOME_MULTIPLIER * frac)
 			
-			if (factor > 1) then
-				spAddUnitResource(unitID, "e", windStrength * factor)
-			else
-				spAddUnitResource(unitID, "e", windStrength)
+			-- store averages
+			local _,_,energyMake,_ = spGetUnitResources(unitID)
+			local oldEMade = spGetUnitRulesParam(unitID,"energy_made")
+			if (not oldEMade) then
+				oldEMade = 0
 			end
+			local oldEMadeFrames = spGetUnitRulesParam(unitID,"energy_made_frames")
+			if (not oldEMadeFrames) then
+				oldEMadeFrames = 0
+			end
+			spSetUnitRulesParam(unitID,"energy_made",oldEMade+energyMake/2)
+			spSetUnitRulesParam(unitID,"energy_made_frames",oldEMadeFrames+INCOME_DELAY_FRAMES)
 		end
 	end
 end

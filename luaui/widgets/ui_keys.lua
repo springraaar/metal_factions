@@ -139,7 +139,7 @@ function widget:Initialize()
 			unbindKey("j")
 			Spring.SendCommands("bind j jump")
 			Spring.SendCommands("bind Shift+j jump")
-			WG.customHotkeys["jump"] = j
+			WG.customHotkeys["jump"] = "j"
 		end
 	end
 end

@@ -142,6 +142,8 @@ local function tooltipExtension(tooltip,cmdAction)
 			tooltip = tooltip .. "."..tooltipHotkey("s","stop")
 		elseif cmdAction == "wait" then
 			tooltip = tooltip .. "."..tooltipHotkey("w","wait")
+		elseif cmdAction == "jump" then
+			tooltip = tooltip .. "."..tooltipHotkey("j","jump")
 		elseif cmdAction == "attack" then
 			tooltip = tooltip .. ". Click-drag to attack targets within an area."..tooltipHotkey("a","attack")
 		elseif cmdAction == "fight" then
