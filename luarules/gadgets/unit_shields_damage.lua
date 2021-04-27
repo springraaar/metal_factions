@@ -121,13 +121,15 @@ local disruptorWaveUnitDefId = UnitDefNames["aven_bass"].id
 local magnetarUnitDefId = UnitDefNames["sphere_magnetar"].id
 local magnetarWeaponDefId = WeaponDefNames["sphere_magnetar_blast"].id
 local magnetarAuraWeaponDefId = WeaponDefNames["sphere_magnetar_aura_blast"].id
+local fireBurnDOTWeaponDefId = WeaponDefNames["gear_fire_burn_damage"].id
 
 local notDirectlyUpgradedWeaponDefIds = {
 	[-1] = true,		-- burning damage
 	[WeaponDefNames["sphere_magnetar_aura_blast"].id] = true,
 	[WeaponDefNames["aven_bass_disruptor_effect"].id] = true,
 	[WeaponDefNames["gear_fire_effect"].id] = true,
-	[WeaponDefNames["gear_fire_effect2"].id] = true
+	[WeaponDefNames["gear_fire_effect2"].id] = true,
+	[fireBurnDOTWeaponDefId] = true
 }
 
 local scoperBeaconDefIds = {
@@ -142,7 +144,8 @@ local burningImmuneDefIds = {
 	[UnitDefNames["gear_u5commander"].id] = true,
 	[UnitDefNames["gear_firestorm"].id] = true,
 	[UnitDefNames["gear_cloakable_cube"].id] = true,
-	[UnitDefNames["gear_cube"].id] = true
+	[UnitDefNames["gear_cube"].id] = true,
+	[UnitDefNames["gear_burner"].id] = true
 }
 
 local burningEffectWeaponDefIds = {
@@ -392,7 +395,7 @@ function gadget:GameFrame(n)
 			else
 				dmg = FIRE_DMG_PER_STEP
 			end
-			spAddUnitDamage(unitID,dmg,0,data.attackerID)
+			spAddUnitDamage(unitID,dmg,0,data.attackerID,fireBurnDOTWeaponDefId)
 	
 			-- spawn CEG
 			radius = spGetUnitRadius(unitID)
@@ -558,6 +561,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
         		xpMod = 1+0.35*(xp/(xp+1))
             end		 
         	damage = damage	* xpMod
+        	--Spring.Echo("xpMod : "..xpMod)
 		end
 	end
 
@@ -572,7 +576,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		end
 		if dmgMod and dmgMod ~= 0 then
 			damage = damage	* (1 + dmgMod)
-			--Spring.Echo("deals more dmg : "..damage.." (x"..(1+dmgMod)..")")
+			--Spring.Echo("dmgMod : "..(1+dmgMod))
 		end
 	end
 	

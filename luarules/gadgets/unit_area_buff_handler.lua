@@ -31,6 +31,7 @@ local UNDERWATER_SLOW_SPEED_THRESHOLD = 0.9*30
 local UNDERWATER_EXTRA_SPEED_MOD = 0.5
 
 local spAddUnitDamage = Spring.AddUnitDamage
+local spGetUnitExperience = Spring.GetUnitExperience
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitRadius = Spring.GetUnitRadius
 local spGetUnitStates = Spring.GetUnitStates
@@ -205,6 +206,15 @@ function gadget:GameFrame(n)
 
 	for uId,p in pairs(autoBuildUnitIds) do
 		spSpawnCEG(autoBuildCEG, p[1],p[2],p[3])
+	end
+
+	-- set rules param with experience, for public display
+	local xp = 0
+	for _,unitId in ipairs(allUnits) do
+		xp = spGetUnitExperience(unitId)
+		if (xp) then
+			spSetUnitRulesParam(unitId, "experience",xp,{public = true})
+		end
 	end
 	
 	if (n%AREA_CHECK_DELAY == 0) then

@@ -106,6 +106,15 @@ local scoperBeacons = {}
 local comsatBeaconDefId = UnitDefNames["cs_beacon"].id
 local scoperBeaconDefId = UnitDefNames["scoper_beacon"].id
 
+
+local TOTEM_COST_FRACTION = 0.03
+local TOTEM_MAX_CHARGES = 1000
+local TOTEM_MAX_METAL = 300
+local TOTEM_SQ_RADIUS = 600*600
+local totemDefId = UnitDefNames["claw_totem"].id
+local totemUnitIds = {}
+
+
 local maxSlopeByUnitDefId = {}
 local stuckGroundUnitIds = {}
 
@@ -380,6 +389,9 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 	if ud.name == "sphere_magnetar" then
 		magnetarUnitIds[unitId] = true
 	end
+	if (unitDefId == totemDefId ) then
+		totemUnitIds[unitId] = true
+	end
 
 	if (unitDefId == comsatBeaconDefId ) then
 		comsatBeacons[unitId] = 1
@@ -574,7 +586,9 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 	if magnetarUnitIds[unitId] then
 		magnetarUnitIds[unitId] = nil
 	end
-
+	if (totemUnitIds[unitId] ) then
+		totemUnitIds[unitId] = nil
+	end
 	if comsatBeacons[unitId] then
 		comsatBeacons[unitId] = nil
 	end
@@ -597,7 +611,7 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 	end
 	
 	local _,_,_,_,bp = spGetUnitHealth(unitId)
-
+	local checkTotems = false
 	-- if unit is an aircraft which leaves no wreckage, spawn some debris
 	local ud = UnitDefs[unitDefId]
 	--Spring.Echo("unit destroyed")
@@ -606,6 +620,7 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 			--Spring.Echo("aircraft destroyed "..tostring(ud.wreckName))
 			local physics = unitPhysicsById[unitId]
 			if (physics ~= nil) then
+				checkTotems = true
 				--Spring.Echo("aircraft destroyed had physics!")
 				local metalAmount = ud.metalCost * AIRCRAFT_DEBRIS_METAL_FACTOR
 				local fId = nil
@@ -718,6 +733,31 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 		end
 	end
 
+	-- charge totems (only from fully built units)
+	if ud and bp == 1 and (not destructibleProjectileDefIds[unitDefId]) and (unitDefId ~= comsatBeaconDefId) and (unitDefId ~= scoperBeaconDefId) and not isDrone(ud) then
+		local metalCost = 0
+		if ud.customParams and ud.customParams.iscommander then
+			metalCost = 500
+			--Spring.Echo("commander died")
+		else
+			metalCost = ud.metalCost
+		end
+		local totalTotemChargesToAdd = TOTEM_COST_FRACTION * metalCost * TOTEM_MAX_CHARGES / TOTEM_MAX_METAL  
+		local physics = unitPhysicsById[unitId]
+		local totemPhysics = nil
+		local affectedTotemIds = {}
+		for tId,_ in pairs(totemUnitIds) do
+			totemPhysics = unitPhysicsById[tId]
+			if sqDistance(physics[1],totemPhysics[1],physics[3],totemPhysics[3]) < TOTEM_SQ_RADIUS then
+				affectedTotemIds[#affectedTotemIds+1] = tId
+			end
+		end
+		local affectedTotems = #affectedTotemIds
+		for _,tId in ipairs(affectedTotemIds) do
+			--Spring.Echo("totem "..tId.." charges="..floor(totalTotemChargesToAdd / affectedTotems))
+			spCallCOBScript(tId, "addCharges", 0, floor(totalTotemChargesToAdd / affectedTotems))
+		end
+	end
 	unitPhysicsById[unitId] = nil
 end
 

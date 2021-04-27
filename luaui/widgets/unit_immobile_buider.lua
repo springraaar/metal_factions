@@ -116,6 +116,7 @@ function widget:Initialize()
 	for _,unitID in ipairs(spGetTeamUnits(spGetMyTeamID())) do
 		local unitDefID = spGetUnitDefID(unitID)
 		if (IsImmobileBuilder(UnitDefs[unitDefID])) then
+			immobileBuilders[unitID] = true
 			SetupUnit(unitID)
 		end
 	end
@@ -174,14 +175,17 @@ function widget:GameFrame(frame)
 					end		
 				end
 			end
+		else
+			if (not idlers[unitID]) then
+				idlers[unitID] = frame
+			end
 		end
 	end
   
 	for unitID, f in pairs(idlers) do
-		local idler = idlers[k]
 		if ((frame - f) > idleFrames) then
-			local cmds = spGetUnitCommands(unitID,0)
-			if (cmds and cmds > 0) then
+			local cmds = spGetUnitCommands(unitID,5)
+			if (cmds and #cmds > 0) then
 				idlers[unitID] = nil				
 			else
 				SetupUnit(unitID)

@@ -20,8 +20,8 @@ energyTransactions() {
 		while( get BUILD_PERCENT_LEFT ) {
 			sleep 100;
 		}
-		call-script lua_energyTransaction(5*activationLevel);  // divided by 20 on the gadget
-		call-script lua_metalTransaction(1*activationLevel);   
+		call-script lua_energyTransaction(5*activationLevel);  
+		call-script lua_metalTransaction(1*activationLevel);   // divided by 20 on the gadget
 		sleep 467;		// 15 frames
 	}
 }

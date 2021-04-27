@@ -73,7 +73,15 @@ local function SpawnStartUnit(teamID)
             or ((z>Game.mapSizeZ/2) and "north" or "south")
         local unitID = Spring.CreateUnit(startUnit, x, y, z, facing, teamID)
 
+		-- spawn test units
+		--local xpArr = {0.1, 0.3, 0.4, 0.7, 1, 1.3, 1.8, 2.7, 4.5, 10}
+		--for i=0,9 do
+		--	local uId = Spring.CreateUnit("aven_trooper", 100+i*50,100,100,"s",teamID)
+		--	Spring.SetUnitExperience(uId,xpArr[i%10 +1],100)
+		--end
     end
+
+
 
     -- set start resources, either from mod options or custom team keys
     local teamOptions = select(7, Spring.GetTeamInfo(teamID))

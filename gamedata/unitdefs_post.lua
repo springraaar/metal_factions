@@ -228,6 +228,10 @@ if (true) then
 			 --end
 		else
 			local factionBuilding = false
+			if name == "claw_totem" then
+				unitDef.builder = true
+				unitDef.workertime = 1
+			end
 			
 			if string.sub(name,1,5) == "aven_" then
 				unitDef.buildinggrounddecaltype = "building_aven.dds"

@@ -68,8 +68,8 @@ local HIGH_ANGLE_DESCENT_FAR_FROM_TARGET_H = 500
 local HIGH_ANGLE_DESCENT_FAR_TARGET_DIST = 250
 
 -- terminal phase
-local LONG_RANGE_ROCKET_TERMINAL_DIST = 800
-local LONG_RANGE_ROCKET_SUBMUNITION_DIST = 600
+local LONG_RANGE_ROCKET_TERMINAL_SQDIST = 800*800
+local LONG_RANGE_ROCKET_SUBMUNITION_SQDIST = 600*600
 
 local LONG_RANGE_ROCKET_NON_TERMINAL_LIMIT_SQV = 277
 local LONG_RANGE_PREMIUM_ROCKET_NON_TERMINAL_LIMIT_SQV = 2304
@@ -87,7 +87,7 @@ local submunitionRocketWeaponIds = {
 
 
 -- detonate when very close to target
-local LONG_RANGE_ROCKET_DETONATE_DIST = 80
+local LONG_RANGE_ROCKET_DETONATE_SQDIST = 80*80
 
 local DC_ROCKET_DEPLOY_LIMIT_H = 300
 local DC_ROCKET_AUTO_BUILD_STEPS = 10
@@ -237,7 +237,7 @@ end
 
 -- is close enough to enter the terminal phase
 function isTerminalPhase(px,py,pz,tx,ty,tz)
-	if (abs(px-tx) < LONG_RANGE_ROCKET_TERMINAL_DIST) and (abs(pz-tz) < LONG_RANGE_ROCKET_TERMINAL_DIST and abs(py-ty) < LONG_RANGE_ROCKET_TERMINAL_DIST) then
+	if (px-tx)*(px-tx)+(py-ty)*(py-ty)+(pz-tz)*(pz-tz) < LONG_RANGE_ROCKET_TERMINAL_SQDIST then
 		return true
 	end 
 	return false
@@ -246,7 +246,7 @@ end
 
 -- is close enough to enter the terminal phase
 function isSubmunitionDeploymentPhase(px,py,pz,tx,ty,tz)
-	if (abs(px-tx) < LONG_RANGE_ROCKET_SUBMUNITION_DIST) and (abs(pz-tz) < LONG_RANGE_ROCKET_SUBMUNITION_DIST and abs(py-ty) < LONG_RANGE_ROCKET_SUBMUNITION_DIST) then
+	if (px-tx)*(px-tx)+(py-ty)*(py-ty)+(pz-tz)*(pz-tz) < LONG_RANGE_ROCKET_SUBMUNITION_SQDIST then
 		return true
 	end 
 	return false
@@ -254,7 +254,7 @@ end
 
 -- is just about to hit the target
 function isAboutToCollide(px,py,pz,tx,ty,tz)
-	if (abs(px-tx) < LONG_RANGE_ROCKET_DETONATE_DIST) and (abs(pz-tz) < LONG_RANGE_ROCKET_DETONATE_DIST and abs(py-ty) < LONG_RANGE_ROCKET_DETONATE_DIST) then
+	if (px-tx)*(px-tx)+(py-ty)*(py-ty)+(pz-tz)*(pz-tz) < LONG_RANGE_ROCKET_DETONATE_SQDIST then
 		return true
 	end 
 	return false

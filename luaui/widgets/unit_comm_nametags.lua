@@ -5,7 +5,7 @@ function widget:GetInfo()
     author    = "Bluestone, Floris, tweaked by raaar",
     date      = "26 april 2018",
     license   = "GNU GPL, v2 or later",
-    layer     = -10,
+    layer     = 12,
     enabled   = true,
   }
 end
@@ -16,7 +16,7 @@ end
 
 local nameScaling			= true
 local useThickLeterring		= true
-local heightOffset			= 50
+local heightOffset			= 60
 local fontSize				= 15		-- not real fontsize, it will be scaled
 local scaleFontAmount		= 120
 local fontShadow			= true		-- only shows if font has a white outline

@@ -1,3 +1,56 @@
+2021/04/27 ------------------ NOTES v1.54 ----------------------
+
+
+--- new units
+
+- added GEAR "Rattler" : Heavy infantry bot with M lasers
+
+- added CLAW "Totem" : Hardened resource collector
+
+
+--- Balance / Mechanics
+
+- made cube buildable by AI, it had the wrong builder attribute
+
+- increased the HP bonus from the major HP upgrade from 10 to 11%
+
+- reduced minimum water depth for medium and large ships from 18, 30 to 10, 15
+
+- GEAR "Burner" can no longer be set on fire
+
+- fire burn damage over time now scales with unit experience
+
+- CLAW "Breaker" will now avoid targetting air units
+- CLAW "Breaker" and "Flail" shotguns have a narrower spray angle
+
+- fixed issue where construction towers would sometimes no longer auto-patrol when idle
+
+- fixed reload times on a few dozen weapons which were slightly off of multiples of 33ms
+
+- fixed transport drones for some factions being reclaimable/capturable
+
+- slightly reduced the collision volume of light laser towers to avoid exploits where they get shot at without firing back
+
+- increased damage/s for most anti-ground aircraft by 10-20% and adjusted costs
+- AVEN "Gryphon" rockets had their damage increased and type changed from M to H, but got 28% more expensive
+
+- SPHERE "Shine" turns a bit faster
+- modified distance checks for long range destructible rockets to make them more consistently targetable regardless of the direction they're travelling
+- SPHERE "Meteorite" rocket got its speed reduced from 450 to 400
+
+
+--- UI / Visual / Audio
+
+- added camera flip widget, bound to ctrl-shift-o 
+(rotates player view 180º : SW becomes NW)
+
+- combat experience is now visible for enemy units as well
+- combat experience icons will show up above each unit
+
+- added ally cursors widget 
+
+
+
 2021/03/27 ------------------ NOTES v1.53 ----------------------
 
 

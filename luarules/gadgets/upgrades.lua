@@ -51,7 +51,7 @@ local modifiersByUpgrade = {
 	upgrade_green_2_commander_hp = { hp = 0.15, restrictions = "commander", limit = 2, type = TYPE_COMMANDER },
 
 	upgrade_green_3_regen = { regen = 3, php_regen = 0.002, limit = 1, type = TYPE_MAJOR },
-	upgrade_green_3_hp = { hp=0.1, limit = 1, type = TYPE_MAJOR },
+	upgrade_green_3_hp = { hp=0.11, limit = 1, type = TYPE_MAJOR },
 
 -- utility / blue
 

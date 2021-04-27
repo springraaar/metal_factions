@@ -643,7 +643,7 @@ function GenerateNewTooltip()
 			health = health * hpMod
 			maxHealth = maxHealth * hpMod
 			-- experience
-			local xp = spGetUnitExperience(u)
+			local xp = spGetUnitRulesParam(u,"experience") or 0
 			local xpMod = 1
 			if xp and xp>0 then
 				local xpIndex = min(10,max(floor(11*xp/(xp+1)),0))+1
@@ -718,7 +718,7 @@ function GenerateNewTooltip()
 			NewTooltip = NewTooltip..GetTooltipWeaponData(ud,xpMod,rangeMod,dmgMod).."\n"
 		  
 			-- build power
-			if ud.buildSpeed and ud.buildSpeed > 0 then
+			if ud.buildSpeed and ud.buildSpeed > 1 then
 				NewTooltip = NewTooltip.."\n"..GetTooltipBuildPower(ud.buildSpeed)..  "\255\255\255\255\n"
 			end
                         
