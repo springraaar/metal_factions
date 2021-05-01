@@ -438,7 +438,7 @@ function processCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
 			i = i + 1
 		end
 		
-		Spring.PlaySoundFile('GENERICCMD', 1)
+		Spring.PlaySoundFile('GENERICCMD', 0.6)
 		return true, true
 	end
 	return false

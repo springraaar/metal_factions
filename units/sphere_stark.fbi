@@ -58,7 +58,7 @@
 	//  Movement
 	//************
 	maxSlope=20;
-	maxWaterDepth=22;
+
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -82,6 +82,8 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
+	floater=1;
+	waterline=0;
 	collisionVolumeType = box;
 	collisionVolumeScales =58 50 58;
 	collisionVolumeOffsets = 0 1 0;

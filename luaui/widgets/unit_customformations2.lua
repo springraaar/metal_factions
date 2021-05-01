@@ -574,7 +574,7 @@ function widget:MouseRelease(mx, my, mButton)
 				end
 			end
 			
-			Spring.PlaySoundFile('GENERICCMD', 1)
+			Spring.PlaySoundFile('GENERICCMD', 0.8)
 		end
 		
 		

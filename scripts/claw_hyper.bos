@@ -3,9 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, turbase, turret, sleeve, llauncher, lflare,rlauncher,rflare,r1,r2,r3,l1,l2,l3, b1,b2,b3,b4,ldoor,rdoor,bottom,aimpt;
+piece  base, turbase, turret, sleeve, llauncher, lflare,rlauncher,rflare,r1,r2,r3,l1,l2,l3, b1,b2,b3,b4,ldoor,rdoor,bottom,aimpt,floatbase;
 
-static-var  gun_1,canAim;
+static-var  gun_1,canAim,isFloating;
 
 // Signal definitions
 #define SIG_AIM				2
@@ -179,6 +179,15 @@ checkIncomingMissile(fireState, needToOpen) {
 
 Create()
 {
+	hide floatbase;
+	isFloating = FALSE;
+	if ( GET GROUND_WATER_HEIGHT(GET UNIT_XZ) < [0])
+	{
+		isFloating = TRUE;
+		show floatbase;
+		move base to y-axis [2] now;
+	}
+	
 	hide lflare;
 	hide rflare;
 	move aimpt to y-axis [40.000000] now;
@@ -223,16 +232,22 @@ QueryPrimary(piecenum)
 
 Killed(severity, corpsetype)
 {
-	hide lflare;
-	hide rflare;
-	
 	if( severity <= 50 )
 	{
+		if (isFloating) 
+		{
+			corpsetype = 1;
+		}
+		if (!isFloating) 
+		{
+			corpsetype = 2;
+		}
 		explode turret type SHATTER;
 		explode llauncher type SHATTER;
 		explode rlauncher type SHATTER;
-		return (1);
+		return corpsetype;
 	}
+
 	explode base type SHATTER;
 	explode ldoor type SHATTER;
 	explode rdoor type SHATTER;
@@ -241,5 +256,5 @@ Killed(severity, corpsetype)
 	explode sleeve type SHATTER;
 	explode llauncher type SHATTER;
 	explode rlauncher type SHATTER;
-	return (2);
+	return (3);
 }

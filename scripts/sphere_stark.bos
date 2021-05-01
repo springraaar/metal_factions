@@ -3,9 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, base2, turret, sleeve, barrel, flare, tl, tr, tl2,tl3, tr2,tr3;
+piece  base, base2, turret, sleeve, barrel, flare, tl, tr, tl2,tl3, tr2,tr3,floater,floater2;
 
-static-var  restore_delay;
+static-var  isFloating;
 
 // Signal definitions
 #define SIG_AIM				2
@@ -44,18 +44,22 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 Create()
 {
-	restore_delay = 10000;
+	hide floater;
+	hide floater2;
+	isFloating = FALSE;
+	if ( GET GROUND_WATER_HEIGHT(GET UNIT_XZ) < [0])
+	{
+		isFloating = TRUE;
+		show floater;
+		show floater2;
+	}
+	
 	start-script SmokeUnit();
-}
-
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
 }
 
 RestoreAfterDelay()
 {
-	sleep restore_delay;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
 	turn turret to y-axis <0.000000> speed <160.016484>;
 	turn sleeve to x-axis <0.000000> speed <160.005495>;
 }
@@ -111,17 +115,26 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-
 	if( severity <= 50 )
 	{
+		if (isFloating) 
+		{
+			corpsetype = 1;
+		}
+		if (!isFloating) 
+		{
+			corpsetype = 2;
+		}
+		explode turret type SHATTER;
 		explode sleeve type SHATTER;
-		return (1);
+		return corpsetype;
 	}
+
 	explode base type SHATTER;
 	explode base2 type SHATTER;
 	explode turret type SHATTER;	
 	explode sleeve type SHATTER;
 	explode tl type SHATTER;
 	explode tr type SHATTER;
-	return (2);
+	return (3);
 }

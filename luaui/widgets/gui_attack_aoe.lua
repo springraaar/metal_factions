@@ -631,14 +631,16 @@ function widget:DrawWorld()
             local wd=WeaponDefs[w.weaponDef]
             if wNum > 1 and wd.isShield == false and wd.description ~= "No Weapon" then
               range = spGetUnitWeaponState(selUnitID,wNum,"range")
-              if (wd.type == "TorpedoLauncher") then
-                glColor(0.7, 0.35, 1, 0.5)
-              else
-                glColor(1, 0.35, 0.35, 0.5)
+              if range then
+                if (wd.type == "TorpedoLauncher") then
+                  glColor(0.7, 0.35, 1, 0.5)
+                else
+                  glColor(1, 0.35, 0.35, 0.5)
+                end
+                glLineWidth(2)
+                glDrawGroundCircle(fx, fy, fz, range, 50)
+                glColor(1,1,1,1)
               end
-              glLineWidth(2)
-              glDrawGroundCircle(fx, fy, fz, range, 50)
-              glColor(1,1,1,1)
             end
           end
         end

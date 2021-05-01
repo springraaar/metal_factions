@@ -3,9 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, flare, turret, barrel, launcher;
+piece  base, flare, turret, barrel, launcher, floatbase, fb2;
 
-static-var  gun_1;
+static-var  isFloating;
 
 // Signal definitions
 #define SIG_AIM				2
@@ -44,6 +44,16 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 Create()
 {
+	hide floatbase;
+	hide fb2;
+	isFloating = FALSE;
+	if ( GET GROUND_WATER_HEIGHT(GET UNIT_XZ) < [0])
+	{
+		isFloating = TRUE;
+		show floatbase;
+		show fb2;
+	}
+
 	start-script SmokeUnit();
 	return (0);
 }
@@ -97,16 +107,24 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-
 	if( severity <= 50 )
 	{
+		if (isFloating) 
+		{
+			corpsetype = 1;
+		}
+		if (!isFloating) 
+		{
+			corpsetype = 2;
+		}
 		explode launcher type SHATTER;
 		explode barrel type SHATTER;
-		return (1);
+		return corpsetype;
 	}
+
 	explode base type SHATTER;
 	explode turret type SHATTER;
 	explode launcher type SHATTER;
 	explode barrel type SHATTER;
-	return (2);
+	return (3);
 }

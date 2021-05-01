@@ -61,7 +61,6 @@
 	//  Movement
 	//************
 	maxSlope=20;
-	maxWaterDepth=5;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -86,7 +85,8 @@
 	//  Miscellaneous
 	//*****************
 	damagemodifier=0.5;
-	digger=1;
+	floater=1;
+	waterline=0;
 
 	[CustomParams]
 	{

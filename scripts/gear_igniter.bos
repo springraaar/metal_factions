@@ -12,6 +12,9 @@ piece  base, turret, sleeve, flare, fwheell, fwheelr,  bwheell, bwheelr, b2, b3,
 
 #include "aimhelper1.h"
 
+lua_checkAllowFiring() { return 0; }
+lua_checkLockTarget() { return 0; }
+
 // Signal definitions
 #define SIG_AIM				2
 
@@ -102,8 +105,18 @@ RestoreAfterDelay()
 	turn sleeve to y-axis <0.000000> speed <100.000000>;
 }
 
-AimPrimary(heading, pitch)
+AimPrimary(heading, pitch, canFire)
 {
+	// overkill prevention check
+	canFire = (get GAME_FRAME) - (get WEAPON_RELOADSTATE(1)) > 0;
+	if (canFire) {
+		call-script lua_checkAllowFiring(1,(get TARGET_ID(1)),LOCK_INCENDIARY);
+		canFire = get LUA1;
+	}
+	if (!canFire) {
+		return (0);
+	}
+	
 	call-script updateAimHelper1(heading,pitch,<300>,<300>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
@@ -121,6 +134,7 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
+	call-script lua_checkLockTarget(get TARGET_ID(1),LOCK_INCENDIARY);
 	emit-sfx 1024 from flare;
 	move mis to z-axis [-3] now;
 	sleep 5000;

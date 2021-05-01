@@ -97,3 +97,10 @@
 	// 3 - all features always visible	(default)
 	featureVisibility = 2;
 }
+
+[SYSTEM]
+{
+	pathFinderSystem = 0; // 0- legacy, 1- QTPFS
+	pathFinderUpdateRate = 0.002;	// default is 0.007
+	pathFinderRawDistMult = 1.25;	// default is 1.25
+}

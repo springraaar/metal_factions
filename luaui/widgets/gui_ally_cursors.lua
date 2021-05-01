@@ -240,7 +240,7 @@ end
 function widget:DrawWorldPreUnit()
   if Spring.IsGUIHidden() then return end
   glDepthTest(true)
-  glTexture('LuaUI/Images/AlliedCursors.png')
+  glTexture('luaui/images/alliedCursor.png')
   glPolygonOffset(-7,-10)
   local time = clock()
 

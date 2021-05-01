@@ -2270,6 +2270,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitPower=2;
+		reaimTime=1;
 		expDmgScaling=1;
 	}
 	[DAMAGE]
@@ -10518,23 +10519,23 @@
 }
 [gear_box_laser]
 {
-	name=Laser;
+	name=Medium Laser;
 	weaponType=BeamLaser;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
-	beamTime=0.05;
-	thickness=2.123;
-	coreThickness=0.55;
-	intensity=0.85;
+	beamTime=0.1;
+	thickness=2.888;
+	coreThickness=0.6;
+	intensity=0.88; 
 	turret=1;
 	range=380;
 	minIntensity=1.0;
-	reloadTime=1;
-	energyPerShot=20;
+	reloadTime=2.7;
+	energyPerShot=66;
 	projectiles=2;
 	weaponVelocity=1533;
 	areaOfEffect=8;
 	soundTrigger=1;
-	soundStart=lasrfir1;
+	soundStart=lasrfir3;
 	soundHit=lasrhit2;
 	fireStarter=50;
 	scrollSpeed=0;
@@ -10547,18 +10548,18 @@
 	avoidFeature=0;
 	[CUSTOMPARAMS]
 	{
-		hitPower=1;
+		hitPower=2;
 		reaimTime=1;
 		aaRangeBoost=1;
 		expDmgScaling=1;
 	}
 	[DAMAGE]
 	{
-		default=50;
+		default=100;
 		group_invincible=1;
-		armor_heavy=12;//#AUTO#
-		armor_medium=25;//#AUTO#
-		armor_light=50;//#AUTO#
+		armor_heavy=50;//#AUTO#
+		armor_medium=100;//#AUTO#
+		armor_light=100;//#AUTO#
 	}
 }
 [gear_rhino_laser]
@@ -13646,13 +13647,13 @@
 	turret=1;
 	model=weapon_amprocket.3do;
 	range=620;
-	reloadTime=2.4;
+	reloadTime=1.8;
 	flightTime=2;
 	fixedLauncher=1;
-	weaponVelocity=380;
+	weaponVelocity=400;
 	startVelocity=300;
 	projectiles=1;
-	weaponAcceleration=30;
+	weaponAcceleration=50;
 	areaOfEffect=60;
 	metalPerShot=0;
 	soundStart=amprockfire;
@@ -16895,7 +16896,6 @@
 	areaOfEffect=32;
 	soundStart=ringfire2;
 	soundHit=ringhit;
-	burnBlow=1;
 	energyPerShot=3500;
 	tolerance=3000;
 	interceptedByShieldType=1;
@@ -16904,7 +16904,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
-		evalFactor=1.3; // compensation for piercing effect
+		evalFactor=1.25; // compensation for piercing effect
 		expDmgScaling=1;
 	}
 	[DAMAGE]

@@ -86,6 +86,8 @@ local spGetUnitIsStunned = Spring.GetUnitIsStunned
 local spGetUnitNearestEnemy = Spring.GetUnitNearestEnemy
 local spGetGameFrame = Spring.GetGameFrame
 local spGetUnitTransporter = Spring.GetUnitTransporter
+local spSpawnCEG = Spring.SpawnCEG
+local spPlaySoundFile = Spring.PlaySoundFile
 local max = math.max
 local random = math.random
 
@@ -401,8 +403,8 @@ function gadget:GameFrame(n)
 			radius = spGetUnitRadius(unitID)
 			if radius ~= nil then
 				local h = radius / 3
-				Spring.SpawnCEG(BURNING_CEG, x - h + 2*h*random(), y+h, z - h + 2*h*random(), 0, 1, 0,radius ,radius)
-				Spring.PlaySoundFile(BURNING_SOUND, 4, x, y+h, z)
+				spSpawnCEG(BURNING_CEG, x - h + 2*h*random(), y+h, z - h + 2*h*random(), 0, 1, 0,radius ,radius)
+				spPlaySoundFile(BURNING_SOUND, 1, x, y+h, z)
 		
 				-- update table
 				if (data.steps > 1) then
@@ -544,8 +546,8 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		if (showEffect) then
 			local _,_,_,x,y,z = spGetUnitPosition(unitID,true)
 			if x ~= nil then
-				Spring.SpawnCEG(EMP_CEG, x - 10 + math.random(20), y, z - 10 + math.random(20), 0, 1, 0,30 ,30)
-				Spring.PlaySoundFile(EMP_SOUND, 4, x, y, z)
+				spSpawnCEG(EMP_CEG, x - 10 + math.random(20), y, z - 10 + math.random(20), 0, 1, 0,30 ,30)
+				spPlaySoundFile(EMP_SOUND, 0.5, x, y, z)
 			end
 		end
 	end

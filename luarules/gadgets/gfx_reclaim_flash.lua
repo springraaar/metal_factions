@@ -42,7 +42,7 @@ function gadget:FeatureDestroyed(featureID,allyteam)
 			else
 				local radius = tonumber(Spring.GetFeatureRadius(featureID))
 				Spring.SpawnCEG(dceg, fx, fy, fz, 0, 1, 0,radius ,radius)
-				Spring.PlaySoundFile('FEATURECRUSH', 1, fx, fy, fz)
+				Spring.PlaySoundFile('FEATURECRUSH', 0.7, fx, fy, fz)
 			end
 		end
 	end
