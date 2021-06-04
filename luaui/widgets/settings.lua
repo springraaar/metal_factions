@@ -26,8 +26,11 @@ function widget:Initialize()
 	-- set max nano particles to 10000
 	Spring.SetConfigInt("MaxNanoParticles",10000)
 	
-	-- set scrollwheel speed to -25
-	Spring.SetConfigInt("ScrollWheelSpeed",-25)
+	-- set scrollwheel speed to -25 if >= 0
+	local swSpeed = Spring.GetConfigInt("ScrollWheelSpeed")
+	if (swSpeed and swSpeed >=0) then
+		Spring.SetConfigInt("ScrollWheelSpeed",-25)
+	end
 	
 	-- disable clock and fps (widget is used instead)
 	Spring.SendCommands("clock 0")

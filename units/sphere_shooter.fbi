@@ -3,29 +3,29 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Claw;
-	name=Ringo;
-	description=Raider/Skirmisher Robot;
-	iconType=mobileraider;
+	side=SPHERE;
+	name=Shooter;
+	description=Light Missile Turret;
+	iconType=staticfighter;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW LEVEL1 WEAPON NOTAIR NOTSUB;
+	category=SPHERE LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitName=claw_ringo;
-	objectName=claw_ringo.3do;
-	corpse=claw_ringo_dead;
-	buildPic=claw_ringo.png;
-	soundCategory=CLAW_BOTSML;
+	unitName=sphere_shooter;
+	objectName=sphere_shooter.3do;
+	corpse=sphere_shooter_dead;
+	buildPic=sphere_shooter.png;
+	soundCategory=COR_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=940;
+	maxDamage=1360;
 	footprintx=3;
 	footprintz=3;
 
@@ -33,13 +33,17 @@
 	//  Resources
 	//*************
 	metalStorage=0;
-	energyMake=0;
 	energyUse=0;
 	energyStorage=0;
 
 	//************************************************************
 	//  Building
 	//************
+	yardMap=ooo ooo ooo;
+	collisionVolumeType=CylY;
+	collisionVolumeScales=30 50 30;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
 
 	//************************************************************
 	//  Constructor
@@ -52,21 +56,12 @@
 	//*************
 	canAttack=1;
 	canGuard=1;
-	canMove=1;
-	canPatrol=1;
 	canStop=1;
-	upright=0;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementClass=KBOTHT3;
-	turnRate=910;
-	acceleration=0.35;
-	brakeRate=0.5;
-	maxVelocity=2.6;
-	maxSlope=17;
-	maxWaterDepth=25;
+	maxSlope=20;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -77,10 +72,10 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=claw_ringo_ring;
-	onlytargetcategory1=NOTAIR;
-	explodeAs=SMALL_UNITEX;
-	selfDestructAs=SMALL_UNIT;
+	weapon1=sphere_shooter_missile;
+	badTargetCategory1=VTOL;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
 
 	//************************************************************
 	//  Orders
@@ -90,30 +85,19 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	collisionVolumeType = box;
-	collisionVolumeScales =30 35 30;
-	collisionVolumeOffsets = 0 -1 0;
-	collisionVolumeTest = 1;
-
-	[SFXTypes]
-	{
-		explosionGenerator0=custom:ringcharge1;
-		explosionGenerator1=custom:ringcharge2;
-		explosionGenerator2=custom:ringcharge3;
-		explosionGenerator3=custom:ringcharge4;
-		explosionGenerator4=custom:rocketflarebig;
-		explosionGenerator5=custom:nanoframeblast;
-	}
+	floater=1;
+	waterline=0;
 
 	[CustomParams]
 	{
-		builtBy=claw_light_plant,claw_adv_kbot_plant;
-		evalFactor=0.85;
-		tip=Ring charging resets if dealt 25%+ HP in damage within 3 seconds;
+		builtBy=sphere_l1builder,sphere_l2builder;
 	}
-
-	buildCostEnergy=1079;//#AUTO#
-	buildCostMetal=215;//#AUTO#
-	buildTime=2572;//#AUTO#
-	mass=153;//#AUTO#
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:GLOWSML;
+	}
+	buildCostEnergy=1356;//#AUTO#
+	buildCostMetal=271;//#AUTO#
+	buildTime=3232;//#AUTO#
+	mass=860;//#AUTO#
 }

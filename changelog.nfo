@@ -1,3 +1,51 @@
+2021/06/04 ------------------ NOTES v1.57 ----------------------
+
+
+--- new units
+
+- added SPHERE "Shooter" : L1 missile tower
+
+- added AVEN "Salvo" : L2 Rocket Artillery Hovercraft
+
+
+--- Balance / Mechanics
+
+- made AVEN "Kit" rockets fly about 20% faster with slightly higher trajectory and one at a time, 10% increased fire rate
+(the previous 2 rocket burst was too easy to bait and dodge)
+- made AVEN "Bolter" rockets fly about 25% faster
+
+- fixed evaluation for CLAW "Gyro" and "Ringo" weapons, making them ~5% cheaper
+
+- reduced cost of L2 unit factories from ~1700m to ~1500m
+
+- AVEN "Delta" commander form has slightly higher energy efficiency on the cannon but about ~3% lower dmg/s
+
+- GEAR "Rhino" had its range increased to 900 and dmg/s increased to 100 but is about 7% slower and costs 36% more
+
+- increased AVEN medium drone range from 420 to 460 and consume 25 E/s to fire
+
+- increased AVEN "Swatter" HP by about 8% and reduced its speed by about 12% and cost by about 5%
+
+
+--- UI / Visual / Audio
+
+- settings widget forces scroll wheel speed to -25 only if >= 0
+
+- resource bars show blue markers to indicate the high-priority reserve threshold for metal and energy (right-click to set)
+
+- unit information panel shows effective targets for weapons : SURFACE, AIR, WATER
+
+- clicking on "show graph" on the awards panel will show a new summary graph with the history of relative unit value and resource income for all teams throughout the game
+(clicking a second time will show the default Spring engine graphs that were shown before)
+
+
+--- AI
+
+- added #AI RESIGN command
+
+
+
+
 2021/05/02 ------------------ NOTES v1.56 ----------------------
 
 - changed GEAR "Box" laser to fire alternatively from each arm instead of both simultaneously

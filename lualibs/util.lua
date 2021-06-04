@@ -35,7 +35,7 @@ spGetPlayerInfo = Spring.GetPlayerInfo
 spDestroyUnit = Spring.DestroyUnit
 
 -------------------------------------------- CONSTANTS
-ENERGY_METAL_VALUE = 60
+ENERGY_METAL_VALUE = 1/60
 
 
 
@@ -114,6 +114,18 @@ function printTable(table)
 	for k, v in pairs(table) do 
 		log("table["..tostring(k).."]="..tostring(v))	
 	end
+end
+
+
+function splitString(input, sep)
+	if sep == nil then
+		sep = "%s"
+	end
+	local t={}
+	for str in string.gmatch(input, "([^"..sep.."]+)") do
+		table.insert(t, str)
+	end
+	return t
 end
 
 

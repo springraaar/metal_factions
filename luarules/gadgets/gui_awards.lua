@@ -10,6 +10,7 @@ function gadget:GetInfo()
   }
 end
 
+include("LuaLibs/json.lua")
 
 local IMG_PATH = "LuaRules/Images/awards/"
 local AWARD_OFFSET = 550
@@ -31,6 +32,7 @@ local AWARD_OTHERS = AWARD_OFFSET+7
 
 local COMMANDER_XP_AWARD_THRESHOLD = 0.3 -- about II on the converted scale
 local EFFICIENCY_AWARD_THRESHOLD = 1.0
+
 
 -------------------------------------------------- SYNCED CODE
 if (gadgetHandler:IsSyncedCode()) then 
@@ -379,6 +381,9 @@ function gadget:GameOver(winningAllyTeams)
 
 	local winnersUndetermined = (next(winningAllyTeams) == nil)
 	
+	local historyDataStr = Spring.Utilities.json.encode(GG.statsHistory) 
+	--Spring.Echo("SYNCED HISTORY maxIncome="..tostring(historyData.maxAllyTeamResourceIncome).." maxValue="..tostring(historyData.maxAllyTeamUnitValue))
+	
 	--tell unsynced
 	SendToUnsynced("ReceiveAwards", ecoKillAward, ecoKillAwardSec, ecoKillAwardThi, ecoKillScore, ecoKillScoreSec, ecoKillScoreThi, 
 									fightKillAward, fightKillAwardSec, fightKillAwardThi, fightKillScore, fightKillScoreSec, fightKillScoreThi, 
@@ -386,7 +391,7 @@ function gadget:GameOver(winningAllyTeams)
 									comAward, comAwardSec, comAwardThi, comScore, comScoreSec, comScoreThi,
 									ecoAward, ecoScore, 
 									dmgRecAward, dmgRecScore, 
-									sleepAward, sleepScore, winnersUndetermined)
+									sleepAward, sleepScore, winnersUndetermined,historyDataStr)
 	
 	--Spring.Echo("awards sent to unsynced")
 end
@@ -423,14 +428,18 @@ local vsx, vsy = Spring.GetViewGeometry()
 local drawAwards = false 
 local cx,cy --coords for center of screen
 local bx,by --coords for top left hand corner of box
+local gx,gy --coords for top left hand corner of graphs box
 local w = 900 
 local h = 550
+local gw = 800 
+local gh = 300
 local bgMargin = 6
 
 --h = 520-bgMargin-bgMargin
 --w = 1050-bgMargin-bgMargin
 
-local Background
+local Background	-- background
+local graphsBackground  -- inner background for the graphs
 local awardList = {}
 local myTeamId = -1
 
@@ -471,8 +480,13 @@ local quitColour
 local graphColour
 
 local playerListByTeam = {} --does not contain specs
+local allyTeamGraphs = {}
+local historyData = {}
 local myPlayerID = Spring.GetMyPlayerID()
 
+local graphsShown = false
+local awardsHeader
+local endFrame = 0
 
 function round(num, idp)
   return string.format("%." .. (idp or 0) .. "f", num)
@@ -502,6 +516,17 @@ function getScoreStr(type,score)
 end
 
 
+-- convert frames to hh:mm:ss
+function framesToHMS(frames)
+	local seconds = math.floor(frames / 30)
+	local hh = math.floor(seconds/3600)
+	local mm = math.floor(math.fmod(seconds/60,60))
+	local ss = math.fmod(seconds,60)
+	
+	return string.format("%02d:%02d:%02d",hh,mm,ss)
+end
+
+
 function gadget:Initialize()
 	--register actions to SendToUnsynced messages
 	gadgetHandler:AddSyncAction("ReceiveAwards", ProcessAwards)	
@@ -521,7 +546,7 @@ function gadget:Initialize()
 		local playerList = Spring.GetPlayerList(teamID)
 		local list = {} --without specs
 		for _,playerID in pairs(playerList) do
-			local name, _, isSpec = Spring.GetPlayerInfo(playerID)
+			local name, _, isSpec,tId,aId = Spring.GetPlayerInfo(playerID)
 			if not isSpec then
 				if teamID == tId then
 					myTeamId = tId
@@ -531,6 +556,36 @@ function gadget:Initialize()
 		end
 		playerListByTeam[teamID] = list
 	end
+	
+	-- process ally teams
+	for _,allyId in pairs(Spring.GetAllyTeamList()) do
+		local teams = Spring.GetTeamList(allyId)
+		if #teams > 0 and teams[1] ~= Spring.GetGaiaTeamID() then
+			local aName = ""
+			for _,teamId in pairs(teams) do
+				local name = FindPlayerName(teamId)
+				if (not allyTeamGraphs[allyId]) then
+					allyTeamGraphs[allyId] = {}
+					allyTeamGraphs[allyId].leaderId = teamId
+					allyTeamGraphs[allyId].name = ""
+					allyTeamGraphs[allyId].graph = nil
+					
+					--Spring.Echo("ally team graphs set for allyId="..allyId)
+				end
+				if aName == "" then
+					aName = name
+				else
+					aName = aName ..", "..name
+				end
+			end
+			if string.len(aName) > 40 then
+				aName = string.sub(aName,1,40).."..."
+			end
+			
+			allyTeamGraphs[allyId].name = aName 
+		end
+	end
+
 end
 
 
@@ -707,14 +762,19 @@ function ProcessAwards(_,ecoKillAward, ecoKillAwardSec, ecoKillAwardThi, ecoKill
 						comAward, comAwardSec, comAwardThi, comScore, comScoreSec, comScoreThi, 
 						ecoAward, ecoScore, 
 						dmgRecAward, dmgRecScore, 
-						sleepAward, sleepScore,winnersUndetermined)
+						sleepAward, sleepScore,winnersUndetermined,historyDataStr)
 
+
+	--Spring.Echo("HISTORY_JSON"..historyDataStr)
+	historyData = Spring.Utilities.json.decode(historyDataStr)
 	--fix geometry
 	vsx,vsy = Spring.GetViewGeometry()
     cx = vsx/2 
     cy = vsy/2 
 	bx = cx - w/2
 	by = cy - h/2 - 45
+	gx = cx - gw/2
+	gy = cy + 100 - gh/2 - 45
 	
     --record who won which awards in chat message (for demo parsing by replays.springrts.com)
 	--make all values positive, as unsigned ints are easier to parse
@@ -724,7 +784,8 @@ function ProcessAwards(_,ecoKillAward, ecoKillAwardSec, ecoKillAwardThi, ecoKill
 	local commanderLine    = ''
   
 	-- create awards
-	CreateBackground(winnersUndetermined)
+	CreateBackground()
+	createAwardsHeader(winnersUndetermined)
 	local awardOffset = 100
 	if ecoKillAward > -1 then
 		table.insert(awardList,CreateAward('award_ecodmg',0,AWARD_TEXT[AWARD_ECODMG], white, ecoKillAward, ecoKillAwardSec, ecoKillAwardThi, ecoKillScore, ecoKillScoreSec, ecoKillScoreThi, awardOffset))
@@ -762,14 +823,27 @@ function ProcessAwards(_,ecoKillAward, ecoKillAwardSec, ecoKillAwardThi, ecoKill
 	Spring.SendLuaRulesMsg(mfParserMsg)
 	
 	drawAwards = true
+	endFrame = historyData.maxFrame
+	if (endFrame) then
+		-- generate graph gl lists
+		for allyId,data in pairs(allyTeamGraphs) do
+			local r,g,b,a = Spring.GetTeamColor(data.leaderId)
+			data.color = {r,g,b,a}
+		end
+		createGraphsBackground()
+		for allyId,data in pairs(allyTeamGraphs) do
+			data.graph = createAllyTeamGraph(allyId,data)
+		end
+	end
 	
-	--don't show graph
+	--Spring.Echo("HISTORY maxIncome="..tostring(historyData.maxAllyTeamResourceIncome).." maxValue="..tostring(historyData.maxAllyTeamUnitValue))
+	--don't show default graphs yet
 	Spring.SendCommands('endgraph 0')	
 end
 
 
 
-function CreateBackground(winnersUndetermined)	
+function CreateBackground()	
 	if Background then
 		glDeleteList(Background)
 	end
@@ -778,6 +852,26 @@ function CreateBackground(winnersUndetermined)
 		WG['guishader_api'].InsertRect(math.floor(bx), math.floor(by), math.floor(bx + w), math.floor(by + h),'awards')
 	end
 	
+	Background = glCreateList(function()
+		-- background
+		gl.Color(0,0,0,0.8)
+		glRect(bx-bgMargin, by-bgMargin, bx + w +bgMargin,by + h+bgMargin)
+		-- content area
+		gl.Color(0.33,0.33,0.33,0.15)
+		glRect(bx, by, bx + w, by + h)
+		
+		glColor(1,1,1,1)
+	end)	
+end
+
+
+function createAwardsHeader()	
+	if awardsHeader then
+		glDeleteList(awardsHeader)
+	end
+	
+	
+	-- awards header
 	local victoryStatus = 0
 	local endType = ''
 	if (myTeamId >= 0) then
@@ -794,55 +888,73 @@ function CreateBackground(winnersUndetermined)
 		end
 	end
 	
-	Background = glCreateList(function()
-		-- background
-		gl.Color(0,0,0,0.8)
-		glRect(bx-bgMargin, by-bgMargin, bx + w +bgMargin,by + h+bgMargin)
-		-- content area
-		gl.Color(0.33,0.33,0.33,0.15)
-		glRect(bx, by, bx + w, by + h)
-		
+	awardsHeader = glCreateList(function()
 		glColor(1,1,1,1)
 		if endType ~= '' then 
 			glTexture(':l:'..IMG_PATH..endType..'.png')
 			glTexRect(bx + w/2 - 220, by + h - 75, bx + w/2 + 120, by + h - 5)
 		end
-		
-		glText('Score', bx + w/2 + 275, by + h - 65, 15, "o") 
-	
+		glText('Score', bx + w/2 + 275, by + h - 65, 15, "o") 		
 	end)	
 end
 
 function colourNames(teamID)
-		if teamID < 0 then return "" end
-    	nameColourR,nameColourG,nameColourB,nameColourA = Spring.GetTeamColor(teamID)
-		--the first \255 is just a tag (not colour setting) no part can end with a zero due to engine limitation (C)
+	if teamID < 0 then return "" end
+	nameColourR,nameColourG,nameColourB,nameColourA = Spring.GetTeamColor(teamID)
+	--the first \255 is just a tag (not colour setting) no part can end with a zero due to engine limitation (C)
 
-		--half-assed compensation to avoid white outline which makes reading harder, not easier..
-		local compensation = 0
-		local checkFactor = 0.8*nameColourR + 1.2*nameColourG + 0.6*nameColourB
-		if checkFactor  < 1 then
-			compensation = 80
-		elseif checkFactor < 2.6 then
-			compensation = 80  / (checkFactor)
-		end
+	--half-assed compensation to avoid white outline which makes reading harder, not easier..
+	local compensation = 0
+	local checkFactor = 0.8*nameColourR + 1.2*nameColourG + 0.6*nameColourB
+	if checkFactor  < 1 then
+		compensation = 80
+	elseif checkFactor < 2.6 then
+		compensation = 80  / (checkFactor)
+	end
 
-		R255 = math.min(math.floor(nameColourR*255) +compensation,255)  
-        G255 = math.min(math.floor(nameColourG*255) +compensation,255)
-        B255 = math.min(math.floor(nameColourB*255) +compensation,255)
+	R255 = math.min(math.floor(nameColourR*255) +compensation,255)  
+    G255 = math.min(math.floor(nameColourG*255) +compensation,255)
+    B255 = math.min(math.floor(nameColourB*255) +compensation,255)
 
-        if ( R255%10 == 0) then
-                R255 = R255+1
-        end
-        if( G255%10 == 0) then
-                G255 = G255+1
-        end
-        if ( B255%10 == 0) then
-                B255 = B255+1
-        end
+    if ( R255%10 == 0) then
+            R255 = R255+1
+    end
+    if( G255%10 == 0) then
+            G255 = G255+1
+    end
+    if ( B255%10 == 0) then
+            B255 = B255+1
+    end
 	return "\255"..string.char(R255)..string.char(G255)..string.char(B255) --works thanks to zwzsg
 end 
 
+-- outputs a text string with the prefix to match a given color
+function colorStr(str,color)
+
+	--half-assed compensation to avoid white outline which makes reading harder, not easier..
+	local compensation = 0
+	local checkFactor = 0.8*color[1] + 1.2*color[2] + 0.6*color[3]
+	if checkFactor  < 1 then
+		compensation = 80
+	elseif checkFactor < 2.6 then
+		compensation = 80  / (checkFactor)
+	end
+
+	R255 = math.min(math.floor(color[1]*255) +compensation,255)  
+    G255 = math.min(math.floor(color[2]*255) +compensation,255)
+    B255 = math.min(math.floor(color[3]*255) +compensation,255)
+
+    if ( R255%10 == 0) then
+		R255 = R255+1
+    end
+    if( G255%10 == 0) then
+		G255 = G255+1
+    end
+    if ( B255%10 == 0) then
+		B255 = B255+1
+    end
+	return "\255"..string.char(R255)..string.char(G255)..string.char(B255)..str
+end 
 
 
 function FindPlayerName(teamID)
@@ -957,6 +1069,131 @@ function CreateAward(pic, award, note, noteColour, winnerID, secondID, thirdID, 
 	return thisAward
 end
 
+-- draw straight line
+local drawLegendLine = function()
+	for i = 1, 5, 1 do
+		gl.Vertex((i - 1)/4, 0.5)
+	end
+end
+
+function createGraphsBackground()
+	if graphsBackground then
+		glDeleteList(graphsBackground)
+	end
+	
+	graphsBackground = glCreateList(function()
+		-- background
+		gl.Color(0,0,0,0.8)
+		glRect(gx-bgMargin, gy-bgMargin, gx + gw +bgMargin,gy + gh+bgMargin)
+		-- content area
+		gl.Color(0.1,0.1,0.1,0.15)
+		glRect(gx, gy, gx + gw, gy + gh)
+		
+		-- lines
+		gl.Color(0.5,0.5,0.5,0.5)
+		local offset=0
+		for i=0,8,1 do
+			offset = i*gh/8
+			glRect(gx, gy + offset, gx + gw, gy + offset+1)		-- h line
+			offset = i*gw/8
+			glRect(gx + offset, gy, gx + offset +1, gy + gh)	-- v line
+		end
+		-- time
+		glColor(1,1,1,1)
+		for i=0.0,1.0,0.25 do
+			glText(framesToHMS(endFrame*i), gx + gw*i - 20 , gy -20, 12, "o")
+		end
+		
+		-- legend
+		local x =  gx + 0.75*gw - 60
+		local y = gy - 65
+		local width = 50
+		local height = 14
+		gl.Color({1,1,1,1})
+		gl.PushMatrix()
+		gl.Translate(x, y, 0)
+		gl.Scale(width, height, 1)
+		gl.LineStipple(true)
+		gl.LineWidth(3)
+		gl.BeginEnd(GL.LINE_STRIP, drawLegendLine)
+		gl.LineStipple(false)
+		gl.PopMatrix()
+
+		gl.PushMatrix()
+		gl.Translate(x, y-20, 0)
+		gl.Scale(width, height, 1)
+		gl.LineWidth(1.5)
+		gl.BeginEnd(GL.LINE_STRIP, drawLegendLine)
+		gl.PopMatrix()	
+		
+		glText("Rel. unit value", gx + 0.75*gw , gy -60, 14, "o")
+		glText("Rel. resource income", gx + 0.75*gw , gy -80, 14, "o")
+
+		-- print team names
+		local offset=0
+		for allyId,data in pairs(allyTeamGraphs) do
+			glText(colorStr("Team "..allyId.." :"..data.name,data.color), gx, gy -60 - offset, 14, "o")
+			offset = offset + 20
+		end
+		
+		glColor(1,1,1,1)
+	end)
+end
+
+function createAllyTeamGraph(allyId,data)
+	local teamColor = data.color
+
+	local unitValueGraphArray = {}
+	local resourceIncomeGraphArray = {}
+	local uvMax = historyData.maxAllyTeamUnitValue
+	local riMax = historyData.maxAllyTeamResourceIncome
+	local allyIdStr = tostring(allyId)
+	for i,fData in pairs(historyData.dataPerFrame) do
+		--Spring.Echo("GRAPH POINT allyId="..tostring(allyId).." f="..tostring(fData.frame).." v="..tostring(fData.unitValuePerAllyTeam[allyIdStr]))
+		table.insert(unitValueGraphArray,fData.unitValuePerAllyTeam[allyIdStr])
+		table.insert(resourceIncomeGraphArray,fData.resourceIncomePerAllyTeam[allyIdStr])
+	end
+
+	--gets vertex's from array and plots them
+	local drawValueLine = function()
+		for i = 1, #unitValueGraphArray do
+			local ordinate = unitValueGraphArray[i]
+			gl.Vertex((i - 1)/(#unitValueGraphArray - 1), ordinate/uvMax)
+		end
+	end
+	
+	
+	local drawIncomeLine = function()
+		for i = 1, #resourceIncomeGraphArray do
+			local ordinate = resourceIncomeGraphArray[i]
+			gl.Vertex((i - 1)/(#resourceIncomeGraphArray - 1), ordinate/riMax)
+		end
+	end
+	
+	return glCreateList(function ()
+			local x = gx
+			local y = gy
+			local width = gw
+			local height = gh
+
+			gl.Color(teamColor)
+			gl.PushMatrix()
+			gl.Translate(x, y, 0)
+			gl.Scale(width, height, 1)
+			gl.LineStipple(true)
+			gl.LineWidth(3)
+			gl.BeginEnd(GL.LINE_STRIP, drawValueLine)
+			gl.LineStipple(false)
+			gl.PopMatrix()
+
+			gl.PushMatrix()
+			gl.Translate(x, y, 0)
+			gl.Scale(width, height, 1)
+			gl.LineWidth(1.5)
+			gl.BeginEnd(GL.LINE_STRIP, drawIncomeLine)
+			gl.PopMatrix()			
+	end)
+end
 
 
 local quitX = 150
@@ -970,11 +1207,18 @@ function gadget:MousePress(x,y,button)
 			Spring.SendCommands("quitforce")
 		end
 		if (x > bx+w-graphsX-5) and (x < bx+w-graphsX+16*gl.GetTextWidth('Show Graphs')+5) and (y>by+50-5) and (y<by+50+16+5) then
-			Spring.SendCommands('endgraph 1')
-			if (WG ~= nil and WG['guishader_api'] ~= nil) then
-				WG['guishader_api'].RemoveRect('awards')
+			
+			-- show custom stats history on first click
+			if endFrame and (not graphsShown) then
+				graphsShown = true
+			-- show engine graphs on the second click
+			else
+				Spring.SendCommands('endgraph 1')
+				if (WG ~= nil and WG['guishader_api'] ~= nil) then
+					WG['guishader_api'].RemoveRect('awards')
+				end
+				drawAwards = false
 			end
-			drawAwards = false
 		end	
 	end
 end
@@ -989,8 +1233,8 @@ function gadget:DrawScreen()
 
 	if not drawAwards then return end
 	
-  vsx,vsy = Spring.GetViewGeometry()
-  widgetScale = (0.70 + (vsx*vsy / 7500000))
+	vsx,vsy = Spring.GetViewGeometry()
+	widgetScale = (0.70 + (vsx*vsy / 7500000))
   
 	glPushMatrix()
 		glTranslate(-(vsx * (widgetScale-1))/2, -(vsy * (widgetScale-1))/2, 0)
@@ -1001,10 +1245,19 @@ function gadget:DrawScreen()
 		end 
 		
 		-- draw all awards
-		for _,awd in pairs(awardList) do
-			glCallList(awd)
+		if not graphsShown then
+			glCallList(awardsHeader)
+
+			for _,awd in pairs(awardList) do
+				glCallList(awd)
+			end
+		else
+		-- draw graphs
+			glCallList(graphsBackground)
+			for allyId,data in pairs(allyTeamGraphs) do
+				glCallList(data.graph)			
+			end
 		end
-		
 		--draw buttons, wastefully, but it doesn't matter now game is over
 		local x1,y1 = Spring.GetMouseState()
 		local x,y = correctMouseForScaling(x1,y1)

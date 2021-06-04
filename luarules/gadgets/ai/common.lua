@@ -245,6 +245,7 @@ EXTERNAL_CMD_DEFMULT = "DEFMULT"
 EXTERNAL_CMD_COMMORPH = "COMMORPH"
 EXTERNAL_CMD_LOADCUSTOMSTRATEGIES = "LOADCUSTOMSTRATEGIES"
 EXTERNAL_CMD_BEACONTYPE = "BEACONTYPE"
+EXTERNAL_CMD_RESIGN = "RESIGN"
 
 EXTERNAL_RESPONSE_SETMARKER = "SETMARKER"
 EXTERNAL_RESPONSE_REMOVEMARKER = "REMOVEMARKER"
@@ -403,6 +404,7 @@ spGetFeatureDefID = Spring.GetFeatureDefID
 spGetFeaturePosition = Spring.GetFeaturePosition
 spGetUnitMoveTypeData = Spring.GetUnitMoveTypeData
 spGetTeamRulesParam = Spring.GetTeamRulesParam
+spSetTeamRulesParam = Spring.SetTeamRulesParam
 spAddTeamResource = Spring.AddTeamResource
 spGetUnitCommands = Spring.GetUnitCommands
 spGetUnitsInCylinder = Spring.GetUnitsInCylinder
@@ -861,6 +863,7 @@ attackerList =
 	"aven_slider_s",	
 	"aven_swatter",
 	"aven_skimmer",
+	"aven_salvo",
 	"aven_excalibur",
 	"aven_turbulence",		
 	"aven_penetrator",
@@ -1337,7 +1340,7 @@ naturallyRoamingCommanders = {
 
 
 lltByFaction = { [side1Name] = "aven_light_laser_tower", [side2Name] = "gear_light_laser_tower", [side3Name] = "claw_drill", [side4Name] = "sphere_stir"}
-lightAAByFaction = { [side1Name] = "aven_defender", [side2Name] = "gear_pulverizer"}
+lightAAByFaction = { [side1Name] = "aven_defender", [side2Name] = "gear_pulverizer", [side4Name] = "sphere_shooter"}
 mediumAAByFaction = { [side3Name] = "claw_gemini", [side4Name] = "sphere_shine"}
 heavyAAByFaction = { [side1Name] = {"aven_warden"}, [side2Name] = {"gear_missilator"}, [side3Name] = {"claw_hyper"}, [side4Name] = {"sphere_stark"}}
 lev1HeavyDefenseByFaction = {[side1Name] = {"aven_sentinel"}, [side2Name] = {"gear_blaze","gear_beamer"}, [side3Name] = {"claw_piercer"}, [side4Name] = {"sphere_stout"}}

@@ -546,6 +546,10 @@ function AI:processExternalCommand(msg,playerId,teamId,pName)
 					self:messageAllies("reset beacon type to \"all\"")
 				end
 			end			
+		elseif (command == EXTERNAL_CMD_RESIGN) then
+			self:messageAllies("resigning...")
+			Spring.KillTeam(self.id)
+			spSetTeamRulesParam(self.id,"ai_resigned","1")
 		end
 	end
 end

@@ -12,6 +12,9 @@ end
 
 include("LuaLibs/Util.lua")
 
+
+local spSetTeamRulesParam = Spring.SetTeamRulesParam
+
 local SURRENDER_THRESHOLD = 0.040 -- 4% of the "strength" of the strongest team
 local AI_SURRENDER_FACTOR = 0.5
 local NO_COMMANDER_SURRENDER_FACTOR = 0.5
@@ -135,6 +138,9 @@ function gadget:GameFrame(n)
 					if teamValueMod < SURRENDER_THRESHOLD then
 						if ( not defeatedAllyIds[allyId] ) then
 							Spring.SendMessage("Team "..allyId.." has been DEFEATED.")
+							if isAI then
+								spSetTeamRulesParam(id,"ai_resigned","1")
+							end
 						end
 						defeatedAllyIds[allyId] = true
 						Spring.KillTeam(id)

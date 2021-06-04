@@ -21,6 +21,8 @@ local NeededFrameworkVersion = 8.1
 local CanvasX,CanvasY = 1280,734 --resolution in which the widget was made (for 1:1 size)
 --1272,734 == 1280,768 windowed
 
+VFS.Include("lualibs/custom_cmd.lua")
+
 local Config = {
 	metal = {
 		px = 370,py = 0, --default start position
@@ -41,6 +43,7 @@ local Config = {
 		cbarbackground = {0,0,0,1},
 		cbar = {1,1,1,1},
 		cindicator = {1,0,0,0.8},
+		hpindicator = {0.3,0.3,1,0.8},
 		
 		cincome = {0,1,0,1},
 		cpull = {1,0,0,1},
@@ -52,7 +55,7 @@ local Config = {
 		
 		dragbutton = {2}, --middle mouse button
 		tooltip = {
-			background ="\255\255\255\1Leftclick\255\255\255\255 on the bar to set team share.",
+			background ="\255\255\255\1Left-Click\255\255\255\255 on the bar to set team share, \255\255\255\1Right-Click\255\255\255\255 to set high priority reserve.",
 			income = "Your metal income per second.",
 			pull = "Your metal expense per second.",
 			expense = "Your metal expense, same as pull if not shown.",
@@ -80,6 +83,7 @@ local Config = {
 		cbarbackground = {0,0,0,1},
 		cbar = {1,1,0,1},
 		cindicator = {1,0,0,0.8},
+		hpindicator = {0.3,0.3,1,0.8},		
 		
 		cincome = {0,1,0,1},
 		cpull = {1,0,0,1},
@@ -91,7 +95,7 @@ local Config = {
 		
 		dragbutton = {2}, --middle mouse button
 		tooltip = {
-			background ="\255\255\255\1Left Click\255\255\255\255 on the bar to set team share.",
+			background ="\255\255\255\1Left-Click\255\255\255\255 on the bar to set team share, \255\255\255\1Right-Click\255\255\255\255 to set high priority reserve.",
 			income = "Your energy income per second.",
 			pull = "Your energy expense per second.",
 			expense = "Your energy expense, same as pull if not shown.",
@@ -104,7 +108,20 @@ local Config = {
 local sGetMyTeamID = Spring.GetMyTeamID
 local sGetTeamResources = Spring.GetTeamResources
 local sSetShareLevel = Spring.SetShareLevel
+local spGetTeamRulesParam = Spring.GetTeamRulesParam
+local spSendLuaRulesMsg = Spring.SendLuaRulesMsg
 local sformat = string.format
+
+local function setHPLevel(res,level)
+	--Spring.Echo("Set high-priority threshold for "..res.." to "..level)
+	local msg = ""
+	if (res == "energy") then
+		msg = UI_CMD_HP_THRESHOLD_ENERGY .."|"..level
+	elseif (res == "metal") then
+		msg = UI_CMD_HP_THRESHOLD_METAL .."|"..level
+	end
+	spSendLuaRulesMsg(msg)
+end
 
 local function IncludeRedUIFrameworkFunctions()
 	New = WG.Red.New(widget)
@@ -258,11 +275,22 @@ local function createbar(r)
 	shareindicator.border = r.cborder
 	--shareindicator.texture = barTexture
 	shareindicator.textureColor = r.cindicator
+	
+	
+	local hpindicator = Copy(barbackground)
+	hpindicator.color = r.hpindicator
+	hpindicator.py = hpindicator.py -2
+	hpindicator.sx = barbackground.sy
+	hpindicator.sy = hpindicator.sy +4
+	hpindicator.border = r.cborder
+	--shareindicator.texture = barTexture
+	hpindicator.textureColor = r.hpindicator
 
 	New(barbackground)
 	New(bar)
 	New(barborder)
 	New(shareindicator)
+	New(hpindicator)
 	
 	bar.overrideCursor = true
 	
@@ -295,7 +323,7 @@ local function createbar(r)
 	}
 	
 	background.movableSlaves = {
-		barbackground,barborder,bar,shareindicator,
+		barbackground,barborder,bar,shareindicator,hpindicator,
 		income,pull,expense,current,storage,label
 	}
 	
@@ -320,6 +348,7 @@ local function createbar(r)
 		["bar"] = bar,
 		["barborder"] = barborder,
 		["shareindicator"] = shareindicator,
+		["hpindicator"] = hpindicator,
 		["income"] = income,
 		["pull"] = pull,
 		["expense"] = expense,
@@ -333,6 +362,10 @@ end
 
 local function updatebar(b,res)
 	local r = {sGetTeamResources(sGetMyTeamID(),res)} -- 1 = cur 2 = cap 3 = pull 4 = income 5 = expense 6 = share
+	local hpThreshold = spGetTeamRulesParam(sGetMyTeamID(),"hp_threshold_"..res)
+	if (not hpThreshold) then
+		hpThreshold = 0.05
+	end
 	local barbackpx = b.barbackground.px
 	local barbacksx = b.barbackground.sx
 	
@@ -365,6 +398,7 @@ local function updatebar(b,res)
 	end
 	
 	b.shareindicator.px = barbackpx+r[6]*barbacksx-b.shareindicator.sx/2
+	b.hpindicator.px = barbackpx+hpThreshold*barbacksx-b.hpindicator.sx/2
 end
 
 function widget:Initialize()
@@ -379,10 +413,18 @@ function widget:Initialize()
 			sSetShareLevel("metal",(mx-self.px)/self.sx)
 			updatebar(metal,"metal")
 		end},
+		{3,function(mx,my,self)
+			setHPLevel("metal",(mx-self.px)/self.sx)
+			updatebar(metal,"metal")
+		end},
 	}
 	energy.barbackground.mouseHeld = {
 		{1,function(mx,my,self)
 			sSetShareLevel("energy",(mx-self.px)/self.sx)
+			updatebar(energy,"energy")
+		end},
+		{3,function(mx,my,self)
+			setHPLevel("energy",(mx-self.px)/self.sx)
 			updatebar(energy,"energy")
 		end},
 	}

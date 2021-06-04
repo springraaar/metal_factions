@@ -3,7 +3,7 @@ function widget:GetInfo()
 	return {
 		name      = "Metal Factions Tooltip",
 		desc      = "overrides default tooltip, shows shield and weapon info",
-		author    = "raaar, based on a Kernel Panic widget by zwszg",
+		author    = "raaar, based on a Kernel Panic widget by zwzsg",
 		date      = "September 2012",
 		license   = "GNU GPL v2",
 		layer     = 0,
@@ -13,6 +13,7 @@ end
 
 
 VFS.Include("lualibs/constants.lua")
+VFS.Include("lualibs/util.lua")
 
 local frameSkip = 4       -- draw once every frameSkip+1 frames 
 local counter = 0
@@ -62,6 +63,13 @@ local noDamageWeaponDefIds = {
 	[WeaponDefNames["scoper_beacon"].id] = true
 }
 
+local weaponTargetLabels = {
+	AIR2 = "\255\60\60\80AIR",
+	AIR = "\255\200\200\255AIR",
+	SURFACE = "\255\160\140\130SURFACE",
+	WATER = "\255\64\64\255WATER"
+}
+
 local myPlayerID
 local myTeamID
 local myAllyTeamID
@@ -93,6 +101,17 @@ local function convertColor(r,g,b,a)
 	green = min( green, 1 )
 	blue = min( blue, 1 )
 	return red,green,blue,a
+end
+
+function formatTargets(targets)
+	local tList = splitString(targets,",")
+	local result = ""
+	
+	for i,label in pairs(tList) do
+		result = result .. "  " .. tostring(weaponTargetLabels[label])
+	end
+	
+	return result
 end
 
 function widget:Initialize()
@@ -298,8 +317,12 @@ function GetTooltipWeaponData(ud, xpMod, rangeMod, dmgMod)
 					NewTooltip = NewTooltip.."     \255\255\255\0E"..(reloadTime >= 5 and "" or "/s")..": "..FormatNbr((reloadTime >= 5 and energyPerSecond*reloadTime or energyPerSecond),1)
 				end
 				
-				if weap.waterWeapon then
-					NewTooltip = NewTooltip.."    \255\64\64\255WATER"
+				if (weap.customParams and weap.customParams.targets) then
+					NewTooltip = NewTooltip.."     \255\255\255\255Targets: "..formatTargets(weap.customParams.targets)
+				else
+					if weap.waterWeapon then
+						NewTooltip = NewTooltip.."     \255\255\255\255Targets: \255\64\64\255WATER"
+					end
 				end
 			end
 		end

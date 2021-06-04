@@ -55,6 +55,7 @@ local Spring_GetMouseState       = Spring.GetMouseState
 local Spring_GetAIInfo           = Spring.GetAIInfo
 local Spring_GetViewGeometry 	 = Spring.GetViewGeometry
 local spGetGameFrame			 = Spring.GetGameFrame
+local spGetTeamRulesParam        = Spring.GetTeamRulesParam
 
 local GetTextWidth        = fontHandler.GetTextWidth
 local UseFont             = fontHandler.UseFont
@@ -642,34 +643,42 @@ function CreatePlayer(playerID)
 end
 
 function CreatePlayerFromTeam(teamID)
-
 	local _,_, isDead, isAI, tside, tallyteam,incomeMult = Spring_GetTeamInfo(teamID)
 	local tred, tgreen, tblue                 = Spring_GetTeamColor(teamID)
 	local tname, ttotake, tdead
 	local tskill = GetSkill(teamID)
-	
+
 	if isAI then
-	
-		local version
-		
-		_,_,_,_, tname, version = Spring_GetAIInfo(teamID)
-
-		local aiInfo = Spring.GetTeamLuaAI(teamID)
-		if (aiInfo and string.sub(aiInfo,1,4) == "MFAI") then
-			tname = aiInfo
-			-- add the team id to the name
-			tname = tname:gsub( "MFAI", "["..teamID.."] MFAI")
-		else
-			if type(version) == "string" then
-				tname = "AI:" .. tname .. "-" .. version 
+		if (spGetTeamRulesParam(teamID,"ai_resigned") == "1") then
+			if Spring_GetTeamUnitCount(teamID) > 0  then
+				tname = "- aband. units -"
+				ttotake = true
+				tdead = false
 			else
-				tname = "AI:" .. tname
+				tname = "- dead team -"
+				ttotake = false
+				tdead = true
 			end
+		else
+			local version
+			_,_,_,_, tname, version = Spring_GetAIInfo(teamID)
+	
+			local aiInfo = Spring.GetTeamLuaAI(teamID)
+			if (aiInfo and string.sub(aiInfo,1,4) == "MFAI") then
+				tname = aiInfo
+				-- add the team id to the name
+				tname = tname:gsub( "MFAI", "["..teamID.."] MFAI")
+			else
+				if type(version) == "string" then
+					tname = "AI:" .. tname .. "-" .. version 
+				else
+					tname = "AI:" .. tname
+				end
+			end
+	
+			ttotake = false
+			tdead = false
 		end
-
-		ttotake = false
-		tdead = false
-		
 	else
 	
 		if Spring_GetGameSeconds() < 0.1 then
@@ -692,6 +701,7 @@ function CreatePlayerFromTeam(teamID)
 		
 		end
 	end
+
 
 	return {
 		rank             = 8, -- "don't know which" value
@@ -2210,6 +2220,13 @@ function CheckPlayersChange()
 			if maxIncome > 0 then
 				teamResources[teamId].position = math.floor(teamResources[teamId].income * 100 / maxIncome)
 			end
+		end
+		
+		-- get updated rows for resigned AIs
+		if spGetTeamRulesParam(teamId,"ai_resigned") == "1" and (not player[teamId+32].resignProcessed) then
+			player[teamId+32] = CreatePlayerFromTeam(teamId)
+			player[teamId+32].resignProcessed = true	
+			sorting = true	
 		end
 	end
 	
