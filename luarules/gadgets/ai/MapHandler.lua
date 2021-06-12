@@ -305,7 +305,7 @@ function MapHandler:Init()
 		end
 		log(lineStr,self.ai)
 	end
-	--]]
+	--]]	
 	
 	self.cellConnections = {}
 	self.cellConnections[PF_UNIT_LAND] = {}

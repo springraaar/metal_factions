@@ -500,7 +500,7 @@ function GenerateNewTooltip()
 			end
 			
 			-- build power
-			if fud.buildSpeed and fud.buildSpeed > 0 then
+			if fud.buildSpeed and fud.buildSpeed > 1 then
 				NewTooltip = NewTooltip.."\n"..GetTooltipBuildPower(fud.buildSpeed).."\255\255\255\255\n"
 			end
 			

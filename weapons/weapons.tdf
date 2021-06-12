@@ -4810,7 +4810,7 @@
 	cegTag=PLASMATRAIL1;
 	reloadTime=2;
 	weaponVelocity=355;
-	areaOfEffect=64;
+	areaOfEffect=80;
 	soundStart=cannon3;
 	soundHit=xplomed2;
 	tolerance=3000;
@@ -5224,7 +5224,7 @@
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
 	reloadTime=2.5;
 	weaponVelocity=328;
-	areaOfEffect=48;
+	areaOfEffect=64;
 	soundStart=canlite3;
 	soundHit=xplomed3;
 	tolerance=3000;
@@ -5307,7 +5307,7 @@
 	range=700;
 	reloadTime=1.6;
 	weaponVelocity=350;
-	areaOfEffect=64;
+	areaOfEffect=72;
 	soundStart=cannon1;
 	soundHit=xplomed4;
 	tolerance=3000;
@@ -5344,10 +5344,10 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	turret=1;
-	range=920;
-	reloadTime=2.4;
+	range=1050;
+	reloadTime=2.2;
 	weaponVelocity=400;
-	areaOfEffect=64;
+	areaOfEffect=72;
 	soundStart=cannon3;
 	soundHit=xplomed2;
 	tolerance=3000;
@@ -5359,23 +5359,24 @@
   	sizeDecay=-0.1;
 	cegTag=PLASMATRAIL2;
 	explosionGenerator=custom:STDBLASTWRAPPER;
-	accuracy=200;
-	movingAccuracy=300;
+	accuracy=180;
+	movingAccuracy=280;
 	interceptedByShieldType=1;
 	avoidFeature=0;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
 		expDmgScaling=1;
+		restrictedAngle=1;
 		targets=SURFACE;
 	}
 	[DAMAGE]
 	{
-		default=180;
+		default=220;
 		group_invincible=1;
-		armor_heavy=180;//#AUTO#
-		armor_medium=180;//#AUTO#
-		armor_light=180;//#AUTO#
+		armor_heavy=220;//#AUTO#
+		armor_medium=220;//#AUTO#
+		armor_light=220;//#AUTO#
 	}
 }
 [aven_lurker_torpedo]
@@ -7671,6 +7672,7 @@
 		hitPower=2;
 		aaRangeBoost=1;
 		expDmgScaling=1;
+		restrictedAngle=1;
 		targets=SURFACE,AIR;
 	}
 	[DAMAGE]
@@ -7875,7 +7877,7 @@
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	reloadTime=3;
 	weaponVelocity=480;
-	areaOfEffect=64;
+	areaOfEffect=80;
 	soundStart=cannon3;
 	soundHit=xplomed2;
 	tolerance=1000;
@@ -7914,7 +7916,7 @@
 	cegTag=PLASMATRAIL1;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	weaponVelocity=300;
-	areaOfEffect=48;
+	areaOfEffect=80;
 	size=3.2;
 	rgbColor=0.7 0.6 0.3;
 	stages=3;
@@ -8072,7 +8074,7 @@
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	cegTag=PLASMATRAIL1;
 	weaponVelocity=365;
-	areaOfEffect=64;
+	areaOfEffect=80;
 	soundStart=cannon3;
 	soundHit=xplomed2;
 	tolerance=3000;
@@ -8108,7 +8110,7 @@
 	range=720;
 	reloadTime=3;
 	weaponVelocity=360;
-	areaOfEffect=64;
+	areaOfEffect=80;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	cegTag=PLASMATRAIL2;
 	soundStart=cannon3;
@@ -8152,7 +8154,7 @@
 	weaponVelocity=290;
 	cegTag=PLASMATRAIL1;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
-	areaOfEffect=48;
+	areaOfEffect=64;
 	soundStart=cannon1;
 	soundHit=xplomed3;
 	tolerance=3000;
@@ -8190,7 +8192,7 @@
 	cegTag=PLASMATRAIL1;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	weaponVelocity=338;
-	areaOfEffect=64;
+	areaOfEffect=80;
 	soundStart=cannon3;
 	soundHit=xplomed2;
 	tolerance=4000;
@@ -9269,7 +9271,7 @@
 	range=1450;
 	reloadTime=2.2;
 	weaponVelocity=480;
-	areaOfEffect=80;
+	areaOfEffect=96;
 	soundStart=CANNHVY1;
 	soundHit=xplomed2;
 	accuracy=200;
@@ -9310,7 +9312,7 @@
 	range=1300;
 	reloadTime=2.5;
 	weaponVelocity=480;
-	areaOfEffect=80;
+	areaOfEffect=96;
 	soundStart=CANNHVY1;
 	soundHit=xplomed2;
 	accuracy=200;
@@ -11692,7 +11694,7 @@
 	metalPerShot=0;
 	turnRate=30000;
 	fixedLauncher=1;
-	areaOfEffect=48;
+	areaOfEffect=64;
 	explosionGenerator=custom:ROCKETSMLBLASTWRAPPER;
 	cegTag=ROCKETTRAIL1;
 	texture1=null; //flare//
@@ -11737,7 +11739,7 @@
 	metalPerShot=0;
 	fixedLauncher=1;
 	turnRate=30000;
-	areaOfEffect=48;
+	areaOfEffect=64;
 	explosionGenerator=custom:ROCKETSMLBLASTWRAPPER;
 	cegTag=ROCKETTRAIL1;
 	texture1=null; //flare//
@@ -12573,7 +12575,7 @@
 	range=1450;
 	reloadTime=2.0;
 	weaponVelocity=500;
-	areaOfEffect=80;
+	areaOfEffect=100;
 	soundStart=CANNHVY1;
 	soundHit=xplomed2;
 	accuracy=200;
@@ -12888,7 +12890,7 @@
 	name=High Energy Bolt;
 	weaponType=LaserCannon;
 	turret=1;
-	range=1000;
+	range=1050;
 	duration=0.10;
 	reloadTime=6;
 	energyPerShot=500;
@@ -12915,6 +12917,7 @@
 		reaimTime=1;
 		aaRangeBoost=1;
 		expDmgScaling=1;
+		evalFactor=0.90; // slight angle restriction
 		targets=SURFACE,AIR2;
 	}
 	[DAMAGE]
@@ -13046,7 +13049,7 @@
 	weaponAcceleration=131;
 	metalPerShot=0;
 	turnRate=30000;
-	areaOfEffect=60;
+	areaOfEffect=80;
 	explosionGenerator=custom:ROCKETBLASTWRAPPER;
 	cegTag=ROCKETTRAIL2;
 	texture1=null; //flare//
@@ -13824,7 +13827,7 @@
 	startVelocity=400;
 	projectiles=1;
 	weaponAcceleration=100;
-	areaOfEffect=48;
+	areaOfEffect=64;
 	metalPerShot=0;
 	sprayAngle=300;
 	soundStart=rocklit1;
@@ -14758,8 +14761,8 @@
 	texture4=null;
 	energyPerShot=200;
 	turret=1;
-	range=1200;
-	reloadTime=1.5;
+	range=1180;
+	reloadTime=1.8;
 	weaponVelocity=1532;
 	startVelocity=1532;
 	accuracy=0;
@@ -14775,6 +14778,7 @@
 		hitPower=3;
 		reaimTime=1;
 		expDmgScaling=1;
+		evalFactor=0.93; // less discount than angle restriction
 		targets=SURFACE,AIR2;
 	}
 	[DAMAGE]
@@ -15969,7 +15973,7 @@
 	weaponVelocity=320;
 	cegTag=PLASMATRAIL1;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
-	areaOfEffect=48;
+	areaOfEffect=64;
 	soundStart=cannon1;
 	soundHit=xplomed3;
 	tolerance=3000;
@@ -16006,7 +16010,7 @@
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	reloadTime=1;
 	weaponVelocity=355;
-	areaOfEffect=64;
+	areaOfEffect=80;
 	accuracy=200;
 	movingAccuracy=500;
 	soundStart=cannon3;
@@ -16046,7 +16050,7 @@
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
 	reloadTime=2;
 	weaponVelocity=400;
-	areaOfEffect=48;
+	areaOfEffect=64;
 	soundStart=canlite3;
 	soundHit=xplomed3;
 	tolerance=3000;
@@ -16085,7 +16089,7 @@
 	weaponVelocity=350;
 	cegTag=PLASMATRAIL1;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
-	areaOfEffect=48;
+	areaOfEffect=64;
 	soundStart=cannon1;
 	soundHit=xplomed3;
 	tolerance=3000;
@@ -16122,7 +16126,7 @@
 	weaponVelocity=300;
 	cegTag=PLASMATRAIL1;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
-	areaOfEffect=48;
+	areaOfEffect=64;
 	soundStart=cannon1;
 	soundHit=xplomed3;
 	tolerance=3000;
@@ -16900,6 +16904,7 @@
 		hitPower=3;
 		reaimTime=1;
 		expDmgScaling=1;
+		evalFactor=0.95; // less discount than angle restriction
 		targets=SURFACE;
 	}
 	[DAMAGE]
@@ -17182,15 +17187,15 @@
 	trajectoryHeight=0.2;
 	turret=1;
 	model=weapon_ringsml.3do;
-	range=450;
-	accuracy=100;
-	movingAccuracy=200;
-	reloadTime=6.5;
+	range=430;
+	accuracy=50;
+	movingAccuracy=100;
+	reloadTime=5;
 	flightTime=3.75;
 	texture1=null; //flare//
 	wobble=100;
 	turnRate=6000;
-	weaponVelocity=500;
+	weaponVelocity=600;
 	cegTag=RINGTRAILSML;
 	explosionGenerator=custom:RINGBLASTWRAPPER;
 	areaOfEffect=32;
@@ -17198,7 +17203,7 @@
 	soundHit=ringhit;
 	energyPerShot=200;
 	tolerance=6000;
-	startVelocity=500;
+	startVelocity=600;
 	weaponAcceleration=50;
 	interceptedByShieldType=1;
 	impulseFactor=0.4;
@@ -17912,7 +17917,7 @@
 	range=720;
 	reloadTime=3.3;
 	weaponVelocity=360;
-	areaOfEffect=64;
+	areaOfEffect=80;
 	cegTag=PLASMATRAIL2;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	soundStart=cannon3;
@@ -18511,7 +18516,7 @@
 	weaponVelocity=300;
 	cegTag=PLASMATRAIL1;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
-	areaOfEffect=48;
+	areaOfEffect=64;
 	soundStart=cannon1;
 	soundHit=xplomed3;
 	tolerance=3000;
@@ -18550,7 +18555,7 @@
 	weaponVelocity=300;
 	cegTag=PLASMATRAIL1;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
-	areaOfEffect=48;
+	areaOfEffect=64;
 	soundStart=cannon1;
 	soundHit=xplomed3;
 	tolerance=3000;
@@ -19090,6 +19095,7 @@
 		hitPower=1;
 		reaimTime=1;
 		expDmgScaling=1;
+		evalFactor=0.93; // less discount than angle restriction
 		targets=SURFACE,AIR;
 	}
 	[DAMAGE]
@@ -19323,11 +19329,11 @@
 	explosionGenerator=custom:ROCKETBLASTWRAPPER;
 	model=weapon_medmsl;
 	cegTag=ROCKETTRAIL2B;
-	range=800;
-	reloadTime=3;
+	range=950;
+	reloadTime=2.5;
 	weapontimer=0.3;
 	fixedLauncher=1;
-	flightTime=4;
+	flightTime=5;
 	weaponVelocity=600;
 	startVelocity=300;
 	weaponAcceleration=66;
@@ -19716,7 +19722,7 @@
 	weaponVelocity=500;
 	startVelocity=400;
 	weaponAcceleration=100;
-	areaOfEffect=48;
+	areaOfEffect=64;
 	metalPerShot=0;
 	soundStart=rocklit1;
 	soundHit=xplosml2;
@@ -19889,7 +19895,7 @@
 	cegTag=PLASMATRAIL1;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
 	weaponVelocity=340;
-	areaOfEffect=48;
+	areaOfEffect=72;
 	soundStart=cannon1;
 	soundHit=xplomed4;
 	tolerance=3000;
@@ -19962,7 +19968,7 @@
 	cegTag=PLASMATRAIL1;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	weaponVelocity=380;
-	areaOfEffect=64;
+	areaOfEffect=80;
 	soundStart=cannon3;
 	soundHit=xplomed2;
 	tolerance=3000;
@@ -20584,6 +20590,7 @@
 		hitPower=1;
 		reaimTime=1;
 		expDmgScaling=1;
+		evalFactor=0.93; // less discount than angle restriction
 		targets=SURFACE,AIR;
 	}
 	[DAMAGE]

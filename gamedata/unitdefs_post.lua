@@ -119,7 +119,6 @@ local reducedDecalDurationUnits = {
 	sphere_moho_mine = true
 }
 
-
 local noDecalUnits = {
 	gear_mine = true,
 	gear_incendiary_mine = true,

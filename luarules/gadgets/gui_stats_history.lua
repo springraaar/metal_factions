@@ -14,6 +14,7 @@ include("lualibs/util.lua")
 
 
 local spGetUnitTeam = Spring.GetUnitTeam
+local spGetTeamList = Spring.GetTeamList
 local spGetAllyTeamList = Spring.GetAllyTeamList
 local spGetAllUnits = Spring.GetAllUnits
 local spGetTeamUnits = Spring.GetTeamUnits
@@ -27,6 +28,7 @@ local CHECK_DELAY_FRAMES = 30*10	-- every 10s
 local dataPerFrame = {}
 local maxAllyTeamUnitValue = 0
 local maxAllyTeamResourceIncome = 0
+local teamResourceIncome = {}
 
 GG.statsHistory = {
 	dataPerFrame = dataPerFrame
@@ -57,6 +59,34 @@ end
 
 -- register metrics a few times per minute
 function gadget:GameFrame(n)
+
+	-- get resource income every frame and average it out, to avoid spikes in the graph
+	-- ignore the first second
+	local teamList = spGetTeamList()
+	local resourceIncome = 0
+	local unitValue = 0
+	local ud, id, udId, cost = 0
+	if n > 30 then
+		for i=1,#teamList do
+			id = teamList[i]
+			if id ~= Spring.GetGaiaTeamID() then
+	
+				-- update resource income					
+				local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(id,"metal")
+				local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(id,"energy")
+				resourceIncome = incomeM + incomeE/60
+				
+				local previousResourceIncome = teamResourceIncome[id]
+				if not previousResourceIncome then
+					teamResourceIncome[id] = resourceIncome
+				else
+					teamResourceIncome[id] = previousResourceIncome + resourceIncome 
+				end
+			end
+		end
+	end
+
+
 	if n > 0 and math.fmod(n,CHECK_DELAY_FRAMES) == 0 then
 
 		local unitValuePerAllyTeam = {}
@@ -71,19 +101,19 @@ function gadget:GameFrame(n)
 		end
 
 		for _,allyId in ipairs(allyTeamList) do
-			local teamList = spGetTeamList(allyId)
-			local resourceIncome = 0
-			local unitValue = 0
+			teamList = spGetTeamList(allyId)
+			resourceIncome = 0
+			unitValue = 0
 			
 			for i=1,#teamList do
-				local id = teamList[i]
+				id = teamList[i]
 				
 				if id ~= Spring.GetGaiaTeamID() then
 			        
 			        -- update unit value	
-			       	local ud = nil
-					local udId = nil
-					local cost =  nil
+			       	ud = nil
+					udId = nil
+					cost =  nil
 				    for _,uId in ipairs(spGetTeamUnits(id)) do
 						local _,_,_,_,progress = spGetUnitHealth(uId) 
 						progress = progress or 0
@@ -99,9 +129,8 @@ function gadget:GameFrame(n)
 				    end
 
 					-- update resource income					
-					local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(id,"metal")
-					local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(id,"energy")
-					resourceIncome = resourceIncome + incomeM + incomeE/60
+					resourceIncome = resourceIncome + teamResourceIncome[id] / CHECK_DELAY_FRAMES
+					teamResourceIncome[id] = 0
 				end
 			end
 		

@@ -690,7 +690,7 @@ Create()
 	shouldRun = FALSE;
 	isReady = FALSE;
 	chargeState = [0];
-	reloadTime = 10000;
+	reloadTime = 5000; // should be irrelevant
 
 	//call-script stopAimHelper1(<1000>,<1000>);
 
