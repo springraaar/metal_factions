@@ -89,10 +89,8 @@
 	//*****************
 	hoverAttack=1;
 	airStrafe=1;
-//	isbomber=1;
 	upright=1;
 	airHoverFactor=-1;
-//	maneuverleashlength=180;
 	bankingAllowed=0;
 
 	CanLoopbackAttack=0;
@@ -106,6 +104,7 @@
 	{
 		builtBy=gear_adv_aircraft_plant;
 		tip=Burns ground for 20s, dealing up to 20(M) dmg/s. Affected units burn for 210(M) dmg over 7s;
+		canAreaAttack=1;
 	}
 
 	[SFXTypes]

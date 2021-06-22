@@ -32,7 +32,7 @@ local cLight						= {1, 1, 1, 0.5}
 local cLightBorder						= {1, 1, 1, 1}
 local cWhite						= {1, 1, 1, 1}
 local cBorder						= {0, 0, 0, 1}		
-local cBack							= {0, 0, 0, 0.5}
+local cBack							= {0, 0, 0, 0.6}
 
 local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
 	if BLcornerX == nil then return false end
@@ -44,20 +44,16 @@ local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
 end
 
 function updateSizesPositions()
-	if (vsy > 1800) then
-		scaleFactor=1.6
-	elseif (vsy > 1400) then
-		scaleFactor=1.4
-	elseif (vsy > 1200) then
-		scaleFactor=1.2
+	if (vsy > 1080) then
+		scaleFactor = vsy/1080
 	else
-		scaleFactor=1
+		scaleFactor = 1
 	end
 	fontSize = refFontSize * scaleFactor 
-	ButtonMenu.x1 = vsx - 10 - refBoxSizeX*scaleFactor
-	ButtonMenu.x2 = vsx - 10
-	ButtonMenu.y1 = vsy - 10 - refBoxSizeY*scaleFactor
-	ButtonMenu.y2 = vsy - 10
+	ButtonMenu.x1 = vsx - 10*scaleFactor - refBoxSizeX*scaleFactor
+	ButtonMenu.x2 = vsx - 10*scaleFactor
+	ButtonMenu.y1 = vsy - 10*scaleFactor - refBoxSizeY*scaleFactor
+	ButtonMenu.y2 = vsy - 10*scaleFactor
 	
 end
 

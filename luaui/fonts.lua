@@ -136,7 +136,7 @@ local function LoadFontSpecs(fontName)
     return nil
   end
   local fontSpecs = chunk()
-
+  
   print('fontSpecs.srcFile  = ' .. fontSpecs.srcFile)
   print('fontSpecs.family   = ' .. fontSpecs.family)
   print('fontSpecs.style    = ' .. fontSpecs.style)

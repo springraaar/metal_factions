@@ -78,10 +78,18 @@ local spSendCommands           = Spring.SendCommands
 
 include("colors.h.lua")
 
-local vsx, vsy = widgetHandler:GetViewSizes()
+local vsx, vsy = gl.GetViewSizes()
 function widget:ViewResize(viewSizeX, viewSizeY)
-  vsx = viewSizeX
-  vsy = viewSizeY
+	vsx = viewSizeX
+	vsy = viewSizeY
+  
+	scaleFactor = 1
+	if (vsy > 1080) then
+		scaleFactor = vsy / 1080
+	end
+	iconSizeX = math.floor(useModels and 80*scaleFactor or 64*scaleFactor)
+	iconSizeY = math.floor(iconSizeX * 0.75)
+	fontSize = iconSizeY * 0.25
 end
 
 
@@ -99,7 +107,11 @@ local activePress = false
 local mouseIcon = -1
 local currentDef = nil
 
-local iconSizeX = math.floor(useModels and 80 or 64)
+local scaleFactor = 1
+if (vsy > 1080) then
+	scaleFactor = vsy / 1080
+end	
+local iconSizeX = math.floor(useModels and 80*scaleFactor or 64*scaleFactor)
 local iconSizeY = math.floor(iconSizeX * 0.75)
 local fontSize = iconSizeY * 0.25
 
@@ -151,7 +163,7 @@ function widget:DrawScreen()
     if (lb or mb or rb) then
       DrawIconQuad(mouseIcon, { 1, 0, 0, 0.333 })  --  red highlight
     else
-      DrawIconQuad(mouseIcon, { 0, 0, 1, 0.333 })  --  blue highlight
+      DrawIconQuad(mouseIcon, { 1, 1, 1, 0.333 })  --  white highlight
     end
   end
 end

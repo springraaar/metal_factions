@@ -264,41 +264,47 @@ function gadget:GameFrame(n)
 		-- check modifier for units with land and water movement penalties
 		for unitId,_ in pairs(landSlowerUnitIds) do
 			x,y,z = spGetUnitPosition(unitId)
-			h = spGetGroundHeight(x,z)
-			if ( h > WATER_HEIGHT_THRESHOLD ) then
-				m = newSpeedModifierUnitIds[unitId]
-				if (m == nil) then
-					m = 1
+			if x then
+				h = spGetGroundHeight(x,z)
+				if ( h > WATER_HEIGHT_THRESHOLD ) then
+					m = newSpeedModifierUnitIds[unitId]
+					if (m == nil) then
+						m = 1
+					end
+					newSpeedModifierUnitIds[unitId] = m * LAND_WATER_MOD
 				end
-				newSpeedModifierUnitIds[unitId] = m * LAND_WATER_MOD
 			end
 		end
 		for unitId,_ in pairs(waterSlowerUnitIds) do
 			x,y,z = spGetUnitPosition(unitId)
-			h = spGetGroundHeight(x,z)
-			if ( h <= WATER_HEIGHT_THRESHOLD ) then
-				m = newSpeedModifierUnitIds[unitId]
-				if (m == nil) then
-					m = 1
+			if x then
+				h = spGetGroundHeight(x,z)
+				if ( h <= WATER_HEIGHT_THRESHOLD ) then
+					m = newSpeedModifierUnitIds[unitId]
+					if (m == nil) then
+						m = 1
+					end
+					newSpeedModifierUnitIds[unitId] = m * LAND_WATER_MOD
 				end
-				newSpeedModifierUnitIds[unitId] = m * LAND_WATER_MOD
 			end
 		end
 		
 		for unitId,_ in pairs(underwaterSlowerUnitIds) do
 			x,y,z = spGetUnitPosition(unitId)
-			h = spGetGroundHeight(x,z)
-			if ( h <= WATER_HEIGHT_THRESHOLD ) then
-				m = newSpeedModifierUnitIds[unitId]
-				if (m == nil) then
-					m = 1
+			if x then
+				h = spGetGroundHeight(x,z)
+				if ( h <= WATER_HEIGHT_THRESHOLD ) then
+					m = newSpeedModifierUnitIds[unitId]
+					if (m == nil) then
+						m = 1
+					end
+					
+					mData = spGetUnitMoveTypeData(unitId)
+					if (mData and mData.maxSpeed and mData.maxSpeed > UNDERWATER_SLOW_SPEED_THRESHOLD) then
+						--Spring.Echo("max speed ="..mData.maxSpeed)
+						newSpeedModifierUnitIds[unitId] = m * (UNDERWATER_SLOW_SPEED_THRESHOLD + (mData.maxSpeed-UNDERWATER_SLOW_SPEED_THRESHOLD) * UNDERWATER_EXTRA_SPEED_MOD ) / mData.maxSpeed
+					end	
 				end
-				
-				mData = spGetUnitMoveTypeData(unitId)
-				if (mData and mData.maxSpeed and mData.maxSpeed > UNDERWATER_SLOW_SPEED_THRESHOLD) then
-					--Spring.Echo("max speed ="..mData.maxSpeed)
-					newSpeedModifierUnitIds[unitId] = m * (UNDERWATER_SLOW_SPEED_THRESHOLD + (mData.maxSpeed-UNDERWATER_SLOW_SPEED_THRESHOLD) * UNDERWATER_EXTRA_SPEED_MOD ) / mData.maxSpeed
-				end	
 			end
 		end
 		

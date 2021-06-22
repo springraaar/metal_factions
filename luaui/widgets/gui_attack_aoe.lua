@@ -43,6 +43,12 @@ local secondPart = 0
 local mouseDistance = 1000
 local extraDrawRange
 
+local vsx, vsy = gl.GetViewSizes()
+local scaleFactor = 1
+if (vsy > 1080) then
+	scaleFactor = vsy / 1080
+end	
+
 --------------------------------------------------------------------------------
 --speedups
 --------------------------------------------------------------------------------
@@ -327,7 +333,7 @@ local function DrawAoE(tx, ty, tz, aoe, ee, alphaMult, offset)
   end
 
   glColor(1,1,1,1)
-  glLineWidth(1)
+  glLineWidth(1*scaleFactor)
 end
 
 --------------------------------------------------------------------------------
@@ -360,7 +366,7 @@ local function DrawNoExplode(aoe, fx, fy, fz, tx, ty, tz, range)
   glBeginEnd(GL_LINES, VertexList, vertices)
 
   glColor(1,1,1,1)
-  glLineWidth(1)
+  glLineWidth(1*scaleFactor)
 end
 
 --------------------------------------------------------------------------------
@@ -492,7 +498,7 @@ local function DrawBallisticScatter(scatter, v, mygravity ,fx, fy, fz, tx, ty, t
   glDepthTest(true)
   glColor(1,1,1,1)
   -- FIXME ATIBUG  glPointSize(1)
-  glLineWidth(1)
+  glLineWidth(1*scaleFactor)
 end
 
 --------------------------------------------------------------------------------
@@ -515,7 +521,7 @@ local function DrawWobbleScatter(scatter, fx, fy, fz, tx, ty, tz, rangeScatter, 
     DrawCircle(tx, ty, tz, scatter)
   end
   glColor(1,1,1,1)
-  glLineWidth(1)
+  glLineWidth(1*scaleFactor)
 end
 
 --------------------------------------------------------------------------------
@@ -545,7 +551,7 @@ local function DrawDirectScatter(scatter, fx, fy, fz, tx, ty, tz, range, unitRad
   glLineWidth(scatterLineWidthMult / mouseDistance)
   glBeginEnd(GL_LINES, VertexList, vertices)
   glColor(1,1,1,1)
-  glLineWidth(1)
+  glLineWidth(1*scaleFactor)
 end
 
 --------------------------------------------------------------------------------
@@ -576,7 +582,7 @@ local function DrawDroppedScatter(aoe, ee, scatter, v, fx, fy, fz, tx, ty, tz, s
     DrawCircle(px_c, py_c, pz_c, currScatter)
   end
   glColor(1,1,1,1)
-  glLineWidth(1)
+  glLineWidth(1*scaleFactor)
 end
 
 --------------------------------------------------------------------------------
@@ -587,7 +593,7 @@ local function DrawOrbitalScatter(scatter, tx, ty, tz)
   glLineWidth(scatterLineWidthMult / mouseDistance)
   DrawCircle(tx, ty, tz, scatter)
   glColor(1,1,1,1)
-  glLineWidth(1)
+  glLineWidth(1*scaleFactor)
 end
 --------------------------------------------------------------------------------
 --callins
@@ -637,7 +643,7 @@ function widget:DrawWorld()
                 else
                   glColor(1, 0.35, 0.35, 0.5)
                 end
-                glLineWidth(2)
+                glLineWidth(2*scaleFactor)
                 glDrawGroundCircle(fx, fy, fz, range, 50)
                 glColor(1,1,1,1)
               end
@@ -700,7 +706,7 @@ function widget:DrawWorld()
   
   if (cmd == CMD_MANUALFIRE) then
     glColor(1, 0, 0, 0.75)
-    glLineWidth(1)
+    glLineWidth(1*scaleFactor)
     glDrawGroundCircle(fx, fy, fz, info.range, circleDivs)
     glColor(1,1,1,1)
   end

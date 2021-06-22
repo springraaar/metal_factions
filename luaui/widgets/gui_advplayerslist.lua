@@ -57,20 +57,31 @@ local Spring_GetViewGeometry 	 = Spring.GetViewGeometry
 local spGetGameFrame			 = Spring.GetGameFrame
 local spGetTeamRulesParam        = Spring.GetTeamRulesParam
 
-local GetTextWidth        = fontHandler.GetTextWidth
-local UseFont             = fontHandler.UseFont
-local TextDraw            = fontHandler.Draw
-local TextDrawCentered    = fontHandler.DrawCentered
-local TextDrawRight       = fontHandler.DrawRight
 
 local gl_Texture          = gl.Texture
 local gl_Rect             = gl.Rect
 local gl_TexRect          = gl.TexRect
 local gl_Color            = gl.Color
+local gl_GetTextWidth     = gl.GetTextWidth
+local gl_GetTextHeight    = gl.GetTextHeight
+local gl_Text             = gl.Text
+
+
+
+--local GetTextWidth        = fontHandler.GetTextWidth
+--local UseFont             = fontHandler.UseFont
+--fontHandler.LoadFont(self.font, floor(self.size*uiScale), floor(self.outlineWidth*uiScale), self.outlineWeight)
+--local TextDraw            = fontHandler.Draw
+--local TextDrawCentered    = fontHandler.DrawCentered
+--local TextDrawRight       = fontHandler.DrawRight
+
+-- use builtin font to allow scaling
 
 local floor = math.floor
 local ceil = math.ceil
 local modf = math.modf
+local max = math.max
+local min = math.min
 
 --------------------------------------------------------------------------------
 -- IMAGES
@@ -190,7 +201,7 @@ end
 
 function round(num, idp)
   local mult = 10^(idp or 0)
-  return math.floor(num * mult + 0.5) / mult
+  return floor(num * mult + 0.5) / mult
 end
 
 --------------------------------------------------------------------------------
@@ -216,13 +227,19 @@ local doubleClick                  = false  -- deals with double click
 --------------------------------------------------------------------------------
 
 local vsx,vsy                                    = gl.GetViewSizes()
+local scaleFactor = 1
+if (vsy ~= 1080) then
+	scaleFactor = vsy/1080
+else
+	scaleFactor = 1
+end
 
 local openClose                                  = 0
 local widgetTop                                  = 0
 local widgetRight                                = 1
 local widgetHeight                               = 0
 local widgetWidth                                = 0
-local widgetPosX                                 = vsx-200
+local widgetPosX                                 = vsx-200*scaleFactor
 local widgetPosY                                 = 0
 
 local expandDown                                 = false
@@ -233,9 +250,9 @@ local localLeft      -- used by different functions to pass values
 local localBottom    -- used by different functions to pass values
 
 local activePlayers   = {}
-local labelOffset     = 20
-local separatorOffset = 3
-local playerOffset    = 19
+local labelOffset     = 20 * scaleFactor
+local separatorOffset = 3 * scaleFactor
+local playerOffset    = 19 * scaleFactor
 local drawList        = {}
 local teamN
 local newSide		  = {}
@@ -255,15 +272,17 @@ local glTexRect 					= gl.TexRect
 local refFontSize = 14
 local refBoxSizeX = 100
 local refBoxSizeY = 30
-local fontSize = refFontSize
-local scaleFactor = 1
-
+local itemSizeY = 16 * scaleFactor 
+local fontSize = refFontSize * scaleFactor
+	
 -- colors
 local cLight						= {1, 1, 1, 0.5}
 local cLightBorder					= {1, 1, 1, 1}
 local cWhite						= {1, 1, 1, 1}
 local cBorder						= {0, 0, 0, 1}		
-local cBack							= {0, 0, 0, 0.5}
+local cBack							= {0, 0, 0, 0.6}
+
+local addedBrightness = 0.2 -- to avoid white outline on players
 
 local CHAT_ALL = 0
 local CHAT_ALLIES = 1
@@ -291,15 +310,12 @@ local function isOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
 end
 
 function updateChatTypeSizesPositions()
-	if (vsy > 1800) then
-		scaleFactor=1.6
-	elseif (vsy > 1400) then
-		scaleFactor=1.4
-	elseif (vsy > 1200) then
-		scaleFactor=1.2
+	if (vsy ~= 1080) then
+		scaleFactor = vsy/1080
 	else
 		scaleFactor=1
 	end
+
 	fontSize = refFontSize * scaleFactor 
 	chatTypeButton.x1 = vsx - 1 - refBoxSizeX*scaleFactor
 	chatTypeButton.x2 = vsx - 1
@@ -344,7 +360,7 @@ m_rank = {
 	spec      = true,
 	play      = true,
 	active    = true,
-	width     = 30,
+	width     = 30 * scaleFactor,
 	position  = 2,
 	posX      = 0,
 	pic       = rank8,
@@ -354,7 +370,7 @@ m_side = {
 	spec      = true,
 	play      = true,
 	active    = true,
-	width     = 19,
+	width     = 19 * scaleFactor,
 	position  = 3,
 	posX      = 0,
 	pic       = sidePic,
@@ -364,7 +380,7 @@ m_ID = {
 	spec      = true,
 	play      = true,
 	active    = false,
-	width     = 22,
+	width     = 22 * scaleFactor,
 	position  = 4,
 	posX      = 0,
 	pic       = IDPic,
@@ -384,7 +400,7 @@ m_cpuping = {
 	spec      = true,
 	play      = true,
 	active    = true,
-	width     = 25,
+	width     = 25 * scaleFactor,
 	position  = 6,
 	posX      = 0,
 	pic       = cpuPingPic,
@@ -394,7 +410,7 @@ m_share = {
 	spec      = false,
 	play      = true,
 	active    = true,
-	width     = 56,
+	width     = 56 * scaleFactor,
 	position  = 7,
 	posX      = 0,
 	pic       = sharePic,
@@ -405,7 +421,7 @@ m_resources = {
 	spec      = true,
 	play      = true,
 	active    = true,
-	width     = 50,
+	width     = 50 * scaleFactor,
 	position  = 8,
 	posX      = 0,
 	pic       = resourcesPic,
@@ -415,7 +431,7 @@ m_chat = {
 	spec      = false,
 	play      = true,
 	active    = true,
-	width     = 19,
+	width     = 19 * scaleFactor,
 	position  = 10,
 	posX      = 0,
 	pic       = chatPic,
@@ -425,7 +441,7 @@ m_spec = {
 	spec      = true,
 	play      = false,
 	active    = true,
-	width     = 19,
+	width     = 19 * scaleFactor,
 	position  = 11,
 	posX      = 0,
 	pic       = specPic,
@@ -436,7 +452,7 @@ m_position = {
 	spec      = true,
 	play      = true,
 	active    = true,
-	width     = 40,
+	width     = 40 * scaleFactor,
 	position  = 9,
 	posX      = 0,
 	pic       = positionPic,
@@ -446,7 +462,7 @@ m_position = {
 	spec      = false,
 	play      = true,
 	active    = false,
-	width     = 19,
+	width     = 19 * scaleFactor,
 	position  = 11,
 	posX      = 0,
 	pic       = diplomacyPic,		
@@ -482,7 +498,39 @@ m_seespec = {
 }
 
 
+-- get text dimensions
+function GetTextWidth(text)
+	return gl_GetTextWidth(text)*fontSize
+end  
+function GetTextHeight(text)
+	return gl_GetTextHeight(text)*fontSize
+end  
 
+-- draw text
+function TextDraw(text,x,y,options)
+	options = options or "on"
+	return gl_Text(text,x,y,fontSize,options)
+end
+function TextDrawCentered(text,x,y)
+	return TextDraw(text,x,y,"onc")
+end
+function TextDrawRight(text,x,y)
+	return TextDraw(text,x,y,"onr")
+end
+
+-- make text brighter to avoid white outline
+local function convertColor(r,g,b,a)
+	local red = r + addedBrightness
+	local green = g + addedBrightness
+	local blue = b + addedBrightness
+	red = max( red, 0 )
+	green = max( green, 0 )
+	blue = max( blue, 0 )
+	red = min( red, 1 )
+	green = min( green, 1 )
+	blue = min( blue, 1 )
+	return red,green,blue,a
+end
 
 function SetModulesPositionX()
 	m_name.width = SetMaxPlayerNameWidth()
@@ -530,7 +578,7 @@ function SetMaxPlayerNameWidth()
 	local maxWidth = GetTextWidth("- aband. units -")+4+100 -- minimal width = minimal standard text width
 	local name = ""
 	local nextWidth = 0
-	UseFont(font)
+	--UseFont(font)
 	for _,wplayer in ipairs(t) do
 		name = Spring_GetPlayerInfo(wplayer)
 		nextWidth = GetTextWidth(name)+4+100
@@ -542,6 +590,18 @@ function SetMaxPlayerNameWidth()
 end
 
 function GeometryChange()
+	if (vsy ~= 1080) then
+		scaleFactor = vsy/1080
+	else
+		scaleFactor=1
+	end
+	
+	itemSizeY = 16 * scaleFactor 
+	widgetPosX = vsx-200*scaleFactor
+	labelOffset     = 20 * scaleFactor
+	separatorOffset = 3 * scaleFactor
+	playerOffset    = 19 * scaleFactor
+	
 	widgetRight = widgetWidth + widgetPosX
 	if widgetRight > vsx then
 		widgetRight = vsx
@@ -607,6 +667,8 @@ function CreatePlayer(playerID)
 	local tname,_, tspec, tteam, tallyteam, tping, tcpu, tcountry, trank = Spring_GetPlayerInfo(playerID)
 	local _,_,_,_, tside, tallyteam,incomeMult                         = Spring_GetTeamInfo(tteam)
 	local tred, tgreen, tblue                                            = Spring_GetTeamColor(tteam)
+	tred,tgreen,tblue,_ = convertColor(tred,tgreen,tblue,0) 
+	
 	local tskill = GetSkill(playerID)
 	
 
@@ -645,6 +707,7 @@ end
 function CreatePlayerFromTeam(teamID)
 	local _,_, isDead, isAI, tside, tallyteam,incomeMult = Spring_GetTeamInfo(teamID)
 	local tred, tgreen, tblue                 = Spring_GetTeamColor(teamID)
+	tred,tgreen,tblue,_ = convertColor(tred,tgreen,tblue,0) 
 	local tname, ttotake, tdead
 	local tskill = GetSkill(teamID)
 
@@ -946,7 +1009,7 @@ function widget:DrawScreen()
 	local mouseX,mouseY           = Spring_GetMouseState()
 
 	-- sets font
-	UseFont(font)
+	--UseFont(font)
 	
 	-- updates resources for the sharing
 	UpdateResources()
@@ -975,7 +1038,7 @@ function widget:DrawScreen()
 	glRect(chatTypeButton.x1,chatTypeButton.y1,chatTypeButton.x2,chatTypeButton.y2)
 	glColor(cWhite)
 	-- chat button text
-	gl.Text(chatTypeLabels[chatType],(chatTypeButton.x1 + chatTypeButton.x2) /2, (chatTypeButton.y1 + chatTypeButton.y2) / 2-fontSize/2,fontSize,"c")
+	gl_Text(chatTypeLabels[chatType],(chatTypeButton.x1 + chatTypeButton.x2) /2, (chatTypeButton.y1 + chatTypeButton.y2) / 2-GetTextHeight(chatTypeLabels[chatType])/2,fontSize,"c")
 	-- chat type button border
 	if chatTypeButton.above then
 		glColor(cLightBorder)
@@ -1048,7 +1111,7 @@ end
 function DrawBackground()
 	
 	-- draws background rectangle
-	gl_Color(0,0,0,0.3)                              
+	gl_Color(0,0,0,0.6)                              
 	gl_Rect(widgetPosX,widgetPosY, widgetPosX + widgetWidth, widgetPosY + widgetHeight - 1)
 	
 	-- draws black border
@@ -1091,7 +1154,7 @@ function DrawLabel(text, vOffset)
 	TextDraw(text, widgetPosX + 2, widgetPosY + widgetHeight -vOffset+1)
 	gl_Color(1,1,1,0.5)
 	gl_Rect(widgetPosX+1, widgetPosY + widgetHeight -vOffset-1, widgetPosX + widgetWidth-1, widgetPosY + widgetHeight -vOffset-2)
-	gl_Color(0,0,0,0.5)
+	gl_Color(0,0,0,0.6)
 	gl_Rect(widgetPosX+1, widgetPosY + widgetHeight -vOffset-2, widgetPosX + widgetWidth-1, widgetPosY + widgetHeight -vOffset-3)
 	gl_Color(1,1,1)
 end
@@ -1135,7 +1198,7 @@ function DrawPlayer(playerID, leader, vOffset, mouseX, mouseY)
 		position = teamResources[team].position
 	end
 
-	if mouseY >= posY and mouseY <= posY + 16 then tipY = true end
+	if mouseY >= posY and mouseY <= posY + itemSizeY then tipY = true end
 	
 	if spec == false then
 		if leader == true then                              -- take / share buttons
@@ -1171,16 +1234,17 @@ function DrawPlayer(playerID, leader, vOffset, mouseX, mouseY)
 			end
 		end
 
+		local nameColorStr = GetPlayerColorStr(red,green,blue)
 		gl_Color(red,green,blue,1)
 		if m_side.active == true then                        
 			DrawSidePic(team, posY, leader, dark)   
 		end
-		gl_Color(red,green,blue,1)	
+		gl_Color(1,1,1,1)	
 		if m_name.active == true then
 			if (incomeMult ~= 1) then
-				DrawName(name.." \255\255\255\255[+"..math.round(100*(incomeMult-1)).."%]", posY, dark)
+				DrawName(nameColorStr..name.." \255\255\255\255[+"..math.round(100*(incomeMult-1)).."%]", posY, dark)
 			else
-				DrawName(name, posY, dark)
+				DrawName(nameColorStr..name, posY, dark)
 			end
 		end
 		if m_resources.active == true and hasResourceInfo then
@@ -1194,7 +1258,7 @@ function DrawPlayer(playerID, leader, vOffset, mouseX, mouseY)
 	else
 		gl_Color(1,1,1,1)	
 		if m_name.active == true then
-			DrawName(name, posY, false)
+			DrawName("\255\153\178\178"..name, posY, false)
 		end		
 	end
 
@@ -1235,52 +1299,52 @@ function DrawTakeSignal(posY)
 		if right == true then
 			gl_Color(1,0.95,0)
 			gl_Texture(arrowPic)
-			gl_TexRect(widgetPosX - 11, posY, widgetPosX - 1, posY + 16)
+			gl_TexRect(widgetPosX - 11*scaleFactor, posY, widgetPosX - 1, posY + itemSizeY)
 			gl_Color(1,1,1)
 			gl_Texture(takePic)
-			gl_TexRect(widgetPosX - 57, posY - 1, widgetPosX - 12, posY + 17)			
+			gl_TexRect(widgetPosX - 57*scaleFactor, posY - 1, widgetPosX - 12*scaleFactor, posY + itemSizeY +1)			
 		else
 			local leftPosX = widgetPosX + widgetWidth
 			gl_Color(1,0.95,0)
 			gl_Texture(arrowPic)
-			gl_TexRect(leftPosX + 11, posY, leftPosX + 1, posY + 16)
+			gl_TexRect(leftPosX + 11*scaleFactor, posY, leftPosX + 1, posY + itemSizeY)
 			gl_Color(1,1,1)
 			gl_Texture(takePic)
-			gl_TexRect(leftPosX + 12, posY - 1, leftPosX + 57, posY + 17)	
+			gl_TexRect(leftPosX + 12*scaleFactor, posY - 1, leftPosX + 57*scaleFactor, posY + itemSizeY+1)	
 		end
 	end	
 end
 
 function DrawShareButtons(posY, needm, neede)
 	gl_Texture(unitsPic)                       -- Share UNIT BUTTON
-	gl_TexRect(m_share.posX + widgetPosX  + 1, posY, m_share.posX + widgetPosX  + 17, posY + 16)
+	gl_TexRect(m_share.posX + widgetPosX  + 1, posY, m_share.posX + widgetPosX  + 17*scaleFactor, posY + itemSizeY)
 	gl_Texture(energyPic)                      -- share ENERGY BUTTON
-	gl_TexRect(m_share.posX + widgetPosX  + 19, posY, m_share.posX + widgetPosX  + 35, posY + 16)
+	gl_TexRect(m_share.posX + widgetPosX  + 19*scaleFactor, posY, m_share.posX + widgetPosX  + 35*scaleFactor, posY + itemSizeY)
 	gl_Texture(metalPic)                       -- share METAL BUTTON
-	gl_TexRect(m_share.posX + widgetPosX  + 37, posY, m_share.posX + widgetPosX  + 54, posY + 16)
+	gl_TexRect(m_share.posX + widgetPosX  + 37*scaleFactor, posY, m_share.posX + widgetPosX  + 54*scaleFactor, posY + itemSizeY)
 	gl_Texture(lowPic)
 	if needm == true then
-		gl_TexRect(m_share.posX + widgetPosX  + 37, posY, m_share.posX + widgetPosX  + 54, posY + 16)
+		gl_TexRect(m_share.posX + widgetPosX  + 37*scaleFactor, posY, m_share.posX + widgetPosX  + 54*scaleFactor, posY + itemSizeY)
 	end
 	if neede == true then
-		gl_TexRect(m_share.posX + widgetPosX  + 19, posY, m_share.posX + widgetPosX  + 35, posY + 16)	
+		gl_TexRect(m_share.posX + widgetPosX  + 19*scaleFactor, posY, m_share.posX + widgetPosX  + 35*scaleFactor, posY + itemSizeY)	
 	end
 	gl_Texture(false)
 end
 
 function DrawSpecButton(team, posY)
 	gl_Texture(specPic)
-	gl_TexRect(m_spec.posX + widgetPosX  + 1, posY, m_spec.posX + widgetPosX  + 17, posY + 16)
+	gl_TexRect(m_spec.posX + widgetPosX  + 1, posY, m_spec.posX + widgetPosX  + 17*scaleFactor, posY + itemSizeY)
 	if specTarget == team then 
 		gl_Texture(selectPic)
-		gl_TexRect(m_spec.posX + widgetPosX  + 1, posY, m_spec.posX + widgetPosX  + 17, posY + 16)
+		gl_TexRect(m_spec.posX + widgetPosX  + 1, posY, m_spec.posX + widgetPosX  + 17*scaleFactor, posY + itemSizeY)
 	end
 	gl_Texture(false)
 end
 
 function DrawChatButton(posY)
 	gl_Texture(chatPic)
-	gl_TexRect(m_chat.posX + widgetPosX  + 1, posY, m_chat.posX + widgetPosX  + 17, posY + 16)	
+	gl_TexRect(m_chat.posX + widgetPosX  + 1, posY, m_chat.posX + widgetPosX  + 17*scaleFactor, posY + itemSizeY)	
 end
 
 function DrawSidePic(team, posY, leader, dark)
@@ -1289,7 +1353,7 @@ function DrawSidePic(team, posY, leader, dark)
 	else
 		gl_Texture(notFirstPic)                          -- sets image for not leader of team players
 	end
-	gl_TexRect(m_side.posX + widgetPosX  + 1, posY, m_side.posX + widgetPosX  + 17, posY + 16) -- draws side image
+	gl_TexRect(m_side.posX + widgetPosX  + 1, posY, m_side.posX + widgetPosX  + 17*scaleFactor, posY + itemSizeY) -- draws side image
 	if dark == true then	-- draws outline if player color is dark
 		--gl_Color(1,1,1)
 		if leader == true then
@@ -1297,7 +1361,7 @@ function DrawSidePic(team, posY, leader, dark)
 		else
 			gl_Texture(notFirstPicWO)
 		end
-		gl_TexRect(m_side.posX + widgetPosX +1, posY,m_side.posX + widgetPosX +17, posY + 16)
+		gl_TexRect(m_side.posX + widgetPosX +1, posY,m_side.posX + widgetPosX +17*scaleFactor, posY + itemSizeY)
 		gl_Texture(false)
 	end
 	gl_Texture(false)	
@@ -1314,8 +1378,8 @@ function DrawRank(skill, posY, dark)
 	
 	--  show TS skill value instead, if available
 	gl_Color(1,1,1,1)
-	UseFont(font)
-	TextDraw(skill, m_rank.posX + widgetPosX + 3, posY + 3)
+	--UseFont(font)
+	TextDraw(skill, m_rank.posX + widgetPosX + 3*scaleFactor, posY + 3*scaleFactor)
 	gl_Color(1,1,1,1)
 	
 end
@@ -1323,27 +1387,26 @@ end
 function DrawRankImage(rankImage, posY)
 		gl_Color(1,1,1)
 		gl_Texture(rankImage)
-		gl_TexRect(widgetPosX + 2, posY, widgetPosX + 18, posY + 16)
+		gl_TexRect(widgetPosX + 2, posY, widgetPosX + 18*scaleFactor, posY + itemSizeY)
 end
 
 function DrawName(name, posY, dark)
-	TextDraw(name, m_name.posX + widgetPosX + 3, posY + 3) -- draws name
-	if dark == true then                                   -- draws outline if player color is dark
-		gl_Color(1,1,1)
-		UseFont(fontWOutline)
-		TextDraw(name, m_name.posX + widgetPosX + 3, posY + 3)
-		UseFont(font)
-	end
+	TextDraw(name, m_name.posX + widgetPosX + 3*scaleFactor, posY + 3*scaleFactor) -- draws name
+	--if dark == true then                                   -- draws outline if player color is dark
+		--UseFont(fontWOutline)
+		--TextDraw(name, m_name.posX + widgetPosX + 3*scaleFactor, posY + 3*scaleFactor)
+		--UseFont(font)
+	--end
 	gl_Color(1,1,1)
 end
 
 function DrawID(playerID, posY, dark)
-	TextDrawCentered(playerID..".", m_ID.posX + widgetPosX + 10, posY + 3) -- draws name
+	TextDrawCentered(playerID..".", m_ID.posX + widgetPosX + 10*scaleFactor, posY + 3*scaleFactor) -- draws name
 	if dark == true then                                  -- draws outline if player color is dark
 		gl_Color(1,1,1)
-		UseFont(fontWOutline)
-		TextDrawCentered(playerID..".", m_ID.posX + widgetPosX + 10, posY + 3)
-		UseFont(font)
+		--UseFont(fontWOutline)
+		TextDrawCentered(playerID..".", m_ID.posX + widgetPosX + 10*scaleFactor, posY + 3*scaleFactor)
+		--UseFont(font)
 	end
 	gl_Color(1,1,1)
 end
@@ -1351,40 +1414,40 @@ end
 function DrawPingCpu(pingLvl, cpuLvl, posY)
 	gl_Color(pingCpuColors[pingLvl].r,pingCpuColors[pingLvl].g,pingCpuColors[pingLvl].b)
 	gl_Texture(pingPic)
-	gl_TexRect(m_cpuping.posX + widgetPosX  + 13, posY, m_cpuping.posX + widgetPosX  + 23, posY + 16)
+	gl_TexRect(m_cpuping.posX + widgetPosX  + 13*scaleFactor, posY, m_cpuping.posX + widgetPosX  + 23*scaleFactor, posY + itemSizeY)
 	gl_Color(pingCpuColors[cpuLvl].r,pingCpuColors[cpuLvl].g,pingCpuColors[cpuLvl].b)
 	gl_Texture(cpuPic)
-	gl_TexRect(m_cpuping.posX + widgetPosX  + 1, posY, m_cpuping.posX + widgetPosX  + 11, posY + 16)	
+	gl_TexRect(m_cpuping.posX + widgetPosX  + 1, posY, m_cpuping.posX + widgetPosX  + 11*scaleFactor, posY + itemSizeY)	
 end
 
 function DrawPoint(posY,pointtime)
 	if right == true then
 		gl_Color(1,0,0,pointtime/20)
 		gl_Texture(arrowPic)
-		gl_TexRect(widgetPosX - 11, posY, widgetPosX - 1, posY+ 16)
+		gl_TexRect(widgetPosX - 11*scaleFactor, posY, widgetPosX - 1, posY+ itemSizeY)
 		gl_Color(1,1,1,pointtime/20)
 		gl_Texture(pointPic)
-		gl_TexRect(widgetPosX - 28, posY, widgetPosX - 12, posY + 16)
+		gl_TexRect(widgetPosX - 28*scaleFactor, posY, widgetPosX - 12*scaleFactor, posY + itemSizeY)
 	else
 		leftPosX = widgetPosX + widgetWidth
 		gl_Color(1,0,0,pointtime/20)
 		gl_Texture(arrowPic)
-		gl_TexRect(leftPosX + 11, posY, leftPosX + 1, posY + 16)
+		gl_TexRect(leftPosX + 11*scaleFactor, posY, leftPosX + 1, posY + itemSizeY)
 		gl_Color(1,1,1,pointtime/20)
 		gl_Texture(pointPic)
-		gl_TexRect(leftPosX + 28, posY, leftPosX + 12, posY + 16)	
+		gl_TexRect(leftPosX + 28*scaleFactor, posY, leftPosX + 12*scaleFactor, posY + itemSizeY)	
 	end
 	gl_Color(1,1,1,1)
 end
 
 function TakeTip(mouseX)
 	if right == true then
-		if mouseX >= widgetPosX - 57 and mouseX <= widgetPosX - 1 then
+		if mouseX >= widgetPosX - 57*scaleFactor and mouseX <= widgetPosX - 1 then
 			tipText = "Click to take abandoned units"
 		end
 	else
 		local leftPosX = widgetPosX + widgetWidth
-		if mouseX >= leftPosX + 1 and mouseX <= leftPosX + 57 then
+		if mouseX >= leftPosX + 1 and mouseX <= leftPosX + 57*scaleFactor then
 			tipText = "Click to take abandoned units"
 		end		
 	end
@@ -1392,40 +1455,40 @@ end
 
 function ShareTip(mouseX, playerID)
 	if playerID == myPlayerID then
-		if mouseX >= m_share.posX + widgetPosX  + 1 and mouseX <= m_share.posX + widgetPosX  + 17 then
+		if mouseX >= m_share.posX + widgetPosX  + 1 and mouseX <= m_share.posX + widgetPosX  + 17*scaleFactor then
 			tipText = "Double click to ask for Unit support"
-		elseif mouseX >= m_share.posX + widgetPosX  + 19 and mouseX <= m_share.posX + widgetPosX  + 35 then
+		elseif mouseX >= m_share.posX + widgetPosX  + 19*scaleFactor and mouseX <= m_share.posX + widgetPosX  + 35*scaleFactor then
 			tipText = "Click and drag to ask for Energy"
-		elseif mouseX >= m_share.posX + widgetPosX  + 37 and mouseX <= m_share.posX + widgetPosX  + 53 then
+		elseif mouseX >= m_share.posX + widgetPosX  + 37*scaleFactor and mouseX <= m_share.posX + widgetPosX  + 53*scaleFactor then
 			tipText = "Click and drag to ask for Metal"
 		end
 	else
-		if mouseX >= m_share.posX + widgetPosX  + 1 and mouseX <= m_share.posX + widgetPosX  + 17 then
+		if mouseX >= m_share.posX + widgetPosX  + 1 and mouseX <= m_share.posX + widgetPosX  + 17*scaleFactor then
 			tipText = "Double click to share Units"
-		elseif mouseX >= m_share.posX + widgetPosX  + 19 and mouseX <= m_share.posX + widgetPosX  + 35 then
+		elseif mouseX >= m_share.posX + widgetPosX  + 19*scaleFactor and mouseX <= m_share.posX + widgetPosX  + 35*scaleFactor then
 			tipText = "Click and drag to share Energy"
-		elseif mouseX >= m_share.posX + widgetPosX  + 37 and mouseX <= m_share.posX + widgetPosX  + 53 then
+		elseif mouseX >= m_share.posX + widgetPosX  + 37*scaleFactor and mouseX <= m_share.posX + widgetPosX  + 53*scaleFactor then
 			tipText = "Click and drag to share Metal"
 		end
 	end
 end
 
 function SpecTip(mouseX)
-	if mouseX >= m_spec.posX + widgetPosX  + 1 and mouseX <= m_spec.posX + widgetPosX  + 17 then
+	if mouseX >= m_spec.posX + widgetPosX  + 1 and mouseX <= m_spec.posX + widgetPosX  + 17*scaleFactor then
 		tipText = "Click to observe the Player"
 	end	
 end
 
 function PingCpuTip(mouseX, pingLvl, cpuLvl)
-	if mouseX >= m_cpuping.posX + widgetPosX  + 13 and mouseX <=  m_cpuping.posX + widgetPosX  + 23 then
+	if mouseX >= m_cpuping.posX + widgetPosX  + 13*scaleFactor and mouseX <=  m_cpuping.posX + widgetPosX  + 23*scaleFactor then
 		tipText = "Ping: "..pingLvl.." ms"
-	elseif mouseX >= m_cpuping.posX + widgetPosX  + 1 and mouseX <=  m_cpuping.posX + widgetPosX  + 11 then		
+	elseif mouseX >= m_cpuping.posX + widgetPosX  + 1 and mouseX <=  m_cpuping.posX + widgetPosX  + 11*scaleFactor then		
 		tipText = "Cpu Usage: "..cpuLvl.."%"
 	end
 end
 
 function resourcesTip(mouseX, res)
-	if mouseX >= m_resources.posX + widgetPosX  + 13 and mouseX <=  m_resources.posX + widgetPosX  + 50 then
+	if mouseX >= m_resources.posX + widgetPosX  + 13*scaleFactor and mouseX <=  m_resources.posX + widgetPosX  + 50*scaleFactor then
 		tipText = " \255\230\230\230M: "..floor(res.currentM).."/"..floor(res.storageM).." (+"..formatNbr(res.incomeM,1)..")"
 		tipText = tipText.."  \255\255\255\0E: "..floor(res.currentE).."/"..floor(res.storageE).." (+"..floor(res.incomeE)..")\255\255\255\255"
 	end
@@ -1433,12 +1496,12 @@ end
 
 function PointTip(mouseX)
 	if right == true then
-		if mouseX >= widgetPosX - 28 and mouseX <= widgetPosX - 1 then
+		if mouseX >= widgetPosX - 28*scaleFactor and mouseX <= widgetPosX - 1 then
 			tipText = "Click to reach the last point set by the player"
 		end
 	else
 		local leftPosX = widgetPosX + widgetWidth
-		if mouseX >= leftPosX + 1 and mouseX <= leftPosX + 28 then
+		if mouseX >= leftPosX + 1 and mouseX <= leftPosX + 28*scaleFactor then
 			tipText = "Click to reach the last point set by the player"
 		end
 	end
@@ -1446,15 +1509,15 @@ end
 
 function DrawTip(mouseX, mouseY)
 		if tipText ~= nil then
-			local tw = GetTextWidth(tipText) + 14
+			local tw = GetTextWidth(tipText) + 14*scaleFactor
 			if right ~= true then tw = -tw end
 			gl_Color(0.7,0.7,0.7,0.5)
-			gl_Rect(mouseX-tw,mouseY,mouseX,mouseY+30) -- !! to be changed if the widget can be anywhere on the screen
+			gl_Rect(mouseX-tw,mouseY,mouseX,mouseY+30*scaleFactor) -- !! to be changed if the widget can be anywhere on the screen
 			gl_Color(1,1,1,1)
 			if right == true then
-				TextDrawRight(tipText,mouseX-7,mouseY+10)
+				TextDrawRight(tipText,mouseX-7*scaleFactor,mouseY+10*scaleFactor)
 			else
-				TextDraw(tipText,mouseX+7,mouseY+10)
+				TextDraw(tipText,mouseX+7*scaleFactor,mouseY+10*scaleFactor)
 			end
 		end
 		tipText        = nil
@@ -1465,34 +1528,34 @@ function DrawShareSlider()
 	if energyPlayer ~= nil then
 		posY = widgetPosY + widgetHeight - energyPlayer.posY
 		gl_Texture(barPic)
-		gl_TexRect(m_share.posX + widgetPosX  + 18,posY-3,m_share.posX + widgetPosX  + 36,posY+58)
+		gl_TexRect(m_share.posX + widgetPosX  + 18*scaleFactor,posY-3*scaleFactor,m_share.posX + widgetPosX  + 36*scaleFactor,posY+58*scaleFactor)
 		gl_Texture(energyPic)
-		gl_TexRect(m_share.posX + widgetPosX  + 19,posY+sliderPosition,m_share.posX + widgetPosX  + 35,posY+16+sliderPosition)
+		gl_TexRect(m_share.posX + widgetPosX  + 19*scaleFactor,posY+sliderPosition,m_share.posX + widgetPosX  + 35*scaleFactor,posY+itemSizeY+sliderPosition)
 		gl_Texture(amountPic)
 		if right == true then
-			gl_TexRect(m_share.posX + widgetPosX  - 28,posY-1+sliderPosition, m_share.posX + widgetPosX  + 19,posY+17+sliderPosition)
+			gl_TexRect(m_share.posX + widgetPosX  - 28*scaleFactor,posY-1+sliderPosition, m_share.posX + widgetPosX  + 19*scaleFactor,posY+itemSizeY+1+sliderPosition)
 			gl_Texture(false)
-			TextDrawCentered(amountEM.."", m_share.posX + widgetPosX  - 5,posY+3+sliderPosition)
+			TextDrawCentered(amountEM.."", m_share.posX + widgetPosX  - 5*scaleFactor,posY+3*scaleFactor+sliderPosition)
 		else
-			gl_TexRect(m_share.posX + widgetPosX  + 76,posY-1+sliderPosition, m_share.posX + widgetPosX  + 31,posY+17+sliderPosition)
+			gl_TexRect(m_share.posX + widgetPosX  + 76*scaleFactor,posY-1+sliderPosition, m_share.posX + widgetPosX  + 31*scaleFactor,posY+itemSizeY+1+sliderPosition)
 			gl_Texture(false)
-			TextDrawCentered(amountEM.."", m_share.posX + widgetPosX  + 55,posY+3+sliderPosition)				
+			TextDrawCentered(amountEM.."", m_share.posX + widgetPosX  + 55*scaleFactor,posY+3*scaleFactor+sliderPosition)				
 		end
 	elseif metalPlayer ~= nil then
 		posY = widgetPosY + widgetHeight - metalPlayer.posY
 		gl_Texture(barPic)
-		gl_TexRect(m_share.posX + widgetPosX  + 36,posY-3,m_share.posX + widgetPosX  + 54,posY+58)
+		gl_TexRect(m_share.posX + widgetPosX  + 36*scaleFactor,posY-3*scaleFactor,m_share.posX + widgetPosX  + 54*scaleFactor,posY+58*scaleFactor)
 		gl_Texture(metalPic)
-		gl_TexRect(m_share.posX + widgetPosX  + 37, posY+sliderPosition,m_share.posX + widgetPosX  + 53,posY+16+sliderPosition)
+		gl_TexRect(m_share.posX + widgetPosX  + 37*scaleFactor, posY+sliderPosition,m_share.posX + widgetPosX  + 53*scaleFactor,posY+itemSizeY+sliderPosition)
 		gl_Texture(amountPic)
 		if right == true then
-			gl_TexRect(m_share.posX + widgetPosX  - 12,posY-1+sliderPosition, m_share.posX + widgetPosX  + 35,posY+17+sliderPosition)
+			gl_TexRect(m_share.posX + widgetPosX  - 12*scaleFactor,posY-1+sliderPosition, m_share.posX + widgetPosX  + 35*scaleFactor,posY+itemSizeY+1+sliderPosition)
 			gl_Texture(false)
-			TextDrawCentered(amountEM.."", m_share.posX + widgetPosX  + 11,posY+3+sliderPosition)
+			TextDrawCentered(amountEM.."", m_share.posX + widgetPosX  + 11*scaleFactor,posY+3*scaleFactor+sliderPosition)
 		else
-			gl_TexRect(m_share.posX + widgetPosX  + 88,posY-1+sliderPosition, m_share.posX + widgetPosX  + 47,posY+17+sliderPosition)
+			gl_TexRect(m_share.posX + widgetPosX  + 88*scaleFactor,posY-1+sliderPosition, m_share.posX + widgetPosX  + 47*scaleFactor,posY+itemSizeY+1+sliderPosition)
 			gl_Texture(false)
-			TextDrawCentered(amountEM.."", m_share.posX + widgetPosX  + 71,posY+3+sliderPosition)
+			TextDrawCentered(amountEM.."", m_share.posX + widgetPosX  + 71*scaleFactor,posY+3*scaleFactor+sliderPosition)
 		end
 	end
 end
@@ -1501,20 +1564,20 @@ end
 function DrawResourceBars(posY, energyLevel, metalLevel)
 
 	if (energyLevel ~= nil and metalLevel ~= nil) then
-		energyLevel = math.max(energyLevel,0)
-		metalLevel = math.max(metalLevel,0)
+		energyLevel = max(energyLevel,0)
+		metalLevel = max(metalLevel,0)
 		
 		gl_Color(1,1,1)
 		gl_Texture(hBarPic)
-		gl_TexRect(m_resources.posX + widgetPosX + 0, posY, m_resources.posX + widgetPosX + 50, posY + 18)
+		gl_TexRect(m_resources.posX + widgetPosX + 0, posY, m_resources.posX + widgetPosX + 50*scaleFactor, posY + 18*scaleFactor)
 	
 		gl_Color(1,1,1)
 		gl_Texture(metalBarPic)
-		gl_TexRect(m_resources.posX + widgetPosX + 2, posY + 3 , m_resources.posX + widgetPosX + metalLevel * 48 , posY + 7)
+		gl_TexRect(m_resources.posX + widgetPosX + 2, posY + 3*scaleFactor , m_resources.posX + widgetPosX + metalLevel * 48*scaleFactor , posY + 7*scaleFactor)
 	
 		gl_Color(1,1,1)
 		gl_Texture(energyBarPic)
-		gl_TexRect(m_resources.posX + widgetPosX + 2, posY + 11, m_resources.posX + widgetPosX + energyLevel * 48, posY + 15)
+		gl_TexRect(m_resources.posX + widgetPosX + 2, posY + 11*scaleFactor, m_resources.posX + widgetPosX + energyLevel * 48 * scaleFactor, posY + 15*scaleFactor)
 		
 	
 		gl_Texture(false)
@@ -1531,10 +1594,10 @@ function DrawPosition(posY, position)
 		if position < 100 then
 			level = position / 100
 		end
-		gl_Color(1,math.max(1,2*level),level)
+		gl_Color(1,max(1,2*level),level)
 
-		TextDrawCentered(position.."%", m_position.posX + widgetPosX + 20, posY + 3)
-		--gl_Rect(m_position.posX + widgetPosX + 0, posY + 0, m_position.posX + widgetPosX + 40, posY + 18)
+		TextDrawCentered(position.."%", m_position.posX + widgetPosX + 20*scaleFactor, posY + 3*scaleFactor)
+		--gl_Rect(m_position.posX + widgetPosX + 0, posY + 0, m_position.posX + widgetPosX + 40*scaleFactor, posY + 18*scaleFactor)
 		gl_Color(1,1,1)
 	end
 end
@@ -1660,6 +1723,14 @@ function GetDark(red,green,blue)
 	return false
 end
 
+function GetPlayerColorStr(red,green,blue)                  	
+	if red and green and blue then
+		return "\255"..string.char(floor(red*255))..string.char(floor(green*255))..string.char(floor(blue*255))
+	end
+
+	return "\255\255\255\255"
+end
+
 function Spec(teamID)
 	Spring_SendCommands{"specteam "..teamID}
 	specTarget = teamID
@@ -1695,7 +1766,7 @@ function widget:MousePress(x,y,button)
 					clickedPlayer = player[i]
 					posY = widgetPosY + widgetHeight - clickedPlayer.posY
 					if m_spec.active == true then
-						if IsOnRect(x, y, m_spec.posX + widgetPosX +1, posY, m_spec.posX + widgetPosX +17,posY+16) then --spec button
+						if IsOnRect(x, y, m_spec.posX + widgetPosX +1, posY, m_spec.posX + widgetPosX +17*scaleFactor,posY+itemSizeY) then --spec button
 							teamToSpec = clickedPlayer.team
 							Spring_SendCommands{"specteam "..teamToSpec}
 							Spec(teamToSpec)
@@ -1714,12 +1785,12 @@ function widget:MousePress(x,y,button)
 							if clickedPlayer.pointTime ~= nil then
 								posY = widgetPosY + widgetHeight - clickedPlayer.posY
 								if right == true then
-									if IsOnRect(x,y, widgetPosX - 28, posY - 1,widgetPosX - 12, posY + 17) then                           --point button
+									if IsOnRect(x,y, widgetPosX - 28*scaleFactor, posY - 1,widgetPosX - 12*scaleFactor, posY + itemSizeY+1) then                           --point button
 										Spring.SetCameraTarget(clickedPlayer.pointX,clickedPlayer.pointY,clickedPlayer.pointZ,1)          --                                       --
 										return true                                                                                       --
 									end                                                                                                   --
 								else                                                                                                      --
-									if IsOnRect(x,y, widgetPosX + widgetWidth + 12, posY-1,widgetPosX + widgetWidth + 28, posY + 17) then --
+									if IsOnRect(x,y, widgetPosX + widgetWidth + 12*scaleFactor, posY-1,widgetPosX + widgetWidth + 28*scaleFactor, posY + itemSizeY+1) then --
 										Spring.SetCameraTarget(clickedPlayer.pointX,clickedPlayer.pointY,clickedPlayer.pointZ,1)                                                  --
 										return true
 									end
@@ -1738,12 +1809,12 @@ function widget:MousePress(x,y,button)
 						if m_take.active == true then
 							if clickedPlayer.totake == true then
 								if right == true then
-									if IsOnRect(x,y, widgetPosX - 57, posY - 1,widgetPosX - 12, posY + 17) then                            --take button
+									if IsOnRect(x,y, widgetPosX - 57*scaleFactor, posY - 1,widgetPosX - 12*scaleFactor, posY + itemSizeY+1) then                            --take button
 										Take()                                                                                             --
 										return true                                                                                        --
 									end                                                                                                    --
 								else                                                                                                       --
-									if IsOnRect(x,y, widgetPosX + widgetWidth + 12, posY-1,widgetPosX + widgetWidth + 57, posY + 17) then  --
+									if IsOnRect(x,y, widgetPosX + widgetWidth + 12*scaleFactor, posY-1,widgetPosX + widgetWidth + 57*scaleFactor, posY + itemSizeY+1) then  --
 										Take()                                                                                             --
 										return true
 									end
@@ -1751,7 +1822,7 @@ function widget:MousePress(x,y,button)
 							end
 						end
 						if m_share.active == true and clickedPlayer.dead ~= true then
-							if IsOnRect(x, y, m_share.posX + widgetPosX +1, posY, m_share.posX + widgetPosX +17,posY+16) then       -- share units button
+							if IsOnRect(x, y, m_share.posX + widgetPosX +1, posY, m_share.posX + widgetPosX +17*scaleFactor,posY+itemSizeY) then       -- share units button
 								if release ~= nil then                                                                                --
 									if release >= now then                                                                            --
 										if clickedPlayer.team == myTeamID then                                                        --
@@ -1773,11 +1844,11 @@ function widget:MousePress(x,y,button)
 								end
 								return true
 							end
-							if IsOnRect(x, y, m_share.posX + widgetPosX +17, posY, m_share.posX + widgetPosX +33,posY+16) then      -- share energy button (initiates the slider)
+							if IsOnRect(x, y, m_share.posX + widgetPosX +17*scaleFactor, posY, m_share.posX + widgetPosX +33*scaleFactor,posY+itemSizeY) then      -- share energy button (initiates the slider)
 								energyPlayer = clickedPlayer
 								return true
 							end
-							if IsOnRect(x, y, m_share.posX + widgetPosX +33, posY, m_share.posX + widgetPosX +49,posY+16) then      -- share metal button (initiates the slider)
+							if IsOnRect(x, y, m_share.posX + widgetPosX +33*scaleFactor, posY, m_share.posX + widgetPosX +49*scaleFactor,posY+itemSizeY) then      -- share metal button (initiates the slider)
 								metalPlayer = clickedPlayer
 								return true
 							end
@@ -1792,7 +1863,7 @@ function widget:MousePress(x,y,button)
 						clickedPlayer = player[i]
 						posY = widgetPosY + widgetHeight - clickedPlayer.posY
 						if m_chat.active == true then
-							if IsOnRect(x, y, m_chat.posX + widgetPosX +1, posY, m_chat.posX + widgetPosX +17,posY+16) then                            --chat button
+							if IsOnRect(x, y, m_chat.posX + widgetPosX +1, posY, m_chat.posX + widgetPosX +17*scaleFactor,posY+itemSizeY) then                            --chat button
 								Spring_SendCommands("chatall","pastetext /w "..clickedPlayer.name..' \1')
 								return true                                                                                                                --
 							end
@@ -1801,12 +1872,12 @@ function widget:MousePress(x,y,button)
 							if clickedPlayer.pointTime ~= nil then
 								if clickedPlayer.allyteam == myAllyTeamID then
 									if right == true then
-										if IsOnRect(x,y, widgetPosX - 28, posY - 1,widgetPosX - 12, posY + 17) then
+										if IsOnRect(x,y, widgetPosX - 28*scaleFactor, posY - 1,widgetPosX - 12*scaleFactor, posY + itemSizeY+1) then
 											Spring.SetCameraTarget(clickedPlayer.pointX,clickedPlayer.pointY,clickedPlayer.pointZ,1)
 											return true
 										end
 									else
-										if IsOnRect(x,y, widgetPosX + widgetWidth + 12, posY-1,widgetPosX + widgetWidth + 28, posY + 17) then
+										if IsOnRect(x,y, widgetPosX + widgetWidth + 12*scaleFactor, posY-1,widgetPosX + widgetWidth + 28*scaleFactor, posY + itemSizeY+1) then
 											Spring.SetCameraTarget(clickedPlayer.pointX,clickedPlayer.pointY,clickedPlayer.pointZ,1)
 											return true
 										end
@@ -1829,7 +1900,7 @@ function widget:MouseMove(x,y,dx,dy,button)
 		end
 		sliderPosition = y-sliderOrigin
 		if sliderPosition < 0 then sliderPosition = 0 end
-		if sliderPosition > 39 then sliderPosition = 39 end
+		if sliderPosition > 39*scaleFactor then sliderPosition = 39*scaleFactor end
 	end
 end
 
@@ -1906,19 +1977,19 @@ end
 
 local function DrawTweakButton(module, image)
 	gl_Texture(image)
-	gl_TexRect(localLeft + localOffset, localBottom + 11, localLeft + localOffset + 16, localBottom + 27)
+	gl_TexRect(localLeft + localOffset, localBottom + 11*scaleFactor, localLeft + localOffset + 16*scaleFactor, localBottom + 27*scaleFactor)
 	if module.active ~= true then
 		gl_Texture(crossPic)
-		gl_TexRect(localLeft + localOffset, localBottom + 11, localLeft + localOffset + 16, localBottom + 27)
+		gl_TexRect(localLeft + localOffset, localBottom + 11*scaleFactor, localLeft + localOffset + 16*scaleFactor, localBottom + 27*scaleFactor)
 	end
-	localOffset = localOffset + 16
+	localOffset = localOffset + 16*scaleFactor
 end
 
 local function DrawTweakButtons()
 	
-	local minSize = (modulesCount-1) * 16 + 2
+	local minSize = (modulesCount-1) * 16*scaleFactor + 2
 	localLeft     = widgetPosX
-	localBottom   = widgetPosY + widgetHeight - 28
+	localBottom   = widgetPosY + widgetHeight - 28*scaleFactor
 	localOffset   = 1
 	
 	if localLeft + minSize > vsx then localLeft = vsx - minSize end
@@ -1942,15 +2013,15 @@ local function DrawArrows()
 	gl_Color(1,1,1,0.4)
 	gl_Texture(arrowdPic)
 	if expandDown == true then
-		gl_TexRect(widgetPosX, widgetPosY - 12, widgetRight, widgetPosY - 4)
+		gl_TexRect(widgetPosX, widgetPosY - 12*scaleFactor, widgetRight, widgetPosY - 4*scaleFactor)
 	else
-		gl_TexRect(widgetPosX, widgetTop + 12, widgetRight, widgetTop + 4)
+		gl_TexRect(widgetPosX, widgetTop + 12*scaleFactor, widgetRight, widgetTop + 4*scaleFactor)
 	end
 		gl_Texture(arrowPic)
 	if expandLeft == true then
-		gl_TexRect(widgetPosX - 4, widgetPosY, widgetPosX - 12, widgetTop)
+		gl_TexRect(widgetPosX - 4*scaleFactor, widgetPosY, widgetPosX - 12*scaleFactor, widgetTop)
 	else
-		gl_TexRect(widgetRight + 4, widgetPosY, widgetRight + 12, widgetTop)
+		gl_TexRect(widgetRight + 4*scaleFactor, widgetPosY, widgetRight + 12*scaleFactor, widgetTop)
 	end
 	gl_Color(1,1,1,1)
 	gl_Texture(false)
@@ -1965,13 +2036,13 @@ function widget:TweakDrawScreen()
 end
 
 local function checkButton(module, x, y)
-		if IsOnRect(x, y, localLeft + localOffset, localBottom + 11, localLeft + localOffset + 16, localBottom + 27) then
+		if IsOnRect(x, y, localLeft + localOffset, localBottom + 11*scaleFactor, localLeft + localOffset + 16*scaleFactor, localBottom + 27*scaleFactor) then
 			module.active = not module.active
 			SetModulesPositionX()
-			localOffset = localOffset + 16
+			localOffset = localOffset + itemSizeY
 			return true
 		else
-			localOffset = localOffset + 16
+			localOffset = localOffset + itemSizeY
 			return false
 		end
 end
@@ -1980,10 +2051,10 @@ function widget:TweakMousePress(x,y,button)
 	if button == 1 then
 		
 		localLeft = widgetPosX
-		localBottom = widgetPosY + widgetHeight - 28
+		localBottom = widgetPosY + widgetHeight - 28*scaleFactor
 		localOffset = 1
 		if localBottom < 0 then localBottom = 0 end
-		if localLeft + 181 > vsx then localLeft = vsx - 181 end
+		if localLeft + 181*scaleFactor > vsx then localLeft = vsx - 181*scaleFactor end
 		
 		if checkButton(m_rank,    x, y) then return true end
 		if checkButton(m_side,    x, y) then return true end
@@ -2218,7 +2289,7 @@ function CheckPlayersChange()
 	for _,teamId in ipairs(Spring.GetTeamList()) do
 		if (teamResources[teamId]) then
 			if maxIncome > 0 then
-				teamResources[teamId].position = math.floor(teamResources[teamId].income * 100 / maxIncome)
+				teamResources[teamId].position = floor(teamResources[teamId].income * 100 / maxIncome)
 			end
 		end
 		
@@ -2262,7 +2333,9 @@ function CheckPlayersChange()
 					player[player[i].team + 32] = CreatePlayerFromTeam(player[i].team)         
 				end
 				player[i].team = teamID
-				player[i].red, player[i].green, player[i].blue = Spring_GetTeamColor(teamID)
+				local r,g,b = Spring_GetTeamColor(teamID)
+				r,g,b,_ = convertColor(r,g,b,0) 
+				player[i].red, player[i].green, player[i].blue = r,g,b
 				player[i].dark = GetDark(player[i].red, player[i].green, player[i].blue)
 				player[i].skill = GetSkill(i) 
 				sorting = true
@@ -2295,7 +2368,7 @@ function CheckPlayersChange()
 			-- send warning message to yourself if player is lagging behind
 			if player[i].spec == false then
 				if (tonumber(player[i].ping) > PLAYER_LAG_WARNING_THRESHOLD_MS and (f > 0 and (not latestLagWarningByPlayer[i] or f - latestLagWarningByPlayer[i] > PLAYER_LAG_WARNING_DELAY_F ))) then
-					Spring.SendMessageToPlayer(myPlayerID,"WARNING: <PLAYER"..i.."> is lagging behind "..(math.floor(tonumber(player[i].ping)/1000)).."s" )
+					Spring.SendMessageToPlayer(myPlayerID,"WARNING: <PLAYER"..i.."> is lagging behind "..(floor(tonumber(player[i].ping)/1000)).."s" )
 					Spring.SendCommands("pause 1") -- pause the game
 					latestLagWarningByPlayer[i] = f
 				end

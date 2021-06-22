@@ -20,6 +20,11 @@ end
 local NeededFrameworkVersion = 8.1
 local CanvasX,CanvasY = 1280,734 --resolution in which the widget was made (for 1:1 size)
 --1272,734 == 1280,768 windowed
+local vsx, vsy = gl.GetViewSizes()
+local maxFontSizeFactor = 1
+if (vsy > 1080) then
+	maxFontSizeFactor = vsy / 1080
+end	
 
 VFS.Include("lualibs/custom_cmd.lua")
 
@@ -30,7 +35,7 @@ local Config = {
 		
 		barsy = 6, --width of the actual bar
 		fontsize = 12,
-		maxFontsize = 24,
+		maxFontsize = 24 * maxFontSizeFactor,
 		margin = 5, --distance from background border
 		
 		padding = 4, -- for border effect
@@ -38,7 +43,7 @@ local Config = {
 		
 		expensefadetime = 0.25, --fade effect time, in seconds
 		
-		cbackground = {0,0,0,0.5}, --color {r,g,b,alpha}
+		cbackground = {0,0,0,0.6}, --color {r,g,b,alpha}
 		cborder = {0,0,0,0.88},
 		cbarbackground = {0,0,0,1},
 		cbar = {1,1,1,1},
@@ -70,7 +75,7 @@ local Config = {
 		
 		barsy = 6, --width of the actual bar
 		fontsize = 12,
-		maxFontsize = 24,
+		maxFontsize = 24 * maxFontSizeFactor,
 		margin = 5,
 		
 		padding = 4, -- for border effect
@@ -78,7 +83,7 @@ local Config = {
 		
 		expensefadetime = 0.25,
 		
-		cbackground = {0,0,0,0.5},
+		cbackground = {0,0,0,0.6},
 		cborder = {0,0,0,0.88},
 		cbarbackground = {0,0,0,1},
 		cbar = {1,1,0,1},
@@ -240,7 +245,7 @@ local function createbar(r)
 	New(background2)
 	
 	local number = {"text",
-		px=0,py=background.py+r.margin,fontsize=r.fontsize,maxFontsize=20,
+		px=0,py=background.py+r.margin,fontsize=r.fontsize,maxFontsize=20 * maxFontSizeFactor,
 		caption=r.name.." +99999.9m",
 		options="n", --disable colorcodes
 	}

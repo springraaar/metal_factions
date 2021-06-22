@@ -137,7 +137,7 @@ function gadget:GameFrame(n)
 					-- if severely disadvantaged, surrender        
 					if teamValueMod < SURRENDER_THRESHOLD then
 						if ( not defeatedAllyIds[allyId] ) then
-							Spring.SendMessage("Team "..allyId.." has been DEFEATED.")
+							Spring.SendMessage("Team "..allyId.." has been DEFEATED : resigning player "..id)
 							if isAI then
 								spSetTeamRulesParam(id,"ai_resigned","1")
 							end

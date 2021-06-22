@@ -18,6 +18,7 @@ local commanderXp = {}
 local commanderName = {}
 local commanderMoveState = {}
 local commanderBuildOrderFrameByTeam = {}
+local spGetUnitsInCylinder = Spring.GetUnitsInCylinder
 local GetTeamUnits = Spring.GetTeamUnits 
 local GetUnitDefId = Spring.GetUnitDefID
 local GetGameFrame = Spring.GetGameFrame
@@ -61,6 +62,14 @@ local advCommanderDefIds = {
 	[UnitDefNames['sphere_u4commander'].id] = true,	
 	[UnitDefNames['sphere_u5commander'].id] = true,
 	[UnitDefNames['sphere_u6commander'].id] = true
+}
+
+
+local commanderPadDefIds = {
+	[UnitDefNames['aven_commander_respawner'].id] = true,
+	[UnitDefNames['gear_commander_respawner'].id] = true,
+	[UnitDefNames['claw_commander_respawner'].id] = true,
+	[UnitDefNames['sphere_commander_respawner'].id] = true
 }
 
 -- checks if unit is a commander
@@ -158,7 +167,26 @@ function gadget:UnitFinished(unitId, unitDefId, teamId)
 		
 		-- replace token with commander
 		if (commanderName[teamId]) then
-			Spring.CreateUnit(commanderName[teamId],bpx,bpy,bpz,"s",teamId)
+			
+			-- get the commander pad that built it
+			local nearbyUnits = spGetUnitsInCylinder(bpx,bpz,50,teamId)
+			local padId = nil			
+			for i,pId in pairs(nearbyUnits) do
+				if commanderPadDefIds[GetUnitDefId(pId)] then
+					padId = pId
+					break
+				end
+			end
+			local cId = Spring.CreateUnit(commanderName[teamId],bpx,bpy,bpz,"s",teamId)
+		
+			if padId ~= nil and cId ~= nil then
+				local cmdQueue = Spring.GetUnitCommands(padId, 20)
+				if (#cmdQueue>0) then 
+					for i,cmd in pairs(cmdQueue) do
+						spGiveOrderToUnit(cId, cmd.id, cmd.params, cmd.options)
+					end
+				end
+			end
 		
 			-- destroy token
 			Spring.DestroyUnit(unitId)

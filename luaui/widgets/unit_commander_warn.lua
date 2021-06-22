@@ -21,6 +21,7 @@ local duration = 1.2
 local maxOpacity = 0.6
 local opacity = 0
 
+local scaleFactor = 1
 local myTeamID = Spring.GetMyTeamID()
 
 local comUnitDefIDs = {}
@@ -34,11 +35,16 @@ end
 
 function createList()
 	local vsx, vsy = gl.GetViewSizes()
+	if (vsy > 1080) then
+		scaleFactor = vsy/1080
+	else
+		scaleFactor = 1
+	end
 	dList = gl.CreateList(function()
 		gl.Texture(vignetteTexture)
 		gl.TexRect(-(vsx/25), -(vsy/25), vsx+(vsx/25), vsy+(vsy/25))
 		gl.Texture(signTexture)
-		gl.TexRect(vsx - 100, vsy/2 +53, vsx-20, vsy/2 - 53)
+		gl.TexRect(vsx - 100*scaleFactor, vsy/2 +53*scaleFactor, vsx-20*scaleFactor, vsy/2 - 53*scaleFactor)
 		gl.Texture(false)
 	end)
 end

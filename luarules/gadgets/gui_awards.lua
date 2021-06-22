@@ -441,7 +441,6 @@ local bgMargin = 6
 local Background	-- background
 local graphsBackground  -- inner background for the graphs
 local awardList = {}
-local myTeamId = -1
 
 local xpArr = {
 "",
@@ -870,6 +869,8 @@ function createAwardsHeader()
 		glDeleteList(awardsHeader)
 	end
 	
+	myTeamId = Spring.GetLocalTeamID()
+	Spring.Echo("TEAM ID "..myTeamId)
 	
 	-- awards header
 	local victoryStatus = 0

@@ -178,7 +178,8 @@ function MapHandler:Init()
 			newCell.isWater = spTestBuildOrder(waterTestUnitDef.id, newCell.p.x,0,newCell.p.z,0) > 0
 			newCell.isDeepWater = spTestBuildOrder(deepWaterTestUnitDef.id, newCell.p.x,0,newCell.p.z,0) > 0
 			newCell.isLandSlope = false
-			if( not newCell.isLand and not newCell.isWater and not newCell.isDeepWater) then
+			--if( not newCell.isLand and not newCell.isWater and not newCell.isDeepWater) then
+			if(newCell.type == PF_TYPE_LAND_STEEP_SLOPE) then
 				newCell.isLandSlope = true	
 			end
 			
@@ -234,6 +235,17 @@ function MapHandler:Init()
 		end
 	end
 	--]]
+	-- output map profile to console	
+	--[[ ]]--
+	for j=0,(pFCellCountZ - 1) do
+		local lineStr = ""
+		for i=0,(pFCellCountX - 1) do
+			local cell = self.mapPFCells[i][j]
+			lineStr = lineStr.." "..(cell.isDeepWater and "W" or (cell.isWater and "w" or (cell.isLandSlope and "S" or " ")))
+		end
+		log(lineStr,self.ai)
+	end
+	
 	
 	-- add metal spot info to cells
 	local cell = nil

@@ -74,7 +74,6 @@ local modifiersByUpgrade = {
 local upgradesByPlayerId = {}
 GG.upgradeCountsByTypeAndPlayerId = {}
 local upgradeBuildOrdersByPlayerId = {}
-local upgradeBuildOrdersByTypePlayerId = {}
 local modifiersByPlayerId = {}
 local modifiersByUnitId = {}
 local processedUpgradeIds = {}
@@ -425,47 +424,55 @@ function updateUnitWeaponDamage(unitId, modifier)
 end
 
 -- check if a given upgrade can be built by player
-function checkLimit(name, teamId)
+-- returns false if not available or the smallest number of buildable upgrades
+-- if beingBuilt
+function checkLimit(name, teamId, ignoreBeingBuilt)
 	local limit = modifiersByUpgrade[name].limit or 1
 	local type = modifiersByUpgrade[name].type
 	local beingBuilt = 0
 	local typeBeingBuilt = 0
 	local ud = nil
-	for _,uId in ipairs(spGetTeamUnits(teamId)) do
-		ud = UnitDefs[spGetUnitDefId(uId)]
-		
-		local health,maxHealth,_,_,bp = spGetUnitHealth(uId)
-		
-		-- if it's finished but unitfinished has not yet triggered, trigger it
-		-- else increment current being-built counters
-		if (bp and bp > 0.99) then
-			gadget:UnitFinished(uId, ud.id, teamId)
-		else
-			if (ud.name == name) then
-				beingBuilt = beingBuilt + 1
-				typeBeingBuilt = typeBeingBuilt + 1
-			elseif (isUpgrade(ud.id) and modifiersByUpgrade[ud.name].type == type) then
-				typeBeingBuilt = typeBeingBuilt + 1
+	if (not ignoreBeingBuilt) then
+		for _,uId in ipairs(spGetTeamUnits(teamId)) do
+			ud = UnitDefs[spGetUnitDefId(uId)]
+			
+			local health,maxHealth,_,_,bp = spGetUnitHealth(uId)
+			
+			-- if it's finished but unitfinished has not yet triggered, trigger it
+			-- else increment current being-built counters
+			if (bp and bp > 0.99) then
+				gadget:UnitFinished(uId, ud.id, teamId)
+			else
+				if (ud.name == name) then
+					beingBuilt = beingBuilt + 1
+					typeBeingBuilt = typeBeingBuilt + 1
+				elseif (isUpgrade(ud.id) and modifiersByUpgrade[ud.name].type == type) then
+					typeBeingBuilt = typeBeingBuilt + 1
+				end
 			end
 		end
 	end
-	
 	-- check for limit by type
 	local typeCount = GG.upgradeCountsByTypeAndPlayerId[teamId][type]
 	local typeLimit = limitsByType[type]
 	
-	local orders = upgradeBuildOrdersByPlayerId[teamId][name] or 0 
-	local typeOrders = upgradeBuildOrdersByTypePlayerId[teamId][type] or 0
+	--local orders = upgradeBuildOrdersByPlayerId[teamId][name] or 0 
+	--local typeOrders = upgradeBuildOrdersByTypePlayerId[teamId][type] or 0
+	local orders = 0
+	local typeOrders = 0
 	local upgrades = upgradesByPlayerId[teamId][name] or 0
 	if (orders + beingBuilt + upgrades < limit) and (typeOrders + typeBeingBuilt + typeCount < typeLimit) then
-		return true
+		return math.min(limit - (orders + beingBuilt + upgrades),typeLimit - (typeOrders + typeBeingBuilt + typeCount))
 	end
 	
 	
 	local _,_,_,isAI,_,_ = spGetTeamInfo(teamId)
 	if (not isAI) then
-		spSendMessageToTeam( teamId, "\""..UnitDefNames[name].humanName.."\" : own limit or type limit reached : construction aborted : orders="..orders.." beingbuilt="..beingBuilt.." upgrades="..upgrades.." limit="..limit.." typeorders="..typeOrders.." typeBeingBuilt="..typeBeingBuilt.." typecount="..typeCount.." typelimit="..typeLimit)
-		--spSendMessageToTeam( teamId, "\""..UnitDefNames[name].humanName.."\" : own limit or type limit reached : construction aborted")
+		--spSendMessageToTeam( teamId, "\""..UnitDefNames[name].humanName.."\" : own limit or type limit reached : construction aborted : orders="..orders.." beingbuilt="..beingBuilt.." upgrades="..upgrades.." limit="..limit.." typeorders="..typeOrders.." typeBeingBuilt="..typeBeingBuilt.." typecount="..typeCount.." typelimit="..typeLimit)
+		spSendMessageToTeam( teamId, "\""..UnitDefNames[name].humanName.."\" : own limit or type limit reached : upgrade construction aborted")
+	end
+	if (ignoreBeingBuilt) then
+		return 0
 	end
 	return false
 end
@@ -486,7 +493,6 @@ function gadget:Initialize()
 		upgradesByPlayerId[teamId] = {}
 		GG.upgradeCountsByTypeAndPlayerId[teamId] = { [TYPE_MINOR] = 0, [TYPE_COMMANDER] = 0, [TYPE_MAJOR] = 0 }
 		upgradeBuildOrdersByPlayerId[teamId] = {}
-		upgradeBuildOrdersByTypePlayerId[teamId] = {}
 		modifiersByPlayerId[teamId] = {}
 		
 		-- player upgrade status string, for tooltip
@@ -507,20 +513,11 @@ function gadget:UnitCreated(unitId, unitDefId, teamId)
 	if not isUpgrade(unitDefId) then
 		updateUnitModifiers(unitId, unitDefId, teamId)
 	else
-			
 		if (not upgradeBuildOrdersByPlayerId[teamId][name]) then
-			upgradeBuildOrdersByPlayerId[teamId][name] = 0
-		else	
-			upgradeBuildOrdersByPlayerId[teamId][name] = upgradeBuildOrdersByPlayerId[teamId][name] - 1
+			upgradeBuildOrdersByPlayerId[teamId][name] = {}
 		end
+		upgradeBuildOrdersByPlayerId[teamId][name][unitId] = true
 		
-		local type = modifiersByUpgrade[name].type
-		if (not upgradeBuildOrdersByTypePlayerId[teamId][type]) then
-			upgradeBuildOrdersByTypePlayerId[teamId][type] = 0
-		else	
-			upgradeBuildOrdersByTypePlayerId[teamId][type] = upgradeBuildOrdersByTypePlayerId[teamId][type] - 1
-		end
-	
 		--Spring.Echo(name.." created at frame "..Spring.GetGameFrame())
 	end
 end
@@ -574,34 +571,54 @@ function gadget:AllowUnitCreation(unitDefId,builderId,teamId,x,y,z)
 		if (not checkLimit(name, teamId)) then
 			return false
 		end
-		
-		if (not upgradeBuildOrdersByPlayerId[teamId][name]) then
-			upgradeBuildOrdersByPlayerId[teamId][name] = 1
-		else	
-			upgradeBuildOrdersByPlayerId[teamId][name] = upgradeBuildOrdersByPlayerId[teamId][name] + 1
-		end
-		
-		local type = modifiersByUpgrade[name].type
-		if (not upgradeBuildOrdersByTypePlayerId[teamId][type]) then
-			upgradeBuildOrdersByTypePlayerId[teamId][type] = 1
-		else	
-			upgradeBuildOrdersByTypePlayerId[teamId][type] = upgradeBuildOrdersByTypePlayerId[teamId][type] + 1
-		end
-		
-		upgradeBuildOrdersByPlayerId[teamId]["frame"] = spGetGameFrame()
 	end
 	
 	return true
 end
 
 
--- clean up leftover upgrade build orders that resolved but builder got killed before the upgrade unit got created
+-- cleanup
+function gadget:UnitDestroyed(unitId, unitDefId, teamId)
+	if isUpgrade(unitDefId) then
+		local name = UnitDefs[unitDefId].name
+		
+		if (upgradeBuildOrdersByPlayerId[teamId]) then
+			local beingBuilt = upgradeBuildOrdersByPlayerId[teamId][name]
+			if beingBuilt and beingBuilt[unitId] then
+				beingBuilt[unitId] = nil
+			end
+		end
+	end
+end
+
+
+-- clean up excess upgrade build orders
 function gadget:GameFrame(n)
-	for tId,data in pairs(upgradeBuildOrdersByPlayerId) do
-		if (data["frame"] and n > data["frame"] + UPGRADE_ORDER_CLEANUP_DELAY_FRAMES) then
-			-- clear upgrade orders 
-			upgradeBuildOrdersByPlayerId[tId] = {}
-			upgradeBuildOrdersByTypePlayerId[tId] = {}
+		
+	for _,teamId in pairs (spGetTeamList()) do
+		local countByType = {}
+		for name,beingBuilt in pairs(upgradeBuildOrdersByPlayerId[teamId]) do
+			if beingBuilt and next(beingBuilt) ~= nil then
+				local type = modifiersByUpgrade[name].type
+				local typeLimit = limitsByType[type]
+				if (not countByType[type]) then
+					countByType[type] = GG.upgradeCountsByTypeAndPlayerId[teamId][type]
+				end
+				local allowed = checkLimit(name, teamId,true)
+
+				-- let upgrades be built until the limit is reached
+				-- make the rest disappear
+				for uId,_ in pairs(beingBuilt) do
+					if (allowed > 0 and countByType[type] < typeLimit ) then
+						allowed = allowed - 1
+						countByType[type] = countByType[type] + 1
+					else
+						Spring.DestroyUnit(uId,false,true)
+						--Spring.Echo("removed "..uId.." / "..name)
+						-- table is cleared on unitdestroyed
+					end
+				end
+			end
 		end
 	end
 end

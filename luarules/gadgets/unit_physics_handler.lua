@@ -184,6 +184,9 @@ local function updateUnitPhysics(unitId)
 	vx,vy,vz,v = spGetUnitVelocity(unitId)
 	rx,ry,rz = spGetUnitRotation(unitId)
 	
+	if not x then
+		return
+	end	
 	
 	-- force aircraft that flew off the map to "teleport" back into the nearest edge
 	-- workaround for 104.0 engine bug
@@ -441,86 +444,87 @@ function gadget:GameFrame(n)
 		
 		-- get updated physics
 		updateUnitPhysics(unitId)
-		
-		groundHeight = spGetGroundHeight(x,z)
-		h = y - groundHeight
-		-- prevent repeated collisions when walking down slopes
-		if h > GROUND_COLLISION_H_THRESHOLD then
-			enableGC = true
-		else 
-			enableGC = oldPhysics[8]
-		end
-		
-		-- workaround for engine not calling StartMoving when it should in some situations
-		if moveAnimationUnitIds[unitId] then
-			if (n%MOVING_CHECK_DELAY == 0) then
-				if abs(vx) > 0.1 or abs(vz) > 0.1 then
-					if abs(h) < 3 or y <= 0 then
-						spCallCOBScript(unitId,"StartMoving",0)
+		if x then
+			groundHeight = spGetGroundHeight(x,z)
+			h = y - groundHeight
+			-- prevent repeated collisions when walking down slopes
+			if h > GROUND_COLLISION_H_THRESHOLD then
+				enableGC = true
+			else 
+				enableGC = oldPhysics[8]
+			end
+			
+			-- workaround for engine not calling StartMoving when it should in some situations
+			if moveAnimationUnitIds[unitId] then
+				if (n%MOVING_CHECK_DELAY == 0) then
+					if abs(vx) > 0.1 or abs(vz) > 0.1 then
+						if abs(h) < 3 or y <= 0 then
+							spCallCOBScript(unitId,"StartMoving",0)
+						end
+					else
+						spCallCOBScript(unitId,"StopMoving",0)			
 					end
-				else
-					spCallCOBScript(unitId,"StopMoving",0)			
 				end
 			end
-		end
-		
-		if (groundHeight > 0) then
-			-- check for high speed ground impact
-			if oldPhysics[7] > 0 and h <= 0 and enableGC == true then
-				
-				-- only trigger this if moving fast
-				if abs(oldPhysics[5]) > COLLISION_SPEED_THRESHOLD then
-					local radius = spGetUnitRadius(unitId) * 2 * (1 + COLLISION_SPEED_MOD * abs(oldPhysics[5]))
-					--Spring.Echo("unit "..unitId.." ground collision at frame "..n.." radius="..radius.." speed="..abs(oldPhysics[5]))
-					spSpawnCEG(groundCollisionCEG, x,groundHeight+5,z,0,1,0,radius,radius)
-					spPlaySoundFile(groundCollisionSound, math.min(1,math.max(0.2,radius/50)), x, y, z)
-					enableGC = false
-				end
-			end
-		else
-			-- check for high speed water impact
-			if (oldPhysics[2] > 0 and y <= 0) or (oldPhysics[2] <= 0 and y > 0 ) then
-				if abs(oldPhysics[5]) > COLLISION_SPEED_THRESHOLD then
-					local radius = spGetUnitRadius(unitId) * 2 * (1 + COLLISION_SPEED_MOD * abs(oldPhysics[5]))
-					-- ascending collision is less intense
-					if oldPhysics[5] > 0 then
-						radius = radius * 0.66
-					end
+			
+			if (groundHeight > 0) then
+				-- check for high speed ground impact
+				if oldPhysics[7] > 0 and h <= 0 and enableGC == true then
 					
-					--Spring.Echo("unit "..unitId.." water collision at frame "..n.." radius="..radius)
-					spSpawnCEG(waterCollisionCEG, x,3,z,0,1,0,radius,radius)
-					spPlaySoundFile(waterCollisionSound, math.min(1,math.max(0.2,radius/50)), x, y, z)
-					enableGC = false
+					-- only trigger this if moving fast
+					if abs(oldPhysics[5]) > COLLISION_SPEED_THRESHOLD then
+						local radius = spGetUnitRadius(unitId) * 2 * (1 + COLLISION_SPEED_MOD * abs(oldPhysics[5]))
+						--Spring.Echo("unit "..unitId.." ground collision at frame "..n.." radius="..radius.." speed="..abs(oldPhysics[5]))
+						spSpawnCEG(groundCollisionCEG, x,groundHeight+5,z,0,1,0,radius,radius)
+						spPlaySoundFile(groundCollisionSound, math.min(1,math.max(0.2,radius/50)), x, y, z)
+						enableGC = false
+					end
+				end
+			else
+				-- check for high speed water impact
+				if (oldPhysics[2] > 0 and y <= 0) or (oldPhysics[2] <= 0 and y > 0 ) then
+					if abs(oldPhysics[5]) > COLLISION_SPEED_THRESHOLD then
+						local radius = spGetUnitRadius(unitId) * 2 * (1 + COLLISION_SPEED_MOD * abs(oldPhysics[5]))
+						-- ascending collision is less intense
+						if oldPhysics[5] > 0 then
+							radius = radius * 0.66
+						end
+						
+						--Spring.Echo("unit "..unitId.." water collision at frame "..n.." radius="..radius)
+						spSpawnCEG(waterCollisionCEG, x,3,z,0,1,0,radius,radius)
+						spPlaySoundFile(waterCollisionSound, math.min(1,math.max(0.2,radius/50)), x, y, z)
+						enableGC = false
+					end
 				end
 			end
-		end
-	
-		-- check if unit is stuck
-		if (checkStuck(defId,x,y,z,v)) then
-			if not stuckGroundUnitIds[unitId] then
-				--Spring.Echo(unitId.." is stuck!")
-				stuckGroundUnitIds[unitId] = true
-			end
-		else
-			if stuckGroundUnitIds[unitId] then
-				--Spring.Echo(unitId.." is no longer stuck")
-				stuckGroundUnitIds[unitId] = nil
-			end
-		end
 		
-		-- update physics
-		oldPhysics[1] = x
-		oldPhysics[2] = y
-		oldPhysics[3] = z
-		oldPhysics[4] = vx
-		oldPhysics[5] = vy
-		oldPhysics[6] = vz
-		oldPhysics[7] = h
-		oldPhysics[8] = enableGC
-		oldPhysics[9] = rx
-		oldPhysics[10] = ry
-		oldPhysics[11] = rz
-		oldPhysics[12] = v
+			-- check if unit is stuck
+			if (checkStuck(defId,x,y,z,v)) then
+				if not stuckGroundUnitIds[unitId] then
+					--Spring.Echo(unitId.." is stuck!")
+					stuckGroundUnitIds[unitId] = true
+				end
+			else
+				if stuckGroundUnitIds[unitId] then
+					--Spring.Echo(unitId.." is no longer stuck")
+					stuckGroundUnitIds[unitId] = nil
+				end
+			end
+			
+			-- update physics
+			oldPhysics[1] = x
+			oldPhysics[2] = y
+			oldPhysics[3] = z
+			oldPhysics[4] = vx
+			oldPhysics[5] = vy
+			oldPhysics[6] = vz
+			oldPhysics[7] = h
+			oldPhysics[8] = enableGC
+			oldPhysics[9] = rx
+			oldPhysics[10] = ry
+			oldPhysics[11] = rz
+			oldPhysics[12] = v
+		end
 	end
 	
 	-- feature physics

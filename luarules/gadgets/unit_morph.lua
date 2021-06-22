@@ -44,6 +44,8 @@ include("lualibs/custom_cmd.lua")
 
 local MAX_MORPH = 0 --// will increase dynamically
 
+local spGiveOrderToUnit = Spring.GiveOrderToUnit
+local spGetUnitCommands = Spring.GetUnitCommands
 
 --------------------------------------------------------------------------------
 --  COMMON
@@ -535,13 +537,14 @@ local function FinishMorph(unitID, morphData)
 	    { CMD.TRAJECTORY, { states.trajectory and 1 or 0 }, { } },
 	  })
 	
-	  --//copy command queue        FIX : removed 04/2012, caused erros
-	  --local cmds = Spring.GetUnitCommands(unitID)
-	  --for i = 2, cmds.n do  -- skip the first command (CMD_MORPH)
-	    --local cmd = cmds[i]
-	    --Spring.GiveOrderToUnit(newUnit, cmd.id, cmd.params, cmd.options.coded)
-	  --end
-	
+		--//copy command queue    
+		local cmdQueue = spGetUnitCommands(unitID, 20)
+		if (cmdQueue and #cmdQueue>0) then 
+			for i,cmd in pairs(cmdQueue) do
+				spGiveOrderToUnit(newUnit, cmd.id, cmd.params, cmd.options)
+			end
+		end
+			
 	  --//reassign assist commands to new unit
 	  ReAssignAssists(newUnit,unitID)
 	

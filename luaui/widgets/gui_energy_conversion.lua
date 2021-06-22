@@ -27,6 +27,8 @@ local sx, sy = 140, 80
 local scaling, fontSize, col1, col2, row1, row2, row3, row4
 local onsidemargin = 2
 
+local METAL_MAKER_ENERGY_PER_METAL = 144 
+
 local hoverLeft, hoverRight, hoverBottom, hoverTop, barBottom, barTop
 --------------------------------------------------------------------------------
 -- Speedups
@@ -65,7 +67,12 @@ function widget:Initialize()
 		widgetHandler:RemoveWidget(self)
 		return false
 	end
-	scaling = 1 --Y/1200
+	scaling = 1
+	if (Y > 1080) then
+		scaling = Y / 1080
+	end
+	
+	px, py = X-150*scaling, Y-230*scaling
 	sx, sy, fontSize = sx*scaling, sy*scaling, 12*scaling
 	col1, col2, row1, row2, row3, row4 = 135*scaling, 69*scaling, 5*scaling, 21*scaling,37*scaling,53*scaling
 	hoverLeft = 49*scaling
@@ -122,7 +129,7 @@ function widget:DrawScreen()
 	
 	if curCapacity <= 0 then return end
 	
-	local Mprod = curUsage/120
+	local Mprod = curUsage/METAL_MAKER_ENERGY_PER_METAL
 	local display
 	if Mprod >= 1 then 
 		display = format('%i.', Mprod) .. floor((Mprod-floor(Mprod))*10)
@@ -134,7 +141,7 @@ function widget:DrawScreen()
         glTranslate(px, py, 0)
         
         -- Panel
-        glColor(0, 0, 0, 0.5)
+        glColor(0, 0, 0, 0.6)
         glRect(0, 0, sx, sy)
         
         -- Border

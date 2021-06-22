@@ -32,11 +32,9 @@ local CanvasX,CanvasY = 1272,734 --resolution in which the widget was made (for 
 --1272,734 == 1280,768 windowed
 local vsx, vsy = gl.GetViewSizes()
 local maxFontSizeFactor = 1
---if (vsy > 1800) then
---	maxFontSizeFactor = 1.45
---elseif (vsy > 1200) then
---	maxFontSizeFactor = 1.2
---end	
+if (vsy > 1080) then
+	maxFontSizeFactor = vsy / 1080
+end	
 local sGetSelectedUnitsCount = Spring.GetSelectedUnitsCount
 local sGetActiveCommand = Spring.GetActiveCommand
 local sGetActiveCmdDescs = Spring.GetActiveCmdDescs
@@ -181,7 +179,7 @@ local Config = {
 		fadeTime = 0.25, --fade effect time, in seconds
 		
 		ctext = {0.9,0.9,0.9,1}, --color {r,g,b,alpha}
-		cbackground = {0,0,0,0.5},
+		cbackground = {0,0,0,0.6},
 		cborder = {0,0,0,1},
 		cbuttonBackground = {0.1,0.1,0.1,1},
 		
@@ -205,7 +203,7 @@ local Config = {
 		fadeTime = 0.25,
 		
 		ctext = {0.9,0.9,0.9,1},
-		cbackground = {0,0,0,0.5},
+		cbackground = {0,0,0,0.6},
 		cborder = {0,0,0,1},
 		cbuttonBackground={0.1,0.1,0.1,1},
 		
@@ -229,7 +227,7 @@ local Config = {
 		fadeTime = 0.25,
 		
 		ctext = {0.9,0.9,0.9,1},
-		cbackground = {0,0,0,0.5},
+		cbackground = {0,0,0,0.6},
 		cborder = {0,0,0,1},
 		cbuttonBackground={0.1,0.1,0.1,1},
 		

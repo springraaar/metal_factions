@@ -70,6 +70,17 @@ local weaponTargetLabels = {
 	WATER = "\255\64\64\255WATER"
 }
 
+local weaponHitPowerLabels = {
+	["1"] = "\255\150\150\255(L)\255\255\255\255",
+	["2"] = "\255\160\140\50(M)\255\255\255\255",
+	["3"] = "\255\200\110\100(H)\255\255\255\255"
+}
+local armorTypeLabels = {
+	["L"] = "\255\150\150\255(L)\255\255\255\255",
+	["M"] = "\255\160\140\50(M)\255\255\255\255",
+	["H"] = "\255\200\110\100(H)\255\255\255\255"
+}
+
 local myPlayerID
 local myTeamID
 local myAllyTeamID
@@ -302,14 +313,11 @@ function GetTooltipWeaponData(ud, xpMod, rangeMod, dmgMod)
 						end
 					end
 					
-					local hitpower = "L"
-					
-					if ( weap.damages[Game.armorTypes.default] == weap.damages[Game.armorTypes.armor_heavy] ) then
-						hitpower = "H"
-					elseif ( weap.damages[Game.armorTypes.default] == weap.damages[Game.armorTypes.armor_medium] ) then
-						hitpower = "M"
+					local hitpower = 0
+					if ( weap.customParams and weap.customParams.hitpower) then
+						hitpower = weap.customParams.hitpower
 					end
-					actionStr = actionStr.."("..hitpower..")"
+					actionStr = actionStr..weaponHitPowerLabels[weap.customParams.hitpower]
 				end       
 				NewTooltip = NewTooltip.."\n\255\255\255\255"..weap.description.."    "..actionStr.."     Range: "..FormatNbr(range,2)
 			
@@ -491,7 +499,7 @@ function GenerateNewTooltip()
 				"\255\200\200\200Metal: "..unitmetalcost.."    \255\255\255\0Energy: "..unitenergycost..""..
 				"\255\213\213\255".."    Build time: ".."\255\170\170\255"..
 				buildTimeStr.."s".."    "..GetTooltipTransportability(fud).."\n"..
-				"\255\200\200\200Health: ".."\255\200\200\200"..fud.health.."("..armorTypeStr..")"
+				"\255\200\200\200Health: ".."\255\200\200\200"..fud.health..armorTypeLabels[armorTypeStr]
 				if fud.shieldPower > 0 then NewTooltip=NewTooltip.."\255\135\135\255     Shield: "..FormatNbr(fud.shieldPower) end
 					
 			-- weapons
@@ -718,7 +726,7 @@ function GenerateNewTooltip()
 			local hasShield, ShieldPower=Spring.GetUnitShieldState(id)
 			local maxShieldPower = ud.shieldPower
 			if (health ~= nil) then
-				NewTooltip = NewTooltip.."\255\200\200\200Health: ".."\255\200\200\200"..floor(health).."\255\200\200\200/\255\200\200\200"..floor(maxHealth).."("..armorTypeStr..")"
+				NewTooltip = NewTooltip.."\255\200\200\200Health: ".."\255\200\200\200"..floor(health).."\255\200\200\200/\255\200\200\200"..floor(maxHealth)..armorTypeLabels[armorTypeStr]
 				if hasShield then NewTooltip=NewTooltip.."\255\135\135\255      Shield: "..FormatNbr(math.min(ShieldPower,maxShieldPower)).."/"..FormatNbr(maxShieldPower) end
 			end
 		    
@@ -841,7 +849,7 @@ function widget:DrawScreenEffects(vsx,vsy)
         end
  
         if not FontSize then
-                FontSize = max(8,4+vsy/100)
+                FontSize = max(8,vsy/72)
         end
  
         xTooltipSize = FontSize*(1+maxWidth)
@@ -861,7 +869,7 @@ function widget:DrawScreenEffects(vsx,vsy)
                 gl.TexRect(x1,y1,x2*1.2,y2*1.2,0.01,0.99,0.99,0.01)
                 gl.Texture(false)
         else
-                gl.Color(0.0,0.0,0.0,0.5)  --background
+                gl.Color(0.0,0.0,0.0,0.6)  --background
                 gl.Rect(x1,y1,x2,y2)
                 gl.Color(0.0,0.0,0.0,1)  --border
                 gl.LineWidth(1)

@@ -1,3 +1,43 @@
+2021/06/21 ------------------ NOTES v1.60 ----------------------
+
+--- Balance / Mechanics
+
+- fixed an error which happened if a comsat station was destroyed immediately after firing the "reveal area" projectile
+
+- slightly modified CLAW "Assassin" form weapon reload times to ensure the reload bar corresponds to the main railgun weapon instead of the torpedo
+
+- reduced HP of air scouts from 110 to 100 and reduced cost by ~3%
+
+- GEAR incendiary units now have the "area attack" ability
+
+--- UI
+
+- fixed issue with wrong victory/defeat state showing up on the awards panel
+
+- fixed energy->metal conversion panel which was assuming max +3 m/s from each converter instead of +2.5
+- messages panel now shows spectator messages in a greyish tone
+- modified several UI elements to scale better to 4k resolution
+
+- make bottom right unit info panel armor/weapon types color-coded for easier reading
+
+- auto-resize the minimap to better fit the area above the build/orders menu
+
+- fixed area attack commands
+
+- respawned commanders now inherit orders from the commander pad
+- morphed commanders now resume queued orders after morphing
+
+- fixed upgrade build orders below the limits being wrongly denied if players canceled/reassigned previous build orders
+
+
+--- AI
+
+- fixed AI not using GEAR "Might"
+- will try be more selective when figuring out where to build construction towers 
+(to avoid issues where the first construction tower can't find a suitable spot for the first factory)
+
+
+
 2021/06/12 ------------------ NOTES v1.59 ----------------------
 
 - reverted cost reduction for relatively fast ground units that was unintended on the previous version

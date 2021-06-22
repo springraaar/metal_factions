@@ -45,7 +45,7 @@ local cLight						= {1, 1, 1, 0.5}
 local cLightBorder						= {1, 1, 1, 1}
 local cWhite						= {1, 1, 1, 1}
 local cBorder						= {0, 0, 0, 1}		
-local cBack							= {0, 0, 0, 0.5}
+local cBack							= {0, 0, 0, 0.6}
 
 
 ------- progress-related variables
@@ -103,50 +103,47 @@ end
 
 
 function updateSizesPositions()
-	if (vsy > 1800) then
-		scaleFactor=1.6
-	elseif (vsy > 1400) then
-		scaleFactor=1.4
-	elseif (vsy > 1200) then
-		scaleFactor=1.2
+	if (vsy > 1080) then
+		scaleFactor = vsy/1080
 	else
-		scaleFactor=1
+		scaleFactor = 1
 	end
 	fontSize = refFontSize * scaleFactor 
 	
-	bgClock.x1 = vsx - 10 - refClockSizeX * scaleFactor 
-	bgClock.x2 = vsx - 10
-	bgClock.y1 = vsy - 10 - refClockSizeY * scaleFactor - refShiftY * scaleFactor
-	bgClock.y2 = vsy - 10 - refShiftY * scaleFactor
+	local margin = 10*scaleFactor
+	bgClock.x1 = vsx - margin - refClockSizeX * scaleFactor 
+	bgClock.x2 = vsx - margin
+	bgClock.y1 = vsy - margin - refClockSizeY * scaleFactor - refShiftY * scaleFactor
+	bgClock.y2 = vsy - margin - refShiftY * scaleFactor
 	
-	bgFPS.x1 = vsx - 10 - refFPSSizeX * scaleFactor
-	bgFPS.x2 = vsx - 10
-	bgFPS.y1 = vsy - 10 - refFPSSizeY * scaleFactor - refShiftY * 2 * scaleFactor
-	bgFPS.y2 = vsy - 10 - refShiftY * 2 * scaleFactor
+	bgFPS.x1 = vsx - margin - refFPSSizeX * scaleFactor
+	bgFPS.x2 = vsx - margin
+	bgFPS.y1 = vsy - margin - refFPSSizeY * scaleFactor - refShiftY * 2 * scaleFactor
+	bgFPS.y2 = vsy - margin - refShiftY * 2 * scaleFactor
 	
-	local offset = bgClock.x2 - bgClock.x1 + 10
-	bgProgress.x1 = vsx - 10 - offset - refProgressSizeX * scaleFactor 
-	bgProgress.x2 = vsx - 10 - offset
-	bgProgress.y1 = vsy - 10 - refProgressSizeY * scaleFactor - refShiftY * scaleFactor
-	bgProgress.y2 = vsy - 10 - refShiftY * scaleFactor
+	local offset = bgClock.x2 - bgClock.x1 + margin
+	bgProgress.x1 = vsx - margin - offset - refProgressSizeX * scaleFactor 
+	bgProgress.x2 = vsx - margin - offset
+	bgProgress.y1 = vsy - margin - refProgressSizeY * scaleFactor - refShiftY * scaleFactor
+	bgProgress.y2 = vsy - margin - refShiftY * scaleFactor
 	
-	offset = bgFPS.x2 - bgFPS.x1 + 10
-	bgSpdIncrease.x1 = vsx - 10 - offset - refSpdSizeX * scaleFactor
-	bgSpdIncrease.x2 = vsx - 10 - offset
-	bgSpdIncrease.y1 = vsy - 10 - refSizeY * scaleFactor - refShiftY * 2 * scaleFactor
-	bgSpdIncrease.y2 = vsy - 10 - refShiftY * 2 * scaleFactor
+	offset = bgFPS.x2 - bgFPS.x1 + margin
+	bgSpdIncrease.x1 = vsx - margin - offset - refSpdSizeX * scaleFactor
+	bgSpdIncrease.x2 = vsx - margin - offset
+	bgSpdIncrease.y1 = vsy - margin - refSizeY * scaleFactor - refShiftY * 2 * scaleFactor
+	bgSpdIncrease.y2 = vsy - margin - refShiftY * 2 * scaleFactor
 
-	offset = offset + 10 + refSpdSizeX * scaleFactor
-	bgPause.x1 = vsx - 10 - offset - refSpdSizeX * scaleFactor
-	bgPause.x2 = vsx - 10 - offset
-	bgPause.y1 = vsy - 10 - refSizeY * scaleFactor - refShiftY * 2 * scaleFactor
-	bgPause.y2 = vsy - 10 - refShiftY * 2 * scaleFactor
+	offset = offset + margin + refSpdSizeX * scaleFactor
+	bgPause.x1 = vsx - margin - offset - refSpdSizeX * scaleFactor
+	bgPause.x2 = vsx - margin - offset
+	bgPause.y1 = vsy - margin - refSizeY * scaleFactor - refShiftY * 2 * scaleFactor
+	bgPause.y2 = vsy - margin - refShiftY * 2 * scaleFactor
 	
-	offset = offset + 10 + refSpdSizeX * scaleFactor
-	bgSpdDecrease.x1 = vsx - 10 - offset - refSpdSizeX * scaleFactor
-	bgSpdDecrease.x2 = vsx - 10 - offset
-	bgSpdDecrease.y1 = vsy - 10 - refSizeY * scaleFactor - refShiftY * 2 * scaleFactor
-	bgSpdDecrease.y2 = vsy - 10 - refShiftY * 2 * scaleFactor
+	offset = offset + margin + refSpdSizeX * scaleFactor
+	bgSpdDecrease.x1 = vsx - margin - offset - refSpdSizeX * scaleFactor
+	bgSpdDecrease.x2 = vsx - margin - offset
+	bgSpdDecrease.y1 = vsy - margin - refSizeY * scaleFactor - refShiftY * 2 * scaleFactor
+	bgSpdDecrease.y2 = vsy - margin - refShiftY * 2 * scaleFactor
 end
 
 

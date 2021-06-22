@@ -61,14 +61,15 @@ local MIN_ALPHA					= 0.0
 local MAX_ALPHA					= 1.0
 local PLAYER_BOX_ALPHA			= MIN_ALPHA
 local SYSTEM_BOX_ALPHA			= MIN_ALPHA
-local PLAYER_BOX_FILL_COLOR			= {0.0, 0.0, 0.0, 0.5}
+local PLAYER_BOX_FILL_COLOR			= {0.0, 0.0, 0.0, 0.6}
 local PLAYER_BOX_LINE_COLOR			= {0.0, 0.0, 0.0, 1}
-local SYSTEM_BOX_FILL_COLOR			= {0.0, 0.0, 0.0, 0.5}
+local SYSTEM_BOX_FILL_COLOR			= {0.0, 0.0, 0.0, 0.6}
 local SYSTEM_BOX_LINE_COLOR			= {0.0, 0.0, 0.0, 1}
 local PLAYER_TEXT_OUTLINE_COLOR		= {0.00, 0.00, 0.20, 0.20}
 local PLAYER_TEXT_DEFAULT_COLOR		= {0.7, 0.7, 0.7, 1.0}
+local PLAYER_TEXT_SPECTATOR_COLOR	= {0.4, 0.5, 0.5, 1.0}
 local SYSTEM_TEXT_COLOR				= { 1.0,  1.0,  1.0, 1.0}
-local FILL_ALPHA = 0.5 
+local FILL_ALPHA = 0.6 
 local LINE_ALPHA = 1.0
 -- use color codes to define font colors, otherwise uses gl_Color, unfortunately, colored font with outline doesn't seems to be supported when this is off
 local USECOLORCODES = true
@@ -598,16 +599,13 @@ function setDefaultUserVars(sizeX, sizeY, useParams)
 	else
 		-- get dimensions of our OGL viewport
 		SIZE_X, SIZE_Y = widgetHandler:GetViewSizes()
-		Spring.Echo("VIEWPORT SX="..tonumber(SIZE_X).." SY="..tonumber(SIZE_Y))
+		--Spring.Echo("VIEWPORT SX="..tonumber(SIZE_X).." SY="..tonumber(SIZE_Y))
 	end
 
 	if (SIZE_X > 1 and SIZE_Y > 1) then
-		if (SIZE_Y > 1800) then
-			scaleFactor = 1.6
-		elseif (SIZE_Y > 1400) then
-			scaleFactor = 1.4
-		elseif (SIZE_Y > 1200) then
-			scaleFactor = 1.2
+		
+		if (SIZE_Y ~= 1080) then
+			scaleFactor = SIZE_Y / 1080
 		else
 			scaleFactor = 1
 		end
@@ -645,9 +643,9 @@ function setDefaultUserVars(sizeX, sizeY, useParams)
 			end
 		end
 		
-		if FONT_SIZE == nil then
-			FONT_SIZE = 15 * scaleFactor
-		end
+		
+		FONT_SIZE = 15 * scaleFactor
+		
 		MAX_NUM_PLAYER_MESSAGES = math_floor((PLAYER_MSG_BOX_H - FONT_SIZE) / FONT_SIZE)
 		MAX_NUM_SYSTEM_MESSAGES = math_floor((SYSTEM_MSG_BOX_H - FONT_SIZE) / FONT_SIZE)
 
@@ -1044,10 +1042,13 @@ function buildTable()
 	--local playerRoster = GetPlayerRoster(ROSTER_SORT_TYPE)
 	local playerIds = spGetPlayerList()
 	for index,pId in ipairs(playerIds) do
-		local playerName,_,_,playerTeam = spGetPlayerInfo(pId)
-		local r, g, b, a = GetTeamColor(playerTeam)
-
-		PLAYER_COLOR_TABLE[playerName] = {r, g, b, a}
+		local playerName,active,spectator,playerTeam = spGetPlayerInfo(pId)
+		if (not spectator) then
+			local r, g, b, a = GetTeamColor(playerTeam)
+			PLAYER_COLOR_TABLE[playerName] = {r, g, b, a}
+		else
+			PLAYER_COLOR_TABLE[playerName] = PLAYER_TEXT_SPECTATOR_COLOR
+		end
 	end
 	
 	local teamIds = spGetTeamList() 
@@ -1161,7 +1162,7 @@ end
 
 -- draw hint to show chat
 function drawVisibilityHint()
-	drawBox(PLAYER_MSG_BOX_X_MIN, PLAYER_MSG_BOX_Y_MAX, PLAYER_MSG_BOX_W, 26, {0.0, 0.0, 0.0, 0.5},  {0.0, 0.0, 0.0, 1})
+	drawBox(PLAYER_MSG_BOX_X_MIN, PLAYER_MSG_BOX_Y_MAX, PLAYER_MSG_BOX_W, 26, {0.0, 0.0, 0.0, 0.6},  {0.0, 0.0, 0.0, 1})
 	gl_Color(SYSTEM_TEXT_COLOR)
 	gl_Text(">>>>>>>> Press SPACE to view chat", PLAYER_MSG_BOX_X_MIN +5, PLAYER_MSG_BOX_Y_MAX - (FONT_SIZE + 6), FONT_SIZE, FONT_RENDER_STYLES[2])
 end

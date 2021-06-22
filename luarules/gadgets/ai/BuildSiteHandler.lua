@@ -154,8 +154,9 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 													end
 												end
 											end
-										end								
-										if (validPosFound < 2) then
+										end
+										--Spring.MarkerAddPoint(testPos.x,testPos.y,testPos.z,validPosFound) --DEBUG								
+										if (validPosFound < 6) then
 											valid = false
 										end
 									else

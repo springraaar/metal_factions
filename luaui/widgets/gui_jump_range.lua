@@ -55,6 +55,11 @@ local max                    = math.max
 local min                    = math.min
 local sqrt                   = math.sqrt
 
+local vsx, vsy = gl.GetViewSizes()
+local scaleFactor = 1
+if (vsy > 1080) then
+	scaleFactor = vsy / 1080
+end	
 
 local selJumpUnits = {}  -- id, range table
 
@@ -105,7 +110,7 @@ function widget:DrawWorld()
 			local fx, fy, fz = spGetUnitPosition(uId)
 			if fx then
 				glColor(0, 0.5, 0.0, 1)
-				glLineWidth(2)
+				glLineWidth(2*scaleFactor)
 				glDrawGroundCircle(fx, fy, fz, range, 50)
 				glColor(1,1,1,1)
 			end
