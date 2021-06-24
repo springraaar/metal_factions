@@ -1143,6 +1143,7 @@
 		reaimTime=4;
 		aaRangeBoost=1;
 		expDmgScaling=1;
+		restrictedAngle=1;
 		targets=SURFACE,AIR;
 	}
 	[DAMAGE]
@@ -4956,6 +4957,7 @@
 		aaRangeBoost=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR;
+		evalFactor=0.93; // less discount than angle restriction
 	}
 	[DAMAGE]
 	{
@@ -7410,6 +7412,7 @@
 		reaimTime=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR;
+		evalFactor=0.93; // less discount than angle restriction
 	}
 	[DAMAGE]
 	{
@@ -12917,7 +12920,7 @@
 		reaimTime=1;
 		aaRangeBoost=1;
 		expDmgScaling=1;
-		evalFactor=0.90; // slight angle restriction
+		evalFactor=0.90; // less discount than angle restriction
 		targets=SURFACE,AIR2;
 	}
 	[DAMAGE]
@@ -19613,6 +19616,7 @@
 		aaRangeBoost=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR;
+		evalFactor=0.93; // less discount than angle restriction
 	}
 	[DAMAGE]
 	{

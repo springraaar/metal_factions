@@ -83,6 +83,8 @@
 	//***********
 	weapon1=aven_catfish_cannon;
 	weapon2=aven_catfish_laser;
+	weaponMainDir2=0 0 1;
+	maxAngleDif2=320;
 	noChaseCategory=VTOL;
 	badTargetCategory1=VTOL;
 	badTargetCategory2=VTOL;
@@ -119,8 +121,8 @@
 		explosionGenerator2=custom:redflare;
 	}
 
-	buildCostEnergy=16624;//#AUTO#
-	buildCostMetal=3324;//#AUTO#
-	buildTime=39622;//#AUTO#
-	mass=3452;//#AUTO#
+	buildCostEnergy=16383;//#AUTO#
+	buildCostMetal=3276;//#AUTO#
+	buildTime=39047;//#AUTO#
+	mass=3427;//#AUTO#
 }

@@ -88,6 +88,9 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 	local checkPos = newPosition(searchPos.x,searchPos.y,searchPos.z)
 	local testBuildOrder,blockingFId = 0
 	local dist = 0 -- currently checked only for static builders
+	
+	local validPosFound = 0
+	local dxi,dzi = 0
 	for x = xMin, xMax, step do
 		-- check x map bounds
 		if (x > self.mapMinX) and (x < self.mapMaxX) then
@@ -143,12 +146,12 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 								if ud.isBuilder then
 									if isTargetStaticBuilder then
 										-- check if factories can be built on nearby terrain
-										local validPosFound = 0
-										local dxi,dzi = 0
-										for dxi = -1, 1 do
-											for dzi = -1, 1 do
+										validPosFound = 0
+										dxi,dzi = 0
+										for dxi = -140, 140, 140 do
+											for dzi = -140, 140, 140 do
 												if not (dxi == 0 and dzi == 0) then
-													buildTest,blockingFId = spTestBuildOrder(NANO_TOWER_PLANT_TEST_DEF_ID, testPos.x + 140*dxi, testPos.y, testPos.z + 140*dzi,0)
+													buildTest,blockingFId = spTestBuildOrder(NANO_TOWER_PLANT_TEST_DEF_ID, testPos.x + dxi, testPos.y, testPos.z + dzi,0)
 													if (blockingFId == nil and (buildTest == 1 or buildTest == 2)) then
 														validPosFound = validPosFound+1
 													end

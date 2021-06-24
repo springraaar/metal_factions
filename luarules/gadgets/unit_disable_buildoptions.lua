@@ -47,11 +47,12 @@ local function DisableBuildButtons(unitID, disableTable)
 end
 
 function gadget:Initialize()
-	disableWind = ((Game.windMax + Game.windMin) / 2) < MIN_AVG_WIND
+	disableWind = ((0.7*Game.windMax + 0.3*Game.windMin) / 2) < MIN_AVG_WIND
 	if (disableWind) then
 		table.insert(alwaysDisableTable, {UnitDefNames["aven_wind_generator"].id, "Unit disabled: Wind is too weak on this map.",})
 		table.insert(alwaysDisableTable, {UnitDefNames["gear_wind_generator"].id, "Unit disabled: Wind is too weak on this map.",})
 		table.insert(alwaysDisableTable, {UnitDefNames["claw_wind_generator"].id, "Unit disabled: Wind is too weak on this map.",})
+		table.insert(alwaysDisableTable, {UnitDefNames["sphere_wind_generator"].id, "Unit disabled: Wind is too weak on this map.",})
 	end
 	
 	disableTidal = Game.tidal < MIN_TIDAL

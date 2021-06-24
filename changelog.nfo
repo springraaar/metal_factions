@@ -1,3 +1,22 @@
+2021/06/23 ------------------ NOTES v1.61 ----------------------
+
+--- Balance / Mechanics
+
+
+- fixed AVEN "Catfish" not being able to exit the vehicle factory properly
+
+- AVEN "Turbulence" got slightly reduced cost by 3% due to angle restrictions on the secondary lasers
+- slightly reduced cost due to weapon aiming angle restrictions on SPHERE "Screener", AVEN "Catfish" and GEAR "Proteus"
+
+- slightly reduced the minimum wind threshold and added the SPHERE wind generator to the list of restricted build options
+
+- fixed Canister, Crasher, Harasser and construction robot not having the Advanced Robot Factory set properly in the builder list
+(this affected AI and the unit filter on the web site)
+
+- reduced the HP of aircraft wreck parts from 2000-3000 to 600-1000
+
+
+
 2021/06/21 ------------------ NOTES v1.60 ----------------------
 
 --- Balance / Mechanics
@@ -18,7 +37,7 @@
 - messages panel now shows spectator messages in a greyish tone
 - modified several UI elements to scale better to 4k resolution
 
-- make bottom right unit info panel armor/weapon types color-coded for easier reading
+- make bottom left unit info panel armor/weapon types color-coded for easier reading
 
 - auto-resize the minimap to better fit the area above the build/orders menu
 

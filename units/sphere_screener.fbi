@@ -82,6 +82,8 @@
 	//  Weapons
 	//***********
 	weapon1=sphere_screener_laser;
+	weaponMainDir1=0 0 1;
+	maxAngleDif1=320;
 	noChaseCategory=VTOL;
 	badTargetCategory1=VTOL;
 	weapon2=sphere_screener_shield;
@@ -120,8 +122,8 @@
 	explosionGenerator1=custom:UNITFIRE;
 	}
 
-	buildCostEnergy=26775;//#AUTO#
-	buildCostMetal=5355;//#AUTO#
-	buildTime=63814;//#AUTO#
-	mass=4456;//#AUTO#
+	buildCostEnergy=26451;//#AUTO#
+	buildCostMetal=5290;//#AUTO#
+	buildTime=63042;//#AUTO#
+	mass=4421;//#AUTO#
 }
