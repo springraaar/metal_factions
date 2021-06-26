@@ -482,7 +482,8 @@ local playerListByTeam = {} --does not contain specs
 local allyTeamGraphs = {}
 local historyData = {}
 local myPlayerID = Spring.GetMyPlayerID()
-
+local myTeamId = Spring.GetLocalTeamID()
+	
 local graphsShown = false
 local awardsHeader
 local endFrame = 0
@@ -864,13 +865,10 @@ function CreateBackground()
 end
 
 
-function createAwardsHeader()	
+function createAwardsHeader(winnersUndetermined)	
 	if awardsHeader then
 		glDeleteList(awardsHeader)
 	end
-	
-	myTeamId = Spring.GetLocalTeamID()
-	Spring.Echo("TEAM ID "..myTeamId)
 	
 	-- awards header
 	local victoryStatus = 0
@@ -878,7 +876,7 @@ function createAwardsHeader()
 	if (myTeamId >= 0) then
 		victoryStatus = Spring.GetTeamRulesParam(myTeamId,'victory_status')
 	end
-	--Spring.Echo('player team was '..myTeamId)
+	
 	if winnersUndetermined then
 		endType = 'undetermined'
 	else

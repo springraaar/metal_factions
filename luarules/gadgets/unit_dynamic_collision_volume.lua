@@ -129,8 +129,6 @@ if (gadgetHandler:IsSyncedCode()) then
 		-- reduce size of aircraft factories
 		if (airFactories[ud.name]) then 
 			spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.25, ys*0.5)
-			--spSetUnitRadiusAndHeight(unitID, (xs+zs)*2.25, ys*2.5)
-			--spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.0025, ys*0.005)
 		end
 		
 		-- reduce size of unit under construction
