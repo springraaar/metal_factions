@@ -396,6 +396,7 @@ spGetFeatureResources = Spring.GetFeatureResources
 spGiveOrderToUnit = Spring.GiveOrderToUnit
 spTestMoveOrder = Spring.TestMoveOrder
 spGetGroundInfo = Spring.GetGroundInfo
+spGetAIInfo = Spring.GetAIInfo
 spGetGroundHeight = Spring.GetGroundHeight
 spGetGroundNormal = Spring.GetGroundNormal
 spGetUnitDefDimensions = Spring.GetUnitDefDimensions

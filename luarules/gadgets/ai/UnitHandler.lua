@@ -1398,7 +1398,7 @@ function UnitHandler:GameFrame(f)
 								cell.nearbyAttackerCost = cell.nearbyAttackerCost + ownCells[xi][zi].attackerCost
 								cell.nearbyAirAttackerCost = cell.nearbyAirAttackerCost + ownCells[xi][zi].airAttackerCost
 								cell.nearbyDefenderCost = cell.nearbyDefenderCost + ownCells[xi][zi].defenderCost
-								cell.nearbyUnderwaterDefenderCost = cell.nearbyUnderwaterDefenderCost + ownCells[xi][zi].nearbyUnderwaterDefenderCost
+								cell.nearbyUnderwaterDefenderCost = cell.nearbyUnderwaterDefenderCost + ownCells[xi][zi].underwaterDefenderCost
 								cell.nearbyCost = cell.nearbyCost + ownCells[xi][zi].cost
 								cell.nearbyEconomyCost = cell.nearbyEconomyCost + ownCells[xi][zi].economyCost
 							end

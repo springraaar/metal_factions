@@ -15,6 +15,7 @@ local Echo = Spring.Echo
 local spGetTeamList = Spring.GetTeamList
 local spGetPlayerInfo = Spring.GetPlayerInfo
 local spGetTeamInfo = Spring.GetTeamInfo
+local spGetAIInfo = Spring.GetAIInfo
 local spGetTeamLuaAI = Spring.GetTeamLuaAI
 local spAreTeamsAllied = Spring.AreTeamsAllied
 local spGetTeamStartPosition = Spring.GetTeamStartPosition
@@ -210,26 +211,27 @@ function gadget:RecvLuaMsg(msg, playerId)
 	--Spring.Echo("received lua msg from player "..playerId..": "..msg) --DEBUG
 
 	local pName,active,spectator,teamId,allyId,_,_,_,_,_ = spGetPlayerInfo(playerId)
-	-- exclude spectators
-	-- TODO allow cheats to override this
-	if (active and not spectator) then
-		--Spring.Echo("pName="..pName.." teamId="..teamId.." allyId="..allyId)
-		-- forward message to all AIs allied with the player
+	
+	--Spring.Echo("pName="..pName.." teamId="..teamId.." allyId="..allyId)
+	-- forward message to all AIs allied with the player
 
-		local enemyStrategyOverride = false
-		local includeEnemies = false
-		if (spGetGameFrame() < FULL_AI_TEAM_ENEMY_STRATEGY_OVERRIDE_FRAMES and string.find(msg,EXTERNAL_CMD_STRATEGY) ~= nil ) then
-			enemyStrategyOverride = true
-		end
-		if (string.find(msg,EXTERNAL_CMD_LOADCUSTOMSTRATEGIES) ~= nil ) then
-			includeEnemies = true
-		end
-		for _,thisAI in ipairs(mFAIs) do
-			if (thisAI.allyId == allyId or includeEnemies or (enemyStrategyOverride and (not thisAI.hasHumanAllies))) then
-				thisAI:processExternalCommand(msg,playerId,teamId,pName)
+	local enemyStrategyOverride = false
+	local includeEnemies = false
+	if (spGetGameFrame() < FULL_AI_TEAM_ENEMY_STRATEGY_OVERRIDE_FRAMES and string.find(msg,EXTERNAL_CMD_STRATEGY) ~= nil ) then
+		enemyStrategyOverride = true
+	end
+	if (string.find(msg,EXTERNAL_CMD_LOADCUSTOMSTRATEGIES) ~= nil ) then
+		includeEnemies = true
+	end
+	for _,thisAI in ipairs(mFAIs) do
+		local isOwner = (thisAI.hostingPlayerId == playerId) 
+		if ( isOwner or (active and not spectator)) then
+			if ( isOwner or thisAI.allyId == allyId or includeEnemies or (enemyStrategyOverride and (not thisAI.hasHumanAllies))) then
+				thisAI:processExternalCommand(msg,playerId,teamId,pName,isOwner,spectator)
 			end
 		end
 	end
+
 end
 
 

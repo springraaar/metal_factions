@@ -812,6 +812,43 @@ function moveAtkCenter(self)
 	return {action="wait", frames=120}
 end
 
+function activateAtkCenter(self)
+	local radius = BIG_RADIUS
+	local atkPos = self.ai.unitHandler.unitGroups[UNIT_GROUP_ATTACKERS].centerPos 
+	local basePos = self.ai.unitHandler.basePos
+	
+	local p = newPosition()
+	p.y = 0
+	if ( atkPos.x > 0 and atkPos.z >0) then
+		p.x = atkPos.x-radius/2+random(1,radius)
+		p.z = atkPos.z-radius/2+random(1,radius)
+	elseif ( basePos.x > 0 and basePos.z > 0) then
+		p.x = basePos.x-radius/2+random(1,radius)
+		p.z = basePos.z-radius/2+random(1,radius)
+	else
+		-- just activate
+		spGiveOrderToUnit(self.unitId,CMD.ONOFF,{1},{})
+
+		return SKIP_THIS_TASK
+	end
+	
+	if checkWithinDistance(self.pos, p,radius) then
+		-- near target position, stop and activate
+		spGiveOrderToUnit(self.unitId,CMD.STOP,{},{})
+		spGiveOrderToUnit(self.unitId,CMD.ONOFF,{1},{})
+	else	
+		-- far from target position, deactivate and move
+		spGiveOrderToUnit(self.unitId,CMD.ONOFF,{0},{})
+		
+		spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},{})
+			
+		-- add another order to queue in case the first is invalid
+		spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x - radius/2 + random( 1, radius),0,p.z - radius/2 + random( 1, radius)},CMD.OPT_SHIFT)
+	end
+	
+	return {action="wait", frames=120}
+end
+
 function patrolAtkCenter(self)
 	local radius = MED_RADIUS
 	local atkPos = self.ai.unitHandler.unitGroups[UNIT_GROUP_ATTACKERS].centerPos
@@ -2008,6 +2045,10 @@ atkSupporter = {
 	{action = "wait", frames = 32}
 }
 
+atkSupporterAct = {
+	activateAtkCenter,
+	{action = "wait", frames = 32}
+}
 
 atkPatroller = {
 	patrolAtkCenter,
@@ -4308,6 +4349,7 @@ taskQueues = {
 	claw_haze = atkSupporter,
 	claw_lensor = atkSupporter,
 	claw_spotter = airScout,
+	claw_hammer = atkSupporterAct,	
 	claw_long_range_rocket_platform = lRRocketPlatform,
 	claw_premium_nuclear_rocket = unblockableNuke,
 	claw_comsat_station = comsatStation,

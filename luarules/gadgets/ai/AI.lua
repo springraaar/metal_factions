@@ -45,6 +45,10 @@ function AI.create(id, mode, strategyStr, allyId, mapHandler)
 	obj.frameShift = 7*tonumber(id)	-- used to spread out processing from different AIs across multiple frames
 	obj.needStartPosAdjustment = false
 	obj.sentStartupHelpMsg = false
+	
+	local _,_,hostingPlayerId,_,_,_ = spGetAIInfo(id)
+	obj.hostingPlayerId = hostingPlayerId
+	
 	return obj
 end
 
@@ -350,7 +354,7 @@ function AI:loadCustomStrategies(playerId,teamId,pName,strategyTextCompressed)
 end
 
 -- process external command
-function AI:processExternalCommand(msg,playerId,teamId,pName)
+function AI:processExternalCommand(msg,playerId,teamId,pName,isOwner,spectator)
 	if (msg) then
 		local parameters = splitString(msg,"|")
 		local shift = 0
@@ -413,7 +417,9 @@ function AI:processExternalCommand(msg,playerId,teamId,pName)
 			strategyStr = parameters[shift+2]
 			
 			if (( msgFromAllies and targetTeamId == nil) or targetTeamId == self.id) then
-				if not msgFromAllies then
+				if (isOwner and spectator) then
+					Spring.Echo("AI "..self.id.." received strategy override from owner/spectator : "..tostring(strategyStr))
+				elseif not msgFromAllies then
 					Spring.Echo("AI "..self.id.." received strategy override from enemies : "..tostring(strategyStr))
 				end
 				-- try to get the player's custom strategy with that name, else check the default list
@@ -547,9 +553,11 @@ function AI:processExternalCommand(msg,playerId,teamId,pName)
 				end
 			end			
 		elseif (command == EXTERNAL_CMD_RESIGN) then
-			self:messageAllies("resigning...")
-			Spring.KillTeam(self.id)
-			spSetTeamRulesParam(self.id,"ai_resigned","1")
+			if (targetTeamId == nil or targetTeamId == self.id) then
+				self:messageAllies("resigning...")
+				Spring.KillTeam(self.id)
+				spSetTeamRulesParam(self.id,"ai_resigned","1")
+			end
 		end
 	end
 end
