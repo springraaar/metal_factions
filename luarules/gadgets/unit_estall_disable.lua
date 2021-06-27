@@ -46,58 +46,66 @@ local GetGameSeconds    = Spring.GetGameSeconds
 local units = {}
 local disabledUnits = {}
 local changeStateDelay = 3 -- delay in seconds before state of unit can be changed. Do not set it below 2 seconds, because it takes 2 seconds before enabled unit reaches full energy use
-local LOW_ENERGY_DISABLE_THRESHOLD = 800
-local LOW_ENERGY_ENABLE_THRESHOLD = 1200
+local JAMMER_ENERGY_DISABLE_THRESHOLD = 300
+local RADAR_ENERGY_DISABLE_THRESHOLD = 900
+local EXTRACTOR_ENERGY_DISABLE_THRESHOLD = 1300
+
 local radarDefs = {
   [ UnitDefNames['aven_advanced_radar_tower'].id ] = true,
   [ UnitDefNames['aven_radar_tower'].id ] = true,
-  [ UnitDefNames['aven_radar_jamming_tower'].id ] = true,
   [ UnitDefNames['aven_seer'].id ] = true,
-  [ UnitDefNames['aven_jammer'].id ] = true,
   [ UnitDefNames['aven_marky'].id ] = true,
-  [ UnitDefNames['aven_eraser'].id ] = true,
   [ UnitDefNames['aven_sonar_station'].id ] = true,
   [ UnitDefNames['aven_advanced_sonar_station'].id ] = true,
   [ UnitDefNames['aven_discovery'].id ] = true,
-  [ UnitDefNames['aven_escort'].id ] = true,
   [ UnitDefNames['aven_zephyr'].id ] = true,
   [ UnitDefNames['aven_perceptor'].id ] = true,
 
   [ UnitDefNames['gear_advanced_radar_tower'].id ] = true,
   [ UnitDefNames['gear_radar_tower'].id ] = true,
-  [ UnitDefNames['gear_radar_jamming_tower'].id ] = true,
   [ UnitDefNames['gear_informer'].id ] = true,
-  [ UnitDefNames['gear_deleter'].id ] = true,
   [ UnitDefNames['gear_voyeur'].id ] = true,
-  [ UnitDefNames['gear_spectre'].id ] = true,
   [ UnitDefNames['gear_advanced_sonar_station'].id ] = true,
   [ UnitDefNames['gear_sonar_station'].id ] = true,
-    [ UnitDefNames['gear_monitor'].id ] = true,
-  [ UnitDefNames['gear_phantom'].id ] = true,
+  [ UnitDefNames['gear_monitor'].id ] = true,
 
   [ UnitDefNames['claw_advanced_radar_tower'].id ] = true,
   [ UnitDefNames['claw_radar_tower'].id ] = true,
-  [ UnitDefNames['claw_radar_jamming_tower'].id ] = true,
   [ UnitDefNames['claw_seer'].id ] = true,
-  [ UnitDefNames['claw_jammer'].id ] = true,
   [ UnitDefNames['claw_revealer'].id ] = true,
-  [ UnitDefNames['claw_shade'].id ] = true,
   [ UnitDefNames['claw_advanced_sonar_station'].id ] = true,
   [ UnitDefNames['claw_sonar_station'].id ] = true,
   [ UnitDefNames['claw_explorer'].id ] = true,
-  [ UnitDefNames['claw_negator'].id ] = true,
-  [ UnitDefNames['claw_haze'].id ] = true,
 
   [ UnitDefNames['sphere_adv_radar_tower'].id ] = true,
   [ UnitDefNames['sphere_radar_tower'].id ] = true,
-  [ UnitDefNames['sphere_radar_jamming_tower'].id ] = true,
   [ UnitDefNames['sphere_scanner'].id ] = true,
-  [ UnitDefNames['sphere_concealer'].id ] = true,
   [ UnitDefNames['sphere_sensor'].id ] = true,
-  [ UnitDefNames['sphere_rain'].id ] = true,
   [ UnitDefNames['sphere_advanced_sonar_station'].id ] = true,
   [ UnitDefNames['sphere_sonar_station'].id ] = true,
-  [ UnitDefNames['sphere_echo'].id ] = true,
+  [ UnitDefNames['sphere_echo'].id ] = true
+}
+
+local jammerDefs = {
+  [ UnitDefNames['aven_radar_jamming_tower'].id ] = true,
+  [ UnitDefNames['aven_jammer'].id ] = true,
+  [ UnitDefNames['aven_eraser'].id ] = true,
+  [ UnitDefNames['aven_escort'].id ] = true,
+
+  [ UnitDefNames['gear_radar_jamming_tower'].id ] = true,
+  [ UnitDefNames['gear_deleter'].id ] = true,
+  [ UnitDefNames['gear_spectre'].id ] = true,
+  [ UnitDefNames['gear_phantom'].id ] = true,
+
+  [ UnitDefNames['claw_radar_jamming_tower'].id ] = true,
+  [ UnitDefNames['claw_jammer'].id ] = true,
+  [ UnitDefNames['claw_shade'].id ] = true,
+  [ UnitDefNames['claw_negator'].id ] = true,
+  [ UnitDefNames['claw_haze'].id ] = true,
+
+  [ UnitDefNames['sphere_radar_jamming_tower'].id ] = true,
+  [ UnitDefNames['sphere_concealer'].id ] = true,
+  [ UnitDefNames['sphere_rain'].id ] = true,
   [ UnitDefNames['sphere_orb'].id ] = true,
   [ UnitDefNames['sphere_mist'].id ] = true
 }
@@ -123,16 +131,19 @@ function gadget:Initialize()
 	end
 end
 
-
 function AddUnit(unitID, unitDefID) 
-  if (radarDefs[unitDefID] or metalDefs[unitDefID]) then
-		units[unitID] = { defID = unitDefID, changeStateTime = GetGameSeconds() } 
-  end
+	if (jammerDefs[unitDefID]) then
+		units[unitID] = { defID = unitDefID, changeStateTime = GetGameSeconds(), threshold = JAMMER_ENERGY_DISABLE_THRESHOLD } 
+	elseif ( radarDefs[unitDefID]) then
+		units[unitID] = { defID = unitDefID, changeStateTime = GetGameSeconds(), threshold = RADAR_ENERGY_DISABLE_THRESHOLD}
+	elseif ( metalDefs[unitDefID]) then
+		units[unitID] = { defID = unitDefID, changeStateTime = GetGameSeconds(), threshold = EXTRACTOR_ENERGY_DISABLE_THRESHOLD} 
+	end
 end
 
 function RemoveUnit(unitID) 
-  units[unitID] = nil
-  disabledUnits[unitID] = nil
+	units[unitID] = nil
+	disabledUnits[unitID] = nil
 end
 
 
@@ -145,12 +156,12 @@ function gadget:UnitTaken(unitID, unitDefID)
 end
 
 function gadget:UnitGiven(unitID, unitDefID, newTeamID)
-  if (newTeamID==nil) then RemoveUnit(unitID) end
+	if (newTeamID==nil) then RemoveUnit(unitID) end
 end
 
 
 function gadget:UnitDestroyed(unitID)
-  RemoveUnit(unitID)
+	RemoveUnit(unitID)
 end
 
 
@@ -174,7 +185,7 @@ function gadget:GameFrame(n)
 				
 				-- if unit has been disabled, check if it can be activated
 				if (disabledUnitEnergyUse~=nil) then -- we have disabled unit
-					if (disabledUnitEnergyUse < teamEnergy[unitTeamID] and teamEnergy[unitTeamID] > LOW_ENERGY_ENABLE_THRESHOLD) then  -- we still have enough energy to reenable unit
+					if (teamEnergy[unitTeamID] > data.threshold + disabledUnitEnergyUse) then  -- we still have enough energy to reenable unit
 						disabledUnits[unitID]=nil
 						GiveOrderToUnit(unitID, CMD.ONOFF, { 1 }, { })
 						data.changeStateTime = gameSeconds
@@ -185,7 +196,7 @@ function gadget:GameFrame(n)
 					local energyUpkeep = UnitDefs[data.defID].energyUpkeep
 					if (energyUse == nil or energyUpkeep == nil) then -- unit probably doesn't exist, get rid of it
 						RemoveUnit(unitID)
-					elseif (energyUse > 0 and teamEnergy[unitTeamID] < LOW_ENERGY_DISABLE_THRESHOLD) then -- there is not enough energy to keep unit running (its energy use auto dropped to 0), we will disable it 
+					elseif (energyUse > 0 and teamEnergy[unitTeamID] < data.threshold) then -- there is not enough energy to keep unit running (its energy use auto dropped to 0), we will disable it 
 						if (GetUnitStates(unitID).active) then  -- only disable "active" unit
 							GiveOrderToUnit(unitID, CMD.ONOFF, { 0 }, { })
 							data.changeStateTime = gameSeconds
@@ -201,8 +212,8 @@ end
 
 function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
 	if (cmdID == CMD.ONOFF and disabledUnits[unitID]~=nil) then
-    return false
-  else 
+		return false
+	else 
 		return true
 	end
 end

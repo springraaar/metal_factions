@@ -222,6 +222,8 @@ function gadget:GameFrame(n)
 		local stallingEByTeam = {}
 		local metalMake,metalUse,energyMake,energyUse = 0
 		
+		local slowRate = 0
+		local normalRate = 0
 		-- set build speeds according to priority
 		for unitID,_ in pairs(buildSpeedList) do
 			priority = buildPriorityList[unitID] or 0
@@ -259,27 +261,30 @@ function gadget:GameFrame(n)
 	
 			-- if set to high priority, build normally
 			if (priority == 1) then
-				spSetUnitBuildSpeed(unitID, buildSpeedList[unitID]*1)
+				normalRate = buildSpeedList[unitID]
+				spSetUnitBuildSpeed(unitID, normalRate,normalRate,normalRate)
 				haltedList[unitID] = nil
 			else
 				metalMake,metalUse,energyMake,energyUse = spGetUnitResources(unitID)
 				
 				-- if not, build normally only if not stalling in either energy or metal
-				if spGetUnitIsBuilding(unitID) == nil or (stallingM == 0 and stallingE == 0) then
+				if (stallingM == 0 and stallingE == 0) then
 					-- Spring.Echo("unit "..UnitDefs[spGetUnitDefID(unitID)].name.." builds at max rate")
-					spSetUnitBuildSpeed(unitID, buildSpeedList[unitID]*1)
+					normalRate = buildSpeedList[unitID]
+					spSetUnitBuildSpeed(unitID,normalRate,normalRate,normalRate)
 					haltedList[unitID] = nil
 				else
 					-- Spring.Echo("unit "..UnitDefs[spGetUnitDefID(unitID)].name.." stops production")
-					spSetUnitBuildSpeed(unitID, buildSpeedList[unitID]*0.01) -- tiny fraction to keep metal usage > 0 and prevent decay
+					slowRate = buildSpeedList[unitID]*0.01
+					spSetUnitBuildSpeed(unitID, slowRate, slowRate, slowRate) -- tiny fraction to keep metal usage > 0 and prevent decay
 					haltedList[unitID] = 1
 				end
 			end
 		end
 	else
-		-- this is here halt nano-stream visuals (also lowers resource usage a bit more)
+		-- this is here to halt nano-stream visuals (also lowers resource usage a bit more)
 		for unitID,_ in pairs(haltedList) do
-			spSetUnitBuildSpeed(unitID, buildSpeedList[unitID]*0.0)
+			spSetUnitBuildSpeed(unitID, 0,0,0)
 		end		
 	end
 end

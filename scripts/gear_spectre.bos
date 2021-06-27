@@ -262,7 +262,7 @@ Activate()
 {
 	signal SIG_ACTIVATE;
 	set-signal-mask SIG_ACTIVATE;
-	spin t3 around y-axis speed <100.021978>;
+	spin t3 around y-axis speed <360.021978>;
 	return (0);
 }
 
@@ -270,7 +270,7 @@ Deactivate()
 {
 	signal SIG_ACTIVATE;
 	set-signal-mask SIG_ACTIVATE;
-	turn t3 to y-axis <0.000000> speed <100.021978>;
+	turn t3 to y-axis <0.000000> speed <360.021978>;
 	wait-for-turn t3 around y-axis;
 	return (0);
 }
@@ -301,37 +301,17 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode tbase type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode t2 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode t3 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode fork type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
 		explode tbase type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 		explode t2 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 		explode t3 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 		explode fork type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		return (0);
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode tbase type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode t2 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode t3 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode fork type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		return (0);
-	}
-	corpsetype = 3;
 	explode tbase type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 	explode t2 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 	explode t3 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 	explode fork type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-	return (0);
+	return (2);
 }

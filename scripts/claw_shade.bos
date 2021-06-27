@@ -244,24 +244,9 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode base type BITMAPONLY | BITMAP3;
-		explode head type SHATTER | EXPLODE_ON_HIT | BITMAP3;
-		explode bodysect1 type BITMAPONLY | BITMAP3;
-		explode lleg1 type BITMAPONLY | BITMAP4;
-		explode lleg2 type BITMAPONLY | BITMAP3;
-		explode lleg3 type BITMAPONLY | BITMAP5;
-		explode rleg3 type BITMAPONLY | BITMAP3;
-		explode rleg2 type FALL | EXPLODE_ON_HIT | BITMAP3;
-		explode rleg1 type BITMAPONLY | BITMAP5;
-		explode turretholder type BITMAPONLY | BITMAP5;
-		return (0);
-	}
+
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
 		explode base type BITMAPONLY | BITMAP3;
 		explode head type SHATTER | SMOKE | EXPLODE_ON_HIT | BITMAP3;
 		explode bodysect1 type BITMAPONLY | BITMAP3;
@@ -272,24 +257,8 @@ Killed(severity, corpsetype)
 		explode rleg2 type FALL | EXPLODE_ON_HIT | BITMAP3;
 		explode rleg1 type BITMAPONLY | BITMAP5;
 		explode turretholder type BITMAPONLY | BITMAP5;
-		return (0);
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode base type BITMAPONLY | BITMAP3;
-		explode head type SHATTER | EXPLODE_ON_HIT | BITMAP3;
-		explode bodysect1 type BITMAPONLY | BITMAP3;
-		explode lleg1 type BITMAPONLY | BITMAP4;
-		explode lleg2 type BITMAPONLY | BITMAP3;
-		explode lleg3 type BITMAPONLY | BITMAP5;
-		explode rleg3 type BITMAPONLY | BITMAP3;
-		explode rleg2 type FALL | EXPLODE_ON_HIT | BITMAP3;
-		explode rleg1 type BITMAPONLY | BITMAP5;
-		explode turretholder type BITMAPONLY | BITMAP5;
-		return (0);
-	}
-	corpsetype = 3;
 	explode base type BITMAPONLY | BITMAP3;
 	explode head type SHATTER | EXPLODE_ON_HIT | BITMAP3;
 	explode bodysect1 type BITMAPONLY | BITMAP3;
@@ -300,4 +269,5 @@ Killed(severity, corpsetype)
 	explode rleg2 type FALL | EXPLODE_ON_HIT | BITMAP3;
 	explode rleg1 type BITMAPONLY | BITMAP5;
 	explode turretholder type BITMAPONLY | BITMAP5;
+	return (2);
 }

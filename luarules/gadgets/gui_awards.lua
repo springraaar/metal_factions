@@ -481,7 +481,7 @@ local graphColour
 local playerListByTeam = {} --does not contain specs
 local allyTeamGraphs = {}
 local historyData = {}
-local myPlayerID = Spring.GetMyPlayerID()
+local myPlayerId = Spring.GetMyPlayerID()
 local myTeamId = Spring.GetLocalTeamID()
 	
 local graphsShown = false
@@ -538,8 +538,6 @@ function gadget:Initialize()
  	--ThirdAward = CreateAward('award_com',0,'Fighting with commander',white,1,1,1,24378,1324,132,400)
 	--OtherAwards = CreateAward('',2,'',white,1,1,1,3,100,1000,500)
 
-	local tId = Spring.GetLocalTeamID()
-
 	--load a list of players for each team into playerListByTeam
 	local teamList = Spring.GetTeamList()
 	for _,teamID in pairs(teamList) do
@@ -548,9 +546,6 @@ function gadget:Initialize()
 		for _,playerID in pairs(playerList) do
 			local name, _, isSpec,tId,aId = Spring.GetPlayerInfo(playerID)
 			if not isSpec then
-				if teamID == tId then
-					myTeamId = tId
-				end
 				table.insert(list, name)
 			end
 		end

@@ -39,8 +39,8 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 Go()
 {
 	spin dish around y-axis speed <60.000000>;
-	spin ear1 around x-axis speed <120.000000>;
-	spin ear2 around x-axis speed <-120.000000>;
+	spin ear1 around x-axis speed <360.000000>;
+	spin ear2 around x-axis speed <-360.000000>;
 	return (0);
 }
 

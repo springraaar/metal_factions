@@ -57,7 +57,7 @@ Create()
 
 Activate()
 {
-	spin fbase around z-axis speed <100.021978>;
+	spin fbase around z-axis speed <360.021978>;
 	return (0);
 }
 
@@ -75,33 +75,17 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode base type BITMAPONLY | BITMAP1;
-		explode fork type BITMAPONLY | BITMAP2;
-		explode turret type BITMAPONLY | BITMAP2;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
 		corpsetype = 2;
 		explode base type BITMAPONLY | BITMAP1;
 		explode fork type SHATTER | BITMAP2;
 		explode turret type BITMAPONLY | BITMAP2;
-		return (0);
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode base type BITMAPONLY | BITMAP1;
-		explode fork type SHATTER | BITMAP2;
-		explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-		return (0);
-	}
-	corpsetype = 3;
+
 	explode base type BITMAPONLY | BITMAP1;
 	explode fork type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-	return (0);
+	return (2);
 }
