@@ -225,8 +225,8 @@ function gadget:RecvLuaMsg(msg, playerId)
 	end
 	for _,thisAI in ipairs(mFAIs) do
 		local isOwner = (thisAI.hostingPlayerId == playerId) 
-		if ( isOwner or (active and not spectator)) then
-			if ( isOwner or thisAI.allyId == allyId or includeEnemies or (enemyStrategyOverride and (not thisAI.hasHumanAllies))) then
+		if ( (isOwner and spectator) or (active and not spectator)) then
+			if ( (isOwner and spectator) or thisAI.allyId == allyId or includeEnemies or (enemyStrategyOverride and (not thisAI.hasHumanAllies))) then
 				thisAI:processExternalCommand(msg,playerId,teamId,pName,isOwner,spectator)
 			end
 		end

@@ -167,8 +167,14 @@ function AI:findStartPos(doRangeCheck, minStartPosDist)
 		local rangeCheck = true
 		local METAL_POTENTIAL_THRESHOLD = 1
 		
-		
 		local xMin, zMin, xMax, zMax = Spring.GetAllyTeamStartBox(self.allyId)
+		
+		-- if beacon is set within the box, use that position
+		if (self.beaconPos ~= nil and self.beaconPos.x > 0) then
+			if (self.beaconPos.x >= xMin and self.beaconPos.x <= xMax and self.beaconPos.z >= zMin and self.beaconPos.z <= zMax) then
+				return {x=self.beaconPos.x,y=self.beaconPos.y,z=self.beaconPos.z}
+			end
+		end
 		
 		-- adjust min distance taking into account zone size and number of allies 
 		local allies = Spring.GetTeamList(self.allyId)
@@ -365,7 +371,7 @@ function AI:processExternalCommand(msg,playerId,teamId,pName,isOwner,spectator)
 		local msgFromAllies = spAreTeamsAllied(self.id,teamId)
 		local command = parameters[shift+1] 
 		--Spring.Echo("command was: "..command)
-		if (command == EXTERNAL_CMD_SETBEACON) then
+		if (command == EXTERNAL_CMD_SETBEACON and (msgFromAllies or (isOwner and spectator))) then
 			local px = tonumber(parameters[shift+2])
 			local py = tonumber(parameters[shift+3])
 			local pz = tonumber(parameters[shift+4])
@@ -392,7 +398,7 @@ function AI:processExternalCommand(msg,playerId,teamId,pName,isOwner,spectator)
 			--spMarkerAddPoint(px,py,pz,"AI BEACON\nuntil "..hh..":"..mm..":"..ss.."\n("..pName..")")
 			self:markerAllies(px,py,pz,"AI BEACON\nuntil "..hh..":"..mm..":"..ss.."\n("..pName..")")
 
-		elseif (command == EXTERNAL_CMD_REMOVEBEACON) then
+		elseif (command == EXTERNAL_CMD_REMOVEBEACON and (msgFromAllies or (isOwner and spectator))) then
 			self.beaconSetPlayerId = playerId
 			self.beaconSetTeamId = teamId
 			
@@ -508,7 +514,7 @@ function AI:processExternalCommand(msg,playerId,teamId,pName,isOwner,spectator)
 					end
 				end
 			end
-		elseif (command == EXTERNAL_CMD_COMPAD) then
+		elseif (command == EXTERNAL_CMD_COMPAD and (msgFromAllies and (not spectator))) then
 			if (targetTeamId == nil or targetTeamId == self.id) then
 
 				-- get all the AI units, try to find a commander pad

@@ -74,8 +74,8 @@ function gadget:AllowCommand(unitId, unitDefId, teamId, cmd, param, opt)
 		else 
 			return false
 		end
-	elseif cmd == CMD.STOP then
-		-- stop cancels the area attack order
+	elseif cmd == CMD.STOP or cmd == CMD.MOVE then
+		-- cancel the area attack order
 		if attackerList[unitId] then
 			attackerList[unitId] = nil
 		end

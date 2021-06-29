@@ -202,8 +202,8 @@ avenLandAssault = {
 				{name="aven_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_kbot",min=2,max=6,weight=0.2},
-				{name="aven_adv_construction_vehicle",min=2,max=6,weight=0.2},
+				{name="aven_construction_kbot",min=2,max=6,weight=0.4},
+				{name="aven_adv_construction_vehicle",min=2,max=6,weight=0.4},
 				{name="aven_trooper_laser",min=1,max=MANY,weight=0.4,includeConditions={THREAT_AIR}},
 				{name="aven_centurion",min=0,max=MANY,weight=0.4},
 				{name="aven_kodiak",min=0,max=MANY,weight=0.4},
@@ -418,9 +418,9 @@ avenLandSkirmisher = {
 				{name="aven_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_kbot",min=2,max=6,weight=0.2},
-				{name="aven_adv_construction_kbot",min=2,max=3,weight=0.2},
-				{name="aven_adv_construction_vehicle",min=2,max=6,weight=0.2},
+				{name="aven_construction_kbot",min=2,max=6,weight=0.4},
+				{name="aven_adv_construction_kbot",min=2,max=3,weight=0.3},
+				{name="aven_adv_construction_vehicle",min=2,max=6,weight=0.3},
 				{name="aven_trooper_laser",min=1,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="aven_shocker",min=1,max=MANY,weight=1,includeConditions={THREAT_ASSAULT}},
 				{name="aven_weaver",min=3,max=MANY,weight=0.6},
@@ -626,8 +626,8 @@ avenAir = {
 				{name="aven_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_aircraft",min=2,max=6,weight=0.2},
-				{name="aven_adv_construction_aircraft",min=2,max=5,weight=0.2},
+				{name="aven_construction_aircraft",min=2,max=6,weight=0.4},
+				{name="aven_adv_construction_aircraft",min=2,max=5,weight=0.4},
 				{name="aven_falcon",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="aven_falcon",min=1,max=MANY,weight=0.2},
 				{name="aven_icarus",min=1,max=MANY,weight=0.6},
@@ -834,8 +834,8 @@ avenAmphibious = {
 				{name="aven_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="aven_construction_hovercraft",min=2,max=4,weight=0.3},
-				{name="aven_adv_construction_aircraft",min=2,max=4,weight=0.3},
+				{name="aven_construction_hovercraft",min=2,max=6,weight=0.3},
+				{name="aven_adv_construction_aircraft",min=2,max=6,weight=0.4},
 				{name="aven_swatter",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="aven_skimmer",min=0,max=MANY,weight=0.2},
 				{name="aven_slider",min=0,max=MANY,weight=0.6},
@@ -1045,9 +1045,9 @@ gearLandAssault = {
 				{name="gear_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_kbot",min=2,max=6,weight=0.2},
-				{name="gear_adv_construction_vehicle",min=2,max=6,weight=0.2},
-				{name="gear_adv_construction_aircraft",min=1,max=4,weight=0.2},
+				{name="gear_construction_kbot",min=2,max=6,weight=0.3},
+				{name="gear_adv_construction_vehicle",min=2,max=6,weight=0.3},
+				{name="gear_adv_construction_aircraft",min=1,max=4,weight=0.3},
 				{name="gear_crasher",min=1,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_reaper",min=3,max=MANY,weight=0.3},
 				{name="gear_deleter",min=1,max=1,weight=0.01},
@@ -1262,10 +1262,10 @@ gearLandSkirmisher = {
 				{name="gear_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_kbot",min=2,max=6,weight=0.2},
-				{name="gear_adv_construction_kbot",min=1,max=3,weight=0.15},
-				{name="gear_adv_construction_vehicle",min=2,max=3,weight=0.2},
-				{name="gear_adv_construction_aircraft",min=2,max=3,weight=0.2},
+				{name="gear_construction_kbot",min=2,max=6,weight=0.4},
+				{name="gear_adv_construction_kbot",min=1,max=3,weight=0.2},
+				{name="gear_adv_construction_vehicle",min=2,max=3,weight=0.3},
+				{name="gear_adv_construction_aircraft",min=2,max=4,weight=0.3},
 				{name="gear_box",min=0,max=MANY,weight=0.6,includeConditions={THREAT_AIR}},
 				{name="gear_cube",min=0,max=MANY,weight=1,includeConditions={THREAT_ASSAULT}},				
 				{name="gear_barrel",min=3,max=MANY,weight=0.4},
@@ -1473,8 +1473,8 @@ gearAir = {
 				{name="gear_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_aircraft",min=2,max=6,weight=0.2},
-				{name="gear_adv_construction_aircraft",min=2,max=5,weight=0.2},
+				{name="gear_construction_aircraft",min=2,max=6,weight=0.3},
+				{name="gear_adv_construction_aircraft",min=2,max=6,weight=0.3},
 				{name="gear_vector",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_vector",min=1,max=MANY,weight=0.2},
 				{name="gear_stratos",min=1,max=MANY,weight=0.6},
@@ -1669,13 +1669,13 @@ gearAmphibious = {
 				{name="gear_commander_respawner",min=2,max=2},
 				{name="gear_upgrade_center",min=1,max=1},
 				{name="gear_adv_shipyard",min=1,max=2,includeConditions={CONDITION_WATER}},
-				{name="gear_adv_vehicle_plant",min=1,max=1,excludeConditions={CONDITION_WATER}},
+				{name="gear_adv_vehicle_plant",min=1,max=2,excludeConditions={CONDITION_WATER}},
 				{name="gear_long_range_rocket_platform",min=1,max=1},
 				{name="gear_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_aircraft",min=2,max=4,weight=0.2},
-				{name="gear_adv_construction_aircraft",min=2,max=4,weight=0.2},
+				{name="gear_construction_aircraft",min=2,max=5,weight=0.3},
+				{name="gear_adv_construction_aircraft",min=2,max=5,weight=0.3},
 				{name="gear_proteus",min=1,max=MANY,weight=0.4},
 				{name="gear_vector",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_whirlpool",min=2,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
@@ -1868,8 +1868,8 @@ clawLandAssault = {
 				advancedDefenseBuilders = 1
 			},				
 			factories = {
-				{name="claw_nano_tower",min=1,max=3},
-				{name="claw_adv_vehicle_plant",min=1,max=2},
+				{name="claw_nano_tower",min=1,max=4},
+				{name="claw_adv_vehicle_plant",min=1,max=3},
 				{name="claw_light_plant",min=1,max=1,weight=1},				
 				{name="claw_commander_respawner",min=2,max=2},
 				{name="claw_upgrade_center",min=1,max=1},
@@ -1878,8 +1878,8 @@ clawLandAssault = {
 				{name="claw_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="claw_construction_kbot",min=2,max=6,weight=0.1},
-				{name="claw_adv_construction_vehicle",min=2,max=6,weight=0.1},
+				{name="claw_construction_kbot",min=2,max=8,weight=0.4},
+				{name="claw_adv_construction_vehicle",min=2,max=6,weight=0.3},
 				{name="claw_jester",min=1,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="claw_armadon",min=3,max=MANY,weight=0.3},
 				{name="claw_jammer",min=1,max=1,weight=0.01},
@@ -2092,9 +2092,9 @@ clawLandSkirmisher = {
 				{name="claw_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="claw_construction_kbot",min=2,max=6,weight=0.2},
-				{name="claw_adv_construction_kbot",min=2,max=3,weight=0.2},
-				{name="claw_adv_construction_vehicle",min=2,max=3,weight=0.2},
+				{name="claw_construction_kbot",min=2,max=6,weight=0.4},
+				{name="claw_adv_construction_kbot",min=2,max=3,weight=0.3},
+				{name="claw_adv_construction_vehicle",min=2,max=6,weight=0.3},
 				{name="claw_brute",min=0,max=MANY,weight=0.6,includeConditions={THREAT_AIR}},
 				{name="claw_armadon",min=0,max=MANY,weight=1,includeConditions={THREAT_ASSAULT}},
 				{name="claw_bishop",min=3,max=MANY,weight=0.4},
@@ -2302,8 +2302,8 @@ clawAir = {
 				{name="claw_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="claw_construction_aircraft",min=2,max=6,weight=0.2},
-				{name="claw_adv_construction_aircraft",min=2,max=5,weight=0.2},
+				{name="claw_construction_aircraft",min=2,max=6,weight=0.4},
+				{name="claw_adv_construction_aircraft",min=2,max=6,weight=0.4},
 				{name="claw_x",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="claw_x",min=1,max=MANY,weight=0.2},
 				{name="claw_havoc",min=1,max=MANY,weight=0.6},
@@ -2516,9 +2516,9 @@ clawAmphibious = {
 				{name="claw_adv_shipyard",min=1,max=1,includeConditions={CONDITION_WATER}}
 			},
 			mobileUnits = {
-				{name="claw_construction_aircraft",min=2,max=4,weight=0.25},
-				{name="claw_adv_construction_aircraft",min=2,max=4,weight=0.25},
-				{name="claw_adv_construction_spinbot",min=1,max=2,weight=0.25},
+				{name="claw_construction_aircraft",min=2,max=6,weight=0.4},
+				{name="claw_adv_construction_aircraft",min=2,max=6,weight=0.3},
+				{name="claw_adv_construction_spinbot",min=1,max=3,weight=0.3},
 				{name="claw_dizzy",min=1,max=MANY,weight=0.4,includeConditions={THREAT_AIR}},
 				{name="claw_tempest",min=1,max=MANY,weight=0.4},
 				{name="claw_mace",min=1,max=MANY,weight=0.4,excludeConditions={THREAT_AIR}},
@@ -2723,7 +2723,7 @@ sphereLandAssault = {
 			},				
 			factories = {
 				{name="sphere_pole",min=1,max=6},
-				{name="sphere_adv_vehicle_factory",min=1,max=2},
+				{name="sphere_adv_vehicle_factory",min=1,max=3},
 				{name="sphere_light_factory",min=1,max=1,weight=1},				
 				{name="sphere_commander_respawner",min=2,max=2},
 				{name="sphere_upgrade_center",min=1,max=1},
@@ -2732,8 +2732,8 @@ sphereLandAssault = {
 				{name="sphere_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_vehicle",min=2,max=6,weight=0.2},
-				{name="sphere_adv_construction_vehicle",min=2,max=6,weight=0.2},
+				{name="sphere_construction_vehicle",min=2,max=6,weight=0.4},
+				{name="sphere_adv_construction_vehicle",min=2,max=6,weight=0.3},
 				{name="sphere_slicer",min=1,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="sphere_bulk",min=3,max=MANY,weight=0.3},
 				{name="sphere_concealer",min=1,max=1,weight=0.01},
@@ -2943,10 +2943,10 @@ sphereLandSkirmisher = {
 				{name="sphere_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_vehicle",min=2,max=6,weight=0.2},
-				{name="sphere_adv_construction_kbot",min=2,max=3,weight=0.2},
-				{name="sphere_adv_construction_vehicle",min=2,max=3,weight=0.2},
-				{name="sphere_adv_construction_aircraft",min=2,max=3,weight=0.2},
+				{name="sphere_construction_vehicle",min=2,max=6,weight=0.4},
+				{name="sphere_adv_construction_kbot",min=2,max=3,weight=0.3},
+				{name="sphere_adv_construction_vehicle",min=2,max=3,weight=0.3},
+				{name="sphere_adv_construction_aircraft",min=2,max=4,weight=0.3},
 				{name="sphere_slicer",min=0,max=MANY,weight=0.6,includeConditions={THREAT_AIR}},
 				{name="sphere_ark",min=3,max=MANY,weight=0.4},
 				{name="sphere_masher",min=3,max=MANY,weight=0.4},
@@ -3154,8 +3154,8 @@ sphereAir = {
 				{name="sphere_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_aircraft",min=2,max=6,weight=0.2},
-				{name="sphere_adv_construction_aircraft",min=2,max=5,weight=0.2},
+				{name="sphere_construction_aircraft",min=2,max=6,weight=0.4},
+				{name="sphere_adv_construction_aircraft",min=2,max=6,weight=0.3},
 				{name="sphere_twilight",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="sphere_twilight",min=1,max=MANY,weight=0.2},
 				{name="sphere_meteor",min=1,max=MANY,weight=0.6},
@@ -3353,16 +3353,16 @@ sphereAmphibious = {
 			factories = {
 				{name="sphere_pole",min=1,max=6},
 				{name="sphere_adv_aircraft_factory",min=1,max=2},
-				{name="sphere_sphere_factory",min=1,max=1},
+				{name="sphere_sphere_factory",min=1,max=2},
 				{name="sphere_commander_respawner",min=2,max=2},
 				{name="sphere_upgrade_center",min=1,max=1},
 				{name="sphere_scout_pad",min=1,max=1},
 				{name="sphere_long_range_rocket_platform",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_aircraft",min=2,max=4,weight=0.2},
-				{name="sphere_adv_construction_aircraft",min=2,max=4,weight=0.2},
-				{name="sphere_construction_sphere",min=1,max=2,weight=0.2},
+				{name="sphere_construction_aircraft",min=2,max=6,weight=0.4},
+				{name="sphere_adv_construction_aircraft",min=2,max=6,weight=0.3},
+				{name="sphere_construction_sphere",min=1,max=3,weight=0.3},
 				{name="sphere_aster",min=1,max=MANY,weight=0.8,includeConditions={THREAT_AIR}},
 				{name="sphere_aster",min=1,max=MANY,weight=0.4},
 				{name="sphere_gazer",min=1,max=MANY,weight=0.4},
