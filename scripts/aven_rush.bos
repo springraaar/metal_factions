@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, wake1, wake2, torpedodrop, hull, bottom, h2, left, right;
+piece  base, wake1, wake2, torpedodrop, hull, bottom, h2, left, right, chargept2;
 
 static-var  restore_delay;
 
@@ -104,6 +104,27 @@ QueryPrimary(piecenum)
 	return (0);
 }
 
+
+AimSecondary(heading, pitch)
+{
+	return (1);
+}
+
+FireSecondary()
+{
+	return (0);
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = chargept2;
+	return (0);
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = chargept2;
+}
 
 SweetSpot(piecenum)
 {

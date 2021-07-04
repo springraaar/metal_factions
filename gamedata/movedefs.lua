@@ -28,6 +28,12 @@ local moveDefs = {
 	LARGEBOAT = {
 		FootprintX=7,
 		FootprintZ=7,
+		MinWaterDepth=10,
+		CrushStrength=300,
+	},
+	LARGEBOAT2 = {
+		FootprintX=7,
+		FootprintZ=7,
 		MinWaterDepth=15,
 		CrushStrength=300,
 	},

@@ -2029,6 +2029,33 @@
 }
 
 
+[WBDEPTHCHARGEBLASTWRAPPER]			// wb depth charge blast wrapper
+{
+	usedefaultexplosions=0;
+	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d1 p0.6 x0;explosionGenerator=custom:FLAKBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	
+	// main explosion spikes (water)
+	[waterblobs]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=-1 r2,-1 r2,-1 r2;
+			width=100;
+			length=100;
+			alpha=0.4;
+			alphadecay=0.02;
+			color=0.6, 0.6, 0.7;
+		}
+		air=0;
+		water=1;
+		underwater=1;
+		ground=0;
+  		count=6;
+	}
+
+}
+
 
 [AABOMBBLASTWRAPPER]			// aa bomb blast wrapper
 {

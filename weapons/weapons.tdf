@@ -2149,6 +2149,45 @@
 		armor_light=525;//#AUTO#
 	}
 }
+[aven_slider_s_depthcharge2]
+{
+	name=WB Depth Charges;
+	weaponType=TorpedoLauncher;
+	turret=1;
+	model=weapon_WBDEPTHCHARGE;
+	range=350;
+	reloadTime=10;
+	flightTime=6;
+	weaponVelocity=200;
+	startVelocity=30;
+	weaponAcceleration=50;
+	turnRate=18000;
+	areaOfEffect=180;
+	soundStart=torpedo3;
+	soundHit=xplodepwb;
+	subMissile=0;
+	tracks=1;
+	waterWeapon=1;
+	tolerance=3000;
+	explosionGenerator=custom:WBDEPTHCHARGEBLASTWRAPPER;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		expDmgScaling=1;
+		targets=WATER;
+		evalFactor=0.6; //niche
+	}
+	[DAMAGE]
+	{
+		default=400;
+		group_invincible=1;
+		armor_heavy=100;//#AUTO#
+		armor_medium=200;//#AUTO#
+		armor_light=400;//#AUTO#
+	}
+}
 [aven_rush_depthcharge]
 {
 	name=Depth Charges;
@@ -2185,6 +2224,45 @@
 		armor_heavy=525;//#AUTO#
 		armor_medium=525;//#AUTO#
 		armor_light=525;//#AUTO#
+	}
+}
+[aven_rush_depthcharge2]
+{
+	name=WB Depth Charges;
+	weaponType=TorpedoLauncher;
+	turret=1;
+	model=weapon_WBDEPTHCHARGE;
+	range=350;
+	reloadTime=10;
+	flightTime=6;
+	weaponVelocity=200;
+	startVelocity=30;
+	weaponAcceleration=50;
+	turnRate=18000;
+	areaOfEffect=180;
+	soundStart=torpedo3;
+	soundHit=xplodepwb;
+	subMissile=0;
+	tracks=1;
+	waterWeapon=1;
+	tolerance=3000;
+	explosionGenerator=custom:WBDEPTHCHARGEBLASTWRAPPER;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		expDmgScaling=1;
+		targets=WATER;
+		evalFactor=0.6; //niche
+	}
+	[DAMAGE]
+	{
+		default=400;
+		group_invincible=1;
+		armor_heavy=100;//#AUTO#
+		armor_medium=200;//#AUTO#
+		armor_light=400;//#AUTO#
 	}
 }
 [aven_guardian_cannon]
@@ -15350,6 +15428,45 @@
 		armor_light=133;//#AUTO#
 	}
 }
+[claw_hunter_depthcharge2]
+{
+	name=WB Depth Charges;
+	weaponType=TorpedoLauncher;
+	turret=1;
+	model=weapon_WBDEPTHCHARGE;
+	range=350;
+	reloadTime=10;
+	flightTime=6;
+	weaponVelocity=200;
+	startVelocity=30;
+	weaponAcceleration=50;
+	turnRate=18000;
+	areaOfEffect=180;
+	soundStart=torpedo3;
+	soundHit=xplodepwb;
+	subMissile=0;
+	tracks=1;
+	waterWeapon=1;
+	tolerance=3000;
+	explosionGenerator=custom:WBDEPTHCHARGEBLASTWRAPPER;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		expDmgScaling=1;
+		targets=WATER;
+		evalFactor=0.6; //niche
+	}
+	[DAMAGE]
+	{
+		default=400;
+		group_invincible=1;
+		armor_heavy=100;//#AUTO#
+		armor_medium=200;//#AUTO#
+		armor_light=400;//#AUTO#
+	}
+}
 [claw_sinker_torpedo]
 {
 	name=Torpedoes;
@@ -16966,16 +17083,16 @@
 	turret=1;
 	collideFriendly=1;
 	model=weapon_torpedo;
-	range=600;
-	reloadTime=1.2;
-	projectiles=2;
+	range=700;
+	reloadTime=1;
+	projectiles=1;
 	flightTime=6;
-	weaponVelocity=350;
-	startVelocity=250;
-	weaponAcceleration=75;
+	weaponVelocity=320;
+	startVelocity=240;
+	weaponAcceleration=60;
 	subMissile=0;
 	turnRate=18750;
-	areaOfEffect=48;
+	areaOfEffect=80;
 	soundStart=torpedo1;
 	soundHit=xplodep1;
 	tracks=1;
@@ -16986,18 +17103,18 @@
 	avoidFeature=0;
 	[CUSTOMPARAMS]
 	{
-		hitPower=2;
+		hitPower=3;
 		restrictedAngle=1;
 		expDmgScaling=1;
 		targets=WATER;
 	}
 	[DAMAGE]
 	{
-		default=280;
+		default=400;
 		group_invincible=1;
-		armor_heavy=140;//#AUTO#
-		armor_medium=280;//#AUTO#
-		armor_light=280;//#AUTO#
+		armor_heavy=400;//#AUTO#
+		armor_medium=400;//#AUTO#
+		armor_light=400;//#AUTO#
 	}
 }
 [claw_massacre_cannon]

@@ -179,7 +179,7 @@ function widget:DrawWorldPreUnit()
     if (radius) then
       local isJumping = spGetUnitRulesParam(unitID,"is_jumping")
       isJumping = (isJumping and isJumping == 1)
-      if (trackSlope and (not UnitDefs[udid].canFly) and (not UnitDefs[udid].floatOnWater) and (not isJumping) ) then
+      if (trackSlope and (not UnitDefs[udid].canFly) and (not UnitDefs[udid].waterline) and (not isJumping) ) then
         local x, y, z = spGetUnitBasePosition(unitID)
         local gx, gy, gz = spGetGroundNormal(x, z)
         local degrot = math.acos(gy) * 180 / math.pi

@@ -1,3 +1,31 @@
+2021/07/03 ------------------ NOTES v1.66 ----------------------
+
+
+- fixed normal build priority units halting their repair rates when stalling metal but not energy
+
+- made non-battleship ships more consistently able to cross shallow water
+
+- CLAW "Monster" has H damage torpedoes, slightly increased range and ~37% increased cost
+
+- increased cost of minor upgrades from 250m to 350m
+
+- CLAW "Hunter", AVEN "Rush" and "Slider(s)" get a secondary WB depth charge weapon to help them against L1 subs
+- CLAW "Hunter" and AVEN "Rush" get slightly lower speed and higher HP
+
+- ground units now slide faster down slopes that are too steep for them
+- fixed a bug that caused units floating over steep slopes to "dance" around
+
+--- UI
+
+- selection circle no longer tilts for units floating over steep slopes
+- commanders now default to "hold position"
+
+- changed key combination to open menu from ESC to SHIFT+ESC to avoid confusing people who use ESC to cancel orders
+
+- cloaking sets units to "hold fire" instead of "return fire" to avoid issues where they'd open fire against stuff that hit them a minute earlier
+
+
+
 2021/06/29 ------------------ NOTES v1.65 ----------------------
 
 - normal build priority units will no longer halt their reclaim rates when stalling resources

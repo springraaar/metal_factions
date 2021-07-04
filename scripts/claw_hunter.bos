@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, hull, wake1, wake2, front, fbottom, back, bbottom, chargept;
+piece  base, hull, wake1, wake2, front, fbottom, back, bbottom, chargept, chargept2;
 
 
 // Signal definitions
@@ -87,6 +87,28 @@ AimFromPrimary(piecenum)
 QueryPrimary(piecenum)
 {
 	piecenum = chargept;
+}
+
+
+AimSecondary(heading, pitch)
+{
+	return (1);
+}
+
+FireSecondary()
+{
+	return (0);
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = chargept2;
+	return (0);
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = chargept2;
 }
 
 

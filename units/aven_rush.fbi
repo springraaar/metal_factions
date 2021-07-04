@@ -8,12 +8,12 @@
 	buildPic=aven_rush.png;
 	FootprintX=4;
 	FootprintZ=4;
-	maxDamage=1300;
+	maxDamage=1900;
 	energyUse=0;
 	workerTime=0;
 	builder=0;
 	sightDistance=500;
-	sonarDistance=400; 
+	sonarDistance=450; 
 	radarDistance=0;
 	soundCategory=aven_SHIP;
 	energyStorage=0;
@@ -25,7 +25,7 @@
 	canPatrol=1;
 	canStop=1;
 	canGuard=1;
-	maxVelocity=3.3;
+	maxVelocity=3.0;
 	brakeRate=0.019;
 	acceleration=0.42;
 	turnRate=500;
@@ -34,6 +34,8 @@
 	iconType=shipraider;
 	weapon1=aven_rush_depthcharge;
 	onlytargetcategory1=NOTAIR;
+	weapon2=aven_rush_depthcharge2;
+	onlyTargetCategory2=NOTAIR;
 	canAttack=1;
 	activateWhenBuilt=1;
 	minWaterDepth=12;
@@ -53,8 +55,8 @@
 	collisionVolumeScales =25 35 50;
 	collisionVolumeOffsets = 0 -10 0;
 	collisionVolumeTest = 1;
-	buildCostEnergy=3185;//#AUTO#
-	buildCostMetal=637;//#AUTO#
-	buildTime=7591;//#AUTO#
-	mass=537;//#AUTO#
+	buildCostEnergy=4133;//#AUTO#
+	buildCostMetal=826;//#AUTO#
+	buildTime=9852;//#AUTO#
+	mass=750;//#AUTO#
 	}

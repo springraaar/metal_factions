@@ -4,7 +4,7 @@
 function widget:GetInfo()
   return {
     name      = "Don't Shoot",
-    desc      = "Sets armed cloakable units to return fire while cloaked.",
+    desc      = "Sets armed cloakable units to hold fire while cloaked.",
     author    = "Quantum, Jools",
     date      = "June 2, 2012",
     license   = "GNU GPL, v2 or later",
@@ -58,7 +58,7 @@ function widget:CommandNotify(commandID, params, options)
         if states.cloak then
           GiveOrderToUnit(unitID, CMD.FIRE_STATE, {2}, {})
         else
-          GiveOrderToUnit(unitID, CMD.FIRE_STATE, {1}, {}) 
+          GiveOrderToUnit(unitID, CMD.FIRE_STATE, {0}, {}) 
         end
       end
     end

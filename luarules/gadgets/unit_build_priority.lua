@@ -276,15 +276,21 @@ function gadget:GameFrame(n)
 				else
 					-- Spring.Echo("unit "..UnitDefs[spGetUnitDefID(unitID)].name.." stops production")
 					slowRate = buildSpeedList[unitID]*0.01
-					spSetUnitBuildSpeed(unitID, slowRate, slowRate) -- tiny fraction to keep metal usage > 0 and prevent decay
-					haltedList[unitID] = 1
+					if stallingE == 1 then
+						spSetUnitBuildSpeed(unitID, slowRate, slowRate) -- tiny fraction to keep metal usage > 0 and prevent decay
+						haltedList[unitID] = {build=true,repair=true}
+					else
+						spSetUnitBuildSpeed(unitID, slowRate, normalRate) -- tiny fraction to keep metal usage > 0 and prevent decay
+						haltedList[unitID] = {build=true,repair=false}
+					end
 				end
 			end
 		end
 	else
 		-- this is here to halt nano-stream visuals (also lowers resource usage a bit more)
-		for unitID,_ in pairs(haltedList) do
-			spSetUnitBuildSpeed(unitID, 0,0)
+		for unitID,data in pairs(haltedList) do
+			normalRate = buildSpeedList[unitID]
+			spSetUnitBuildSpeed(unitID, 0,data.repair and 0 or normalRate)
 		end		
 	end
 end

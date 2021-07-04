@@ -3,8 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, flare, wake1, wake2, wake3, wake4, wake5,
-       wake6, wake7, wake8, top,t2;
+piece  base, flare, wake1, wake2, wake3, wake4, wake5, wake6, wake7, wake8, top,t2, chargept2,b2,b3,b5,b6,clauncher,clauncher2;
 
 static-var  Static_Var_1, restore_delay, Static_Var_3, Static_Var_4;
 
@@ -157,6 +156,28 @@ QueryPrimary(piecenum)
 	return (0);
 }
 
+
+AimSecondary(heading, pitch)
+{
+	return (1);
+}
+
+FireSecondary()
+{
+	return (0);
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = chargept2;
+	return (0);
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = chargept2;
+}
+
 SweetSpot(piecenum)
 {
 	piecenum = base;
@@ -165,24 +186,15 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	hide flare;
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		return (0);
+		explode b5 type SHATTER;
+		explode b6 type SHATTER;
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		return (0);
-	}
-	corpsetype = 3;
-
-
-	return (0);
+	explode b2 type SHATTER;
+	explode b3 type SHATTER;
+	explode b5 type SHATTER;
+	explode b6 type SHATTER;
+	return (2);
 }

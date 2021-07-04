@@ -87,8 +87,9 @@ PF_UNIT_AIR = 6
 
 PF_MOVEDEF_CONVERSION = {
 	["smallboat"] = PF_UNIT_WATER,
-	["mediumboat"] = PF_UNIT_WATER_DEEP,
-	["largeboat"] = PF_UNIT_WATER_DEEP,
+	["mediumboat"] = PF_UNIT_WATER,
+	["largeboat"] = PF_UNIT_WATER,
+	["largeboat2"] = PF_UNIT_WATER_DEEP,
 
 	["kbotht2"] = PF_UNIT_LAND,
 	["kbotht3"] = PF_UNIT_LAND,

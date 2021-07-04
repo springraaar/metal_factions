@@ -99,10 +99,7 @@ end
 function widget:MousePress(mx, my, mButton)
 	if not Spring.IsGUIHidden() then
 		if ButtonMenu.above then		
-			if not WG.menuShown then
-				Spring.SendCommands("quitmenu")
-				WG.menuShown = true
-			end
+			Spring.SendCommands("quitmenu")
 		end
 	end
 	

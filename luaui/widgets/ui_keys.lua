@@ -18,7 +18,6 @@ VFS.Include("lualibs/custom_cmd.lua")
 
 
 local menuSecond = -1
-WG.menuShown = false
 WG.customHotkeys = {}
 WG.unboundDefKeys = {}
 local shouldShowMenu = false
@@ -57,7 +56,9 @@ end
 
 function widget:Initialize()
 	Spring.SendCommands("unbindaction showmetalmap")
-	Spring.SendCommands("unbindaction quitmenu")
+	--Spring.SendCommands("unbindaction quitmenu")
+	Spring.SendCommands("unbind esc quitmenu")
+	Spring.SendCommands("bind Shift+esc quitmenu")
    
 	-- try to load custom key binds
 	if VFS.FileExists(customKeybindsFile) then
@@ -164,12 +165,6 @@ function widget:KeyPress(key, mods, isRepeat)
 				return false
 			end
 		end
-	elseif (key == KEYSYMS.ESCAPE) then
-		if (not WG.menuShown) then
-			shouldShowMenu = true
-		else 
-			WG.menuShown = false
-		end
 	elseif (key == KEYSYMS.F4) then
 		Spring.SendCommands("showmetalmap")
 	elseif (key == KEYSYMS.F10) then
@@ -179,11 +174,7 @@ end
 
 -- workaround for menu not showing up
 function widget:KeyRelease()
-	if (shouldShowMenu) then
-		Spring.SendCommands("quitmenu")
-		WG.menuShown = true
-		shouldShowMenu = false
-	elseif (shouldSelectCom) then
+	if (shouldSelectCom) then
 		Spring.SelectUnitArray({shouldSelectCom})
 		shouldSelectCom = false
 	end

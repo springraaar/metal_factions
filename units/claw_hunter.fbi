@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=1400;
+	maxDamage=1600;
 	footprintx=4;
 	footprintz=4;
 
@@ -65,7 +65,7 @@
 	turnRate=650;
 	acceleration=0.8;
 	brakeRate=0.015;
-	maxVelocity=2.9;
+	maxVelocity=2.5;
 	minwaterdepth=12;
 	waterline=0;
 
@@ -81,6 +81,8 @@
 	//***********
 	weapon1=claw_hunter_depthcharge;
 	onlyTargetCategory1=NOTAIR;
+	weapon2=claw_hunter_depthcharge2;
+	onlyTargetCategory2=NOTAIR;
 	explodeAs=BIG_UNITEX;
 	selfDestructAs=BIG_UNIT;
 
@@ -103,8 +105,8 @@
 		evalfactor=0.85;//SHIP
 	}
 
-	buildCostEnergy=2387;//#AUTO#
-	buildCostMetal=477;//#AUTO#
-	buildTime=5689;//#AUTO#
-	mass=509;//#AUTO#
+	buildCostEnergy=2690;//#AUTO#
+	buildCostMetal=538;//#AUTO#
+	buildTime=6412;//#AUTO#
+	mass=579;//#AUTO#
 }

@@ -68,6 +68,9 @@ local spGetFeatureCollisionVolumeData = Spring.GetFeatureCollisionVolumeData
 local spSetFeaturePhysics = Spring.SetFeaturePhysics
 local spCreateFeature = Spring.CreateFeature
 
+local mcDisable = Spring.MoveCtrl.Disable
+local mcEnable = Spring.MoveCtrl.Enable
+
 local random = math.random
 local floor = math.floor
 local min = math.min
@@ -116,6 +119,7 @@ local totemUnitIds = {}
 
 
 local maxSlopeByUnitDefId = {}
+local floatingGroundDefIds = {}
 local stuckGroundUnitIds = {}
 
 GG.destructibleProjectilesDestroyed = {}
@@ -178,6 +182,7 @@ end
  
 
 local x,y,z,vx,vy,vz,v,h,rx,ry,rz, enableGC
+local nx,ny,nz,slope
 local physics, transportedUnits
 local function updateUnitPhysics(unitId)
 	x,y,z = spGetUnitPosition(unitId)
@@ -228,17 +233,15 @@ local function updateUnitPhysics(unitId)
 	
 	-- force stuck ground units to slide down the slope, give them a push
 	if stuckGroundUnitIds[unitId] == true then
-		local nx,ny,nz,slope = spGetGroundNormal(x,z,true)
+		nx,ny,nz,slope = spGetGroundNormal(x,z,true)
 		h = abs(y - spGetGroundHeight(x,z))
 		if (v < 0.3 ) then
 			--Spring.Echo("moving stuck unit at ("..x..";"..y..";"..z..") n=("..nx..";"..ny..";"..nz..") slope="..slope)
-			
-			-- push the unit out of the slope
-			if (y > 0) then
-				spSetUnitPosition(unitId,x+nx,y,z+nz)
-			else
-				Spring.AddUnitImpulse(unitId,4*nx,0.1,4*nz)
-			end
+		
+			spSetUnitPosition(unitId,x+(5+random(10))*nx,y+1*ny,z+(5+random(10))*nz)
+			local dx,dy,dz = spGetUnitDirection(unitId) 
+			spSetUnitDirection(unitId,0.7*dx+0.3*nx,dy,0.7*dz+0.3*nz)
+			Spring.AddUnitImpulse(unitId,0.1*nx,0.1,0.1*nz)
 		end
 	end
 	
@@ -327,7 +330,13 @@ end
 -- checks if a unit is stuck by testing slope
 local function checkStuck(defId,x,y,z,v)
 	if (maxSlopeByUnitDefId[defId] and v < 0.1) then
-		local dx, dz, slope
+		h = spGetGroundHeight(x,z)
+
+		-- floating stuff over water doesn't get stuck
+		if (floatingGroundDefIds[defId] and h < 0) then
+			return false
+		end
+	
 		_,_,_,slope = spGetGroundNormal(x,z)
 		if slope > maxSlopeByUnitDefId[defId] then
 			return true
@@ -377,6 +386,10 @@ function gadget:Initialize()
 			if unitDef.moveDef and unitDef.moveDef.maxSlope and unitDef.moveDef.maxSlope < 0.5 then
 				maxSlopeByUnitDefId[defId] = unitDef.moveDef.maxSlope
 				--Spring.Echo(unitDef.name.." maxSlope="..unitDef.moveDef.maxSlope)
+				
+				if (string.find(tostring(unitDef.moveDef.name),"hover")) then
+					floatingGroundDefIds[defId] = true
+				end
 			end 
 		end
 	end
