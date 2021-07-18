@@ -61,9 +61,9 @@
 	//  Movement
 	//************
 	movementClass=KBOTHT3;
-	turnRate=910;
-	acceleration=0.4;
-	brakeRate=0.2;
+	turnRate=1000;
+	acceleration=0.9;
+	brakeRate=0.5;
 	maxVelocity=1.6;
 	maxSlope=17;
 	maxWaterDepth=25;
@@ -108,8 +108,8 @@
 		explosionGenerator1=custom:yellowflaremed;
 	}
 
-	buildCostEnergy=4430;//#AUTO#
+	buildCostEnergy=4434;//#AUTO#
 	buildCostMetal=886;//#AUTO#
-	buildTime=10559;//#AUTO#
+	buildTime=10568;//#AUTO#
 	mass=732;//#AUTO#
 }

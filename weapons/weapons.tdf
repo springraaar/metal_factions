@@ -547,7 +547,7 @@
 	weaponType=TorpedoLauncher;
 	collideFriendly=1;
 	model=weapon_torpedo;
-	range=450;
+	range=440;
 	reloadTime=4.0;
 	turret=1;
 	flightTime=4;
@@ -880,11 +880,11 @@
 	}
 	[DAMAGE]
 	{
-		default=410;
+		default=415;
 		group_invincible=1;
-		armor_heavy=410;//#AUTO#
-		armor_medium=410;//#AUTO#
-		armor_light=410;//#AUTO#
+		armor_heavy=415;//#AUTO#
+		armor_medium=415;//#AUTO#
+		armor_light=415;//#AUTO#
 	}
 }
 [aven_dazer_disruptor]
@@ -1837,7 +1837,7 @@
 	cegTag=BOMBTRAIL;
 	range=450;
 	explosionGenerator=custom:STDNARROWBLASTWRAPPER;
-	reloadTime=15;
+	reloadTime=18;
 	flightTime=2.75;
 	weaponVelocity=360;
 	startVelocity=200;
@@ -2606,7 +2606,7 @@
 	tracks=1;
 	weaponVelocity=600;
 	weaponAcceleration=100;
-	turnRate=14384;
+	turnRate=30000;
 	areaOfEffect=96;
 	metalPerShot=0;
 	soundStart=rockhvy3;
@@ -4579,7 +4579,7 @@
 	weaponVelocity=550;
 	weaponAcceleration=160;
 	startVelocity=30;
-	turnRate=20000;
+	turnRate=30000;
 	areaOfEffect=96;
 	metalPerShot=0;
 	soundStart=rockhvy3;
@@ -4715,7 +4715,7 @@
 	weaponVelocity=700;
 	startVelocity=450;
 	weaponAcceleration=130;
-	turnRate=34384;
+	turnRate=42000;
 	areaOfEffect=48;
 	burst=2;
 	burstRate=0.2;
@@ -4726,7 +4726,7 @@
 	tracks=1;
 	smokeTrail=1;
 	cegTag=SMLROCKETTRAIL;
-	tolerance=10000;
+	tolerance=9000;
 	collideFriendly=0;
 	avoidFriendly=0;
 	interceptedByShieldType=1;
@@ -6395,7 +6395,7 @@
 	weaponType=TorpedoLauncher;
 	collideFriendly=1;
 	model=weapon_torpedo;
-	range=650;
+	range=660;
 	reloadTime=3.2;
 	turret=1;
 	flightTime=6;
@@ -7225,7 +7225,7 @@
 	cegTag=BOMBTRAIL;
 	range=450;
 	explosionGenerator=custom:STDNARROWBLASTWRAPPER;
-	reloadTime=15;
+	reloadTime=18;
 	flightTime=2.75;
 	weaponVelocity=360;
 	startVelocity=200;
@@ -7389,10 +7389,11 @@
 	range=400;
 	explosionGenerator=custom:ROCKETBLASTWRAPPER;
 	reloadTime=50;
-	areaOfEffect=210;
-	burst=20;
+	areaOfEffect=190;
+	burst=22;
 	burstRate=0.035;
 	sprayAngle=16000;
+	leadLimit=50;
 	soundStart=bombrel;
 	soundHit=xplomed3;
 	myGravity=0.3;
@@ -7403,17 +7404,17 @@
 	[CUSTOMPARAMS]
 	{
 		hitPower=2;
-		evalFactor=1.38; // compensation for the evaluator's factor for non-hoverattack air types
+		evalFactor=1.45; // compensation for the evaluator's factor for non-hoverattack air types
 		expDmgScaling=1;
 		targets=SURFACE;
 	}
 	[DAMAGE]
 	{
-		default=300;
+		default=330;
     		group_invincible=1;
-		armor_heavy=150;//#AUTO#
-		armor_medium=300;//#AUTO#
-		armor_light=300;//#AUTO#
+		armor_heavy=165;//#AUTO#
+		armor_medium=330;//#AUTO#
+		armor_light=330;//#AUTO#
 	}
 }
 [gear_BATSLASER]
@@ -8473,7 +8474,7 @@
 	weaponType=BeamLaser;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
 	turret=1;
-	range=370;
+	range=380;
 	minIntensity=1.0;
 	beamTime=0.05;
 	thickness=2.123;
@@ -9303,7 +9304,7 @@
 	weaponVelocity=800;
 	startVelocity=300;
 	weaponAcceleration=131;
-	turnRate=34384;
+	turnRate=42000;
 	areaOfEffect=48;
 	burst=2;
 	burstRate=0.2;
@@ -9314,7 +9315,7 @@
 	tracks=1;
 	smokeTrail=1;
 	cegTag=SMLROCKETTRAIL;
-	tolerance=10000;
+	tolerance=9000;
 	collideFriendly=0;
 	avoidFriendly=0;
 	waterBounce=0;
@@ -13561,10 +13562,10 @@
 	}
 	[DAMAGE]
 	{
-		default=130;
-		armor_heavy=32;//#AUTO#
-		armor_medium=65;//#AUTO#
-		armor_light=130;//#AUTO#
+		default=132;
+		armor_heavy=33;//#AUTO#
+		armor_medium=66;//#AUTO#
+		armor_light=132;//#AUTO#
 	}
 }
 [claw_u2commander_torpedo]
@@ -13656,7 +13657,7 @@
 	name=Fast Torpedoes;
 	weaponType=TorpedoLauncher;
 	model=weapon_fasttorpedo;
-	range=580;
+	range=590;
 	tracks=1;
 	turnRate=16000;
 	reloadTime=5.6;
@@ -14971,7 +14972,7 @@
 	energyPerShot=4300;
 	turret=1;
 	range=4700;
-	reloadTime=13.5;
+	reloadTime=16;
 	weaponVelocity=2332;
 	startVelocity=2332;
 	turnRate=25000;
@@ -17635,7 +17636,7 @@
 	beamTime=0.1;
 	range=520; 
 	reloadTime=0.1;
-	energyPerShot=46;
+	energyPerShot=42;
 	weaponVelocity=400;
   	texture1=lightning2;
   	laserFlareSize=2;
@@ -17705,11 +17706,11 @@
 	}
 	[DAMAGE]
 	{
-		default=680;
+		default=700;
 		group_invincible=1;
-		armor_heavy=680;//#AUTO#
-		armor_medium=680;//#AUTO#
-		armor_light=680;//#AUTO#
+		armor_heavy=700;//#AUTO#
+		armor_medium=700;//#AUTO#
+		armor_light=700;//#AUTO#
 	}
 }
 [sphere_u6commander_cannon]
@@ -17718,7 +17719,7 @@
 	weaponType=Cannon;
 	turret=1;
 	range=620;
-	reloadTime=6.5;
+	reloadTime=6.4;
 	weaponVelocity=330;
 	areaOfEffect=240;
 	soundStart=novafire;
@@ -17749,11 +17750,11 @@
 	}
 	[DAMAGE]
 	{
-		default=1150;
+		default=1160;
 		group_invincible=1;
-		armor_heavy=575;//#AUTO#
-		armor_medium=1150;//#AUTO#
-		armor_light=1150;//#AUTO#
+		armor_heavy=580;//#AUTO#
+		armor_medium=1160;//#AUTO#
+		armor_light=1160;//#AUTO#
 	}
 }
 [sphere_commander_torpedo]
@@ -17801,7 +17802,7 @@
 	weaponType=TorpedoLauncher;
 	collideFriendly=1;
 	model=weapon_torpedo;
-	range=460;
+	range=470;
 	reloadTime=5;
 	turret=1;
 	flightTime=4;
@@ -17944,11 +17945,11 @@
 	}
 	[DAMAGE]
 	{
-		default=400;
+		default=420;
 		group_invincible=1;
-		armor_heavy=400;//#AUTO#
-		armor_medium=400;//#AUTO#
-		armor_light=400;//#AUTO#
+		armor_heavy=420;//#AUTO#
+		armor_medium=420;//#AUTO#
+		armor_light=420;//#AUTO#
 	}
 }
 [sphere_u5commander_torpedo]
@@ -17996,7 +17997,7 @@
 	weaponType=TorpedoLauncher;
 	collideFriendly=1;
 	model=weapon_torpedo;
-	range=540;
+	range=550;
 	reloadTime=3.1;
 	turret=1;
 	flightTime=4;
@@ -19086,7 +19087,7 @@
 	cegTag=BOMBTRAIL;
 	range=450;
 	explosionGenerator=custom:STDNARROWBLASTWRAPPER;
-	reloadTime=15;
+	reloadTime=18;
 	flightTime=2.75;
 	weaponVelocity=360;
 	startVelocity=200;

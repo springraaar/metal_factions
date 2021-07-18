@@ -1,3 +1,33 @@
+2021/07/18 ------------------ NOTES v1.67 ----------------------
+
+
+--- Balance / Mechanics
+
+- relatively expensive units get up to 10% cheaper
+- relatively slow units get up to 5% cheaper
+- increased the cost of relatively long range units by 1-6%
+- CLAW "Longhorn" had its reload time increased by about 20% and cost slightly reduced
+
+- minor increases in mobility for relatively slow commanders (< 5%)
+
+- GEAR "Cascade" deals slightly higher damage per run to big targets like factories, but each bomb has slighly reduced area of effect
+- limited GEAR "Cascade"'s ability to lead moving targets
+
+- increased maneuverability and turret turn rates for various relatively mobile robots, mostly L2 ones
+- GEAR "Psycho" has 3% increased range and 3% reduced speed
+
+- increased turn rate of AVEN "Merl" and "Ranger" rockets to avoid overshoot issues
+
+- removed the energy generation from mobile construction units and reduced their costs by about 15%
+- the L1 mobile builders also got slightly higher HP
+
+- increased the missiles' turn rate and reduced the aiming tolerance for AVEN "Swift" and GEAR "Dash" to avoid overshooting the target
+- removed the 10% discount from AVEN "Swift", GEAR "Dash" and CLAW "Hornet"
+- increased HP by up to 50% and reload time by 20% on AVEN "Thunder", GEAR "Shadow" and SPHERE "Manta" and increased cost by about 10%
+
+- added 15 HP/s regeneration to CLAW "Totem"
+
+
 2021/07/03 ------------------ NOTES v1.66 ----------------------
 
 
@@ -18,12 +48,14 @@
 --- UI
 
 - selection circle no longer tilts for units floating over steep slopes
+
 - commanders now default to "hold position"
 
 - changed key combination to open menu from ESC to SHIFT+ESC to avoid confusing people who use ESC to cancel orders
 
 - cloaking sets units to "hold fire" instead of "return fire" to avoid issues where they'd open fire against stuff that hit them a minute earlier
 
+- added widget that sets all ground factories to "hold position" (disabled by default, can be enabled on the f11 widgets menu)
 
 
 2021/06/29 ------------------ NOTES v1.65 ----------------------

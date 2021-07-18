@@ -60,6 +60,7 @@
 	//*************
 	onOffable=0;
 	activateWhenBuilt=1;
+	autoheal=15;
 
 	//************************************************************
 	//  Movement
@@ -95,7 +96,7 @@
 	{
 		builtBy=claw_l1builder,claw_l2builder;
 		manualCost=1;
-		tip=Absorbs 3% cost of units killed within 600 radius, adding +6m/s and +30E/s for up to 50s (max 300m);
+		tip=Regenerates 15 HP/s. Absorbs 3% cost of destroyed units within 600 radius, adding +6m/s and +30E/s for up to 50s (max 300m);
 	}
 	buildCostEnergy=3000;
 	buildCostMetal=600;

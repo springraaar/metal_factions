@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=1000;
+	maxDamage=1100;
 	footprintx=3;
 	footprintz=3;
 
@@ -34,7 +34,7 @@
 	//*************
 	metalmake=0.0;
 	metalStorage=0;
-	energyMake=6;
+	energyMake=0;
 	energyUse=0;
 	energyStorage=0;
 
@@ -110,8 +110,8 @@
 		explosionGenerator1=custom:UNITFIRE;
 	}
 
-	buildCostEnergy=1784;//#AUTO#
-	buildCostMetal=356;//#AUTO#
-	buildTime=4252;//#AUTO#
-	mass=184;//#AUTO#
+	buildCostEnergy=1350;//#AUTO#
+	buildCostMetal=270;//#AUTO#
+	buildTime=3217;//#AUTO#
+	mass=182;//#AUTO#
 }

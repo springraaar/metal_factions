@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=550;
+	maxDamage=700;
 	footprintx=2;
 	footprintz=2;
 
@@ -34,7 +34,7 @@
 	//*************
 	metalmake=0.0;
 	metalStorage=0;
-	energyMake=4;
+	energyMake=0;
 	energyUse=0;
 	energyStorage=0;
 
@@ -106,8 +106,8 @@
 	{
 		explosionGenerator0=custom:Nano;
 	}
-	buildCostEnergy=1600;//#AUTO#
-	buildCostMetal=320;//#AUTO#
-	buildTime=3814;//#AUTO#
-	mass=122;//#AUTO#
+	buildCostEnergy=1289;//#AUTO#
+	buildCostMetal=257;//#AUTO#
+	buildTime=3074;//#AUTO#
+	mass=130;//#AUTO#
 }

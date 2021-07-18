@@ -61,9 +61,9 @@
 	//  Movement
 	//************
 	movementClass=KBOTHT3;
-	turnRate=690;
-	acceleration=0.9;
-	brakeRate=0.3;
+	turnRate=990;
+	acceleration=1;
+	brakeRate=0.8;
 	maxVelocity=3.3;
 	maxSlope=20;
 	maxWaterDepth=12;
@@ -107,8 +107,8 @@
 		explosionGenerator0=custom:redflare;
 		explosionGenerator1=custom:glowsml;
 	}
-	buildCostEnergy=4657;//#AUTO#
-	buildCostMetal=931;//#AUTO#
-	buildTime=11099;//#AUTO#
+	buildCostEnergy=4652;//#AUTO#
+	buildCostMetal=930;//#AUTO#
+	buildTime=11088;//#AUTO#
 	mass=672;//#AUTO#
 }

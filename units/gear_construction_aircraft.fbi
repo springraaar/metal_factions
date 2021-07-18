@@ -24,7 +24,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=480;
+	maxDamage=580;
 	footprintx=3;
 	footprintz=3;
 
@@ -33,7 +33,7 @@
 	//*************
 	metalmake=0.0;
 	metalStorage=0;
-	energyMake=5;
+	energyMake=0;
 	energyUse=0;
 	energyStorage=0;
 
@@ -104,8 +104,8 @@
 		builtBy=gear_aircraft_plant,gear_adv_aircraft_plant;
 	}
 
-	buildCostEnergy=3424;//#AUTO#
-	buildCostMetal=684;//#AUTO#
-	buildTime=8161;//#AUTO#
-	mass=174;//#AUTO#
+	buildCostEnergy=2964;//#AUTO#
+	buildCostMetal=592;//#AUTO#
+	buildTime=7065;//#AUTO#
+	mass=171;//#AUTO#
 }

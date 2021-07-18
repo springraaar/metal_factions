@@ -24,7 +24,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=470;
+	maxDamage=570;
 	footprintx=3;
 	footprintz=3;
 
@@ -33,7 +33,7 @@
 	//*************
 	metalmake=0.0;
 	metalStorage=0;
-	energyMake=5.5;
+	energyMake=0;
 	energyUse=0;
 	energyStorage=0;
 
@@ -104,8 +104,8 @@
 		buildertype=claw_l1builder;
 		builtBy=claw_aircraft_plant,claw_adv_aircraft_plant;
 	}
-	buildCostEnergy=3442;//#AUTO#
-	buildCostMetal=688;//#AUTO#
-	buildTime=8203;//#AUTO#
-	mass=173;//#AUTO#
+	buildCostEnergy=2948;//#AUTO#
+	buildCostMetal=589;//#AUTO#
+	buildTime=7027;//#AUTO#
+	mass=169;//#AUTO#
 }

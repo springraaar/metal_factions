@@ -24,7 +24,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=550;
+	maxDamage=600;
 	footprintx=3;
 	footprintz=3;
 
@@ -33,7 +33,7 @@
 	//*************
 	metalmake=0.0;
 	metalStorage=0;
-	energyMake=5.5;
+	energyMake=0;
 	energyUse=0;
 	energyStorage=0;
 
@@ -104,8 +104,8 @@
 		builtBy=sphere_aircraft_factory,sphere_adv_aircraft_factory,sphere_sphere_factory;
 	}
 
-	buildCostEnergy=3398;//#AUTO#
-	buildCostMetal=679;//#AUTO#
-	buildTime=8100;//#AUTO#
-	mass=181;//#AUTO#
+	buildCostEnergy=2796;//#AUTO#
+	buildCostMetal=559;//#AUTO#
+	buildTime=6664;//#AUTO#
+	mass=168;//#AUTO#
 }
