@@ -67,6 +67,7 @@ local spSetFeatureMoveCtrl = Spring.SetFeatureMoveCtrl
 local spGetFeatureCollisionVolumeData = Spring.GetFeatureCollisionVolumeData
 local spSetFeaturePhysics = Spring.SetFeaturePhysics
 local spCreateFeature = Spring.CreateFeature
+local spAddUnitImpulse = Spring.AddUnitImpulse
 
 local mcDisable = Spring.MoveCtrl.Disable
 local mcEnable = Spring.MoveCtrl.Enable
@@ -235,13 +236,13 @@ local function updateUnitPhysics(unitId)
 	if stuckGroundUnitIds[unitId] == true then
 		nx,ny,nz,slope = spGetGroundNormal(x,z,true)
 		h = abs(y - spGetGroundHeight(x,z))
-		if (v < 0.3 ) then
-			--Spring.Echo("moving stuck unit at ("..x..";"..y..";"..z..") n=("..nx..";"..ny..";"..nz..") slope="..slope)
+		if (v < 0.3 and h < 10) then
+			-- Spring.Echo("moving stuck unit at ("..x..";"..y..";"..z..") n=("..nx..";"..ny..";"..nz..") slope="..slope)
 		
 			spSetUnitPosition(unitId,x+(5+random(10))*nx,y+1*ny,z+(5+random(10))*nz)
 			local dx,dy,dz = spGetUnitDirection(unitId) 
 			spSetUnitDirection(unitId,0.7*dx+0.3*nx,dy,0.7*dz+0.3*nz)
-			Spring.AddUnitImpulse(unitId,0.1*nx,0.1,0.1*nz)
+			spAddUnitImpulse(unitId,0.1*nx,0.1,0.1*nz)
 		end
 	end
 	
@@ -328,10 +329,17 @@ local function updateFeaturePhysics(featureId)
 end
 
 -- checks if a unit is stuck by testing slope
-local function checkStuck(defId,x,y,z,v)
+local function checkStuck(unitId,defId,x,y,z,v)
 	if (maxSlopeByUnitDefId[defId] and v < 0.1) then
+		if (spGetUnitTransporter(unitId)) then
+			return false
+		end
+		
 		h = spGetGroundHeight(x,z)
-
+		if (y-h > 10) then
+			return false
+		end
+		
 		-- floating stuff over water doesn't get stuck
 		if (floatingGroundDefIds[defId] and h < 0) then
 			return false
@@ -512,7 +520,7 @@ function gadget:GameFrame(n)
 			end
 		
 			-- check if unit is stuck
-			if (checkStuck(defId,x,y,z,v)) then
+			if (checkStuck(unitId,defId,x,y,z,v)) then
 				if not stuckGroundUnitIds[unitId] then
 					--Spring.Echo(unitId.." is stuck!")
 					stuckGroundUnitIds[unitId] = true

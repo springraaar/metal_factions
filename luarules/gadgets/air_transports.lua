@@ -125,24 +125,30 @@ function gadget:GameFrame(n)
 	local spdMod = 0
 	for unitId,ud in pairs(airTransports) do
 		vx,vy,vz,vw = spGetUnitVelocity(unitId)
-		alSpeed = airTransportMaxSpeeds[unitId]
-		
-		-- apply the modifier from upgrades
-		-- TODO put this on the area buff handler gadget instead
-		--spdMod = spGetUnitRulesParam(unitId, "upgrade_speed")
-		--if spdMod and spdMod ~= 0 then
-		--	alSpeed = alSpeed * (1+spdMod)
-		--end
-		if (GG.speedModifierUnitIds) then
-			spdMod = GG.speedModifierUnitIds[unitId]
-			if (spdMod and spdMod ~= 0) then
-				alSpeed = alSpeed * spdMod
+		if vw then 
+			alSpeed = airTransportMaxSpeeds[unitId]
+			
+			-- apply the modifier from upgrades
+			-- TODO put this on the area buff handler gadget instead
+			--spdMod = spGetUnitRulesParam(unitId, "upgrade_speed")
+			--if spdMod and spdMod ~= 0 then
+			--	alSpeed = alSpeed * (1+spdMod)
+			--end
+			if (GG.speedModifierUnitIds) then
+				spdMod = GG.speedModifierUnitIds[unitId]
+				if (spdMod and spdMod ~= 0) then
+					alSpeed = alSpeed * spdMod
+				end
+			end 
+			
+			if (alSpeed and vw > alSpeed) then
+				factor = alSpeed / vw
+				spSetUnitVelocity(unitId,vx * factor,vy * factor,vz * factor)
 			end
-		end 
-		
-		if (alSpeed and vw > alSpeed) then
-			factor = alSpeed / vw
-			spSetUnitVelocity(unitId,vx * factor,vy * factor,vz * factor)
+		else
+			-- transport invalid, cleanup table entries
+			airTransports[unitId] = nil
+			airTransportMaxSpeeds[unitId] = nil
 		end
 	end
 	
