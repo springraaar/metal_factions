@@ -236,8 +236,8 @@ local function updateUnitPhysics(unitId)
 	if stuckGroundUnitIds[unitId] == true then
 		nx,ny,nz,slope = spGetGroundNormal(x,z,true)
 		h = abs(y - spGetGroundHeight(x,z))
-		if (v < 0.3 and h < 10) then
-			-- Spring.Echo("moving stuck unit at ("..x..";"..y..";"..z..") n=("..nx..";"..ny..";"..nz..") slope="..slope)
+		if (v < 0.3 and h < 10 ) then
+			--Spring.Echo("moving stuck unit at ("..x..";"..y..";"..z..") n=("..nx..";"..ny..";"..nz..") slope="..slope)
 		
 			spSetUnitPosition(unitId,x+(5+random(10))*nx,y+1*ny,z+(5+random(10))*nz)
 			local dx,dy,dz = spGetUnitDirection(unitId) 
@@ -336,7 +336,11 @@ local function checkStuck(unitId,defId,x,y,z,v)
 		end
 		
 		h = spGetGroundHeight(x,z)
-		if (y-h > 10) then
+		if (y-h > 5) then
+			return false
+		end
+		
+		if spGetUnitRulesParam(unitId, "is_jumping") == 1 then
 			return false
 		end
 		

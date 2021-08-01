@@ -60,11 +60,11 @@
 	//  Movement
 	//************
 	turnRate=800;
-	acceleration=0.3;
+	acceleration=0.6;
 	brakeRate=3;
 	maxVelocity=4.2;
 	maxSlope=10;
-	cruiseAlt=90;
+	cruiseAlt=140;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -107,8 +107,8 @@
 	{
 		explosionGenerator0=custom:ROCKETFLAREMED;
 	}
-	buildCostEnergy=1858;//#AUTO#
-	buildCostMetal=371;//#AUTO#
-	buildTime=4429;//#AUTO#
-	mass=141;//#AUTO#
+	buildCostEnergy=1918;//#AUTO#
+	buildCostMetal=383;//#AUTO#
+	buildTime=4571;//#AUTO#
+	mass=143;//#AUTO#
 }

@@ -95,18 +95,21 @@ local function SetupUnit(unitID)
 	-- and give them a PATROL order (does not matter where, afaict)
 	local x, y, z = spGetUnitPosition(unitID)
 	if (x) then
-		spGiveOrderToUnit(unitID, CMD_MOVE_STATE, { 2 }, {})
-		if (x > hmsx) then
-			x = x - 25
-		else
-			x = x + 25
+		local cmds = spGetUnitCommands(unitID,5)
+		if (cmds and (#cmds == 0)) then
+			spGiveOrderToUnit(unitID, CMD_MOVE_STATE, { 2 }, {})
+			if (x > hmsx) then
+				x = x - 25
+			else
+				x = x + 25
+			end
+			if (z > hmsz) then
+				z = z - 25
+			else
+				z = z + 25
+			end
+			spGiveOrderToUnit(unitID, CMD_PATROL, { x, y, z }, {})
 		end
-		if (z > hmsz) then
-			z = z - 25
-		else
-			z = z + 25
-		end
-		spGiveOrderToUnit(unitID, CMD_PATROL, { x, y, z }, {})
 	end
 end
 

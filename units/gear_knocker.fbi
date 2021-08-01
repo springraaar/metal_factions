@@ -59,13 +59,13 @@
 	//************************************************************
 	//  Movement
 	//************
-	turnRate=600;
-	acceleration=0.17;
-	brakeRate=0.16;
+	turnRate=650;
+	acceleration=0.47;
+	brakeRate=0.36;
 	maxVelocity=3.6;
 	maxSlope=10;
 	
-	cruiseAlt=120;
+	cruiseAlt=140;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -110,8 +110,8 @@
 	{
 		explosionGenerator0=custom:rocketflaremed;
 	}
-	buildCostEnergy=2413;//#AUTO#
-	buildCostMetal=482;//#AUTO#
-	buildTime=5752;//#AUTO#
-	mass=192;//#AUTO#
+	buildCostEnergy=2528;//#AUTO#
+	buildCostMetal=505;//#AUTO#
+	buildTime=6027;//#AUTO#
+	mass=196;//#AUTO#
 }

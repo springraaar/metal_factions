@@ -108,7 +108,20 @@ local jumpDefTemplates = {
 		rotateMidAir = false,
 		cannotJumpMidair = false,
 		jumpSpreadException = false,
-	}
+	},
+	grenado = {
+		range = 250,
+		speed = 6,
+		reload = 15,
+		delay = 0,
+		height = 150,
+
+		requiresUpgrade = false,			
+		noJumpHandling =  false,
+		rotateMidAir = false,
+		cannotJumpMidair = false,
+		jumpSpreadException = false,
+	}	
 }
 local baseJumpDefs = {}
 local jumpDefsByUnitId = {}

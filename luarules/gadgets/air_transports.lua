@@ -1,7 +1,7 @@
 function gadget:GetInfo()
    return {
       name = "Air Transports Handler",
-      desc = "Slows down transport depending on loaded mass (up to 55%) and fixes unloaded units sliding bug",
+      desc = "Slows down transport depending on loaded mass and fixes unloaded units sliding bug",
       author = "raaar",
       date = "2015",
       license = "PD",
@@ -10,7 +10,7 @@ function gadget:GetInfo()
    }
 end
 
-local TRANSPORTED_MASS_SPEED_PENALTY = 0.55 -- higher makes unit slower
+local TRANSPORTED_MASS_SPEED_PENALTY = 0.45 -- higher makes unit slower
 local FRAMES_PER_SECOND = 30
 
 local TRANSPORT_SQDISTANCE_TOLERANCE = 1024 -- about 30 elmos 

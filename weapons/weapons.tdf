@@ -153,7 +153,7 @@
 	name=Torpedoes;
 	weaponType=TorpedoLauncher;
 	model=weapon_torpedo;
-	range=640;
+	range=620;
 	reloadTime=4;
 	turret=1;
 	flightTime=4;
@@ -595,7 +595,7 @@
   	separation=0.1;
   	alphaDecay=0.9;
   	sizeDecay=-0.2;
-	range=680;
+	range=660;
 	reloadTime=3.7;
 	weaponVelocity=450;
 	energyPerShot=250;
@@ -632,7 +632,7 @@
 	turret=1;
 	model=weapon_missile.3do;
 	texture1=null; //flare//
-	range=680;
+	range=660;
 	reloadTime=0.9;
 	flightTime=4;
 	trajectoryHeight=0.2;
@@ -4523,7 +4523,7 @@
 	turret=1;
 	model=weapon_missile.3do;
 	texture1=null; //flare//
-	range=680;
+	range=660;
 	reloadTime=3.8;
 	flightTime=3.75;
 	weaponVelocity=800;
@@ -5299,7 +5299,7 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	turret=1;
-	range=700;
+	range=660;
 	cegTag=PLASMATRAIL1;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
 	reloadTime=2.5;
@@ -6060,7 +6060,7 @@
 	minIntensity=1.0;
 	reloadTime=0.9;
 	weaponVelocity=1533; 
-	areaOfEffect=16;
+	areaOfEffect=8;
 	soundTrigger=1;
 	soundStart=lasrfir3;
 	soundHit=lasrhit2;
@@ -6231,7 +6231,7 @@
 	minIntensity=1.0;
 	reloadTime=0.6;
 	weaponVelocity=1533; 
-	areaOfEffect=16;
+	areaOfEffect=8;
 	soundTrigger=1;
 	soundStart=lasrfir3;
 	soundHit=lasrhit2;
@@ -19329,15 +19329,15 @@
 	turret=0;
 	range=450;
 	minIntensity=1.0;
-	reloadTime=0.6;
+	reloadTime=0.434;
 	weaponVelocity=600;
-	accuracy=400;
+	accuracy=200;
 	areaOfEffect=24;
 	soundStart=engcannon;
 	soundHit=xplomed5;
 	soundTrigger=1;
 	tolerance=8000;
-	energyPerShot=15;
+	energyPerShot=20;
 	interceptedByShieldType=1;
 	avoidFeature=0;
 	[CUSTOMPARAMS]
@@ -20012,11 +20012,11 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	turret=1;
-	range=500;
+	range=480;
 	reloadTime=2;
 	cegTag=PLASMATRAIL1;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
-	weaponVelocity=340;
+	weaponVelocity=370;
 	areaOfEffect=72;
 	soundStart=cannon1;
 	soundHit=xplomed4;

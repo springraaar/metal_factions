@@ -59,13 +59,13 @@
 	//************************************************************
 	//  Movement
 	//************
-	turnRate=600;
+	turnRate=650;
 	acceleration=0.32;
 	brakeRate=0.3;
-	maxVelocity=5.1;
+	maxVelocity=4.5;
 	maxSlope=10;
 	
-	cruiseAlt=120;
+	cruiseAlt=140;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -109,8 +109,8 @@
 	{
 		explosionGenerator0=custom:redflarefast;
 	}
-	buildCostEnergy=5760;//#AUTO#
-	buildCostMetal=1152;//#AUTO#
-	buildTime=13730;//#AUTO#
-	mass=379;//#AUTO#
+	buildCostEnergy=6196;//#AUTO#
+	buildCostMetal=1239;//#AUTO#
+	buildTime=14767;//#AUTO#
+	mass=394;//#AUTO#
 }

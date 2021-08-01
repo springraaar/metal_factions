@@ -61,7 +61,7 @@
 	//************
 	movementClass=KBOTUW3;
 	turnRate=840;
-	acceleration=0.1;
+	acceleration=1;
 	brakeRate=0.15;
 	maxVelocity=1.7;
 	maxSlope=14;
@@ -101,16 +101,24 @@
 	{
 		builtBy=gear_adv_kbot_lab;
 		tip=use CTRL-D to self-destruct and deal up to 3200(H) damage in a wide area;
-		evalfactor=0.85;//GRENADO
+		evalfactor=0.95;//GRENADO
 		offensiveExplosion=1;
+		canJump=1;
+		jumpType=grenado;
+		jumpMod=1.00;
 	}
 
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:yellowflaremed;
+		explosionGenerator1=custom:JUMPASC;
+		explosionGenerator2=custom:JUMPASC2;
+		explosionGenerator3=custom:JUMPDESC;
+		explosionGenerator4=custom:JUMPDESC2;
+
 	}
-	buildCostEnergy=9880;//#AUTO#
-	buildCostMetal=1976;//#AUTO#
-	buildTime=23549;//#AUTO#
-	mass=1783;//#AUTO#
+	buildCostEnergy=11652;//#AUTO#
+	buildCostMetal=2330;//#AUTO#
+	buildTime=27771;//#AUTO#
+	mass=1820;//#AUTO#
 }

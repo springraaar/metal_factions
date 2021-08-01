@@ -41,9 +41,9 @@
 	maxWaterDepth=12;
 	maxSlope=17;
 	maxVelocity=1.9;
-	brakeRate=0.04;
-	Acceleration=0.05;
-	turnRate=350;
+	brakeRate=0.1;
+	Acceleration=0.12;
+	turnRate=500;
 	movementClass=TANKSH3;
 
 	// ------------------- scout
@@ -53,7 +53,6 @@
 
 	// ------------------- weapons
 	Weapon1=sphere_trax_cannon;
-	badTargetCategory1=VTOL;
 	badTargetCategory1=VTOL;
 	noChaseCategory=VTOL;
 	explodeAs=SMALL_UNITEX;
@@ -83,8 +82,8 @@
 	{
 		explosionGenerator0=custom:yellowflaresml;
 	}
-	buildCostEnergy=2334;//#AUTO#
-	buildCostMetal=466;//#AUTO#
-	buildTime=5562;//#AUTO#
+	buildCostEnergy=2335;//#AUTO#
+	buildCostMetal=467;//#AUTO#
+	buildTime=5567;//#AUTO#
 	mass=780;//#AUTO#
 }
