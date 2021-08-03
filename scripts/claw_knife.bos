@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define SPEEDUP_FACTOR 200
+#define SPEEDUP_FACTOR 270
 
 #define HEADING_TOLERANCE	<35>
 #define PITCH_TOLERANCE		<25>
@@ -45,10 +45,10 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 		}
 		
 		
-		mAMoveSpd1 = [20.000000] * mASpdFactor / 100;
-		mATurnSpd1 = <415.000000> * (100 + mASpdFactor) / 200;
-		mATurnSpd2 = <300.000000> * (100 + mASpdFactor) / 200;
-		mATurnSpd3 = <150.000000> * (100 + mASpdFactor) / 200;
+		mAMoveSpd1 = [10.000000] * mASpdFactor / 100;
+		mATurnSpd1 = <385.000000> * (100 + mASpdFactor) / 200;
+		mATurnSpd2 = <280.000000> * (100 + mASpdFactor) / 200;
+		mATurnSpd3 = <130.000000> * (100 + mASpdFactor) / 200;
 
 		mAVertFactor = [0.000000]-[3.000000] * mASpdFactor / SPEEDUP_FACTOR;
 		legAngle1 = <45.000000>;
@@ -243,28 +243,28 @@ run()
 {
 	var slowTurnSpd, slowTurnSpd2;
 
-	slowTurnSpd = mATurnSpd2 / 2;
-	slowTurnSpd2 = mATurnSpd2 / 6;
+	slowTurnSpd = mATurnSpd2 / 3;
+	slowTurnSpd2 = mATurnSpd2 / 8;
 	
 	// back impulse 
 	if( bMoving )
 	{
-		turn lthigh to x-axis <40.000000> speed mATurnSpd2;
-		turn lleg to x-axis <0> speed mATurnSpd2;
+		turn lthigh to x-axis <40.000000> speed mATurnSpd3;
+		turn lleg to x-axis <0> speed mATurnSpd3;
 		turn lfoot to x-axis <20> speed mATurnSpd3;
 
-		turn rthigh to x-axis <40.000000> speed mATurnSpd2;
-		turn rleg to x-axis <0.000000> speed mATurnSpd2;
+		turn rthigh to x-axis <40.000000> speed mATurnSpd3;
+		turn rleg to x-axis <0.000000> speed mATurnSpd3;
 		turn rfoot to x-axis <20.000000> speed mATurnSpd3;
 
 		// front legs, opposite
-		turn ruparm to x-axis <-35.000000> speed mATurnSpd2;
-		turn rloarm to x-axis <0.000000> speed mATurnSpd2;
-		turn rhand to x-axis <10.000000> speed mATurnSpd3;
+		turn ruparm to x-axis <-45.000000> speed mATurnSpd2;
+		turn rloarm to x-axis <10.000000> speed mATurnSpd3;
+		turn rhand to x-axis <60.000000> speed mATurnSpd3;
 
-		turn luparm to x-axis <-35.000000> speed mATurnSpd2;
-		turn lloarm to x-axis <0.000000> speed mATurnSpd2;
-		turn lhand to x-axis <10.000000> speed mATurnSpd3;
+		turn luparm to x-axis <-45.000000> speed mATurnSpd2;
+		turn lloarm to x-axis <10.000000> speed mATurnSpd3;
+		turn lhand to x-axis <60.000000> speed mATurnSpd3;
 		
 		//move pelvis to y-axis mAVertFactor speed mAMoveSpd1;
 		move pelvis to y-axis [0.000000] speed mAMoveSpd1;
@@ -301,15 +301,15 @@ run()
 
 		// front legs, opposite
 		turn ruparm to x-axis <-35.000000> speed mATurnSpd2;
-		turn rloarm to x-axis <0.000000> speed mATurnSpd2;
-		turn rhand to x-axis <0.000000> speed mATurnSpd2;
+		turn rloarm to x-axis <0.000000> speed mATurnSpd3;
+		turn rhand to x-axis <0.000000> speed mATurnSpd3;
 
 		turn luparm to x-axis <-35.000000> speed mATurnSpd2;
-		turn lloarm to x-axis <0.000000> speed mATurnSpd2;
-		turn lhand to x-axis <0.000000> speed mATurnSpd2;
+		turn lloarm to x-axis <0.000000> speed mATurnSpd3;
+		turn lhand to x-axis <0.000000> speed mATurnSpd3;
 		
 		//move pelvis to y-axis mAVertFactor speed mAMoveSpd1;
-		move pelvis to y-axis [3.000000] speed mAMoveSpd1;
+		move pelvis to y-axis [2.000000] speed mAMoveSpd1;
 		move pelvis to z-axis [0.000000] speed mAMoveSpd1;
 		turn pelvis to x-axis <0.000000> speed slowTurnSpd;
 
@@ -351,7 +351,7 @@ run()
 		turn lhand to x-axis <0.000000> speed mATurnSpd2;
 		
 		//move pelvis to y-axis mAVertFactor speed mAMoveSpd1;
-		move pelvis to y-axis [2.000000] speed mAMoveSpd1;
+		move pelvis to y-axis [1.500000] speed mAMoveSpd1;
 		move pelvis to z-axis [0.000000] speed mAMoveSpd1;
 		turn pelvis to x-axis <10.000000> speed slowTurnSpd;
 

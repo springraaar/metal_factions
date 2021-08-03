@@ -108,7 +108,7 @@ local function SetupUnit(unitID)
 			else
 				z = z + 25
 			end
-			spGiveOrderToUnit(unitID, CMD_PATROL, { x, y, z }, {})
+			spGiveOrderToUnit(unitID, CMD_PATROL, { x, y, z }, CMD.OPT_SHIFT)
 		end
 	end
 end

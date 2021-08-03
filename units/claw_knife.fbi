@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=580;
+	maxDamage=400;
 	footprintx=2;
 	footprintz=2;
 
@@ -62,9 +62,9 @@
 	//************
 	movementClass=KBOTHT2;
 	turnRate=910;
-	acceleration=0.35;
+	acceleration=1.35;
 	brakeRate=0.5;
-	maxVelocity=2.7;
+	maxVelocity=3.3;
 	maxSlope=17;
 	maxWaterDepth=25;
 
@@ -105,8 +105,8 @@
 		tip=Loses up to 30% weapon damage over its range;
 	}
 
-	buildCostEnergy=516;//#AUTO#
-	buildCostMetal=103;//#AUTO#
-	buildTime=1231;//#AUTO#
-	mass=89;//#AUTO#
+	buildCostEnergy=465;//#AUTO#
+	buildCostMetal=93;//#AUTO#
+	buildTime=1110;//#AUTO#
+	mass=65;//#AUTO#
 }

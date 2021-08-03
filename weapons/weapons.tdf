@@ -12436,7 +12436,7 @@
 	range=590;
 	reloadTime=0.134;
 	weaponVelocity=600;
-	movingAccuracy=1000;
+	movingAccuracy=800;
 	sprayAngle=100;
 	areaOfEffect=8;
 	soundStart=armsml3;
@@ -15582,14 +15582,15 @@
 		hitPower=1;
 		reaimTime=1;
 		expDmgScaling=1;
+		evalFactor=0.85;//KNIFE
 		targets=SURFACE;
 	}
 	[DAMAGE]
 	{
-		default=10;
+		default=9;
 		armor_heavy=2;//#AUTO#
-		armor_medium=5;//#AUTO#
-		armor_light=10;//#AUTO#
+		armor_medium=4;//#AUTO#
+		armor_light=9;//#AUTO#
 	}
 }
 [claw_u6commander_laser]
@@ -20335,7 +20336,7 @@
 	thickness=2.123;
 	coreThickness=0.55;
 	turret=1;
-	range=380;
+	range=400;
 	minIntensity=1.0;
 	reloadTime=0.5;
 	energyPerShot=10;
