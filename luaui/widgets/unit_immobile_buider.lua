@@ -138,6 +138,7 @@ end
 
 
 function widget:UnitGiven(unitID, unitDefID, unitTeam)
+ 	widget:UnitCreated(unitID, unitDefID, unitTeam)
 	widget:UnitFinished(unitID, unitDefID, unitTeam)
 end
 
