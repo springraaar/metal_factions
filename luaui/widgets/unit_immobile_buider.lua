@@ -44,6 +44,8 @@ local spGiveOrderToUnit = Spring.GiveOrderToUnit
 local spGetFeaturePosition = Spring.GetFeaturePosition
 local spValidUnitID = Spring.ValidUnitID
 local spValidFeatureID = Spring.ValidFeatureID
+local spGetUnitStates = Spring.GetUnitStates
+
 local hmsx = Game.mapSizeX/2
 local hmsz = Game.mapSizeZ/2
 
@@ -97,7 +99,7 @@ local function SetupUnit(unitID)
 	if (x) then
 		local cmds = spGetUnitCommands(unitID,5)
 		if (cmds and (#cmds == 0)) then
-			spGiveOrderToUnit(unitID, CMD_MOVE_STATE, { 2 }, {})
+			spGiveOrderToUnit(unitID, CMD_MOVE_STATE, { 2 }, CMD.OPT_SHIFT)
 			if (x > hmsx) then
 				x = x - 25
 			else
@@ -144,8 +146,17 @@ function widget:GameFrame(frame)
 	local cmds,cmd1,tx,tz,x,z
 	 
 	for unitID,_ in pairs(immobileBuilders) do
+		-- ensure they're not on hold position
+		local states = spGetUnitStates(unitID)
+		if states then
+			if states["movestate"] == 0 then
+				-- stop the unit to trigger setup
+				--Spring.Echo("Immobile builder "..unitID.." was set to hold position : change to roam")
+				spGiveOrderToUnit(unitID, CMD_MOVE_STATE, { 2 }, CMD.OPT_SHIFT)
+			end
+		end 
+
 		cmds = spGetUnitCommands(unitID,5)
-		
 		-- if first command targets something outside build radius, cancel it
 		if (cmds and (#cmds > 0)) then
 			for i,cmd in ipairs(cmds) do

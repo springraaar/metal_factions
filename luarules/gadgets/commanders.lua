@@ -18,6 +18,8 @@ local commanderXp = {}
 local commanderName = {}
 local commanderMoveState = {}
 local commanderBuildOrderFrameByTeam = {}
+local commanderTokensByTeam = {}
+
 local spGetUnitsInCylinder = Spring.GetUnitsInCylinder
 local GetTeamUnits = Spring.GetTeamUnits 
 local GetUnitDefId = Spring.GetUnitDefID
@@ -26,6 +28,8 @@ local spGiveOrderToUnit = Spring.GiveOrderToUnit
 local spGetUnitStates = Spring.GetUnitStates
 local spSetUnitCosts = Spring.SetUnitCosts
 local AreTeamsAllied = Spring.AreTeamsAllied
+local spGetTeamList = Spring.GetTeamList
+
 local markedWreckPositions = {}
 local damagedByEnemyByUnitIdFrame = {}
 local FRIENDLY_FIRE_EXPLOIT_THRESHOLD_FRAMES = 600 -- 20s
@@ -120,6 +124,13 @@ function gadget:UnitCreated(unitId, unitDefId, teamId)
 
   	-- if commander token is created, adjust cost and build time
   	if isCommanderToken(unitDefId) then
+  		local tokensTable = commanderTokensByTeam[teamId]
+  		if not tokensTable then
+  			tokensTable = {}
+  			commanderTokensByTeam[teamId] = tokensTable
+  		end
+  		tokensTable[unitId] = true
+  	
   		local mod = getCommanderTokenMod(teamId)
   		--Spring.Echo("commander respawn mod for team "..teamId.." value="..tostring(mod))
   		
@@ -196,9 +207,14 @@ end
 
 -- save xp when commanders are destroyed
 function gadget:UnitDestroyed(unitId, unitDefId, teamId)
-
+	-- cleanup commander tokens table
+	if isCommanderToken(unitDefId) then
+		local tokensTable = commanderTokensByTeam[teamId]
+  		if tokensTable and tokensTable[unitId] then
+  			tokensTable[unitId] = nil
+  		end
 	-- if unit is commander, save data for player
-	if ( isCommander(unitDefId)) then
+	elseif ( isCommander(unitDefId)) then
 		local xp = Spring.GetUnitExperience(unitId)
 		if (commanderXp[teamId]) then
 			commanderXp[teamId] = COMMANDER_RESPAWN_EXPERIENCE_FACTOR * xp
@@ -282,8 +298,9 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 	end 
 end
 
--- replace adv commander wreck if commander was killed without being hit by enemies recently
 function gadget:GameFrame(n)
+
+	-- replace adv commander wreck if commander was killed without being hit by enemies recently
 	for id,pos in pairs(markedWreckPositions) do
 		if (GetGameFrame() - pos.frame > WRECK_FIX_DELAY_FRAMES) then
 			local wrecks = Spring.GetFeaturesInRectangle(pos.x-30,pos.z-30,pos.x+30,pos.z+30)
@@ -307,5 +324,23 @@ function gadget:GameFrame(n)
 			markedWreckPositions[id] = nil
 		end
 	end
+	
+	-- clean up excess token build orders, the AllowUnitCreation checks are not enough 
+	for _,teamId in pairs (spGetTeamList()) do
+		local tokensTable = commanderTokensByTeam[teamId]
+  		
+  		if tokensTable then
+  			local firstId = nil
+	  		
+	  		for uId,_ in pairs(tokensTable) do
+  				if not firstId then
+  					firstId = uId
+  				else
+  					--Spring.Echo("found redundant commander token : tId="..teamId.." uId="..uId.." : deleting..")
+  					Spring.DestroyUnit(uId,false,true)
+  				end	
+  			end
+  		end
+	end	
 end
 

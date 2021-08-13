@@ -10,7 +10,7 @@ function widget:GetInfo()
 	date    = "October 2019",
 	license = "",
 	layer	  = 2000,
-	enabled = true,
+	enabled = false,
   }
 end
 
@@ -43,7 +43,7 @@ local glCopyToTexture   = gl.CopyToTexture
 -- File path Constants
 -----------------------------------------------------------------
 
-local luaShaderDir = "luaui/widgets/include/"
+local luaShaderDir = "luaui/headers/"
 
 -----------------------------------------------------------------
 -- Shader Sources
@@ -128,7 +128,7 @@ void main() {
 -- Global Variables
 -----------------------------------------------------------------
 
-local LuaShader = VFS.Include(luaShaderDir.."LuaShader.lua")
+local LuaShader = VFS.Include(luaShaderDir.."luashader.lua")
 
 local vsx, vsy, vpx, vpy
 local screenCopyTex
