@@ -27,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=3000;
+	maxDamage=2950;
 	buildcostmetal=2000;
 	buildcostenergy=20000;
 	buildtime=30000;
@@ -83,10 +83,10 @@
 	//  Movement
 	//************
 	movementClass=KBOTDS2;
-	turnRate=1044;
-	acceleration=0.3;
-	brakeRate=0.1;
-	maxVelocity=3.2;
+	turnRate=1200;
+	acceleration=0.9;
+	brakeRate=0.2;
+	maxVelocity=3.05;
 	maxSlope=20;
 	maxWaterDepth=35;
 
@@ -123,26 +123,17 @@
 	cloakCost=50;
 	cloakCostMoving=150;
 	commander=1;
-	designation=ARM-WM;
-	downloadable=1;
 	hidedamage=0;
 	immunetoparalyzer=1;
 	leavetracks=1;
 	maneuverleashlength=640;
 	minCloakDistance=170;
-	norestrict=1;
-	shootme=1;
 	showplayername=1;
-	smoothanim=1;
-	steeringmode=2;
-	threed=1;
 	trackoffset=0;
 	trackstrength=8;
 	trackstretch=1;
 	tracktype=ComTrack;
 	trackwidth=22;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =33 47 26;
 	collisionVolumeOffsets = 0 1 0;

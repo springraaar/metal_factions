@@ -1,3 +1,25 @@
+2021/08/22 ------------------ NOTES v1.73 ----------------------
+
+--- Balance / Mechanics
+
+UPGRADES
+- increased major speed upgrade from +10% to +11%
+- increased major HP upgrade from +11% to +12%
+- increased the commander HP upgrade from +15% to +16%
+- reduced the speed penalty on minor damage and HP upgrades from -2% to -1%
+- reduced the commander speed upgrade from +15% to +14%
+- modified the commander regeneration upgrade from 20 HP/s to 11+0.2% HP/s
+
+
+OTHER
+- modified how turn-rates get evaluated in a way that benefits units with relatively high turn rates (> 600)
+- sweeping changes that slightly improve slow units relative to fast ones, including commanders
+- normalized commander accelerations and adjusted turn rates according to the commander's speed
+(some relatively mobile commanders had low acceleration and could be more hindered by slopes or projectiles)
+
+- reduced idle regeneration delay from 25 to 20s
+
+
 2021/08/13 ------------------ NOTES v1.72 ----------------------
 
 - fixed a rare bug that could allow for duplicate commanders being respawned for the same team

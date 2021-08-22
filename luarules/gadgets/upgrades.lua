@@ -34,7 +34,7 @@ local modifierTypes = {"damage","range","hp","speed","hp","regen","php_regen","l
 local modifiersByUpgrade = {
 -- weapon / red
 	
-	upgrade_red_1_damage = { damage = 0.07, speed = -0.02, restrictions = "armed", limit = 3, type = TYPE_MINOR },
+	upgrade_red_1_damage = { damage = 0.07, speed = -0.01, restrictions = "armed", limit = 3, type = TYPE_MINOR },
 	upgrade_red_1_range = { range = 0.035, speed = -0.02, restrictions = "armed", limit = 3, type = TYPE_MINOR },
 
 	upgrade_red_2_commander_damage = { damage = 0.2, restrictions = "commander", limit = 2, type = TYPE_COMMANDER },
@@ -44,20 +44,20 @@ local modifiersByUpgrade = {
 
 -- armor / green
 
-	upgrade_green_1_hp = { hp = 0.06, speed = -0.02, limit = 3, type = TYPE_MINOR },
+	upgrade_green_1_hp = { hp = 0.06, speed = -0.01, limit = 3, type = TYPE_MINOR },
 	upgrade_green_1_regen = { regen = 1, php_regen = 0.001, limit = 3, type = TYPE_MINOR },
 
-	upgrade_green_2_commander_regen = { regen = 20, restrictions = "commander", limit = 3, type = TYPE_COMMANDER },
-	upgrade_green_2_commander_hp = { hp = 0.15, restrictions = "commander", limit = 2, type = TYPE_COMMANDER },
+	upgrade_green_2_commander_regen = { regen = 11, php_regen = 0.002, restrictions = "commander", limit = 3, type = TYPE_COMMANDER },
+	upgrade_green_2_commander_hp = { hp = 0.16, restrictions = "commander", limit = 2, type = TYPE_COMMANDER },
 
 	upgrade_green_3_regen = { regen = 3, php_regen = 0.002, limit = 1, type = TYPE_MAJOR },
-	upgrade_green_3_hp = { hp=0.11, limit = 1, type = TYPE_MAJOR },
+	upgrade_green_3_hp = { hp=0.12, limit = 1, type = TYPE_MAJOR },
 
 -- utility / blue
 
 	upgrade_blue_1_speed = { speed = 0.05, limit = 3, type = TYPE_MINOR },
 	
-	upgrade_blue_2_commander_speed = { speed = 0.15, restrictions = "commander", limit = 2, type = TYPE_COMMANDER },
+	upgrade_blue_2_commander_speed = { speed = 0.14, restrictions = "commander", limit = 2, type = TYPE_COMMANDER },
 	upgrade_blue_2_commander_light_drones = { light_drones = 1, restrictions = "commander", limit = 3, type = TYPE_COMMANDER },	
 
 	upgrade_blue_3_commander_stealth_drone = { stealth_drone = 1, restrictions = "commander", limit = 3, type = TYPE_COMMANDER },
@@ -67,7 +67,7 @@ local modifiersByUpgrade = {
 	
 	upgrade_blue_3_commander_jump = { jump = 1, restrictions = "commander", limit = 3, type = TYPE_COMMANDER },
 	
-	upgrade_blue_3_speed = { speed=0.10, limit = 1, type = TYPE_MAJOR }
+	upgrade_blue_3_speed = { speed=0.11, limit = 1, type = TYPE_MAJOR }
 }
 
 

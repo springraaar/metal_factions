@@ -72,7 +72,7 @@ local AUTO_BUILD_STEP_FRAMES = 15
 local REGEN_EFFECT_DELAY = 10		
 
 -- idle here means not taking damage for a while
-local IDLE_REGEN_FRAMES = 30 * 25	-- 25 seconds
+local IDLE_REGEN_FRAMES = 30 * 20	-- 20 seconds
 local IDLE_REGEN_FLAT = 2
 local IDLE_REGEN_FRACTION = 0.002
 
