@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=4500;
+	maxDamage=9500;
 	footprintx=4;
 	footprintz=4;
 
@@ -60,11 +60,11 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementClass=KBOTHT4;
-	turnRate=700;
-	acceleration=0.9;
+	movementClass=KBOTUW4;
+	turnRate=600;
+	acceleration=0.3;
 	brakeRate=1;
-	maxVelocity=1.15;
+	maxVelocity=0.9;
 	maxSlope=14;
 	maxWaterDepth=12;
 
@@ -78,10 +78,14 @@
 	//  Weapons
 	//***********
 	weapon1=gear_luminator_heatray;
-	noChaseCategory=VTOL;
 	onlytargetcategory1=NOTAIR;
-	explodeAs=PENETRATOR_BLAST;
-	selfDestructAs=PENETRATOR_BLAST;
+	weapon2=gear_luminator_missile;
+	badtargetcategory2=NOTAIR;
+	weapon3=gear_luminator_flare;
+	badtargetcategory3=NOTAIR;
+	noChaseCategory=VTOL;
+	explodeAs=LUMINATOR_BLAST;
+	selfDestructAs=LUMINATOR_BLAST;
 
 
 	//************************************************************
@@ -94,7 +98,7 @@
 	//  Miscellaneous
 	//*****************
 	collisionVolumeType = box;
-	collisionVolumeScales =40 80 40;
+	collisionVolumeScales =48 100 48;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 
@@ -110,10 +114,11 @@
 		explosionGenerator1=custom:hrglowbig1;
 		explosionGenerator2=custom:hrglowbig2;
 		explosionGenerator3=custom:hrglowbig3;
+		explosionGenerator4=custom:yellowflaresml;
 	}
 
-	buildCostEnergy=30999;//#AUTO#
-	buildCostMetal=6199;//#AUTO#
-	buildTime=73881;//#AUTO#
-	mass=3191;//#AUTO#
+	buildCostEnergy=60824;//#AUTO#
+	buildCostMetal=12164;//#AUTO#
+	buildTime=144964;//#AUTO#
+	mass=10287;//#AUTO#
 }

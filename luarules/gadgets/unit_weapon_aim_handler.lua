@@ -40,8 +40,8 @@ local slaveWeaponIndexesByUnitDefId = {
 	[UnitDefNames["aven_u1commander"].id] = {3,1},
 	[UnitDefNames["aven_u2commander"].id] = {3,1},
 	[UnitDefNames["aven_u5commander"].id] = {3,1},
-	[UnitDefNames["aven_warrior"].id] = {1,2},
 	[UnitDefNames["aven_magnum"].id] = {2,1},
+	[UnitDefNames["aven_raptor"].id] = {1,2},
 	-- GEAR	
 	[UnitDefNames["gear_commander"].id] = {3,1},
 	[UnitDefNames["gear_u3commander"].id] = {3,1},

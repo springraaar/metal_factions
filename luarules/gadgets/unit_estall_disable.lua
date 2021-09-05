@@ -39,6 +39,8 @@ local GetUnitStates			= Spring.GetUnitStates
 local GetUnitTeam				= Spring.GetUnitTeam
 local GetUnitResources	= Spring.GetUnitResources
 local GetGameSeconds    = Spring.GetGameSeconds
+local spGetUnitHealth = Spring.GetUnitHealth
+local spCallCOBScript = Spring.CallCOBScript
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -176,7 +178,7 @@ function gadget:GameFrame(n)
 			local eCur, eMax, ePull, eInc, _, _, _, eRec = Spring.GetTeamResources(teamID, "energy")
 			teamEnergy[teamID] = eCur - ePull + eInc
 		end 
-
+		
 		-- check each unit
 		for unitID,data in pairs(units) do
 			if (gameSeconds - data.changeStateTime > changeStateDelay) then
@@ -202,6 +204,16 @@ function gadget:GameFrame(n)
 							data.changeStateTime = gameSeconds
 							disabledUnits[unitID] = energyUpkeep
 						end				
+					end
+					
+					-- disable units that aren't fully built
+					local _,_,_,_,bp = spGetUnitHealth(unitID)
+					if bp and bp < 1 then
+						spCallCOBScript(unitID, "Deactivate", 0)
+						--Spring.Echo("deactivating... "..unitID)
+					else
+						spCallCOBScript(unitID, "Activate", 0)
+						--Spring.Echo("activating... "..unitID)
 					end
 				end
 			end

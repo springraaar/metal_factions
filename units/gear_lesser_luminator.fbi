@@ -3,36 +3,39 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Aven;
-	name=Icarus;
-	description=Heavy Bomber;
-	iconType=airbomber;
+	side=Gear;
+	name=Lesser Luminator;
+	description=Heavy Fire Support Robot;
+	iconType=mobileheavyfs;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN VTOL LEVEL2 WEAPON NOTSUB;
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitName=aven_icarus;
-	objectName=aven_icarus.3do;
-	buildPic=aven_icarus.png;
-	soundCategory=aven_VTOL;
+	unitName=gear_lesser_luminator;
+	objectName=gear_lesser_luminator.3do;
+	corpse=gear_lesser_luminator_dead;
+	buildPic=gear_lesser_luminator.png;
+	soundCategory=GEAR_BOTBIG;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=4200;
-	footprintx=5;
-	footprintz=5;
+	maxDamage=2800;
+	footprintx=4;
+	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
+	metalStorage=0;
 	energyMake=0;
 	energyUse=0;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -41,82 +44,76 @@
 	//************************************************************
 	//  Constructor
 	//***************
+	builder=0;
+	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
 	canAttack=1;
-	canDropFlare=0;
-	canFly=1;
 	canGuard=1;
 	canMove=1;
 	canPatrol=1;
 	canStop=1;
-	stealth=0;
+	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	acceleration=0.1;
-	brakeRate=0.08;
-	maxVelocity=5.1;
-	maxWaterDepth=5;
-	cruiseAlt=220;
-	turnRate=400;
-
+	movementClass=KBOTHT4;
+	turnRate=700;
+	acceleration=0.6;
+	brakeRate=1;
+	maxVelocity=1.15;
+	maxSlope=14;
+	maxWaterDepth=12;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightDistance=600;
+	sightDistance=500;
 	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=aven_icarus_bomb;
-	weapon2=aven_icarus_missile;
+	weapon1=gear_lesser_luminator_heatray;
+	noChaseCategory=VTOL;
 	onlytargetcategory1=NOTAIR;
-	badTargetCategory2=NOTAIR;
-	explodeAs=HBOMBER;
-	selfDestructAs=HBOMBER;
-	weaponMainDir1=0 -1 0;  //x:0 y:0 z:1 => that's forward!
-	maxAngleDif1=190;
+	explodeAs=HAZ_BLAST;
+	selfDestructAs=HAZ_BLAST;
 
 
 	//************************************************************
 	//  Orders
 	//**********
+	noAutoFire=0;
+	moveState=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	hoverAttack=1;
-	airStrafe=1;
-//	isbomber=1;
-	bankingAllowed=0;
-	airHoverFactor=-1;
-//	maneuverleashlength=180;
-	upright=1;
-
-	CanLoopbackAttack=0;
-	collide=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =55 15 50;
-	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeScales =35 80 35;
+	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 
-	[customParams] 
+	[CustomParams]
 	{
-		builtBy=aven_adv_aircraft_plant;
+		builtBy=gear_adv_kbot_lab;
+		tip=Loses up to 30% weapon damage over its range;
 	}
 
 	[SFXTypes]
 	{
-		explosionGenerator0=custom:rocketflaresml;
+		explosionGenerator0=custom:yellowflaremed;
+		explosionGenerator1=custom:hrglowsml1;
+		explosionGenerator2=custom:hrglowsml2;
+		explosionGenerator3=custom:hrglowsml3;
 	}
-	buildCostEnergy=16507;//#AUTO#
-	buildCostMetal=3301;//#AUTO#
-	buildTime=39343;//#AUTO#
-	mass=1075;//#AUTO#
+
+	buildCostEnergy=12994;//#AUTO#
+	buildCostMetal=2598;//#AUTO#
+	buildTime=30970;//#AUTO#
+	mass=1566;//#AUTO#
 }

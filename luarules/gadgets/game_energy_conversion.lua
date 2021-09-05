@@ -84,6 +84,8 @@ local spGetUnitDefID = Spring.GetUnitDefID
 local spAddUnitResource = Spring.AddUnitResource
 local spUseUnitResource = Spring.UseUnitResource
 local spSetUnitResourcing = Spring.SetUnitResourcing
+local spCallCOBScript = Spring.CallCOBScript
+
 
 ----------------------------------------------------------------
 -- Functions
@@ -123,7 +125,7 @@ local function UpdateMetalMakers(teamID, energyUse)
 					updateUnitConversion(unitID, amount, eSteps[j])
 					
 					if (defs.status == 0) then
-						Spring.CallCOBScript(unitID,"MMStatus",0,1)
+						spCallCOBScript(unitID,"MMStatus",0,1)
 						defs.status = 1
 						teamActiveMM[teamID] = (teamActiveMM[teamID] + 1)
 					end
@@ -131,7 +133,7 @@ local function UpdateMetalMakers(teamID, energyUse)
 					if (teamActiveMM[teamID] == 0) then break end
 					if (defs.status == 1) then
 						updateUnitConversion(unitID, 0, 0)
-						Spring.CallCOBScript(unitID,"MMStatus",0,0)
+						spCallCOBScript(unitID,"MMStatus",0,0)
 						defs.status = 0
 						teamActiveMM[teamID] = (teamActiveMM[teamID] - 1)
 					end
@@ -333,32 +335,49 @@ end
 
 
 function gadget:UnitFinished(uID, uDefID, uTeam)
-    local cDefs = convertCapacities[uDefID]
-    if cDefs then
-        if not teamMMList[uTeam][cDefs.e][uID] then 
-	    teamMMList[uTeam][cDefs.e][uID] = {capacity = 0, status = 0, built = false, emped = false}
+	local cDefs = convertCapacities[uDefID]
+	if cDefs then
+		--Spring.Echo("unit "..uID.." finished")
+		if not teamMMList[uTeam][cDefs.e][uID] then 
+			teamMMList[uTeam][cDefs.e][uID] = {capacity = 0, status = 0, built = false, emped = false}
         end
-        teamMMList[uTeam][cDefs.e][uID].capacity = cDefs.c
+		teamMMList[uTeam][cDefs.e][uID].capacity = cDefs.c
 		teamMMList[uTeam][cDefs.e][uID].built = true
 		if not teamMMList[uTeam][cDefs.e][uID].emped then
 			teamMMList[uTeam][cDefs.e][uID].status = 1
 			teamActiveMM[uTeam] = teamActiveMM[uTeam] + 1
-			Spring.CallCOBScript(uID,"MMStatus",0,1)
+			spCallCOBScript(uID,"MMStatus",0,1)
 			AdjustTeamCapacity(uTeam, cDefs.c, cDefs.e)
 		end
     end
 end
 
+function gadget:AllowUnitBuildStep(builderID, builderTeam, uID, uDefID, part)
+	local cDefs = convertCapacities[uDefID]
+	if cDefs then
+		local _, _, _, _ ,bp = spGetUnitHealth(uID)
+		if bp and bp < 1 then
+			local uTeam = spGetUnitTeam(uID)
+			-- unit was partially reclaimed, disable animations and remove it from the listings
+			-- UnitFinished callin will restore it
+			spCallCOBScript(uID,"MMStatus",0,0)
+			self:UnitDestroyed(uID,uDefID,uTeam)
+	    end
+    end
+    
+    return true
+end
 
 function gadget:UnitDamaged(uID, uDefID, uTeam, damage, paralyzer)
 	local cDefs = convertCapacities[uDefID]
-
-    if paralyzer and cDefs then
-		local _, maxHealth, paralyzeDamage, _ ,_ = spGetUnitHealth(uID)
-		local relativeParDmg = paralyzeDamage -  maxHealth
-		if (relativeParDmg > 0) then 
-			EmpedVector:push(uID, currentFrameStamp + math.ceil(relativeParDmg / (maxHealth / paralysisRelRate)))
-		end
+	if cDefs then
+		if paralyzer then
+			local _, maxHealth, paralyzeDamage, _ ,_ = spGetUnitHealth(uID)
+			local relativeParDmg = paralyzeDamage -  maxHealth
+			if (relativeParDmg > 0) then 
+				EmpedVector:push(uID, currentFrameStamp + math.ceil(relativeParDmg / (maxHealth / paralysisRelRate)))
+			end
+	    end
     end
 end
 

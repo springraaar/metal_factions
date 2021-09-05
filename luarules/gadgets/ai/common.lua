@@ -924,6 +924,7 @@ attackerList =
 	"gear_eruptor",
 	"gear_flareon",
 	"gear_luminator",
+	"gear_lesser_luminator",
 
 	"gear_vector",
 	"gear_stratos",
