@@ -254,7 +254,10 @@ local moveDefs = {
 local array = {}
 local i = 1
 for k,v in pairs(moveDefs) do
-	--v.heatmapping = false -- disable heatmapping
+	v.heatMapping = true	-- default false
+	v.heatMod = 0.0042	-- default 0.0042
+	v.heatProduced = 30	-- default 30
+
 	v.allowRawMovement = true
 	array[i] = v
 	v.name = k

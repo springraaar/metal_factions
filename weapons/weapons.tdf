@@ -104,10 +104,10 @@
 	}
 	[DAMAGE]
 	{
-		default=440;
-		armor_heavy=440;//#AUTO#
-		armor_medium=440;//#AUTO#
-		armor_light=440;//#AUTO#
+		default=430;
+		armor_heavy=430;//#AUTO#
+		armor_medium=430;//#AUTO#
+		armor_light=430;//#AUTO#
 	}
 }
 [aven_u1commander_torpedo]
@@ -116,7 +116,7 @@
 	weaponType=TorpedoLauncher;
 	model=weapon_torpedo;
 	range=460;
-	reloadTime=3;
+	reloadTime=3.2;
 	turret=1;
 	flightTime=4;
 	subMissile=0;
@@ -141,11 +141,11 @@
 	}
 	[DAMAGE]
 	{
-		default=400;
+		default=410;
 		group_invincible=1;
-		armor_heavy=400;//#AUTO#
-		armor_medium=400;//#AUTO#
-		armor_light=400;//#AUTO#
+		armor_heavy=410;//#AUTO#
+		armor_medium=410;//#AUTO#
+		armor_light=410;//#AUTO#
 	}
 }
 [aven_u2commander_torpedo]
@@ -153,7 +153,7 @@
 	name=Torpedoes;
 	weaponType=TorpedoLauncher;
 	model=weapon_torpedo;
-	range=620;
+	range=610;
 	reloadTime=4;
 	turret=1;
 	flightTime=4;
@@ -191,8 +191,8 @@
 	name=Torpedoes;
 	weaponType=TorpedoLauncher;
 	model=weapon_torpedo;
-	range=420;
-	reloadTime=2.8;
+	range=430;
+	reloadTime=3;
 	turret=1;
 	flightTime=4;
 	subMissile=0;
@@ -230,7 +230,7 @@
 	weaponType=TorpedoLauncher;
 	model=weapon_torpedo;
 	range=660;
-	reloadTime=4;
+	reloadTime=4.1;
 	turret=1;
 	flightTime=6;
 	subMissile=0;
@@ -266,8 +266,8 @@
 	name=Torpedoes;
 	weaponType=TorpedoLauncher;
 	model=weapon_torpedo;
-	range=440;
-	reloadTime=3.5;
+	range=420;
+	reloadTime=3.7;
 	turret=1;
 	flightTime=4;
 	subMissile=0;
@@ -497,10 +497,10 @@
 	}
 	[DAMAGE]
 	{
-		default=36;
-		armor_heavy=9;//#AUTO#
-		armor_medium=18;//#AUTO#
-		armor_light=36;//#AUTO#
+		default=34;
+		armor_heavy=8;//#AUTO#
+		armor_medium=17;//#AUTO#
+		armor_light=34;//#AUTO#
 	}
 }
 [aven_u1commander_cannon]
@@ -534,11 +534,11 @@
 	}
 	[DAMAGE]
 	{
-		default=130;
+		default=120;
 		group_invincible=1;
-		armor_heavy=65;//#AUTO#
-		armor_medium=130;//#AUTO#
-		armor_light=130;//#AUTO#
+		armor_heavy=60;//#AUTO#
+		armor_medium=120;//#AUTO#
+		armor_light=120;//#AUTO#
 	}
 }
 [aven_commander_torpedo]
@@ -548,7 +548,7 @@
 	collideFriendly=1;
 	model=weapon_torpedo;
 	range=435;
-	reloadTime=4.0;
+	reloadTime=4.1;
 	turret=1;
 	flightTime=4;
 	subMissile=0;
@@ -573,11 +573,11 @@
 	}
 	[DAMAGE]
 	{
-		default=405;
+		default=400;
 		group_invincible=1;
-		armor_heavy=405;//#AUTO#
-		armor_medium=405;//#AUTO#
-		armor_light=405;//#AUTO#
+		armor_heavy=400;//#AUTO#
+		armor_medium=400;//#AUTO#
+		armor_light=400;//#AUTO#
 	}
 }
 [aven_u2commander_chargedshot]
@@ -595,7 +595,7 @@
   	separation=0.1;
   	alphaDecay=0.9;
   	sizeDecay=-0.2;
-	range=660;
+	range=650;
 	reloadTime=3.7;
 	weaponVelocity=450;
 	energyPerShot=250;
@@ -632,7 +632,7 @@
 	turret=1;
 	model=weapon_missile.3do;
 	texture1=null; //flare//
-	range=660;
+	range=650;
 	reloadTime=0.9;
 	flightTime=4;
 	trajectoryHeight=0.2;
@@ -836,11 +836,11 @@
 	}
 	[DAMAGE]
 	{
-		default=68;
+		default=60;
 		group_invincible=1;
-		armor_heavy=17;//#AUTO#
-		armor_medium=34;//#AUTO#
-		armor_light=68;//#AUTO#
+		armor_heavy=15;//#AUTO#
+		armor_medium=30;//#AUTO#
+		armor_light=60;//#AUTO#
 	}
 }
 [aven_u6commander_laser]
@@ -857,7 +857,7 @@
 	rgbColor2=0.5 1.0 0.5;
 	intensity=1.0;
 	turret=1;
-	range=690;
+	range=680;
 	minIntensity=1.0;
 	reloadTime=2.5;
 	energyPerShot=300;
@@ -880,11 +880,11 @@
 	}
 	[DAMAGE]
 	{
-		default=425;
+		default=420;
 		group_invincible=1;
-		armor_heavy=425;//#AUTO#
-		armor_medium=425;//#AUTO#
-		armor_light=425;//#AUTO#
+		armor_heavy=420;//#AUTO#
+		armor_medium=420;//#AUTO#
+		armor_light=420;//#AUTO#
 	}
 }
 [aven_dazer_disruptor]
@@ -5149,7 +5149,7 @@
 	turret=1;
 	range=420;
 	minIntensity=1.0;
-	reloadTime=1.567;
+	reloadTime=1.6;
 	energyPerShot=85;
 	weaponVelocity=1533;
 	areaOfEffect=8;
@@ -5170,11 +5170,11 @@
 	}
 	[DAMAGE]
 	{
-		default=212;
+		default=200;
 		group_invincible=1;
-		armor_heavy=212;//#AUTO#
-		armor_medium=212;//#AUTO#
-		armor_light=212;//#AUTO#
+		armor_heavy=200;//#AUTO#
+		armor_medium=200;//#AUTO#
+		armor_light=200;//#AUTO#
 	}
 }
 [aven_LIGHTCANNON]
@@ -6254,7 +6254,7 @@
 	coreThickness=0.6;
 	intensity=0.9; 
 	turret=1;
-	range=480;
+	range=470;
 	minIntensity=1.0;
 	reloadTime=0.6;
 	weaponVelocity=1533; 
@@ -6295,7 +6295,7 @@
 	weaponType=TorpedoLauncher;
 	collideFriendly=1;
 	model=weapon_torpedo;
-	range=480;
+	range=470;
 	reloadTime=4.8;
 	turret=1;
 	flightTime=4;
@@ -6423,7 +6423,7 @@
 	collideFriendly=1;
 	model=weapon_torpedo;
 	range=660;
-	reloadTime=3.2;
+	reloadTime=3.3;
 	turret=1;
 	flightTime=6;
 	subMissile=0;
@@ -6462,7 +6462,7 @@
 	collideFriendly=1;
 	model=weapon_torpedo;
 	range=660;
-	reloadTime=3.1;
+	reloadTime=3.2;
 	turret=1;
 	flightTime=6;
 	subMissile=0;
@@ -6504,7 +6504,7 @@
 	accuracy=300;
 	movingAccuracy=600;
 	turret=1;
-	range=780;
+	range=765;
 	reloadTime=4;
 	weaponVelocity=400;
 	areaOfEffect=90;
@@ -13141,7 +13141,7 @@
 	beamDecay=0.8;
 	beamTTL=5;
 	hardStop=0;
-	range=700;
+	range=690;
 	reloadTime=3.5;
 	energyPerShot=520;
 	weaponVelocity=1000;
@@ -13541,7 +13541,7 @@
 	turret=1;
 	range=460;
 	minIntensity=1.0;
-	reloadTime=0.40;
+	reloadTime=0.5;
 	energyPerShot=20;
 	weaponVelocity=1533;
 	areaOfEffect=8;
@@ -13567,10 +13567,10 @@
 	}
 	[DAMAGE]
 	{
-		default=90;
-		armor_heavy=45;//#AUTO#
-		armor_medium=90;//#AUTO#
-		armor_light=90;//#AUTO#
+		default=105;
+		armor_heavy=52;//#AUTO#
+		armor_medium=105;//#AUTO#
+		armor_light=105;//#AUTO#
 	}
 }
 [claw_u1commander_laser]
@@ -13611,10 +13611,10 @@
 	}
 	[DAMAGE]
 	{
-		default=210;
-		armor_heavy=210;//#AUTO#
-		armor_medium=210;//#AUTO#
-		armor_light=210;//#AUTO#
+		default=205;
+		armor_heavy=205;//#AUTO#
+		armor_medium=205;//#AUTO#
+		armor_light=205;//#AUTO#
 	}
 }
 [claw_u4commander_torpedo]
@@ -13623,8 +13623,8 @@
 	weaponType=TorpedoLauncher;
 	collideFriendly=1;
 	model=weapon_smltorpedo;
-	range=440;
-	reloadTime=1.4;
+	range=460;
+	reloadTime=1.6;
 	turret=1;
 	flightTime=4;
 	subMissile=0;
@@ -13743,7 +13743,7 @@
 	turret=1;
 	model=weapon_missile.3do;
 	texture1=null; //flare//
-	range=690;
+	range=680;
 	reloadTime=0.9;
 	flightTime=3.75;
 	projectiles=2;
@@ -13785,8 +13785,8 @@
 	weaponType=TorpedoLauncher;
 	collideFriendly=1;
 	model=weapon_smltorpedo;
-	range=600;
-	reloadTime=2.2;
+	range=620;
+	reloadTime=2.5;
 	turret=1;
 	flightTime=4;
 	subMissile=0;
@@ -13835,7 +13835,7 @@
 	texture4=null;
 	energyPerShot=400;
 	turret=1;
-	range=660;
+	range=650;
 	reloadTime=5.6;
 	weaponVelocity=1532;
 	startVelocity=1532;
@@ -13871,7 +13871,7 @@
 	range=590;
 	tracks=1;
 	turnRate=16000;
-	reloadTime=5.6;
+	reloadTime=5.8;
 	turret=1;
 	flightTime=3;
 	weaponVelocity=450;
@@ -17787,10 +17787,10 @@
 	}
 	[DAMAGE]
 	{
-		default=19;
+		default=18;
 		armor_heavy=4;//#AUTO#
 		armor_medium=9;//#AUTO#
-		armor_light=19;//#AUTO#
+		armor_light=18;//#AUTO#
 	}
 }
 [sphere_u2commander_beam]
@@ -17890,7 +17890,7 @@
 	coreThickness=1.0;
 	intensity=0.9;
 	turret=1;
-	range=730;
+	range=720;
 	minIntensity=1.0;
 	reloadTime=5.5;
 	energyPerShot=700;
@@ -17930,7 +17930,7 @@
 	name=Nova Cannon;
 	weaponType=Cannon;
 	turret=1;
-	range=620;
+	range=610;
 	reloadTime=6.3;
 	weaponVelocity=330;
 	areaOfEffect=240;
@@ -18054,7 +18054,7 @@
 	collideFriendly=1;
 	model=weapon_torpedo;
 	range=440;
-	reloadTime=3.6;
+	reloadTime=3.8;
 	turret=1;
 	flightTime=4;
 	subMissile=0;
@@ -18171,7 +18171,7 @@
 	collideFriendly=1;
 	model=weapon_torpedo;
 	range=670;
-	reloadTime=4.0;
+	reloadTime=4.2;
 	turret=1;
 	flightTime=6;
 	subMissile=0;

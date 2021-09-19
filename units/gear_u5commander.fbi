@@ -18,7 +18,6 @@
 	//  External Specs
 	//******************
 	unitName=gear_u5commander;
-	unitnumber=94;
 	objectName=gear_u5commander.3do;
 	buildPic=gear_u5commander.png;
 	soundCategory=gear_COM;
@@ -28,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=4400;
+	maxDamage=4300;
 	buildcostmetal=2000;
 	buildcostenergy=20000;
 	buildtime=30000;
@@ -59,10 +58,10 @@
 	builder=1;
 	buildDistance=200;
 	workerTime=300;
-    repairSpeed=300;
-    reclaimSpeed=300;
-    terraformSpeed=600;
-    capturespeed=200;
+	repairSpeed=300;
+	reclaimSpeed=300;
+	terraformSpeed=600;
+	capturespeed=200;
 
 	//************************************************************
 	//  Abilities
@@ -84,7 +83,7 @@
 	turnRate=800;
 	acceleration=0.4;
 	brakeRate=0.32;
-	maxVelocity=0.93;
+	maxVelocity=0.87;
 	maxSlope=20;
 	maxWaterDepth=999;
 
