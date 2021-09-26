@@ -21148,10 +21148,10 @@
 	shieldForce=3000;
 	shieldRadius=80;
 	shieldMaxSpeed=2000;
-	shieldPower=1500;
-	shieldStartingPower=1500;
-	shieldPowerRegen=30;
-	shieldPowerRegenEnergy=60;
+	shieldPower=3000;
+	shieldStartingPower=3000;
+	shieldPowerRegen=60;
+	shieldPowerRegenEnergy=120;
 	shieldInterceptType=2;
 	shieldGoodColor=0.9 0.9 1.0 1;
 	shieldBadColor=0.6 0.2 0.2 0.05;
@@ -21422,10 +21422,10 @@
 	}
 	[DAMAGE]
 	{
-		default=35;
-		armor_heavy=17;//#AUTO#
-		armor_medium=35;//#AUTO#
-		armor_light=35;//#AUTO#
+		default=33;
+		armor_heavy=16;//#AUTO#
+		armor_medium=33;//#AUTO#
+		armor_light=33;//#AUTO#
 	}
 }
 [sphere_chroma_beam1]
@@ -21467,10 +21467,10 @@
 	}
 	[DAMAGE]
 	{
-		default=50;
-		armor_heavy=50;//#AUTO#
-		armor_medium=50;//#AUTO#
-		armor_light=50;//#AUTO#
+		default=48;
+		armor_heavy=48;//#AUTO#
+		armor_medium=48;//#AUTO#
+		armor_light=48;//#AUTO#
 	}
 }
 [sphere_bastion_cannon]
@@ -22081,8 +22081,8 @@
 	turret=1;
 	range=870;
 	minIntensity=1.0;
-	reloadTime=7;
-	energyPerShot=500;
+	reloadTime=6;
+	energyPerShot=620;
 	weaponVelocity=1533;
 	areaOfEffect=8;
 	soundStart=lasrcan2;
@@ -22107,11 +22107,11 @@
 	}
 	[DAMAGE]
 	{
-		default=700;
+		default=850;
 		group_invincible=1;
-		armor_heavy=700;//#AUTO#
-		armor_medium=700;//#AUTO#
-		armor_light=700;//#AUTO#
+		armor_heavy=850;//#AUTO#
+		armor_medium=850;//#AUTO#
+		armor_light=850;//#AUTO#
 	}
 }
 [sphere_crab_torpedo]

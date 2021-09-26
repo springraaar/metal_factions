@@ -28,7 +28,6 @@ aimingMode(built)
 		} else {
 			if (!built) 
 			{
-				spin front2 around z-axis speed <140.000000>;
 				built = TRUE;				
 			}
 	
@@ -37,9 +36,11 @@ aimingMode(built)
 				show front4;
 				hide front3;
 				emit-sfx 1024+1 from flare;
+				spin front2 around z-axis speed <360.000000>;
 			}
 			else
 			{
+				spin front2 around z-axis speed <120.000000>;
 				show front3;
 				hide front4;
 			}

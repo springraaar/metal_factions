@@ -48,7 +48,7 @@ function gadget:Initialize()
 			local set = Spring.SetSmoothMesh
 			local get = Spring.GetGroundHeight
 			local spGetMetalAmount = Spring.GetMetalAmount
-			local T = 200  -- sampling "radius"
+			local radius = 260 
 			local HEIGHT_OFFSET = 30 -- shift desired height
 			local minHeight = math.huge
 			local floor = math.floor
@@ -69,18 +69,27 @@ function gadget:Initialize()
 				minHeight = 0
 			end
 			
-			local mN,mS,mE,mW,m0
+			local m0,xs,zs,mIdx
+			local measurementOffsets={{0,1},{0,-1},{-1,0},{1,0},{-0.5,-0.5},{-0.5,0.5},{0.5,-0.5},{0.5,0.5},{-0.2,-0.2},{-0.2,0.2},{0.2,-0.2},{0.2,0.2}}
+			local measurement={0,0,0,0,0,0,0,0,0,0,0,0,0}
 			local maxMeasurement
 			-- override smooth mesh height
-			for x=0,sizeX,tileSize do 
-				for z=0,sizeZ,tileSize do 
+			for x=1,sizeX,tileSize do 
+				for z=1,sizeZ,tileSize do 
 					m0 = get(x,z)
-					mE = get(x+T,z)
-					mW = get(x-T,z)
-					mN = get(x,z-T)
-					mS = get(x,z+T)
+					measurement={m0,m0,m0,m0,m0,m0,m0,m0,m0,m0,m0,m0,m0}  -- 12 positions + center
+					mIdx = 2
+					for _,offsets in pairs(measurementOffsets) do
+						xs = x+radius*offsets[1]
+						zs = z+radius*offsets[2]
+							
+						if (xs >= 0 and xs <= sizeX and zs >= 0 and zs <= sizeZ) then
+							measurement[mIdx] = get(xs,zs)
+						end
+						mIdx = mIdx +1
+					end
 					
-					maxMeasurement = math.max(m0,mE,mW,mN,mS,minHeight)
+					maxMeasurement = math.max(measurement[1],0.85*measurement[2],0.85*measurement[3],0.85*measurement[4],0.85*measurement[5],measurement[6],measurement[7],measurement[8],measurement[9],measurement[10],measurement[11],measurement[12],measurement[13],minHeight)
 					
 					set(x,z, maxMeasurement + HEIGHT_OFFSET) 
 				end 

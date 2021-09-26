@@ -5,7 +5,7 @@
 	//********************
 	side=Gear;
 	name=Mass Burner;
-	description=Produces 80 E/s but consumes 0.2 M/s;
+	description=Produces 100 E/s but consumes 0.2 M/s;
 	iconType=energy;
 
 	//************************************************************
@@ -33,7 +33,7 @@
 	//  Resources
 	//*************
 	metalStorage=0;
-	energyMake=80;
+	energyMake=100;
 	metaluse=0.2;
 	energyUse=0;
 	energyStorage=0;
@@ -96,8 +96,8 @@
 		explosionGenerator1=custom:mburnersmoke2;
 	}
 
-	buildCostEnergy=2242;//#AUTO#
-	buildCostMetal=448;//#AUTO#
-	buildTime=5345;//#AUTO#
-	mass=1048;//#AUTO#
+	buildCostEnergy=2689;//#AUTO#
+	buildCostMetal=537;//#AUTO#
+	buildTime=6410;//#AUTO#
+	mass=1108;//#AUTO#
 }
