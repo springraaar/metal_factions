@@ -34,6 +34,8 @@ local WidgetList = {} --list of widgets using the framework
 
 local LastProcessedWidget = "" --for debugging
 
+local tagsToCleanup = {}
+
 local vsx,vsy = widgetHandler:GetViewSizes()
 if (vsx == 1) then --hax for windowed mode
 	vsx,vsy = Spring.GetWindowGeometry()
@@ -54,6 +56,23 @@ end
 
 local function getTextHeight(o)
 	return getLineCount(o.caption)*o.fontsize
+end
+
+local function dump(o)
+   if type(o) == 'table' then
+      local s = '{ '
+      for k,v in pairs(o) do
+         if type(k) ~= 'number' then k = '"'..k..'"' end
+         s = s .. '['..k..'] = ' .. dump(v) .. ','
+      end
+      return s .. '} '
+   else
+      return tostring(o)
+   end
+end
+
+local function cleanupTaggedObjects(tag)
+	tagsToCleanup[tag] = true
 end
 
 local function isInRect(x,y,px,py,sx,sy)
@@ -531,6 +550,7 @@ function widget:Initialize()
 	Main.Screen = {vsx=vsx,vsy=vsy}
 	Main.Copytable = copyTable
 	Main.Mouse = Mouse
+	Main.CleanupTaggedObjects = cleanupTaggedObjects
 	
 	Main.GetWidgetObjects = function(w)
 		for i=1,#WidgetList do
@@ -670,45 +690,60 @@ function widget:Update()
 			
 			local delLst = {}
 			local objLst = wl[j]
+			--Spring.Echo(LastProcessedWidget.." objs="..#objLst.." tagsToCleanup="..#tagsToCleanup)
+			-- removed tagged from list
+			for i=1,#objLst do
+				local o = objLst[i]
+				for tag,_ in pairs(tagsToCleanup) do
+					if (o and o.cleanupTag and o.cleanupTag == tag) then
+						--Spring.Echo(LastProcessedWidget.." removing obj="..tostring(o.caption))
+						objLst[i] = nil
+						break
+					end
+				end
+			end
+			
 			
 			for i=1,#objLst do
 				local o = objLst[i]
-				o.tempActive = nil
-				if (o.scheduledForDeletion) then
-					delLst[#delLst+1] = i
-				else
-					if (o.active ~= false) then
-						o.notFirstProcessing = true
-						if (o.lastActiveState == false) then
-							o.justActivated = true
-						else
-							o.justActivated = nil
-						end
+				if o then
+					o.tempActive = nil
+					if (o.scheduledForDeletion) then
+						delLst[#delLst+1] = i
 					else
-						if ((o.lastActiveState ~= false) and o.notFirstProcessing) then
-							o.justDeactivated = true
+						if (o.active ~= false) then
+							o.notFirstProcessing = true
+							if (o.lastActiveState == false) then
+								o.justActivated = true
+							else
+								o.justActivated = nil
+							end
 						else
-							o.justDeactivated = nil
+							if ((o.lastActiveState ~= false) and o.notFirstProcessing) then
+								o.justDeactivated = true
+							else
+								o.justDeactivated = nil
+							end
+						end
+						o.lastActiveState = o.active
+						
+						if (o.effects) then
+							processEffects(o,CurClock)
+						end
+						if ((o.active ~= false) or o.tempActive) then
+							F[o[2]](o) --object draw function
 						end
 					end
-					o.lastActiveState = o.active
 					
-					if (o.effects) then
-						processEffects(o,CurClock)
-					end
-					if ((o.active ~= false) or o.tempActive) then
-						F[o[2]](o) --object draw function
-					end
-				end
-				
-				--process mouseevents backwards, so topmost drawn objects get to mouseevents first
-				local ro = objLst[#objLst-i+1]
-				if (not ro.scheduledForDeletion) then
-					if (ro.active ~= false) then
-						if (ro.onUpdate) then
-							ro.onUpdate(ro)
+					--process mouseevents backwards, so topmost drawn objects get to mouseevents first
+					local ro = objLst[#objLst-i+1]
+					if (ro and (not ro.scheduledForDeletion)) then
+						if (ro.active ~= false) then
+							if (ro.onUpdate) then
+								ro.onUpdate(ro)
+							end
+							processMouseEvents(ro)
 						end
-						processMouseEvents(ro)
 					end
 				end
 			end
@@ -717,6 +752,9 @@ function widget:Update()
 				table.remove(objLst,delLst[i])
 			end
 		end
+		
+		-- empty cleanup tags 
+		tagsToCleanup = {}
 	end
 end
 

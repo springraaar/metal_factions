@@ -199,10 +199,10 @@ function widget:GameFrame(frame)
   
 	for unitID, f in pairs(idlers) do
 		if ((frame - f) > idleFrames) then
+			idlers[unitID] = nil
 			local cmds = spGetUnitCommands(unitID,5)
-			if (cmds and #cmds > 0) then
-				idlers[unitID] = nil				
-			else
+			if (not cmds) or (#cmds == 0) then
+				--Spring.Echo("SETUP PATROL "..unitID.." frame="..frame)
 				SetupUnit(unitID)
 			end
 		end

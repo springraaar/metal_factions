@@ -15,7 +15,7 @@ end
 VFS.Include("lualibs/constants.lua")
 VFS.Include("lualibs/util.lua")
 
-local frameSkip = 4       -- draw once every frameSkip+1 frames 
+local frameSkip = 9       -- draw once every frameSkip+1 frames 
 local counter = 0
 local xpArr = {
 "",
@@ -50,6 +50,25 @@ local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetTeamRulesParam = Spring.GetTeamRulesParam
 local spGetUnitTeam = Spring.GetUnitTeam
 local spGetTeamColor = Spring.GetTeamColor
+local spIsGUIHidden = Spring.IsGUIHidden
+local spGetCurrentTooltip = Spring.GetCurrentTooltip
+local spGetDrawFrame = Spring.GetDrawFrame 
+
+local glBlending = gl.Blending
+local glColor = gl.Color
+local glRect = gl.Rect
+local glLineWidth = gl.LineWidth
+local glShape = gl.Shape
+local glText = gl.Text	
+local glGetTextWidth = gl.GetTextWidth
+
+local glCreateList	= gl.CreateList
+local glDeleteList	= gl.DeleteList
+local glCallList	= gl.CallList
+
+local tooltipGlList = nil
+
+--local fontHandler = gl.LoadFont("luaui/fonts/EDENMB__.TTF",16,1)
 
 local TRANSPORT_MASS_LIMIT_LIGHT = 1200
 local TRANSPORT_MASS_LIMIT_HEAVY = 3000  
@@ -57,6 +76,10 @@ local PARALYZE_DAMAGE_FACTOR = 0.33 -- paralyze damage adds this fraction as nor
 local ONCE_RELOAD_THRESHOLD = 999
 
 local windGroundMin,windGroundMax,windGroundRef = 0
+
+-- cached tooltip strings 
+local cachedTooltipWeaponDataKey = ""
+local cachedTooltipWeaponDataStr = ""
 
 local noDamageWeaponDefIds = {
 	[WeaponDefNames["comsat_beacon"].id] = true,
@@ -81,6 +104,7 @@ local armorTypeLabels = {
 	["H"] = "\255\200\110\100(H)\255\255\255\255"
 }
 
+local unitDefByName = {}
 local myPlayerID
 local myTeamID
 local myAllyTeamID
@@ -140,7 +164,10 @@ function widget:Initialize()
 	windGroundMin, windGroundMax = Spring.GetGroundExtremes()
 	windGroundMin, windGroundMax = math.max(windGroundMin,0), math.max(windGroundMax,1)
 	windGroundRef = 0.25*windGroundMax + 0.75*windGroundMin
-	
+	-- get unitdefs by name
+	for _,ud in pairs(UnitDefs) do
+		unitDefByName[ud.humanName] = ud
+	end
 	-- get players and teams info
 	myPlayerID = Spring.GetLocalPlayerID()
 	myTeamID = Spring.GetLocalTeamID()
@@ -175,32 +202,11 @@ end
 function widget:Shutdown()
         Spring.SendCommands({"tooltip 1"})
 end
-  
--- format number  
--- TODO put this on a lib
-function FormatNbr(x,digits)
-	if x then
-		local ret=string.format("%."..(digits or 0).."f",x)
-		if digits and digits>0 then
-			while true do
-				local last = string.sub(ret,string.len(ret))
-				if last=="0" or last=="." then
-					ret = string.sub(ret,1,string.len(ret)-1)
-				end
-				if last~="0" then
-					break
-				end
-			end
-		end
-		return ret
-	else
-		return ""
-	end
-end
+
 
 -- generates upgrade data string for player
-function GetTooltipUpgradeData(teamId)
-	local NewTooltip = ""
+function getTooltipUpgradeData(teamId)
+	local newTooltip = ""
 	
 	-- get upgrades for team
 	local statusStr = spGetTeamRulesParam(teamId,"upgrade_status")
@@ -208,44 +214,48 @@ function GetTooltipUpgradeData(teamId)
 	local modStr = spGetTeamRulesParam(teamId,"upgrade_modifiers")
 	
 	if (statusStr) then
-		NewTooltip = NewTooltip..statusStr.."\n"
+		newTooltip = newTooltip..statusStr.."\n"
 	end
 	if (listStr) then
-		NewTooltip = NewTooltip..listStr.."\n"
+		newTooltip = newTooltip..listStr.."\n"
 	end
 	if (modStr) then
-		NewTooltip = NewTooltip.." \nEFFECTS\n"..modStr
+		newTooltip = newTooltip.." \nEFFECTS\n"..modStr
 	end
 			
-	return NewTooltip
+	return newTooltip
 end
 
 
 -- generates upgrade summary string for player
-function GetTooltipUpgradeLabel(teamId)
-	local NewTooltip = ""
+function getTooltipUpgradeLabel(teamId)
+	local newTooltip = "\255\255\255\255"
 	
 	-- get upgrades for team
 	local labelStr = spGetTeamRulesParam(teamId,"upgrade_label")
 	
 	if (labelStr) then
-		NewTooltip = NewTooltip..labelStr
+		newTooltip = newTooltip..labelStr
 	else
-		NewTooltip = NewTooltip.."Upgrades: \255\130\130\130[0]  [0]  [0]"
+		newTooltip = newTooltip.."Upgrades: \255\130\130\130[0]  [0]  [0]"
 	end
 			
-	return NewTooltip
+	return newTooltip
 end
 
 -- generates weapon data string for unit
-function GetTooltipWeaponData(ud, xpMod, rangeMod, dmgMod)
-	local NewTooltip = ""
-	
+function getTooltipWeaponData(ud, xpMod, rangeMod, dmgMod)
+	local newTooltip = ""
 	if not rangeMod then
 		rangeMod = 1
 	end
 	if not dmgMod then
 		dmgMod = 1
+	end
+	-- use cache	
+	cKey = floor(spGetDrawFrame()/60)..ud.id..xpMod..rangeMod..dmgMod
+	if (cKey == cachedTooltipWeaponDataKey) then
+		return cachedTooltipWeaponDataStr
 	end
 	
 	if ud.canKamikaze then
@@ -262,10 +272,10 @@ function GetTooltipWeaponData(ud, xpMod, rangeMod, dmgMod)
                 weapon_action="Paralyze"
                 local paralyzeDmg = dmgMod * weap.damages[Game.armorTypes.default]
                 local normalDmg = PARALYZE_DAMAGE_FACTOR * paralyzeDmg
-				NewTooltip = NewTooltip.. "\n\255\100\255\255Paralyze: "..FormatNbr(paralyzeDmg,0).."/once \255\255\213\213Damage: \255\255\170\170"..FormatNbr(normalDmg,0).."/once"
+				newTooltip = newTooltip.. "\n\255\100\255\255Paralyze: "..formatNbr(paralyzeDmg,0).."/once \255\255\213\213Damage: \255\255\170\170"..formatNbr(normalDmg,0).."/once"
 	        else
 	        	local normalDmg = dmgMod * weap.damages[Game.armorTypes.default]
-	        	NewTooltip = NewTooltip.."\n\255\255\213\213Damage: \255\255\170\170"..FormatNbr(normalDmg,0).."/once"
+	        	newTooltip = newTooltip.."\n\255\255\213\213Damage: \255\255\170\170"..formatNbr(normalDmg,0).."/once"
 	        end
 	    end
     elseif ud.weapons and ud.weapons[1] and ud.weapons[1].weaponDef then
@@ -297,19 +307,19 @@ function GetTooltipWeaponData(ud, xpMod, rangeMod, dmgMod)
 						if (isDisruptor) then
 							local paralyzeDmg = damage
 							local normalDmg = paralyzeDmg * PARALYZE_DAMAGE_FACTOR
-							actionStr = "Paralyze: \255\100\255\255"..FormatNbr(paralyzeDmg,0).."\255\255\255\255"..(reloadTime >= ONCE_RELOAD_THRESHOLD and " once" or ("/"..FormatNbr(reloadTime,2).."s"))
-							actionStr = actionStr.." Dmg: \255\255\255\255"..FormatNbr(normalDmg,0).."\255\255\255\255"..(reloadTime >= ONCE_RELOAD_THRESHOLD and " once" or ("/"..FormatNbr(reloadTime,2).."s"))
+							actionStr = "Paralyze: \255\100\255\255"..formatNbr(paralyzeDmg,0).."\255\255\255\255"..(reloadTime >= ONCE_RELOAD_THRESHOLD and " once" or ("/"..formatNbr(reloadTime,2).."s"))
+							actionStr = actionStr.." Dmg: \255\255\255\255"..formatNbr(normalDmg,0).."\255\255\255\255"..(reloadTime >= ONCE_RELOAD_THRESHOLD and " once" or ("/"..formatNbr(reloadTime,2).."s"))
 						else
-							actionStr = "Dmg/s: \255\255\255\255"..FormatNbr(damage,0).."\255\255\255\255"..(reloadTime >= ONCE_RELOAD_THRESHOLD and " once" or ("/"..FormatNbr(reloadTime,2).."s"))
+							actionStr = "Dmg/s: \255\255\255\255"..formatNbr(damage,0).."\255\255\255\255"..(reloadTime >= ONCE_RELOAD_THRESHOLD and " once" or ("/"..formatNbr(reloadTime,2).."s"))
 						end
 					else 
 						if (isDisruptor) then
 							local paralyzeDps = dps
 							local normalDps = paralyzeDps * PARALYZE_DAMAGE_FACTOR
-							actionStr = "Paralyze/s: \255\100\255\255"..FormatNbr(paralyzeDps,0).."\255\255\255\255"
-							actionStr = actionStr.." Dmg/s: \255\255\255\255"..FormatNbr(normalDps,0).."\255\255\255\255"
+							actionStr = "Paralyze/s: \255\100\255\255"..formatNbr(paralyzeDps,0).."\255\255\255\255"
+							actionStr = actionStr.." Dmg/s: \255\255\255\255"..formatNbr(normalDps,0).."\255\255\255\255"
 						else
-							actionStr = "Dmg/s: \255\255\255\255"..FormatNbr(dps,1).."\255\255\255\255"
+							actionStr = "Dmg/s: \255\255\255\255"..formatNbr(dps,1).."\255\255\255\255"
 						end
 					end
 					
@@ -319,28 +329,30 @@ function GetTooltipWeaponData(ud, xpMod, rangeMod, dmgMod)
 					end
 					actionStr = actionStr..weaponHitPowerLabels[weap.customParams.hitpower]
 				end       
-				NewTooltip = NewTooltip.."\n\255\255\255\255"..weap.description.."    "..actionStr.."     Range: "..FormatNbr(range,2)
+				newTooltip = newTooltip.."\n\255\255\255\255"..weap.description.."    "..actionStr.."     Range: "..formatNbr(range,2)
 			
 				if energyPerSecond  > 0 then
-					NewTooltip = NewTooltip.."     \255\255\255\0E"..(reloadTime >= 5 and "" or "/s")..": "..FormatNbr((reloadTime >= 5 and energyPerSecond*reloadTime or energyPerSecond),1)
+					newTooltip = newTooltip.."     \255\255\255\0E"..(reloadTime >= 5 and "" or "/s")..": "..formatNbr((reloadTime >= 5 and energyPerSecond*reloadTime or energyPerSecond),1)
 				end
 				
 				if (weap.customParams and weap.customParams.targets) then
-					NewTooltip = NewTooltip.."     \255\255\255\255Targets: "..formatTargets(weap.customParams.targets)
+					newTooltip = newTooltip.."     \255\255\255\255Targets: "..formatTargets(weap.customParams.targets)
 				else
 					if weap.waterWeapon then
-						NewTooltip = NewTooltip.."     \255\255\255\255Targets: \255\64\64\255WATER"
+						newTooltip = newTooltip.."     \255\255\255\255Targets: \255\64\64\255WATER"
 					end
 				end
 			end
 		end
 	end
     
-	return NewTooltip
+    cachedTooltipWeaponDataKey = cKey
+	cachedTooltipWeaponDataStr = newTooltip
+	return newTooltip
 end
  
 -- generates build power string in m/s as a function of build speed
-function GetTooltipBuildPower(buildSpeed)
+function getTooltipBuildPower(buildSpeed)
 	
 	-- time is 11 * weighted_cost_metal
 	-- time = 11 * (m + e/60) / spd
@@ -350,11 +362,11 @@ function GetTooltipBuildPower(buildSpeed)
 	-- 13m/12 = time * spd / 11
 	-- m/time = 12*spd / (11*13) 
 	
-	return "\255\255\255\150Build Power: ".. FormatNbr(12 * buildSpeed / (11*13),1).." metal/s"
+	return "\255\255\255\150Build Power: ".. formatNbr(12 * buildSpeed / (11*13),1).." metal/s"
 end
 
 -- get tooltip mass/transportability label
-function GetTooltipTransportability(ud)
+function getTooltipTransportability(ud)
 	if ud.speed > 0 then
 		local transpStr = ""
 		if ud.cantBeTransported  then 
@@ -367,29 +379,78 @@ function GetTooltipTransportability(ud)
 			transpStr = "no transport"
 		end
 	
-		return "     \255\200\200\200Mass: ".. FormatNbr(ud.mass,0).." ("..transpStr..")"
+		return "     \255\200\200\200Mass: ".. formatNbr(ud.mass,0).." ("..transpStr..")"
 	else
 		return ""
 	end	
 end
 	
-	
--- generates new tooltip 
-function GenerateNewTooltip()
-	local CurrentTooltip = Spring.GetCurrentTooltip()
- 
+-- update tooltip gl list
+function updateTooltipGlList(text)
+	local vsx,vsy = gl.GetViewSizes() 
+	local fontSize = max(8,vsy/72)
+	local nttString = ''
+	local nttList = {}
+
+	nttString = text:gsub("\n+", "\n")
+	nttList = {}    
+	local maxWidth = 0
+	local width = 0
+	for line in string.gmatch(nttString,"[^\r\n]+") do
+		table.insert(nttList,line)
+		width = glGetTextWidth(line)
+		if width>maxWidth then
+			maxWidth = width
+		end
+	end
+	local lineCount = #nttList
+	local xTooltipSize = fontSize*(1+maxWidth)
+	local yTooltipSize = fontSize*(1+lineCount)
+	local x1,y1,x2,y2 = 0,0,xTooltipSize,yTooltipSize
+	glDeleteList(tooltipGlList)
+	tooltipGlList = glCreateList(function()
+		glBlending(GL.SRC_ALPHA,GL.ONE_MINUS_SRC_ALPHA) -- default
+		glColor(0.0,0.0,0.0,0.6)  --background
+		glRect(x1,y1,x2,y2)
+		glColor(0.0,0.0,0.0,1)  --border
+		glLineWidth(1)
+		glShape(GL.LINE_LOOP,{	{v={x1,y2}},{v={x2,y2}},{v={x2,y1}},{v={x1,y1}},})
+		glColor(1,1,1,1)
+		
+		glText(trim(nttString),x1+fontSize*0.5,y1+fontSize*(lineCount+0.5-1),fontSize,'o')
+		--for k=1,lineCount do
+		--	glText(nttList[k],x1+fontSize*0.5,y1+fontSize*(lineCount+0.5-k),fontSize,'o')
+		--end	
+	end)
+end
+
+-- updates the tooltip as necessary
+function updateTooltip()
 	if tempTooltip and frameSkip > 0 then
 		counter = counter +1
 		if (counter % (frameSkip+1) ~= 0) then
-			return tempTooltip
+			return
 		end
 	end
- 
-	local NewTooltip = ""
-	local HotkeyTooltip = ""
-	local FoundTooltipType = nil
+	
+	updateTooltipGlList(generateNewTooltip())
+end
+
+-- generates new tooltip 
+function generateNewTooltip()
+	-- ---------------- testing
+	--if true then		
+	--	newTooltip = "bla bla \n bla blgdfgdfg \n bleflsdfdls\ndfg\nggdfgdfg" 
+	--	tempTooltip = newTooltip
+	--	return newTooltip	
+	--end
+	
+	local currentTooltip = spGetCurrentTooltip() 
+	local newTooltip = ""
+	local hotkeyTooltip = ""
+	local foundTooltipType = nil
 	local mx,my,gx,gy,gz,id
- 
+	local selectedUnitsCount = spGetSelectedUnitsCount()
 	mx,my = GetMouseState()
 	if mx and my then
 		local _,pos = TraceScreenRay(mx,my,true,true)
@@ -402,131 +463,84 @@ function GenerateNewTooltip()
 		end
 	end
  
-        
-	if spGetSelectedUnitsCount()>1 then
-		NewTooltip=NewTooltip.."\255\255\255\255"..spGetSelectedUnitsCount().."\255\255\255\255 units selected\255\255\255\255\n"
-	end
-        
-	 
-	local TerrainType = string.match(CurrentTooltip,"Terrain type: (.+)\nSpeeds T/K/H/S ")
-	local TerrainSpeeds = string.match(CurrentTooltip,"Speeds T/K/H/S (.+)\nHardness")
-	if TerrainType~=nil then
-		NewTooltip=NewTooltip.."\255\255\255\64"..TerrainType
-		if TerrainSpeeds~=nil then
-			TerrainSpeedList={}
-			for Speed in string.gmatch(TerrainSpeeds,"[0-7]+.[0-7]+") do
-				table.insert(TerrainSpeedList,Speed)
-			end
-			if #TerrainSpeedList>=1 then
-				local DiffSpeed = false
-				for _,Speeds in pairs(TerrainSpeedList) do
-					if Speeds~=TerrainSpeedList[1] then
-						DiffSpeed = true
-					end
-				end
-				for i=1,#TerrainSpeedList do
-					while true do
-						local last = string.sub(TerrainSpeedList[i],string.len(TerrainSpeedList[i]))
-						if last=="0" or last=="." then
-							TerrainSpeedList[i] = string.sub(TerrainSpeedList[i],1,string.len(TerrainSpeedList[i])-1)
-						end
-						if last~="0" then
-							break
-						end
-					end
-				end
-				if DiffSpeed then
-					--NewTooltip=NewTooltip.."\nSpeeds x "..TerrainSpeeds
-				else
-					--NewTooltip=NewTooltip.."\nSpeed x"..TerrainSpeedList[1]
-				end
-			end
-		end
+	local terrainType = string.match(currentTooltip,"Terrain type: (.+)\nSpeeds T/K/H/S ")
+	if terrainType~=nil then
+		newTooltip="\255\255\255\64"..terrainType
 		if gx and gz then
-			--NewTooltip=NewTooltip.."\n\n("..(32)*floor((gx+16)/32)..","..(32)*floor((gz+16)/32)..")"
-			NewTooltip=NewTooltip.."\n\n("..floor(gx+0.5)..","..floor(gz+0.5)..")"
+			newTooltip=newTooltip.."\255\255\255\255\n("..floor(gx+0.5)..","..floor(gz+0.5)..")"
 			
 			local h = Spring.GetGroundHeight(gx,gz)
 			local airMeshH = Spring.GetSmoothMeshHeight(gx,gz)
 			local _,_,_,slope = Spring.GetGroundNormal(gx,gz,true)  
-			--NewTooltip=NewTooltip.."\n\nAltitude "..floor(h).."\n\nAir Mesh Altitude "..floor(airMeshH)
-			NewTooltip=NewTooltip.."\n\nAltitude "..floor(h).."\n\nAir Mesh Altitude "..floor(airMeshH).."\n\nSlope "..slope
+			newTooltip=newTooltip.."\n\nAltitude "..floor(h).."\n\nAir Mesh Altitude "..floor(airMeshH).."\n\nSlope "..slope
 		end
-		FoundTooltipType="terrain"
+		foundTooltipType="terrain"
+		tempTooltip = newTooltip
+		return newTooltip		
 	end
  
 	local buildpower = 1
+
+	if selectedUnitsCount>1 then
+		newTooltip="\255\255\255\255"..selectedUnitsCount.."\255\255\255\255 units selected\255\255\255\255\n"
+	end
 	
 	-- compute total buildpower of units selected 
-	if spGetSelectedUnitsCount() >= 1 then
+	if selectedUnitsCount >= 1 then
 		for _,u in pairs(spGetSelectedUnits()) do
 			local def=UnitDefs[Spring.GetUnitDefID(u)]
 			buildpower = buildpower + def.buildSpeed
 		end
 	end   
 
-	local unitpre = string.match(CurrentTooltip,"(.-)\nBuild:") or string.match(CurrentTooltip,"(.-)\n\255\255\255\255Build:") or ""
-	local unitname = string.match(CurrentTooltip,"Build: (.+) %- ")
-	local unitdesc = string.match(CurrentTooltip," %- (.+)\nHealth ")
-	local unithealth = string.match(CurrentTooltip,"Health (.+)\nMetal")
-	local unitbuildtime = string.match(CurrentTooltip.."\n","Build time (.-)\n")
-	local unitmetalcost = string.match(CurrentTooltip,"Metal cost (.-)\nEnergy cost ")
-	local unitenergycost = string.match(CurrentTooltip,"\nEnergy cost (.-).Build time ")
+	local unitpre = string.match(currentTooltip,"(.-)\nBuild:") or string.match(currentTooltip,"(.-)\n\255\255\255\255Build:") or ""
+	local unitname = string.match(currentTooltip,"Build: (.+) %- ")
+	local unitdesc = string.match(currentTooltip," %- (.+)\nHealth ")
+	local unithealth = string.match(currentTooltip,"Health (.+)\nMetal")
+	local unitbuildtime = string.match(currentTooltip.."\n","Build time (.-)\n")
+	local unitmetalcost = string.match(currentTooltip,"Metal cost (.-)\nEnergy cost ")
+	local unitenergycost = string.match(currentTooltip,"\nEnergy cost (.-).Build time ")
 
 	if unitname and unitdesc and unithealth and unitbuildtime then
-		local fud = nil
-		for _,ud in pairs(UnitDefs) do
-			--[[
-			Spring.Echo("ud.humanName=",ud.humanName)
-			Spring.Echo("ud.tooltip=",ud.tooltip)
-			Spring.Echo("ud.health=",ud.health)
-			Spring.Echo("ud.buildTime=",ud.buildTime)
-			]]--
-			if ud.humanName==unitname and ud.tooltip==unitdesc and ""..ud.health==unithealth and
-				""..ud.buildTime==unitbuildtime then
-				fud=ud
-				break
-			end
-		end
+		local fud = unitDefByName[unitname]
 		if fud then
 			local armorTypeStr= "L"
 			if ( Game.armorTypes[fud.armorType] == "armor_heavy" ) then armorTypeStr = "H"
 			elseif ( Game.armorTypes[fud.armorType] == "armor_medium" ) then armorTypeStr = "M" end
 			
 			-- old build time expression : floor((29+floor(31+fud.buildTime/(buildpower/32)))/30)
-			local buildTimeStr = FormatNbr(fud.buildTime/buildpower,2)
-			NewTooltip = NewTooltip.."\n"..unitpre.."\n"..fud.humanName.." ("..fud.tooltip..")"..buildHotkey(fud.name).."\n"..
+			local buildTimeStr = formatNbr(fud.buildTime/buildpower,2)
+			newTooltip = newTooltip.."\n"..unitpre.."\n"..fud.humanName.." ("..fud.tooltip..")"..buildHotkey(fud.name).."\n"..
 				"\255\200\200\200Metal: "..unitmetalcost.."    \255\255\255\0Energy: "..unitenergycost..""..
 				"\255\213\213\255".."    Build time: ".."\255\170\170\255"..
-				buildTimeStr.."s".."    "..GetTooltipTransportability(fud).."\n"..
+				buildTimeStr.."s".."    "..getTooltipTransportability(fud).."\n"..
 				"\255\200\200\200Health: ".."\255\200\200\200"..fud.health..armorTypeLabels[armorTypeStr]
-				if fud.shieldPower > 0 then NewTooltip=NewTooltip.."\255\135\135\255     Shield: "..FormatNbr(fud.shieldPower) end
+				if fud.shieldPower > 0 then newTooltip=newTooltip.."\255\135\135\255     Shield: "..formatNbr(fud.shieldPower) end
 					
 			-- weapons
 			if fud.canKamikaze or (fud.weapons and fud.weapons[1] and fud.weapons[1].weaponDef) then
-				NewTooltip = NewTooltip..GetTooltipWeaponData(fud,1)
+				newTooltip = newTooltip..getTooltipWeaponData(fud,1)
 			end
 			
 			-- build power
 			if fud.buildSpeed and fud.buildSpeed > 1 then
-				NewTooltip = NewTooltip.."\n"..GetTooltipBuildPower(fud.buildSpeed).."\255\255\255\255\n"
+				newTooltip = newTooltip.."\n"..getTooltipBuildPower(fud.buildSpeed).."\255\255\255\255\n"
 			end
 			
 			-- speed
-			NewTooltip = NewTooltip.."\255\255\255\255\n"
+			newTooltip = newTooltip.."\255\255\255\255\n"
 			if fud.speed and fud.speed>0 then
-				NewTooltip = NewTooltip.."\255\193\255\187Speed: \255\134\255\121"..FormatNbr(fud.speed,2).."\255\255\255\255"
+				newTooltip = newTooltip.."\255\193\255\187Speed: \255\134\255\121"..formatNbr(fud.speed,2).."\255\255\255\255"
 			else
 				-- show where buildings can be built
 				if (fud.minWaterDepth > 0) then
-					NewTooltip = NewTooltip.."Buildable on \255\64\64\255WATER\255\255\255\255\n"
+					newTooltip = newTooltip.."Buildable on \255\64\64\255WATER\255\255\255\255\n"
 				elseif (fud.maxWaterDepth < 100) then
-					NewTooltip = NewTooltip.."Buildable on \255\200\200\200LAND\255\255\255\255\n"
+					newTooltip = newTooltip.."Buildable on \255\200\200\200LAND\255\255\255\255\n"
 				else
-					NewTooltip = NewTooltip.."Buildable on \255\200\200\200LAND\255\255\255\255,\255\64\64\255WATER\255\255\255\255\n"
+					newTooltip = newTooltip.."Buildable on \255\200\200\200LAND\255\255\255\255,\255\64\64\255WATER\255\255\255\255\n"
 				end
 			end
-			FoundTooltipType="knownbuildbutton"
 			
 			if fud.windGenerator > 1 then
 				
@@ -547,39 +561,45 @@ function GenerateNewTooltip()
 				minWindE = minWindE * factor 
 				maxWindE = maxWindE * factor
 				avgWindE = avgWindE * factor
-			   	minWindE = FormatNbr(minWindE,0)
-			   	maxWindE = FormatNbr(maxWindE,0)
-			   	avgWindE = FormatNbr(avgWindE,0)
+			   	minWindE = formatNbr(minWindE,0)
+			   	maxWindE = formatNbr(maxWindE,0)
+			   	avgWindE = formatNbr(avgWindE,0)
 				
-				NewTooltip = NewTooltip.."Generates \255\255\255\0"..minWindE.."-"..maxWindE.." E/s (avg "..avgWindE..")\255\155\155\155 (Altitude Bonus: +"..FormatNbr((factor-1)*100,1).."%)\255\255\255\255  \n"
+				newTooltip = newTooltip.."Generates \255\255\255\0"..minWindE.."-"..maxWindE.." E/s (avg "..avgWindE..")\255\155\155\155 (Altitude Bonus: +"..formatNbr((factor-1)*100,1).."%)\255\255\255\255  \n"
 			elseif fud.tidalGenerator == 1 then
-				NewTooltip = NewTooltip.."Generates \255\255\255\0"..Game.tidal.." E/s\255\255\255\255\n"
+				newTooltip = newTooltip.."Generates \255\255\255\0"..Game.tidal.." E/s\255\255\255\255\n"
 			end
 			
 			if fud.customParams.tip then
-				NewTooltip = NewTooltip.."\n"..TIP_COLOR_PREFIX..fud.customParams.tip.."\255\255\255\255\n"
+				newTooltip = newTooltip.."\n"..TIP_COLOR_PREFIX..fud.customParams.tip.."\255\255\255\255\n"
 			end
+			
+			foundTooltipType="knownbuildbutton"
+			tempTooltip = newTooltip
+			return newTooltip	
 		else
-			local buildTimeStr = FormatNbr(ud.buildTime/buildpower,2)
-		    NewTooltip = NewTooltip.."\n"..unitpre.."\n"..unitname.." ("..unitdesc..")\n"..
+			local buildTimeStr = formatNbr(ud.buildTime/buildpower,2)
+		    newTooltip = newTooltip.."\n"..unitpre.."\n"..unitname.." ("..unitdesc..")\n"..
 		            "\255\255\213\213Health: ".."\255\255\170\170"..unithealth..
 		            "\n\255\213\213\255Build time: ".."\255\170\170\255"..
 		            buildTimeStr.."s"..
 		            "\255\255\255\255\n"
-		    FoundTooltipType="unknownbuildbutton"
+		    foundTooltipType="unknownbuildbutton"
+			tempTooltip = newTooltip
+			return newTooltip	
 		end
 	end
  
-	local isItLiveUnitTooltip = string.match(CurrentTooltip,"Experience (.+) Cost ")
-	if isItLiveUnitTooltip or CurrentTooltip=="" then
+	local isItLiveUnitTooltip = string.match(currentTooltip,"Experience (.+) Cost ")
+	if isItLiveUnitTooltip or currentTooltip=="" then
 
 		-- id being calculated way above
-		if not id and spGetSelectedUnitsCount()>=1 then
-			id = spGetSelectedUnits()[spGetSelectedUnitsCount()]
+		if not id and selectedUnitsCount >=1 then
+			id = spGetSelectedUnits()[selectedUnitsCount]
 		end
                 
 		-- many units
-		if id and spGetSelectedUnitsCount()>1 then
+		if id and selectedUnitsCount >1 then
 			local totalMetalMake = 0
 			local totalMetalUse = 0 
 			local totalEnergyMake = 0
@@ -634,21 +654,22 @@ function GenerateNewTooltip()
 			end
 					
 			-- cost
-			NewTooltip = NewTooltip.."\255\200\200\200Metal: "..totalMetalCost.."    \255\255\255\0Energy: "..totalEnergyCost.."\n"
+			newTooltip = newTooltip.."\255\200\200\200Metal: "..totalMetalCost.."    \255\255\255\0Energy: "..totalEnergyCost.."\n"
 			
 			-- health totals					
-			NewTooltip = NewTooltip.."\255\200\200\200Health: ".."\255\200\200\200"..floor(totalHealth).."\255\200\200\200/\255\200\200\200"..floor(totalMaxHealth)
-			if anyShield then NewTooltip=NewTooltip.."\255\135\135\255      Shield: "..FormatNbr(math.min(totalShieldPower,totalMaxShieldPower)).."/"..FormatNbr(totalMaxShieldPower) end
+			newTooltip = newTooltip.."\255\200\200\200Health: ".."\255\200\200\200"..floor(totalHealth).."\255\200\200\200/\255\200\200\200"..floor(totalMaxHealth)
+			if anyShield then newTooltip=newTooltip.."\255\135\135\255      Shield: "..formatNbr(math.min(totalShieldPower,totalMaxShieldPower)).."/"..formatNbr(totalMaxShieldPower) end
 			
 			-- energy and metal upkeep totals
 			if true then
-				NewTooltip = NewTooltip.."\n\255\200\200\200Metal: \255\0\255\0+"..FormatNbr(totalMetalMake,1).."\255\255\255\255/\255\255\0\0"..FormatNbr(-totalMetalUse,1)
-				NewTooltip = NewTooltip.."    \255\255\255\0Energy: \255\0\255\0+"..FormatNbr(totalEnergyMake,1).."\255\255\255\255/\255\255\0\0"..FormatNbr(-totalEnergyUse,1)
+				newTooltip = newTooltip.."\n\255\200\200\200Metal: \255\0\255\0+"..formatNbr(totalMetalMake,1).."\255\255\255\255/\255\255\0\0"..formatNbr(-totalMetalUse,1)
+				newTooltip = newTooltip.."    \255\255\255\0Energy: \255\0\255\0+"..formatNbr(totalEnergyMake,1).."\255\255\255\255/\255\255\0\0"..formatNbr(-totalEnergyUse,1)
 			end
-			FoundTooltipType="liveunit"
-
+			foundTooltipType="liveunit"
+			tempTooltip = newTooltip
+			return newTooltip	
 		-- one unit
-		elseif id or spGetSelectedUnitsCount()==1 then
+		elseif id or selectedUnitsCount ==1 then
 			local u=id
 			local ud=UnitDefs[Spring.GetUnitDefID(u)]
 			
@@ -659,11 +680,11 @@ function GenerateNewTooltip()
 			-- build progress, health and shield
 			local health,maxHealth,paralyzeDamage,captureProgress,buildProgress = Spring.GetUnitHealth(u)
 			stunned_or_beingbuilt, stunned, beingbuilt = Spring.GetUnitIsStunned(u)
-			NewTooltip = NewTooltip.."\n"..ud.humanName.." ("..ud.tooltip..")"
+			newTooltip = ud.humanName.." ("..ud.tooltip..")"
 			-- owner
 			local r,g,b = spGetTeamColor(teamID)
 			r,g,b,_ = convertColor(r,g,b,0)
-			NewTooltip = NewTooltip.." \255"..string.char(floor(255*r))..string.char(floor(255*g))..string.char(floor(255*b))..nameByTeamID[teamID]
+			newTooltip = newTooltip.." \255"..string.char(floor(255*r))..string.char(floor(255*g))..string.char(floor(255*b))..nameByTeamID[teamID]
 			
 			local hpMod = spGetUnitRulesParam(u,"upgrade_hp")
 			if not hpMod then
@@ -680,7 +701,7 @@ function GenerateNewTooltip()
 				local xpIndex = min(10,max(floor(11*xp/(xp+1)),0))+1
 				xpMod = 1+0.35*(xp/(xp+1))
 				if(xpIndex > 1) then
-					NewTooltip = NewTooltip.."\255\255\255\255    Experience: "..xpArr[xpIndex]
+					newTooltip = newTooltip.."\255\255\255\255    Experience: "..xpArr[xpIndex]
 				end
 			end
 			local dmgMod = spGetUnitRulesParam(u,"upgrade_damage")
@@ -699,24 +720,24 @@ function GenerateNewTooltip()
 						                        
 			-- paralysis
 			if stunned then
-				NewTooltip = NewTooltip.."\255\194\173\255   PARALYZED"
+				newTooltip = newTooltip.."\255\194\173\255   PARALYZED"
 			end
 			-- cloaking
 			if spGetUnitIsCloaked(u) then
-				NewTooltip = NewTooltip.."\255\170\170\170   CLOAKED"
+				newTooltip = newTooltip.."\255\170\170\170   CLOAKED"
 			end        
 			-- alliance
 			if isFriendly == false then
-				NewTooltip = NewTooltip.."    \255\255\0\0ENEMY"	
+				newTooltip = newTooltip.."    \255\255\0\0ENEMY"	
 			end
 
-			NewTooltip = NewTooltip.."\n"
+			newTooltip = newTooltip.."\n"
 			if buildProgress and buildProgress<1 then
-				NewTooltip = NewTooltip.."\255\213\213\255".."Build progress: ".."\255\170\170\255"..FormatNbr(100*buildProgress).."%\n"
+				newTooltip = newTooltip.."\255\213\213\255".."Build progress: ".."\255\170\170\255"..formatNbr(100*buildProgress).."%\n"
 			end
 
 			-- cost
-			NewTooltip = NewTooltip.."\255\200\200\200Metal: "..ud.metalCost.."    \255\255\255\0Energy: "..ud.energyCost.."    "..GetTooltipTransportability(ud).."\n"
+			newTooltip = newTooltip.."\255\200\200\200Metal: "..ud.metalCost.."    \255\255\255\0Energy: "..ud.energyCost.."    "..getTooltipTransportability(ud).."\n"
 		
 		
 			local armorTypeStr= "L"
@@ -726,38 +747,38 @@ function GenerateNewTooltip()
 			local hasShield, ShieldPower=Spring.GetUnitShieldState(id)
 			local maxShieldPower = ud.shieldPower
 			if (health ~= nil) then
-				NewTooltip = NewTooltip.."\255\200\200\200Health: ".."\255\200\200\200"..floor(health).."\255\200\200\200/\255\200\200\200"..floor(maxHealth)..armorTypeLabels[armorTypeStr]
-				if hasShield then NewTooltip=NewTooltip.."\255\135\135\255      Shield: "..FormatNbr(math.min(ShieldPower,maxShieldPower)).."/"..FormatNbr(maxShieldPower) end
+				newTooltip = newTooltip.."\255\200\200\200Health: ".."\255\200\200\200"..floor(health).."\255\200\200\200/\255\200\200\200"..floor(maxHealth)..armorTypeLabels[armorTypeStr]
+				if hasShield then newTooltip=newTooltip.."\255\135\135\255      Shield: "..formatNbr(math.min(ShieldPower,maxShieldPower)).."/"..formatNbr(maxShieldPower) end
 			end
 		    
 			-- energy and metal upkeep
 			if isFriendly then
-				NewTooltip = NewTooltip.."    \255\200\200\200Metal: \255\0\255\0+"..FormatNbr(metalMake,1).."\255\255\255\255/\255\255\0\0"..FormatNbr(-metalUse,1)
-				NewTooltip = NewTooltip.."    \255\255\255\0Energy: \255\0\255\0+"..FormatNbr(energyMake,1).."\255\255\255\255/\255\255\0\0"..FormatNbr(-energyUse,1)
-				-- NewTooltip=NewTooltip.."\255\255\255\0     +E/M ratio: "..FormatNbr(energyMake / ud.metalCost,4).."\n"
+				newTooltip = newTooltip.."    \255\200\200\200Metal: \255\0\255\0+"..formatNbr(metalMake,1).."\255\255\255\255/\255\255\0\0"..formatNbr(-metalUse,1)
+				newTooltip = newTooltip.."    \255\255\255\0Energy: \255\0\255\0+"..formatNbr(energyMake,1).."\255\255\255\255/\255\255\0\0"..formatNbr(-energyUse,1)
+				-- newTooltip=newTooltip.."\255\255\255\0     +E/M ratio: "..formatNbr(energyMake / ud.metalCost,4).."\n"
 
 				if ud.windGenerator > 1 then
 					local eMade = spGetUnitRulesParam(u,"energy_made")
 					local eMadeFrames = spGetUnitRulesParam(u,"energy_made_frames")
 					if (eMadeFrames and eMadeFrames > 0) then
-						NewTooltip = NewTooltip.."\n\255\255\255\0Avg E/s produced: "..FormatNbr(eMade*30 / eMadeFrames,2).."\255\255\255\255\n"
+						newTooltip = newTooltip.."\n\255\255\255\0Avg E/s produced: "..formatNbr(eMade*30 / eMadeFrames,2).."\255\255\255\255\n"
 					end
 				end
 			end
 		
 			-- weapons
-			NewTooltip = NewTooltip..GetTooltipWeaponData(ud,xpMod,rangeMod,dmgMod).."\n"
+			newTooltip = newTooltip..getTooltipWeaponData(ud,xpMod,rangeMod,dmgMod).."\n"
 		  
 			-- build power
 			if ud.buildSpeed and ud.buildSpeed > 1 then
-				NewTooltip = NewTooltip.."\n"..GetTooltipBuildPower(ud.buildSpeed)..  "\255\255\255\255\n"
+				newTooltip = newTooltip.."\n"..getTooltipBuildPower(ud.buildSpeed)..  "\255\255\255\255\n"
 			end
                         
 			-- upgrades (upgrade centers only)
 			local isUpgradeCenter = string.find(ud.name, "upgrade_center")
 			local teamId = spGetUnitTeam(u)
 			if isUpgradeCenter then
-				NewTooltip = NewTooltip..GetTooltipUpgradeData(teamId).."\n\n"
+				newTooltip = newTooltip..getTooltipUpgradeData(teamId).."\n\n"
 			end
 						
 			-- speed
@@ -771,7 +792,7 @@ function GenerateNewTooltip()
 				
 				local vx,vy,vz = spGetUnitVelocity(u)
 				local speed = 30*math.sqrt(vx*vx+vz*vz)
-				NewTooltip = NewTooltip.."\255\193\255\187Speed: \255\134\255\121"..FormatNbr(speed).."\255\193\255\187/\255\134\255\121"..FormatNbr(ud.speed*speedMod,2).."\255\255\255\255      "
+				newTooltip = newTooltip.."\255\193\255\187Speed: \255\134\255\121"..formatNbr(speed).."\255\193\255\187/\255\134\255\121"..formatNbr(ud.speed*speedMod,2).."\255\255\255\255      "
 			end
 
 			if ud.transportCapacity>0 and ud.transportMass>0 and isFriendly then
@@ -785,115 +806,94 @@ function GenerateNewTooltip()
 					currentMassUsage = currentMassUsage + tUd.mass
 				end
 				 
-				NewTooltip = NewTooltip.."\255\255\255\255Transport: "..FormatNbr(min(2,(currentCapacityUsage/ud.transportCapacity))*50,0).."% / "..FormatNbr((currentMassUsage/ud.transportMass)*100,0).."%      "
+				newTooltip = newTooltip.."\255\255\255\255Transport: "..formatNbr(min(2,(currentCapacityUsage/ud.transportCapacity))*50,0).."% / "..formatNbr((currentMassUsage/ud.transportMass)*100,0).."%      "
 			end
 
 			-- upgrade summary
 			if not isUpgradeCenter then
-				NewTooltip = NewTooltip..GetTooltipUpgradeLabel(spGetUnitTeam(u))
+				newTooltip = newTooltip..getTooltipUpgradeLabel(spGetUnitTeam(u))
 			end
  						
 			if ud.customParams.tip then
-				NewTooltip = NewTooltip.."\n"..TIP_COLOR_PREFIX..ud.customParams.tip.."\255\255\255\255\n"
+				newTooltip = newTooltip.."\n"..TIP_COLOR_PREFIX..ud.customParams.tip.."\255\255\255\255\n"
 			end
  
-			FoundTooltipType="liveunit"
+			foundTooltipType="liveunit"
+			tempTooltip = newTooltip
+			return newTooltip	
 		end
 	end
  
-	local hotkeys = string.match(CurrentTooltip.."\n","Hotkeys: (.-)\n")
+	local hotkeys = string.match(currentTooltip.."\n","Hotkeys: (.-)\n")
 	if hotkeys then
-		HotkeyTooltip = "\n\255\255\196\128Hotkeys: ".."\255\255\128\001"..hotkeys.."\255\255\255\255"
-		CurrentTooltip=string.gsub(CurrentTooltip.."\n","Hotkeys: .-\n","")
-		NewTooltip=NewTooltip..HotkeyTooltip
-		CurrentTooltip=CurrentTooltip..HotkeyTooltip
+		hotkeyTooltip = "\n\255\255\196\128Hotkeys: ".."\255\255\128\001"..hotkeys.."\255\255\255\255"
+		currentTooltip=string.gsub(currentTooltip.."\n","Hotkeys: .-\n","")
+		newTooltip=newTooltip..hotkeyTooltip
+		currentTooltip=currentTooltip..hotkeyTooltip
 	end
  
-	local action = string.match(CurrentTooltip,"(.-)\n")
+	local action = string.match(currentTooltip,"(.-)\n")
 	if action then
 		action = string.match(action,"(.-): ")
 		if action then
-			CurrentTooltip=string.gsub(CurrentTooltip,"(.-): ","",1)
-			CurrentTooltip="\255\170\255\170"..action..":\255\255\255\255 "..CurrentTooltip
+			currentTooltip=string.gsub(currentTooltip,"(.-): ","",1)
+			currentTooltip="\255\170\255\170"..action..":\255\255\255\255 "..currentTooltip
 		end
 	end
   
-	if FoundTooltipType then
-		tempTooltip = NewTooltip
-		return NewTooltip
+	if foundTooltipType then
+		tempTooltip = newTooltip
+		return newTooltip
 	else
-		tempTooltip = CurrentTooltip
-		return CurrentTooltip
+		tempTooltip = currentTooltip
+		return currentTooltip
 	end
 end
- 
- 
-local FontSize
-local xTooltipSize = 0
-local yTooltipSize = 0
- 
-function widget:DrawScreenEffects(vsx,vsy)
-        WG.KP_ToolTip=nil
-        if Spring.IsGUIHidden() then
-                return
-        end
- 
-        local nttString = GenerateNewTooltip()
-        local nttList = {}
-        local maxWidth = 0
-        for line in string.gmatch(nttString,"[^\r\n]+") do
-                table.insert(nttList,"\255\255\255\255"..line)
-                if gl.GetTextWidth(line)>maxWidth then
-                        maxWidth=gl.GetTextWidth(line)
-                end
-        end
- 
-        if not FontSize then
-                FontSize = max(8,vsy/72)
-        end
- 
-        xTooltipSize = FontSize*(1+maxWidth)
-        yTooltipSize = FontSize*(1+#nttList)
- 
-        -- Bottom left position by default
-        local x1,y1,x2,y2=0,0,xTooltipSize,yTooltipSize
- 
-        -- Note: this line is done even if the KP_ToolTip is devoid of text
-        -- The only case where KP_ToolTip is nil are when the widget is off or the GUI is hidden
-        WG.KP_ToolTip={x1=x1,y1=y1,x2=x2,y2=y2,xSize=xTooltipSize,ySize=yTooltipSize,FontSize=FontSize}
- 
-        gl.Blending(GL.SRC_ALPHA,GL.ONE_MINUS_SRC_ALPHA) -- default
-        if WG.MidKnightBG then
-                gl.Color(1,1,1,1)
-                gl.Texture("bitmaps/tooltipbg.png")
-                gl.TexRect(x1,y1,x2*1.2,y2*1.2,0.01,0.99,0.99,0.01)
-                gl.Texture(false)
-        else
-                gl.Color(0.0,0.0,0.0,0.6)  --background
-                gl.Rect(x1,y1,x2,y2)
-                gl.Color(0.0,0.0,0.0,1)  --border
-                gl.LineWidth(1)
-                gl.Shape(GL.LINE_LOOP,{
-                        {v={x1,y2}},{v={x2,y2}},
-                        {v={x2,y1}},{v={x1,y1}},})
-                gl.Color(1,1,1,1)
-        end
-        for k=1,#nttList do
-                gl.Text(nttList[k],x1+FontSize/2,y1+FontSize*(#nttList+0.5-k),FontSize,'o')
-        end
-        gl.Text("\255\255\255\255 ",0,0,FontSize,'o') -- Reset color to white for other widgets using gl.Text
+
+function widget:DrawScreen()
+	if spIsGUIHidden() then
+		return
+	end
+
+	updateTooltip()
+	glCallList(tooltipGlList)
+	
+--[[
+	nttString = generateNewTooltip()
+	nttList = {}    
+	local maxWidth = 0
+	local width = 0
+	for line in string.gmatch(nttString,"[^\r\n]+") do
+		table.insert(nttList,line)
+		width = glGetTextWidth(line)
+		if width>maxWidth then
+			maxWidth = width
+		end
+	end
+	local lineCount = #nttList
+
+ 	local x1,y1,x2,y2=0,0,xTooltipSize,yTooltipSize
+	xTooltipSize = fontSize*(1+maxWidth)
+	yTooltipSize = fontSize*(1+lineCount)
+  
+	glBlending(GL.SRC_ALPHA,GL.ONE_MINUS_SRC_ALPHA) -- default
+	glColor(0.0,0.0,0.0,0.6)  --background
+	glRect(x1,y1,x2,y2)
+	glColor(0.0,0.0,0.0,1)  --border
+	glLineWidth(1)
+	glShape(GL.LINE_LOOP,{	{v={x1,y2}},{v={x2,y2}},{v={x2,y1}},{v={x1,y1}},})	gl.Color(1,1,1,1)
+	
+	glText(trim(nttString),x1+fontSize*0.5,y1+fontSize*(lineCount+0.5-1),fontSize,'o')
+	
+	]]--
+	--for k=1,lineCount do
+		--glText(nttList[k],x1+fontSize*0.5,y1+fontSize*(lineCount+0.5-k),fontSize,'o')
+		--glText("bla",0,y1+fontSize*(lineCount+0.5-k),fontSize,'o')
+		--glText("bla",0,y1+fontSize*(lineCount+0.5-k),fontSize,'o')
+		--glText("bla",0,y1+fontSize*(lineCount+0.5-k),fontSize,'o')
+		--glText("bla",0,y1+fontSize*(lineCount+0.5-k),fontSize,'o')
+		--glText("bla",0,y1+fontSize*(lineCount+0.5-k),fontSize,'o')
+	--end
 end
  
- 
---function widget:MouseWheel(up,value)
---        local xMouse,yMouse = GetMouseState()
---        if xMouse < xTooltipSize and yMouse < yTooltipSize and not Spring.IsGUIHidden() then
---                if up then
---                        FontSize = max(FontSize - 1,2)
---                else
---                        FontSize = FontSize + 1
---                end
---                return true
---        end
---        return false
---end
+

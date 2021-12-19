@@ -21,6 +21,13 @@ local TextDraw            = fontHandler.Draw
 local TextDrawCentered    = fontHandler.DrawCentered
 local TextDrawRight       = fontHandler.DrawRight
 
+local glCreateList	= gl.CreateList
+local glDeleteList	= gl.DeleteList
+local glCallList	= gl.CallList
+local spGetTimer    = Spring.GetTimer
+local spDiffTimers  = Spring.DiffTimers
+local floor = math.floor
+
 local refFontSize = 14
 local refBoxSizeX = 60
 local refBoxSizeY = 30
@@ -33,6 +40,10 @@ local cLightBorder						= {1, 1, 1, 1}
 local cWhite						= {1, 1, 1, 1}
 local cBorder						= {0, 0, 0, 1}		
 local cBack							= {0, 0, 0, 0.6}
+
+local glList = nil
+local glListRefreshIdx = -1
+local refTimer = spGetTimer()
 
 local function IsOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
 	if BLcornerX == nil then return false end
@@ -69,31 +80,40 @@ end
 
 
 function widget:DrawScreen()
+	local refreshIdx = floor(spDiffTimers(spGetTimer(),refTimer)*5)
+	-- refresh gl list only a few times per second
+	if (not glList) or refreshIdx ~= glListRefreshIdx then
+		if (glList) then
+			glDeleteList(glList)
+		end 
+		glList = glCreateList(function()
+			-- draw menu button
+			if ButtonMenu.above then
+				glColor(cLight)
+			else
+				glColor(cBack)
+			end
+			glRect(ButtonMenu.x1,ButtonMenu.y1,ButtonMenu.x2,ButtonMenu.y2)
+			
+			glColor(cWhite)
+			-- menu button text
+			gl.Text("MENU",(ButtonMenu.x1 + ButtonMenu.x2) /2, (ButtonMenu.y1 + ButtonMenu.y2) / 2-fontSize/2,fontSize,"c")
+			--TextDrawCentered("MENU", (ButtonMenu.x1 + ButtonMenu.x2) /2, ButtonMenu.y1 + 10 )
 		
-	-- draw menu button
-	if ButtonMenu.above then
-		glColor(cLight)
-	else
-		glColor(cBack)
+			-- menu button border
+			if ButtonMenu.above then
+				glColor(cLightBorder)
+			else
+				glColor(cBorder)
+			end
+			glRect(ButtonMenu.x1,ButtonMenu.y1,ButtonMenu.x1+1,ButtonMenu.y2)
+			glRect(ButtonMenu.x2-1,ButtonMenu.y1,ButtonMenu.x2,ButtonMenu.y2)
+			glRect(ButtonMenu.x1,ButtonMenu.y1,ButtonMenu.x2,ButtonMenu.y1+1)
+			glRect(ButtonMenu.x1,ButtonMenu.y2-1,ButtonMenu.x2,ButtonMenu.y2)
+		end)
+		glListRefreshIdx = refreshIdx
 	end
-	glRect(ButtonMenu.x1,ButtonMenu.y1,ButtonMenu.x2,ButtonMenu.y2)
-	
-	glColor(cWhite)
-	-- menu button text
-	gl.Text("MENU",(ButtonMenu.x1 + ButtonMenu.x2) /2, (ButtonMenu.y1 + ButtonMenu.y2) / 2-fontSize/2,fontSize,"c")
-	--TextDrawCentered("MENU", (ButtonMenu.x1 + ButtonMenu.x2) /2, ButtonMenu.y1 + 10 )
-
-	-- menu button border
-	if ButtonMenu.above then
-		glColor(cLightBorder)
-	else
-		glColor(cBorder)
-	end
-	glRect(ButtonMenu.x1,ButtonMenu.y1,ButtonMenu.x1+1,ButtonMenu.y2)
-	glRect(ButtonMenu.x2-1,ButtonMenu.y1,ButtonMenu.x2,ButtonMenu.y2)
-	glRect(ButtonMenu.x1,ButtonMenu.y1,ButtonMenu.x2,ButtonMenu.y1+1)
-	glRect(ButtonMenu.x1,ButtonMenu.y2-1,ButtonMenu.x2,ButtonMenu.y2)
-	
+	glCallList(glList)
 end
 
 function widget:MousePress(mx, my, mButton)

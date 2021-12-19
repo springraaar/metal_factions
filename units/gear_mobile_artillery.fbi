@@ -5,7 +5,7 @@
 	//********************
 	side=Gear;
 	name=Barrager;
-	description=Fast-firing Artillery;
+	description=Rapid-Fire Artillery;
 	iconType=mobileartillery;
 
 	//************************************************************
@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=4100;
+	maxDamage=3400;
 	footprintx=4;
 	footprintz=4;
 
@@ -103,7 +103,6 @@
 	collisionVolumeScales =50 40 45;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	scale=1.2;
 
 	[SFXTypes]
 	{
@@ -114,8 +113,8 @@
 		builtBy=gear_adv_vehicle_plant;
 		canAreaAttack=1;
 	}
-	buildCostEnergy=14638;//#AUTO#
-	buildCostMetal=2927;//#AUTO#
-	buildTime=34888;//#AUTO#
-	mass=2000;//#AUTO#
+	buildCostEnergy=15170;//#AUTO#
+	buildCostMetal=3034;//#AUTO#
+	buildTime=36156;//#AUTO#
+	mass=1861;//#AUTO#
 }

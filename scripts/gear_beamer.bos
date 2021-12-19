@@ -45,13 +45,13 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 open()
 {
 	set ARMORED to 0;
-	turn rdoor to z-axis <-90.000000> speed <240.000000>;
-	turn ldoor to z-axis <90.000000> speed <240.000000>;
+	turn rdoor to z-axis <-90.000000> speed <380.000000>;
+	turn ldoor to z-axis <90.000000> speed <380.000000>;
 	wait-for-turn ldoor around z-axis;
 	
-	move rdoor to y-axis  [-25.000000] speed [30.000000];
-	move ldoor to y-axis  [-25.000000] speed [30.000000];
-	move stand to y-axis [44.000000] speed [80.000000];
+	move rdoor to y-axis  [-25.000000] speed [150.000000];
+	move ldoor to y-axis  [-25.000000] speed [150.000000];
+	move stand to y-axis [44.000000] speed [280.000000];
 	wait-for-move ldoor along y-axis;
 	wait-for-move stand along y-axis;
 	isOpen = TRUE;
@@ -126,8 +126,8 @@ AimPrimary(heading, pitch)
 		call-script open();
 	}
 	
-	turn turret to y-axis heading speed <200.071429>;
-	turn sleeve to x-axis <0.000000> - pitch speed <150.038462>;
+	turn turret to y-axis heading speed <350.071429>;
+	turn sleeve to x-axis <0.000000> - pitch speed <350.038462>;
 	wait-for-turn turret around y-axis;
 	wait-for-turn sleeve around x-axis;
 	start-script RestoreAfterDelay();

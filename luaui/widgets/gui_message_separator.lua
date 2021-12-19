@@ -112,10 +112,12 @@ local scaleFactor = 1
 if not gl.TextAdjusted then
    local glText = gl.Text
    gl.Text = function(text,x,y,size,options)
-      if size then
-         glText(text,x,y+size/4,size,options)
-      else
-         glText(text,x,y,size,options)
+      if text then
+	      if size then
+	         glText(text,x,y+size/4,size,options)
+	      else
+	         glText(text,x,y,size,options)
+	      end
       end
    end
    gl.TextAdjusted = true
@@ -128,6 +130,11 @@ local GetGameFrame = Spring.GetGameFrame
 local spGetPlayerList = Spring.GetPlayerList
 local spGetPlayerInfo = Spring.GetPlayerInfo
 local spGetTeamList = Spring.GetTeamList
+local spGetGameSeconds = Spring.GetGameSeconds
+local spGetTimer = Spring.GetTimer
+local spDiffTimers = Spring.DiffTimers
+local spGetLastUpdateSeconds = Spring.GetLastUpdateSeconds
+local spGetDrawFrame = Spring.GetDrawFrame
 
 local math_ceil 		= math.ceil
 local math_floor 		= math.floor
@@ -138,6 +145,14 @@ local gl_Color 			= gl.Color
 local gl_Text 			= gl.Text
 local gl_GetTextWidth 	= gl.GetTextWidth
 local gl_Rect 			= gl.Rect
+
+local glCreateList	= gl.CreateList
+local glDeleteList	= gl.DeleteList
+local glCallList	= gl.CallList
+
+local glListRefreshIdx = -1
+local glList = nil
+local refTimer = spGetTimer()
 
 function widget:Initialize()
 	-- disable default console
@@ -808,13 +823,10 @@ function widget:AddConsoleLine(line)
 	end
 end
 
-
-
-
 function widget:DrawScreen()
 
 	CURRENT_FRAME = GetGameFrame()
-
+	
 	-- is it time to clear our player message buffer?
 	if ((CURRENT_FRAME - LAST_PLAYER_MSG_CLEAR_FRAME) > DELAY_BEFORE_CLEAR) then
 		DRAW_PLAYER_MESSAGES = false
@@ -823,139 +835,154 @@ function widget:DrawScreen()
 		PLAYER_BOX_ALPHA = MIN_ALPHA
 	end
 
-	-- show message box and scroll to latest message on mouse over if it was invisible
-	local mx,my,_,_,_ = GetMouseState()
-	if (not DRAW_PLAYER_MESSAGES) and mouseOverPlayerMessageBox( mx, my ) then
-		drawVisibilityHint()
-	end
-	
-	-- is it time to scroll back to the latest message?
-	if ((CURRENT_FRAME - LAST_PLAYER_MSG_SCROLL_FRAME) > DELAY_BEFORE_CLEAR) then
-		scrollToLatestPlayerMessage()
-	end
-	
-	-- is it time to clear our system message buffer?
-	if ((CURRENT_FRAME - LAST_SYSTEM_MSG_CLEAR_FRAME) > DELAY_BEFORE_CLEAR) then
-		LAST_SYSTEM_MSG_CLEAR_FRAME = CURRENT_FRAME
-		SYSTEM_BOX_ALPHA = MIN_ALPHA
-
-		clearSystemMessageHistory()
-	end
-
-	-- only draw boxes in tweak mode
-	--if (widgetHandler:InTweakMode()) then
-		PLAYER_BOX_FILL_COLOR[4] = FILL_ALPHA * PLAYER_BOX_ALPHA
-		PLAYER_BOX_LINE_COLOR[4] = LINE_ALPHA * PLAYER_BOX_ALPHA
-		SYSTEM_BOX_FILL_COLOR[4] = FILL_ALPHA * SYSTEM_BOX_ALPHA
-		SYSTEM_BOX_LINE_COLOR[4] = LINE_ALPHA * SYSTEM_BOX_ALPHA
-
-		drawBox(PLAYER_MSG_BOX_X_MIN, PLAYER_MSG_BOX_Y_MAX, PLAYER_MSG_BOX_W, PLAYER_MSG_BOX_H, PLAYER_BOX_FILL_COLOR, PLAYER_BOX_LINE_COLOR)
-		drawBox(SYSTEM_MSG_BOX_X_MIN, SYSTEM_MSG_BOX_Y_MAX, SYSTEM_MSG_BOX_W, SYSTEM_MSG_BOX_H, SYSTEM_BOX_FILL_COLOR, SYSTEM_BOX_LINE_COLOR)
-	--end
-
-
-	local y = PLAYER_MSG_BOX_Y_MAX - (FONT_SIZE + 6)
-
-	-- because PLAYER_MSG_HISTORY is never reset to {}
-	-- while scrollable history enabled we need another
-	-- way to determine if we should draw messages
-	if (DRAW_PLAYER_MESSAGES == true) then
-		for index = MESSAGE_FRAME_MIN, MESSAGE_FRAME_MAX, 1 do
-			if (index <= NUM_PLAYER_MESSAGES) then
-				if PLAYER_MSG_HISTORY[index] ~= nil then
-					local playerColor = PLAYER_MSG_HISTORY[index][1]
-					local playerFontStyle = PLAYER_MSG_HISTORY[index][2]
-					local playerMessage = PLAYER_MSG_HISTORY[index][3]
-					local playerMessageWidth = (gl_GetTextWidth(playerMessage) * FONT_SIZE )
-
-					-- TODO original wrapping and splitting wasn't working properly
-					-- using workaround at widget:AddConsoleLine and processConsoleLine
-					if (MESSAGE_WRAPPING == 1) then
-						local bufferIndex, buffer = getMessageParts(playerMessage, playerMessageWidth, PLAYER_MSG_BOX_W)
-
-						if (bufferIndex > 1) then
-							-- our buffer was filled with at least two message parts
-							copyPlayerMessageBuffer(buffer, bufferIndex, index, playerColor, playerFontStyle)
-
-							-- we've expanded our player message
-							-- history, abort drawing this frame
-							break
+	local refreshIdx = math_floor(spDiffTimers(spGetTimer(),refTimer)*5)
+	-- refresh gl list only a few times per second
+	if (not glList) or refreshIdx ~= glListRefreshIdx then
+		if (glList) then
+			glDeleteList(glList)
+		end 
+		glList = glCreateList(function()
+		
+			-- show message box and scroll to latest message on mouse over if it was invisible
+			local mx,my,_,_,_ = GetMouseState()
+			if (not DRAW_PLAYER_MESSAGES) and mouseOverPlayerMessageBox( mx, my ) then
+				drawVisibilityHint()
+			end
+			
+			-- is it time to scroll back to the latest message?
+			if ((CURRENT_FRAME - LAST_PLAYER_MSG_SCROLL_FRAME) > DELAY_BEFORE_CLEAR) then
+				scrollToLatestPlayerMessage()
+			end
+			
+			-- is it time to clear our system message buffer?
+			if ((CURRENT_FRAME - LAST_SYSTEM_MSG_CLEAR_FRAME) > DELAY_BEFORE_CLEAR) then
+				LAST_SYSTEM_MSG_CLEAR_FRAME = CURRENT_FRAME
+				SYSTEM_BOX_ALPHA = MIN_ALPHA
+		
+				clearSystemMessageHistory()
+			end
+		
+			-- only draw boxes in tweak mode
+			--if (widgetHandler:InTweakMode()) then
+				PLAYER_BOX_FILL_COLOR[4] = FILL_ALPHA * PLAYER_BOX_ALPHA
+				PLAYER_BOX_LINE_COLOR[4] = LINE_ALPHA * PLAYER_BOX_ALPHA
+				SYSTEM_BOX_FILL_COLOR[4] = FILL_ALPHA * SYSTEM_BOX_ALPHA
+				SYSTEM_BOX_LINE_COLOR[4] = LINE_ALPHA * SYSTEM_BOX_ALPHA
+		
+				drawBox(PLAYER_MSG_BOX_X_MIN, PLAYER_MSG_BOX_Y_MAX, PLAYER_MSG_BOX_W, PLAYER_MSG_BOX_H, PLAYER_BOX_FILL_COLOR, PLAYER_BOX_LINE_COLOR)
+				drawBox(SYSTEM_MSG_BOX_X_MIN, SYSTEM_MSG_BOX_Y_MAX, SYSTEM_MSG_BOX_W, SYSTEM_MSG_BOX_H, SYSTEM_BOX_FILL_COLOR, SYSTEM_BOX_LINE_COLOR)
+			--end
+		
+		
+			local y = PLAYER_MSG_BOX_Y_MAX - (FONT_SIZE + 6)
+		
+			-- because PLAYER_MSG_HISTORY is never reset to {}
+			-- while scrollable history enabled we need another
+			-- way to determine if we should draw messages
+			if (DRAW_PLAYER_MESSAGES == true) then
+				for index = MESSAGE_FRAME_MIN, MESSAGE_FRAME_MAX, 1 do
+					if (index <= NUM_PLAYER_MESSAGES) then
+						if PLAYER_MSG_HISTORY[index] ~= nil then
+							local playerColor = PLAYER_MSG_HISTORY[index][1]
+							local playerFontStyle = PLAYER_MSG_HISTORY[index][2]
+							local playerMessage = PLAYER_MSG_HISTORY[index][3]
+							local playerMessageWidth = (gl_GetTextWidth(playerMessage) * FONT_SIZE )
+		
+							-- TODO original wrapping and splitting wasn't working properly
+							-- using workaround at widget:AddConsoleLine and processConsoleLine
+							if (MESSAGE_WRAPPING == 1) then
+								local bufferIndex, buffer = getMessageParts(playerMessage, playerMessageWidth, PLAYER_MSG_BOX_W)
+		
+								if (bufferIndex > 1) then
+									-- our buffer was filled with at least two message parts
+									copyPlayerMessageBuffer(buffer, bufferIndex, index, playerColor, playerFontStyle)
+		
+									-- we've expanded our player message
+									-- history, abort drawing this frame
+									break
+								end
+							else
+								-- fix horizontal overflow the easy way
+								--playerMessage, _ = splitMessage(playerMessage, playerMessageWidth, PLAYER_MSG_BOX_W)
+							end
+		
+							--if (TEXT_OUTLINING == 1 and not widgetHandler:InTweakMode()) then
+								-- draw bars behind player messages (only if player message box not rendered)
+								--drawBox(PLAYER_MSG_BOX_X_MIN, (y + FONT_SIZE), PLAYER_MSG_BOX_W, FONT_SIZE, PLAYER_TEXT_OUTLINE_COLOR, PLAYER_TEXT_OUTLINE_COLOR)
+							--end
+		
+							local text = playerMessage
+							local style = playerFontStyle
+							if ( USECOLORCODES ) then
+								local colorcode = convertColor(playerColor)
+								text = colorcode..playerMessage
+							else
+								style = playerFontStyle.."n"
+							end
+							gl_Color(playerColor)
+							gl_Text(text, PLAYER_MSG_BOX_X_MIN+5, y, FONT_SIZE, style)
 						end
-					else
-						-- fix horizontal overflow the easy way
-						--playerMessage, _ = splitMessage(playerMessage, playerMessageWidth, PLAYER_MSG_BOX_W)
 					end
-
-					--if (TEXT_OUTLINING == 1 and not widgetHandler:InTweakMode()) then
-						-- draw bars behind player messages (only if player message box not rendered)
-						--drawBox(PLAYER_MSG_BOX_X_MIN, (y + FONT_SIZE), PLAYER_MSG_BOX_W, FONT_SIZE, PLAYER_TEXT_OUTLINE_COLOR, PLAYER_TEXT_OUTLINE_COLOR)
-					--end
-
-					local text = playerMessage
-					local style = playerFontStyle
-					if ( USECOLORCODES ) then
-						local colorcode = convertColor(playerColor)
-						text = colorcode..playerMessage
-					else
-						style = playerFontStyle.."n"
-					end
-					gl_Color(playerColor)
-					gl_Text(text, PLAYER_MSG_BOX_X_MIN+5, y, FONT_SIZE, style)
+		
+					y = y - FONT_SIZE
 				end
 			end
-
-			y = y - FONT_SIZE
-		end
-	end
-
-	y = SYSTEM_MSG_BOX_Y_MAX - (FONT_SIZE + 6)
-
-	-- draw system message strings
-	for index = 1, table.getn(SYSTEM_MSG_HISTORY), 1 do
-		local systemMessage = SYSTEM_MSG_HISTORY[index]
-		local systemMessageWidth
-		if systemMessage ~= nil then
-			systemMessageWidth = (gl_GetTextWidth(systemMessage) * FONT_SIZE )
-		else
-			systemMessageWidth = 0
-		end
-
-		if (MESSAGE_WRAPPING == 1) then
-			local bufferIndex, buffer = getMessageParts(systemMessage, systemMessageWidth, SYSTEM_MSG_BOX_W)
-
-			if (bufferIndex > 1) then
-				-- our buffer was filled with at least two message parts
-				copySystemMessageBuffer(buffer, bufferIndex, index)
-
-				-- we've expanded our system message
-				-- history so abort drawing this frame
-				break
-			end
-		else
-			-- fix horizontal overflow the easy way
-			--systemMessage, _ = splitMessage(systemMessage, systemMessageWidth, SYSTEM_MSG_BOX_W)
-		end
-
-		-- make sure messages do not get printed below
-		-- bottom edge of box in case user increased
-		-- fontsize and box already reasonably full
-		if (index <= MAX_NUM_SYSTEM_MESSAGES) then
-			if ( systemMessageWidth > 0 ) then
-				local text = systemMessage
-				local style = FONT_RENDER_STYLES[1]
-				if ( USECOLORCODES ) then
-					local colorcode = convertColor(SYSTEM_TEXT_COLOR)
-					text = colorcode..systemMessage
+		
+			y = SYSTEM_MSG_BOX_Y_MAX - (FONT_SIZE + 6)
+		
+			-- draw system message strings
+			for index = 1, table.getn(SYSTEM_MSG_HISTORY), 1 do
+				local systemMessage = SYSTEM_MSG_HISTORY[index]
+				local systemMessageWidth
+				if systemMessage ~= nil then
+					systemMessageWidth = (gl_GetTextWidth(systemMessage) * FONT_SIZE )
 				else
-					style = FONT_RENDER_STYLES[1].."n"
+					systemMessageWidth = 0
 				end
-				gl_Color(SYSTEM_TEXT_COLOR)
-				gl_Text(text, SYSTEM_MSG_BOX_X_MIN+5, y, FONT_SIZE, style)
+		
+				if (MESSAGE_WRAPPING == 1) then
+					local bufferIndex, buffer = getMessageParts(systemMessage, systemMessageWidth, SYSTEM_MSG_BOX_W)
+		
+					if (bufferIndex > 1) then
+						-- our buffer was filled with at least two message parts
+						copySystemMessageBuffer(buffer, bufferIndex, index)
+		
+						-- we've expanded our system message
+						-- history so abort drawing this frame
+						break
+					end
+				else
+					-- fix horizontal overflow the easy way
+					--systemMessage, _ = splitMessage(systemMessage, systemMessageWidth, SYSTEM_MSG_BOX_W)
+				end
+		
+				-- make sure messages do not get printed below
+				-- bottom edge of box in case user increased
+				-- fontsize and box already reasonably full
+				if (index <= MAX_NUM_SYSTEM_MESSAGES) then
+					if ( systemMessageWidth > 0 ) then
+						local text = systemMessage
+						local style = FONT_RENDER_STYLES[1]
+						if ( USECOLORCODES ) then
+							local colorcode = convertColor(SYSTEM_TEXT_COLOR)
+							text = colorcode..systemMessage
+						else
+							style = FONT_RENDER_STYLES[1].."n"
+						end
+						gl_Color(SYSTEM_TEXT_COLOR)
+						gl_Text(text, SYSTEM_MSG_BOX_X_MIN+5, y, FONT_SIZE, style)
+					end
+				end
+		
+				y = y - FONT_SIZE
 			end
-		end
-
-		y = y - FONT_SIZE
+		
+		end)
+		glListRefreshIdx = refreshIdx
 	end
+	glCallList(glList)
+
+
 end
 
 
@@ -1168,6 +1195,6 @@ function drawVisibilityHint()
 end
 
 function getTimeStr()
-	local seconds = Spring.GetGameSeconds()
+	local seconds = spGetGameSeconds()
 	return "["..string.format("%.2d:%.2d", math_floor(seconds/60), seconds%60).."] "
 end

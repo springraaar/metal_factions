@@ -130,14 +130,15 @@ for wdName, wd in pairs(WeaponDefs) do
 			wd.heightmod = 1.0		-- default was 1.0
 		elseif (wd.weapontype == "Cannon" or wd.weapontype == "EmgCannon" ) then
 			if wd.range and tonumber(wd.range) > 380 then
-				--wd.cylindertargeting = 20
 				wd.heightmod = 0.5			-- default was 0.8
 			end
 			wd.heightboostfactor = 0.0		-- default was -1.0
-		elseif (wd.weapontype == "MissileLauncher" or wd.weapontype == "StarburstLauncher" ) then
-			--wd.cylindertargeting = 20
+		elseif (wd.weapontype == "MissileLauncher" ) then
 			wd.heightmod = 0.5			-- default was 0.8
+		elseif (wd.weapontype == "StarburstLauncher" ) then
+			wd.cylindertargeting = 2
 		end
+
 		
 		-- override mygravity for cannons if not specified
 		if (wd.weapontype == "Cannon") then
@@ -147,10 +148,11 @@ for wdName, wd in pairs(WeaponDefs) do
 		end
 		
 		-- range compensation for lasercannons due to engine bug
+		-- https://springrts.com/mantis/view.php?id=6384
 		if (wd.weapontype == "LaserCannon") then
 			local oRange = tonumber(wd.range)
 			if oRange > 0 then
-				wd.range = oRange + 30
+				wd.range = oRange + 20
 			end 
 		end
 	end

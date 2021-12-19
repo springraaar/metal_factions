@@ -69,6 +69,8 @@ local TYPE_BUILD = 1
 local TYPE_ORDER = 2
 local TYPE_ICONORDER = 3 
 
+local CLEANUP_TAG = 1
+
 -- custom commands
 VFS.Include("lualibs/custom_cmd.lua")
 
@@ -243,10 +245,11 @@ local Config = {
 local function IncludeRedUIFrameworkFunctions()
 	New = WG.Red.New(widget)
 	Copy = WG.Red.Copytable
-	SetTooltip = WG.Red.SetTooltip
-	GetSetTooltip = WG.Red.GetSetTooltip
-	Screen = WG.Red.Screen
-	GetWidgetObjects = WG.Red.GetWidgetObjects
+	setTooltip = WG.Red.SetTooltip
+	getSetTooltip = WG.Red.GetSetTooltip
+	screen = WG.Red.Screen
+	getWidgetObjects = WG.Red.GetWidgetObjects
+	cleanupTaggedObjects = WG.Red.CleanupTaggedObjects
 end
 
 local function RedUIchecks()
@@ -291,6 +294,7 @@ local function adjustGridYOffsets()
 	local iconOrderMenuYShift = iconOrderMenu.background.py - oldIconOrderMenuY
 	
 	local slaves = buildMenu.background.movableSlaves
+	--Spring.Echo("build slaves="..#slaves)
 	local o,c,niChilds = nil
 	if (slaves and #slaves > 0) then
 		for i=1,#slaves do
@@ -313,6 +317,7 @@ local function adjustGridYOffsets()
 		end
 	end
 	slaves = iconOrderMenu.background.movableSlaves
+	--Spring.Echo("iconorder slaves="..#slaves)
 	if (slaves and #slaves > 0) then
 		for i=1,#slaves do
 			o = slaves[i]
@@ -327,10 +332,10 @@ local function AutoResizeObjects() --autoresize v2
 		LastAutoResizeY = CanvasY
 	end
 	local lx,ly = LastAutoResizeX,LastAutoResizeY
-	local vsx,vsy = Screen.vsx,Screen.vsy
+	local vsx,vsy = screen.vsx,screen.vsy
 	--local vsx,vsy = 3940,2160
 	if ((lx ~= vsx) or (ly ~= vsy)) then
-		local objects = GetWidgetObjects(widget)
+		local objects = getWidgetObjects(widget)
 		scale = vsy/ly
 		maxFontSizeFactor = scale
 		local skippedObjects = {}
@@ -470,7 +475,7 @@ local function CreateGrid(r)
 			mouseOverHighlight.px = self.px
 			mouseOverHighlight.py = self.py
 			mouseOverHighlight.active = nil
-			SetTooltip(tooltipExtension(self.tooltip,self.cmdAction))
+			setTooltip(tooltipExtension(self.tooltip,self.cmdAction))
 		end,
 		
 		onUpdate=function(self)
@@ -502,7 +507,7 @@ local function CreateGrid(r)
 			mouseOverHighlightWide.py = self.py
 			mouseOverHighlightWide.active = nil
 			
-			SetTooltip(self.tooltip)
+			setTooltip(self.tooltip)
 		end
 	iconWide.sx=r.isx*2
 	local iconFlat = Copy(icon,true)
@@ -519,7 +524,7 @@ local function CreateGrid(r)
 			mouseOverHighlightFlat.py = self.py
 			mouseOverHighlightFlat.active = nil
 			
-			SetTooltip(self.tooltip)
+			setTooltip(self.tooltip)
 		end
 	iconFlat.sy=ICON_FLAT_HEIGHT
 	New(background)
@@ -563,6 +568,7 @@ local function CreateGrid(r)
 	for y=1,r.iy do
 		for x=1,r.ix do
 			local b = New(Copy(icon,true))
+			--b.cleanupTag = CLEANUP_TAG
 			b.options = b.options.."o"
 			b.px = background.px +r.margin + (x-1)*(r.iSpreadX + r.isx)
 			if (r.showFilter) then
@@ -612,7 +618,7 @@ local function CreateGrid(r)
 	New(heldHighlightFlat)
 
 	--tooltip
-	background.mouseOver = function(mx,my,self) SetTooltip(r.tooltip.background) end
+	background.mouseOver = function(mx,my,self) setTooltip(r.tooltip.background) end
 	
 	return {
 		["stateRect"] = stateRect,
@@ -674,13 +680,14 @@ end
 
 
 local function UpdateGrid(g,cmds,orderType,unfilteredCmds)
+	cleanupTaggedObjects(CLEANUP_TAG)
 	local nCommands = #cmds
 	if (nCommands==0) then
 		g.background.active = false
 	else
 		g.background.active = nil
 	end
-
+	
 	local curPage = g.page
 	local icons = g.icons
 	local page = {{}}
@@ -776,6 +783,7 @@ local function UpdateGrid(g,cmds,orderType,unfilteredCmds)
 				local stateRects = {}			
 				for i=1,stateCount do
 					local s = New(Copy(g.stateRect,true))
+					s.cleanupTag = CLEANUP_TAG
 					stateRects[#stateRects+1] = s
 					s.active = false
 					
@@ -1003,10 +1011,9 @@ function widget:Initialize()
 	AutoResizeObjects() --fix for displacement on crash issue
 end
 
-
-
 local function onNewCommands(filteredBuildCmds,buildCmds,otherCmds,iconOtherCmds)
 	if (SelectedUnitsCount==0) then
+		cleanupTaggedObjects(CLEANUP_TAG)
 		buildMenu.page = 1
 		orderMenu.page = 1
 		iconOrderMenu.page = 1
@@ -1032,7 +1039,7 @@ end
 --[[  FIXME: commented out, something was making this not work properly if left enabled
 function widget:GetConfigData() --save config
 	if (PassedStartupCheck) then
-		local vsy = Screen.vsy
+		local vsy = screen.vsy
 		local unscale = CanvasY/vsy --needed due to autoresize, stores unresized variables
 		Config.buildMenu.px = buildMenu.background.px * unscale
 		Config.buildMenu.py = buildMenu.background.py * unscale

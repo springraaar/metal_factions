@@ -56,7 +56,8 @@ local Spring_GetAIInfo           = Spring.GetAIInfo
 local Spring_GetViewGeometry 	 = Spring.GetViewGeometry
 local spGetGameFrame			 = Spring.GetGameFrame
 local spGetTeamRulesParam        = Spring.GetTeamRulesParam
-
+local spGetTimer                 = Spring.GetTimer
+local spDiffTimers               = Spring.DiffTimers
 
 local gl_Texture          = gl.Texture
 local gl_Rect             = gl.Rect
@@ -66,7 +67,9 @@ local gl_GetTextWidth     = gl.GetTextWidth
 local gl_GetTextHeight    = gl.GetTextHeight
 local gl_Text             = gl.Text
 
-
+local glCreateList	= gl.CreateList
+local glDeleteList	= gl.DeleteList
+local glCallList	= gl.CallList
 
 --local GetTextWidth        = fontHandler.GetTextWidth
 --local UseFont             = fontHandler.UseFont
@@ -509,7 +512,8 @@ end
 -- draw text
 function TextDraw(text,x,y,options)
 	options = options or "on"
-	return gl_Text(text,x,y,fontSize,options)
+
+	gl_Text(text,x,y,fontSize,options)
 end
 function TextDrawCentered(text,x,y)
 	return TextDraw(text,x,y,"onc")
@@ -660,6 +664,11 @@ end
 
 function widget:Initialize()
 	Init()
+	
+	-- participating on a team, change chat type to "ally"
+	-- disabled because it makes the chat popup appear
+	--chatType = CHAT_ALLIES
+	--Spring.SendCommands("ChatAlly")
 end
 
 function CreatePlayer(playerID)
@@ -1001,7 +1010,9 @@ end
 ---------------------------------------------------------------------------------------------------
 --  Draw
 ---------------------------------------------------------------------------------------------------
-
+local glList = nil
+local glListRefreshIdx = -1
+local refTimer = spGetTimer()
 function widget:DrawScreen()
 
 	local vOffset                 = 0         -- position of the next object to draw
@@ -1020,37 +1031,50 @@ function widget:DrawScreen()
 		return
 	end
 	
-	-- draws the background
-	DrawBackground()
-	
-	-- draws the main list
-	DrawList()
-
-	-- draws share energy/metal sliders
-	DrawShareSlider()
-	
-	-- draw chat type button
-	if chatTypeButton.above then
-		glColor(cLight)
-	else
-		glColor(cBack)
+	local refreshIdx = floor(spDiffTimers(spGetTimer(),refTimer)*5)
+	-- refresh gl list only a few times per second
+	if (not glList) or refreshIdx ~= glListRefreshIdx then
+		if (glList) then
+			glDeleteList(glList)
+		end 
+		glList = glCreateList(function()
+			-- draws the background
+			DrawBackground()
+			
+			-- draws the main list
+			DrawList()
+		
+			-- draws share energy/metal sliders
+			DrawShareSlider()
+			
+			-- draw chat type button
+			if chatTypeButton.above then
+				glColor(cLight)
+			else
+				glColor(cBack)
+			end
+			glRect(chatTypeButton.x1,chatTypeButton.y1,chatTypeButton.x2,chatTypeButton.y2)
+			glColor(cWhite)
+			-- chat button text
+			gl_Text(chatTypeLabels[chatType],(chatTypeButton.x1 + chatTypeButton.x2) /2, (chatTypeButton.y1 + chatTypeButton.y2) / 2-GetTextHeight(chatTypeLabels[chatType])/2,fontSize,"c")
+			-- chat type button border
+			if chatTypeButton.above then
+				glColor(cLightBorder)
+			else
+				glColor(cBorder)
+			end
+			glRect(chatTypeButton.x1,chatTypeButton.y1,chatTypeButton.x1+1,chatTypeButton.y2)
+			glRect(chatTypeButton.x2-1,chatTypeButton.y1,chatTypeButton.x2,chatTypeButton.y2)
+			glRect(chatTypeButton.x1,chatTypeButton.y1,chatTypeButton.x2,chatTypeButton.y1+1)
+			glRect(chatTypeButton.x1,chatTypeButton.y2-1,chatTypeButton.x2,chatTypeButton.y2)
+			gl_Color(1,1,1,1)			
+		end)
+		glListRefreshIdx = refreshIdx
 	end
-	glRect(chatTypeButton.x1,chatTypeButton.y1,chatTypeButton.x2,chatTypeButton.y2)
-	glColor(cWhite)
-	-- chat button text
-	gl_Text(chatTypeLabels[chatType],(chatTypeButton.x1 + chatTypeButton.x2) /2, (chatTypeButton.y1 + chatTypeButton.y2) / 2-GetTextHeight(chatTypeLabels[chatType])/2,fontSize,"c")
-	-- chat type button border
-	if chatTypeButton.above then
-		glColor(cLightBorder)
-	else
-		glColor(cBorder)
-	end
-	glRect(chatTypeButton.x1,chatTypeButton.y1,chatTypeButton.x1+1,chatTypeButton.y2)
-	glRect(chatTypeButton.x2-1,chatTypeButton.y1,chatTypeButton.x2,chatTypeButton.y2)
-	glRect(chatTypeButton.x1,chatTypeButton.y1,chatTypeButton.x2,chatTypeButton.y1+1)
-	glRect(chatTypeButton.x1,chatTypeButton.y2-1,chatTypeButton.x2,chatTypeButton.y2)
-	
-	gl_Color(1,1,1,1)
+	glCallList(glList)
+		
+			
+	-- wouldn't work inside the list for some reason
 	gl_Texture(chatTypePic)
 	gl_TexRect(chatTypeButton.x1 - 1 - (chatTypeButton.y2-chatTypeButton.y1), chatTypeButton.y1, chatTypeButton.x1 - 1, chatTypeButton.y2)
 end
@@ -1109,7 +1133,6 @@ function CheckTime()
 end
 
 function DrawBackground()
-	
 	-- draws background rectangle
 	gl_Color(0,0,0,0.6)                              
 	gl_Rect(widgetPosX,widgetPosY, widgetPosX + widgetWidth, widgetPosY + widgetHeight - 1)
@@ -1120,7 +1143,7 @@ function DrawBackground()
 	gl_Rect(widgetPosX,widgetPosY + widgetHeight  - 2, widgetPosX + widgetWidth, widgetPosY + widgetHeight  - 1)
 	gl_Rect(widgetPosX , widgetPosY, widgetPosX + 1, widgetPosY + widgetHeight  - 1)
 	gl_Rect(widgetPosX + widgetWidth - 1, widgetPosY, widgetPosX + widgetWidth, widgetPosY + widgetHeight  - 1)
-	gl_Color(1,1,1,1)
+	gl_Color(1,1,1,1)		
 end
 
 function DrawList()

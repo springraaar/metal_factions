@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, lwing, rwing, lbody, rbody, lw2, rw2, center, weapon, firept1, firept2, ljet, rjet, ljp2, rjp2, b2;
+piece  base, lwing, rwing, lbody, rbody, lw2, rw2, center, weapon1,weapon2, firept1, firept2, ljet, rjet, ljp2, rjp2, b2;
 
 static-var  statechg_DesiredState, statechg_StateChanging, Static_Var_3, Static_Var_4, gun_1;
 
@@ -99,17 +99,15 @@ Deactivate()
 	start-script RequestState(1);
 }
 
-FirePrimary()
+Shot1()
 {
 	if (gun_1 == [0])
 	{
-		sleep 30;
 		gun_1 = [1];
 		return (0);
 	}
-	if (gun_1 == [0])
+	if (gun_1 == [1])
 	{
-		sleep 30;
 		gun_1 = [0];
 		return (0);
 	}
@@ -131,7 +129,7 @@ QueryPrimary(piecenum)
 
 AimFromPrimary(piecenum)
 {
-		piecenum = weapon;
+		piecenum = b2;
 }
 
 AimPrimary(heading,pitch)

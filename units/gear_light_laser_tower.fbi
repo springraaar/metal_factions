@@ -74,9 +74,9 @@
 	//  Weapons
 	//***********
 	weapon1=gear_llt_laser;
-	badTargetCategory1=VTOL;
-	explodeAs=MEDIUM_BUILDINGEX;
-	selfDestructAs=MEDIUM_BUILDING;
+	badTargetCategory1=NOTAIR;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
 
 	//************************************************************
 	//  Orders
@@ -100,8 +100,8 @@
 		explosionGenerator0=custom:GLOWSML;
 	}
 
-	buildCostEnergy=1280;//#AUTO#
+	buildCostEnergy=1281;//#AUTO#
 	buildCostMetal=256;//#AUTO#
-	buildTime=3052;//#AUTO#
+	buildTime=3054;//#AUTO#
 	mass=744;//#AUTO#
 }

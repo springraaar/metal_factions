@@ -71,8 +71,8 @@
 	//***********
 	weapon1=gear_pulverizer_missile;
 	badTargetCategory1=NOTAIR;
-	explodeAs=BIG_UNITEX;
-	selfDestructAs=BIG_UNIT;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
 
 	//************************************************************
 	//  Orders
@@ -98,8 +98,8 @@
 	{
 		explosionGenerator0=custom:rocketflaresml;
 	}
-	buildCostEnergy=1534;//#AUTO#
-	buildCostMetal=306;//#AUTO#
-	buildTime=3657;//#AUTO#
+	buildCostEnergy=1535;//#AUTO#
+	buildCostMetal=307;//#AUTO#
+	buildTime=3658;//#AUTO#
 	mass=828;//#AUTO#
 }

@@ -1,3 +1,58 @@
+2021/12/19 ------------------ NOTES v1.77 ----------------------
+
+
+- fixed light laser towers not prioritizing air targets
+- slightly increased the slope tolerance for commanders to match the other robots (it's slightly higher than vehicles)
+- fixed collision volumes of some of the advanced sonar stations and GEAR "Eruptor", CLAW "Mega" and a few others
+- small adjustments to colision volumes for some vehicles
+
+- reduced AVEN "Sniper" range by 5% and cost by 8%
+- reduced AVEN "Penetrator" range by 5% and cost by 7%
+- reduced the range compensation for a weapon type that's used on miniguns and energy bolts from +30 to +20
+
+- increased GEAR "Lesser Luminator" range by 6% and cost by 9%
+- fixed GEAR light laser tower's death explosion being larger than it should
+- increased HP of GEAR adv construction robot by about 10% and reduced cost by 8%
+- GEAR "Barrager" has 17% less HP,about 2.5% more range, slightly higher area of effect and rate of fire but 3.5% increased cost
+- GEAR "Moe" has AOE increased from 54 to 70 and slightly increased cost
+- slightly reduced the dmg/s of heatrays but reduced the drop in damage over the range from 30% to 15%
+- slightly increased GEAR "Solaris" range to 1600 but reduced dmg/s by about 35% and cost by 25%
+- GEAR "Beamer" opens up and turns about twice as fast
+- GEAR "Cascade" deals less damage to relatively small targets and is easier to dodge
+(it's still generally able to destroy a L2 factory in a single pass)
+
+- slightly adjusted area of effect and cost of various units with heavy plasma cannons
+
+- CLAW "Sickle" has M armor and laser changed from H to M with 10% more range and 10% less dmg/s. Costs 8% more
+- CLAW "Pounder" has a very slight range and area of effect increase and slightly increased cost
+
+- fixed wrecks of L1 construction construction robots/vehicle and ships not spawning the secondary wreck when violently destroyed
+
+- fixed issue that caused vertically launched missiles and rockets to have less range than they should when firing at higher targets
+
+- increased hypersonic nuclear rockets' blast diameter from 700 to 750
+
+- mass burners and fission reactors now only produce the extra energy associated with the metal drain (using 60e/m ratio) if there's metal available
+
+--- VISUALS
+
+- miscellaneous improvements to unit textures
+
+- damaged units are now slown as slightly darker
+
+--- UI
+
+- fixed issue that sometimes caused the idle construction tower trigger to run multiple times
+(patrol would override queued orders sometimes)
+
+- significant performance improvements on various UI widgets
+- fixed performance leak issue with the commands/build orders menu that increased load over time
+(it was main the reason for the fps being improved by typing "/luaui reload" late in the game)
+
+- selected units widget now also shows idle builders and sorted results
+
+
+
 2021/09/26 ------------------ NOTES v1.76 ----------------------
 
 --- Balance / Mechanics
@@ -4476,9 +4531,6 @@ camera_smooth_move.lua
 
 - SPHERE's unit shields protect only the owner, take 2x dmg from paralyzer weapons, and regenerate 2%hp/s at the cost of 4%hp E/s
 (they take dmg according to the unit's armor type, for now)
-
-
-
 
 
 

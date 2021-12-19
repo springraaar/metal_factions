@@ -240,20 +240,9 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode arm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode nano1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-		explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode front2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode boxl type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode boxr type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		return (0);
-	}
+
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
 		explode arm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
 		explode nano1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
 		explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP2;
@@ -262,22 +251,8 @@ Killed(severity, corpsetype)
 		explode back type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 		explode boxl type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 		explode boxr type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		return (0);
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode arm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode nano1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-		explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode front type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode front2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode back type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode boxl type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode boxr type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		return (0);
-	}
-	corpsetype = 3;
 	explode arm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
 	explode nano1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
 	explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP2;
@@ -286,5 +261,5 @@ Killed(severity, corpsetype)
 	explode back type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode boxl type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode boxr type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-	return (0);
+	return (2);
 }

@@ -3057,7 +3057,7 @@
 	startVelocity=150;
 	weaponAcceleration=130;
 	turnRate=33000;
-	areaOfEffect=700;
+	areaOfEffect=750;
 	edgeEffectiveness=0.4;
 	metalPerShot=0;
 	soundStart=misicbmfast;
@@ -3109,7 +3109,7 @@
 	startVelocity=150;
 	weaponAcceleration=130;
 	turnRate=33000;
-	areaOfEffect=700;
+	areaOfEffect=750;
 	edgeEffectiveness=0.4;
 	metalPerShot=0;
 	soundStart=misicbmfast;
@@ -3161,7 +3161,7 @@
 	startVelocity=150;
 	weaponAcceleration=130;
 	turnRate=33000;
-	areaOfEffect=700;
+	areaOfEffect=750;
 	edgeEffectiveness=0.4;
 	metalPerShot=0;
 	soundStart=misicbmfast;
@@ -3213,7 +3213,7 @@
 	startVelocity=150;
 	weaponAcceleration=130;
 	turnRate=33000;
-	areaOfEffect=700;
+	areaOfEffect=750;
 	edgeEffectiveness=0.4;
 	metalPerShot=0;
 	soundStart=misicbmfast;
@@ -4338,7 +4338,7 @@
 	weaponType=LaserCannon;
 	turret=1;
 	duration=0.10;
-	range=1000;
+	range=950;
 	minIntensity=1.0;
 	thickness=6;
 	reloadTime=12;
@@ -5546,7 +5546,7 @@
 	weaponType=LaserCannon;
 	turret=1;
 	duration=0.10;
-	range=1100;
+	range=1050;
 	minIntensity=1.0;
 	thickness=6;
 	reloadTime=6;
@@ -7500,14 +7500,14 @@
 	range=400;
 	explosionGenerator=custom:ROCKETBLASTWRAPPER;
 	reloadTime=50;
-	areaOfEffect=190;
-	burst=22;
-	burstRate=0.035;
-	sprayAngle=16000;
+	areaOfEffect=160;
+	burst=16;
+	burstRate=0.067;
+	sprayAngle=3000;
 	leadLimit=50;
 	soundStart=bombrel;
 	soundHit=xplomed3;
-	myGravity=0.3;
+	myGravity=0.2;
 	collideFriendly=0;
 	avoidFriendly=0;
 	interceptedByShieldType=1;
@@ -7515,17 +7515,17 @@
 	[CUSTOMPARAMS]
 	{
 		hitPower=2;
-		evalFactor=1.45; // compensation for the evaluator's factor for non-hoverattack air types
+		evalFactor=1.65; // compensation for the evaluator's factor for non-hoverattack air types
 		expDmgScaling=1;
 		targets=SURFACE;
 	}
 	[DAMAGE]
 	{
-		default=330;
+		default=450;
     		group_invincible=1;
-		armor_heavy=165;//#AUTO#
-		armor_medium=330;//#AUTO#
-		armor_light=330;//#AUTO#
+		armor_heavy=225;//#AUTO#
+		armor_medium=450;//#AUTO#
+		armor_light=450;//#AUTO#
 	}
 }
 [gear_BATSLASER]
@@ -8151,7 +8151,7 @@
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	reloadTime=1.3;
 	weaponVelocity=400;
-	areaOfEffect=54;
+	areaOfEffect=70;
 	soundStart=cannon3;
 	soundHit=xplomed2;
 	size=3.2;
@@ -8183,14 +8183,14 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	turret=1;
-	range=1220;
+	range=1250;
 	accuracy=200;
 	movingAccuracy=350;
 	cegTag=PLASMATRAIL1;
 	explosionGenerator=custom:STDBLASTWRAPPER;
-	reloadTime=1.1;
+	reloadTime=0.9;
 	weaponVelocity=400;
-	areaOfEffect=74;
+	areaOfEffect=80;
 	soundStart=cannon3;
 	soundHit=xplomed2;
 	size=3.2;
@@ -8210,11 +8210,11 @@
 	}
 	[DAMAGE]
 	{
-		default=220;
+		default=200;
 		group_invincible=1;
-		armor_heavy=220;//#AUTO#
-		armor_medium=220;//#AUTO#
-		armor_light=220;//#AUTO#
+		armor_heavy=200;//#AUTO#
+		armor_medium=200;//#AUTO#
+		armor_light=200;//#AUTO#
 	}
 }
 [gear_big_bob_cannon]
@@ -8229,7 +8229,7 @@
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	reloadTime=2.1;
 	weaponVelocity=400;
-	areaOfEffect=64;
+	areaOfEffect=90;
 	burnBlow=1;
 	soundStart=cannon3;
 	soundHit=xplomed2;
@@ -8544,7 +8544,7 @@
 	collideFriendly=1;
 	model=gear_blowfish;
 	range=150;
-	cylinderTargetting=1;
+	cylinderTargeting=1;
 	reloadTime=999;
 	flightTime=4;
 	subMissile=0;
@@ -8726,7 +8726,7 @@
 	range=1800;
 	reloadTime=2.8;
 	weaponVelocity=440;
-	areaOfEffect=95;
+	areaOfEffect=100;
 	soundStart=cannhvy5;
 	soundHit=xplomed2;
 	tolerance=3000;
@@ -9545,7 +9545,7 @@
 	range=600;
 	reloadTime=1.8;
 	weaponVelocity=390;
-	areaOfEffect=95;
+	areaOfEffect=100;
 	soundStart=cannhvy2;
 	soundHit=xplomed2;
 	tolerance=3000;
@@ -12977,7 +12977,7 @@
 	turret=1;
 	soundTrigger=1;
 	intensity=0.3; 
-	minIntensity=0.7; 
+	minIntensity=0.85; 
 	laserFlareSize=8;
 	coreThickness=1.5;
 	thickness=3;
@@ -12986,7 +12986,7 @@
 	beamTTL=5;
 	hardStop=0;
 	range=960;
-	reloadTime=4.5;
+	reloadTime=5;
 	energyPerShot=700;
 	weaponVelocity=10000;
 	areaOfEffect=45;
@@ -13029,7 +13029,7 @@
 	turret=1;
 	soundTrigger=1;
 	intensity=0.3; 
-	minIntensity=0.7; 
+	minIntensity=0.85; 
 	laserFlareSize=7;
 	coreThickness=1.5;
 	thickness=3;
@@ -13081,7 +13081,7 @@
 	turret=1;
 	soundTrigger=1;
 	intensity=0.3; 
-	minIntensity=0.7; 
+	minIntensity=0.85; 
 	laserFlareSize=8;
 	coreThickness=1.5;
 	thickness=3;
@@ -13089,8 +13089,8 @@
 	beamDecay=0.8;
 	beamTTL=5;
 	hardStop=0;
-	range=940;
-	reloadTime=4.5;
+	range=1000;
+	reloadTime=5;
 	energyPerShot=700;
 	weaponVelocity=10000;
 	areaOfEffect=45;
@@ -13133,7 +13133,7 @@
 	turret=1;
 	soundTrigger=1;
 	intensity=0.3; 
-	minIntensity=0.7; 
+	minIntensity=0.85; 
 	laserFlareSize=7;
 	coreThickness=1.5;
 	thickness=3;
@@ -13142,7 +13142,7 @@
 	beamTTL=5;
 	hardStop=0;
 	range=690;
-	reloadTime=3.5;
+	reloadTime=3.7;
 	energyPerShot=520;
 	weaponVelocity=1000;
 	areaOfEffect=45;
@@ -13171,11 +13171,11 @@
 	}
 	[DAMAGE]
 	{
-		default=900;
+		default=890;
 		group_invincible=1;
-		armor_heavy=900;//#AUTO#
-		armor_medium=900;//#AUTO#
-		armor_light=900;//#AUTO#
+		armor_heavy=890;//#AUTO#
+		armor_medium=890;//#AUTO#
+		armor_light=890;//#AUTO#
 	}
 }
 [gear_edge_laser2]
@@ -13229,7 +13229,7 @@
 	turret=1;
 	soundTrigger=1;
 	intensity=0.3; 
-	minIntensity=0.7; 
+	minIntensity=0.85; 
 	laserFlareSize=5;
 	coreThickness=2.8;
 	thickness=4;
@@ -13237,9 +13237,9 @@
 	beamDecay=0.8;
 	beamTTL=5;
 	hardStop=0;
-	range=1550;
-	reloadTime=10;
-	energyPerShot=6000;
+	range=1600;
+	reloadTime=13;
+	energyPerShot=7000;
 	weaponVelocity=1000;
 	areaOfEffect=65;
 	soundStart=heatrayfire2;
@@ -13267,11 +13267,11 @@
 	}
 	[DAMAGE]
 	{
-		default=6000;
+		default=5000;
 		group_invincible=1;
-		armor_heavy=6000;//#AUTO#
-		armor_medium=6000;//#AUTO#
-		armor_light=6000;//#AUTO#
+		armor_heavy=5000;//#AUTO#
+		armor_medium=5000;//#AUTO#
+		armor_light=5000;//#AUTO#
 	}
 }
 [gear_luminator_heatray]
@@ -13281,7 +13281,7 @@
 	turret=1;
 	soundTrigger=1;
 	intensity=0.3; 
-	minIntensity=0.7; 
+	minIntensity=0.85; 
 	laserFlareSize=4;
 	coreThickness=2.3;
 	thickness=3.6;
@@ -13290,7 +13290,7 @@
 	beamDecay=0.8;
 	beamTTL=5;
 	range=1450;
-	reloadTime=10;
+	reloadTime=11;
 	energyPerShot=4200;
 	weaponVelocity=3000;
 	areaOfEffect=55;
@@ -14996,7 +14996,7 @@
 }
 [claw_grinder_railgun]
 {
-	name=Fast-Firing Rail Gun;
+	name=Rapid-Fire Rail Gun;
 	weaponType=MissileLauncher;
 	explosionGenerator=custom:STDNARROWBLASTWRAPPER;
 	cegTag=RAILGUNTRAILSML;
@@ -15084,7 +15084,7 @@
 }
 [claw_drakkar_railgun]
 {
-	name=Fast-Firing Rail Gun;
+	name=Rapid-Fire Rail Gun;
 	weaponType=MissileLauncher;
 	explosionGenerator=custom:STDNARROWBLASTWRAPPER;
 	cegTag=RAILGUNTRAILSML;
@@ -15127,7 +15127,7 @@
 }
 [claw_u5commander_railgun]
 {
-	name=Fast-Firing Rail Gun;
+	name=Rapid-Fire Rail Gun;
 	weaponType=MissileLauncher;
 	explosionGenerator=custom:STDNARROWBLASTWRAPPER;
 	cegTag=RAILGUNTRAILSML;
@@ -16490,7 +16490,7 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	turret=1;
-	range=1240;
+	range=1260;
 	size=3.4;
 	rgbColor=0.9 0.7 0.3;
 	stages=4;
@@ -16500,7 +16500,7 @@
 	energyPerShot=0;
 	reloadTime=3.2;
 	weaponVelocity=450;
-	areaOfEffect=80;
+	areaOfEffect=90;
 	cegTag=PLASMATRAIL2;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	soundStart=cannhvy2;
@@ -16607,27 +16607,27 @@
 }
 [claw_sickle_laser]
 {
-	name=High Energy Laser;
+	name=Medium Laser;
 	weaponType=BeamLaser;
 	explosionGenerator=custom:BLUELASERBLASTWRAPPER;
-	energyPerShot=80;
 	intensity=0.85;
-	beamTime=0.15;
-	thickness=3.234;
-	coreThickness=0.8;
+	beamTime=0.1;
+	thickness=2.888;
+	coreThickness=0.6;
+	energyPerShot=50;
 	turret=1;
-	range=420;
+	range=460;
 	minIntensity=1.0;
-	reloadTime=2;
+	reloadTime=1.5;
 	weaponVelocity=1533;
 	areaOfEffect=8;
 	soundTrigger=1;
-	soundStart=lasrfir2;
-	soundHit=lasrhit1;
+	soundStart=lasrlit2;
+	soundHit=lasrhit2;
 	fireStarter=50;
 	scrollSpeed=0;
 	pulseSpeed=0;
-	rgbColor=0.5 0.4 1.0;
+	rgbColor=0.3 0.3 1.0;
 	rgbColor2=0.1 0.3 1.0;
 	tolerance=3000;
 	impulseFactor=0.222;
@@ -16635,7 +16635,7 @@
 	avoidFeature=0;
 	[CUSTOMPARAMS]
 	{
-		hitPower=3;
+		hitPower=2;
 		reaimTime=1;
 		aaRangeBoost=1;
 		expDmgScaling=1;
@@ -16643,10 +16643,10 @@
 	}
 	[DAMAGE]
 	{
-		default=220;
-		armor_heavy=220;//#AUTO#
-		armor_medium=220;//#AUTO#
-		armor_light=220;//#AUTO#
+		default=150;
+		armor_heavy=75;//#AUTO#
+		armor_medium=150;//#AUTO#
+		armor_light=150;//#AUTO#
 	}
 }
 [claw_scythe_laser]
@@ -16654,7 +16654,7 @@
 	name=High Energy Laser;
 	weaponType=BeamLaser;
 	explosionGenerator=custom:BLUELASERBLASTWRAPPER;
-	energyPerShot=80;
+	energyPerShot=110;
 	intensity=0.85;
 	beamTime=0.15;
 	thickness=3.234;
@@ -20823,7 +20823,7 @@
 	weaponVelocity=500;
 	cegTag=ROCKETTRAIL2;
 	explosionGenerator=custom:ROCKETBLASTWRAPPER;
-	areaOfEffect=90;
+	areaOfEffect=100;
 	soundStart=MISLHVY3;
 	soundHit=xplomed2;
 	tolerance=3000;
@@ -21024,7 +21024,7 @@
 }
 [sphere_shine_laser]
 {
-	name=Laser;
+	name=Medium Laser;
 	weaponType=BeamLaser;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
 	beamTime=0.1;

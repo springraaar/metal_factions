@@ -24,6 +24,13 @@ local glRect						= gl.Rect
 local glTexture 					= gl.Texture
 local glTexRect 					= gl.TexRect
 local glText	 					= gl.Text
+local glCreateList	= gl.CreateList
+local glDeleteList	= gl.DeleteList
+local glCallList	= gl.CallList
+local spGetTimer    = Spring.GetTimer
+local spDiffTimers  = Spring.DiffTimers
+local spGetGameSeconds = Spring.GetGameSeconds
+
 local hh,mm,ss 
 local seconds 
 
@@ -39,6 +46,8 @@ local refProgressSizeX = 240
 local refProgressSizeY = 30
 local fontSize = refFontSize
 local scaleFactor = 1
+
+local floor = math.floor
 
 -- colors
 local cLight						= {1, 1, 1, 0.5}
@@ -72,6 +81,9 @@ local running = (localFrame > 0)
 local progressCaption = ""
 local catchingPercent = "" 
 
+local glList = nil
+local glListRefreshIdx = -1
+local refTimer = spGetTimer()
 
 local function estimateServerFrame()
 	local speedFactor, _, isPaused = spGetGameSpeed()
@@ -274,31 +286,43 @@ end
 
 
 function widget:DrawScreen()
-			
-	-- clock
-	seconds = Spring.GetGameSeconds()
-	hh = math.floor(seconds / 3600)
-	mm = math.floor(seconds % 3600 / 60)
-	ss = math.floor(seconds % 3600 % 60)
-   	hh = hh < 10 and "0"..hh or hh
-   	mm = mm < 10 and "0"..mm or mm
-   	ss = ss < 10 and "0"..ss or ss
-	drawElement(bgClock,hh..":"..mm..":"..ss,false)
+	local refreshIdx = floor(spDiffTimers(spGetTimer(),refTimer)*5)
+	-- refresh gl list only a few times per second
+	if (not glList) or refreshIdx ~= glListRefreshIdx then
+		if (glList) then
+			glDeleteList(glList)
+		end 
 
-	-- fps indicator
-	drawElement(bgFPS,"FPS: "..Spring.GetFPS(),false)
-	
-	-- progress indicator
-	if (showProgress) then
-		drawElement(bgProgress,progressCaption,false)
-		if (showSpeedButtons) then
-			--local speedFactor, _, isPaused = spGetGameSpeed()
-			--Spring.Echo("speedFactor="..tostring(speedFactor).." isPaused="..tostring(isPaused))
-			drawElement(bgSpdIncrease,"+",false)
-			drawElement(bgPause,replayPaused and playTexture or pauseTexture,true)
-			drawElement(bgSpdDecrease,"-",false)
-		end
+		-- clock
+		seconds = spGetGameSeconds()
+		hh = math.floor(seconds / 3600)
+		mm = math.floor(seconds % 3600 / 60)
+		ss = math.floor(seconds % 3600 % 60)
+	   	hh = hh < 10 and "0"..hh or hh
+	   	mm = mm < 10 and "0"..mm or mm
+	   	ss = ss < 10 and "0"..ss or ss
+		glList = glCreateList(function()
+			drawElement(bgClock,hh..":"..mm..":"..ss,false)
+		
+			-- fps indicator
+			drawElement(bgFPS,"FPS: "..Spring.GetFPS(),false)
+			
+			-- progress indicator
+			if (showProgress) then
+				drawElement(bgProgress,progressCaption,false)
+				if (showSpeedButtons) then
+					--local speedFactor, _, isPaused = spGetGameSpeed()
+					--Spring.Echo("speedFactor="..tostring(speedFactor).." isPaused="..tostring(isPaused))
+					drawElement(bgSpdIncrease,"+",false)
+					drawElement(bgPause,replayPaused and playTexture or pauseTexture,true)
+					drawElement(bgSpdDecrease,"-",false)
+				end
+			end
+		end)
+		glListRefreshIdx = refreshIdx
 	end
+	glCallList(glList)
+
 end
 
 

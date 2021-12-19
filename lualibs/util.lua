@@ -128,7 +128,31 @@ function splitString(input, sep)
 	return t
 end
 
+-- trim string
+function trim(s)
+   return s:match'^()%s*$' and '' or s:match'^%s*(.*%S)'
+end
 
+-- convert number to string with N decimal digits
+function formatNbr(x,digits)
+	if x then
+		local ret=string.format("%."..(digits or 0).."f",x)
+		if digits and digits>0 then
+			while true do
+				local last = string.sub(ret,string.len(ret))
+				if last=="0" or last=="." then
+					ret = string.sub(ret,1,string.len(ret)-1)
+				end
+				if last~="0" then
+					break
+				end
+			end
+		end
+		return ret
+	else
+		return ""
+	end
+end
 -------------------------------------------- OTHER
 
 

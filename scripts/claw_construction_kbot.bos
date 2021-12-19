@@ -364,28 +364,21 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode base type BITMAPONLY | BITMAP1;
-		explode torso type BITMAPONLY | BITMAP3;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode base type BITMAPONLY | BITMAP1;
-		explode torso type FALL | BITMAP3;
-		return (0);
+		explode torso type SHATTER;
+		explode head type SHATTER;
+		explode l_thigh type SHATTER;
+		explode rleg type SHATTER;
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode base type BITMAPONLY | BITMAP1;
-		explode torso type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-		return (0);
-	}
-	corpsetype = 3;
-	explode base type BITMAPONLY | BITMAP1;
-	explode torso type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+
+	explode torso type SHATTER;
+	explode head type SHATTER;
+	explode l_thigh type SHATTER;
+	explode rleg type SHATTER;
+	explode rfoot type SHATTER;
+	explode lfoot type SHATTER;
+	explode hips type SHATTER;
+	return (2);
 }

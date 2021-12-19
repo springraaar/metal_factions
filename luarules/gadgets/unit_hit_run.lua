@@ -51,7 +51,7 @@ include("lualibs/custom_cmd.lua")
 local enableHitNRunList = {}
 local unitIdsThatFiredRecently = {}
 local unitNames = {}
-local REACTION_DELAY_FRAMES = 15
+local REACTION_DELAY_FRAMES = 20
 local RUN_LENGTH = 3000
 
 local CMD_MOVE_STATE    = CMD.MOVE_STATE
@@ -72,6 +72,11 @@ local enabledUnitNames = {
 	gear_cascade = true,
 	sphere_manta = true
 }
+
+local reactionDelayFramesByUnitDefId = {
+	[UnitDefNames['gear_cascade'].id] = 45
+}
+
 
 local hitNRunCmdDesc = {
 	id      = CMD_HITNRUN,
@@ -219,11 +224,13 @@ function gadget:Shutdown()
 end
 
 function gadget:GameFrame(n)
-	local cmds,cmd1,tx,tz,x,z
+	local cmds,cmd1,tx,tz,x,z,defId,reactionDelayFrames
 
 	-- process each hit-n-run enabled unit that fired recently
 	for unitId,f in pairs(unitIdsThatFiredRecently) do
-		if n - f > REACTION_DELAY_FRAMES then
+		defId = spGetUnitDefID(unitId)
+		reactionDelayFrames = reactionDelayFramesByUnitDefId[defId] or REACTION_DELAY_FRAMES
+		if n - f > reactionDelayFrames then
 			cmds = spGetUnitCommands(unitId,5)
 			-- stop the unit and order it to move somewhere
 			if (cmds and (#cmds > 0)) then

@@ -140,6 +140,14 @@ local noDecalUnits = {
 	sphere_meteorite_rocket = true
 }
 
+-- for units with extra energy income associated to a metal drain
+-- this is here to disable the unitdef's values as it's handled through a gadget 
+local metalDrainingEnergyGenerators = {
+	gear_mass_burner = 12,
+	sphere_fusion_reactor = 30,
+	sphere_hardened_fission_reactor = 30
+} 
+
 -- unitdef tweaking
 if (true) then
 	for name,unitDef in pairs(UnitDefs) do
@@ -260,6 +268,12 @@ if (true) then
 					unitDef.buildinggrounddecaldecayspeed = 0.01
 				end
 			end
+		end
+		
+		-- disable extra E income and M drain on the unitdef as it's handled by gadget
+		if metalDrainingEnergyGenerators[name] then
+			unitDef.energymake = tonumber(unitDef.energymake) - metalDrainingEnergyGenerators[name]
+			unitDef.metaluse = 0
 		end
 	end
 end

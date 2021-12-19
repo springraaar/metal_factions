@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=2800;
+	maxDamage=3100;
 	footprintx=3;
 	footprintz=3;
 
@@ -103,7 +103,7 @@
 		buildertype=gear_l2builder;
 		builtBy=gear_adv_kbot_lab;
 		tip=Spawns transport drones (max 1);
-		evalfactor=1.5; // because drones
+		evalfactor=1.30; // because drones
 	}
 
 	[SFXTypes]
@@ -111,8 +111,8 @@
 		explosionGenerator0=custom:Nano;
 	}
 
-	buildCostEnergy=5683;//#AUTO#
-	buildCostMetal=1136;//#AUTO#
-	buildTime=13545;//#AUTO#
-	mass=1725;//#AUTO#
+	buildCostEnergy=5238;//#AUTO#
+	buildCostMetal=1047;//#AUTO#
+	buildTime=12486;//#AUTO#
+	mass=1798;//#AUTO#
 }

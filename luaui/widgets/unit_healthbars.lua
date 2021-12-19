@@ -45,7 +45,8 @@ local drawFeatureHealth  = true
 local featureTitlesAlpha = featureBarAlpha * titlesAlpha/barAlpha
 local featureHpThreshold = 0.85
 
-local infoDistance = 1000000
+local infoSqDistance = 10000000
+local fullTextSqDistance = 300000 
 
 local minReloadTime = 4 --// in seconds
 local maxReloadTime = 999 --// in seconds
@@ -54,6 +55,7 @@ local drawStunnedOverlay = true
 local drawUnitsOnFire    = true
 local drawJumpJet        = Spring.GetGameRulesParam("jumpJets")
 local drawMorphOverlay   = true
+local drawDamageOverlay  = true
 
 --// this table is used to shows the hp of perimeter defence, and filter it for default wreckages
 local walls = {dragonsteeth=true,dragonsteeth_core=true,
@@ -103,6 +105,7 @@ local empDecline = 32/30/40
 local cx, cy, cz = 0,0,0  --// camera pos
 
 local paraUnits   = {}
+local damagedUnits = {}
 local onFireUnits = {}
 local regenUnits = {}
 local UnitMorphs  = {}
@@ -488,14 +491,16 @@ do
   local fullText
   local ux, uy, uz
   local dx, dy, dz, dist
-  local health,maxHealth,paralyzeDamage,capture,build
   local hp, hp100, emp, morph
   local reload,reloaded,reloadFrame
   local numStockpiled,numStockpileQued
   local customInfo = {}
   local ci
+  local DMG_OVERLAY_HP_FRAC = 0.8
+  local DMG_OVERLAY_OPACITY = 0.4
 
   function DrawUnitInfos(unitID,unitDefID, ud)
+    local health,maxHealth,paralyzeDamage,capture,build
     local MAGNETAR_DEF_ID = UnitDefNames["sphere_magnetar"].id
     if (not customInfo[unitDefID]) then
     
@@ -529,13 +534,13 @@ do
     ux, uy, uz = GetUnitViewPosition(unitID)
     dx, dy, dz = ux-cx, uy-cy, uz-cz
     dist = dx*dx + dy*dy + dz*dz
-    if (dist > infoDistance) then
-      if (ud.id ~= MAGNETAR_DEF_ID and dist > 9000000) then
-        return
-      end
+    if (dist > infoSqDistance and ud.id ~= MAGNETAR_DEF_ID) then
+      return
+    elseif (dist > fullTextSqDistance) then
       fullText = false
     end
-
+    
+    
     --// GET UNIT INFORMATION
     health,maxHealth,paralyzeDamage,capture,build = GetUnitHealth(unitID)
     --if (not health)    then health=-1   elseif(health<1)    then health=1    end
@@ -577,6 +582,10 @@ do
       if (health) and ((drawFullHealthBars)or(hp<1)) and ((build==1)or(build-hp>=0.01)) then
         hp100 = hp*100; hp100 = hp100 - hp100%1; --//same as floor(hp*100), but 10% faster
         if (hp100<0) then hp100=0 elseif (hp100>100) then hp100=100 end
+        if build==1 and hp100 < 80 then
+          -- this stores the alpha of the overlay for each damaged unit
+          damagedUnits[#damagedUnits+1]={unitID,(DMG_OVERLAY_HP_FRAC-hp) * DMG_OVERLAY_OPACITY}
+       	end
         if (drawFullHealthBars)or(hp100<100) then
           AddBar("health",hp,nil,(fullText and hp100..'%') or '',bfcolormap[hp100])
         end
@@ -770,9 +779,13 @@ do
   local glBlending             = gl.Blending
   local glDepthTest            = gl.DepthTest
   local glTexture              = gl.Texture
+  local glCallList             = gl.CallList
+  local glDeleteList           = gl.DeleteList
   local GetCameraVectors       = Spring.GetCameraVectors
   local abs                    = math.abs
 
+  local glListDamage = nil 
+  
   function DrawOverlays()
     local uId
     --// draw an overlay for stunned units
@@ -815,6 +828,33 @@ do
       glDepthTest(false)
 
       paraUnits = {}
+    end
+  
+    --// draw an overlay for damaged units
+    if (drawDamageOverlay)and(damagedUnits) then
+      --glDeleteList(glListDamage)
+      --glListDamage = nil
+      local u = nil
+      --if (not glListDamage) then
+	      --glListDamage = gl.CreateList(function()
+		      glDepthTest(true)
+		      glPolygonOffset(-1, -1)
+		      glBlending(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA)
+		
+		      for i=1,#damagedUnits  do
+		        u = damagedUnits[i]
+		      	--Spring.Echo("f="..spGetGameFrame().." damageAlpha="..tostring(damagedUnits[i][2]))
+		      	glColor(0.0,0.0,0.0, u[2])
+		        glUnit(u[1],true)
+		      end
+		
+		      glBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+		      glPolygonOffset(false)
+		      glDepthTest(false)
+	      --end)
+      --end
+      --glCallList(glListDamage)
+      damagedUnits = {}
     end
 
     --// overlay for units on fire
@@ -951,7 +991,7 @@ do
       dx, dy, dz = wx-cx, wy-cy, wz-cz
       dist = dx*dx + dy*dy + dz*dz
       if (dist < 6000000) then
-        if (dist < infoDistance) then
+        if (dist < infoSqDistance) then
           DrawFeatureInfos(featureInfo[4], featureInfo[5], true, wx,wy,wz)
         else
           DrawFeatureInfos(featureInfo[4], featureInfo[5], false, wx,wy,wz)
