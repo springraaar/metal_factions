@@ -380,20 +380,21 @@ function widget:MouseRelease(x, y, button)
 	local unitDefID = -1
 	local unitTable = nil
 	if mouseIconType == TYPE_SELECTED then
+		for index,udid in ipairs(selectedSortedUnitTypes) do
+			if (index-1 == icon) then
+				unitDefID = udid
+				break
+			end
+		end
+
 		units = spGetSelectedUnitsSorted()
 		if (units.n ~= selUnitTypes) then
 			return -1  -- discard this click
 		end
 		units.n = nil
 	
-		local index = 0
-		for udid,uTable in pairs(units) do
-			if (index == icon) then
-				unitDefID = udid
-				unitTable = uTable
-				break
-			end
-			index = index + 1
+		if units[unitDefID] then
+			unitTable = units[unitDefID]
 		end
 		if (unitTable == nil) then
 			return -1
