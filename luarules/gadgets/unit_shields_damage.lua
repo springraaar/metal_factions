@@ -707,6 +707,7 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 		targetDamage = targetDamage + damage
 		return
 	end
+
 	if (attackerTeam and (not spAreTeamsAllied(unitTeam,attackerTeam))) and (not paralyzer) then
 		-- add entry to table
 		if unitXPTable[unitID] == nil then

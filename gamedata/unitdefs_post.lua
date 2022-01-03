@@ -148,6 +148,14 @@ local metalDrainingEnergyGenerators = {
 	sphere_hardened_fission_reactor = 30
 } 
 
+-- for units with extra energy income associated to on/off state
+-- this is here to disable the unitdef's values as it's handled through scripting/gadget 
+local conditionalEnergyGenerators = {
+	gear_solar_collector = true,
+	claw_solar_collector = true
+} 
+
+
 -- unitdef tweaking
 if (true) then
 	for name,unitDef in pairs(UnitDefs) do
@@ -274,6 +282,10 @@ if (true) then
 		if metalDrainingEnergyGenerators[name] then
 			unitDef.energymake = tonumber(unitDef.energymake) - metalDrainingEnergyGenerators[name]
 			unitDef.metaluse = 0
+		end
+		-- disable E income on the unitdef as it's handled by script/gadget
+		if conditionalEnergyGenerators[name] then
+			unitDef.energymake = 0
 		end
 	end
 end

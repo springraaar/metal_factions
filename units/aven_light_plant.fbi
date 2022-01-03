@@ -32,9 +32,9 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalStorage=100;
+	metalStorage=0;
 	energyUse=0;
-	energyStorage=100;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -88,14 +88,15 @@
 	[customParams] 
 	{
 		builtBy=aven_l1builder,aven_l2builder;
+		tip=-33% build/repair time;
 	}
 
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:Nano;
 	}
-	buildCostEnergy=3919;//#AUTO#
-	buildCostMetal=783;//#AUTO#
-	buildTime=6165;//#AUTO#
-	mass=1812;//#AUTO#
+	buildCostEnergy=3893;//#AUTO#
+	buildCostMetal=778;//#AUTO#
+	buildTime=6124;//#AUTO#
+	mass=1808;//#AUTO#
 }

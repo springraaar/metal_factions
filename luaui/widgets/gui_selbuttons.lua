@@ -64,6 +64,7 @@ local spGetCommandQueue        = Spring.GetCommandQueue
 local spGetUnitDefID           = Spring.GetUnitDefID 
 local spGetGameFrame           = Spring.GetGameFrame
 local spGetUnitHealth          = Spring.GetUnitHealth
+local spGetUnitIsStunned       = Spring.GetUnitIsStunned
 local spGetGameSeconds         = Spring.GetGameSeconds
 local spGetTimer               = Spring.GetTimer
 local spDiffTimers             = Spring.DiffTimers
@@ -155,7 +156,8 @@ local function isIdleBuilder(unitID)
 		local bQueue = spGetFullBuildQueue(unitID)
 		if not bQueue[1] then  --- has no build queue
 			local _, _, _, _, buildProg = spGetUnitHealth(unitID)
-			if buildProg == 1 then  --- isnt under construction
+			local stunned = spGetUnitIsStunned(unitID)
+			if buildProg == 1 and (not stunned) then  --- isnt under construction or stunned
 				if ud.isFactory then
 					return true 
 				else
@@ -273,10 +275,12 @@ local function leftMouseButton(unitDefID, unitTable)
 	local alt, ctrl, meta, shift = spGetModKeyState()
 	if (not ctrl) then
 		-- select units of icon type
-		if (alt or meta) then
-			spSelectUnitArray({ unitTable[1] })  -- only 1
-		else
-			spSelectUnitArray(unitTable)
+		if (unitTable and #unitTable > 0) then
+			if (alt or meta) then
+				spSelectUnitArray({ unitTable[1] })  -- only 1
+			else
+				spSelectUnitArray(unitTable)
+			end
 		end
 	else
 		-- select all units of the icon type

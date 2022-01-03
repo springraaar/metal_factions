@@ -32,9 +32,9 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalStorage=100;
+	metalStorage=0;
 	energyUse=0;
-	energyStorage=100;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -92,14 +92,15 @@
 	[CustomParams]
 	{
 		builtBy=gear_l1builder,gear_l2builder;
+		tip=-33% build/repair time;
 	}
 	[SFXTypes]
 	{
 	explosionGenerator0=custom:Nano;
 	}
 
-	buildCostEnergy=4091;//#AUTO#
-	buildCostMetal=818;//#AUTO#
-	buildTime=6435;//#AUTO#
-	mass=1970;//#AUTO#
+	buildCostEnergy=4060;//#AUTO#
+	buildCostMetal=812;//#AUTO#
+	buildTime=6387;//#AUTO#
+	mass=1966;//#AUTO#
 }

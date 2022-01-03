@@ -13,7 +13,8 @@ end
 local TRANSPORTED_MASS_SPEED_PENALTY = 0.45 -- higher makes unit slower
 local FRAMES_PER_SECOND = 30
 
-local TRANSPORT_SQDISTANCE_TOLERANCE = 1024 -- about 30 elmos 
+local TRANSPORT_SQDISTANCE_TOLERANCE = 1200 -- about 35 elmos 
+local DROP_ALTITUDE_LIMIT = 150
 
 local airTransports = {}
 local airTransportMaxSpeeds = {}
@@ -188,6 +189,12 @@ local function sqDist(pos1, pos2)
 	return difX^2 + difY^2 + difZ^2
 end
 
+local function sqDistXZ(pos1, pos2)
+	local difX = pos1[1] - pos2[1]
+	local difZ = pos1[3] - pos2[3]
+	return difX^2 + difZ^2
+end
+
 function gadget:AllowUnitTransportLoad(transporterID, transporterUnitDefID, transporterTeam, transporteeID, transporteeUnitDefID, transporteeTeam, goalX, goalY, goalZ)
 
 	local pos1 = {spGetUnitPosition(transporterID)}
@@ -211,7 +218,11 @@ function gadget:AllowUnitTransportUnload(transporterID, transporterUnitDefID, tr
 	local pos1 = {spGetUnitPosition(transporterID)}
 	local pos2 = {goalX, goalY, goalZ}
 	--Spring.Echo("unload d=".. sqDist(pos1, pos2))
-	if sqDist(pos1, pos2) > TRANSPORT_SQDISTANCE_TOLERANCE and pos1[2] > 0 then
+	if sqDistXZ(pos1, pos2) > TRANSPORT_SQDISTANCE_TOLERANCE and pos1[2] > 0 then
+		return false
+	end
+	-- limit drop altitude
+	if ( pos1[2] > 0 and pos1[2] - pos2[2] > DROP_ALTITUDE_LIMIT ) then
 		return false
 	end
 	spSetUnitVelocity(transporterID, 0,0,0)

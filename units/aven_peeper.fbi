@@ -24,7 +24,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=100;
+	maxDamage=150;
 	footprintx=2;
 	footprintz=2;
 
@@ -111,12 +111,12 @@
 	[CustomParams]
 	{
 		builtBy=aven_scout_pad,aven_aircraft_plant,aven_adv_aircraft_plant;
-		evalfactor=0.8;
+		evalfactor=0.69;
 	}
 
 
-	buildCostEnergy=338;//#AUTO#
+	buildCostEnergy=336;//#AUTO#
 	buildCostMetal=67;//#AUTO#
-	buildTime=806;//#AUTO#
-	mass=23;//#AUTO#
+	buildTime=802;//#AUTO#
+	mass=29;//#AUTO#
 }

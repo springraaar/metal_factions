@@ -33,9 +33,9 @@
 	//  Resources
 	//*************
 	metalmake=0.0;
-	metalStorage=100;
+	metalStorage=0;
 	energyUse=0;
-	energyStorage=100;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -90,6 +90,7 @@
 	[CustomParams]
 	{
 		builtBy=aven_l1builder,aven_l2builder;
+		tip=-33% build/repair time;
 	}
 	[SFXTypes]
 	{
@@ -97,8 +98,8 @@
 	explosionGenerator1=custom:Normallight;
 	explosionGenerator2=custom:UNITFIRE;
 	}
-	buildCostEnergy=4028;//#AUTO#
-	buildCostMetal=805;//#AUTO#
-	buildTime=6336;//#AUTO#
-	mass=1910;//#AUTO#
+	buildCostEnergy=3999;//#AUTO#
+	buildCostMetal=799;//#AUTO#
+	buildTime=6290;//#AUTO#
+	mass=1906;//#AUTO#
 }

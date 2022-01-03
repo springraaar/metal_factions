@@ -60,7 +60,7 @@ function AI:setStrategy(side,strategyStr,noMessage,playerId)
 		local mapProfile = self.mapHandler.mapProfile
 		
 		if mapProfile == MAP_PROFILE_LAND_FLAT then
-			viableStrategyStrList = {"assault","skirmisher","air","amphibious"}
+			viableStrategyStrList = {"assault","skirmisher","amphibious"}
 			strategyStr = viableStrategyStrList[random( 1, #viableStrategyStrList)]
 		elseif mapProfile == MAP_PROFILE_LAND_RUGGED then
 			viableStrategyStrList = {"assault","skirmisher","air","amphibious"}
@@ -429,7 +429,7 @@ function AI:processExternalCommand(msg,playerId,teamId,pName,isOwner,spectator)
 					Spring.Echo("AI "..self.id.." received strategy override from enemies : "..tostring(strategyStr))
 				end
 				-- try to get the player's custom strategy with that name, else check the default list
-				if (strategyStr ~= nil and playerStrategyTable[playerId][self.side.."_"..strategyStr]) then
+				if (strategyStr ~= nil and playerStrategyTable[playerId] and playerStrategyTable[playerId][self.side.."_"..strategyStr]) then
 					self:setStrategy(self.side,strategyStr,false,playerId)
 					self.humanStrategyStr = strategyStr
 				elseif (strategyStr ~= nil and strategyTable[self.side.."_"..strategyStr]) then

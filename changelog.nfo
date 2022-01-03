@@ -1,3 +1,44 @@
+2022/01/02 ------------------ NOTES v1.79 ----------------------
+
+--- Balance / Mechanics
+
+- solar collectors no longer produce energy while closed
+
+- pickup distance for air transports increased from 30 to 35 with a dropoff altitude tolerance of 150 over land
+- air transports no longer bank when turning
+
+
+- ~1% cost increase on units with L damage type weapons
+- ~2% cost reduction on ground units with short range lasers
+
+- reduced cost of scout pads by about 10% but increased the build time by about 20%
+(to match the other cost/build time ratio)
+
+- added description indicating that L1 factories have -33% build/repair time
+- removed 100 E/M storage from factories
+
+- reduced cost of scout pads by 10%
+- increased HP of air scouts from 100 to 150 (same cost)
+- reduced the metal content for air scout wrecks to match 30% of their cost (50m -> 20m)
+
+--- UI
+
+- fixed lua error that would sometimes appear when clicking the unit selection buttons
+- idle builders selector now ignores paralyzed units
+- improved message box refresh mechanics
+- mf_keys.txt is automatically created if missing and default keybinds are loaded
+("W wall, Z areamex, V construction tower" and a few others, plus helpful comments)
+
+--- AI
+
+- fixed lua error when trying to set strategy for AI when the player has no custom strategies defined
+(oops)
+- AI with unspecified strategy will no longer try to go air-only on flat land maps
+
+
+
+
+
 2021/12/19 ------------------ NOTES v1.78 ----------------------
 
 - fixed issue with the selection widget where sometimes clicking one unit type would select a different subset

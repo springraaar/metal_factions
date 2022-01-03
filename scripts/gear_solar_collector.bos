@@ -7,6 +7,21 @@ piece  base, panel1, panel2, panel3, panel4,logo1,logo2,logo3,logo4, ldoor, rdoo
 
 static-var  Static_Var_1, statechg_DesiredState, statechg_StateChanging;
 
+lua_energyTransaction() { return 0; }
+
+
+energyTransactions() {
+	// send resources every half second
+	while (TRUE) {
+		while( get BUILD_PERCENT_LEFT ) {
+			sleep 100;
+		}
+		if (GET ACTIVATION) {
+			call-script lua_energyTransaction(10);  
+		}
+		sleep 467;		// 15 frames
+	}
+}
 
 activatescr()
 {
@@ -134,6 +149,8 @@ Create()
 {
 	call-script InitState();
 	start-script SmokeUnit();
+	start-script energyTransactions();
+	
 	Static_Var_1 = 0;
 	return (0);
 }

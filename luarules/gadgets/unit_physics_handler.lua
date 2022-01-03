@@ -66,6 +66,7 @@ local spSetFeatureRotation = Spring.SetFeatureRotation
 local spSetFeatureMoveCtrl = Spring.SetFeatureMoveCtrl
 local spGetFeatureCollisionVolumeData = Spring.GetFeatureCollisionVolumeData
 local spSetFeaturePhysics = Spring.SetFeaturePhysics
+local spSetFeatureResources = Spring.SetFeatureResources
 local spCreateFeature = Spring.CreateFeature
 local spAddUnitImpulse = Spring.AddUnitImpulse
 
@@ -667,6 +668,9 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 						fId = spCreateFeature(spawnName,physics[1],physics[2],physics[3],random(4)-1)
 						if (fId) then
 							setFeaturePhysics(fId,physics[1] + random(radius),physics[2],physics[3] + random(radius),randomNegative(smallPieceV)+physics[4],randomNegative(smallPieceV)+physics[5],randomNegative(smallPieceV)+physics[6])
+							if metalAmount < 50 then
+								spSetFeatureResources(fId,metalAmount,0)
+							end
 						end
 					end
 				else 

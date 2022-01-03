@@ -16,7 +16,6 @@ include("keysym.h.lua")
 -- custom commands
 VFS.Include("lualibs/custom_cmd.lua")
 
-
 local menuSecond = -1
 WG.customHotkeys = {}
 WG.unboundDefKeys = {}
@@ -24,6 +23,31 @@ local shouldShowMenu = false
 local shouldSelectCom = false
 
 local customKeybindsFile = "luaui/configs/mf_keys.txt"
+
+local keybindsFileTxt = [[
+// ---------- mf keybind instructions
+// EXAMPLES:
+// this is a comment, remove them from the relevant lines below to enable them, or add your own
+//swap_a_f		// swaps A and F hotkeys (most games use A for attack-move/fight instead of F)
+//MB w wall		// build small wall, any faction
+//MB z areamex		// area metal extractor command
+//MB x areamex2		// area metal extractor command, level 2
+//MB c areamex2h	// area metal extractor command, level 2 (exploiter)
+//MB v build aven_nano_tower,gear_nano_tower,claw_nano_tower,sphere_pole		// try to build units from a list, separated by "," (generally one from each faction)
+//MB v build aven_light_laser_tower,aven_defender,aven_stasis,aven_sentinel		// alternate between trying to build units from a list, separated by ","
+//MB <key> <action>	// supported actions: fight,attack,patrol,repair,guard,reclaim,restore,capture,loadunits,unloadunits,wait,onoff,selfd,priority
+
+MB w wall
+MB z areamex
+MB x areamex2
+MB c areamex2h
+MB v build aven_nano_tower,gear_nano_tower,claw_nano_tower,sphere_pole
+
+// ---------- regular keybind instructions
+// bind shift+v buildunit_aven_weaver
+// bind v buildunit_aven_weaver
+// ...
+]]
 
 local function trim(s)
 	return string.match(s,"[%s\t\n\v\f\r]*(.-)[%s\t\n\v\f\r]*$")
@@ -51,7 +75,6 @@ function getArray(str)
 	return arr
 end
 
-
 --------------------------------------------
 
 function widget:Initialize()
@@ -60,9 +83,20 @@ function widget:Initialize()
 	Spring.SendCommands("unbind esc quitmenu")
 	Spring.SendCommands("bind Shift+esc quitmenu")
    
+	-- create a custom keybinds file with default content if it's missing
+	if not VFS.FileExists(customKeybindsFile) then
+		Spring.Echo("creating mf keybinds file with default content at "..customKeybindsFile)
+		Spring.CreateDir("luaui")
+		Spring.CreateDir("luaui/configs")
+		io.output(customKeybindsFile)
+		io.write(keybindsFileTxt)
+	else
+		keybindsFileTxt = VFS.LoadFile(customKeybindsFile)
+	end
+   
 	-- try to load custom key binds
-	if VFS.FileExists(customKeybindsFile) then
-		local text = VFS.LoadFile(customKeybindsFile)
+	if keybindsFileTxt then
+		local text = keybindsFileTxt
 		
 		-- process the content line by line
 		local line = ""

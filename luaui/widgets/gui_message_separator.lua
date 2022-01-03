@@ -151,6 +151,7 @@ local glDeleteList	= gl.DeleteList
 local glCallList	= gl.CallList
 
 local glListRefreshIdx = -1
+local glListRefreshKey = nil
 local glList = nil
 local refTimer = spGetTimer()
 
@@ -835,9 +836,10 @@ function widget:DrawScreen()
 		PLAYER_BOX_ALPHA = MIN_ALPHA
 	end
 
-	local refreshIdx = math_floor(spDiffTimers(spGetTimer(),refTimer)*5)
+	local refreshIdx = math_floor(spDiffTimers(spGetTimer(),refTimer)*3)
+	local refreshKey = MESSAGE_FRAME_MAX
 	-- refresh gl list only a few times per second
-	if (not glList) or refreshIdx ~= glListRefreshIdx then
+	if (not glList) or refreshIdx ~= glListRefreshIdx or refreshKey ~= glListRefreshKey then
 		if (glList) then
 			glDeleteList(glList)
 		end 
@@ -978,6 +980,8 @@ function widget:DrawScreen()
 			end
 		
 		end)
+		
+		glListRefreshKey = refreshKey
 		glListRefreshIdx = refreshIdx
 	end
 	glCallList(glList)

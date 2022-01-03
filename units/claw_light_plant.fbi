@@ -24,8 +24,8 @@
 
 
 	// ------------------- resources
-	energyStorage=100;
-	metalStorage=100;
+	energyStorage=0;
+	metalStorage=0;
 	energyUse=0;
 
 
@@ -66,14 +66,15 @@
 	[CustomParams]
 	{
 		builtBy=claw_l1builder,claw_l2builder;
+		tip=-33% build/repair time;
 	}
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:Nano;
 	}
 
-	buildCostEnergy=3867;//#AUTO#
-	buildCostMetal=773;//#AUTO#
-	buildTime=6084;//#AUTO#
-	mass=1764;//#AUTO#
+	buildCostEnergy=3843;//#AUTO#
+	buildCostMetal=768;//#AUTO#
+	buildTime=6045;//#AUTO#
+	mass=1762;//#AUTO#
 }

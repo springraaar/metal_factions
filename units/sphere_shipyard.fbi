@@ -33,9 +33,9 @@
 	//  Resources
 	//*************
 	metalmake=0;
-	metalStorage=100;
+	metalStorage=0;
 	energyUse=0;
-	energyStorage=100;
+	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -90,6 +90,7 @@
 	[CustomParams]
 	{
 		builtBy=sphere_l1builder,sphere_l2builder;
+		tip=-33% build/repair time;
 	}
 
 	[SFXTypes]
@@ -98,8 +99,8 @@
 		explosionGenerator1=custom:Normallight;
 		explosionGenerator2=custom:UNITFIRE;
 	}
-	buildCostEnergy=4059;//#AUTO#
-	buildCostMetal=811;//#AUTO#
-	buildTime=6385;//#AUTO#
-	mass=1940;//#AUTO#
+	buildCostEnergy=4029;//#AUTO#
+	buildCostMetal=805;//#AUTO#
+	buildTime=6339;//#AUTO#
+	mass=1936;//#AUTO#
 }
