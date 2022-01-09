@@ -173,7 +173,8 @@ local mySpecStatus = false
 --General players/spectator count and tables
 local player = {}
 local teamResources = {}
-
+local allyTeamResources = {}
+local allyTeamResourcesByDrawListIndex = {}
 
 function formatNbr(x,digits)
 	if x then
@@ -512,7 +513,6 @@ end
 -- draw text
 function TextDraw(text,x,y,options)
 	options = options or "on"
-
 	gl_Text(text,x,y,fontSize,options)
 end
 function TextDrawCentered(text,x,y)
@@ -708,7 +708,7 @@ function CreatePlayer(playerID)
 		storageE     = nil,
 		currentM     = nil,
 		currentE     = nil,
-		position     = nil
+		relIncome     = nil
 	}
 	
 end
@@ -794,7 +794,7 @@ function CreatePlayerFromTeam(teamID)
 		storageE     = nil,
 		currentM     = nil,
 		currentE     = nil,
-		position     = nil	
+		relIncome     = nil	
 	}
 	
 end
@@ -870,6 +870,9 @@ function SortAllyTeams(vOffset)
 			vOffset = vOffset + labelOffset
 			table.insert(drawListOffset, vOffset)
 			table.insert(drawList, -2)  -- "Allies" label
+			if (allyTeamResources[allyTeamID] and allyTeamResources[allyTeamID].relIncome) then
+				allyTeamResourcesByDrawListIndex[#drawList] = allyTeamResources[allyTeamID]
+			end
 			vOffset = SortTeams(allyTeamID, vOffset)	-- Add the teams from the allyTeam		
 			break
 		end
@@ -878,16 +881,19 @@ function SortAllyTeams(vOffset)
 	-- add the others
 	for allyTeamID = 0, allyTeamsCount-1 do
 		if allyTeamID ~= myAllyTeamID then
-			if firstEnemy == true then
+			--if firstEnemy == true then
 				vOffset = vOffset + labelOffset
 				table.insert(drawListOffset, vOffset)
 				table.insert(drawList, -3) -- "Enemies" label
-				firstEnemy = false
-			else
-				vOffset = vOffset + separatorOffset
-				table.insert(drawListOffset, vOffset)
-				table.insert(drawList, -4) -- Enemy teams separator
-			end
+			--	firstEnemy = false
+			--else
+				--vOffset = vOffset + separatorOffset
+				--table.insert(drawListOffset, vOffset)
+				--table.insert(drawList, -4) -- Enemy teams separator
+			--end
+			if (allyTeamResources[allyTeamID] and allyTeamResources[allyTeamID].relIncome) then
+				allyTeamResourcesByDrawListIndex[#drawList] = allyTeamResources[allyTeamID]
+			end			
 			vOffset = SortTeams(allyTeamID, vOffset) -- Add the teams from the allyTeam 
 		end
 	end
@@ -1165,6 +1171,10 @@ function DrawList()
 			DrawPlayer(drawObject, leader, drawListOffset[i], mouseX, mouseY)
 			leader = false
 		end
+		if mySpecStatus == true and allyTeamResourcesByDrawListIndex[i] then
+			--Spring.Echo("idx="..i.." offset="..drawListOffset[i].." obj="..drawObject.." inc="..allyTeamResourcesByDrawListIndex[i].relIncome)
+			DrawRelativeIncome(widgetPosY + widgetHeight -drawListOffset[i], allyTeamResourcesByDrawListIndex[i].relIncome, true)
+		end
 	end
 
 	DrawTip(mouseX, mouseY)
@@ -1213,12 +1223,12 @@ function DrawPlayer(playerID, leader, vOffset, mouseX, mouseY)
 	local incomeMult     = player[playerID].incomeMult
 	local posY     = widgetPosY + widgetHeight - vOffset
 	local hasResourceInfo = nil
-	local energyLevel, metalLevel, position
+	local energyLevel, metalLevel, relIncome
 	if (teamResources[team] ~= nil) then
 		hasResourceInfo = true
 		energyLevel   = teamResources[team].currentE / teamResources[team].storageE
 		metalLevel   = teamResources[team].currentM / teamResources[team].storageM
-		position = teamResources[team].position
+		relIncome = teamResources[team].relIncome
 	end
 
 	if mouseY >= posY and mouseY <= posY + itemSizeY then tipY = true end
@@ -1274,8 +1284,8 @@ function DrawPlayer(playerID, leader, vOffset, mouseX, mouseY)
 			DrawResourceBars(posY, energyLevel, metalLevel)
 			if tipY == true then resourcesTip(mouseX, teamResources[team]) end
 		end
-		if m_position.active == true and position ~= nil then
-			DrawPosition(posY, position)
+		if m_position.active == true and relIncome ~= nil then
+			DrawRelativeIncome(posY, relIncome,not mySpecStatus)
 		end
 			
 	else
@@ -1608,18 +1618,22 @@ function DrawResourceBars(posY, energyLevel, metalLevel)
 	end
 end
 
-function DrawPosition(posY, position)
-	if position ~= nil then
+function DrawRelativeIncome(posY, relIncome, highlight)
+	if relIncome ~= nil then
 		local level = 1	
-		if position < 0 then
-			position = 0
+		if relIncome < 0 then
+			relIncome = 0
 		end
-		if position < 100 then
-			level = position / 100
+		if relIncome < 100 then
+			level = relIncome / 100
 		end
-		gl_Color(1,max(1,2*level),level)
-
-		TextDrawCentered(position.."%", m_position.posX + widgetPosX + 20*scaleFactor, posY + 3*scaleFactor)
+		--gl_Color(1,max(1,2*level),level)
+		if (highlight) then
+			gl_Color(1,1,1,1)
+		else
+			gl_Color(0.6,0.6,0.6,1)
+		end
+		TextDraw(relIncome.."%", m_position.posX + widgetPosX + 20*scaleFactor, posY + 3*scaleFactor,"nc")
 		--gl_Rect(m_position.posX + widgetPosX + 0, posY + 0, m_position.posX + widgetPosX + 40*scaleFactor, posY + 18*scaleFactor)
 		gl_Color(1,1,1)
 	end
@@ -1652,19 +1666,19 @@ function GetPingLvl(ping)
 end
 
 -- Listen for other widgets that tell if a player has changed side. 1 = arm, 2 = core. Expand at will to include more factions.
-function widget:RecvLuaMsg(msg, playerID)
-	local sidePrefix = '195' -- set by widget gui_commchange.lua
-	local sms = string.sub(msg, string.len(sidePrefix)+1) 
-	
-	local side = tonumber(string.sub(sms,1,1))
-	
-	if side == 1 then
-		newSide[playerID] = 1
-	elseif side == 2 then
-		newSide[playerID] = 2
-	end
-	SetSidePics()
-end
+--function widget:RecvLuaMsg(msg, playerID)
+--	local sidePrefix = '195' -- set by widget gui_commchange.lua
+--	local sms = string.sub(msg, string.len(sidePrefix)+1) 
+--	
+--	local side = tonumber(string.sub(sms,1,1))
+--	
+--	if side == 1 then
+--		newSide[playerID] = 1
+--	elseif side == 2 then
+--		newSide[playerID] = 2
+--	end
+--	SetSidePics()
+--end
 
 -- Set up array to handle dynamic side changes
 function SetNewSides()
@@ -2279,17 +2293,31 @@ function CheckPlayersChange()
 	local sorting = false
 	local f = spGetGameFrame() 
 
+	-- reset ally team income counter
+	for _,allyId in ipairs(Spring_GetAllyTeamList()) do
+		if allyTeamResources[allyId] then
+			allyTeamResources[allyId].income = 0
+			allyTeamResources[allyId].relIncome = 0
+		else
+			allyTeamResources[allyId] = {
+				income = 0,
+				relIncome = 0
+			}
+		end
+	end
+
 	-- track resources for all teams, if allowed
 	local maxIncome = 0
-	for _,teamId in ipairs(Spring.GetTeamList()) do
+	local maxAllyIncome = 0
+	for _,teamId in ipairs(Spring_GetTeamList()) do
 	
 		-- track resource income and usage
 		local currentE,storageE,_,incomeE,_,_,_,_ = Spring_GetTeamResources(teamId,"energy")
 		local currentM,storageM,_,incomeM,_,_,_,_ = Spring_GetTeamResources(teamId,"metal")
+		local _,_,_,_,_,allyId,_,_ = Spring_GetTeamInfo(teamId)
 
 		if currentE ~= nil then
 			local income = weightedIncome(incomeM,incomeE)
-			local position = 0
 			
 			teamResources[teamId] = {
 				currentE = currentE,
@@ -2299,20 +2327,31 @@ function CheckPlayersChange()
 				incomeE = incomeE,
 				incomeM = incomeM,
 				income = income,
-				position = 0
+				relIncome = 0
 			}
 			
-			income = weightedIncome(incomeM,incomeE)
+			if allyTeamResources[allyId] then
+				allyTeamResources[allyId].income = allyTeamResources[allyId].income + income
+			else
+				allyTeamResources[allyId] = {
+					income = income,
+					relIncome = 0
+				}
+			end
+			
 			if income > maxIncome then
 				maxIncome = income
+			end
+			if allyTeamResources[allyId] and allyTeamResources[allyId].income > maxAllyIncome then
+				maxAllyIncome = allyTeamResources[allyId].income
 			end
 		end
 	end
 	-- set relative resource position
-	for _,teamId in ipairs(Spring.GetTeamList()) do
+	for _,teamId in ipairs(Spring_GetTeamList()) do
 		if (teamResources[teamId]) then
 			if maxIncome > 0 then
-				teamResources[teamId].position = floor(teamResources[teamId].income * 100 / maxIncome)
+				teamResources[teamId].relIncome = floor(teamResources[teamId].income * 100 / maxIncome)
 			end
 		end
 		
@@ -2321,6 +2360,16 @@ function CheckPlayersChange()
 			player[teamId+32] = CreatePlayerFromTeam(teamId)
 			player[teamId+32].resignProcessed = true	
 			sorting = true	
+		end
+	end
+	
+	-- set relative resource position for ally teams
+	for _,allyId in ipairs(Spring_GetAllyTeamList()) do
+		if (allyTeamResources[allyId]) then
+			if maxAllyIncome > 0 then
+				allyTeamResources[allyId].relIncome = floor(allyTeamResources[allyId].income * 100 / maxAllyIncome)
+				--Spring.Echo("allyTeam="..allyId.." relIncome="..allyTeamResources[allyId].relIncome)
+			end
 		end
 	end
 	

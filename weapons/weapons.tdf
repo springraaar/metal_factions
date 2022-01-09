@@ -13583,7 +13583,7 @@
 	thickness=3.234;
 	coreThickness=0.8;
 	turret=1;
-	range=490;
+	range=480;
 	minIntensity=1.0;
 	reloadTime=0.8;
 	weaponVelocity=1533;
@@ -13611,10 +13611,10 @@
 	}
 	[DAMAGE]
 	{
-		default=205;
-		armor_heavy=205;//#AUTO#
-		armor_medium=205;//#AUTO#
-		armor_light=205;//#AUTO#
+		default=215;
+		armor_heavy=215;//#AUTO#
+		armor_medium=215;//#AUTO#
+		armor_light=215;//#AUTO#
 	}
 }
 [claw_u4commander_torpedo]
@@ -13841,7 +13841,7 @@
 	startVelocity=1532;
 	accuracy=0;
 	areaOfEffect=24;
-	soundStart=krogun1;
+	soundStart=railgun;
 	soundHit=xplolrg2;
 	soundTrigger=1;
 	tolerance=3000;
@@ -14438,7 +14438,7 @@
 	startVelocity=1532;
 	accuracy=0;
 	areaOfEffect=24;
-	soundStart=krogun1;
+	soundStart=railgun;
 	soundHit=xplolrg2;
 	soundTrigger=1;
 	tolerance=3000;
@@ -14932,7 +14932,7 @@
 	weaponVelocity=1532;
 	accuracy=10;
 	areaOfEffect=24;
-	soundStart=krogun1;
+	soundStart=railgun;
 	soundHit=xplolrg2;
 	soundTrigger=1;
 	tolerance=3000;
@@ -14971,7 +14971,7 @@
 	weaponVelocity=1532;
 	startVelocity=1532;
 	areaOfEffect=24;
-	soundStart=krogun1;
+	soundStart=railgun;
 	soundHit=xplolrg2;
 	soundTrigger=1;
 	fireStarter=90;
@@ -15060,7 +15060,7 @@
 	startVelocity=1532;
 	accuracy=0;
 	areaOfEffect=24;
-	soundStart=krogun1;
+	soundStart=railgun;
 	soundHit=xplolrg2;
 	soundTrigger=1;
 	tolerance=3000;
@@ -15142,8 +15142,8 @@
 	texture4=null;
 	energyPerShot=60;
 	turret=1;
-	range=580;
-	reloadTime=0.3;
+	range=540;
+	reloadTime=0.267;
 	weaponVelocity=1532;
 	startVelocity=1532;
 	accuracy=250;
@@ -15163,10 +15163,10 @@
 	}
 	[DAMAGE]
 	{
-		default=102;
-		armor_heavy=102;//#AUTO#
-		armor_medium=102;//#AUTO#
-		armor_light=102;//#AUTO#
+		default=105;
+		armor_heavy=105;//#AUTO#
+		armor_medium=105;//#AUTO#
+		armor_light=105;//#AUTO#
 	}
 }
 [claw_longhorn_railgun]
@@ -17143,7 +17143,7 @@
 	startVelocity=1532;
 	accuracy=0;
 	areaOfEffect=24;
-	soundStart=krogun1;
+	soundStart=railgun;
 	soundHit=xplolrg2;
 	soundTrigger=1;
 	tolerance=3000;
