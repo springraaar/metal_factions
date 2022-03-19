@@ -1,0 +1,123 @@
+
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Caliber;
+	description=Deployable Heavy Artillery Hydrobot;
+	iconType=amphibartillery;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_caliber;
+	objectName=gear_caliber.3do;
+	corpse=gear_caliber_dead;
+	buildPic=gear_caliber.png;
+	soundCategory=GEAR_BOTBIG;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=3000;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=0;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	floater=0;
+	onOffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=KBOTUW4;
+	turnRate=545;
+	acceleration=0.2;
+	brakeRate=0.1;
+	maxVelocity=1.4;
+	turninplace=1;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	sonarDistance=0;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_caliber_cannon;
+	noChaseCategory=VTOL;
+	onlytargetcategory1=NOTAIR;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	moveState=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	damagemodifier=0.5;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 60 60;
+	collisionVolumeOffsets = 0 -5 0;
+	collisionVolumeTest = 1;
+	pushResistant=1;
+
+	[CustomParams]
+	{
+		builtBy=gear_hydrobot_plant;
+		tip=Use ON/OFF toggle deployment mode. Can only fire if deployed but cannot move. Gains 50% dmg resistance when closed;
+		evalfactor=0.9; //can't fire while moving
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:yellowflarebig;
+		explosionGenerator1=custom:collision;
+	}
+
+	buildCostEnergy=15312;//#AUTO#
+	buildCostMetal=3062;//#AUTO#
+	buildTime=36495;//#AUTO#
+	mass=1770;//#AUTO#
+}

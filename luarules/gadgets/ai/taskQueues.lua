@@ -4296,6 +4296,7 @@ taskQueues = {
 	gear_adv_construction_kbot = gearLev2Con,
 	gear_adv_construction_aircraft = gearLev2Con,	
 	gear_adv_construction_sub = gearLev2Con,
+	gear_construction_hydrobot = gearLev2Con,
 	gear_nano_tower = staticBuilder,
 	gear_light_plant = gearLightPlant,
 	gear_aircraft_plant = gearAircraftPlant,
@@ -4315,6 +4316,7 @@ taskQueues = {
 	gear_long_range_rocket_platform = lRRocketPlatform,
 	gear_premium_nuclear_rocket = unblockableNuke,
 	gear_comsat_station = comsatStation,
+	gear_caliber = atkSupporterAct,
 ------------------- CLAW
 	claw_commander_respawner = respawner,
 	claw_commander = clawCommander,

@@ -136,9 +136,8 @@ undeploy()
 		move ldoor1 to x-axis [0] speed [8];
 		move rdoor1 to x-axis [0] speed [8];
 		wait-for-move ldoor1 along x-axis;
-		
-		
 	}
+	isDeployed = FALSE;
 }
 
 

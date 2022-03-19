@@ -277,6 +277,12 @@ function getTooltipWeaponData(ud, xpMod, rangeMod, dmgMod)
 	        	local normalDmg = dmgMod * weap.damages[Game.armorTypes.default]
 	        	newTooltip = newTooltip.."\n\255\255\213\213Damage: \255\255\170\170"..formatNbr(normalDmg,0).."/once"
 	        end
+	        
+			local hitpower = 0
+			if ( weap.customParams and weap.customParams.hitpower) then
+				hitpower = weap.customParams.hitpower
+			end
+			newTooltip = newTooltip..weaponHitPowerLabels[weap.customParams.hitpower]
 	    end
     elseif ud.weapons and ud.weapons[1] and ud.weapons[1].weaponDef then
 		for _,w in pairs(ud.weapons) do

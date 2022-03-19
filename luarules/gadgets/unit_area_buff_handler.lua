@@ -414,6 +414,7 @@ function gadget:GameFrame(n)
 		end
 		
 		-- check regeneration due to upgrades
+		-- and other properties
 		local regen = 0
 		local health,maxHealth,bp = 0
 		for _,unitId in ipairs(allUnits) do
@@ -425,6 +426,19 @@ function gadget:GameFrame(n)
 			if (not phpR) then
 				phpR = 0
 			end
+			
+			ud = UnitDefs[spGetUnitDefID(unitId)]
+			-- hydrobot regen
+			if (ud and ud.customParams and ud.customParams.hydrobotregen == 1) then
+				-- check if on water
+				_,_,_,_,y,_ = spGetUnitPosition(unitId,true)
+				
+				if (y < -2) then
+					r = r + 2
+					phpR = phpR + 0.1
+				end
+			end
+				
 			if (r > 0 or phpR > 0) then
 				health,maxHealth,_,_,bp = spGetUnitHealth(unitId)
 				

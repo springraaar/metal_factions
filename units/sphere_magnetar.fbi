@@ -23,7 +23,7 @@
 	FootprintX=4;
 	FootprintZ=4;
 	mass=15000;
-	autoheal=250;
+	autoheal=320;
 	pushResistant=1;
 	
 	// ------------------- resources
@@ -101,14 +101,14 @@
 	{
 		builtBy=sphere_sphere_factory;
 		energyCostMoving=320;
-		tip=Requires 320E/s to move. Regenerates 250HP/s. If charged, 440 range aura pulls and deals 400(L) disruptor dmg/s; 
+		tip=Requires 320E/s to move. Regenerates 320HP/s. If charged, 440 range aura pulls and deals 400(L) disruptor dmg/s; 
 	}
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:magnetar;
 		explosionGenerator1=custom:magnetaraura;
 	}
-	buildcostenergy=50000;//#AUTO#
-	buildcostmetal=10000;//#AUTO#
-	buildtime=120000;//#AUTO#
+	buildcostenergy=45000;//#AUTO#
+	buildcostmetal=9000;//#AUTO#
+	buildtime=108000;//#AUTO#
 }

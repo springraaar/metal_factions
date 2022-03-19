@@ -101,7 +101,7 @@
 	[CustomParams]
 	{
 		buildertype=claw_l1builder;
-		builtBy=claw_shipyard,claw_adv_shipyard;
+		builtBy=claw_shipyard,claw_adv_shipyard,claw_spinbot_plant;
 		evalfactor=0.85;//SHIP
 	}
 	[SFXTypes]
@@ -110,8 +110,8 @@
 		explosionGenerator1=custom:UNITFIRE;
 	}
 
-	buildCostEnergy=1409;//#AUTO#
-	buildCostMetal=281;//#AUTO#
-	buildTime=3358;//#AUTO#
-	mass=184;//#AUTO#
+	buildCostEnergy=1447;//#AUTO#
+	buildCostMetal=289;//#AUTO#
+	buildTime=3450;//#AUTO#
+	mass=185;//#AUTO#
 }

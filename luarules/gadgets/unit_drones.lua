@@ -178,6 +178,7 @@ local droneNamesForUnitDefName = {
 	aven_u5commander = avenDrones,
 	aven_u6commander = avenDrones,	
 	gear_adv_construction_kbot = gearDrones,
+	gear_adv_construction_hydrobot = gearDrones,
 	gear_commander = gearDrones,
 	gear_u1commander = gearDrones,
 	gear_u2commander = gearDrones,
@@ -204,7 +205,8 @@ local droneNamesForUnitDefName = {
 local droneBuildCEG = "dronebuild"
 
 local builtinDroneUpgrades = {
-	[UnitDefNames["gear_adv_construction_kbot"].id] = "upgrade_transport_drone"
+	[UnitDefNames["gear_adv_construction_kbot"].id] = "upgrade_transport_drone",
+	[UnitDefNames["gear_adv_construction_hydrobot"].id] = "upgrade_transport_drone"
 }
 
 --------------------------------------------------------------------------------

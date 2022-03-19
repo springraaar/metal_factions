@@ -74,6 +74,7 @@ local mcSetPosition          = MoveCtrl.SetPosition
 local mcSetRotation          = MoveCtrl.SetRotation
 local mcDisable              = MoveCtrl.Disable
 local mcEnable               = MoveCtrl.Enable
+local spSetUnitPhysics       = Spring.SetUnitPhysics
 
 local spSetUnitLeaveTracks = Spring.SetUnitLeaveTracks -- or MoveCtrl.spSetUnitLeaveTracks --0.82 compatiblity
 
@@ -121,7 +122,85 @@ local jumpDefTemplates = {
 		rotateMidAir = false,
 		cannotJumpMidair = false,
 		jumpSpreadException = false,
-	}	
+	},
+	hopper = {
+		range = 400,
+		speed = 6,
+		reload = 10,
+		delay = 0,
+		height = 350,
+
+		requiresUpgrade = false,			
+		noJumpHandling =  false,
+		rotateMidAir = false,
+		cannotJumpMidair = false,
+		jumpSpreadException = false,
+	},
+	flail = {
+		range = 350,
+		speed = 6,
+		reload = 10,
+		delay = 0,
+		height = 300,
+
+		requiresUpgrade = false,			
+		noJumpHandling =  false,
+		rotateMidAir = false,
+		cannotJumpMidair = false,
+		jumpSpreadException = false,
+	},	
+	pyro = {
+		range = 350,
+		speed = 6,
+		reload = 10,
+		delay = 0,
+		height = 200,
+
+		requiresUpgrade = false,			
+		noJumpHandling =  false,
+		rotateMidAir = false,
+		cannotJumpMidair = false,
+		jumpSpreadException = false,
+	},
+	exploder = {
+		range = 350,
+		speed = 6,
+		reload = 10,
+		delay = 0,
+		height = 200,
+
+		requiresUpgrade = false,			
+		noJumpHandling =  false,
+		rotateMidAir = false,
+		cannotJumpMidair = false,
+		jumpSpreadException = false,
+	},
+	commando = {
+		range = 350,
+		speed = 6,
+		reload = 10,
+		delay = 0,
+		height = 300,
+
+		requiresUpgrade = false,			
+		noJumpHandling =  false,
+		rotateMidAir = false,
+		cannotJumpMidair = false,
+		jumpSpreadException = false,
+	},
+	hydrobotcon = {
+		range = 350,
+		speed = 4.5,
+		reload = 10,
+		delay = 0,
+		height = 300,
+
+		requiresUpgrade = false,			
+		noJumpHandling =  false,
+		rotateMidAir = false,
+		cannotJumpMidair = false,
+		jumpSpreadException = false,
+	},	
 }
 local baseJumpDefs = {}
 local jumpDefsByUnitId = {}
@@ -484,7 +563,8 @@ local function Jump(unitID, goal, origCmdParams, mustJump)
 				
 				-- behave differently underwater
 				if (y0 < 0 and i < 0.5) then
-					spAddUnitImpulse(unitID,vx, min(vy,maxImpulse/2), vz)	
+					spSetUnitPhysics(unitID, x0, y0, z0, vx, vy, vz, rx, ry, rz, 0,0,0) -- remove water drag
+					spAddUnitImpulse(unitID,vx, min(vy,maxImpulse/2), vz)
 				else
 					spSetUnitVelocity(unitID, 0, 0, 0) -- disable gravity effect
 					if (i < 0.5) then

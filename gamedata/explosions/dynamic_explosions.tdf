@@ -1779,6 +1779,14 @@
 	[_stdblast3]{class=CExpGenSpawner;[properties]{pos=-30 r60,-60,-30 r60;delay=20;damage=600;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
 
+[EXPLODERBLASTWRAPPER]
+{
+	usedefaultexplosions=0;
+	[_stdblast1]{class=CExpGenSpawner;[properties]{pos=0,40,0;delay=0;damage=1800;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=0,25,0;delay=7;damage=1600;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast3]{class=CExpGenSpawner;[properties]{pos=0,10,0;delay=15;damage=1400;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+
 [PYROCLASMDEBRISBLASTWRAPPER]
 {
 	usedefaultexplosions=0;

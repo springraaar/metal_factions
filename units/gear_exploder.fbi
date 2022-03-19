@@ -1,0 +1,133 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Exploder;
+	description=Cloakable Kamikaze Hydrobot;
+	iconType=amphibartilleryfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL2 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_exploder;
+	objectName=gear_exploder.3do;
+	buildPic=gear_exploder.png;
+	soundCategory=COR_KBOT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1000;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	upright=0;
+	kamikaze=1;
+	stealth=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=KBOTUW3;
+	turnRate=900;
+	acceleration=0.2;
+	brakeRate=0.25;
+	maxVelocity=1.3;
+	maxSlope=14;
+	maxWaterDepth=21;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=440;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	noChaseCategory=VTOL;
+	onlyTargetCategory1=NOTAIR;
+	explodeAs=gear_exploder_blast;
+	selfDestructAs=gear_exploder_blast;
+	selfdestructcountdown=0;
+
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	moveState=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =25 20 25;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	canCloak=1;
+	cloakCost=15;
+	cloakCostMoving=30;
+	initCloaked=1;
+	kamikazeDistance=35;
+	minCloakDistance=20;
+
+	[CustomParams]
+	{
+		builtBy=gear_hydrobot_plant;
+		tip=Regenerates 2+0.1%HP/s in water. Can jump (10s reload). Radar stealth;
+		offensiveExplosion=1;
+		hydrobotRegen=1;
+		manualCost=1;
+		canJump=1;
+		jumpType=exploder;
+		jumpMod=1.00;
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:fireflare;
+		explosionGenerator1=custom:JUMPASC;
+		explosionGenerator2=custom:JUMPASC2;
+		explosionGenerator3=custom:JUMPDESC;
+		explosionGenerator4=custom:JUMPDESC2;
+	}
+	buildCostEnergy=4000;//#AUTO#
+	buildCostMetal=800;//#AUTO#
+	buildTime=9600;//#AUTO#
+	mass=400;//#AUTO#
+}

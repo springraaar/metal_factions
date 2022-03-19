@@ -214,6 +214,14 @@ local moveDefs = {
 		depthmodparams=commonDepthModParams,
 		slopemod=6,
 	},
+	KBOTATUW2 = {
+		FootprintX=2,
+		FootprintZ=2,
+		CrushStrength=30,
+		Submarine=1,
+		depthmodparams=commonDepthModParams,
+		slopemod=6,
+	},
 	TANKDH5 = {
 		FootprintX=5,
 		FootprintZ=5,

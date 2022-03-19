@@ -47,7 +47,7 @@
 	cancloak=1;
 	
 
-	movementClass=KBOTHT3;
+	movementClass=KBOTUW3;
 	turnRate=1232;
 	acceleration=1.1;
 	brakeRate=3.0;
@@ -79,13 +79,22 @@
 	[CustomParams]
 	{
 		builtBy=aven_adv_kbot_lab;
+		tip=Can jump (10s reload);
+		canJump=1;
+		evalfactor=1.05;//JUMP
+		jumpType=commando;
+		jumpMod=1.00;
 	}
 	[SFXTypes]
 	{
-	explosionGenerator0=custom:BlueFlareBig;
+		explosionGenerator0=custom:BlueFlareBig;
+		explosionGenerator1=custom:JUMPASC;
+		explosionGenerator2=custom:JUMPASC2;
+		explosionGenerator3=custom:JUMPDESC;
+		explosionGenerator4=custom:JUMPDESC2;
 	}
-	buildCostEnergy=3014;//#AUTO#
-	buildCostMetal=602;//#AUTO#
-	buildTime=7184;//#AUTO#
-	mass=650;//#AUTO#
+	buildCostEnergy=3039;//#AUTO#
+	buildCostMetal=607;//#AUTO#
+	buildTime=7244;//#AUTO#
+	mass=652;//#AUTO#
 }

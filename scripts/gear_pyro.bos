@@ -1,4 +1,4 @@
-#define TA			// This is a TA script
+#define TAK			// This is a TAK script
 
 #include "sfxtype.h"
 #include "exptype.h"
@@ -8,8 +8,7 @@
 #define HEADING_TOLERANCE	<30>
 #define PITCH_TOLERANCE		<25>
 
-piece  torso, ruparm, luparm, rfire, rloarm, lloarm, pelvis, rbarrel, lshield,
-       rleg, rfoot, lleg, lfoot, head, lthigh, rthigh, ground;
+piece  torso, ruparm, luparm, rfire, rloarm, lloarm, pelvis, rbarrel, lshield, rleg, rfoot, lleg, lfoot, head, lthigh, rthigh, ground, jumpback,jbl,jbr,lbjetpt,rbjetpt,jumpjets,lfjet,rfjet,lfjetpt,rfjetpt;
 
 static-var  bMoving, bAiming, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
 
@@ -18,6 +17,52 @@ static-var  bMoving, bAiming, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMo
 // Signal definitions
 #define SIG_AIM				2
 
+#include "jumpvars.h"
+
+
+showJumpGear() {
+	show jumpback;
+	show jbl;
+	show jbr;
+	show jumpjets;
+	show lfjet;
+	show rfjet;
+}
+
+hideJumpGear() {
+	hide jumpback;
+	hide jbl;
+	hide jbr;
+	hide jumpjets;
+	hide lfjet;
+	hide rfjet;
+}
+
+showJumpEffects(descending, frames) {
+	if (descending) {
+		emit-sfx 1024+4 from lfjetpt;
+		emit-sfx 1024+4 from rfjetpt;
+		emit-sfx 1024+3 from lbjetpt;
+		emit-sfx 1024+3 from rbjetpt;
+		if (frames == JUMP_SND_FRAMES) {
+			play-sound( "jumpdesc", 1 );
+		}
+	} else {
+		if (frames == 0 ) {
+			play-sound( "jumpstart", 1 );
+		} else {
+			if (frames == JUMP_SND_FRAMES) {
+				play-sound( "jumpasc", 1 );
+			}
+		}
+		emit-sfx 1024+2 from lfjetpt;
+		emit-sfx 1024+2 from rfjetpt;
+		emit-sfx 1024+1 from lbjetpt;
+		emit-sfx 1024+1 from rbjetpt;
+	}
+}
+
+#include "jump.h"
 
 MotionSpeedControl(maxSpeed,currentSpeed)
 {
@@ -95,9 +140,21 @@ walk()
 	slowTurnSpd = mATurnSpd2 / 4;
 	slowTurnSpd2 = mATurnSpd2 / 12;
 	
-	
+	if (isJumping) {
+		move pelvis to y-axis [0.000000] speed [12.500000];
+		turn pelvis to x-axis <0.000000> speed <20.000000>;
+		turn rthigh to x-axis <0.000000> speed <200.000000>;
+		turn rleg to x-axis <0.000000> speed <200.000000>;
+		turn rfoot to x-axis <0.000000> speed <200.000000>;
+		turn lthigh to x-axis <0.000000> speed <200.000000>;
+		turn lleg to x-axis <0.000000> speed <200.000000>;
+		turn lfoot to x-axis <0.000000> speed <200.000000>;
+		sleep 100;
+		return;
+	}
+
 	// back contact point : right foot behind, left foot forward
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		turn lthigh to x-axis <0.000000>-legAngle1 speed mATurnSpd1;
 		turn lleg to x-axis legAngle2 speed mATurnSpd2;
@@ -124,14 +181,14 @@ walk()
 	}
 
 	// intermediate pose 2 : left stomp ground
-	if( bMoving)
+	if( bMoving && !isJumping )
 	{
 		//turn lfoot to x-axis legAngle3 speed mATurnSpd1*5;
 		//wait-for-turn lfoot around x-axis;
 	}
 
 	// passing pose 2 : right foot raising, left foot on the ground
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		turn lthigh to x-axis <0.000000> speed mATurnSpd2;
 		turn lleg to x-axis <0.000000> speed mATurnSpd2;
@@ -161,7 +218,7 @@ walk()
 	}
 	
 	// forward contact point : right foot forward, left foot behind
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		turn lthigh to x-axis legAngle2 speed mATurnSpd2;
 		turn lleg to x-axis legAngle3 speed mATurnSpd2;
@@ -189,14 +246,14 @@ walk()
 	}
 
 	// intermediate pose 1 : right stomp ground
-	if( bMoving)
+	if( bMoving && !isJumping )
 	{
 		//turn rfoot to x-axis legAngle3 speed mATurnSpd1*5;
 		//wait-for-turn rfoot around x-axis;
 	}
 
 	// passing pose 1 : right foot on ground, left foot raising
-	if( bMoving )
+	if( bMoving && !isJumping )
 	{
 		turn lthigh to x-axis <-20.000000> speed mATurnSpd2;
 		turn lleg to x-axis <30.000000> speed mATurnSpd2;
@@ -280,8 +337,10 @@ Create()
 	bMoving = FALSE;
 	bAiming = FALSE;
 	call-script stopAimHelper1(<1000>,<1000>);
+	start-script initJump();
 	start-script MotionControl();
 	start-script SmokeUnit();
+	start-script setHasJump(1);
 	start-script MotionSpeedControl();
 	return (0);
 }

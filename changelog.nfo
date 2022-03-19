@@ -1,3 +1,48 @@
+
+2022/03/19 ------------------ NOTES v1.81 ----------------------
+
+--- new units
+
+- added AVEN "Rover" : L2 fast scout/raider vehicle
+
+- added GEAR "Bandit" : L2 fast scout/raider robot
+- added GEAR L2 Hydrobot factory : builds level 2 amphibious robots that regenerate on water
+- added GEAR "Metalhead" : L2 armored assault hydrobot
+- added GEAR "Hopper" : L2 jumpy attack hydrobot
+- added GEAR "Caliber" : L2 deployable heavy artillery hydrobot
+- added GEAR "Exploder" : L2 walking bomb hydrobot
+- added GEAR "Salamander" : L2 raider hydrobot
+
+- added CLAW "Wolverine" : L2 fast scout/raider vehicle
+
+- added SPHERE "Mite" : L2 fast all-terrain scout/raider robot
+
+
+--- Balance / Mechanics
+
+- modified how unit costs scale with unit attributes, progressively benefitting more expensive units
+- reduced the discount for L weapons and armor types and reduced the premium for H weapons and armor
+(in general, a lot of L1 units end up to about 5% more expensive and L2 units end up to 20% cheaper)
+
+- significantly reduced the cost of sonar stations and the impact of short range sonars on many units
+
+
+- GEAR "Pyro", CLAW "Flail" and AVEN "Commando" are now amphibious and have the ability to jump (10s reload)
+
+- SPHERE "Bastion" has a bit more range and damage/s (still 10%+ less range than the counterparts)
+
+- AVEN "Guardian", GEAR "Punisher" and SPHERE "Banger" deal about 20% higher dmg/s but cost about 15% more
+
+- increased aiming rates and tolerance for some fast units with rapid fire weapons to allow them to efficiently fire while maneuvering
+
+- SPHERE "Magnetar" : increased passive regeneration from 250 to 320 HP/s
+
+--- UI
+
+- removed "anti-air" from unit descriptions to avoid confusion
+
+
+
 2022/01/09 ------------------ NOTES v1.80 ----------------------
 
 --- UI

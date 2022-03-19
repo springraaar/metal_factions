@@ -60,7 +60,7 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementClass=KBOTHT3;
+	movementClass=KBOTUW3;
 	turnRate=1000;
 	acceleration=0.9;
 	brakeRate=0.5;
@@ -101,15 +101,23 @@
 	[CustomParams]
 	{
 		builtBy=claw_adv_kbot_plant;
+		tip=Can jump (10s reload);
+		canJump=1;
+		evalfactor=1.05;//JUMP
+		jumpType=flail;
+		jumpMod=1.00;
 	}
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:yellowflaremed;
-		explosionGenerator1=custom:yellowflaremed;
+		explosionGenerator1=custom:JUMPASC;
+		explosionGenerator2=custom:JUMPASC2;
+		explosionGenerator3=custom:JUMPDESC;
+		explosionGenerator4=custom:JUMPDESC2;
 	}
 
-	buildCostEnergy=4343;//#AUTO#
-	buildCostMetal=868;//#AUTO#
-	buildTime=10352;//#AUTO#
-	mass=726;//#AUTO#
+	buildCostEnergy=4455;//#AUTO#
+	buildCostMetal=891;//#AUTO#
+	buildTime=10618;//#AUTO#
+	mass=734;//#AUTO#
 }

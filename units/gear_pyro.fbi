@@ -60,7 +60,7 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementClass=KBOTHT3;
+	movementClass=KBOTUW3;
 	turnRate=1050;
 	acceleration=1.0;
 	brakeRate=1;
@@ -100,20 +100,28 @@
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:FireFlare;
+		explosionGenerator1=custom:JUMPASC;
+		explosionGenerator2=custom:JUMPASC2;
+		explosionGenerator3=custom:JUMPDESC;
+		explosionGenerator4=custom:JUMPDESC2;
 	}
 
 	[CustomParams]
 	{
 		builtBy=gear_adv_kbot_lab;
 		tip=Targets burn for 210(M) dmg over 7s;
+		canJump=1;
+		evalfactor=1.05;//JUMP
+		jumpType=pyro;
+		jumpMod=1.00;
 	}
 
 	//************************************************************
 	//  To be removed
 	//*****************
 
-	buildCostEnergy=2732;//#AUTO#
-	buildCostMetal=546;//#AUTO#
-	buildTime=6511;//#AUTO#
-	mass=557;//#AUTO#
+	buildCostEnergy=2896;//#AUTO#
+	buildCostMetal=579;//#AUTO#
+	buildTime=6902;//#AUTO#
+	mass=568;//#AUTO#
 }

@@ -5,7 +5,7 @@
 
 #define SPEEDUP_FACTOR 150
 
-#define HEADING_TOLERANCE	<25>
+#define HEADING_TOLERANCE	<28>
 #define PITCH_TOLERANCE		<20>
 
 piece  base, turret,slpt, sleeve, barrel, flash,sleeve2,barrel2,flash2,t1,wheel1 ,t2,wheel2,t3, wheel3,t4,wheel4,bb, front, back;
@@ -110,11 +110,11 @@ RestoreAfterDelay()
 
 AimPrimary(heading, pitch)
 {
-	call-script updateAimHelper1(heading,pitch,<350>,<350>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	call-script updateAimHelper1(heading,pitch,<450>,<450>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	turn turret to y-axis heading speed <350.038462>;
-	turn slpt to x-axis <0.000000> - pitch speed <350.000000>;
+	turn turret to y-axis heading speed <450.038462>;
+	turn slpt to x-axis <0.000000> - pitch speed <450.000000>;
 	if ( !aimReady1 )
 	{
 		wait-for-turn turret around y-axis;
