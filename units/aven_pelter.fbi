@@ -93,6 +93,7 @@
 	[customParams] 
 	{
 		builtBy=aven_l1builder,aven_l2builder;
+		evalFactor=1.1; //easily deployable on hard-to-reach positions
 	}
 
 	[SFXTypes]
@@ -100,8 +101,8 @@
 		explosionGenerator0=custom:rocketflaremed;
 	}
 
-	buildCostEnergy=837;//#AUTO#
-	buildCostMetal=167;//#AUTO#
-	buildTime=1996;//#AUTO#
-	mass=686;//#AUTO#
+	buildCostEnergy=925;//#AUTO#
+	buildCostMetal=185;//#AUTO#
+	buildTime=2205;//#AUTO#
+	mass=698;//#AUTO#
 }

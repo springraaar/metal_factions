@@ -102,7 +102,7 @@
 	[CustomParams]
 	{
 		builtBy=gear_hydrobot_plant;
-		tip=Gains 50% dmg resistance when not firing or moving. Regenerates 2+0.1%HP/s in water;
+		tip=Regenerates 2+0.1%HP/s in water. Gains 50% dmg resistance when not firing or moving;
 		hydrobotRegen=1;
 		evalFactor=0.9; //clumsy movement
 	}
@@ -111,8 +111,8 @@
 	{
 		explosionGenerator0=custom:fireflare;
 	}
-	buildCostEnergy=2180;//#AUTO#
-	buildCostMetal=436;//#AUTO#
-	buildTime=5197;//#AUTO#
-	mass=645;//#AUTO#
+	buildCostEnergy=2195;//#AUTO#
+	buildCostMetal=439;//#AUTO#
+	buildTime=5231;//#AUTO#
+	mass=646;//#AUTO#
 }

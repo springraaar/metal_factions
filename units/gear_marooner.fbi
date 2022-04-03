@@ -1,0 +1,114 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Marooner;
+	description=Torpedo Hydrobot;
+	iconType=amphibartilleryfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_marooner;
+	objectName=gear_marooner.3do;
+	corpse=gear_marooner_dead;
+	buildPic=gear_marooner.png;
+	soundCategory=COR_KBOT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1800;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	upright=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=KBOTUW3;
+	turnRate=840;
+	acceleration=0.1;
+	brakeRate=0.15;
+	maxVelocity=1.35;
+	maxSlope=14;
+	maxWaterDepth=21;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance= 490;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_marooner_torpedo;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	moveState=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =32 40 32;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=gear_hydrobot_plant;
+		tip=Regenerates 2+0.1%HP/s in water;
+		hydrobotRegen=1;
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:fireflare;
+	}
+	buildCostEnergy=4759;//#AUTO#
+	buildCostMetal=951;//#AUTO#
+	buildTime=11342;//#AUTO#
+	mass=767;//#AUTO#
+}

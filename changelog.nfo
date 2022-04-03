@@ -1,3 +1,60 @@
+2022/04/03 ------------------ NOTES v1.82 ----------------------
+
+
+--- new units
+
+- added GEAR "Stilts" : L2 Armored heavy fire support hydrobot
+- added GEAR "Buoy" : L2 Intelligence hydrobot
+- added GEAR "Marooner" : L2 Torpedo hydrobot
+- added GEAR "Rexapod" : L2 Very heavy assault hydrobot
+
+- added SPHERE "Dipole" : L2 Energy-intensive fast fighter sphere
+- added SPHERE "Cluster" : L2 Assault/anti-sub sphere
+
+--- Balance / Mechanics
+
+- increased AVEN "Excalibur" range from 1380 to 1430 and HP by 200 and increased cost by 8%
+
+- reduced GEAR "Exploder" blast diameter from 250 to 180
+- reduced GEAR "Rhino" cost by 8%
+- reduced GEAR "Caliber" cost by 6% and added missing hydrobot regeneration on water
+
+- increased CLAW "Pike" HP from 3000 to 3500 and reduced top speed by 5% and increased cost by 2%
+- reduced CLAW "Hammer" cost by 6%
+
+- reduced SPHERE "Magnetar" cost from 9000m to 8000m
+
+- energy cost multiplier for repairing built units lowered from 0.75 to 0.60
+
+- increased cost of static amphibious bomb launchers by 10%
+
+- slightly increased the cost of units with relatively slow non-tracking projectiles 
+- slightly increased cost of high HP units, namely relatively fast ones
+(in short, tough/fast units with flamethrowers,cannons and unguided rockets get 3-5% more expensive, fire supports with non-tracking weapons and fragile bodies get up to about 3% cheaper)
+
+
+--- UI
+
+- added "O" default keybind for ON/OFF action
+- added "#GAME <command>" handler, whih supports two options:
+. "CLEARWRECKS" command, which removes all wreckages (cheat mode only)
+. "RESETUPGRADES" command, which resets upgrades for all players (cheat mode only)
+
+--- AI
+
+- GEAR amphibious strategy will now use the hydrobots			
+- no longer override strategy if manually set by the player (only if set to default/adaptable strategy)
+- mark the corresponding threat flag when enemy has a significant underwater presence (to build more units that hit underwater)
+- added preliminary ability to use jump when evading or engaging targets
+
+--- OTHER
+
+- removed lots of unused 3d model files
+
+
+
+
+
 
 2022/03/19 ------------------ NOTES v1.81 ----------------------
 

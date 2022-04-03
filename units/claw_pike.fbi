@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=3000;
+	maxDamage=3500;
 	footprintx=4;
 	footprintz=4;
 
@@ -61,9 +61,9 @@
 	//************
 	movementClass=TANKSH4;
 	turnRate=300;
-	acceleration=0.3;
-	brakeRate=0.8;
-	maxVelocity=1.0;
+	acceleration=0.2;
+	brakeRate=0.7;
+	maxVelocity=0.95;
 	maxSlope=12;
 	maxWaterDepth=0;
 
@@ -111,8 +111,8 @@
 		explosionGenerator0=custom:railgunflarebig;
 	}
 
-	buildCostEnergy=26384;//#AUTO#
-	buildCostMetal=5276;//#AUTO#
-	buildTime=62883;//#AUTO#
-	mass=2508;//#AUTO#
+	buildCostEnergy=26339;//#AUTO#
+	buildCostMetal=5267;//#AUTO#
+	buildTime=62774;//#AUTO#
+	mass=2630;//#AUTO#
 }

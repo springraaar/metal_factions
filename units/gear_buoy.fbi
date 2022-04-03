@@ -1,0 +1,116 @@
+
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Buoy;
+	description=Intelligence Hydrobot. Provides radar, sonar and radar jammer;
+	iconType=amphibintel;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL2 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_buoy;
+	objectName=gear_buoy.3do;
+	corpse=gear_buoy_dead;
+	buildPic=gear_buoy.png;
+	soundCategory=aven_JAM;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1300;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=70;
+	energyStorage=0;
+
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	floater=1;
+	onOffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=TANKHOVER4;
+	turnRate=645;
+	acceleration=0.3;
+	brakeRate=0.03;
+	maxVelocity=1.3;
+	turninplace=1;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=2000;
+	sonarDistance=1000;
+	radarDistanceJam=600;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =30 50 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	waterline=15;
+	
+	[CustomParams]
+	{
+		builtBy=gear_hydrobot_plant;
+		tip=Regenerates 2+0.1%HP/s in water;
+		hydrobotRegen=1;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:glowsml;
+	}
+	buildCostEnergy=3192;//#AUTO#
+	buildCostMetal=638;//#AUTO#
+	buildTime=7607;//#AUTO#
+	mass=268;//#AUTO#
+}

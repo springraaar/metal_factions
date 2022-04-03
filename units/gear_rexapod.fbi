@@ -1,0 +1,130 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Rexapod;
+	description=Very Heavy Assault Hydrobot;
+	iconType=amphibassault;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_rexapod;
+	objectName=gear_rexapod.3do;
+	corpse=gear_rexapod_dead;
+	buildPic=gear_rexapod.png;
+	soundCategory=GEAR_BOTBIG;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=20000;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	upright=0;
+	onOffable=1;
+	activateWhenBuilt=1;
+	damageModifier=0.8;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=TANKDH6;
+	turnRate=400;
+	acceleration=0.7;
+	brakeRate=1.0;
+	maxVelocity=0.7;
+	turninplace=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=490;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_rexapod_cannon;
+	weapon2=gear_rexapod_flare;
+	weapon3=gear_rexapod_missile;
+	weaponMainDir1=0 0 1;
+	maxAngleDif1=100;
+	badTargetCategory1=VTOL;
+	badTargetCategory2=NOTAIR;
+	onlyTargetCategory3=NOTAIR;
+	noChaseCategory=VTOL;
+	explodeAs=EXPLOSIVE_UNIT_BLAST;
+	selfDestructAs=EXPLOSIVE_UNIT_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	moveState=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	cantbetransported=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =80 65 90;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	upright=1;
+
+	[CustomParams]
+	{
+		builtBy=gear_hydrobot_plant;
+		tip= Regenerates 2+0.1%HP/s in water. Use ON/OFF to open/close. Gains 20% damage resistance when closed;
+		hydrobotRegen=1;
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflarebig;
+		explosionGenerator1=custom:yellowflaremed;
+		explosionGenerator2=custom:yellowflaremed;
+		explosionGenerator3=custom:glowsml;
+		explosionGenerator4=custom:mmakersmoke;
+	}
+	buildCostEnergy=39113;//#AUTO#
+	buildCostMetal=7822;//#AUTO#
+	buildTime=93221;//#AUTO#
+	mass=12171;//#AUTO#
+}

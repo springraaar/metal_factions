@@ -1,0 +1,98 @@
+[UNITINFO]
+{
+	// ------------------- description
+	side=Sphere;
+	Name=Cluster Module (Bomb);
+	Description=Light Fire Support/Anti-Sub Sphere;
+	iconType=fspherebomber;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+
+	// ------------------- external specs
+	unitName=sphere_cluster_module_bomb;
+	objectName=sphere_cluster_module_bomb.3do;
+	Corpse=sphere_cluster_module_bomb_dead;
+	buildPic=sphere_cluster_module_bomb.png;
+	soundCategory=SPHERE_SPHERESML;
+
+	// ------------------- health/cost/size
+	maxDamage=1200;
+	FootprintX=3;
+	FootprintZ=3;
+	
+	// ------------------- resources
+	energyMake=0;
+	MetalMake=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyUse=0;
+
+	// ------------------- constructor
+	builder=0;
+
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	onOffable=0;
+
+
+	// ------------------- movement
+	canFly=1;
+	maxVelocity=0.9;
+	brakeRate=0.05;
+	Acceleration=0.05;
+	turnRate=632;
+	cruiseAlt=100;
+	hoverAttack=1;
+	airStrafe=0;
+	airHoverFactor=0.1;
+	upright=1;
+	bankingAllowed=0;
+	useSmoothMesh=1;
+	verticalSpeed=1.2;
+
+	// ------------------- scout
+	sightDistance=600;
+	radarDistance=0;
+	sonarDistance=0;
+
+	// ------------------- weapons
+	weapon1=sphere_cluster_module_missile;
+	onlyTargetCategory1=NOTAIR;
+	explodeAs=small_unit;
+	selfDestructAs=small_unit;
+
+	// ------------------- orders
+	movestate=0;
+
+	// ------------------- stealth
+
+	// ------------------- misc
+	minAirbasePower=99999;
+	activateWhenBuilt=0;
+	collisionVolumeType = sphere;
+	collisionVolumeScales =25 25 25;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_sphere_factory;
+		energyCostMoving=10;
+		tip=Requires 10E/s to move;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflaremed;
+	}
+	buildCostEnergy=1076;//#AUTO#
+	buildCostMetal=215;//#AUTO#
+	buildTime=2565;//#AUTO#
+	mass=371;//#AUTO#
+}

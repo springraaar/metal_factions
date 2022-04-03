@@ -254,11 +254,11 @@
 	}
 	[DAMAGE]
 	{
-		default=425;
+		default=430;
 		group_invincible=1;
-		armor_heavy=425;//#AUTO#
-		armor_medium=425;//#AUTO#
-		armor_light=425;//#AUTO#
+		armor_heavy=430;//#AUTO#
+		armor_medium=430;//#AUTO#
+		armor_light=430;//#AUTO#
 	}
 }
 [aven_u5commander_torpedo]
@@ -497,10 +497,10 @@
 	}
 	[DAMAGE]
 	{
-		default=34;
+		default=32;
 		armor_heavy=8;//#AUTO#
-		armor_medium=17;//#AUTO#
-		armor_light=34;//#AUTO#
+		armor_medium=16;//#AUTO#
+		armor_light=32;//#AUTO#
 	}
 }
 [aven_u1commander_cannon]
@@ -573,11 +573,11 @@
 	}
 	[DAMAGE]
 	{
-		default=410;
+		default=420;
 		group_invincible=1;
-		armor_heavy=410;//#AUTO#
-		armor_medium=410;//#AUTO#
-		armor_light=410;//#AUTO#
+		armor_heavy=420;//#AUTO#
+		armor_medium=420;//#AUTO#
+		armor_light=420;//#AUTO#
 	}
 }
 [aven_u2commander_chargedshot]
@@ -706,10 +706,10 @@
 	}
 	[DAMAGE]
 	{
-		default=260;
-		armor_heavy=130;//#AUTO#
-		armor_medium=260;//#AUTO#
-		armor_light=260;//#AUTO#
+		default=255;
+		armor_heavy=127;//#AUTO#
+		armor_medium=255;//#AUTO#
+		armor_light=255;//#AUTO#
 	}
 }
 [aven_u4commander_laser]
@@ -880,11 +880,11 @@
 	}
 	[DAMAGE]
 	{
-		default=420;
+		default=430;
 		group_invincible=1;
-		armor_heavy=420;//#AUTO#
-		armor_medium=420;//#AUTO#
-		armor_light=420;//#AUTO#
+		armor_heavy=430;//#AUTO#
+		armor_medium=430;//#AUTO#
+		armor_light=430;//#AUTO#
 	}
 }
 [aven_dazer_disruptor]
@@ -4384,7 +4384,7 @@
 	weaponType=LaserCannon;
 	turret=1;
 	duration=0.12;
-	range=1380;
+	range=1430;
 	minIntensity=1.0;
 	thickness=8;
 	reloadTime=11;
@@ -6111,11 +6111,11 @@
 	}
 	[DAMAGE]
 	{
-		default=100;
+		default=105;
 		group_invincible=1;
-		armor_heavy=50;//#AUTO#
-		armor_medium=100;//#AUTO#
-		armor_light=100;//#AUTO#
+		armor_heavy=52;//#AUTO#
+		armor_medium=105;//#AUTO#
+		armor_light=105;//#AUTO#
 	}
 }
 [gear_commander_torpedo]
@@ -6206,9 +6206,9 @@
 	weaponType=LaserCannon;
 	turret=1;
 	range=600;
-	duration=0.07;
+	duration=0.10;
 	reloadTime=1.5;
-	energyPerShot=400;
+	energyPerShot=500;
 	weaponVelocity=1533;
 	areaOfEffect=8;
 	soundStart=annigun3;
@@ -6222,7 +6222,7 @@
 	texture2=null;
 	texture3=null;
 	texture4=null;
-	thickness=4;
+	thickness=5;
 	impulseFactor=0.222;
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -6237,11 +6237,11 @@
 	}
 	[DAMAGE]
 	{
-		default=400;
+		default=600;
 		group_invincible=1;
-		armor_heavy=400;//#AUTO#
-		armor_medium=400;//#AUTO#
-		armor_light=400;//#AUTO#
+		armor_heavy=600;//#AUTO#
+		armor_medium=600;//#AUTO#
+		armor_light=600;//#AUTO#
 	}
 }
 [gear_u4commander_laser]
@@ -6409,11 +6409,11 @@
 	}
 	[DAMAGE]
 	{
-		default=400;
+		default=420;
 		group_invincible=1;
-		armor_heavy=400;//#AUTO#
-		armor_medium=400;//#AUTO#
-		armor_light=400;//#AUTO#
+		armor_heavy=420;//#AUTO#
+		armor_medium=420;//#AUTO#
+		armor_light=420;//#AUTO#
 	}
 }
 [gear_u2commander_torpedo]
@@ -6505,7 +6505,7 @@
 	movingAccuracy=600;
 	turret=1;
 	range=765;
-	reloadTime=4;
+	reloadTime=4.1;
 	weaponVelocity=400;
 	areaOfEffect=90;
 	projectiles=2;
@@ -6707,7 +6707,7 @@
 	weaponType=Cannon;	
 	turret=1;
 	range=520;
-	reloadTime=4;
+	reloadTime=4.2;
 	energyPerShot=0;
 	weaponVelocity=320;
 	mygravity=0.1;
@@ -6976,6 +6976,55 @@
 		armor_light=500;//#AUTO#
 	}
 }
+[gear_rexapod_missile]
+{
+	name=Amphibious Guided Bombs;
+	weaponType=StarburstLauncher;
+	model=weapon_amphbomb;
+	range=550;
+	turret=1;
+	cegTag=AMPBOMBTRAIL;
+  	explosionGenerator=custom:ROCKETBLASTWRAPPER;
+	texture1=null; //flare//
+	texture2=null;//first segment of missiletrail//
+	texture3=null;//flame//
+	texture4=null;//unknown//
+	reloadTime=2.5;
+	flightTime=5.5;
+	fixedLauncher=1;
+	tracks=1;
+	weaponTimer=0.8;
+	weaponVelocity=350;
+	weaponAcceleration=50;
+	startVelocity=170;
+	turnRate=20000;
+	waterWeapon=1;
+	subMissile=1;
+	areaOfEffect=64;
+	metalPerShot=0;
+	soundStart=ampbomb1;
+	soundHit=xplomed4;
+	fireStarter=100;
+	smokeTrail=0;
+	tolerance=4000;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	avoidGround=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		expDmgScaling=1;
+		targets=SURFACE,WATER;
+	}
+	[DAMAGE]
+	{
+		default=500;
+		group_invincible=1;
+		armor_heavy=500;//#AUTO#
+		armor_medium=500;//#AUTO#
+		armor_light=500;//#AUTO#
+	}
+}
 [gear_metalhead_missile]
 {
 	name=Amphibious Guided Bombs;
@@ -7008,7 +7057,7 @@
 	tolerance=4000;
 	interceptedByShieldType=1;
 	avoidFeature=0;
-	avoidGround=0;
+	avoidGround=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
@@ -7158,6 +7207,50 @@
 		armor_light=150;//#AUTO#
 	}
 }
+[gear_rexapod_flare]
+{
+	name=Seeker Flares;
+	weaponType=StarburstLauncher;
+	explosionGenerator=custom:FLAREBLASTWRAPPER;
+	model=weapon_flare.3do;
+	cegTag=FLARETRAIL;
+	range=530;
+	turret=1;
+	weapontimer=0.5;
+	reloadTime=0.7;
+	flightTime=4;
+	weaponVelocity=500;
+	startVelocity=350;
+	weaponAcceleration=150;
+	turnRate=43000;
+	areaOfEffect=32;
+	energyPerShot=50;
+	metalPerShot=0;
+	soundStart=flarefire;
+	soundHit=flarehit;
+	fireStarter=70;
+	tracks=1;
+	fixedLauncher=1;
+	smokeTrail=0;
+	texture1=null;
+	dance=1;
+	tolerance=9000;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=150;
+		armor_heavy=37;//#AUTO#
+		armor_medium=75;//#AUTO#
+		armor_light=150;//#AUTO#
+	}
+}
 [gear_salamander_flare]
 {
 	name=Seeker Flares;
@@ -7169,10 +7262,11 @@
 	turret=1;
 	reloadTime=3;
 	flightTime=4;
+	weaponTimer=0.5;
 	weaponVelocity=500;
 	startVelocity=350;
 	weaponAcceleration=150;
-	turnRate=33000;
+	turnRate=42000;
 	areaOfEffect=32;
 	energyPerShot=50;
 	metalPerShot=0;
@@ -7455,6 +7549,55 @@
 		armor_heavy=650;//#AUTO#
 		armor_medium=650;//#AUTO#
 		armor_light=650;//#AUTO#
+	}
+}
+[gear_rexapod_cannon]
+{
+	name=Energized Plasma Bombardment;
+	weaponType=Cannon;
+	explosionGenerator=custom:STDBLASTWRAPPER;
+	cegTag=REXPLASMATRAIL;
+	turret=1;
+	range=620;
+	reloadTime=0.9;
+	weaponVelocity=420;
+	accuracy=400;
+	burnBlow=1;
+	sprayAngle=2000;
+	areaOfEffect=110;
+	energyPerShot=600;
+	metalPerShot=0;
+	size=3.4;
+	rgbColor=0.9 0.9 0.3;
+	stages=4;
+  	separation=0.4;
+  	alphaDecay=0.24;
+  	sizeDecay=-0.1;
+	burst=3;
+	burstRate=0.1;
+	soundStart=slowplasma;
+	soundHit=xplochargedshot;
+	fireStarter=70;
+	smokeTrail=0;
+	tolerance=5000;
+	interceptedByShieldType=1;
+	collideFriendly=0;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		reaimTime=10;
+		expDmgScaling=1;
+		evalFactor=0.65; // steep angle restriction, clumsy turning
+		targets=SURFACE;
+	}
+	[DAMAGE]
+	{
+		default=320;
+		group_invincible=1;
+		armor_heavy=320;//#AUTO#
+		armor_medium=320;//#AUTO#
+		armor_light=320;//#AUTO#
 	}
 }
 [COREDEPTHCHARGE]
@@ -8176,7 +8319,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
-		restrictedAngle=1;
+		evalFactor=0.65; // steep angle restriction, clumsy turning
 		reaimTime=1;
 		expDmgScaling=1;
 		targets=SURFACE;
@@ -8890,44 +9033,6 @@
 		armor_light=500;//#AUTO#
 	}
 }
-[CORFLAK_GUN]
-{
-	name=Flak Cannon;
-	weaponType=Cannon;
-	turret=1;
-	range=1000;
-	reloadTime=0.85;
-	weaponVelocity=999;
-	areaOfEffect=155;
-	soundStart=canlite2;
-	soundHit=xploflak1;
-	tolerance=3000;
-	burnBlow=1;
-	explosionGenerator=custom:FLAKBLASTWRAPPER;
-	size=2;
-	rgbColor=1 1 1;
-	stages=2;
-  	separation=0.0;
-  	alphaDecay=0.8;
-  	sizeDecay=-2;
-  	craterMult=0.125;
-	interceptedByShieldType=1;
-	avoidFeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitPower=1;
-		expDmgScaling=1;
-		targets=SURFACE,AIR;
-	}
-	[DAMAGE]
-	{
-		default=220;
-		group_invincible=1;
-		armor_heavy=55;//#AUTO#
-		armor_medium=110;//#AUTO#
-		armor_light=220;//#AUTO#
-	}
-}
 [gear_burner_flamethrower]
 {
 	name=Flame Thrower;
@@ -9088,120 +9193,6 @@
 		armor_heavy=700;//#AUTO#
 		armor_medium=1400;//#AUTO#
 		armor_light=1400;//#AUTO#
-	}
-}
-[gear_copperhead_flak]
-{
-	name=Flak Cannon;
-	weaponType=Cannon;
-	turret=1;
-	range=900;
-	reloadTime=1;
-	weaponVelocity=999;
-	areaOfEffect=140;
-	soundStart=canlite2;
-	soundHit=xploflak1;
-	tolerance=3000;
-	burnBlow=1;
-	explosionGenerator=custom:FLAKBLASTWRAPPER;
-	size=2;
-	rgbColor=1 1 1;
-	stages=2;
-  	separation=0.0;
-  	alphaDecay=0.8;
-  	sizeDecay=-2;
-  	craterMult=0.125;
-	interceptedByShieldType=1;
-	avoidFeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitPower=1;
-		expDmgScaling=1;
-		targets=SURFACE,AIR;
-	}
-	[DAMAGE]
-	{
-		default=190;
-		group_invincible=1;
-		armor_heavy=47;//#AUTO#
-		armor_medium=95;//#AUTO#
-		armor_light=190;//#AUTO#
-	}
-}
-[gear_shredder_flak]
-{
-	name=Flak Cannon;
-	weaponType=Cannon;
-	turret=1;
-	range=820;
-	reloadTime=1.1;
-	weaponVelocity=999;
-	areaOfEffect=140;
-	soundStart=canlite2;
-	soundHit=xploflak1;
-	tolerance=3000;
-	burnBlow=1;
-	explosionGenerator=custom:FLAKBLASTWRAPPER;
-	size=2;
-	rgbColor=1 1 1;
-	stages=2;
-  	separation=0.0;
-  	alphaDecay=0.8;
-  	sizeDecay=-2;
-  	craterMult=0.125;
-	interceptedByShieldType=1;
-	avoidFeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitPower=1;
-		expDmgScaling=1;
-		targets=SURFACE,AIR;
-	}
-	[DAMAGE]
-	{
-		default=190;
-		group_invincible=1;
-		armor_heavy=47;//#AUTO#
-		armor_medium=95;//#AUTO#
-		armor_light=190;//#AUTO#
-	}
-}
-[aven_archer_flak]
-{
-	name=Flak Cannon;
-	weaponType=Cannon;
-	turret=1;
-	range=720;
-	reloadTime=0.78;
-	weaponVelocity=999;
-	areaOfEffect=120;
-	soundStart=canlite2;
-	soundHit=xploflak1;
-	tolerance=3000;
-	burnBlow=1;
-	explosionGenerator=custom:FLAKBLASTWRAPPER;
-	size=2;
-	rgbColor=1 1 1;
-	stages=2;
-  	separation=0.0;
-  	alphaDecay=0.8;
-  	sizeDecay=-2;
-  	craterMult=0.125;
-	interceptedByShieldType=1;
-	avoidFeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitPower=1;
-		expDmgScaling=1;
-		targets=SURFACE,AIR;
-	}
-	[DAMAGE]
-	{
-		default=160;
-		group_invincible=1;
-		armor_heavy=40;//#AUTO#
-		armor_medium=80;//#AUTO#
-		armor_light=160;//#AUTO#
 	}
 }
 [gear_zipper_laser]
@@ -9371,6 +9362,44 @@
 		armor_light=600;//#AUTO#
 	}
 }
+[gear_marooner_torpedo]
+{
+	name=Heavy Torpedoes;
+	weaponType=TorpedoLauncher;
+	turret=1;
+	model=weapon_advtorpedo;
+	collideFriendly=1;
+	range=800;
+	reloadTime=7;
+	weaponVelocity=450;
+	startVelocity=150;
+	weaponAcceleration=50;
+	flightTime=8;
+	turnRate=15750;
+	areaOfEffect=120;
+	soundStart=torpedo2;
+	soundHit=xplodep3;
+	tracks=1;
+	waterWeapon=1;
+	tolerance=32767;
+	explosionGenerator=custom:STDBLASTWRAPPER;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		expDmgScaling=1;
+		targets=WATER;
+	}
+	[DAMAGE]
+	{
+		default=500;
+		group_invincible=1;
+		armor_heavy=500;//#AUTO#
+		armor_medium=500;//#AUTO#
+		armor_light=500;//#AUTO#
+	}
+}
 [gear_titan_laser]
 {
 	name=High Energy Laser;
@@ -9412,6 +9441,50 @@
 		armor_heavy=220;//#AUTO#
 		armor_medium=220;//#AUTO#
 		armor_light=220;//#AUTO#
+	}
+}
+[gear_stilts_laser]
+{
+	name=High Energy Laser;
+	weaponType=BeamLaser;
+	explosionGenerator=custom:GREENLASERBLASTWRAPPER;
+	beamTime=0.15;
+	thickness=3.534;
+	coreThickness=0.9;
+	scrollSpeed=0;
+	pulseSpeed=0;
+	rgbColor=0.0 0.61 0.0;   
+	rgbColor2=0.5 1.0 0.5;
+	intensity=1.0;
+	turret=1;
+	range=850;
+	minIntensity=1.0;
+	reloadTime=2.3;
+	energyPerShot=300;
+	weaponVelocity=1533;
+	areaOfEffect=8;
+	soundStart=lasrhvy3;
+	soundHit=lasrhit1;
+	fireStarter=90;
+	tolerance=6000;
+	impulseFactor=0.222;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		reaimTime=1;
+		aaRangeBoost=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=420;
+		group_invincible=1;
+		armor_heavy=420;//#AUTO#
+		armor_medium=420;//#AUTO#
+		armor_light=420;//#AUTO#
 	}
 }
 [gear_jigsaw_laser1]
@@ -10990,7 +11063,7 @@
 	range=480;
 	reloadTime=3.6;
 	weaponVelocity=250;
-	areaOfEffect=250;
+	areaOfEffect=180;
 	edgeEffectiveness=0.9;
 	soundStart=xplomas3;
 	soundHit=xplomed1;
@@ -14018,11 +14091,11 @@
 	}
 	[DAMAGE]
 	{
-		default=410;
+		default=420;
 		group_invincible=1;
-		armor_heavy=410;//#AUTO#
-		armor_medium=410;//#AUTO#
-		armor_light=410;//#AUTO#
+		armor_heavy=420;//#AUTO#
+		armor_medium=420;//#AUTO#
+		armor_light=420;//#AUTO#
 	}
 }
 [claw_u2commander_missile]
@@ -15579,7 +15652,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
-		aaRangeBoost=1;
+		reaimTime=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR2;
 	}
@@ -18267,7 +18340,7 @@
 	weaponType=Cannon;
 	turret=1;
 	range=610;
-	reloadTime=6.3;
+	reloadTime=6.5;
 	weaponVelocity=330;
 	areaOfEffect=240;
 	soundStart=novafire;
@@ -19039,6 +19112,104 @@
 	{
 		hitPower=3;
 		expDmgScaling=1;
+		targets=SURFACE,WATER;
+	}
+	[DAMAGE]
+	{
+		default=500;
+		group_invincible=1;
+		armor_heavy=500;//#AUTO#
+		armor_medium=500;//#AUTO#
+		armor_light=500;//#AUTO#
+	}
+}
+[sphere_cluster_missile]
+{
+	name=Amphibious Guided Bombs;
+	weaponType=MissileLauncher;
+	model=weapon_amphbomb;
+	range=480;
+	turret=1;
+	cegTag=AMPBOMBTRAIL;
+  	explosionGenerator=custom:ROCKETBLASTWRAPPER;
+	texture1=null; //flare//
+	texture2=null;//first segment of missiletrail//
+	texture3=null;//flame//
+	texture4=null;//unknown//
+	reloadTime=2.5;
+	flightTime=4;
+	fixedLauncher=1;
+	tracks=1;
+	weaponVelocity=300;
+	weaponAcceleration=70;
+	startVelocity=200;
+	turnRate=35000;
+	waterWeapon=1;
+	subMissile=1;
+	areaOfEffect=64;
+	metalPerShot=0;
+	soundStart=ampbomb1;
+	soundHit=xplomed4;
+	fireStarter=100;
+	smokeTrail=0;
+	tolerance=4000;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	avoidGround=1;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		expDmgScaling=1;
+		reaimTime=1;
+		targets=SURFACE,WATER;
+	}
+	[DAMAGE]
+	{
+		default=500;
+		group_invincible=1;
+		armor_heavy=500;//#AUTO#
+		armor_medium=500;//#AUTO#
+		armor_light=500;//#AUTO#
+	}
+}
+[sphere_cluster_module_missile]
+{
+	name=Amphibious Guided Bombs;
+	weaponType=MissileLauncher;
+	model=weapon_amphbomb;
+	range=420;
+	turret=1;
+	cegTag=AMPBOMBTRAIL;
+  	explosionGenerator=custom:ROCKETBLASTWRAPPER;
+	texture1=null; //flare//
+	texture2=null;//first segment of missiletrail//
+	texture3=null;//flame//
+	texture4=null;//unknown//
+	reloadTime=10;
+	flightTime=4;
+	fixedLauncher=1;
+	tracks=1;
+	weaponVelocity=300;
+	weaponAcceleration=70;
+	startVelocity=200;
+	turnRate=35000;
+	waterWeapon=1;
+	subMissile=1;
+	areaOfEffect=64;
+	metalPerShot=0;
+	soundStart=ampbomb1;
+	soundHit=xplomed4;
+	fireStarter=100;
+	smokeTrail=0;
+	tolerance=4000;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	avoidGround=1;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		expDmgScaling=1;
+		reaimTime=1;
 		targets=SURFACE,WATER;
 	}
 	[DAMAGE]
@@ -20464,7 +20635,7 @@
 }
 [sphere_comet_cannon]
 {
-	name=Heavy Plasma Discharge;
+	name=Energized Plasma Discharge;
 	weaponType=MissileLauncher;
 	explosionGenerator=custom:REDBLASTWRAPPER;
 	cegTag=REDPLASMATRAIL;
@@ -20480,7 +20651,6 @@
 	areaOfEffect=90;
 	energyPerShot=200;
 	metalPerShot=0;
-	burnBlow=1;
 	soundStart=slowplasma;
 	soundHit=xplochargedshot;
 	fireStarter=70;
@@ -20527,7 +20697,6 @@
 	energyPerShot=1800;
 	metalPerShot=0;
 	projectiles=8;
-	burnBlow=1;
 	soundTrigger=0;
 	soundStart=atomfire;
 	soundHit=xplomed4;
@@ -20864,6 +21033,32 @@
 		default=10;
 	}
 }
+[sphere_dipole_shield]
+{
+	name=Energy shield;
+	weaponType=Shield;
+	smartShield=1;
+	exteriorShield=0;
+	visibleShield=1;
+	visibleShieldRepulse=0;
+	shieldEnergyUse=0;
+	shieldForce=3000;
+	shieldRadius=32;
+	shieldMaxSpeed=2000;
+	shieldPower=1000;
+	shieldStartingPower=1000;
+	shieldPowerRegen=20;
+	shieldPowerRegenEnergy=40;
+	shieldInterceptType=2;
+	shieldGoodColor=0.9 0.9 1.0 1;
+	shieldBadColor=0.6 0.2 0.2 0.05;
+	shieldAlpha=0.5;
+	visibleShieldHitFrames=5;
+	[DAMAGE]
+	{
+		default=10;
+	}
+}
 [sphere_rain_shield]
 {
 	name=Energy shield;
@@ -21017,6 +21212,50 @@
 	range=430;
 	minIntensity=1.0;
 	reloadTime=0.5;
+	energyPerShot=9;
+	weaponVelocity=1533;
+	areaOfEffect=8;
+	soundTrigger=1;
+	soundStart=lasrfir1;
+	soundHit=lasrhit2;
+	fireStarter=50;
+	scrollSpeed=0;
+	pulseSpeed=0;
+	rgbColor=0.6 0.4 0.1;
+	rgbColor2=1 0.8 0.4;
+	tolerance=3000;
+	impulseFactor=0.222;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		reaimTime=1;
+		aaRangeBoost=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=45;
+		armor_heavy=11;//#AUTO#
+		armor_medium=22;//#AUTO#
+		armor_light=45;//#AUTO#
+	}
+}
+[sphere_cluster_module_laser]
+{
+	name=Rapid Fire Laser;
+	weaponType=BeamLaser;
+	explosionGenerator=custom:REDLASERBLASTWRAPPER;
+	intensity=0.85;
+	beamTime=0.05;
+	thickness=2.123;
+	coreThickness=0.55;
+	turret=1;
+	range=420;
+	minIntensity=1.0;
+	reloadTime=0.6;
 	energyPerShot=9;
 	weaponVelocity=1533;
 	areaOfEffect=8;
@@ -22105,6 +22344,94 @@
 		armor_heavy=2;//#AUTO#
 		armor_medium=4;//#AUTO#
 		armor_light=9;//#AUTO#
+	}
+}
+[sphere_dipole_beam1]
+{
+	Name=Ruby Lightning Beam;
+	weaponType=BeamLaser;
+	largeBeamLaser=1;
+	turret=1;
+	pulseSpeed=4.0;
+	thickness=8;
+	beamTime=0.1;
+	range=450; 
+	reloadTime=0.1;
+	energyPerShot=13;
+	weaponVelocity=400;
+  	texture1=lightning2;
+  	laserFlareSize=2;
+	areaOfEffect=16;
+	soundStart=elec3;
+	soundHit=lashit2;
+	fireStarter=90;
+	rgbColor=1.0 0.2 0.1;
+	rgbColor2=1.0 1.0 1.0;
+	tolerance=5000;
+	explosionGenerator=custom:RUBYBEAMBLAST;
+	minIntensity=1.0; 
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		reaimTime=1;
+		airLaser=1;
+		aaRangeBoost=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=19;
+		armor_heavy=9;//#AUTO#
+		armor_medium=19;//#AUTO#
+		armor_light=19;//#AUTO#
+	}
+}
+[sphere_dipole_beam2]
+{
+	Name=Emerald Lightning Beam;
+	weaponType=BeamLaser;
+	largeBeamLaser=1;
+	turret=1;
+	pulseSpeed=4.0;
+	tileLength=250;
+	scrollSpeed=3;
+	thickness=5;
+	beamTime=0.1;
+	range=450; 
+	reloadTime=0.1;
+	energyPerShot=6;
+	weaponVelocity=400;
+  	texture1=lightning;
+  	laserFlareSize=1.5;
+	areaOfEffect=8;
+	soundStart=elec2;
+	soundHit=lashit2;
+	fireStarter=90;
+	rgbColor=0.3 0.6 0.3;
+	rgbColor2=0.3 1.0 0.4;
+	tolerance=5000;
+	explosionGenerator=custom:OPALBEAMBLAST;
+	minIntensity=1.0; 
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		reaimTime=1;
+		airLaser=1;
+		aaRangeBoost=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=13;
+		armor_heavy=3;//#AUTO#
+		armor_medium=6;//#AUTO#
+		armor_light=13;//#AUTO#
 	}
 }
 [sphere_blower_aabomb]

@@ -162,6 +162,8 @@ local function tooltipExtension(tooltip,cmdAction)
 			tooltip = tooltip .. "."..tooltipHotkey(nil,"areamex2")
 		elseif cmdAction == "areamex2h" then
 			tooltip = tooltip .. "."..tooltipHotkey(nil,"areamex2h")
+		elseif cmdAction == "onoff" then
+			tooltip = tooltip .. "."..tooltipHotkey(nil,"onoff")
 		end
 	end
 	

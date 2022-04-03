@@ -2151,6 +2151,58 @@ usedefaultexplosions=0;
 	}
 
 }
+[REXPLASMATRAIL]
+{
+	usedefaultexplosions=0;	
+	[_glow]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=55;explosionGenerator=custom:DYNPROJGLOWRED;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[groundflash]
+	{
+		flashSize = 65;
+		flashAlpha = 0.07;
+		circleGrowth = 0;
+		circleAlpha = 0.1;
+		ttl = 3;
+		color = 0.8, 1.0, 0.5;
+
+	}
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-1 r2, -1 r2,-1 r2;
+			width=16;
+			length=16;
+			alpha=0.08;
+			alphadecay=0.005;
+			color=0.8, 1.0, 0.8;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=3; 
+	}
+	[center]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-0.6 r1.2, -0.6 r1.2,-0.6 r1.2;
+			width=6;
+			length=6;
+			alpha=0.3;
+			alphadecay=0.15;
+			color=0.7, 1.0, 0.0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=6; 
+	}
+
+}
 [YELLOWPLASMATRAIL]
 {
 	usedefaultexplosions=0;	

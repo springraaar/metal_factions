@@ -368,12 +368,11 @@ AimPrimary(heading, pitch)
 	targetPitch = pitch;
 	bAiming = TRUE;
 
-	// make unit turn to face target 	
-	while (heading < <-10> || heading > <10>) {
-		if (bMoving && (heading < <-15> || heading > <15>)) {
-			return (0);
-		}	
-		call-script lua_turnToTarget(1);
+	// make unit turn to face target
+	if (!bMoving && (get ABS(heading) > <10>)) {
+		call-script lua_turnToTarget(1,10);
+	}
+	if (get ABS(heading) > <20>) {
 		sleep 100;
 	}
 	

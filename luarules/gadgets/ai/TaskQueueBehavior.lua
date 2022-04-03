@@ -737,18 +737,18 @@ function TaskQueueBehavior:GameFrame(f)
 				end
 			end
 			
-			if (not hasLandConnection) and (not hasAmphibiousConnection) then
+			if self.ai.autoChangeStrategies and ((not hasLandConnection) and (not hasAmphibiousConnection)) then
 				viableStrategyStrList = {"air"}
 				strategyStr = viableStrategyStrList[random( 1, #viableStrategyStrList)]
-				if self.ai.currentStrategyStr ~= strategyStr then
+				if self.ai.currentStrategyStr ~= strategyStr and (not tableContains(viableStrategyStrList,self.ai.currentStrategyStr)) then
 					self.ai:messageAllies("no land or amphibious connection found to enemy commanders, change strategy to \""..strategyStr.."\"")
 					self.ai.strategyOverride = true
 					self.ai:setStrategy(self.unitSide,strategyStr,false)
 				end
-			elseif (not hasLandConnection) and hasAmphibiousConnection then
+			elseif self.ai.autoChangeStrategies and ((not hasLandConnection) and hasAmphibiousConnection) then
 				viableStrategyStrList = {"air","amphibious"}
 				strategyStr = viableStrategyStrList[random( 1, #viableStrategyStrList)]
-				if self.ai.currentStrategyStr ~= strategyStr then
+				if self.ai.currentStrategyStr ~= strategyStr and (not tableContains(viableStrategyStrList,self.ai.currentStrategyStr)) then
 					self.ai:messageAllies("no land connection found to enemy commanders, change strategy to \""..strategyStr.."\"")
 					self.ai.strategyOverride = true
 					self.ai:setStrategy(self.unitSide,strategyStr,false)

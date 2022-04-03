@@ -1,0 +1,211 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<35>
+
+
+piece ground, hips,torso,lturret,lsleeve,lflare,rturret,rsleeve,rflare,sphere,shieldpt,m2on,m2off,m3on,m3off,m4on,m4off,m5on,m5off,m6on,m6off,m7on,m7off;
+	
+static-var bMoving,bAiming, firept1, energyBoostedMovement;
+
+#include "aimhelper1.h"
+#include "aimhelper2.h"
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_AIM2			4
+
+lua_checkEnergy() { return 0; }
+
+
+MotionControl(hasEnergy)
+{
+	hasEnergy = 1;
+	while (TRUE)
+	{
+		bMoving = (get CURRENT_SPEED) * 50 / (get MAX_SPEED);
+
+		// lua check for energy availability		
+		call-script lua_checkEnergy(2000);
+		hasEnergy = get LUA1;
+		
+		// update speed and activation state
+		if (bMoving && hasEnergy)
+		{
+			energyBoostedMovement = TRUE;
+			hide m2off;
+			hide m3off;
+			hide m4off;
+			hide m5off;
+			hide m6off;
+			hide m7off;
+			show m2on;
+			show m3on;
+			show m4on;
+			show m5on;
+			show m6on;
+			show m7on;
+		}
+		if (!bMoving || !hasEnergy)
+		{
+			energyBoostedMovement = FALSE;
+			show m2off;
+			show m3off;
+			show m4off;
+			show m5off;
+			show m6off;
+			show m7off;
+			hide m2on;
+			hide m3on;
+			hide m4on;
+			hide m5on;
+			hide m6on;
+			hide m7on;
+			
+		}
+
+		sleep 60;
+	}
+}
+
+Effect()
+{
+	while (TRUE)
+	{
+		if (energyBoostedMovement)
+		{
+			emit-sfx 1024+1 from shieldpt;
+		}
+
+		sleep 90;
+	}
+}
+
+
+Create()
+{
+
+	energyBoostedMovement = FALSE;
+	bMoving=FALSE;
+	bAiming=FALSE;
+	call-script stopAimHelper1(<1000>,<1000>);
+	call-script stopAimHelper2(<1000>,<1000>);
+
+	start-script MotionControl();
+	start-script Effect();
+}
+
+
+RestoreAfterDelayWeapon1()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
+	turn lturret to y-axis <0.000000> speed <100>;
+	turn lsleeve to x-axis <0.000000> speed <100>;
+}
+RestoreAfterDelayWeapon2()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper2(<100>,<100>);
+	turn rturret to y-axis <0.000000> speed <100>;
+	turn rsleeve to x-axis <0.000000> speed <100>;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = lturret;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = lflare;
+}
+
+FirePrimary()
+{
+	emit-sfx 1024 + 0 from lflare;
+	return 1;
+}
+
+
+AimPrimary(heading, pitch)
+{
+	call-script updateAimHelper1(heading,pitch,<600>,<600>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+		
+	turn lturret to y-axis heading speed <600.027473>;
+	turn lsleeve to x-axis <0.000000> - pitch speed <600.038462>;
+	if ( !aimReady1 )
+	{
+		wait-for-turn lturret around y-axis;
+		wait-for-turn lsleeve around x-axis;
+	}
+	
+	start-script RestoreAfterDelayWeapon1();
+	return (1);
+}
+
+
+AimFromWeapon2(piecenum)
+{
+	piecenum = rturret;
+}
+
+QueryWeapon2(piecenum)
+{
+	piecenum = rflare;
+}
+
+FireWeapon2()
+{
+	emit-sfx 1024 + 2 from rflare;
+	return 1;
+}
+
+
+AimWeapon2(heading, pitch)
+{
+	call-script updateAimHelper2(heading,pitch,<600>,<600>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM2;
+	set-signal-mask SIG_AIM2;
+		
+	turn rturret to y-axis heading speed <600.027473>;
+	turn rsleeve to x-axis <0.000000> - pitch speed <600.038462>;
+	if ( !aimReady2 )
+	{
+		wait-for-turn rturret around y-axis;
+		wait-for-turn rsleeve around x-axis;
+	}
+
+	start-script RestoreAfterDelayWeapon2();
+	return (1);
+}
+
+QueryWeapon3(piecenum)
+{
+	piecenum = shieldpt;
+	return (0);
+}
+
+AimFromWeapon3(piecenum)
+{
+	piecenum = shieldpt;
+	return (0);
+}
+
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		explode sphere type SHATTER | BITMAP4;
+		return (1);
+	}
+	explode sphere type SHATTER | BITMAP4;
+	return (2);
+}
+

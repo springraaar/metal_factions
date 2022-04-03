@@ -839,11 +839,21 @@ function activateAtkCenter(self)
 	else	
 		-- far from target position, deactivate and move
 		spGiveOrderToUnit(self.unitId,CMD.ONOFF,{0},{})
-		
-		spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},{})
-			
-		-- add another order to queue in case the first is invalid
-		spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x - radius/2 + random( 1, radius),0,p.z - radius/2 + random( 1, radius)},CMD.OPT_SHIFT)
+		local h = spGetGroundHeight(p.x,p.z)
+		if (spGetGroundHeight(p.x,p.z) < 0) then
+			for i=1,6,1 do
+				local x = p.x-radius/2+random(1,radius)
+				local z = p.z-radius/2+random(1,radius)
+				if (spGetGroundHeight(x,z) > 0) then
+					h = spGetGroundHeight(x,z)
+					p.x = x
+					p.z = z
+					break	
+				end
+			end
+		end
+
+		spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,h,p.z},{})
 	end
 	
 	return {action="wait", frames=120}
@@ -2564,6 +2574,7 @@ function gearL2VehicleRadar(self) return buildWithLimitedNumber(self,"gear_infor
 function gearL2VehicleRadarJammer(self) return buildWithLimitedNumber(self,"gear_deleter",1) end
 function gearL1ShipChoice(self) return choiceByType(self,{"gear_searcher","gear_viking"},"gear_enforcer",{"gear_searcher","gear_viking"},"gear_snake") end
 function gearL2ShipChoice(self) return choiceByType(self,"gear_shredder",{"gear_executioner","gear_edge"},{"gear_executioner","gear_noser"},"gear_noser") end
+function gearL2HydrobotChoice(self) return choiceByType(self,{"gear_hopper","gear_stilts"},{"gear_caliber","gear_rexapod"},{"gear_salamander,gear_metalhead,gear_caliber,gear_stilts"},"gear_marooner") end
 function gearScoper(self) return buildWithLimitedNumber(self,"gear_zoomer",1) end
 
 gearCommander = {
@@ -2891,6 +2902,14 @@ gearAdvShipPlant = {
 	{action = "wait", frames = 128}
 }
 
+gearHydrobotPlant = {
+	"gear_salamander",
+	"gear_adv_construction_hydrobot",
+	gearL2HydrobotChoice,
+	gearL2HydrobotChoice,
+	gearL2HydrobotChoice,
+	{action = "wait", frames = 128}
+}
 
 ------------------------------- CLAW
 
@@ -4296,7 +4315,7 @@ taskQueues = {
 	gear_adv_construction_kbot = gearLev2Con,
 	gear_adv_construction_aircraft = gearLev2Con,	
 	gear_adv_construction_sub = gearLev2Con,
-	gear_construction_hydrobot = gearLev2Con,
+	gear_adv_construction_hydrobot = gearLev2Con,
 	gear_nano_tower = staticBuilder,
 	gear_light_plant = gearLightPlant,
 	gear_aircraft_plant = gearAircraftPlant,
@@ -4305,13 +4324,15 @@ taskQueues = {
 	gear_adv_vehicle_plant = gearAdvVehiclePlant,
 	gear_adv_aircraft_plant = gearAdvAircraftPlant,
 	gear_adv_shipyard = gearAdvShipPlant,
+	gear_hydrobot_plant = gearHydrobotPlant,
 	gear_upgrade_center = upgradeCenter,
 	gear_scout_pad = scoutPad,
 	gear_voyeur = atkSupporter,
 	gear_spectre = atkSupporter,
 	gear_informer = atkSupporter,
 	gear_deleter = atkSupporter,
-	gear_zoomer = atkSupporter,	
+	gear_zoomer = atkSupporter,
+	gear_buoy = atkSupporter,		
 	gear_fink = airScout,
 	gear_long_range_rocket_platform = lRRocketPlatform,
 	gear_premium_nuclear_rocket = unblockableNuke,
@@ -4444,6 +4465,7 @@ sTaskQueues = {
 	gear_adv_construction_kbot = stratMobileBuilder,
 	gear_adv_construction_aircraft = stratMobileBuilder,	
 	gear_adv_construction_sub = stratMobileBuilder,
+	gear_adv_construction_hydrobot = stratMobileBuilder,
 	gear_nano_tower = stratStaticBuilder,
 	gear_light_plant = stratPlant,
 	gear_aircraft_plant = stratPlant,
@@ -4452,6 +4474,7 @@ sTaskQueues = {
 	gear_adv_vehicle_plant = stratPlant,
 	gear_adv_aircraft_plant = stratPlant,
 	gear_adv_shipyard = stratPlant,
+	gear_hydrobot_plant = stratPlant,
 	gear_upgrade_center = stratUpgradeCenter,
 ------------------- CLAW
 	claw_commander = stratCommander,

@@ -229,11 +229,6 @@ MAP_PROFILE_AIRONLY = 4
 -- commands
 include("lualibs/custom_cmd.lua")
 
---CMD.MOVE = 10
---CMD_PATROL = 15
---CMD_FIGHT = 16
---CMD_RECLAIM = 10	 --FIXME
---CMD_REPAIR = 10	 --FIXME
 CMD_FEATURE_ID_OFFSET = Game.maxUnits
 
 -- external commands
@@ -406,6 +401,7 @@ spGetCommandQueue = Spring.GetCommandQueue
 spGetFeatureDefID = Spring.GetFeatureDefID
 spGetFeaturePosition = Spring.GetFeaturePosition
 spGetUnitMoveTypeData = Spring.GetUnitMoveTypeData
+spGetUnitRulesParam = Spring.GetUnitRulesParam
 spGetTeamRulesParam = Spring.GetTeamRulesParam
 spSetTeamRulesParam = Spring.SetTeamRulesParam
 spAddTeamResource = Spring.AddTeamResource
@@ -441,6 +437,17 @@ end
 function setContains(set, key)
 	return set[key] ~= nil
 end
+
+function tableContains(tab, key)
+    for index, value in ipairs(tab) do
+        if value == key then
+            return true
+        end
+    end
+
+    return false
+end
+
 
 function listToSet (list)
 	local set = {}
@@ -914,7 +921,10 @@ attackerList =
 	"gear_metalhead",
 	"gear_hopper",
 	"gear_salamander",
+	"gear_stilts",
 	"gear_marauder",
+	"gear_marooner",
+	"gear_rexapod",
 	"gear_proteus",
 	"gear_heater",
 	"gear_reaper",
@@ -1023,7 +1033,11 @@ attackerList =
 	"sphere_gazer",
 	"sphere_comet",
 	"sphere_atom",
-	"sphere_chroma"      
+	"sphere_chroma",
+	"sphere_dipole",
+	"sphere_cluster",
+	"sphere_cluster_module_laser",
+	"sphere_cluster_module_bomb"
 }
 
 
@@ -1099,6 +1113,7 @@ unitAbleToHitUnderwater = {
 	aven_slider_s = true,
 	aven_advanced_torpedo_launcher = true,
 	aven_albatross = true,
+	aven_pelter = true,
 ------------------------------------------------ GEAR
 	gear_commander = true,
 	gear_u1commander = true,
@@ -1113,6 +1128,10 @@ unitAbleToHitUnderwater = {
 	gear_noser = true,
 	gear_advanced_torpedo_launcher = true,
 	gear_whirlpool = true,
+	gear_metalhead = true,
+	gear_marooner = true,
+	gear_lobber = true,
+	gear_rexapod = true,
 ------------------------------------------------ CLAW
 	claw_commander = true,
 	claw_u1commander = true,
@@ -1127,7 +1146,8 @@ unitAbleToHitUnderwater = {
 	claw_dancer = true,
 	claw_cutter = true,
 	claw_trident = true,
-	claw_nailer = true,	
+	claw_nailer = true,
+	claw_cache = true,		
 ------------------------------------------------ SPHERE
 	sphere_commander = true,
 	sphere_u1commander = true,
@@ -1143,6 +1163,9 @@ unitAbleToHitUnderwater = {
 	sphere_pluto = true,
 	sphere_oyster = true,
 	sphere_crab = true,
+	sphere_slugger = true,
+	sphere_cluster = true,
+	sphere_cluster_module_bomb = true,
 	sphere_neptune = true
 }
 
@@ -1361,7 +1384,7 @@ lev2ArtilleryDefenseByFaction = {[side1Name] = {"aven_guardian"}, [side2Name] = 
 lev2LongRangeArtilleryByFaction = {[side1Name] = {"aven_standoff"}, [side2Name] = {"gear_intimidator"}, [side3Name] = {"claw_longhorn"}, [side4Name] = {"sphere_bastion"}}
 respawnerByFaction = {[side1Name] = "aven_commander_respawner", [side2Name] = "gear_commander_respawner", [side3Name] = "claw_commander_respawner", [side4Name] = "sphere_commander_respawner"}
 lev1PlantByFaction = {[side1Name] = {"aven_light_plant","aven_aircraft_plant"}, [side2Name] = {"gear_light_plant","gear_aircraft_plant"}, [side3Name] = {"claw_light_plant","claw_aircraft_plant"}, [side4Name] = {"sphere_light_factory","sphere_aircraft_factory"}}
-lev2PlantByFaction = {[side1Name] = {"aven_adv_kbot_lab","aven_adv_vehicle_plant","aven_hovercraft_platform","aven_adv_aircraft_plant"}, [side2Name] = {"gear_adv_kbot_lab","gear_adv_vehicle_plant","gear_adv_aircraft_plant"}, [side3Name] = {"claw_adv_kbot_plant","claw_adv_vehicle_plant","claw_spinbot_plant","claw_adv_aircraft_plant"}, [side4Name] = {"sphere_adv_vehicle_factory","sphere_adv_kbot_factory","sphere_sphere_factory","sphere_adv_aircraft_factory"}}
+lev2PlantByFaction = {[side1Name] = {"aven_adv_kbot_lab","aven_adv_vehicle_plant","aven_hovercraft_platform","aven_adv_aircraft_plant"}, [side2Name] = {"gear_adv_kbot_lab","gear_adv_vehicle_plant","gear_adv_aircraft_plant","gear_hydrobot_plant"}, [side3Name] = {"claw_adv_kbot_plant","claw_adv_vehicle_plant","claw_spinbot_plant","claw_adv_aircraft_plant"}, [side4Name] = {"sphere_adv_vehicle_factory","sphere_adv_kbot_factory","sphere_sphere_factory","sphere_adv_aircraft_factory"}}
 solarByFaction = { [side1Name] = "aven_solar_collector", [side2Name] = "gear_solar_collector", [side3Name] = "claw_solar_collector"}
 windByFaction = { [side1Name] = "aven_wind_generator", [side2Name] = "gear_wind_generator", [side3Name] = "claw_wind_generator", [side4Name] = "sphere_wind_generator"}
 geoByFaction = { [side1Name] = "aven_geothermal_powerplant", [side2Name] = "gear_geothermal_powerplant", [side3Name] = "claw_geothermal_powerplant", [side4Name] = "sphere_geothermal_powerplant"}

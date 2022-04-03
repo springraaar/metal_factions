@@ -140,7 +140,7 @@ local magnetarIds = {}
 local magnetarAuraWeaponId = WeaponDefNames["sphere_magnetar_aura_blast"].id
 local magnetarAuraEPerProjectile = 80 
 
-local speedModifierUnitIds = {} -- (unitId,modifier)
+GG.speedModifierUnitIds = {} -- (unitId,modifier)
 
 local landSlowerUnitIds = {}
 local waterSlowerUnitIds = {}
@@ -192,9 +192,9 @@ end
 -- apply speed modifier when the unit finishes construction
 -- workaround to make it work with inherited move orders
 function gadget:UnitFinished(unitId, unitDefId, unitTeam)
-	if speedModifierUnitIds then
-		modifier = speedModifierUnitIds[unitId]
-		if modifier and modifier ~= 1 then
+	if GG.speedModifierUnitIds then
+		modifier = GG.speedModifierUnitIds[unitId]
+		if modifier then
 			--Spring.Echo("updated speed : modifier "..tostring(modifier))
 			updateUnitSpeedModifier(unitId,modifier)
 		end
@@ -252,7 +252,7 @@ function gadget:GameFrame(n)
 		-- check speed modifiers due to upgrades
 		for _,unitId in ipairs(allUnits) do
 			spdMod = spGetUnitRulesParam(unitId, "upgrade_speed")
-			if spdMod and spdMod ~= 0 then
+			if spdMod then
 				m = newSpeedModifierUnitIds[unitId]
 				if (m == nil) then
 					m = 1
@@ -379,18 +379,19 @@ function gadget:GameFrame(n)
 		
 		-- apply speed modifiers
 		for unitId,modifier in pairs(newSpeedModifierUnitIds) do
-			if modifier ~= speedModifierUnitIds[unitId] then
+			local oldMod = GG.speedModifierUnitIds[unitId]
+			if modifier ~= oldMod and (oldMod == nil or math.abs(modifier - oldMod) > 0.001) then
+				--Spring.Echo("ggmod="..tostring(oldMod).." mod="..modifier)
 				updateUnitSpeedModifier(unitId,modifier)
 			end
 		end
-		for unitId,_ in pairs(speedModifierUnitIds) do
+		for unitId,_ in pairs(GG.speedModifierUnitIds) do
 			if not newSpeedModifierUnitIds[unitId] then
 				updateUnitSpeedModifier(unitId,1)
 			end
 		end	
 		
-		speedModifierUnitIds = newSpeedModifierUnitIds
-		GG.speedModifierUnitIds = speedModifierUnitIds -- for other gadgets
+		GG.speedModifierUnitIds = newSpeedModifierUnitIds
 	end
 	
 	
@@ -625,8 +626,8 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam)
 	if zephyrAffectedUnitIds[unitId] then
 		zephyrAffectedUnitIds[unitId] = nil
 	end
-	if speedModifierUnitIds[unitId] then
-		speedModifierUnitIds[unitId] = nil
+	if GG.speedModifierUnitIds[unitId] then
+		GG.speedModifierUnitIds[unitId] = nil
 	end
 	if lastDamageFrameUnitIds[unitId] then
 		lastDamageFrameUnitIds[unitId] = nil

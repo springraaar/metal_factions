@@ -31,9 +31,13 @@ local spGetUnitWeaponTarget = Spring.GetUnitWeaponTarget
 local spSetUnitDirection = Spring.SetUnitDirection
 local spSetUnitRotation = Spring.SetUnitRotation
 local spGetUnitDirection = Spring.GetUnitDirection
+local spSetUnitPhysics = Spring.SetUnitPhysics
+local spCreateUnit = Spring.CreateUnit
 local spAreTeamsAllied = Spring.AreTeamsAllied
 local spGetUnitTeam = Spring.GetUnitTeam
 local spAddUnitResource = Spring.AddUnitResource
+local spGetUnitPiecePosDir = Spring.GetUnitPiecePosDir
+local spGetGroundHeight = Spring.GetGroundHeight
 local floor = math.floor
 
 -------------------------------------------------------------------------------------
@@ -82,6 +86,14 @@ local missileDefIds = {
 	[UnitDefNames["sphere_nuclear_rocket"].id] = true,
 	[UnitDefNames["sphere_dc_rocket"].id] = true,
 	[UnitDefNames["sphere_meteorite_rocket"].id] = true
+}
+
+local SPAWN_CLUSTER_MODULE_LASER = 1
+local SPAWN_CLUSTER_MODULE_BOMB = 2
+
+local spawnUnitByType = {
+	[SPAWN_CLUSTER_MODULE_LASER] = "sphere_cluster_module_laser",
+	[SPAWN_CLUSTER_MODULE_BOMB] = "sphere_cluster_module_bomb"
 }
 
 -------------------------------------------------------------------------------------
@@ -385,7 +397,8 @@ end
 
 
 -- turns the unit to face a target of a weapon
-function turnToTarget(unitID, unitDefID, teamID, wNum)
+-- speedMod controls how fast it converges, min 1 (5-15 recommended)
+function turnToTarget(unitID, unitDefID, teamID, wNum, speedMod)
 	local allyId = spGetUnitAllyTeam(unitID)
 	
 	local px, py, pz = spGetUnitPosition(unitID)
@@ -414,8 +427,9 @@ function turnToTarget(unitID, unitDefID, teamID, wNum)
 		tx = tx / norm
 		tz = tz / norm
 		
-		local newDx = 0.9*dx + 0.1*tx
-		local newDz = 0.9*dz + 0.1*tz
+		local step = speedMod * 0.005 
+		local newDx = (1-step)*dx + step*tx
+		local newDz = (1-step)*dz + step*tz
 		
 		spSetUnitDirection(unitID,newDx,dy,newDz)
 		--local rotSpd = math.acos(newDx*dx + newDz*dz)	-- not working properly
@@ -443,6 +457,40 @@ function checkIncomingMissile(unitID, unitDefID, teamID, radius)
  	return 0
 end
 
+-- returns the ground offset between the piece position and the unit center position
+function getPieceHeightDiff(unitID, unitDefID, teamID, pieceIdx)
+	local x, y, z = spGetUnitPosition(unitID)
+	local px, py, pz,_,_,_ = spGetUnitPiecePosDir(unitID, pieceIdx)
+	--Spring.Echo("uId="..unitID.." pieceIdx="..pieceIdx.." x="..x.." z="..z.." px="..px.." pz="..pz)
+	local hCenter = spGetGroundHeight(x,z)
+	local hPiece = spGetGroundHeight(px,pz)
+
+	-- confirm unit piece list, for debug purposes
+	--for num,name in pairs(Spring.GetUnitPieceList(unitID)) do
+	--	Spring.Echo("piece "..num.." : "..name)
+	--end
+
+ 	return hPiece-hCenter
+end
+
+-- spawns a unit from a piece
+function spawnUnit(unitID, unitDefID, teamID, pieceIdx, spawnType)
+	local x, y, z = spGetUnitPosition(unitID)
+	local px, py, pz,dx,dy,dz = spGetUnitPiecePosDir(unitID, pieceIdx)
+
+	local uId = spCreateUnit(spawnUnitByType[spawnType],px,py,pz,0,teamID,false)
+	if (uId) then
+		spSetUnitPhysics(uId,px,py,pz,dx*2,dy*2,dz*2,0,0,0,0.1,0.1,0.1)
+		spGiveOrderToUnit(uId, CMD.FIGHT, { (px+5*dx), y, (pz+5*dz)}, {})
+	end	
+
+	-- confirm unit piece list, for debug purposes
+	--for num,name in pairs(Spring.GetUnitPieceList(unitID)) do
+	--	Spring.Echo("piece "..num.." : "..name)
+	--end
+
+	return 0
+end
 ---------------------------------------- CALLINS
 
 -- initialize maps
@@ -505,3 +553,5 @@ gadgetHandler:RegisterGlobal("setMobility", setMobility)
 gadgetHandler:RegisterGlobal("disableEnemyTargetting", disableEnemyTargetting)
 gadgetHandler:RegisterGlobal("turnToTarget", turnToTarget)
 gadgetHandler:RegisterGlobal("checkIncomingMissile", checkIncomingMissile)
+gadgetHandler:RegisterGlobal("getPieceHeightDiff", getPieceHeightDiff)
+gadgetHandler:RegisterGlobal("spawnUnit", spawnUnit)

@@ -1,0 +1,119 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Stilts;
+	description=Armored Heavy Fire Support Hydrobot;
+	iconType=amphibheavyfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_stilts;
+	objectName=gear_stilts.3do;
+	corpse=gear_stilts_dead;
+	buildPic=gear_stilts.png;
+	soundCategory=GEAR_BOTBIG;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=6000;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	upright=0;
+	onOffable=1;
+	activateWhenBuilt=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=KBOTUW4;
+	turnRate=500;
+	acceleration=0.9;
+	brakeRate=1.0;
+	maxVelocity=0.8;
+	turninplace=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_stilts_laser;
+	noChaseCategory=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	moveState=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	cantbetransported=0;
+	collisionVolumeType = box;
+	collisionVolumeScales =50 130 50;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	upright=1;
+
+	[CustomParams]
+	{
+		builtBy=gear_hydrobot_plant;
+		tip=Regenerates 2+0.1%HP/s in water. Use ON/OFF to adjust height;
+		hydrobotRegen=1;
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:greenflare;
+		explosionGenerator1=custom:unitfire;
+	}
+	buildCostEnergy=14064;//#AUTO#
+	buildCostMetal=2812;//#AUTO#
+	buildTime=33521;//#AUTO#
+	mass=3899;//#AUTO#
+}

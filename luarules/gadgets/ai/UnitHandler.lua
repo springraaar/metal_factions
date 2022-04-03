@@ -1512,12 +1512,13 @@ function UnitHandler:GameFrame(f)
 			end
 		end
 		
-		-- update enemy cell data
+		-- update enemy cell data (these are cost totals not unit counts)
 		local enemyAttackers = 0
 		local enemyAssaults = 0
 		local enemyAirAttackers = 0
 		local enemyDefenders = 0
 		local enemyArmedUnits = 0
+		local enemyUnderwaterCost = 0
 		if enemyUnitIds ~= nil then
 			local cell = nil
 			local cells = {}
@@ -1557,6 +1558,9 @@ function UnitHandler:GameFrame(f)
 				
 					if (pos.y < UNDERWATER_THRESHOLD ) then
 						isSubmerged = true
+						if (progress > 0.85) then
+							enemyUnderwaterCost = enemyUnderwaterCost + cost						
+						end
 					end
 					if setContains(unitTypeSets[TYPE_EXTRACTOR],tmpName) then
 						cost = cost * ENEMY_EXTRACTOR_COST_FACTOR
@@ -1721,13 +1725,16 @@ function UnitHandler:GameFrame(f)
 		-- update threat type 
 		if ( enemyAirAttackers / enemyArmedUnits > THREAT_AIR_THRESHOLD ) then
 			self.threatType = THREAT_AIR
-		elseif ( enemyDefenders / enemyArmedUnits > THREAT_DEFENSE_THRESHOLD ) then
-			self.threatType = THREAT_DEFENSE
+		elseif ( enemyUnderwaterCost / enemyArmedUnits > THREAT_UNDERWATER_THRESHOLD ) then
+			self.threatType = THREAT_UNDERWATER
 		elseif ( enemyAssaults / enemyArmedUnits > THREAT_ASSAULT_THRESHOLD ) then
 			self.threatType = THREAT_ASSAULT
+		elseif ( enemyDefenders / enemyArmedUnits > THREAT_DEFENSE_THRESHOLD ) then
+			self.threatType = THREAT_DEFENSE
 		else
 			self.threatType = THREAT_NORMAL
 		end
+		--self.ai:messageAll("THREAT="..self.threatType) 
 		
 		-- calculate overall force advantage factor
 		self.perceivedTeamAdvantageFactor = (ownArmedMobilesWeightedCost + friendlyArmedMobilesWeightedCost ) / enemyArmedWeightedCost

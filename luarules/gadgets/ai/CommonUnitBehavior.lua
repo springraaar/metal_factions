@@ -352,6 +352,18 @@ function CommonUnitBehavior:evade(threatPos, moveDistance)
 	local increment = moveDistance / UNIT_EVADE_WAYPOINTS
 	local strafeSign = 1 
 	local strafeDistance = 0
+
+	-- try jumping, if possible	
+	local jumpRange = spGetUnitRulesParam(self.unitId,"jump_range")
+	local canJump = (jumpRange and jumpRange > 0) and (spGetUnitRulesParam(self.unitId,"jumpReload") >= 1)
+	if (canJump) then
+		pos.x = pos.x + vx * jumpRange
+		pos.z = pos.z + vz * jumpRange
+		if  spTestMoveOrder(self.unitDef.id,pos.x,0,pos.z,0,0,0,true,true) then
+			spGiveOrderToUnit(self.unitId,CMD_JUMP,{pos.x,spGetGroundHeight(pos.x,pos.z),pos.z},{})
+			return
+		end
+	end
 	
 	local ordersGiven = 0
 	for i=1,UNIT_EVADE_WAYPOINTS do
@@ -417,6 +429,18 @@ function CommonUnitBehavior:engage(threatPos, moveDistance)
 	local increment = moveDistance / UNIT_EVADE_WAYPOINTS
 	local strafeSign = 1 
 	local strafeDistance = 0
+	
+	-- try jumping, if possible	
+	local jumpRange = spGetUnitRulesParam(self.unitId,"jump_range")
+	local canJump = (jumpRange and jumpRange > 0) and (spGetUnitRulesParam(self.unitId,"jumpReload") >= 1)
+	if (canJump) then
+		pos.x = pos.x + vx * jumpRange
+		pos.z = pos.z + vz * jumpRange
+		if  spTestMoveOrder(self.unitDef.id,pos.x,0,pos.z,0,0,0,true,true) then
+			spGiveOrderToUnit(self.unitId,CMD_JUMP,{pos.x,spGetGroundHeight(pos.x,pos.z),pos.z},{})
+			return
+		end
+	end
 	
 	local ordersGiven = 0
 	for i=1,UNIT_EVADE_WAYPOINTS do

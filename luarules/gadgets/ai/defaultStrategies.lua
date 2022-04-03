@@ -735,7 +735,8 @@ avenAmphibious = {
 				{name="aven_slider_s",min=2,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
 				{name="aven_slider_s",min=0,max=MANY,weight=0.1},
 				{name="aven_swatter",min=1,max=MANY,weight=0.3},
-				{name="aven_turbulence",min=0,max=MANY,weight=0.1}
+				{name="aven_turbulence",min=0,max=MANY,weight=0.1},
+				{name="aven_perceptor",min=1,max=1,weight=0.01}
 			}
 		},
 		------------------ STAGE 3
@@ -785,12 +786,13 @@ avenAmphibious = {
 				{name="aven_slider",min=0,max=MANY,weight=0.6},
 				{name="aven_slider_s",min=2,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
 				{name="aven_slider_s",min=0,max=MANY,weight=0.1},
+				{name="aven_perceptor",min=1,max=2,weight=0.01},
 				{name="aven_swatter",min=1,max=MANY,weight=0.3},
 				{name="aven_turbulence",min=0,max=MANY,weight=0.1},
 				{name="aven_excalibur",min=0,max=MANY,weight=0.1},
 				{name="aven_falcon",min=3,max=MANY,weight=0.3,includeConditions={THREAT_AIR}},
 				{name="aven_albatross",min=3,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
-				{name="aven_albatross",min=1,max=MANY,weight=0.1},
+				{name="aven_albatross",min=1,max=MANY,weight=0.1}
 			}
 		},
 		------------------ STAGE 4
@@ -840,6 +842,7 @@ avenAmphibious = {
 				{name="aven_skimmer",min=0,max=MANY,weight=0.2},
 				{name="aven_slider",min=0,max=MANY,weight=0.6},
 				{name="aven_slider_s",min=2,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
+				{name="aven_perceptor",min=1,max=3,weight=0.01},
 				{name="aven_swatter",min=1,max=MANY,weight=0.3},
 				{name="aven_tsunami",min=0,max=MANY,weight=0.2},
 				{name="aven_turbulence",min=0,max=MANY,weight=0.2},
@@ -1490,8 +1493,8 @@ gearAir = {
 
 gearAmphibious = {
 	name = "gearAmphibious",
-	commanderMorphs = { "Blazer Form","Devastator Form" },
-	upgrades = "offensive",
+	commanderMorphs = { "Blazer Form","Dominator Form" },
+	upgrades = "defensive_regen",
 	stages = {
 		------------------ STAGE 1
 		{
@@ -1509,11 +1512,11 @@ gearAmphibious = {
 			properties = {
 				commanderBuildsFactories = false,
 				roamingCommander = true,
-				raiderSpeedThreshold = 75,
+				raiderSpeedThreshold = 70,
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
 				enemyThreatEstimationMult = 1.4,
-				defenseDensityMult = 2,
+				defenseDensityMult = 1,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -1526,13 +1529,16 @@ gearAmphibious = {
 			},
 			factories = {
 				{name="gear_nano_tower",min=1,max=1},
-				{name="gear_aircraft_plant",min=1,max=1},
+				{name="gear_hydrobot_plant",min=1,max=1},
 				{name="gear_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_aircraft",min=1,max=2,weight=0.2},
-				{name="gear_zipper",min=0,max=MANY,weight=0.6},
-				{name="gear_knocker",min=0,max=MANY,weight=0.3}
+				{name="gear_construction_kbot",min=1,max=2,weight=0.2,excludeConditions={CONDITION_WATER}},
+				{name="gear_construction_ship",min=1,max=2,weight=0.2,includeConditions={CONDITION_WATER}},
+				{name="gear_salamander",min=0,max=MANY,weight=0.6},
+				{name="gear_metalhead",min=0,max=MANY,weight=0.3},
+				{name="gear_marooner",min=2,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
+				{name="gear_hopper",min=0,max=MANY,weight=0.3}
 			}
 		},
 		------------------ STAGE 2
@@ -1555,7 +1561,7 @@ gearAmphibious = {
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
 				enemyThreatEstimationMult = 1.4,
-				defenseDensityMult = 2,
+				defenseDensityMult = 1,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -1568,19 +1574,26 @@ gearAmphibious = {
 			},
 			factories = {
 				{name="gear_nano_tower",min=1,max=3},
+				{name="gear_hydrobot_plant",min=1,max=1},
 				{name="gear_adv_aircraft_plant",min=1,max=1},
-				{name="gear_adv_shipyard",min=1,max=1,includeConditions={CONDITION_WATER}},
-				{name="gear_adv_vehicle_plant",min=1,max=1,excludeConditions={CONDITION_WATER}},
 				{name="gear_commander_respawner",min=1,max=2},
 				{name="gear_upgrade_center",min=1,max=1},
 				{name="gear_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_aircraft",min=1,max=4,weight=0.2},
-				{name="gear_adv_construction_aircraft",min=1,max=4,weight=0.2},
-				{name="gear_proteus",min=1,max=MANY,weight=0.4},
+				{name="gear_construction_kbot",min=1,max=6,weight=0.2,excludeConditions={CONDITION_WATER}},
+				{name="gear_construction_ship",min=1,max=6,weight=0.2,includeConditions={CONDITION_WATER}},
+				{name="gear_adv_construction_hydrobot",min=1,max=4,weight=0.3},
+				{name="gear_adv_construction_aircraft",min=1,max=2,weight=0.1},
+				{name="gear_salamander",min=1,max=MANY,weight=0.8},
+				{name="gear_metalhead",min=1,max=MANY,weight=0.4},
+				{name="gear_stilts",min=1,max=MANY,weight=0.2},
+				{name="gear_buoy",min=1,max=1,weight=0.01},
+				{name="gear_hopper",min=1,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_vector",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
+				{name="gear_marooner",min=2,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
 				{name="gear_whirlpool",min=2,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
+				{name="gear_caliber",min=1,max=MANY,weight=0.2},
 				{name="gear_stratos",min=1,max=MANY,weight=0.2}
 			}
 		},
@@ -1617,20 +1630,28 @@ gearAmphibious = {
 			},				
 			factories = {
 				{name="gear_nano_tower",min=1,max=4},
+				{name="gear_hydrobot_plant",min=1,max=2},
 				{name="gear_adv_aircraft_plant",min=1,max=2},
-				{name="gear_adv_shipyard",min=1,max=2,includeConditions={CONDITION_WATER}},
-				{name="gear_adv_vehicle_plant",min=1,max=1,excludeConditions={CONDITION_WATER}},
 				{name="gear_commander_respawner",min=1,max=2},
 				{name="gear_upgrade_center",min=1,max=1},
 				{name="gear_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_aircraft",min=2,max=4,weight=0.2},
-				{name="gear_adv_construction_aircraft",min=2,max=4,weight=0.2},
-				{name="gear_proteus",min=1,max=MANY,weight=0.4},
+				{name="gear_construction_kbot",min=1,max=6,weight=0.2,excludeConditions={CONDITION_WATER}},
+				{name="gear_construction_ship",min=1,max=6,weight=0.2,includeConditions={CONDITION_WATER}},
+				{name="gear_adv_construction_hydrobot",min=2,max=4,weight=0.3},
+				{name="gear_adv_construction_aircraft",min=1,max=5,weight=0.1},
+				{name="gear_salamander",min=1,max=MANY,weight=0.8},
+				{name="gear_metalhead",min=1,max=MANY,weight=0.4},
+				{name="gear_stilts",min=1,max=MANY,weight=0.2},
+				{name="gear_buoy",min=1,max=2,weight=0.01},
+				{name="gear_hopper",min=1,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_vector",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_whirlpool",min=2,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
-				{name="gear_stratos",min=1,max=MANY,weight=0.4}
+				{name="gear_marooner",min=2,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
+				{name="gear_caliber",min=1,max=MANY,weight=0.2},
+				{name="gear_rexapod",min=1,max=MANY,weight=0.1},
+				{name="gear_stratos",min=1,max=MANY,weight=0.2}
 			}
 		},
 		------------------ STAGE 4
@@ -1666,21 +1687,29 @@ gearAmphibious = {
 			},				
 			factories = {
 				{name="gear_nano_tower",min=1,max=5},
-				{name="gear_adv_aircraft_plant",min=1,max=2},
-				{name="gear_commander_respawner",min=2,max=2},
+				{name="gear_hydrobot_plant",min=1,max=3},
+				{name="gear_adv_aircraft_plant",min=1,max=3},
+				{name="gear_commander_respawner",min=1,max=3},
 				{name="gear_upgrade_center",min=1,max=1},
-				{name="gear_adv_shipyard",min=1,max=2,includeConditions={CONDITION_WATER}},
-				{name="gear_adv_vehicle_plant",min=1,max=2,excludeConditions={CONDITION_WATER}},
 				{name="gear_long_range_rocket_platform",min=1,max=1},
 				{name="gear_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_aircraft",min=2,max=5,weight=0.3},
-				{name="gear_adv_construction_aircraft",min=2,max=5,weight=0.3},
-				{name="gear_proteus",min=1,max=MANY,weight=0.4},
+				{name="gear_construction_kbot",min=1,max=6,weight=0.2,excludeConditions={CONDITION_WATER}},
+				{name="gear_construction_ship",min=1,max=6,weight=0.2,includeConditions={CONDITION_WATER}},
+				{name="gear_adv_construction_hydrobot",min=2,max=7,weight=0.3},
+				{name="gear_adv_construction_aircraft",min=1,max=7,weight=0.1},
+				{name="gear_salamander",min=1,max=MANY,weight=0.8},
+				{name="gear_metalhead",min=1,max=MANY,weight=0.4},
+				{name="gear_stilts",min=1,max=MANY,weight=0.3},
+				{name="gear_buoy",min=1,max=3,weight=0.01},
+				{name="gear_hopper",min=1,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_vector",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_whirlpool",min=2,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
-				{name="gear_stratos",min=1,max=MANY,weight=0.4}
+				{name="gear_marooner",min=2,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
+				{name="gear_caliber",min=1,max=MANY,weight=0.3},
+				{name="gear_rexapod",min=1,max=MANY,weight=0.1},
+				{name="gear_stratos",min=1,max=MANY,weight=0.3}
 			}
 		},	
 	}
@@ -3214,8 +3243,10 @@ sphereAmphibious = {
 			mobileUnits = {
 				{name="sphere_construction_aircraft",min=1,max=3,weight=0.2},
 				{name="sphere_nimbus",min=0,max=MANY,weight=0.6},
+				{name="sphere_cluster",min=0,max=MANY,weight=0.2},
 				{name="sphere_aster",min=1,max=MANY,weight=0.2,includeConditions={THREAT_AIR}},
-				{name="sphere_aster",min=0,max=MANY,weight=0.2}
+				{name="sphere_aster",min=0,max=MANY,weight=0.2},
+				{name="sphere_cluster",min=1,max=MANY,weight=0.4,includeConditions={THREAT_UNDERWATER}},
 			}
 		},
 		------------------ STAGE 2
@@ -3262,8 +3293,11 @@ sphereAmphibious = {
 				{name="sphere_aster",min=1,max=MANY,weight=0.8,includeConditions={THREAT_AIR}},
 				{name="sphere_nimbus",min=1,max=MANY,weight=0.5},
 				{name="sphere_aster",min=1,max=MANY,weight=0.3},
+				{name="sphere_cluster",min=0,max=MANY,weight=0.2},
 				{name="sphere_gazer",min=0,max=MANY,weight=0.3},
-				{name="sphere_orb",min=1,max=1,weight=0.01}
+				{name="sphere_cluster",min=1,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
+				{name="sphere_orb",min=1,max=1,weight=0.01},
+				{name="sphere_dipole",min=1,max=MANY,weight=0.3}				
 			}
 		},
 		------------------ STAGE 3
@@ -3312,7 +3346,9 @@ sphereAmphibious = {
 				{name="sphere_aster",min=1,max=MANY,weight=0.8,includeConditions={THREAT_AIR}},
 				{name="sphere_aster",min=1,max=MANY,weight=0.4},
 				{name="sphere_gazer",min=1,max=MANY,weight=0.4},
+				{name="sphere_cluster",min=1,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
 				{name="sphere_orb",min=1,max=1,weight=0.01},
+				{name="sphere_dipole",min=1,max=MANY,weight=0.3},				
 				{name="sphere_resolver",min=1,max=2,weight=0.1},
 				{name="sphere_blower",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="sphere_neptune",min=2,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
@@ -3366,8 +3402,10 @@ sphereAmphibious = {
 				{name="sphere_construction_sphere",min=1,max=3,weight=0.3},
 				{name="sphere_aster",min=1,max=MANY,weight=0.8,includeConditions={THREAT_AIR}},
 				{name="sphere_aster",min=1,max=MANY,weight=0.4},
+				{name="sphere_cluster",min=1,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
 				{name="sphere_gazer",min=1,max=MANY,weight=0.4},
 				{name="sphere_orb",min=1,max=1,weight=0.01},
+				{name="sphere_dipole",min=1,max=MANY,weight=0.3},
 				{name="sphere_chroma",min=1,max=MANY,weight=0.2},
 				{name="sphere_resolver",min=1,max=2,weight=0.1},
 				{name="sphere_blower",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},

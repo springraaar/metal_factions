@@ -29,8 +29,8 @@ Build()
 
 activatescr()
 {
-	move xl to x-axis [-38] speed [25];
-	move xr to x-axis [38] speed [25];
+	move xl to x-axis [-44] speed [25];
+	move xr to x-axis [44] speed [25];
 	wait-for-move xl along x-axis;
 	
 	move platform1 to y-axis [10.000000] speed [20.000000];

@@ -101,7 +101,7 @@
 	[CustomParams]
 	{
 		buildertype=gear_l1builder;
-		builtBy=gear_shipyard,gear_adv_shipyard;
+		builtBy=gear_shipyard,gear_adv_shipyard,gear_hydrobot_plant;
 		evalfactor=0.85;//SHIP
 	}
 	[SFXTypes]
@@ -110,8 +110,8 @@
 		explosionGenerator1=custom:UNITFIRE;
 	}
 
-	buildCostEnergy=1475;//#AUTO#
+	buildCostEnergy=1477;//#AUTO#
 	buildCostMetal=295;//#AUTO#
-	buildTime=3517;//#AUTO#
+	buildTime=3521;//#AUTO#
 	mass=192;//#AUTO#
 }

@@ -102,18 +102,18 @@ AimPrimary(heading, pitch)
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	targetPitch1 = pitch;
+
 	
-	// make unit turn to face target 	
-	while (heading < <-5> || heading > <5>) {
-		if (bMoving && (heading < <-15> || heading > <15>)) {
-			return (0);
-		}
-		call-script lua_turnToTarget(1);
+	// make unit turn to face target
+	if (!bMoving && (get ABS(heading) > <5>)) {
+		call-script lua_turnToTarget(1,10);
+	}
+	if (get ABS(heading) > <20>) {
 		sleep 100;
 	}
-
 	turn turret to y-axis heading speed <60.000000>;
 	turn sleeve to x-axis <0.000000> - pitch speed <120.000000>;
+
 	if (get ABS (pitch - oldPitch1) > <20>) {
 		wait-for-turn turret around y-axis;
 		wait-for-turn sleeve around x-axis;

@@ -1,0 +1,118 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<35>
+
+
+#define SPAWN_CLUSTER_MODULE_LASER	1
+#define SPAWN_CLUSTER_MODULE_BOMB 	2
+
+
+piece ground, hips,torso,support,flare1,flare2,sphere,e1,e2,e3,e4,e5,e6;
+	
+static-var firept1;
+
+
+#include "aimhelper1.h"
+
+// Signal definitions
+#define SIG_AIM				2
+
+lua_spawnUnit() { return 0; }
+
+
+Create()
+{
+	firept1 = 0;
+	call-script stopAimHelper1(<1000>,<1000>);
+}
+
+
+
+RestoreAfterDelayWeapon()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<1000>);
+	turn torso to y-axis <0.000000> speed <100>;
+
+}
+
+
+AimFromPrimary(piecenum)
+{
+	piecenum = torso;
+}
+
+
+QueryPrimary(piecenum)
+{
+	if(firept1 == 0)
+	{
+		piecenum = flare1;
+		return;
+	}
+	if(firept1 == 1)
+	{
+		piecenum = flare2;
+		return;
+	}
+}
+
+
+FirePrimary()
+{
+	if( firept1 == 0 )
+	{
+		emit-sfx 1024 + 0 from flare1;
+		sleep 100;
+		firept1 = 1;
+		return (0);
+	}
+	if( firept1 == 1 )
+	{
+		emit-sfx 1024 + 0 from flare2;
+		sleep 100;
+		firept1 = 0;
+		return (0);
+	}
+}
+
+
+AimPrimary(heading, pitch)
+{
+	call-script updateAimHelper1(heading,pitch,<170>,<1000>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	
+	turn torso to y-axis heading speed <170>;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+	}
+	start-script RestoreAfterDelayWeapon();
+	return (1);
+}
+
+
+
+Killed(severity, corpsetype)
+{
+	call-script lua_spawnUnit(13,SPAWN_CLUSTER_MODULE_LASER); // e1
+	call-script lua_spawnUnit(12,SPAWN_CLUSTER_MODULE_LASER); // e2
+	call-script lua_spawnUnit(11,SPAWN_CLUSTER_MODULE_LASER); // e3
+	call-script lua_spawnUnit(10,SPAWN_CLUSTER_MODULE_BOMB); // e4
+	call-script lua_spawnUnit(9,SPAWN_CLUSTER_MODULE_BOMB); // e5
+	call-script lua_spawnUnit(8,SPAWN_CLUSTER_MODULE_BOMB); // e6
+		
+	if( severity <= 50 )
+	{
+		explode sphere type SHATTER | BITMAP4;
+		return (1);
+	}
+	explode sphere type SHATTER | BITMAP4;
+	return (2);
+}
+

@@ -93,6 +93,7 @@
 	[customParams] 
 	{
 		builtBy=sphere_l1builder,sphere_l2builder;
+		evalFactor=1.1; //easily deployable on hard-to-reach positions
 	}
 
 	[SFXTypes]
@@ -100,8 +101,8 @@
 		explosionGenerator0=custom:rocketflaremed;
 	}
 
-	buildCostEnergy=839;//#AUTO#
-	buildCostMetal=167;//#AUTO#
-	buildTime=2001;//#AUTO#
-	mass=710;//#AUTO#
+	buildCostEnergy=927;//#AUTO#
+	buildCostMetal=185;//#AUTO#
+	buildTime=2210;//#AUTO#
+	mass=722;//#AUTO#
 }

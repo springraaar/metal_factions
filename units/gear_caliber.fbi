@@ -106,8 +106,9 @@
 	[CustomParams]
 	{
 		builtBy=gear_hydrobot_plant;
-		tip=Use ON/OFF toggle deployment mode. Can only fire if deployed but cannot move. Gains 50% dmg resistance when closed;
-		evalfactor=0.9; //can't fire while moving
+		tip=Regenerates 2+0.1%HP/s in water. Use ON/OFF toggle deployment mode. Can only fire if deployed but cannot move. Gains 50% dmg resistance when closed;
+		evalfactor=0.85; //can't fire while moving
+		hydrobotRegen=1;
 	}
 
 	[SFXTypes]
@@ -116,8 +117,8 @@
 		explosionGenerator1=custom:collision;
 	}
 
-	buildCostEnergy=15312;//#AUTO#
-	buildCostMetal=3062;//#AUTO#
-	buildTime=36495;//#AUTO#
-	mass=1770;//#AUTO#
+	buildCostEnergy=14839;//#AUTO#
+	buildCostMetal=2967;//#AUTO#
+	buildTime=35368;//#AUTO#
+	mass=1739;//#AUTO#
 }

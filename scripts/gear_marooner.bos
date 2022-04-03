@@ -1,0 +1,344 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 140
+
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
+
+piece  gp, hips, lbackleg,lb2,rbackleg,rb2,rfrontleg,rf2,lfrontleg,lf2, body,b2,turret,sleeve,flare,lfcover,lbcover,rfcover,rbcover,lff,rff,lbf,rbf,ldoor,rdoor,ll,lr;
+
+static-var  bMoving, isUnderWater, mASpdFactor,isOpen;
+
+#include "aimhelper1.h"
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_MOVE			8
+
+
+MotionSpeedControl(minSpeed, maxSpeed,currentSpeed)
+{
+	maxSpeed = get MAX_SPEED;
+	currentSpeed = 0;
+	mASpdFactor = SPEEDUP_FACTOR;
+	minSpeed = 3 * SPEEDUP_FACTOR / 4;
+	
+	while(TRUE)
+	{
+		currentSpeed = get CURRENT_SPEED;
+		mASpdFactor = SPEEDUP_FACTOR * currentSpeed / maxSpeed;
+
+		if ( mASpdFactor < minSpeed )
+		{
+			mASpdFactor = minSpeed;
+		}
+
+		sleep 60;
+	}
+}
+
+
+walk()
+{
+	if( bMoving )
+	{
+		
+		//turn hips to x-axis <2.000000> speed <20.000000> * mASpdFactor / 100;
+		//turn hips to z-axis <-1.000000> speed <15.000000> * mASpdFactor / 100;
+		move hips to z-axis [-2.300000] speed [4]* mASpdFactor / 100;
+		turn lfrontleg to y-axis <20.000000> speed <100.967033> * mASpdFactor / 100;
+		turn lfrontleg to z-axis <5.016484> speed <550.104396> * mASpdFactor / 100;
+
+		turn lbackleg to y-axis <-0.000000> speed <300.038462> * mASpdFactor / 100;
+		turn lbackleg to z-axis <-15.016484> speed <60.104396> * mASpdFactor / 100;
+
+		
+		turn rfrontleg to y-axis <40.412088> speed <300.060440> * mASpdFactor / 100;
+		turn rfrontleg to z-axis <15.016484> speed <60.104396> * mASpdFactor / 100;
+		
+		turn rbackleg to y-axis <-40.093407> speed <100.368132> * mASpdFactor / 100;
+		turn rbackleg to z-axis <-5.016484> speed <550.104396> * mASpdFactor / 100;
+		
+		sleep 200 * 100 / mASpdFactor;
+	}
+
+	// only vertical
+	if( bMoving )
+	{
+
+		move hips to z-axis [2.300000] speed [4]* mASpdFactor / 100;
+		turn lbackleg to z-axis <5.016484> speed <150.104396> * mASpdFactor / 100;
+		turn rfrontleg to z-axis <-5.016484> speed <150.104396> * mASpdFactor / 100;
+		
+		sleep 200 * 100 / mASpdFactor;
+	}
+	
+	
+	if( bMoving )
+	{
+		//turn hips to x-axis <-2.000000> speed <20.000000> * mASpdFactor / 100;
+		//turn hips to z-axis <1.000000> speed <15.000000> * mASpdFactor / 100;
+		move hips to z-axis [-2.300000] speed [4]* mASpdFactor / 100;
+
+		turn lfrontleg to y-axis <-40.000000> speed <300.967033> * mASpdFactor / 100;
+		turn lfrontleg to z-axis <-15.016484> speed <60.104396> * mASpdFactor / 100;
+
+		turn lbackleg to y-axis <40.000000> speed <100.038462> * mASpdFactor / 100;
+		turn lbackleg to z-axis <5.016484> speed <550.104396> * mASpdFactor / 100;
+
+		turn rfrontleg to y-axis <-20.412088> speed <100.060440> * mASpdFactor / 100;
+		turn rfrontleg to z-axis <-5.016484> speed <550.104396> * mASpdFactor / 100;
+		
+		turn rbackleg to y-axis <00.093407> speed <300.368132> * mASpdFactor / 100;
+		turn rbackleg to z-axis <15.016484> speed <60.104396> * mASpdFactor / 100;
+		
+		
+		sleep 200 * 100 / mASpdFactor;
+	}
+	
+	// only vertical
+	if( bMoving )
+	{
+		move hips to z-axis [2.300000] speed [4]* mASpdFactor / 100;
+		turn lfrontleg to z-axis <5.016484> speed <150.104396> * mASpdFactor / 100;
+		turn rbackleg to z-axis <-5.016484> speed <150.104396> * mASpdFactor / 100;
+		
+		
+		sleep 200 * 100 / mASpdFactor;
+	}
+	
+}
+
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from body;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+MotionControl(moving, justmoved)
+{
+	while( TRUE )
+	{
+		moving = bMoving;
+		if( moving )
+		{
+			justmoved = TRUE;
+			call-script walk();
+		}
+		if( !moving )
+		{
+			if( justmoved )
+			{
+				turn lbackleg to x-axis <0.000000> speed <260.000000>;
+				turn rbackleg to x-axis <0.000000> speed <260.000000>;
+				turn rfrontleg to x-axis <0.000000> speed <260.000000>;
+				turn lfrontleg to x-axis <0.000000> speed <260.000000>;
+				turn lbackleg to y-axis <45.000000> speed <260.000000>;
+				turn rbackleg to y-axis <-45.000000> speed <260.000000>;
+				turn rfrontleg to y-axis <45.000000> speed <260.000000>;
+				turn lfrontleg to y-axis <-45.000000> speed <260.000000>;
+			
+				turn lbackleg to z-axis <0.000000> speed <260.000000>;
+				turn rbackleg to z-axis <0.000000> speed <260.000000>;
+				turn rfrontleg to z-axis <0.000000> speed <260.000000>;
+				turn lfrontleg to z-axis <0.000000> speed <260.000000>;
+				turn hips to z-axis <0.000000> speed <260.000000>;
+				turn hips to x-axis <0.000000> speed <260.000000>;
+	
+				move hips to x-axis [0.000000] speed [3.000000];
+				move hips to z-axis [0.000000] speed [3.000000];
+
+
+				justmoved = FALSE;
+			}
+			sleep 100;
+		}
+	}
+}
+
+Open()
+{
+	turn turret to y-axis <0.000000> speed <200.000000>;
+	turn sleeve to x-axis <0.000000> speed <200.000000>;
+	move rdoor to x-axis [2.6] speed [15];
+	move ldoor to x-axis [-2.6] speed [15];
+	wait-for-turn turret around y-axis;
+	wait-for-turn sleeve around x-axis;
+	wait-for-move ldoor along x-axis;
+	isOpen = TRUE;
+	return (0);
+}
+
+Close()
+{
+	isOpen = FALSE;
+	turn turret to y-axis <0.000000> speed <200.000000>;
+	turn sleeve to x-axis <30.000000> speed <200.000000>;
+	move rdoor to x-axis [0] speed [15];
+	move ldoor to x-axis [0] speed [15];
+	wait-for-turn turret around y-axis;
+	wait-for-turn sleeve around x-axis;
+	wait-for-move ldoor along x-axis;
+	
+	return (0); 
+}
+
+
+
+checkUnderwater()
+{
+	while (TRUE)
+	{
+		if ((GET GROUND_WATER_HEIGHT(GET UNIT_XZ)) < [-7] ) 
+		{
+			isUnderwater = TRUE;
+		}
+		else
+		{
+			isUnderwater = FALSE;
+			if (isOpen)
+			{
+				call-script Close();
+			}
+		}
+		sleep 100;
+	}
+}
+
+Create()
+{
+	bMoving = FALSE;
+	isUnderWater = FALSE;
+	isOpen = FALSE;
+	call-script Close();
+	call-script stopAimHelper1(<1000>,<1000>);
+	start-script MotionSpeedControl();
+	start-script MotionControl();
+	start-script SmokeUnit();
+	start-script checkUnderwater();
+}
+
+
+StartMoving()
+{
+	bMoving = TRUE;
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while( bMoving )
+	{
+		if( isUnderWater == TRUE )
+		{
+			//emit-sfx 256 | 3 from bleg;
+			//emit-sfx 256 | 3 from bleg2;
+			//emit-sfx 256 | 3 from bleg3;
+			//emit-sfx 256 | 3 from bleg4;			
+		}
+		sleep 250;
+	}
+}
+
+StopMoving()
+{
+	bMoving = FALSE;
+	signal SIG_MOVE;
+}
+
+RestoreAfterDelay()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
+	call-script Close();
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare;
+}
+
+FirePrimary()
+{
+	emit-sfx 1024 + 0 from flare;
+}
+
+AimPrimary(heading, pitch)
+{
+	if (!isUnderwater) 
+	{
+		return (0);
+	}
+
+	if( ! isOpen)
+	{
+		call-script Open();
+	}
+	
+
+	call-script updateAimHelper1(heading,pitch,<110>,<110>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	
+	turn turret to y-axis heading speed <110.027473>;
+	turn sleeve to x-axis <0.000000> - pitch speed <110.038462>;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		explode body type SHATTER;
+		explode b2 type SHATTER;
+		explode turret type SHATTER;
+		explode ll type SHATTER;
+		explode lr type SHATTER;
+		
+		return (1);
+	}
+	explode body type SHATTER;
+	explode b2 type SHATTER;
+	explode turret type SHATTER;
+	explode ll type SHATTER;
+	explode lr type SHATTER;
+	explode sleeve type SHATTER;
+	return (2);
+}

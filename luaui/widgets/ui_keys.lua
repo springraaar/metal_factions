@@ -177,6 +177,14 @@ function widget:Initialize()
 			WG.customHotkeys["jump"] = "j"
 		end
 	end
+	if (not WG.unboundDefKeys or not WG.unboundDefKeys["o"]) then
+		if (not WG.customHotkeys["onoff"]) then
+			unbindKey("o")
+			Spring.SendCommands("bind o onoff")
+			Spring.SendCommands("bind Shift+o onoff")
+			WG.customHotkeys["onoff"] = "o"
+		end
+	end
 end
 
 

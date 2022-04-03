@@ -93,6 +93,7 @@
 	[customParams] 
 	{
 		builtBy=claw_l1builder,claw_l2builder;
+		evalFactor=1.1; //easily deployable on hard-to-reach positions
 	}
 
 	[SFXTypes]
@@ -100,8 +101,8 @@
 		explosionGenerator0=custom:rocketflaremed;
 	}
 
-	buildCostEnergy=884;//#AUTO#
-	buildCostMetal=176;//#AUTO#
-	buildTime=2109;//#AUTO#
-	mass=642;//#AUTO#
+	buildCostEnergy=980;//#AUTO#
+	buildCostMetal=196;//#AUTO#
+	buildTime=2337;//#AUTO#
+	mass=654;//#AUTO#
 }

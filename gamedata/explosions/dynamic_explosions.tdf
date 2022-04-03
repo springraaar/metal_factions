@@ -1782,9 +1782,66 @@
 [EXPLODERBLASTWRAPPER]
 {
 	usedefaultexplosions=0;
-	[_stdblast1]{class=CExpGenSpawner;[properties]{pos=0,40,0;delay=0;damage=1800;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
-	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=0,25,0;delay=7;damage=1600;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
-	[_stdblast3]{class=CExpGenSpawner;[properties]{pos=0,10,0;delay=15;damage=1400;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast1]{class=CExpGenSpawner;[properties]{pos=0,40,0;delay=0;damage=1200;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=0,30,0;delay=5;damage=1100;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast3]{class=CExpGenSpawner;[properties]{pos=0,20,0;delay=10;damage=1000;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast3]{class=CExpGenSpawner;[properties]{pos=0,10,0;delay=15;damage=900;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+
+
+	[gflash]
+	{
+		class=CSimpleGroundFlash;
+		[properties]
+		{
+			size = 80;
+			sizeGrowth = 1;
+			texture=groundflash;
+	     		ttl = 180;
+     			colormap = 1 1 1 0.5    1 1 1 0;
+		}
+		air=0;
+     		ground=1;
+	      	water=0;
+		underwater=1;
+		count=1;
+	}
+	[blobs]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=-1 r2,-1 r2,-1 r2;
+			width=30;
+			length=60;
+			alpha=0.4;
+			alphadecay=0.01;
+			color=1.0, 0.9, 0.8;
+		}
+		air=1;
+		water=0;
+		ground=1;
+		underwater=0;
+  		count=4;
+	}
+	[waterblobs]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=-1 r2,-1 r2,-1 r2;
+			width=30;
+			length=60;
+			alpha=0.4;
+			alphadecay=0.01;
+			color=1.0, 0.9, 1.0;
+		}
+		air=0;
+		water=1;
+		underwater=0;
+		ground=0;
+  		count=4;
+	}
+
 }
 
 [PYROCLASMDEBRISBLASTWRAPPER]

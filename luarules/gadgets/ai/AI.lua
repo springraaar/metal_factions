@@ -287,8 +287,12 @@ end
 
 function AI:messageAllies(msg)
 	Spring.SendMessageToAllyTeam(self.allyId,"--- AI "..self.id..": "..msg)
-	--Spring.SendMessage("--- AI "..self.id..": "..msg)
 end
+
+function AI:messageAll(msg)
+	Spring.SendMessage("--- AI "..self.id..": "..msg)
+end
+
 
 function AI:markerAllies(x,y,z,msg)
 	SendToUnsynced("AIEvent",self.id,self.allyId,EXTERNAL_RESPONSE_SETMARKER,x.."|"..y.."|"..z.."|"..msg)

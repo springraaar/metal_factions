@@ -1,0 +1,106 @@
+[UNITINFO]
+{
+	// ------------------- description
+	side=Sphere;
+	Name=Dipole;
+	Description=Energy-Intensive Fast Fighter Sphere;
+	iconType=fspherefighter;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+
+	// ------------------- external specs
+	unitName=sphere_dipole;
+	objectName=sphere_dipole.3do;
+	Corpse=sphere_dipole_dead;
+	buildPic=sphere_dipole.png;
+	soundCategory=SPHERE_SPHERESML;
+
+	// ------------------- health/cost/size
+	maxDamage=3000;
+	FootprintX=3;
+	FootprintZ=3;
+	
+	// ------------------- resources
+	energyMake=0;
+	MetalMake=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyUse=0;
+
+	// ------------------- constructor
+	builder=0;
+
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	onOffable=0;
+
+
+	// ------------------- movement
+	canFly=1;
+	maxVelocity=2.8;
+	brakeRate=0.06;
+	Acceleration=0.15;
+	turnRate=700;
+	cruiseAlt=100;
+	hoverAttack=1;
+	airStrafe=0;
+	airHoverFactor=0.1;
+	upright=1;
+	bankingallowed=0;
+	useSmoothMesh=1;
+
+	// ------------------- scout
+	sightDistance=600;
+	radarDistance=0;
+	sonarDistance=0;
+
+	// ------------------- weapons
+	weapon1=sphere_dipole_beam1;
+	weaponMainDir1=1 0 0;
+	maxAngleDif1=280;
+	weapon2=sphere_dipole_beam2;
+	weaponMainDir2=-1 0 0;
+	maxAngleDif2=280;
+	weapon3=sphere_dipole_shield;
+	badTargetCategory1=NOTAIR;
+	badTargetCategory2=NOTAIR;
+	explodeAs=BIG_SPHERE_BLAST;
+	selfDestructAs=BIG_SPHERE_BLAST;
+
+	// ------------------- orders
+	movestate=0;
+
+	// ------------------- stealth
+
+	// ------------------- misc
+	minAirbasePower=99999;
+	activateWhenBuilt=0;
+	collisionVolumeType = sphere;
+	collisionVolumeScales =45 45 45;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_sphere_factory;
+		energyCostMoving=150;
+		tip=Requires 150E/s to move;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rubyglow;
+		explosionGenerator2=custom:opalglow;
+		explosionGenerator1=custom:comettrail;
+	}
+	buildCostEnergy=12174;//#AUTO#
+	buildCostMetal=2434;//#AUTO#
+	buildTime=29016;//#AUTO#
+	mass=1561;//#AUTO#
+}

@@ -1,0 +1,111 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<35>
+
+
+
+piece ground, hips,torso,support,sleeve,flare1,flare2,sphere;
+	
+static-var firept1;
+
+
+#include "aimhelper1.h"
+
+// Signal definitions
+#define SIG_AIM				2
+
+lua_spawnUnit() { return 0; }
+
+
+Create()
+{
+	firept1 = 0;
+	call-script stopAimHelper1(<1000>,<1000>);
+}
+
+
+
+RestoreAfterDelayWeapon()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
+	turn torso to y-axis <0.000000> speed <100>;
+	turn sleeve to x-axis <0.000000> speed <100>;
+
+}
+
+
+AimFromPrimary(piecenum)
+{
+	piecenum = torso;
+}
+
+
+QueryPrimary(piecenum)
+{
+	if(firept1 == 0)
+	{
+		piecenum = flare1;
+		return;
+	}
+	if(firept1 == 1)
+	{
+		piecenum = flare2;
+		return;
+	}
+}
+
+
+FirePrimary()
+{
+	if( firept1 == 0 )
+	{
+		emit-sfx 1024 + 0 from flare1;
+		sleep 100;
+		firept1 = 1;
+		return (0);
+	}
+	if( firept1 == 1 )
+	{
+		emit-sfx 1024 + 0 from flare2;
+		sleep 100;
+		firept1 = 0;
+		return (0);
+	}
+}
+
+
+AimPrimary(heading, pitch)
+{
+	call-script updateAimHelper1(heading,pitch,<400>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	
+	turn torso to y-axis heading speed <400>;
+	turn sleeve to x-axis <0>-pitch speed <400>;
+	if (!aimReady1)
+	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
+	start-script RestoreAfterDelayWeapon();
+	return (1);
+}
+
+
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		explode sphere type SHATTER | BITMAP4;
+		return (1);
+	}
+	explode sphere type SHATTER | BITMAP4;
+	return (2);
+}
+

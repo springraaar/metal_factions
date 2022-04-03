@@ -29,7 +29,7 @@ local COLOR_BLUE = "\255\180\180\255"
 local COLOR_DEFAULT = "\255\255\255\255" 
 local COLOR_DARK = "\255\130\130\130"
 
-local modifierTypes = {"damage","range","hp","speed","hp","regen","php_regen","light_drones","medium_drone","stealth_drone","builder_drone"}
+local modifierTypes = {"damage","range","hp","speed","regen","php_regen","light_drones","medium_drone","stealth_drone","builder_drone","transport_drone","jump"}
 
 local modifiersByUpgrade = {
 -- weapon / red
@@ -72,13 +72,12 @@ local modifiersByUpgrade = {
 
 
 local upgradesByPlayerId = {}
+GG.resetUpgrades = false
 GG.upgradeCountsByTypeAndPlayerId = {}
 local upgradeBuildOrdersByPlayerId = {}
 local modifiersByPlayerId = {}
 local modifiersByUnitId = {}
 local processedUpgradeIds = {}
-
--- modifier types : speed, regen, damage, hp
 
 
 local UPGRADE_ORDER_CLEANUP_DELAY_FRAMES = 100
@@ -307,6 +306,7 @@ end
 function updateUnitModifiers(unitId, unitDefId, teamId)
 	local ud = UnitDefs[unitDefId]
 	local unitMods = nil
+	local oldUnitMods = modifiersByUnitId[unitId]
 	
 	-- check what type of unit it is and get the corresponding modifier list
 	if ud.customParams.iscommander then
@@ -334,7 +334,10 @@ function updateUnitModifiers(unitId, unitDefId, teamId)
 	
 	-- clear existing modifiers
 	for _,modName in pairs(modifierTypes) do
-		spSetUnitRulesParam(unitId,"upgrade_"..modName,"",{public = true})
+		spSetUnitRulesParam(unitId,"upgrade_"..modName,0,{public = true})
+	end
+	if GG.speedModifierUnitIds then 
+		GG.speedModifierUnitIds[unitId] = nil
 	end
 	
 	if unitMods then
@@ -477,14 +480,8 @@ function checkLimit(name, teamId, ignoreBeingBuilt)
 	return false
 end
 
-
--------------------------- SYNCED CODE ONLY
-if (not gadgetHandler:IsSyncedCode()) then
-	return false
-end
-
-
-function gadget:Initialize()
+-- reset upgrades for all teams and units
+function resetUpgrades()
 	local teamList = spGetTeamList()
 
 	for i=1,#teamList do
@@ -498,7 +495,27 @@ function gadget:Initialize()
 		-- player upgrade status string, for tooltip
 		local playerUpgradesStr = "UPGRADES        minor: 0/"..limitsByType[TYPE_MINOR].."       commander: 0/"..limitsByType[TYPE_COMMANDER].."      major: 0/"..limitsByType[TYPE_MAJOR]
 		spSetTeamRulesParam(teamId,"upgrade_status", playerUpgradesStr,{public = true})
+		
+		updatePlayerModifiers(teamId)
+		
+		-- reset upgrades for the units as well
+		local ud = nil
+		for _,uId in ipairs(spGetTeamUnits(teamId)) do
+			ud = UnitDefs[spGetUnitDefId(uId)]
+			--Spring.Echo("updating upgrades for unit "..uId.."/"..ud.name)			
+			updateUnitModifiers(uId, ud.id, teamId)
+		end
 	end
+end
+
+
+-------------------------- SYNCED CODE ONLY
+if (not gadgetHandler:IsSyncedCode()) then
+	return false
+end
+
+function gadget:Initialize()
+	resetUpgrades()
 end
 
 function gadget:UnitCreated(unitId, unitDefId, teamId)
@@ -594,7 +611,12 @@ end
 
 -- clean up excess upgrade build orders
 function gadget:GameFrame(n)
-		
+	-- check upgrade reset token
+	if GG.resetUpgrades then
+		resetUpgrades()
+		GG.resetUpgrades = false
+	end
+	
 	for _,teamId in pairs (spGetTeamList()) do
 		local countByType = {}
 		for name,beingBuilt in pairs(upgradeBuildOrdersByPlayerId[teamId]) do

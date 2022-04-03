@@ -31,6 +31,7 @@ local NAME_PREFIX_PATTERNS		= {"%<", "%["}
 local NAME_POSTFIX_PATTERNS		= {"%> ", "%] "}
 
 local AI_MSG_PREFIX = "#AI"
+local GAME_MSG_PREFIX = "#GAME"
 
 local customStrategiesChecked = false
 
@@ -143,37 +144,71 @@ function widget:MousePress(mx,my,button)
 end
 
 -- check console message, figure out if it's an AI command sent by the player and forward it
--- TODO find another way to do this
+-- also forward GAME related commands
+-- TODO find a better way to do this
 function widget:AddConsoleLine(line)
-	if (string.len(line) > 0 and string.find(line, AI_MSG_PREFIX)) then
-		local playerName = getPlayerName(line)
-		local playerId = getPlayerIdFromName(playerName)
-		local myPlayerId = spGetLocalPlayerID()
-		if (playerId == myPlayerId) then
-			local msg = string.sub(line, string.find(line, AI_MSG_PREFIX),-1)  
-			local tokens = {}
-			-- get tokens
-			for token in string.gmatch(msg, "[^%s]+") do
-   				tokens[#tokens+1] = token
-			end
-
-			if #tokens == 1 then
-				spSendMessageToPlayer(myPlayerId,"usage : #AI [<playerId>] <command> <parameters>\nAvailable commands :\nSTATUS : show current status\nSTRATEGY <strategyName> : change strategy\nCOMPAD : give the player a commander pad\nCOMMORPH : morph the commander immediately\nDEFMULT <N> : set defense density multiplier to N, 0 to disable defenses, -1 to reset\nBEACONTYPE all|raiders|main : set which squads follow the beacon\nRESIGN : forces AI to resign")
-				return
-			end
-			
-			if #tokens >= 2 then
-				local str = ""
-				for i,token in ipairs(tokens) do
-					if i > 1 then
-						if i > 2 then
-							str = str.."|"..token
-						else
-							str = str..token
+	if (string.len(line) > 0) then
+		if ( string.find(line, AI_MSG_PREFIX) ) then
+			local playerName = getPlayerName(line)
+			local playerId = getPlayerIdFromName(playerName)
+			local myPlayerId = spGetLocalPlayerID()
+			if (playerId == myPlayerId) then
+				local msg = string.sub(line, string.find(line, AI_MSG_PREFIX),-1)  
+				local tokens = {}
+				-- get tokens
+				for token in string.gmatch(msg, "[^%s]+") do
+	   				tokens[#tokens+1] = token
+				end
+	
+				if #tokens == 1 then
+					spSendMessageToPlayer(myPlayerId,"usage : #AI [<playerId>] <command> <parameters>\nAvailable commands :\nSTATUS : show current status\nSTRATEGY <strategyName> : change strategy\nCOMPAD : give the player a commander pad\nCOMMORPH : morph the commander immediately\nDEFMULT <N> : set defense density multiplier to N, 0 to disable defenses, -1 to reset\nBEACONTYPE all|raiders|main : set which squads follow the beacon\nRESIGN : forces AI to resign")
+					return
+				end
+				
+				if #tokens >= 2 then
+					local str = ""
+					for i,token in ipairs(tokens) do
+						if i > 1 then
+							if i > 2 then
+								str = str.."|"..token
+							else
+								str = str..token
+							end
 						end
 					end
+					spSendLuaRulesMsg(str)				
 				end
-				spSendLuaRulesMsg(str)				
+			end
+		elseif ( string.find(line, GAME_MSG_PREFIX) ) then
+			local playerName = getPlayerName(line)
+			local playerId = getPlayerIdFromName(playerName)
+			local myPlayerId = spGetLocalPlayerID()
+			if (playerId == myPlayerId) then
+				local msg = string.sub(line, string.find(line, GAME_MSG_PREFIX),-1)  
+				local tokens = {}
+				-- get tokens
+				for token in string.gmatch(msg, "[^%s]+") do
+	   				tokens[#tokens+1] = token
+				end
+	
+				if #tokens == 1 then
+					spSendMessageToPlayer(myPlayerId,"usage : #GAME [<playerId>] <command> <parameters>\nAvailable commands :\nCLEARWRECKS : remove all wreckages (cheat only)\nRESETUPGRADES : reset upgrades (cheat only)")
+					return
+				end
+				
+				if #tokens >= 2 then
+					local str = ""
+					for i,token in ipairs(tokens) do
+						if i > 1 then
+							if i > 2 then
+								str = str.."|"..token
+							else
+								str = str..token
+							end
+						end
+					end
+					spSendLuaRulesMsg(str)				
+				end
 			end
 		end
 	end
