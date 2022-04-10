@@ -73,10 +73,6 @@
 	// ------------------- orders
 	movestate=0;
 
-	// ------------------- stealth
-	//cloakCost=200;
-	//cloakCostMoving=750;
-	//minCloakDistance=170;
 
 	// ------------------- misc
 	minAirbasePower=99999;
@@ -89,15 +85,15 @@
 	[CustomParams]
 	{
 		builtBy=sphere_sphere_factory;
-		energyCostMoving=120;
-		tip=Requires 120E/s to move;
+		energyCostMoving=110;
+		tip=Requires 110E/s to move;
 	}
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:rocketflaresml;
 	}
-	buildCostEnergy=11730;//#AUTO#
-	buildCostMetal=2346;//#AUTO#
-	buildTime=27957;//#AUTO#
-	mass=3651;//#AUTO#
+	buildCostEnergy=11076;//#AUTO#
+	buildCostMetal=2215;//#AUTO#
+	buildTime=26399;//#AUTO#
+	mass=3581;//#AUTO#
 }

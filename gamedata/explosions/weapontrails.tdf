@@ -1277,6 +1277,31 @@ usedefaultexplosions=0;
 	}
 }
 
+[BOMBTRAILSML]
+{
+	usedefaultexplosions=0;	
+
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos = 0, 0, 0;
+			dir= -1 r2, -1 r2, -1 r2;
+			width=9;
+			length=9;
+			alpha=0.1;
+			alphadecay=0.04;
+			color=1.0, 1.0, 0.9;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=2; 
+	}
+}
+
 [BOMBTRAIL]
 {
 	usedefaultexplosions=0;	

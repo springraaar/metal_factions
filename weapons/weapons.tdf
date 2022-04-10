@@ -1917,8 +1917,8 @@
 	range=600;
 	minIntensity=1.0;
 	thickness=7;
-	reloadTime=6;
-	energyPerShot=1000;
+	reloadTime=8.6;
+	energyPerShot=1600;
 	weaponVelocity=2533;
 	areaOfEffect=8;
 	soundStart=annigun3;
@@ -1948,10 +1948,10 @@
 	}
 	[DAMAGE]
 	{
-		default=1250;
-		armor_heavy=1250;//#AUTO#
-		armor_medium=1250;//#AUTO#
-		armor_light=1250;//#AUTO#
+		default=1800;
+		armor_heavy=1800;//#AUTO#
+		armor_medium=1800;//#AUTO#
+		armor_light=1800;//#AUTO#
 	}
 }
 [aven_ghost_bomb]
@@ -6182,7 +6182,8 @@
 	thickness=6;
 	impulseFactor=0.222;
 	interceptedByShieldType=1;
-	avoidFeature=0;
+	avoidFeature=1;
+	avoidNeutral=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
@@ -6605,7 +6606,8 @@
 	thickness=9;
 	impulseFactor=0.222;
 	interceptedByShieldType=1;
-	avoidFeature=0;
+	avoidFeature=1;
+	avoidNeutral=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
@@ -9244,7 +9246,7 @@
 	weaponType=MissileLauncher;
 	dance=0;
 	explosionGenerator=custom:ROCKETSMLBLASTWRAPPER;
-	cegTag=BOMBTRAIL1;
+	cegTag=BOMBTRAILSML;
 	texture1=null; //flare//
 	texture2=null;//first segment of missiletrail//
 	texture3=null;//flame//
@@ -20269,7 +20271,7 @@
 	energyPerShot=100;
 	weaponVelocity=500;
 	accuracy=150;
-	areaOfEffect=80;
+	areaOfEffect=100;
 	soundStart=engcannon2;
 	soundHit=xplochargedshot;
 	soundTrigger=1;

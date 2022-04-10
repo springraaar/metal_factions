@@ -5,8 +5,8 @@
 	//********************
 	side=Aven;
 	name=Ace;
-	description=Very Fast Assassination Bomber;
-	iconType=airfighter;
+	description=Very Fast Assassination Fighter/Bomber;
+	iconType=airmulti;
 
 	//************************************************************
 	//  Categories
@@ -24,7 +24,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=1400;
+	maxDamage=2000;
 	footprintx=4;
 	footprintz=4;
 
@@ -67,20 +67,21 @@
 	maxSlope=10;
 	maxWaterDepth=2;
 	cruiseAlt=210;
+	verticalSpeed=10.0;
 
 	// flight behaviour
-	wingDrag=0.07;      //0.07
-	wingAngle=0.08;	//0.08;
+	wingDrag=0.08;      //0.07
+	wingAngle=0.09;	//0.08;
 	drag=0.08;		//0.08
 	frontToSpeed=0.1;  //0.1
 	speedToFront=0.07; //0.07
-	myGravity=0.4; //0.4
+	myGravity=0.6; //0.4
 	maxBank=0.8;	//0.8
 	maxPitch=0.45;	//0.45
-	turnRadius=350; //500
-	maxAileron=0.01;	//0.015
-	maxElevator=0.01;	//0.01
-	maxRudder=0.01;  //0.004
+	turnRadius=300; //500
+	maxAileron=0.015;	//0.015
+	maxElevator=0.015;	//0.01
+	maxRudder=0.015;  //0.004
 	maxAcc=0.765; //0.065
 
 
@@ -120,6 +121,7 @@
 		builtBy=aven_adv_aircraft_plant;
 		energyCostMoving=300;
 		tip=Requires 300E/s to move;
+		evalFactor=1.2; // dodges most stuff
 	}
 
 	[SFXTypes]
@@ -127,8 +129,8 @@
 		explosionGenerator0=custom:rocketflaresml;
 		explosionGenerator1=custom:acetrail;
 	}
-	buildCostEnergy=7963;//#AUTO#
-	buildCostMetal=1592;//#AUTO#
-	buildTime=18979;//#AUTO#
-	mass=440;//#AUTO#
+	buildCostEnergy=9956;//#AUTO#
+	buildCostMetal=1991;//#AUTO#
+	buildTime=23729;//#AUTO#
+	mass=581;//#AUTO#
 }

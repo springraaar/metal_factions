@@ -63,9 +63,9 @@ local function processSoundDefaults(wd)
 end
 
 -- weapondef tweaking
+-- NOTE : property names are lower case
 for wdName, wd in pairs(WeaponDefs) do
-	local hb = wd.heightBoostFactor
-	
+
 	-- auto detect ota weapontypes
 	if (wd.weapontype==nil) then
 		local rendertype = tonumber(wd.rendertype) or 0
@@ -157,11 +157,6 @@ for wdName, wd in pairs(WeaponDefs) do
 		end
 	end
 	
-	-- set explosion speed
-	-- defaults are about 3-4 for most cases
-	if (not wd.explosionSpeed) then
-		wd.explosionSpeed = 8
-	end
 
 	-- force unit to retry the aim animation more often 
 	-- without this it would only run twice per second (?)
@@ -174,6 +169,27 @@ for wdName, wd in pairs(WeaponDefs) do
 	end
 	if not (wd.customparams.reaimtime) then
 		wd.customparams.reaimtime = 10
+	end
+
+	if wd.areaofeffect then
+		local aoe = tonumber(wd.areaofeffect)
+		local edge = tonumber(wd.edgeeffectiveness) or 0
+
+		-- set minimum aoe to 12
+		if aoe < 10 then
+			wd.areaofeffect = 12
+		end
+
+		-- increase edge effectiveness by 0.2
+		if edge < 0.8 then
+			wd.edgeeffectiveness = edge + 0.2
+		end
+
+		-- set explosion speed
+		-- defaults are about 3-4 for most cases
+		if (not wd.explosionspeed) then
+			wd.explosionspeed = 7 + aoe*0.02
+		end
 	end
 
 	-- TODO disabled for now because it'd make walls untargetable
