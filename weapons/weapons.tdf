@@ -5339,7 +5339,7 @@
 	name=Light Laser;
 	weaponType=BeamLaser;
 	turret=1;
-	range=560;
+	range=530;
 	minIntensity=1.0;
 	reloadTime=0.5;
 	weaponVelocity=1533;
@@ -5368,6 +5368,53 @@
 		hitPower=1;
 		aaRangeBoost=1;
 		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=60;
+		group_invincible=1;
+		armor_heavy=15;//#AUTO#
+		armor_medium=30;//#AUTO#
+		armor_light=60;//#AUTO#
+	}
+}
+[aven_valiant_laser]
+{
+	name=Light Laser;
+	weaponType=BeamLaser;
+	turret=1;
+	range=530;
+	minIntensity=1.0;
+	reloadTime=0.55;
+	weaponVelocity=1533;
+	explosionGenerator=custom:REDLASERBLASTWRAPPER;
+	tolerance=3000;
+	beamTime=0.05;
+	thickness=2.123;
+	coreThickness=0.55;
+	intensity=0.85; 
+	energyPerShot=15;
+	areaOfEffect=8;
+	soundTrigger=1;
+	soundStart=lasrfir1;
+	soundHit=lasrhit2;
+	fireStarter=30;
+	scrollSpeed=0;
+	pulseSpeed=0;
+	rgbColor=0.51 0.0 0.0;
+	rgbColor2=1.0 0.4 0.4;
+	tolerance=3000;
+	impulseFactor=0.222;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		aaRangeBoost=1;
+		expDmgScaling=1;
+		reaimTime=1;
+		evalFactor=0.93; // less discount than angle restriction
 		targets=SURFACE,AIR;
 	}
 	[DAMAGE]
@@ -7127,7 +7174,7 @@
 	name=Seeker Flares;
 	weaponType=StarburstLauncher;
 	explosionGenerator=custom:FLAREBLASTWRAPPER;
-	model=weapon_flare.3do;
+	model=weapon_invisible.3do;
 	cegTag=FLARETRAIL;
 	range=400;
 	turret=1;
@@ -7171,11 +7218,54 @@
 	name=Seeker Flares;
 	weaponType=StarburstLauncher;
 	explosionGenerator=custom:FLAREBLASTWRAPPER;
-	model=weapon_flare.3do;
+	model=weapon_invisible.3do;
 	cegTag=FLARETRAIL;
 	range=530;
 	turret=1;
 	reloadTime=0.7;
+	flightTime=4;
+	weaponVelocity=500;
+	startVelocity=350;
+	weaponAcceleration=150;
+	turnRate=33000;
+	areaOfEffect=32;
+	energyPerShot=50;
+	metalPerShot=0;
+	soundStart=flarefire;
+	soundHit=flarehit;
+	fireStarter=70;
+	tracks=1;
+	fixedLauncher=1;
+	smokeTrail=0;
+	texture1=null;
+	dance=1;
+	tolerance=9000;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=150;
+		armor_heavy=37;//#AUTO#
+		armor_medium=75;//#AUTO#
+		armor_light=150;//#AUTO#
+	}
+}
+[gear_strainer_flare]
+{
+	name=Seeker Flares;
+	weaponType=StarburstLauncher;
+	explosionGenerator=custom:FLAREBLASTWRAPPER;
+	model=weapon_invisible.3do;
+	cegTag=FLARETRAIL;
+	range=530;
+	turret=1;
+	reloadTime=0.8;
 	flightTime=4;
 	weaponVelocity=500;
 	startVelocity=350;
@@ -7214,7 +7304,7 @@
 	name=Seeker Flares;
 	weaponType=StarburstLauncher;
 	explosionGenerator=custom:FLAREBLASTWRAPPER;
-	model=weapon_flare.3do;
+	model=weapon_invisible.3do;
 	cegTag=FLARETRAIL;
 	range=530;
 	turret=1;
@@ -7258,7 +7348,7 @@
 	name=Seeker Flares;
 	weaponType=StarburstLauncher;
 	explosionGenerator=custom:FLAREBLASTWRAPPER;
-	model=weapon_flare.3do;
+	model=weapon_invisible.3do;
 	cegTag=FLARETRAIL;
 	range=420;
 	turret=1;
@@ -7437,14 +7527,14 @@
 	turret=1;
 	model=weapon_fastmissile3.3do;
 	texture1=null; //flare//
-	range=1350;
-	reloadTime=3.6;
+	range=1250;
+	reloadTime=3.5;
 	flightTime=6;
 	trajectoryHeight=0.1;
 	weaponVelocity=1100;
 	startVelocity=700;
 	weaponAcceleration=154;
-	turnRate=41660;
+	turnRate=51660;
 	areaOfEffect=100;
 	metalPerShot=0;
   	craterMult=0.125;
@@ -7461,6 +7551,96 @@
 	[CUSTOMPARAMS]
 	{
 		hitPower=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=680;
+		armor_heavy=170;//#AUTO#
+		armor_medium=340;//#AUTO#
+		armor_light=680;//#AUTO#
+	}
+}
+[gear_strainer_missile]
+{
+	name=Large Missiles;
+	weaponType=MissileLauncher;
+	explosionGenerator=custom:FASTMISBLASTWRAPPER;
+	cegTag=FASTROCKETTRAIL;
+	turret=1;
+	model=weapon_fastmissile3.3do;
+	texture1=null; //flare//
+	range=1000;
+	reloadTime=5;
+	flightTime=6;
+	trajectoryHeight=0.1;
+	weaponVelocity=1100;
+	startVelocity=700;
+	weaponAcceleration=154;
+	turnRate=51660;
+	areaOfEffect=100;
+	metalPerShot=0;
+  	craterMult=0.125;
+	soundStart=mislite3;
+	soundHit=xplosml1;
+	fireStarter=70;
+	tracks=1;
+	smokeTrail=0;
+	tolerance=10000;
+	waterBounce=0;
+	NumBounce=1;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		reaimTime=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=680;
+		armor_heavy=170;//#AUTO#
+		armor_medium=340;//#AUTO#
+		armor_light=680;//#AUTO#
+	}
+}
+[gear_tensor_missile]
+{
+	name=Large Missiles;
+	weaponType=MissileLauncher;
+	explosionGenerator=custom:FASTMISBLASTWRAPPER;
+	cegTag=FASTROCKETTRAIL;
+	turret=1;
+	model=weapon_fastmissile3.3do;
+	texture1=null; //flare//
+	range=1000;
+	reloadTime=5;
+	flightTime=6;
+	trajectoryHeight=0.1;
+	weaponVelocity=1100;
+	startVelocity=700;
+	weaponAcceleration=154;
+	turnRate=51660;
+	areaOfEffect=100;
+	metalPerShot=0;
+  	craterMult=0.125;
+	soundStart=mislite3;
+	soundHit=xplosml1;
+	fireStarter=70;
+	tracks=1;
+	smokeTrail=0;
+	tolerance=10000;
+	waterBounce=0;
+	NumBounce=1;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		reaimTime=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR;
 	}
@@ -8911,7 +9091,7 @@
 	weaponType=BeamLaser;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
 	turret=1;
-	range=560;
+	range=530;
 	minIntensity=1.0;
 	beamTime=0.05;
 	thickness=2.123;
@@ -10841,6 +11021,94 @@
 		armor_light=800;//#AUTO#
 	}
 }
+[gear_overcharger_cannon_old]
+{
+	name=Overcharged EWB Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=750;
+	highTrajectory=1;
+	reloadTime=3;
+	weaponVelocity=330;
+	areaOfEffect=200;
+	soundStart=overfire;
+	soundHit=xplomas2;
+	energyPerShot=900;
+	tolerance=3000;
+	burnBlow=1;
+	cegTag=PLASMATRAIL3;
+	explosionGenerator=custom:TSUNAMIBLASTWRAPPER;
+	size=3;
+	rgbColor=1.0 0.8 0.5;
+	stages=3;
+  	separation=0.0;
+  	alphaDecay=0.8;
+  	sizeDecay=-2;
+	craterMult=0.125;
+	interceptedByShieldType=1;
+	avoidGround=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		reaimTime=1;
+		expDmgScaling=1;
+		targets=SURFACE;
+	}
+	[DAMAGE]
+	{
+		default=800;
+		group_invincible=1;
+		armor_heavy=400;//#AUTO#
+		armor_medium=800;//#AUTO#
+		armor_light=800;//#AUTO#
+	}
+}
+[gear_overcharger_flare]
+{
+	name=Supercharged WB Seeker Flares;
+	weaponType=MissileLauncher;
+	explosionGenerator=custom:FLAKBLASTWRAPPER;
+	model=weapon_invisible.3do;
+	cegTag=OVERTRAIL;
+	range=750;
+	turret=1;
+	reloadTime=3;
+	flightTime=8;
+	weaponVelocity=300;
+	startVelocity=300;
+	weaponAcceleration=30;
+	turnRate=42000;
+	areaOfEffect=210;
+	energyPerShot=1000;
+	metalPerShot=0;
+	soundStart=overfire;
+	soundHit=overhit;
+	fireStarter=70;
+	tracks=1;
+	fixedLauncher=1;
+	trajectoryHeight=1;
+	smokeTrail=0;
+	texture1=null;
+	dance=150;
+	tolerance=9000;
+	craterMult=0.125;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=900;
+		armor_heavy=450;//#AUTO#
+		armor_medium=900;//#AUTO#
+		armor_light=900;//#AUTO#
+	}
+}
 [gear_firestorm_rocket]
 {
 	name=Incendiary Rockets;
@@ -11246,6 +11514,50 @@
 		armor_heavy=11;//#AUTO#
 		armor_medium=22;//#AUTO#
 		armor_light=44;//#AUTO#
+	}
+}
+[gear_strainer_laser]
+{
+	name=Laser;
+	weaponType=BeamLaser;
+	explosionGenerator=custom:REDLASERBLASTWRAPPER;
+	beamTime=0.05;
+	thickness=2.123;
+	coreThickness=0.55;
+	intensity=0.85;
+	turret=1;
+	range=530;
+	minIntensity=1.0;
+	reloadTime=0.55;
+	weaponVelocity=1533;
+	areaOfEffect=8;
+	soundTrigger=1;
+	soundStart=lasrfir1;
+	soundHit=lasrhit2;
+	fireStarter=50;
+	scrollSpeed=0;
+	pulseSpeed=0;
+	rgbColor=0.51 0.0 0.0;
+	rgbColor2=1.0 0.4 0.4;
+	tolerance=3000;
+	impulseFactor=0.222;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		reaimTime=1;
+		aaRangeBoost=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=60;
+		group_invincible=1;
+		armor_heavy=15;//#AUTO#
+		armor_medium=30;//#AUTO#
+		armor_light=60;//#AUTO#
 	}
 }
 [gear_pinion_laser]
@@ -12471,14 +12783,103 @@
 	turret=1;
 	model=weapon_fastmissile2.3do;
 	texture1=null; //flare//
-	range=1350;
-	reloadTime=5.5;
+	range=1250;
+	reloadTime=5;
 	flightTime=6;
 	trajectoryHeight=0.1;
 	weaponVelocity=1100;
 	startVelocity=700;
 	weaponAcceleration=140;
-	turnRate=31660;
+	turnRate=51660;
+	areaOfEffect=100;
+	metalPerShot=0;
+  	craterMult=0.125;
+	soundStart=mislite3;
+	soundHit=xplosml1;
+	fireStarter=70;
+	tracks=1;
+	smokeTrail=0;
+	tolerance=10000;
+	waterBounce=0;
+	NumBounce=1;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=680;
+		armor_heavy=170;//#AUTO#
+		armor_medium=340;//#AUTO#
+		armor_light=680;//#AUTO#
+	}
+}
+[aven_valiant_missile]
+{
+	name=Large Missiles;
+	weaponType=MissileLauncher;
+	explosionGenerator=custom:FASTMISBLASTWRAPPER;
+	cegTag=FASTROCKETTRAIL;
+	turret=1;
+	model=weapon_fastmissile2.3do;
+	texture1=null; //flare//
+	range=1000;
+	reloadTime=6;
+	flightTime=6;
+	trajectoryHeight=0.1;
+	weaponVelocity=1100;
+	startVelocity=700;
+	weaponAcceleration=140;
+	turnRate=51660;
+	areaOfEffect=100;
+	metalPerShot=0;
+  	craterMult=0.125;
+	soundStart=mislite3;
+	soundHit=xplosml1;
+	fireStarter=70;
+	tracks=1;
+	smokeTrail=0;
+	tolerance=10000;
+	waterBounce=0;
+	NumBounce=1;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		reaimTime=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=680;
+		armor_heavy=170;//#AUTO#
+		armor_medium=340;//#AUTO#
+		armor_light=680;//#AUTO#
+	}
+}
+[aven_priest_missile]
+{
+	name=Large Missiles;
+	weaponType=MissileLauncher;
+	explosionGenerator=custom:FASTMISBLASTWRAPPER;
+	cegTag=FASTROCKETTRAIL;
+	turret=1;
+	model=weapon_fastmissile2.3do;
+	texture1=null; //flare//
+	range=1000;
+	reloadTime=6.8;
+	flightTime=6;
+	fixedLauncher=1;
+	weaponVelocity=1100;
+	startVelocity=400;
+	weaponAcceleration=250;
+	turnRate=51660;
 	areaOfEffect=100;
 	metalPerShot=0;
   	craterMult=0.125;
@@ -15668,7 +16069,7 @@
 }
 [claw_wolverine_gun]
 {
-	name=MG;
+	name=Autocannon;
 	weaponType=LaserCannon;
 	explosionGenerator=custom:railgunblastsml;
 	intensity=1;
@@ -15699,6 +16100,53 @@
 	[CUSTOMPARAMS]
 	{
 		hitPower=1;
+		reaimTime=1;
+		aaRangeBoost=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=20;
+		armor_heavy=5;//#AUTO#
+		armor_medium=10;//#AUTO#
+		armor_light=20;//#AUTO#
+	}
+}
+[claw_phalanx_gun]
+{
+	name=Autocannon;
+	weaponType=LaserCannon;
+	explosionGenerator=custom:railgunblastsml;
+	intensity=1;
+	duration=0.05;
+	thickness=1.3;
+	coreThickness=1;
+	scrollSpeed=0;
+	rgbColor=1 0.3 0;
+	rgbColor2=1 0.7 0.2;
+	texture1=railgunshot;
+	texture2=null;
+	texture3=null;
+	texture4=null;
+	energyPerShot=5;
+	turret=1;
+	range=520;
+	reloadTime=0.2;
+	accuracy=300;
+	predictBoost=0.5;
+	weaponVelocity=2032;
+	areaOfEffect=8;
+	soundStart=armsml1;
+	soundHit=comfire1;
+	soundTrigger=1;
+	tolerance=1500;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		reaimTime=1;
 		aaRangeBoost=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR;
@@ -15729,7 +16177,7 @@
 	texture4=null;
 	energyPerShot=5;
 	turret=1;
-	range=560;
+	range=530;
 	reloadTime=0.1;
 	accuracy=300;
 	predictBoost=0.5;
@@ -16495,7 +16943,97 @@
 	weaponVelocity=1200;
 	startVelocity=900;
 	weaponAcceleration=154;
-	turnRate=41660;
+	turnRate=51660;
+	areaOfEffect=100;
+	metalPerShot=0;
+  	craterMult=0.125;
+	soundStart=mislite3;
+	soundHit=xplosml1;
+	fireStarter=70;
+	tracks=1;
+	smokeTrail=0;
+	tolerance=10000;
+	waterBounce=0;
+	NumBounce=1;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		reaimTime=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=680;
+		armor_heavy=170;//#AUTO#
+		armor_medium=340;//#AUTO#
+		armor_light=680;//#AUTO#
+	}
+}
+[claw_phalanx_missile]
+{
+	name=Large Missiles;
+	weaponType=MissileLauncher;
+	explosionGenerator=custom:FASTMISBLASTWRAPPER;
+	cegTag=FASTROCKETTRAIL;
+	turret=1;
+	model=weapon_fastmissile.3do;
+	texture1=null; //flare//
+	range=1000;
+	reloadTime=5.5;
+	flightTime=6;
+	trajectoryHeight=0.1;
+	weaponVelocity=1200;
+	startVelocity=900;
+	weaponAcceleration=154;
+	turnRate=51660;
+	areaOfEffect=100;
+	metalPerShot=0;
+  	craterMult=0.125;
+	soundStart=mislite3;
+	soundHit=xplosml1;
+	fireStarter=70;
+	tracks=1;
+	smokeTrail=0;
+	tolerance=10000;
+	waterBounce=0;
+	NumBounce=1;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		reaimTime=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=680;
+		armor_heavy=170;//#AUTO#
+		armor_medium=340;//#AUTO#
+		armor_light=680;//#AUTO#
+	}
+}
+[claw_lash_missile]
+{
+	name=Large Missiles;
+	weaponType=MissileLauncher;
+	explosionGenerator=custom:FASTMISBLASTWRAPPER;
+	cegTag=FASTROCKETTRAIL;
+	turret=1;
+	model=weapon_fastmissile.3do;
+	texture1=null; //flare//
+	range=1000;
+	reloadTime=4;
+	flightTime=6;
+	trajectoryHeight=0.1;
+	weaponVelocity=1200;
+	startVelocity=900;
+	weaponAcceleration=154;
+	turnRate=51660;
 	areaOfEffect=100;
 	metalPerShot=0;
   	craterMult=0.125;
@@ -16533,14 +17071,14 @@
 	turret=1;
 	model=weapon_fastmissile.3do;
 	texture1=null; //flare//
-	range=1350;
-	reloadTime=3.6;
+	range=1250;
+	reloadTime=3.4;
 	flightTime=6;
 	trajectoryHeight=0.1;
 	weaponVelocity=1200;
 	startVelocity=900;
 	weaponAcceleration=154;
-	turnRate=41660;
+	turnRate=51660;
 	areaOfEffect=100;
 	metalPerShot=0;
   	craterMult=0.125;
@@ -21474,14 +22012,14 @@
 	turret=1;
 	model=weapon_fastmissile4.3do;
 	texture1=null; //flare//
-	range=1350;
-	reloadTime=5.5;
+	range=1250;
+	reloadTime=5;
 	flightTime=6;
 	trajectoryHeight=0.1;
 	weaponVelocity=1100;
 	startVelocity=700;
 	weaponAcceleration=140;
-	turnRate=31660;
+	turnRate=51660;
 	areaOfEffect=100;
 	metalPerShot=0;
   	craterMult=0.125;
@@ -21518,14 +22056,14 @@
 	turret=1;
 	model=weapon_fastmissile4.3do;
 	texture1=null; //flare//
-	range=1250;
-	reloadTime=6;
+	range=1000;
+	reloadTime=5.5;
 	flightTime=6;
 	trajectoryHeight=0.1;
 	weaponVelocity=1100;
 	startVelocity=700;
 	weaponAcceleration=140;
-	turnRate=31660;
+	turnRate=51660;
 	areaOfEffect=100;
 	metalPerShot=0;
   	craterMult=0.125;
@@ -21544,7 +22082,7 @@
 		hitPower=1;
 		reaimTime=1;
 		expDmgScaling=1;
-		evalFactor=0.93; // less discount than angle restriction
+		evalFactor=0.95; // less discount than angle restriction
 		targets=SURFACE,AIR;
 	}
 	[DAMAGE]
@@ -21565,7 +22103,7 @@
 	thickness=2.123;
 	coreThickness=0.55;
 	turret=1;
-	range=560;
+	range=530;
 	minIntensity=1.0;
 	reloadTime=0.334;
 	energyPerShot=10;
@@ -21730,6 +22268,53 @@
 		armor_light=150;//#AUTO#
 	}
 }
+[sphere_glare_laser]
+{
+	name=Flash Beam;
+	weaponType=BeamLaser;
+	explosionGenerator=custom:FLASHBLASTWRAPPER;
+	beamTime=0.03;
+	thickness=2.888;
+	coreThickness=1.6;
+	intensity=0.8;
+	turret=1;
+	range=1000;
+	minIntensity=1.0;
+	beamTTL=60;
+	beamDecay=0.9;
+	reloadTime=4.5;
+	energyPerShot=400;
+	weaponVelocity=1533;
+	areaOfEffect=8;
+	soundStart=flashlaser;
+	soundHit=lasrhit2;
+	fireStarter=20;
+	scrollSpeed=0;
+	pulseSpeed=0;
+	rgbColor=0.0 0.5 0.0;
+	rgbColor2=1.0 1.0 1.0;
+	tolerance=3000;
+	impulseFactor=0.0222;
+	craterMult=0.05;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		reaimTime=1;
+		aaRangeBoost=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=680;
+		group_invincible=1;
+		armor_heavy=170;//#AUTO#
+		armor_medium=340;//#AUTO#
+		armor_light=680;//#AUTO#
+	}
+}
 [sphere_sphere_shield]
 {
 	name=Energy shield;
@@ -21818,7 +22403,7 @@
 	visibleShieldRepulse=0;
 	shieldEnergyUse=0;
 	shieldForce=3000;
-	shieldRadius=72;
+	shieldRadius=60;
 	shieldMaxSpeed=2000;
 	shieldPower=1500;
 	shieldStartingPower=1500;

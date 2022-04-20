@@ -5,7 +5,7 @@
 	//********************
 	side=Aven;
 	name=Merl;
-	description=Mobile Rocket Launcher;
+	description=Rocket Artillery;
 	iconType=mobileartillery;
 
 	//************************************************************
@@ -60,13 +60,11 @@
 	//  Movement
 	//************
 	movementClass=TANKSH3;
-	turnRate=330;
-	acceleration=0.03;
+	turnRate=400;
+	acceleration=0.1;
 	brakeRate=0.27;
 	maxVelocity=1.5;
-	maxSlope=16;
-	maxWaterDepth=4;
-	turnInPlace=1;
+
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -110,8 +108,8 @@
 		tip=Gains 20% damage resistance when closed;
 	}
 
-	buildCostEnergy=6055;//#AUTO#
-	buildCostMetal=1211;//#AUTO#
-	buildTime=14431;//#AUTO#
-	mass=351;//#AUTO#
+	buildCostEnergy=6121;//#AUTO#
+	buildCostMetal=1224;//#AUTO#
+	buildTime=14590;//#AUTO#
+	mass=354;//#AUTO#
 }

@@ -1,0 +1,122 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Phalanx;
+	description=Anti-Swarm/Missile Frigate;
+	iconType=shipfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_phalanx;
+	objectName=claw_phalanx.3do;
+	corpse=claw_phalanx_dead;
+	buildPic=claw_phalanx.png;
+	soundCategory=gear_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=3200;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	floater=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=LARGEBOAT;
+	turnRate=220;
+	acceleration=0.05;
+	brakeRate=0.05;
+	maxVelocity=1.65;
+	waterline=1;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=300;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_phalanx_missile;
+	badTargetCategory1=NOTAIR;
+	weapon2=claw_phalanx_gun;
+	weaponMainDir2=0 0 1;
+	maxAngleDif2=310;
+	badTargetCategory2=NOTAIR;
+	weapon3=claw_phalanx_gun;
+	weaponMainDir3=0 0 -1;
+	maxAngleDif3=310;
+	badTargetCategory3=NOTAIR;
+	explodeAs=HUGE_UNIT;
+	selfDestructAs=HUGE_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	moveState=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =45 50 90;
+	collisionVolumeOffsets = 0 -14 0;
+	collisionVolumeTest = 1;
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:yellowflarebig;
+		explosionGenerator1=custom:railgunflaresml;
+	}
+	[CustomParams]
+	{
+		builtBy=claw_adv_shipyard;
+		evalfactor=0.85;//SHIP
+	}
+	buildCostEnergy=10324;//#AUTO#
+	buildCostMetal=2064;//#AUTO#
+	buildTime=24607;//#AUTO#
+	mass=2380;//#AUTO#
+}

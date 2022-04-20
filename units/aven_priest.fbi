@@ -1,0 +1,114 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Priest;
+	description=Missile Launcher;
+	iconType=mobilefs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_priest;
+	objectName=aven_priest.3do;
+	corpse=aven_priest_dead;
+	buildPic=aven_priest.png;
+	soundCategory=aven_VEHICLE;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1250;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=TANKSH3;
+	turnRate=400;
+	acceleration=0.1;
+	brakeRate=0.27;
+	maxVelocity=1.5;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_priest_missile;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+	badTargetCategory1=NOTAIR;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	moveState=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	leavetracks=1;
+	trackoffset=6;
+	trackstrength=5;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=35;
+	collisionVolumeType = box;
+	collisionVolumeScales =42 20 50;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	damageModifier=0.8;
+
+	[customParams] 
+	{
+		builtBy=aven_adv_vehicle_plant;
+		tip=Gains 20% damage resistance when closed;
+	}
+
+	buildCostEnergy=4828;//#AUTO#
+	buildCostMetal=965;//#AUTO#
+	buildTime=11507;//#AUTO#
+	mass=317;//#AUTO#
+}

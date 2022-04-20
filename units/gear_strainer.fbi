@@ -1,0 +1,116 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Strainer;
+	description=Anti-Swarm/Missile Frigate;
+	iconType=shipfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_strainer;
+	objectName=gear_strainer.3do;
+	corpse=gear_strainer_dead;
+	buildPic=gear_strainer.png;
+	soundCategory=gear_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=3500;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	floater=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=LARGEBOAT;
+	turnRate=220;
+	acceleration=0.05;
+	brakeRate=0.05;
+	maxVelocity=1.65;
+	waterline=1;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=300;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_strainer_missile;
+	badTargetCategory1=NOTAIR;
+	weapon2=gear_strainer_flare;
+	badTargetCategory2=NOTAIR;
+	explodeAs=HUGE_UNIT;
+	selfDestructAs=HUGE_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	moveState=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =45 50 80;
+	collisionVolumeOffsets = 0 -14 0;
+	collisionVolumeTest = 1;
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:yellowflarebig;
+		explosionGenerator1=custom:yellowflaresml;
+	}
+	[CustomParams]
+	{
+		builtBy=gear_adv_shipyard;
+		evalfactor=0.85;//SHIP
+	}
+	buildCostEnergy=11070;//#AUTO#
+	buildCostMetal=2214;//#AUTO#
+	buildTime=26384;//#AUTO#
+	mass=2580;//#AUTO#
+}

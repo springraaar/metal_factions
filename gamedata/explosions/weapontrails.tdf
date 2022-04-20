@@ -1350,7 +1350,68 @@ usedefaultexplosions=0;
   		count=3; 
 	}
 }
+[OVERTRAIL]
+{
+	usedefaultexplosions=0;	
+	[_glow]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=45;explosionGenerator=custom:DYNPROJGLOW;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos = 0, 0, 0;
+			dir= -1 r2, -1 r2, -1 r2;
+			width=16;
+			length=16;
+			alpha=0.1;
+			alphadecay=0.02;
+			color=1.0, 1.0, 0.9;
 
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=3; 
+	}
+	[spikescenter]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos = 0, 0, 0;
+			dir= -1 r2, -1 r2, -1 r2;
+			width=8;
+			length=8;
+			alpha=0.3;
+			alphadecay=0.1;
+			color=1.0, 1.0, 0.9;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=3; 
+	}
+	[spikes2]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos = 0, 0, 0;
+			dir= -1 r2, -1 r2, -1 r2;
+			width=2;
+			length=18;
+			alpha=0.5;
+			alphadecay=0.2;
+			color=1.0, 0.8, 0.3;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=4; 
+	}
+}
 [FLARETRAIL]
 {
 	usedefaultexplosions=0;	

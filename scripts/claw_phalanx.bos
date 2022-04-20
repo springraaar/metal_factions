@@ -1,0 +1,232 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
+piece  base, turret,firept1, wake1, wake2, sleeve, turret2,sleeve2, barrel2, flare2, h2, turret3,sleeve3,barrel3,flare3;
+
+static-var  gun_2;
+
+#include "aimhelper1.h"
+#include "aimhelper2.h"
+#include "aimhelper3.h"
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_AIM_2			4
+#define SIG_AIM_3			8
+#define SIG_MOVE			16
+
+lua_checkAllowFiring() { return 0; }
+lua_checkLockTarget() { return 0; }
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+Create()
+{
+	hide firept1;
+	hide flare2;
+	hide flare3;
+	turn turret3 to y-axis <180.000000> now;
+	call-script stopAimHelper1(<1000>,<1000>);
+	call-script stopAimHelper2(<1000>,<1000>);
+	call-script stopAimHelper3(<1000>,<1000>);
+	call-script updateAimHelper3(<180>,0,<1000>,<1000>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	start-script SmokeUnit();
+}
+
+RestoreAfterDelay()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
+	turn turret to y-axis <0.000000> speed <100.000000>;
+	turn sleeve to x-axis <0.000000> speed <100.000000>;
+}
+RestoreAfterDelay2()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper2(<100>,<100>);
+	turn turret2 to y-axis <0.000000> speed <100.000000>;
+	turn sleeve2 to x-axis <0.000000> speed <100.000000>;
+}
+
+RestoreAfterDelay3()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper3(<100>,<100>);
+	call-script updateAimHelper3(<180>,0,<100>,<100>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	turn turret3 to y-axis <180.000000> speed <100.000000>;
+	turn sleeve3 to x-axis <0.000000> speed <100.000000>;
+}
+
+StartMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while( TRUE )
+	{
+		emit-sfx 2 from wake1;
+		emit-sfx 2 from wake2;
+		sleep 300;
+	}
+}
+
+StopMoving()
+{
+	signal SIG_MOVE;
+}
+
+AimPrimary(heading, pitch, canFire)
+{
+	call-script updateAimHelper1(heading,pitch,<400>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn turret to y-axis heading speed <400.000000>;
+	turn sleeve to x-axis <0.000000> - pitch speed <400.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
+	start-script RestoreAfterDelay();
+	// overkill prevention check
+	canFire = (get GAME_FRAME) - (get WEAPON_RELOADSTATE(1)) > 0;
+	if (canFire) {
+		call-script lua_checkAllowFiring(1,(get TARGET_ID(1)));
+		canFire = get LUA1;
+	}
+	if (!canFire) {
+		return (0);
+	}
+	return (1);
+}
+
+FirePrimary()
+{
+	call-script lua_checkLockTarget(get TARGET_ID(1));
+	emit-sfx 1024 + 0 from firept1;
+	return (0);
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = firept1;
+}
+
+
+AimSecondary(heading, pitch)
+{
+	call-script updateAimHelper2(heading,pitch,<480>,<480>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM_2;
+	set-signal-mask SIG_AIM_2;
+	turn turret2 to y-axis heading speed <480.000000>;
+	turn sleeve2 to x-axis <0.000000> - pitch speed <480.000000>;
+	if (!aimReady2)
+	{
+		wait-for-turn turret2 around y-axis;
+		wait-for-turn sleeve2 around x-axis;
+	}
+	start-script RestoreAfterDelay2();
+	return (1);
+}
+
+FireSecondary()
+{
+	move barrel2 to z-axis [-0.50000] now;
+	emit-sfx 1024+1 from flare2;
+	sleep 100;
+	move barrel2 to z-axis [0.000000] speed [5.000000];
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = turret2;
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = flare2;
+}
+
+
+AimTertiary(heading, pitch)
+{
+	call-script updateAimHelper3(heading,pitch,<480>,<480>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM_3;
+	set-signal-mask SIG_AIM_3;
+	turn turret3 to y-axis heading speed <480.000000>;
+	turn sleeve3 to x-axis <0.000000> - pitch speed <480.000000>;
+	if (!aimReady3)
+	{
+		wait-for-turn turret3 around y-axis;
+		wait-for-turn sleeve3 around x-axis;
+	}
+	start-script RestoreAfterDelay3();
+	return (1);
+}
+
+FireTertiary()
+{
+	move barrel3 to z-axis [-0.50000] now;
+	emit-sfx 1024+1 from flare3;
+	sleep 100;
+	move barrel3 to z-axis [0.000000] speed [5.000000];
+}
+
+AimFromTertiary(piecenum)
+{
+	piecenum = turret3;
+}
+
+QueryTertiary(piecenum)
+{
+	piecenum = flare3;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		explode turret2 type SHATTER;
+		explode turret3 type SHATTER;
+		return (1);
+	}
+	explode turret2 type SHATTER;
+	explode h2 type SHATTER;
+	
+	return (2);
+}

@@ -2894,3 +2894,37 @@
 	}
 }
 
+[FLASHBLASTWRAPPER]			// flash beam blast wrapper
+{
+	usedefaultexplosions=0;
+	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d0.3 p0.6 x0;explosionGenerator=custom:STDNARROWBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	
+	[bigGlow]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-1 r2,-1 r2,-1 r2;
+			width=20;
+			length=40;
+			alpha=1;
+			alphadecay=0.05;
+			color=0.3, 0.4, 0.3;
+
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+  		count=10; 
+	}
+	[groundflash]
+	{
+		flashSize = 100;
+		flashAlpha = 0.15;
+		circleGrowth = 0.1;
+		circleAlpha = 0.1;
+		ttl = 15;
+		color = 0.9,1.0,0.9;
+	}
+}

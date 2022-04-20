@@ -38,6 +38,7 @@ local spGetUnitTeam = Spring.GetUnitTeam
 local spAddUnitResource = Spring.AddUnitResource
 local spGetUnitPiecePosDir = Spring.GetUnitPiecePosDir
 local spGetGroundHeight = Spring.GetGroundHeight
+local spAddUnitDamage = Spring.AddUnitDamage
 local floor = math.floor
 
 -------------------------------------------------------------------------------------
@@ -95,6 +96,8 @@ local spawnUnitByType = {
 	[SPAWN_CLUSTER_MODULE_LASER] = "sphere_cluster_module_laser",
 	[SPAWN_CLUSTER_MODULE_BOMB] = "sphere_cluster_module_bomb"
 }
+
+local selfBurnFireWeaponId = WeaponDefNames["gear_pyro_flamethrower"].id
 
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
@@ -491,6 +494,13 @@ function spawnUnit(unitID, unitDefID, teamID, pieceIdx, spawnType)
 
 	return 0
 end
+
+
+-- sets the unit on fire
+function selfIgnite(unitID, unitDefID, teamID)
+	spAddUnitDamage(unitID,1,0,-1,selfBurnFireWeaponId)
+end
+
 ---------------------------------------- CALLINS
 
 -- initialize maps
@@ -555,3 +565,4 @@ gadgetHandler:RegisterGlobal("turnToTarget", turnToTarget)
 gadgetHandler:RegisterGlobal("checkIncomingMissile", checkIncomingMissile)
 gadgetHandler:RegisterGlobal("getPieceHeightDiff", getPieceHeightDiff)
 gadgetHandler:RegisterGlobal("spawnUnit", spawnUnit)
+gadgetHandler:RegisterGlobal("selfIgnite", selfIgnite)

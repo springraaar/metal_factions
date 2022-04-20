@@ -1,0 +1,117 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Tensor;
+	description=Missile Launcher;
+	iconType=mobilefs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_tensor;
+	objectName=gear_tensor.3do;
+	corpse=gear_tensor_dead;
+	buildPic=gear_tensor.png;
+	soundCategory=gear_TANK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=2900;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=TANKSH4;
+	turnRate=400;
+	acceleration=0.36;
+	brakeRate=0.2;
+	maxVelocity=1;
+	maxSlope=12;
+	maxWaterDepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_tensor_missile;
+	noChaseCategory=VTOL;
+	badTargetCategory1=NOTAIR;
+	explodeAs=HUGE_UNIT;
+	selfDestructAs=HUGE_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	moveState=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	leavetracks=1;
+	trackoffset=7;
+	trackstrength=6;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=42;
+	collisionVolumeType = box;
+	collisionVolumeScales =45 40 45;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflarebig;
+	}
+	[CustomParams]
+	{
+		builtBy=gear_adv_vehicle_plant;
+	}
+	buildCostEnergy=7301;//#AUTO#
+	buildCostMetal=1460;//#AUTO#
+	buildTime=17402;//#AUTO#
+	mass=1211;//#AUTO#
+}

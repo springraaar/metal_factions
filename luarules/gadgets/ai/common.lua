@@ -879,9 +879,11 @@ attackerList =
 	"aven_turbulence",		
 	"aven_penetrator",
 	"aven_merl",
+	"aven_priest",
 	"aven_kodiak",
 	"aven_tsunami",
 	"aven_catfish",
+	"aven_valiant",
 
 	"aven_icarus",
 	"aven_gryphon",
@@ -924,6 +926,7 @@ attackerList =
 	"gear_stilts",
 	"gear_marauder",
 	"gear_marooner",
+	"gear_overcharger",
 	"gear_rexapod",
 	"gear_proteus",
 	"gear_heater",
@@ -932,9 +935,8 @@ attackerList =
 	"gear_tremor",
 	"gear_diplomat",
 	"gear_rhino",
+	"gear_tensor",
 	"gear_might",
-	"gear_snapper",
-	"gear_slinger",
 	"gear_mobile_artillery",
 	"gear_eruptor",
 	"gear_flareon",
@@ -992,6 +994,7 @@ attackerList =
 	"claw_gyro",
 	"claw_dancer",
 	"claw_mace",
+	"claw_lash",
 	"claw_dynamo",
 	"claw_pike",
 ------------------------------------------------ SPHERE
@@ -1009,6 +1012,7 @@ attackerList =
 	"sphere_masher",
 	"sphere_trax",
 	"sphere_pulsar",
+	"sphere_glare",
 	"sphere_quad",
 	"sphere_bulk",
 	"sphere_slammer",
@@ -1186,7 +1190,7 @@ seaAttackerList =
 	"aven_emperor",
 	"aven_fletcher",
 	"aven_rush",
-
+	"aven_valiant",
 ------------------------------------------------ GEAR
 ----------- l1
 	"gear_searcher",
@@ -1201,7 +1205,7 @@ seaAttackerList =
 	"gear_executioner",
 	"gear_edge",
 	"gear_jigsaw",
-
+	"gear_strainer",
 ------------------------------------------------ CLAW
 ----------- l1
 	"claw_speeder",
@@ -1214,6 +1218,7 @@ seaAttackerList =
 	"claw_monster",
 	"claw_wrecker",
 	"claw_maul",
+	"claw_phalanx",	
 ------------------------------------------------ SPHERE
 ----------- l1
 	"sphere_skiff",

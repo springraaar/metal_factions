@@ -1,0 +1,88 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	side=Sphere;
+	Name=Glare;
+	Description=Anti-Light Sniper/Fire Support;
+	iconType=mobilefs;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=sphere_glare;
+	objectName=sphere_glare.3do;
+	buildPic=sphere_glare.png;
+	soundCategory=gear_TANK;
+	Corpse=sphere_glare_dead;
+
+	// ------------------- health/cost/size
+	FootprintX=4;
+	FootprintZ=4;
+	maxDamage=3000;
+
+	// ------------------- resources
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	Builder=0;
+
+	// ------------------- movement
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.25;
+	brakeRate=0.08;
+	Acceleration=0.08;
+	turnRate=350;
+	movementClass=TANKSH4;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_glare_laser;
+	badTargetCategory1=NOTAIR;
+	noChaseCategory=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	// ------------------- orders
+	moveState=0;
+	noAutoFire=0;
+
+	// ------------------- misc
+	leavetracks=1;
+	trackoffset=8;
+	trackstrength=5;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=35;
+
+	collisionVolumeType = box;
+	collisionVolumeScales =45 45 45;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_adv_vehicle_factory;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:flashflare;
+	}
+	buildCostEnergy=8227;//#AUTO#
+	buildCostMetal=1645;//#AUTO#
+	buildTime=19608;//#AUTO#
+	mass=1298;//#AUTO#
+}

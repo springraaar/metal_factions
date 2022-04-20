@@ -1,0 +1,118 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Valiant;
+	description=Anti-Swarm/Missile Frigate;
+	iconType=shipfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_valiant;
+	objectName=aven_valiant.3do;
+	corpse=aven_valiant_dead;
+	buildPic=aven_valiant.png;
+	soundCategory=aven_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=3200;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	floater=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=LARGEBOAT;
+	turnRate=240;
+	acceleration=0.06;
+	brakeRate=0.06;
+	maxVelocity=1.7;
+	waterline=1;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=300;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_valiant_missile;
+	badTargetCategory1=NOTAIR;
+	weapon2=aven_valiant_laser;
+	weaponMainDir2=0 0 1;
+	maxAngleDif2=300;
+	badTargetCategory2=NOTAIR;
+	explodeAs=HUGE_UNIT;
+	selfDestructAs=HUGE_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	moveState=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =45 50 80;
+	collisionVolumeOffsets = 0 -14 0;
+	collisionVolumeTest = 1;
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:yellowflarebig;
+		explosionGenerator1=custom:glowsml;
+	}
+	[CustomParams]
+	{
+		builtBy=aven_adv_shipyard;
+		evalfactor=0.85;//SHIP
+	}
+	buildCostEnergy=9377;//#AUTO#
+	buildCostMetal=1875;//#AUTO#
+	buildTime=22350;//#AUTO#
+	mass=2280;//#AUTO#
+}
