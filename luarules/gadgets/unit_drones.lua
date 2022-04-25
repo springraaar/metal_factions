@@ -204,10 +204,6 @@ local droneNamesForUnitDefName = {
 
 local droneBuildCEG = "dronebuild"
 
-local builtinDroneUpgrades = {
-	[UnitDefNames["gear_adv_construction_kbot"].id] = "upgrade_transport_drone",
-	[UnitDefNames["gear_adv_construction_hydrobot"].id] = "upgrade_transport_drone"
-}
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -240,28 +236,6 @@ local function drainEnergyIfAvailable(unitId, ownerId, minE, drainE)
 	-- else return failure
 	return false
 end
-
-
-function gadget:Initialize()
-
-end
-
-function gadget:UnitFinished(unitID, unitDefID, unitTeam)
-
-end
-
--- set up builtin drone upgrades when the units are created
-function gadget:UnitCreated(unitID, unitDefID, unitTeam)
-	if builtinDroneUpgrades[unitDefID] then
-		spSetUnitRulesParam(unitID, builtinDroneUpgrades[unitDefID],1,{public = true})
-	end
-end
-
-
-function gadget:UnitGiven(unitID, unitDefID, unitTeam)
-
-end
-
 
 function gadget:GameFrame(n)
 	-- used to avoid "DestroyUnit() recursion is not permitted" errors

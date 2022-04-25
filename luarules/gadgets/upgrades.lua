@@ -101,6 +101,11 @@ local modf = math.modf
 local fmod = math.fmod
 
 
+local builtinDroneUpgrades = {
+	[UnitDefNames["gear_adv_construction_kbot"].id] = "upgrade_transport_drone",
+	[UnitDefNames["gear_adv_construction_hydrobot"].id] = "upgrade_transport_drone"
+}
+
 local noUpgradeUnitDefIds = {
 	[UnitDefNames["cs_beacon"].id] = true,
 	[UnitDefNames["scoper_beacon"].id] = true
@@ -329,13 +334,18 @@ function updateUnitModifiers(unitId, unitDefId, teamId)
 			unitMods = modifiersByPlayerId[teamId].other
 		end
 	end
-
+	
 	modifiersByUnitId[unitId] = unitMods
 	
+	-- keep drone upgrades set for some units
+	--if builtinDroneUpgrades[unitDefId] then
+	--	modifiersByUnitId[unitId][builtinDroneUpgrades[unitDefId]] = 1
+	--end	
+
 	-- clear existing modifiers
 	for _,modName in pairs(modifierTypes) do
 		spSetUnitRulesParam(unitId,"upgrade_"..modName,0,{public = true})
-	end
+	end	
 	if GG.speedModifierUnitIds then 
 		GG.speedModifierUnitIds[unitId] = nil
 	end
@@ -362,6 +372,11 @@ function updateUnitModifiers(unitId, unitDefId, teamId)
 		if (not hasDamage) then
 			updateUnitWeaponDamage(unitId, 0)
 		end 
+	end
+	
+	-- keep drone upgrades set for some units
+	if builtinDroneUpgrades[unitDefId] then
+		spSetUnitRulesParam(unitId, builtinDroneUpgrades[unitDefId],1,{public = true})
 	end
 end
 

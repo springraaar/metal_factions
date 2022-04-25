@@ -35,6 +35,8 @@ local PARALYZE_MISSING_HP_FACTOR = 2.0 -- how much paralyze damage is amplified 
 local DAMAGE_REPAIR_DISRUPT_FRAMES = 60 
 local SELF_DAMAGE_FACTOR = 0.33
 
+local UNIT_RECLAIM_FACTOR = 1.0
+
 local ARMOR_L = 1
 local ARMOR_M = 2
 local ARMOR_H = 3
@@ -86,6 +88,8 @@ local spGetUnitIsStunned = Spring.GetUnitIsStunned
 local spGetUnitNearestEnemy = Spring.GetUnitNearestEnemy
 local spGetGameFrame = Spring.GetGameFrame
 local spGetUnitTransporter = Spring.GetUnitTransporter
+local spGetTeamInfo = Spring.GetTeamInfo
+local spAddTeamResource = Spring.AddTeamResource
 local spSpawnCEG = Spring.SpawnCEG
 local spPlaySoundFile = Spring.PlaySoundFile
 local max = math.max
@@ -757,6 +761,30 @@ function gadget:AllowUnitBuildStep(builderID, builderTeam, unitID, unitDefID, pa
 		end
 	end
 	
+	-- reimburse excess metal retrieved from reclaiming units
+	-- fix for exploit where players with bonus could get extra metal from building and reclaiming their units
+	if (part < 0) then
+		local _,_,_,_,_,_,incomeMult = spGetTeamInfo(builderTeam)
+		if (incomeMult and incomeMult > 1) then
+			local metalAmount = UnitDefs[unitDefID].metalCost * part * (1-incomeMult) * UNIT_RECLAIM_FACTOR
+			--Spring.Echo("reclaiming "..part.." bonus="..incomeMult.." m="..metalAmount)
+			spUseUnitResource(builderID,"m",metalAmount)
+		end
+	end
+	return true
+end
+
+
+function gadget:AllowFeatureBuildStep(builderID, builderTeam, featureID, featureDefID, part)
+	-- reimburse excess metal retrieved from reclaiming features when bonus resource multiplier is set
+	if (part < 0) then
+		local _,_,_,_,_,_,incomeMult = spGetTeamInfo(builderTeam)
+		if (incomeMult and incomeMult > 1) then
+			local metalAmount = FeatureDefs[featureDefID].metal * part * (1-incomeMult)
+			--Spring.Echo("reclaiming "..part.." bonus="..incomeMult.." m="..metalAmount)
+			spUseUnitResource(builderID,"m",metalAmount)
+		end
+	end
 	return true
 end
 
