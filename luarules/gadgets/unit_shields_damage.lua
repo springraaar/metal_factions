@@ -34,6 +34,8 @@ local PARALYZE_DAMAGE_FACTOR = 0.33 -- paralyze damage adds this fraction as nor
 local PARALYZE_MISSING_HP_FACTOR = 2.0 -- how much paralyze damage is amplified by target's missing HP %
 local DAMAGE_REPAIR_DISRUPT_FRAMES = 60 
 local SELF_DAMAGE_FACTOR = 0.33
+local SUBMERGED_SURFACE_BLAST_DMG_FACTOR = 0.25 
+local SUBMERGED_SURFACE_BLAST_DMG_THRESHOLD = 5
 
 local UNIT_RECLAIM_FACTOR = 1.0
 
@@ -530,6 +532,16 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		damage = damage * SELF_DAMAGE_FACTOR
 	end
 	
+	-- reduce damage from non-water weapons' AOE to submerged units
+	local fullySubmergedDepth = spGetUnitRulesParam(unitID, "fullySubmergedDepth")
+	if fullySubmergedDepth and fullySubmergedDepth > SUBMERGED_SURFACE_BLAST_DMG_THRESHOLD then
+		local wd = WeaponDefs[weaponDefID]
+		if (not wd.waterWeapon) then
+			damage = damage * SUBMERGED_SURFACE_BLAST_DMG_FACTOR
+			--Spring.Echo("d="..damage.." (reduced)")
+		end
+	end
+	
 	-- long range rockets that were shot down deal reduced dmg to others in flight
 	if (longRangeRocketsDefIds[unitDefID] == true and reducedDamageLongRangeRocketsWeaponDefIds[weaponDefID] == true) then
 		damage = damage * LONG_RANGE_ROCKET_CHAIN_DAMAGE_FACTOR
@@ -818,9 +830,8 @@ function gadget:AllowUnitCloak(unitId,enemyId)
 	end
 
 	-- if it's on water, decloak
-	x,y,z = spGetUnitPosition(unitId)
-	h = spGetGroundHeight(x,z)
-	if ( h < -5 and y < 0) then
+	local submergedDepth = spGetUnitRulesParam(unitId, "submergedDepth")
+	if submergedDepth and submergedDepth > 5 then
 		return false
 	end
 

@@ -69,6 +69,7 @@ local spSetFeaturePhysics = Spring.SetFeaturePhysics
 local spSetFeatureResources = Spring.SetFeatureResources
 local spCreateFeature = Spring.CreateFeature
 local spAddUnitImpulse = Spring.AddUnitImpulse
+local spGetUnitCollisionVolumeData = Spring.GetUnitCollisionVolumeData
 
 local mcDisable = Spring.MoveCtrl.Disable
 local mcEnable = Spring.MoveCtrl.Enable
@@ -536,6 +537,22 @@ function gadget:GameFrame(n)
 					stuckGroundUnitIds[unitId] = nil
 				end
 			end
+			
+			-- update submerged status
+			local _, ys, _, _, _, _, _, _, _,_ = spGetUnitCollisionVolumeData(unitId)
+			local submergedDepth = 0
+			local fullySubmergedDepth = 0
+			if (groundHeight < 0) then
+				if (y < 0) then
+					submergedDepth = abs(y)
+					if (submergedDepth > ys) then
+						fullySubmergedDepth = submergedDepth - ys
+					end
+				end
+			end
+			spSetUnitRulesParam(unitId,"submergedDepth",submergedDepth)
+			spSetUnitRulesParam(unitId,"fullySubmergedDepth",fullySubmergedDepth)
+			--Spring.Echo("unitId="..unitId.." submergedDepth="..submergedDepth.." fullySubmergedDepth="..fullySubmergedDepth)
 			
 			-- update physics
 			oldPhysics[1] = x

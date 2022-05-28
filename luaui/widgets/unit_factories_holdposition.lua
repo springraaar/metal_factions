@@ -32,6 +32,7 @@ local registered = {
 	[UnitDefNames["gear_adv_vehicle_plant"].id] = 1,
 	[UnitDefNames["gear_shipyard"].id] = 1,
 	[UnitDefNames["gear_adv_shipyard"].id] = 1,
+	[UnitDefNames["gear_hydrobot_plant"].id] = 1,
 	
 -------------------- CLAW	
 	[UnitDefNames["claw_light_plant"].id] = 1,

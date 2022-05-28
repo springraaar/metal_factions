@@ -11,12 +11,6 @@ function widget:GetInfo()
 	}
 end
 
---  modified by raaar, feb 2016 :
---   . added labels and modified layout and sizes a bit
---   . use red ui framework 8.1
-
--- local barTexture = LUAUI_DIRNAME.."Images/resbar.dds"
-
 local NeededFrameworkVersion = 8.1
 local CanvasX,CanvasY = 1280,734 --resolution in which the widget was made (for 1:1 size)
 --1272,734 == 1280,768 windowed
@@ -26,7 +20,24 @@ if (vsy > 1080) then
 	maxFontSizeFactor = vsy / 1080
 end	
 
+VFS.Include("lualibs/constants.lua")
 VFS.Include("lualibs/custom_cmd.lua")
+VFS.Include("lualibs/util.lua")
+
+
+local sGetMyTeamID = Spring.GetMyTeamID
+local sGetTeamResources = Spring.GetTeamResources
+local sSetShareLevel = Spring.SetShareLevel
+local spGetTeamRulesParam = Spring.GetTeamRulesParam
+local spSendLuaRulesMsg = Spring.SendLuaRulesMsg
+local spGetWind = Spring.GetWind
+local sformat = string.format
+
+local min = math.min
+local max = math.max
+local floor = math.floor
+
+local avgWindMod = 1 
 
 local Config = {
 	metal = {
@@ -108,14 +119,52 @@ local Config = {
 			current = "Your current energy storage.",
 		},
 	},
-}
+	
+	wind = {
+		px = 636+235+3,py = 0,
+		sx = 103,sy = 16, --background size
+		
+		barsy = 6, --width of the actual bar
+		fontsize = 9,
+		maxFontsize = 18 * maxFontSizeFactor,
+		margin = 4,
+		
+		padding = 4, -- for border effect
+		color2 = {1,1,1,0.022}, -- for border effect
+		
+		
+		cbackground = {0,0,0,0.6},
+		cborder = {0,0,0,0.88},
+		clabel = {0.9,0.9,1,1},
+		
+		name = "WIND",
+		
+		tooltip = {
+			background ="\255\255\255\255Wind strength for energy generation purposes.",
+		},
+	},
+	tidal = {
+		px = 636+235+3,py = 19,
+		sx = 63,sy = 16, --background size
+		
+		fontsize = 9,
+		maxFontsize = 18 * maxFontSizeFactor,
+		margin = 4,
+		
+		padding = 4, -- for border effect
+		color2 = {1,1,1,0.022}, -- for border effect
+		
+		cbackground = {0,0,0,0.6},
+		cborder = {0,0,0,0.88},
+		clabel = {0.3,0.8,1,1},
 
-local sGetMyTeamID = Spring.GetMyTeamID
-local sGetTeamResources = Spring.GetTeamResources
-local sSetShareLevel = Spring.SetShareLevel
-local spGetTeamRulesParam = Spring.GetTeamRulesParam
-local spSendLuaRulesMsg = Spring.SendLuaRulesMsg
-local sformat = string.format
+		name = "TIDAL",
+		
+		tooltip = {
+			background ="\255\255\255\255Tidal strength for energy generation purposes.",
+		},
+	},
+}
 
 local function setHPLevel(res,level)
 	--Spring.Echo("Set high-priority threshold for "..res.." to "..level)
@@ -365,6 +414,141 @@ local function createbar(r)
 	}
 end
 
+local function createWind(r)
+	local background2 = {"rectangle",
+		px=r.px+r.padding,py=r.py+r.padding,
+		sx=r.sx-r.padding-r.padding,sy=r.sy-r.padding-r.padding,
+		color=r.color2,
+	}
+	local background = {"rectangle",
+		px=r.px,py=r.py,
+		sx=r.sx,sy=r.sy,
+		color=r.cbackground,
+		border=r.cborder,
+		movable=r.dragbutton,
+		obeyScreenEdge = true,
+		
+		padding=r.padding,
+		
+		--overrideCursor = true,
+		overrideClick = {1},
+		onUpdate=function(self)
+			background2.px = self.px + self.padding
+			background2.py = self.py + self.padding
+			background2.sx = self.sx - self.padding - self.padding
+			background2.sy = self.sy - self.padding - self.padding
+		end,
+	}
+	New(background)
+	New(background2)
+	
+	local text = {"text",
+		px=background.px+r.margin,py=background.py+r.margin,fontsize=r.fontsize,maxFontsize=20 * maxFontSizeFactor,
+		caption=r.name,
+		options="n", --disable colorcodes
+	}
+	
+	local label = New(text)
+	label.caption = r.name
+	label.color = r.clabel
+	
+	local baseValue = New(text)
+	baseValue.px = baseValue.px + 63
+	
+	baseValue.caption = "("..formatNbr(Game.windMin*WIND_INCOME_MULTIPLIER*EXCESS_WIND_REDUCTION_MULT,0).."-"..formatNbr(Game.windMax*WIND_INCOME_MULTIPLIER*EXCESS_WIND_REDUCTION_MULT,0)..")"
+	local avgWind = (Game.windMax + Game.windMin) * 0.5
+	avgWindMod = min(1,max(avgWind-5,0)/9)
+	
+	baseValue.color = {1-avgWindMod*0.3,avgWindMod,avgWindMod*0.4,1}
+	baseValue.fontsize = r.fontsize*0.93
+	
+	local currentValue = New(text)
+	currentValue.px = currentValue.px + 35
+	currentValue.caption = ""
+	
+	background.movableSlaves = {
+		label,baseValue,currentValue
+	}
+	
+	--baseValue.fontsize = r.fontsize*0.93
+	--currentValue.fontsize = r.fontsize*0.93
+	
+	--tooltip
+	background.mouseOver = function(mx,my,self) SetTooltip(r.tooltip.background) end	
+
+	return {
+		["background"] = background,
+		["background2"] = background2,
+		["label"] = label,
+		["baseValue"] = baseValue,
+		["currentValue"] = currentValue,		
+		margin = r.margin
+	}
+end
+
+local function createTidal(r)
+	local background2 = {"rectangle",
+		px=r.px+r.padding,py=r.py+r.padding,
+		sx=r.sx-r.padding-r.padding,sy=r.sy-r.padding-r.padding,
+		color=r.color2,
+	}
+	local background = {"rectangle",
+		px=r.px,py=r.py,
+		sx=r.sx,sy=r.sy,
+		color=r.cbackground,
+		border=r.cborder,
+		movable=r.dragbutton,
+		obeyScreenEdge = true,
+		
+		padding=r.padding,
+		
+		--overrideCursor = true,
+		overrideClick = {1},
+		onUpdate=function(self)
+			background2.px = self.px + self.padding
+			background2.py = self.py + self.padding
+			background2.sx = self.sx - self.padding - self.padding
+			background2.sy = self.sy - self.padding - self.padding
+		end,
+	}
+	New(background)
+	New(background2)
+	
+	local text = {"text",
+		px=background.px+r.margin,py=background.py+r.margin,fontsize=r.fontsize,maxFontsize=20 * maxFontSizeFactor,
+		caption=r.name,
+		options="n", --disable colorcodes
+	}
+	
+	local label = New(text)
+	label.caption = r.name
+	label.color = r.clabel
+	
+	local baseValue = New(text)
+	baseValue.px = baseValue.px + 35
+	baseValue.caption = formatNbr(Game.tidal,1)
+	local mod = min(1,Game.tidal/20)  
+	baseValue.color = {1-mod*0.3,mod,mod*0.4,1}
+	
+	background.movableSlaves = {
+		label,baseValue
+	}
+	
+	--baseValue.fontsize = r.fontsize*0.93
+	
+	--tooltip
+	background.mouseOver = function(mx,my,self) SetTooltip(r.tooltip.background) end
+	
+
+	return {
+		["background"] = background,
+		["background2"] = background2,
+		["label"] = label,
+		["baseValue"] = baseValue,
+		margin = r.margin
+	}
+end
+
 local function updatebar(b,res)
 	local r = {sGetTeamResources(sGetMyTeamID(),res)} -- 1 = cur 2 = cap 3 = pull 4 = income 5 = expense 6 = share
 	local hpThreshold = spGetTeamRulesParam(sGetMyTeamID(),"hp_threshold_"..res)
@@ -406,12 +590,30 @@ local function updatebar(b,res)
 	b.hpindicator.px = barbackpx+hpThreshold*barbacksx-b.hpindicator.sx/2
 end
 
+
+local function updateWind(r)
+	local _, _, _, windStrength, x, _, z = spGetWind()
+	windStrength = (min(windStrength,WIND_STR_CAP))
+	-- reduce wind strength to match the actual average it's supposed to have
+	windStrength = windStrength * WIND_INCOME_MULTIPLIER * EXCESS_WIND_REDUCTION_MULT
+	
+	local maxWind = Game.windMax * WIND_INCOME_MULTIPLIER * EXCESS_WIND_REDUCTION_MULT
+	local fraction = windStrength / maxWind
+	local mod = min(1,(fraction-0.3)/0.4)*(1+avgWindMod)*0.5
+	-- get color 
+	r.currentValue.color = {1-mod*0.3,mod,mod*0.4,1}
+	r.currentValue.caption = formatNbr(windStrength,1)
+end
+
+
 function widget:Initialize()
 	PassedStartupCheck = RedUIchecks()
 	if (not PassedStartupCheck) then return end
 	
 	metal = createbar(Config.metal)
 	energy = createbar(Config.energy)
+	wind = createWind(Config.wind)
+	tidal = createTidal(Config.tidal)
 	
 	metal.barbackground.mouseHeld = {
 		{1,function(mx,my,self)
@@ -453,6 +655,7 @@ function widget:Update()
 	if (gameFrame ~= lastFrame) then
 		updatebar(energy,"energy")
 		updatebar(metal,"metal")
+		updateWind(wind)
 		lastFrame = gameFrame
 	end
 end

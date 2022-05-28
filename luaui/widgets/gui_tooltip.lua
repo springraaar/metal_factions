@@ -553,7 +553,10 @@ function generateNewTooltip()
 				local minWindE = WIND_INCOME_MULTIPLIER * math.min(Game.windMin,WIND_STR_CAP)
 				local maxWindE = WIND_INCOME_MULTIPLIER * math.min(Game.windMax,WIND_STR_CAP)
 				local avgWindE = (minWindE + maxWindE) / 2
-
+				-- rescale to compensate for avg being higher than arithmetic avg
+				minWindE = minWindE * EXCESS_WIND_REDUCTION_MULT
+				maxWindE = maxWindE * EXCESS_WIND_REDUCTION_MULT
+				
 			   	local factor = 1
 			   	if gy then
 				   	if gy >= windGroundMax then

@@ -43,9 +43,11 @@ end
 local function SpawnStartUnit(teamID)
     local startUnit = GetStartUnit(teamID)
     local factionStr = ''
+
     if startUnit == "random" then
     	factionStr = 'random_'
-       	startUnit = commanders[ math.random(1,#commanders) ]
+    	local idx = math.random(1,#commanders)
+       	startUnit = commanders[idx]
     end
     factionStr = factionStr..string.sub(startUnit,0,string.find(startUnit,"_")-1) 
     Spring.SetTeamRulesParam(teamID, 'faction', factionStr , {public=true})
@@ -80,8 +82,6 @@ local function SpawnStartUnit(teamID)
 		--	Spring.SetUnitExperience(uId,xpArr[i%10 +1],100)
 		--end
     end
-
-
 
     -- set start resources, either from mod options or custom team keys
     local teamOptions = select(7, Spring.GetTeamInfo(teamID))

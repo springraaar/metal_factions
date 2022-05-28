@@ -32,7 +32,6 @@ local fissionReactorUnitDefIds = {
 local fissionReactorIds = {}
 
 local INCOME_DELAY_FRAMES = 15
-local EXCESS_WIND_REDUCTION_MULT = 0.85 
 
 local MASS_BURNER_M_DRAIN_STEP = 0.2 / 2 
 local FISSION_REACTOR_M_DRAIN_STEP = 0.5 / 2
