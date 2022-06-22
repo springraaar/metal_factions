@@ -1,3 +1,37 @@
+2022/06/21 ------------------ NOTES v1.87 ----------------------
+
+
+--- Balance / Mechanics
+
+- CLAW "Roller" shoots a 15% faster rocket with significantly faster fire rate and +25% dmg/s but also costs 19% more
+
+- increased CLAW "Assassin" commander's railgun damage per shot and reload time by about 4% (quick fix to show the reload bar)
+
+- fixed lua errors when units got hit underwater by environmental hazards
+
+- shrink targetting volume for submerged units to avoid distracting surface weaponry 
+
+- reduced height of collision volume for metal extractors
+
+- increased CLAW "Totem" HP from 4000 to 5000
+
+- nukes and some big explosions that can happen underwater no longer deal reduced damage to submerged units
+
+- SPHERE "Charger" damage/s shifted from the rapid fire blaster to the cannon and cost was slightly increased
+
+--- UI
+
+- fixed tooltip displaying GEAR llt text when trying to build AVEN llt
+- CLAW totems no longer show up in the idle builders list 
+- message box scroll bar allows click-drag
+
+--- AI
+
+- fixed lua error for classic mode AI when it tries to figure out which hydrobot to build, in some situations
+
+
+
+
 2022/05/28 ------------------ NOTES v1.86 ----------------------
 
 

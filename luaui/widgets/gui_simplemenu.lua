@@ -120,6 +120,7 @@ function widget:MousePress(mx, my, mButton)
 	if not Spring.IsGUIHidden() then
 		if ButtonMenu.above then		
 			Spring.SendCommands("quitmenu")
+			return true
 		end
 	end
 	

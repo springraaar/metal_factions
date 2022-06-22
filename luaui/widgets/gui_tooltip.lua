@@ -104,7 +104,6 @@ local armorTypeLabels = {
 	["H"] = "\255\200\110\100(H)\255\255\255\255"
 }
 
-local unitDefByName = {}
 local myPlayerID
 local myTeamID
 local myAllyTeamID
@@ -164,10 +163,7 @@ function widget:Initialize()
 	windGroundMin, windGroundMax = Spring.GetGroundExtremes()
 	windGroundMin, windGroundMax = math.max(windGroundMin,0), math.max(windGroundMax,1)
 	windGroundRef = 0.25*windGroundMax + 0.75*windGroundMin
-	-- get unitdefs by name
-	for _,ud in pairs(UnitDefs) do
-		unitDefByName[ud.humanName] = ud
-	end
+
 	-- get players and teams info
 	myPlayerID = Spring.GetLocalPlayerID()
 	myTeamID = Spring.GetLocalTeamID()
@@ -444,13 +440,6 @@ end
 
 -- generates new tooltip 
 function generateNewTooltip()
-	-- ---------------- testing
-	--if true then		
-	--	newTooltip = "bla bla \n bla blgdfgdfg \n bleflsdfdls\ndfg\nggdfgdfg" 
-	--	tempTooltip = newTooltip
-	--	return newTooltip	
-	--end
-	
 	local currentTooltip = spGetCurrentTooltip() 
 	local newTooltip = ""
 	local hotkeyTooltip = ""
@@ -497,18 +486,16 @@ function generateNewTooltip()
 			local def=UnitDefs[Spring.GetUnitDefID(u)]
 			buildpower = buildpower + def.buildSpeed
 		end
-	end   
-
-	local unitpre = string.match(currentTooltip,"(.-)\nBuild:") or string.match(currentTooltip,"(.-)\n\255\255\255\255Build:") or ""
-	local unitname = string.match(currentTooltip,"Build: (.+) %- ")
-	local unitdesc = string.match(currentTooltip," %- (.+)\nHealth ")
-	local unithealth = string.match(currentTooltip,"Health (.+)\nMetal")
-	local unitbuildtime = string.match(currentTooltip.."\n","Build time (.-)\n")
-	local unitmetalcost = string.match(currentTooltip,"Metal cost (.-)\nEnergy cost ")
-	local unitenergycost = string.match(currentTooltip,"\nEnergy cost (.-).Build time ")
-
-	if unitname and unitdesc and unithealth and unitbuildtime then
-		local fud = unitDefByName[unitname]
+	end  
+	--Spring.Echo("\n"..currentTooltip) 
+	
+	local buildOrderUnitDefName = nil
+	if string.sub(currentTooltip,1,9) == "buildunit" then
+		buildOrderUnitDefName = string.match(currentTooltip,"buildunit_(.+)Build:")
+	end
+	
+	if buildOrderUnitDefName then
+		local fud = UnitDefNames[buildOrderUnitDefName]
 		if fud then
 			local armorTypeStr= "L"
 			if ( Game.armorTypes[fud.armorType] == "armor_heavy" ) then armorTypeStr = "H"
@@ -516,8 +503,8 @@ function generateNewTooltip()
 			
 			-- old build time expression : floor((29+floor(31+fud.buildTime/(buildpower/32)))/30)
 			local buildTimeStr = formatNbr(fud.buildTime/buildpower,2)
-			newTooltip = newTooltip.."\n"..unitpre.."\n"..fud.humanName.." ("..fud.tooltip..")"..buildHotkey(fud.name).."\n"..
-				"\255\200\200\200Metal: "..unitmetalcost.."    \255\255\255\0Energy: "..unitenergycost..""..
+			newTooltip = newTooltip.."\n\n"..fud.humanName.." ("..fud.tooltip..")"..buildHotkey(fud.name).."\n"..
+				"\255\200\200\200Metal: "..fud.metalCost.."    \255\255\255\0Energy: "..fud.energyCost..""..
 				"\255\213\213\255".."    Build time: ".."\255\170\170\255"..
 				buildTimeStr.."s".."    "..getTooltipTransportability(fud).."\n"..
 				"\255\200\200\200Health: ".."\255\200\200\200"..fud.health..armorTypeLabels[armorTypeStr]
@@ -584,16 +571,6 @@ function generateNewTooltip()
 			end
 			
 			foundTooltipType="knownbuildbutton"
-			tempTooltip = newTooltip
-			return newTooltip	
-		else
-			local buildTimeStr = formatNbr(ud.buildTime/buildpower,2)
-		    newTooltip = newTooltip.."\n"..unitpre.."\n"..unitname.." ("..unitdesc..")\n"..
-		            "\255\255\213\213Health: ".."\255\255\170\170"..unithealth..
-		            "\n\255\213\213\255Build time: ".."\255\170\170\255"..
-		            buildTimeStr.."s"..
-		            "\255\255\255\255\n"
-		    foundTooltipType="unknownbuildbutton"
 			tempTooltip = newTooltip
 			return newTooltip	
 		end

@@ -24,7 +24,6 @@ local NAME_PREFIX_PATTERNS		= {"%<", "%["}
 local NAME_POSTFIX_PATTERNS		= {"%> ", "%] "}
 local numPlayerMessages			= 0
 
-
 local SHOW_KEY					= KEYSYMS.SPACE
 -- how many game-logic frames to wait
 -- before clearing message buffers at
@@ -79,6 +78,7 @@ local MAX_LINE_STRING_LENGTH = 75
 local VISIBILITY_HINT_SHOWN = false
 local scaleFactor = 1 
 local scrollBarCoords = {x1=0,x2=0,y1=0,y2=0}
+local SCROLLBAR_CLICK_TOLERANCE = 10 
 
 -- Compensate for gl.Text y positioning change between 0.80.0 and 0.80.1
 if not gl.TextAdjusted then
@@ -126,6 +126,8 @@ local glListRefreshIdx = -1
 local glListRefreshKey = nil
 local glList = nil
 local refTimer = spGetTimer()
+
+local mousePressed = false
 
 function widget:Initialize()
 	-- disable default console
@@ -185,7 +187,7 @@ function mouseOverPlayerMessageBox(x, y)
 end
 
 function mouseOverPlayerMessageBoxScrollBar(x, y)
-	if (x > scrollBarCoords.x1 and x < scrollBarCoords.x2) then
+	if (x > scrollBarCoords.x1 - SCROLLBAR_CLICK_TOLERANCE and x < scrollBarCoords.x2 + SCROLLBAR_CLICK_TOLERANCE) then
 		if (y < scrollBarCoords.y2 and y > scrollBarCoords.y1) then
 			return true
 		end
@@ -194,8 +196,7 @@ function mouseOverPlayerMessageBoxScrollBar(x, y)
 	return false
 end
 
-
-function widget:MousePress(mx,my,button)
+function handleScrollBar(mx,my,button)
 	if (mouseOverPlayerMessageBoxScrollBar(mx,my) and numPlayerMessages > 15) then
 		local scrollBarFraction = 1 - (my - scrollBarCoords.y1)/(scrollBarCoords.y2 - scrollBarCoords.y1)
 		
@@ -212,6 +213,20 @@ function widget:MousePress(mx,my,button)
 	end
 	
 	return false
+end
+
+function widget:MouseMove(mx,my,dx,dy,button)
+	return handleScrollBar(mx,my,button)
+end
+
+function widget:MouseRelease(mx,my,button)
+	mousePressed = false
+	return handleScrollBar(mx,my,button)
+end
+
+function widget:MousePress(mx,my,button)
+	mousePressed = true
+	return handleScrollBar(mx,my,button)
 end
 
 function widget:MouseWheel(up, value)

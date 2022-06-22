@@ -133,6 +133,7 @@ local ignoreIdleBuilderDefIds = {
 	[UnitDefNames["claw_scout_pad"].id] = true,
 	[UnitDefNames["claw_commander_respawner"].id] = true,
 	[UnitDefNames["claw_upgrade_center"].id] = true,
+	[UnitDefNames["claw_totem"].id] = true,
 -------------------- SPHERE	
 	[UnitDefNames["sphere_scout_pad"].id] = true,
 	[UnitDefNames["sphere_commander_respawner"].id] = true,

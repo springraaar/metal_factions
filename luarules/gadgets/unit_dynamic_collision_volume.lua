@@ -21,6 +21,7 @@ local spSetUnitRadiusAndHeight = Spring.SetUnitRadiusAndHeight
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spSetUnitBlocking = Spring.SetUnitBlocking
 local spGetUnitBlocking = Spring.GetUnitBlocking
+local spGetUnitDefID = Spring.GetUnitDefID
 
 local popupUnits = {}		--list of pop-up style units
 local unitCollisionVolume = include("luaRules/configs/collision_volumes.lua")	--pop-up style unit collision volume definitions
@@ -30,7 +31,10 @@ local unitBlocking = {} --   <uId,{isBlocking, isSolidObjectCollidable,isProject
 local BP_SIZE_LIMIT = 0.8
 local BP_REDUCED_FP_LIMIT = 0.2
 local BP_SIZE_MULTIPLIER = 1 / BP_SIZE_LIMIT
+local SUBMERGED_RADIUS_FACTOR = 0.6
 
+local lastSubmergedStatusByUnitId = {}
+ 
 local submarines = {
 	aven_lurker = true,
 	aven_stinger = true,
@@ -195,6 +199,9 @@ if (gadgetHandler:IsSyncedCode()) then
 		if unitBlocking[unitID] then
 			unitBlocking[unitID] = nil 
 		end
+		if lastSubmergedStatusByUnitId[unitID] then
+			lastSubmergedStatusByUnitId[unitID] = nil
+		end
 	end
 
 	
@@ -292,9 +299,41 @@ if (gadgetHandler:IsSyncedCode()) then
 							spSetUnitBlocking(uId,true,true,ispc,isrsc,cr,bep,bhc)
 						end
 					end
+					
+				 
+					-- adjust targetting radius for units as they get in and out of water
+					local ud = UnitDefs[spGetUnitDefID(uId)]
+					if (not ud.shieldPower and not ud.canFly and not ud.waterLine) then
+						local fullySubmergedDepth = spGetUnitRulesParam(uId, "fullySubmergedDepth")
+						if fullySubmergedDepth and fullySubmergedDepth > 5 then
+							if (not lastSubmergedStatusByUnitId[unitID]) then
+							
+								xs = data[1] * SUBMERGED_RADIUS_FACTOR
+								ys = data[2] * SUBMERGED_RADIUS_FACTOR
+								zs = data[3] * SUBMERGED_RADIUS_FACTOR
+								
+								-- Spring.Echo(uId.." submerged")
+								spSetUnitRadiusAndHeight(uId, (xs+zs)/2, ys)
+								lastSubmergedStatusByUnitId[uId] = true
+							end
+						else
+							if (lastSubmergedStatusByUnitId[uId]) then
+								xs = data[1]
+								ys = data[2]
+								zs = data[3]
+								
+								-- Spring.Echo(uId.." emerged")
+								spSetUnitRadiusAndHeight(uId, (xs+zs)/2, ys)
+								lastSubmergedStatusByUnitId[uId] = false
+							end
+						end
+					end
 				end
 			end
 		end
+		
+		
+
 		
 		-- remove collision volume for cs beacons
 		-- this is here because it wasn't working on unitcreated, for some reason 

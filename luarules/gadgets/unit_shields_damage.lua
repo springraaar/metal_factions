@@ -536,7 +536,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	local fullySubmergedDepth = spGetUnitRulesParam(unitID, "fullySubmergedDepth")
 	if fullySubmergedDepth and fullySubmergedDepth > SUBMERGED_SURFACE_BLAST_DMG_THRESHOLD then
 		local wd = WeaponDefs[weaponDefID]
-		if (not wd.waterWeapon) then
+		if (wd and (not wd.waterWeapon)) then
 			damage = damage * SUBMERGED_SURFACE_BLAST_DMG_FACTOR
 			--Spring.Echo("d="..damage.." (reduced)")
 		end

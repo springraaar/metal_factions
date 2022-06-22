@@ -2868,10 +2868,11 @@
 	avoidGround=0;
 	avoidFriendly=0;
 	collideFriendly=0;
+	waterWeapon=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
-		targets=SURFACE;
+		targets=SURFACE,WATER;
 	}
 	[DAMAGE]
 	{
@@ -2919,10 +2920,11 @@
 	avoidGround=0;
 	avoidFriendly=0;
 	collideFriendly=0;
+	waterWeapon=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
-		targets=SURFACE;
+		targets=SURFACE,WATER;
 	}
 	[DAMAGE]
 	{
@@ -2970,10 +2972,11 @@
 	avoidGround=0;
 	avoidFriendly=0;
 	collideFriendly=0;
+	waterWeapon=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
-		targets=SURFACE;
+		targets=SURFACE,WATER;
 	}
 	[DAMAGE]
 	{
@@ -3021,10 +3024,11 @@
 	avoidGround=0;
 	avoidFriendly=0;
 	collideFriendly=0;
+	waterWeapon=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
-		targets=SURFACE;
+		targets=SURFACE,WATER;
 	}
 	[DAMAGE]
 	{
@@ -3073,10 +3077,11 @@
 	avoidGround=0;
 	avoidFriendly=0;
 	collideFriendly=0;
+	waterWeapon=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
-		targets=SURFACE;
+		targets=SURFACE,WATER;
 	}
 	[DAMAGE]
 	{
@@ -3125,10 +3130,11 @@
 	avoidGround=0;
 	avoidFriendly=0;
 	collideFriendly=0;
+	waterWeapon=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
-		targets=SURFACE;
+		targets=SURFACE,WATER;
 	}
 	[DAMAGE]
 	{
@@ -3177,10 +3183,11 @@
 	avoidGround=0;
 	avoidFriendly=0;
 	collideFriendly=0;
+	waterWeapon=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
-		targets=SURFACE;
+		targets=SURFACE,WATER;
 	}
 	[DAMAGE]
 	{
@@ -3229,10 +3236,11 @@
 	avoidGround=0;
 	avoidFriendly=0;
 	collideFriendly=0;
+	waterWeapon=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
-		targets=SURFACE;
+		targets=SURFACE,WATER;
 	}
 	[DAMAGE]
 	{
@@ -10068,6 +10076,7 @@
 	explosionGenerator=custom:LARGEBLASTWRAPPER2;
 	interceptedByShieldType=1;
 	avoidFeature=0;
+	waterWeapon=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
@@ -10319,6 +10328,7 @@
 	explosionGenerator=custom:LARGEBLASTWRAPPER1;
 	interceptedByShieldType=1;
 	avoidFeature=0;
+	waterWeapon=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
@@ -10373,6 +10383,7 @@
 	explosionGenerator=custom:LARGEBLASTWRAPPER2;
 	interceptedByShieldType=1;
 	avoidFeature=0;
+	waterWeapon=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
@@ -10400,6 +10411,7 @@
 	explosionGenerator=custom:LARGEBLASTWRAPPER1;
 	interceptedByShieldType=1;
 	avoidFeature=0;
+	waterWeapon=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
@@ -10427,6 +10439,7 @@
 	explosionGenerator=custom:LARGEBLASTWRAPPER1;
 	interceptedByShieldType=1;
 	avoidFeature=0;
+	waterWeapon=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
@@ -10454,6 +10467,7 @@
 	explosionGenerator=custom:LARGEBLASTWRAPPER1;
 	interceptedByShieldType=1;
 	avoidFeature=0;
+	waterWeapon=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=2;
@@ -10508,6 +10522,7 @@
 	explosionGenerator=custom:LARGEBLASTWRAPPER2;
 	interceptedByShieldType=1;
 	avoidFeature=0;
+	waterWeapon=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
@@ -10535,6 +10550,7 @@
 	explosionGenerator=custom:LARGEBLASTWRAPPER2;
 	interceptedByShieldType=1;
 	avoidFeature=0;
+	waterWeapon=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
@@ -11312,6 +11328,7 @@
 	explosionGenerator=custom:DEBRISBLASTWRAPPER;
 	interceptedByShieldType=1;
 	avoidFeature=0;
+	waterWeapon=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
@@ -11340,6 +11357,7 @@
 	explosionGenerator=custom:EXPLODERBLASTWRAPPER;
 	interceptedByShieldType=1;
 	avoidFeature=0;
+	waterWeapon=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
@@ -11368,6 +11386,7 @@
 	explosionGenerator=custom:TORPEDOBLASTWRAPPER;
 	interceptedByShieldType=1;
 	avoidFeature=0;
+	waterWeapon=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
@@ -14603,7 +14622,7 @@
 	energyPerShot=400;
 	turret=1;
 	range=650;
-	reloadTime=5.3;
+	reloadTime=5.6;
 	weaponVelocity=1532;
 	startVelocity=1532;
 	accuracy=0;
@@ -14624,10 +14643,10 @@
 	}
 	[DAMAGE]
 	{
-		default=840;
-		armor_heavy=840;//#AUTO#
-		armor_medium=840;//#AUTO#
-		armor_light=840;//#AUTO#
+		default=890;
+		armor_heavy=890;//#AUTO#
+		armor_medium=890;//#AUTO#
+		armor_light=890;//#AUTO#
 	}
 }
 [claw_u3commander_torpedo]
@@ -14752,11 +14771,11 @@
 	turret=1;
 	model=weapon_rocket3.3do;
 	range=600;
-	reloadTime=6;
+	reloadTime=4;
 	flightTime=2;
-	weaponVelocity=350;
+	weaponVelocity=400;
 	startVelocity=350;
-	weaponAcceleration=0;
+	weaponAcceleration=100;
 	areaOfEffect=64;
 	metalPerShot=0;
 	soundStart=rocklit1;
@@ -14776,11 +14795,11 @@
 	}
 	[DAMAGE]
 	{
-		default=300;
+		default=250;
 		group_invincible=1;
-		armor_heavy=300;//#AUTO#
-		armor_medium=300;//#AUTO#
-		armor_light=300;//#AUTO#
+		armor_heavy=250;//#AUTO#
+		armor_medium=250;//#AUTO#
+		armor_light=250;//#AUTO#
 	}
 }
 [claw_hazard_rocket]
@@ -20546,9 +20565,9 @@
   	sizeDecay=-0.3;
 	turret=1;
 	range=500;
-	reloadTime=0.5;
+	reloadTime=0.6;
 	weaponVelocity=600;
-	accuracy=400;
+	accuracy=200;
 	areaOfEffect=24;
 	soundStart=engcannon;
 	soundHit=xplomed5;
@@ -20673,8 +20692,8 @@
   	sizeDecay=-0.2;
 	turret=1;
 	range=500;
-	reloadTime=6;
-	energyPerShot=300;
+	reloadTime=4.7;
+	energyPerShot=380;
 	weaponVelocity=500;
 	accuracy=300;
 	movingAccuracy=600;

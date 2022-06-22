@@ -2574,7 +2574,7 @@ function gearL2VehicleRadar(self) return buildWithLimitedNumber(self,"gear_infor
 function gearL2VehicleRadarJammer(self) return buildWithLimitedNumber(self,"gear_deleter",1) end
 function gearL1ShipChoice(self) return choiceByType(self,{"gear_searcher","gear_viking"},"gear_enforcer",{"gear_searcher","gear_viking"},"gear_snake") end
 function gearL2ShipChoice(self) return choiceByType(self,"gear_shredder",{"gear_executioner","gear_edge"},{"gear_executioner","gear_noser"},"gear_noser") end
-function gearL2HydrobotChoice(self) return choiceByType(self,{"gear_hopper","gear_stilts"},{"gear_caliber","gear_rexapod"},{"gear_salamander,gear_metalhead,gear_caliber,gear_stilts"},"gear_marooner") end
+function gearL2HydrobotChoice(self) return choiceByType(self,{"gear_hopper","gear_stilts"},{"gear_caliber","gear_rexapod"},{"gear_salamander","gear_metalhead","gear_caliber","gear_stilts"},"gear_marooner") end
 function gearScoper(self) return buildWithLimitedNumber(self,"gear_zoomer",1) end
 
 gearCommander = {

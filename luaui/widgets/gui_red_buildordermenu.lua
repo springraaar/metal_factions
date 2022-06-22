@@ -164,6 +164,8 @@ local function tooltipExtension(tooltip,cmdAction)
 			tooltip = tooltip .. "."..tooltipHotkey(nil,"areamex2h")
 		elseif cmdAction == "onoff" then
 			tooltip = tooltip .. "."..tooltipHotkey(nil,"onoff")
+		elseif cmdAction and string.sub(cmdAction,1,9) == "buildunit" and tooltip:find("Unit disabled") == nil then
+			tooltip = cmdAction .. tooltip
 		end
 	end
 	
@@ -769,6 +771,7 @@ local function UpdateGrid(g,cmds,orderType,unfilteredCmds)
 			if (cmd.params[1]) then
 				icon.caption = " "..cmd.params[1].." "
 				icon.textureColor = {0.5,0.5,0.5,1}
+				--Spring.Echo(cmd.id .. "|" .. icon.caption)
 			else
 				icon.textureColor = {1,1,1,1}
 				icon.caption = nil
