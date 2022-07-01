@@ -53,7 +53,6 @@ local allyTeamAliveTeamsCount = {}
 local teamToAllyTeam = {}
 local aliveAllyTeamCount = 0
 local killedAllyTeams = {}
-local showSandboxMessage = 0
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -182,7 +181,7 @@ end
 function gadget:GameFrame(frame)
 	-- only do a check in slowupdate
 	if (frame%16) == 0 then
-		if (showSandboxMessage == 1) then
+		if (GG.sandbox) then
 			Spring.Echo("---------------------------------------------\nSANDBOX MODE : victory conditions disabled.\n(To play normally restart the game with MFAI and/or human opponents)")
 			gadgetHandler:RemoveGadget()
 			return
@@ -242,7 +241,7 @@ function gadget:Initialize()
 	end
 	
 	if aliveAllyTeamCount == 1 then
-		showSandboxMessage = 1
+		GG.sandbox = true
 	end
 	
 end

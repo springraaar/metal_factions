@@ -192,7 +192,7 @@ function widget:AddConsoleLine(line)
 				end
 	
 				if #tokens == 1 then
-					spSendMessageToPlayer(myPlayerId,"usage : #GAME [<playerId>] <command> <parameters>\nAvailable commands :\nCLEARWRECKS : remove all wreckages (cheat only)\nRESETUPGRADES : reset upgrades (cheat only)")
+					spSendMessageToPlayer(myPlayerId,"usage : #GAME [<playerId>] <command> <parameters>\nAvailable commands :\nCLEARWRECKS : remove all wreckages (cheat only)\nRESETUPGRADES : reset upgrades (cheat only)\nSANDBOX : disable automatic win condition (cheat only)")
 					return
 				end
 				

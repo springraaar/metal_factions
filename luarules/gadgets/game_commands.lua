@@ -25,6 +25,7 @@ local spDestroyFeature = Spring.DestroyFeature
 local spGetFeatureDefID = Spring.GetFeatureDefID
 local CMD_CLEARWRECKS = "CLEARWRECKS"
 local CMD_RESETUPGRADES = "RESETUPGRADES"
+local CMD_SANDBOX = "SANDBOX"
 
 include("lualibs/util.lua")
 
@@ -66,6 +67,15 @@ function processExternalCommand(msg,playerId,pName,teamId,allyId, active,spectat
 				spEcho("GAME : upgrades reset!") 
 			else
 				spEcho("GAME : RESETUPGRADES command requires cheat mode.")
+			end
+		elseif (command == CMD_SANDBOX and active) then
+			-- enable sandbox mode
+			if (spIsCheatingEnabled()) then
+				GG.sandbox = true
+				spEcho("GAME : enabling sandbox mode...")
+				-- game end gadget should show the message in a few frames 
+			else
+				spEcho("GAME : SANDBOX command requires cheat mode.")
 			end
 		end
 
