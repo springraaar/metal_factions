@@ -1389,7 +1389,7 @@ end
 --  Keyboard call-ins
 --
 
-function widgetHandler:KeyPress(key, mods, isRepeat, label, unicode)
+function widgetHandler:KeyPress(key, mods, isRepeat, label, unicode, scanCode)
   if (self.tweakMode) then
     self.tweakKeys[key] = true
     local mo = self.mouseOwner
@@ -1399,12 +1399,12 @@ function widgetHandler:KeyPress(key, mods, isRepeat, label, unicode)
     return true
   end
 
-  if (self.actionHandler:KeyAction(true, key, mods, isRepeat)) then
+  if (self.actionHandler:KeyAction(true, key, mods, isRepeat, scanCode)) then
     return true
   end
 
   for _,w in ipairs(self.KeyPressList) do
-    if (w:KeyPress(key, mods, isRepeat, label, unicode)) then
+    if (w:KeyPress(key, mods, isRepeat, label, unicode, scanCode)) then
       return true
     end
   end
@@ -1412,7 +1412,7 @@ function widgetHandler:KeyPress(key, mods, isRepeat, label, unicode)
 end
 
 
-function widgetHandler:KeyRelease(key, mods, label, unicode)
+function widgetHandler:KeyRelease(key, mods, label, unicode, scanCode)
   if (self.tweakMode and self.tweakKeys[key] ~= nil) then
     local mo = self.mouseOwner
     if (mo and mo.TweakKeyRelease) then
@@ -1424,12 +1424,12 @@ function widgetHandler:KeyRelease(key, mods, label, unicode)
     return true
   end
 
-  if (self.actionHandler:KeyAction(false, key, mods, false)) then
+  if (self.actionHandler:KeyAction(false, key, mods, false, scanCode)) then
     return true
   end
 
   for _,w in ipairs(self.KeyReleaseList) do
-    if (w:KeyRelease(key, mods, label, unicode)) then
+    if (w:KeyRelease(key, mods, label, unicode, scanCode)) then
       return true
     end
   end
