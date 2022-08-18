@@ -331,55 +331,15 @@ RestoreAfterDelay()
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = body;
-	return (0);
-}
-
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode body type BITMAPONLY | BITMAP3;
-		explode dish1 type BITMAPONLY | BITMAP4;
-		explode lfoot type BITMAPONLY | BITMAP5;
-		explode rfoot type BITMAPONLY | BITMAP1;
-		explode lleg type BITMAPONLY | BITMAP2;
-		explode rleg type BITMAPONLY | BITMAP3;
-		explode l_thigh type BITMAPONLY | BITMAP4;
-		explode r_thigh type BITMAPONLY | BITMAP5;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode body type BITMAPONLY | BITMAP3;
-		explode dish1 type SHATTER | BITMAP4;
-		explode lfoot type FALL | BITMAP5;
-		explode rfoot type FALL | BITMAP1;
-		explode lleg type FALL | BITMAP2;
-		explode rleg type FALL | BITMAP3;
-		explode l_thigh type FALL | BITMAP4;
-		explode r_thigh type FALL | BITMAP5;
-		return (0);
+		explode body type SHATTER;
+		explode dish1 type SHATTER;
+		explode rfoot type SHATTER;
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode body type BITMAPONLY | BITMAP3;
-		explode dish1 type SHATTER | BITMAP4;
-		explode lfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-		explode rfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode lleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-		explode rleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-		explode l_thigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
-		explode r_thigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-		return (0);
-	}
-	corpsetype = 3;
-	explode body type BITMAPONLY | BITMAP3;
 	explode dish1 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 	explode lfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
 	explode rfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
@@ -387,5 +347,5 @@ Killed(severity, corpsetype)
 	explode rleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
 	explode l_thigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
 	explode r_thigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-	return (0);
+	return (2);
 }

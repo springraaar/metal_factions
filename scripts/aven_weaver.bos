@@ -276,59 +276,24 @@ QueryPrimary(piecenum)
 	}	
 }
 
-Killed(Func_Var_1, Func_Var_2)
+Killed(severity, corpsetype)
 {
-	if( Func_Var_1 <= 25 )
+	if( severity <= 50 )
 	{
-		Func_Var_2 = 1;
-		explode sleeve type BITMAPONLY | EXPTYPE_MEDIUMEXPLOSION;
-		explode base type BITMAPONLY | EXPTYPE_LARGEEXPLOSION;
-		explode leg1 type BITMAPONLY | EXPTYPE_SMALLEXPLOSION;
-		explode leg2 type BITMAPONLY | EXPTYPE_MEDIUMEXPLOSION;
-		explode leg3 type BITMAPONLY | EXPTYPE_LARGEEXPLOSION;
-		explode leg4 type BITMAPONLY | EXPTYPE_XLARGEEXPLOSION;
-		explode leg5 type BITMAPONLY | EXPTYPE_BLOODEXPLOSION;
-		explode leg6 type BITMAPONLY | EXPTYPE_SMALLEXPLOSION;
-		explode turret type BITMAPONLY | EXPTYPE_MEDIUMEXPLOSION;
-		return (0);
+		explode sleeve type SHATTER;
+		explode leg1 type SHATTER;
+		explode leg3 type SHATTER;
+		explode leg5 type SHATTER;
+		explode turret type SHATTER;
+		return (1);
 	}
-	if( Func_Var_1 <= 50 )
-	{
-		Func_Var_2 = 2;
-		explode sleeve type FALL | EXPTYPE_MEDIUMEXPLOSION;
-		explode base type BITMAPONLY | EXPTYPE_LARGEEXPLOSION;
-		explode leg1 type FALL | EXPTYPE_SMALLEXPLOSION;
-		explode leg2 type FALL | EXPTYPE_MEDIUMEXPLOSION;
-		explode leg3 type FALL | EXPTYPE_LARGEEXPLOSION;
-		explode leg4 type FALL | EXPTYPE_XLARGEEXPLOSION;
-		explode leg5 type FALL | EXPTYPE_BLOODEXPLOSION;
-		explode leg6 type FALL | EXPTYPE_SMALLEXPLOSION;
-		explode turret type 1 | EXPTYPE_MEDIUMEXPLOSION;
-		return (0);
-	}
-	if( Func_Var_1 <= 99 )
-	{
-		Func_Var_2 = 3;
-		explode sleeve type FALL | 8 | 16 | 2 | EXPTYPE_MEDIUMEXPLOSION;
-		explode base type BITMAPONLY | EXPTYPE_LARGEEXPLOSION;
-		explode leg1 type FALL | 8 | 16 | 2 | EXPTYPE_SMALLEXPLOSION;
-		explode leg2 type FALL | 8 | 16 | 2 | EXPTYPE_MEDIUMEXPLOSION;
-		explode leg3 type FALL | 8 | 16 | 2 | EXPTYPE_LARGEEXPLOSION;
-		explode leg4 type FALL | 8 | 16 | 2 | EXPTYPE_XLARGEEXPLOSION;
-		explode leg5 type FALL | 8 | 16 | 2 | EXPTYPE_BLOODEXPLOSION;
-		explode leg6 type FALL | 8 | 16 | 2 | EXPTYPE_SMALLEXPLOSION;
-		explode turret type 1 | EXPTYPE_MEDIUMEXPLOSION;
-		return (0);
-	}
-	Func_Var_2 = 3;
-	explode sleeve type FALL | 8 | 16 | 2 | EXPTYPE_MEDIUMEXPLOSION;
-	explode base type BITMAPONLY | EXPTYPE_LARGEEXPLOSION;
-	explode leg1 type FALL | 8 | 16 | 2 | EXPTYPE_SMALLEXPLOSION;
-	explode leg2 type FALL | 8 | 16 | 2 | EXPTYPE_MEDIUMEXPLOSION;
-	explode leg3 type FALL | 8 | 16 | 2 | EXPTYPE_LARGEEXPLOSION;
-	explode leg4 type FALL | 8 | 16 | 2 | EXPTYPE_XLARGEEXPLOSION;
-	explode leg5 type FALL | 8 | 16 | 2 | EXPTYPE_BLOODEXPLOSION;
-	explode leg6 type FALL | 8 | 16 | 2 | EXPTYPE_SMALLEXPLOSION;
-	explode turret type 1 | 2 | EXPTYPE_MEDIUMEXPLOSION;
-	return;
+	explode sleeve type SHATTER;
+	explode leg1 type SHATTER;
+	explode leg2 type SHATTER;
+	explode leg3 type SHATTER;
+	explode leg4 type SHATTER;
+	explode leg5 type SHATTER;
+	explode leg6 type SHATTER;
+	explode turret type SHATTER;
+	return (2);
 }

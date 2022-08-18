@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=450;
+	maxDamage=540;
 	footprintx=3;
 	footprintz=3;
 
@@ -75,7 +75,6 @@
 	//***********
 	explodeAs=SMALL_BUILDINGEX;
 	selfDestructAs=SMALL_BUILDINGEX;
-	selfdestructcountdown=0;
 
 	//************************************************************
 	//  Orders
@@ -89,10 +88,11 @@
 	[customParams] 
 	{
 		builtBy=aven_l1builder,aven_l2builder;
+		evalFactor=1.14;
 	}
 
-	buildCostEnergy=736;//#AUTO#
-	buildCostMetal=147;//#AUTO#
-	buildTime=1754;//#AUTO#
-	mass=160;//#AUTO#
+	buildCostEnergy=707;//#AUTO#
+	buildCostMetal=141;//#AUTO#
+	buildTime=1685;//#AUTO#
+	mass=182;//#AUTO#
 }

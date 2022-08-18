@@ -40,59 +40,18 @@ Create()
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
-
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode t1 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode t2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode t3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode t4 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode t5 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode t6 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
 		explode t1 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 		explode t2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 		explode t3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 		explode t4 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 		explode t5 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 		explode t6 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-
-		explode b1 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode b2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;		
-		explode b3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode b4 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-
-		return (0);
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode t1 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode t2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode t3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode t4 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode t5 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode t6 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-
-		explode b1 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode b2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;		
-		explode b3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode b4 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-
-		return (0);
-	}
-	corpsetype = 3;
 	explode t1 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode t2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode t3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
@@ -104,6 +63,5 @@ Killed(severity, corpsetype)
 	explode b2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;		
 	explode b3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode b4 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-
-	return (0);
+	return (2);
 }

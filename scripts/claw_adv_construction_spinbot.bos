@@ -269,26 +269,14 @@ StopBuilding()
 
 
 
-SweetSpot(piecenum)
-{
-	piecenum = turret;
-	return (0);
-}
-
-
-
-
 Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		corpsetype = 1;
-		
 		explode head type SHATTER;
 		explode base2 type SHATTER;
-		return (0);
+		return (1);
 	}
-	corpsetype = 2;
 
 	explode base2 type SHATTER;
 	explode base1 type SHATTER;
@@ -300,5 +288,5 @@ Killed(severity, corpsetype)
 	explode d2 type SHATTER;
 	explode spike type SHATTER;
 	
-	return (0);
+	return (2);
 }

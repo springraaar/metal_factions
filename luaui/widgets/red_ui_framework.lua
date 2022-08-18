@@ -731,7 +731,12 @@ function widget:Update()
 							processEffects(o,CurClock)
 						end
 						if ((o.active ~= false) or o.tempActive) then
-							F[o[2]](o) --object draw function
+							local drawFunc = o[2]
+							if (drawFunc) then
+								F[drawFunc](o) --object draw function
+							else
+								Spring.Echo("REDUI : "..tostring(o.bsx).." draw function is nil")	
+							end
 						end
 					end
 					

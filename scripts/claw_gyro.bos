@@ -431,33 +431,20 @@ QueryPrimary(piecenum)
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = turret;
-	return (0);
-}
-
-
-
-
 Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		corpsetype = 1;
-		
 		explode ringholder type SHATTER;
 		explode turret type SHATTER;
 		explode base2 type SHATTER;
-		return (0);
+		return (1);
 	}
-	corpsetype = 2;
 
 	explode base2 type SHATTER;
 	explode base1 type SHATTER;
 	explode turret type SHATTER;
 	explode ringholder type SHATTER;
 	explode tbase2 type SHATTER;
-	
-	return (0);
+	return (2);
 }

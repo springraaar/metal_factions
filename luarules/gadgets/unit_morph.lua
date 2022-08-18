@@ -262,22 +262,22 @@ end
 
 local function GetMorphToolTip(unitID, unitDefID, teamID, morphDef, teamTech, unitXP, unitRank, teamOwnsReqUnit)
   local ud = UnitDefs[morphDef.into]
-  local tt = ''
+  local tt = 'morphunit_'..ud.name
   if (morphDef.text ~= nil) then
 	tt = tt .. WhiteStr  .. morphDef.text .. '\n'
   else
-  	--tt = tt .. WhiteStr  .. 'Upgrade into a ' .. ud.humanName .. '\n'
   	tt = tt .. 'Upgrade into a ' .. ud.humanName .. '\n'
   end
-  if (morphDef.time > 0) then
-  	tt = tt .. GreenStr  .. 'time: '   .. morphDef.time     .. '\n'
-  end	
   if (morphDef.metal > 0) then
-  	tt = tt .. CyanStr   .. 'metal: '  .. morphDef.metal    .. '\n'
+  	tt = tt .. '\255\200\200\200Metal: '  .. morphDef.metal 
   end
   if (morphDef.energy > 0) then
-    tt = tt .. YellowStr .. 'energy: ' .. morphDef.energy   .. '\n'
+    tt = tt .. '\255\255\255\1    Energy: ' .. morphDef.energy
   end
+  if (morphDef.time > 0) then
+  	tt = tt .. '\255\213\213\255    Time:\255\170\170\255 '   .. morphDef.time .. 's\n'
+  end	
+
   if (morphDef.tech > teamTech) or
      (morphDef.xp > unitXP) or
      (morphDef.rank > unitRank) or

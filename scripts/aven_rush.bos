@@ -134,39 +134,17 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode hull type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode bottom type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode h2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
 		explode hull type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 		explode bottom type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 		explode h2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode left type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode right type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		return (0);
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode hull type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode bottom type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode h2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode left type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode right type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		return (0);
-	}
-	corpsetype = 3;
 	explode hull type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode bottom type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode h2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode left type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode right type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-	return (0);
+	return (2);
 }

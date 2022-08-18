@@ -41,9 +41,9 @@
 	//************
 	yardMap=ooooo ooooo ooooo ooooo ooooo;
 	activateWhenBuilt=1;
-	collisionVolumeType = box;
-	collisionVolumeScales =57 90 57;
-	collisionVolumeOffsets = 0 -2 0;
+	collisionVolumeType = cyly;
+	collisionVolumeScales =36 92 36;
+	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
 	//************************************************************
@@ -89,8 +89,8 @@
 		builtBy=gear_l1builder,gear_l2builder;
 	}
 
-	buildCostEnergy=591;//#AUTO#
-	buildCostMetal=118;//#AUTO#
-	buildTime=1410;//#AUTO#
-	mass=138;//#AUTO#
+	buildCostEnergy=561;//#AUTO#
+	buildCostMetal=112;//#AUTO#
+	buildTime=1338;//#AUTO#
+	mass=136;//#AUTO#
 }

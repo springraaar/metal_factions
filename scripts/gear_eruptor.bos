@@ -98,52 +98,17 @@ QueryPrimary(piecenum)
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
-
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode barrel type SHATTER | BITMAP4;
-		explode c2 type SHATTER | BITMAP4;
-		explode c3 type SHATTER | BITMAP4;
-		explode c4 type SHATTER | BITMAP4;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
 		explode barrel type SHATTER | BITMAP4;
 		explode c2 type SHATTER | BITMAP4;
 		explode c3 type SHATTER | BITMAP4;
 		explode c4 type SHATTER | BITMAP4;
-		explode left type SHATTER | BITMAP4;
-		explode right type SHATTER | BITMAP4;
-		explode turret type SHATTER | BITMAP4;
-		explode tl type SHATTER | BITMAP4;
-		explode tr type SHATTER | BITMAP4;
-		return (0);
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode barrel type SHATTER | BITMAP4;
-		explode c2 type SHATTER | BITMAP4;
-		explode c3 type SHATTER | BITMAP4;
-		explode c4 type SHATTER | BITMAP4;
-		explode left type SHATTER | BITMAP4;
-		explode right type SHATTER | BITMAP4;
-		explode turret type SHATTER | BITMAP4;
-		explode tl type SHATTER | BITMAP4;
-		explode tr type SHATTER | BITMAP4;
-		return (0);
-	}
-	corpsetype = 3;
+
 	explode barrel type SHATTER | BITMAP4;
 	explode c2 type SHATTER | BITMAP4;
 	explode c3 type SHATTER | BITMAP4;
@@ -153,5 +118,5 @@ Killed(severity, corpsetype)
 	explode turret type SHATTER | BITMAP4;
 	explode tl type SHATTER | BITMAP4;
 	explode tr type SHATTER | BITMAP4;
-	return (0);
+	return (2);
 }

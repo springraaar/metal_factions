@@ -53,7 +53,7 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 	local testPos = newPosition(searchPos.x,searchPos.y,searchPos.z)
 
 	local isStaticBuilder = builderBehavior.isStaticBuilder
-	searchRadius = builderBehavior.isStaticBuilder and searchRadius or 200
+	searchRadius = builderBehavior.isStaticBuilder and searchRadius or 250
 	local xMin = searchPos.x - searchRadius
 	local xMax = searchPos.x + searchRadius
 	local zMin = searchPos.z - searchRadius
@@ -81,6 +81,24 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 	end
 	local isTargetExplosive = setContains(unitTypeSets[TYPE_FUSION],ud.name)
 	local isTargetStaticBuilder = constructionTowers[ud.name] ~= nil
+	local staticBuilderTestUnitDefId = NANO_TOWER_PLANT_TEST_DEF_ID
+	-- for static builders, use a factory that it'll actually try to build on the current strategy
+	-- to validate the position
+	if isTargetStaticBuilder and self.ai.useStrategies then
+		local currentStrategy = self.ai.currentStrategy
+		local sStage = self.ai.currentStrategyStage
+		local targetBuildings = currentStrategy.stages[sStage].buildings
+		if (targetBuildings) then
+			for i,props in ipairs(targetBuildings) do
+				local uName = props.name
+				if setContains(unitTypeSets[TYPE_PLANT],uName) then
+					staticBuilderTestUnitDefId = UnitDefNames[uName].id
+					--Spring.Echo("staticBuilderTestUnitDefId="..staticBuilderTestUnitDefId.." ("..uName..")")
+					break
+				end
+			end
+		end
+	end
 	local buildTest = 0
 	local testRadius = minDistance+radius
 	local groundMetal = 0
@@ -88,6 +106,7 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 	local checkPos = newPosition(searchPos.x,searchPos.y,searchPos.z)
 	local testBuildOrder,blockingFId = 0
 	local dist = 0 -- currently checked only for static builders
+	
 	
 	local validPosFound = 0
 	local dxi,dzi = 0
@@ -151,7 +170,7 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 										for dxi = -140, 140, 140 do
 											for dzi = -140, 140, 140 do
 												if not (dxi == 0 and dzi == 0) then
-													buildTest,blockingFId = spTestBuildOrder(NANO_TOWER_PLANT_TEST_DEF_ID, testPos.x + dxi, testPos.y, testPos.z + dzi,0)
+													buildTest,blockingFId = spTestBuildOrder(staticBuilderTestUnitDefId, testPos.x + dxi, testPos.y, testPos.z + dzi,0)
 													if (blockingFId == nil and (buildTest == 1 or buildTest == 2)) then
 														validPosFound = validPosFound+1
 													end
@@ -203,7 +222,7 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 									-- check if unit violates minimum distance from nearby metal spots
 									for _,sPos in ipairs(mapCell.nearbyMetalSpots) do
 										--Spring.MarkerAddPoint(sPos.x,sPos.y,sPos.z,"SPOT") --DEBUG
-										if (checkWithinDistance(testPos,sPos,testRadius+150)) then
+										if (checkWithinDistance(testPos,sPos,testRadius+134)) then
 											valid = false
 											break
 										end
@@ -223,26 +242,24 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 	
 							if ( valid == true ) and minDistance > 0 and ownCell ~= nil then		
 								-- check if unit violates minimum distance from nearby own buildings
-								for uId,_ in pairs(ownCell.buildingIdSet) do
-									uDef = UnitDefs[spGetUnitDefID(uId)]
+								-- (buildingIdSet should include adjacent cells too)
+								for uId,uDef in pairs(ownCell.buildingIdSet) do
+									uRadius = spGetUnitDefDimensions(uDef.id).radius
+									uPos = newPosition(spGetUnitPosition(uId,false,false))
+																			
+									-- add some safety tolerance around factories to avoid blocking the exit
+									if uDef.isBuilder and setContains(unitTypeSets[TYPE_PLANT],uDef.name) then
+										uRadius = uRadius + 80
+									end
 									
-									if (uDef) then
-										uRadius = spGetUnitDefDimensions(uDef.id).radius
-										-- add some safety tolerance around factories to avoid blocking the exit
-										if uDef.isBuilder then
-											uRadius = uRadius + 64
-										end
-										
-										-- if building a fusion avoid building near other fusions
-										if (isTargetExplosive and setContains(unitTypeSets[TYPE_FUSION],uDef.name)) then
-											uRadius = uRadius + 250
-										end
-										
-										uPos = newPosition(spGetUnitPosition(uId,false,false))
-										if (checkWithinDistance(testPos,uPos,testRadius+uRadius)) then
-											valid = false
-											break
-										end
+									-- if building a fusion avoid building near other fusions
+									if (isTargetExplosive and setContains(unitTypeSets[TYPE_FUSION],uDef.name)) then
+										uRadius = uRadius + 380
+									end
+
+									if (checkWithinDistance(testPos,uPos,testRadius+uRadius)) then
+										valid = false
+										break
 									end
 								end
 							end
@@ -300,20 +317,37 @@ function BuildSiteHandler:closestBuildSpot(builderBehavior, ud, minimumDistance,
 	local pos = nil	
 	
 	-- target nearest cell (and safest, if building something expensive without weapons) with least amount of buildings
-	local targetPos = self:getBuildSearchPos(builderBehavior, ud)
+	local targetPos,targetPosList = self:getBuildSearchPos(builderBehavior, ud)
 
 	if (targetPos ~= nil) then
 		-- add some randomness
 		targetPos.x = targetPos.x - 128 + 16*random(1,16)	
 		targetPos.z = targetPos.z - 128 + 16*random(1,16)
 		
-		
 		-- try to build near the target location
 		pos = self:findClosestBuildSite(ud, targetPos, BUILD_SEARCH_RADIUS, minDistance, builderBehavior)
 	
-		-- if failed
+		-- if failed, use the list
 		if pos == nil then
-		
+			local first = true
+			for i, item in spairs(targetPosList, function(t,a,b) return t[b].dist > t[a].dist end) do
+				if first then	-- skip first which should match the one already tried
+					first = false
+				else
+					local searchPos = item.pos
+					--if ud.name == 'aven_nano_tower' or ud.name == 'aven_fusion_reactor' then
+					--	Spring.MarkerAddPoint(searchPos.x,500,searchPos.z,i..":"..ud.name) --DEBUG 
+					--end
+					-- test position
+					pos = self:findClosestBuildSite(ud, searchPos, searchRadius, minDistance, builderBehavior)	
+					if pos ~= nil then
+						break
+					end
+				end
+			end
+
+			-- OLD search method, remove?					
+			--[[
 			-- try near 12 positions in growing circumferences around the target position
 			local searchAngle = nil
 			local searchPos = nil
@@ -326,15 +360,16 @@ function BuildSiteHandler:closestBuildSpot(builderBehavior, ud, minimumDistance,
 				searchPos.z = floor((targetPos.z + searchRadius * math.sin(searchAngle)) / 16 + 0.5) * 16
 				searchPos.y = targetPos.y
 	
-				--if builderBehavior.unitName=='sphere_construction_vehicle' then
-				--	Spring.MarkerAddPoint(searchPos.x,500,searchPos.z,"r="..searchRadius) --DEBUG 
-				--end
+				if ud.name == 'aven_fusion_reactor' then
+					Spring.MarkerAddPoint(searchPos.x,500,searchPos.z,"FUSION? r="..searchRadius) --DEBUG 
+				end
 				-- test position
 				pos = self:findClosestBuildSite(ud, searchPos, searchRadius, minDistance, builderBehavior)	
 				if pos ~= nil then
 					break
 				end
 			end
+			]]--
 		end
 	end
 	
@@ -408,6 +443,7 @@ function BuildSiteHandler:closestFreeSpot(builderBehavior, ud, position, safety,
 end
 
 -- return position where builder should attempt to build unit
+-- returns best position and a list of possible cell positions
 function BuildSiteHandler:getBuildSearchPos(builderBehavior,ud)
 	local builderPos = newPosition(spGetUnitPosition(builderBehavior.unitId,false,false))
 	local builderName = builderBehavior.unitName
@@ -428,7 +464,8 @@ function BuildSiteHandler:getBuildSearchPos(builderBehavior,ud)
 	local distanceToSelf = 0
 	local distanceToBase = 0
 	local cost = getWeightedCost(ud)
-
+	
+	targetPosList = {}
 	for _,cell in ipairs(self.ai.mapHandler.mapCellList) do
 		distanceToSelf = distance(cell.p,builderPos)
 		if(distanceToSelf < 5000) then
@@ -446,7 +483,7 @@ function BuildSiteHandler:getBuildSearchPos(builderBehavior,ud)
 						if (builderBehavior.specialRole == UNIT_ROLE_DEFENSE_BUILDER or builderBehavior.specialRole == UNIT_ROLE_ADVANCED_DEFENSE_BUILDER) then
 							weightedDistance = distanceToSelf * 0.3 + distanceToVulnerable * 0.45 + distanceToBase * 0.25
 						else
-							weightedDistance = distanceToSelf * 0.8 + distanceToVulnerable * 0.2
+							weightedDistance = distanceToSelf * 0.6 + distanceToVulnerable * 0.3 + distanceToBase * 0.1
 						end
 					else
 						weightedDistance = distanceToSelf * 0.3 + distanceToSafe * 0.35 + distanceToBase * 0.45
@@ -455,6 +492,8 @@ function BuildSiteHandler:getBuildSearchPos(builderBehavior,ud)
 				else
 					weightedDistance = distanceToSelf
 				end
+
+				table.insert(targetPosList,{pos=newPosition(cell.p.x,cell.p.y,cell.p.z),dist=weightedDistance})
 				
 				if(bestCell == nil or weightedDistance < bestDistance) then
 					bestCell = cell
@@ -480,7 +519,9 @@ function BuildSiteHandler:getBuildSearchPos(builderBehavior,ud)
 	else
 		return nil
 	end
-	return targetPos
+	
+	
+	return targetPos,targetPosList
 end
 
 

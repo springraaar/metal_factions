@@ -171,29 +171,13 @@ Killed(severity, corpsetype)
 	hide lflare;
 	hide rflare;
 	
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode llauncher type SHATTER | BITMAP4;
-		explode rlauncher type SHATTER | BITMAP4;
-		explode sides type SHATTER | BITMAP4;
-		return (0);
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode llauncher type SHATTER | BITMAP4;
-		explode rlauncher type SHATTER | BITMAP4;
-		explode sides type SHATTER | BITMAP4;
-		return (0);
-	}
-	corpsetype = 3;
+
 	explode llauncher type SHATTER | BITMAP4;
 	explode rlauncher type SHATTER | BITMAP4;
 	explode sides type SHATTER | BITMAP4;
+	return (2);
 }

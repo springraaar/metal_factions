@@ -43,12 +43,10 @@ MotionSpeedControl(minSpeed, maxSpeed,currentSpeed)
 
 walk()
 {
-	if( bMoving ) //1
+	if( bMoving ) 
 	{
 		move Hip to y-axis [-0.625000] speed [15]* mASpdFactor / 100;
 		move Hip to z-axis [-1.500000] speed [25]* mASpdFactor / 100;
-		//move RLLeg to y-axis [0.000000] now;
-		//move LLLeg to y-axis [1.624985] now;
 		
 		turn Hip to x-axis <10.901099> speed <60> * mASpdFactor / 100;
 		turn LULeg to x-axis <-43.945055> speed <360> * mASpdFactor / 100;
@@ -70,11 +68,10 @@ walk()
 		wait-for-turn LLLeg around x-axis;
 		wait-for-turn RLLeg around x-axis;		
 	}
-	if( bMoving )//4
+	if( bMoving )
 	{
 		move Hip to y-axis [0.625000] speed [15]* mASpdFactor / 100;
 		move Hip to z-axis [-0.500000] speed [15]* mASpdFactor / 100;
-		//move LLLeg to y-axis [0.187485] now;
 		
 		turn LULeg to x-axis <-76.302198>  speed <360> * mASpdFactor / 100;
 		turn RULeg to x-axis <18.989011>  speed <360> * mASpdFactor / 100;
@@ -94,12 +91,10 @@ walk()
 		wait-for-turn LLLeg around x-axis;
 		wait-for-turn RLLeg around x-axis;
 	}
-	if( bMoving )//9 - middle?
+	if( TRUE )
 	{
 		move Hip to y-axis [-2.374985] speed [15]* mASpdFactor / 100;
 		move Hip to z-axis [6.000000] speed [25]* mASpdFactor / 100;
-		//move RLLeg to y-axis [3.124985] now;
-		//move LLLeg to y-axis [2.000000] now;
 		
 		turn LULeg to x-axis <-32.346154>  speed <360> * mASpdFactor / 100;
 		turn RULeg to x-axis <-1.758242>  speed <360> * mASpdFactor / 100;
@@ -119,12 +114,11 @@ walk()
 		wait-for-turn RLLeg around x-axis;
 	}
 
-	if( bMoving )//13
+	if( bMoving )
 	{
 		move Hip to y-axis [-0.625000] speed [15]* mASpdFactor / 100;
 		move Hip to z-axis [-1.500000] speed [25]* mASpdFactor / 100;
-		//move RLLeg to y-axis [1.624985] now;
-		//move LLLeg to y-axis [0.000000] now;
+
 		turn Hip to x-axis <10.901099>  speed <60> * mASpdFactor / 100;
 		turn LULeg to x-axis <4.214286>  speed <360> * mASpdFactor / 100;
 		turn RULeg to x-axis <-43.956044>  speed <360> * mASpdFactor / 100;
@@ -143,12 +137,10 @@ walk()
 		wait-for-turn RLLeg around x-axis;		
 	}
 
-	if( bMoving )//17
+	if( bMoving )
 	{
 		move Hip to y-axis [1.250000] speed [15]* mASpdFactor / 100;
 		move Hip to z-axis [0.000000] speed [15]* mASpdFactor / 100;
-		//move RLLeg to y-axis [-1.250000] now;
-		//move LLLeg to y-axis [0.000000] now;
 		
 		turn LULeg to x-axis <20.038462>  speed <360> * mASpdFactor / 100;
 		turn RULeg to x-axis <-81.923077>  speed <360> * mASpdFactor / 100;
@@ -168,12 +160,10 @@ walk()
 		wait-for-turn RLLeg around x-axis;		
 	}
 
-	if( bMoving )//21 - max2
+	if( TRUE )
 	{
 		move Hip to y-axis [-2.374985] speed [15]* mASpdFactor / 100;
 		move Hip to z-axis [6.000000] speed [25]* mASpdFactor / 100;
-		//move RLLeg to y-axis [1.999985] now;
-		//move LLLeg to y-axis [3.000000] now;
 		
 		turn LULeg to x-axis <-1.747253>  speed <360> * mASpdFactor / 100;
 		turn RULeg to x-axis <-32.346154>  speed <360> * mASpdFactor / 100;

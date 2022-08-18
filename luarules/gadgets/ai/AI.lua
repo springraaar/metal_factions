@@ -166,6 +166,8 @@ function AI:findStartPos(doRangeCheck, minStartPosDist)
 	if self:hasStartBox(xMin,xMax,zMin,zMax) and (xMax > xMin + 100) and (zMax > zMin + 100) then
 		local rangeCheck = true
 		local METAL_POTENTIAL_THRESHOLD = 1
+		local BOX_DISTANCE_TOLERANCE = 800
+		local SPOT_ADJUSTMENT_DISTANCE = 140
 		
 		local xMin, zMin, xMax, zMax = Spring.GetAllyTeamStartBox(self.allyId)
 		
@@ -186,8 +188,8 @@ function AI:findStartPos(doRangeCheck, minStartPosDist)
 		for _, cell in spairs(self.mapHandler.mapCellList, function(t,a,b) return t[b].metalPotential < t[a].metalPotential end) do
 			rangeCheck = true
 	
-			-- check that cell center is within start box for the team and has metal potential
-			if cell.metalSpotCount > 0 and cell.metalPotential >= METAL_POTENTIAL_THRESHOLD and (cell.p.x > xMin and cell.p.x < xMax) and (cell.p.z > zMin and cell.p.z < zMax) then
+			-- check that cell center is close enough to start box for the team and has metal potential
+			if cell.metalSpotCount > 0 and cell.metalPotential >= METAL_POTENTIAL_THRESHOLD and (cell.p.x > xMin-BOX_DISTANCE_TOLERANCE and cell.p.x < xMax+BOX_DISTANCE_TOLERANCE) and (cell.p.z > zMin-BOX_DISTANCE_TOLERANCE and cell.p.z < zMax+BOX_DISTANCE_TOLERANCE) then
 				-- Echo("cellX="..cell.p.x.." cellZ="..cell.p.z.." metal="..cell.metalPotential) --DEBUG
 			
 				if (numAllies > 0 and doRangeCheck) then
@@ -213,6 +215,7 @@ function AI:findStartPos(doRangeCheck, minStartPosDist)
 				
 				-- return spot
 				if rangeCheck == true then
+					-- check a position near a metal spot within the target cell
 					local mSpot = cell.metalSpots[1]
 					
 					if (mSpot == nil) then
@@ -222,6 +225,29 @@ function AI:findStartPos(doRangeCheck, minStartPosDist)
 					spot.x = min(xMax, max(xMin, mSpot.x -50 + random(100)))
 					spot.z = min(zMax, max(zMin, mSpot.z -50 + random(100)))  
 					spot.y = spGetGroundHeight(spot.x, spot.z)		
+					
+					local mSpotReachable = false
+					-- if necessary, apply correction to avoid starting on a position where the target metal spot cannot be reached
+					if self.mapHandler:checkConnection(mSpot, spot,PF_UNIT_AMPHIBIOUS) then					
+						mSpotReachable = true
+					else
+						local dxi,dzi = 0
+						for dxi = -SPOT_ADJUSTMENT_DISTANCE, SPOT_ADJUSTMENT_DISTANCE, SPOT_ADJUSTMENT_DISTANCE do
+							for dzi = -SPOT_ADJUSTMENT_DISTANCE, SPOT_ADJUSTMENT_DISTANCE, SPOT_ADJUSTMENT_DISTANCE do
+								if not (dxi == 0 and dzi == 0) then
+									local newSpot = {x=spot.x+dxi,y=spot.y,z=spot.z+dzi}
+									newSpot.x = min(xMax, max(xMin, spot.x))
+									newSpot.z = min(zMax, max(zMin, spot.z))  
+									newSpot.y = spGetGroundHeight(newSpot.x, newSpot.z)
+									
+									if self.mapHandler:checkConnection(mSpot, newSpot,PF_UNIT_AMPHIBIOUS) then
+										spot = newSpot
+										break
+									end
+								end
+							end
+						end	
+					end
 					
 					-- Spring.Echo("found start position for MFAI id="..self.id.." at ("..spot.x..";"..spot.y..";"..spot.z..")") --DEBUG
 					return spot
@@ -345,6 +371,17 @@ function AI:loadCustomStrategies(playerId,teamId,pName,strategyTextCompressed)
 		playerAvailableStrategyOwner[playerId] = {pName,teamId}
 		playerAvailableStrategyIds[playerId] = sIds
 		playerStrategyTable[playerId] = sTable
+		
+		-- backward compatibility
+		for sName,sArr in pairs(sTable) do
+			local strat = sArr[1]
+			local stages = strat.stages
+			for i,stage in pairs(stages) do
+				if stage.factories and not stage.buildings then
+					stage.buildings = stage.factories
+				end
+			end
+		end
 	
 		local stratIdListStr = "" 
 		local n=0

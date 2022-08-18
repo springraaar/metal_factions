@@ -336,57 +336,18 @@ QueryNanoPiece(piecenum)
 	}	
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
-
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
+	if( severity <= 50 )
 	{
-		corpsetype = 1;
 		explode turret type SHATTER | BITMAP2;
 		explode lmidsup type SHATTER | BITMAP2;
 		explode rfrontsup type SHATTER | BITMAP2;
 		explode nano1 type SHATTER | BITMAP2;
 		explode nano2 type SHATTER | BITMAP2;
 				
-		return (0);
+		return (1);
 	}
-	if( severity <= 50 )
-	{
-		corpsetype = 2;
-		explode turret type SHATTER | BITMAP2;
-		explode lmidsup type SHATTER | BITMAP2;
-		explode rfrontsup type SHATTER | BITMAP2;
-		explode nano1 type SHATTER | BITMAP2;
-		explode nano2 type SHATTER | BITMAP2;
-		explode walls type SHATTER | BITMAP2;
-		explode door1 type SHATTER | BITMAP2;
-		explode door2 type SHATTER | BITMAP2;
-		
-		return (0);
-	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode turret type SHATTER | BITMAP2;
-		explode lmidsup type SHATTER | BITMAP2;
-		explode rfrontsup type SHATTER | BITMAP2;
-		explode nano1 type SHATTER | BITMAP2;
-		explode nano2 type SHATTER | BITMAP2;
-		explode walls type SHATTER | BITMAP2;
-		explode door1 type SHATTER | BITMAP2;
-		explode door2 type SHATTER | BITMAP2;
-		explode hull type SHATTER | BITMAP2;
-		explode bottom type SHATTER | BITMAP2;
-		explode base2 type SHATTER | BITMAP2;
-
-		return (0);
-	}
-	corpsetype = 3;
 	explode turret type SHATTER | BITMAP2;
 	explode lmidsup type SHATTER | BITMAP2;
 	explode rfrontsup type SHATTER | BITMAP2;
@@ -398,5 +359,5 @@ Killed(severity, corpsetype)
 	explode hull type SHATTER | BITMAP2;
 	explode bottom type SHATTER | BITMAP2;
 	explode base2 type SHATTER | BITMAP2;
-	return (0);
+	return (2);
 }

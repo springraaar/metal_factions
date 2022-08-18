@@ -13,11 +13,11 @@ end
 
 local spSetUnitMetalExtraction = Spring.SetUnitMetalExtraction
 
-local extractorRadius = Game.extractorRadius
 local ADVANCED_EXTRACTOR_RADIUS_FACTOR = 1.3 
-local MIN_EXTRACTOR_RADIUS = 32
-local ADVANCED_EXTRACTOR_RADIUS = extractorRadius >= MIN_EXTRACTOR_RADIUS and (extractorRadius*ADVANCED_EXTRACTOR_RADIUS_FACTOR) or (MIN_EXTRACTOR_RADIUS*ADVANCED_EXTRACTOR_RADIUS_FACTOR) 
-GG.ADVANCED_EXTRACTOR_RADIUS = ADVANCED_EXTRACTOR_RADIUS
+local MIN_EXTRACTOR_RADIUS = 100
+local EXTRACTOR_RADIUS = Game.extractorRadius >= MIN_EXTRACTOR_RADIUS and (Game.extractorRadius) or (MIN_EXTRACTOR_RADIUS) 
+local ADVANCED_EXTRACTOR_RADIUS = EXTRACTOR_RADIUS*ADVANCED_EXTRACTOR_RADIUS_FACTOR 
+GG.ADVANCED_EXTRACTOR_RADIUS = ADVANCED_EXTRACTOR_RADIUS		-- not used, remove?
 
 local basicMexDefIds = {
 	[UnitDefNames['aven_metal_extractor'].id] = true,
@@ -49,6 +49,10 @@ function gadget:UnitFinished(unitID, unitDefID, unitTeam, builderID)
   		local ud = UnitDefs[unitDefID]
     	-- apply modified extraction radius for moho mines and exploiters
    		spSetUnitMetalExtraction(unitID, ud.extractsMetal, ADVANCED_EXTRACTOR_RADIUS)
+	elseif (basicMexDefIds[unitDefID]) then
+  		local ud = UnitDefs[unitDefID]
+		-- set extraction for basic extractors as well to work around the reclaim/rebuild bug
+   		spSetUnitMetalExtraction(unitID, ud.extractsMetal, EXTRACTOR_RADIUS)
 	end 
 end
 

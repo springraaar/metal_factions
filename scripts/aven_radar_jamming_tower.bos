@@ -113,15 +113,9 @@ Deactivate()
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
-
 Killed(severity, corpsetype)
 {
-	if( severity <= 250 )
+	if( severity <= 50 )
 	{
 		if (isFloating) 
 		{

@@ -5,7 +5,7 @@
 	//********************
 	side=Sphere;
 	name=Energy Storage;
-	description=Increases Energy Storage by 15000;
+	description=Increases Energy Storage by 10000;
 	iconType=energy;
 
 	//************************************************************
@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=1500;
+	maxDamage=2000;
 	footprintx=4;
 	footprintz=4;
 
@@ -34,7 +34,7 @@
 	//*************
 	metalStorage=0;
 	energyUse=0;
-	energyStorage=15000;
+	energyStorage=10000;
 
 	//************************************************************
 	//  Building
@@ -91,8 +91,8 @@
 	{
 		explosionGenerator0=custom:Glow;
 	}
-	buildCostEnergy=3198;//#AUTO#
-	buildCostMetal=639;//#AUTO#
-	buildTime=7622;//#AUTO#
-	mass=1176;//#AUTO#
+	buildCostEnergy=2622;//#AUTO#
+	buildCostMetal=524;//#AUTO#
+	buildTime=6250;//#AUTO#
+	mass=1348;//#AUTO#
 }

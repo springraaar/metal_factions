@@ -322,14 +322,10 @@ Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		corpsetype = 1;
-		
 		explode head type SHATTER;
 		explode base2 type SHATTER;
-		return (0);
+		return (1);
 	}
-	corpsetype = 2;
-
 	explode base2 type SHATTER;
 	explode base1 type SHATTER;
 	explode turret type SHATTER;
@@ -341,5 +337,5 @@ Killed(severity, corpsetype)
 	explode lg2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
 	explode rg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
 	
-	return (0);
+	return (2);
 }

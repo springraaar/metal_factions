@@ -100,45 +100,17 @@ QueryPrimary(piecenum)
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
-
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode base type BITMAPONLY | BITMAP1;
-		explode torp1 type BITMAPONLY | BITMAP2;
-		explode torp2 type BITMAPONLY | BITMAP3;
-		explode wake type BITMAPONLY | BITMAP4;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode base type BITMAPONLY | BITMAP1;
-		explode torp1 type BITMAPONLY | BITMAP2;
-		explode torp2 type BITMAPONLY | BITMAP3;
-		explode wake type BITMAPONLY | BITMAP4;
-		return (0);
+		explode torp1 type SHATTER;
+		explode torp2 type SHATTER;
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode base type BITMAPONLY | BITMAP1;
-		explode torp1 type BITMAPONLY | BITMAP2;
-		explode torp2 type BITMAPONLY | BITMAP3;
-		explode wake type BITMAPONLY | BITMAP4;
-		return (0);
-	}
-	corpsetype = 3;
-	explode base type BITMAPONLY | BITMAP1;
-	explode torp1 type BITMAPONLY | BITMAP2;
-	explode torp2 type BITMAPONLY | BITMAP3;
-	explode wake type BITMAPONLY | BITMAP4;
-	return (0);
+	explode torp1 type SHATTER;
+	explode torp2 type SHATTER;
+	explode front type SHATTER;
+	explode back type SHATTER;
+	return (2);
 }

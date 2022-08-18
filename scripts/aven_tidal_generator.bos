@@ -1,0 +1,85 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, wheel;
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+activationControl(buildPercentLeft,inWater)
+{
+	while(TRUE)
+	{
+		buildPercentLeft = get(BUILD_PERCENT_LEFT);
+		inWater = get(IN_WATER);
+		
+		if ( buildPercentLeft == 0 && inWater > 0)
+		{
+			set ACTIVATION to TRUE;
+			spin wheel around y-axis speed <35.005495>;
+		}
+		else
+		{
+			set ACTIVATION to FALSE;	//TODO should disable energy production, but doesn't
+			stop-spin wheel around y-axis decelerate <10.000000>;
+		}
+	
+		sleep 300;
+	}
+}
+
+Create()
+{
+	start-script SmokeUnit();
+	start-script activationControl();
+}
+
+Activate()
+{
+	return(0);
+}
+
+Deactivate()
+{
+	return(0);
+}
+
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		explode wheel type SHATTER;
+		return (1);
+	}
+	explode base type SHATTER;
+	explode wheel type SHATTER;
+	return (2);
+	
+}

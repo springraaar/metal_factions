@@ -118,12 +118,18 @@ local aircraftWithThrusters = {}
 local abs = math.abs
 local min = math.min
 local max = math.max
+local floor = math.floor
 local spGetSpectatingState = Spring.GetSpectatingState
 local spGetUnitDefID       = Spring.GetUnitDefID
 local spGetUnitRulesParam  = Spring.GetUnitRulesParam
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitVelocity = Spring.GetUnitVelocity
 local spGetUnitDirection = Spring.GetUnitDirection
+local spGetGameSpeed = Spring.GetGameSpeed
+
+local copyTable = Spring.Utilities.CopyTable
+
+
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -197,7 +203,7 @@ local function UnitFinished(_,unitID,unitDefID)
       end
 
       if (fx.class=="AirJet") then
-        aircraftWithThrusters[unitID] = effects
+        aircraftWithThrusters[unitID] = {fThrust=0,vThrust=0,v=0,effects=effects}
       end
       if (fx.class=="GroundFlash") then
         fx.options.pos = { Spring.GetUnitPosition(unitID) }
@@ -253,7 +259,7 @@ local function UnitEnteredLos(_,unitID)
       local fx = effects[i]
 
       if (fx.class=="AirJet") then
-        aircraftWithThrusters[unitID] = effects
+        aircraftWithThrusters[unitID] = {fThrust=0,vThrust=0,v=0,effects=effects}
       end
       if (fx.class=="GroundFlash") then
         fx.options.pos = { Spring.GetUnitPosition(unitID) }
@@ -281,72 +287,107 @@ end
 
 local color1 = {0,0,0}
 local color2 = {1,0.5,0}
+local lastSkipCheckFrame = 0
+local lastSkipCount = 0
+local lastTotalProcessed = 0
+local FTHRUST_UPDATE_RESOLUTION = 4
+local VTHRUST_UPDATE_RESOLUTION = 3
+local V_UPDATE_RESOLUTION = 3
+
 
 local function GameFrame(_,n)
+	local userSpeedFactor, speedFactor, paused = spGetGameSpeed()
+	--Spring.Echo("speedFactor="..speedFactor.." userSpeedFactor="..userSpeedFactor)
   	-- update flight thruster effect according to unit movement
-	if ((n%3)== 0 and (next(aircraftWithThrusters))) then
-	    for unitID,effects in pairs(aircraftWithThrusters) do
-			local unitDefID = Spring.GetUnitDefID(unitID)
+	if ((n%(3*userSpeedFactor))== 0 and (next(aircraftWithThrusters))) then
+		--[[
+		if (n - lastSkipCheckFrame > 300) then
+			local pct = 0
+			if lastTotalProcessed > 0 then
+				pct = lastSkipCount*100 / lastTotalProcessed
+			end
+			Spring.Echo(n.." : thruster update skips (last 10s) : "..pct.." %")
+			lastTotalProcessed = 0
+			lastSkipCount = 0
+			lastSkipCheckFrame = n
+		end
+		]]--
+		local ud, unitDefID, vx, vy, vz, v, dx, dy, dz, maxV, xzAlignFactor, fThrust, vThrust, loadFactor, effects, oldVThrust, oldFThrust, oldV
+	    for unitID,props in pairs(aircraftWithThrusters) do
+			local unitDefID = spGetUnitDefID(unitID)
 			if unitDefID then
-				local ud = UnitDefs[unitDefID]
-				if (effects) then
-					local vx, vy, vz, v = spGetUnitVelocity(unitID)
-					local dx, dy, dz = spGetUnitDirection(unitID)
+				ud = UnitDefs[unitDefID]
+				if (props) then
+					oldVThrust = props.vThrust
+					oldFThrust = props.fThrust
+					oldV = props.v
+					effects = props.effects
+					vx, vy, vz, v = spGetUnitVelocity(unitID)
+					dx, dy, dz = spGetUnitDirection(unitID)
 				
-					local maxV = ud.speed
-					if (vx == nil or maxV == 0) then
-						return
-					end
-					
-					local xzAlignFactor = (vx * dx + vz * dz) / v 
-					if xzAlignFactor < 0 then
-						xzAlignFactor = 0
-					end
-					
-					-- TODO should match acceleration, not velocity
-					local fThrust = (v / maxV) * xzAlignFactor * 30 
-					local vThrust = 1 + vy / 10
-					if fThrust < 0.2 then
-						fThrust = 0.2
-					end
-					if vThrust < 0.3 then
-						vThrust = 0.3
-					end
-					
-					--  increase thruster intensity for loaded transports
-					if (ud.isTransport) then
-						local loadFactor = spGetUnitRulesParam(unitID, "transport_load_factor")
-						if loadFactor then
-							loadFactor = tonumber(loadFactor)
-							if (loadFactor and loadFactor > 0) then
-								fThrust = fThrust * (1 + loadFactor)
-								vThrust = vThrust * (1 + loadFactor)
-							end 
-							if (fThrust > 1) then
-								fThrust = 1
-							end
-							if (vThrust > 1) then
-								vThrust = 1
+					maxV = ud.speed
+					if (vx ~= nil and maxV ~= 0) then
+						
+						xzAlignFactor = (vx * dx + vz * dz) / v 
+						if xzAlignFactor < 0 then
+							xzAlignFactor = 0
+						end
+						
+						-- TODO should match acceleration, not velocity
+						fThrust = (v / maxV) * xzAlignFactor * 30 
+						vThrust = 1 + vy *0.1
+						if fThrust < 0.2 then
+							fThrust = 0.2
+						end
+						if vThrust < 0.3 then
+							vThrust = 0.3
+						end
+						
+						--  increase thruster intensity for loaded transports
+						if (ud.isTransport) then
+							loadFactor = spGetUnitRulesParam(unitID, "transport_load_factor")
+							if loadFactor then
+								loadFactor = tonumber(loadFactor)
+								if (loadFactor and loadFactor > 0) then
+									fThrust = fThrust * (1 + loadFactor)
+									vThrust = vThrust * (1 + loadFactor)
+								end 
+								if (fThrust > 1) then
+									fThrust = 1
+								end
+								if (vThrust > 1) then
+									vThrust = 1
+								end
 							end
 						end
-					end
-					
-					ClearFxs(unitID)
-					for i=1, #effects do
-						local fx = effects[i]
-						if fx.class == "AirJet" then
-							local newFx = Spring.Utilities.CopyTable(fx,true)
-							newFx.options.unit = unitID
-							if (fx.options.down == true) then
-								newFx.options.length = fx.options.length * vThrust
-							else
-								newFx.options.length = fx.options.length * fThrust
+						--lastTotalProcessed = lastTotalProcessed + 1						
+						-- only update/replace the lups fx if they changed significantly
+						if (floor(fThrust*FTHRUST_UPDATE_RESOLUTION) ~= oldFThrust) or (floor(vThrust*VTHRUST_UPDATE_RESOLUTION) ~= oldVThrust) or (floor(v*V_UPDATE_RESOLUTION) ~= oldV) then
+							ClearFxs(unitID)
+							for i=1, #effects do
+								local fx = effects[i]
+								if fx.class == "AirJet" then
+									local newFx = copyTable(fx,true)
+									local newOptions = newFx.options 
+									newOptions.unit = unitID
+									if (newOptions.down == true) then
+										newOptions.length = fx.options.length * vThrust
+									else
+										newOptions.length = fx.options.length * fThrust
+									end
+									AddFxs( unitID, LupsAddFX(newFx.class,newOptions) )
+								end
 							end
-							AddFxs( unitID, LupsAddFX(newFx.class,newFx.options) )
+							
+							props.vThrust = floor(vThrust*VTHRUST_UPDATE_RESOLUTION)
+							props.fThrust = floor(fThrust*FTHRUST_UPDATE_RESOLUTION)
+							props.v = floor(v*V_UPDATE_RESOLUTION)
+						--else
+							--lastSkipCount = lastSkipCount + 1
+							--Spring.Echo(n.." : skipped thruster update for unit "..unitID)
 						end
 					end
 				end
-				
 			end
 		end
 	end

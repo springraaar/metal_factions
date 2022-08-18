@@ -285,27 +285,15 @@ FireWeapon1()
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode cover type SHATTER | BITMAP2;
-		explode legsup1 type SHATTER | BITMAP2;
-		explode legsup2 type SHATTER | BITMAP2;
-		explode legsup3 type SHATTER | BITMAP2;
-		explode legsup4 type SHATTER | BITMAP2;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
 		explode cover type SHATTER | BITMAP2;
 		explode legsup1 type SHATTER | BITMAP2;
 		explode legsup2 type SHATTER | BITMAP2;
 		explode legsup3 type SHATTER | BITMAP2;
 		explode legsup4 type SHATTER | BITMAP2;
-		return (0);
+		return (1);
 	}
-	corpsetype = 3;
 	explode body type SHATTER | BITMAP2;
 	explode turret type SHATTER | BITMAP2;
 	explode b2 type SHATTER | BITMAP2;	
@@ -318,5 +306,5 @@ Killed(severity, corpsetype)
 	explode rbackleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
 	explode rfrontleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
 	explode lfrontleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-	return (0);
+	return (2);
 }

@@ -102,6 +102,7 @@ local gameFrame = 0
 
 local empDecline = 32/30/40
 
+local min = math.min
 local cx, cy, cz = 0,0,0  --// camera pos
 
 local paraUnits   = {}
@@ -884,7 +885,7 @@ do
 
       local alpha = (spGetGameFrame() % 3) / 3
       for i=1,#regenUnits do
-      	--Spring.Echo("f="..spGetGameFrame().." regen="..tostring(alpha * regenUnits[i][2] / 30))
+      	--Spring.Echo("f="..spGetGameFrame().." regen="..tostring(alpha * regenUnits[i][2] / 60))
       	glColor(0,1,0,alpha * regenUnits[i][2] / 60)
         glUnit(regenUnits[i][1],true)
       end

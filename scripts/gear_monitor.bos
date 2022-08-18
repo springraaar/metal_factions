@@ -165,29 +165,19 @@ QueryPrimary(piecenum)
 }
 
 
-SweetSpot(piecenum)
-{
-	piecenum = hull;
-	return (0);
-}
-
 Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		corpsetype = 1;
-		
 		explode sleeve type SHATTER;
 		explode barrel type SHATTER;
-		return (0);
+		return (1);
 	}
-	corpsetype = 3;
-
 	explode hull type SHATTER;
 	explode bottom type SHATTER;
 	explode turret type SHATTER;
 	explode h2 type SHATTER;
 	explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
 	explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-	return (0);
+	return (2);
 }

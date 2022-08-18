@@ -41,7 +41,7 @@ function CommonUnitBehavior:commonInit(ai, uId)
 	self.isCommander = setContains(unitTypeSets[TYPE_COMMANDER],self.unitName)
 	self.isUpgradedCommander = setContains(unitTypeSets[TYPE_UPGRADED_COMMANDER],self.unitName)
 
-	self.isArmed = #self.unitDef.weapons > 0
+	self.isArmed = #self.unitDef.weapons > 0 and (not fakeWeaponUnits[self.unitName])
 	self.unitCost = getWeightedCostByName(self.unitName) 
 	self.isFullHealth = true
 	self.isSeriouslyDamaged = false
@@ -64,10 +64,11 @@ function CommonUnitBehavior:commonInit(ai, uId)
 	else
 		self.minRange = 500
 	end
-	
-	self.isAssault = (self.unitDef.health / self.unitCost > ASSAULT_HEALTH_COST_RATIO)
+	self.maxHp = self.unitDef.health
+	self.armorType = self.unitDef.armorType
+	self.isAssault = (self.maxHp * hpEvaluationFactorByArmorType[self.armorType] / self.unitCost > ASSAULT_HEALTH_COST_RATIO)
 	--self.noEvadeUnit = (not self.isCommander) and self.isAssault
-	-- evade! always evade!
+	-- evade! always evade?
 	self.noEvadeUnit = false
 	
 	self.noEngageUnit = false --might be useful
@@ -85,8 +86,11 @@ function CommonUnitBehavior:avoidEnemyAndRetreat()
 		-- only check for armed units
 		if checkWithinDistance(cell.p,self.pos,radius) and (cell.attackerCost > 0 or cell.airAttackerCost > 0 or cell.defenderCost > 0) then
 			enemiesNearby = true
+			break
 		end
 	end
+	local enemyCells = self.ai.unitHandler.enemyCells
+	local dangerCells = self.ai.unitHandler.dangerCells
 	
 	-- if enemies nearby, avoid them, else retreat
 	if enemiesNearby then
@@ -95,14 +99,15 @@ function CommonUnitBehavior:avoidEnemyAndRetreat()
 		local threatCost = 0
 		local lowestThreatPos = nil
 		local lowestThreatCost = math.huge
-		local xIndex,zIndex = getCellXZIndexesForPosition(self.pos)
 		local cellCountX = self.ai.mapHandler.cellCountX
 		local cellCountZ = self.ai.mapHandler.cellCountZ 
 		local mapCell = nil
 		local sqDist = 0
+		local xIndex,zIndex = getCellXZIndexesForPosition(selfPos)
 		-- find most threatening nearby enemy cell
 		local xi,zi = 0
 		local enemyCell = nil
+		local dangerCell = nil
 		-- check nearby cells
 		for dxi = -2, 2 do
 			for dzi = -2, 2 do
@@ -113,11 +118,9 @@ function CommonUnitBehavior:avoidEnemyAndRetreat()
 					-- consider only cells you can move to
 					if self.ai.mapHandler:checkConnection(selfPos, mapCell.p,self.pFType) then
 						threatCost = 0
-						
-						--TODO test danger cells?
-						--dangerCell = getCellFromTableIfExists(dangerCells,xIndex,zIndex)
-						if self.ai.unitHandler.enemyCells[xi] then
-							enemyCell = self.ai.unitHandler.enemyCells[xi][zi]
+
+						if enemyCells[xi] then
+							enemyCell = enemyCells[xi][zi]
 							
 							if enemyCell ~= nil then
 								threatCost = enemyCell.combinedThreatCost
@@ -125,6 +128,11 @@ function CommonUnitBehavior:avoidEnemyAndRetreat()
 									threatCost = 0
 								end
 							end												
+						end
+						-- increase threat cost for danger cells
+						dangerCell = getCellFromTableIfExists(dangerCells,xi,zi)
+						if dangerCell ~= nil then
+							threatCost = threatCost*1.2 + 1000
 						end
 						
 						-- increase threat cost the further away from base the cell is

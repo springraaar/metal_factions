@@ -5,8 +5,6 @@
 
 piece  base, b2, b3, b4, l1, l2;
 
-static-var  Static_Var_1;
-
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
@@ -50,25 +48,15 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode base type SHATTER | EXPLODE_ON_HIT | BITMAP3;
-		explode b2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
-		explode b4 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
 		explode base type SHATTER | EXPLODE_ON_HIT | BITMAP3;
 		explode b2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
 		explode b4 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
-		return (0);
+		return (1);
 	}
-	corpsetype = 3;
 	explode base type SHATTER | EXPLODE_ON_HIT | BITMAP3;
 	explode b2 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
 	explode b4 type SHATTER | EXPLODE_ON_HIT | BITMAP3;
-	return (0);
+	return (2);
 }

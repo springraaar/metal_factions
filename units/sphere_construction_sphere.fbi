@@ -18,7 +18,7 @@
 	soundCategory=SPHERE_SPHEREBIG;
 
 	// ------------------- health/cost/size
-	maxDamage=6000;
+	maxDamage=4000;
 	FootprintX=4;
 	FootprintZ=4;
 	autoheal=30;
@@ -49,9 +49,9 @@
 
 	// ------------------- movement
 	canFly=1;
-	maxVelocity=0.8;
-	brakeRate=0.03;
-	Acceleration=0.03;
+	maxVelocity=1.2;
+	brakeRate=0.04;
+	Acceleration=0.04;
 	turnRate=632;
 	cruiseAlt=100;
 	hoverAttack=1;
@@ -89,16 +89,16 @@
 	{
 		buildertype=sphere_l2builder;
 		builtBy=sphere_sphere_factory;
-		energyCostMoving=110;
-		tip=Requires 110E/s to move. Regenerates 30 HP/s;
+		energyCostMoving=60;
+		tip=Requires 60E/s to move. Regenerates 30 HP/s;
 	}
 
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:buildglow;
 	}
-	buildCostEnergy=7755;//#AUTO#
-	buildCostMetal=1551;//#AUTO#
-	buildTime=18484;//#AUTO#
-	mass=3227;//#AUTO#
+	buildCostEnergy=7654;//#AUTO#
+	buildCostMetal=1530;//#AUTO#
+	buildTime=18243;//#AUTO#
+	mass=2416;//#AUTO#
 }

@@ -157,50 +157,17 @@ AimFromPrimary(piecenum)
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
-
 Killed(severity, corpsetype)
 {
 	hide flare1;
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode barrel1 type FALL | BITMAP1;
-		explode base type BITMAPONLY | BITMAP3;
-		explode flare1 type FALL | BITMAP4;
-		explode sleeve type SHATTER | BITMAP1;
-		explode turret type FALL | BITMAP2;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode dish type SHATTER | BITMAP1;
-		explode dish2 type SHATTER | BITMAP1;
-		explode dish3 type SHATTER | BITMAP1;
 		explode sleeve type SHATTER | BITMAP1;
-		explode body type SHATTER | BITMAP1;
-		explode left type SHATTER | BITMAP1;
-		explode right type SHATTER | BITMAP1;
-		return (0);
-	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
+		explode turret type SHATTER | BITMAP2;
 		explode dish type SHATTER | BITMAP1;
-		explode dish2 type SHATTER | BITMAP1;
-		explode dish3 type SHATTER | BITMAP1;
-		explode sleeve type SHATTER | BITMAP1;
-		explode body type SHATTER | BITMAP1;
-		explode left type SHATTER | BITMAP1;
-		explode right type SHATTER | BITMAP1;
-		return (0);
+		return (1);
 	}
-	corpsetype = 3;
+
 	explode dish type SHATTER | BITMAP1;
 	explode dish2 type SHATTER | BITMAP1;
 	explode dish3 type SHATTER | BITMAP1;
@@ -208,5 +175,5 @@ Killed(severity, corpsetype)
 	explode body type SHATTER | BITMAP1;
 	explode left type SHATTER | BITMAP1;
 	explode right type SHATTER | BITMAP1;
-	return (0);
+	return (2);
 }

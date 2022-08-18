@@ -1167,7 +1167,7 @@
 	turret=1;
 	range=330;
 	minIntensity=1.0;
-	reloadTime=1;
+	reloadTime=0.9;
 	weaponVelocity=1533;
 	areaOfEffect=8;
 	soundTrigger=1;
@@ -1192,10 +1192,10 @@
 	}
 	[DAMAGE]
 	{
-		default=45;
-		armor_heavy=11;//#AUTO#
-		armor_medium=22;//#AUTO#
-		armor_light=45;//#AUTO#
+		default=50;
+		armor_heavy=12;//#AUTO#
+		armor_medium=25;//#AUTO#
+		armor_light=50;//#AUTO#
 	}
 }
 [aven_trooper_laser]
@@ -5357,7 +5357,7 @@
 	thickness=2.123;
 	coreThickness=0.55;
 	intensity=0.85; 
-	energyPerShot=20;
+	energyPerShot=18;
 	areaOfEffect=8;
 	soundTrigger=1;
 	soundStart=lasrfir1;
@@ -5380,11 +5380,11 @@
 	}
 	[DAMAGE]
 	{
-		default=60;
+		default=70;
 		group_invincible=1;
-		armor_heavy=15;//#AUTO#
-		armor_medium=30;//#AUTO#
-		armor_light=60;//#AUTO#
+		armor_heavy=17;//#AUTO#
+		armor_medium=35;//#AUTO#
+		armor_light=70;//#AUTO#
 	}
 }
 [aven_valiant_laser]
@@ -6070,7 +6070,7 @@
 	intensity=0.8;
 	range=290;
 	minIntensity=1.0;
-	reloadTime=1.0;
+	reloadTime=0.9;
 	weaponVelocity=1533;
 	areaOfEffect=8;
 	soundTrigger=1;
@@ -6095,11 +6095,11 @@
 	}
 	[DAMAGE]
 	{
-		default=40;
+		default=50;
 		group_invincible=1;
-		armor_heavy=10;//#AUTO#
-		armor_medium=20;//#AUTO#
-		armor_light=40;//#AUTO#
+		armor_heavy=12;//#AUTO#
+		armor_medium=25;//#AUTO#
+		armor_light=50;//#AUTO#
 	}
 }
 [gear_commander_nanoblast]
@@ -9131,11 +9131,11 @@
 	}
 	[DAMAGE]
 	{
-		default=50;
+		default=55;
 		group_invincible=1;
-		armor_heavy=12;//#AUTO#
-		armor_medium=25;//#AUTO#
-		armor_light=50;//#AUTO#
+		armor_heavy=13;//#AUTO#
+		armor_medium=27;//#AUTO#
+		armor_light=55;//#AUTO#
 	}
 }
 [gear_flareon_laser]
@@ -9421,11 +9421,11 @@
 	}
 	[DAMAGE]
 	{
-		default=42;
+		default=50;
 		group_invincible=1;
-		armor_heavy=10;//#AUTO#
-		armor_medium=21;//#AUTO#
-		armor_light=42;//#AUTO#
+		armor_heavy=12;//#AUTO#
+		armor_medium=25;//#AUTO#
+		armor_light=50;//#AUTO#
 	}
 }
 [gear_bandit_bomb]
@@ -9442,7 +9442,7 @@
 	turret=1;
 	model=weapon_smallbomb.3do;
 	range=270;
-	reloadTime=3;
+	reloadTime=2.7;
 	flightTime=2;
 	weaponVelocity=250;
 	startVelocity=250;
@@ -10230,10 +10230,10 @@
 	}
 	[DAMAGE]
 	{
-		default=12;
+		default=14;
 		armor_heavy=3;//#AUTO#
-		armor_medium=6;//#AUTO#
-		armor_light=12;//#AUTO#
+		armor_medium=7;//#AUTO#
+		armor_light=14;//#AUTO#
 	}
 }
 [aven_tl_torpedo]
@@ -11617,11 +11617,11 @@
 	}
 	[DAMAGE]
 	{
-		default=41;
+		default=48;
 		group_invincible=1;
-		armor_heavy=10;//#AUTO#
-		armor_medium=20;//#AUTO#
-		armor_light=41;//#AUTO#
+		armor_heavy=12;//#AUTO#
+		armor_medium=24;//#AUTO#
+		armor_light=48;//#AUTO#
 	}
 }
 [gear_box_laser]
@@ -12657,10 +12657,10 @@
 	}
 	[DAMAGE]
 	{
-		default=10;
-		armor_heavy=2;//#AUTO#
-		armor_medium=5;//#AUTO#
-		armor_light=10;//#AUTO#
+		default=14;
+		armor_heavy=3;//#AUTO#
+		armor_medium=7;//#AUTO#
+		armor_light=14;//#AUTO#
 	}
 }
 [aven_twister_laser]
@@ -13271,10 +13271,10 @@
 	}
 	[DAMAGE]
 	{
-		default=12;
+		default=14;
 		armor_heavy=3;//#AUTO#
-		armor_medium=6;//#AUTO#
-		armor_light=12;//#AUTO#
+		armor_medium=7;//#AUTO#
+		armor_light=14;//#AUTO#
 	}
 }
 [aven_trooper_emg]
@@ -13311,10 +13311,10 @@
 	}
 	[DAMAGE]
 	{
-		default=12;
+		default=14;
 		armor_heavy=3;//#AUTO#
-		armor_medium=6;//#AUTO#
-		armor_light=12;//#AUTO#
+		armor_medium=7;//#AUTO#
+		armor_light=14;//#AUTO#
 	}
 }
 [aven_trooper_hemg]
@@ -13392,10 +13392,10 @@
 	}
 	[DAMAGE]
 	{
-		default=13;
+		default=14;
 		armor_heavy=3;//#AUTO#
-		armor_medium=6;//#AUTO#
-		armor_light=13;//#AUTO#
+		armor_medium=7;//#AUTO#
+		armor_light=14;//#AUTO#
 	}
 }
 [aven_warrior_missile_old]
@@ -14815,7 +14815,7 @@
 	flightTime=2;
 	burst=2;
 	burstRate=0.1;
-	turnRate=12000;
+	turnRate=42000;
 	fixedLauncher=1;
 	weaponVelocity=350;
 	startVelocity=350;
@@ -15663,6 +15663,7 @@
 	range=400;
 	minIntensity=1.0;
 	reloadTime=4;
+	energyPerShot=60;
 	beamBurst=1;
 	burst=4;
 	burstRate=0.1;
@@ -16676,10 +16677,10 @@
 	}
 	[DAMAGE]
 	{
-		default=9;
+		default=11;
 		armor_heavy=2;//#AUTO#
-		armor_medium=4;//#AUTO#
-		armor_light=9;//#AUTO#
+		armor_medium=5;//#AUTO#
+		armor_light=11;//#AUTO#
 	}
 }
 [claw_u6commander_laser]
@@ -16808,10 +16809,10 @@
 	}
 	[DAMAGE]
 	{
-		default=50;
-		armor_heavy=12;//#AUTO#
-		armor_medium=25;//#AUTO#
-		armor_light=50;//#AUTO#
+		default=55;
+		armor_heavy=13;//#AUTO#
+		armor_medium=27;//#AUTO#
+		armor_light=55;//#AUTO#
 	}
 }
 [claw_dizzy_laser]
@@ -19341,8 +19342,8 @@
   	sizeDecay=-0.2;
 	turret=1;
 	range=420;
-	reloadTime=1.6;
-	energyPerShot=10;
+	reloadTime=1.5;
+	energyPerShot=15;
 	weaponVelocity=390;
 	accuracy=200;
 	areaOfEffect=24;
@@ -19361,10 +19362,10 @@
 	}
 	[DAMAGE]
 	{
-		default=70;
-		armor_heavy=35;//#AUTO#
-		armor_medium=70;//#AUTO#
-		armor_light=70;//#AUTO#
+		default=80;
+		armor_heavy=40;//#AUTO#
+		armor_medium=80;//#AUTO#
+		armor_light=80;//#AUTO#
 	}
 }
 [sphere_double_blaster]
@@ -19993,7 +19994,7 @@
 	turret=1;
 	range=320;
 	minIntensity=1.0;
-	reloadTime=1.2;
+	reloadTime=0.9;
 	weaponVelocity=1533;
 	areaOfEffect=8;
 	soundTrigger=1;
@@ -20036,7 +20037,7 @@
 	turret=1;
 	range=340;
 	minIntensity=1.0;
-	reloadTime=1.2;
+	reloadTime=0.9;
 	weaponVelocity=1533;
 	areaOfEffect=8;
 	soundTrigger=1;
@@ -21271,6 +21272,7 @@
 	{
 		hitPower=2;
 		expDmgScaling=1;
+		evalFactor=0.90; // drains own shield
 		targets=SURFACE;
 	}
 	[DAMAGE]
@@ -21771,94 +21773,6 @@
 	range=430;
 	minIntensity=1.0;
 	reloadTime=0.5;
-	energyPerShot=9;
-	weaponVelocity=1533;
-	areaOfEffect=8;
-	soundTrigger=1;
-	soundStart=lasrfir1;
-	soundHit=lasrhit2;
-	fireStarter=50;
-	scrollSpeed=0;
-	pulseSpeed=0;
-	rgbColor=0.6 0.4 0.1;
-	rgbColor2=1 0.8 0.4;
-	tolerance=3000;
-	impulseFactor=0.222;
-	interceptedByShieldType=1;
-	avoidFeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitPower=1;
-		reaimTime=1;
-		aaRangeBoost=1;
-		expDmgScaling=1;
-		targets=SURFACE,AIR;
-	}
-	[DAMAGE]
-	{
-		default=45;
-		armor_heavy=11;//#AUTO#
-		armor_medium=22;//#AUTO#
-		armor_light=45;//#AUTO#
-	}
-}
-[sphere_cluster_module_laser]
-{
-	name=Rapid Fire Laser;
-	weaponType=BeamLaser;
-	explosionGenerator=custom:REDLASERBLASTWRAPPER;
-	intensity=0.85;
-	beamTime=0.05;
-	thickness=2.123;
-	coreThickness=0.55;
-	turret=1;
-	range=420;
-	minIntensity=1.0;
-	reloadTime=0.6;
-	energyPerShot=9;
-	weaponVelocity=1533;
-	areaOfEffect=8;
-	soundTrigger=1;
-	soundStart=lasrfir1;
-	soundHit=lasrhit2;
-	fireStarter=50;
-	scrollSpeed=0;
-	pulseSpeed=0;
-	rgbColor=0.6 0.4 0.1;
-	rgbColor2=1 0.8 0.4;
-	tolerance=3000;
-	impulseFactor=0.222;
-	interceptedByShieldType=1;
-	avoidFeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitPower=1;
-		reaimTime=1;
-		aaRangeBoost=1;
-		expDmgScaling=1;
-		targets=SURFACE,AIR;
-	}
-	[DAMAGE]
-	{
-		default=45;
-		armor_heavy=11;//#AUTO#
-		armor_medium=22;//#AUTO#
-		armor_light=45;//#AUTO#
-	}
-}
-[sphere_hermit_laser]
-{
-	name=Rapid Fire Laser;
-	weaponType=BeamLaser;
-	explosionGenerator=custom:REDLASERBLASTWRAPPER;
-	intensity=0.85;
-	beamTime=0.05;
-	thickness=2.123;
-	coreThickness=0.55;
-	turret=1;
-	range=440;
-	minIntensity=1.0;
-	reloadTime=0.5;
 	energyPerShot=10;
 	weaponVelocity=1533;
 	areaOfEffect=8;
@@ -21888,6 +21802,94 @@
 		armor_heavy=12;//#AUTO#
 		armor_medium=25;//#AUTO#
 		armor_light=50;//#AUTO#
+	}
+}
+[sphere_cluster_module_laser]
+{
+	name=Laser;
+	weaponType=BeamLaser;
+	explosionGenerator=custom:REDLASERBLASTWRAPPER;
+	beamTime=0.1;
+	thickness=2.555;
+	coreThickness=0.5;
+	intensity=0.9;
+	turret=1;
+	range=420;
+	minIntensity=1.0;
+	reloadTime=1.8;
+	weaponVelocity=1533;
+	areaOfEffect=8;
+	energyPerShot=40;
+	soundStart=smlaser;
+	soundHit=lasrhit2;
+	fireStarter=20;
+	scrollSpeed=0;
+	pulseSpeed=0;
+	rgbColor=0.51 0.0 0.0;
+	rgbColor2=1.0 0.4 0.4;
+	tolerance=3000;
+	impulseFactor=0.222;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		reaimTime=1;
+		aaRangeBoost=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=120;
+		group_invincible=1;
+		armor_heavy=60;//#AUTO#
+		armor_medium=120;//#AUTO#
+		armor_light=120;//#AUTO#
+	}
+}
+[sphere_hermit_laser]
+{
+	name=Rapid Fire Laser;
+	weaponType=BeamLaser;
+	explosionGenerator=custom:REDLASERBLASTWRAPPER;
+	intensity=0.85;
+	beamTime=0.05;
+	thickness=2.123;
+	coreThickness=0.55;
+	turret=1;
+	range=440;
+	minIntensity=1.0;
+	reloadTime=0.4;
+	energyPerShot=10;
+	weaponVelocity=1533;
+	areaOfEffect=8;
+	soundTrigger=1;
+	soundStart=lasrfir1;
+	soundHit=lasrhit2;
+	fireStarter=50;
+	scrollSpeed=0;
+	pulseSpeed=0;
+	rgbColor=0.6 0.4 0.1;
+	rgbColor2=1 0.8 0.4;
+	tolerance=3000;
+	impulseFactor=0.222;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		reaimTime=1;
+		aaRangeBoost=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=55;
+		armor_heavy=13;//#AUTO#
+		armor_medium=27;//#AUTO#
+		armor_light=55;//#AUTO#
 	}
 }
 [sphere_charger_shield]
@@ -22125,7 +22127,7 @@
 	range=530;
 	minIntensity=1.0;
 	reloadTime=0.334;
-	energyPerShot=10;
+	energyPerShot=16;
 	weaponVelocity=1533;
 	areaOfEffect=8;
 	soundTrigger=1;
@@ -22149,10 +22151,10 @@
 	}
 	[DAMAGE]
 	{
-		default=50;
-		armor_heavy=12;//#AUTO#
-		armor_medium=25;//#AUTO#
-		armor_light=50;//#AUTO#
+		default=60;
+		armor_heavy=15;//#AUTO#
+		armor_medium=30;//#AUTO#
+		armor_light=60;//#AUTO#
 	}
 }
 [sphere_crab_laser]

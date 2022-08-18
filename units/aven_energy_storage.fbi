@@ -5,7 +5,7 @@
 	//********************
 	side=Aven;
 	name=Energy Storage;
-	description=Increases Energy Storage by 15000;
+	description=Increases Energy Storage by 10000;
 	iconType=energy;
 
 	//************************************************************
@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=1000;
+	maxDamage=1450;
 	footprintx=4;
 	footprintz=4;
 	collisionVolumeType=CylY;
@@ -36,7 +36,7 @@
 	//*************
 	metalStorage=0;
 	energyUse=0;
-	energyStorage=15000;
+	energyStorage=10000;
 
 	//************************************************************
 	//  Building
@@ -88,8 +88,8 @@
 	{
 	explosionGenerator0=custom:Glow;
 	}
-	buildCostEnergy=2877;//#AUTO#
-	buildCostMetal=575;//#AUTO#
-	buildTime=6857;//#AUTO#
-	mass=882;//#AUTO#
+	buildCostEnergy=2348;//#AUTO#
+	buildCostMetal=469;//#AUTO#
+	buildTime=5596;//#AUTO#
+	mass=1036;//#AUTO#
 }

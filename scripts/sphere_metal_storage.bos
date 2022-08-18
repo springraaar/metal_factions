@@ -5,10 +5,6 @@
 
 piece  base,b2,ss; 
 
-static-var  restore_delay, unitviewer;
-
-
-
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
 	while( get BUILD_PERCENT_LEFT )
@@ -38,48 +34,19 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 Create()
 {
-	unitviewer = FALSE;
 	start-script SmokeUnit();
 }
 
 
-
-Demo()
-{
-	unitviewer = TRUE;
-}
-
-SweetSpot(piecenum)
-{
-	piecenum = ss;
-}
-
-
-
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode base type BITMAPONLY | BITMAP1;
-		explode ss type BITMAPONLY | BITMAP1;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode base type SHATTER | BITMAP4;
-		explode ss type SHATTER | BITMAP4;
-		return (0);
+		explode base type BITMAPONLY | BITMAP1;
+		explode ss type BITMAPONLY | BITMAP1;
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode base type SHATTER | BITMAP4;
-		explode ss type SHATTER | BITMAP4;
-		return (0);
-	}
-	corpsetype = 3;
 	explode base type SHATTER | BITMAP4;
 	explode ss type SHATTER | BITMAP4;
+	return (2);
 }

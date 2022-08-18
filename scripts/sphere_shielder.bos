@@ -70,22 +70,8 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode c1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode c2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode c3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode c4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode b3 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode b2 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode c5 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode c6 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
 		explode c1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
 		explode c2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
 		explode c3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
@@ -94,22 +80,8 @@ Killed(severity, corpsetype)
 		explode b2 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 		explode c5 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 		explode c6 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		return (0);
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode c1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode c2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode c3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode c4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode b3 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode b2 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode c5 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode c6 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		return (0);
-	}
-	corpsetype = 3;
 	explode c1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
 	explode c2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
 	explode c3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
@@ -118,5 +90,5 @@ Killed(severity, corpsetype)
 	explode b2 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 	explode c5 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 	explode c6 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-
+	return (2);
 }

@@ -441,47 +441,19 @@ QueryWeapon4(piecenum)
 }
 
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-}
-
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode sleeve type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode sleeve2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
 		explode sleeve type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 		explode sleeve2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode hull type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode bottom type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode h3 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode h4 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		return (0);
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode sleeve type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode sleeve2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode hull type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode bottom type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode h3 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode h4 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		return (0);
-	}
-	corpsetype = 3;
 	explode sleeve type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 	explode sleeve2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 	explode hull type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 	explode bottom type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 	explode h3 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 	explode h4 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	return(2);
 }

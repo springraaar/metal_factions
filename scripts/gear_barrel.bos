@@ -409,28 +409,19 @@ QuerySecondary(piecenum)
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = launcher;
-	return (0);
-}
-
 Killed(severity, corpsetype)
 {
-	if( severity <= 70 )
+	if( severity <= 50 )
 	{
-		corpsetype = 1;
-		
 		explode launcher type SHATTER;
 		explode fb4 type SHATTER;
-		return (0);
+		return (1);
 	}
-	corpsetype = 3;
 
 	explode hull type SHATTER;
 	explode fb2 type SHATTER;
 	explode fb3 type SHATTER;
 	explode fb4 type SHATTER;
 	explode launcher type SHATTER;
-	return (0);
+	return (2);
 }

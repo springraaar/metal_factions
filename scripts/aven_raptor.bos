@@ -416,31 +416,14 @@ FireSecondary()
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-	
-		explode t2 type SHATTER | BITMAP2;
-		explode s1 type SHATTER | BITMAP2;
-		explode s2 type SHATTER | BITMAP2;
-		explode pack type SHATTER | BITMAP2;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode torso type SHATTER | BITMAP2;
 		explode t2 type SHATTER | BITMAP2;
 		explode s1 type SHATTER | BITMAP2;
 		explode s2 type SHATTER | BITMAP2;
 		explode pack type SHATTER | BITMAP2;
-		explode lthigh type SHATTER | BITMAP2;
-		explode lleg type SHATTER | BITMAP2;
-		explode rthigh type SHATTER | BITMAP2;
-		explode rleg type SHATTER | BITMAP2;
-		return (0);
+		return (1);
 	}
-	corpsetype = 3;
 	explode torso type SHATTER | BITMAP2;
 	explode t2 type SHATTER | BITMAP2;
 	explode s1 type SHATTER | BITMAP2;
@@ -451,5 +434,5 @@ Killed(severity, corpsetype)
 	explode rthigh type SHATTER | BITMAP2;
 	explode rleg type SHATTER | BITMAP2;
 	
-	return (0);
+	return (2);
 }

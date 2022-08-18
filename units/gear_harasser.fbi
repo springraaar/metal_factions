@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=720;
+	maxDamage=620;
 	footprintx=2;
 	footprintz=2;
 
@@ -61,9 +61,9 @@
 	//************
 	movementClass=TANKSH3;
 	turnRate=650;
-	acceleration=0.18;
+	acceleration=0.38;
 	brakeRate=0.07;
-	maxVelocity=3.5;
+	maxVelocity=3.4;
 	maxSlope=18;
 	maxWaterDepth=12;
 	turnInPlace=1;
@@ -103,8 +103,8 @@
 		builtBy=gear_light_plant,gear_adv_vehicle_plant;
 		evalfactor=1;
 	}
-	buildCostEnergy=763;//#AUTO#
-	buildCostMetal=152;//#AUTO#
-	buildTime=1818;//#AUTO#
-	mass=115;//#AUTO#
+	buildCostEnergy=814;//#AUTO#
+	buildCostMetal=162;//#AUTO#
+	buildTime=1941;//#AUTO#
+	mass=104;//#AUTO#
 }

@@ -136,26 +136,18 @@ Deactivate()
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = Base;
-	return (0);
-}
-
 Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		corpsetype = 1;
 		explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 		explode jammer type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 		explode fork type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 		explode ear1 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 		explode ear2 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		return;
+		return (1);
 	}
 
-	corpsetype = 2;
 	explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 	explode jammer type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 	explode fork type SHATTER | EXPLODE_ON_HIT | BITMAP4;
@@ -167,5 +159,5 @@ Killed(severity, corpsetype)
 	explode b5 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 	explode jets type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 		
-	return (0);
+	return (2);
 }

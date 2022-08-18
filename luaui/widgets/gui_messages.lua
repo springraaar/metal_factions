@@ -290,7 +290,7 @@ function setDefaultUserVars(sizeX, sizeY, useParams)
 			PLAYER_MSG_BOX_W = PLAYER_MSG_BOX_X_MAX - PLAYER_MSG_BOX_X_MIN
 			PLAYER_MSG_BOX_H = (SIZE_Y / 8)
 
-			PLAYER_MSG_BOX_Y_MAX = SIZE_Y - 56 * scaleFactor
+			PLAYER_MSG_BOX_Y_MAX = SIZE_Y - 10 - (60) * scaleFactor
 			PLAYER_MSG_BOX_Y_MIN = PLAYER_MSG_BOX_Y_MAX - PLAYER_MSG_BOX_H
 		else
 			-- turn serialized relative coordinates into absolute ones again

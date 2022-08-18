@@ -34,7 +34,8 @@ local vsx, vsy = gl.GetViewSizes()
 local maxFontSizeFactor = 1
 if (vsy > 1080) then
 	maxFontSizeFactor = vsy / 1080
-end	
+end
+
 local sGetSelectedUnitsCount = Spring.GetSelectedUnitsCount
 local sGetActiveCommand = Spring.GetActiveCommand
 local sGetActiveCmdDescs = Spring.GetActiveCmdDescs
@@ -197,7 +198,7 @@ local Config = {
 		showFilter = true
 	},
 	orderMenu = {
-		px = 0,py = CanvasY -435,
+		px = 0,py = CanvasY - 435,
 		
 		isx = ICON_NORMAL_HEIGHT,isy = ICON_FLAT2_HEIGHT,
 		ix = 6,iy = 2,
@@ -221,7 +222,7 @@ local Config = {
 		showFilter = false
 	},
 	iconOrderMenu = {
-		px = 0,py = CanvasY -538,
+		px = 0,py = CanvasY - 538,
 		
 		isx = ICON_SML_HEIGHT,isy = ICON_SML_HEIGHT,
 		ix = 7,iy = 2,
@@ -288,7 +289,7 @@ local function adjustGridYOffsets()
 	local oldIconOrderMenuY = iconOrderMenu.background.py
 
 	local gap = 5 * scale
-	local topOffset = 210 * scale
+	local topOffset = 220 * scale
 	iconOrderMenu.background.py = topOffset 
 	orderMenu.background.py = topOffset + iconOrderMenuH + gap	
 	buildMenu.background.py = topOffset + orderMenuH + iconOrderMenuH + gap*2

@@ -30,6 +30,9 @@ function initUnitGroup(id)
 	obj.totalCost = 0 
 	obj.recruits = {}
 	obj.nearCenterAntiUWCost = 0
+	obj.avgHpCostRatio = 1
+	obj.avgRange = 1
+	obj.avgSpeed = 1
 	obj.isAmphibious = false
 	obj.closestCell = nil
 	obj.closestCellVulnerable = nil
@@ -73,7 +76,11 @@ function initUnitCell()
 		internalThreatCost = 0, 
 		combinedThreatCost = 0, 
 		internalThreatCostExcludingBadAA = 0,  -- only enemy cells
-		combinedThreatCostExcludingBadAA = 0 -- only enemy cells
+		combinedThreatCostExcludingBadAA = 0, -- only enemy cells
+		combinedAvgHpCostRatio = 0,  -- only enemy cells
+		combinedAvgRange = 0,  -- only enemy cells
+		combinedAvgSpeed = 0,  -- only enemy cells
+		combinedAvgRefCost = 0  -- only enemy cells
 	}
 	
 	return newCell
@@ -119,15 +126,17 @@ function UnitHandler:Init(ai)
 	self.attackerCount = 0 
 	self.airAttackerCount = 0
 	self.seaAttackerCount = 0
-
-	self.humanTask = nil
-	self.humanTaskFrame = -HUMAN_TASK_DELAY_FRAMES - 1 
+	self.focusOnEndGameArmy = false 	-- end game, stop making structures, focus on army
+	
+	self.humanTask = nil		--remove?
+	self.humanTaskFrame = -HUMAN_TASK_DELAY_FRAMES - 1	--remove? 	
 	self.baseUnderAttack = false
 	self.baseUnderAttackFrame = -BASE_UNDER_ATTACK_FRAMES - 1
 	self.lastMainForceAttackFrame = 0
 	self.ownCellList = {}
 	self.ownCells = {}
 	self.ownBuildingCells = {}
+	self.ownBuildingUDefById = {}
 	
 	self.friendlyCellList = {}
 	self.friendlyCells = {}
@@ -158,7 +167,7 @@ function UnitHandler:Init(ai)
 	self.perceivedTeamAdvantageFactor = 1
 
 	-- when on all-in mode, avoid retreating units
-	self.allIn = false
+	self.allIn = false --TODO remove this? changed to work on a per-group basis
 	
 	-- raider path distance maps for various path types 
 	self.raiderPFDistances = {}
@@ -192,7 +201,7 @@ function UnitHandler:Init(ai)
 	self.badAAUnitDefIds = {}
 	local hasDecentAAWeapon = false
 	for _,ud in pairs(UnitDefs) do
-		if ud.weapons and ud.weapons[1] and ud.weapons[1].weaponDef then
+		if ud.weapons and (not fakeWeaponUnits[ud.name]) and ud.weapons[1] and ud.weapons[1].weaponDef then
 			hasDecentAAWeapon = false
 			for wNum,w in pairs(ud.weapons) do
 				local wd=WeaponDefs[w.weaponDef]
@@ -460,8 +469,10 @@ function UnitHandler:getCellAttackValue(group, cell)
 		totalAssistCost = totalAssistCost - group.nearCenterCost * groupCostFactor 
 	end 
 	
-	
-	local threatEvaluationFactor = self.baseUnderAttack and DEFENSE_ENEMY_THREAT_EVALUATION_FACTOR or ATTACK_ENEMY_THREAT_EVALUATION_FACTOR
+	local threatEvaluationFactor = ATTACK_ENEMY_THREAT_EVALUATION_FACTOR
+	if (self.baseUnderAttack and cellDistance < BASE_DESPERATION_DEFENSE_THRESHOLD_DISTANCE ) then
+		threatEvaluationFactor = threatEvaluationFactor * DEFENSE_ENEMY_THREAT_EVALUATION_FACTOR 
+	end
 	if (self.isEasyMode) then
 		threatEvaluationFactor = threatEvaluationFactor * ATTACK_ENEMY_THREAT_EVALUATION_EASY_FACTOR
 	end
@@ -482,7 +493,7 @@ function UnitHandler:getCellAttackValue(group, cell)
 			threatEvaluationFactor = threatEvaluationFactor * mult
 		end
 	end
-
+	threatEvaluationFactor = threatEvaluationFactor / max(self.perceivedTeamAdvantageFactor,1.0)
 	threatEvaluationFactor = threatEvaluationFactor * (group.task == TASK_ATTACK and ATTACK_PERSISTENCE_THREAT_EVALUATION_FACTOR or 1) 
 
 	-- scale threat according to combat efficiency history
@@ -493,13 +504,13 @@ function UnitHandler:getCellAttackValue(group, cell)
 		cellValue = cellValue * DEVALUATION_DISTANCE/(DEVALUATION_DISTANCE + cellDistance*groupDistanceFactor)
 	end
 	 
-	--if (self.ai.id == 0 and group.id == UNIT_GROUP_AIR_ATTACKERS) then 
+	--if (self.ai.id == 1 and group.id == UNIT_GROUP_ATTACKERS) then 
 	--	Spring.MarkerAddPoint(cell.p.x,cell.p.y,cell.p.z,cellValue) --DEBUG
 	--	Spring.MarkerAddPoint(group.centerPos.x,group.centerPos.y,group.centerPos.z,"GROUP "..tostring(checkAssist)) --DEBUG
 	--	Spring.MarkerAddPoint(self.basePos.x,self.basePos.y,self.basePos.z,"BASE") --DEBUG
 	--end
 	 
-	return cellValue * max(self.perceivedTeamAdvantageFactor,1.0), nearerThreatCostAlongDirection
+	return cellValue, nearerThreatCostAlongDirection
 end
 
 
@@ -619,6 +630,8 @@ function UnitHandler:doTargetting(group)
 	if (group.totalCost > 2.0 * group.nearCenterCost) then
 		tooSpreadOut = true
 	end
+	-- go all-in if engaging longer range units
+	local allIn = false
 	
 	if (task == TASK_ATTACK or task == TASK_DEFEND) then
 	
@@ -647,13 +660,21 @@ function UnitHandler:doTargetting(group)
 
 		-- if we have a cell then lets go attack it!
 		if bestCell ~= nil then
+			if group.avgRange < 1.1*bestCell.combinedAvgRange then
+				--if (group.id == UNIT_GROUP_ATTACKERS) then
+				--	log("attackers avgRange="..group.avgRange.." enemyAvgRange="..bestCell.combinedAvgRange.." : engage all-in",self.ai)
+				--end
+				allIn = true
+			end
+		
+		
 			local evade = false
 			for i,recruit in ipairs(group.recruits) do
 				-- if target is armed and unit is far from center of atk force, move to center
 				-- else, attack the cell
 				if (not targetDefended) or (not recruit:attackRegroupCenterIfNeeded(group.centerPos, radius)) then
 					if (not recruit.isSeriouslyDamaged ) then
-						evade = (not self.allIn) and (not self.isEasyMode) and #group.recruits < 200 and not recruit.canFly
+						evade = (not allIn) and (not self.isEasyMode) and #group.recruits < 200 and not recruit.canFly
 						if not (evade and recruit:evadeIfNeeded()) then
 							recruit:attackCell(group.centerPos, bestCell)
 						end
@@ -756,7 +777,7 @@ end
 function UnitHandler:removeRecruit(attkbehavior, gId)
 	for i,v in ipairs(self.unitGroups[gId].recruits) do
 		if v.unitId == attkbehavior.unitId then
-			-- log(attkbehavior.unitId.."being removed from recruits",self.ai)
+			--log(attkbehavior.unitId.." being removed from recruits",self.ai)
 			table.remove(self.unitGroups[gId].recruits,i)
 			return true
 		end
@@ -966,12 +987,18 @@ function UnitHandler:UnitDamaged(unitId, unitDefId, unitTeamId, damage, paralyze
 	-- own units are getting damage, mark cell with current frame
 	if unitTeamId == self.ai.id and attackerTeamId ~= self.ai.id then
 		local f = spGetGameFrame()
-		xIndex,zIndex = getCellXZIndexesForPosition(newPosition(spGetUnitPosition(unitId)))
+		local pos = newPosition(spGetUnitPosition(unitId))
+		xIndex,zIndex = getCellXZIndexesForPosition(pos)
 		if not self.dangerCells[xIndex] then
 			self.dangerCells[xIndex] = {}
 		end
 		self.dangerCells[xIndex][zIndex] = f
 		--log("DANGER cell at xi="..xIndex.." zi="..zIndex.." f="..f,self.ai) --DEBUG
+	
+		-- enemies are attacking our base, probably
+		if (sqDistance(pos.x,self.basePos.x,pos.z,self.basePos.z) < BASE_DESPERATION_DEFENSE_THRESHOLD_SQDISTANCE) then
+			self.baseUnderAttackFrame = f
+		end
 	end		
 end
 
@@ -985,8 +1012,10 @@ function UnitHandler:UnitCreated(uId,unitDefId,builderId)
 		-- register building id on all adjacent cells
 		local cells = getAdjacentCellList(self.ownBuildingCells,pos)
 		for _,cell in ipairs(cells) do
-			addToSet(cell.buildingIdSet,uId)
-		end		
+			cell.buildingIdSet[uId] = ud
+		end
+		
+		self.ownBuildingUDefById[uId] = ud
 	end
 	
 end
@@ -1009,7 +1038,11 @@ function UnitHandler:UnitDestroyed(uId,teamId,unitDefId)
 			local cells = getAdjacentCellList(self.ownBuildingCells,pos)
 			for _,cell in ipairs(cells) do
 				removeFromSet(cell.buildingIdSet,uId)
-			end		
+			end
+			
+			if self.ownBuildingUDefById[uId] then
+				self.ownBuildingUDefById[uId] = nil
+			end
 		end 
 	
 		if (setContains(unitTypeSets[TYPE_ATTACKER],un)) then
@@ -1212,13 +1245,13 @@ function UnitHandler:GameFrame(f)
 			self.mexUpgraderCountTarget = 0
 			self.advancedDefenseBuilderCountTarget = 0
 		end		
-		if self.isBrutalMode then
-			self.basePatrollerCountTarget = max(self.basePatrollerCountTarget-1,1)
-			self.mexUpgraderCountTarget = max(self.mexUpgraderCountTarget-1,1)
-			self.defenseBuilderCountTarget = max(self.defenseBuilderCountTarget-1,1)
-			self.advancedDefenseBuilderCountTarget = max(self.advancedDefenseBuilderCountTarget-1,1)
-			self.attackPatrollerCountTarget = max(self.attackPatrollerCountTarget-1,1)
-		end 
+		--if self.isBrutalMode then
+		--	self.basePatrollerCountTarget = max(self.basePatrollerCountTarget-1,1)
+		--	self.mexUpgraderCountTarget = max(self.mexUpgraderCountTarget-1,1)
+		--	self.defenseBuilderCountTarget = max(self.defenseBuilderCountTarget-1,1)
+		--	self.advancedDefenseBuilderCountTarget = max(self.advancedDefenseBuilderCountTarget-1,1)
+		--	self.attackPatrollerCountTarget = max(self.attackPatrollerCountTarget-1,1)
+		--end 
 
 		-- use strategy based targets
 		if (self.ai.useStrategies) then
@@ -1271,7 +1304,7 @@ function UnitHandler:GameFrame(f)
 			local pos = newPosition(spGetUnitPosition(uId,false,false))
 			ud = UnitDefs[spGetUnitDefID(uId)]
 			tmpName = ud.name
-			hasWeapons = #ud.weapons > 0
+			hasWeapons = #ud.weapons > 0 and (not fakeWeaponUnits[tmpName])
 			cost = getWeightedCostByName(tmpName)
 			local xIndex, zIndex = getCellXZIndexesForPosition(pos)
 			--if (xIndex ~= xIndex) then  -- NaN ! Hohenheim v3 is buggy, ignore it
@@ -1394,13 +1427,14 @@ function UnitHandler:GameFrame(f)
 					zi = cell.zIndex + dzi
 					if (xi >=0) and (zi >= 0) and not (dxi == 0 and dzi == 0) then
 						if ownCells[xi] then
-							if ownCells[xi][zi] then
-								cell.nearbyAttackerCost = cell.nearbyAttackerCost + ownCells[xi][zi].attackerCost
-								cell.nearbyAirAttackerCost = cell.nearbyAirAttackerCost + ownCells[xi][zi].airAttackerCost
-								cell.nearbyDefenderCost = cell.nearbyDefenderCost + ownCells[xi][zi].defenderCost
-								cell.nearbyUnderwaterDefenderCost = cell.nearbyUnderwaterDefenderCost + ownCells[xi][zi].underwaterDefenderCost
-								cell.nearbyCost = cell.nearbyCost + ownCells[xi][zi].cost
-								cell.nearbyEconomyCost = cell.nearbyEconomyCost + ownCells[xi][zi].economyCost
+							local nearbyCell = ownCells[xi][zi]
+							if nearbyCell then
+								cell.nearbyAttackerCost = cell.nearbyAttackerCost + nearbyCell.attackerCost
+								cell.nearbyAirAttackerCost = cell.nearbyAirAttackerCost + nearbyCell.airAttackerCost
+								cell.nearbyDefenderCost = cell.nearbyDefenderCost + nearbyCell.defenderCost
+								cell.nearbyUnderwaterDefenderCost = cell.nearbyUnderwaterDefenderCost + nearbyCell.underwaterDefenderCost
+								cell.nearbyCost = cell.nearbyCost + nearbyCell.cost
+								cell.nearbyEconomyCost = cell.nearbyEconomyCost + nearbyCell.economyCost
 							end
 						end
 					end
@@ -1410,6 +1444,21 @@ function UnitHandler:GameFrame(f)
 			-- add combined and internal threat cost
 			cell.combinedThreatCost = getCombinedThreatCost(cell)
 			cell.internalThreatCost = getInternalThreatCost(cell)
+		end
+		-- check end game focus-on-army condition
+		self.focusOnEndGameArmy = false
+		if (ownUnitCount > Game.maxUnits*END_GAME_ARMY_UNIT_CAP_THRESHOLD ) then
+			if (self.mobileCount < Game.maxUnits*END_GAME_ARMY_MOBILE_RATIO_THRESHOLD ) then
+				self.focusOnEndGameArmy = true
+
+				-- override builder roles
+				self.mexBuilderCountTarget = 0
+				self.basePatrollerCountTarget = basePatrollerCountTarget +1
+				self.mexUpgraderCountTarget = 0
+				self.defenseBuilderCountTarget = 0
+				self.advancedDefenseBuilderCountTarget = 0
+				self.attackPatrollerCountTarget = self.attackPatrollerCountTarget +1 
+			end
 		end
 		
 		-- iterate through friendly units
@@ -1485,13 +1534,14 @@ function UnitHandler:GameFrame(f)
 					zi = cell.zIndex + dzi
 					if (xi >=0) and (zi >= 0) and not (dxi == 0 and dzi == 0) then
 						if friendlyCells[xi] then
-							if friendlyCells[xi][zi] then
-								cell.nearbyAttackerCost = cell.nearbyAttackerCost + friendlyCells[xi][zi].attackerCost
-								cell.nearbyAirAttackerCost = cell.nearbyAirAttackerCost + friendlyCells[xi][zi].airAttackerCost
-								cell.nearbyDefenderCost = cell.nearbyDefenderCost + friendlyCells[xi][zi].defenderCost
-								cell.nearbyUnderwaterDefenderCost = cell.nearbyUnderwaterDefenderCost + friendlyCells[xi][zi].nearbyUnderwaterDefenderCost
-								cell.nearbyCost = cell.nearbyCost + friendlyCells[xi][zi].cost
-								cell.nearbyEconomyCost = cell.nearbyEconomyCost + friendlyCells[xi][zi].economyCost
+							local nearbyCell = friendlyCells[xi][zi]
+							if nearbyCell then
+								cell.nearbyAttackerCost = cell.nearbyAttackerCost + nearbyCell.attackerCost
+								cell.nearbyAirAttackerCost = cell.nearbyAirAttackerCost + nearbyCell.airAttackerCost
+								cell.nearbyDefenderCost = cell.nearbyDefenderCost + nearbyCell.defenderCost
+								cell.nearbyUnderwaterDefenderCost = cell.nearbyUnderwaterDefenderCost + nearbyCell.nearbyUnderwaterDefenderCost
+								cell.nearbyCost = cell.nearbyCost + nearbyCell.cost
+								cell.nearbyEconomyCost = cell.nearbyEconomyCost + nearbyCell.economyCost
 							end
 						end
 					end
@@ -1530,7 +1580,7 @@ function UnitHandler:GameFrame(f)
 				ud = UnitDefs[spGetUnitDefID(eId)]
 				local tmpName = ud.name
 				if (not neutralUnits[tmpName]) then
-					local hasWeapons = #ud.weapons > 0
+					local hasWeapons = #ud.weapons > 0 and (not fakeWeaponUnits[tmpName])
 					local cost = getWeightedCostByName(tmpName)
 					local health,maxHealth,_,_,progress = spGetUnitHealth(eId) 
 					local isSubmerged = false
@@ -1575,6 +1625,10 @@ function UnitHandler:GameFrame(f)
 						if (self.badAAUnitNames[tmpName]) then
 							cell.badAAAirAttackerCost = cell.badAAAirAttackerCost + cost
 						end
+						cell.combinedAvgHpCostRatio = cell.combinedAvgHpCostRatio + maxHealth  -- cost*hp/cost
+						cell.combinedAvgRange = cell.combinedAvgRange + cost*ud.maxWeaponRange
+						cell.combinedAvgSpeed = cell.combinedAvgSpeed + cost*ud.speed
+						cell.combinedAvgRefCost = cell.combinedAvgRefCost + cost
 					elseif progress > 0.85 and hasWeapons and ud.canMove then
 						cell.attackerCost = cell.attackerCost + cost
 						enemyArmedUnits = enemyArmedUnits + cost
@@ -1586,6 +1640,10 @@ function UnitHandler:GameFrame(f)
 						if (self.badAAUnitNames[tmpName]) then
 							cell.badAAAttackerCost = cell.badAAAttackerCost + cost
 						end
+						cell.combinedAvgHpCostRatio = cell.combinedAvgHpCostRatio + maxHealth  -- cost*hp/cost
+						cell.combinedAvgRange = cell.combinedAvgRange + cost*ud.maxWeaponRange
+						cell.combinedAvgSpeed = cell.combinedAvgSpeed + cost*ud.speed
+						cell.combinedAvgRefCost = cell.combinedAvgRefCost + cost
 					elseif progress > 0.85 and hasWeapons then
 						cell.defenderCost = cell.defenderCost + cost
 						enemyArmedUnits = enemyArmedUnits + cost
@@ -1595,6 +1653,9 @@ function UnitHandler:GameFrame(f)
 							cell.badAADefenderCost = cell.badAADefenderCost + cost
 						end
 						cell.buildingCount = cell.buildingCount + 1
+						cell.combinedAvgHpCostRatio = cell.combinedAvgHpCostRatio + maxHealth  -- cost*hp/cost
+						cell.combinedAvgRange = cell.combinedAvgRange + cost*ud.maxWeaponRange
+						cell.combinedAvgRefCost = cell.combinedAvgRefCost + cost
 					elseif progress > 0.85 and (not ud.canMove or setContains(unitTypeSets[TYPE_ECONOMY],tmpName) ) then
 						cell.economyCost = cell.economyCost + cost
 						cell.buildingCount = cell.buildingCount + 1
@@ -1620,6 +1681,7 @@ function UnitHandler:GameFrame(f)
 				end
 			end
 			
+				
 			-- load nearby cell data for each cell
 			-- use map cells as empty cells may have nearby threat data
 			-- if they do, add them as relevant enemy cells
@@ -1649,7 +1711,8 @@ function UnitHandler:GameFrame(f)
 							nearbyDistanceFactor = 1 / sqrt(dxi*dxi + dzi*dzi)
 							
 							if cells[xi] then
-								if cells[xi][zi] and cells[xi][zi].cost > 0 then
+								local nearbyCell = cells[xi][zi]
+								if nearbyCell and nearbyCell.cost > 0 then
 									-- if there's nearby enemy stuff, but enemy cell not registered, create it 
 									if enemyCell == nil then
 										if cells[xIndex] == nil then
@@ -1666,24 +1729,35 @@ function UnitHandler:GameFrame(f)
 										end
 									end
 								
-									enemyCell.nearbyAttackerCost = enemyCell.nearbyAttackerCost + cells[xi][zi].attackerCost * nearbyDistanceFactor
-									enemyCell.nearbyAirAttackerCost = enemyCell.nearbyAirAttackerCost + cells[xi][zi].airAttackerCost * nearbyDistanceFactor
-									enemyCell.nearbyDefenderCost = enemyCell.nearbyDefenderCost + cells[xi][zi].defenderCost * nearbyDistanceFactor
-									enemyCell.nearbyBadAAAttackerCost = enemyCell.nearbyBadAAAttackerCost + cells[xi][zi].badAAAttackerCost * nearbyDistanceFactor
-									enemyCell.nearbyBadAAAirAttackerCost = enemyCell.nearbyBadAAAirAttackerCost + cells[xi][zi].badAAAirAttackerCost * nearbyDistanceFactor
-									enemyCell.nearbyBadAADefenderCost = enemyCell.nearbyBadAADefenderCost + cells[xi][zi].badAADefenderCost * nearbyDistanceFactor
+									enemyCell.nearbyAttackerCost = enemyCell.nearbyAttackerCost + nearbyCell.attackerCost * nearbyDistanceFactor
+									enemyCell.nearbyAirAttackerCost = enemyCell.nearbyAirAttackerCost + nearbyCell.airAttackerCost * nearbyDistanceFactor
+									enemyCell.nearbyDefenderCost = enemyCell.nearbyDefenderCost + nearbyCell.defenderCost * nearbyDistanceFactor
+									enemyCell.nearbyBadAAAttackerCost = enemyCell.nearbyBadAAAttackerCost + nearbyCell.badAAAttackerCost * nearbyDistanceFactor
+									enemyCell.nearbyBadAAAirAttackerCost = enemyCell.nearbyBadAAAirAttackerCost + nearbyCell.badAAAirAttackerCost * nearbyDistanceFactor
+									enemyCell.nearbyBadAADefenderCost = enemyCell.nearbyBadAADefenderCost + nearbyCell.badAADefenderCost * nearbyDistanceFactor
+
+									enemyCell.combinedAvgHpCostRatio = enemyCell.combinedAvgHpCostRatio + nearbyCell.combinedAvgHpCostRatio
+									enemyCell.combinedAvgRange = enemyCell.combinedAvgRange + nearbyCell.combinedAvgRange
+									enemyCell.combinedAvgSpeed = enemyCell.combinedAvgSpeed + nearbyCell.combinedAvgSpeed
+									enemyCell.combinedAvgRefCost = enemyCell.combinedAvgRefCost + nearbyCell.combinedAvgRefCost
 								end
 							end
 						end
 					end
 				end
 
-				if enemyCell then				
+				if enemyCell then
 					-- add combined and internal threat cost
 					enemyCell.combinedThreatCost = getCombinedThreatCost(enemyCell)
 					enemyCell.internalThreatCost = getInternalThreatCost(enemyCell)
 					enemyCell.combinedThreatCostExcludingBadAA = getCombinedThreatCostExcludingBadAA(enemyCell)
 					enemyCell.internalThreatCostExcludingBadAA = getInternalThreatCostExcludingBadAA(enemyCell)
+
+					if (enemyCell.combinedAvgRefCost > 0) then
+						enemyCell.combinedAvgHpCostRatio = enemyCell.combinedAvgHpCostRatio/enemyCell.combinedAvgRefCost
+						enemyCell.combinedAvgRange = enemyCell.combinedAvgRange/enemyCell.combinedAvgRefCost
+						enemyCell.combinedAvgSpeed = enemyCell.combinedAvgSpeed/enemyCell.combinedAvgRefCost
+					end
 				end
 			end
 			
@@ -1776,12 +1850,16 @@ function UnitHandler:GameFrame(f)
 		self.mostVulnerableCell = mostVulnerableCell
 		self.leastVulnerableCell = leastVulnerableCell
 		--if self.ai.id == 2 then log("safeCell ( "..leastVulnerableCell.p.x.." ; "..leastVulnerableCell.p.z .." ) vulnerableCell ( "..mostVulnerableCell.p.x.." ; "..mostVulnerableCell.p.z.." )", self.ai) end --DEBUG
-
+		--if self.ai.id == 0 then
+		--	Spring.SendCommands("ClearMapMarks")
+		--	Spring.MarkerAddPoint(leastVulnerableCell.p.x,500,leastVulnerableCell.p.z,"SAFE") --DEBUG
+		--	Spring.MarkerAddPoint(mostVulnerableCell.p.x,500,mostVulnerableCell.p.z,"VULNERABLE") --DEBUG
+		--end
 		self.collectedData = true
 	end
 	
 	-- update raiding paths for ground and air units
-	if fmod(f,199) == 32 + self.ai.frameShift then
+	if fmod(f,159) == 32 + self.ai.frameShift then
 		self.raiderThreatCostReference[PF_UNIT_LAND] = self.unitGroups[UNIT_GROUP_RAIDERS] and self.unitGroups[UNIT_GROUP_RAIDERS].nearCenterCost/2 or 100
 		self.raiderThreatCostReference[PF_UNIT_AMPHIBIOUS] = self.unitGroups[UNIT_GROUP_RAIDERS] and self.unitGroups[UNIT_GROUP_RAIDERS].nearCenterCost/2 or 100
 		self.raiderThreatCostReference[PF_UNIT_AIR] = self.unitGroups[UNIT_GROUP_AIR_ATTACKERS] and self.unitGroups[UNIT_GROUP_AIR_ATTACKERS].nearCenterCost/2 or 100
@@ -1905,20 +1983,34 @@ function UnitHandler:GameFrame(f)
 		--log("AI "..self.ai.id.." attackers="..#(self.unitGroups[UNIT_GROUP_ATTACKERS].recruits).." raiders="..#(self.unitGroups[UNIT_GROUP_RAIDERS].recruits).." airAttackers"..#(self.unitGroups[UNIT_GROUP_AIR_ATTACKERS].recruits),self.ai)	
 	end
 	-- update status and positions for each group
-	if fmod(f,69) == 13 + self.ai.frameShift then
+	if fmod(f,59) == 13 + self.ai.frameShift then
 		-- iterate through own units : members of unit groups
 		for gId,group in pairs(self.unitGroups) do
 			local recruits = group.recruits
-			group.oldCenterPos = group.centerPos
 			oldGroupNearCenterCount = group.nearCenterCount
 			local groupX = 0
 			local groupZ = 0
-			local groupCount = 0
+			local groupCount = #recruits
 			local groupCost = 0
+			local groupNearCenterX = 0
+			local groupNearCenterZ = 0
 			local groupNearCenterCost = 0
 			local groupNearCenterCount = 0
+			local groupAvgHpCostRatio = 0
+			local groupAvgRange = 0
+			local groupAvgSpeed = 0
 			local forceInclusionRadius = gId == UNIT_GROUP_AIR_ATTACKERS and FORCE_INCLUSION_RADIUS_AIR or FORCE_INCLUSION_RADIUS
 			local groupNearCenterAntiUWCost = 0
+
+			-- air units are allowed to stray farther away from center
+			if (group.id == UNIT_GROUP_AIR_ATTACKERS) then
+				forceInclusionRadius = forceInclusionRadius * (1 + sqrt(groupCount/8))
+			elseif (group.id == UNIT_GROUP_RAIDERS) then
+				forceInclusionRadius = forceInclusionRadius * (1 + sqrt(groupCount/16))
+			else
+				forceInclusionRadius = forceInclusionRadius * (1 + sqrt(groupCount/16))
+			end
+			
 			
 			group.isAmphibious = false
 			if (self.ai.useStrategies) then
@@ -1941,27 +2033,49 @@ function UnitHandler:GameFrame(f)
 				if (behavior.isSeriouslyDamaged == true) then
 					cost = cost / 2
 				end
-
+				if cost > 0 then
+					groupAvgHpCostRatio = groupAvgHpCostRatio + behavior.maxHp
+					groupAvgRange = groupAvgRange + cost*behavior.maxRange
+					groupAvgSpeed = groupAvgSpeed + cost*behavior.speed
+				end
+				
 				-- check center
 				-- ignore units too far from center
-				if checkWithinMapBounds(upos.x,upos.z) and  ((#recruits < 2 or oldGroupNearCenterCount < 2) or distance(group.oldCenterPos, upos) < forceInclusionRadius)  then
+				if checkWithinMapBounds(upos.x,upos.z) then
 					groupX = groupX + upos.x
 					groupZ = groupZ + upos.z
-					groupNearCenterCost = groupNearCenterCost + cost 
-					groupNearCenterCount = groupNearCenterCount + 1
 					
-					if unitAbleToHitUnderwater[un] then
-						groupNearCenterAntiUWCost = groupNearCenterAntiUWCost + cost
+					if ((#recruits < 2 or oldGroupNearCenterCount < 2) or distance(group.oldCenterPos, upos) < forceInclusionRadius) then
+						groupNearCenterX = groupNearCenterX + upos.x
+						groupNearCenterZ = groupNearCenterZ + upos.z
+					
+						groupNearCenterCost = groupNearCenterCost + cost 
+						groupNearCenterCount = groupNearCenterCount + 1
+						
+						if unitAbleToHitUnderwater[un] then
+							groupNearCenterAntiUWCost = groupNearCenterAntiUWCost + cost
+						end
 					end 
 				end
 
 				groupCost = groupCost + cost
-				groupCount = groupCount + 1
 			end
-	
+
 			if groupCount > 0 and groupNearCenterCount > 0 then
-				groupX = groupX / groupNearCenterCount
-				groupZ = groupZ / groupNearCenterCount
+				-- use the "near-center" position only if most units are actually nearby
+				if groupNearCenterCount > groupCount * GROUP_NEAR_CENTER_THRESHOLD and groupNearCenterCost > groupCost * GROUP_NEAR_CENTER_THRESHOLD then
+					groupX = groupNearCenterX / groupNearCenterCount
+					groupZ = groupNearCenterZ / groupNearCenterCount
+				else
+					groupX = groupX / groupCount
+					groupZ = groupZ / groupCount
+				end
+			
+				if groupCost > 0 then
+					groupAvgHpCostRatio = groupAvgHpCostRatio/groupCost
+					groupAvgRange = groupAvgRange/groupCost
+					groupAvgSpeed = groupAvgSpeed/groupCost
+				end
 			else 
 				groupX = self.basePos.x
 				groupZ = self.basePos.z
@@ -1969,12 +2083,14 @@ function UnitHandler:GameFrame(f)
 			
 			-- shift center position towards where it's been moving over the last few seconds
 			if (group.oldCenterPosFrame > 0) then
-				local newX = groupX + (groupX - group.oldCenterPos.x)
-				local newZ = groupZ + (groupZ - group.oldCenterPos.z)
-				
-				if ( newX > 0 and newX < Game.mapSizeX and newZ > 0 and newZ < Game.mapSizeZ) then
-					groupX = newX
-					groupZ = newZ
+				if abs(groupX - group.oldCenterPos.x) < 500 and abs(groupZ - group.oldCenterPos.z) < 500 then
+					local newX = groupX + (groupX - group.oldCenterPos.x)*0.3
+					local newZ = groupZ + (groupZ - group.oldCenterPos.z)*0.3
+					
+					if ( newX > 0 and newX < Game.mapSizeX and newZ > 0 and newZ < Game.mapSizeZ) then
+						groupX = newX
+						groupZ = newZ
+					end
 				end
 			end
 			
@@ -1985,7 +2101,14 @@ function UnitHandler:GameFrame(f)
 			group.nearCenterCost = groupNearCenterCost
 			group.nearCenterCount = groupNearCenterCount
 			group.nearCenterAntiUWCost = groupNearCenterAntiUWCost
+			group.avgHpCostRatio = groupAvgHpCostRatio
+			group.avgRange = groupAvgRange
+			group.avgSpeed = groupAvgSpeed
 			
+			--if (self.ai.id == 1 ) then 
+			--	Spring.MarkerAddPoint(groupX,500,groupZ,(group.id == UNIT_GROUP_ATTACKERS and "ATTACKERS" or (group.id == UNIT_GROUP_RAIDERS and "RAIDERS" or "OTHER")).."\n"..group.nearCenterCount.."/"..(#recruits)) --DEBUG
+			--end
+			group.oldCenterPos = group.centerPos
 			group.oldCenterPosFrame = f
 			-- log("group "..gId.." center ("..groupNearCenterCount.." / "..groupNearCenterCost..") : ("..groupX..";"..groupZ..")",self.ai) --DEBUG
 		end
@@ -2018,7 +2141,7 @@ function UnitHandler:GameFrame(f)
 			self.sizeMult = 1 + incomeM*FORCE_SIZE_MOD_METAL -- + (self.atkFailureCost/FORCE_COST_REFERENCE)*BRUTAL_FORCE_SIZE_MOD_FAILURE
 		end
 		
-		self.refForceCost = FORCE_COST_REFERENCE * self.sizeMult -- target force size
+		self.refForceCost = FORCE_COST_REFERENCE * self.sizeMult -- target minimum force size
 		
 		-- if base is under attack...?
 		if (f - self.baseUnderAttackFrame < BASE_UNDER_ATTACK_FRAMES ) then
@@ -2035,6 +2158,7 @@ function UnitHandler:GameFrame(f)
 		for gId,group in pairs(self.unitGroups) do
 			oldTargetCell = group.targetCell
 			local groupCenterPos = group.centerPos
+			minForceCost = self.refForceCost
 			if (group.id == UNIT_GROUP_AIR_ATTACKERS) then
 				minForceCost = FORCE_COST_REFERENCE	-- do not scale min air force
 			elseif (group.id == UNIT_GROUP_RAIDERS) then
@@ -2085,8 +2209,10 @@ function UnitHandler:GameFrame(f)
 			group.targetValue = bestValue
 			group.targetThreatAlongPath = bestCellThreatAlongPath
 			
-			-- TODO : get human defined task, somehow
-			-- AI beacon and strategy changes are enough? remove this?
+			-- figure out something about the profile of enemies around the target cell
+			-- might be relevant to figure out whether to attack or how to engage
+			-- TODO move this elsewhere
+	
 			local task = group.task
 			local taskFrame = group.taskFrame
 			if ( self.humanTask == nil or (self.humanTaskFrame + HUMAN_TASK_DELAY_FRAMES < f) ) then

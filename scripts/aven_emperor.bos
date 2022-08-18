@@ -370,45 +370,27 @@ QueryTertiary(piecenum)
 	}
 	return (0);
 }
-SweetSpot(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
 
 Killed(severity, corpsetype)
 {
 	hide flare1a;
 	hide flare1b;
 	hide flare1c;
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode turret1 type SHATTER | BITMAP5;
-		explode turret2 type SHATTER | BITMAP5;
-		explode turret3 type SHATTER | BITMAP5;
-		explode h4 type SHATTER | BITMAP5;
-		explode h5 type SHATTER | BITMAP5;
-		explode h6 type SHATTER | BITMAP5;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
 		explode turret1 type SHATTER | BITMAP5;
 		explode turret2 type SHATTER | BITMAP5;
 		explode turret3 type SHATTER | BITMAP5;
 		explode h4 type SHATTER | BITMAP5;
 		explode h5 type SHATTER | BITMAP5;
 		explode h6 type SHATTER | BITMAP5;
-		return (0);
+		return (1);
 	}
-	corpsetype = 3;
 	explode turret1 type SHATTER | BITMAP5;
 	explode turret2 type SHATTER | BITMAP5;
 	explode turret3 type SHATTER | BITMAP5;
 	explode h4 type SHATTER | BITMAP5;
 	explode h5 type SHATTER | BITMAP5;
 	explode h6 type SHATTER | BITMAP5;
-	return (0);
+	return (2);
 }

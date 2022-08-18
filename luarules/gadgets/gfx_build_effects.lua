@@ -1,0 +1,199 @@
+   function gadget:GetInfo()
+      return {
+        name      = "Build Effects",
+        desc      = "Displays effects as units and features are built or reclaimed",
+        author    = "raaar",
+        date      = "2022",
+        license   = "PD",
+        layer     = math.huge,
+        enabled   = true,
+      }
+    end
+
+
+local spGetUnitCollisionVolumeData = Spring.GetUnitCollisionVolumeData
+local spGetUnitPosition = Spring.GetUnitPosition
+local spSpawnCEG = Spring.SpawnCEG
+local spGetAllUnits = Spring.GetAllUnits
+local spGetUnitHealth = Spring.GetUnitHealth
+
+local spGetFeatureResources = Spring.GetFeatureResources
+local spGetAllFeatures = Spring.GetAllFeatures
+local spGetFeaturePosition = Spring.GetFeaturePosition
+local spGetFeatureCollisionVolumeData = Spring.GetFeatureCollisionVolumeData
+local spGetFeatureRadius = Spring.GetFeatureRadius
+local spGetUnitDefId = Spring.GetUnitDefID
+local spPlaySoundFile = Spring.PlaySoundFile
+
+local oldBpByUnitId = {}
+local oldBpByFeatureId = {}
+local createCEG = "buildcreated"
+local buildCEG = "buildprogress"
+local buildWideCEG = "buildwideprogress"
+local reclaimCEG = "reclaimprogress"
+
+local eceg = "gplasmaballbloom"
+local mceg = "bplasmaballbloom"
+local dceg = "featureblastwrapper"
+
+
+local random = math.random
+local abs = math.abs
+local floor = math.floor
+
+local noCreationEffectDefIds = {
+	[UnitDefNames["cs_beacon"].id] = true,
+	[UnitDefNames["scoper_beacon"].id] = true
+}
+
+if (not gadgetHandler:IsSyncedCode()) then
+  return
+end
+
+function gadget:Initialize()
+	Spring.LoadSoundDef("LuaRules/Configs/sound_defs.lua")
+end
+
+function gadget:UnitCreated(unitId, unitDefId, unitTeam)
+	local ud = UnitDefs[unitDefId]
+	if (not noCreationEffectDefIds[unitDefId]) and (not (ud.customParams and ud.customParams.isdrone)) then
+		local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetUnitCollisionVolumeData(unitId)
+		local px,py,pz = spGetUnitPosition(unitId)
+		spSpawnCEG(createCEG, px, py+5, pz,0,1,0,xs,xs)
+	end
+end
+
+
+function gadget:GameFrame(n)
+	if (n%3 == 0) then
+		-- check units
+		local xs, ys, zs, xo, yo, zo, vtype, htype, axis, px,py,pz,offsetX, offsetZ, intensity
+		for _,unitId in pairs(spGetAllUnits()) do
+			local _,_,_,_,bp = spGetUnitHealth(unitId)
+			local ud = UnitDefs[spGetUnitDefId(unitId)]
+			
+			if not (ud.customParams and ud.customParams.isdrone) then
+				local oldBp = oldBpByUnitId[unitId]
+				if not oldBp then 
+					oldBp = bp
+				end
+				if bp < 1 then
+					if bp > oldBp then
+						local intensity = (bp - oldBp)*100
+					
+						xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetUnitCollisionVolumeData(unitId)
+						px,py,pz = spGetUnitPosition(unitId)
+						xs = xs*0.95
+						ys = ys*0.95
+						zs = zs*0.95
+						
+						-- random offsets
+						if xs < 50 then
+							spSpawnCEG( buildCEG, px -xs*0.5 +random()*xs, py+ys, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
+							spSpawnCEG( buildCEG, px -xs*0.5 +random()*xs, py+ys, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
+						else
+							xs = xs*0.65
+							zs = zs*0.65
+	
+							spSpawnCEG( buildWideCEG, px -xs*0.5 +random()*xs, py+ys, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
+							spSpawnCEG( buildWideCEG, px -xs*0.5 +random()*xs, py+ys, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
+						end
+						
+						-- offset depends on bp
+						--[[
+						--offsetX = ((bp*1000)%50) * 0.02
+						--offsetZ = floor((bp*100)%50) * 0.02
+						--local r = 10 + xs*0.1
+						--spSpawnCEG(buildCEG, px -xs*0.5 +offsetX*xs-0.5*r+r*random(), py+ys, pz-zs*0.5+offsetZ*zs-0.5*r+r*random(),0,1,0,xs,intensity)
+						--spSpawnCEG(buildCEG, px -xs*0.5 +offsetX*xs-0.5*r+r*random(), py+ys, pz-zs*0.5+offsetZ*zs-0.5*r+r*random(),0,1,0,xs,intensity)
+						]]-- 
+						
+					elseif bp < oldBp then
+						intensity = abs((bp - oldBp))*100
+					
+						xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetUnitCollisionVolumeData(unitId)
+						px,py,pz = spGetUnitPosition(unitId)
+						xs = xs*0.95
+						ys = ys*0.95
+						zs = zs*0.95
+						
+						spSpawnCEG(reclaimCEG, px -xs*0.5 +random()*xs, py+ys, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
+						spSpawnCEG(reclaimCEG, px -xs*0.5 +random()*xs, py+ys, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
+					end
+				end
+				oldBpByUnitId[unitId] = bp
+			end
+		end
+		
+		-- check features
+		for _,fId in pairs(spGetAllFeatures()) do
+			local _,_,_,_,bp = spGetFeatureResources(fId)
+	
+			local oldBp = oldBpByFeatureId[fId]
+			if not oldBp then 
+				oldBp = bp
+			end
+			if bp < 1 then
+				if bp > oldBp then		-- never happens?
+					intensity = (bp - oldBp)*100
+				
+					xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetFeatureCollisionVolumeData(fId)
+					px,py,pz = spGetFeaturePosition(fId)
+					xs = xs*0.95
+					ys = ys*0.95
+					zs = zs*0.95
+					
+					spSpawnCEG(buildCEG, px -xs*0.5 +random()*xs, py+ys, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
+					spSpawnCEG(buildCEG, px -xs*0.5 +random()*xs, py+ys, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
+				elseif bp < oldBp then
+					intensity = abs((bp - oldBp))*100
+				
+					xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetFeatureCollisionVolumeData(fId)
+					px,py,pz = spGetFeaturePosition(fId)
+					xs = xs*0.95
+					ys = ys*0.95
+					zs = zs*0.95
+					
+					spSpawnCEG(reclaimCEG, px -xs*0.5 +random()*xs, py+ys, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
+					spSpawnCEG(reclaimCEG, px -xs*0.5 +random()*xs, py+ys, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
+				end
+			end
+			oldBpByFeatureId[fId] = bp
+		end
+		--end
+	end
+end
+
+
+function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDefId, attackerTeamId)
+	if (oldBpByUnitId[unitId]) then
+		oldBpByUnitId[unitId] = nil
+	end
+end	
+
+
+function gadget:FeatureDestroyed(featureId,allyteam)
+	if (oldBpByFeatureId[featureId]) then
+		oldBpByFeatureId[featureId] = nil
+	end
+	
+	local fx,fy,fz=spGetFeaturePosition(featureId)
+	if (fx ~= nil) then
+		local rm, mm, re, me, rl = spGetFeatureResources(featureId)
+		if (rm ~= nil) then
+			if me > mm and rl == 0 then
+				local radius = tonumber(spGetFeatureRadius(featureId))
+				spSpawnCEG(eceg, fx, fy, fz,0,1,0,radius,radius)
+				spPlaySoundFile('Sounds/RECLAIM1.wav', 1, fx, fy, fz)
+			elseif mm >= me and rl == 0 then
+				local radius = tonumber(spGetFeatureRadius(featureId))
+				spSpawnCEG(mceg, fx, fy, fz,0,1,0,radius,radius)
+				spPlaySoundFile('Sounds/RECLAIM1.wav', 1, fx, fy, fz)
+			else
+				local radius = tonumber(spGetFeatureRadius(featureId))
+				spSpawnCEG(dceg, fx, fy, fz, 0, 1, 0,radius ,radius)
+				spPlaySoundFile('FEATURECRUSH', 0.7, fx, fy, fz)
+			end
+		end
+	end
+end

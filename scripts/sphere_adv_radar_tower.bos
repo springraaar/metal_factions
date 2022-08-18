@@ -111,27 +111,19 @@ Deactivate()
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
-
 Killed(severity, corpsetype)
 {
-	if( severity <= 250 )
+	if( severity <= 50 )
 	{
-		corpsetype = 1;
-		explode base type BITMAPONLY | BITMAP1;
-		explode dish type BITMAPONLY | BITMAP2;
-		explode ear1 type BITMAPONLY | BITMAP3;
-		explode ear2 type BITMAPONLY | BITMAP4;
-		return (0);
+		explode dish type SHATTER;
+		explode ear1 type SHATTER;
+		explode ear2 type SHATTER;
+		return (1);
 	}
-	corpsetype = 3;
-	explode base type BITMAPONLY | BITMAP1;
+	
+	explode base type SHATTER;
 	explode dish type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode ear1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
 	explode ear2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
-	return (0);
+	return (2);
 }

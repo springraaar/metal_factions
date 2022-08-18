@@ -141,12 +141,6 @@ QuerySecondary(piecenum)
 }
 
 
-SweetSpot(piecenum)
-{
-	piecenum = hull;
-	return (0);
-}
-
 Killed(severity, corpsetype)
 {
 	if( severity <= 50 )

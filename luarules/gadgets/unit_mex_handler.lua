@@ -437,8 +437,9 @@ function processCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
 			end
 			i = i + 1
 		end
-		
-		Spring.PlaySoundFile('GENERICCMD', 0.6)
+
+		-- disabled because every spectator hears this, makes watching AI fights annoying
+		--Spring.PlaySoundFile('GENERICCMD', 0.6,x,y,z,0,0,0,"userinterface")
 		return true, true
 	end
 	return false

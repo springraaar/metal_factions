@@ -270,7 +270,7 @@ QueryPrimary(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 35 )
+	if( severity <= 50 )
 	{
 		explode bodysect1 type SHATTER;
 		explode barrel type SHATTER;

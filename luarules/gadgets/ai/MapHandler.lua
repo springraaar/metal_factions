@@ -420,6 +420,10 @@ function MapHandler:checkConnection(p1,p2,unitPathingType)
 	end
 	
 	CHECKregions = self.pFRegions[unitPathingType]
+	if not CHECKregions then
+		log("MFAI WARNING: could not find pFRegions for pathing type "..tostring(unitPathingType))
+		return false
+	end
 	CHECKx1, CHECKz1 = getPFCellXZIndexesForPosition(p1)
 	CHECKx2, CHECKz2 = getPFCellXZIndexesForPosition(p2)
 	

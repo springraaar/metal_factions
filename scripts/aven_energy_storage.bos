@@ -5,8 +5,6 @@
 
 piece  base, b2, b3, b4, b5,b6,b7;
 
-static-var  Static_Var_1;
-
 
 Standby()
 {
@@ -65,43 +63,20 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode b3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode b4 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode b5 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode b6 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode b7 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
 		explode b3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 		explode b4 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 		explode b5 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 		explode b6 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 		explode b7 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		return (0);
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode b2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode b3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode b4 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode b5 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode b6 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode b7 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		return (0);
-	}
-	corpsetype = 3;
 	explode b2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode b3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode b4 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode b5 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode b6 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode b7 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-	return (0);
+	return (2);
 }

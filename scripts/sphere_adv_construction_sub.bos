@@ -155,53 +155,23 @@ TargetHeading(Func_Var_1)
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
-
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode back type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode boxl type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode boxr type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode door1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
-		explode door2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
 		explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 		explode back type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 		explode boxl type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 		explode boxr type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode door1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
-		explode door2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
-		return (0);
+		explode door1 type SHATTER;
+		explode door2 type SHATTER;
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode back type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode boxl type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode boxr type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode door1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
-		explode door2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
-		return (0);
-	}
-	corpsetype = 3;
 	explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode back type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode boxl type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode boxr type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode door1 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
 	explode door2 type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP5;
-	return (0);
+	return (2);
 }

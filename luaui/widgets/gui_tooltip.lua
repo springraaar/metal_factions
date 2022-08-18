@@ -53,6 +53,7 @@ local spGetTeamColor = Spring.GetTeamColor
 local spIsGUIHidden = Spring.IsGUIHidden
 local spGetCurrentTooltip = Spring.GetCurrentTooltip
 local spGetDrawFrame = Spring.GetDrawFrame 
+local spGetActiveCommand = Spring.GetActiveCommand
 
 local glBlending = gl.Blending
 local glColor = gl.Color
@@ -208,6 +209,9 @@ function getTooltipUpgradeData(teamId)
 	local statusStr = spGetTeamRulesParam(teamId,"upgrade_status")
 	local listStr = spGetTeamRulesParam(teamId,"upgrade_list")
 	local modStr = spGetTeamRulesParam(teamId,"upgrade_modifiers")
+	if listStr and listStr == 0 then
+		listStr = ""
+	end
 	
 	if (statusStr) then
 		newTooltip = newTooltip..statusStr.."\n"
@@ -489,9 +493,25 @@ function generateNewTooltip()
 	end  
 	--Spring.Echo("\n"..currentTooltip) 
 	
+	
 	local buildOrderUnitDefName = nil
 	if string.sub(currentTooltip,1,9) == "buildunit" then
 		buildOrderUnitDefName = string.match(currentTooltip,"buildunit_(.+)Build:")
+		newTooltip = newTooltip.."\255\255\255\150Build:\255\255\255\255\n"
+	elseif string.sub(currentTooltip,1,9) == "morphunit" then
+		buildOrderUnitDefName = string.match(currentTooltip,"morphunit_(.+)Morph to")
+		buildOrderUnitDefName = string.gsub(buildOrderUnitDefName, "[\128-\255]", "")
+		newTooltip = newTooltip..string.sub(currentTooltip,11+string.len(buildOrderUnitDefName)).."\255\255\255\255\n\n"
+	else
+		-- check if it's an active build order
+		local _, cmdID = spGetActiveCommand()
+		if (cmdID and cmdID < 0) then
+			local ud = UnitDefs[-cmdID]
+			if ud then 
+				buildOrderUnitDefName = ud.name
+			end 
+		end 
+		newTooltip = newTooltip.."\255\255\255\150Build:\255\255\255\255\n"
 	end
 	
 	if buildOrderUnitDefName then
@@ -803,7 +823,17 @@ function generateNewTooltip()
 			if ud.customParams.tip then
 				newTooltip = newTooltip.."\n"..TIP_COLOR_PREFIX..ud.customParams.tip.."\255\255\255\255\n"
 			end
- 
+			
+			--[[
+			metalExtraction = Spring.GetUnitMetalExtraction(u)
+			if (metalExtraction) then
+				local x,y,z = Spring.GetUnitPosition(u)
+				local metalAmount = Spring.GetMetalAmount(x, z )
+				local refExtr = Spring.GetMetalExtraction(x, z )  
+				newTooltip = newTooltip.."\nextracts="..metalExtraction.." amount="..metalAmount.." refExtr="..refExtr
+			end
+ 			]]--
+ 			
 			foundTooltipType="liveunit"
 			tempTooltip = newTooltip
 			return newTooltip	

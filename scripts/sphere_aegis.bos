@@ -59,9 +59,8 @@ AimSecondary(heading, pitch)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
+	if( severity <= 50 )
 	{
-		corpsetype = 1;
 		explode base type BITMAPONLY | BITMAP1;
 		explode c1 type SHATTER | BITMAP4;
 		explode c2 type SHATTER | BITMAP4;
@@ -71,39 +70,8 @@ Killed(severity, corpsetype)
 		explode c6 type SHATTER | BITMAP4;
 		explode c7 type SHATTER | BITMAP4;
 		explode c8 type SHATTER | BITMAP4;
-		return (0);
+		return (1);
 	}
-	if( severity <= 50 )
-	{
-		corpsetype = 2;
-		explode base type SHATTER | BITMAP4;
-		explode ss type SHATTER | BITMAP4;
-		explode c1 type SHATTER | BITMAP4;
-		explode c2 type SHATTER | BITMAP4;
-		explode c3 type SHATTER | BITMAP4;
-		explode c4 type SHATTER | BITMAP4;
-		explode c5 type SHATTER | BITMAP4;
-		explode c6 type SHATTER | BITMAP4;
-		explode c7 type SHATTER | BITMAP4;
-		explode c8 type SHATTER | BITMAP4;
-		return (0);
-	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode base type SHATTER | BITMAP4;
-		explode ss type SHATTER | BITMAP4;
-		explode c1 type SHATTER | BITMAP4;
-		explode c2 type SHATTER | BITMAP4;
-		explode c3 type SHATTER | BITMAP4;
-		explode c4 type SHATTER | BITMAP4;
-		explode c5 type SHATTER | BITMAP4;
-		explode c6 type SHATTER | BITMAP4;
-		explode c7 type SHATTER | BITMAP4;
-		explode c8 type SHATTER | BITMAP4;
-		return (0);
-	}
-	corpsetype = 3;
 	explode base type SHATTER | BITMAP4;
 	explode ss type SHATTER | BITMAP4;
 	explode c1 type SHATTER | BITMAP4;
@@ -113,5 +81,6 @@ Killed(severity, corpsetype)
 	explode c5 type SHATTER | BITMAP4;
 	explode c6 type SHATTER | BITMAP4;
 	explode c7 type SHATTER | BITMAP4;
-	explode c8 type SHATTER | BITMAP4;	
+	explode c8 type SHATTER | BITMAP4;
+	return (2);
 }

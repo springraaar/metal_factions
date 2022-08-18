@@ -120,7 +120,11 @@ function checkMorph(self)
 								end
 							end
 	
-							spGiveOrderToUnit(self.unitId,morphCmd,{},{})
+							if (morphCmd) then
+								spGiveOrderToUnit(self.unitId,morphCmd,{},{})
+							else
+								log("MFAI WARNING: "..self.unitName.." got bad morph command : "..tostring(morphName),self.ai)
+							end
 						else
 							return SKIP_THIS_TASK
 						end
@@ -493,6 +497,9 @@ function defendNearbyBuildingsIfNeeded(self,safeFraction)
 	local ownUnitIds = self.ai.ownUnitIds
 	local unitCount = 0
 	local pos = self.pos
+	if (self.ai.unitHandler.focusOnEndGameArmy) then
+		return SKIP_THIS_TASK 
+	end
 	
 	local ownBuildingCell = getNearbyCellIfExists(self.ai.unitHandler.ownBuildingCells, pos)
 	if (ownBuildingCell ~= nil) then 
@@ -761,6 +768,8 @@ function staticBriefAreaPatrol(self)
 	-- do it for some time
 	return {action="wait", frames=STATIC_AREA_PATROL_FRAMES}
 end
+
+
 
 function commanderBriefAreaPatrol(self)
 	--if (countOwnUnitsInRadius(self,nil, self.pos, 600, 4, TYPE_L1_PLANT) < 1 and countOwnUnitsInRadius(self,nil, self.pos, 600, 4, TYPE_L2_PLANT) < 1) then
@@ -1610,8 +1619,9 @@ function countOwnUnitsInRadius(self,unitName, pos, radius, maxCount, type)
 	local ownUnitIds = self.ai.ownUnitIds
 	local unitCount = 0
 
-	local ownCell = getNearbyCellIfExists(self.ai.unitHandler.ownBuildingCells, pos)
 	local ud = nil
+	--[[	
+	local ownCell = getNearbyCellIfExists(self.ai.unitHandler.ownBuildingCells, pos)
 	if (ownCell ~= nil) then 
 		for uId,_ in pairs(ownCell.buildingIdSet) do
 			ud = spGetUnitDefID(uId)		
@@ -1632,6 +1642,20 @@ function countOwnUnitsInRadius(self,unitName, pos, radius, maxCount, type)
 			end
 		end
 	end
+	]]--
+	local buildingIdSet = self.ai.unitHandler.ownBuildingUDefById
+	for uId,ud in pairs(buildingIdSet) do
+		un = ud.name
+		if ((unitName ~= nil and un == unitName) or (type ~= nil and setContains(unitTypeSets[type],un)) ) then
+			local upos = newPosition(spGetUnitPosition(uId,false,false))
+			if checkWithinDistance(pos, upos,radius) then
+				unitCount = unitCount + 1
+			end
+			if maxCount ~= nil and maxCount > 0 and unitCount >= maxCount then
+				break
+			end
+		end
+	end
 	
 	return unitCount
 end
@@ -1642,7 +1666,7 @@ function checkAreaLimit(self,unitName, builder, unitLimit, radius, type)
 		return unitName
 	end
 		
-	local pos = self.ai.buildSiteHandler:getBuildSearchPos(self,UnitDefNames[unitName])
+	local pos,_ = self.ai.buildSiteHandler:getBuildSearchPos(self,UnitDefNames[unitName])
 	if (pos ~= nil) then
 		-- default radius is medium
 		if ( radius  == nil ) then
@@ -1842,7 +1866,7 @@ function areaLimit_AdvRadar(self)
 		return SKIP_THIS_TASK
 	end
 
-	return checkAreaLimit(self,advRadarByFaction[self.unitSide], self.unitId, 1, BIG_RADIUS, nil)
+	return checkAreaLimit(self,advRadarByFaction[self.unitSide], self.unitId, 1, HUGE_RADIUS, nil)
 	
 end
 
@@ -1851,7 +1875,7 @@ function areaLimit_AdvSonar(self)
 		return SKIP_THIS_TASK
 	end
 
-	return checkAreaLimit(self,advSonarByFaction[self.unitSide], self.unitId, 1, BIG_RADIUS, nil)
+	return checkAreaLimit(self,advSonarByFaction[self.unitSide], self.unitId, 1, HUGE_RADIUS, nil)
 	
 end
 
@@ -2115,9 +2139,9 @@ upgradeOffensive = {
 	"upgrade_red_1_range",
 	"upgrade_red_1_range",
 	"upgrade_red_1_range",
+	"upgrade_blue_3_commander_stealth_drone",
 	"upgrade_red_2_commander_damage",
 	"upgrade_red_2_commander_range",
-	"upgrade_green_2_commander_regen",
 	{action = "wait", frames = 38}
 }
 
@@ -2128,8 +2152,8 @@ upgradeDefensive = {
 	"upgrade_green_1_regen",
 	"upgrade_green_1_hp",
 	"upgrade_green_1_regen",
+	"upgrade_blue_3_commander_stealth_drone",
 	"upgrade_green_2_commander_hp",
-	"upgrade_green_2_commander_regen",
 	"upgrade_green_2_commander_regen",
 	{action = "wait", frames = 38}
 }
@@ -2141,8 +2165,8 @@ upgradeDefensiveRegen = {
 	"upgrade_green_1_regen",
 	"upgrade_blue_1_speed",
 	"upgrade_green_1_hp",
+	"upgrade_blue_3_commander_stealth_drone",
 	"upgrade_green_2_commander_hp",
-	"upgrade_green_2_commander_regen",
 	"upgrade_green_2_commander_regen",
 	{action = "wait", frames = 38}
 }
@@ -2153,7 +2177,7 @@ upgradeSpeed = {
 	"upgrade_blue_1_speed",
 	"upgrade_blue_1_speed",
 	"upgrade_blue_1_speed",
-	"upgrade_blue_2_commander_speed",
+	"upgrade_blue_3_commander_stealth_drone",
 	"upgrade_blue_2_commander_speed",
 	"upgrade_green_2_commander_regen",
 	"upgrade_blue_3_speed",
@@ -2167,8 +2191,8 @@ upgradeMixed = {
 	"upgrade_blue_1_speed",
 	"upgrade_blue_1_speed",
 	"upgrade_green_1_hp",
+	"upgrade_blue_3_commander_stealth_drone",
 	"upgrade_green_2_commander_regen",
-	"upgrade_red_2_commander_damage",
 	"upgrade_green_2_commander_hp",
 	{action = "wait", frames = 38}
 }
@@ -2193,8 +2217,8 @@ upgradeMixedDronesCombat = {
 	"upgrade_blue_1_speed",
 	"upgrade_blue_1_speed",
 	"upgrade_green_1_hp",
+	"upgrade_blue_3_commander_stealth_drone",	
 	"upgrade_blue_2_commander_light_drones",
-	"upgrade_blue_3_commander_medium_drone",
 	"upgrade_blue_3_commander_medium_drone",
 	{action = "wait", frames = 38}
 }
@@ -3665,6 +3689,7 @@ function stratCommanderAction(self)
 	local comMorphMetalIncome = currentStrategy.stages[sStage].economy.comMorphMetalIncome or 99999
 	local comMorphEnergyIncome = currentStrategy.stages[sStage].economy.comMorphEnergyIncome or 99999
 	local defenseDensityMult = currentStrategy.stages[sStage].properties.defenseDensityMult or 1
+	local focusOnEndGameArmy =  self.ai.unitHandler.focusOnEndGameArmy
 	local action = SKIP_THIS_TASK
 	
 	if self.isBrutalMode then
@@ -3693,17 +3718,16 @@ function stratCommanderAction(self)
 	local minEnergyIncome = currentStrategy.stages[sStage].economy.minEnergyIncome
 	local targetMetalIncome = currentStrategy.stages[sStage].economy.metalIncome
 	local targetEnergyIncome = currentStrategy.stages[sStage].economy.energyIncome
-	 
 
-
-	-- factories
-	local targetFactories = currentStrategy.stages[sStage].factories
+	-- factories and other key buildings
+	local targetBuildings = currentStrategy.stages[sStage].buildings
 	local buildsFactories = currentStrategy.stages[sStage].properties.commanderBuildsFactories
-	if (targetFactories) then
-		for i,props in ipairs(targetFactories) do
+	local options = buildOptionsByPlant[self.builderType]
+	if (options and targetBuildings) then
+		for i,props in ipairs(targetBuildings) do
 			local minCount = props.min 
 			local uName = props.name
-			if (buildsFactories or constructionTowers[uName]) then
+			if options[uName] == true and (buildsFactories or constructionTowers[uName]) then
 				if (checkAllowedConditions(self,props) and countOwnUnits(self,uName, 99, nil) < minCount) then
 		
 					-- if unit is far away from base center, move to center and then retry
@@ -3753,7 +3777,8 @@ function stratCommanderAction(self)
 
 	-- check behavior type
 	-- if has decent resource income and factories, go support the attackers
-	if (incomeM > comAttackerMetalIncome and incomeE > comAttackerEnergyIncome and countOwnUnits(self,nil,2,TYPE_PLANT) > 0) then
+	local hasFactories = countOwnUnits(self,nil,2,TYPE_PLANT) > 0
+	if (incomeM > comAttackerMetalIncome and incomeE > comAttackerEnergyIncome and hasFactories) then
 		--log("com changing to attack mode",self.ai) --DEBUG
 		self:changeQueue(commanderAtkQueueByFaction[self.unitSide])
 		self.isAttackMode = true
@@ -3776,12 +3801,14 @@ function stratCommanderAction(self)
 		end
 	end
 
-
 	self.couldNotFindGeoSpot = false
 	self.couldNotFindMetalSpot = false
-	-- short patrol
-	self.briefAreaPatrolFrames = 300
-	return briefAreaPatrol(self)
+	if (hasFactories) then
+		-- short patrol
+		self.briefAreaPatrolFrames = 300
+		return briefAreaPatrol(self)	
+	end
+	return SKIP_THIS_TASK
 end
 
 
@@ -3802,7 +3829,7 @@ function stratStaticBuilderAction(self)
 	if (self.ai.humanDefenseDensityMult ~= nil) then
 		defenseDensityMult = self.ai.humanDefenseDensityMult
 	end
-		
+	local focusOnEndGameArmy =  self.ai.unitHandler.focusOnEndGameArmy		
 	local action = SKIP_THIS_TASK
 	
 	if self.isBrutalMode then
@@ -3821,15 +3848,18 @@ function stratStaticBuilderAction(self)
 		return action
 	end	
 	
-	-- factories (only level 1 and 2 plants)
-	local targetFactories = currentStrategy.stages[sStage].factories
-	if (targetFactories) then
-		for i,props in ipairs(targetFactories) do
+	-- factories and other key buildings
+	local targetBuildings = currentStrategy.stages[sStage].buildings
+	local options = buildOptionsByPlant[self.builderType]
+	if (options and targetBuildings) then
+		for i,props in ipairs(targetBuildings) do
 			local minCount = props.min 
 			local uName = props.name
 			
-			if self:checkPreviousAttempts(uName) and setContains(unitTypeSets[TYPE_PLANT],uName) then
+			--if self:checkPreviousAttempts(uName) and setContains(unitTypeSets[TYPE_PLANT],uName) then
+			if options[uName] == true and self:checkPreviousAttempts(uName) then
 				if checkAllowedConditions(self,props) and (countOwnUnits(self,uName, minCount, nil) < minCount) then
+					self:setHighPriorityState(1)
 					return uName
 				end
 			end
@@ -3837,7 +3867,7 @@ function stratStaticBuilderAction(self)
 	end
 
 	-- defense
-	if defenseDensityMult > 0 then
+	if defenseDensityMult > 0 and (not focusOnEndGameArmy) then
 		if (self.unitSide == "claw" or self.unitSide == "sphere") then
 			local unitName = mediumAAByFaction[self.unitSide]
 			if self:checkPreviousAttempts(unitName) then
@@ -3854,20 +3884,6 @@ function stratStaticBuilderAction(self)
 				if action ~= SKIP_THIS_TASK then
 					self:setHighPriorityState(1)
 					return action
-				end
-			end
-		end
-	end
-
-	-- other production buildings
-	local targetFactories = currentStrategy.stages[sStage].factories
-	if (targetFactories) then
-		for i,props in ipairs(targetFactories) do
-			local minCount = props.min 
-			local uName = props.name
-			if self:checkPreviousAttempts(uName) and not setContains(unitTypeSets[TYPE_PLANT],uName) then
-				if checkAllowedConditions(self,props) and (countOwnUnits(self,uName, 99, nil) < minCount) then
-					return uName
 				end
 			end
 		end
@@ -3896,7 +3912,7 @@ function stratMobileBuilderAction(self)
 	if (self.ai.humanDefenseDensityMult ~= nil) then
 		defenseDensityMult = self.ai.humanDefenseDensityMult
 	end
-	
+	local focusOnEndGameArmy =  self.ai.unitHandler.focusOnEndGameArmy
 	local action = SKIP_THIS_TASK
 	
 	local brutalStartDelayActive = false
@@ -3920,7 +3936,7 @@ function stratMobileBuilderAction(self)
 	end
 	
 	-- prioritize building some defenses if base is under attack
-	if (self.ai.unitHandler.baseUnderAttack) then
+	if self.ai.unitHandler.baseUnderAttack then
 		action = defendNearbyBuildingsIfNeeded(self, 0.2)
 		if action ~= SKIP_THIS_TASK then
 			self:setHighPriorityState(1)
@@ -4005,14 +4021,15 @@ function stratMobileBuilderAction(self)
 		end
 	end
 	
-	-- factories
-	local targetFactories = currentStrategy.stages[sStage].factories
-	if (targetFactories) then
-		for i,props in ipairs(targetFactories) do
+	-- factories and other key buildings
+	local targetBuildings = currentStrategy.stages[sStage].buildings
+	local options = buildOptionsByPlant[self.builderType]
+	if (targetBuildings and options) then
+		for i,props in ipairs(targetBuildings) do
 			local minCount = props.min
 			local maxCount = props.max
 			local uName = props.name
-			if (checkAllowedConditions(self,props) and countOwnUnits(self,uName, 99, nil) < maxCount) then
+			if options[uName] == true and (checkAllowedConditions(self,props) and countOwnUnits(self,uName, 99, nil) < maxCount) then
 	
 				-- if unit is far away from base center, move to center and then retry
 				if farFromBaseCenter(self)  then
@@ -4020,53 +4037,13 @@ function stratMobileBuilderAction(self)
 					return moveBaseCenter(self)
 				end	
 
-				--log(self.unitName.." trying to build a factory : "..uName,self.ai) --DEBUG				
+				--log(self.unitName.." trying to build a factory : "..uName,self.ai) --DEBUG	
+				self:setHighPriorityState(1)			
 				return uName
 			end
 		end
 	end
 	
-	-- set up minimal defense if necessary
-	action = defendNearbyBuildingsIfNeeded(self, 0.1)
-	if action ~= SKIP_THIS_TASK then
-		return action
-	end	
-	
-	-- support buildings
-	if (self.isAdvBuilder) then
-		action = areaLimit_AdvRadar(self)
-		if action ~= SKIP_THIS_TASK then
-			return action
-		end
-		if (self.isWaterMode == true) then
-			action = areaLimit_AdvSonar(self)
-			if action ~= SKIP_THIS_TASK then
-				return action
-			end
-		end
-		action = areaLimit_Jammer(self)
-		if action ~= SKIP_THIS_TASK then
-			return action
-		end		
-	else
-		action = areaLimit_Radar(self)
-		if action ~= SKIP_THIS_TASK then
-			return action
-		end
-		if (self.isWaterMode == true) then
-			action = areaLimit_Sonar(self)
-			if action ~= SKIP_THIS_TASK then
-				return action
-			end
-		end
-	end
-	if (incomeM > 50 and (not brutalStartDelayActive)) then
-		action = buildWithLimitedNumber(self, comsatByFaction[self.unitSide],min(1 + floor(incomeM/30),6))
-		if action ~= SKIP_THIS_TASK then
-			return action
-		end	
-	end
-
 	-- storage
 	if (sStage > 1) then
 		action = buildWithLimitedNumber(self, energyStorageByFaction[self.unitSide],sStage-1)
@@ -4078,7 +4055,50 @@ function stratMobileBuilderAction(self)
 			return action
 		end
 	end
-		
+	
+	-- set up minimal defense if necessary
+	action = defendNearbyBuildingsIfNeeded(self, 0.1)
+	if action ~= SKIP_THIS_TASK then
+		return action
+	end	
+	
+	if not focusOnEndGameArmy then
+		-- support buildings
+		if (self.isAdvBuilder) then
+			action = areaLimit_AdvRadar(self)
+			if action ~= SKIP_THIS_TASK then
+				return action
+			end
+			if (self.isWaterMode == true) then
+				action = areaLimit_AdvSonar(self)
+				if action ~= SKIP_THIS_TASK then
+					return action
+				end
+			end
+			action = areaLimit_Jammer(self)
+			if action ~= SKIP_THIS_TASK then
+				return action
+			end		
+		else
+			action = areaLimit_Radar(self)
+			if action ~= SKIP_THIS_TASK then
+				return action
+			end
+			if (self.isWaterMode == true) then
+				action = areaLimit_Sonar(self)
+				if action ~= SKIP_THIS_TASK then
+					return action
+				end
+			end
+		end
+		if (incomeM > 50 and (not brutalStartDelayActive)) then
+			action = buildWithLimitedNumber(self, comsatByFaction[self.unitSide],min(1 + floor(incomeM/30),6))
+			if action ~= SKIP_THIS_TASK then
+				return action
+			end	
+		end
+	end
+
 	-- metal and energy generation : try to reach target income
 	if (incomeM < targetMetalIncome) then
 		if not self.couldNotFindMetalSpot then
@@ -4128,10 +4148,15 @@ function stratMobileBuilderAction(self)
 	
 	self.couldNotFindGeoSpot = false
 	self.couldNotFindMetalSpot = false
-	--log(self.unitName.." brief area patrol ",self.ai) --DEBUG
-	-- short patrol
-	self.briefAreaPatrolFrames = 300
-	return briefAreaPatrol(self)
+	local hasFactories = countOwnUnits(self,nil,2,TYPE_PLANT) > 0
+
+	if (hasFactories) then
+		-- short patrol
+		self.briefAreaPatrolFrames = 300
+		return briefAreaPatrol(self)	
+	end
+	
+	return SKIP_THIS_TASK
 end
 
 function stratPlantAction(self)
@@ -4147,7 +4172,6 @@ function stratPlantAction(self)
 	end
 	
 	-- check recommended build options and build what it can
-	-- factories
 	local targetMobileUnits = currentStrategy.stages[sStage].mobileUnits
 	local mobileUnitCount = self.ai.unitHandler.mobileCount 
 	--log("mobiles="..mobileUnitCount,self.ai) --DEBUG

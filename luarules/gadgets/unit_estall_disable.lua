@@ -15,15 +15,13 @@ function gadget:GetInfo()
   return {
     name      = "UnitEStallDisable",
     desc      = "Deactivates units during energy stall",
-    author    = "Licho",
+    author    = "Licho, modified by raaar",
     date      = "23.7.2007",
     license   = "GNU GPL, v2 or later",
     layer     = 2,
     enabled   = true
   }
 end
-
--- raaar, aug 2015 : modified unit list
 
 --------------------------------------------------------------------------------
 if (gadgetHandler:IsSyncedCode()) then
@@ -34,11 +32,12 @@ if (gadgetHandler:IsSyncedCode()) then
 --Speed-ups
 
 local insert            = table.insert
-local GiveOrderToUnit		= Spring.GiveOrderToUnit
-local GetUnitStates			= Spring.GetUnitStates
-local GetUnitTeam				= Spring.GetUnitTeam
-local GetUnitResources	= Spring.GetUnitResources
-local GetGameSeconds    = Spring.GetGameSeconds
+local spGiveOrderToUnit		= Spring.GiveOrderToUnit
+local spGetUnitStates			= Spring.GetUnitStates
+local spGetUnitTeam				= Spring.GetUnitTeam
+local spGetUnitResources	= Spring.GetUnitResources
+local spGetGameSeconds    = Spring.GetGameSeconds
+local spGetTeamList = Spring.GetTeamList
 local spGetUnitHealth = Spring.GetUnitHealth
 local spCallCOBScript = Spring.CallCOBScript
 
@@ -113,6 +112,10 @@ local jammerDefs = {
 }
 
 local metalDefs = {
+  [ UnitDefNames['aven_metal_extractor'].id ] = true,
+  [ UnitDefNames['gear_metal_extractor'].id ] = true,
+  [ UnitDefNames['claw_metal_extractor'].id ] = true,
+  [ UnitDefNames['sphere_metal_extractor'].id ] = true,
   [ UnitDefNames['aven_exploiter'].id ] = true,
   [ UnitDefNames['gear_exploiter'].id ] = true,
   [ UnitDefNames['claw_exploiter'].id ] = true,
@@ -135,11 +138,11 @@ end
 
 function AddUnit(unitID, unitDefID) 
 	if (jammerDefs[unitDefID]) then
-		units[unitID] = { defID = unitDefID, changeStateTime = GetGameSeconds(), threshold = JAMMER_ENERGY_DISABLE_THRESHOLD } 
+		units[unitID] = { defID = unitDefID, changeStateTime = spGetGameSeconds(), threshold = JAMMER_ENERGY_DISABLE_THRESHOLD } 
 	elseif ( radarDefs[unitDefID]) then
-		units[unitID] = { defID = unitDefID, changeStateTime = GetGameSeconds(), threshold = RADAR_ENERGY_DISABLE_THRESHOLD}
+		units[unitID] = { defID = unitDefID, changeStateTime = spGetGameSeconds(), threshold = RADAR_ENERGY_DISABLE_THRESHOLD}
 	elseif ( metalDefs[unitDefID]) then
-		units[unitID] = { defID = unitDefID, changeStateTime = GetGameSeconds(), threshold = EXTRACTOR_ENERGY_DISABLE_THRESHOLD} 
+		units[unitID] = { defID = unitDefID, changeStateTime = spGetGameSeconds(), threshold = EXTRACTOR_ENERGY_DISABLE_THRESHOLD} 
 	end
 end
 
@@ -166,13 +169,11 @@ function gadget:UnitDestroyed(unitID)
 	RemoveUnit(unitID)
 end
 
-
-
 function gadget:GameFrame(n)
 	if (((n+8) % 64) < 0.1) then
 		local teamEnergy = {}
-		local gameSeconds = GetGameSeconds()
-		local temp = Spring.GetTeamList() 
+		local gameSeconds = spGetGameSeconds()
+		local temp = spGetTeamList() 
 		-- update energy available for each team
 		for _,teamID in ipairs(temp) do 
 			local eCur, eMax, ePull, eInc, _, _, _, eRec = Spring.GetTeamResources(teamID, "energy")
@@ -183,32 +184,33 @@ function gadget:GameFrame(n)
 		for unitID,data in pairs(units) do
 			if (gameSeconds - data.changeStateTime > changeStateDelay) then
 				local disabledUnitEnergyUse = disabledUnits[unitID] 
-				local unitTeamID = GetUnitTeam(unitID)
+				local unitTeamID = spGetUnitTeam(unitID)
+				local unitStates = spGetUnitStates(unitID)
 				
 				-- if unit has been disabled, check if it can be activated
 				if (disabledUnitEnergyUse~=nil) then -- we have disabled unit
 					if (teamEnergy[unitTeamID] > data.threshold + disabledUnitEnergyUse) then  -- we still have enough energy to reenable unit
 						disabledUnits[unitID]=nil
-						GiveOrderToUnit(unitID, CMD.ONOFF, { 1 }, { })
+						spGiveOrderToUnit(unitID, CMD.ONOFF, { 1 }, { })
 						data.changeStateTime = gameSeconds
 						teamEnergy[unitTeamID] = teamEnergy[unitTeamID] - disabledUnitEnergyUse
 					end
 				else -- we have non-disabled unit
-					local _, _, _, energyUse =	GetUnitResources(unitID)
+					local _, _, _, energyUse =	spGetUnitResources(unitID)
 					local energyUpkeep = UnitDefs[data.defID].energyUpkeep
 					if (energyUse == nil or energyUpkeep == nil) then -- unit probably doesn't exist, get rid of it
 						RemoveUnit(unitID)
 					elseif (energyUse > 0 and teamEnergy[unitTeamID] < data.threshold) then -- there is not enough energy to keep unit running (its energy use auto dropped to 0), we will disable it 
-						if (GetUnitStates(unitID).active) then  -- only disable "active" unit
-							GiveOrderToUnit(unitID, CMD.ONOFF, { 0 }, { })
+						if (unitStates.active) then  -- only disable "active" unit
+							spGiveOrderToUnit(unitID, CMD.ONOFF, { 0 }, { })
 							data.changeStateTime = gameSeconds
 							disabledUnits[unitID] = energyUpkeep
 						end				
 					end
 					
-					-- disable units that aren't fully built
+					-- disable units that aren't fully built or if they're set to "off"
 					local _,_,_,_,bp = spGetUnitHealth(unitID)
-					if bp and bp < 1 then
+					if (bp and bp < 1) or (not unitStates.active) then
 						spCallCOBScript(unitID, "Deactivate", 0)
 						--Spring.Echo("deactivating... "..unitID)
 					else

@@ -1,3 +1,88 @@
+2022/08/18 ------------------ NOTES v1.89 ----------------------
+
+--- Balance / Mechanics
+
+ECONOMY
+- slightly improved wind generator models and reduced collision size for non-sphere wind generators
+- fixed metal, wind and tidal generators sometimes spinning when they should be offline
+- metal extractors no longer self-destruct immediately
+- fixed an issue where basic metal extractors would no longer produce metal if partially reclaimed then rebuilt
+- reduced cost solar, wind and tidal generators by about 10%
+- increased hp for non-sphere metal extractors by about 20% and adjusted cost
+- reduced cost L2 fusion reactors by about 4%
+- reduced cost of L2 metal extractors by about 10%, with exploiter cost going up relative to advanced extractors
+- reduced energy and metal storage building capacity from 15000E/4000M to 10000E/2500M
+- increased HP of storage buildings from 1000-1500 to 1500-2000
+(after adjusting costs they're about 10-20% cheaper than before)
+
+OTHER
+- commander HP upgrade module changed from +16% to 17%
+- commander damage upgrade module changed from +20% to +22%
+
+- fixing the secondary wreckage spawning condition for a lot of units
+- only mines, grenado, exploder and commanders can now self-destruct themselves
+
+- slightly increased dmg/s of light raiders and in some cases increased acceleration and reduced HP
+- slightly increased dmg/s of light laser towers
+- slightly increased dmg/s of light infantry robots in general
+
+- fixed AVEN construction tower turret turning significantly slower than the others
+
+- GEAR "Bandit" has slightly higher dmg/s
+- GEAR mines had footprint reduced from 2x2 to 1x1
+
+- CLAW "Hornet" lasers drain 15E/s and the unit cost is reduced by about 4%
+- increased CLAW "Hazard" rocket turn rate to avoid overshooting
+
+- SPHERE "Cluster" modules with laser had damage type changed from L to M
+- SPHERE "Atom" is about 4% cheaper
+- SPHERE construction sphere got HP reduced to 2/3 but is 50% faster and drains about half as much energy to move
+(the 3d model was updated as well)
+
+--- AI
+
+- more likely to reposition commander and other mobile builders to find a suitable spot to build stuff instead of getting stuck on patrol
+- avoid building the construction tower underwater if using a land-based strategy
+- modified strategies to build more factories, builders and build construction towers in pairs on later stages
+- more likely to mobilize the army to engage when its core base is under attack
+- miscellaneous tuning of AI strategies, build placement and other decision making improvements
+- reduced "Brutal" mode's "cheat" income growth from +1m/+10m per min to +0.6m/+6e
+
+--- UI / Visual
+
+- added effects when units and features are built or being reclaimed
+
+- improved how AVEN "Zeta" form commander's run animation scales with speed modifiers
+
+- improved a performance issue related to aircraft thruster effects 
+(most significant when the game is sped-up, like on replays, catching up after disconnect, etc.) 
+
+- modified how minimap/zoom-out icons are scaled with unit cost and size
+- added distinctive icon for COMSAT stations
+
+- temporarily removed clicking sound associated to area-metal-extractor commands
+(it's hearable by spectators and made watching AI fights annoying)
+
+- GEAR "Canister" is now labeled "Incendiary Mortar Robot"
+- GEAR "Big Bob" changed icon type to "Multipurpose"
+
+- bottom-left info panel shows full information when checking build or morph orders
+
+- updated code to allow support for positional key codes in the future (by Badosu)
+
+- removed minimap resize/move/maximize buttons, improved auto-scaling and slightly increased its size
+(the maximize button could trap the user on maximized minimap view with no easy way to revert)
+
+- added "window resize monitor" widget which triggers UI reload when players toggle between fullscreen or resize the game window
+(this fixes some UI elements that weren't properly resizing/positioning themselves in those situations)
+
+- settings widget
+. enables vsync if it's disabled
+. no longer tries to disable grass or enable ground decals
+. disables softparticles if using BAR105 engine
+. set font-related settings
+
+
 2022/07/01 ------------------ NOTES v1.88 ----------------------
 
 - added #GAME SANDBOX command to disable victory conditions

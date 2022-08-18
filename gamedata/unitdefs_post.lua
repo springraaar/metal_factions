@@ -140,6 +140,27 @@ local noDecalUnits = {
 	sphere_meteorite_rocket = true
 }
 
+local noIconOverrideUnits = {
+	gear_mine = true,
+	gear_incendiary_mine = true,
+	aven_premium_nuclear_rocket = true,
+	aven_nuclear_rocket = true,
+	aven_dc_rocket = true,
+	aven_lightning_rocket = true,
+	gear_premium_nuclear_rocket = true,
+	gear_nuclear_rocket = true,
+	gear_dc_rocket = true,
+	gear_pyroclasm_rocket = true,
+	claw_premium_nuclear_rocket = true,
+	claw_nuclear_rocket = true,
+	claw_dc_rocket = true,
+	claw_impaler_rocket = true,
+	sphere_premium_nuclear_rocket = true,
+	sphere_nuclear_rocket = true,
+	sphere_dc_rocket = true,
+	sphere_meteorite_rocket = true
+}
+
 -- for units with extra energy income associated to a metal drain
 -- this is here to disable the unitdef's values as it's handled through a gadget 
 local metalDrainingEnergyGenerators = {
@@ -156,6 +177,45 @@ local conditionalEnergyGenerators = {
 } 
 
 
+local selfDUnits = {
+	-- AVEN
+	aven_commander = true,
+	aven_u1commander = true,
+	aven_u2commander = true,
+	aven_u3commander = true,
+	aven_u4commander = true,
+	aven_u5commander = true,
+	aven_u6commander = true,
+	-- GEAR
+	gear_commander = true,
+	gear_u1commander = true,
+	gear_u2commander = true,
+	gear_u3commander = true,
+	gear_u4commander = true,
+	gear_u5commander = true,
+	gear_u6commander = true,
+	gear_mine = true,
+	gear_grenado = true,
+	gear_exploder = true,
+	-- CLAW
+	claw_commander = true,
+	claw_u1commander = true,
+	claw_u2commander = true,
+	claw_u3commander = true,
+	claw_u4commander = true,
+	claw_u5commander = true,
+	claw_u6commander = true,
+	-- SPHERE
+	sphere_commander = true,
+	sphere_u1commander = true,
+	sphere_u2commander = true,
+	sphere_u3commander = true,
+	sphere_u4commander = true,
+	sphere_u5commander = true,
+	sphere_u6commander = true
+}
+
+
 -- unitdef tweaking
 if (true) then
 	for name,unitDef in pairs(UnitDefs) do
@@ -163,7 +223,6 @@ if (true) then
 		local mv = unitDef.maxvelocity
 		local ac = unitDef.acceleration
 		local sd = unitDef.sightdistance
-
 		if (sd) then
 
 			-- airlos = los, and increase los 20%
@@ -206,7 +265,7 @@ if (true) then
 		if (unitDef.radardistance and tonumber(unitDef.radardistance) > 0) or (unitDef.sonardistance and tonumber(unitDef.sonardistance) > 0) then
 			unitDef.activatewhenbuilt = true
 		end
-
+		
 		if (mv and tonumber(mv) > 0) then
 			mv = tonumber(mv)
 			-- disable transporting enemy units
@@ -286,6 +345,21 @@ if (true) then
 		-- disable E income on the unitdef as it's handled by script/gadget
 		if conditionalEnergyGenerators[name] then
 			unitDef.energymake = 0
+		end
+		-- disable self-destruction option
+		if not selfDUnits[name] then
+			unitDef.canselfdestruct = 0
+		end
+		
+		-- override icon
+		if not noIconOverrideUnits[name] then
+			local iconPrefix = unitDef.icontype
+			if iconPrefix then
+				local cost = tonumber(unitDef.buildcostmetal)
+				local sizeMod = 0.4*math.sqrt(tonumber(unitDef.footprintx)*tonumber(unitDef.footprintz)) + 1.0*(cost > 1 and math.sqrt(cost/350) or cost/350)
+				local iconSuffix = "s"..math.max(0,math.min(math.floor(sizeMod),9))
+				unitDef.icontype = iconPrefix..iconSuffix
+			end
 		end
 	end
 end

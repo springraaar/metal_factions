@@ -56,6 +56,7 @@ function TaskQueueBehavior:Init(ai, uId)
 	self.buildFailures = {} -- <unitName,lastAttemptFrame>
 	self.couldNotFindMetalSpot = false
 	self.couldNotFindGeoSpot = false
+	self.repositionAfterFailToFindBuildPos = false
 	self.beingUselessCounter = 0
 	self.lastProgressFrame = 0
 	self.nextMetalSpotPos = nil
@@ -206,70 +207,98 @@ function TaskQueueBehavior:progressQueue()
 		
 		-- reset the mex building position
 		self.nextMetalSpotPos = nil
-		
-		if (self.isMobileBuilder and value ~= SKIP_THIS_TASK) then
-			local cmds = spGetUnitCommands(self.unitId,3)
-			local cmdCount = 0
-			if (cmds and (#cmds >= 0)) then
-				cmdCount = #cmds
-			end
-			--[[
-			if (self.isCommander) then
-				Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(tostring(self.isAttackMode).." "..cmdCount.." "..tostring(self.currentProject))) --DEBUG
-			else
-				Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(self:builderRoleStr().." "..cmdCount.." "..tostring(self.currentProject))) --DEBUG
-			end
-			]]--
-			-- if the unit processed something but is still with an empty command queue, do something!
-			if cmdCount == 0 then
-				local radius = MED_RADIUS
-				local basePos = self.ai.unitHandler.basePos
-				
-				self.beingUselessCounter = self.beingUselessCounter + 1
-				if (self.beingUselessCounter > 1) then
-					
-					if ( basePos.x > 0 and basePos.z > 0) then
-						
-						-- if unit is "disconnected" from base, order it to move a bit
-						-- may be due to map hander's pathing map resolution being too low
-						if not self.ai.mapHandler:checkConnection(self.ai.unitHandler.basePos, self.pos,self.pFType) then									
 
-							--log(self.unitName.." is being useless, move (counter="..self.beingUselessCounter..")",self.ai) --DEBUG
-							p = newPosition()
-							p.x = basePos.x-radius/2+random(1,radius)
-							p.z = basePos.z-radius/2+random(1,radius)
-							p.y = spGetGroundHeight(p.x,p.z)
-							spGiveOrderToUnit(self.unitId,CMD.STOP,{p.x,p.y,p.z},{})
-							spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},CMD.OPT_SHIFT)
-							
-							-- add another order to queue in case the first is invalid
-							spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x - radius/2 + random( 1, radius),p.y,p.z - radius/2 + random( 1, radius)},CMD.OPT_SHIFT)
-						else
-						-- patrol a bit, do some good
-	
-							--log(self.unitName.." is being useless, patrol (counter="..self.beingUselessCounter..")",self.ai) --DEBUG
-							p = newPosition()
-							p.x = basePos.x-radius/2+random(1,radius)
-							p.z = basePos.z-radius/2+random(1,radius)
-							p.y = spGetGroundHeight(p.x,p.z)
-							spGiveOrderToUnit(self.unitId,CMD.STOP,{p.x,p.y,p.z},{})
-							spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x,p.y,p.z},CMD.OPT_SHIFT)
-							
-							-- add another order to queue in case the first is invalid
-							spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x - radius/2 + random( 1, radius),p.y,p.z - radius/2 + random( 1, radius)},CMD.OPT_SHIFT)
-						end
+		-- if the unit processed something but is still with an empty command queue, do something!		
+		if (self.isMobileBuilder and value ~= SKIP_THIS_TASK) then
+			-- try repositioning after failing to find build spot for some things
+			if self.repositionAfterFailToFindBuildPos then
+				-- randomly move somewhere towards the center of the map
+				local dist = 500
+				local selfPos = self.pos
+				local mapCenterPos = {x=Game.mapSizeX*0.5,y=0,z=Game.mapSizeZ*0.5 } 
+				local centerDist = distance(selfPos,mapCenterPos)
+				local toCenterDir = {x=(mapCenterPos.x - selfPos.x)/centerDist, y=0, z=(mapCenterPos.z - selfPos.z)/centerDist}
+				
+				for i=1,3 do
+					local p = newPosition()
+					p.x = selfPos.x-dist/2+random(1,dist) + toCenterDir.x*dist
+					p.z = selfPos.z-dist/2+random(1,dist) + toCenterDir.z*dist
+					p.y = spGetGroundHeight(p.x,p.z)
 					
-						self.progress = true
-						self.currentProject = "custom"
-						self.waitLeft = 120	
+					if  self.ai.mapHandler:checkConnection(selfPos, p,self.pFType) then
+						spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},{})
+						break
 					end
 				end
+						
+				self.repositionAfterFailToFindBuildPos = false
+				self.progress = true
+				self.currentProject = "custom"
+				self.waitLeft = 240	
 			else
-				--if (self.beingUselessCounter > 0 ) then
-				--	log(self.unitName.." is being useful??? (counter="..self.beingUselessCounter..") proj="..tostring(self.currentProject),self.ai) --DEBUG
-				--end
-				-- assume it's doing something
-				self.beingUselessCounter = 0
+				local cmds = spGetUnitCommands(self.unitId,3)
+				local cmdCount = 0
+				if (cmds and (#cmds >= 0)) then
+					cmdCount = #cmds
+				end
+				--[[
+				if (self.isCommander) then
+					Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(tostring(self.isAttackMode).." "..cmdCount.." "..tostring(self.currentProject))) --DEBUG
+				else
+					Spring.MarkerAddPoint(self.pos.x,100,self.pos.z,tostring(self:builderRoleStr().." "..cmdCount.." "..tostring(self.currentProject))) --DEBUG
+				end
+				]]--
+				--log(self.unitName.." : "..spGetGameFrame().." task="..tostring(value).." curTask="..tostring(self.currentProject).." progress="..tostring(self.progress).." cmdCount="..cmdCount,self.ai) --DEBUG
+				if cmdCount == 0 then
+					--log(self.unitName.." has empty command queue",self.ai) --DEBUG
+					local radius = MED_RADIUS
+					local basePos = self.ai.unitHandler.basePos
+					
+					self.beingUselessCounter = self.beingUselessCounter + 1
+					if (self.beingUselessCounter > 1) then
+						if ( basePos.x > 0 and basePos.z > 0) then
+							
+							-- if unit is "disconnected" from base, order it to move a bit
+							-- may be due to map hander's pathing map resolution being too low
+							if not self.ai.mapHandler:checkConnection(self.ai.unitHandler.basePos, self.pos,self.pFType) then									
+	
+								--log(self.unitName.." is being useless, move (counter="..self.beingUselessCounter..")",self.ai) --DEBUG
+								p = newPosition()
+								p.x = basePos.x-radius/2+random(1,radius)
+								p.z = basePos.z-radius/2+random(1,radius)
+								p.y = spGetGroundHeight(p.x,p.z)
+								spGiveOrderToUnit(self.unitId,CMD.STOP,{p.x,p.y,p.z},{})
+								spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},CMD.OPT_SHIFT)
+								
+								-- add another order to queue in case the first is invalid
+								spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x - radius/2 + random( 1, radius),p.y,p.z - radius/2 + random( 1, radius)},CMD.OPT_SHIFT)
+							else
+							-- patrol a bit, do some good
+		
+								--log(self.unitName.." is being useless, patrol (counter="..self.beingUselessCounter..")",self.ai) --DEBUG
+								p = newPosition()
+								p.x = basePos.x-radius/2+random(1,radius)
+								p.z = basePos.z-radius/2+random(1,radius)
+								p.y = spGetGroundHeight(p.x,p.z)
+								spGiveOrderToUnit(self.unitId,CMD.STOP,{p.x,p.y,p.z},{})
+								spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x,p.y,p.z},CMD.OPT_SHIFT)
+								
+								-- add another order to queue in case the first is invalid
+								spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x - radius/2 + random( 1, radius),p.y,p.z - radius/2 + random( 1, radius)},CMD.OPT_SHIFT)
+							end
+						
+							self.progress = true
+							self.currentProject = "custom"
+							self.waitLeft = 120	
+						end
+					end
+				else
+					--if (self.beingUselessCounter > 0 ) then
+					--	log(self.unitName.." is being useful??? (counter="..self.beingUselessCounter..") proj="..tostring(self.currentProject),self.ai) --DEBUG
+					--end
+					-- assume it's doing something
+					self.beingUselessCounter = 0
+				end
 			end
 		end
 	end
@@ -281,6 +310,7 @@ function TaskQueueBehavior:processItem(value, checkResources, checkAssistNearby)
 	local p = false
 	local selfPos = self.pos
 	local ud = nil
+	self.repositionAfterFailToFindBuildPos = false
 	
 	-- evaluate any functions here, they may return tables
 	while type(value) == "function" do
@@ -460,7 +490,7 @@ function TaskQueueBehavior:processItem(value, checkResources, checkAssistNearby)
 								self.couldNotFindMetalSpot = false
 							end 
 						else
-							--log(self.unitName.." at ( "..selfPos.x.." ; "..selfPos.z..") could not find build spot for "..value,self.ai)
+							-- log(self.unitName.." at ( "..selfPos.x.." ; "..selfPos.z..") could not find build spot for "..value,self.ai)
 							if ud.needGeo then
 								self.couldNotFindGeoSpot = true
 							else
@@ -506,12 +536,10 @@ function TaskQueueBehavior:processItem(value, checkResources, checkAssistNearby)
 						-- misc placement
 						else
 							if (not setContains(unitTypeSets[TYPE_SUPPORT],value) ) then
-								local spreadDistance = (setContains(unitTypeSets[TYPE_FUSION],value) and 0 or BUILD_SPREAD_DISTANCE) 
+								local spreadDistance = (setContains(unitTypeSets[TYPE_FUSION],value) and 8 or BUILD_SPREAD_DISTANCE) 
 								
 								p = self.ai.buildSiteHandler:closestBuildSpot(self, ud, spreadDistance)
 								if p ~= nil then
-									
-									
 									-- if it's a cheap multi-build structure, queue further orders
 									local shift = multiBuildBuildings[ud.name]
 									if (shift and shift > 0) then
@@ -521,11 +549,25 @@ function TaskQueueBehavior:processItem(value, checkResources, checkAssistNearby)
 										spGiveOrderToUnit(self.unitId,-ud.id,{p.x+shift,p.y,p.z-shift},CMD.OPT_SHIFT)
 										spGiveOrderToUnit(self.unitId,-ud.id,{p.x+shift,p.y,p.z+shift},CMD.OPT_SHIFT)
 									else
-										spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},{})
+										-- if it's a static build tower and on stage 2+, build two instead
+										local isTargetStaticBuilder = constructionTowers[ud.name] ~= nil
+										if isTargetStaticBuilder then
+											local currentStrategy = self.ai.currentStrategy
+											local sStage = self.ai.currentStrategyStage
+											if sStage and sStage > 1 then
+												spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z-32},{})
+												spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z+32},CMD.OPT_SHIFT)
+											else
+												spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},{})
+											end
+										else
+											spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},{})
+										end
 									end
 									success = true
 								else
-									-- log(self.unitName.." at ( "..selfPos.x.." ; "..selfPos.z..") could not find build spot for "..value,self.ai)
+									self.repositionAfterFailToFindBuildPos = true
+									--log(self.unitName.." at ( "..selfPos.x.." ; "..selfPos.z..") could not find build spot for "..value,self.ai)
 									success = false
 								end
 							else

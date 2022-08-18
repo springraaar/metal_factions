@@ -225,42 +225,16 @@ QueryBuildInfo(piecenum)
 	piecenum = pad;
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-}
-
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode base type BITMAPONLY | BITMAP1;
-		explode pad type BITMAPONLY | BITMAP2;
-		explode b2 type BITMAPONLY | BITMAP3;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode base type BITMAPONLY | BITMAP1;
-		explode pad type BITMAPONLY | BITMAP2;
-		explode b2 type BITMAPONLY | BITMAP3;
-		explode b2 type SHATTER | BITMAP5;
-		return (0);
+		explode pad type SHATTER;
+		explode b2 type SHATTER;
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode base type BITMAPONLY | BITMAP1;
-		explode pad type SHATTER | BITMAP2;
-		explode b2 type SHATTER | BITMAP3;
-		explode b2 type SHATTER | BITMAP5;
-		return (0);
-	}
-	corpsetype = 3;
-		explode base type BITMAPONLY | BITMAP1;
-		explode pad type SHATTER | BITMAP2;
-		explode b2 type SHATTER | BITMAP3;
-		explode b2 type SHATTER | BITMAP5;
+	explode base type SHATTER;
+	explode pad type SHATTER;
+	explode b2 type SHATTER;
+	return (2);
 }

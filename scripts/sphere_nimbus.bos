@@ -181,13 +181,10 @@ AimSecondary(heading, pitch)
 }
 
 
-
-
 Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		corpsetype = 1;
 		explode sphere type SHATTER | BITMAP4;
 		explode left type SHATTER | BITMAP4;
 		explode right type SHATTER | BITMAP4;

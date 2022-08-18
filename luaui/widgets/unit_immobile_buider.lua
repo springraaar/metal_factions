@@ -15,17 +15,13 @@ function widget:GetInfo()
   return {
     name      = "ImmobileBuilder",
     desc      = "Sets immobile builders to ROAM, with a PATROL command",
-    author    = "trepan",
-    date      = "Jan 8, 2007",
+    author    = "trepan, modified by raaar",
+    date      = "2007-2022",
     license   = "GNU GPL, v2 or later",
     layer     = 0,
     enabled   = true
   }
 end
-
--- raaar @nov 2015 : disabled patrol setup for created builders (they'll still get it if idle)
--- raaar @Sep 2015 : enabled patrol setup for idle builders
--- raaar @Sep 2013 : modified syntax to conform to spring 95
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -99,7 +95,6 @@ local function SetupUnit(unitID)
 	if (x) then
 		local cmds = spGetUnitCommands(unitID,5)
 		if (cmds and (#cmds == 0)) then
-			spGiveOrderToUnit(unitID, CMD_MOVE_STATE, { 2 }, CMD.OPT_SHIFT)
 			if (x > hmsx) then
 				x = x - 25
 			else
@@ -110,7 +105,8 @@ local function SetupUnit(unitID)
 			else
 				z = z + 25
 			end
-			spGiveOrderToUnit(unitID, CMD_PATROL, { x, y, z }, CMD.OPT_SHIFT)
+			spGiveOrderToUnit(unitID, CMD_PATROL, { x, y, z }, {})
+			spGiveOrderToUnit(unitID, CMD_MOVE_STATE, { 2 }, CMD.OPT_SHIFT)
 		end
 	end
 end
@@ -160,6 +156,8 @@ function widget:GameFrame(frame)
 		cmds = spGetUnitCommands(unitID,5)
 		-- if first command targets something outside build radius, cancel it
 		if (cmds and (#cmds > 0)) then
+			idlers[unitID] = nil
+			--Spring.Echo("NOT IDLE "..unitID.." frame="..frame)
 			for i,cmd in ipairs(cmds) do
 				if trackedCommands[cmd["id"]] and cmd["params"] then
 	  	  			--Spring.Echo(CMD[cmd["id"]].." params="..printArr(cmd["params"]))

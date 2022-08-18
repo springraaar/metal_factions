@@ -5,7 +5,7 @@
 
 piece  base, b2, post,cover,grid1,grid2,grid3, top,top2;
 
-static-var  windDir;
+static-var  windSpeed,windAngle;
 
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
@@ -36,49 +36,43 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 	return (0);
 }
 
-Go()
+SetSpeed(spd)
 {
-	turn post to y-axis windDir speed <20.000000>;
-	return (0);
+	windSpeed = spd;
 }
 
-Stop()
+SetDirection(angle)
 {
-	return (0);
+	windAngle = angle;
+}
+
+
+activationControl(buildPercentLeft)
+{
+	while(TRUE)
+	{
+		buildPercentLeft = get(BUILD_PERCENT_LEFT);
+		if ( buildPercentLeft == 0 && windSpeed > 0)
+		{
+			turn post to y-axis windAngle speed <20.000000>;
+		}
+		else
+		{
+			stop-spin post around y-axis decelerate <10.000000>;
+		}
+	
+		sleep 100;
+	}
 }
 
 
 Create()
 {
-	windDir = 0;
+	windSpeed = 0;
+	windAngle = 0;
 	start-script SmokeUnit();
-	return (0);
+	start-script activationControl();
 }
-
-Activate()
-{
-	return (0);
-}
-
-Deactivate()
-{
-	return (0);
-}
-
-SetSpeed(Func_Var_1)
-{
-	return (0);
-}
-SetDirection(dir)
-{
-	//if( get BUILD_PERCENT_LEFT == 0 )
-	//{
-		windDir = dir;
-		turn post to y-axis windDir speed <20.000000>;
-	//}
-	return (0);
-}
-
 
 Killed(severity, corpsetype)
 {

@@ -150,7 +150,6 @@ if (gadgetHandler:IsSyncedCode()) then
 			spSetUnitCollisionVolumeData(unitID, xs, ys, zs, xo, yo, zo, vtype, htype, axis)
 			spSetUnitMidAndAimPos(unitID,0, ys*0.5, 0,0, ys*0.75+yo,0,true)
 		end
-		
 	end
 
 

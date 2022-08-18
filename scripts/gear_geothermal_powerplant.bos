@@ -40,49 +40,17 @@ Create()
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
-
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
+	if( severity <= 50 )
 	{
-		corpsetype = 1;
 		explode b3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 		explode pipes1 type SHATTER | EXPLODE_ON_HIT | BITMAP2;		
 		explode pipes2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 		explode pipes3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 		explode pipes4 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		return (0);
+		return (1);
 	}
-	if( severity <= 50 )
-	{
-		corpsetype = 2;
-		explode b2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;		
-		explode b3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode pipes1 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode pipes2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode pipes3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode pipes4 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-
-		return (0);
-	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode b2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;		
-		explode b3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode pipes1 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode pipes2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode pipes3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode pipes4 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-
-		return (0);
-	}
-	corpsetype = 3;
 	explode b2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;		
 	explode b3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode pipes1 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
@@ -90,5 +58,5 @@ Killed(severity, corpsetype)
 	explode pipes3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode pipes4 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 
-	return (0);
+	return (2);
 }

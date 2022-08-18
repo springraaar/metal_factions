@@ -429,33 +429,22 @@ QuerySecondary(piecenum)
 		return (0);
 	}
 }
-SweetSpot(piecenum)
-{
-	piecenum = torso;
-	return (0);
-}
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode torso type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
 		explode torso type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 		return (0);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode torso type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		return (0);
-	}
-	corpsetype = 3;
+
+	explode lthigh type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode rthigh type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode lleg type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode rleg type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode luparm type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode ruparm type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 	explode torso type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+
 	return (0);
 }

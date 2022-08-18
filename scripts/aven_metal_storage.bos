@@ -40,45 +40,19 @@ Create()
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
-
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode b6 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode b7 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode b8 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode b9 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
 		explode b6 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 		explode b7 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 		explode b8 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 		explode b9 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		return (0);
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode b6 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode b7 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode b8 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		explode b9 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-		return (0);
-	}
-	corpsetype = 3;
 	explode b6 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 	explode b7 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 	explode b8 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 	explode b9 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-	return (0);
+	return (2);
 }

@@ -70,7 +70,6 @@
 	//***********
 	explodeAs=SMALL_BUILDINGEX;
 	selfDestructAs=SMALL_BUILDINGEX;
-	selfdestructcountdown=0;
 
 	//************************************************************
 	//  Orders
@@ -88,10 +87,11 @@
 	[CustomParams]
 	{
 		builtBy=sphere_l1builder,sphere_l2builder;
+		evalFactor=1.14;
 	}
 
-	buildCostEnergy=786;//#AUTO#
-	buildCostMetal=157;//#AUTO#
-	buildTime=1875;//#AUTO#
-	mass=196;//#AUTO#
+	buildCostEnergy=722;//#AUTO#
+	buildCostMetal=144;//#AUTO#
+	buildTime=1722;//#AUTO#
+	mass=192;//#AUTO#
 }

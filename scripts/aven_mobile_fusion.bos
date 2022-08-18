@@ -108,51 +108,15 @@ Create()
 	return (0);
 }
 
-
-
-SweetSpot(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
-
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode b3 type SHATTER | BITMAP1;
-		explode b4 type SHATTER | BITMAP1;
-		explode b5 type SHATTER | BITMAP1;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
 		explode b3 type SHATTER | BITMAP1;
 		explode b4 type SHATTER | BITMAP1;
 		explode b5 type SHATTER | BITMAP1;
-		explode left type SHATTER | BITMAP1;
-		explode right type SHATTER | BITMAP1;
-		explode p1 type SHATTER | BITMAP1;
-		explode p2 type SHATTER | BITMAP1;
-		explode p3 type SHATTER | BITMAP1;
-		return (0);
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode b3 type SHATTER | BITMAP1;
-		explode b4 type SHATTER | BITMAP1;
-		explode b5 type SHATTER | BITMAP1;
-		explode left type SHATTER | BITMAP1;
-		explode right type SHATTER | BITMAP1;
-		explode p1 type SHATTER | BITMAP1;
-		explode p2 type SHATTER | BITMAP1;
-		explode p3 type SHATTER | BITMAP1;
-		return (0);
-	}
-	corpsetype = 3;
 	explode b3 type SHATTER | BITMAP1;
 	explode b4 type SHATTER | BITMAP1;
 	explode b5 type SHATTER | BITMAP1;
@@ -161,5 +125,5 @@ Killed(severity, corpsetype)
 	explode p1 type SHATTER | BITMAP1;
 	explode p2 type SHATTER | BITMAP1;
 	explode p3 type SHATTER | BITMAP1;
-	return (0);
+	return (2);
 }

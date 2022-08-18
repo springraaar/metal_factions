@@ -20,7 +20,7 @@
 	// ------------------- health/cost/size
 	FootprintX=2;
 	FootprintZ=2;
-	maxDamage=580;
+	maxDamage=550;
 
 
 	// ------------------- resources
@@ -42,7 +42,7 @@
 	maxSlope=17;
 	maxVelocity=3.1;
 	brakeRate=0.06;
-	Acceleration=0.12;
+	Acceleration=0.32;
 	turnRate=650;
 	turnInPlace=1;
 	movementClass=TANKSH3;
@@ -82,8 +82,8 @@
 		explosionGenerator0=custom:GLOWSML;
 	}
 
-	buildCostEnergy=655;//#AUTO#
-	buildCostMetal=131;//#AUTO#
-	buildTime=1561;//#AUTO#
-	mass=94;//#AUTO#
+	buildCostEnergy=750;//#AUTO#
+	buildCostMetal=150;//#AUTO#
+	buildTime=1789;//#AUTO#
+	mass=93;//#AUTO#
 }

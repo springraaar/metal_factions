@@ -5,9 +5,6 @@
 
 piece  base, wheel, b2, b3;
 
-static-var  statechg_DesiredState, statechg_StateChanging;
-
-
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
 	while( get BUILD_PERCENT_LEFT )
@@ -36,105 +33,54 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 	return (0);
 }
 
-Go()
+activationControl(buildPercentLeft,inWater)
 {
-	dont-cache wheel;
-	spin wheel around y-axis speed <35.005495>;
-	return (0);
-}
-
-Stop()
-{
-	spin wheel around y-axis speed <0.000000>;
-	cache wheel;
-	return (0);
-}
-
-InitState()
-{
-	statechg_DesiredState = TRUE;
-	statechg_StateChanging = FALSE;
-	return (0);
-}
-
-RequestState(requestedstate, currentstate)
-{
-	if( statechg_StateChanging )
+	while(TRUE)
 	{
-		statechg_DesiredState = requestedstate;
-		return (0);
-	}
-	statechg_StateChanging = TRUE;
-	currentstate = statechg_DesiredState;
-	statechg_DesiredState = requestedstate;
-	while( statechg_DesiredState != currentstate )
-	{
-		if( statechg_DesiredState == 0 )
+		buildPercentLeft = get(BUILD_PERCENT_LEFT);
+		inWater = get(IN_WATER);
+		
+		if ( buildPercentLeft == 0 && inWater > 0)
 		{
-			call-script Go();
-			currentstate = 0;
+			set ACTIVATION to TRUE;
+			spin wheel around y-axis speed <35.005495>;
 		}
-		if( statechg_DesiredState == 1 )
+		else
 		{
-			call-script Stop();
-			currentstate = 1;
+			set ACTIVATION to FALSE;	//TODO should disable energy production, but doesn't
+			stop-spin wheel around y-axis decelerate <10.000000>;
 		}
+	
+		sleep 300;
 	}
-	statechg_StateChanging = FALSE;
-	return (0);
 }
 
 Create()
 {
-	dont-shade wheel;
-	call-script InitState();
 	start-script SmokeUnit();
-	return (0);
+	start-script activationControl();
 }
 
 Activate()
 {
-	start-script RequestState(0);
-	return (0);
+	return(0);
 }
 
 Deactivate()
 {
-	start-script RequestState(1);
-	return (0);
+	return(0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode base type BITMAPONLY | BITMAP1;
-		explode wheel type BITMAPONLY | BITMAP2;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode base type BITMAPONLY | BITMAP1;
-		explode wheel type BITMAPONLY | BITMAP2;
-		return (0);
+		explode wheel type SHATTER;
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode base type BITMAPONLY | BITMAP1;
-		explode wheel type BITMAPONLY | BITMAP2;
-		return (0);
-	}
-	corpsetype = 3;
-	explode base type BITMAPONLY | BITMAP1;
-	explode wheel type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-	return (0);
+	explode base type SHATTER;
+	explode wheel type SHATTER;
+	return (2);
+	
 }

@@ -37,7 +37,7 @@ local modifiersByUpgrade = {
 	upgrade_red_1_damage = { damage = 0.07, speed = -0.01, restrictions = "armed", limit = 3, type = TYPE_MINOR },
 	upgrade_red_1_range = { range = 0.035, speed = -0.02, restrictions = "armed", limit = 3, type = TYPE_MINOR },
 
-	upgrade_red_2_commander_damage = { damage = 0.2, restrictions = "commander", limit = 2, type = TYPE_COMMANDER },
+	upgrade_red_2_commander_damage = { damage = 0.22, restrictions = "commander", limit = 2, type = TYPE_COMMANDER },
 	upgrade_red_2_commander_range = { range = 0.1, restrictions = "commander", limit = 1, type = TYPE_COMMANDER },
 	
 	upgrade_red_3_damage = { damage = 0.13, restrictions = "armed", limit = 1, type = TYPE_MAJOR },
@@ -47,8 +47,8 @@ local modifiersByUpgrade = {
 	upgrade_green_1_hp = { hp = 0.06, speed = -0.01, limit = 3, type = TYPE_MINOR },
 	upgrade_green_1_regen = { regen = 1, php_regen = 0.001, limit = 3, type = TYPE_MINOR },
 
-	upgrade_green_2_commander_regen = { regen = 11, php_regen = 0.002, restrictions = "commander", limit = 3, type = TYPE_COMMANDER },
-	upgrade_green_2_commander_hp = { hp = 0.16, restrictions = "commander", limit = 2, type = TYPE_COMMANDER },
+	upgrade_green_2_commander_regen = { regen = 8, php_regen = 0.003, restrictions = "commander", limit = 3, type = TYPE_COMMANDER },
+	upgrade_green_2_commander_hp = { hp = 0.17, restrictions = "commander", limit = 2, type = TYPE_COMMANDER },
 
 	upgrade_green_3_regen = { regen = 3, php_regen = 0.002, limit = 1, type = TYPE_MAJOR },
 	upgrade_green_3_hp = { hp=0.12, limit = 1, type = TYPE_MAJOR },
@@ -291,7 +291,6 @@ function updatePlayerModifiers(teamId)
 	GG.upgradeCountsByTypeAndPlayerId[teamId] = { [TYPE_MINOR] = minorCount, [TYPE_COMMANDER] = commanderCount, [TYPE_MAJOR] = majorCount }
 	local playerUpgradesStr = "UPGRADES        minor: "..minorCount.."/"..limitsByType[TYPE_MINOR].."       commander: "..commanderCount.."/"..limitsByType[TYPE_COMMANDER].."      major: "..majorCount.."/"..limitsByType[TYPE_MAJOR]
 	local playerUpgradesLabelStr = "Upgrades: "..(redCount > 0 and COLOR_RED or COLOR_DARK).." ["..redCount.."]"..(greenCount > 0 and COLOR_GREEN or COLOR_DARK).."  ["..greenCount.."]"..(blueCount > 0 and COLOR_BLUE or COLOR_DARK).."  ["..blueCount.."]"..COLOR_DEFAULT
-
 
 	-- player upgrade status
 	spSetTeamRulesParam(teamId,"upgrade_label", playerUpgradesLabelStr,{public = true})

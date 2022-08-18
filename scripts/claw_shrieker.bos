@@ -199,50 +199,18 @@ AimFromPrimary(piecenum)
 	piecenum = torso;
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = torso;
-}
-
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode luparm type BITMAPONLY | BITMAP2;
-	
-		explode h2 type BITMAPONLY | BITMAP2;
-		explode ruparm type BITMAPONLY | BITMAP4;
-	
-		explode eye3 type BITMAPONLY | BITMAP4;
-		explode torso type BITMAPONLY | BITMAP5;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode luparm type FALL | BITMAP2;
-		
-		explode h2 type FALL | BITMAP2;
-		explode ruparm type FALL | BITMAP4;
+		explode luparm type SHATTER;
 	
-		explode eye3 type FALL | BITMAP4;
-		explode torso type SHATTER | BITMAP5;
-		return (0);
+		explode h2 type SHATTER;
+		explode ruparm type SHATTER;
+	
+		explode eye3 type SHATTER;
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode luparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-	
-		explode h2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-		explode ruparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
-	
-		explode eye3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
-		explode torso type SHATTER | BITMAP5;
-		return (0);
-	}
-	corpsetype = 3;
 	explode luparm type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
 
 	explode h2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
@@ -250,4 +218,5 @@ Killed(severity, corpsetype)
 
 	explode eye3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
 	explode torso type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	return (2);
 }

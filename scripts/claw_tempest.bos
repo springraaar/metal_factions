@@ -435,30 +435,15 @@ Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		corpsetype = 1;
-		
 		explode head type SHATTER;
 		explode base2 type SHATTER;
-		return (0);
+		return (1);
 	}
-	if( severity <= 75 )
-	{
-		corpsetype = 2;
-		explode base2 type SHATTER;
-		explode base1 type SHATTER;
-		explode turret type SHATTER;
-		explode head type SHATTER;
-		explode luparm type SHATTER;
-		explode ruparm type SHATTER;
-		return (0);
-	}
-	corpsetype = 3;
-
 	explode base2 type SHATTER;
 	explode base1 type SHATTER;
 	explode turret type SHATTER;
 	explode head type SHATTER;
 	explode luparm type SHATTER;
 	explode ruparm type SHATTER;
-	return (0);
+	return (2);
 }

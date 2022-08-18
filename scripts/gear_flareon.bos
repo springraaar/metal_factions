@@ -203,32 +203,28 @@ Shot2()
 
 Killed(severity, corpsetype)
 {
-	if( severity >= 0 AND severity < 25 )
+	if( severity <= 50 )
 	{
-		corpsetype = 1;
 		explode sleeve type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 		explode barrel type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 		explode front type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 		explode tur2 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
 		explode tur3 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+		return (1);
 	}
-	else
-	{
-		corpsetype = 2;
-		explode sleeve type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode barrel type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode front type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode tur2 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode tur3 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode body type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode t1cover type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode t2cover type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode l1 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode r1 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode left type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-		explode right type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-	}
-	return;
+	explode sleeve type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode barrel type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode front type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode tur2 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode tur3 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode body type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode t1cover type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode t2cover type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode l1 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode r1 type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode left type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode right type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	return (2);
 }
 
 Create()

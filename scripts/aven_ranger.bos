@@ -285,55 +285,17 @@ QuerySecondary(piecenum)
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
-
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode m1 type SHATTER | EXPLODE_ON_HIT | BITMAP2;		
-		explode m2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode m3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;		
-		explode m4 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
 		explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 		explode m1 type SHATTER | EXPLODE_ON_HIT | BITMAP2;		
 		explode m2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 		explode m3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;		
 		explode m4 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode hull type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode bottom type SHATTER | EXPLODE_ON_HIT | BITMAP2;		
-		explode h3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode h4 type SHATTER | EXPLODE_ON_HIT | BITMAP2;		
-
-		return (0);
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode m1 type SHATTER | EXPLODE_ON_HIT | BITMAP2;		
-		explode m2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode m3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;		
-		explode m4 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode hull type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode bottom type SHATTER | EXPLODE_ON_HIT | BITMAP2;		
-		explode h3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-		explode h4 type SHATTER | EXPLODE_ON_HIT | BITMAP2;		
-
-		return (0);
-	}
-	corpsetype = 3;
 	explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode m1 type SHATTER | EXPLODE_ON_HIT | BITMAP2;		
 	explode m2 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
@@ -344,5 +306,5 @@ Killed(severity, corpsetype)
 	explode h3 type SHATTER | EXPLODE_ON_HIT | BITMAP2;
 	explode h4 type SHATTER | EXPLODE_ON_HIT | BITMAP2;		
 
-	return (0);
+	return (2);
 }

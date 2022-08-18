@@ -229,45 +229,18 @@ QueryPrimary(piecenum)
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		if( Static_Var_1 <= 2 )
-		{
-			Static_Var_3 = 0;
-			corpsetype = 1;
-		}
-		if( Static_Var_3 )
-		{
-			corpsetype = 2;
-		}
-		explode base type BITMAPONLY | BITMAP2;
-		explode turret type BITMAPONLY | BITMAP4;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 3;
-		explode base type BITMAPONLY | BITMAP2;
-		explode turret type SHATTER | BITMAP4;
-		return (0);
+		explode turret type SHATTER;
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 4;
-		explode base type BITMAPONLY | BITMAP2;
-		explode turret type SHATTER | BITMAP4;
-		return (0);
-	}
-	corpsetype = 4;
-	explode base type BITMAPONLY | BITMAP2;
+	explode sleeve type SHATTER;
+	explode barrel type SHATTER;
+	explode ldoor type SHATTER;
+	explode rdoor type SHATTER;
 	explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP4;
-	return (0);
+	return (2);
 }

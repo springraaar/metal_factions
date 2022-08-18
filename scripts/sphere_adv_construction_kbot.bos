@@ -270,36 +270,17 @@ StopBuilding()
 	start-script RestoreAfterDelay();
 }
 
-
-SweetSpot(piecenum)
-{
-	piecenum = body;
-}
-
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode base type BITMAPONLY | BITMAP1;
-		explode turret type BITMAPONLY | BITMAP3;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		explode base type BITMAPONLY | BITMAP1;
-		explode turret type FALL | BITMAP3;
-		return (0);
+		explode turret type SHATTER;
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode base type BITMAPONLY | BITMAP1;
-		explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-		return (0);
-	}
-	corpsetype = 3;
-	explode base type BITMAPONLY | BITMAP1;
 	explode turret type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode rmid2 type SHATTER;
+	explode rback2 type SHATTER;
+	explode sphere type SHATTER;
+	explode sphere2 type SHATTER;
+	return(2);
 }
