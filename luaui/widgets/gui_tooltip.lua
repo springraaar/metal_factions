@@ -71,7 +71,8 @@ local tooltipGlList = nil
 
 --local fontHandler = gl.LoadFont("luaui/fonts/EDENMB__.TTF",16,1)
 
-local TRANSPORT_MASS_LIMIT_LIGHT = 1200
+local TRANSPORT_MASS_LIMIT_LIGHT = 600
+local TRANSPORT_MASS_LIMIT_MEDIUM = 1350
 local TRANSPORT_MASS_LIMIT_HEAVY = 3000  
 local PARALYZE_DAMAGE_FACTOR = 0.33 -- paralyze damage adds this fraction as normal damage
 local ONCE_RELOAD_THRESHOLD = 999
@@ -377,9 +378,11 @@ function getTooltipTransportability(ud)
 		local transpStr = ""
 		if ud.cantBeTransported  then 
 			transpStr = "no transport"
-		elseif ud.mass < TRANSPORT_MASS_LIMIT_LIGHT then
+		elseif ud.mass <= TRANSPORT_MASS_LIMIT_LIGHT then
 			transpStr = "light"
-		elseif ud.mass < TRANSPORT_MASS_LIMIT_HEAVY then
+		elseif ud.mass <= TRANSPORT_MASS_LIMIT_MEDIUM then
+			transpStr = "medium"
+		elseif ud.mass <= TRANSPORT_MASS_LIMIT_HEAVY then
 			transpStr = "heavy"
 		else 
 			transpStr = "no transport"

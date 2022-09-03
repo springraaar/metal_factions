@@ -6,7 +6,7 @@
 	side=Aven;
 	name=Atlas;
 	description=Air Transport;
-	iconType=air;
+	iconType=airtransport;
 
 	//************************************************************
 	//  Categories
@@ -93,7 +93,7 @@
 	//*****************
 	transmaxunits=1;
 	transportcapacity=1;
-	transportmass=1200;
+	transportMass=1350;
 	transportsize=6;
 	verticalspeed=10.0;
 	bankingAllowed=0;
@@ -108,7 +108,7 @@
 	[CustomParams]
 	{
 		builtBy=aven_aircraft_plant,aven_adv_aircraft_plant;
-		tip=Transport weight limit : LIGHT;
+		tip=Transport weight limit : MEDIUM;
 	}
 	[SFXTypes]
 	{

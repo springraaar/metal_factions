@@ -1,3 +1,39 @@
+2022/09/03 ------------------- NOTES v1.90----------------------
+
+--- Balance / Mechanics
+
+- added "Dash" ability for all mobile units : 30-60% movement speed boost for 4s, 1min reload
+(% bonus is higher for slower units)
+
+- changed air transportability classes from light/heavy to light/medium/heavy, with mass thresholds changed from 1200/3000 to 600/1350/3000
+- added cheap light air transport for all factions
+
+- AVEN "Weaver" and "Swatter" get range increased from 700 to 740 and adjusted cost
+
+- SPHERE "Comet" had dmg/s increased by 30% and cost increased by 15%
+
+--- AI
+
+- fixed error that sometimes happened when setting AI beacons
+- AI will no longer try to move to engage mines
+- AI uses the new "dash" ability
+- "Brutal" mode AI sticks to the first strategy stage for 200s instead of 90s to gather a bigger army before teching
+
+--- Sound/visual effects
+
+- added unique images to differentiate between various "cannon" projectile types
+- modified sounds for heavy cannons
+- improved magnetar aura effect to show particles being pulled in
+
+--- UI
+
+- added specific icon for air transports
+- air transports have their idle state set to "fly" by default
+- slightly increased width of auxiliary lines for ranges,etc. and mouse selection box
+- improved health/reload/status bar visuals
+
+
+
 2022/08/18 ------------------ NOTES v1.89 ----------------------
 
 --- Balance / Mechanics
@@ -18,6 +54,7 @@ ECONOMY
 OTHER
 - commander HP upgrade module changed from +16% to 17%
 - commander damage upgrade module changed from +20% to +22%
+- commander regen upgrade module changed from +11+2% HP/s to 8+3% HP/s
 
 - fixing the secondary wreckage spawning condition for a lot of units
 - only mines, grenado, exploder and commanders can now self-destruct themselves

@@ -3,14 +3,14 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define SPEEDUP_FACTOR 300
+#define SPEEDUP_FACTOR 200
 
 #define HEADING_TOLERANCE	<30>
 #define PITCH_TOLERANCE		<20>
 
 piece  ground, hips, leg1,bleg,leg2,bleg2,leg3,bleg3,leg4,bleg4, body, tbase, turret, sleeve, barrel, flare, cover, b2, legsup1, legsup2, legsup3, legsup4, top1, cover2, cover3, fcover1,fcover2;
 
-static-var  bMoving, isOpen, bAiming;
+static-var  bMoving, isOpen, bAiming, mASpdFactor;
 
 lua_setMobility() { return 0; }
 
@@ -20,6 +20,27 @@ lua_setMobility() { return 0; }
 #define SIG_MOVE			2
 #define SIG_AIM				4
 #define SIG_AIMNORESTORE	8
+
+MotionSpeedControl(minSpeed, maxSpeed,currentSpeed)
+{
+	maxSpeed = get MAX_SPEED;
+	currentSpeed = 0;
+	mASpdFactor = SPEEDUP_FACTOR;
+	minSpeed = 3 * SPEEDUP_FACTOR / 4;
+	
+	while(TRUE)
+	{
+		currentSpeed = get CURRENT_SPEED;
+		mASpdFactor = SPEEDUP_FACTOR * currentSpeed / maxSpeed;
+
+		if ( mASpdFactor < minSpeed )
+		{
+			mASpdFactor = minSpeed;
+		}
+
+		sleep 60;
+	}
+}
 
 open()
 {
@@ -62,118 +83,118 @@ walk()
 	if( bMoving )
 	{
 		/* X */
-		turn hips to x-axis <-1.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+		turn hips to x-axis <-1.000000> speed <20.000000> * mASpdFactor / 100;
 			
 		/* Y */
-		turn leg4 to y-axis <-80.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		turn leg4 to y-axis <-80.000000> speed <260.000000> * mASpdFactor / 100;
 
-		turn leg2 to y-axis <-35.000000> speed <120.000000> * SPEEDUP_FACTOR / 100;
+		turn leg2 to y-axis <-35.000000> speed <120.000000> * mASpdFactor / 100;
 
-		turn leg3 to y-axis <5.000000> speed <140.000000> * SPEEDUP_FACTOR / 100;
+		turn leg3 to y-axis <5.000000> speed <140.000000> * mASpdFactor / 100;
 		
-		turn leg1 to y-axis <25.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		turn leg1 to y-axis <25.000000> speed <260.000000> * mASpdFactor / 100;
 
 		/* Z */
-		turn bleg4 to z-axis <-20.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
-		turn bleg to z-axis <-20.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
-		turn hips to z-axis <3.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+		turn bleg4 to z-axis <-20.000000> speed <260.000000> * mASpdFactor / 100;
+		turn bleg to z-axis <-20.000000> speed <260.000000> * mASpdFactor / 100;
+		turn hips to z-axis <3.000000> speed <20.000000> * mASpdFactor / 100;
 
 		/* move */
-		move hips to x-axis [-0.2500000] speed [2.000000] * SPEEDUP_FACTOR / 100;
-		move hips to z-axis [-0.2500000] speed [2.000000] * SPEEDUP_FACTOR / 100;
+		move hips to x-axis [-0.2500000] speed [2.000000] * mASpdFactor / 100;
+		move hips to z-axis [-0.2500000] speed [2.000000] * mASpdFactor / 100;
 		
 		
-		turn leg4 to z-axis <-20.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
-		sleep 100 * 100 / SPEEDUP_FACTOR;
-		turn leg4 to z-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
-		sleep 100 * 100 / SPEEDUP_FACTOR;
+		turn leg4 to z-axis <-20.000000> speed <200.000000> * mASpdFactor / 100;
+		sleep 100 * 100 / mASpdFactor;
+		turn leg4 to z-axis <0.000000> speed <200.000000> * mASpdFactor / 100;
+		sleep 100 * 100 / mASpdFactor;
 
 	}
 	if( bMoving )
 	{
 		/* X */
-		turn hips to x-axis <1.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+		turn hips to x-axis <1.000000> speed <20.000000> * mASpdFactor / 100;
 		
 		/* Y */
-		turn leg4 to y-axis <-35.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+		turn leg4 to y-axis <-35.000000> speed <200.000000> * mASpdFactor / 100;
 
-		turn leg2 to y-axis <-90.000000> speed <180.000000> * SPEEDUP_FACTOR / 100;
+		turn leg2 to y-axis <-90.000000> speed <180.000000> * mASpdFactor / 100;
 
-		turn leg3 to y-axis <15.000000> speed <140.000000> * SPEEDUP_FACTOR / 100;
+		turn leg3 to y-axis <15.000000> speed <140.000000> * mASpdFactor / 100;
 		
-		turn leg1 to y-axis <-5.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+		turn leg1 to y-axis <-5.000000> speed <200.000000> * mASpdFactor / 100;
 
 		/* Z */
-		turn bleg4 to z-axis <0.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
-		turn bleg to z-axis <0.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
-		turn hips to z-axis <3.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+		turn bleg4 to z-axis <0.000000> speed <260.000000> * mASpdFactor / 100;
+		turn bleg to z-axis <0.000000> speed <260.000000> * mASpdFactor / 100;
+		turn hips to z-axis <3.000000> speed <20.000000> * mASpdFactor / 100;
 		
 		/* move */
-		move hips to x-axis [0.000000] speed [2.000000] * SPEEDUP_FACTOR / 100;
-		move hips to z-axis [0.000000] speed [2.000000] * SPEEDUP_FACTOR / 100;
+		move hips to x-axis [0.000000] speed [2.000000] * mASpdFactor / 100;
+		move hips to z-axis [0.000000] speed [2.000000] * mASpdFactor / 100;
 		
-		turn leg1 to z-axis <-20.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
-		sleep 100 * 100 / SPEEDUP_FACTOR;
-		turn leg1 to z-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
-		sleep 100 * 100 / SPEEDUP_FACTOR;
+		turn leg1 to z-axis <-20.000000> speed <200.000000> * mASpdFactor / 100;
+		sleep 100 * 100 / mASpdFactor;
+		turn leg1 to z-axis <0.000000> speed <200.000000> * mASpdFactor / 100;
+		sleep 100 * 100 / mASpdFactor;
 
 	}
 	if( bMoving )
 	{
 		/* X */
-		turn hips to x-axis <-1.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+		turn hips to x-axis <-1.000000> speed <20.000000> * mASpdFactor / 100;
 
 		/* Y */
-		turn leg4 to y-axis <-5.000000> speed <140.000000> * SPEEDUP_FACTOR / 100;
+		turn leg4 to y-axis <-5.000000> speed <140.000000> * mASpdFactor / 100;
 
-		turn leg2 to y-axis <-25.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		turn leg2 to y-axis <-25.000000> speed <260.000000> * mASpdFactor / 100;
 
-		turn leg3 to y-axis <80.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
+		turn leg3 to y-axis <80.000000> speed <260.000000> * mASpdFactor / 100;
 		
-		turn leg1 to y-axis <35.000000> speed <120.000000> * SPEEDUP_FACTOR / 100;
+		turn leg1 to y-axis <35.000000> speed <120.000000> * mASpdFactor / 100;
 
 		/* Z */
-		turn bleg2 to z-axis <20.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
-		turn bleg3 to z-axis <20.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
-		turn hips to z-axis <-3.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+		turn bleg2 to z-axis <20.000000> speed <260.000000> * mASpdFactor / 100;
+		turn bleg3 to z-axis <20.000000> speed <260.000000> * mASpdFactor / 100;
+		turn hips to z-axis <-3.000000> speed <20.000000> * mASpdFactor / 100;
 
 
 		/* move */
-		move hips to x-axis [0.2500000] speed [2.000000] * SPEEDUP_FACTOR / 100;
-		move hips to z-axis [-0.2500000] speed [2.000000] * SPEEDUP_FACTOR / 100;
+		move hips to x-axis [0.2500000] speed [2.000000] * mASpdFactor / 100;
+		move hips to z-axis [-0.2500000] speed [2.000000] * mASpdFactor / 100;
 		
-		turn leg3 to z-axis <20.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
-		sleep 100 * 100 / SPEEDUP_FACTOR;
-		turn leg3 to z-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
-		sleep 100 * 100 / SPEEDUP_FACTOR;
+		turn leg3 to z-axis <20.000000> speed <200.000000> * mASpdFactor / 100;
+		sleep 100 * 100 / mASpdFactor;
+		turn leg3 to z-axis <0.000000> speed <200.000000> * mASpdFactor / 100;
+		sleep 100 * 100 / mASpdFactor;
 
 	}
 	if( bMoving )
 	{
-		turn hips to x-axis <1.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+		turn hips to x-axis <1.000000> speed <20.000000> * mASpdFactor / 100;
 
 		/* Y */
-		turn leg4 to y-axis <-15.000000> speed <140.000000> * SPEEDUP_FACTOR / 100;
+		turn leg4 to y-axis <-15.000000> speed <140.000000> * mASpdFactor / 100;
 
-		turn leg2 to y-axis <5.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+		turn leg2 to y-axis <5.000000> speed <200.000000> * mASpdFactor / 100;
 
-		turn leg3 to y-axis <35.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
+		turn leg3 to y-axis <35.000000> speed <200.000000> * mASpdFactor / 100;
 
-		turn leg1 to y-axis <90.000000> speed <180.000000> * SPEEDUP_FACTOR / 100;			
+		turn leg1 to y-axis <90.000000> speed <180.000000> * mASpdFactor / 100;			
 
 		/* Z */
-		turn bleg3 to z-axis <0.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
-		turn bleg2 to z-axis <0.000000> speed <260.000000> * SPEEDUP_FACTOR / 100;
-		turn hips to z-axis <3.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
+		turn bleg3 to z-axis <0.000000> speed <260.000000> * mASpdFactor / 100;
+		turn bleg2 to z-axis <0.000000> speed <260.000000> * mASpdFactor / 100;
+		turn hips to z-axis <3.000000> speed <20.000000> * mASpdFactor / 100;
 
 		/* move */
-		move hips to x-axis [0.000000] speed [2.000000] * SPEEDUP_FACTOR / 100;
-		move hips to z-axis [0.000000] speed [2.000000] * SPEEDUP_FACTOR / 100;
+		move hips to x-axis [0.000000] speed [2.000000] * mASpdFactor / 100;
+		move hips to z-axis [0.000000] speed [2.000000] * mASpdFactor / 100;
 
-		turn leg2 to z-axis <20.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
-		sleep 100 * 100 / SPEEDUP_FACTOR;
-		turn leg2 to z-axis <0.000000> speed <200.000000> * SPEEDUP_FACTOR / 100;
-		sleep 100 * 100 / SPEEDUP_FACTOR;
+		turn leg2 to z-axis <20.000000> speed <200.000000> * mASpdFactor / 100;
+		sleep 100 * 100 / mASpdFactor;
+		turn leg2 to z-axis <0.000000> speed <200.000000> * mASpdFactor / 100;
+		sleep 100 * 100 / mASpdFactor;
 	}
 }
 
@@ -296,6 +317,7 @@ Create()
 	bMoving = FALSE;
 	bAiming = FALSE;
 	call-script stopAimHelper1(<1000>,<1000>);
+	start-script MotionSpeedControl();
 	start-script MotionControl();
 	start-script SmokeUnit();
 	return (0);

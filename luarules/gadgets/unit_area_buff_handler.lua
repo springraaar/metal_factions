@@ -20,6 +20,7 @@ end
 
 
 local LAND_WATER_MOD = 0.66
+
 local ZEPHYR_REGEN_PER_SECOND = 4
 local ZEPHYR_MOD = 1.25
 local ENERGY_BOOSTED_MOVEMENT_SLOW_MOD = 0.25
@@ -63,6 +64,7 @@ local spGetUnitIsDead = Spring.GetUnitIsDead
 local spSpawnProjectile = Spring.SpawnProjectile
 
 local max = math.max
+local min = math.min
 local floor = math.floor
 
 local AREA_CHECK_DELAY = 6
@@ -203,6 +205,10 @@ end
 
 function gadget:GameFrame(n)
 	local allUnits = spGetAllUnits()
+	local DASH_SPEED_MOD = 0.3
+	local DASH_SPEED_MOD_MIN = 0.3
+	local DASH_SPEED_MOD_MAX = 0.6
+	local DASH_BASE_SPEED_REF = 45
 
 	for uId,p in pairs(autoBuildUnitIds) do
 		spSpawnCEG(autoBuildCEG, p[1],p[2],p[3])
@@ -258,6 +264,23 @@ function gadget:GameFrame(n)
 					m = 1
 				end
 				newSpeedModifierUnitIds[unitId] = m + spdMod
+			end
+		end
+	
+		-- check speed modifiers due to dash
+		for _,unitId in ipairs(allUnits) do
+			local dashFrames = spGetUnitRulesParam(unitId, "dashFrames")
+			if dashFrames and dashFrames > 0 then
+				local ud = UnitDefs[spGetUnitDefID(unitId)]
+				local dashMult = 1.5 + 0.5 * (DASH_BASE_SPEED_REF-ud.speed) / DASH_BASE_SPEED_REF 
+				local dashMod = max(DASH_SPEED_MOD_MIN,min(DASH_SPEED_MOD_MAX,DASH_SPEED_MOD*dashMult))
+				
+				m = newSpeedModifierUnitIds[unitId]
+				if (m == nil) then
+					m = 1
+				end
+				newSpeedModifierUnitIds[unitId] = m + dashMod
+				--Spring.Echo(ud.name.." speed="..ud.speed.." dashMod="..dashMod)
 			end
 		end
 		

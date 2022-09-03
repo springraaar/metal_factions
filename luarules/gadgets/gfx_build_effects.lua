@@ -89,14 +89,14 @@ function gadget:GameFrame(n)
 						
 						-- random offsets
 						if xs < 50 then
-							spSpawnCEG( buildCEG, px -xs*0.5 +random()*xs, py+ys, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
-							spSpawnCEG( buildCEG, px -xs*0.5 +random()*xs, py+ys, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
+							spSpawnCEG( buildCEG, px -xs*0.5 +random()*xs, py+ys+3, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
+							spSpawnCEG( buildCEG, px -xs*0.5 +random()*xs, py+ys+3, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
 						else
 							xs = xs*0.65
 							zs = zs*0.65
 	
-							spSpawnCEG( buildWideCEG, px -xs*0.5 +random()*xs, py+ys, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
-							spSpawnCEG( buildWideCEG, px -xs*0.5 +random()*xs, py+ys, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
+							spSpawnCEG( buildWideCEG, px -xs*0.5 +random()*xs, py+ys+10, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
+							spSpawnCEG( buildWideCEG, px -xs*0.5 +random()*xs, py+ys+10, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
 						end
 						
 						-- offset depends on bp

@@ -136,6 +136,13 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.35,0.35,0.3}, width=12, length=85, piece="ljp", onActive=true}},
     {class='AirJet',options={color={0.35,0.35,0.3}, width=12, length=85, piece="rjp", onActive=true}}
   },
+  aven_atlas_l = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=18, piece="tp1", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=18, piece="tp2", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=18, piece="tp3", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=18, piece="tp4", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=4, length=25, piece="cjp", onActive=true}}
+  },   
   aven_atlas = {
     {class='AirJet',options={color={0.3,0.1,0}, width=7, length=25, piece="tp1", onActive=true, down=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=7, length=25, piece="tp2", onActive=true, down=true}},
@@ -249,6 +256,13 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=30, piece="ljp2", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=30, piece="rjp2", onActive=true}}
   },
+  gear_carrier_l = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=18, piece="tp1", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=18, piece="tp2", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=18, piece="tp3", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=18, piece="tp4", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=4, length=25, piece="cjp", onActive=true}}
+  },     
   gear_carrier = {
     {class='AirJet',options={color={0.3,0.1,0}, width=7, length=25, piece="tp1", onActive=true, down=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=7, length=25, piece="tp2", onActive=true, down=true}},
@@ -322,6 +336,13 @@ effectUnitDefs = {
   claw_adv_construction_aircraft = {
     {class='AirJet',options={color={0.3,0.1,0}, width=8, length=30, piece="jp1", onActive=true}}
   },
+  claw_mover_l = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=18, piece="tp1", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=18, piece="tp2", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=18, piece="tp3", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=18, piece="tp4", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=4, length=25, piece="cjp", onActive=true}}
+  },  
   claw_mover = {
     {class='AirJet',options={color={0.3,0.1,0}, width=7, length=25, piece="tp1", onActive=true, down=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=7, length=25, piece="tp2", onActive=true, down=true}},
@@ -408,6 +429,13 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=40, piece="rjp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=40, piece="cjp", onActive=true}}
   },
+  sphere_lifter_l = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=18, piece="tp1", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=18, piece="tp2", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=18, piece="tp3", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=18, piece="tp4", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=4, length=25, piece="cjp", onActive=true}}
+  },    
   sphere_lifter = {
     {class='AirJet',options={color={0.3,0.1,0}, width=7, length=25, piece="tp1", onActive=true, down=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=7, length=25, piece="tp2", onActive=true, down=true}},

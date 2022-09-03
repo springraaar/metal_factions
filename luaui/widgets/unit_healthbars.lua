@@ -28,11 +28,11 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-local barHeight = 4
+local barHeight = 3
 local barWidth  = 14  --// (barWidth)x2 total width!!!
 local barAlpha  = 0.9
 
-local featureBarHeight = 4
+local featureBarHeight = 3
 local featureBarWidth  = 10
 local featureBarAlpha  = 0.6
 
@@ -46,7 +46,7 @@ local featureTitlesAlpha = featureBarAlpha * titlesAlpha/barAlpha
 local featureHpThreshold = 0.85
 
 local infoSqDistance = 10000000
-local fullTextSqDistance = 300000 
+local fullTextSqDistance = 420000 
 
 local minReloadTime = 4 --// in seconds
 local maxReloadTime = 999 --// in seconds
@@ -56,12 +56,7 @@ local drawUnitsOnFire    = true
 local drawJumpJet        = Spring.GetGameRulesParam("jumpJets")
 local drawMorphOverlay   = true
 local drawDamageOverlay  = true
-
---// this table is used to shows the hp of perimeter defence, and filter it for default wreckages
-local walls = {dragonsteeth=true,dragonsteeth_core=true,
-		   fortification=true,fortification_core=true,
-		   floatingteeth=true,floatingteeth_core=true,
-		   avdfc=true,avdfcns=true,avdfv=true,avdfvns=true}
+local drawDashOverlay    = true
 
 local stockpileH = 24
 local stockpileW = 12
@@ -74,6 +69,8 @@ local bkBottom   = { 0.40,0.40,0.40,barAlpha }
 local bkTop      = { 0.10,0.10,0.10,barAlpha }
 local hpcolormap = { {0.8, 0.0, 0.0, barAlpha},  {0.8, 0.6, 0.0, barAlpha}, {0.0,0.70,0.0,barAlpha} }
 local bfcolormap = {}
+local bBorder   = { 0.0,0.0,0.0,barAlpha }
+local bBorderThickness = 0.8 
 
 local fbkBottom   = { 0.40,0.40,0.40,featureBarAlpha }
 local fbkTop      = { 0.06,0.06,0.06,featureBarAlpha }
@@ -89,6 +86,7 @@ local barColors = {
   reload  = { 0.00,0.60,0.60,barAlpha },
   jump    = { 0.0,0.50,0.00,barAlpha },
   shield  = { 0.20,0.60,0.60,barAlpha },
+  dash    = { 0.38,0.38,0.48,barAlpha },
 
   resurrect = { 1.00,0.50,0.00,featureBarAlpha },
   reclaim   = { 0.75,0.75,0.75,featureBarAlpha },
@@ -111,7 +109,7 @@ local onFireUnits = {}
 local regenUnits = {}
 local UnitMorphs  = {}
 local magnetars   = {}
-
+local dashUnits = {}
 
 local barShader
 local barDList
@@ -242,33 +240,32 @@ function widget:Initialize()
     if (barShader) then
       barDList = gl.CreateList(function()
         gl.BeginEnd(GL.QUADS,function()
+          
+          gl.Color(bBorder);
+          gl.Vertex(-barWidth-bBorderThickness,barHeight+bBorderThickness,0,1);
+          gl.Vertex(barWidth+bBorderThickness,barHeight+bBorderThickness,0,1);
+          gl.Vertex(barWidth+bBorderThickness,0-bBorderThickness,0,1);
+          gl.Vertex(-barWidth-bBorderThickness,0-bBorderThickness,0,1);
+          
           gl.Vertex(-barWidth,0,        0,0);
           gl.Vertex(-barWidth,0,        barWidth*2,0);
           gl.Vertex(-barWidth,barHeight,barWidth*2,0);
           gl.Vertex(-barWidth,barHeight,0,0);
-
-          gl.Color(bkBottom);
-          gl.Vertex(barWidth,0,        0,         1);
-          gl.Vertex(barWidth,0,        barWidth*2,1);
-          gl.Color(bkTop);
-          gl.Vertex(barWidth,barHeight,barWidth*2,1);
-          gl.Vertex(barWidth,barHeight,0,         1);
         end)
       end)
 
       barFeatureDList = gl.CreateList(function()
         gl.BeginEnd(GL.QUADS,function()
+          gl.Color(bBorder);
+          gl.Vertex(-featureBarWidth-bBorderThickness,featureBarHeight+bBorderThickness,0,1);
+          gl.Vertex(featureBarWidth+bBorderThickness,featureBarHeight+bBorderThickness,0,1);
+          gl.Vertex(featureBarWidth+bBorderThickness,0-bBorderThickness,0,1);
+          gl.Vertex(-featureBarWidth-bBorderThickness,0-bBorderThickness,0,1);
+
           gl.Vertex(-featureBarWidth,0,               0,0);
           gl.Vertex(-featureBarWidth,0,               featureBarWidth*2,0);
           gl.Vertex(-featureBarWidth,featureBarHeight,featureBarWidth*2,0);
           gl.Vertex(-featureBarWidth,featureBarHeight,0,0);
-
-          gl.Color(fbkBottom);
-          gl.Vertex(featureBarWidth,0,               0,         1);
-          gl.Vertex(featureBarWidth,0,               featureBarWidth*2,1);
-          gl.Color(fbkTop);
-          gl.Vertex(featureBarWidth,featureBarHeight,featureBarWidth*2,1);
-          gl.Vertex(featureBarWidth,featureBarHeight,0,         1);
         end)
       end)
     end
@@ -379,7 +376,7 @@ do
   end
 
   function DrawStockpile(numStockpiled,numStockpileQued)
-    --// DRAW STOCKPILED MISSLES
+    --// DRAW STOCKPILED MISSILES
     glColor(1,1,1,1)
     glTexture("luaui/images/nuke.png")
     local xoffset = barWidth+16
@@ -410,9 +407,13 @@ do
   local maxBars = 20
   local bars    = {}
   local barHeightL = barHeight + 2
-  local barStart   = -(barWidth + 1)
+  local barStart   = -(barWidth + 2)
   local fBarHeightL = featureBarHeight + 2
-  local fBarStart   = -(featureBarWidth + 1)
+  local fBarStart   = -(featureBarWidth + 2)
+  local fontSz1 = 3.5
+  local fontOffset1 = fontSz1 * 0.25
+  local fontSz2 = 2
+  local fontOffset2 = -fontSz2 * 0.1
 
   for i=1,maxBars do bars[i] = {} end
 
@@ -433,10 +434,10 @@ do
       if (fullText) then
         if (barShader) then glMyText(1) end
         glColor(1,1,1,barAlpha)
-        glText(barInfo.text,barStart,yoffset-1,5,"r")
+        glText(barInfo.text,barStart,yoffset-fontOffset1,fontSz1,"rno")
         if (drawBarTitles) then
           glColor(1,1,1,titlesAlpha)
-          glText(barInfo.title,0,yoffset,3,"c")
+          glText(barInfo.title,0,yoffset-fontOffset2,fontSz2,"cno")
         end
         if (barShader) then glMyText(0) end
       end
@@ -454,10 +455,10 @@ do
       if (fullText) then
         if (barShader) then glMyText(1) end
         glColor(1,1,1,featureBarAlpha)
-        glText(barInfo.text,fBarStart,yoffset-1,5,"r")
+        glText(barInfo.text,fBarStart,yoffset-fontOffset1,fontSz1,"rno")
         if (drawBarTitles) then
           glColor(1,1,1,featureTitlesAlpha)
-          glText(barInfo.title,0,yoffset,3,"c")
+          glText(barInfo.title,0,yoffset-fontOffset2,fontSz2,"cno")
         end
         if (barShader) then glMyText(0) end
       end
@@ -497,14 +498,15 @@ do
   local numStockpiled,numStockpileQued
   local customInfo = {}
   local ci
-  local DMG_OVERLAY_HP_FRAC = 0.8
-  local DMG_OVERLAY_OPACITY = 0.4
 
   function DrawUnitInfos(unitID,unitDefID, ud)
     local health,maxHealth,paralyzeDamage,capture,build
     local MAGNETAR_DEF_ID = UnitDefNames["sphere_magnetar"].id
+    local DMG_OVERLAY_HP_FRAC = 0.8
+    local DMG_OVERLAY_OPACITY = 0.4
+
     if (not customInfo[unitDefID]) then
-    
+   
       -- find the weapon with the highest reload time
       local maxReloadTime = 0
       local maxReloadTimeIndex = 0
@@ -523,6 +525,7 @@ do
       customInfo[unitDefID] = {
         height        = ud.height+14,
         canJump       = (ud.customParams.canjump=="1")or(GetUnitRulesParam(unitID,"jumpReload")),
+        canDash       = (GetUnitRulesParam(unitID,"dashReload")),
         maxShield     = ud.shieldPower,
         canStockpile  = ud.canStockpile,
         reloadTime    = maxReloadTime,
@@ -555,6 +558,10 @@ do
     if (drawUnitsOnFire) and (GetUnitRulesParam(unitID,"on_fire")==1) then
       onFireUnits[#onFireUnits+1]=unitID
     end
+
+    if (drawDashOverlay) and (GetUnitRulesParam(unitID,"dashFrames") and GetUnitRulesParam(unitID,"dashFrames") > 0) then
+      dashUnits[#dashUnits+1]=unitID
+    end
 	
     if (GetUnitRulesParam(unitID,"recent_regen") and GetUnitRulesParam(unitID,"recent_regen") > 1) then
       regenUnits[#regenUnits+1]={unitID,GetUnitRulesParam(unitID,"recent_regen")}
@@ -575,7 +582,7 @@ do
         local shieldOn,shieldPower = GetUnitShieldState(unitID)
         if (shieldOn)and(build==1)and(shieldPower<ci.maxShield) then
           shieldPower = shieldPower / ci.maxShield
-          AddBar("shield",shieldPower,"shield",(fullText and floor(shieldPower*100)..'%') or '')
+          AddBar("SHIELD",shieldPower,"shield",(fullText and floor(shieldPower*100)..'%') or '')
         end
       end
 
@@ -588,19 +595,19 @@ do
           damagedUnits[#damagedUnits+1]={unitID,(DMG_OVERLAY_HP_FRAC-hp) * DMG_OVERLAY_OPACITY}
        	end
         if (drawFullHealthBars)or(hp100<100) then
-          AddBar("health",hp,nil,(fullText and hp100..'%') or '',bfcolormap[hp100])
+          AddBar("HP",hp,nil,(fullText and hp100..'%') or '',bfcolormap[hp100])
         end
       end
 
       --// BUILD
       if (build<1) then
-        AddBar("building",build,"build",(fullText and floor(build*100)..'%') or '')
+        AddBar("BUILDING",build,"build",(fullText and floor(build*100)..'%') or '')
       end
 
       --// MORPHING
       if (morph) then
         local build = morph.progress
-        AddBar("upgrading",build,"build",(fullText and floor(build*100)..'%') or '')
+        AddBar("UPGRADING",build,"build",(fullText and floor(build*100)..'%') or '')
       end
 
       --// STOCKPILE
@@ -610,7 +617,7 @@ do
         if (numStockpiled) then
           stockpileBuild = stockpileBuild or 0
           if (stockpileBuild>0) then
-            AddBar("stockpile",stockpileBuild,"stock",(fullText and floor(stockpileBuild*100)..'%') or '')
+            AddBar("STOCKPILE",stockpileBuild,"stock",(fullText and floor(stockpileBuild*100)..'%') or '')
           end
         end
       else
@@ -634,12 +641,12 @@ do
           end
         end
         local empcolor_index = (stunned and ((blink and "emp_b") or "emp_p")) or ("emp")
-        AddBar("paralyze",emp,empcolor_index,infotext)
+        AddBar("PARALYZE",emp,empcolor_index,infotext)
       end
 
       --// CAPTURE
       if ((capture or -1)>0) then
-        AddBar("capture",capture,"capture",(fullText and floor(capture*100)..'%') or '')
+        AddBar("CAPTURE",capture,"capture",(fullText and floor(capture*100)..'%') or '')
       end
 
       --// RELOAD
@@ -647,7 +654,7 @@ do
         _,reloaded,reloadFrame = GetUnitWeaponState(unitID,ci.primaryWeapon)
         if (reloaded==false) then
           reload = 1 - ((reloadFrame-gameFrame)/30) / ci.reloadTime;
-          AddBar("reload",reload,"reload",(fullText and floor(reload*100)..'%') or '')
+          AddBar("RELOAD",reload,"reload",(fullText and floor(reload*100)..'%') or '')
         end
       end
 
@@ -655,7 +662,15 @@ do
       if (drawJumpJet)and(ci.canJump) then
         local jumpReload = GetUnitRulesParam(unitID,"jumpReload")
         if (jumpReload and (jumpReload>0) and (jumpReload<1)) then
-          AddBar("jump",jumpReload,"jump",(fullText and floor(jumpReload*100)..'%') or '')
+          AddBar("JUMP",jumpReload,"jump",(fullText and floor(jumpReload*100)..'%') or '')
+        end
+      end
+
+      --// DASH
+      if (ci.canDash) then
+        local dashReload = GetUnitRulesParam(unitID,"dashReload")
+        if (dashReload and (dashReload>0) and (dashReload<1)) then
+          AddBar("DASH",dashReload,"dash",(fullText and floor(dashReload*100)..'%') or '')
         end
       end
 
@@ -672,7 +687,7 @@ do
           glMyText(0)
         else
           DrawStockpile(numStockpiled,numStockpileQued)
-        end
+        end  
       end
 
       --// DRAW BARS
@@ -710,7 +725,6 @@ do
       local featureDef   = FeatureDefs[featureDefID or -1] or {height=0,name=''}
       customInfo[featureDefID] = {
         height = featureDef.height+14,
-        wall   = walls[featureDef.name],
       }
     end
     ci = customInfo[featureDefID]
@@ -722,7 +736,7 @@ do
 
     --// filter all walls and none resurrecting features
     if (not health)or
-       ((resurrect==0)and(reclaimLeft==1)and(not ci.wall))
+       ((resurrect==0)and(reclaimLeft==1))
     then return end
 
     hp = (health or 0)/(maxHealth or 1)
@@ -731,17 +745,17 @@ do
       --// HEALTH
       if (hp<featureHpThreshold)and(drawFeatureHealth) then
         local hpcolor = {GetColor(fhpcolormap,hp)}
-        AddBar("health",hp,nil,(fullText and floor(hp*100)..'%') or '',hpcolor)
+        AddBar("HP",hp,nil,(fullText and floor(hp*100)..'%') or '',hpcolor)
       end
 
       --// RESURRECT
       if (resurrect>0) then
-        AddBar("resurrect",resurrect,"resurrect",(fullText and floor(resurrect*100)..'%') or '')
+        AddBar("RESURRECT",resurrect,"resurrect",(fullText and floor(resurrect*100)..'%') or '')
       end
 
       --// RECLAIMING
       if (reclaimLeft>0 and reclaimLeft<1) then
-        AddBar("reclaim",reclaimLeft,"reclaim",(fullText and floor(reclaimLeft*100)..'%') or '')
+        AddBar("RECLAIM",reclaimLeft,"reclaim",(fullText and floor(reclaimLeft*100)..'%') or '')
       end
 
 
@@ -897,6 +911,26 @@ do
       regenUnits = {}
     end
 
+
+    --// overlay for units that have the dash ability active
+    if (drawDashOverlay)and(dashUnits) then
+      glDepthTest(true)
+      glPolygonOffset(-2, -2)
+      glBlending(GL_SRC_ALPHA, GL_ONE)
+
+      local alpha = (spGetGameFrame() % 3) / 25
+      glColor(1,1,1,alpha)
+      for i=1,#dashUnits do
+        glUnit(dashUnits[i],true)
+      end
+
+      glBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+      glPolygonOffset(false)
+      glDepthTest(false)
+
+      dashUnits = {}
+    end
+    
     --// overlay for units morphing
     if (drawMorphOverlay)and(UnitMorphs) then
       glDepthTest(true)

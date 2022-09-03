@@ -2172,10 +2172,20 @@ function UnitHandler:GameFrame(f)
 			-- AI beacon override
 			if self.ai:isBeaconActive(group.id) then
 				local xIndex,zIndex = getCellXZIndexesForPosition(self.ai.beaconPos)
-				local cell = getCellFromTableIfExists(self.ai.mapHandler.mapCells,xIndex,zIndex)
-				local value, threatAlongPath = self:getCellAttackValue(group,cell)
+				local mapCell = getCellFromTableIfExists(self.ai.mapHandler.mapCells,xIndex,zIndex)
+				local enemyCell = getCellFromTableIfExists(self.enemyCells,xIndex,zIndex)
 				
-				if (cell) then
+				-- use a unit cell instead of the map cell directly
+				local cell = enemyCell
+				if not cell then
+					cell = initUnitCell()
+					cell.xIndex = mapCell.xIndex
+					cell.zIndex = mapCell.zIndex
+					cell.p = mapCell.p
+				end 
+
+				local value, threatAlongPath = self:getCellAttackValue(group,cell)			
+				if (cell and mapCell) then
 					bestCell = cell
 					bestValue = value or 0
 					bestCellThreatAlongPath = threatAlongPath or 0

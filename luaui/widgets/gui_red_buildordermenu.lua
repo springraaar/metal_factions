@@ -80,24 +80,26 @@ local iconCmdPosition = {
 	[CMD.FIGHT] = 2,
 	[CMD.MOVE] = 3,
 	[CMD_JUMP] = 4,
-	[CMD.PATROL] = 5,
-	[CMD.GUARD] = 6,	
-	[CMD.WAIT] = 7,
-	[CMD.STOP] = 8,
-	[CMD.LOAD_UNITS] = 9,
-	[CMD.UNLOAD_UNITS] = 10,
-	[CMD.REPAIR] = 11,
-	[CMD.RECLAIM] = 12,
-	[CMD.RESTORE] = 13,
-	[CMD.CAPTURE] = 14,
-	[CMD_AREAMEX] = 15,
-	[CMD_UPGRADEMEX] = 16,
-	[CMD_UPGRADEMEX2] = 17
+	[CMD_DASH] = 5,	
+	[CMD.PATROL] = 6,
+	[CMD.GUARD] = 7,	
+	[CMD.WAIT] = 8,
+	[CMD.STOP] = 9,
+	[CMD.LOAD_UNITS] = 10,
+	[CMD.UNLOAD_UNITS] = 11,
+	[CMD.REPAIR] = 12,
+	[CMD.RECLAIM] = 13,
+	[CMD.RESTORE] = 14,
+	[CMD.CAPTURE] = 15,
+	[CMD_AREAMEX] = 16,
+	[CMD_UPGRADEMEX] = 17,
+	[CMD_UPGRADEMEX2] = 18
 }
 
 local iconCmdTex = {
 	[CMD.MOVE] = "icon_move.png",
 	[CMD_JUMP] = "icon_jump.png",
+	[CMD_DASH] = "icon_dash.png",
 	[CMD.ATTACK] = "icon_attack.png",
 	[CMD.FIGHT] = "icon_fight.png",
 	[CMD.REPAIR] = "icon_repair.png",
@@ -145,6 +147,8 @@ local function tooltipExtension(tooltip,cmdAction)
 			tooltip = tooltip .. "."..tooltipHotkey("w","wait")
 		elseif cmdAction == "jump" then
 			tooltip = tooltip .. "."..tooltipHotkey("j","jump")
+		elseif cmdAction == "dash" then
+			tooltip = tooltip .. "."..tooltipHotkey("j","dash")
 		elseif cmdAction == "attack" then
 			tooltip = tooltip .. ". Click-drag to attack targets within an area."..tooltipHotkey("a","attack")
 		elseif cmdAction == "fight" then

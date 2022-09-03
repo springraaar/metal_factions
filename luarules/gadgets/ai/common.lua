@@ -51,7 +51,7 @@ ALL_IN_ADVANTAGE_THRESHOLD = 1.4
 CELL_VALUE_RETARGET_PREFERENCE_FACTOR = 2
 ENGAGE_THREAT_FACTOR = 0.5
 MIN_FORCE_COST_BUILD_NUKE_THRESHOLD = 35000
-BRUTAL_STRATEGY_STAGES_DELAY_FRAMES = 90*30 
+BRUTAL_STRATEGY_STAGES_DELAY_FRAMES = 200*30 
 END_GAME_ARMY_MOBILE_RATIO_THRESHOLD = 0.4
 END_GAME_ARMY_UNIT_CAP_THRESHOLD = 0.6
 GROUP_NEAR_CENTER_THRESHOLD = 0.66			-- more than 2/3rds units and cost near center
@@ -1356,22 +1356,29 @@ fakeWeaponUnits = {
 
 -- units that the AI won't target
 neutralUnits = {
+	------------------------------------------------ AVEN
 	aven_dragons_teeth = true,
-	gear_dragons_teeth = true,
-	claw_dragons_teeth = true,
-	sphere_dragons_teeth = true,
 	aven_fortification_wall = true,
-	gear_fortification_wall = true,
-	claw_fortification_wall = true,
-	sphere_fortification_wall = true,
 	aven_large_fortification_wall = true,
-	gear_large_fortification_wall = true,
-	claw_large_fortification_wall = true,
-	sphere_large_fortification_wall = true,	
 	aven_fortification_gate = true,
+	------------------------------------------------ GEAR
+	gear_dragons_teeth = true,
+	gear_fortification_wall = true,
+	gear_large_fortification_wall = true,
 	gear_fortification_gate = true,
+	gear_mine = true,
+	gear_incendiary_mine = true,
+	------------------------------------------------ CLAW
+	claw_dragons_teeth = true,
+	claw_fortification_wall = true,
+	claw_large_fortification_wall = true,
 	claw_fortification_gate = true,
-	sphere_fortification_gate = true,
+	------------------------------------------------ SPHERE
+	sphere_dragons_teeth = true,
+	sphere_fortification_wall = true,
+	sphere_large_fortification_wall = true,
+	sphere_fortification_gate = true,	
+	------------------------------------------------ other
 	cs_beacon = true,
 	scoper_beacon = true
 }

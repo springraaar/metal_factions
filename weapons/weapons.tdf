@@ -31,9 +31,10 @@
 	turret=1;
 	explosionGenerator=custom:BLUEBLASTWRAPPER;
 	cegTag=BLUEGLOWMED;
+	texture1=ecannon;
 	intensity=1;
 	size=3.2;
-	rgbColor=0.6 0.8 1.0;
+	rgbColor=0.85 0.9 1.0;
 	stages=7;
 	noGap=0;
   	separation=0.1;
@@ -74,9 +75,10 @@
 	turret=1;
 	explosionGenerator=custom:BLUEBLASTWRAPPER;
 	cegTag=BLUEGLOWMED;
+	texture1=ecannon;
 	intensity=1;
 	size=4.1;
-	rgbColor=0.8 0.9 1.0;
+	rgbColor=0.9 0.95 1.0;
 	stages=7;
 	noGap=0;
   	separation=0.1;
@@ -306,9 +308,10 @@
 	turret=1;
 	explosionGenerator=custom:BLUEBLASTWRAPPER;
 	cegTag=BLUEGLOWMED;
+	texture1=ecannon;
 	intensity=1;
 	size=2.6;
-	rgbColor=0.5 0.7 1.0;
+	rgbColor=0.85 0.9 1.0;
 	stages=7;
 	noGap=0;
   	separation=0.1;
@@ -349,9 +352,10 @@
 	turret=1;
 	explosionGenerator=custom:BLUEBLASTWRAPPER;
 	cegTag=BLUEGLOWMED;
+	texture1=ecannon;
 	intensity=1;
 	size=2.6;
-	rgbColor=0.5 0.7 1.0;
+	rgbColor=0.8 0.9 1.0;
 	stages=7;
 	noGap=0;
   	separation=0.1;
@@ -391,6 +395,7 @@
 	weaponType=EmgCannon;
 	explosionGenerator=custom:EMGFLASHMED;
 	cegTag=EMGTRAIL;
+	texture1=emg;
 	size=1.8;
 	rgbColor=0.8 0.9 1.0;
 	stages=2;
@@ -430,6 +435,7 @@
 	weaponType=EmgCannon;
 	explosionGenerator=custom:EMGFLASHMED;
 	cegTag=EMGTRAIL;
+	texture1=emg;
 	size=1.8;
 	rgbColor=0.8 0.9 1.0;
 	stages=2;
@@ -469,6 +475,7 @@
 	weaponType=EmgCannon;
 	explosionGenerator=custom:EMGFLASHMED;
 	cegTag=EMGTRAIL;
+	texture1=emg;
 	size=1.8;
 	rgbColor=0.8 0.9 1.0;
 	stages=2;
@@ -509,6 +516,7 @@
 	weaponType=EmgCannon;
 	explosionGenerator=custom:STDNARROWBLASTWRAPPER;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	turret=1;
 	range=460;
 	reloadTime=0.7;
@@ -587,9 +595,10 @@
 	turret=1;
 	explosionGenerator=custom:BLUEBLASTWRAPPER;
 	cegTag=BLUEGLOWMED;
+	texture1=ecannon;
 	intensity=1;
 	size=3.2;
-	rgbColor=0.6 0.8 1.0;
+	rgbColor=0.85 0.9 1.0;
 	stages=7;
 	noGap=0;
   	separation=0.1;
@@ -673,6 +682,7 @@
 	weaponType=Cannon;
 	explosionGenerator=custom:EMPBLASTSML;
 	cegTag=empshottrail;
+	texture1=disrcannon;
 	energyPerShot=90;
 	accuracy=250;
 	turret=1;
@@ -893,6 +903,7 @@
 	weaponType=Cannon;
 	explosionGenerator=custom:EMPBLASTSML;
 	cegTag=empshottrail;
+	texture1=disrcannon;
 	energyPerShot=45;
 	accuracy=350;
 	turret=1;
@@ -905,7 +916,7 @@
 	soundHit=emphit;
 	explosionScar=0;
 	size=2.45;
-	rgbColor=0 0.50 0.5;
+	rgbColor=0.5 0.6 0.7;
 	stages=4;
   	separation=0.66;
   	alphaDecay=0.8;
@@ -938,6 +949,7 @@
 	weaponType=Cannon;
 	explosionGenerator=custom:EMPBLASTSML;
 	cegTag=empshottrail;
+	texture1=disrcannon;
 	energyPerShot=60;
 	accuracy=350;
 	turret=1;
@@ -983,6 +995,7 @@
 	weaponType=Cannon;
 	explosionGenerator=custom:EMPBLASTSML;
 	cegTag=empshottrail;
+	texture1=disrcannon;
 	energyPerShot=45;
 	accuracy=350;
 	turret=1;
@@ -1644,6 +1657,7 @@
 	weaponType=Cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	cegTag=PLASMATRAIL2;
+	texture1=cannon;
 	energyPerShot=0;
 	accuracy=300;
 	turret=1;
@@ -1651,7 +1665,7 @@
 	reloadTime=3.1;
 	weaponVelocity=400;
 	areaOfEffect=85;
-	soundStart=cannhvy5;
+	soundStart=cannhvy6;
 	soundHit=xplomed2;
 	size=3.4;
 	rgbColor=0.9 0.7 0.3;
@@ -1726,10 +1740,11 @@
 	range=500;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	cegTag=PLASMATRAIL2;
+	texture1=ecannon;
 	reloadTime=3;
 	weaponVelocity=355;
 	areaOfEffect=80;
-	soundStart=cannon3;
+	soundStart=cannon4;
 	soundHit=xplomed2;
 	tolerance=3000;
 	size=3.2;
@@ -2271,6 +2286,7 @@
 	weaponType=Cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	cegTag=PLASMATRAIL2;
+	texture1=cannon;
 	energyPerShot=0;
 	size=3.4;
 	rgbColor=0.9 0.7 0.3;
@@ -2284,7 +2300,7 @@
 	reloadTime=2.8;
 	weaponVelocity=440;
 	areaOfEffect=100;
-	soundStart=cannhvy5;
+	soundStart=cannhvy7;
 	soundHit=xplomed2;
 	accuracy=250;
 	interceptedByShieldType=1;
@@ -2310,6 +2326,7 @@
 	weaponType=EmgCannon;
 	explosionGenerator=custom:STDNARROWBLASTWRAPPER;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	turret=1;
 	range=500;
 	reloadTime=0.5;
@@ -2347,6 +2364,7 @@
 	name=Plasma Bolt;
 	weaponType=EmgCannon;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	explosionGenerator=custom:STDNARROWBLASTWRAPPER;
 	turret=1;
 	range=600;
@@ -2386,6 +2404,7 @@
 	weaponType=EmgCannon;
 	explosionGenerator=custom:STDNARROWBLASTWRAPPER;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	turret=1;
 	range=430;
 	reloadTime=1.2;
@@ -2416,176 +2435,6 @@
 		armor_heavy=55;//#AUTO#
 		armor_medium=110;//#AUTO#
 		armor_light=110;//#AUTO#
-	}
-}
-[armmine1]
-{
-	name=Mine;
-	weaponType=Cannon;
-	range=480;
-	reloadTime=3.6;
-	weaponVelocity=250;
-	areaOfEffect=512;
-	soundStart=largegun;
-	soundHit=exmine4;
-	edgeEffectiveness=0.25;
-	explosionGenerator=custom:ROCKETBLASTWRAPPER;
-	interceptedByShieldType=1;
-	avoidFeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitPower=3;
-	}
-	[DAMAGE]
-	{
-		default=2000;
-		group_mines=5;
-		group_invincible=1;
-		armor_heavy=2000;//#AUTO#
-		armor_medium=2000;//#AUTO#
-		armor_light=2000;//#AUTO#
-	}
-}
-[armmine2]
-{
-	name=Nuclear Mine;
-	weaponType=Cannon;
-	range=480;
-	reloadTime=3.6;
-	weaponVelocity=250;
-	areaOfEffect=160;
-	soundStart=largegun;
-	soundHit=xplonuk3;
-	edgeEffectiveness=0.5;
-  	explosionGenerator=custom:ROCKETBLASTWRAPPER;
-	interceptedByShieldType=1;
-	avoidFeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitPower=3;
-	}
-	[DAMAGE]
-	{
-		default=2800;
-		group_mines=5;
-		group_invincible=1;
-		armor_heavy=2800;//#AUTO#
-		armor_medium=2800;//#AUTO#
-		armor_light=2800;//#AUTO#
-	}
-}
-[armmine3]
-{
-	name=Focal Mine;
-	weaponType=Cannon;
-	range=1;
-	turret=1;
-	reloadTime=3.6;
-	weaponVelocity=250;
-	areaOfEffect=250;
-	soundStart=largegun;
-	soundHit=exmine3;
-	edgeEffectiveness=0.5;
-	explosionGenerator=custom:ROCKETBLASTWRAPPER;
-	interceptedByShieldType=1;
-	avoidFeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitPower=3;
-	}
-	[DAMAGE]
-	{
-		default=2500;
-		group_mines=5;
-		group_invincible=1;
-		armor_heavy=2500;//#AUTO#
-		armor_medium=2500;//#AUTO#
-		armor_light=2500;//#AUTO#
-	}
-}
-[armmine4]
-{
-	name=Wide Blast Mine;
-	weaponType=Cannon;
-	turret=1;
-	range=480;
-	reloadTime=3.6;
-	weaponVelocity=250;
-	areaOfEffect=556;
-	soundStart=largegun;
-	soundHit=xplonuk3;
-	edgeEffectiveness=0.1;
-	explosionGenerator=custom:ROCKETBLASTWRAPPER;
-	interceptedByShieldType=1;
-	avoidFeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitPower=3;
-	}
-	[DAMAGE]
-	{
-		default=2500;
-		group_mines=5;
-		group_invincible=1;
-		armor_heavy=2500;//#AUTO#
-		armor_medium=2500;//#AUTO#
-		armor_light=2500;//#AUTO#
-	}
-}
-[armmine5]
-{
-	name=Whap Mine;
-	weaponType=Cannon;
-	range=480;
-	reloadTime=3.6;
-	weaponVelocity=250;
-	areaOfEffect=950;
-	soundStart=largegun;
-	soundHit=xplonuk4;
-	edgeEffectiveness=0.25;
-	explosionGenerator=custom:ROCKETBLASTWRAPPER; //changed V9//
-	interceptedByShieldType=1;
-	avoidFeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitPower=3;
-	}
-	[DAMAGE]
-	{
-		default=2250;
-		group_mines=5;
-		group_invincible=1;
-		armor_heavy=2250;//#AUTO#
-		armor_medium=2250;//#AUTO#
-		armor_light=2250;//#AUTO#
-	}
-}
-[armmine6]
-{
-	name=Blast Mine;
-	weaponType=Cannon;
-	range=480;
-	reloadTime=3.6;
-	weaponVelocity=250;
-	areaOfEffect=667;
-	soundStart=largegun;
-	soundHit=exmine2;
-	edgeEffectiveness=0.25;
-	explosionGenerator=custom:ROCKETBLASTWRAPPER;
-	interceptedByShieldType=1;
-	avoidFeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitPower=3;
-	}
-	[DAMAGE]
-	{
-		default=1400;
-		group_mines=5;
-		group_invincible=1;
-		armor_heavy=1400;//#AUTO#
-		armor_medium=1400;//#AUTO#
-		armor_light=1400;//#AUTO#
 	}
 }
 [aven_ranger_rocket]
@@ -4858,6 +4707,7 @@
   	sizeDecay=-0.1;
 	turret=1;
 	cegTag=LRPCTRAIL;
+	texture1=ecannon;
 	explosionGenerator=custom:LRPCBLASTWRAPPER;
 	range=4400;
 	reloadTime=10;
@@ -4865,7 +4715,7 @@
 	energyPerShot=2500;
 	areaOfEffect=125;
 	accuracy=30;
-	soundStart=xplonuk4;
+	soundStart=cannhvy8;
 	soundHit=xplonuk1;
 	fireStarter=50;
 	tolerance=3000;
@@ -4895,10 +4745,11 @@
 	range=500;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	reloadTime=2;
 	weaponVelocity=355;
 	areaOfEffect=80;
-	soundStart=cannon3;
+	soundStart=cannon4;
 	soundHit=xplomed2;
 	tolerance=3000;
 	size=3.2;
@@ -4932,6 +4783,7 @@
 	turret=1;
 	explosionGenerator=custom:BLUEBLASTWRAPPER;
 	cegTag=BLUEGLOWMED;
+	texture1=ecannon;
 	intensity=1;
 	size=3.2;
 	rgbColor=0.6 0.8 1.0;
@@ -4973,6 +4825,7 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	cegTag=PLASMATRAIL2;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	energyPerShot=0;
 	turret=1;
@@ -4980,7 +4833,7 @@
 	reloadTime=5;
 	weaponVelocity=450;
 	areaOfEffect=80;
-	soundStart=CANNHVY1;
+	soundStart=cannhvy6;
 	soundHit=xplomed2;
 	accuracy=200;
 	movingAccuracy=350;
@@ -5192,6 +5045,7 @@
 	turret=1;
 	range=420;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
 	reloadTime=2;
 	weaponVelocity=328;
@@ -5239,6 +5093,7 @@
 	burnBlow=1;
 	explosionGenerator=custom:FLAKBLASTWRAPPER;
 	cegTag=PLASMATRAIL1;
+	texture1=wbcannon;
 	size=2;
 	rgbColor=1 1 1;
 	stages=2;
@@ -5271,6 +5126,7 @@
 	turret=1;
 	range=360;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
 	reloadTime=2;
 	weaponVelocity=310;
@@ -5309,6 +5165,7 @@
 	turret=1;
 	range=660;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
 	reloadTime=2.5;
 	weaponVelocity=328;
@@ -5454,6 +5311,7 @@
   	sizeDecay=-0.1;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	accuracy=200;
 	movingAccuracy=500;
 	interceptedByShieldType=1;
@@ -5483,7 +5341,7 @@
 	reloadTime=2.2;
 	weaponVelocity=400;
 	areaOfEffect=72;
-	soundStart=cannon3;
+	soundStart=cannon4;
 	soundHit=xplomed2;
 	tolerance=3000;
 	size=3.2;
@@ -5493,6 +5351,7 @@
   	alphaDecay=0.3;
   	sizeDecay=-0.1;
 	cegTag=PLASMATRAIL2;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	accuracy=180;
 	movingAccuracy=280;
@@ -6555,6 +6414,7 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	cegTag=PLASMATRAIL2;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	energyPerShot=0;
 	accuracy=300;
@@ -6780,6 +6640,7 @@
 	fireStarter=70;
 	explosionGenerator=custom:fireballboombig;
 	cegTag=fireballtrail2;
+	texture1=fcannon;
 	rgbColor=0.7 0.3 0.0;
 	size=8.00;
 	stages=7;
@@ -6814,13 +6675,14 @@
 	turret=1;
 	range=580;
 	cegTag=PLASMATRAIL2;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	reloadTime=3;
 	weaponVelocity=390;
 	areaOfEffect=80;
 	accuracy=300;
 	movingAccuracy=600;
-	soundStart=cannon3;
+	soundStart=cannon4;
 	soundHit=xplomed2;
 	tolerance=3000;
 	size=3.2;
@@ -7747,6 +7609,7 @@
 	weaponType=Cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	cegTag=REXPLASMATRAIL;
+	texture1=ecannon;
 	turret=1;
 	range=620;
 	reloadTime=0.9;
@@ -8042,6 +7905,7 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	cegTag=PLASMATRAIL2;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	energyPerShot=0;
 	turret=1;
@@ -8049,7 +7913,7 @@
 	reloadTime=3;
 	weaponVelocity=450;
 	areaOfEffect=80;
-	soundStart=CANNHVY1;
+	soundStart=cannhvy6;
 	soundHit=xplomed2;
 	accuracy=200;
 	movingAccuracy=350;
@@ -8088,6 +7952,7 @@
   	alphaDecay=0.2;
   	sizeDecay=-0.1;
 	cegTag=LRPCTRAIL;
+	texture1=ecannon;
 	explosionGenerator=custom:LRPCBLASTWRAPPER;
 	turret=1;
 	range=4500;
@@ -8095,7 +7960,7 @@
 	weaponVelocity=850;
 	energyPerShot=3000;
 	areaOfEffect=125;
-	soundStart=xplonuk3;
+	soundStart=cannhvy8;
 	soundHit=xplonuk1;
 	fireStarter=50;
 	accuracy=40;
@@ -8491,11 +8356,12 @@
 	turret=1;
 	range=900;
 	cegTag=PLASMATRAIL2;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	reloadTime=3;
 	weaponVelocity=480;
 	areaOfEffect=80;
-	soundStart=cannon3;
+	soundStart=cannon4;
 	soundHit=xplomed2;
 	tolerance=1000;
 	size=3.2;
@@ -8531,6 +8397,7 @@
 	range=400;
 	reloadTime=1.2;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	weaponVelocity=300;
 	areaOfEffect=80;
@@ -8540,7 +8407,7 @@
   	separation=0.5;
   	alphaDecay=0.3;
   	sizeDecay=-0.1;
-	soundStart=cannon3;
+	soundStart=cannon4;
 	soundHit=xplomed2;
 	tolerance=3000;
 	accuracy=500;
@@ -8572,11 +8439,12 @@
 	accuracy=200;
 	movingAccuracy=350;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	reloadTime=1.3;
 	weaponVelocity=400;
 	areaOfEffect=70;
-	soundStart=cannon3;
+	soundStart=cannon4;
 	soundHit=xplomed2;
 	size=3.2;
 	rgbColor=0.7 0.6 0.3;
@@ -8611,11 +8479,12 @@
 	accuracy=200;
 	movingAccuracy=350;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	reloadTime=0.9;
 	weaponVelocity=400;
 	areaOfEffect=80;
-	soundStart=cannon3;
+	soundStart=cannon4;
 	soundHit=xplomed2;
 	size=3.2;
 	rgbColor=0.7 0.6 0.3;
@@ -8650,12 +8519,13 @@
 	accuracy=200;
 	movingAccuracy=400;
 	cegTag=PLASMATRAIL2;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	reloadTime=2.1;
 	weaponVelocity=400;
 	areaOfEffect=90;
 	burnBlow=1;
-	soundStart=cannon3;
+	soundStart=cannon4;
 	soundHit=xplomed2;
 	size=3.2;
 	rgbColor=0.7 0.6 0.3;
@@ -8690,9 +8560,10 @@
 	reloadTime=1.8;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	weaponVelocity=365;
 	areaOfEffect=80;
-	soundStart=cannon3;
+	soundStart=cannon4;
 	soundHit=xplomed2;
 	tolerance=3000;
 	size=3.2;
@@ -8730,7 +8601,8 @@
 	areaOfEffect=80;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	cegTag=PLASMATRAIL2;
-	soundStart=cannon3;
+	texture1=cannon;
+	soundStart=cannon4;
 	soundHit=xplomed2;
 	accuracy=200;
 	movingAccuracy=500;
@@ -8770,6 +8642,7 @@
 	reloadTime=1.9;
 	weaponVelocity=290;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
 	areaOfEffect=64;
 	soundStart=cannon1;
@@ -8807,10 +8680,11 @@
 	range=420;
 	reloadTime=2.5;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	weaponVelocity=338;
 	areaOfEffect=80;
-	soundStart=cannon3;
+	soundStart=cannon4;
 	soundHit=xplomed2;
 	tolerance=4000;
 	accuracy=600;
@@ -8855,6 +8729,7 @@
 	burnBlow=1;
 	explosionGenerator=custom:FLAKBLASTWRAPPER;
 	cegTag=PLASMATRAIL1;
+	texture1=wbcannon;
 	size=2;
 	rgbColor=1 1 1;
 	stages=2;
@@ -9190,13 +9065,14 @@
 	energyPerShot=0;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	cegTag=PLASMATRAIL2;
+	texture1=cannon;
 	turret=1;
 	mygravity=0.1;
 	range=1800;
 	reloadTime=2.8;
 	weaponVelocity=440;
 	areaOfEffect=100;
-	soundStart=cannhvy5;
+	soundStart=cannhvy7;
 	soundHit=xplomed2;
 	tolerance=3000;
 	size=3.4;
@@ -9727,6 +9603,7 @@
 	weaponType=Cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	cegTag=PLASMATRAIL2;
+	texture1=cannon;
 	energyPerShot=0;
 	accuracy=300;
 	turret=1;
@@ -9734,7 +9611,7 @@
 	reloadTime=3;
 	weaponVelocity=400;
 	areaOfEffect=85;
-	soundStart=cannhvy5;
+	soundStart=cannhvy6;
 	soundHit=xplomed2;
 	size=3.4;
 	rgbColor=0.9 0.7 0.3;
@@ -9902,6 +9779,7 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	cegTag=PLASMATRAIL3;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	energyPerShot=0;
 	rgbColor=1 0.33 0.0;
@@ -9910,7 +9788,7 @@
 	reloadTime=2.2;
 	weaponVelocity=480;
 	areaOfEffect=96;
-	soundStart=CANNHVY1;
+	soundStart=cannhvy6;
 	soundHit=xplomed2;
 	accuracy=200;
 	movingAccuracy=300;
@@ -9943,6 +9821,7 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	cegTag=PLASMATRAIL3;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	energyPerShot=0;
 	rgbColor=1 0.33 0.0;
@@ -9951,7 +9830,7 @@
 	reloadTime=3;
 	weaponVelocity=480;
 	areaOfEffect=96;
-	soundStart=cannhvy5;
+	soundStart=cannhvy6;
 	soundHit=xplomed2;
 	accuracy=200;
 	movingAccuracy=300;
@@ -9984,6 +9863,7 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	cegTag=PLASMATRAIL3;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	energyPerShot=0;
 	rgbColor=1 0.33 0.0;
@@ -9992,7 +9872,7 @@
 	reloadTime=2.5;
 	weaponVelocity=480;
 	areaOfEffect=96;
-	soundStart=CANNHVY1;
+	soundStart=cannhvy6;
 	soundHit=xplomed2;
 	accuracy=200;
 	movingAccuracy=500;
@@ -10026,6 +9906,7 @@
 	weaponType=Cannon;
 	energyPerShot=0;
 	cegTag=PLASMATRAIL3;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	turret=1;
 	range=600;
@@ -10202,6 +10083,7 @@
 	weaponType=EmgCannon;
 	explosionGenerator=custom:EMGFLASH;
 	cegTag=EMGTRAIL;
+	texture1=emg;
 	size=1.6;
 	rgbColor=1.0 0.7 0.1;
 	stages=2;
@@ -10959,6 +10841,7 @@
 	fireStarter=70;
 	explosionGenerator=custom:fireballboommed;
 	cegTag=fireballtrail3;
+	texture1=fcannon;
 	rgbColor=0.7 0.3 0.0;
 	size=4.00;
 	stages=7;
@@ -11010,6 +10893,7 @@
 	fireStarter=70;
 	explosionGenerator=custom:fireballboombig;
 	cegTag=fireballtrail2;
+	texture1=fcannon;
 	rgbColor=0.7 0.3 0.0;
 	size=8.00;
 	stages=7;
@@ -11034,49 +10918,6 @@
 		group_invincible=1;
 		armor_heavy=200;//#AUTO#
 		armor_medium=400;//#AUTO#
-		armor_light=800;//#AUTO#
-	}
-}
-[gear_overcharger_cannon_old]
-{
-	name=Overcharged EWB Cannon;
-	weaponType=Cannon;
-	turret=1;
-	range=750;
-	highTrajectory=1;
-	reloadTime=3;
-	weaponVelocity=330;
-	areaOfEffect=200;
-	soundStart=overfire;
-	soundHit=xplomas2;
-	energyPerShot=900;
-	tolerance=3000;
-	burnBlow=1;
-	cegTag=PLASMATRAIL3;
-	explosionGenerator=custom:TSUNAMIBLASTWRAPPER;
-	size=3;
-	rgbColor=1.0 0.8 0.5;
-	stages=3;
-  	separation=0.0;
-  	alphaDecay=0.8;
-  	sizeDecay=-2;
-	craterMult=0.125;
-	interceptedByShieldType=1;
-	avoidGround=1;
-	avoidFeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitPower=2;
-		reaimTime=1;
-		expDmgScaling=1;
-		targets=SURFACE;
-	}
-	[DAMAGE]
-	{
-		default=800;
-		group_invincible=1;
-		armor_heavy=400;//#AUTO#
-		armor_medium=800;//#AUTO#
 		armor_light=800;//#AUTO#
 	}
 }
@@ -11824,6 +11665,7 @@
 	energyPerShot=60;
 	explosionGenerator=custom:TSUNAMIBLASTWRAPPER;
 	cegTag=glowsml;
+	texture1=ecannon;
 	size=3;
 	rgbColor=0.25 0.35 0.45;
 	stages=2;
@@ -12493,6 +12335,7 @@
 	weaponType=EmgCannon;
 	collideFriendly=0;
 	cegTag=EMGTRAIL;
+	texture1=emg;
 	size=1.8;
 	rgbColor=0.8 0.9 1.0;
 	stages=2;
@@ -12627,6 +12470,7 @@
 	weaponType=EmgCannon;
 	collideFriendly=0;
 	cegTag=EMGTRAIL;
+	texture1=emg;
 	size=1.6;
 	rgbColor=1.0 0.7 0.1;
 	stages=2;
@@ -12933,7 +12777,7 @@
 	turret=1;
 	model=weapon_missile.3do;
 	texture1=null; //flare//
-	range=700;
+	range=740;
 	reloadTime=4;
 	flightTime=3.75;
 	weaponVelocity=805;
@@ -13023,7 +12867,7 @@
 	turret=1;
 	model=weapon_missile.3do;
 	texture1=null; //flare//
-	range=700;
+	range=740;
 	reloadTime=3.2;
 	flightTime=3.75;
 	weaponVelocity=805;
@@ -13243,6 +13087,7 @@
 	weaponType=EmgCannon;
 	explosionGenerator=custom:EMGFLASH;
 	cegTag=EMGTRAIL;
+	texture1=emg;
 	size=1.6;
 	rgbColor=1.0 0.7 0.1;
 	stages=2;
@@ -13283,6 +13128,7 @@
 	weaponType=EmgCannon;
 	explosionGenerator=custom:EMGFLASH;
 	cegTag=EMGTRAIL;
+	texture1=emg;
 	size=1.6;
 	rgbColor=1.0 0.7 0.1;
 	stages=2;
@@ -13323,6 +13169,7 @@
 	weaponType=EmgCannon;
 	explosionGenerator=custom:EMGFLASHMED;
 	cegTag=EMGTRAIL;
+	texture1=emg;
 	size=1.8;
 	rgbColor=0.8 0.9 1.0;
 	stages=2;
@@ -13364,6 +13211,7 @@
 	weaponType=EmgCannon;
 	explosionGenerator=custom:EMGFLASH;
 	cegTag=EMGTRAIL;
+	texture1=emg;
 	size=1.6;
 	rgbColor=1.0 0.7 0.1;
 	stages=2;
@@ -13499,6 +13347,7 @@
 	weaponType=EmgCannon;
 	explosionGenerator=custom:EMGFLASH;
 	cegTag=EMGTRAIL;
+	texture1=emg;
 	size=1.6;
 	rgbColor=1.0 0.7 0.1;
 	stages=2;
@@ -13595,6 +13444,7 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	cegTag=PLASMATRAIL3;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	energyPerShot=0;
 	rgbColor=1 0.33 0.0;
@@ -13603,7 +13453,7 @@
 	reloadTime=2.0;
 	weaponVelocity=500;
 	areaOfEffect=100;
-	soundStart=CANNHVY1;
+	soundStart=cannhvy7;
 	soundHit=xplomed2;
 	accuracy=200;
 	movingAccuracy=300;
@@ -13636,6 +13486,7 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	cegTag=PLASMATRAIL2;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	energyPerShot=0;
 	turret=1;
@@ -13643,7 +13494,7 @@
 	reloadTime=3;
 	weaponVelocity=450;
 	areaOfEffect=80;
-	soundStart=CANNHVY1;
+	soundStart=cannhvy6;
 	soundHit=xplomed2;
 	accuracy=200;
 	movingAccuracy=350;
@@ -13678,12 +13529,13 @@
 	energyPerShot=0;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	cegTag=PLASMATRAIL2;
+	texture1=cannon;
 	turret=1;
 	range=1220;
 	reloadTime=2.9;
 	weaponVelocity=450;
 	areaOfEffect=85;
-	soundStart=CANNHVY1;
+	soundStart=cannhvy6;
 	soundHit=xplomed2;
 	tolerance=3000;
 	accuracy=200;
@@ -15625,6 +15477,8 @@
 	tolerance=8000;
 	burnBlow=1;
 	explosionGenerator=custom:FLAKBLASTWRAPPER;
+	cegTag=PLASMATRAIL1;
+	texture1=wbcannon;
 	size=1.5;
 	rgbColor=1 1 1;
 	stages=2;
@@ -15696,46 +15550,6 @@
 		armor_heavy=17;//#AUTO#
 		armor_medium=35;//#AUTO#
 		armor_light=70;//#AUTO#
-	}
-}
-[claw_piercer_railgun_old]
-{
-	name=Railgun;
-	weaponType=Cannon;
-	explosionGenerator=custom:STDNARROWBLASTWRAPPER;
-  	noGap=0;
-	intensity=1;
-	size=1;
-	rgbColor=0.1 0.1 0.1;
-	stages=12;
-  	separation=0.75;
-  	alphaDecay=0;
-  	sizeDecay=-0.1;
-	cegTag=RAILGUNTRAIL;
-	energyPerShot=200;
-	turret=1;
-	range=1330;
-	reloadTime=4;
-	weaponVelocity=1532;
-	accuracy=10;
-	areaOfEffect=24;
-	soundStart=railgun;
-	soundHit=xplolrg2;
-	soundTrigger=1;
-	tolerance=3000;
-	interceptedByShieldType=1;
-	avoidFeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitPower=3;
-		expDmgScaling=1;
-	}
-	[DAMAGE]
-	{
-		default=500;
-		armor_heavy=500;//#AUTO#
-		armor_medium=500;//#AUTO#
-		armor_light=500;//#AUTO#
 	}
 }
 [claw_piercer_railgun]
@@ -16603,6 +16417,7 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	cegTag=PLASMATRAIL3;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	energyPerShot=0;
 	size=3.4;
@@ -16616,7 +16431,7 @@
 	reloadTime=2;
 	weaponVelocity=500;
 	areaOfEffect=100;
-	soundStart=cannhvy5;
+	soundStart=cannhvy7;
 	soundHit=xplomed2;
 	accuracy=200;
 	movingAccuracy=300;
@@ -17176,6 +16991,7 @@
 	name=Spreadshot EWB Cannon;
 	weaponType=Cannon;
 	cegTag=PLASMATRAIL3;
+	texture1=wbcannon;
 	explosionGenerator=custom:TSUNAMIBLASTWRAPPER;
 	size=3;
 	rgbColor=1.0 0.8 0.5;
@@ -17222,6 +17038,7 @@
 	name=Spreadshot EWB Cannon;
 	weaponType=Cannon;
 	cegTag=PLASMATRAIL3;
+	texture1=wbcannon;
 	explosionGenerator=custom:TSUNAMIBLASTWRAPPER;
 	size=3;
 	rgbColor=1.0 0.8 0.5;
@@ -17274,6 +17091,7 @@
 	reloadTime=0.8;
 	weaponVelocity=320;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
 	areaOfEffect=64;
 	soundStart=cannon1;
@@ -17309,13 +17127,14 @@
 	turret=1;
 	range=500;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	reloadTime=1;
 	weaponVelocity=355;
 	areaOfEffect=80;
 	accuracy=200;
 	movingAccuracy=500;
-	soundStart=cannon3;
+	soundStart=cannon4;
 	soundHit=xplomed2;
 	tolerance=3000;
 	size=3.2;
@@ -17349,6 +17168,7 @@
 	turret=1;
 	range=500;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
 	reloadTime=2;
 	weaponVelocity=400;
@@ -17390,6 +17210,7 @@
 	reloadTime=1.8;
 	weaponVelocity=350;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
 	areaOfEffect=64;
 	soundStart=cannon1;
@@ -17427,6 +17248,7 @@
 	reloadTime=1.8;
 	weaponVelocity=300;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
 	areaOfEffect=64;
 	soundStart=cannon1;
@@ -17471,8 +17293,9 @@
 	weaponVelocity=450;
 	areaOfEffect=90;
 	cegTag=PLASMATRAIL2;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
-	soundStart=cannhvy2;
+	soundStart=cannhvy6;
 	soundHit=xplomed4;
 	accuracy=200;
 	movingAccuracy=350;
@@ -17511,8 +17334,9 @@
 	weaponVelocity=450;
 	areaOfEffect=80;
 	cegTag=PLASMATRAIL2;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
-	soundStart=cannhvy2;
+	soundStart=cannhvy7;
 	soundHit=xplomed4;
 	accuracy=200;
 	movingAccuracy=350;
@@ -17551,8 +17375,9 @@
 	weaponVelocity=450;
 	areaOfEffect=80;
 	cegTag=PLASMATRAIL2;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
-	soundStart=cannhvy2;
+	soundStart=cannhvy6;
 	soundHit=xplomed2;
 	accuracy=200;
 	movingAccuracy=500;
@@ -18187,8 +18012,9 @@
 	weaponVelocity=390;
 	areaOfEffect=64;
 	cegTag=PLASMATRAIL2;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
-	soundStart=cannon3;
+	soundStart=cannon4;
 	soundHit=xplomed2;
 	accuracy=200;
 	movingAccuracy=500;
@@ -18311,6 +18137,7 @@
   	alphaDecay=0.2;
   	sizeDecay=-0.1;
 	cegTag=PLASMATRAIL3;
+	texture1=ecannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	groundBounce=0;
 	waterBounce=0;
@@ -18357,6 +18184,7 @@
   	alphaDecay=0.2;
   	sizeDecay=-0.1;
 	cegTag=PLASMATRAIL3;
+	texture1=ecannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	groundBounce=0;
 	waterBounce=0;
@@ -18402,6 +18230,7 @@
   	alphaDecay=0.2;
   	sizeDecay=-0.1;
 	cegTag=PLASMATRAIL3;
+	texture1=ecannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	groundBounce=0;
 	waterBounce=0;
@@ -18448,6 +18277,7 @@
   	alphaDecay=0.2;
   	sizeDecay=-0.1;
 	cegTag=LRPCTRAIL;
+	texture1=ecannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	groundBounce=0;
 	waterBounce=0;
@@ -18910,6 +18740,7 @@
 	burnBlow=1;
 	explosionGenerator=custom:FLAKBLASTWRAPPER;
 	cegTag=NOVATRAIL;
+	texture1=wbcannon;
 	size=4;
 	rgbColor=1 1 1;
 	stages=2;
@@ -19221,8 +19052,9 @@
 	weaponVelocity=360;
 	areaOfEffect=80;
 	cegTag=PLASMATRAIL2;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
-	soundStart=cannon3;
+	soundStart=cannon4;
 	soundHit=xplomed2;
 	accuracy=200;
 	movingAccuracy=500;
@@ -19332,6 +19164,7 @@
 	weaponType=EmgCannon;
 	explosionGenerator=custom:REDBLASTWRAPPER;
 	cegTag=REDGLOWSML;
+	texture1=ecannon;
   	noGap=0;
 	intensity=1;
 	size=2.5;
@@ -19374,6 +19207,7 @@
 	weaponType=EmgCannon;
 	explosionGenerator=custom:REDBLASTWRAPPER;
 	cegTag=REDGLOWSML;
+	texture1=ecannon;
   	noGap=0;
 	intensity=1;
 	size=2.7;
@@ -19915,6 +19749,7 @@
 	reloadTime=2.3;
 	weaponVelocity=300;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
 	areaOfEffect=64;
 	soundStart=cannon1;
@@ -19954,6 +19789,7 @@
 	reloadTime=2.35;
 	weaponVelocity=300;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
 	areaOfEffect=64;
 	soundStart=cannon1;
@@ -20324,6 +20160,7 @@
 	weaponType=EmgCannon;
 	explosionGenerator=custom:REDBLASTWRAPPER;
 	cegTag=REDGLOWSML;
+	texture1=ecannon;
   	noGap=0;
 	intensity=1;
 	size=2.5;
@@ -20365,6 +20202,7 @@
 	name=Plasma Cannon;
 	weaponType=Cannon;
 	cegTag=PLASMATRAIL3;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	energyPerShot=0;
 	size=3.4;
@@ -20378,7 +20216,7 @@
 	reloadTime=3;
 	weaponVelocity=500;
 	areaOfEffect=100;
-	soundStart=cannhvy5;
+	soundStart=cannhvy7;
 	soundHit=xplomed2;
 	accuracy=200;
 	movingAccuracy=300;
@@ -20556,6 +20394,7 @@
 	weaponType=EmgCannon;
 	explosionGenerator=custom:REDBLASTWRAPPER;
 	cegTag=REDGLOWSML;
+	texture1=ecannon;
   	noGap=0;
 	intensity=1;
 	size=2.5;
@@ -20598,6 +20437,7 @@
 	weaponType=EmgCannon;
 	explosionGenerator=custom:REDBLASTWRAPPER;
 	cegTag=REDGLOWSML;
+	texture1=ecannon;
   	noGap=0;
 	intensity=1;
 	size=2.5;
@@ -20640,6 +20480,7 @@
 	weaponType=EmgCannon;
 	explosionGenerator=custom:REDBLASTWRAPPER;
 	cegTag=REDGLOWSML;
+	texture1=ecannon;
   	noGap=0;
 	intensity=1;
 	size=2.5;
@@ -20683,13 +20524,14 @@
 	weaponType=Cannon;
 	explosionGenerator=custom:REDBLASTWRAPPER;
 	cegTag=REDGLOWMED;
+	texture1=ecannon;
   	noGap=1;
 	intensity=1;
 	size=5.1;
-	rgbColor=1.0 0.6 0.6;
+	rgbColor=1.0 0.95 0.93;
 	stages=7;
   	separation=0;
-  	alphaDecay=0.8;
+  	alphaDecay=0.95;
   	sizeDecay=-0.2;
 	turret=1;
 	range=500;
@@ -20815,13 +20657,14 @@
 	weaponType=Cannon;
 	explosionGenerator=custom:REDBLASTWRAPPER;
 	cegTag=REDGLOWMED;
+	texture1=ecannon;
   	noGap=0;
 	intensity=1;
 	size=4.1;
-	rgbColor=1.0 0.5 0.5;
+	rgbColor=1.0 0.93 0.9;
 	stages=7;
   	separation=0;
-  	alphaDecay=0.9;
+  	alphaDecay=0.95;
   	sizeDecay=-0.2;
 	turret=1;
 	range=650;
@@ -21198,18 +21041,18 @@
 	name=Energized Plasma Discharge;
 	weaponType=MissileLauncher;
 	explosionGenerator=custom:REDBLASTWRAPPER;
-	cegTag=REDPLASMATRAIL;
+	cegTag=COMETPLASMATRAIL;
 	turret=1;
 	model=weapon_redplasma.3do;
 	range=420;
-	reloadTime=1.0;
-	flightTime=1.9;
+	reloadTime=0.6;
+	flightTime=1.5;
 	fixedLauncher=1;
 	weaponVelocity=340;
-	startVelocity=340;
-	weaponAcceleration=30;
-	areaOfEffect=90;
-	energyPerShot=200;
+	startVelocity=300;
+	weaponAcceleration=100;
+	areaOfEffect=100;
+	energyPerShot=160;
 	metalPerShot=0;
 	soundStart=slowplasma;
 	soundHit=xplochargedshot;
@@ -21220,7 +21063,7 @@
 	collideFriendly=0;
 	avoidFeature=0;
 	tracks=0;
-	turnRate=35000;
+	turnRate=40000;
 	wobble=5500;
 	[CUSTOMPARAMS]
 	{
@@ -21231,11 +21074,11 @@
 	}
 	[DAMAGE]
 	{
-		default=320;
+		default=250;
 		group_invincible=1;
-		armor_heavy=320;//#AUTO#
-		armor_medium=320;//#AUTO#
-		armor_light=320;//#AUTO#
+		armor_heavy=250;//#AUTO#
+		armor_medium=250;//#AUTO#
+		armor_light=250;//#AUTO#
 	}
 }
 [sphere_atom_cannon]
@@ -21336,6 +21179,7 @@
 	range=480;
 	reloadTime=2;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
 	weaponVelocity=370;
 	areaOfEffect=72;
@@ -21373,6 +21217,7 @@
 	range=570;
 	reloadTime=0.8;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
 	weaponVelocity=380;
 	areaOfEffect=64;
@@ -21409,10 +21254,11 @@
 	range=500;
 	reloadTime=1.8;
 	cegTag=PLASMATRAIL1;
+	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	weaponVelocity=380;
 	areaOfEffect=80;
-	soundStart=cannon3;
+	soundStart=cannon4;
 	soundHit=xplomed2;
 	tolerance=3000;
 	size=3.2;
@@ -22710,6 +22556,7 @@
   	alphaDecay=0.2;
   	sizeDecay=-0.1;
 	cegTag=LRPCTRAIL;
+	texture1=ecannon;
 	explosionGenerator=custom:LRPCBLASTWRAPPER;
 	groundBounce=0;
 	waterBounce=0;
@@ -22719,7 +22566,7 @@
 	weaponVelocity=850;
 	energyPerShot=2100;
 	areaOfEffect=110;
-	soundStart=xplonuk3;
+	soundStart=cannhvy8;
 	soundHit=xplonuk1;
 	fireStarter=50;
 	accuracy=30;

@@ -372,6 +372,13 @@ function CommonUnitBehavior:evade(threatPos, moveDistance)
 			return
 		end
 	end
+
+	-- activate dash, if possible	
+	local dashReload = spGetUnitRulesParam(self.unitId,"dashReload")
+	local canDash = (dashReload and dashReload == 1)
+	if (canDash) then
+		spGiveOrderToUnit(self.unitId,CMD_DASH,{},{})
+	end
 	
 	local ordersGiven = 0
 	for i=1,UNIT_EVADE_WAYPOINTS do
@@ -448,6 +455,13 @@ function CommonUnitBehavior:engage(threatPos, moveDistance)
 			spGiveOrderToUnit(self.unitId,CMD_JUMP,{pos.x,spGetGroundHeight(pos.x,pos.z),pos.z},{})
 			return
 		end
+	end
+	
+	-- activate dash, if possible	
+	local dashReload = spGetUnitRulesParam(self.unitId,"dashReload")
+	local canDash = (dashReload and dashReload == 1)
+	if (canDash) then
+		spGiveOrderToUnit(self.unitId,CMD_DASH,{},{})
 	end
 	
 	local ordersGiven = 0

@@ -834,7 +834,126 @@
 	}
 }
 
+[COMETFLARE]
+{
+	usedefaultexplosions=0;	
 
+	[puffs]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.05;
+			sizeMod=1.0;
+			pos=0, 0, 0;
+			gravity=0, 0.05, 0;
+			emitVector=dir;
+			colorMap=1.0 0.6 0.2 0.01 0.1 0.1 0.1 0.2 0.0 0.0 0.0 0.01;
+			Texture=smoke;
+			airdrag=0.8;
+			particleLife=20;
+			particleLifeSpread=5;
+			numParticles=1;
+			particleSpeed=3;
+			particleSpeedSpread=1;
+			particleSize=15;
+			particleSizeSpread=5;
+			emitRot=0;
+			emitRotSpread=20;
+			directional=0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+	[LARGEFLASH]
+	{
+		class = CBitmapMuzzleFlame;
+		[properties]
+      	{
+         		dir = dir;
+	         	colorMap=1.0 1.0 0.6 0.01   0.6 0.3 0.1 0.01   0.4 0.1 0.0 0.01; 
+	          	size=15;
+      	    	length=6;
+	          	sizeGrowth=0.4;
+	          	ttl=2;
+      	    	frontOffset=0.2;
+	          	sideTexture=muzzleside;
+      	    	frontTexture=muzzlefront;
+      	}
+		water=1;
+		air=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+	[GLOWCENTER]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=dir;
+			width=30;
+			length=23;
+			alpha=0.6;
+			alphadecay=0.08;
+			color=0.9, 0.8, 0.6;
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+  		count=1; 
+	}
+	[GLOWCENTER2]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=dir;
+			width=16;
+			length=12;
+			alpha=0.9;
+			alphadecay=0.9;
+			color=0.9, 0.8, 0.6;
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+  		count=1; 
+	}
+	[GLOW]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=dir;
+			width=45;
+			length=36;
+			alpha=0.3;
+			alphadecay=0.045;
+			color=0.9, 0.8, 0.6;
+
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+  		count=1; 
+	}
+	[GROUNDFLASH]
+	{
+		flashSize = 35;
+		flashAlpha = 0.15;
+		circleGrowth = 0;
+		circleAlpha = 0.1;
+		ttl = 8;
+		color = 1.0,0.9,0.2;
+
+	}
+}
 [DISRWAVEFIRE]
 {
 	usedefaultexplosions=0;	

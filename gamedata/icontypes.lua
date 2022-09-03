@@ -79,6 +79,12 @@ local _iconTypes = {
 		distance=1,
 		size=REF_SIZE
 	},
+	airtransport={
+		bitmap="icons/airtransport.tga",
+		radiusadjust=false,
+		distance=1,
+		size=1.2
+	},
 	sea={
 		bitmap="icons/semi-circle.tga",
 		radiusadjust=false,

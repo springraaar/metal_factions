@@ -185,6 +185,15 @@ function widget:Initialize()
 			WG.customHotkeys["onoff"] = "o"
 		end
 	end
+	if (not WG.unboundDefKeys or not WG.unboundDefKeys["d"]) then
+		if (not WG.customHotkeys["dash"]) then
+			unbindKey("d")
+			Spring.SendCommands("bind d dash")
+			Spring.SendCommands("bind Shift+d dash")
+			WG.customHotkeys["dash"] = "d"
+		end
+	end
+
 end
 
 
