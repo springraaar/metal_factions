@@ -53,7 +53,7 @@ end
 -- enforce default fly idle states
 function widget:UnitCreated(unitId, unitDefId, teamId)
 	if defaultFlyState[unitDefId] then
-		Spring.Echo("ID="..unitDefId)
+		--Spring.Echo("ID="..unitDefId)
 		spGiveOrderToUnit(unitId, CMD.IDLEMODE, {defaultFlyState[unitDefId]}, {})
 	end
 end

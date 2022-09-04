@@ -102,7 +102,10 @@ function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOpt
 	end
 	
 	if cmdID == CMD_DASH then
-		if canDashUnitIds[unitID] and not dashingUnitIds[unitID] then 
+		local isJumping = spGetUnitRulesParam(unitID,"is_jumping")
+		isJumping = isJumping and (isJumping == 1)
+	
+		if (not isJumping) and canDashUnitIds[unitID] and not dashingUnitIds[unitID] then 
 			dashingUnitIds[unitID] = {frames = DASH_FRAMES,reloadFrames = DASH_RELOAD_FRAMES}
 			spSetUnitRulesParam(unitID, "dashReload", 0)
 			spSetUnitRulesParam(unitID, "dashFrames", DASH_FRAMES)
