@@ -1201,6 +1201,7 @@ seaAttackerList =
 	"aven_lurker",
 	"aven_stinger",
 ----------- l2
+	"aven_ranger",
 	"aven_conqueror",
 	"aven_piranha",
 	"aven_emperor",

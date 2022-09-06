@@ -36,6 +36,7 @@ local spGetUnitPosition      = Spring.GetUnitPosition
 local spSpawnCEG             = Spring.SpawnCEG
 local spPlaySoundFile        = Spring.PlaySoundFile
 local spGetUnitCollisionVolumeData = Spring.GetUnitCollisionVolumeData
+local spGetUnitHealth        = Spring.GetUnitHealth
 
 local DASH_FRAMES = 4*30 			-- 4s dash time
 local DASH_RELOAD_FRAMES = 60*30	-- 60s dash reload
@@ -104,8 +105,9 @@ function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOpt
 	if cmdID == CMD_DASH then
 		local isJumping = spGetUnitRulesParam(unitID,"is_jumping")
 		isJumping = isJumping and (isJumping == 1)
-	
-		if (not isJumping) and canDashUnitIds[unitID] and not dashingUnitIds[unitID] then 
+        local _,_,_,_,bp = spGetUnitHealth(unitID)
+	    
+		if (bp and bp == 1) and (not isJumping) and canDashUnitIds[unitID] and not dashingUnitIds[unitID] then 
 			dashingUnitIds[unitID] = {frames = DASH_FRAMES,reloadFrames = DASH_RELOAD_FRAMES}
 			spSetUnitRulesParam(unitID, "dashReload", 0)
 			spSetUnitRulesParam(unitID, "dashFrames", DASH_FRAMES)

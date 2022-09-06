@@ -31,7 +31,7 @@ local unitBlocking = {} --   <uId,{isBlocking, isSolidObjectCollidable,isProject
 local BP_SIZE_LIMIT = 0.8
 local BP_REDUCED_FP_LIMIT = 0.2
 local BP_SIZE_MULTIPLIER = 1 / BP_SIZE_LIMIT
-local SUBMERGED_RADIUS_FACTOR = 0.6
+local SUBMERGED_RADIUS_FACTOR = 0.5
 
 local lastSubmergedStatusByUnitId = {}
  

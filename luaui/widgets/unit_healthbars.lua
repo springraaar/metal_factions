@@ -86,7 +86,7 @@ local barColors = {
   reload  = { 0.00,0.60,0.60,barAlpha },
   jump    = { 0.0,0.50,0.00,barAlpha },
   shield  = { 0.20,0.60,0.60,barAlpha },
-  dash    = { 0.38,0.38,0.48,barAlpha },
+  dash    = { 0.4,0.4,0.53,barAlpha },
 
   resurrect = { 1.00,0.50,0.00,featureBarAlpha },
   reclaim   = { 0.75,0.75,0.75,featureBarAlpha },
