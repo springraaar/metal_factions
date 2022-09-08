@@ -49,7 +49,8 @@ local disabledUnits = {}
 local changeStateDelay = 3 -- delay in seconds before state of unit can be changed. Do not set it below 2 seconds, because it takes 2 seconds before enabled unit reaches full energy use
 local JAMMER_ENERGY_DISABLE_THRESHOLD = 300
 local RADAR_ENERGY_DISABLE_THRESHOLD = 900
-local EXTRACTOR_ENERGY_DISABLE_THRESHOLD = 1300
+local ADV_EXTRACTOR_ENERGY_DISABLE_THRESHOLD = 1300
+local EXTRACTOR_ENERGY_DISABLE_THRESHOLD = 50
 
 local radarDefs = {
   [ UnitDefNames['aven_advanced_radar_tower'].id ] = true,
@@ -111,11 +112,7 @@ local jammerDefs = {
   [ UnitDefNames['sphere_mist'].id ] = true
 }
 
-local metalDefs = {
-  [ UnitDefNames['aven_metal_extractor'].id ] = true,
-  [ UnitDefNames['gear_metal_extractor'].id ] = true,
-  [ UnitDefNames['claw_metal_extractor'].id ] = true,
-  [ UnitDefNames['sphere_metal_extractor'].id ] = true,
+local advMetalDefs = {
   [ UnitDefNames['aven_exploiter'].id ] = true,
   [ UnitDefNames['gear_exploiter'].id ] = true,
   [ UnitDefNames['claw_exploiter'].id ] = true,
@@ -124,6 +121,13 @@ local metalDefs = {
   [ UnitDefNames['gear_moho_mine'].id ] = true,
   [ UnitDefNames['claw_moho_mine'].id ] = true,
   [ UnitDefNames['sphere_moho_mine'].id ] = true
+}
+
+local metalDefs = {
+  [ UnitDefNames['aven_metal_extractor'].id ] = true,
+  [ UnitDefNames['gear_metal_extractor'].id ] = true,
+  [ UnitDefNames['claw_metal_extractor'].id ] = true,
+  [ UnitDefNames['sphere_metal_extractor'].id ] = true
 }
 
 --------------------------------------------------------------------------------
@@ -141,9 +145,12 @@ function AddUnit(unitID, unitDefID)
 		units[unitID] = { defID = unitDefID, changeStateTime = spGetGameSeconds(), threshold = JAMMER_ENERGY_DISABLE_THRESHOLD } 
 	elseif ( radarDefs[unitDefID]) then
 		units[unitID] = { defID = unitDefID, changeStateTime = spGetGameSeconds(), threshold = RADAR_ENERGY_DISABLE_THRESHOLD}
+	elseif ( advMetalDefs[unitDefID]) then
+		units[unitID] = { defID = unitDefID, changeStateTime = spGetGameSeconds(), threshold = ADV_EXTRACTOR_ENERGY_DISABLE_THRESHOLD} 
 	elseif ( metalDefs[unitDefID]) then
 		units[unitID] = { defID = unitDefID, changeStateTime = spGetGameSeconds(), threshold = EXTRACTOR_ENERGY_DISABLE_THRESHOLD} 
 	end
+
 end
 
 function RemoveUnit(unitID) 
@@ -210,7 +217,7 @@ function gadget:GameFrame(n)
 					
 					-- disable units that aren't fully built or if they're set to "off"
 					local _,_,_,_,bp = spGetUnitHealth(unitID)
-					if (bp and bp < 1) or (not unitStates.active) then
+					if (bp and bp < 1) or (not unitStates.active) or (disabledUnits[unitID]) then
 						spCallCOBScript(unitID, "Deactivate", 0)
 						--Spring.Echo("deactivating... "..unitID)
 					else
