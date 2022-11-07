@@ -384,6 +384,7 @@ avenLandSkirmisher = {
 				{name="aven_sniper",min=3,max=MANY,weight=0.3},
 				{name="aven_merl",min=2,max=MANY,weight=0.4},
 				{name="aven_priest",min=1,max=MANY,weight=0.4},
+				{name="aven_tribune",min=1,max=MANY,weight=0.2},
 				{name="aven_bolter",min=3,max=MANY,weight=0.3},
 				{name="aven_eraser",min=1,max=1,weight=0.01},
 				{name="aven_duster",min=0,max=MANY,weight=0.3},
@@ -443,6 +444,7 @@ avenLandSkirmisher = {
 				{name="aven_sniper",min=3,max=MANY,weight=0.3},
 				{name="aven_merl",min=2,max=MANY,weight=0.4},
 				{name="aven_priest",min=1,max=MANY,weight=0.4},
+				{name="aven_tribune",min=1,max=MANY,weight=0.2},
 				{name="aven_bolter",min=3,max=MANY,weight=0.3},
 				{name="aven_eraser",min=1,max=1,weight=0.01},
 				{name="aven_duster",min=0,max=MANY,weight=0.3},
@@ -2066,6 +2068,7 @@ clawLandSkirmisher = {
 				{name="claw_grunt",min=0,max=MANY,weight=0.5,includeConditions={THREAT_AIR}},
 				{name="claw_jester",min=0,max=MANY,weight=0.6},
 				{name="claw_roller",min=0,max=MANY,weight=0.3},
+				{name="claw_chisel",min=0,max=MANY,weight=0.3},
 				{name="claw_piston",min=0,max=MANY,weight=1,includeConditions={THREAT_ASSAULT}},				
 				{name="claw_piston",min=0,max=MANY,weight=0.3}
 			}
@@ -2845,7 +2848,7 @@ sphereLandAssault = {
 				{name="sphere_pulsar",min=0,max=MANY,weight=0.4},
 				{name="sphere_trax",min=0,max=MANY,weight=0.6},
 				{name="sphere_crustle",min=0,max=MANY,weight=0.6},
-				{name="sphere_double",min=0,max=MANY,weight=0.3,excludeConditions={THREAT_AIR}},
+				{name="sphere_reaver",min=0,max=MANY,weight=0.3,excludeConditions={THREAT_AIR}},
 				{name="sphere_quad",min=0,max=MANY,weight=0.3},
 				{name="sphere_twilight",min=3,max=MANY,weight=0.3,includeConditions={THREAT_AIR}},
 				{name="sphere_neptune",min=3,max=MANY,weight=0.3,includeConditions={THREAT_UNDERWATER}}
@@ -2903,7 +2906,7 @@ sphereLandAssault = {
 				{name="sphere_pulsar",min=0,max=MANY,weight=0.4},
 				{name="sphere_trax",min=0,max=MANY,weight=0.6},
 				{name="sphere_crustle",min=0,max=MANY,weight=0.6},
-				{name="sphere_double",min=0,max=MANY,weight=0.3,excludeConditions={THREAT_AIR}},
+				{name="sphere_reaver",min=0,max=MANY,weight=0.3,excludeConditions={THREAT_AIR}},
 				{name="sphere_quad",min=0,max=MANY,weight=0.3},
 				{name="sphere_twilight",min=3,max=MANY,weight=0.3,includeConditions={THREAT_AIR}},
 				{name="sphere_neptune",min=3,max=MANY,weight=0.3,includeConditions={THREAT_UNDERWATER}}
@@ -3062,7 +3065,7 @@ sphereLandSkirmisher = {
 				{name="sphere_glare",min=0,max=MANY,weight=0.3},
 				{name="sphere_slammer",min=0,max=MANY,weight=0.3},
 				{name="sphere_needles",min=0,max=MANY,weight=0.3},
-				{name="sphere_double",min=0,max=MANY,weight=0.2,excludeConditions={THREAT_AIR}},
+				{name="sphere_reaver",min=0,max=MANY,weight=0.2,excludeConditions={THREAT_AIR}},
 				{name="sphere_quad",min=0,max=MANY,weight=0.3}
 			}
 		},
@@ -3121,7 +3124,7 @@ sphereLandSkirmisher = {
 				{name="sphere_glare",min=0,max=MANY,weight=0.3},
 				{name="sphere_slammer",min=0,max=MANY,weight=0.3},
 				{name="sphere_needles",min=0,max=MANY,weight=0.3},
-				{name="sphere_double",min=0,max=MANY,weight=0.3,excludeConditions={THREAT_AIR}},
+				{name="sphere_reaver",min=0,max=MANY,weight=0.3,excludeConditions={THREAT_AIR}},
 				{name="sphere_quad",min=0,max=MANY,weight=0.4},
 				{name="sphere_resolver",min=1,max=2,weight=0.01},
 				{name="sphere_twilight",min=3,max=MANY,weight=0.3,includeConditions={THREAT_AIR}},

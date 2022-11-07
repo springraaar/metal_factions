@@ -148,7 +148,7 @@ Shot1()
 		emit-sfx 1024 from flare;
 		sleep 100;
 		gun_1 = 222;
-		sleep 1500;
+		sleep 5500;
 		move mis to z-axis [0.000000] speed [7.000000];
 		return (0);
 	}
@@ -159,7 +159,7 @@ Shot1()
 		emit-sfx 1024 from flare2;
 		sleep 100;
 		gun_1 = 111;
-		sleep 1500;
+		sleep 5500;
 		move mis2 to z-axis [0.000000] speed [7.000000];
 		return (0);
 	}

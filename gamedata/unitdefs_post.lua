@@ -176,6 +176,14 @@ local conditionalEnergyGenerators = {
 	claw_solar_collector = true
 } 
 
+-- units which use the build radius as effect radius
+local fakeBuilders = {
+	claw_totem = true,
+	aven_power_node = true,
+	gear_power_node = true,
+	claw_power_node = true,
+	sphere_power_node = true
+}
 
 local selfDUnits = {
 	-- AVEN
@@ -302,7 +310,7 @@ if (true) then
 			 --end
 		else
 			local factionBuilding = false
-			if name == "claw_totem" then
+			if fakeBuilders[name] then
 				unitDef.builder = true
 				unitDef.workertime = 1
 			end

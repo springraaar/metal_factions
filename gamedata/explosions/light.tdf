@@ -864,3 +864,97 @@
 		count=1;
 	}
 }
+
+
+
+[PNODEGLOW1]
+{
+	useAirLos=0;
+	usedefaultexplosions=0;
+	[heatcloud]// Fire burst
+   	{
+      	[properties]
+      	{
+      		heat = 21;
+			Texture=light;
+      		maxheat = 100;
+      		heatFalloff = 10;
+      		size = 8.0;
+      		sizeGrowth = 0.1;
+      		sizemod = 0;
+      		sizemodmod = 0;
+      		speed = 0, 0, 0;
+      		pos = 0, 0.0, 0;
+			useAirLos=0;
+      	}
+		air=1;
+      	water=1;
+      	ground=1;
+      	count=1;
+   	}
+	[GLOW]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=-1 r2,-1 r2,-1 r2;
+			width=12;
+			length=9;
+			alpha=0.15;
+			alphadecay=0.1;
+			color=1.0, 1.0, 1.0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=2;
+	}
+}
+
+[PNODEGLOW2]
+{
+	useAirLos=0;
+	usedefaultexplosions=0;
+	[heatcloud]// Fire burst
+   	{
+      	[properties]
+      	{
+      		heat = 21;
+			Texture=bluelight;
+      		maxheat = 100;
+      		heatFalloff = 10;
+      		size = 10.0;
+      		sizeGrowth = 0.1;
+      		sizemod = 0;
+      		sizemodmod = 0;
+      		speed = 0, 0, 0;
+      		pos = 0, 0.0, 0;
+			useAirLos=0;
+      	}
+		air=1;
+      	water=1;
+      	ground=1;
+      	count=1;
+   	}
+	[GLOW]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=-1 r2,-1 r2,-1 r2;
+			width=16;
+			length=11;
+			alpha=0.2;
+			alphadecay=0.1;
+			color=0.1, 0.3, 1.0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=2;
+	}
+}

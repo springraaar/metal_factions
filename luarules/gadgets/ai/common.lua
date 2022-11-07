@@ -55,6 +55,7 @@ BRUTAL_STRATEGY_STAGES_DELAY_FRAMES = 200*30
 END_GAME_ARMY_MOBILE_RATIO_THRESHOLD = 0.4
 END_GAME_ARMY_UNIT_CAP_THRESHOLD = 0.6
 GROUP_NEAR_CENTER_THRESHOLD = 0.66			-- more than 2/3rds units and cost near center
+L1_ENERGY_EFF_THRESHOLD = 1000
 
 COMBAT_EFFICIENCY_HISTORY_STEP_FRAMES = 30*60
 COMBAT_EFFICIENCY_HISTORY_CHECK_STEPS = 10 
@@ -310,6 +311,8 @@ BASE_UNDER_ATTACK_RADIUS = 800
 MORPH_CHECK_RADIUS = 1300
 EVADE_EDGE_MARGIN = 300			-- TODO this is still not working properly
 COMMANDER_ATTACK_ZIGZAG_DISTANCE = 200
+PNODE_CONNECTION_RADIUS = 490
+PNODE_CONNECTION_SQRADIUS = PNODE_CONNECTION_RADIUS*PNODE_CONNECTION_RADIUS
 
 -- reference unit types
 TYPE_LIGHT_DEFENSE = 1
@@ -360,6 +363,7 @@ TYPE_HIGH_PRIORITY = 37
 TYPE_UW_DEFENSE = 38
 TYPE_FAKE_WEAPON = 39
 TYPE_NUKE = 40
+TYPE_PNODE = 41
 
 -- Taskqueuebehavior skips this name
 SKIP_THIS_TASK = "s"
@@ -545,8 +549,7 @@ function log(inStr, ai)
 	end
 end
 
-local xd
-local zd
+local xd,zd,xd2,zd2,sqDist
 function distance(pos1,pos2)
 	xd = pos1.x-pos2.x
 	zd = pos1.z-pos2.z
@@ -572,7 +575,16 @@ function checkWithinDistance(pos,center,maxDistance)
 		return false
 	end
 	
-	if (sqrt(xd*xd + zd*zd) > maxDistance) then
+	sqDist = maxDistance*maxDistance	
+	xd2 = xd*xd
+	if xd2 > sqDist then
+		return false
+	end
+	zd2 = zd*zd
+	if zd2 > sqDist then
+		return false
+	end
+	if (xd2 + zd2 > sqDist) then
 		return false
 	end
 	
@@ -885,6 +897,7 @@ attackerList =
 	
 	"aven_racer",
 	"aven_centurion",
+	"aven_tribune",
 	"aven_javelin",
 	"aven_slider",
 	"aven_slider_s",	
@@ -968,6 +981,7 @@ attackerList =
 	"claw_wolverine",
 	"claw_grunt",
 	"claw_piston",
+	"claw_chisel",
 	"claw_jester",
 	"claw_ringo",
 	"claw_boar",
@@ -1030,7 +1044,9 @@ attackerList =
 	"sphere_pulsar",
 	"sphere_glare",
 	"sphere_quad",
+	"sphere_reaver",
 	"sphere_bulk",
+	"sphere_monolith",
 	"sphere_slammer",
 	"sphere_golem",
 	"sphere_chub",
@@ -1435,6 +1451,7 @@ commanderByFaction = {[side1Name] = "aven_commander", [side2Name] = "gear_comman
 mexByFaction =  { [side1Name] = "aven_metal_extractor", [side2Name] = "gear_metal_extractor", [side3Name] = "claw_metal_extractor", [side4Name] = "sphere_metal_extractor"}
 hazMexByFaction =  { [side1Name] = "aven_exploiter", [side2Name] = "gear_exploiter", [side3Name] = "claw_exploiter", [side4Name] = "sphere_exploiter"}
 mohoMineByFaction = { [side1Name] = "aven_moho_mine", [side2Name] = "gear_moho_mine", [side3Name] = "claw_moho_mine", [side4Name] = "sphere_moho_mine"}
+powerNodeByFaction = { [side1Name] = "aven_power_node", [side2Name] = "gear_power_node", [side3Name] = "claw_power_node", [side4Name] = "sphere_power_node"}
 fusionByFaction = { [side1Name] = "aven_fusion_reactor", [side2Name] = "gear_fusion_power_plant", [side3Name] = "claw_adv_fusion_reactor", [side4Name] = "sphere_adv_fusion_reactor"}
 advRadarByFaction = { [side1Name] = "aven_advanced_radar_tower", [side2Name] = "gear_advanced_radar_tower", [side3Name] = "claw_advanced_radar_tower", [side4Name] = "sphere_adv_radar_tower"}
 commanderMorphByFaction = {[side1Name] = {"aven_u1commander","aven_u2commander","aven_u3commander","aven_u4commander","aven_u5commander","aven_u6commander"}, [side2Name] = {"gear_u1commander","gear_u2commander","gear_u3commander","gear_u4commander","gear_u5commander","gear_u6commander"}, [side3Name] = {"claw_u1commander","claw_u2commander","claw_u3commander","claw_u4commander","claw_u5commander","claw_u6commander"}, [side4Name] = {"sphere_u1commander","sphere_u2commander","sphere_u3commander","sphere_u4commander","sphere_u5commander","sphere_u6commander"}}
@@ -1463,6 +1480,8 @@ rocketPlatformByFaction =  { [side1Name] = "aven_long_range_rocket_platform", [s
 unblockableNukeByFaction =  { [side1Name] = "aven_premium_nuclear_rocket", [side2Name] = "gear_premium_nuclear_rocket", [side3Name] = "claw_premium_nuclear_rocket", [side4Name] = "sphere_premium_nuclear_rocket"}
 comsatByFaction =  { [side1Name] = "aven_comsat_station", [side2Name] = "gear_comsat_station", [side3Name] = "claw_comsat_station", [side4Name] = "sphere_comsat_station"}
 
+
+
 unitTypeSets = {
 	[TYPE_LIGHT_DEFENSE] = tableToSet({lltByFaction,waterLltByFaction}),
 	[TYPE_HEAVY_DEFENSE] = tableToSet({lev1HeavyDefenseByFaction,lev1WaterHeavyDefenseByFaction}),
@@ -1476,8 +1495,9 @@ unitTypeSets = {
 	[TYPE_MOHO] = tableToSet({mohoMineByFaction,UWMohoMineByFaction,hazMexByFaction}),
 	[TYPE_HAZMOHO] = tableToSet(hazMexByFaction),
 	[TYPE_EXTRACTOR] = tableToSet({mexByFaction,hazMexByFaction,UWMexByFaction,mohoMineByFaction,UWMohoMineByFaction}),
-	[TYPE_ENERGYGENERATOR] = tableToSet({solarByFaction,windByFaction,geoByFaction,fusionByFaction,tidalByFaction,{"sphere_fusion_reactor","sphere_hardened_fission_reactor","aven_bio_dome","gear_mass_burner"}}),
-	[TYPE_ECONOMY] = tableToSet({tidalByFaction,mexByFaction,hazMexByFaction,mohoMineByFaction,mmakerByFaction,solarByFaction,windByFaction,geoByFaction,fusionByFaction,energyStorageByFaction,metalStorageByFaction,{"sphere_fusion_reactor","sphere_hardened_fission_reactor","claw_totem"}}),
+	[TYPE_PNODE] = tableToSet(powerNodeByFaction),
+	[TYPE_ENERGYGENERATOR] = tableToSet({solarByFaction,windByFaction,geoByFaction,fusionByFaction,tidalByFaction,{"sphere_fusion_reactor","sphere_hardened_fission_reactor","aven_bio_dome","gear_mass_burner","claw_totem"}}),
+	[TYPE_ECONOMY] = tableToSet({tidalByFaction,mexByFaction,hazMexByFaction,mohoMineByFaction,mmakerByFaction,solarByFaction,windByFaction,geoByFaction,fusionByFaction,energyStorageByFaction,metalStorageByFaction,powerNodeByFaction,{"sphere_fusion_reactor","sphere_hardened_fission_reactor","aven_bio_dome","gear_mass_burner","claw_totem"}}),
 	[TYPE_PLANT] = tableToSet({lev1PlantByFaction,lev2PlantByFaction}),
 	[TYPE_UW_DEFENSE] = tableToSet({lev1TorpedoDefenseByFaction,lev2TorpedoDefenseByFaction}),		
 	[TYPE_ATTACKER] = listToSet({attackerList,airAttackerList,seaAttackerList}),

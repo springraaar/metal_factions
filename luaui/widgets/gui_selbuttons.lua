@@ -125,19 +125,23 @@ local ignoreIdleBuilderDefIds = {
 	[UnitDefNames["aven_scout_pad"].id] = true,
 	[UnitDefNames["aven_commander_respawner"].id] = true,
 	[UnitDefNames["aven_upgrade_center"].id] = true,
+	[UnitDefNames["aven_power_node"].id] = true,
 -------------------- GEAR
 	[UnitDefNames["gear_scout_pad"].id] = true,
 	[UnitDefNames["gear_commander_respawner"].id] = true,
 	[UnitDefNames["gear_upgrade_center"].id] = true,
+	[UnitDefNames["gear_power_node"].id] = true,
 -------------------- CLAW	
 	[UnitDefNames["claw_scout_pad"].id] = true,
 	[UnitDefNames["claw_commander_respawner"].id] = true,
 	[UnitDefNames["claw_upgrade_center"].id] = true,
 	[UnitDefNames["claw_totem"].id] = true,
+	[UnitDefNames["claw_power_node"].id] = true,
 -------------------- SPHERE	
 	[UnitDefNames["sphere_scout_pad"].id] = true,
 	[UnitDefNames["sphere_commander_respawner"].id] = true,
-	[UnitDefNames["sphere_upgrade_center"].id] = true
+	[UnitDefNames["sphere_upgrade_center"].id] = true,
+	[UnitDefNames["sphere_power_node"].id] = true
 }
 
 

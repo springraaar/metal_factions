@@ -15,6 +15,7 @@ local vsx, vsy 						= gl.GetViewSizes()
 local bgClock						= {}
 local bgFPS							= {}
 local bgProgress					= {}
+local bgSpdDisp						= {}
 local bgSpdIncrease					= {}
 local bgSpdDecrease					= {}
 local bgPause						= {}
@@ -40,6 +41,7 @@ local refClockSizeY = 30
 local refFPSSizeX = 80
 local refFPSSizeY = 30
 local refSpdSizeX = 30
+local refSpdDispSizeX = 60
 local refSizeY = 30
 local refShiftY = 40
 local refProgressSizeX = 240
@@ -55,7 +57,7 @@ local cLightBorder						= {1, 1, 1, 1}
 local cWhite						= {1, 1, 1, 1}
 local cBorder						= {0, 0, 0, 1}		
 local cBack							= {0, 0, 0, 0.6}
-
+local cRed							= {1, 0.2, 0.2, 1}
 
 ------- progress-related variables
 local playTexture	= ":n:"..LUAUI_DIRNAME.."Images/play.dds"
@@ -140,6 +142,12 @@ function updateSizesPositions()
 	bgProgress.y2 = vsy - margin - refShiftY * scaleFactor
 	
 	offset = bgFPS.x2 - bgFPS.x1 + margin
+	bgSpdDisp.x1 = vsx - margin - offset - refSpdDispSizeX * scaleFactor
+	bgSpdDisp.x2 = vsx - margin - offset
+	bgSpdDisp.y1 = vsy - margin - refSizeY * scaleFactor - refShiftY * 2 * scaleFactor
+	bgSpdDisp.y2 = vsy - margin - refShiftY * 2 * scaleFactor
+
+	offset = offset + margin + bgSpdDisp.x2 - bgSpdDisp.x1 
 	bgSpdIncrease.x1 = vsx - margin - offset - refSpdSizeX * scaleFactor
 	bgSpdIncrease.x2 = vsx - margin - offset
 	bgSpdIncrease.y1 = vsy - margin - refSizeY * scaleFactor - refShiftY * 2 * scaleFactor
@@ -159,14 +167,18 @@ function updateSizesPositions()
 end
 
 
-function drawElement(el,content,isImage)
+function drawElement(el,content,isImage,textColor)
 	if el.above then
 		glColor(cLight)
 	else
 		glColor(cBack)
 	end
 	glRect(el.x1,el.y1,el.x2,el.y2)
-	glColor(cWhite)
+	if textColor then
+		glColor(textColor)
+	else
+		glColor(cWhite)
+	end
 	if (isImage) then
 		glTexture(content)
 		glTexRect(el.x1+1, el.y1+1, el.x2-1, el.y2-1)
@@ -307,7 +319,17 @@ function widget:DrawScreen()
 			-- fps indicator
 			drawElement(bgFPS,"FPS: "..Spring.GetFPS(),false)
 			
-			-- progress indicator
+			-- speed indicator
+			local speedFactor, actualSpeedFactor, isPaused = spGetGameSpeed()
+			if actualSpeedFactor < speedFactor or speedFactor ~= 1 then
+				local color = cWhite
+				if actualSpeedFactor < speedFactor then
+					color = cRed
+				end
+				drawElement(bgSpdDisp,isPaused and "-" or (string.format('x%.2f', actualSpeedFactor)),false,color)
+			end
+			
+			-- progress indicator, speed buttons
 			if (showProgress) then
 				drawElement(bgProgress,progressCaption,false)
 				if (showSpeedButtons) then

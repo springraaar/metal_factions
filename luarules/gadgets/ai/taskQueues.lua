@@ -1540,9 +1540,9 @@ function fusionIfNeeded(self)
 	local unitName = SKIP_THIS_TASK
 
 	if self.ai.useStrategies then
-		unitName = buildWithMinimalMetalIncome(self,fusionByFaction[self.unitSide],40)
+		unitName = buildWithMinimalMetalIncome(self,fusionByFaction[self.unitSide],30)
 	else
-		unitName = buildWithMinimalMetalIncome(self,buildEnergyIfNeeded(self,fusionByFaction[self.unitSide]),40)
+		unitName = buildWithMinimalMetalIncome(self,buildEnergyIfNeeded(self,fusionByFaction[self.unitSide]),30)
 	end
 	
 	-- if unit is far away from base center, move to center and then retry
@@ -2009,7 +2009,7 @@ function comsatTargetting(self)
 	local basePos = self.ai.unitHandler.basePos
 	local value = 0
 	local bestValue = 0
-	-- target most threathening cell, prioritizing for proximity to base
+	-- target most threatening cell, prioritizing for proximity to base
 	for _,cell  in pairs(self.ai.unitHandler.enemyCellList) do
 		
 		value = (cell.attackerCost + cell.defenderCost + cell.airAttackerCost / 5) * (1500 / max(distance(basePos, cell.p),1500))
@@ -3794,7 +3794,7 @@ function stratCommanderAction(self)
 			end
 		end
 	end	
-	if (incomeE < targetEnergyIncome) then
+	if (incomeE < targetEnergyIncome and incomeE < L1_ENERGY_EFF_THRESHOLD) then
 		action = L1EnergyGenerator(self)
 		if (action ~= SKIP_THIS_TASK) then
 			return action
@@ -3965,13 +3965,13 @@ function stratMobileBuilderAction(self)
 			action = fusionIfNeeded(self)
 			if (action ~= SKIP_THIS_TASK) then
 				return action
-			else
+			elseif incomeE < L1_ENERGY_EFF_THRESHOLD then
 				action = L1EnergyGenerator(self)
 				if (action ~= SKIP_THIS_TASK) then
 					return action
 				end
 			end
-		else
+		elseif incomeE < L1_ENERGY_EFF_THRESHOLD then
 			action = L1EnergyGenerator(self)
 			if (action ~= SKIP_THIS_TASK) then
 				return action
@@ -4055,6 +4055,12 @@ function stratMobileBuilderAction(self)
 			return action
 		end
 	end
+
+	-- power nodes
+	--log(spGetGameFrame().." power node check : nextNode="..tostring(self.ai.unitHandler.nextPowerNodeCell),self.ai)
+	if (self.ai.unitHandler.nextPowerNodeCell) then
+		return powerNodeByFaction[self.unitSide]
+	end
 	
 	-- set up minimal defense if necessary
 	action = defendNearbyBuildingsIfNeeded(self, 0.1)
@@ -4126,13 +4132,13 @@ function stratMobileBuilderAction(self)
 			action = fusionIfNeeded(self)
 			if (action ~= SKIP_THIS_TASK) then
 				return action
-			else
+			elseif incomeE < L1_ENERGY_EFF_THRESHOLD then
 				action = L1EnergyGenerator(self)
 				if (action ~= SKIP_THIS_TASK) then
 					return action
 				end
 			end
-		else
+		elseif incomeE < L1_ENERGY_EFF_THRESHOLD then
 			action = L1EnergyGenerator(self)
 			if (action ~= SKIP_THIS_TASK) then
 				--log(self.unitName.." HERE L1ENERGY adv="..tostring(self.isAdvBuilder).." act="..action,self.ai) --DEBUG
@@ -4140,6 +4146,8 @@ function stratMobileBuilderAction(self)
 			end
 		end
 	end
+	
+	--TODO builders very rarely get here
 		
 	-- if unit is far away from base center, move to center
 	if farFromBaseCenter(self) then

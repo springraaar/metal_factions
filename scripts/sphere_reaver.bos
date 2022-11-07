@@ -1,0 +1,212 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 150
+
+#define HEADING_TOLERANCE	<28>
+#define PITCH_TOLERANCE		<20>
+
+piece  base, turret,slpt, sleeve, sleeve2,sleeve3,mis,mis2,mis3,flare,flare2,flare3,smoke,smoke2,smoke3,t1,wheel1 ,t2,wheel2,t3, wheel3,t4,wheel4,t5,wheel5,t6,wheel6,bb, front, back;
+
+static-var  gun_1;
+
+#include "aimhelper1.h"
+
+// Signal definitions
+#define SIG_AIM				2
+
+#include "wheelspeed.h"
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+
+HitByWeapon(Func_Var_1, Func_Var_2)
+{
+	turn base to z-axis Func_Var_2 speed <105.016484>;
+	turn base to x-axis Func_Var_1 speed <105.016484>;
+	wait-for-turn base around z-axis;
+	wait-for-turn base around x-axis;
+	turn base to z-axis <0.000000> speed <30.005495>;
+	turn base to x-axis <0.000000> speed <30.005495>;
+}
+
+
+
+
+SpinWheels(last)
+{
+	last = 0;
+	while ( TRUE )
+	{
+		
+		if ( last != (wheelSpeed / 8) )
+		{
+			spin t1 around x-axis speed wheelSpeed; // accelerate wheelAcceleration;
+			spin t2 around x-axis speed wheelSpeed; //accelerate wheelAcceleration;
+			spin t3 around x-axis speed wheelSpeed; //accelerate wheelAcceleration;
+			spin t4 around x-axis speed wheelSpeed; //accelerate wheelAcceleration;
+			spin t5 around x-axis speed wheelSpeed; //accelerate wheelAcceleration;
+			spin t6 around x-axis speed wheelSpeed; //accelerate wheelAcceleration;
+			last = wheelSpeed / 8;
+		}
+		sleep 100;
+	}
+	return (0);
+}
+
+StopWheels()
+{
+	stop-spin t1 around x-axis decelerate <12.000000>;
+	stop-spin t2 around x-axis decelerate <12.000000>;
+	stop-spin t3 around x-axis decelerate <12.000000>;
+	stop-spin t4 around x-axis decelerate <12.000000>;
+	stop-spin t5 around x-axis decelerate <12.000000>;
+	stop-spin t6 around x-axis decelerate <12.000000>;
+	return (0);
+}
+
+Create()
+{
+	gun_1=0;
+	call-script stopAimHelper1(<1000>,<1000>);
+	start-script SmokeUnit();
+	start-script WheelSpeedControl();
+	start-script SpinWheels();
+}
+
+
+RestoreAfterDelay()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<150>,<150>);
+	turn turret to y-axis <0.000000> speed <150>;
+	turn slpt to x-axis <0.000000> speed <150>;
+}
+
+AimPrimary(heading, pitch)
+{
+	call-script updateAimHelper1(heading,pitch,<220>,<220>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn turret to y-axis heading speed <220.038462>;
+	turn slpt to x-axis <0.000000> - pitch speed <220.000000>;
+	if ( !aimReady1 )
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn slpt around x-axis;
+	}
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+
+Shot1()
+{
+	if( gun_1 == 0 )
+	{
+		move mis to z-axis [-3.000000] now;
+		emit-sfx 256 | 2 from smoke;
+		emit-sfx 1024 from flare;
+		sleep 30;
+		gun_1 = 1;
+		sleep 3500;
+		move mis to z-axis [0.000000] speed [7.000000];
+		return (0);
+	}
+	if( gun_1 == 1 )
+	{
+		move mis2 to z-axis [-3.000000] now;
+		emit-sfx 256 | 2 from smoke2;
+		emit-sfx 1024 from flare2;
+		sleep 30;
+		gun_1 = 2;
+		sleep 3500;
+		move mis2 to z-axis [0.000000] speed [7.000000];
+		return (0);
+	}
+	if( gun_1 == 2 )
+	{
+		move mis3 to z-axis [-3.000000] now;
+		emit-sfx 256 | 2 from smoke3;
+		emit-sfx 1024 from flare3;
+		sleep 30;
+		gun_1 = 0;
+		sleep 3500;
+		move mis3 to z-axis [0.000000] speed [7.000000];
+		return (0);
+	}
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum)
+{
+	if( gun_1 == 0 )
+	{
+		piecenum = flare;
+		return(0);
+	}
+	if( gun_1 == 1 )
+	{
+		piecenum = flare2;
+		return(0);
+	}
+	if( gun_1 == 2 )
+	{
+		piecenum = flare3;
+		return(0);
+	}
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		explode turret type SHATTER;
+		explode sleeve type SHATTER;
+		explode sleeve2 type SHATTER;
+		explode sleeve3 type SHATTER;
+		return (1);
+	}
+
+	explode turret type SHATTER;
+	explode sleeve type SHATTER;
+	explode sleeve2 type SHATTER;
+	explode sleeve3 type SHATTER;
+	explode t1 type SHATTER;
+	explode t2 type SHATTER;
+	explode wheel1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode wheel2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode wheel3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	return (2);
+}

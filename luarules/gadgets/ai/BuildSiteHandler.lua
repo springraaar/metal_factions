@@ -80,6 +80,7 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 		--Spring.SendCommands("clearmapmarks") 
 	end
 	local isTargetExplosive = setContains(unitTypeSets[TYPE_FUSION],ud.name)
+	local isTargetPowerNode = setContains(unitTypeSets[TYPE_PNODE],ud.name)
 	local isTargetStaticBuilder = constructionTowers[ud.name] ~= nil
 	local staticBuilderTestUnitDefId = NANO_TOWER_PLANT_TEST_DEF_ID
 	-- for static builders, use a factory that it'll actually try to build on the current strategy
@@ -106,7 +107,8 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 	local checkPos = newPosition(searchPos.x,searchPos.y,searchPos.z)
 	local testBuildOrder,blockingFId = 0
 	local dist = 0 -- currently checked only for static builders
-	
+	local checkPNodeConnectivity = false
+	local checkPNodeConnectivityPassed = false 
 	
 	local validPosFound = 0
 	local dxi,dzi = 0
@@ -241,6 +243,7 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 							end
 	
 							if ( valid == true ) and minDistance > 0 and ownCell ~= nil then		
+								checkPNodeConnectivityPassed = false 
 								-- check if unit violates minimum distance from nearby own buildings
 								-- (buildingIdSet should include adjacent cells too)
 								for uId,uDef in pairs(ownCell.buildingIdSet) do
@@ -257,11 +260,22 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 										uRadius = uRadius + 380
 									end
 
+									-- if building a power node, avoid building near other nodes
+									if (isTargetPowerNode and setContains(unitTypeSets[TYPE_PNODE],uDef.name)) then
+										checkPNodeConnectivity = true
+										uRadius = uRadius + 280
+										if checkWithinDistance(testPos,uPos,PNODE_CONNECTION_RADIUS,PNODE_CONNECTION_SQRADIUS) then
+											checkPNodeConnectivityPassed = true
+										end
+									end
 									if (checkWithinDistance(testPos,uPos,testRadius+uRadius)) then
 										valid = false
 										break
 									end
 								end
+							end
+							if checkPNodeConnectivity and (not checkPNodeConnectivityPassed) then
+								valid = false
 							end
 							
 							-- extra check to confirm that this isn't blocking any factory

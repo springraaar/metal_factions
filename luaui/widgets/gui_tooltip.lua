@@ -393,7 +393,38 @@ function getTooltipTransportability(ud)
 		return ""
 	end	
 end
-	
+
+-- gets grid information for power nodes
+function getTooltipGridNodeData(uId)
+	local gridId = spGetUnitRulesParam(uId,"powerGridId")
+	local gridStrength = spGetUnitRulesParam(uId,"powerGridStrength")
+	local totalExtractionMult = spGetUnitRulesParam(uId,"powerGridTotalExtractionMult")
+	local extractionBonus = spGetUnitRulesParam(uId,"powerGridExtractionBonus")
+	local gridLevel = spGetUnitRulesParam(uId,"powerGridLevel")
+
+	if (gridId and gridId > 0) then
+		--return " \n\255\255\255\255ID: "..gridId.." lev="..gridLevel.."     \255\255\255\255Grid strength: \255\255\255\0"..formatNbr(gridStrength,0).."     \255\255\255\255Connected extraction power: \255\200\200\200"..formatNbr(totalExtractionMult,1).."     \255\255\255\255Extraction bonus: \255\200\200\200+"..formatNbr(extractionBonus*100,2).."%\255\255\255\255\n "
+		return " \n\255\255\255\255Grid strength: \255\255\255\0"..formatNbr(gridStrength,0).."     \255\255\255\255Connected extraction power: \255\200\200\200"..formatNbr(totalExtractionMult,1).."     \255\255\255\255Extraction bonus: \255\200\200\200+"..formatNbr(extractionBonus*100,2).."%\255\255\255\255\n "
+	end
+			
+	return " \n\255\255\155\0Node disabled\255\255\255\255\n "
+end
+
+-- gets grid information for power nodes
+function getTooltipGridData(uId)
+	local gridId = spGetUnitRulesParam(uId,"powerGridId")
+	local gridStrength = spGetUnitRulesParam(uId,"powerGridStrength")
+	local totalExtractionMult = spGetUnitRulesParam(uId,"powerGridTotalExtractionMult")
+	local extractionBonus = spGetUnitRulesParam(uId,"powerGridExtractionBonus")
+	local gridLevel = spGetUnitRulesParam(uId,"powerGridLevel")
+
+	if (gridId and gridId > 0) then
+		return "\255\255\255\255Grid: \255\255\255\0"..formatNbr(gridStrength,0).." \255\200\200\200(+"..formatNbr(extractionBonus*100,2).."%)\255\255\255\255"
+	end
+
+	return ""
+end	
+
 -- update tooltip gl list
 function updateTooltipGlList(text)
 	local vsx,vsy = gl.GetViewSizes() 
@@ -764,7 +795,12 @@ function generateNewTooltip()
 			if isFriendly then
 				newTooltip = newTooltip.."    \255\200\200\200Metal: \255\0\255\0+"..formatNbr(metalMake,1).."\255\255\255\255/\255\255\0\0"..formatNbr(-metalUse,1)
 				newTooltip = newTooltip.."    \255\255\255\0Energy: \255\0\255\0+"..formatNbr(energyMake,1).."\255\255\255\255/\255\255\0\0"..formatNbr(-energyUse,1)
-				-- newTooltip=newTooltip.."\255\255\255\0     +E/M ratio: "..formatNbr(energyMake / ud.metalCost,4).."\n"
+
+				if ud.customParams and ud.customParams.powergridnode == "1" then
+					newTooltip = newTooltip.."\n"..getTooltipGridNodeData(id)
+				elseif (ud.customParams and ud.customParams.boostspowergrid == "1") or energyMake > 5 or ud.energyStorage > 1000 or (ud.extractsMetal and ud.extractsMetal > 0) then 
+					newTooltip = newTooltip.."    "..getTooltipGridData(id)
+				end
 
 				if ud.windGenerator > 1 then
 					local eMade = spGetUnitRulesParam(u,"energy_made")

@@ -295,6 +295,12 @@ local _iconTypes = {
 		distance=1,
 		size=REF_SIZE
 	},
+	scoutpad={
+		bitmap="icons/scoutpad.tga",
+		radiusadjust=false,
+		distance=1,
+		size=REF_SIZE
+	},
 	plant={
 		bitmap="icons/plant.tga",
 		radiusadjust=false,
@@ -303,6 +309,12 @@ local _iconTypes = {
 	},
 	plant2={
 		bitmap="icons/plant2.tga",
+		radiusadjust=false,
+		distance=1,
+		size=REF_SIZE
+	},
+	powernode={
+		bitmap="icons/powernode.tga",
 		radiusadjust=false,
 		distance=1,
 		size=REF_SIZE

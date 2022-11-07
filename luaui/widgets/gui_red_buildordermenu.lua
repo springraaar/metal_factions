@@ -26,6 +26,7 @@ end
 
 include("keysym.h.lua")
 
+
 local NeededFrameworkVersion = 8.1
 local CanvasX,CanvasY = 1272,734 --resolution in which the widget was made (for 1:1 size)
 --TODO review this, use numbers that make more sense
@@ -1111,7 +1112,6 @@ local function GetCommands()
 	for index,cmd in pairs(sGetActiveCmdDescs()) do
 		if (type(cmd) == "table") then
 			--Spring.Echo("id="..cmd.id.." type="..cmd.type.." action="..cmd.action)
-		
 			if (
 			(not isHiddenCmd[cmd.id]) and
 			(cmd.action ~= nil) and

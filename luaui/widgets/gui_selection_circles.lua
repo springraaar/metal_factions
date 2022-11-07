@@ -171,7 +171,7 @@ function widget:DrawWorldPreUnit()
   glDepthTest(false)
 
   glLineWidth(2.0)
-  local alpha = 0.1
+  local alpha = 0.13
   glColor(0, 1, 0, alpha)
   for _,unitID in ipairs(spGetSelectedUnits()) do
     local udid = spGetUnitDefID(unitID)
@@ -186,13 +186,13 @@ function widget:DrawWorldPreUnit()
         glColor(0, 1, 0, alpha)
         glDrawListAtUnit(unitID, circlePolys, false, radius, 1.0, radius, degrot, gz, 0, -gx)
 
-		glColor(0, 1, 0, 0.3)
+		glColor(0, 1, 0, 0.35)
         glDrawListAtUnit(unitID, circleLines, false, radius+1, 1.0, radius+1, degrot, gz, 0, -gx)                          
       else
         glColor(0, 1, 0, alpha)
         glDrawListAtUnit(unitID, circlePolys, false, radius, 1.0, radius)
 
-		glColor(0, 1, 0, 0.3)
+		glColor(0, 1, 0, 0.35)
         glDrawListAtUnit(unitID, circleLines, false, radius+1, 1.0, radius+1)                         
       end
     end

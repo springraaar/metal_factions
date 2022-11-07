@@ -54,11 +54,12 @@ local dashCmdDesc = {
 }
 
 
--- upgrade dash properties for unit id
+-- update dash properties for unit id
 local function updateDashDefsForUnitId(unitId, unitDefId)
 	local ud = UnitDefs[unitDefId]
 	if not ud.isImmobile then
 		-- enable dash
+		canDashUnitIds[unitId] = unitDefId
 		spSetUnitRulesParam(unitId, "dashReload", 1)
 		spSetUnitRulesParam(unitId, "dashFrames", 0)
 		spSetUnitRulesParam(unitId, "dashReloadFrames", 0)
@@ -84,7 +85,6 @@ function gadget:Initialize()
 end
 
 function gadget:UnitCreated(unitID, unitDefID, unitTeam)
-	canDashUnitIds[unitID] = unitDefID
 	updateDashDefsForUnitId(unitID, unitDefID)
 end
 
@@ -105,8 +105,8 @@ function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOpt
 	if cmdID == CMD_DASH then
 		local isJumping = spGetUnitRulesParam(unitID,"is_jumping")
 		isJumping = isJumping and (isJumping == 1)
-        local _,_,_,_,bp = spGetUnitHealth(unitID)
-	    
+		local _,_,_,_,bp = spGetUnitHealth(unitID)
+		
 		if (bp and bp == 1) and (not isJumping) and canDashUnitIds[unitID] and not dashingUnitIds[unitID] then 
 			dashingUnitIds[unitID] = {frames = DASH_FRAMES,reloadFrames = DASH_RELOAD_FRAMES}
 			spSetUnitRulesParam(unitID, "dashReload", 0)

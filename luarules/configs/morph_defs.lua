@@ -229,6 +229,34 @@ local morphDefs = {
 			metal = 1500,
 			text = 'Morph to Nova Form : Weapon has huge area of effect and can shoot in high-trajectory mode. Heavy armor. Slower speed.'
 		}		
+	},
+	sphere_emerald_sphere = {
+		{
+			into = 'sphere_ruby_sphere',
+			time = 20,
+			cmdname = 'Ruby Tower',
+			energy = 3000,
+			metal = 600,
+			text = 'Morph to Ruby Form : slightly increased range, HP and M damage type.'
+		},
+		{
+			into = 'sphere_obsidian_sphere',
+			time = 40,
+			cmdname = 'Obsidian Tower',
+			energy = 6000,
+			metal = 1200,
+			text = 'Morph to Obsidian Form : slightly increased range, HP and H damage type.'
+		}
+	},
+	sphere_ruby_sphere = {
+		{
+			into = 'sphere_obsidian_sphere',
+			time = 20,
+			cmdname = 'Obsidian Tower',
+			energy = 3000,
+			metal = 600,
+			text = 'Morph to Obsidian Form : slightly increased range, HP and H damage type.'
+		}
 	}
 }
 

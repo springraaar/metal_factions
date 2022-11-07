@@ -1,3 +1,48 @@
+2022/11/07 ------------------ NOTES v1.94 ----------------------
+
+--- New units
+
+- added AVEN "Tribune" : L2 Heavy Skirmisher Tank
+- added AVEN "Ambassador" : L2 Mobile Fortress
+
+- added SPHERE "Reaver" : L2 Fast Skirmisher Vehicle
+- added SPHERE "Monolith" : L2 Amphibious Very Heavy Assault Vehicle
+
+- added CLAW "Chisel" : L1 Fire Support Vehicle
+
+- added "Power Node" units for each faction, available from level 1 and can be used to set up a power grid which boosts metal extractor output
+
+--- Balance / Mechanics
+
+- SPHERE Emerald and Ruby sphere towers have slightly less range and HP and can morph into Ruby/Obsidian
+
+- GEAR "Might" deals about 66% more damage with the secondary lasers and cost slightly increased
+
+ECONOMY
+- increased AVEN Bio Dome starting energy production from +15/s to +20/s
+- increased energy drain of L1 metal extractors from -3 to -10 E/s
+- power nodes have 500 connection radius and link energy production and storage and metal extractors
+- grid strength is equal to energy production + storage/100
+- the metal extraction bonus can go up to +100% and depends on grid strength and how many extractors are linked
+- energy usage is scaled as well
+(roughly a 500 strength grid increases a basic extractor's output by 50% )
+
+(generally: building new extractors > adding extractors to grid > adding energy generation/storage to grid)
+
+--- UI
+
+- dash effects will no longer play on static units that were selected together with mobile ones when dash was activated
+- build separation is automatically set to slightly lower than node connection radius when building power nodes, then reverted
+- when building or selecting a power node, an overlay is shown with the relevant grid areas
+- added game speed indicator (visible when != 1 or below user setting)
+- upgrade centers and scout pads are automatically set to high priority when built
+
+--- AI
+
+- will try to use power nodes
+- stop making non-geothermal L1 energy buildings past 1000 E/s income
+
+
 2022/09/08 ------------------ NOTES v1.93 ----------------------
 
 - fixed an issue with triggering the disable animation for buildings that are disabled due to low energy

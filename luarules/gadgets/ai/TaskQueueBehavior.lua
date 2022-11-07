@@ -535,7 +535,53 @@ function TaskQueueBehavior:processItem(value, checkResources, checkAssistNearby)
 							end
 						-- misc placement
 						else
-							if (not setContains(unitTypeSets[TYPE_SUPPORT],value) ) then
+							if setContains(unitTypeSets[TYPE_PNODE],value) then
+								local targetCell = self.ai.unitHandler.nextPowerNodeCell
+								local closestNodeCell = self.ai.unitHandler.closestPowerNodeCell
+								
+								if targetCell ~= nil then
+									if closestNodeCell ~= nil then
+										-- existing grid, build connection from closest to target
+										local ox = closestNodeCell.p.x
+										local oz = closestNodeCell.p.z
+										local tx = targetCell.p.x
+										local tz = targetCell.p.z
+										local dist = distance(targetCell.p,closestNodeCell.p)
+										local dirx = (tx-ox) / dist
+										local dirz = (tz-oz) / dist
+										local stepDist = 400	-- safe distance between nodes
+										local firstOrder = true
+										-- issue a build order for each step
+										for d=stepDist,dist,stepDist do
+											local sx = ox+d*dirx
+											local sz = oz+d*dirz
+											p = self.ai.buildSiteHandler:findClosestBuildSite(ud, newPosition(sx,selfPos.y,sz), BUILD_SEARCH_RADIUS, 8, self)
+											if p ~= nil then
+												-- skip cell if it already has power nodes built
+												xIndex,zIndex = getCellXZIndexesForPosition(p)
+												local testCell = getCellFromTableIfExists(self.ai.unitHandler.ownCells,xIndex,zIndex) 
+												if testCell == nil or testCell.powerNodeCount < 2 then
+													spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},firstOrder and {} or CMD.OPT_SHIFT)
+													success = true
+													firstOrder = false
+												end
+											else
+												success = false
+												break
+											end
+										end
+									else
+										-- first node, build it on target
+										p = self.ai.buildSiteHandler:findClosestBuildSite(ud, targetCell.p, BUILD_SEARCH_RADIUS, 8, self)
+										if p ~= nil then
+											spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},{})
+											success = true
+										else
+											success = false
+										end										
+									end				
+								end
+							elseif (not setContains(unitTypeSets[TYPE_SUPPORT],value) ) then
 								local spreadDistance = (setContains(unitTypeSets[TYPE_FUSION],value) and 8 or BUILD_SPREAD_DISTANCE) 
 								
 								p = self.ai.buildSiteHandler:closestBuildSpot(self, ud, spreadDistance)

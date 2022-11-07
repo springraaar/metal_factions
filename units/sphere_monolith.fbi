@@ -1,0 +1,90 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	side=Sphere;
+	Name=Monolith;
+	Description=Amphibious Very Heavy Assault Vehicle;
+	iconType=amphibassault;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=sphere_monolith;
+	objectName=sphere_monolith.3do;
+	buildPic=sphere_monolith.png;
+	soundCategory=SPHERE_TANKBIG;
+	Corpse=sphere_monolith_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=5;
+	FootprintZ=5;
+	maxDamage=18000;
+
+
+	// ------------------- resources
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	Builder=0;
+
+	// ------------------- movement
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=0.7;
+	brakeRate=0.04;
+	Acceleration=0.05;
+	turnRate=190;
+	movementClass=TANKDH6;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=250;
+
+	// ------------------- weapons
+	weapon1=sphere_monolith_cannon;
+	weapon2=sphere_monolith_shield;
+	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
+	explodeAs=EXPLOSIVE_UNIT_BLAST;
+	selfDestructAs=EXPLOSIVE_UNIT_BLAST;
+
+
+	// ------------------- orders
+
+	// ------------------- misc
+	noAutoFire=0;
+	leavetracks=1;
+	trackoffset=8;
+	trackstrength=5;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=50;
+	collisionVolumeType = box;
+	collisionVolumeScales =70 80 70;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_adv_vehicle_factory;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:yellowflaremed;
+	}
+	buildCostEnergy=34010;//#AUTO#
+	buildCostMetal=6802;//#AUTO#
+	buildTime=81058;//#AUTO#
+	mass=10827;//#AUTO#
+}

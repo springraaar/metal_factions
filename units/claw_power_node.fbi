@@ -1,0 +1,110 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Power Node;
+	description=Resource Grid - Boosts Metal Extraction;
+	iconType=powernode;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW LEVEL1 ENERGY NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_power_node;
+	objectName=claw_power_node.3do;
+	corpse=claw_power_node_dead;
+	script=power_node.cob;
+	buildPic=claw_power_node.png;
+	soundCategory=aven_MSTOR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1000;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	metalMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=oo oo;
+	collisionvolumetype=cyly;
+	collisionVolumeScales=18 45 18;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+	buildDistance=500;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onOffable=0;
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=30;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	canAttack=0;
+	canFight=0;
+	canGuard=0;
+	canPatrol=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+
+	[CustomParams]
+	{
+		builtBy=claw_l1builder,claw_l2builder;
+		manualCost=1;
+		powerGridNode=1;
+		tip=Connects nearby energy production/storage, metal extractors and other nodes in 500 radius;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:pnodeglow1;
+		explosionGenerator1=custom:pnodeglow2;
+	}
+	buildCostEnergy=900;
+	buildCostMetal=180;
+	buildTime=2160;
+	mass=300;
+}

@@ -68,13 +68,15 @@ function initUnitCell()
 		p = newPosition(), 
 		baseDistance = 0, 
 		extractorCount = 0, 
+		powerNodeCount = 0,		-- only own cells
+		powerNodeGridStr = 0,	-- only own cells
 		underWaterCost = 0, 
 		economyCost = 0, 
 		nearbyCost = 0,   -- only own cells
 		nearbyEconomyCost = 0,   -- only own cells
 		buildingCount = 0,
 		internalThreatCost = 0, 
-		combinedThreatCost = 0, 
+		combinedThreatCost = 0,
 		internalThreatCostExcludingBadAA = 0,  -- only enemy cells
 		combinedThreatCostExcludingBadAA = 0, -- only enemy cells
 		combinedAvgHpCostRatio = 0,  -- only enemy cells
@@ -145,6 +147,8 @@ function UnitHandler:Init(ai)
 	self.threatType = THREAT_NORMAL
 	self.friendlyExtractorCount = 0
 	self.enemyExtractorCount = 0
+	self.nextPowerNodeCell = nil
+	self.closestPowerNodeCell = nil
 	
 	-- task queue related information
 	self.standardQueueCount = 0
@@ -979,6 +983,45 @@ function UnitHandler:reconstruct_path(cameFrom,current)
     return path
 end
 
+-- update recommended cell to build the next power node and the closest one with a node
+function UnitHandler:updateNextPowerNodeCell()
+	local targetCell = nil
+	local closestNodeCell = nil
+	local bestValue = 0
+	
+	-- find own cell with biggest economy and no power nodes
+	for i,cell in ipairs(self.ownCellList) do
+		if cell.economyCost > 200 and cell.powerNodeCount == 0 then
+			if cell.economyCost > bestValue then
+				bestValue = cell.economyCost
+				targetCell = cell
+			end
+		end
+	end
+
+	--TODO repeat process try to get a cell from friendly cells
+	
+	-- find closest cell that already has a power node connected to the strongest grid
+	if targetCell ~= nil then
+		local bestDist = math.huge
+		local bestGrid = 0
+		local sqd,gridStr = 0
+		for i,cell in ipairs(self.ownCellList) do
+			if cell.powerNodeCount > 0 then
+				sqd = sqDistance(targetCell.p.x,cell.p.x,targetCell.p.z,cell.p.z)
+				gridStr = cell.powerNodeGridStr
+				if sqd < bestDist and gridStr > bestGrid then
+					bestDist = sqd
+					bestGrid = gridStr
+					closestNodeCell = cell
+				end
+			end
+		end
+	end
+
+	self.nextPowerNodeCell = targetCell
+	self.closestPowerNodeCell = closestNodeCell
+end
 
 ----------------------- engine event handlers
 
@@ -1339,6 +1382,10 @@ function UnitHandler:GameFrame(f)
 				cost = cost * ENEMY_EXTRACTOR_COST_FACTOR
 				cell.extractorCount = cell.extractorCount + 1
 			end
+			if setContains(unitTypeSets[TYPE_PNODE],tmpName) then
+				cell.powerNodeCount = cell.powerNodeCount + 1
+				cell.powerNodeGridStr = max(cell.powerNodeGridStr,spGetUnitRulesParam(uId,"powerGridStrength"))
+			end
 			
 			if (pos.y < UNDERWATER_THRESHOLD ) then
 				cell.underWaterCost = cell.underWaterCost + cost				
@@ -1491,6 +1538,10 @@ function UnitHandler:GameFrame(f)
 				cost = cost * ENEMY_EXTRACTOR_COST_FACTOR
 				cell.extractorCount = cell.extractorCount + 1
 			end
+			if setContains(unitTypeSets[TYPE_PNODE],tmpName) then
+				cell.powerNodeCount = cell.powerNodeCount + 1
+				cell.powerNodeGridStr = max(cell.powerNodeGridStr,spGetUnitRulesParam(uId,"powerGridStrength"))
+			end
 			
 			if (pos.y < UNDERWATER_THRESHOLD ) then
 				cell.underWaterCost = cell.underWaterCost + cost				
@@ -1561,6 +1612,10 @@ function UnitHandler:GameFrame(f)
 				end			
 			end
 		end
+		
+		-- update target cell to get a power node and closest cell with one, if any
+		self:updateNextPowerNodeCell()
+		--log(spGetGameFrame().." nextNode="..tostring(self.nextPowerNodeCell),self.ai)
 		
 		-- update enemy cell data (these are cost totals not unit counts)
 		local enemyAttackers = 0
@@ -1784,9 +1839,9 @@ function UnitHandler:GameFrame(f)
 		--[[		
 		if self.ai.id == 0 then
 			Spring.SendCommands("ClearMapMarks") --DEBUG
-			if self.enemyCells then 
-				for i=1,#self.enemyCellList do
-					local cell = self.enemyCellList[i]
+			if self.ownCells then 
+				for i=1,#self.ownCellList do
+					local cell = self.ownCellList[i]
 					Spring.MarkerAddPoint(cell.p.x,spGetGroundHeight(cell.p.x,cell.p.z),cell.p.z,"Value="..string.format("%2f", cell.combinedThreatCost)) --DEBUG
 				end	
 			end
@@ -2267,5 +2322,3 @@ function UnitHandler:GameFrame(f)
 		end
 	end
 end
-
-

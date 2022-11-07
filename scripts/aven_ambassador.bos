@@ -1,0 +1,411 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 	100
+
+#define AIM_SPEED <180>
+
+piece  base,cbox,turret1,turret2,turret3,turret4,sleeve1,sleeve2,sleeve3,sleeve4,flare1,flare2,flare3,flare4, t1,t2,t3,t4,t1cover,t2cover,t3cover,t4cover,left,right,center,body,f11,f12,f13,f14,ldoor,rdoor,lflare,rflare,lmdoor1,lmdoor2,rmdoor1,rmdoor2;
+
+static-var  gun_1,gun_6,bMoving;
+
+#include "aimhelper1.h"
+
+// Signal definitions
+#define SIG_AIM 1
+#define SIG_AIM2 2
+#define SIG_AIM3 4
+#define SIG_AIM4 8
+#define SIG_AIM5 32
+
+StartMoving()
+{
+ 	bMoving = TRUE;
+}
+
+StopMoving()
+{
+ 	bMoving = FALSE;
+}
+
+AnimateTracks(current,maxSpeed,currentSpeed, delay)
+{
+	maxSpeed = get MAX_SPEED;
+	current = 0;
+	
+	while(TRUE)
+	{
+		currentSpeed = get CURRENT_SPEED;
+		
+		delay = 140;
+		if ( currentSpeed > 0 AND bMoving )
+		{
+			delay = delay - ((currentSpeed * 100) / maxSpeed);
+			
+			if( current == 0 )
+			{
+				turn t1 to y-axis <180.000000> now;
+				turn t2 to y-axis <180.000000> now;
+				turn t3 to y-axis <180.000000> now;
+				turn t4 to y-axis <180.000000> now;
+
+			}
+			if( current == 1 )
+			{
+				turn t1 to y-axis <0.000000> now;
+				turn t2 to y-axis <0.000000> now;
+				turn t3 to y-axis <0.000000> now;
+				turn t4 to y-axis <0.000000> now;
+			}
+			
+			current = current + 1;
+			if( current == 2 )
+			{
+				current = 0;
+			}
+		}
+		
+		if( delay > 0)
+		{
+			sleep delay;
+		}
+		if( delay <= 0)
+		{
+			sleep 100;
+		}
+	}
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+	return (0);
+}
+
+
+
+Create()
+{
+	gun_1 = 0;
+	gun_6 = 0;
+	turn turret3 to y-axis <180.000000> now;
+	turn turret4 to y-axis <180.000000> now;
+	call-script stopAimHelper1(<1000>,<1000>);
+	start-script SmokeUnit();
+	start-script AnimateTracks();
+	return (0);
+}
+
+
+RestoreAfterDelay1()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	move ldoor to x-axis [0] speed [4];
+	move rdoor to x-axis [0] speed [4];
+	return (0);
+}
+
+RestoreAfterDelay2()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn turret1 to y-axis <0.000000> speed AIM_SPEED;
+	turn sleeve1 to x-axis <0.000000> speed AIM_SPEED;
+	return;
+}
+RestoreAfterDelay3()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn turret2 to y-axis <0.000000> speed AIM_SPEED;
+	turn sleeve2 to x-axis <0.000000> speed AIM_SPEED;
+	return;
+}
+RestoreAfterDelay4()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn turret3 to y-axis <180.000000> speed AIM_SPEED;
+	turn sleeve3 to x-axis <0.000000> speed AIM_SPEED;
+	return;
+}
+RestoreAfterDelay5()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	turn turret4 to y-axis <180.000000> speed AIM_SPEED;
+	turn sleeve4 to x-axis <0.000000> speed AIM_SPEED;
+	return;
+}
+
+AimPrimary(heading, pitch)
+{
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	move ldoor to x-axis [-7] speed [10];
+	move rdoor to x-axis [7] speed [10];
+	
+	wait-for-move ldoor along x-axis;
+	wait-for-move rdoor along x-axis;
+	start-script RestoreAfterDelay1();
+	return (1);
+}
+
+FirePrimary()
+{
+	if (gun_1 == 0) {
+		emit-sfx 1024 + 0 from f11;
+		sleep 150;
+		gun_1 = 1;
+		return (0);
+	}
+	if (gun_1 == 1) {
+		emit-sfx 1024 + 0 from f12;
+		sleep 150;
+		gun_1 = 2;
+		return (0);
+	}
+	if (gun_1 == 2) {
+		emit-sfx 1024 + 0 from f13;
+		sleep 150;
+		gun_1 = 3;
+		return (0);
+	}
+	if (gun_1 == 3) {
+		emit-sfx 1024 + 0 from f14;
+		sleep 150;
+		gun_1 = 0;
+		return (0);
+	}	
+}
+
+QueryPrimary(piecenum)
+{
+	if (gun_1 == 0) {
+		piecenum = f11;
+		return (0);
+	}
+	if (gun_1 == 1) {
+		piecenum = f12;
+		return (0);
+	}
+	if (gun_1 == 2) {
+		piecenum = f13;
+		return (0);
+	}
+	if (gun_1 == 3) {
+		piecenum = f14;
+		return (0);
+	}			
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = cbox;
+	return (0);
+}
+
+
+AimFromWeapon2(piecenum)
+{
+	piecenum = turret1;
+	return;
+}
+
+QueryWeapon2(piecenum)
+{
+	piecenum = flare1;
+	return (0);
+}
+
+AimWeapon2(heading, pitch)
+{
+	signal SIG_AIM2;
+	set-signal-mask SIG_AIM2;
+	turn turret1 to y-axis heading speed AIM_SPEED;
+	turn sleeve1 to x-axis <0.000000> - pitch speed AIM_SPEED;
+	wait-for-turn turret1 around y-axis;
+	wait-for-turn sleeve1 around x-axis;
+	start-script RestoreAfterDelay2();
+	return (1);
+}
+
+FireWeapon2()
+{
+	emit-sfx 1024+1 from flare1;
+	return;
+}
+
+AimFromWeapon3(piecenum)
+{
+	piecenum = turret2;
+	return;
+}
+
+QueryWeapon3(piecenum)
+{
+	piecenum = flare2;
+	return (0);
+}
+
+AimWeapon3(heading, pitch)
+{
+	signal SIG_AIM3;
+	set-signal-mask SIG_AIM3;
+	turn turret2 to y-axis heading speed <180.021978>;
+	turn sleeve2 to x-axis <0.000000> - pitch speed <180.010989>;
+	wait-for-turn turret2 around y-axis;
+	wait-for-turn sleeve2 around x-axis;
+	start-script RestoreAfterDelay3();
+	return (1);
+}
+
+FireWeapon3()
+{
+	emit-sfx 1024+1 from flare2;
+	return;
+}
+
+AimFromWeapon4(piecenum)
+{
+	piecenum = turret3;
+	return;
+}
+
+QueryWeapon4(piecenum)
+{
+	piecenum = flare3;
+	return (0);
+}
+
+AimWeapon4(heading, pitch)
+{
+	signal SIG_AIM4;
+	set-signal-mask SIG_AIM4;
+	turn turret3 to y-axis heading speed AIM_SPEED;
+	turn sleeve3 to x-axis <0.000000> - pitch speed AIM_SPEED;
+	wait-for-turn turret3 around y-axis;
+	wait-for-turn sleeve3 around x-axis;
+	start-script RestoreAfterDelay4();
+	return (1);
+}
+
+FireWeapon4()
+{
+	emit-sfx 1024+1 from flare3;
+	return;
+}
+
+AimFromWeapon5(piecenum)
+{
+	piecenum = turret4;
+	return;
+}
+
+QueryWeapon5(piecenum)
+{
+	piecenum = flare4;
+	return (0);
+}
+
+AimWeapon5(heading, pitch)
+{
+	signal SIG_AIM5;
+	set-signal-mask SIG_AIM5;
+	turn turret4 to y-axis heading speed AIM_SPEED;
+	turn sleeve4 to x-axis <0.000000> - pitch speed AIM_SPEED;
+	wait-for-turn turret4 around y-axis;
+	wait-for-turn sleeve4 around x-axis;
+	start-script RestoreAfterDelay5();
+	return (1);
+}
+
+FireWeapon5()
+{
+	emit-sfx 1024+1 from flare4;
+	return;
+}
+
+
+AimWeapon6(heading, pitch)
+{
+	return (1);
+}
+
+FireWeapon6()
+{
+	if (gun_6 == 0) {
+		move lmdoor1 to z-axis [-1] now;
+		move lmdoor2 to z-axis [1] now;
+		emit-sfx 1024 + 2 from lflare;
+		sleep 300;
+		gun_6 = 1;
+		move lmdoor1 to z-axis [0] speed [10];
+		move lmdoor2 to z-axis [0] speed [10];
+		return (0);
+	}
+	if (gun_6 == 1) {
+		move rmdoor1 to z-axis [1] now;
+		move rmdoor2 to z-axis [-1] now;
+		emit-sfx 1024 + 2 from rflare;
+		sleep 300;
+		gun_6 = 0;
+		move rmdoor1 to z-axis [0] speed [10];
+		move rmdoor2 to z-axis [0] speed [10];
+		return (0);
+	}
+}
+
+QueryWeapon6(piecenum)
+{
+	if (gun_6 == 0) {
+		piecenum = lflare;
+		return (0);
+	}
+	if (gun_6 == 1) {
+		piecenum = rflare;
+		return (0);
+	}
+}
+
+AimFromWeapon6(piecenum)
+{
+	piecenum = cbox;
+	return;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		explode cbox type SHATTER;
+		explode ldoor type SHATTER;
+		explode rdoor type SHATTER;
+		return (1);
+	}
+	explode t1 type SHATTER;
+	explode t2 type SHATTER;
+	explode t3 type SHATTER;
+	explode t4 type SHATTER;
+	return (2);
+}

@@ -64,7 +64,15 @@ local highPriorityNames = {
 	aven_commander_respawner = true,
 	gear_commander_respawner = true,
 	claw_commander_respawner = true,
-	sphere_commander_respawner = true
+	sphere_commander_respawner = true,
+	aven_upgrade_center = true,
+	gear_upgrade_center = true,
+	claw_upgrade_center = true,
+	sphere_upgrade_center = true,
+	aven_scout_pad = true,
+	gear_scout_pad = true,
+	claw_scout_pad = true,
+	sphere_scout_pad = true
 }
 
 local buildPriorityCmdDesc = {

@@ -91,7 +91,8 @@ local nanoExplosionCEG = "NANOFRAMEBLAST"
 local nanoExplosionSound = "Sounds/NECRNAN2.wav"
 local extraDeathEffectsCEG = "EXTRADEATHEFFECTS"
 
-local MOVING_CHECK_DELAY = 10
+local STUCK_CHECK_DELAY_FRAMES = 10
+local MOVING_CHECK_DELAY_FRAMES = 10
 local COLLISION_SPEED_THRESHOLD = 5
 local COLLISION_SPEED_MOD = 0.1
 local GROUND_COLLISION_H_THRESHOLD = 30
@@ -196,31 +197,6 @@ local function updateUnitPhysics(unitId)
 		return
 	end	
 	
-	-- force aircraft that flew off the map to "teleport" back into the nearest edge
-	-- workaround for 104.0 engine bug
-	 if (not destructibleProjectileUnitIds[unitId]) and ((x < -MAP_SAFETY_TOLERANCE or x > mapSizeX+MAP_SAFETY_TOLERANCE) or (z < -MAP_SAFETY_TOLERANCE or z > mapSizeZ+MAP_SAFETY_TOLERANCE)) then
-	 	local bestDistance = math.huge
-	 	local d = 0
-	 	local targetX, targetY, targetZ
-	 	for _,p in pairs(mapSafetyPoints) do
-	 		d = sqDistance(x,p.x,z,p.z) 
-	 		if (d < bestDistance) then
-	 			bestDistance = d
-	 			targetX = p.x
-	 			targetY = p.y
-	 			targetZ = p.z
-	 		end
-	 	end
-	 	
-	 	spSetUnitPosition(unitId,targetX,targetY,targetZ)
-	 	spSetUnitVelocity(unitId,0,0,0)
-	 	--Spring.Echo("WARNING : unit "..unitId.." was flying way off the map : moved to ("..targetX..","..targetY..","..targetZ..")")
-
-		x,y,z = spGetUnitPosition(unitId)
-		vx,vy,vz,v = spGetUnitVelocity(unitId)
-	 end
-	 
-	
 	if comsatBeacons[unitId] or scoperBeacons[unitId] then
 		spSetUnitVelocity(unitId,0,0,0)
 	end
@@ -264,29 +240,6 @@ local function updateUnitPhysics(unitId)
 		end
 	end
 	 
-	
-	-- force physics for aircraft movement to prevent shaking in some cases
-	-- TODO disabled for now, needs fixing
-	if false and aircraftMovementFixUnitIds[unitId] == true then
-		local groundHeight = spGetGroundHeight(x,z)
-		h = y - groundHeight
-		if (h > 50) and v > 0.2 then
-			
-			-- average old rotation physics with the latest
-			physics = unitPhysicsById[unitId]
-			if physics and physics[9] then
-			
-				--rx = (physics[9] + rx) / 2
-				--ry = (physics[10] + ry) / 2
-				--rz = (physics[11] + rz) / 2
-
-				--Spring.Echo("enforced physics for aircraft "..unitId.." : orx="..physics[9].." ory="..physics[10].." orz="..physics[11])		
-				--Spring.Echo("enforced physics for aircraft "..unitId.." : orx="..physics[9].." ory="..physics[10].." orz="..physics[11].." rx="..rx.." ry="..ry.." rz="..rz)
-				--spSetUnitRotation(unitId,rx,ry,rz)	
-			end
-		end
-	end
-	
 	-- attach destructible unit ids to the projectile if it's in flight 
 	if destructibleProjectileUnitIds[unitId] == true then
 		if not destructibleProjectileInitialPositionByUnitId[unitId] then
@@ -441,8 +394,9 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 	--if aircraftMovementFixDefIds[unitDefId] then
 		--aircraftMovementFixUnitIds[unitId] = true
 	--end
-		
-	unitPhysicsById[unitId] = {0,0,0,0,0,0,0,false}
+
+	-- x,y,z,vx,vy,vz,h,enableGC,rx,ry,rz,v		
+	unitPhysicsById[unitId] = {0,0,0,0,0,0,0,false,0,0,0,0}
 end
 
 function gadget:GameFrame(n)
@@ -467,13 +421,16 @@ function gadget:GameFrame(n)
 			scoperBeacons[uId] = frames + 1
 		end
 	end
-	
+	local doMoveAnimCheck = n%MOVING_CHECK_DELAY_FRAMES == 0
+	local doStuckCheck = n%STUCK_CHECK_DELAY_FRAMES == 0
+	local ys,submergedDepth,fullySubmergedDepth
 	-- check unit physics
 	for unitId,oldPhysics in pairs(unitPhysicsById) do
 		local defId = spGetUnitDefID(unitId)
 		
 		-- get updated physics
 		updateUnitPhysics(unitId)
+
 		if x then
 			groundHeight = spGetGroundHeight(x,z)
 			h = y - groundHeight
@@ -485,8 +442,8 @@ function gadget:GameFrame(n)
 			end
 			
 			-- workaround for engine not calling StartMoving when it should in some situations
-			if moveAnimationUnitIds[unitId] then
-				if (n%MOVING_CHECK_DELAY == 0) then
+			if (doMoveAnimCheck) then
+				if moveAnimationUnitIds[unitId] then
 					if abs(vx) > 0.1 or abs(vz) > 0.1 then
 						if abs(h) < 3 or y <= 0 then
 							spCallCOBScript(unitId,"StartMoving",0)
@@ -496,7 +453,7 @@ function gadget:GameFrame(n)
 					end
 				end
 			end
-			
+
 			if (groundHeight > 0) then
 				-- check for high speed ground impact
 				if oldPhysics[7] > 0 and h <= 0 and enableGC == true then
@@ -529,22 +486,24 @@ function gadget:GameFrame(n)
 			end
 		
 			-- check if unit is stuck
-			if (checkStuck(unitId,defId,x,y,z,v)) then
-				if not stuckGroundUnitIds[unitId] then
-					--Spring.Echo(unitId.." is stuck!")
-					stuckGroundUnitIds[unitId] = true
-				end
-			else
-				if stuckGroundUnitIds[unitId] then
-					--Spring.Echo(unitId.." is no longer stuck")
-					stuckGroundUnitIds[unitId] = nil
+			if (doStuckCheck) then
+				if (checkStuck(unitId,defId,x,y,z,v)) then
+					if not stuckGroundUnitIds[unitId] then
+						--Spring.Echo(unitId.." is stuck!")
+						stuckGroundUnitIds[unitId] = true
+					end
+				else
+					if stuckGroundUnitIds[unitId] then
+						--Spring.Echo(unitId.." is no longer stuck")
+						stuckGroundUnitIds[unitId] = nil
+					end
 				end
 			end
 			
 			-- update submerged status
-			local _, ys, _, _, _, _, _, _, _,_ = spGetUnitCollisionVolumeData(unitId)
-			local submergedDepth = 0
-			local fullySubmergedDepth = 0
+			 _, ys, _, _, _, _, _, _, _,_ = spGetUnitCollisionVolumeData(unitId)
+			submergedDepth = 0
+			fullySubmergedDepth = 0
 			if (groundHeight < 0) then
 				if (y < 0) then
 					submergedDepth = abs(y)
@@ -572,7 +531,7 @@ function gadget:GameFrame(n)
 			oldPhysics[12] = v
 		end
 	end
-	
+
 	-- feature physics
 	for featureId,oldPhysics in pairs(featurePhysicsById) do
 	
@@ -816,6 +775,7 @@ end
 
 function gadget:FeatureCreated(featureId, allyTeam)
 	featureIds[featureId] = true
+	-- x,y,z,vx,vy,vz,h,enableGC
 	featurePhysicsById[featureId] = {0,0,0,0,0,0,0,false}
 	
 	-- adjust the collision volume positions

@@ -1,0 +1,277 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 	80
+
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
+piece  base, turret, sleeve, lbarrel1,lbarrel2,lbarrel3,lflash1,lflash2,lflash3,rbarrel1,rbarrel2,rbarrel3,rflash1,rflash2,rflash3,b1,b2,t1, t2,bb, t1cover,t2cover,tldoor,trdoor,shieldpt;
+
+static-var  gun_1, isOpen;
+
+#include "aimhelper1.h"
+
+// Signal definitions
+#define SIG_AIM				2
+
+#include "tankthreads.h"
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+
+Open()
+{
+	set ARMORED to FALSE;
+
+	move tldoor to x-axis [-6.1] speed [40];
+	move trdoor to x-axis [6.1] speed [40];
+	wait-for-move tldoor along x-axis;
+	wait-for-move trdoor along x-axis;
+
+	move lbarrel1 to z-axis [1.000000] speed [10.000000];
+	move lbarrel2 to z-axis [1.000000] speed [10.000000];
+	move lbarrel3 to z-axis [1.000000] speed [10.000000];
+	move rbarrel1 to z-axis [1.000000] speed [10.000000];
+	move rbarrel2 to z-axis [1.000000] speed [10.000000];
+	move rbarrel3 to z-axis [1.000000] speed [10.000000];
+	wait-for-move lbarrel1 along z-axis;
+	wait-for-move lbarrel2 along z-axis;
+	wait-for-move lbarrel3 along z-axis;
+	wait-for-move rbarrel1 along z-axis;
+	wait-for-move rbarrel2 along z-axis;
+	wait-for-move rbarrel3 along z-axis;
+
+	isOpen = TRUE;
+	return (0);
+}
+
+Close()
+{
+	isOpen = FALSE;
+	turn sleeve to x-axis <0.000000> speed <100.000000>;
+	wait-for-turn sleeve around x-axis;
+	move lbarrel1 to z-axis [0.000000] speed [10.000000];
+	move lbarrel2 to z-axis [0.000000] speed [10.000000];
+	move lbarrel3 to z-axis [0.000000] speed [10.000000];
+	move rbarrel1 to z-axis [0.000000] speed [10.000000];
+	move rbarrel2 to z-axis [0.000000] speed [10.000000];
+	move rbarrel3 to z-axis [0.000000] speed [10.000000];
+	wait-for-move lbarrel1 along z-axis;
+	wait-for-move lbarrel2 along z-axis;
+	wait-for-move lbarrel3 along z-axis;
+	wait-for-move rbarrel1 along z-axis;
+	wait-for-move rbarrel2 along z-axis;
+	wait-for-move rbarrel3 along z-axis;
+	move tldoor to x-axis [0] speed [10];
+	move trdoor to x-axis [0] speed [10];
+	wait-for-move tldoor along x-axis;
+	wait-for-move trdoor along x-axis;
+	
+	set ARMORED to TRUE;
+	return (0); 
+}
+
+
+Create()
+{
+	gun_1=0;
+	isOpen = FALSE;
+	start-script SmokeUnit();
+	start-script AnimateTracks();
+}
+
+
+RestoreAfterDelay()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<80>,<80>);
+	turn turret to y-axis <0.000000> speed <80.016484>;
+	call-script Close();
+}
+
+AimPrimary(heading, pitch)
+{
+	if( ! isOpen)
+	{
+		call-script Open();
+	}
+
+	call-script updateAimHelper1(heading,pitch,<90>,<290>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn turret to y-axis heading speed <90.038462>;
+	turn sleeve to x-axis <0.000000> - pitch speed <290.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary() 
+{
+	if (gun_1 == 0){
+		move lbarrel1 to z-axis [0.000000] now;
+		emit-sfx 1024 from lflash1;
+		sleep 1;
+		move rbarrel1 to z-axis [0.000000] now;
+		emit-sfx 1024 from rflash1;
+		sleep 150;
+		move lbarrel1 to z-axis [1.000000] speed [10.000000];
+		move rbarrel1 to z-axis [1.000000] speed [10.000000];
+		return 0;
+	}
+	if (gun_1 == 3){
+		move rbarrel2 to z-axis [0.000000] now;
+		emit-sfx 1024 from rflash2;
+		sleep 1;
+		move lbarrel2 to z-axis [0.000000] now;
+		emit-sfx 1024 from lflash2;
+		sleep 150;
+		move lbarrel2 to z-axis [1.000000] speed [10.000000];
+		move rbarrel2 to z-axis [1.000000] speed [10.000000];
+		return 0;
+	}
+	if (gun_1 == 4){
+		move lbarrel3 to z-axis [0.000000] now;
+		emit-sfx 1024 from lflash3;
+		sleep 1;
+		move rbarrel3 to z-axis [0.000000] now;
+		emit-sfx 1024 from rflash3;
+		sleep 150;
+		move lbarrel3 to z-axis [1.000000] speed [10.000000];
+		move rbarrel3 to z-axis [1.000000] speed [10.000000];
+		return 0;
+	}
+}
+
+Shot1()
+{
+	if (gun_1 == 0){
+		sleep 1;
+		gun_1=1;
+		return 0;
+	}
+	if (gun_1 == 1){
+		sleep 1;
+		gun_1=3;
+		return 0;
+	}
+	if (gun_1 == 2){
+		sleep 1;
+		gun_1=4;
+		return 0;
+	}
+	if (gun_1 == 3){
+		sleep 1;
+		gun_1=2;
+		return 0;
+	}
+	if (gun_1 == 4){
+		sleep 1;
+		gun_1=5;
+		return 0;
+	}
+	if (gun_1 == 5){
+		sleep 1;
+		gun_1=0;
+		return 0;
+	}
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum)
+{
+	//get PRINT(queryCount,gun_1,lastGun1);
+	if (gun_1 == 0){
+		piecenum = lflash1;
+		return 0;
+	}
+	if (gun_1 == 1){
+		piecenum = rflash1;
+		return 0;
+	}
+	if (gun_1 == 2){
+		piecenum = lflash2;
+		return 0;
+	}
+	if (gun_1 == 3){
+		piecenum = rflash2;
+		return 0;
+	}
+	if (gun_1 == 4){
+		piecenum = lflash3;
+		return 0;
+	}
+	if (gun_1 == 5){
+		piecenum = rflash3;
+		return 0;
+	}
+}
+
+
+AimSecondary(heading, pitch)
+{
+	return (1);
+}
+
+
+AimFromSecondary(piecenum)
+{
+	piecenum = shieldpt;
+	return (0);
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = shieldpt;
+	return (0);
+}
+
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		return (1);
+	}
+	explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode t1cover type SHATTER;
+	explode t2cover type SHATTER;
+	return (2);
+}

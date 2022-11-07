@@ -39,6 +39,7 @@ local spAddUnitResource = Spring.AddUnitResource
 local spGetUnitPiecePosDir = Spring.GetUnitPiecePosDir
 local spGetGroundHeight = Spring.GetGroundHeight
 local spAddUnitDamage = Spring.AddUnitDamage
+local spPlaySoundFile = Spring.PlaySoundFile
 local floor = math.floor
 
 -------------------------------------------------------------------------------------
@@ -501,6 +502,19 @@ function selfIgnite(unitID, unitDefID, teamID)
 	spAddUnitDamage(unitID,1,0,-1,selfBurnFireWeaponId)
 end
 
+
+
+-- plays sound at unit position
+sounds = {
+	[1] = 'sounds/gridplus.wav',
+	[2] = 'sounds/gridminus.wav'
+}
+function playSound(unitID, unitDefID, teamID, soundId, volume)
+	local x, y, z = spGetUnitPosition(unitID)
+	spPlaySoundFile(sounds[soundId], volume/100, x, y, z)
+end
+
+
 ---------------------------------------- CALLINS
 
 -- initialize maps
@@ -566,3 +580,4 @@ gadgetHandler:RegisterGlobal("checkIncomingMissile", checkIncomingMissile)
 gadgetHandler:RegisterGlobal("getPieceHeightDiff", getPieceHeightDiff)
 gadgetHandler:RegisterGlobal("spawnUnit", spawnUnit)
 gadgetHandler:RegisterGlobal("selfIgnite", selfIgnite)
+gadgetHandler:RegisterGlobal("playSound", playSound)

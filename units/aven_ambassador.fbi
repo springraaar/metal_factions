@@ -1,0 +1,132 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Ambassador;
+	description=Amphibious Mobile Fortress;
+	iconType=amphibmulti;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_ambassador;
+	objectName=aven_ambassador.3do;
+	corpse=aven_ambassador_dead;
+	buildPic=aven_ambassador.png;
+	soundCategory=aven_TANK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=14200;
+	footprintx=6;
+	footprintz=6;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=TANKDH6;
+	turnRate=170;
+	acceleration=0.06125;
+	brakeRate=0.04;
+	maxVelocity=0.8;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=250;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_ambassador_rocket;
+	noChaseCategory=VTOL;
+	onlyTargetCategory1=NOTAIR;
+	weapon2=aven_ambassador_cannon;
+	weaponMainDir2=-0.6 0 1;
+	maxAngleDif2=205;
+	weapon3=aven_ambassador_cannon;
+	weaponMainDir3=0.6 0 1;
+	maxAngleDif3=205;
+	weapon4=aven_ambassador_cannon;
+	weaponMainDir4=0.6 0 -1;
+	maxAngleDif4=205;
+	weapon5=aven_ambassador_cannon;
+	weaponMainDir5=-0.6 0 -1;
+	maxAngleDif5=205;
+	weapon6=aven_ambassador_missile;
+	explodeAs=EXPLOSIVE_UNIT_BLAST;
+	selfDestructAs=EXPLOSIVE_UNIT_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	moveState=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	leavetracks=1;
+	trackoffset=8;
+	trackstrength=8;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=40;
+	collisionVolumeType = box;
+	collisionVolumeScales =80 55 90;
+	collisionVolumeOffsets = 0 -5 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=aven_adv_vehicle_plant;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflarebig;
+		explosionGenerator1=custom:emgflarefast;
+		explosionGenerator2=custom:rocketflaresml;
+	}
+	buildCostEnergy=29768;//#AUTO#
+	buildCostMetal=5953;//#AUTO#
+	buildTime=70949;//#AUTO#
+	mass=8854;//#AUTO#
+}
