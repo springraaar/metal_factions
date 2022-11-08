@@ -859,7 +859,7 @@
 	weaponType=BeamLaser;
 	explosionGenerator=custom:GREENLASERBLASTWRAPPER;
 	beamTime=0.15;
-	thickness=3.534;
+	thickness=3.154;
 	coreThickness=0.9;
 	scrollSpeed=0;
 	pulseSpeed=0;
@@ -1136,9 +1136,10 @@
 	turret=1;
 	range=450;
 	minIntensity=1.0;
-	reloadTime=1.5;
+	reloadTime=1.9;
 	weaponVelocity=1533;
 	areaOfEffect=8;
+	energyPerShot=30;
 	soundStart=lasrfir3;
 	soundHit=lasrhit2;
 	fireStarter=20;
@@ -1161,11 +1162,11 @@
 	}
 	[DAMAGE]
 	{
-		default=80;
+		default=100;
 		group_invincible=1;
-		armor_heavy=40;//#AUTO#
-		armor_medium=80;//#AUTO#
-		armor_light=80;//#AUTO#
+		armor_heavy=50;//#AUTO#
+		armor_medium=100;//#AUTO#
+		armor_light=100;//#AUTO#
 	}
 }
 [aven_runner_laser]
@@ -9683,7 +9684,7 @@
 	weaponType=BeamLaser;
 	explosionGenerator=custom:GREENLASERBLASTWRAPPER;
 	beamTime=0.15;
-	thickness=3.534;
+	thickness=3.154;
 	coreThickness=0.9;
 	scrollSpeed=0;
 	pulseSpeed=0;

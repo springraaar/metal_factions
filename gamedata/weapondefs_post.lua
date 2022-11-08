@@ -124,7 +124,13 @@ for wdName, wd in pairs(WeaponDefs) do
 			-- fading effect for beams proportional to damage
 			if wd.damage and wd.damage.default then
 				local defaultDamage = tonumber(wd.damage.default)
-				wd.beamttl = 3 + defaultDamage / 150
+				wd.beamttl = 4 + defaultDamage / 130
+				if not wd.beamdecay then
+					wd.beamdecay = 0.8
+				end
+				if not wd.laserflaresize then
+					wd.laserflaresize = 9
+				end
 			end
 		elseif (wd.weapontype == "LaserCannon") then
 			wd.heightmod = 1.0		-- default was 1.0
