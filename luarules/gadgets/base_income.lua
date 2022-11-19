@@ -29,11 +29,11 @@ local BASE_ENERGY_INCOME = 40
 --SYNCED CODE
 if (gadgetHandler:IsSyncedCode()) then
 
-function gadget:GameFrame() 
+function gadget:GameFrame(n) 
 	local teamList = spGetTeamList()
 	
-	-- every 16 frames, add income for each team 
-	if math.fmod(spGetGameFrame(),15) == 0 then
+	-- every 15 frames, add income for each team 
+	if n%15 == 0 then
 		for i=1,#teamList do
 			local id = teamList[i]
 		

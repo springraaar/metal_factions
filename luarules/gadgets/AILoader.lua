@@ -31,8 +31,22 @@ include("luarules/gadgets/ai/common.lua")
 include("luarules/gadgets/ai/AI.lua")
 include("luarules/gadgets/ai/MapHandler.lua")
 
+---------------------------------------------- auxiliary functions
+
+function registerUnit()
+	
+end
+
+
+function deregisterUnit()
+	
+end
+
+
 --SYNCED CODE
 if (gadgetHandler:IsSyncedCode()) then
+
+---------------------------------------------- engine callins
 
 function gadget:Initialize()
 
@@ -130,23 +144,6 @@ function gadget:GameFrame(n)
 	
 	-- for each AI...
     for _,thisAI in ipairs(mFAIs) do
-        
-        -- update sets of unit ids : own, friendlies, enemies
-		thisAI.ownUnitIds = {}
-        thisAI.friendlyUnitIds = {}
-        thisAI.enemyUnitIds = {}
-
-        for _,uId in ipairs(spGetAllUnits()) do
-        	if (spGetUnitTeam(uId) == thisAI.id) then
-        		addToSet(thisAI.ownUnitIds, uId)
-        	elseif (setContains(thisAI.alliedTeamIds,spGetUnitTeam(uId)) or spGetUnitTeam(uId) == thisAI.id) then
-        		addToSet(thisAI.friendlyUnitIds, uId)
-        	else
-        		addToSet(thisAI.enemyUnitIds, uId)
-        	end
-        end 
-	
-		-- run AI game frame update handlers
 		thisAI:GameFrame(n)
     end
 
@@ -158,14 +155,14 @@ end
 
 function gadget:UnitCreated(unitId, unitDefId, teamId, builderId) 
 	-- for each AI...
-    for _,thisAI in ipairs(mFAIs) do
+    for _,thisAI in pairs(mFAIs) do
 		thisAI:UnitCreated(unitId, unitDefId, teamId, builderId)
 	end
 end
 
 function gadget:UnitDestroyed(unitId, unitDefId, teamId, attackerId, attackerDefId, attackerTeamId) 
 	-- for each AI...
-    for _,thisAI in ipairs(mFAIs) do
+    for _,thisAI in pairs(mFAIs) do
 		thisAI:UnitDestroyed(unitId, unitDefId, teamId, attackerId, attackerDefId, attackerTeamId)
 	end
 end
@@ -173,14 +170,14 @@ end
 
 function gadget:UnitDamaged(unitId, unitDefId, unitTeamId, damage, paralyzer, weaponDefId, projectileId, attackerId, attackerDefId, attackerTeamId)
 	-- for each AI...
-    for _,thisAI in ipairs(mFAIs) do
+    for _,thisAI in pairs(mFAIs) do
 		thisAI:UnitDamaged(unitId, unitDefId, unitTeamId, attackerId, attackerDefId, attackerTeamId)
 	end	
 end
 
 function gadget:UnitIdle(unitId, unitDefId, teamId) 
 	-- for each AI...
-    for _,thisAI in ipairs(mFAIs) do
+    for _,thisAI in pairs(mFAIs) do
 		thisAI:UnitIdle(unitId, unitDefId, teamId)
 	end
 end
@@ -188,21 +185,21 @@ end
 
 function gadget:UnitFinished(unitId, unitDefId, teamId) 
 	-- for each AI...
-    for _,thisAI in ipairs(mFAIs) do
+    for _,thisAI in pairs(mFAIs) do
 		thisAI:UnitFinished(unitId, unitDefId, teamId)
 	end
 end
 
 function gadget:UnitTaken(unitId, unitDefId, teamId, newTeamId) 
 	-- for each AI...
-    for _,thisAI in ipairs(mFAIs) do
+    for _,thisAI in pairs(mFAIs) do
 		thisAI:UnitTaken(unitId, unitDefId, teamId, newTeamId)
 	end
 end
 
 function gadget:UnitGiven(unitId, unitDefId, teamId, oldTeamId) 
 	-- for each AI...
-    for _,thisAI in ipairs(mFAIs) do
+    for _,thisAI in pairs(mFAIs) do
 		thisAI:UnitGiven(unitId, unitDefId, teamId, oldTeamId)
 	end
 end
@@ -223,7 +220,7 @@ function gadget:RecvLuaMsg(msg, playerId)
 	if (string.find(msg,EXTERNAL_CMD_LOADCUSTOMSTRATEGIES) ~= nil ) then
 		includeEnemies = true
 	end
-	for _,thisAI in ipairs(mFAIs) do
+	for _,thisAI in pairs(mFAIs) do
 		local isOwner = (thisAI.hostingPlayerId == playerId) 
 		if ( (isOwner and spectator) or (active and not spectator)) then
 			if ( (isOwner and spectator) or thisAI.allyId == allyId or includeEnemies or (enemyStrategyOverride and (not thisAI.hasHumanAllies))) then

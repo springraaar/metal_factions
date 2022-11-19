@@ -64,7 +64,7 @@ function reclaimNearbyFeaturesIfNecessary(self)
 		if #featuresToReclaim > 0 then
 			--log("reclaiming "..#featuresToReclaim,self.ai) --DEBUG
 			for i,fId in ipairs(featuresToReclaim) do
-				spGiveOrderToUnit( self.unitId, CMD.RECLAIM, {CMD_FEATURE_ID_OFFSET+fId}, i == 1 and {} or CMD.OPT_SHIFT )
+				spGiveOrderToUnit( self.unitId, CMD.RECLAIM, {CMD_FEATURE_ID_OFFSET+fId}, i == 1 and EMPTY_TABLE or CMD.OPT_SHIFT )
 			end
 		
 			return {action = "wait_idle", frames = CLEANUP_FRAMES}
@@ -121,7 +121,7 @@ function checkMorph(self)
 							end
 	
 							if (morphCmd) then
-								spGiveOrderToUnit(self.unitId,morphCmd,{},{})
+								spGiveOrderToUnit(self.unitId,morphCmd,EMPTY_TABLE,EMPTY_TABLE)
 							else
 								log("MFAI WARNING: "..self.unitName.." got bad morph command : "..tostring(morphName),self.ai)
 							end
@@ -139,7 +139,7 @@ function checkMorph(self)
 						end
 
 						local morphCmd = morphCmdIds[ random( 1, #morphCmdIds) ]
-						spGiveOrderToUnit(self.unitId,morphCmd,{},{})
+						spGiveOrderToUnit(self.unitId,morphCmd,EMPTY_TABLE,EMPTY_TABLE)
 					end
 					
 					
@@ -167,7 +167,7 @@ function assistOtherBuilderIfNeeded(self)
 		for i,tq in ipairs(queues) do
 			if self.unitDef.isAirUnit or (tq.unitDef.isAirUnit == false and self.isWaterMode == tq.isWaterMode) then
 				if tq.specialRole == UNIT_ROLE_ADVANCED_DEFENSE_BUILDER or tq.specialRole == UNIT_ROLE_MEX_UPGRADER then
-					spGiveOrderToUnit(self.unitId,CMD.GUARD,{tq.unitId},{})
+					spGiveOrderToUnit(self.unitId,CMD.GUARD,{tq.unitId},EMPTY_TABLE)
 					return {action="wait_idle", frames=1800}
 				end
 			end
@@ -201,7 +201,7 @@ function assistNearbyConstructionIfNeeded(self,includeMobiles,includeNonBuilders
 						if (health < 0.9*maxHealth) then
 							if self.ai.mapHandler:checkConnection(selfPos, uPos,self.pFType) then
 								--log("repairing nearby unit",self.ai) --DEBUG
-								spGiveOrderToUnit(self.unitId,CMD.REPAIR,{uId},{})
+								spGiveOrderToUnit(self.unitId,CMD.REPAIR,{uId},EMPTY_TABLE)
 								return {action="wait_idle", frames=300}
 							end
 						end
@@ -211,7 +211,7 @@ function assistNearbyConstructionIfNeeded(self,includeMobiles,includeNonBuilders
 							un = ud.name
 							if self.ai.mapHandler:checkConnection(selfPos, uPos,self.pFType) then
 								--log("assisting nearby unit under construction",self.ai) --DEBUG
-								spGiveOrderToUnit(self.unitId,CMD.REPAIR,{uId},{})
+								spGiveOrderToUnit(self.unitId,CMD.REPAIR,{uId},EMPTY_TABLE)
 								return {action="wait_idle", frames=300}
 							end
 						end
@@ -628,7 +628,7 @@ function reclaimNearestMexIfNeeded(self)
 
 	if mexUnitId ~= nil then
 		-- command the engineer to reclaim the mex
-		spGiveOrderToUnit(self.unitId,CMD.RECLAIM,{mexUnitId},{})
+		spGiveOrderToUnit(self.unitId,CMD.RECLAIM,{mexUnitId},EMPTY_TABLE)
 		-- log("MexUpgradeBehavior: unit "..self.unitName.." goes to reclaim a mex",self.ai)
 		
 		-- we'll build the moho here
@@ -692,7 +692,7 @@ function basePatrolIfNeeded(self)
 		
 		local movePos = newPosition(baseX - (radius + random( 1, radius)),0,baseZ)
 		if (spTestMoveOrder(self.unitDefId,movePos.x,movePos.y,movePos.z)) then
-			spGiveOrderToUnit(self.unitId,CMD.PATROL,{movePos.x,movePos.y,movePos.z},{})
+			spGiveOrderToUnit(self.unitId,CMD.PATROL,{movePos.x,movePos.y,movePos.z},EMPTY_TABLE)
 		end
 	
 		movePos.x=baseX + (radius + random( 1, radius))
@@ -732,7 +732,7 @@ function briefAreaPatrol(self)
 	
 	local movePos = newPosition(selfPos.x - (radius + random( 1, radius)),selfPos.y,selfPos.z)
 	if (spTestMoveOrder(self.unitDefId,movePos.x,movePos.y,movePos.z)) then
-		spGiveOrderToUnit(self.unitId,CMD.PATROL,{movePos.x,movePos.y,movePos.z},{})
+		spGiveOrderToUnit(self.unitId,CMD.PATROL,{movePos.x,movePos.y,movePos.z},EMPTY_TABLE)
 	end
 
 	movePos.x=selfPos.x + (radius + random( 1, radius))
@@ -761,7 +761,7 @@ function staticBriefAreaPatrol(self)
 	local radius = 100 
 	
 	local movePos = newPosition(selfPos.x - (radius + random( 1, radius)),selfPos.y,selfPos.z)
-	spGiveOrderToUnit(self.unitId,CMD.PATROL,{movePos.x,movePos.y,movePos.z},{})
+	spGiveOrderToUnit(self.unitId,CMD.PATROL,{movePos.x,movePos.y,movePos.z},EMPTY_TABLE)
 	movePos.x=selfPos.x + (radius + random( 1, radius))
 	spGiveOrderToUnit(self.unitId,CMD.PATROL,{movePos.x,movePos.y,movePos.z},CMD.OPT_SHIFT)
 	
@@ -786,7 +786,7 @@ function exitPlant(self)
 	p.x = self.pos.x
 	p.z = self.pos.z+100
 	p.y = self.pos.y
-	spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},{})
+	spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},EMPTY_TABLE)
 
 	-- log(self.unitName.." ("..self.pos.x..";"..self.pos.z..") exiting factory to ("..p.x..";"..p.z..")",self.ai) --DEBUG
 
@@ -814,7 +814,7 @@ function moveAtkCenter(self)
 		return SKIP_THIS_TASK
 	end
 
-	spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},{})
+	spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},EMPTY_TABLE)
 		
 	-- add another order to queue in case the first is invalid
 	spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x - radius/2 + random( 1, radius),0,p.z - radius/2 + random( 1, radius)},CMD.OPT_SHIFT)
@@ -836,18 +836,18 @@ function activateAtkCenter(self)
 		p.z = basePos.z-radius/2+random(1,radius)
 	else
 		-- just activate
-		spGiveOrderToUnit(self.unitId,CMD.ONOFF,{1},{})
+		spGiveOrderToUnit(self.unitId,CMD.ONOFF,TABLE_WITH_ONE,EMPTY_TABLE)
 
 		return SKIP_THIS_TASK
 	end
 	
 	if checkWithinDistance(self.pos, p,radius) then
 		-- near target position, stop and activate
-		spGiveOrderToUnit(self.unitId,CMD.STOP,{},{})
-		spGiveOrderToUnit(self.unitId,CMD.ONOFF,{1},{})
+		spGiveOrderToUnit(self.unitId,CMD.STOP,EMPTY_TABLE,EMPTY_TABLE)
+		spGiveOrderToUnit(self.unitId,CMD.ONOFF,TABLE_WITH_ONE,EMPTY_TABLE)
 	else	
 		-- far from target position, deactivate and move
-		spGiveOrderToUnit(self.unitId,CMD.ONOFF,{0},{})
+		spGiveOrderToUnit(self.unitId,CMD.ONOFF,TABLE_WITH_ZERO,EMPTY_TABLE)
 		local h = spGetGroundHeight(p.x,p.z)
 		if (spGetGroundHeight(p.x,p.z) < 0) then
 			for i=1,6,1 do
@@ -862,7 +862,7 @@ function activateAtkCenter(self)
 			end
 		end
 
-		spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,h,p.z},{})
+		spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,h,p.z},EMPTY_TABLE)
 	end
 	
 	return {action="wait", frames=120}
@@ -891,11 +891,11 @@ function patrolAtkCenter(self)
 	
 	-- do not give the orders if already there
 	if (distance(self.pos,p) > BIG_RADIUS) then
-		spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},{})			
+		spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},EMPTY_TABLE)			
 		spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS),0,p.z - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS)},CMD.OPT_SHIFT)
 	--elseif (f - self.idleFrame < 90 or self.distance(self.pos,p) > MED_RADIUS) then
 	elseif (true) then
-		spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x,p.y,p.z},{})			
+		spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x,p.y,p.z},EMPTY_TABLE)			
 		spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS),0,p.z - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS)},CMD.OPT_SHIFT)
 	end
 	
@@ -996,9 +996,9 @@ function commanderPatrol(self)
 				
 		if (self.stuckCounter == 5) then
 			-- probably fell into a hole, selfdestruct!
-			spGiveOrderToUnit(self.unitId,CMD.SELFD,{},{})
+			spGiveOrderToUnit(self.unitId,CMD.SELFD,EMPTY_TABLE,EMPTY_TABLE)
 		else
-			spGiveOrderToUnit(self.unitId,CMD.MOVE,{self.pos.x  - 120 + random( 1, 240),self.pos.y,self.pos.z - 120 + random( 1, 240)},{})	
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{self.pos.x  - 120 + random( 1, 240),self.pos.y,self.pos.z - 120 + random( 1, 240)},EMPTY_TABLE)	
 			spGiveOrderToUnit(self.unitId,CMD.PATROL,{self.pos.x - 120 + random( 1, 240),self.pos.y,self.pos.z -120 + random( 1, 240)},CMD.OPT_SHIFT)
 			spGiveOrderToUnit(self.unitId,CMD.PATROL,{self.pos.x - 120 + random( 1, 240),self.pos.y,self.pos.z -120 + random( 1, 240)},CMD.OPT_SHIFT)
 		end
@@ -1023,7 +1023,7 @@ function commanderPatrol(self)
 			altPos3.z = (0.5*p.z+0.5*enemyPos.z) - COMMANDER_ATTACK_ZIGZAG_DISTANCE/2 + random( 1, COMMANDER_ATTACK_ZIGZAG_DISTANCE)
 			altPos3.y = spGetGroundHeight(altPos3.x,altPos3.z)
 			
-			spGiveOrderToUnit(self.unitId,CMD.MOVE,{altPos1.x,altPos1.y,altPos1.z},{})
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{altPos1.x,altPos1.y,altPos1.z},EMPTY_TABLE)
 			spGiveOrderToUnit(self.unitId,CMD.MOVE,{altPos2.x,altPos2.y,altPos2.z},CMD.OPT_SHIFT)
 			spGiveOrderToUnit(self.unitId,CMD.MOVE,{altPos3.x,altPos3.y,altPos3.z},CMD.OPT_SHIFT)
 		else
@@ -1042,11 +1042,11 @@ function commanderPatrol(self)
 			 
 			-- test if that position is reachable
 			if self.ai.mapHandler:checkConnection(self.pos, p,self.pFType) and self.ai.mapHandler:checkConnection(self.pos, patrolPos,self.pFType) then
-				spGiveOrderToUnit(self.unitId,firstCmd,{p.x,p.y,p.z},{})
+				spGiveOrderToUnit(self.unitId,firstCmd,{p.x,p.y,p.z},EMPTY_TABLE)
 				spGiveOrderToUnit(self.unitId,CMD.PATROL,{patrolPos.x,patrolPos.y,patrolPos.z},CMD.OPT_SHIFT)
 			else
 				-- if not just patrol in place
-				spGiveOrderToUnit(self.unitId,CMD.PATROL,{self.pos.x  - 60 + random( 1, 120),self.pos.y,self.pos.z - 60 + random( 1, 120)},{})
+				spGiveOrderToUnit(self.unitId,CMD.PATROL,{self.pos.x  - 60 + random( 1, 120),self.pos.y,self.pos.z - 60 + random( 1, 120)},EMPTY_TABLE)
 				spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x - 60 + random( 1, 120),p.y,p.z- 60 + random( 1, 120)},CMD.OPT_SHIFT)
 				spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x - 60 + random( 1, 120),p.y,p.z- 60 + random( 1, 120)},CMD.OPT_SHIFT)
 			end
@@ -1095,10 +1095,10 @@ function scoutRandomly(self)
 		
 		-- do not give the orders if already there
 		if (distance(self.pos,p1) > BIG_RADIUS) then
-			spGiveOrderToUnit(self.unitId,CMD.MOVE,{p1.x,p1.y,p1.z},{})			
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{p1.x,p1.y,p1.z},EMPTY_TABLE)			
 			spGiveOrderToUnit(self.unitId,CMD.PATROL,{p2.x,0,p2.z},CMD.OPT_SHIFT)
 		else
-			spGiveOrderToUnit(self.unitId,CMD.PATROL,{p1.x,p1.y,p1.z},{})			
+			spGiveOrderToUnit(self.unitId,CMD.PATROL,{p1.x,p1.y,p1.z},EMPTY_TABLE)			
 			spGiveOrderToUnit(self.unitId,CMD.PATROL,{p2.x,0,p2.z},CMD.OPT_SHIFT)
 		end
 
@@ -1120,7 +1120,7 @@ function moveBaseCenter(self)
 		p.x = basePos.x-radius/2+random(1,radius)
 		p.z = basePos.z-radius/2+random(1,radius)
 		p.y = 0
-		spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},{})
+		spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},EMPTY_TABLE)
 		
 		-- add another order to queue in case the first is invalid
 		spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x - radius/2 + random( 1, radius),p.y,p.z - radius/2 + random( 1, radius)},CMD.OPT_SHIFT)
@@ -1142,7 +1142,7 @@ function moveVulnerablePos(self)
 		p.x = cellPos.x-radius/2+random(1,radius)
 		p.z = cellPos.z-radius/2+random(1,radius)
 		p.y = 0
-		spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},{})
+		spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},EMPTY_TABLE)
 		
 		-- add another order to queue in case the first is invalid
 		spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x - radius/2 + random( 1, radius),p.y,p.z - radius/2 + random( 1, radius)},CMD.OPT_SHIFT)
@@ -1169,7 +1169,7 @@ function moveSafePos(self)
 		p.y = 0
 
 
-		spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},{})
+		spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},EMPTY_TABLE)
 		
 		-- add another order to queue in case the first is invalid
 		spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x - radius/2 + random( 1, radius),p.y,p.z - radius/2 + random( 1, radius)},CMD.OPT_SHIFT)
@@ -1998,7 +1998,7 @@ function unblockableNukeTargetting(self)
 		end
 		
 		-- launch nuke
-		spGiveOrderToUnit(self.unitId,CMD.ATTACK,{bestPos.x,spGetGroundHeight(bestPos.x,bestPos.z),bestPos.z},{})
+		spGiveOrderToUnit(self.unitId,CMD.ATTACK,{bestPos.x,spGetGroundHeight(bestPos.x,bestPos.z),bestPos.z},EMPTY_TABLE)
 	end
 
 	return SKIP_THIS_TASK
@@ -2021,7 +2021,7 @@ function comsatTargetting(self)
 	end
 	
 	if bestPos ~= nil then
-		spGiveOrderToUnit(self.unitId,CMD.ATTACK,{bestPos.x,spGetGroundHeight(bestPos.x,bestPos.z),bestPos.z},{})
+		spGiveOrderToUnit(self.unitId,CMD.ATTACK,{bestPos.x,spGetGroundHeight(bestPos.x,bestPos.z),bestPos.z},EMPTY_TABLE)
 	end
 
 	return SKIP_THIS_TASK

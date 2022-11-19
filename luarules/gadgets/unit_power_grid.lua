@@ -74,9 +74,15 @@ local nodeIds = {}
 local boosterUnitIdsByAllyId = {}	-- allyId, unitId, {eStorage,mMult,gridId}
 local affectedUnitIdsByAllyId = {}	-- allyId, unitId, {eStorage,mMult,gridId}
 local nodesByAllyId = {}		-- allyId, nodeArray<nodePropertiesTable>
-local gridsByAllyId = {}		-- allyId, gridArray<gridPropertiesTable>
 
 --------------------------------------------------- auxiliary functions
+
+function tablelength(T)
+  local count = 0
+  for _ in pairs(T) do count = count + 1 end
+  return count
+end
+
 
 function getGridDataObject(allyId, gridId)
 	return {
@@ -87,7 +93,9 @@ function getGridDataObject(allyId, gridId)
 		totalExtractionMult = 0,
 		gridStrength = 0,
 		extractionBonus = 0,
-		gridLevel = 0 
+		gridLevel = 0,
+		extraEnergyUse = 0,
+		extraMetalIncome = 0
 	}
 end
 
@@ -142,7 +150,6 @@ function gadget:Initialize()
 		if (ud.customParams) then
 			if ud.customParams.powergridnode == "1" then
 				nodeDefIds[ud.id] = true
-				Spring.Echo(ud.name.." is power node")
 			elseif ud.customParams.boostspowergrid == "1" or ud.tidalGenerator == 1 or ud.energyStorage > 100 or ud.energyMake > 5 or ud.windGenerator > 0 then
 				gridBoosterDefIds[ud.id] = true
 			end
@@ -158,7 +165,7 @@ function gadget:Initialize()
 		nodesByAllyId[allyId] = {}
 	end
 	
-	for _,unitId in ipairs(spGetAllUnits()) do
+	for _,unitId in pairs(spGetAllUnits()) do
 		gadget:UnitCreated(unitId,spGetUnitDefID(unitId),spGetUnitTeam(unitId))
 	end
 end
@@ -256,10 +263,8 @@ function gadget:GameFrame(n)
 	--end
 	
 	if (n%GRID_CHECK_FRAMES == 0) then
-		-- reset state
-		gridsByAllyId = {}
 
-		local ux,uz,nx,nz,eMake,eStorage,uId,nId,gridNodeList,gridId,grid,bp
+		local ux,uz,nx,nz,eMake,eStorage,uId,nId,gridNodeList,gridId,grid,bp,mChange,eChange
 		for _,allyId in ipairs(allyTeams) do
 			gridNodes = nodesByAllyId[allyId]
 			grids = {}
@@ -419,12 +424,12 @@ function gadget:GameFrame(n)
 				end
 			end
 			
-			-- set grid extraction bonus and custom params for each node
+			-- set grid extraction bonus and rules params for each node
 			for gridId,grid in pairs(grids) do
 				grid.extractionBonus = getGridExtractionBonus(grid)
 				gridNodeList = grid.nodes
 				grid.gridLevel = getGridLevel(grid)
-				-- set custom params for each node (they all have a grid, even if it's only itself)
+				-- set rules params for each node (they all have a grid, even if it's only itself)
 				for i,node in ipairs(gridNodeList) do
 					nId = node.uId
 					spSetUnitRulesParam(nId,"powerGridId",grid.gridId)
@@ -436,7 +441,7 @@ function gadget:GameFrame(n)
 				end
 				--Spring.Echo("grid "..gridId.." strength="..grid.gridStrength.." ext="..grid.totalExtractionMult.." bonus="..grid.extractionBonus.." level="..grid.gridLevel)
 			end
-			-- set custom params for each affected unit
+			-- set rules params for each affected unit
 			for uId,props in pairs(affectedUnitIdsByAllyId[allyId]) do
 				grid = grids[props.gridId]
 				if props.gridId and props.gridId > 0 and props.active then
@@ -447,19 +452,27 @@ function gadget:GameFrame(n)
 					spSetUnitRulesParam(uId,"powerGridLevel",grid.gridLevel)
 					-- change metal extraction
 					--Spring.Echo("extraction="..Spring.GetMetalExtraction ( props.x, props.z ).." amount="..Spring.GetMetalAmount ( props.x, props.z ).." unitExtraction="..Spring.GetUnitMetalExtraction ( uId ) )
+					
+					mMake,_,_,_ = spGetUnitResources(uId)
+					eChange = props.eUse*(grid.extractionBonus)
 					spSetUnitMetalExtraction(uId,props.mExt*(1+grid.extractionBonus))
-					spSetUnitResourcing( uId, "cue", props.eUse*(grid.extractionBonus)) 
+					spSetUnitResourcing( uId, "cue", eChange)
+					grid.extraEnergyUse = grid.extraEnergyUse + eChange
+					grid.extraMetalIncome = grid.extraMetalIncome + grid.extractionBonus*mMake  
 				else
 					spSetUnitRulesParam(uId,"powerGridId",0)
 					spSetUnitRulesParam(uId,"powerGridStrength",0)
 					spSetUnitRulesParam(uId,"powerGridTotalExtractionMult",0)
 					spSetUnitRulesParam(uId,"powerGridExtractionBonus",0)
 					spSetUnitRulesParam(uId,"powerGridLevel",0)
-					spSetUnitMetalExtraction(uId,props.mExt)
-					spSetUnitResourcing( uId, "cue", 0) 
+					if props.active then
+						spSetUnitMetalExtraction(uId,props.mExt)
+						spSetUnitResourcing( uId, "cue", 0)
+					end 
 				end
 			end
-			-- set custom params for each booster unit
+			
+			-- set rules params for each booster unit
 			for uId,props in pairs(boosterUnitIdsByAllyId[allyId]) do
 				grid = grids[props.gridId]
 				if props.gridId and props.gridId > 0 and props.active then
@@ -478,6 +491,15 @@ function gadget:GameFrame(n)
 				end
 			end
 
+			-- set grid extra metal income and energy drain as rules params on each node
+			for gridId,grid in pairs(grids) do
+				gridNodeList = grid.nodes
+				for i,node in ipairs(gridNodeList) do
+					nId = node.uId
+					spSetUnitRulesParam(nId,"powerGridExtraEnergyUse",grid.extraEnergyUse)
+					spSetUnitRulesParam(nId,"powerGridExtraMetalIncome",grid.extraMetalIncome)
+				end
+			end
 		end
 	end
 end

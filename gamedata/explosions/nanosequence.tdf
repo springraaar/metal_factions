@@ -435,6 +435,42 @@
 	}
 }
 
+[RECLAIMNANO]
+{
+	[nanoparticles]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0;
+			sizeMod=1.0;
+			//pos=-35 r70, 6, -35 r70;
+			emitVector=0, 1, 0;
+			gravity=0, 0.00, 0;
+			colorMap=0.2 0.2 0.8 0.9    0.5 0.5 0.8 0.1    0.2 0.2 0.8 0.1   0.2 0.2 0.5 0.1   0.0 0.0 0.0 0.000;
+			Texture=diamondstar;
+			airdrag=0.9;
+			particleLife=17;
+			particleLifeSpread=10;
+			numParticles=1;
+			particleSpeed=3;
+			particleSpeedSpread=2;
+			particleSize=2;
+			particleSizeSpread=1;
+			emitRot=0;
+			emitRotSpread=15;
+			directional=1;
+			alwaysVisible=0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		underwater=1;
+		unit=1;
+	}
+}
+
+
 [DRONEBUILD]
 {
 	[nanoparticles] 
@@ -478,7 +514,6 @@
 		[properties]
 		{
 			pos=-30 r60,15,-30 r60;
-			//delay=i4 p1.2;
 			explosionGenerator=custom:DRONEBUILDNANO;
 		}
 		air=1;
@@ -496,6 +531,39 @@
 			pos=-15 r30,15,-15 r30;
 			
 			explosionGenerator=custom:BUILDGLOW;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		underwater=1;
+		count=1;
+	}
+}
+
+[AUTORECLAIM]
+{
+	[nanoparticles] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=-30 r60,15,-30 r60;
+			explosionGenerator=custom:RECLAIMNANO;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		underwater=1;
+		count=1;
+	}
+	[glow1] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=0,0,0;
+			pos=-15 r30,15,-15 r30;
+			explosionGenerator=custom:RECLAIMGLOW;
 		}
 		air=1;
 		water=1;

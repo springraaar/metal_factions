@@ -38,6 +38,10 @@ local EFFICIENCY_AWARD_THRESHOLD = 1.0
 if (gadgetHandler:IsSyncedCode()) then 
 
 local SpAreTeamsAllied = Spring.AreTeamsAllied
+local spGetTeamUnits = Spring.GetTeamUnits
+local spGetUnitExperience = Spring.GetUnitExperience
+local spGetUnitDefID = Spring.GetUnitDefID
+local spGetGameSeconds = Spring.GetGameSeconds
 
 local teamInfo = {}
 local coopInfo = {}
@@ -51,6 +55,8 @@ local econUnitDefIDs = {
 	[UnitDefNames["aven_metal_extractor"].id] = true,
 	[UnitDefNames["aven_moho_mine"].id] = true,
 	[UnitDefNames["aven_exploiter"].id] = true,
+	[UnitDefNames["aven_bio_dome"].id] = true,
+	[UnitDefNames["aven_metal_maker"].id] = true,
 	[UnitDefNames["aven_fusion_reactor"].id] = true,
 	[UnitDefNames["aven_mobile_fusion"].id] = true,
 	[UnitDefNames["aven_geothermal_powerplant"].id] = true,
@@ -64,6 +70,8 @@ local econUnitDefIDs = {
 	[UnitDefNames["gear_metal_extractor"].id] = true,
 	[UnitDefNames["gear_moho_mine"].id] = true,
 	[UnitDefNames["gear_exploiter"].id] = true,
+	[UnitDefNames["gear_mass_burner"].id] = true,
+	[UnitDefNames["gear_metal_maker"].id] = true,
 	[UnitDefNames["gear_fusion_power_plant"].id] = true,
 	[UnitDefNames["gear_geothermal_powerplant"].id] = true,
 	[UnitDefNames["gear_energy_storage"].id] = true,
@@ -73,6 +81,8 @@ local econUnitDefIDs = {
 	[UnitDefNames["claw_solar_collector"].id] = true,
 	[UnitDefNames["claw_wind_generator"].id] = true,
 	[UnitDefNames["claw_tidal_generator"].id] = true,
+	[UnitDefNames["claw_totem"].id] = true,
+	[UnitDefNames["claw_metal_maker"].id] = true,
 	[UnitDefNames["claw_adv_fusion_reactor"].id] = true,
 	[UnitDefNames["claw_metal_extractor"].id] = true,
 	[UnitDefNames["claw_moho_mine"].id] = true,
@@ -84,6 +94,9 @@ local econUnitDefIDs = {
 	--------- SPHERE
 	[UnitDefNames["sphere_tidal_generator"].id] = true,
 	[UnitDefNames["sphere_fusion_reactor"].id] = true,
+	[UnitDefNames["sphere_wind_generator"].id] = true,
+	[UnitDefNames["sphere_hardened_fission_reactor"].id] = true,
+	[UnitDefNames["sphere_metal_maker"].id] = true,
 	[UnitDefNames["sphere_adv_fusion_reactor"].id] = true,
 	[UnitDefNames["sphere_metal_extractor"].id] = true,
 	[UnitDefNames["sphere_moho_mine"].id] = true,
@@ -93,17 +106,11 @@ local econUnitDefIDs = {
 	[UnitDefNames["sphere_metal_storage"].id] = true
 }
 
+local commanderDefIds = {}
+
 -- checks if unit is an economy unit
 function isEcon(unitDefID) 
 	if econUnitDefIDs[unitDefID] == true then
-		return true
-	end
-	return false
-end
-
--- checks if unit is a commander
-function isCommander(unitDefId)
-	if (UnitDefs[unitDefId].customParams.iscommander) then
 		return true
 	end
 	return false
@@ -159,12 +166,13 @@ end
 -- track commander XP for each team
 function gadget:GameFrame(n)
 	local teamUnits = {}
+	local xp=0
 	for teamId,_ in pairs(teamInfo) do
-		teamUnits = Spring.GetTeamUnits(teamId)
-		
+		teamUnits = spGetTeamUnits(teamId)
+
 		for _,unitId in pairs(teamUnits) do
-			if ( isCommander(Spring.GetUnitDefID(unitId))) then
-				local xp = Spring.GetUnitExperience(unitId)
+			if ( commanderDefIds[spGetUnitDefID(unitId)] ) then
+				xp = spGetUnitExperience(unitId)
 				
 				-- commander experience can now be lost
 				--if (xp > teamInfo[teamId].comXP) then
@@ -191,7 +199,7 @@ function gadget:UnitDestroyed(unitID, unitDefID, teamID, attackerID, attackerDef
 	if SpAreTeamsAllied(teamID, attackerTeamID) then return end
 	
 	--keep track of who didn't kill for longest (sleeptimes)
-	local curTime = Spring.GetGameSeconds()
+	local curTime = spGetGameSeconds()
 	if (curTime - teamInfo[attackerTeamID].lastKill > teamInfo[attackerTeamID].sleepTime) then
 		teamInfo[attackerTeamID].sleepTime = curTime - teamInfo[attackerTeamID].lastKill
 	end
@@ -528,6 +536,12 @@ end
 
 
 function gadget:Initialize()
+	for _,ud in pairs(UnitDefs) do
+		if (ud.customParams and ud.customParams.iscommander == 1) then
+			commanderDefIds[ud.id] = true
+		end
+	end
+
 	--register actions to SendToUnsynced messages
 	gadgetHandler:AddSyncAction("ReceiveAwards", ProcessAwards)	
 	

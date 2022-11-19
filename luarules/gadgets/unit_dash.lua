@@ -74,8 +74,6 @@ end
 
 
 function gadget:Initialize()
-	Spring.LoadSoundDef("LuaRules/Configs/sound_defs.lua")
-
 	Spring.SetCustomCommandDrawData(CMD_DASH, "Dash", {0, 1, 0, 0.7})
 	Spring.AssignMouseCursor("Dash", "cursorDash", true, true)
 	gadgetHandler:RegisterCMDID(CMD_DASH)

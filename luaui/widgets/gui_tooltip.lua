@@ -401,10 +401,14 @@ function getTooltipGridNodeData(uId)
 	local totalExtractionMult = spGetUnitRulesParam(uId,"powerGridTotalExtractionMult")
 	local extractionBonus = spGetUnitRulesParam(uId,"powerGridExtractionBonus")
 	local gridLevel = spGetUnitRulesParam(uId,"powerGridLevel")
+	local extraEnergyUse = spGetUnitRulesParam(uId,"powerGridExtraEnergyUse")
+	local extraMetalIncome = spGetUnitRulesParam(uId,"powerGridExtraMetalIncome")
 
 	if (gridId and gridId > 0) then
 		--return " \n\255\255\255\255ID: "..gridId.." lev="..gridLevel.."     \255\255\255\255Grid strength: \255\255\255\0"..formatNbr(gridStrength,0).."     \255\255\255\255Connected extraction power: \255\200\200\200"..formatNbr(totalExtractionMult,1).."     \255\255\255\255Extraction bonus: \255\200\200\200+"..formatNbr(extractionBonus*100,2).."%\255\255\255\255\n "
-		return " \n\255\255\255\255Grid strength: \255\255\255\0"..formatNbr(gridStrength,0).."     \255\255\255\255Connected extraction power: \255\200\200\200"..formatNbr(totalExtractionMult,1).."     \255\255\255\255Extraction bonus: \255\200\200\200+"..formatNbr(extractionBonus*100,2).."%\255\255\255\255\n "
+		local str = " \n\255\255\255\255Grid strength: \255\255\255\0"..formatNbr(gridStrength,0).."     \255\255\255\255Connected extraction power: \255\200\200\200"..formatNbr(totalExtractionMult,1).."     \255\255\255\255Extraction bonus: \255\200\200\200+"..formatNbr(extractionBonus*100,2).."%\255\255\255\255\n"
+		str = str .. "\255\200\200\200Extra metal income: \255\0\255\0+"..formatNbr(extraMetalIncome,1).."    \255\255\255\0Extra energy use: \255\255\0\0"..formatNbr(-extraEnergyUse,1).."\n "  
+		return str 
 	end
 			
 	return " \n\255\255\155\0Node disabled\255\255\255\255\n "

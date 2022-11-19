@@ -344,7 +344,7 @@ function BuildSiteHandler:closestBuildSpot(builderBehavior, ud, minimumDistance,
 		-- if failed, use the list
 		if pos == nil then
 			local first = true
-			for i, item in spairs(targetPosList, function(t,a,b) return t[b].dist > t[a].dist end) do
+			for i, item in spairs(targetPosList, distSort) do
 				if first then	-- skip first which should match the one already tried
 					first = false
 				else
@@ -545,7 +545,7 @@ end
 
 function BuildSiteHandler:GameFrame(f)
 	-- cleanup build order table
-	if fmod(f,60) == 6 then
+	if f%60 == 6 then
 		for k,v in pairs(self.buildingOrderTable) do
 			-- if expired, remove from table
 			if (f - v.frame > BUILD_ORDER_VALIDITY_FRAMES) then

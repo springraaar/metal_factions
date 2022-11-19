@@ -120,9 +120,6 @@ local DECLOAK_DAMAGE_THRESHOLD = 3
 
 local LONG_RANGE_ROCKET_CHAIN_DAMAGE_FACTOR = 0.1  -- shot down long range rockets dmg fraction against rockets in flight 
 
-local dealtDef = nil
-local takenDef = nil
-local powerFraction = nil					
 
 local disruptorWaveEffectWeaponDefId = WeaponDefNames["aven_bass_disruptor_effect"].id
 local disruptorWaveUnitDefId = UnitDefNames["aven_bass"].id
@@ -252,9 +249,18 @@ local deathFireballDefIds = {
 local targetDefId = UnitDefNames["target"].id
 local targetDamage = 0
 
+-- more reusable locals
+local d,x,y,z,xo,yo,zo,h,dx,dy,dz, vx,vy,vz,factor,vType,tType,axis
+local dmg,radius,armorType,hitpower,stunned,factor,dmgMod
+local shieldEnabled,oldShieldPower,shieldPower,newShieldPower,damageAbsorbedByShield
+local finalDamage,defMod,oldDmg,newDmg,correctedDamage
+local health,maxHealth,xp,xpMod
+local frac,takenDef,dealtDef
+local f, damagedFrame,buildBlocked,incomeMult,metalAmount
+local UNIT_RP_PUBLIC_TBL = {public = true}
+
 -- set unit collision volume data
 function SetColvol(unitID, colvolType)
-	local d = nil
 	if colvolType == COLVOL_SHIELD then
 		d = unitShieldColvolTable[unitID]
 	else
@@ -273,7 +279,7 @@ function gadget:Initialize()
     		largeShieldUnits[ud.id] = true
     	end
     	
-		local armorType = ARMOR_L
+		armorType = ARMOR_L
         if ( Game.armorTypes[ud.armorType] == "armor_heavy" ) then armorType = ARMOR_H
         elseif ( Game.armorTypes[ud.armorType] == "armor_medium" ) then armorType = ARMOR_M end
 
@@ -282,7 +288,7 @@ function gadget:Initialize()
 
 	-- find weapon hitpower, paralyzer status and
     for _,wd in pairs(WeaponDefs) do        
-		local hitpower = POWER_L
+		hitpower = POWER_L
 		if wd.customParams and wd.customParams.hitpower then
 			hitpower = tonumber(wd.customParams.hitpower)
 		end
@@ -302,11 +308,11 @@ end
 -- add base collision volume of shielded unit to table
 -- add aircrafts to list
 function gadget:UnitFinished(unitID, unitDefID, unitTeam)
-	local shieldEnabled,oldShieldPower = spGetUnitShieldState(unitID)
+	shieldEnabled,oldShieldPower = spGetUnitShieldState(unitID)
 	if shieldEnabled and oldShieldPower > 0 and not (largeShieldUnits[unitDefID] == true) then
 		
 		-- add base colvol to table 
-		local xs, ys, zs, xo, yo, zo, vType, tType, axis, _ = spGetUnitCollisionVolumeData(unitID)
+		xs, ys, zs, xo, yo, zo, vType, tType, axis, _ = spGetUnitCollisionVolumeData(unitID)
 		baseUnitColvolTable[unitID] = {xs,ys,zs,xo,yo,zo,vType,tType,axis}
 	
 		-- get shield colvol and add it to table
@@ -333,7 +339,7 @@ function gadget:GameFrame(n)
 	
 	-- make stunned aircraft fall
 	-- TODO this should be reviewed and moved to unit physics handler
-	local x,y,z,h,dx,dy,dz, vx,vy,vz,factor = 0
+	
 	for unitId,_ in pairs(stunnedAircraftTable) do  
 		x,y,z = spGetUnitPosition(unitId)
 		h = spGetGroundHeight(x,z)
@@ -356,11 +362,11 @@ function gadget:GameFrame(n)
 	end
 
 	-- update "on fire" label for all units
-	for _,unitID in ipairs(spGetAllUnits()) do
+	for _,unitID in pairs(spGetAllUnits()) do
 		if(unitBurningTable[unitID]) then
-			spSetUnitRulesParam(unitID,"on_fire","1",{public = true})
+			spSetUnitRulesParam(unitID,"on_fire",1,UNIT_RP_PUBLIC_TBL)
 		else
-			spSetUnitRulesParam(unitID,"on_fire","0",{public = true})
+			spSetUnitRulesParam(unitID,"on_fire",0,UNIT_RP_PUBLIC_TBL)
 		end
 	end
 
@@ -381,7 +387,7 @@ function gadget:GameFrame(n)
 		
 	-- process shield colvol changes for shielded units
 	for unitID,data in pairs(unitShieldColvolTable) do
-		local shieldEnabled,shieldPower = spGetUnitShieldState(unitID)
+		shieldEnabled,shieldPower = spGetUnitShieldState(unitID)
 		if shieldEnabled and shieldPower > 100 then
 			SetColvol(unitID, COLVOL_SHIELD)
 		else
@@ -390,14 +396,14 @@ function gadget:GameFrame(n)
 	end
 
 	-- process burn debuff for burning units
-	local dmg, radius = 0
+	dmg, radius = 0
 	
 	for unitID,data in pairs(unitBurningTable) do	
 		_,_,_,x,y,z = spGetUnitPosition(unitID,true)
 		
 		if y and y > -10 then
 			-- apply damage
-			local armorType = unitArmorTypeTable[data.unitDefID]
+			armorType = unitArmorTypeTable[data.unitDefID]
 			if (armorType == ARMOR_H) then
 				dmg = FIRE_DMG_PER_STEP_HEAVY
 			else
@@ -408,7 +414,7 @@ function gadget:GameFrame(n)
 			-- spawn CEG
 			radius = spGetUnitRadius(unitID)
 			if radius ~= nil then
-				local h = radius / 3
+				h = radius / 3
 				spSpawnCEG(BURNING_CEG, x - h + 2*h*random(), y+h, z - h + 2*h*random(), 0, 1, 0,radius ,radius)
 				spPlaySoundFile(BURNING_SOUND, 1, x, y+h, z)
 		
@@ -428,7 +434,7 @@ function gadget:GameFrame(n)
 	end
 	
 	-- process unit XP gain
-	local xp = 0
+	xp = 0
 	for unitId,addedXP in pairs(unitXPTable) do  
 		xp = spGetUnitExperience(unitId)
 		if (xp) then
@@ -439,7 +445,7 @@ function gadget:GameFrame(n)
 	end
 
 	-- mark stunned aircraft
-	local stunned = false
+	stunned = false
 	for unitId,_ in pairs(aircraftTable) do  
 		_,stunned,_ = spGetUnitIsStunned(unitId)
 		if (stunned) then
@@ -487,8 +493,8 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 	-- spawn a fireball when some units die	
 	local fireballName = deathFireballDefIds[unitDefID]
 	if fireballName then
-		local x,y,z = spGetUnitPosition(unitID)
-		local _,_,_,_,bp = spGetUnitHealth(unitID)
+		x,y,z = spGetUnitPosition(unitID)
+		_,_,_,_,bp = spGetUnitHealth(unitID)
 
 		if bp > 0.999 then
 			local createdId = Spring.SpawnProjectile(WeaponDefNames[fireballName].id,{
@@ -552,7 +558,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	if (weaponDefID == disruptorWaveEffectWeaponDefId or weaponDefID == magnetarWeaponDefId or weaponDefID == magnetarAuraWeaponDefId) then
 		local showEffect = false
 		if weaponDefID == magnetarAuraWeaponDefId then
-			if math.random() < 0.2 then
+			if random() < 0.2 then
 				showEffect = true
 			end
 		else 
@@ -560,9 +566,9 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		end
 		
 		if (showEffect) then
-			local _,_,_,x,y,z = spGetUnitPosition(unitID,true)
+			_,_,_,x,y,z = spGetUnitPosition(unitID,true)
 			if x ~= nil then
-				spSpawnCEG(EMP_CEG, x - 10 + math.random(20), y, z - 10 + math.random(20), 0, 1, 0,30 ,30)
+				spSpawnCEG(EMP_CEG, x - 10 + random(20), y, z - 10 + random(20), 0, 1, 0,30 ,30)
 				spPlaySoundFile(EMP_SOUND, 0.5, x, y, z)
 			end
 		end
@@ -570,11 +576,11 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	 
 	-- increase damage due to veteran status for most weapons
 	-- to compensate for not getting reload time reduction
-	local dmgMod = 0 
+	dmgMod = 0 
 	if (expDmgScalingWeaponDefIds[weaponDefID]) then
 		if attackerID and attackerID > 0 then
-			local xp = spGetUnitExperience(attackerID)
-			local xpMod = 1
+			xp = spGetUnitExperience(attackerID)
+			xpMod = 1
             if xp and xp > 0 then
         		xpMod = 1+0.35*(xp/(xp+1))
             end		 
@@ -605,7 +611,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		if ( burningAOEPerStepWeaponDefIds[weaponDefID]) then
 			local finalDamage = damage
 			-- decrease damage based on defender's hp modifiers, if any 
-			local defMod = spGetUnitRulesParam(unitID, "upgrade_hp")
+			defMod = spGetUnitRulesParam(unitID, "upgrade_hp")
 			if defMod and defMod ~= 0 then
 				finalDamage = finalDamage	/ (1 + defMod)
 			end
@@ -635,22 +641,22 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	end
 
 	-- get unit shield status
-	local shieldEnabled,oldShieldPower = spGetUnitShieldState(unitID)
+	shieldEnabled,oldShieldPower = spGetUnitShieldState(unitID)
 
 	if shieldEnabled and oldShieldPower > 0 and not (largeShieldUnits[unitDefID] == true) then
-		local newShieldPower = oldShieldPower
-		local damageAbsorbedByShield = 0
-		local hitPower = weaponHitpowerTable[weaponDefID]
+		newShieldPower = oldShieldPower
+		damageAbsorbedByShield = 0
+		local hitpower = weaponHitpowerTable[weaponDefID]
 		local armorType = unitArmorTypeTable[unitDefID]
 		local correctedDamage = damage
 		local factor = 1
 		
-		if (hitPower ~= nil and armorType ~= nil) then
-			if (hitPower == POWER_L and armorType == ARMOR_H) then
+		if (hitpower ~= nil and armorType ~= nil) then
+			if (hitpower == POWER_L and armorType == ARMOR_H) then
 		    	factor = 4
-			elseif (hitPower == POWER_L and armorType == ARMOR_M) then
+			elseif (hitpower == POWER_L and armorType == ARMOR_M) then
 				factor = 2
-			elseif (hitPower == POWER_M and armorType == ARMOR_H) then
+			elseif (hitpower == POWER_M and armorType == ARMOR_H) then
 				factor = 2
 			end
 			correctedDamage = damage * factor
@@ -674,7 +680,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		finalDamage = math.max(math.ceil((correctedDamage - damageAbsorbedByShield)/factor),0)
 
 		-- decrease damage based on defender's hp modifiers, if any 
-		local defMod = spGetUnitRulesParam(unitID, "upgrade_hp")
+		defMod = spGetUnitRulesParam(unitID, "upgrade_hp")
 		if defMod and defMod ~= 0 then
 			finalDamage = finalDamage	/ (1 + defMod)
 		end
@@ -689,8 +695,8 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 			end
 		
 			-- amplify paralyzer damage for lower hp units
-			local health,maxHealth,_,_,_ = spGetUnitHealth(unitID)
-			local factor = 1 + (1 - max(health,0)/maxHealth)
+			health,maxHealth,_,_,_ = spGetUnitHealth(unitID)
+			factor = 1 + (1 - max(health,0)/maxHealth)
 			finalDamage = finalDamage * factor
 		end
 		
@@ -698,7 +704,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	end
 	
 	-- decrease damage based on defender's hp modifiers, if any 
-	local defMod = spGetUnitRulesParam(unitID, "upgrade_hp")
+	defMod = spGetUnitRulesParam(unitID, "upgrade_hp")
 	if defMod and defMod ~= 0 then
 		damage = damage	/ (1 + defMod)
 		--Spring.Echo("takes less dmg : "..(1/ (1 + defMod)))
@@ -709,7 +715,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		spAddUnitDamage(unitID,damage*PARALYZE_DAMAGE_FACTOR,0,attackerID)
 
 		-- amplify paralyzer damage for lower hp units
-		local health,maxHealth,_,_,_ = spGetUnitHealth(unitID)
+		health,maxHealth,_,_,_ = spGetUnitHealth(unitID)
 		local factor = 1 + (1 - max(health,0)/maxHealth) * PARALYZE_MISSING_HP_FACTOR
 		return damage * factor
 	end
@@ -731,8 +737,8 @@ function gadget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weap
 		end
 		
 		-- assign experience to unit that took damage
-		local health,maxHealth,_,_,_ = spGetUnitHealth(unitID) 
-		local frac = damage / maxHealth
+		health,maxHealth,_,_,_ = spGetUnitHealth(unitID) 
+		frac = damage / maxHealth
 		if frac > 1 then
 			frac = 1
 		end 
@@ -764,21 +770,27 @@ function gadget:AllowUnitBuildStep(builderID, builderTeam, unitID, unitDefID, pa
 	-- Spring.Echo("STEP builderId="..builderID.." unitId="..unitID.." part="..part)
 	
 	cloakDisruptedUnitFrameTable[builderID] = spGetGameFrame()
+	-- check if building is allowed
+	buildBlocked = spGetUnitRulesParam(unitID,"build_block")
+	if part > 0 and buildBlocked and buildBlocked == 1 then
+		return false
+	end 
 	
 	-- if unit got damaged recently, deny half of the build steps
-	local f = spGetGameFrame()
-	if damagedUnitFrameTable[unitID] and (f - damagedUnitFrameTable[unitID] < DAMAGE_REPAIR_DISRUPT_FRAMES) then
+	f = spGetGameFrame()
+	damagedFrame = damagedUnitFrameTable[unitID] 
+	if damagedFrame and (f - damagedFrame < DAMAGE_REPAIR_DISRUPT_FRAMES) then
 		if f%2 == 0 then
 			return false
 		end
 	end
-	
+
 	-- reimburse excess metal retrieved from reclaiming units
 	-- fix for exploit where players with bonus could get extra metal from building and reclaiming their units
 	if (part < 0) then
-		local _,_,_,_,_,_,incomeMult = spGetTeamInfo(builderTeam)
+		_,_,_,_,_,_,incomeMult = spGetTeamInfo(builderTeam)
 		if (incomeMult and incomeMult > 1) then
-			local metalAmount = UnitDefs[unitDefID].metalCost * part * (1-incomeMult) * UNIT_RECLAIM_FACTOR
+			metalAmount = UnitDefs[unitDefID].metalCost * part * (1-incomeMult) * UNIT_RECLAIM_FACTOR
 			--Spring.Echo("reclaiming "..part.." bonus="..incomeMult.." m="..metalAmount)
 			spUseUnitResource(builderID,"m",metalAmount)
 		end
@@ -790,9 +802,9 @@ end
 function gadget:AllowFeatureBuildStep(builderID, builderTeam, featureID, featureDefID, part)
 	-- reimburse excess metal retrieved from reclaiming features when bonus resource multiplier is set
 	if (part < 0) then
-		local _,_,_,_,_,_,incomeMult = spGetTeamInfo(builderTeam)
+		_,_,_,_,_,_,incomeMult = spGetTeamInfo(builderTeam)
 		if (incomeMult and incomeMult > 1) then
-			local metalAmount = FeatureDefs[featureDefID].metal * part * (1-incomeMult)
+			metalAmount = FeatureDefs[featureDefID].metal * part * (1-incomeMult)
 			--Spring.Echo("reclaiming "..part.." bonus="..incomeMult.." m="..metalAmount)
 			spUseUnitResource(builderID,"m",metalAmount)
 		end

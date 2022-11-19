@@ -152,7 +152,7 @@ function CommonUnitBehavior:avoidEnemyAndRetreat()
 
 		-- move to lowest threat position
 		if (lowestThreatPos ~= nil) then
-			spGiveOrderToUnit(self.unitId,CMD.MOVE,{lowestThreatPos.x,spGetGroundHeight(lowestThreatPos.x,lowestThreatPos.z),lowestThreatPos.z},{})
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{lowestThreatPos.x,spGetGroundHeight(lowestThreatPos.x,lowestThreatPos.z),lowestThreatPos.z},EMPTY_TABLE)
 			spGiveOrderToUnit(self.unitId,CMD.MOVE,{lowestThreatPos.x-50,spGetGroundHeight(lowestThreatPos.x,lowestThreatPos.z),lowestThreatPos.z+50},CMD.OPT_SHIFT)
 		else
 			self:retreat()
@@ -368,7 +368,7 @@ function CommonUnitBehavior:evade(threatPos, moveDistance)
 		pos.x = pos.x + vx * jumpRange
 		pos.z = pos.z + vz * jumpRange
 		if  spTestMoveOrder(self.unitDef.id,pos.x,0,pos.z,0,0,0,true,true) then
-			spGiveOrderToUnit(self.unitId,CMD_JUMP,{pos.x,spGetGroundHeight(pos.x,pos.z),pos.z},{})
+			spGiveOrderToUnit(self.unitId,CMD_JUMP,{pos.x,spGetGroundHeight(pos.x,pos.z),pos.z},EMPTY_TABLE)
 			return
 		end
 	end
@@ -377,7 +377,7 @@ function CommonUnitBehavior:evade(threatPos, moveDistance)
 	local dashReload = spGetUnitRulesParam(self.unitId,"dashReload")
 	local canDash = (dashReload and dashReload == 1)
 	if (canDash) then
-		spGiveOrderToUnit(self.unitId,CMD_DASH,{},{})
+		spGiveOrderToUnit(self.unitId,CMD_DASH,EMPTY_TABLE,EMPTY_TABLE)
 	end
 	
 	local ordersGiven = 0
@@ -390,13 +390,13 @@ function CommonUnitBehavior:evade(threatPos, moveDistance)
 		-- log(pos.x.." ; "..pos.z)
 		if  spTestMoveOrder(self.unitDef.id,pos.x,0,pos.z,0,0,0,true,true) then
 			ordersGiven = ordersGiven + 1 
-			spGiveOrderToUnit(self.unitId,CMD.MOVE,{pos.x,spGetGroundHeight(pos.x,pos.z),pos.z},i > 1 and CMD.OPT_SHIFT or {})
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{pos.x,spGetGroundHeight(pos.x,pos.z),pos.z},i > 1 and CMD.OPT_SHIFT or EMPTY_TABLE)
 		end
 	end
 	
 	if (ordersGiven == 0) then
 		--log(self.unitName.." RUN TO BASE!",self.ai)
-		spGiveOrderToUnit(self.unitId,CMD.MOVE,{self.ai.unitHandler.basePos.x - BIG_RADIUS/2 + random( 1, BIG_RADIUS),0,self.ai.unitHandler.basePos.z - BIG_RADIUS/2 + random( 1, BIG_RADIUS)},{})
+		spGiveOrderToUnit(self.unitId,CMD.MOVE,{self.ai.unitHandler.basePos.x - BIG_RADIUS/2 + random( 1, BIG_RADIUS),0,self.ai.unitHandler.basePos.z - BIG_RADIUS/2 + random( 1, BIG_RADIUS)},EMPTY_TABLE)
 	end
 	
 end
@@ -452,7 +452,7 @@ function CommonUnitBehavior:engage(threatPos, moveDistance)
 		pos.x = pos.x + vx * jumpRange
 		pos.z = pos.z + vz * jumpRange
 		if  spTestMoveOrder(self.unitDef.id,pos.x,0,pos.z,0,0,0,true,true) then
-			spGiveOrderToUnit(self.unitId,CMD_JUMP,{pos.x,spGetGroundHeight(pos.x,pos.z),pos.z},{})
+			spGiveOrderToUnit(self.unitId,CMD_JUMP,{pos.x,spGetGroundHeight(pos.x,pos.z),pos.z},EMPTY_TABLE)
 			return
 		end
 	end
@@ -461,7 +461,7 @@ function CommonUnitBehavior:engage(threatPos, moveDistance)
 	local dashReload = spGetUnitRulesParam(self.unitId,"dashReload")
 	local canDash = (dashReload and dashReload == 1)
 	if (canDash) then
-		spGiveOrderToUnit(self.unitId,CMD_DASH,{},{})
+		spGiveOrderToUnit(self.unitId,CMD_DASH,EMPTY_TABLE,EMPTY_TABLE)
 	end
 	
 	local ordersGiven = 0
@@ -474,14 +474,14 @@ function CommonUnitBehavior:engage(threatPos, moveDistance)
 		-- log(pos.x.." ; "..pos.z)
 		if  spTestMoveOrder(self.unitDef.id,pos.x,0,pos.z,0,0,0,true,true) then
 			ordersGiven = ordersGiven + 1 
-			spGiveOrderToUnit(self.unitId,CMD.MOVE,{pos.x,spGetGroundHeight(pos.x,pos.z),pos.z},i > 1 and CMD.OPT_SHIFT or {})
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{pos.x,spGetGroundHeight(pos.x,pos.z),pos.z},i > 1 and CMD.OPT_SHIFT or EMPTY_TABLE)
 		end
 	end
 	
 	-- can't reach enemy? run to base?
 	if (ordersGiven == 0) then
 		--log(self.unitName.." RUN TO BASE!",self.ai)
-		spGiveOrderToUnit(self.unitId,CMD.MOVE,{self.ai.unitHandler.basePos.x - BIG_RADIUS/2 + random( 1, BIG_RADIUS),0,self.ai.unitHandler.basePos.z - BIG_RADIUS/2 + random( 1, BIG_RADIUS)},{})
+		spGiveOrderToUnit(self.unitId,CMD.MOVE,{self.ai.unitHandler.basePos.x - BIG_RADIUS/2 + random( 1, BIG_RADIUS),0,self.ai.unitHandler.basePos.z - BIG_RADIUS/2 + random( 1, BIG_RADIUS)},EMPTY_TABLE)
 	end
 	
 end
@@ -613,14 +613,14 @@ function CommonUnitBehavior:orderToClosestCellAlongPath(cellList, order, reverse
 		self.alongPathIdx = newIdx
 		if(progressOrder == CMD.FIGHT and (not backTrack)) then
 			-- just got in, patrol on it
-			spGiveOrderToUnit(self.unitId,CMD.PATROL,{pos.x,pos.y,pos.z},{})
+			spGiveOrderToUnit(self.unitId,CMD.PATROL,{pos.x,pos.y,pos.z},EMPTY_TABLE)
 			local px = pos.x - SML_RADIUS/2 + random( 1, SML_RADIUS)
 			local pz = pos.z - SML_RADIUS/2 + random( 1, SML_RADIUS) 
 			spGiveOrderToUnit(self.unitId,CMD.PATROL,{px,spGetGroundHeight(px,pz),pz},CMD.OPT_SHIFT)
 		end
 	else
 		-- if farther away, use order on the cell
-		spGiveOrderToUnit(self.unitId,backTrack and backTrackOrder or progressOrder,{pos.x,spGetGroundHeight(pos.x,pos.z),pos.z},{})
+		spGiveOrderToUnit(self.unitId,backTrack and backTrackOrder or progressOrder,{pos.x,spGetGroundHeight(pos.x,pos.z),pos.z},EMPTY_TABLE)
 		-- queue a patrol order for progressing aircraft using "fight"
 		if(progressOrder == CMD.FIGHT and (not backTrack) and (self.canFly or self.isCommander)) then
 			local px = pos.x - SML_RADIUS/2 + random( 1, SML_RADIUS)
@@ -650,7 +650,7 @@ function CommonUnitBehavior:orderToPosition(pos, order)
 	if ( abs(selfPos.x - pos.x) > SML_RADIUS or abs(selfPos.z - pos.z) > SML_RADIUS  ) then
 		local px = pos.x - SML_RADIUS/2 + random( 1, SML_RADIUS)
 		local pz = pos.z - SML_RADIUS/2 + random( 1, SML_RADIUS)
-		spGiveOrderToUnit(self.unitId,order,{px,spGetGroundHeight(px,pz),pz},{})
+		spGiveOrderToUnit(self.unitId,order,{px,spGetGroundHeight(px,pz),pz},EMPTY_TABLE)
 	else
 		self:evadeIfNeeded()
 	end

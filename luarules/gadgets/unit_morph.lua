@@ -907,7 +907,7 @@ function gadget:GameFrame(n)
       -- display morph effect
       ox, oy, oz = spGetUnitPosition(unitID)
       if ox then
-        if math.fmod(n,2) == 0 then
+        if n%2 == 0 then
           spSpawnCEG(morphCEG, ox,oy+15,oz)
         end
       end

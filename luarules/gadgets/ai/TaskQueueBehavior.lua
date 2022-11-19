@@ -124,7 +124,7 @@ function TaskQueueBehavior:resetHighPriorityState()
 	local desiredState = self.isHighPriorityBuilder
 	if (self.highPriorityBuilderState ~= desiredState) then
 		self.highPriorityBuilderState = desiredState
-		spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{desiredStateNumber},{})
+		spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{desiredStateNumber},EMPTY_TABLE)
 	end
 end
 
@@ -133,7 +133,7 @@ function TaskQueueBehavior:setHighPriorityState(desiredStateNumber)
 	local desiredState = desiredStateNumber == 1 and true or false
 	if (self.highPriorityBuilderState ~= desiredState) then
 		self.highPriorityBuilderState = desiredState
-		spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{desiredStateNumber},{})
+		spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{desiredStateNumber},EMPTY_TABLE)
 	end
 end
 
@@ -226,7 +226,7 @@ function TaskQueueBehavior:progressQueue()
 					p.y = spGetGroundHeight(p.x,p.z)
 					
 					if  self.ai.mapHandler:checkConnection(selfPos, p,self.pFType) then
-						spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},{})
+						spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},EMPTY_TABLE)
 						break
 					end
 				end
@@ -267,7 +267,7 @@ function TaskQueueBehavior:progressQueue()
 								p.x = basePos.x-radius/2+random(1,radius)
 								p.z = basePos.z-radius/2+random(1,radius)
 								p.y = spGetGroundHeight(p.x,p.z)
-								spGiveOrderToUnit(self.unitId,CMD.STOP,{p.x,p.y,p.z},{})
+								spGiveOrderToUnit(self.unitId,CMD.STOP,{p.x,p.y,p.z},EMPTY_TABLE)
 								spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},CMD.OPT_SHIFT)
 								
 								-- add another order to queue in case the first is invalid
@@ -280,7 +280,7 @@ function TaskQueueBehavior:progressQueue()
 								p.x = basePos.x-radius/2+random(1,radius)
 								p.z = basePos.z-radius/2+random(1,radius)
 								p.y = spGetGroundHeight(p.x,p.z)
-								spGiveOrderToUnit(self.unitId,CMD.STOP,{p.x,p.y,p.z},{})
+								spGiveOrderToUnit(self.unitId,CMD.STOP,{p.x,p.y,p.z},EMPTY_TABLE)
 								spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x,p.y,p.z},CMD.OPT_SHIFT)
 								
 								-- add another order to queue in case the first is invalid
@@ -382,7 +382,7 @@ function TaskQueueBehavior:processItem(value, checkResources, checkAssistNearby)
 						local assistRadius = self.isStaticBuilder and self.buildRange or ASSIST_UNIT_RADIUS
 						if (progress < 1 and distance(selfPos, targetPos) < assistRadius) then
 							-- assist building
-							spGiveOrderToUnit(self.unitId,CMD.REPAIR,{uId},{})
+							spGiveOrderToUnit(self.unitId,CMD.REPAIR,{uId},EMPTY_TABLE)
 							
 							-- log(self.unitName.." goes to assist building "..value.." at ("..unit:newPosition().x..";"..unit:newPosition().z..")")
 							value = {action = "wait_idle", frames = 1800}
@@ -415,7 +415,7 @@ function TaskQueueBehavior:processItem(value, checkResources, checkAssistNearby)
 			--log(self.unitName.." CLEANUP "..value.frames.." frames ".." found="..tostring(#wrecks),self.ai)
 			if (#wrecks > 0) then
 				self.waitLeft = value.frames
-				spGiveOrderToUnit( self.unitId, CMD.RECLAIM, { self.pos.x, self.pos.y, self.pos.z, 500 }, {} )
+				spGiveOrderToUnit( self.unitId, CMD.RECLAIM, { self.pos.x, self.pos.y, self.pos.z, 500 }, EMPTY_TABLE )
 			end	
 				
 			self.progress = true
@@ -440,7 +440,7 @@ function TaskQueueBehavior:processItem(value, checkResources, checkAssistNearby)
 			-- assign high priority to AI normal priority builders building metal extractors, factories and fusion reactors
 			--if not self.isHighPriorityBuilder then
 			--	if setContains(unitTypeSets[TYPE_ECONOMY],value) or setContains(unitTypeSets[TYPE_PLANT],value) then
-			--		spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,{1},{})
+			--		spGiveOrderToUnit(self.unitId,CMD_BUILDPRIORITY,TABLE_WITH_ONE,EMPTY_TABLE)
 			--	end
 			--end
 						
@@ -469,12 +469,12 @@ function TaskQueueBehavior:processItem(value, checkResources, checkAssistNearby)
 						
 						if p ~= nil then
 							if ud.needGeo then
-								spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},{})
+								spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},EMPTY_TABLE)
 							else
 								if (advMetal) then
-									spGiveOrderToUnit(self.unitId,setContains(unitTypeSets[TYPE_HAZMOHO],value) and CMD_UPGRADEMEX2 or CMD_UPGRADEMEX,{p.x,p.y,p.z,150},{})
+									spGiveOrderToUnit(self.unitId,setContains(unitTypeSets[TYPE_HAZMOHO],value) and CMD_UPGRADEMEX2 or CMD_UPGRADEMEX,{p.x,p.y,p.z,150},EMPTY_TABLE)
 								else
-									spGiveOrderToUnit(self.unitId,CMD_AREAMEX,{p.x,p.y,p.z,150},{})
+									spGiveOrderToUnit(self.unitId,CMD_AREAMEX,{p.x,p.y,p.z,150},EMPTY_TABLE)
 									
 								end
 							end
@@ -500,7 +500,7 @@ function TaskQueueBehavior:processItem(value, checkResources, checkAssistNearby)
 						end
 					elseif self.unitDef.isFactory then
 						-- ignore placement for mobile units
-						spGiveOrderToUnit(self.unitId,-ud.id,{selfPos.x,selfPos.y,selfPos.z},{})
+						spGiveOrderToUnit(self.unitId,-ud.id,{selfPos.x,selfPos.y,selfPos.z},EMPTY_TABLE)
 						success = true
 						self.progress = false
 					elseif self.isStaticBuilder then
@@ -509,7 +509,7 @@ function TaskQueueBehavior:processItem(value, checkResources, checkAssistNearby)
 						
 						p = self.ai.buildSiteHandler:staticClosestBuildSpot(self, ud, spreadDistance)
 						if p ~= nil then
-							spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},{})
+							spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},EMPTY_TABLE)
 							
 							success = true
 						else
@@ -528,7 +528,7 @@ function TaskQueueBehavior:processItem(value, checkResources, checkAssistNearby)
 						if #ud.weapons > 0 and ud.isBuilding then
 							p = self.ai.buildSiteHandler:closestBuildSpot(self, ud,  BUILD_SPREAD_DISTANCE)
 							if p ~= nil then
-								spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},{})
+								spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},EMPTY_TABLE)
 								success = true
 							else
 								success = false
@@ -561,7 +561,7 @@ function TaskQueueBehavior:processItem(value, checkResources, checkAssistNearby)
 												xIndex,zIndex = getCellXZIndexesForPosition(p)
 												local testCell = getCellFromTableIfExists(self.ai.unitHandler.ownCells,xIndex,zIndex) 
 												if testCell == nil or testCell.powerNodeCount < 2 then
-													spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},firstOrder and {} or CMD.OPT_SHIFT)
+													spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},firstOrder and EMPTY_TABLE or CMD.OPT_SHIFT)
 													success = true
 													firstOrder = false
 												end
@@ -574,7 +574,7 @@ function TaskQueueBehavior:processItem(value, checkResources, checkAssistNearby)
 										-- first node, build it on target
 										p = self.ai.buildSiteHandler:findClosestBuildSite(ud, targetCell.p, BUILD_SEARCH_RADIUS, 8, self)
 										if p ~= nil then
-											spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},{})
+											spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},EMPTY_TABLE)
 											success = true
 										else
 											success = false
@@ -590,7 +590,7 @@ function TaskQueueBehavior:processItem(value, checkResources, checkAssistNearby)
 									local shift = multiBuildBuildings[ud.name]
 									if (shift and shift > 0) then
 										--Spring.Echo("MULTIBUILD "..ud.name)
-										spGiveOrderToUnit(self.unitId,-ud.id,{p.x-shift,p.y,p.z-shift},{})
+										spGiveOrderToUnit(self.unitId,-ud.id,{p.x-shift,p.y,p.z-shift},EMPTY_TABLE)
 										spGiveOrderToUnit(self.unitId,-ud.id,{p.x-shift,p.y,p.z+shift},CMD.OPT_SHIFT)
 										spGiveOrderToUnit(self.unitId,-ud.id,{p.x+shift,p.y,p.z-shift},CMD.OPT_SHIFT)
 										spGiveOrderToUnit(self.unitId,-ud.id,{p.x+shift,p.y,p.z+shift},CMD.OPT_SHIFT)
@@ -601,13 +601,13 @@ function TaskQueueBehavior:processItem(value, checkResources, checkAssistNearby)
 											local currentStrategy = self.ai.currentStrategy
 											local sStage = self.ai.currentStrategyStage
 											if sStage and sStage > 1 then
-												spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z-32},{})
+												spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z-32},EMPTY_TABLE)
 												spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z+32},CMD.OPT_SHIFT)
 											else
-												spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},{})
+												spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},EMPTY_TABLE)
 											end
 										else
-											spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},{})
+											spGiveOrderToUnit(self.unitId,-ud.id,{p.x,p.y,p.z},EMPTY_TABLE)
 										end
 									end
 									success = true
@@ -617,7 +617,7 @@ function TaskQueueBehavior:processItem(value, checkResources, checkAssistNearby)
 									success = false
 								end
 							else
-								spGiveOrderToUnit(self.unitId,-ud.id,{0,0,0},{})
+								spGiveOrderToUnit(self.unitId,-ud.id,{0,0,0},EMPTY_TABLE)
 								success = true
 							end
 						end
@@ -663,7 +663,7 @@ function TaskQueueBehavior:retreat()
 			local px = self.ai.unitHandler.basePos.x - BIG_RADIUS/2 + random( 1, BIG_RADIUS)
 			local pz = self.ai.unitHandler.basePos.z - BIG_RADIUS/2 + random( 1, BIG_RADIUS)
 			
-			spGiveOrderToUnit(self.unitId,CMD.MOVE,{px,spGetGroundHeight(px,pz),pz},{})
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{px,spGetGroundHeight(px,pz),pz},EMPTY_TABLE)
 		else
 			self:evadeIfNeeded()
 		end
@@ -743,7 +743,7 @@ function TaskQueueBehavior:UnitIdle(uId)
 						
 						-- assist building		
 						-- THIS THROWS AN ERROR : "GiveOrderToUnit() recursion is not permitted"
-						-- spGiveOrderToUnit(self.unitId,CMD.REPAIR,{uId2},{})
+						-- spGiveOrderToUnit(self.unitId,CMD.REPAIR,{uId2},EMPTY_TABLE)
 						-- log(self.unitName.." resuming building "..self.currentProject.." at ("..targetPos.x..";"..targetPos.z..")") --DEBUG
 						-- return
 					end
@@ -887,12 +887,12 @@ function TaskQueueBehavior:GameFrame(f)
 		-- if is commander and base is under attack, go help!
 		if (self.isCommander and self.ai.unitHandler.baseUnderAttack) then
 			if countOwnUnits(self,nil,1,TYPE_PLANT) > 0  then
-				--spGiveOrderToUnit(self.unitId,CMD.STOP,{},{})
+				--spGiveOrderToUnit(self.unitId,CMD.STOP,EMPTY_TABLE,EMPTY_TABLE)
 				self:retreat()
 			end
 			--[[
 			if self.isAttackMode == false and (countOwnUnits(self,nil,1,TYPE_PLANT) > 0 ) then
-				spGiveOrderToUnit(self.unitId,CMD.STOP,{},{})
+				spGiveOrderToUnit(self.unitId,CMD.STOP,EMPTY_TABLE,EMPTY_TABLE)
 				self:changeQueue(commanderAtkQueueByFaction[self.unitSide])
 				self.isAttackMode = true
 				--log("changed to attack commander!",self.ai)
@@ -901,7 +901,7 @@ function TaskQueueBehavior:GameFrame(f)
 		end
 	end
 	
-	if self.isCommander or (fmod(f,10) == 9) then
+	if self.isCommander or (f%10 == 9) then
 		if (self.waitLeft == 0) then
 			-- progress queue if unit is supposed to be doing something but is actually idle
 			if not self.progress and self.isBuilder then

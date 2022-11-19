@@ -85,7 +85,6 @@ function createList()
 end
 
 function widget:Initialize()
-	Spring.LoadSoundDef("luarules/configs/sound_defs.lua")
 	createList()
 	if Spring.IsReplay() or Spring.GetGameFrame() > 0 then
 		widget:PlayerChanged()

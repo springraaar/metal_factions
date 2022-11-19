@@ -87,7 +87,7 @@ function gadget:GameFrame(n)
 	end
 
 
-	if n > 0 and math.fmod(n,CHECK_DELAY_FRAMES) == 0 then
+	if n > 0 and n%CHECK_DELAY_FRAMES == 0 then
 
 		local unitValuePerAllyTeam = {}
 		local resourceIncomePerAllyTeam = {}

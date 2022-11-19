@@ -211,7 +211,7 @@ function updatePlayerModifiers(teamId)
 		for modName,modValue in pairs(mods) do
 			if count > 0 then
 				playerUpgradesModifiers = playerUpgradesModifiers..", "
-				if fmod(count,8) == 0 then
+				if count%8 == 0 then
 					playerUpgradesModifiers = playerUpgradesModifiers.."\n"
 				end
 			end
@@ -258,7 +258,7 @@ function updatePlayerModifiers(teamId)
 	for upName,amount in pairs(upgradesByPlayerId[teamId]) do
 		if count > 0 then
 			playerUpgradesList = playerUpgradesList..", "
-			if fmod(count,4) == 0 then
+			if count%4 == 0 then
 				playerUpgradesList = playerUpgradesList.."\n"
 			end
 		end

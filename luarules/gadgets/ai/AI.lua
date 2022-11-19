@@ -46,6 +46,10 @@ function AI.create(id, mode, strategyStr, allyId, mapHandler)
 	obj.needStartPosAdjustment = false
 	obj.sentStartupHelpMsg = false
 	
+	obj.ownUnitIds = {}
+    obj.friendlyUnitIds = {}
+    obj.enemyUnitIds = {}
+	
 	local _,_,hostingPlayerId,_,_,_ = spGetAIInfo(id)
 	obj.hostingPlayerId = hostingPlayerId
 	
@@ -536,7 +540,7 @@ function AI:processExternalCommand(msg,playerId,teamId,pName,isOwner,spectator)
 								end
 							end
 	
-							spGiveOrderToUnit(comUId,morphCmd,{},{})
+							spGiveOrderToUnit(comUId,morphCmd,EMPTY_TABLE,EMPTY_TABLE)
 							-- set "wait" action
 							tq.waitLeft = 30*300
 							tq.currentProject = "waiting"
@@ -672,7 +676,7 @@ function AI:GameFrame(n)
 	
 	-- resource compensation for brutal mode
 	if (self.isBrutalMode) then
-		if fmod(n,15) == 0 then
+		if n%15 == 0 then
 			local minutesPassed = floor(n/FRAMES_PER_MIN)
 			spAddTeamResource(self.id,"metal",BRUTAL_BASE_INCOME_METAL + minutesPassed * BRUTAL_BASE_INCOME_METAL_PER_MIN  )
 			spAddTeamResource(self.id,"energy",BRUTAL_BASE_INCOME_ENERGY + minutesPassed * BRUTAL_BASE_INCOME_ENERGY_PER_MIN )
@@ -681,6 +685,14 @@ function AI:GameFrame(n)
 end
 
 function AI:UnitCreated(unitId, unitDefId, teamId, builderId)
+	if ( teamId == self.id) then
+		addToSet(self.ownUnitIds, unitId)
+	elseif (setContains(self.alliedTeamIds,teamId)) then
+		addToSet(self.friendlyUnitIds, unitId)
+	else
+		addToSet(self.enemyUnitIds, unitId)
+	end
+	
 	if self.gameEnd == true then
 		return
 	end
@@ -733,6 +745,10 @@ function AI:UnitFinished(unitId, unitDefId, teamId)
 end
 
 function AI:UnitDestroyed(unitId, unitDefId, teamId, attackerId, attackerDefId, attackerTeamId)
+	removeFromSet(self.ownUnitIds, unitId)
+	removeFromSet(self.friendlyUnitIds, unitId)
+	removeFromSet(self.enemyUnitIds, unitId)
+	
 	if self.gameEnd == true then
 		return
 	end
@@ -799,6 +815,10 @@ function AI:UnitDamaged(unitId, unitDefId, unitTeamId, damage, paralyzer, weapon
 end
 
 function AI:UnitTaken(unitId, unitDefId, teamId, newTeamId)
+	removeFromSet(self.ownUnitIds, unitId)
+	removeFromSet(self.friendlyUnitIds, unitId)
+	removeFromSet(self.enemyUnitIds, unitId)
+
 	if self.gameEnd == true then
 		return
 	end
@@ -823,6 +843,14 @@ end
 
 
 function AI:UnitGiven(unitId, unitDefId, teamId, oldTeamId)
+	if ( teamId == self.id) then
+		addToSet(self.ownUnitIds, unitId)
+	elseif (setContains(self.alliedTeamIds,teamId)) then
+		addToSet(self.friendlyUnitIds, unitId)
+	else
+		addToSet(self.enemyUnitIds, unitId)
+	end
+
 	if self.gameEnd == true then
 		return
 	end

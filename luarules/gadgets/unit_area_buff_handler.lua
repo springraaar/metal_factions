@@ -62,25 +62,14 @@ local spGetTeamResources = Spring.GetTeamResources
 local spSpawnCEG = Spring.SpawnCEG
 local spGetUnitIsDead = Spring.GetUnitIsDead
 local spSpawnProjectile = Spring.SpawnProjectile
+local spAddUnitResource = Spring.AddUnitResource
+local spDestroyUnit = Spring.DestroyUnit
+local spPlaySoundFile = Spring.PlaySoundFile
 
 local max = math.max
 local min = math.min
 local floor = math.floor
-
-local AREA_CHECK_DELAY = 6
-local COST_DELAY = 15
-local REGEN_DELAY = 30		-- once per second
-local AUTO_BUILD_STEP_FRAMES = 15
-local REGEN_EFFECT_DELAY = 10		
-
--- idle here means not taking damage for a while
-local IDLE_REGEN_FRAMES = 30 * 20	-- 20 seconds
-local IDLE_REGEN_FLAT = 2
-local IDLE_REGEN_FRACTION = 0.002
-
-local ENERGY_BOOSTED_MOVEMENT_CHECK_THRESHOLD = 2000
-
-local autoBuildCEG = "autobuild" 
+local abs = math.abs
 
 local landSlowerDefIds = {
 	[UnitDefNames["aven_catfish"].id] = true,
@@ -157,6 +146,11 @@ local latestHPByUnitId = {}
 local recentHPGainByUnitId = {}
 local lastCaptureStateByUnitId = {}
 
+local EMPTY_TABLE = {}
+local TABLE_WITH_ALT = {"alt"}
+local UNIT_RP_PUBLIC_TBL = {public = true}
+
+
 function gadget:Initialize()
 	for _,ud in pairs(UnitDefs) do
 		if (ud.minWaterDepth and ud.minWaterDepth < 0) and (ud.isGroundUnit) and (ud.canMove == true) and (not string.find(tostring(ud.moveDef.name),"hover")) then
@@ -210,16 +204,31 @@ function gadget:GameFrame(n)
 	local DASH_SPEED_MOD_MAX = 0.6
 	local DASH_BASE_SPEED_REF = 45
 
+	-- idle here means not taking damage for a while
+	local IDLE_REGEN_FRAMES = 30 * 20	-- 20 seconds
+	local IDLE_REGEN_FLAT = 2
+	local IDLE_REGEN_FRACTION = 0.002
+	local AREA_CHECK_DELAY = 6
+	local COST_DELAY = 15
+	local REGEN_DELAY = 30		-- once per second
+	local AUTO_BUILD_STEP_FRAMES = 5		-- 6 times per second
+	local REGEN_EFFECT_DELAY = 10		
+	
+	local ENERGY_BOOSTED_MOVEMENT_CHECK_THRESHOLD = 2000
+	
+	local autoBuildCEG = "autobuild" 
+	local autoReclaimCEG = "autoreclaim"
+
 	for uId,p in pairs(autoBuildUnitIds) do
-		spSpawnCEG(autoBuildCEG, p[1],p[2],p[3])
+		spSpawnCEG(p[4] and autoBuildCEG or autoReclaimCEG, p[1],p[2],p[3])
 	end
 
 	-- set rules param with experience, for public display
 	local xp = 0
-	for _,unitId in ipairs(allUnits) do
+	for _,unitId in pairs(allUnits) do
 		xp = spGetUnitExperience(unitId)
 		if (xp) then
-			spSetUnitRulesParam(unitId, "experience",xp,{public = true})
+			spSetUnitRulesParam(unitId, "experience",xp,UNIT_RP_PUBLIC_TBL)
 		end
 	end
 	
@@ -240,7 +249,7 @@ function gadget:GameFrame(n)
 				-- get all friendly units in cylinder, add buff unless they have it already
 				local unitsInRadius = spGetUnitsInCylinder(x,z,ZEPHYR_RADIUS)
 				
-				for _,uId in ipairs(unitsInRadius) do
+				for _,uId in pairs(unitsInRadius) do
 					if not zephyrAffectedUnitIds[uId] then
 						if (allyId == spGetUnitAllyTeam(uId)) then
 	
@@ -256,7 +265,7 @@ function gadget:GameFrame(n)
 		end
 		
 		-- check speed modifiers due to upgrades
-		for _,unitId in ipairs(allUnits) do
+		for _,unitId in pairs(allUnits) do
 			spdMod = spGetUnitRulesParam(unitId, "upgrade_speed")
 			if spdMod then
 				m = newSpeedModifierUnitIds[unitId]
@@ -268,7 +277,7 @@ function gadget:GameFrame(n)
 		end
 	
 		-- check speed modifiers due to dash
-		for _,unitId in ipairs(allUnits) do
+		for _,unitId in pairs(allUnits) do
 			local dashFrames = spGetUnitRulesParam(unitId, "dashFrames")
 			if dashFrames and dashFrames > 0 then
 				local ud = UnitDefs[spGetUnitDefID(unitId)]
@@ -369,7 +378,7 @@ function gadget:GameFrame(n)
 						reloadPercent = floor((1 - ((reloadFrame-n)/30) / reloadTime)*100);
 			        end
 	
-					spSetUnitRulesParam(unitId,"magnetar_power",reloadPercent,{public = true})
+					spSetUnitRulesParam(unitId,"magnetar_power",reloadPercent,UNIT_RP_PUBLIC_TBL)
 	
 					-- trigger magnetar "aura" when active	
 					if (isActive and reloadPercent > 99 and allowEnergyBoostedMovement) then
@@ -441,7 +450,7 @@ function gadget:GameFrame(n)
 		-- and other properties
 		local regen = 0
 		local health,maxHealth,bp = 0
-		for _,unitId in ipairs(allUnits) do
+		for _,unitId in pairs(allUnits) do
 			r = spGetUnitRulesParam(unitId, "upgrade_regen")
 			if (not r) then
 				r = 0
@@ -481,7 +490,7 @@ function gadget:GameFrame(n)
 		end
 
 		-- idle regeneration
-		for _,unitId in ipairs(allUnits) do
+		for _,unitId in pairs(allUnits) do
 			if (not lastDamageFrameUnitIds[unitId] or (n - lastDamageFrameUnitIds[unitId] > IDLE_REGEN_FRAMES) ) then
 				local health,maxHealth,_,_,bp = spGetUnitHealth(unitId)
 				
@@ -501,7 +510,7 @@ function gadget:GameFrame(n)
 		-- capture rate degeneration, if it didn't increase on the last second, the unit is not being captured
 		-- start degenerating immediately
 		local oldCaptureFraction = 0
-		for _,unitId in ipairs(allUnits) do
+		for _,unitId in pairs(allUnits) do
 			oldCaptureFraction = lastCaptureStateByUnitId[unitId]
 			if not oldCaptureFraction then
 				oldCaptureFraction = 0
@@ -523,7 +532,7 @@ function gadget:GameFrame(n)
 		local steps = 0
 
 		-- check regeneration due to auto-build status
-		for _,unitId in ipairs(allUnits) do
+		for _,unitId in pairs(allUnits) do
 			r = spGetUnitRulesParam(unitId, "auto_build_fraction_per_step")
 			steps = spGetUnitRulesParam(unitId, "auto_build_steps")
 			if (not r) then
@@ -533,10 +542,10 @@ function gadget:GameFrame(n)
 				r = tonumber(r)
 				steps = tonumber(steps)
 			end
-			if (r > 0 and steps > 0) then
+			if (r ~= 0 and steps > 0) then
 				health,maxHealth,_,_,bp = spGetUnitHealth(unitId)
 				
-				if (bp and bp < 1 and health > 0) then
+				if (bp and ((r > 0 and bp < 1 and health > 0) or (r < 0 and bp > 0 and health > 0))) then
 					local newBp = bp + r
 					local newHp = health + r * maxHealth
 					if newBp > 1 then
@@ -546,22 +555,49 @@ function gadget:GameFrame(n)
 						newHp = maxHealth
 					end
 
-					spSetUnitHealth(unitId, {health = newHp, build = newBp})
+					updateE = spGetUnitRulesParam(unitId, "auto_build_update_energy")
+					updateM = spGetUnitRulesParam(unitId, "auto_build_update_metal")
+					-- TODO auto-build with resource drain requires conditional metal/energy drain
+					-- but isn't used atm
+					-- (updating resources currently supported for auto-reclaim only)
+					if (r < 0) then
+						if bp < r then
+							r = -bp
+						end
 					
-					if steps > 1 or (not autoBuildUnitIds[unitId]) then
+						ud = UnitDefs[spGetUnitDefID(unitId)]
+						if updateE and updateE > 0 then
+							spAddUnitResource(unitId,"e",abs(r*ud.energyCost))												
+						end
+						if updateM and updateM > 0 then
+							spAddUnitResource(unitId,"m",abs(r*ud.metalCost))												
+						end
+					end
+					spSetUnitHealth(unitId, {health = newHp, build = newBp})
+
+					if (newHp <= 0 or newBp <=0) then
+						autoBuildUnitIds[unitId] = nil
 						x,y,z = spGetUnitPosition(unitId)
 						if x then
-							autoBuildUnitIds[unitId] = {x,y,z}
+							local radius = tonumber(spGetUnitRadius(unitId))
+							spSpawnCEG("bplasmaballbloom", x, y, z,0,1,0,radius,radius)
+							spPlaySoundFile('Sounds/RECLAIM1.wav', 1, x, y, z)
+						end
+						spDestroyUnit(unitId, false, true)
+					elseif steps > 1 or (not autoBuildUnitIds[unitId]) then
+						x,y,z = spGetUnitPosition(unitId)
+						if x then
+							autoBuildUnitIds[unitId] = {x,y,z,r>0}
 						end
 					else
 						autoBuildUnitIds[unitId] = nil
 					end
 					
 					-- decrement available steps
-					spSetUnitRulesParam(unitId,"auto_build_steps",(steps-1),{public = true})
+					spSetUnitRulesParam(unitId,"auto_build_steps",(steps-1),UNIT_RP_PUBLIC_TBL)
 				else
 					autoBuildUnitIds[unitId] = nil
-					spSetUnitRulesParam(unitId,"auto_build_steps",0,{public = true})
+					spSetUnitRulesParam(unitId,"auto_build_steps",0,UNIT_RP_PUBLIC_TBL)
 				end
 			end
 		end
@@ -598,7 +634,7 @@ function gadget:GameFrame(n)
 	
 	-- update the unit rules param indicating % hp regenerated over the last second or so	
 	local percentRegenPerSecond = 0
-	for _,unitId in ipairs(allUnits) do
+	for _,unitId in pairs(allUnits) do
 		local health,maxHealth,_,_,bp = spGetUnitHealth(unitId)
 		if (bp) then
 			if not latestHPByUnitId[unitId] then
@@ -616,7 +652,7 @@ function gadget:GameFrame(n)
 					if (percentRegenPerSecond < 0) then 
 						percentRegenPerSecond = 0
 					end
-					spSetUnitRulesParam(unitId,"recent_regen",percentRegenPerSecond,{public = true})
+					spSetUnitRulesParam(unitId,"recent_regen",percentRegenPerSecond,UNIT_RP_PUBLIC_TBL)
 					recentHPGainByUnitId[unitId] = 0
 				end
 			end
@@ -727,14 +763,14 @@ function enforceSpeedChange(unitId,speed)
 	if #cmds >= 1 then
 		for i,cmd in ipairs(cmds) do
 			if cmds[i] and cmds[i].id == CMD.SET_WANTED_MAX_SPEED then
-				spGiveOrderToUnit(unitId,CMD.REMOVE,{cmds[i].tag},{})
+				spGiveOrderToUnit(unitId,CMD.REMOVE,{cmds[i].tag},EMPTY_TABLE)
 			end
 		end
 		local params = {-1, CMD.SET_WANTED_MAX_SPEED, 0, speed}
-		spGiveOrderToUnit(unitId, CMD.INSERT, params, {"alt"})
+		spGiveOrderToUnit(unitId, CMD.INSERT, params, TABLE_WITH_ALT)
 		--Spring.Echo("order given to set speed="..speed.." for unit "..unitId)
 	else
-		spGiveOrderToUnit(unitId, CMD.STOP, {}, {})
+		spGiveOrderToUnit(unitId, CMD.STOP, EMPTY_TABLE, EMPTY_TABLE)
 	end
 end
 

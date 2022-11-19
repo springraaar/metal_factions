@@ -323,10 +323,10 @@ function widget:DrawScreen()
 			local speedFactor, actualSpeedFactor, isPaused = spGetGameSpeed()
 			if actualSpeedFactor < speedFactor or speedFactor ~= 1 then
 				local color = cWhite
-				if actualSpeedFactor < speedFactor then
+				if actualSpeedFactor < speedFactor and not isPaused then
 					color = cRed
 				end
-				drawElement(bgSpdDisp,isPaused and "-" or (string.format('x%.2f', actualSpeedFactor)),false,color)
+				drawElement(bgSpdDisp,isPaused and "II" or (string.format('x%.2f', actualSpeedFactor)),false,color)
 			end
 			
 			-- progress indicator, speed buttons

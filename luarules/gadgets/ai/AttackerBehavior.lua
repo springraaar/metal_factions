@@ -59,7 +59,7 @@ function AttackerBehavior:attackCell(centerPos, cell)
 		
 		self.lastOrderFrame = tmpFrame
 		if self.active then
-			spGiveOrderToUnit(self.unitId,CMD.FIGHT,{self.target.x,self.target.y,self.target.z},{})
+			spGiveOrderToUnit(self.unitId,CMD.FIGHT,{self.target.x,self.target.y,self.target.z},EMPTY_TABLE)
 			-- log(self.unitName.." ("..selfPos.x..";"..selfPos.z..") attacking position ("..p.x..";"..p.z..") ") --DEBUG
 		end
 	end
@@ -77,7 +77,7 @@ function AttackerBehavior:attackRegroupCenterIfNeeded(centerPos, radius)
 		p.y = spGetGroundHeight(p.x,p.z)
 		if (self.lastOrderFrame or 0) + ORDER_DELAY_FRAMES < tmpFrame then
 			self.lastOrderFrame = tmpFrame - ORDER_DELAY_FRAMES/2
-			spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},{})
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},EMPTY_TABLE)
 			self.isBasePatrolling = false
 		end
 		-- log(self.unitName.." ("..selfPos.x..";"..selfPos.z..") moving to center of force at ("..p.x..";"..p.z..")") --DEBUG
@@ -97,7 +97,7 @@ function AttackerBehavior:retreat()
 			local px = basePos.x - BIG_RADIUS/2 + random( 1, BIG_RADIUS)
 			local pz = basePos.z - BIG_RADIUS/2 + random( 1, BIG_RADIUS)
 			local h = spGetGroundHeight(px,pz)
-			spGiveOrderToUnit(self.unitId,CMD.MOVE,{px,h,pz},{})
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{px,h,pz},EMPTY_TABLE)
 		else
 			self:evadeIfNeeded()
 		end
@@ -111,12 +111,14 @@ function AttackerBehavior:basePatrol()
 	local tmpFrame = spGetGameFrame()
 	
 	if (self.lastOrderFrame or 0) + ORDER_DELAY_FRAMES < tmpFrame then
-		local baseX = self.ai.unitHandler.basePos.x
-		local baseZ = self.ai.unitHandler.basePos.z
-		local selfPos = newPosition(spGetUnitPosition(self.unitId,false,false))
+		local selfPos = self.pos
+		local basePos = self.ai.unitHandler.basePos
+
+		local baseX = basePos.x
+		local baseZ = basePos.z
 		local h = spGetGroundHeight(selfPos.x,selfPos.z)
-		if not self.isBasePatrolling or not checkWithinDistance(selfPos,self.ai.unitHandler.basePos,2*HUGE_RADIUS)  then
-			spGiveOrderToUnit(self.unitId,CMD.MOVE,{baseX - (BIG_RADIUS + random( 1, BIG_RADIUS)),h,baseZ},{})
+		if not self.isBasePatrolling or not checkWithinDistance(selfPos,basePos,2*HUGE_RADIUS)  then
+			spGiveOrderToUnit(self.unitId,CMD.MOVE,{baseX - (BIG_RADIUS + random( 1, BIG_RADIUS)),h,baseZ},EMPTY_TABLE)
 			spGiveOrderToUnit(self.unitId,CMD.PATROL,{baseX + (BIG_RADIUS + random( 1, BIG_RADIUS)),h,baseZ},CMD.OPT_SHIFT)
 			spGiveOrderToUnit(self.unitId,CMD.PATROL,{baseX,h,baseZ + (BIG_RADIUS + random( 1, BIG_RADIUS))},CMD.OPT_SHIFT)	
 			spGiveOrderToUnit(self.unitId,CMD.PATROL,{baseX,h,baseZ - (BIG_RADIUS + random( 1, BIG_RADIUS))},CMD.OPT_SHIFT)		
@@ -156,7 +158,7 @@ end
 -- this will issue Hold Pos order to units that need it
 function AttackerBehavior:setMoveState()
 	if (self.unitDef.maxWeaponRange and tonumber(self.unitDef.maxWeaponRange) > 850 ) then
-		spGiveOrderToUnit(self.unitId,CMD.MOVE_STATE,{0}, {})
+		spGiveOrderToUnit(self.unitId,CMD.MOVE_STATE,TABLE_WITH_ZERO, EMPTY_TABLE)
 	end
 end
 

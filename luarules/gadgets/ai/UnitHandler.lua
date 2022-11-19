@@ -1112,14 +1112,14 @@ function UnitHandler:GameFrame(f)
 	
 	-- slowly "forget" about attack failures 
 	-- TODO no longer used, remove?
-	if fmod(f,ATK_FAIL_TOLERANCE_FRAMES) == 0 then
+	if f%ATK_FAIL_TOLERANCE_FRAMES == 0 then
 		if self.atkFailureCost > 0 then 
 			self.atkFailureCost = self.atkFailureCost - ATK_FAIL_TOLERANCE_COST
 		end		
 	end
 
 	-- efficiency tracking
-	if fmod(f,COMBAT_EFFICIENCY_HISTORY_STEP_FRAMES) == 0 then
+	if f%COMBAT_EFFICIENCY_HISTORY_STEP_FRAMES == 0 then
 		local kills = self.latestEnemyLossesCost
 		local losses = self.latestAlliedLossesCost
 		
@@ -1168,7 +1168,7 @@ function UnitHandler:GameFrame(f)
 	local sStage = self.ai.currentStrategyStage
 	
 	-- load game status : own cells, friendly cells, enemy cells
-	if fmod(f,199) == 0 + self.ai.frameShift then
+	if f%199 == 0 + self.ai.frameShift then
 		--if self.ai.id ==0 then Spring.SendCommands("ClearMapMarks") end  --DEBUG
 	
 		-- forget outdated danger cells, if any
@@ -1914,7 +1914,7 @@ function UnitHandler:GameFrame(f)
 	end
 	
 	-- update raiding paths for ground and air units
-	if fmod(f,159) == 32 + self.ai.frameShift then
+	if f%159 == 32 + self.ai.frameShift then
 		self.raiderThreatCostReference[PF_UNIT_LAND] = self.unitGroups[UNIT_GROUP_RAIDERS] and self.unitGroups[UNIT_GROUP_RAIDERS].nearCenterCost/2 or 100
 		self.raiderThreatCostReference[PF_UNIT_AMPHIBIOUS] = self.unitGroups[UNIT_GROUP_RAIDERS] and self.unitGroups[UNIT_GROUP_RAIDERS].nearCenterCost/2 or 100
 		self.raiderThreatCostReference[PF_UNIT_AIR] = self.unitGroups[UNIT_GROUP_AIR_ATTACKERS] and self.unitGroups[UNIT_GROUP_AIR_ATTACKERS].nearCenterCost/2 or 100
@@ -2038,7 +2038,7 @@ function UnitHandler:GameFrame(f)
 		--log("AI "..self.ai.id.." attackers="..#(self.unitGroups[UNIT_GROUP_ATTACKERS].recruits).." raiders="..#(self.unitGroups[UNIT_GROUP_RAIDERS].recruits).." airAttackers"..#(self.unitGroups[UNIT_GROUP_AIR_ATTACKERS].recruits),self.ai)	
 	end
 	-- update status and positions for each group
-	if fmod(f,59) == 13 + self.ai.frameShift then
+	if f%59 == 13 + self.ai.frameShift then
 		-- iterate through own units : members of unit groups
 		for gId,group in pairs(self.unitGroups) do
 			local recruits = group.recruits
@@ -2185,7 +2185,7 @@ function UnitHandler:GameFrame(f)
 	
 	
 	-- define task for each group
-	if fmod(f,199) == 52 + self.ai.frameShift then
+	if f%199 == 52 + self.ai.frameShift then
 		local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
 		local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
 		
@@ -2316,7 +2316,7 @@ function UnitHandler:GameFrame(f)
 	end
 	
 	-- issue orders to units in attack groups according to the current corresponding task
-	if fmod(f,60) == 4 + self.ai.frameShift then
+	if f%60 == 4 + self.ai.frameShift then
 		for gId,group in pairs(self.unitGroups) do
 			self:doTargetting(group)
 		end

@@ -11,7 +11,6 @@ function gadget:GetInfo()
 end
 
 
-local spGetAllUnits = Spring.GetAllUnits
 local spSetUnitCollisionVolumeData = Spring.SetUnitCollisionVolumeData
 local spSetUnitMidAndAimPos = Spring.SetUnitMidAndAimPos
 local spGetUnitHealth = Spring.GetUnitHealth

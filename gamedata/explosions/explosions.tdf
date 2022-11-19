@@ -733,98 +733,7 @@
 		unit=1;
 	}
 }
-[FlakCloud]
-{
-	usedefaultexplosions=0;
-	[spikes]
-	{
-		class=explspike;
-		[properties]
-		{
-			dir=-7 r14,-7 r14,-7 r14;
-			width=22;
-			length=1; //60;
-			alpha=1;
-			alphadecay=0.1;
-			color=1.0, 0.6, 0.2;
 
-		}
-		air=1;
-		water=1;
-		ground=1;
-  		count=5; 
-	}
-	[WIndsphere]
-	{
-		class=CSpherePartSpawner;
-		[properties]
-		{
-			ttl=20 r6;
-			alpha=0.05 r0.1;
-			expansionSpeed=2 r1;
-			color=1.0, 0.6 r0.4, 0.1 r0.9;
-		}
-		ground=1;
-		air=1;
-		count=3;
-	}
-	[Flakspikes]
-	{
-		class=explspike;
-		[properties]
-		{
-			dir=-45 r90,-45 r90,-45 r90;
-			width=0.9 r3;
-			length=6;
-			alpha=0.4 r0.45;
-			alphadecay=0.1 r0.25;
-			color=1.0, 0.6 r0.4, 0.1;
-
-		}
-		air=1;
-		water=1;
-		ground=1;
-  		count=5; 
-	}
-
-	[G_blast2]//base explo// 
-	{
-		class=CSimpleParticleSystem;
-		[properties]
-		{
-		sizeGrowth=0.14;
-		sizeMod=1.0;
-		pos=3 r-3, 1 r-2, 3 r-3;  
-		gravity=0, 0, 0;
-	
-		colorMap=0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.5 0.1 0.1 0.1 0.0;
-
-
-		Texture=smoke;
-		airdrag=0.7;
-		
-		particleLifeSpread=10; 
-		particleSpeedSpread=9;  
-		particleSizeSpread=10;   
-		
-		particleLife=40; 
-		numParticles=12; 
-		particleSpeed=1; 
-		particleSize=18;
-		
-		
-		emitVector=0, 1, 0; 
-		emitRot=80;
-		emitRotSpread=5; 
-		directional=1; 
-
-		}
-	air=1;
-	water=1;
-	ground=1;
-	count=1;
-	}
-}
 [PARALYZER_BLUE]
 {
 	usedefaultexplosions=0;	
@@ -1300,868 +1209,6 @@
   		count=3; 
 	}	
 }
-[CHARGEDSHOTBLUEMED]
-{
-	usedefaultexplosions=0;	
-	[GLOWCENTER]
-	{
-		class=explspike;
-		[properties]
-		{
-			dir=0,1,0;
-			width=90;
-			length=66;
-			alpha=0.6;
-			alphadecay=0.04;
-			color=0.6, 0.8, 0.9;
-		}
-		air=1;
-		water=1;
-		ground=1;
-  		count=1; 
-	}
-	[GLOW]
-	{
-		class=explspike;
-		[properties]
-		{
-			dir=0,1,0;
-			width=100;
-			length=70;
-			alpha=0.3;
-			alphadecay=0.02;
-			color=0.6, 0.8, 0.9;
-
-		}
-		air=1;
-		water=1;
-		ground=1;
-  		count=1; 
-	}
-	[windsphere]
-	{
-		class=CSpherePartSpawner;
-		[properties]
-		{
-			ttl=13;
-			alpha=0.4;
-			expansionSpeed=6 r0.2;
-			color=0.6 r0.2, 0.6 r0.2, 0.6 r0.2;
-		}
-		ground=1;
-		air=1;
-		count=1;
-	}	
-	[burnstuff]
-	{
-		class=CSimpleParticleSystem;
-		[properties]
-		{
-		sizeGrowth=0;
-		sizeMod=1.0;
-		pos=0, 0, 0; 
-		emitVector=0, 1, 0;
-	      gravity=0, -0.4, 0;  
-		colorMap=1 1 1 0.01   1 0.7 0.6 0.01   0.6 0.6 0.6 0.01;
-		Texture=flamespark;
-		airdrag=0.91;
-		particleLife=30;
-		particleLifeSpread=0;
-		numParticles=40;
-		particleSpeed=10.5;
-		particleSpeedSpread=1.8;
-		particleSize=1;
-		particleSizeSpread=2.4;
-		emitRot=45;
-		emitRotSpread=45;
-		directional=1;
-		alwaysVisible=1;
-		}
-	air=1;
-	water=1;
-	ground=1;
-	count=1;
-	}
-	[heatcloud]
-   	{
-		class=CHeatCloudProjectile;
-      	[properties]
-      	{
-      		heat = 1;
-			Texture=bluefirecloud;
-      		maxheat = 1;
-      		heatFalloff = 0.05;
-      		size = 30;
-      		sizeGrowth = 1;
-      		sizemod = 0;
-      		sizemodmod = 0;
-      		speed = -0.2 r0.4, -0.2 r0.4, -0.2 r0.4;
-      		pos = 0.2 r-0.4, 0.2 r-0.4, 0.2 r-0.4;
-      	}
-		air=1;
-      	water=0;
-      	ground=1;
-      	count=1;
-	}
-	[watercloud]
-   	{
-		class=CHeatCloudProjectile;
-      	[properties]
-      	{
-      		heat = 1;
-			Texture=water;
-      		maxheat = 1;
-      		heatFalloff = 0.05;
-      		size = 30;
-      		sizeGrowth = 1;
-      		sizemod = 0;
-      		sizemodmod = 0;
-      		speed = -0.2 r0.4, -0.2 r0.4, -0.2 r0.4;
-      		pos = 0.2 r-0.4, 0.2 r-0.4, 0.2 r-0.4;
-      	}
-		air=0;
-      	water=1;
-      	ground=0;
-      	count=1;
-	}
-	[spikes]
-	{
-		class=explspike;
-		[properties]
-		{
-			dir=-45 r90,-45 r90,-45 r90;
-			width=1.5;
-			length=40;
-			alpha=0.5;
-			alphadecay=0.09;
-			color=0.5, 1, 1; //blue//
-		}
-		air=1;
-		water=1;
-		ground=1;
-  		count=16; 
-	}
-	[groundflash]
-	{
-      		flashSize = 80;
-      		flashAlpha = 0.9;
-      		circleGrowth = 2;
-      		circleAlpha = 0.25;
-      		ttl = 45;
-      		color = 0.7, 0.85, 1.0;
-		air=1;
-     		ground=1;
-     		water=1;
-	}
-	[smoke]
-	{
-		[properties]
-      	{
-         		color = 0.5;
-         		startSize = 15;
-         		sizeExpansion = 1;
-         		ageSpeed=0.015;
-         		size = 20;
-         		sizeGrowth = -1.5;
-         		pos = 5 r-15, 5 r-15, 5 r-15;
-         		speed=0, 1 r0.2, 0;
-      	}
-		air=1;
-      	water=1;
-      	ground=1;
-      	count=3;
-   	}
-}
-[CHARGEDSHOTBLUEBIG]
-{
-	usedefaultexplosions=0;	
-	[GLOWCENTER]
-	{
-		class=explspike;
-		[properties]
-		{
-			dir=0,1,0;
-			width=100;
-			length=70;
-			alpha=0.6;
-			alphadecay=0.03;
-			color=0.6, 0.8, 0.9;
-		}
-		air=1;
-		water=1;
-		ground=1;
-  		count=1; 
-	}
-	[GLOW]
-	{
-		class=explspike;
-		[properties]
-		{
-			dir=0,1,0;
-			width=120;
-			length=90;
-			alpha=0.3;
-			alphadecay=0.015;
-			color=0.6, 0.8, 0.9;
-
-		}
-		air=1;
-		water=1;
-		ground=1;
-  		count=1; 
-	}
-	[windsphere]
-	{
-		class=CSpherePartSpawner;
-		[properties]
-		{
-			ttl=16;
-			alpha=0.4;
-			expansionSpeed=6 r0.2;
-			color=0.6 r0.2, 0.6 r0.2, 0.6 r0.2;
-		}
-		ground=1;
-		air=1;
-		count=1;
-	}	
-	[burnstuff]
-	{
-		class=CSimpleParticleSystem;
-		[properties]
-		{
-		sizeGrowth=0;
-		sizeMod=1.0;
-		pos=0, 0, 0; 
-		emitVector=0, 1, 0;
-	      gravity=0, -0.4, 0;  
-		colorMap=1 1 1 0.01   1 0.7 0.6 0.01   0.6 0.6 0.6 0.01;
-		Texture=flamespark;
-		airdrag=0.91;
-		particleLife=40;
-		particleLifeSpread=0;
-		numParticles=40;
-		particleSpeed=10.5;
-		particleSpeedSpread=1.8;
-		particleSize=1;
-		particleSizeSpread=2.4;
-		emitRot=45;
-		emitRotSpread=45;
-		directional=1;
-		alwaysVisible=1;
-		}
-	air=1;
-	water=1;
-	ground=1;
-	count=1;
-	}
-	[heatcloud]
-   	{
-		class=CHeatCloudProjectile;
-      	[properties]
-      	{
-      		heat = 1;
-			Texture=bluefirecloud;
-      		maxheat = 1;
-      		heatFalloff = 0.05;
-      		size = 40;
-      		sizeGrowth = 1;
-      		sizemod = 0;
-      		sizemodmod = 0;
-      		speed = -0.2 r0.4, -0.2 r0.4, -0.2 r0.4;
-      		pos = 0.2 r-0.4, 0.2 r-0.4, 0.2 r-0.4;
-      	}
-		air=1;
-      	water=0;
-      	ground=1;
-      	count=1;
-	}
-	[watercloud]
-   	{
-		class=CHeatCloudProjectile;
-      	[properties]
-      	{
-      		heat = 1;
-			Texture=water;
-      		maxheat = 1;
-      		heatFalloff = 0.05;
-      		size = 40;
-      		sizeGrowth = 1;
-      		sizemod = 0;
-      		sizemodmod = 0;
-      		speed = -0.2 r0.4, -0.2 r0.4, -0.2 r0.4;
-      		pos = 0.2 r-0.4, 0.2 r-0.4, 0.2 r-0.4;
-      	}
-		air=0;
-      	water=1;
-      	ground=0;
-      	count=1;
-	}
-	[spikes]
-	{
-		class=explspike;
-		[properties]
-		{
-			dir=-45 r90,-45 r90,-45 r90;
-			width=1.5;
-			length=50;
-			alpha=0.5;
-			alphadecay=0.09;
-			color=0.5, 1, 1; //blue//
-		}
-		air=1;
-		water=1;
-		ground=1;
-  		count=16; 
-	}
-	[groundflash]
-	{
-      		flashSize = 100;
-      		flashAlpha = 0.9;
-      		circleGrowth = 2;
-      		circleAlpha = 0.25;
-      		ttl = 45;
-      		color = 0.7, 0.85, 1.0;
-		air=1;
-     		ground=1;
-     		water=1;
-	}
-	[smoke]
-	{
-		[properties]
-      	{
-         		color = 0.5;
-         		startSize = 15;
-         		sizeExpansion = 1;
-         		ageSpeed=0.015;
-         		size = 25;
-         		sizeGrowth = -1.5;
-         		pos = 5 r-15, 5 r-15, 5 r-15;
-         		speed=0, 1 r0.2, 0;
-      	}
-		air=1;
-      	water=1;
-      	ground=1;
-      	count=3;
-   	}
-}
-[CHARGEDSHOTREDSML]
-{
-	usedefaultexplosions=0;	
-	[GLOWCENTER]
-	{
-		class=explspike;
-		[properties]
-		{
-			dir=0,1,0;
-			width=40;
-			length=30;
-			alpha=0.5;
-			alphadecay=0.05;
-			color=0.9, 0.8, 0.3;
-		}
-		air=1;
-		water=1;
-		ground=1;
-  		count=1; 
-	}
-	[GLOW]
-	{
-		class=explspike;
-		[properties]
-		{
-			dir=0,1,0;
-			width=60;
-			length=45;
-			alpha=0.3;
-			alphadecay=0.03;
-			color=0.9, 0.8, 0.3;
-
-		}
-		air=1;
-		water=1;
-		ground=1;
-  		count=1; 
-	}
-	[windsphere]
-	{
-		class=CSpherePartSpawner;
-		[properties]
-		{
-			ttl=10;
-			alpha=0.2;
-			expansionSpeed=4 r0.1;
-			color=0.6 r0.2, 0.5 r0.2, 0.4 r0.2;
-		}
-		ground=1;
-		air=1;
-		count=1;
-	}	
-	[burnstuff]
-	{
-		class=CSimpleParticleSystem;
-		[properties]
-		{
-		sizeGrowth=0;
-		sizeMod=1.0;
-		pos=0, 0, 0; 
-		emitVector=0, 1, 0;
-	      gravity=0, -0.4, 0;  
-		colorMap=1 0.7 0.4 0.01   0.9 0.6 0.3 0.01   0.7 0.5 0.2 0.01;
-		Texture=flamespark;
-		airdrag=0.91;
-		particleLife=30;
-		particleLifeSpread=0;
-		numParticles=10;
-		particleSpeed=5.5;
-		particleSpeedSpread=1.8;
-		particleSize=1;
-		particleSizeSpread=2.4;
-		emitRot=45;
-		emitRotSpread=45;
-		directional=1;
-		alwaysVisible=1;
-		}
-	air=1;
-	water=1;
-	ground=1;
-	count=1;
-	}
-	[heatcloud]
-   	{
-		class=CHeatCloudProjectile;
-      	[properties]
-      	{
-      		heat = 0.7;
-			Texture=firecloud;
-      		maxheat = 1;
-      		heatFalloff = 0.05;
-      		size = 10;
-      		sizeGrowth = 0.5;
-      		sizemod = 0;
-      		sizemodmod = 0;
-      		speed = -0.2 r0.4, -0.2 r0.4, -0.2 r0.4;
-      		pos = 0.2 r-0.4, 0.2 r-0.4, 0.2 r-0.4;
-      	}
-		air=1;
-      	water=0;
-      	ground=1;
-      	count=1;
-	}
-	[watercloud]
-   	{
-		class=CHeatCloudProjectile;
-      	[properties]
-      	{
-      		heat = 1;
-			Texture=water;
-      		maxheat = 1;
-      		heatFalloff = 0.05;
-      		size = 10;
-      		sizeGrowth = 0.5;
-      		sizemod = 0;
-      		sizemodmod = 0;
-      		speed = -0.2 r0.4, -0.2 r0.4, -0.2 r0.4;
-      		pos = 0.2 r-0.4, 0.2 r-0.4, 0.2 r-0.4;
-      	}
-		air=0;
-      	water=1;
-      	ground=0;
-      	count=1;
-	}
-	[spikes]
-	{
-		class=explspike;
-		[properties]
-		{
-			dir=-45 r90,-45 r90,-45 r90;
-			width=1.5;
-			length=15;
-			alpha=0.5;
-			alphadecay=0.09;
-			color=1.0, 0.5, 0.5; //pink//
-		}
-		air=1;
-		water=1;
-		ground=1;
-  		count=4; 
-	}
-	[groundflash]
-	{
-      		flashSize = 40;
-      		flashAlpha = 0.5;
-      		circleGrowth = 0.5;
-      		circleAlpha = 0.2;
-      		ttl = 12;
-      		color = 1.0, 0.85, 0.7;
-		air=1;
-     		ground=1;
-     		water=1;
-	}
-	[smoke]
-	{
-		[properties]
-      	{
-         		color = 0.5;
-         		startSize = 5;
-         		sizeExpansion = 1;
-         		ageSpeed=0.02;
-         		size = 5;
-         		sizeGrowth = -1.5;
-         		pos = 5 r-15, 5 r-15, 5 r-15;
-         		speed=0, 1 r0.2, 0;
-      	}
-		air=1;
-      	water=1;
-      	ground=1;
-      	count=2;
-   	}
-}
-
-[CHARGEDSHOTREDMED]
-{
-	usedefaultexplosions=0;	
-	[GLOWCENTER]
-	{
-		class=explspike;
-		[properties]
-		{
-			dir=0,1,0;
-			width=90;
-			length=66;
-			alpha=0.6;
-			alphadecay=0.04;
-			color=0.9, 0.8, 0.6;
-		}
-		air=1;
-		water=1;
-		ground=1;
-  		count=1; 
-	}
-	[GLOW]
-	{
-		class=explspike;
-		[properties]
-		{
-			dir=0,1,0;
-			width=100;
-			length=70;
-			alpha=0.3;
-			alphadecay=0.02;
-			color=0.9, 0.8, 0.6;
-
-		}
-		air=1;
-		water=1;
-		ground=1;
-  		count=1; 
-	}
-	[windsphere]
-	{
-		class=CSpherePartSpawner;
-		[properties]
-		{
-			ttl=13;
-			alpha=0.4;
-			expansionSpeed=6 r0.2;
-			color=0.6 r0.2, 0.6 r0.2, 0.6 r0.2;
-		}
-		ground=1;
-		air=1;
-		count=1;
-	}	
-	[burnstuff]
-	{
-		class=CSimpleParticleSystem;
-		[properties]
-		{
-		sizeGrowth=0;
-		sizeMod=1.0;
-		pos=0, 0, 0; 
-		emitVector=0, 1, 0;
-	      gravity=0, -0.4, 0;  
-		colorMap=1 0.9 0.8 0.01   1 0.7 0.6 0.01   0.7 0.6 0.5 0.01;
-		Texture=flamespark;
-		airdrag=0.91;
-		particleLife=30;
-		particleLifeSpread=0;
-		numParticles=40;
-		particleSpeed=10.5;
-		particleSpeedSpread=1.8;
-		particleSize=1;
-		particleSizeSpread=2.4;
-		emitRot=45;
-		emitRotSpread=45;
-		directional=1;
-		alwaysVisible=1;
-		}
-	air=1;
-	water=1;
-	ground=1;
-	count=1;
-	}
-	[heatcloud]
-   	{
-		class=CHeatCloudProjectile;
-      	[properties]
-      	{
-      		heat = 1;
-			Texture=firecloud;
-      		maxheat = 1;
-      		heatFalloff = 0.05;
-      		size = 30;
-      		sizeGrowth = 1;
-      		sizemod = 0;
-      		sizemodmod = 0;
-      		speed = -0.2 r0.4, -0.2 r0.4, -0.2 r0.4;
-      		pos = 0.2 r-0.4, 0.2 r-0.4, 0.2 r-0.4;
-      	}
-		air=1;
-      	water=0;
-      	ground=1;
-      	count=1;
-	}
-	[watercloud]
-   	{
-		class=CHeatCloudProjectile;
-      	[properties]
-      	{
-      		heat = 1;
-			Texture=water;
-      		maxheat = 1;
-      		heatFalloff = 0.05;
-      		size = 30;
-      		sizeGrowth = 1;
-      		sizemod = 0;
-      		sizemodmod = 0;
-      		speed = -0.2 r0.4, -0.2 r0.4, -0.2 r0.4;
-      		pos = 0.2 r-0.4, 0.2 r-0.4, 0.2 r-0.4;
-      	}
-		air=0;
-      	water=1;
-      	ground=0;
-      	count=1;
-	}
-	[spikes]
-	{
-		class=explspike;
-		[properties]
-		{
-			dir=-45 r90,-45 r90,-45 r90;
-			width=1.5;
-			length=40;
-			alpha=0.5;
-			alphadecay=0.09;
-			color=1.0, 0.5, 0.5; //pink//
-		}
-		air=1;
-		water=1;
-		ground=1;
-  		count=16; 
-	}
-	[groundflash]
-	{
-      		flashSize = 80;
-      		flashAlpha = 0.9;
-      		circleGrowth = 2;
-      		circleAlpha = 0.25;
-      		ttl = 45;
-      		color = 1.0, 0.85, 0.7;
-		air=1;
-     		ground=1;
-     		water=1;
-	}
-	[smoke]
-	{
-		[properties]
-      	{
-         		color = 0.5;
-         		startSize = 15;
-         		sizeExpansion = 1;
-         		ageSpeed=0.015;
-         		size = 20;
-         		sizeGrowth = -1.5;
-         		pos = 5 r-15, 5 r-15, 5 r-15;
-         		speed=0, 1 r0.2, 0;
-      	}
-		air=1;
-      	water=1;
-      	ground=1;
-      	count=3;
-   	}
-}
-[CHARGEDSHOTREDBIG]
-{
-	usedefaultexplosions=0;	
-	[GLOWCENTER]
-	{
-		class=explspike;
-		[properties]
-		{
-			dir=0,1,0;
-			width=100;
-			length=70;
-			alpha=0.6;
-			alphadecay=0.03;
-			color=1.0, 0.7, 0.5;
-		}
-		air=1;
-		water=1;
-		ground=1;
-  		count=1; 
-	}
-	[GLOW]
-	{
-		class=explspike;
-		[properties]
-		{
-			dir=0,1,0;
-			width=120;
-			length=90;
-			alpha=0.3;
-			alphadecay=0.015;
-			color=0.9, 0.7, 0.5;
-
-		}
-		air=1;
-		water=1;
-		ground=1;
-  		count=1; 
-	}
-	[windsphere]
-	{
-		class=CSpherePartSpawner;
-		[properties]
-		{
-			ttl=16;
-			alpha=0.4;
-			expansionSpeed=6 r0.2;
-			color=0.6 r0.2, 0.6 r0.2, 0.6 r0.2;
-		}
-		ground=1;
-		air=1;
-		count=1;
-	}	
-	[burnstuff]
-	{
-		class=CSimpleParticleSystem;
-		[properties]
-		{
-		sizeGrowth=0;
-		sizeMod=1.0;
-		pos=0, 0, 0; 
-		emitVector=0, 1, 0;
-	      gravity=0, -0.4, 0;  
-		colorMap=1 0.9 0.8 0.01   1 0.7 0.6 0.01   0.6 0.5 0.4 0.01;
-		Texture=flamespark;
-		airdrag=0.91;
-		particleLife=40;
-		particleLifeSpread=0;
-		numParticles=40;
-		particleSpeed=10.5;
-		particleSpeedSpread=1.8;
-		particleSize=1;
-		particleSizeSpread=2.4;
-		emitRot=45;
-		emitRotSpread=45;
-		directional=1;
-		alwaysVisible=1;
-		}
-	air=1;
-	water=1;
-	ground=1;
-	count=1;
-	}
-	[heatcloud]
-   	{
-		class=CHeatCloudProjectile;
-      	[properties]
-      	{
-      		heat = 1;
-			Texture=firecloud;
-      		maxheat = 1;
-      		heatFalloff = 0.05;
-      		size = 40;
-      		sizeGrowth = 1;
-      		sizemod = 0;
-      		sizemodmod = 0;
-      		speed = -0.2 r0.4, -0.2 r0.4, -0.2 r0.4;
-      		pos = 0.2 r-0.4, 0.2 r-0.4, 0.2 r-0.4;
-      	}
-		air=1;
-      	water=0;
-      	ground=1;
-      	count=1;
-	}
-	[watercloud]
-   	{
-		class=CHeatCloudProjectile;
-      	[properties]
-      	{
-      		heat = 1;
-			Texture=water;
-      		maxheat = 1;
-      		heatFalloff = 0.05;
-      		size = 40;
-      		sizeGrowth = 1;
-      		sizemod = 0;
-      		sizemodmod = 0;
-      		speed = -0.2 r0.4, -0.2 r0.4, -0.2 r0.4;
-      		pos = 0.2 r-0.4, 0.2 r-0.4, 0.2 r-0.4;
-      	}
-		air=0;
-      	water=1;
-      	ground=0;
-      	count=1;
-	}
-	[spikes]
-	{
-		class=explspike;
-		[properties]
-		{
-			dir=-45 r90,-45 r90,-45 r90;
-			width=1.5;
-			length=50;
-			alpha=0.5;
-			alphadecay=0.09;
-			color=1.0, 1, 0.5; //reddish//
-		}
-		air=1;
-		water=1;
-		ground=1;
-  		count=16; 
-	}
-	[groundflash]
-	{
-      		flashSize = 100;
-      		flashAlpha = 0.9;
-      		circleGrowth = 2;
-      		circleAlpha = 0.25;
-      		ttl = 45;
-      		color = 1.0, 0.85, 0.7;
-		air=1;
-     		ground=1;
-     		water=1;
-	}
-	[smoke]
-	{
-		[properties]
-      	{
-         		color = 0.5;
-         		startSize = 15;
-         		sizeExpansion = 1;
-         		ageSpeed=0.015;
-         		size = 25;
-         		sizeGrowth = -1.5;
-         		pos = 5 r-15, 5 r-15, 5 r-15;
-         		speed=0, 1 r0.2, 0;
-      	}
-		air=1;
-      	water=1;
-      	ground=1;
-      	count=3;
-   	}
-}
-
 
 [OPALBLAST]
 {
@@ -2257,20 +1304,8 @@
 		ground=1;
   		count=5; 
 	}
-	[WIndsphere]
-	{
-		class=CSpherePartSpawner;
-		[properties]
-		{
-			ttl=7;
-			alpha=0.05 r0.1;
-			expansionSpeed=10;
-			color=0.5, 0.8 r0.2, 0.8 r0.2;
-		}
-		ground=1;
-		air=1;
-		count=1;
-	}
+	[_windsphere]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=200;explosionGenerator=custom:DYNALTWINDSPHERE;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	
 	[Flakspikes]
 	{
 		class=explspike;
@@ -2353,34 +1388,8 @@
   		count=5; 
   		underwater=1;
 	}
-	[WIndsphere]
-	{
-		class=CSpherePartSpawner;
-		[properties]
-		{
-			ttl=20;
-			alpha=0.05 r0.1;
-			expansionSpeed=11;
-			color=0.8, 0.9, 1.0;
-		}
-		ground=1;
-		air=1;
-		count=1;
-	}
-	[WIndsphere]
-	{
-		class=CSpherePartSpawner;
-		[properties]
-		{
-			ttl=20;
-			alpha=0.05 r0.1;
-			expansionSpeed=10;
-			color=0.8, 0.9, 1;
-		}
-		ground=1;
-		air=1;
-		count=1;
-	}
+	[_windsphere]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=350;explosionGenerator=custom:DYNALTWINDSPHERE;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+
 	[Flakspikes]
 	{
 		class=explspike;
@@ -2531,84 +1540,6 @@
 }
 
 
-[DEATHORBBLAST]
-{
-	usedefaultexplosions=0;
-	[spikes]
-	{
-		class=explspike;
-		[properties]
-		{
-			dir=-7 r14,-7 r14,-7 r14;
-			width=22;
-			length=4;
-			alpha=0.5;
-			alphadecay=0.1;
-			color=1.0, 0.6, 0.1;
-
-		}
-		air=1;
-		water=1;
-		ground=1;
-  		count=3; 
-	}
-	[Flakspikes]
-	{
-		class=explspike;
-		[properties]
-		{
-			dir=-45 r90,-45 r90,-45 r90;
-			width=6;
-			length=12;
-			alpha=0.5;
-			alphadecay=0.1;
-			color=1.0, 0.6 r0.4, 0.1;
-
-		}
-		air=1;
-		water=1;
-		ground=1;
-  		count=3; 
-	}
-
-	[G_blast2]//base explo// 
-	{
-		class=CSimpleParticleSystem;
-		[properties]
-		{
-		sizeGrowth=0.14;
-		sizeMod=1.0;
-		pos=3 r-3, 1 r-2, 3 r-3;  
-		gravity=0, 0, 0;
-	
-		colorMap=0.1 0.1 0.1 0.1 0.1 0.1 0.1 0.5 0.1 0.1 0.1 0.0;
-
-
-		Texture=smoke;
-		airdrag=0.7;
-		
-		particleLifeSpread=10; 
-		particleSpeedSpread=9;  
-		particleSizeSpread=10;   
-		
-		particleLife=40; 
-		numParticles=6; 
-		particleSpeed=1; 
-		particleSize=18;
-		
-		
-		emitVector=0, 1, 0; 
-		emitRot=80;
-		emitRotSpread=5; 
-		directional=1; 
-
-		}
-	air=1;
-	water=1;
-	ground=1;
-	count=1;
-	}
-}
 [HEATRAYBOOMSML]
 {
 	usedefaultexplosions=0;	
@@ -3284,20 +2215,7 @@
 	ground=1;
 	count=1;
 	}
-	[windsphere]
-	{
-		class=CSpherePartSpawner;
-		[properties]
-		{
-			ttl=20 r6;
-			alpha=0.05 r0.1;
-			expansionSpeed=4 r1;
-			color=0.5, 0.8 r0.2, 0.8 r0.2;
-		}
-		ground=1;
-		air=1;
-		count=3;
-	}
+	[_windsphere]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=800;explosionGenerator=custom:DYNALTWINDSPHERE;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 
 }
 
@@ -3762,40 +2680,7 @@
 		count=1;
 		alwaysVisible=1;
 	}
-	[windsphere]
-	{
-		class=CSpherePartSpawner;
-		[properties]
-		{
-			ttl=27;
-			alpha=0.6;
-			expansionSpeed=2 d1.5;
-			color=1.0, 1, 1;
-		}
-		ground=1;
-		air=1;
-		count=1;
-		unit=1;
-   		water=1;
-		alwaysVisible=1;
-	}
-	[waterwindsphere]
-	{
-		class=CSpherePartSpawner;
-		[properties]
-		{
-			ttl=27;
-			alpha=0.2;
-			expansionSpeed=2 d1.0;
-			color=1.0, 1, 1;
-		}
-		ground=0;
-		air=0;
-		count=1;
-   		water=1;
-		underwater=1;
-		alwaysVisible=1;
-	}
+	[_windsphere]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=d80;explosionGenerator=custom:DYNALTWINDSPHERE2;alwaysVisible=1;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 	[G_blast]//base explo// 
 	{
 		class=CSimpleParticleSystem;
@@ -4287,6 +3172,77 @@
 [MAGNETARAURABLAST]
 {
 	usedefaultexplosions=0;
+
+	[flash]
+	{
+		class=CSimpleGroundFlash;
+		[properties]
+		{
+			size = 10 23;
+			sizeGrowth = 2 17;
+			texture=magblastwave;	     		
+	     	ttl = 1 40;
+     		colormap = 0.7 0.8 1.0 0.1   0.7 0.8 1.0 0.1   0.0 0.1 0.1 0.05   0.0 0.05 0.05 0.0;
+			alwaysVisible=1;
+		}
+		air=1;
+		ground=1;
+		water=1;
+		underwater=1;
+		count=1;
+	}
+	[flash2]
+	{
+		class=CSimpleGroundFlash;
+		[properties]
+		{
+			size = 10 20;
+			sizeGrowth = 2 12;
+			texture=magblastwave;	     		
+			ttl = 1 40;
+     		colormap = 0.7 0.8 1.0 0.05   0.7 0.8 1.0 0.05   0.0 0.1 0.1 0.025   0.0 0.05 0.05 0.0;
+			alwaysVisible=1;
+		}
+		air=1;
+		ground=0;
+	    water=0;
+		underwater=0;
+		count=1;
+	}
+	[airsphere]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=2 17;
+			sizeMod=1.0;
+			pos=0, 0, 0; 
+			emitVector=0, 1, 0;
+			gravity=0, 0.0, 0;  
+			colorMap=0.14 0.16 0.2 0.02   0.14 0.16 0.2 0.02   0.0 0.04 0.04 0.02   0.0 0.02 0.02 0.0;
+			Texture=magblastwave;
+			airdrag=0.91;
+			particleLife=1 40;
+			particleLifeSpread=0;
+			numParticles=1;
+			particleSpeed=0;
+			particleSpeedSpread=0;
+			particleSize=10 23;
+			particleSizeSpread=0;
+			emitRot=25;
+			emitRotSpread=45;
+			directional=0;
+			alwaysVisible=1;
+		}
+		air=1;
+		unit=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+
+	/*
 	[windsphere]
 	{
 		class=CSpherePartSpawner;
@@ -4321,6 +3277,7 @@
    		water=1;
 		alwaysVisible=1;
 	}
+	*/
 }
 
 [MMAKERSMOKEPUFF]

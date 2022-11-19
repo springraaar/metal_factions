@@ -694,10 +694,6 @@ function widget:SetConfigData(data) -- Loading
 	maxHungarianUnits = data['maxHungarianUnits'] or defaultHungarianUnits
 end
 
-function widget:Initialize()
-	Spring.LoadSoundDef("luarules/configs/sound_defs.lua")
-end
-
 ---------------------------------------------------------------------------------------------------------
 -- Matching Algorithms
 ---------------------------------------------------------------------------------------------------------

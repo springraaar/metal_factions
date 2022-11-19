@@ -293,23 +293,25 @@ function widget:Update()
 	
 	-- check unit selection, update drawlist for power grid overlay
 	circlesToDraw = {}
-	selectedGridId = nil
-	selectedAllyId = nil
-	if spGetSelectedUnitsCount() == 1 then
+	local gridId = nil
+	local allyId = nil
+	if spGetSelectedUnitsCount() >= 1 then
 		--Spring.Echo(spGetGameFrame().." selected 1 unit")
 		local units = spGetSelectedUnits()
-		local uId = units[1]
-		local ud = UnitDefs[Spring.GetUnitDefID(uId)]
-		selectedAllyId = spGetUnitAllyTeam(uId)
-		local gridId = nil
-		if ud and ud.customParams and ud.customParams.powergridnode == "1" then
-			gridId = spGetUnitRulesParam(uId,"powerGridId")
-		end
-		if gridId ~= selectedGridId then
-			selectedGridId = gridId
-			forceRefresh = true
+		for _,uId in ipairs(units) do
+			local ud = UnitDefs[Spring.GetUnitDefID(uId)]
+			allyId = spGetUnitAllyTeam(uId)
+			if ud and ud.customParams and ud.customParams.powergridnode == "1" then
+				gridId = spGetUnitRulesParam(uId,"powerGridId")
+				break
+			end
 		end
 	end  
+	if gridId ~= selectedGridId or allyId ~= selectedAllyId then
+		selectedGridId = gridId
+		selectedAllyId = allyId
+		forceRefresh = true
+	end
 
 	if isBuildingPowerNode or selectedGridId then
 		local spec, fullSpec = spGetSpectatingState()

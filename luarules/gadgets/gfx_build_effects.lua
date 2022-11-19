@@ -41,6 +41,8 @@ local random = math.random
 local abs = math.abs
 local floor = math.floor
 
+local xs, ys, zs, xo, yo, zo, vtype, htype, axis, px,py,pz,offsetX, offsetZ, intensity,bp,oldBp,ud
+
 local noCreationEffectDefIds = {
 	[UnitDefNames["cs_beacon"].id] = true,
 	[UnitDefNames["scoper_beacon"].id] = true
@@ -50,15 +52,11 @@ if (not gadgetHandler:IsSyncedCode()) then
   return
 end
 
-function gadget:Initialize()
-	Spring.LoadSoundDef("LuaRules/Configs/sound_defs.lua")
-end
-
 function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 	local ud = UnitDefs[unitDefId]
 	if (not noCreationEffectDefIds[unitDefId]) and (not (ud.customParams and ud.customParams.isdrone)) then
-		local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetUnitCollisionVolumeData(unitId)
-		local px,py,pz = spGetUnitPosition(unitId)
+		xs, ys, zs, _, _, _, _, _, _, _ = spGetUnitCollisionVolumeData(unitId)
+		px,py,pz = spGetUnitPosition(unitId)
 		spSpawnCEG(createCEG, px, py+5, pz,0,1,0,xs,xs)
 	end
 end
@@ -67,77 +65,78 @@ end
 function gadget:GameFrame(n)
 	if (n%3 == 0) then
 		-- check units
-		local xs, ys, zs, xo, yo, zo, vtype, htype, axis, px,py,pz,offsetX, offsetZ, intensity
 		for _,unitId in pairs(spGetAllUnits()) do
-			local _,_,_,_,bp = spGetUnitHealth(unitId)
-			local ud = UnitDefs[spGetUnitDefId(unitId)]
+			_,_,_,_,bp = spGetUnitHealth(unitId)
+			ud = UnitDefs[spGetUnitDefId(unitId)]
 			
-			if not (ud.customParams and ud.customParams.isdrone) then
-				local oldBp = oldBpByUnitId[unitId]
-				if not oldBp then 
-					oldBp = bp
-				end
-				if bp < 1 then
-					if bp > oldBp then
-						local intensity = (bp - oldBp)*100
+			oldBp = oldBpByUnitId[unitId]
+			if not oldBp then 
+				oldBp = bp
+				oldBpByUnitId[unitId] = bp
+			end
+			if bp < 1 then
+				if bp > oldBp then
+					intensity = (bp - oldBp)*100
+				
+					xs, ys, zs, _, _, _, _, _, _, _ = spGetUnitCollisionVolumeData(unitId)
+					px,py,pz = spGetUnitPosition(unitId)
+					xs = xs*0.95
+					ys = ys*0.95
+					zs = zs*0.95
 					
-						xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetUnitCollisionVolumeData(unitId)
-						px,py,pz = spGetUnitPosition(unitId)
-						xs = xs*0.95
-						ys = ys*0.95
-						zs = zs*0.95
-						
-						-- random offsets
-						if xs < 50 then
-							spSpawnCEG( buildCEG, px -xs*0.5 +random()*xs, py+ys+3, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
-							spSpawnCEG( buildCEG, px -xs*0.5 +random()*xs, py+ys+3, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
-						else
-							xs = xs*0.65
-							zs = zs*0.65
-	
-							spSpawnCEG( buildWideCEG, px -xs*0.5 +random()*xs, py+ys+10, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
-							spSpawnCEG( buildWideCEG, px -xs*0.5 +random()*xs, py+ys+10, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
-						end
-						
-						-- offset depends on bp
-						--[[
-						--offsetX = ((bp*1000)%50) * 0.02
-						--offsetZ = floor((bp*100)%50) * 0.02
-						--local r = 10 + xs*0.1
-						--spSpawnCEG(buildCEG, px -xs*0.5 +offsetX*xs-0.5*r+r*random(), py+ys, pz-zs*0.5+offsetZ*zs-0.5*r+r*random(),0,1,0,xs,intensity)
-						--spSpawnCEG(buildCEG, px -xs*0.5 +offsetX*xs-0.5*r+r*random(), py+ys, pz-zs*0.5+offsetZ*zs-0.5*r+r*random(),0,1,0,xs,intensity)
-						]]-- 
-						
-					elseif bp < oldBp then
-						intensity = abs((bp - oldBp))*100
-					
-						xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetUnitCollisionVolumeData(unitId)
-						px,py,pz = spGetUnitPosition(unitId)
-						xs = xs*0.95
-						ys = ys*0.95
-						zs = zs*0.95
-						
-						spSpawnCEG(reclaimCEG, px -xs*0.5 +random()*xs, py+ys, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
-						spSpawnCEG(reclaimCEG, px -xs*0.5 +random()*xs, py+ys, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
+					-- random offsets
+					if xs < 50 then
+						spSpawnCEG( buildCEG, px -xs*0.5 +random()*xs, py+ys+3, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
+						spSpawnCEG( buildCEG, px -xs*0.5 +random()*xs, py+ys+3, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
+					else
+						xs = xs*0.65
+						zs = zs*0.65
+
+						spSpawnCEG( buildWideCEG, px -xs*0.5 +random()*xs, py+ys+10, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
+						spSpawnCEG( buildWideCEG, px -xs*0.5 +random()*xs, py+ys+10, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
 					end
+					
+					-- offset depends on bp
+					--[[
+					--offsetX = ((bp*1000)%50) * 0.02
+					--offsetZ = floor((bp*100)%50) * 0.02
+					--local r = 10 + xs*0.1
+					--spSpawnCEG(buildCEG, px -xs*0.5 +offsetX*xs-0.5*r+r*random(), py+ys, pz-zs*0.5+offsetZ*zs-0.5*r+r*random(),0,1,0,xs,intensity)
+					--spSpawnCEG(buildCEG, px -xs*0.5 +offsetX*xs-0.5*r+r*random(), py+ys, pz-zs*0.5+offsetZ*zs-0.5*r+r*random(),0,1,0,xs,intensity)
+					]]-- 
+					
+				elseif bp < oldBp then
+					intensity = abs((bp - oldBp))*100
+				
+					xs, ys, zs, _, _, _, _, _, _, _ = spGetUnitCollisionVolumeData(unitId)
+					px,py,pz = spGetUnitPosition(unitId)
+					xs = xs*0.95
+					ys = ys*0.95
+					zs = zs*0.95
+					
+					spSpawnCEG(reclaimCEG, px -xs*0.5 +random()*xs, py+ys, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
+					spSpawnCEG(reclaimCEG, px -xs*0.5 +random()*xs, py+ys, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
 				end
+			end
+			if bp ~= oldBp then
 				oldBpByUnitId[unitId] = bp
 			end
 		end
 		
 		-- check features
 		for _,fId in pairs(spGetAllFeatures()) do
-			local _,_,_,_,bp = spGetFeatureResources(fId)
-	
-			local oldBp = oldBpByFeatureId[fId]
+			_,_,_,_,bp = spGetFeatureResources(fId)
+			
+			oldBp = oldBpByFeatureId[fId]
 			if not oldBp then 
 				oldBp = bp
+				oldBpByFeatureId[fId] = bp
 			end
 			if bp < 1 then
 				if bp > oldBp then		-- never happens?
 					intensity = (bp - oldBp)*100
 				
-					xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetFeatureCollisionVolumeData(fId)
+					xs, ys, zs, _, _, _, _, _, _, _ = spGetFeatureCollisionVolumeData(fId)
 					px,py,pz = spGetFeaturePosition(fId)
 					xs = xs*0.95
 					ys = ys*0.95
@@ -148,7 +147,7 @@ function gadget:GameFrame(n)
 				elseif bp < oldBp then
 					intensity = abs((bp - oldBp))*100
 				
-					xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetFeatureCollisionVolumeData(fId)
+					xs, ys, zs, _, _, _, _, _, _, _ = spGetFeatureCollisionVolumeData(fId)
 					px,py,pz = spGetFeaturePosition(fId)
 					xs = xs*0.95
 					ys = ys*0.95
@@ -158,9 +157,10 @@ function gadget:GameFrame(n)
 					spSpawnCEG(reclaimCEG, px -xs*0.5 +random()*xs, py+ys, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
 				end
 			end
-			oldBpByFeatureId[fId] = bp
+			if bp ~= oldBp then
+				oldBpByFeatureId[fId] = bp
+			end
 		end
-		--end
 	end
 end
 

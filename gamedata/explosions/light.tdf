@@ -355,6 +355,71 @@
 		count=1;
 	}
 }
+[RECLAIMGLOW]
+{
+
+	[GLOW1]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			//dir=-1 r2,-1 r2,-1 r2;
+			dir=1, 0, 0;
+			width=35;
+			length=35;
+			alpha=0.12;
+			alphadecay=0.02;
+			color=0.5, 0.5, 1.0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+	[GLOW2]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			//dir=-1 r2,-1 r2,-1 r2;
+			dir=0, 1, 0;
+			width=35;
+			length=35;
+			alpha=0.12;
+			alphadecay=0.02;
+			color=0.5, 0.5, 1.0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+	[GLOW3]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			//dir=-1 r2,-1 r2,-1 r2;
+			dir=0, 0, 1;
+			width=35;
+			length=35;
+			alpha=0.12;
+			alphadecay=0.02;
+			color=0.5, 0.5, 1.0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+}
+
 
 [RUBYGLOW]
 {

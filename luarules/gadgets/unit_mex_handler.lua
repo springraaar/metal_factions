@@ -29,12 +29,18 @@ local spTestBuildOrder = Spring.TestBuildOrder
 local spIsPosInLos = Spring.IsPosInLos
 local spGetGroundHeight = Spring.GetGroundHeight
 local spGetUnitIsStunned = Spring.GetUnitIsStunned
+local spSetUnitRulesParam = Spring.SetUnitRulesParam
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
 
 local MAP_EDGE_MARGIN = 50
 local mapMinX = MAP_EDGE_MARGIN
 local mapMaxX = Game.mapSizeX - MAP_EDGE_MARGIN
 local mapMinZ = MAP_EDGE_MARGIN
 local mapMaxZ = Game.mapSizeZ - MAP_EDGE_MARGIN
+
+local MEX_AUTO_RECLAIM_STEPS = 30
+local MEX_AUTO_RECLAIM_FRACTION_PER_STEP = -1/MEX_AUTO_RECLAIM_STEPS
+local MEX_AUTO_RECLAIM_RADIUS = 120
 
 local basicMexIdByBuilderDefId = {}
 local safeMexIdByBuilderDefId = {}
@@ -453,7 +459,6 @@ function gadget:Initialize()
 	determine()
 	registerUnits()  
 	
-	Spring.LoadSoundDef("LuaRules/Configs/sound_defs.lua")
 	Spring.AssignMouseCursor("Areamex", "cursorareamex", true, true)
 	Spring.AssignMouseCursor("Areamex2", "cursorareamex2", true, true)
 	Spring.AssignMouseCursor("Areamex2h", "cursorareamex2h", true, true)
@@ -467,6 +472,27 @@ end
 
 function gadget:UnitTaken(unitID, unitDefID, unitTeam, newTeam) 
 	unregisterUnit(unitID, unitDefID, unitTeam, false) 
+end 
+
+-- when adv mex finishes, mark nearby allied basic mex for auto-reclaiming
+function gadget:UnitFinished(unitID, unitDefID, unitTeam) 
+	if safeMexDefIds[unitDefID] or hazardousMexDefIds[unitDefID] then
+		local x,_,z = spGetUnitPosition(unitID)
+		local aId = spGetUnitAllyTeam(unitID)
+		for _,uId in pairs(spGetUnitsInCylinder(x,z,MEX_AUTO_RECLAIM_RADIUS)) do
+			if basicMexDefIds[spGetUnitDefID(uId)] then
+				local aId2 = spGetUnitAllyTeam(uId) 
+				if (aId2 == aId) then
+					-- Spring.Echo("nearby mex found : "..uId)
+					spSetUnitRulesParam(uId,"auto_build_fraction_per_step",MEX_AUTO_RECLAIM_FRACTION_PER_STEP,{public = true})	
+					spSetUnitRulesParam(uId,"auto_build_steps",MEX_AUTO_RECLAIM_STEPS,{public = true})
+					spSetUnitRulesParam(uId,"auto_build_update_metal",1,{public = true})
+					spSetUnitRulesParam(uId,"build_block",1,{public = true})
+					spGiveOrderToUnit(uId, CMD.ONOFF, { 0 }, { })
+				end
+			end
+		end
+	end
 end 
 
 

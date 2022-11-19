@@ -255,10 +255,10 @@ function gadget:GameFrame(n)
 		end
 	end	
 	
-	if fmod(n,DRONE_CHECK_DELAY) == 0 then
+	if n%DRONE_CHECK_DELAY == 0 then
 		-- update table of units with drones
 		local hasDrones = nil
-		for _,unitId in ipairs(spGetAllUnits()) do
+		for _,unitId in pairs(spGetAllUnits()) do
 			local uName = UnitDefs[spGetUnitDefID(unitId)].name
 			local set = {} 
 			
@@ -491,7 +491,7 @@ function gadget:GameFrame(n)
 				spSetUnitPhysics(uId,px,py,pz,ovx,ovy,ovz,orx,ory,0,0,0,0)
 				
 				if not droneBuildStalled[uId] then
-					if fmod(n,2) == 0 then
+					if n%2 == 0 then
 						spSpawnCEG(droneBuildCEG, px,py,pz)
 					end
 				end

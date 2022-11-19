@@ -435,6 +435,10 @@ spAreTeamsAllied = Spring.AreTeamsAllied
 spGetTeamUnits = Spring.GetTeamUnits
 spTransferUnit = Spring.TransferUnit
 
+EMPTY_TABLE = {}
+TABLE_WITH_ZERO = {0}
+TABLE_WITH_ONE = {1}
+
 function splitString (input, sep)
 	if sep == nil then
 		sep = "%s"
@@ -484,6 +488,11 @@ function listToSet (list)
 	
 	end
 	return set
+end
+
+-- used on BuildSiteHandler
+function distSort(t,a,b)
+	return t[b].dist > t[a].dist
 end
 
 function spairs(t, order)
@@ -660,48 +669,47 @@ function checkWithinMapBounds(x,z)
 end
 
 -- retrieve cell x,z indexes for position (general purpose cells)
-
+local _cellX,_cellZ
 function getCellXZIndexesForPosition(pos)
 	if pos ~= nil then
-		local cellX = pos.x - fmod(pos.x, CELL_SIZE)
-		local cellZ = pos.z - fmod(pos.z, CELL_SIZE)
-		cellX = cellX / CELL_SIZE
-		cellZ = cellZ / CELL_SIZE
-		return	cellX, cellZ
+		_cellX = pos.x - pos.x%CELL_SIZE
+		_cellZ = pos.z - pos.z%CELL_SIZE
+		_cellX = _cellX / CELL_SIZE
+		_cellZ = _cellZ / CELL_SIZE
+		return	_cellX, _cellZ
 	end
 end
 
 -- retrieve cell x,z indexes for position (smaller pathfinding cells)
 function getPFCellXZIndexesForPosition(pos)
 	if pos ~= nil then
-		local cellX = pos.x - fmod(pos.x, PF_CELL_SIZE)
-		local cellZ = pos.z - fmod(pos.z, PF_CELL_SIZE)
-		cellX = cellX / PF_CELL_SIZE
-		cellZ = cellZ / PF_CELL_SIZE
-		return	cellX, cellZ
+		_cellX = pos.x - pos.x%PF_CELL_SIZE
+		_cellZ = pos.z - pos.z%PF_CELL_SIZE
+		_cellX = _cellX / PF_CELL_SIZE
+		_cellZ = _cellZ / PF_CELL_SIZE
+		return	_cellX, _cellZ
 	end
 end
 
 function getCellFromTableIfExists(table,xIndex,zIndex)
-	local cell = nil
 	if table ~= nil then
-		if (table[xIndex] ~= nil and table[xIndex][zIndex] ~= nil) then
-			cell = table[xIndex][zIndex]
+		if (table[xIndex] ~= nil) then
+			return table[xIndex][zIndex]
 		end
 	end
 	
-	return cell
+	return nil
 end
-
+local _xIndex,_zIndex
 function getAdjacentCellList(table,pos)
-	local xIndex,zIndex = getCellXZIndexesForPosition(pos)
+	_xIndex,_zIndex = getCellXZIndexesForPosition(pos)
 	local cells = {}
 	
-	if xIndex >=0 and zIndex >=0 then
+	if _xIndex >=0 and _zIndex >=0 then
 		for dxi = -1, 1 do
 			for dzi = -1, 1 do
-				xi = xIndex + dxi
-				zi = zIndex + dzi
+				xi = _xIndex + dxi
+				zi = _zIndex + dzi
 				cell = getCellFromTableIfExists(table,xi,zi)
 				if(cell ~= nil) then
 					cells[#cells+1] = cell
@@ -714,10 +722,10 @@ function getAdjacentCellList(table,pos)
 end
 
 function getNearbyCellIfExists(table,pos)
-	local xIndex,zIndex = getCellXZIndexesForPosition(pos)
+	_xIndex,_zIndex = getCellXZIndexesForPosition(pos)
 	local cell = nil
-	if xIndex >=0 and zIndex >=0 then
-		cell = getCellFromTableIfExists(table,xIndex,zIndex)
+	if _xIndex >=0 and _zIndex >=0 then
+		cell = getCellFromTableIfExists(table,_xIndex,_zIndex)
 		if(cell ~= nil) then
 			return cell
 		end
@@ -725,13 +733,10 @@ function getNearbyCellIfExists(table,pos)
 		-- grab a nearby cell
 		for dxi = -1, 1 do
 			for dzi = -1, 1 do
-				xi = xIndex + dxi
-				zi = zIndex + dzi
+				xi = _xIndex + dxi
+				zi = _zIndex + dzi
 				if (xi >=0) and (zi >= 0) and not (dxi == 0 and dzi == 0) then
-					cell = getCellFromTableIfExists(table,xi,zi)
-					if(cell ~= nil) then
-						return cell
-					end 
+					return getCellFromTableIfExists(table,xi,zi)
 				end
 			end
 		end		

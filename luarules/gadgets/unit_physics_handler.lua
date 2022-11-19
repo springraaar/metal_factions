@@ -25,7 +25,6 @@ local spGetUnitRotation = Spring.GetUnitRotation
 local spGetUnitDirection = Spring.GetUnitDirection
 local spGetUnitRadius = Spring.GetUnitRadius
 local spGetUnitDefID = Spring.GetUnitDefID
-local spGetAllUnits = Spring.GetAllUnits
 local spGetGroundHeight = Spring.GetGroundHeight
 local spGetSmoothMeshHeight = Spring.GetSmoothMeshHeight
 local spGetUnitHealth = Spring.GetUnitHealth
@@ -159,8 +158,6 @@ local destructibleProjectileDefIds = {
 }
 local destructibleProjectileUnitIds = {}
 local destructibleProjectileInitialPositionByUnitId = {}
-
-local aircraftMovementFixUnitIds = {}
 
 -- these are used to warp back aircraft that flew off the map due to an engine bug
 local mapSizeX = Game.mapSizeX
@@ -390,11 +387,6 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 		destructibleProjectileUnitIds[unitId] = true
 	end
 
-	-- TODO this is disabled for now
-	--if aircraftMovementFixDefIds[unitDefId] then
-		--aircraftMovementFixUnitIds[unitId] = true
-	--end
-
 	-- x,y,z,vx,vy,vz,h,enableGC,rx,ry,rz,v		
 	unitPhysicsById[unitId] = {0,0,0,0,0,0,0,false,0,0,0,0}
 end
@@ -604,10 +596,6 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 	if scoperBeacons[unitId] then
 		scoperBeacons[unitId] = nil
 	end	
-	
-	if aircraftMovementFixUnitIds[unitId] then
-		aircraftMovementFixUnitIds[unitId] = nil
-	end
 	
 	if stuckGroundUnitIds[unitId] then
 		stuckGroundUnitIds[unitId] = nil

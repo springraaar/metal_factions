@@ -1,3 +1,25 @@
+2022/11/19 ------------------ NOTES v1.96 ----------------------
+
+--- Balance / Mechanics
+
+- Building a L2 metal extractor triggers an automatic reclaim of nearby allied L1 metal extractors, if any
+(for easier management and to avoid efficiency issues with the power grid)
+
+--- UI
+
+- Info panel when power nodes are selected also shows extra metal income and energy use associated with extractors within the grid
+
+--- AI
+
+- Fixed issues that lead to AVEN and CLAW skirmisher strategies not building mobile radars
+
+--- Performance
+
+- Modified explosion shock wave animations to improve performance and appearance in most situations
+- Enforce Lua garbage collection settings and force it to run more often to avoid crashing with "out-of-memory" errors
+- Miscellaneous performance optimizations, namely when MFAI is used
+
+
 2022/11/08 ------------------ NOTES v1.95 ----------------------
 
 

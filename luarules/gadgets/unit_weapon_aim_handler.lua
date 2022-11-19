@@ -22,7 +22,6 @@ local spSetUnitTarget = Spring.SetUnitTarget
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetGameFrame = Spring.GetGameFrame
 local spGetUnitHealth = Spring.GetUnitHealth
-local spGetAllUnits = Spring.GetAllUnits
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spSetUnitWeaponState = Spring.SetUnitWeaponState
 local spSetUnitWeaponDamages = Spring.SetUnitWeaponDamages

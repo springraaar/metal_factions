@@ -52,7 +52,7 @@ end
 
 -- surrender teams that are very weak compared to the strongest opponent
 function gadget:GameFrame(n)
-	if (not GG.sandbox) and n > 300 and math.fmod(n,CHECK_DELAY_FRAMES) == 5 then
+	if (not GG.sandbox) and n > 300 and n%CHECK_DELAY_FRAMES == 5 then
 		local teamCommanderIds = {}
 		local allyTeamList = Spring.GetAllyTeamList()
 		local allUnits = spGetAllUnits()

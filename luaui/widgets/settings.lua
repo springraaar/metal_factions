@@ -30,6 +30,17 @@ function widget:Initialize()
 		Spring.SetConfigInt("ScrollWheelSpeed",-25,true)
 	end
 	
+	-- ensure lua garbage collection has enough slack to do its job
+	-- (force persistence because otherwise they won't take effect as of 105.0)
+	local gcMemMult = Spring.GetConfigFloat("LuaGarbageCollectionMemLoadMult")
+	if (gcMemMult and gcMemMult < 1.3) then
+		Spring.SetConfigFloat("LuaGarbageCollectionMemLoadMult",1.3,false) -- default 1.33f
+	end
+	local gcTimeMult = Spring.GetConfigFloat("LuaGarbageCollectionRunTimeMult")
+	if (gcTimeMult and gcTimeMult < 4.5) then
+		Spring.SetConfigFloat("LuaGarbageCollectionRunTimeMult",4.5,false) 	-- default 5.0f
+	end
+	
 	-- disable clock and fps (widget is used instead)
 	Spring.SendCommands("clock 0")
 	Spring.SendCommands("fps 0")
@@ -53,12 +64,13 @@ function widget:Initialize()
 	end
 	
 	-- enforce default font sizes
-	Spring.SetConfigInt("FontOutlineWeight",25,true)
-	Spring.SetConfigInt("FontOutlineWidth",3,true)
-	Spring.SetConfigInt("FontSize",23,true)
-	Spring.SetConfigInt("SmallFontOutlineWeight",10,true)
-	Spring.SetConfigInt("SmallFontOutlineWidth",2,true)
-	Spring.SetConfigInt("SmallFontSize",14,true)
+	-- (force persistence because otherwise they won't take effect as of 105.0)
+	Spring.SetConfigInt("FontOutlineWeight",25,false)
+	Spring.SetConfigInt("FontOutlineWidth",3,false)
+	Spring.SetConfigInt("FontSize",23,false)
+	Spring.SetConfigInt("SmallFontOutlineWeight",10,false)
+	Spring.SetConfigInt("SmallFontOutlineWidth",2,false)
+	Spring.SetConfigInt("SmallFontSize",14,false)
 	
 	if (string.find(Engine.version,"BAR105")) then
 		Spring.SendCommands("softparticles 0")

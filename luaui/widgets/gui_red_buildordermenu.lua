@@ -764,10 +764,16 @@ local function UpdateGrid(g,cmds,orderType,unfilteredCmds)
 
 		icon.mouseClick = {
 			{1,function(mx,my,self)
-				Spring.SetActiveCommand(Spring.GetCmdDescIndex(cmd.id),1,true,false,Spring.GetModKeyState())
+				local descIdx = Spring.GetCmdDescIndex(cmd.id)
+				if descIdx then
+					Spring.SetActiveCommand(descIdx,1,true,false,Spring.GetModKeyState())
+				end
 			end},
 			{3,function(mx,my,self)
-				Spring.SetActiveCommand(Spring.GetCmdDescIndex(cmd.id),3,false,true,Spring.GetModKeyState())
+				local descIdx = Spring.GetCmdDescIndex(cmd.id)
+				if descIdx then
+					Spring.SetActiveCommand(descIdx,3,false,true,Spring.GetModKeyState())
+				end
 			end},
 		}
 		
