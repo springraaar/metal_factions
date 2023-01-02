@@ -62,6 +62,9 @@ local spGetGameFrame = Spring.GetGameFrame
 local spGetUnitViewPosition = Spring.GetUnitViewPosition 
 local spGetCameraPosition = Spring.GetCameraPosition
 local spGetUnitDefID = Spring.GetUnitDefID
+local spGetUnitHealth = Spring.GetUnitHealth
+local spIsUnitInView = Spring.IsUnitInView 
+local spIsUnitIcon = Spring.IsUnitIcon
 
 local GL_MODELVIEW  = GL.MODELVIEW
 local GL_PROJECTION = GL.PROJECTION
@@ -95,17 +98,79 @@ local noOutlineUnitDefIds = {
 	[UnitDefNames["scoper_beacon"].id] = true
 }
 
-local lastVisibleFrame = -1000
-local latestVisibleUnits = {} 
-local VISIBLE_VALIDITY_FRAMES = 30	-- cache visible unit list for 1s
+local min = math.min
+local outlinableUnitIds = {}
 
 local OUTLINE_MIN_DISTANCE = 1000
 local OUTLINE_MIN_SQDISTANCE = OUTLINE_MIN_DISTANCE * OUTLINE_MIN_DISTANCE
+
+
+
+local function DrawVisibleUnits()
+	local ux, uy, uz
+	local dx, dy, dz, dist, distMod
+	local cx,cy,cz = spGetCameraPosition()
+	local bp
+	local uId = 0
+	local opacity
+	for uId,data in pairs(outlinableUnitIds) do
+		if not spIsUnitIcon(uId) and spIsUnitInView(uId) then
+			opacity = 0.4
+
+			ux, uy, uz = spGetUnitViewPosition(uId)
+			if ux then
+				_,_,_,_,bp = spGetUnitHealth(uId)
+				dx, dy, dz = ux-cx, uy-cy, uz-cz
+				dist = dx*dx + dy*dy + dz*dz
+				distMod = (dist - 2*OUTLINE_MIN_SQDISTANCE) / OUTLINE_MIN_SQDISTANCE 
+				
+				if distMod > 0 then
+					opacity = min(distMod,1) * opacity
+					opacity = opacity * bp
+				else
+					opacity = 0
+				end
+				--Spring.Echo("unit "..UnitDefs[spGetUnitDefID(uId)].name.." distMod="..distMod.." opacity="..opacity)
+	
+				if opacity > 0 then
+					glColor(0,0,0,opacity)
+					glUnit(uId,true)
+				end
+			end
+		end
+	end
+end
+
+local MyDrawVisibleUnits = function()
+  glClear(GL_COLOR_BUFFER_BIT,0,0,0,0)
+  glPushMatrix()
+  glResetMatrices()
+  DrawVisibleUnits()
+  glColor(1,1,1,1)
+  glPopMatrix()
+end
+
+local blur_h = function()
+  glClear(GL_COLOR_BUFFER_BIT,0,0,0,0)
+  glUseShader(blurShader_h)
+  glTexRect(-1-0.5/vsx,1+0.5/vsy,1+0.5/vsx,-1-0.5/vsy)
+end
+
+local blur_v = function()
+  glClear(GL_COLOR_BUFFER_BIT,0,0,0,0)
+  glUseShader(blurShader_v)
+  glTexRect(-1-0.5/vsx,1+0.5/vsy,1+0.5/vsx,-1-0.5/vsy)
+end
+
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
 function widget:Initialize()
+	for _,unitID in ipairs(spGetVisibleUnits()) do
+		widget:UnitCreated(unitID,spGetUnitDefID(unitID))
+	end
+
   vsx, vsy = widgetHandler:GetViewSizes()
 
   depthShader = gl.CreateShader({
@@ -291,60 +356,6 @@ function widget:Shutdown()
 end
 
 
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-
-local function DrawVisibleUnits()
-	local f = spGetGameFrame()
-	if (f - lastVisibleFrame > VISIBLE_VALIDITY_FRAMES) then
-		latestVisibleUnits = {}
-		local ux, uy, uz
-		local dx, dy, dz, dist		
-		local units = spGetVisibleUnits(ALL_UNITS,nil,false)
-		local cx,cy,cz = spGetCameraPosition()
-		local uId = 0
-		for i=1,#units do
-			uId = units[i]
-			if not noOutlineUnitDefIds[spGetUnitDefID(uId)] then
-				ux, uy, uz = spGetUnitViewPosition(uId)
-				dx, dy, dz = ux-cx, uy-cy, uz-cz
-				dist = dx*dx + dy*dy + dz*dz
-				--Spring.Echo(dist)
-				if (dist > OUTLINE_MIN_SQDISTANCE) then
-					latestVisibleUnits[#latestVisibleUnits+1] = uId
-				end
-			end
-		end
-		lastVisibleFrame = f
-	end
-  
-	for i=1,#latestVisibleUnits do  
-		glUnit(latestVisibleUnits[i],true)
-	end
-end
-
-local MyDrawVisibleUnits = function()
-  glClear(GL_COLOR_BUFFER_BIT,0,0,0,0)
-  glPushMatrix()
-  glResetMatrices()
-  glColor(0,0,0,0.4)
-  DrawVisibleUnits()
-  glColor(1,1,1,1)
-  glPopMatrix()
-end
-
-local blur_h = function()
-  glClear(GL_COLOR_BUFFER_BIT,0,0,0,0)
-  glUseShader(blurShader_h)
-  glTexRect(-1-0.5/vsx,1+0.5/vsy,1+0.5/vsx,-1-0.5/vsy)
-end
-
-local blur_v = function()
-  glClear(GL_COLOR_BUFFER_BIT,0,0,0,0)
-  glUseShader(blurShader_v)
-  glTexRect(-1-0.5/vsx,1+0.5/vsy,1+0.5/vsx,-1-0.5/vsy)
-end
-
 function widget:DrawWorldPreUnit()
   glCopyToTexture(depthtex, 0, 0, 0, 0, vsx, vsy)
   glTexture(depthtex)
@@ -373,6 +384,18 @@ function widget:DrawWorldPreUnit()
   glTexRect(-1-0.5/vsx,1+0.5/vsy,1+0.5/vsx,-1-0.5/vsy)
   glCallList(leave2d)
 end
+
+
+function widget:UnitDestroyed(unitID, unitDefID, unitTeam)
+	outlinableUnitIds[unitID] = nil
+end
+
+function widget:UnitCreated(unitID, unitDefID, unitTeam)
+	if not noOutlineUnitDefIds[unitDefID] then
+		outlinableUnitIds[unitID] = true
+	end
+end
+
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------

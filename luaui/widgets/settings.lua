@@ -1,7 +1,7 @@
 function widget:GetInfo()
 	return {
 		name	= "Settings",
-		desc	= "Overrides some Spring settings: grass, camera, maxParticles, clock, fps, speed indicator",
+		desc	= "Overrides some Spring settings",
 		author	= "raaar",
 		date	= "2015-07-20",
 		license	= "PD",
@@ -18,11 +18,11 @@ function widget:Initialize()
 	camState.mode = Spring.GetCameraNames()['ta']
 	Spring.SetCameraState(camState, 0)
 	
-	-- set max particles to 20000
-	Spring.SetConfigInt("MaxParticles",20000,true)
+	-- set max particles to 30000
+	Spring.SetConfigInt("MaxParticles",30000,true)
 
-	-- set max nano particles to 10000
-	Spring.SetConfigInt("MaxNanoParticles",10000,true)
+	-- set max nano particles to 15000
+	Spring.SetConfigInt("MaxNanoParticles",15000,true)
 	
 	-- set scrollwheel speed to -25 if >= 0
 	local swSpeed = Spring.GetConfigInt("ScrollWheelSpeed")
@@ -58,10 +58,10 @@ function widget:Initialize()
 	Spring.SendCommands("HardwareCursor 1")
 	
 	-- enforce vsync
-	local vsync = Spring.GetConfigInt("VSync")
-	if (vsync and vsync == 0) then
-		Spring.SetConfigInt("VSync",1,true)
-	end
+	--local vsync = Spring.GetConfigInt("VSync")
+	--if (vsync and vsync == 0) then
+	--	Spring.SetConfigInt("VSync",1,true)
+	--end
 	
 	-- enforce default font sizes
 	-- (force persistence because otherwise they won't take effect as of 105.0)
@@ -73,7 +73,7 @@ function widget:Initialize()
 	Spring.SetConfigInt("SmallFontSize",14,false)
 	
 	if (string.find(Engine.version,"BAR105")) then
-		Spring.SendCommands("softparticles 0")
+		Spring.SendCommands("softparticles 1")
 	end
 end
 

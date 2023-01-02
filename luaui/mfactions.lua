@@ -72,8 +72,8 @@ function actionHandler:AddAction(widget, cmd, func, data, types)
   end
 
   -- default to text and keyPress  (not repeat or releases)
-  local text, keyPress, keyRepeat, keyRelease = ParseTypes(types, "tpRr")
-  
+  local text, keyPress, keyRepeat, keyRelease = ParseTypes(types, "tp")
+
   local tSuccess, pSuccess, RSuccess, rSuccess = false, false, false, false
 
   if (text)       then tSuccess = add(self.textActions)       end
@@ -195,8 +195,6 @@ end
 
 
 local function MakeKeySetString(key, mods, getSymbol)
-  if key == nil then return "" end
-
   getSymbol = getSymbol or Spring.GetKeySymbol
   local keyset = ""
   if (mods.alt)   then keyset = keyset .. "A+" end
@@ -208,16 +206,16 @@ local function MakeKeySetString(key, mods, getSymbol)
 end
 
 
-local function TryAction(actionMap, cmd, optLine, optWords, isRepeat, release)
+local function TryAction(actionMap, cmd, optLine, optWords, isRepeat, release, actions)
   local callInfoList = actionMap[cmd]
   if (callInfoList == nil) then
     return false
   end
-  for i,callInfo in ipairs(callInfoList) do
+  for _, callInfo in ipairs(callInfoList) do
     --local widget = callInfo[1]
     local func   = callInfo[2]
     local data   = callInfo[3]
-    if (func(cmd, optLine, optWords, data, isRepeat, release)) then
+    if (func(cmd, optLine, optWords, data, isRepeat, release, actions)) then
       return true
     end
   end
@@ -225,33 +223,33 @@ local function TryAction(actionMap, cmd, optLine, optWords, isRepeat, release)
 end
 
 
-function actionHandler:KeyAction(press, key, mods, isRepeat, scanCode)
-  local defBinds
-  local keyset = MakeKeySetString(key, mods, Spring.GetKeySymbol)
-
-  if scanCode then -- engine supports scancodes
+function actionHandler:KeyAction(press, key, mods, isRepeat, scanCode, actions)
+  if (not actions) then -- engine does not support actions sent in Key(Press|Release)
+    local keyset = MakeKeySetString(key, mods, Spring.GetKeySymbol)
     local scanset = MakeKeySetString(scanCode, mods, Spring.GetScanSymbol)
 
-    defBinds = Spring.GetKeyBindings(keyset, scanset)
-  else
-    defBinds = Spring.GetKeyBindings(keyset)
+    actions = Spring.GetKeyBindings(keyset, scanset)
   end
 
-  if (defBinds) then
-    local actionSet
-    if (press) then
-      actionSet = isRepeat and self.keyRepeatActions or self.keyPressActions
-    else
-      actionSet = self.keyReleaseActions
-    end
-    for b,bAction in ipairs(defBinds) do
-      local bCmd, bOpts = next(bAction, nil)
-		  local words = MakeWords(bOpts)
-      if (TryAction(actionSet, bCmd, bOpts, words, isRepeat, not press)) then
-        return true
-      end
+  if (not(actions and next(actions))) then return false end
+
+  local actionSet
+  if (press) then
+    actionSet = isRepeat and self.keyRepeatActions or self.keyPressActions
+  else
+    actionSet = self.keyReleaseActions
+  end
+
+  for _, bAction in ipairs(actions) do
+    local bCmd = bAction["command"]
+    local bOpts = bAction["extra"]
+    local words = MakeWords(bOpts)
+
+    if (TryAction(actionSet, bCmd, bOpts, words, isRepeat, not press, actions)) then
+      return true
     end
   end
+
   return false
 end
 
@@ -280,8 +278,8 @@ function actionHandler:RecvFromSynced(...)
     if (callInfoList == nil) then
       return false
     end
-    
-    for i,callInfo in ipairs(callInfoList) do
+
+    for _,callInfo in ipairs(callInfoList) do
       -- local widget = callInfo[1]
       local func = callInfo[2]
       if (func(...)) then

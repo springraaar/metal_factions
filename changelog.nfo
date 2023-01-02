@@ -1,3 +1,25 @@
+2023/01/02 ------------------ NOTES v1.97 ----------------------
+
+--- Engine
+
+- updated the engine compatibility recommendation from "105.0" to "105.1.1-1422-g3a36584 BAR105"
+
+--- UI / Visual / Sounds
+
+- reduced beam fade times for many lasers to avoid them being visually offset from the firing piece too much when fired from fast moving units
+- modified some of the sounds for heavy plasma mortars, seeker flares and laser impacts
+- improved sound and explosion effects of AVEN long range lightning rocket
+- improved large explosions (nukes, grenado, etc.)
+- slightly reduced model size for long range rockets
+
+- outline effect transparency scales with build percent to avoid units looking completely dark when starting construction
+(issue was more noticeable on large buildings)
+
+- settings widget no longer enforces vsync=1
+- settings widget enables softparticles (looks better and performance impact doesn't seem significant)
+
+
+
 2022/11/19 ------------------ NOTES v1.96 ----------------------
 
 --- Balance / Mechanics

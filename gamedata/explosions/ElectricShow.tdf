@@ -22,7 +22,7 @@
 		{
 		pos=75 r-150, 15 r-30, 75 r-150;  
 		delay=30 r15;				  
-		explosionGenerator=custom:Sparks;
+		explosionGenerator=custom:LIGHTNINGSPARK;
 		}
 	air=1;
 	water=1;
@@ -38,7 +38,7 @@
 		{
 		pos=25 r-50, 10 r-20, 25 r-50;  
 		delay=15 r15;				  
-		explosionGenerator=custom:Sparks;
+		explosionGenerator=custom:LIGHTNINGSPARK;
 		}
 	air=1;
 	water=1;
@@ -53,56 +53,56 @@
 {
 	[ElectricalStrike] 
 	{
-	    class=CExpGenSpawner;
+		class=CExpGenSpawner;
 		[properties]
 		{
-		pos=0, 0, 0;  
-		delay=0 r1;				  
-		explosionGenerator=custom:LIGHTNINGSML;
+			pos=0, 0, 0;  
+			delay=0 r1;				  
+			explosionGenerator=custom:LIGHTNINGSML;
 		}
-	air=1;
-	water=1;
-	underwater=1;
-	ground=1;
-	count=1;
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
 	}
 	[ElectricalWebOuter] 
 	{
-	    class=CExpGenSpawner;
+		class=CExpGenSpawner;
 		[properties]
 		{
-		pos=75 r-150, 15 r-30, 75 r-150;  
-		delay=30 r15;				  
-		explosionGenerator=custom:Sparks;
+			pos=75 r-150, 15 r-30, 75 r-150;  
+			delay=30 r15;				  
+			explosionGenerator=custom:LIGHTNINGSPARK;
 		}
-	air=1;
-	water=1;
-	underwater=1;
-	ground=1;
-	count=2;
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=2;
 	}
 
 	[ElectricalWebINNER] 
 	{
-	    class=CExpGenSpawner;
+		class=CExpGenSpawner;
 		[properties]
 		{
-		pos=25 r-50, 10 r-20, 25 r-50;  
-		delay=15 r15;				  
-		explosionGenerator=custom:Sparks;
+			pos=25 r-50, 10 r-20, 25 r-50;  
+			delay=15 r15;				  
+			explosionGenerator=custom:LIGHTNINGSPARK;
 		}
-	air=1;
-	water=1;
-	underwater=1;
-	ground=1;
-	count=3;
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=3;
 	}
 
 }
 
-[Sparks]
+[LIGHTNINGSPARK]
 {
-	usedefaultexplosions=1;	
+	usedefaultexplosions=0;	
 	[groundflash]
 	{
 		flashSize = 30;
@@ -132,58 +132,80 @@
 		ground=1;
   		count=3; 
 	}
-	[heatcloud]
-   		{
-      		[properties]
-      		{
-		Texture=lightweb1;
-      		heat = 15;
-      		maxheat = 15;
-      		heatFalloff = 1.4;
-      		size = 7.67 r10;
-      		sizeGrowth = 0.0;
-      		sizemod = 7.67;
-      		sizemodmod = 0;
-      		speed = -0.4 r0.8, -0.2 r0.4, -0.4 r0.8;
-      		pos = 0.8 r-1.6, 3.0 r-0.4, 0.8 r-1.6;
-      		}
+	[heatcloud1]
+	{
+		class=CHeatCloudProjectile;
+		[properties]
+		{
+			Texture=lightweb1;
+			heat = 15;
+			maxheat = 15;
+			heatFalloff = 1.4;
+			size = r20;
+			sizeGrowth = 0.0;
+			sizemod = r1;
+			sizemodmod = r1;
+			speed = -0.4 r0.8, -0.2 r0.4, -0.4 r0.8;
+			pos = 0.8 r-1.6, 3.0 r-0.4, 0.8 r-1.6;
+		}
 		air=1;
       	water=1;
 		underwater=1;
       	ground=1;
       	count=1;
 	}
-
+	[heatcloud2]
+	{
+		class=CHeatCloudProjectile;
+		[properties]
+		{
+			Texture=lightweb2;
+			heat = 15;
+			maxheat = 15;
+			heatFalloff = 1.4;
+			size = r20;
+			sizeGrowth = 0.0;
+			sizemod = r1;
+			sizemodmod = r1;
+			speed = -0.4 r0.8, -0.2 r0.4, -0.4 r0.8;
+			pos = 0.8 r-1.6, 3.0 r-0.4, 0.8 r-1.6;
+		}
+		air=1;
+      	water=1;
+		underwater=1;
+      	ground=1;
+      	count=1;
+	}
 	[burnstuff]
 	{
 		class=CSimpleParticleSystem;
 		[properties]
 		{
-		sizeGrowth=0;
-		sizeMod=1.0;
-		pos=0, 0, 0; 
-		emitVector=0, 1, 0;
-		gravity=0, -0.45, 0;  
-		colorMap=1 1 1 0.01   1 0.7 0.2 0.01   0 0 0 0.01;
-		Texture=flamespark;
-		airdrag=0.95;
-		particleLife=18;
-		particleLifeSpread=0;
-		numParticles=2;
-		particleSpeed=5.4;
-		particleSpeedSpread=1.8;
-		particleSize=2.5;
-		particleSizeSpread=2.4;
-		emitRot=28;
-		emitRotSpread=65;
-		directional=1;
-		alwaysVisible=1;
+			sizeGrowth=0;
+			sizeMod=1.0;
+			pos=0, 0, 0; 
+			emitVector=0, 1, 0;
+			gravity=0, -0.45, 0;  
+			colorMap=1 1 1 0.01   1 0.7 0.2 0.01   0 0 0 0.01;
+			Texture=flamespark;
+			airdrag=0.95;
+			particleLife=18;
+			particleLifeSpread=0;
+			numParticles=2;
+			particleSpeed=5.4;
+			particleSpeedSpread=1.8;
+			particleSize=2.5;
+			particleSizeSpread=2.4;
+			emitRot=28;
+			emitRotSpread=65;
+			directional=1;
+			alwaysVisible=1;
 		}
-	air=1;
-	water=1;
-	underwater=1;
-	ground=1;
-	count=1;
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
 	}
 }
 
@@ -196,7 +218,7 @@
 		{
 		pos=75 r-150, 15 r-30, 75 r-150;  
 		delay=0 r50 d10;
-		explosionGenerator=custom:Sparks;
+		explosionGenerator=custom:LIGHTNINGSPARK;
 		}
 	air=1;
 	water=1;
@@ -210,34 +232,34 @@
 {
 	[ElectricalStrike] 
 	{
-	    class=CExpGenSpawner;
+		class=CExpGenSpawner;
 		[properties]
 		{
-		pos=0, 0, 0;  
-		delay=0 r1;				  
-		explosionGenerator=custom:LIGHTNINGSML;
+			pos=0, 0, 0;  
+			delay=0 r1;				  
+			explosionGenerator=custom:LIGHTNINGSML;
 		}
-	air=1;
-	water=1;
-	underwater=1;
-	ground=1;
-	count=1;
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
 	}
 
 	[ElectricalWebINNER] 
 	{
-	    class=CExpGenSpawner;
+		class=CExpGenSpawner;
 		[properties]
 		{
-		pos=25 r-50, 10 r-20, 25 r-50;  
-		delay=15 r15;				  
-		explosionGenerator=custom:Sparks;
+			pos=25 r-50, 10 r-20, 25 r-50;  
+			delay=15 r15;				  
+			explosionGenerator=custom:LIGHTNINGSPARK;
 		}
-	air=1;
-	water=1;
-	underwater=1;
-	ground=1;
-	count=2;
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=2;
 	}
 
 }

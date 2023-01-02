@@ -123,10 +123,17 @@ for wdName, wd in pairs(WeaponDefs) do
 			wd.heightmod = 1.0		-- default was 1.0
 			-- fading effect for beams proportional to damage
 			if wd.damage and wd.damage.default then
-				local defaultDamage = tonumber(wd.damage.default)
-				wd.beamttl = 4 + defaultDamage / 130
+				if not wd.beamttl then
+					local defaultDamage = tonumber(wd.damage.default)
+					if (wdName:lower():find("_beam",1,true)) then
+						wd.beamttl = 4 + defaultDamage / 130
+					else
+						wd.beamttl = 0 + defaultDamage / 130
+					end
+				end
+				
 				if not wd.beamdecay then
-					wd.beamdecay = 0.8
+					wd.beamdecay = 0.9
 				end
 				if not wd.laserflaresize then
 					wd.laserflaresize = 9
