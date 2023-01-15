@@ -375,18 +375,27 @@ do
     glBeginEnd(GL_QUADS,DrawGradient,-featureBarWidth, featureBarHeight+offsetY, progress_pos, offsetY, brightClr,color)
   end
 
-  function DrawStockpile(numStockpiled,numStockpileQued)
+  function DrawStockpile(numStockpiled,numStockpileQueued)
     --// DRAW STOCKPILED MISSILES
     glColor(1,1,1,1)
     glTexture("luaui/images/nuke.png")
+
+	--if numStockpiled > 0 or numStockpileQueued > 0 then
+	    --local xoffset = barWidth+8
+		--glTexRect(0,-(11*barHeight-2)-stockpileH,stockpileW,-(11*barHeight-2))
+	--end
+	
+	
     local xoffset = barWidth+16
     for i=1,((numStockpiled>3) and 3) or numStockpiled do
       glTexRect(xoffset,-(11*barHeight-2)-stockpileH,xoffset-stockpileW,-(11*barHeight-2))
       xoffset = xoffset-8
     end
+    
     glTexture(false)
 
-    glText(numStockpiled..'/'..numStockpileQued,barWidth+1.7,-(11*barHeight-2)-16,6.5,"cno")
+    --glText(numStockpiled..'/'..numStockpileQueued,barWidth+1.7,-(11*barHeight-2)-20,12.5,"cnos")
+    glText(numStockpiled..'/'..(numStockpileQueued+numStockpiled),barWidth+1.7,-(11*barHeight-2)-20,12.5,"cnos")
   end
 
 end --//end do
@@ -495,7 +504,7 @@ do
   local dx, dy, dz, dist
   local hp, hp100, emp, morph
   local reload,reloaded,reloadFrame
-  local numStockpiled,numStockpileQued
+  local numStockpiled,numStockpileQueued
   local customInfo = {}
   local ci
 
@@ -613,7 +622,7 @@ do
       --// STOCKPILE
       if (ci.canStockpile) then
         local stockpileBuild
-        numStockpiled,numStockpileQued,stockpileBuild = GetUnitStockpile(unitID)
+        numStockpiled,numStockpileQueued,stockpileBuild = GetUnitStockpile(unitID)
         if (numStockpiled) then
           stockpileBuild = stockpileBuild or 0
           if (stockpileBuild>0) then
@@ -683,10 +692,10 @@ do
       if (numStockpiled) then
         if (barShader) then
           glMyText(1)
-          DrawStockpile(numStockpiled,numStockpileQued)
+          DrawStockpile(numStockpiled,numStockpileQueued)
           glMyText(0)
         else
-          DrawStockpile(numStockpiled,numStockpileQued)
+          DrawStockpile(numStockpiled,numStockpileQueued)
         end  
       end
 

@@ -38,7 +38,19 @@ spDestroyUnit = Spring.DestroyUnit
 ENERGY_METAL_VALUE = 1/60
 
 
+GFX_LOW = 0
+GFX_MEDIUM = 1
+GFX_HIGH = 2
 
+-------------------------------------------- WIDGET HANDLING
+
+function disableWidget(name)
+	Spring.SendCommands("disablewidget "..name)
+end
+
+function enableWidget(name)
+	Spring.SendCommands("enablewidget "..name)
+end
 
 -------------------------------------------- GENERIC
 -- sets, tables, string manipulation, etc. 
@@ -149,6 +161,27 @@ function printTable(table)
 	end
 end
 
+function mergeTable(table1,table2)
+	local result = {}
+	for i,v in pairs(table2) do 
+		if (type(v)=='table') then
+			result[i] = mergeTable(v,{})
+		else
+			result[i] = v
+		end
+	end
+	for i,v in pairs(table1) do 
+		if (result[i]==nil) then
+			if (type(v)=='table') then
+				if (type(result[i])~='table') then result[i] = {} end
+				result[i] = mergeTable(v,result[i])
+			else
+				result[i] = v
+			end
+		end
+	end
+	return result
+end
 
 function splitString(input, sep)
 	if sep == nil then
@@ -225,7 +258,7 @@ end
 
 -- checks if unit is a commander
 function isCommander(ud)
-	if (ud.customParams.iscommander) then
+	if (ud.customParams and ud.customParams.iscommander) then
 		return true
 	end
 	return false

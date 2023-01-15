@@ -100,6 +100,8 @@ local function copyTable(t,copyEveryThing)
 	end
 	return r
 end
+
+
 -------------------------
 
 

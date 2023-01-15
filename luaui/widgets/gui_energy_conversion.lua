@@ -119,7 +119,7 @@ function widget:CommandsChanged()
 end
 
 function widget:DrawScreen()
-    if not displayWindow then return end
+    if (not displayWindow or WG.menuShown) then return end
 	
     -- Var
     local myTeamID = spGetMyTeamID()
@@ -183,7 +183,7 @@ function widget:TeamDied(teamID)
 end
 
 function widget:MousePress(mx, my, mButton)
-	if displayWindow then
+	if displayWindow and not WG.menuShown then
 		if mButton == 2 or mButton == 3 then
 			if mx >= px and my >= py and mx < px + sx and my < py + sy then
 				return true
@@ -201,7 +201,7 @@ end
 
 function widget:MouseMove(mx, my, dx, dy, mButton)
     -- Dragging
-	if displayWindow then
+	if displayWindow and not WG.menuShown then
 		if mButton == 2 or mButton == 3 then
 			if px+sx+onsidemargin+dx>=0 and px+onsidemargin+dx<=X then px = px + dx end
 			if py+sy+onsidemargin+dy>=0 and py+onsidemargin+dy<=Y then py = py + dy end

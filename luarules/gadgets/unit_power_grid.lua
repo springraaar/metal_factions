@@ -466,6 +466,7 @@ function gadget:GameFrame(n)
 					spSetUnitRulesParam(uId,"powerGridExtractionBonus",0)
 					spSetUnitRulesParam(uId,"powerGridLevel",0)
 					if props.active then
+						--Spring.Echo(props.mExt)
 						spSetUnitMetalExtraction(uId,props.mExt)
 						spSetUnitResourcing( uId, "cue", 0)
 					end 

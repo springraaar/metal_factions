@@ -205,6 +205,25 @@ local function UnitFinished(_,unitID,unitDefID)
       if (fx.class=="AirJet") then
         aircraftWithThrusters[unitID] = {fThrust=0,vThrust=0,v=0,effects=effects}
       end
+      if (fx.class=="ShieldSphere") then
+        local ud = UnitDefs[unitDefID]
+        if ud.weapons and ud.weapons[1] and ud.weapons[1].weaponDef then
+			for wNum,w in pairs(ud.weapons) do
+				local wd=WeaponDefs[w.weaponDef]
+			    if wd.isShield == true then
+					fx.options.size = wd.shieldRadius
+					fx.options.shieldMax = wd.shieldPower
+					fx.options.uId = unitID
+					break
+			    end
+			end
+	    end
+	    
+      else
+        if (fx.options.radiusFactor) then
+          fx.options.size = Spring.GetUnitRadius(unitID)*fx.options.radiusFactor
+	    end  
+      end
       if (fx.class=="GroundFlash") then
         fx.options.pos = { Spring.GetUnitPosition(unitID) }
       end
@@ -212,10 +231,9 @@ local function UnitFinished(_,unitID,unitDefID)
 		local pos = fx.options.pos or {0, 0, 0}
         fx.options.pos = { pos[1], Spring.GetUnitHeight(unitID)*fx.options.heightFactor, pos[3] }
       end
-	  if (fx.options.radiusFactor) then
-		fx.options.size = Spring.GetUnitRadius(unitID)*fx.options.radiusFactor
-	  end
+
       fx.options.unit = unitID
+      --Spring.Echo("adding lups fx "..fx.class.." to "..unitID)
       AddFxs( unitID,LupsAddFX(fx.class,fx.options) )
       fx.options.unit = nil
     end

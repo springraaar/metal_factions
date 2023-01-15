@@ -79,9 +79,8 @@ end
 
 function widget:Initialize()
 	Spring.SendCommands("unbindaction showmetalmap")
-	--Spring.SendCommands("unbindaction quitmenu")
 	Spring.SendCommands("unbind esc quitmenu")
-	Spring.SendCommands("bind Shift+esc quitmenu")
+	Spring.SendCommands("unbind shift+esc quitmenu")
    
 	-- create a custom keybinds file with default content if it's missing
 	if not VFS.FileExists(customKeybindsFile) then
@@ -198,6 +197,18 @@ end
 
 
 function widget:KeyPress(key, mods, isRepeat)
+	if (key == KEYSYMS.ESCAPE) and mods.shift  then
+		if (not WG.menuShown) then
+			if WG.showMenu then
+				WG.showMenu()
+			end
+		else
+			if WG.hideMenu then
+				WG.hideMenu()
+			end
+		end
+		return
+	end
 	if (key == KEYSYMS.C) and mods.ctrl then
 		-- get team units
 		local unitList = Spring.GetTeamUnits(Spring.GetMyTeamID())
@@ -223,7 +234,6 @@ function widget:KeyPress(key, mods, isRepeat)
 	end
 end
 
--- workaround for menu not showing up
 function widget:KeyRelease()
 	if (shouldSelectCom) then
 		Spring.SelectUnitArray({shouldSelectCom})

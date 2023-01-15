@@ -36,7 +36,7 @@ SphereParticle.Default = {
   sizeGrowth = 0,
   colormap   = { {0, 0, 0, 0} },
 
-  texture    = 'bitmaps/GPL/Lups/sphere.png',
+  texture    = 'bitmaps/sphere.png',
   repeatEffect = false,
   genmipmap    = true,  -- todo
 }

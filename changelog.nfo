@@ -1,3 +1,36 @@
+2023/01/15 ------------------ NOTES v1.98 ----------------------
+
+--- Engine
+
+- updated the springRTS engine compatibility recommendation to "105.1.1-1478-gbc6400c BAR105"
+
+--- New units
+
+- added GEAR "Snapper" : L2 Assault/Raider Hydrobot
+- added AVEN "Skein" : L2 Drone Controller Hovercraft
+
+--- Balance / Mechanics
+
+- fixed SPHERE "Dipole" and "Cluster" not actually draining energy to move
+- slightly increased SPHERE "Dipole" and "Atom" maneuverability
+- slightly reduced the blind spot on "Dipole" beams
+
+- increased GEAR "Exploder" decloak radius from 20 to 40
+
+- Comsat stations got the reload time reduced from 180 to 30s, but stockpile scans every 180s, max 3 charges
+
+- made AVEN hovercraft turn rates more consistent (generally a bit higher)
+
+--- UI / Visual / Sounds
+
+- modified how shields are drawn to significantly improve performance and better compatibility with BAR105 engine
+
+- added "GFX Settings : Low/Medium/High" widgets that change graphics presets
+(defaults to high)
+- settings widgets overrides more settings that are set by other games
+- MENU button now opens up a panel which includes buttons to change between Low/Med/High graphics presets 
+
+
 2023/01/02 ------------------ NOTES v1.97 ----------------------
 
 --- Engine

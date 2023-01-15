@@ -59,6 +59,7 @@ local spSetUnitNoSelect = Spring.SetUnitNoSelect
 local spSetUnitNoMinimap = Spring.SetUnitNoMinimap
 local spSetUnitRadiusAndHeight = Spring.SetUnitRadiusAndHeight
 local spGetTeamList = Spring.GetTeamList
+local spSetUnitEngineDrawMask = Spring.SetUnitEngineDrawMask
 
 -- aim point over target when far from it
 local LONG_RANGE_ROCKET_FAR_FROM_TARGET_H = 1000		
@@ -261,7 +262,23 @@ function isAboutToCollide(px,py,pz,tx,ty,tz)
 end
 
 -- make unit invisible and unselectable
+--[[
+(from engine code)
+enum DrawFlags : uint8_t {
+	SO_NODRAW_FLAG = 0, // must be 0
+	SO_OPAQUE_FLAG = 1,
+	SO_ALPHAF_FLAG = 2,
+	SO_REFLEC_FLAG = 4,
+	SO_REFRAC_FLAG = 8,
+	SO_SHOPAQ_FLAG = 16,
+	SO_SHTRAN_FLAG = 32,
+	SO_DRICON_FLAG = 128,
+};
+
+]]--
 function applyNonInteractiveProperties(uId)
+	--Spring.Echo("applying non-interactive properties to unitId="..uId)
+	--spSetUnitEngineDrawMask(uId, 128)
 	spSetUnitNoDraw(uId,true)
 	spSetUnitNoSelect(uId,true)
 	spSetUnitNoMinimap(uId,true)

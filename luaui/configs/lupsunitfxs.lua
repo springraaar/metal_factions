@@ -1,69 +1,106 @@
 -- note that the order of the MergeTable args matters for nested tables (such as colormaps)!
 
-local presets = {
-	commandAuraRed = {
-		{class='StaticParticles', options=commandCoronaRed},
-		{class='GroundFlash', options=MergeTable(groundFlashRed, {radiusFactor=3.5,mobile=true,life=60,
-			colormap={ {1, 0.2, 0.2, 1},{1, 0.2, 0.2, 0.85},{1, 0.2, 0.2, 1} }})},
-	},
-	commandAuraOrange = {
-	    {class='StaticParticles', options=commandCoronaOrange},
-		{class='GroundFlash', options=MergeTable(groundFlashOrange, {radiusFactor=3.5,mobile=true,life=math.huge,
-			colormap={ {0.8, 0, 0.2, 1},{0.8, 0, 0.2, 0.85},{0.8, 0, 0.2, 1} }})},
-	},
-	commandAuraGreen = {
-		{class='StaticParticles', options=commandCoronaGreen},
-		{class='GroundFlash', options=MergeTable(groundFlashGreen, {radiusFactor=3.5,mobile=true,life=math.huge,
-			colormap={ {0.2, 1, 0.2, 1},{0.2, 1, 0.2, 0.85},{0.2, 1, 0.2, 1} }})},
-	},
-	commandAuraBlue = {
-		{class='StaticParticles', options=commandCoronaBlue},
-		{class='GroundFlash', options=MergeTable(groundFlashBlue, {radiusFactor=3.5,mobile=true,life=math.huge,
-			colormap={ {0.2, 0.2, 1, 1},{0.2, 0.2, 1, 0.85},{0.2, 0.2, 1, 1} }})},
-	},	
-	commandAuraViolet = {
-		{class='StaticParticles', options=commandCoronaViolet},
-		{class='GroundFlash', options=MergeTable(groundFlashViolet, {radiusFactor=3.5,mobile=true,life=math.huge,
-			colormap={ {0.8, 0, 0.8, 1},{0.8, 0, 0.8, 0.85},{0.8, 0, 0.8, 1} }})},
-	},	
-	
-	commAreaShield = {
-		{class='ShieldJitter', options={delay=0, life=math.huge, heightFactor = 0.75, size=350, strength = .001, precision=50, repeatEffect=true, quality=4}},
-	},
-	
-	commandShieldRed = {
-		{class='ShieldSphere', options=MergeTable({colormap1 = {{1, 0.1, 0.1, 0.6}}, colormap2 = {{1, 0.1, 0.1, 0.15}}}, commandShieldSphere)},
---		{class='StaticParticles', options=commandCoronaRed},
---		{class='GroundFlash', options=MergeTable(groundFlashRed, {radiusFactor=3.5,mobile=true,life=60,
---			colormap={ {1, 0.2, 0.2, 1},{1, 0.2, 0.2, 0.85},{1, 0.2, 0.2, 1} }})},	
-	},
-	commandShieldOrange = {
-		{class='ShieldSphere', options=MergeTable({colormap1 = {{0.8, 0.3, 0.1, 0.6}}, colormap2 = {{0.8, 0.3, 0.1, 0.15}}}, commandShieldSphere)},
-	},	
-	commandShieldGreen = {
-		{class='ShieldSphere', options=MergeTable({colormap1 = {{0.1, 1, 0.1, 0.6}}, colormap2 = {{0.1, 1, 0.1, 0.15}}}, commandShieldSphere)},
-	},
-	commandShieldBlue= {
-		{class='ShieldSphere', options=MergeTable({colormap1 = {{0.1, 0.1, 0.8, 0.6}}, colormap2 = {{0.1, 0.1, 1, 0.15}}}, commandShieldSphere)},
-	},	
-	commandShieldViolet = {
-		{class='ShieldSphere', options=MergeTable({colormap1 = {{0.6, 0.1, 0.75, 0.6}}, colormap2 = {{0.6, 0.1, 0.75, 0.15}}}, commandShieldSphere)},
-	},	
-}
+local presets = {}
 
 effectUnitDefs = {
 
-	--// ENERGY STORAGE //--------------------
-  core_energy_storage = {
-    {class='GroundFlash',options=groundFlashCorestor},
+  --// SHIELDS //----------------------------
+  -- big shields
+  sphere_hermit = {
+	{class='ShieldSphere', options=MergeTable({margin=3, heightFactor=0.5}, areaShieldSphere)}
   },
-  lost_energy_storage = {
-    {class='GroundFlash',options=groundFlashCorestor},
+  sphere_shielder = {
+	{class='ShieldSphere', options=MergeTable({margin=3, heightFactor=0.5}, areaShieldSphere)}
   },
-  arm_energy_storage = {
-    {class='GroundFlash',options=groundFlashArmestor},
+  sphere_aegis = {
+	{class='ShieldSphere', options=MergeTable({margin=3, heightFactor=0.5}, areaShieldSphere)}
   },
-
+  sphere_screener = {
+	{class='ShieldSphere', options=MergeTable({margin=3, heightFactor=0.5}, areaShieldSphere)}
+  },
+  -- small shields
+  sphere_golem = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },
+  sphere_charger = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },
+  sphere_rain = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },
+  sphere_pulsar = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },
+  sphere_monolith = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },
+  sphere_emerald_sphere = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },  
+  sphere_ruby_sphere = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },  
+  sphere_obsidian_sphere = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },  
+  sphere_banger = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },  
+  sphere_gazer = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.75}, areaShieldSphere)}
+  },
+  sphere_comet = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.65}, areaShieldSphere)}
+  },
+  sphere_construction_sphere = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.75}, areaShieldSphere)}
+  },
+  sphere_aster = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.75}, areaShieldSphere)}
+  },
+  sphere_chroma = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.85}, areaShieldSphere)}
+  },
+  sphere_dipole = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.65}, areaShieldSphere)}
+  },
+  sphere_atom = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.65}, atomShieldSphere)}
+  },
+  sphere_twilight = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },
+  sphere_neptune = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },
+  sphere_spitfire = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },
+  sphere_meteor = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },
+  sphere_stresser = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },  
+  sphere_u1commander = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },
+  sphere_u2commander = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },
+  sphere_u3commander = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },
+  sphere_u4commander = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },
+  sphere_u5commander = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },
+  sphere_u6commander = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },
+  
   --// AIRCRAFT JETS //----------------------------
 
   ----------------- AVEN
@@ -484,139 +521,13 @@ effectUnitDefs = {
   },  
 
   --// OTHER
-  roost = {
-		{class='SimpleParticles', options=roostDirt},
-		{class='SimpleParticles', options=MergeTable({delay=60},roostDirt)},
-		{class='SimpleParticles', options=MergeTable({delay=120},roostDirt)},
-  },
-   
-}
- 
-effectUnitDefsXmas = {
-
-  arm_commander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,3.8,0.7}, emitVector={0.3,0.7,0.3}, width=3.4, height=9, ballSize=1.3, piecenum=8, piece="head"}},
-  },
-  arm_scommander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,3.8,0.7}, emitVector={0.3,0.7,0.3}, width=3.4, height=9, ballSize=1.3, piecenum=8, piece="head"}},
-  },
-  arm_u0commander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,3.8,0.7}, emitVector={0.3,0.7,0.3}, width=3.4, height=9, ballSize=1.3, piecenum=8, piece="head"}},
-  },
-  arm_ucommander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,3.8,0.7}, emitVector={0.3,0.7,0.3}, width=3.4, height=9, ballSize=1.3, piecenum=8, piece="head"}},
-  },
-  arm_u2commander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,3.8,0.7}, emitVector={0.3,0.7,0.3}, width=3.4, height=9, ballSize=1.3, piecenum=8, piece="head"}},
-  },
-  arm_u3commander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,3.8,0.7}, emitVector={0.3,0.7,0.3}, width=3.4, height=9, ballSize=1.3, piecenum=8, piece="head"}},
-  },
-  arm_u4commander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,3.8,0.7}, emitVector={0.3,0.7,0.3}, width=3.4, height=9, ballSize=1.3, piecenum=8, piece="head"}},
-  },
-  arm_decoy_commander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,3.8,0.7}, emitVector={0.3,0.7,0.3}, width=3.4, height=9, ballSize=1.3, piecenum=8, piece="head"}},
-  },
-  core_commander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,5.2,2.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=16, piece="head"}},
-  },
-  core_scommander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,5.2,2.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=16, piece="head"}},
-  },
-  core_u0commander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,5.2,2.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=16, piece="head"}},
-  },
-  core_ucommander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,5.2,2.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=16, piece="head"}},
-  },
-  core_u2commander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,5.2,2.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=16, piece="head"}},
-  },
-  core_u3commander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,5.2,2.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=16, piece="head"}},
-  },
-  core_u4commander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,5.2,2.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=16, piece="head"}},
-  },
-  core_decoy_commander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,5.2,2.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=16, piece="head"}},
-  },
-  -- lost commanders
-  lost_commander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,9.2,3.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=18, piece="head"}},
-  },
-  lost_u0commander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,9.2,3.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=18, piece="head"}},
-  },
-  lost_ucommander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,9.2,3.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=18, piece="head"}},
-  },
-  lost_u2commander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,9.2,3.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=18, piece="head"}},
-  },
-  lost_u3commander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,9.2,3.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=18, piece="head"}},
-  },
-  lost_u4commander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,9.2,3.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=18, piece="head"}},
-  },
-  lost_decoy_commander = {
-    {class='SantaHat',options={color={1,0.1,0,1}, pos={0,9.2,3.1}, emitVector={0.3,0.7,0.3}, width=3.4, height=8, ballSize=1.1, piecenum=18, piece="head"}},
-  },
-}
-
-effectUnitDefsStPatrick = {}
- 
-for i,f in pairs(effectUnitDefsXmas) do
-	
-	if f and (f[1]) and (f[1].options) and (f[1].options.color) then
-		f[1].options.color = {0.1,0.7,0,1}
-		effectUnitDefsStPatrick[i] = f
-	end
-end
- 
- 
-local levelScale = {
-    1,
-    1.1,
-    1.2,
-    1.25,
-    1.3,
+  
 }
 
 -- load presets from unitdefs
 for i=1,#UnitDefs do
 	local unitDef = UnitDefs[i]
-	
-	if unitDef.customParams and unitDef.customParams.commtype then
-		local s = levelScale[tonumber(unitDef.customParams.level) or 1]
-		if unitDef.customParams.commtype == "1" then
-			effectUnitDefsXmas[unitDef.name] = {
-				{class='SantaHat', options={color={0,0.7,0,1}, pos={0,4*s,0.35*s}, emitVector={0.3,1,0.2}, width=2.7*s, height=6*s, ballSize=0.7*s, piece="head"}},
-			}
-		elseif unitDef.customParams.commtype == "2" then
-			effectUnitDefsXmas[unitDef.name] = {
-				{class='SantaHat', options={pos={0,6*s,2*s}, emitVector={0.4,1,0.2}, width=2.7*s, height=6*s, ballSize=0.7*s, piece="head"}},
-			}
-		elseif unitDef.customParams.commtype == "3" then 
-			effectUnitDefsXmas[unitDef.name] = {
-				{class='SantaHat', options={color={0,0.7,0,1}, pos={1.5*s,4*s,0.5*s}, emitVector={0.7,1.6,0.2}, width=2.2*s, height=6*s, ballSize=0.7*s, piece="head"}},
-			}
-		elseif unitDef.customParams.commtype == "4" then 
-			effectUnitDefsXmas[unitDef.name] = {
-				{class='SantaHat', options={pos={0,3.8*s,0.35*s}, emitVector={0,1,0}, width=2.7*s, height=6*s, ballSize=0.7*s, piece="head"}},
-			}
-		elseif unitDef.customParams.commtype == "5" then 
-			effectUnitDefsXmas[unitDef.name] = {
-				{class='SantaHat', options={color={0,0,0.7,1}, pos={0,0,0}, emitVector={0,1,0.1}, width=2.7*s, height=6*s, ballSize=0.7*s, piece="hat"}},
-			}	    
-		elseif unitDef.customParams.commtype == "6" then 
-			effectUnitDefsXmas[unitDef.name] = {
-				{class='SantaHat', options={color={0,0,0.7,1}, pos={0,0,0}, emitVector={0,1,-0.1}, width=4.05*s, height=9*s, ballSize=1.05*s, piece="hat"}},
-			}	    
-		end
-	end
+
 	if unitDef.customParams then
 		local fxTableStr = unitDef.customParams.lups_unit_fxs
 		if fxTableStr then

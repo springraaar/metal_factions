@@ -45,8 +45,8 @@
 	// ------------------- movement
 	canFly=1;
 	maxVelocity=2.8;
-	brakeRate=0.06;
-	Acceleration=0.15;
+	brakeRate=0.1;
+	Acceleration=0.25;
 	turnRate=700;
 	cruiseAlt=100;
 	hoverAttack=1;
@@ -64,10 +64,10 @@
 	// ------------------- weapons
 	weapon1=sphere_dipole_beam1;
 	weaponMainDir1=1 0 0;
-	maxAngleDif1=280;
+	maxAngleDif1=294;
 	weapon2=sphere_dipole_beam2;
 	weaponMainDir2=-1 0 0;
-	maxAngleDif2=280;
+	maxAngleDif2=294;
 	weapon3=sphere_dipole_shield;
 	badTargetCategory1=NOTAIR;
 	badTargetCategory2=NOTAIR;
@@ -99,8 +99,8 @@
 		explosionGenerator2=custom:opalglow;
 		explosionGenerator1=custom:comettrail;
 	}
-	buildCostEnergy=10649;//#AUTO#
-	buildCostMetal=2129;//#AUTO#
-	buildTime=25380;//#AUTO#
-	mass=1459;//#AUTO#
+	buildCostEnergy=10714;//#AUTO#
+	buildCostMetal=2142;//#AUTO#
+	buildTime=25537;//#AUTO#
+	mass=1464;//#AUTO#
 }

@@ -11,7 +11,7 @@ local _iconTypes = {
 	default = {
 		size=REF_SIZE,
 		radiusadjust=false,
-		distance=1
+		distance=0
 	},
 	aven_commander={
 		bitmap="icons/aven_commander.tga",
@@ -394,7 +394,7 @@ local _iconTypes = {
 	invisible={
 		bitmap="icons/invisible.tga",
 		radiusadjust=false,
-		distance=1,
+		distance=0,
 		size=REF_SIZE
 	},
 	mobile={

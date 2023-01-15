@@ -94,6 +94,7 @@ local spGetTeamInfo = Spring.GetTeamInfo
 local spAddTeamResource = Spring.AddTeamResource
 local spSpawnCEG = Spring.SpawnCEG
 local spPlaySoundFile = Spring.PlaySoundFile
+local spGiveOrderToUnit = Spring.GiveOrderToUnit
 local max = math.max
 local random = math.random
 
@@ -120,6 +121,7 @@ local DECLOAK_DAMAGE_THRESHOLD = 3
 
 local LONG_RANGE_ROCKET_CHAIN_DAMAGE_FACTOR = 0.1  -- shot down long range rockets dmg fraction against rockets in flight 
 
+local EMPTY_TABLE = {}
 
 local disruptorWaveEffectWeaponDefId = WeaponDefNames["aven_bass_disruptor_effect"].id
 local disruptorWaveUnitDefId = UnitDefNames["aven_bass"].id
@@ -140,6 +142,9 @@ local notDirectlyUpgradedWeaponDefIds = {
 local scoperBeaconDefIds = {
 	[UnitDefNames["cs_beacon"].id] = true,
 	[UnitDefNames["scoper_beacon"].id] = true
+}
+local dronerWeaponDefIds = {
+	[WeaponDefNames["aven_skein_beacon"].id] = true
 }
 
 local burningImmuneDefIds = {
@@ -507,6 +512,22 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 	end
 end
 
+function checkDroneBeaconTargetting(attackerID,weaponDefID,unitID)
+	if(dronerWeaponDefIds[weaponDefID]) then
+		local dronesByName = GG.droneOwnersDrones[attackerID]
+		if dronesByName then
+			for uName,uIdSet in pairs(dronesByName) do
+				--Spring.Echo("set had "..#uIdSet.." drones")
+				for _,uId in pairs(uIdSet) do
+					-- order each drone to attack the target
+					spGiveOrderToUnit(uId,CMD.FIGHT,{unitID},EMPTY_TABLE)
+				end 
+			end
+		end
+		return 1
+	end
+	return 0
+end
 
 -- if unit has active shield with power > 0, drain damage from shield first instead of going directly to hp
 function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, weaponDefID, projectileID, attackerID, attackerDefID, attackerTeam)
@@ -514,7 +535,12 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	if(scoperBeaconDefIds[attackerDefID]) then
 		return 0
 	end
-	
+
+	-- drone beacon
+	if checkDroneBeaconTargetting(attackerID,weaponDefID,unitID) == 1 then
+		return 0
+	end
+			
 	-- disable bass self-damage
 	if (weaponDefID == disruptorWaveEffectWeaponDefId and unitDefID == disruptorWaveUnitDefId) then
 		return 0

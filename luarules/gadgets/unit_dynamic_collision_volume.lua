@@ -79,7 +79,8 @@ local airFactories = {
 	sphere_aircraft_factory = true,
 	sphere_adv_aircraft_factory = true,
 	sphere_sphere_factory = true,
-	aven_long_range_missile_platform = true
+	aven_long_range_missile_platform = true,
+	aven_skein = true
 }
 
 local constructionTowers = {

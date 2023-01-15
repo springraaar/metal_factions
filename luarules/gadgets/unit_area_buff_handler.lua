@@ -110,6 +110,10 @@ local energyBoostedMovementDefIds = {
 	[UnitDefNames["sphere_orb"].id] = 0.5,
 	[UnitDefNames["sphere_comet"].id] = 1.0,
 	[UnitDefNames["sphere_atom"].id] = 1.0,
+	[UnitDefNames["sphere_dipole"].id] = 1.0,
+	[UnitDefNames["sphere_cluster"].id] = 0.5,
+	[UnitDefNames["sphere_cluster_module_laser"].id] = 0.5,
+	[UnitDefNames["sphere_cluster_module_bomb"].id] = 0.5,
 	[UnitDefNames["aven_ace"].id] = 10.0
 }
 

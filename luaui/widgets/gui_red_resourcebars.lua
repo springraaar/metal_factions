@@ -366,7 +366,7 @@ local function createbar(r)
 	local storage = New(pull)
 	storage.color = r.cstorage
 	
-		-- label
+	-- label
 	local label = New(number)
 	label.color = r.clabel
 	label.py = (income.py + pull.py) / 2

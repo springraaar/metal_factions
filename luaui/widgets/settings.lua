@@ -18,12 +18,6 @@ function widget:Initialize()
 	camState.mode = Spring.GetCameraNames()['ta']
 	Spring.SetCameraState(camState, 0)
 	
-	-- set max particles to 30000
-	Spring.SetConfigInt("MaxParticles",30000,true)
-
-	-- set max nano particles to 15000
-	Spring.SetConfigInt("MaxNanoParticles",15000,true)
-	
 	-- set scrollwheel speed to -25 if >= 0
 	local swSpeed = Spring.GetConfigInt("ScrollWheelSpeed")
 	if (swSpeed and swSpeed >=0) then
@@ -48,11 +42,12 @@ function widget:Initialize()
 	-- disable game speed indicator
 	Spring.SendCommands("speed 0")
 	
-	-- enforce unit icon distance
+	-- enforce unit icon distance and other settings
 	Spring.SendCommands("disticon 120")
-
-	-- enforce high terrain detail
-	Spring.SendCommands("grounddetail 140")	
+	Spring.SendCommands("iconsasui 0")
+	Spring.SetConfigInt("UnitIconFadeVanish",1000,false) 	-- default 1000
+	Spring.SetConfigFloat("UnitIconScaleUI",1,false) 		-- default 1
+	Spring.SetConfigInt("UnitIconsHideWithUI",0,false) 		-- default 0
 
 	-- enforce hardware cursor	
 	Spring.SendCommands("HardwareCursor 1")
@@ -71,9 +66,5 @@ function widget:Initialize()
 	Spring.SetConfigInt("SmallFontOutlineWeight",10,false)
 	Spring.SetConfigInt("SmallFontOutlineWidth",2,false)
 	Spring.SetConfigInt("SmallFontSize",14,false)
-	
-	if (string.find(Engine.version,"BAR105")) then
-		Spring.SendCommands("softparticles 1")
-	end
 end
 

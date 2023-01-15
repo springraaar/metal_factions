@@ -12,7 +12,7 @@ end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
-include("LuaLibs/Util.lua")
+include("lualibs/util.lua")
 
 if (not gadgetHandler:IsSyncedCode()) then
     return
@@ -68,6 +68,8 @@ local droneUnderConstruction = {}  -- list of drone ids under construction by ow
 local droneBuildStalled = {}
 local droneOwnersByDrone = {}	-- owner id by drone id
 
+GG.droneOwnersDrones = droneOwnersDrones
+
 local markedForDestruction = {}
 local DRONE_CHECK_DELAY = 15		-- 2 steps per second
 
@@ -80,6 +82,9 @@ local DRONE_BUILD_ENERGY_FACTOR = 1.0
 local DRONE_BUILD_ENERGY_MIN = 500
 
 local DRONE_CONSTRUCTION_Y = 100
+local DRONE_CONSTRUCTION_Y_SKEIN = 35
+local skeinDefId = UnitDefNames["aven_skein"].id
+
 local LIGHT_DRONE_LEASH_DISTANCE = 600
 local BUILDER_DRONE_LEASH_DISTANCE = 600
 local MEDIUM_DRONE_LEASH_DISTANCE = 600
@@ -177,6 +182,7 @@ local droneNamesForUnitDefName = {
 	aven_u4commander = avenDrones,
 	aven_u5commander = avenDrones,
 	aven_u6commander = avenDrones,	
+	aven_skein = avenDrones,
 	gear_adv_construction_kbot = gearDrones,
 	gear_adv_construction_hydrobot = gearDrones,
 	gear_commander = gearDrones,
@@ -351,14 +357,15 @@ function gadget:GameFrame(n)
 						
 						-- check again if count of drones already alive is below limit
 						-- do this because of reasons
+						local yOffset = (spGetUnitDefID(ownerId)== skeinDefId) and DRONE_CONSTRUCTION_Y_SKEIN or DRONE_CONSTRUCTION_Y
 						if #droneOwnersDrones[ownerId][uName] < limits[uName] then
 							-- spawn drone
 							x, y, z, dx, dy, dz = getUnitPositionAndDirection(ownerId)
 							if y then		
 								_,up,_ = spGetUnitVectors(ownerId)
-								px = x + up[1] * DRONE_CONSTRUCTION_Y
-								py = y + up[2] * DRONE_CONSTRUCTION_Y
-								pz = z + up[3] * DRONE_CONSTRUCTION_Y
+								px = x + up[1] * yOffset
+								py = y + up[2] * yOffset
+								pz = z + up[3] * yOffset
 								local droneId = spCreateUnit(uName,px,py,pz,0,teamId,true)
 								
 								if droneId and droneId > 0 then
@@ -481,12 +488,12 @@ function gadget:GameFrame(n)
 			ox, oy, oz, odx, ody, odz = getUnitPositionAndDirection(ownerId)
 			ovx,ovy,ovz = spGetUnitVelocity(ownerId)
 			orx,ory,rvz = spGetUnitRotation(ownerId)
-	
+			local yOffset = (spGetUnitDefID(ownerId)== skeinDefId) and DRONE_CONSTRUCTION_Y_SKEIN or DRONE_CONSTRUCTION_Y
 			if ox then
 				_,up,_ = spGetUnitVectors(ownerId)
-				px = ox + up[1] * DRONE_CONSTRUCTION_Y
-				py = oy + up[2] * DRONE_CONSTRUCTION_Y
-				pz = oz + up[3] * DRONE_CONSTRUCTION_Y
+				px = ox + up[1] * yOffset
+				py = oy + up[2] * yOffset
+				pz = oz + up[3] * yOffset
 	
 				spSetUnitPhysics(uId,px,py,pz,ovx,ovy,ovz,orx,ory,0,0,0,0)
 				
@@ -542,10 +549,6 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 	end
 end
 
-
-function gadget:UnitIdle(unitID, unitDefID, unitTeam)
-
-end
 
 
 --------------------------------------------------------------------------------

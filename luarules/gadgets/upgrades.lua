@@ -103,7 +103,8 @@ local fmod = math.fmod
 
 local builtinDroneUpgrades = {
 	[UnitDefNames["gear_adv_construction_kbot"].id] = "upgrade_transport_drone",
-	[UnitDefNames["gear_adv_construction_hydrobot"].id] = "upgrade_transport_drone"
+	[UnitDefNames["gear_adv_construction_hydrobot"].id] = "upgrade_transport_drone",
+	[UnitDefNames["aven_skein"].id] = "upgrade_light_drones"
 }
 
 local noUpgradeUnitDefIds = {

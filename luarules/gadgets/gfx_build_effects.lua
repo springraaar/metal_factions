@@ -55,6 +55,7 @@ end
 function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 	local ud = UnitDefs[unitDefId]
 	if (not noCreationEffectDefIds[unitDefId]) and (not (ud.customParams and ud.customParams.isdrone)) then
+		oldBpByUnitId[unitId] = -1
 		xs, ys, zs, _, _, _, _, _, _, _ = spGetUnitCollisionVolumeData(unitId)
 		px,py,pz = spGetUnitPosition(unitId)
 		spSpawnCEG(createCEG, px, py+5, pz,0,1,0,xs,xs)
@@ -62,15 +63,19 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 end
 
 
+function gadget:FeatureCreated(featureId, allyTeam)
+	oldBpByFeatureId[featureId] = -1
+end
+
+
 function gadget:GameFrame(n)
 	if (n%3 == 0) then
 		-- check units
-		for _,unitId in pairs(spGetAllUnits()) do
+		for unitId,oldBp in pairs(oldBpByUnitId) do
 			_,_,_,_,bp = spGetUnitHealth(unitId)
 			ud = UnitDefs[spGetUnitDefId(unitId)]
 			
-			oldBp = oldBpByUnitId[unitId]
-			if not oldBp then 
+			if oldBp < 0 then 
 				oldBp = bp
 				oldBpByUnitId[unitId] = bp
 			end
@@ -124,11 +129,10 @@ function gadget:GameFrame(n)
 		end
 		
 		-- check features
-		for _,fId in pairs(spGetAllFeatures()) do
+		for fId,oldBp in pairs(oldBpByFeatureId) do
 			_,_,_,_,bp = spGetFeatureResources(fId)
 			
-			oldBp = oldBpByFeatureId[fId]
-			if not oldBp then 
+			if oldBp < 0 then 
 				oldBp = bp
 				oldBpByFeatureId[fId] = bp
 			end

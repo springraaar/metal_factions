@@ -141,6 +141,8 @@ local noDecalUnits = {
 }
 
 local noIconOverrideUnits = {
+	cs_beacon = true,
+	scoper_beacon = true,
 	gear_mine = true,
 	gear_incendiary_mine = true,
 	aven_premium_nuclear_rocket = true,

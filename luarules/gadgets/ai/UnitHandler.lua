@@ -510,7 +510,7 @@ function UnitHandler:getCellAttackValue(group, cell)
 	 
 	--if (self.ai.id == 1 and group.id == UNIT_GROUP_ATTACKERS) then 
 	--	Spring.MarkerAddPoint(cell.p.x,cell.p.y,cell.p.z,cellValue) --DEBUG
-	--	Spring.MarkerAddPoint(group.centerPos.x,group.centerPos.y,group.centerPos.z,"GROUP "..tostring(checkAssist)) --DEBUG
+	--	Spring.MarkerAddPoint(group.centerPos.x,group.centerPos.y,group.centerPos.z,"GROUP nearCenterCost="..tostring(group.nearCenterCost)) --DEBUG
 	--	Spring.MarkerAddPoint(self.basePos.x,self.basePos.y,self.basePos.z,"BASE") --DEBUG
 	--end
 	 
@@ -2223,6 +2223,10 @@ function UnitHandler:GameFrame(f)
 			local bestCell = nil
 			local bestValue = -INFINITY
 			local bestCellThreatAlongPath = 0
+			
+			--if (self.ai.id == 1 and group.id == UNIT_GROUP_ATTACKERS) then 
+			--	Spring.SendCommands("ClearMapMarks")
+			--end
 			
 			-- AI beacon override
 			if self.ai:isBeaconActive(group.id) then

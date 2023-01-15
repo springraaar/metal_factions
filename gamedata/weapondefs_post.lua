@@ -205,6 +205,12 @@ for wdName, wd in pairs(WeaponDefs) do
 		end
 	end
 
+	if wd.weapontype == "Shield" then
+		wd.visibleshield = false
+		wd.visibleshieldhitframes = 0
+		wd.visibleshieldrepulse = false
+	end
+
 	-- TODO disabled for now because it'd make walls untargetable
 	--wd.avoidNeutral = 1
 

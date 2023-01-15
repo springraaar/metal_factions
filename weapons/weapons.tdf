@@ -9519,6 +9519,56 @@
 		armor_light=160;//#AUTO#
 	}
 }
+[gear_snapper_bomb]
+{
+	name=Burst Bomb Launcher;
+	weaponType=MissileLauncher;
+	dance=5;
+	explosionGenerator=custom:ROCKETSMLBLASTWRAPPER;
+	cegTag=BOMBTRAILSML;
+	texture1=null; //flare//
+	texture2=null;//first segment of missiletrail//
+	texture3=null;//flame//
+	texture4=null;//unknown//
+	turret=1;
+	model=weapon_smallbomb.3do;
+	range=410;
+	reloadTime=2.8;
+	burst=3;
+	burstRate=0.15;
+	sprayAngle=2600;
+	flightTime=2;
+	weaponVelocity=350;
+	startVelocity=350;
+	turnRate=3500;
+	wobble=10000;
+	weaponAcceleration=0;
+	trajectoryHeight=0.2;
+	areaOfEffect=74;
+	metalPerShot=0;
+	soundStart=armsml4;
+	soundHit=xplosml2;
+	fireStarter=70;
+	smokeTrail=0;
+	tolerance=6000;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		reaimTime=1;
+		expDmgScaling=1;
+		targets=SURFACE;
+	}
+	[DAMAGE]
+	{
+		default=170;
+		group_invincible=1;
+		armor_heavy=85;//#AUTO#
+		armor_medium=170;//#AUTO#
+		armor_light=170;//#AUTO#
+	}
+}
 [gear_noser_torpedo]
 {
 	name=Heavy Torpedoes;
@@ -12397,13 +12447,16 @@
 	texture2=null;//first segment of missiletrail//
 	texture3=null;//flame//
 	texture4=null;//unknown//
+	explosionScar=0;
 	turret=1;
 	range=99999;
-	reloadTime=180;
+	reloadTime=30;
 	weaponVelocity=8000;
 	startVelocity=8000;
 	weaponAcceleration=50;
 	energyPerShot=1000;
+	stockpile=1;
+	stockpileTime=180;
 	areaOfEffect=8;
 	tracks=1;
 	soundStart=comsatfire;
@@ -12445,6 +12498,7 @@
 	texture2=null;//first segment of missiletrail//
 	texture3=null;//flame//
 	texture4=null;//unknown//
+	explosionScar=0;
 	turret=1;
 	range=1300;
 	reloadTime=1;
@@ -12466,6 +12520,52 @@
 		reaimTime=1;
 		action=Reveal Area;
 		targets=SURFACE;
+	}
+	[DAMAGE]
+	{
+		default=0;
+		group_invincible=0;
+		armor_heavy=0;//#AUTO#
+		armor_medium=0;//#AUTO#
+		armor_light=0;//#AUTO#
+	}
+}
+[aven_skein_beacon]
+{
+	name=Drone Beacon;
+	weaponType=MissileLauncher;
+	trajectoryHeight=0.5;
+	turret=1;
+	flightTime=10.75;
+	turnRate=260000;
+	groundBounce=0;
+	waterBounce=0;
+	texture1=null; //flare//
+	texture2=null;//first segment of missiletrail//
+	texture3=null;//flame//
+	texture4=null;//unknown//
+	explosionScar=0;
+	turret=1;
+	range=550;
+	reloadTime=2;
+	weaponVelocity=3000;
+	startVelocity=3000;
+	weaponAcceleration=50;
+	energyPerShot=0;
+	areaOfEffect=8;
+	tracks=1;
+	fireStarter=0;
+	tolerance=3000;
+	avoidFeature=0;
+	avoidGround=0;
+	avoidFriendly=0;
+	interceptedByShieldType=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		reaimTime=1;
+		action=Focus Drones;
+		targets=SURFACE,AIR;
 	}
 	[DAMAGE]
 	{

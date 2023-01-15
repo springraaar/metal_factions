@@ -71,15 +71,17 @@ walk()
 
 		turn lbackleg to z-axis <5.016484> speed <150.104396> * mASpdFactor / 100;
 		turn rfrontleg to z-axis <-5.016484> speed <150.104396> * mASpdFactor / 100;
-		
+		turn hips to x-axis <-2.000000> speed <20.000000> * mASpdFactor / 100;
+		turn hips to z-axis <1.000000> speed <15.000000> * mASpdFactor / 100;
+	
 		sleep 200 * 100 / mASpdFactor;
 	}
 	
 	
 	if( bMoving )
 	{
-		turn hips to x-axis <-2.000000> speed <20.000000> * mASpdFactor / 100;
-		turn hips to z-axis <1.000000> speed <15.000000> * mASpdFactor / 100;
+		turn hips to x-axis <2.000000> speed <20.000000> * mASpdFactor / 100;
+		turn hips to z-axis <-1.000000> speed <15.000000> * mASpdFactor / 100;
 		turn front to y-axis <-5> speed <15> * mASpdFactor / 100;
 		turn back to y-axis <5> speed <15> * mASpdFactor / 100;
 
@@ -105,7 +107,8 @@ walk()
 	{
 		turn lfrontleg to z-axis <5.016484> speed <150.104396> * mASpdFactor / 100;
 		turn rbackleg to z-axis <-5.016484> speed <150.104396> * mASpdFactor / 100;
-		
+		turn hips to x-axis <-2.000000> speed <20.000000> * mASpdFactor / 100;
+		turn hips to z-axis <1.000000> speed <15.000000> * mASpdFactor / 100;
 		
 		sleep 200 * 100 / mASpdFactor;
 	}
