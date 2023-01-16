@@ -45,7 +45,7 @@ local drawFeatureHealth  = true
 local featureTitlesAlpha = featureBarAlpha * titlesAlpha/barAlpha
 local featureHpThreshold = 0.85
 
-local infoSqDistance = 10000000
+local infoSqDistance = 24000000
 local fullTextSqDistance = 420000 
 
 local minReloadTime = 4 --// in seconds

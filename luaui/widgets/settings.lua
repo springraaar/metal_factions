@@ -42,8 +42,7 @@ function widget:Initialize()
 	-- disable game speed indicator
 	Spring.SendCommands("speed 0")
 	
-	-- enforce unit icon distance and other settings
-	Spring.SendCommands("disticon 120")
+	-- enforce unit icon distance-related settings
 	Spring.SendCommands("iconsasui 0")
 	Spring.SetConfigInt("UnitIconFadeVanish",1000,false) 	-- default 1000
 	Spring.SetConfigFloat("UnitIconScaleUI",1,false) 		-- default 1
