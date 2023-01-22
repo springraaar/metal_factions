@@ -43,7 +43,7 @@ function widget:Initialize()
  	Spring.SetConfigInt("AdvUnitShading",0,false)
  	Spring.SetConfigInt("CompressTextures",1,false)
  	Spring.SetConfigInt("HighResInfoTexture",0,false)
- 	Spring.SetConfigInt("LuaShaders",0,false)
+ 	Spring.SetConfigInt("LuaShaders",1,false)
  	Spring.SetConfigInt("ROAM",2,false)
  	Spring.SetConfigInt("MSAALevel",0,false)	
 

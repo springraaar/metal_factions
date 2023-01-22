@@ -54,6 +54,8 @@ function MergeTable(table1,table2)
   return result
 end
 
+VFS.Include("lualibs/util.lua")
+
 include("configs/lupsfxs.lua")
 include("configs/lupsunitfxs.lua")
 
@@ -176,128 +178,122 @@ end
 
 
 local function AddFxs(unitID,fxID)
-  if (not particleIDs[unitID]) then
-    particleIDs[unitID] = {}
-  end
+	if (not particleIDs[unitID]) then
+		particleIDs[unitID] = {}
+	end
 
-  local unitFXs = particleIDs[unitID]
-  unitFXs[#unitFXs+1] = fxID
+	local unitFXs = particleIDs[unitID]
+	unitFXs[#unitFXs+1] = fxID
+end
+
+local function loadShieldFXOpts(fx,unitID,unitDefID)
+	local ud = UnitDefs[unitDefID]
+    if ud.weapons and ud.weapons[1] and ud.weapons[1].weaponDef then
+		for wNum,w in pairs(ud.weapons) do
+			local wd=WeaponDefs[w.weaponDef]
+		    if wd.isShield == true then
+				fx.options.size = wd.shieldRadius
+				fx.options.shieldMax = wd.shieldPower
+				break
+		    end
+		end
+    end
 end
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
 local function UnitFinished(_,unitID,unitDefID)
-  if registeredUnits[unitID] then
-    return
-  end
-  registeredUnits[unitID] = true
-
-  local effects = UnitEffects[unitDefID]
-  if (effects) then
-    for i=1,#effects do
-      local fx = effects[i]
-      if (not fx.options) then
-        Spring.Log(widget:GetInfo().name, LOG.ERROR, "LUPS DEBUG GRRR", UnitDefs[unitDefID].name, fx and fx.class)
-        return
-      end
-
-      if (fx.class=="AirJet") then
-        aircraftWithThrusters[unitID] = {fThrust=0,vThrust=0,v=0,effects=effects}
-      end
-      if (fx.class=="ShieldSphere") then
-        local ud = UnitDefs[unitDefID]
-        if ud.weapons and ud.weapons[1] and ud.weapons[1].weaponDef then
-			for wNum,w in pairs(ud.weapons) do
-				local wd=WeaponDefs[w.weaponDef]
-			    if wd.isShield == true then
-					fx.options.size = wd.shieldRadius
-					fx.options.shieldMax = wd.shieldPower
-					fx.options.uId = unitID
-					break
-			    end
+	if registeredUnits[unitID] then
+		return
+	end
+	registeredUnits[unitID] = true
+	
+	local effects = UnitEffects[unitDefID]
+	if (effects) then
+		for i=1,#effects do
+			local fx = effects[i]
+			if (not fx.options) then
+				Spring.Log(widget:GetInfo().name, LOG.ERROR, "LUPS DEBUG GRRR", UnitDefs[unitDefID].name, fx and fx.class)
+			return
 			end
-	    end
-	    
-      else
-        if (fx.options.radiusFactor) then
-          fx.options.size = Spring.GetUnitRadius(unitID)*fx.options.radiusFactor
-	    end  
-      end
-      if (fx.class=="GroundFlash") then
-        fx.options.pos = { Spring.GetUnitPosition(unitID) }
-      end
-      if (fx.options.heightFactor) then
-		local pos = fx.options.pos or {0, 0, 0}
-        fx.options.pos = { pos[1], Spring.GetUnitHeight(unitID)*fx.options.heightFactor, pos[3] }
-      end
 
-      fx.options.unit = unitID
-      --Spring.Echo("adding lups fx "..fx.class.." to "..unitID)
-      AddFxs( unitID,LupsAddFX(fx.class,fx.options) )
-      fx.options.unit = nil
-    end
-    
-    --local spec, fullSpec = spGetSpectatingState()
-    --if (spec and fullSpec) then
---      UnitEnteredLos(_,unitID)  
-    --end
-  end 
+			if (fx.class=="AirJet") then
+				aircraftWithThrusters[unitID] = {fThrust=0,vThrust=0,v=0,effects=effects}
+			end
+			if (fx.class=="ShieldSphere") then
+				loadShieldFXOpts(fx,unitID,unitDefID)
+			else
+				if (fx.options.radiusFactor) then
+					fx.options.size = Spring.GetUnitRadius(unitID)*fx.options.radiusFactor
+				end  
+			end
+			if (fx.class=="GroundFlash") then
+				fx.options.pos = { Spring.GetUnitPosition(unitID) }
+			end
+			if (fx.options.heightFactor) then
+				local pos = fx.options.pos or {0, 0, 0}
+				fx.options.pos = { pos[1], Spring.GetUnitHeight(unitID)*fx.options.heightFactor, pos[3] }
+			end
+
+			fx.options.unit = unitID
+      		--Spring.Echo("adding lups fx "..fx.class.." to "..unitID)
+			AddFxs( unitID,LupsAddFX(fx.class,fx.options) )
+			fx.options.unit = nil
+		end
+	end 
 end
 
 
 local function UnitDestroyed(_,unitID,unitDefID, preEvent)
 	if preEvent == false then return end
 	
-  registeredUnits[unitID] = nil
+	registeredUnits[unitID] = nil
 
-  aircraftWithThrusters[unitID] = nil
-  ClearFxs(unitID)
+	aircraftWithThrusters[unitID] = nil
+	ClearFxs(unitID)
 end
 
 
 local function UnitEnteredLos(_,unitID)
-  -- why shouldn't spectators see the effects?
-  local spec, fullSpec = spGetSpectatingState()
-  if (spec and fullSpec) then 
-    return 
-  end
-  
-  --[[
-  if registeredUnits[unitID] then
-    return
-  end
-  registeredUnits[unitID] = true
-  ]]
+	local spec, fullSpec = spGetSpectatingState()
+	if (spec and fullSpec) then return end
 
-  local unitDefID = spGetUnitDefID(unitID)
-  local effects   = UnitEffects[unitDefID]
-  if (effects) then
-    for i=1,#effects do
-      local fx = effects[i]
+	local unitDefID = spGetUnitDefID(unitID)
+	local effects   = UnitEffects[unitDefID]
+	if (effects) then
+		for i=1,#effects do
+			local fx = effects[i]
 
-      if (fx.class=="AirJet") then
-        aircraftWithThrusters[unitID] = {fThrust=0,vThrust=0,v=0,effects=effects}
-      end
-      if (fx.class=="GroundFlash") then
-        fx.options.pos = { Spring.GetUnitPosition(unitID) }
-      end
-    fx.options.unit = unitID
-    AddFxs( unitID,LupsAddFX(fx.class,fx.options) )
-    fx.options.unit = nil
-    end
-  end
+			if (fx.class=="AirJet") then
+				aircraftWithThrusters[unitID] = {fThrust=0,vThrust=0,v=0,effects=effects}
+			end
+			if (fx.class=="ShieldSphere") then
+				loadShieldFXOpts(fx,unitID,unitDefID)
+			else
+				if (fx.options.radiusFactor) then
+					fx.options.size = Spring.GetUnitRadius(unitID)*fx.options.radiusFactor
+				end  
+			end
+			if (fx.class=="GroundFlash") then
+				fx.options.pos = { Spring.GetUnitPosition(unitID) }
+			end
+			fx.options.unit = unitID
+			AddFxs( unitID,LupsAddFX(fx.class,fx.options) )
+			fx.options.unit = nil
+		end
+	end
 end
 
 
 local function UnitLeftLos(_,unitID)
-  local spec, fullSpec = spGetSpectatingState()
-  if (spec and fullSpec) then return end
+	local spec, fullSpec = spGetSpectatingState()
+	if (spec and fullSpec) then return end
 
-  registeredUnits[unitID] = nil
-  aircraftWithThrusters[unitID] = nil
+	registeredUnits[unitID] = nil
+	aircraftWithThrusters[unitID] = nil
   
-  ClearFxs(unitID)
+	ClearFxs(unitID)
 end
 
 --------------------------------------------------------------------------------
@@ -317,7 +313,7 @@ local function GameFrame(_,n)
 	local userSpeedFactor, speedFactor, paused = spGetGameSpeed()
 	--Spring.Echo("speedFactor="..speedFactor.." userSpeedFactor="..userSpeedFactor)
   	-- update flight thruster effect according to unit movement
-	if ((n%(3*userSpeedFactor))== 0 and (next(aircraftWithThrusters))) then
+	if (WG.gfxProfile ~= GFX_LOW and (n%(3*userSpeedFactor))== 0 and (next(aircraftWithThrusters))) then
 		--[[
 		if (n - lastSkipCheckFrame > 300) then
 			local pct = 0

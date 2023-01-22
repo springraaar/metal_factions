@@ -14,7 +14,8 @@ local COLOR_SHIFT_WEIGHT = 0.1
 
 local SPHERE_DETAIL = 60
 
-local spGetUnitShieldState = Spring.GetUnitShieldState 
+local spGetUnitShieldState = Spring.GetUnitShieldState
+local spGetUnitHealth = Spring.GetUnitHealth
 
 local glDeleteTexture = gl.DeleteTexture
 local glDeleteList = gl.DeleteList
@@ -30,6 +31,7 @@ local glTranslate = gl.Translate
 local glScale = gl.Scale
 local glMatrixMode = gl.MatrixMode
 local glTexGen = gl.TexGen
+local glUseShader = gl.UseShader
 
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
@@ -51,27 +53,25 @@ function ShieldSphereParticle.GetInfo()
 end
 
 ShieldSphereParticle.Default = {
-  pos        = {0,0,0}, -- start pos
-  layer      = -24,
-
-  life       = 0,
-
-  size       = 0,
-  innerSize = 0,
-  sizeGrowth = 0,
-
-  margin     = 1,
-
-  color  = { {0, 0, 0, 0} },
-  goodColor  = { {0, 0, 0, 0} },
-  badColor  = { {0, 0, 0, 0} },
-
-  texture = "bitmaps/shield.png",
-  shieldCurrent = 0,
-  shieldMax = 1000,
-  hitStrength = 0,
-  uId = 0,
-  repeatEffect = false,
+	pos        = {0,0,0}, -- start pos
+	layer      = -24,
+	life       = 0,
+	
+	size       = 0,
+	innerSize = 0,
+	sizeGrowth = 0,
+	
+	margin     = 1,
+	
+	color  = {0, 0, 0, 0},
+	goodColor  = {0, 0, 0, 0},
+	badColor  = {0, 0, 0, 0},
+	
+	texture = "bitmaps/shield.png",
+	shieldCurrent = 0,
+	shieldMax = 1000,
+	hitStrength = 0,
+	repeatEffect = false,
 }
 
 
@@ -86,13 +86,13 @@ local glMultiTexCoord = gl.MultiTexCoord
 local glCallList = gl.CallList
 
 function ShieldSphereParticle:BeginDraw()
-	gl.UseShader(shieldShader)
+	glUseShader(shieldShader)
 	glCulling(false)
 end
 
 function ShieldSphereParticle:EndDraw()
 	glTexture(false)
-	gl.UseShader(0)
+	glUseShader(0)
 	glColor(1,1,1,1)
 	glMultiTexCoord(1, 1,1,1,1)
 	glMultiTexCoord(2, 1,1,1,1)
@@ -181,47 +181,51 @@ end
 -----------------------------------------------------------------------------------------------------------------
 
 function ShieldSphereParticle:CreateParticle()
-  -- needed for repeat mode
-  self.csize  = self.size
-  self.clife  = self.life
+	-- needed for repeat mode
+	self.csize  = self.size
+	self.clife  = self.life
   
-  self.size      = self.csize or self.size
-  self.innerSize = self.size*0.998-1
-  self.life_incr = 1/self.life
-  self.life = 0
-  self.color = self.goodColorMap[1]
-  self.goodColor = self.goodColorMap[1]
-  self.badColor = self.badColorMap[1]
+	self.size      = self.csize or self.size
+	self.innerSize = self.size*0.998-1
+	self.life_incr = 1/self.life
+	self.life = 0
+	CopyTable(self.color,self.goodColorMap[1])
+	CopyTable(self.goodColor,self.goodColorMap[1])
+	CopyTable(self.badColor,self.badColorMap[1])
 
-  self.updates = 0
-  self.shieldCurrent = 0
-  self.hitStrength = 0
+	self.updates = 0
+	self.shieldCurrent = 0
+	self.hitStrength = 0
   
-  self.firstGameFrame = Spring.GetGameFrame()
-  self.dieGameFrame   = self.firstGameFrame + self.clife
+	self.firstGameFrame = Spring.GetGameFrame()
+	self.dieGameFrame   = self.firstGameFrame + self.clife
 end
 
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
 
 function ShieldSphereParticle:Update(n)
-  if (self.life<1) then
-    self.life     = self.life + n*self.life_incr
-    self.updates = self.updates +1
-    
-    --Spring.Echo(n)
-    local _,shieldCurrent = spGetUnitShieldState(self.uId)
-	local hitStrength = (self.shieldCurrent - shieldCurrent) / self.shieldMax + 0.5*self.hitStrength
-	--Spring.Echo("cur="..self.shieldCurrent.." max="..self.shieldMax.." hitStr="..hitStrength)
-	if hitStrength < 0.05 then
-		hitStrength = 0 
+	if (self.life<1) then
+		self.life     = self.life + n*self.life_incr
+		self.updates = self.updates +1
+		
+		local isEnabled,shieldCurrent = spGetUnitShieldState(self.unit)
+		--Spring.Echo("uId="..self.unit.." shEnabled="..tostring(isEnabled).." current="..tostring(shieldCurrent))	
+		if isEnabled == 1 and shieldCurrent then
+			local hitStrength = (self.shieldCurrent - shieldCurrent) / self.shieldMax + 0.5*self.hitStrength
+			--Spring.Echo("cur="..self.shieldCurrent.." max="..self.shieldMax.." hitStr="..hitStrength)
+			if hitStrength < 0.05 then
+				hitStrength = 0 
+			end
+			self.shieldCurrent = shieldCurrent
+			self.hitStrength = hitStrength
+			local healthFraction = shieldCurrent / self.shieldMax
+			
+			self.color = getHealthColor(self.goodColor,self.badColor,healthFraction,hitStrength)
+		else
+			self.color = getHealthColor(self.goodColor,self.badColor,0,0)
+		end
 	end
-	self.shieldCurrent = shieldCurrent
-	self.hitStrength = hitStrength
-    local healthFraction = shieldCurrent / self.shieldMax
-    
-    self.color = getHealthColor(self.goodColor,self.badColor,healthFraction,hitStrength)
-  end
 end
 
 -- used if repeatEffect=true;
@@ -233,10 +237,10 @@ function ShieldSphereParticle:ReInitialize()
 end
 
 function ShieldSphereParticle.Create(Options)
-  local newObject = MergeTable(Options, ShieldSphereParticle.Default)
-  setmetatable(newObject,ShieldSphereParticle)  -- make handle lookup
-  newObject:CreateParticle()
-  return newObject
+	local newObject = MergeTable(Options, ShieldSphereParticle.Default)
+	setmetatable(newObject,ShieldSphereParticle)  -- make handle lookup
+	newObject:CreateParticle()
+	return newObject
 end
 
 function ShieldSphereParticle:Destroy()

@@ -50,18 +50,6 @@ local submarines = {
 	sphere_adv_construction_sub = true
 }
 
-local flyingSpheres = {
-	sphere_construction_sphere = true,
-	sphere_nimbus = true,
-	sphere_orb = true,
-	sphere_aster = true,
-	sphere_gazer = true,
-	sphere_comet = true,
-	sphere_magnetar = true,
-	sphere_atom = true,
-	sphere_chroma = true
-}
-
 local respawners = {
 	aven_commander_respawner = true,
 	gear_commander_respawner = true,
@@ -112,11 +100,7 @@ if (gadgetHandler:IsSyncedCode()) then
 			if (ud.transportCapacity>0) then
 				spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.7/2, ys*0.7)
 			else
-				if (flyingSpheres[ud.name]) then
-					spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.7/2, ys*0.7)
-				else
-					spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.7/2, ys*0.7)
-				end
+				spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.7/2, ys*0.7)
 			end
 		end
 		

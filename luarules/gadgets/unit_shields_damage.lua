@@ -95,6 +95,11 @@ local spAddTeamResource = Spring.AddTeamResource
 local spSpawnCEG = Spring.SpawnCEG
 local spPlaySoundFile = Spring.PlaySoundFile
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
+local spGetUnitsInCylinder = Spring.GetUnitsInCylinder
+local spGetAllyTeamList = Spring.GetAllyTeamList
+local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
+local spSetUnitLosState = Spring.SetUnitLosState
+local spSetUnitLosMask = Spring.SetUnitLosMask    
 local max = math.max
 local random = math.random
 
@@ -186,7 +191,8 @@ local burningAOEPerStepWeaponDefIds = {
 	[WeaponDefNames["gear_fire_effect2"].id] = true
 }
 
-local largeShieldUnits = {}
+local largeShieldUnitDefIds = {}
+local largeShieldUnits = {}	-- table with visibility for each ally team
 local dmgModDeadUnits = {} -- for units that deal damage after they die
 							-- workaround for unitRulesParams no longer being available
 
@@ -281,7 +287,7 @@ function gadget:Initialize()
 	-- find units armor types and large shield unit def ids
     for _,ud in pairs(UnitDefs) do
     	if ud.name == "sphere_aegis" or ud.name == "sphere_shielder" or ud.name == "sphere_screener" or ud.name == "sphere_hermit" then
-    		largeShieldUnits[ud.id] = true
+    		largeShieldUnitDefIds[ud.id] = true
     	end
     	
 		armorType = ARMOR_L
@@ -314,18 +320,26 @@ end
 -- add aircrafts to list
 function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 	shieldEnabled,oldShieldPower = spGetUnitShieldState(unitID)
-	if shieldEnabled and oldShieldPower > 0 and not (largeShieldUnits[unitDefID] == true) then
-		
-		-- add base colvol to table 
-		xs, ys, zs, xo, yo, zo, vType, tType, axis, _ = spGetUnitCollisionVolumeData(unitID)
-		baseUnitColvolTable[unitID] = {xs,ys,zs,xo,yo,zo,vType,tType,axis}
-	
-		-- get shield colvol and add it to table
+	if shieldEnabled and oldShieldPower > 0 then
 		local ud = UnitDefs[unitDefID]
 		local shieldDefID = ud.shieldWeaponDef
-		diameter = WeaponDefs[shieldDefID].shieldRadius * 2
-		unitShieldColvolTable[unitID] = {diameter,diameter,diameter,xo,yo,zo,3,1,0}
-
+		if  (largeShieldUnitDefIds[unitDefID] == true) then
+			-- record that it's a large shield unit and the shield radius
+			-- used for visibility workaround
+			local allyTeamVisibility = {}
+			for _,allyId in pairs(spGetAllyTeamList()) do
+				allyTeamVisibility[allyId] = false
+			end
+			largeShieldUnits[unitID] =  {radius=WeaponDefs[shieldDefID].shieldRadius+600,allyTeamVisibility=allyTeamVisibility}
+		else
+			-- add base colvol to table 
+			xs, ys, zs, xo, yo, zo, vType, tType, axis, _ = spGetUnitCollisionVolumeData(unitID)
+			baseUnitColvolTable[unitID] = {xs,ys,zs,xo,yo,zo,vType,tType,axis}
+		
+			-- get shield colvol and add it to table
+			diameter = WeaponDefs[shieldDefID].shieldRadius * 2
+			unitShieldColvolTable[unitID] = {diameter,diameter,diameter,xo,yo,zo,3,1,0}
+		end
 	end
 	
 	if (UnitDefs[unitDefID].canFly) then
@@ -382,6 +396,40 @@ function gadget:GameFrame(n)
 			targetDamage = 0
 		end
 	end
+	
+	
+	-- process area shield visibility
+	for unitID,data in pairs(largeShieldUnits) do
+		local allyTeamVisibility = data.allyTeamVisibility 
+		-- actually check proximity only once per second
+		if (n%30 == 0) then
+			-- assume invisible
+			for aId,_ in pairs(allyTeamVisibility) do
+				allyTeamVisibility[aId] = false
+			end 
+			_,_,_,x,_,z = spGetUnitPosition(unitID,true)
+			for _,uId in pairs( spGetUnitsInCylinder( x, z, data.radius )) do
+				-- if there's an enemy within avg ground-LOS + shield radius of it
+				-- make it visible
+				local aId = spGetUnitAllyTeam(uId)
+				if not allyTeamVisibility[aId] then
+					allyTeamVisibility[aId] = true
+				end
+			end 
+		end
+		
+		-- enforce visiblility if necessary
+		for aId,visible in pairs(allyTeamVisibility) do
+			if visible then
+				--Spring.Echo(n.." : area shield "..unitID.." is visible to allyTeam "..aId)
+				spSetUnitLosMask( unitID, aId, 15)
+				spSetUnitLosState( unitID, aId, 15)
+			else
+				spSetUnitLosMask( unitID, aId, 0)
+			end
+		end 
+	end
+	
 
 	if (n%STEP_DELAY ~= 0) then
 		return
@@ -399,6 +447,7 @@ function gadget:GameFrame(n)
 			SetColvol(unitID, COLVOL_BASE)
 		end
 	end
+
 
 	-- process burn debuff for burning units
 	dmg, radius = 0
@@ -473,6 +522,9 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 	end
 
 	-- remove entries from tables when unit is destroyed
+	if largeShieldUnits[unitID] ~= nil then
+		largeShieldUnits[unitID] = nil
+	end
 	if baseUnitColvolTable[unitID] then
 		baseUnitColvolTable[unitID] = nil
 	end
@@ -669,7 +721,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	-- get unit shield status
 	shieldEnabled,oldShieldPower = spGetUnitShieldState(unitID)
 
-	if shieldEnabled and oldShieldPower > 0 and not (largeShieldUnits[unitDefID] == true) then
+	if shieldEnabled and oldShieldPower > 0 and not (largeShieldUnitDefIds[unitDefID] == true) then
 		newShieldPower = oldShieldPower
 		damageAbsorbedByShield = 0
 		local hitpower = weaponHitpowerTable[weaponDefID]

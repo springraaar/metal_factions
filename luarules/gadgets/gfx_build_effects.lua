@@ -40,6 +40,7 @@ local dceg = "featureblastwrapper"
 local random = math.random
 local abs = math.abs
 local floor = math.floor
+local min = math.min
 
 local xs, ys, zs, xo, yo, zo, vtype, htype, axis, px,py,pz,offsetX, offsetZ, intensity,bp,oldBp,ud
 
@@ -81,7 +82,7 @@ function gadget:GameFrame(n)
 			end
 			if bp < 1 then
 				if bp > oldBp then
-					intensity = (bp - oldBp)*100
+					intensity = min(10,(bp - oldBp)*100)
 				
 					xs, ys, zs, _, _, _, _, _, _, _ = spGetUnitCollisionVolumeData(unitId)
 					px,py,pz = spGetUnitPosition(unitId)
@@ -111,7 +112,7 @@ function gadget:GameFrame(n)
 					]]-- 
 					
 				elseif bp < oldBp then
-					intensity = abs((bp - oldBp))*100
+					intensity = min(20,abs((bp - oldBp))*100)
 				
 					xs, ys, zs, _, _, _, _, _, _, _ = spGetUnitCollisionVolumeData(unitId)
 					px,py,pz = spGetUnitPosition(unitId)
@@ -138,8 +139,7 @@ function gadget:GameFrame(n)
 			end
 			if bp < 1 then
 				if bp > oldBp then		-- never happens?
-					intensity = (bp - oldBp)*100
-				
+					intensity = min(10,(bp - oldBp)*100)
 					xs, ys, zs, _, _, _, _, _, _, _ = spGetFeatureCollisionVolumeData(fId)
 					px,py,pz = spGetFeaturePosition(fId)
 					xs = xs*0.95
@@ -149,7 +149,7 @@ function gadget:GameFrame(n)
 					spSpawnCEG(buildCEG, px -xs*0.5 +random()*xs, py+ys, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
 					spSpawnCEG(buildCEG, px -xs*0.5 +random()*xs, py+ys, pz-zs*0.5+random()*zs,0,1,0,xs,intensity)
 				elseif bp < oldBp then
-					intensity = abs((bp - oldBp))*100
+					intensity = min(20,abs((bp - oldBp))*100)
 				
 					xs, ys, zs, _, _, _, _, _, _, _ = spGetFeatureCollisionVolumeData(fId)
 					px,py,pz = spGetFeaturePosition(fId)

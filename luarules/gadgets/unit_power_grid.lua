@@ -24,6 +24,7 @@ local GRID_RADIUS_SQ = GRID_RADIUS*GRID_RADIUS
 local GRID_CONNECTION_RADIUS = GRID_RADIUS
 local GRID_CONNECTION_RADIUS_SQ = GRID_CONNECTION_RADIUS*GRID_CONNECTION_RADIUS
 
+local BIGGER_RADIUS_EXT_THRESHOLD = 0.0012
 
 local METAL_EXTRACTION_FACTOR = 0.001
 local ENERGY_STORAGE_GRID_FACTOR = 0.01 
@@ -183,7 +184,7 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 	if (gridAffectedDefIds[unitDefId]) then
 		local x,_,z = spGetUnitPosition(unitId)
 		local ud = UnitDefs[unitDefId]
-		affectedUnitIdsByAllyId[allyId][unitId] = {eMake=0,eUse=ud.energyUpkeep,eStorage=0,mMult=ud.extractsMetal/METAL_EXTRACTION_FACTOR,mExt=ud.extractsMetal,gridId=0,x=x,z=z,active=false}
+		affectedUnitIdsByAllyId[allyId][unitId] = {eMake=0,eUse=ud.energyUpkeep,eStorage=0,mMult=ud.extractsMetal/METAL_EXTRACTION_FACTOR,mExt=ud.extractsMetal,mRadius=ud.extractsMetal > BIGGER_RADIUS_EXT_THRESHOLD and GG.ADVANCED_EXTRACTOR_RADIUS or GG.EXTRACTOR_RADIUS,gridId=0,x=x,z=z,active=false}
 	end
 	if (gridBoosterDefIds[unitDefId]) then
 		local x,_,z = spGetUnitPosition(unitId)
@@ -455,7 +456,7 @@ function gadget:GameFrame(n)
 					
 					mMake,_,_,_ = spGetUnitResources(uId)
 					eChange = props.eUse*(grid.extractionBonus)
-					spSetUnitMetalExtraction(uId,props.mExt*(1+grid.extractionBonus))
+					spSetUnitMetalExtraction(uId,props.mExt*(1+grid.extractionBonus),props.mRadius)
 					spSetUnitResourcing( uId, "cue", eChange)
 					grid.extraEnergyUse = grid.extraEnergyUse + eChange
 					grid.extraMetalIncome = grid.extraMetalIncome + grid.extractionBonus*mMake  
@@ -467,7 +468,7 @@ function gadget:GameFrame(n)
 					spSetUnitRulesParam(uId,"powerGridLevel",0)
 					if props.active then
 						--Spring.Echo(props.mExt)
-						spSetUnitMetalExtraction(uId,props.mExt)
+						spSetUnitMetalExtraction(uId,props.mExt,props.mRadius)
 						spSetUnitResourcing( uId, "cue", 0)
 					end 
 				end

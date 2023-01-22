@@ -20,7 +20,7 @@
 	objectName=aven_dragons_teeth.3do;
 	corpse=aven_dragons_teeth_dead;
 	buildPic=aven_dragons_teeth.png;
-	soundCategory=;
+
 
 	//************************************************************
 	//  Health/Cost/Size
@@ -45,6 +45,11 @@
 	//************
 	buildangle=0;
 	yardMap=ff ff;
+	collisionVolumeType = box;
+	collisionVolumeScales =32 32 32;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
 
 	//************************************************************
 	//  Constructor
@@ -72,8 +77,6 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	explodeAs=;
-	selfDestructAs=;
 
 
 	//************************************************************

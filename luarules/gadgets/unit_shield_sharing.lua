@@ -80,6 +80,17 @@ end
 
 -- extra income for wind generators
 function gadget:GameFrame(n)
+	for uId,uDefId in pairs(shieldUnits) do
+		local _,_,_,_,bp = spGetUnitHealth(uId)
+		if (bp) then
+			if bp < 1 then
+				spSetUnitShieldState( uId, -1, false) 
+			else
+				spSetUnitShieldState( uId, -1, true)
+			end
+		end
+	end
+
 	if (n%SHIELD_SHARING_STEP_FRAMES ~= 0) then
 		return
 	end
@@ -99,7 +110,7 @@ function gadget:GameFrame(n)
 		totalAmountDrained = 0 
 		
 		-- if shield is below threshold, try to drain from nearby allied shields
-		if shieldEnabled and oldShieldPower > 0 and powerFraction < SHIELD_SHARING_THRESHOLD_FRACTION then
+		if shieldEnabled == 1 and oldShieldPower > 0 and powerFraction < SHIELD_SHARING_THRESHOLD_FRACTION then
 			teamId = spGetUnitTeam(uId)
 			
 			-- for each nearby allied shielded unit...			
@@ -116,8 +127,7 @@ function gadget:GameFrame(n)
 							maxShieldPower2 = shieldMaxByDefIds[uDefId2]
 							shieldEnabled,oldShieldPower2 = spGetUnitShieldState(uId2)
 							
-							if(shieldEnabled) then
-								--Echo(uId2.." has shield to share")
+							if(shieldEnabled == 1) then
 								powerFraction2 = (oldShieldPower2 / maxShieldPower2)
 								newShieldPower2 = oldShieldPower2
 								drainFromSmlShield = false
