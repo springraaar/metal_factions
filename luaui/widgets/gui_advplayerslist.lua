@@ -58,6 +58,7 @@ local spGetGameFrame			 = Spring.GetGameFrame
 local spGetTeamRulesParam        = Spring.GetTeamRulesParam
 local spGetTimer                 = Spring.GetTimer
 local spDiffTimers               = Spring.DiffTimers
+local spGetGaiaTeamID            = Spring.GetGaiaTeamID 
 
 local gl_Texture          = gl.Texture
 local gl_Rect             = gl.Rect
@@ -169,6 +170,7 @@ local myAllyTeamID
 local myTeamID			
 local myPlayerID
 local mySpecStatus = false
+local specTarget = -1
 
 --General players/spectator count and tables
 local player = {}
@@ -260,8 +262,6 @@ local playerOffset    = 19 * scaleFactor
 local drawList        = {}
 local teamN
 local newSide		  = {}
-
-
 
 
 --------------- chat button stuff
@@ -809,10 +809,10 @@ function SortList()
 	if mySpecStatus ~= myOldSpecStatus then
 		if mySpecStatus == true then
 			teamList = Spring_GetTeamList()
-			for _, team in ipairs(teamList) do               --
+			for _, team in ipairs(teamList) do
 				_,_, isDead = Spring_GetTeamInfo(team)
 				if isDead == false then
-					Spec(team)
+					Spec(team,true)
 					break
 				end
 			end
@@ -1508,7 +1508,7 @@ end
 
 function SpecTip(mouseX)
 	if mouseX >= m_spec.posX + widgetPosX  + 1 and mouseX <= m_spec.posX + widgetPosX  + 17*scaleFactor then
-		tipText = "Click to observe the Player"
+		tipText = "Click to toggle between player and global view"
 	end	
 end
 
@@ -1768,9 +1768,23 @@ function GetPlayerColorStr(red,green,blue)
 	return "\255\255\255\255"
 end
 
-function Spec(teamID)
-	Spring_SendCommands{"specteam "..teamID}
-	specTarget = teamID
+function Spec(teamID, forceFullView)
+	if specTarget ~= teamID and not forceFullView then
+		Spring_SendCommands("deselect")
+		Spring_SendCommands("specfullview 0")
+		Spring_SendCommands("specteam "..teamID)
+		if (Spring.GetMapDrawMode() ~= "los") then
+			Spring_SendCommands("togglelos")
+		end
+		specTarget = teamID
+	else
+		Spring_SendCommands("deselect")
+		Spring_SendCommands("specfullview 1")
+		if (Spring.GetMapDrawMode() ~= "normal") then
+			Spring_SendCommands("togglelos")
+		end
+		specTarget = -1
+	end
 end
 
 function widget:MousePress(x,y,button)
@@ -2516,7 +2530,7 @@ end
 
 function widget:ViewResize(viewSizeX, viewSizeY)
 	local dx, dy = vsx - viewSizeX, vsy - viewSizeY
-	Spring.Echo("view resized from "..vsx.."*"..vsy.." to "..viewSizeX.."*"..viewSizeY.." edown="..tostring(expandDown).." eleft="..tostring(expandLeft))
+	Echo("view resized from "..vsx.."*"..vsy.." to "..viewSizeX.."*"..viewSizeY.." edown="..tostring(expandDown).." eleft="..tostring(expandLeft))
 	vsx, vsy = viewSizeX, viewSizeY
 	if expandDown == true then
 		widgetTop  = widgetTop - dy

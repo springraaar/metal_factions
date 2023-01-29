@@ -72,6 +72,9 @@ local spGetUnitRadius        = Spring.GetUnitRadius
 local spIsUnitVisible        = Spring.IsUnitVisible
 local spIsSphereInView       = Spring.IsSphereInView
 local spGetUnitLosState      = Spring.GetUnitLosState
+local spIsPosInLos           = Spring.IsPosInLos
+local spIsPosInRadar         = Spring.IsPosInRadar
+local spIsPosInAirLos        = Spring.IsPosInAirLos
 local spGetUnitViewPosition  = Spring.GetUnitViewPosition
 local spGetUnitDirection     = Spring.GetUnitDirection
 local spGetHeadingFromVector = Spring.GetHeadingFromVector
@@ -85,6 +88,8 @@ local scGetReadAllyTeam      = Script.GetReadAllyTeam
 local spGetUnitPieceMap      = Spring.GetUnitPieceMap
 local spValidUnitID          = Spring.ValidUnitID
 local spGetProjectilePosition = Spring.GetProjectilePosition
+
+local spGetUnitPieceList = Spring.GetUnitPieceList
 
 local glUnitPieceMatrix = gl.UnitPieceMatrix
 local glPushMatrix      = gl.PushMatrix
@@ -183,36 +188,26 @@ LupsConfig      = {}
 
 local noDrawUnits = {}
 function SetUnitLuaDraw(unitID,nodraw)
-  if (nodraw) then
-    noDrawUnits[unitID] = (noDrawUnits[unitID] or 0) + 1
-    if (noDrawUnits[unitID]==1) then
-      --if (Game.version=="0.76b1") then
-		if   Spring.UnitRendering.ActivateMaterial then
-			Spring.UnitRendering.ActivateMaterial(unitID,1)
+	if (nodraw) then
+		noDrawUnits[unitID] = (noDrawUnits[unitID] or 0) + 1
+		if (noDrawUnits[unitID]==1) then
+			if Spring.UnitRendering.ActivateMaterial then
+				Spring.UnitRendering.ActivateMaterial(unitID,1)
+			end
+			for pieceID in ipairs(spGetUnitPieceList(unitID) or {}) do
+				Spring.UnitRendering.SetPieceList(unitID,1,pieceID,nilDispList)
+			end
 		end
+	else
+		noDrawUnits[unitID] = (noDrawUnits[unitID] or 0) - 1
+		if (noDrawUnits[unitID]==0) then
+			if Spring.UnitRendering.DeactivateMaterial then
+				Spring.UnitRendering.DeactivateMaterial(unitID,1)
+			end
 		
-        --Spring.UnitRendering.SetLODLength(unitID,1,-1000)
-        for pieceID in ipairs(Spring.GetUnitPieceList(unitID) or {}) do
-          Spring.UnitRendering.SetPieceList(unitID,1,pieceID,nilDispList)
-        end
-      --else
-      --  Spring.UnitRendering.SetUnitLuaDraw(unitID,true)
-      --end
-    end
-  else
-    noDrawUnits[unitID] = (noDrawUnits[unitID] or 0) - 1
-    if (noDrawUnits[unitID]==0) then
-      --if (Game.version=="0.76b1") then
-		if   Spring.UnitRendering.DeactivateMaterial then
-			Spring.UnitRendering.DeactivateMaterial(unitID,1)
+			noDrawUnits[unitID] = nil
 		end
-		
-      --else
-      --  Spring.UnitRendering.SetUnitLuaDraw(unitID,false)
-      --end
-      noDrawUnits[unitID] = nil
-    end
-  end
+	end
 end
 
 local function DrawUnit(_,unitID,drawMode)
@@ -667,19 +662,19 @@ local DrawScreenEffectsVisibleFx
 local DrawInMiniMapVisibleFx
 
 function IsPosInLos(x,y,z)
-	return LocalAllyTeamID == -2 or Spring.IsPosInLos(x,y,z, LocalAllyTeamID)
+	return LocalAllyTeamID == -2 or spIsPosInLos(x,y,z, LocalAllyTeamID)
 end
 
 function IsPosInRadar(x,y,z)
-	return LocalAllyTeamID == -2 or Spring.IsPosInRadar(x,y,z, LocalAllyTeamID)
+	return LocalAllyTeamID == -2 or spIsPosInRadar(x,y,z, LocalAllyTeamID)
 end
 
 function IsPosInAirLos(x,y,z)
-	return LocalAllyTeamID == -2 or Spring.IsPosInAirLos(x,y,z, LocalAllyTeamID)
+	return LocalAllyTeamID == -2 or spIsPosInAirLos(x,y,z, LocalAllyTeamID)
 end
 
 function GetUnitLosState(unitID)
-	return LocalAllyTeamID == -2 or (Spring.GetUnitLosState(unitID, LocalAllyTeamID) or {}).los or false
+	return LocalAllyTeamID == -2 or (spGetUnitLosState(unitID, tonumber(LocalAllyTeamID)) or {}).los or false
 end
 
 local function IsUnitFXVisible(fx)

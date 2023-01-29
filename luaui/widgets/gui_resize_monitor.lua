@@ -12,6 +12,8 @@ function widget:GetInfo()
 end
 local vsx, vsy = gl.GetViewSizes()
 
+VFS.Include("lualibs/util.lua")
+
 local spSendCommands = Spring.SendCommands
 local spGetTimer = Spring.GetTimer
 local spDiffTimers = Spring.DiffTimers
@@ -19,6 +21,17 @@ local floor = math.floor
 
 local reload = false
 local refTimer = spGetTimer()
+
+
+local reloadWidgetList = {
+	"Red Minimap",
+	"Red Main Menu",
+	"Red Build/Order Menu",
+	"Red Resource Bars",
+	"Commander Hurt Warning",
+	"Progress",
+	"AdvPlayersList"
+}
 
 ------------------------------------------ Callins
 
@@ -46,7 +59,12 @@ function widget:DrawScreen()
 		if (delayElapsed) then
 			reload = false
 			Spring.Echo("Game view changed : reloading UI...")
-			spSendCommands("luaui reload")
+			
+			for _,name in ipairs(reloadWidgetList) do 
+				disableWidget(name)
+				enableWidget(name)
+			end
+			--spSendCommands("luaui reload")
 		end
 	end
 end

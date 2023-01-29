@@ -223,6 +223,12 @@ local _iconTypes = {
 		distance=1,
 		size=REF_SIZE
 	},
+	staticashield={
+		bitmap="icons/staticashield.tga",
+		radiusadjust=false,
+		distance=1,
+		size=REF_SIZE
+	},
 	building={
 		bitmap="icons/square.tga",
 		radiusadjust=false,
@@ -489,6 +495,12 @@ local _iconTypes = {
 	},
 	amphib={
 		bitmap="icons/amphib.tga",
+		radiusadjust=false,
+		distance=1,
+		size=REF_SIZE
+	},
+	amphibashield={
+		bitmap="icons/amphibashield.tga",
 		radiusadjust=false,
 		distance=1,
 		size=REF_SIZE

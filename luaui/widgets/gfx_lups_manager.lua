@@ -128,6 +128,8 @@ local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitVelocity = Spring.GetUnitVelocity
 local spGetUnitDirection = Spring.GetUnitDirection
 local spGetGameSpeed = Spring.GetGameSpeed
+local spGetUnitRadius = Spring.GetUnitRadius
+local spGetUnitHeight = Spring.GetUnitHeight
 
 local copyTable = Spring.Utilities.CopyTable
 
@@ -200,6 +202,12 @@ local function loadShieldFXOpts(fx,unitID,unitDefID)
     end
 end
 
+local function deRegisterUnitAndClearFX(unitID)
+	registeredUnits[unitID] = nil
+	aircraftWithThrusters[unitID] = nil
+	ClearFxs(unitID)
+end
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -225,15 +233,15 @@ local function UnitFinished(_,unitID,unitDefID)
 				loadShieldFXOpts(fx,unitID,unitDefID)
 			else
 				if (fx.options.radiusFactor) then
-					fx.options.size = Spring.GetUnitRadius(unitID)*fx.options.radiusFactor
+					fx.options.size = spGetUnitRadius(unitID)*fx.options.radiusFactor
 				end  
 			end
 			if (fx.class=="GroundFlash") then
-				fx.options.pos = { Spring.GetUnitPosition(unitID) }
+				fx.options.pos = { spGetUnitPosition(unitID) }
 			end
 			if (fx.options.heightFactor) then
 				local pos = fx.options.pos or {0, 0, 0}
-				fx.options.pos = { pos[1], Spring.GetUnitHeight(unitID)*fx.options.heightFactor, pos[3] }
+				fx.options.pos = { pos[1], spGetUnitHeight(unitID)*fx.options.heightFactor, pos[3] }
 			end
 
 			fx.options.unit = unitID
@@ -248,10 +256,7 @@ end
 local function UnitDestroyed(_,unitID,unitDefID, preEvent)
 	if preEvent == false then return end
 	
-	registeredUnits[unitID] = nil
-
-	aircraftWithThrusters[unitID] = nil
-	ClearFxs(unitID)
+	deRegisterUnitAndClearFX(unitID)
 end
 
 
@@ -272,11 +277,11 @@ local function UnitEnteredLos(_,unitID)
 				loadShieldFXOpts(fx,unitID,unitDefID)
 			else
 				if (fx.options.radiusFactor) then
-					fx.options.size = Spring.GetUnitRadius(unitID)*fx.options.radiusFactor
+					fx.options.size = spGetUnitRadius(unitID)*fx.options.radiusFactor
 				end  
 			end
 			if (fx.class=="GroundFlash") then
-				fx.options.pos = { Spring.GetUnitPosition(unitID) }
+				fx.options.pos = { spGetUnitPosition(unitID) }
 			end
 			fx.options.unit = unitID
 			AddFxs( unitID,LupsAddFX(fx.class,fx.options) )
@@ -290,10 +295,7 @@ local function UnitLeftLos(_,unitID)
 	local spec, fullSpec = spGetSpectatingState()
 	if (spec and fullSpec) then return end
 
-	registeredUnits[unitID] = nil
-	aircraftWithThrusters[unitID] = nil
-  
-	ClearFxs(unitID)
+	deRegisterUnitAndClearFX(unitID)
 end
 
 --------------------------------------------------------------------------------
@@ -310,8 +312,10 @@ local V_UPDATE_RESOLUTION = 3
 
 
 local function GameFrame(_,n)
+	--local spec, fullView,fullSelect = spGetSpectatingState()
+	--Echo("spec="..tostring(spec).." fullView="..tostring(fullView).." fullSelect="..tostring(fullSelect).." teamId="..tostring(Spring.GetMyTeamID()).." allyId="..tostring(Spring.GetMyAllyTeamID()).." drawMode="..tostring(Spring.GetMapDrawMode()))
+
 	local userSpeedFactor, speedFactor, paused = spGetGameSpeed()
-	--Spring.Echo("speedFactor="..speedFactor.." userSpeedFactor="..userSpeedFactor)
   	-- update flight thruster effect according to unit movement
 	if (WG.gfxProfile ~= GFX_LOW and (n%(3*userSpeedFactor))== 0 and (next(aircraftWithThrusters))) then
 		--[[
@@ -438,15 +442,19 @@ end
 
 
 local function CheckForExistingUnits()
-  --// initialize effects for existing units
-  local allUnits = Spring.GetAllUnits();
-  for i=1,#allUnits do
-    local unitID    = allUnits[i]
-    local unitDefID = Spring.GetUnitDefID(unitID)
-    UnitFinished(nil,unitID,unitDefID)
-  end
+	-- reset lups fx
+	for unitID,_ in pairs(registeredUnits) do
+		deRegisterUnitAndClearFX(unitID)
+	end
+	--// initialize effects for existing units
+	local allUnits = Spring.GetAllUnits();
+	for i=1,#allUnits do
+		local unitID    = allUnits[i]
+		local unitDefID = Spring.GetUnitDefID(unitID)
+		UnitFinished(nil,unitID,unitDefID)
+	end
 
-  widgetHandler:RemoveWidgetCallIn("Update",widget)
+	widgetHandler:RemoveWidgetCallIn("Update",widget)
 end
 
 

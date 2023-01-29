@@ -1,3 +1,21 @@
+2023/01/29 ------------------ NOTES v2.01 ----------------------
+
+- reduced the cost of unit with very short range weapons (< 350) by 1-5% and 10% for CLAW "Knife" specifically
+- slightly increased damage of flamethrowers by about 5%
+- weapon damage against L and M armor is no longer rounded down to nearest integer, meaning some L/M weapons will deal more damage to armored targets
+- increased damage of CLAW "Slayer" form's beam
+- reduced cost of robots with jump ability by about 3%
+- increased GEAR "Metalhead" HP by 15% and cost by 9%
+- very slight (~1%) reduction in cost of units with an armored state (pop-up, etc.)
+
+--- UI / Visual / Sounds
+
+- when spectating games, clicking on the "observe player" buttons on the player list toggles between viewing that player's LOS limits and global view
+- fixed a shield visibility issue for spectators
+- modified window resize monitor to only reload specific widgets instead of the full luaui to be faster and avoid triggering multiple times
+- added a specific icon for area shield units
+
+
 2023/01/21 ------------------ NOTES v2.00 ----------------------
 
 --- Balance / Mechanics
