@@ -75,6 +75,7 @@ local spGetUnitLosState      = Spring.GetUnitLosState
 local spIsPosInLos           = Spring.IsPosInLos
 local spIsPosInRadar         = Spring.IsPosInRadar
 local spIsPosInAirLos        = Spring.IsPosInAirLos
+local spIsUnitInLos          = Spring.IsUnitInLos
 local spGetUnitViewPosition  = Spring.GetUnitViewPosition
 local spGetUnitDirection     = Spring.GetUnitDirection
 local spGetHeadingFromVector = Spring.GetHeadingFromVector
@@ -673,8 +674,17 @@ function IsPosInAirLos(x,y,z)
 	return LocalAllyTeamID == -2 or spIsPosInAirLos(x,y,z, LocalAllyTeamID)
 end
 
-function GetUnitLosState(unitID)
-	return LocalAllyTeamID == -2 or (spGetUnitLosState(unitID, tonumber(LocalAllyTeamID)) or {}).los or false
+function GetUnitLosState(unitID)	-- used only on airjet.lua, for some reason
+	--TODO modified in early 2023 to avoid "bad argument #2 to 'spGetUnitLosState' (Invalid allyTeam)"
+	local spec, specFullView = spGetSpectatingState()
+	if (specFullView) then
+		LocalAllyTeamID = scGetReadAllyTeam()
+	else
+		LocalAllyTeamID = spGetLocalAllyTeamID()
+	end
+  
+	--Spring.Echo("localAllyId="..LocalAllyTeamID.." uAllyId="..Spring.GetUnitAllyTeam(unitID).. " uId="..unitID.." name="..UnitDefs[Spring.GetUnitDefID(unitID)].name)
+	return LocalAllyTeamID == -2 or spIsUnitInLos(unitID, LocalAllyTeamID) or false
 end
 
 local function IsUnitFXVisible(fx)

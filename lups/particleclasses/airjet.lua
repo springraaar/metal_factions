@@ -11,6 +11,10 @@ local timerUniform, timer2Uniform
 
 local lastTexture1,lastTexture2
 
+local FTHRUST_MOD = 1/5
+local VTHRUST_MOD = 1/4
+
+
 -----------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------
 
@@ -64,6 +68,7 @@ local spGetPositionLosState = Spring.GetPositionLosState
 local spGetUnitLosState     = Spring.GetUnitLosState
 local spIsSphereInView      = Spring.IsSphereInView
 local spGetUnitRadius       = Spring.GetUnitRadius
+local spIsUnitIcon          = Spring.IsUnitIcon
 
 local IsPosInLos    = Spring.IsPosInLos
 local IsPosInAirLos = Spring.IsPosInAirLos
@@ -358,6 +363,8 @@ function AirJet:CreateParticle()
   self.dList = glCreateList(glBeginEnd,GL_QUADS,
                             BeginEndDrawList,self)
 
+  self.refLength = self.length
+  self.drawLength = -1
   --// used for visibility check
   self.radius = self.length*self.jitterLengthScale
 
@@ -377,6 +384,25 @@ function AirJet.Create(Options)
   return newObject
 end
 
+
+function AirJet:Update(n)
+	local props = WG.aircraftWithThrusters[self.unit]
+	--Spring.Echo("update "..n.." uId="..self.unit.." down="..tostring(self.down).." length="..self.length.." repeat="..tostring(self.repeatEffect).." fThrust="..tostring(props.fThrust))
+	if props then 
+		if self.down then
+			self.length=self.refLength*props.vThrust*VTHRUST_MOD
+		else
+			self.length=self.refLength*props.fThrust*FTHRUST_MOD
+		end
+		-- rebuild draw list if length changes
+		if self.drawLength ~= self.length then
+			glDeleteList(self.dList)
+			self.dList = glCreateList(glBeginEnd,GL_QUADS,BeginEndDrawList,self)
+			self.drawLength = self.length
+		end
+	end
+end
+
 function AirJet:Destroy()
   --gl.DeleteTexture(self.texture1)
   --gl.DeleteTexture(self.texture2)
@@ -385,29 +411,37 @@ end
 
 
 function AirJet:Visible()
-  local radius = self.length
-  local posX,posY,posZ = self.pos[1],self.pos[2],self.pos[3]
-  local losState
-  if (self.unit and not self.worldspace) then
-    losState = GetUnitLosState(self.unit)
-    local ux,uy,uz = spGetUnitViewPosition(self.unit)
-	if ux then
-      posX,posY,posZ = posX+ux,posY+uy,posZ+uz
-      radius = radius + spGetUnitRadius(self.unit)
+	local radius = self.length
+	local posX,posY,posZ = self.pos[1],self.pos[2],self.pos[3]
+	local losState
+	local uRadius
+	if (self.unit and not self.worldspace) then
+		-- don't draw thrusters for icons
+		if spIsUnitIcon(self.unit) then
+			return false
+		end
+		losState = GetUnitLosState(self.unit)
+		local ux,uy,uz = spGetUnitViewPosition(self.unit)
+		if ux then
+			posX,posY,posZ = posX+ux,posY+uy,posZ+uz
+			uRadius = spGetUnitRadius(self.unit)
+			if uRadius then
+				radius = radius + uRadius
+			end
+		end
 	end
-  end
-  if (losState==nil) then
-    if (self.radar) then
-      losState = IsPosInRadar(posX,posY,posZ)
-    end
-    if ((not losState) and self.airLos) then
-      losState = IsPosInAirLos(posX,posY,posZ)
-    end
-    if ((not losState) and self.los) then
-      losState = IsPosInLos(posX,posY,posZ)
-    end
-  end
-  return (losState)and(spIsSphereInView(posX,posY,posZ,radius))
+	if (losState==nil) then
+		if (self.radar) then
+			losState = IsPosInRadar(posX,posY,posZ)
+		end
+		if ((not losState) and self.airLos) then
+			losState = IsPosInAirLos(posX,posY,posZ)
+		end
+		if ((not losState) and self.los) then
+			losState = IsPosInLos(posX,posY,posZ)
+		end
+	end
+	return (losState)and(spIsSphereInView(posX,posY,posZ,radius))
 end
 
 

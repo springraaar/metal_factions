@@ -67,18 +67,6 @@ effectUnitDefs = {
   sphere_atom = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.65}, atomShieldSphere)}
   },
-  sphere_twilight = {
-	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
-  },
-  sphere_neptune = {
-	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
-  },
-  sphere_spitfire = {
-	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
-  },
-  sphere_meteor = {
-	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
-  },
   sphere_stresser = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
   },  
@@ -101,7 +89,7 @@ effectUnitDefs = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
   },
   
-  --// AIRCRAFT JETS //----------------------------
+  --// AIRCRAFT JETS (and air shields)//----------------------------
 
   ----------------- AVEN
   aven_peeper = {
@@ -464,7 +452,8 @@ effectUnitDefs = {
   sphere_twilight = {
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=40, piece="ljp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=40, piece="rjp", onActive=true}},
-    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=40, piece="cjp", onActive=true}}
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=40, piece="cjp", onActive=true}},
+    {class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
   },
   sphere_lifter_l = {
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=18, piece="tp1", onActive=true, down=true}},
@@ -500,7 +489,8 @@ effectUnitDefs = {
   },  
   sphere_spitfire = {
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=30, piece="ljp", onActive=true}},
-    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=30, piece="rjp", onActive=true}}
+    {class='AirJet',options={color={0.3,0.1,0}, width=5, length=30, piece="rjp", onActive=true}},
+    {class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
   },
   sphere_meteor = {
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=25, piece="ljp", onActive=true}},
@@ -508,11 +498,13 @@ effectUnitDefs = {
 	{class='AirJet',options={color={0.3,0.1,0}, width=6, length=25, piece="cjp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=7, length=30, piece="j1", onActive=true,down=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=7, length=30, piece="j2", onActive=true,down=true}},
-    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=30, piece="j3", onActive=true,down=true}}
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=30, piece="j3", onActive=true,down=true}},
+    {class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
   },
   sphere_neptune = {
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=25, piece="ljp", onActive=true}},
-    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=25, piece="rjp", onActive=true}}
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=25, piece="rjp", onActive=true}},
+    {class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.35}, areaShieldSphere)}
   },  
   sphere_tycho = {
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=25, piece="ljp", onActive=true}},

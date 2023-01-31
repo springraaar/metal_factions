@@ -113,6 +113,7 @@ local currentTime = os.date('*t')
 --------------------------------------------------------------------------------
 
 local aircraftWithThrusters = {}
+WG.aircraftWithThrusters = aircraftWithThrusters
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -306,9 +307,9 @@ local color2 = {1,0.5,0}
 local lastSkipCheckFrame = 0
 local lastSkipCount = 0
 local lastTotalProcessed = 0
-local FTHRUST_UPDATE_RESOLUTION = 4
-local VTHRUST_UPDATE_RESOLUTION = 3
-local V_UPDATE_RESOLUTION = 3
+local FTHRUST_UPDATE_RESOLUTION = 5
+local VTHRUST_UPDATE_RESOLUTION = 4
+local V_UPDATE_RESOLUTION = 4
 
 
 local function GameFrame(_,n)
@@ -342,11 +343,13 @@ local function GameFrame(_,n)
 					effects = props.effects
 					vx, vy, vz, v = spGetUnitVelocity(unitID)
 					dx, dy, dz = spGetUnitDirection(unitID)
-				
+					
 					maxV = ud.speed
 					if (vx ~= nil and maxV ~= 0) then
-						
-						xzAlignFactor = (vx * dx + vz * dz) / v 
+						xzAlignFactor = (vx * dx + vz * dz)
+						if v > 0.1 then
+							xzAlignFactor = (vx * dx + vz * dz) / v
+						end 
 						if xzAlignFactor < 0 then
 							xzAlignFactor = 0
 						end
@@ -380,29 +383,13 @@ local function GameFrame(_,n)
 						end
 						--lastTotalProcessed = lastTotalProcessed + 1						
 						-- only update/replace the lups fx if they changed significantly
-						if (floor(fThrust*FTHRUST_UPDATE_RESOLUTION) ~= oldFThrust) or (floor(vThrust*VTHRUST_UPDATE_RESOLUTION) ~= oldVThrust) or (floor(v*V_UPDATE_RESOLUTION) ~= oldV) then
-							ClearFxs(unitID)
-							for i=1, #effects do
-								local fx = effects[i]
-								if fx.class == "AirJet" then
-									local newFx = copyTable(fx,true)
-									local newOptions = newFx.options 
-									newOptions.unit = unitID
-									if (newOptions.down == true) then
-										newOptions.length = fx.options.length * vThrust
-									else
-										newOptions.length = fx.options.length * fThrust
-									end
-									AddFxs( unitID, LupsAddFX(newFx.class,newOptions) )
-								end
-							end
-							
-							props.vThrust = floor(vThrust*VTHRUST_UPDATE_RESOLUTION)
-							props.fThrust = floor(fThrust*FTHRUST_UPDATE_RESOLUTION)
-							props.v = floor(v*V_UPDATE_RESOLUTION)
-						--else
-							--lastSkipCount = lastSkipCount + 1
-							--Spring.Echo(n.." : skipped thruster update for unit "..unitID)
+						fThrust = floor(fThrust*FTHRUST_UPDATE_RESOLUTION)
+						vThrust = floor(vThrust*VTHRUST_UPDATE_RESOLUTION)
+						v = floor(v*V_UPDATE_RESOLUTION)
+						if (fThrust ~= oldFThrust) or (vThrust ~= oldVThrust) or (v ~= oldV) then
+							props.vThrust = vThrust
+							props.fThrust = fThrust
+							props.v = v
 						end
 					end
 				end

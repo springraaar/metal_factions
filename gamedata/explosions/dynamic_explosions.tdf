@@ -1820,14 +1820,51 @@
 			particleSpeedSpread=d0.005 0.5;  
 			particleSizeSpread=d0.01 1;
 		
-			particleLife=d0.08 12;
-			numParticles=d0.04 6; 
+			particleLife=d0.12 12;
+			numParticles=d0.05 5;  
 			particleSpeed=d0.015 2; 
 			particleSize=d0.06 6;
 		
 			emitVector=0, 1, 0; 
 			emitRot=80;
 			emitRotSpread=5; 
+			directional=0; 
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+	// smoke puffs 2
+	[smokepuffs2]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.4;
+			sizeMod=1.0;
+			pos=0, 1, 0; 
+			gravity=0, 0, 0;
+		
+
+			Texture=smoke;
+			airdrag=0.77;
+			colorMap=0.7 0.5 0.4 0.01   0.4 0.2 0.1 0.01   0.0 0.0 0.0 0.01;
+
+			particleLifeSpread=d0.02 1; 
+			particleSpeedSpread=d0.005 0.5;  
+			particleSizeSpread=d0.01 1;
+		
+			particleLife=d0.08 12;
+			numParticles=d0.04 4; 
+			numParticles=0;
+			particleSpeed=d0.02 1; 
+			particleSize=d0.1 8;
+		
+			emitVector=0, 1, 0; 
+			emitRot=0;
+			emitRotSpread=45; 
 			directional=0; 
 		}
 		air=1;
@@ -1882,8 +1919,8 @@
 {
 	usedefaultexplosions=0;
 
-	[_glows]{class=CExpGenSpawner;[properties]{pos=r1y0 d1x0 d-0.5,0,r1y0 d1x0 d-0.5;delay=5 i6;damage=d1;explosionGenerator=custom:DYNSLOWGLOW;}air=1;ground=1;water=1;underwater=1;unit=1;count=6;}
-	[_smokes]{class=CExpGenSpawner;[properties]{pos=r1y0 d1x0 d-0.5,0,r1y0 d1x0 d-0.5;delay=6 i8;damage=20 d2;explosionGenerator=custom:DYNSMOKE;}air=1;ground=1;water=1;underwater=1;unit=1;count=6;}
+	[_glows]{class=CExpGenSpawner;[properties]{pos=r1y0 d1x0 d-0.5,0,r1y0 d1x0 d-0.5;delay=5 i6;damage=d0.9;explosionGenerator=custom:DYNSLOWGLOW;}air=1;ground=1;water=1;underwater=1;unit=1;count=2;}
+	[_smokes]{class=CExpGenSpawner;[properties]{pos=r1y0 d1x0 d-0.5,0,r1y0 d1x0 d-0.5;delay=6 i8;damage=20 d2.5;explosionGenerator=custom:DYNSMOKE;}air=1;ground=1;water=1;underwater=1;unit=1;count=4;}
 
 }
 

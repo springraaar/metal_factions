@@ -31,7 +31,14 @@ local SHOW_KEY					= KEYSYMS.SPACE
 local DELAY_BEFORE_CLEAR			= 15 * 30
 -- clear boxes on resize since text
 -- might otherwise end up outside them
-local playerMsgHistory			= {}
+ 
+local playerMsgHistory = {}
+if (WG.playerMsgHistory) then
+	playerMsgHistory = WG.playerMsgHistory 
+else
+	WG.playerMsgHistory = playerMsgHistory
+end
+
 local SYSTEM_MSG_HISTORY			= {}
 -- "n": ignore embedded colors, "o/O": black/white outline
 local FONT_RENDER_STYLES			= {"", "o", "O"}
@@ -57,7 +64,12 @@ local PLAYER_COLOR_TABLE			= {}		-- indexed by player name
 local TEAM_COLOR_TABLE				= {}
 
 -- message patterns our filter should match
-local MESSAGE_FILTERS				= { "ClientReadNet","to access the quit menu" }
+local MESSAGE_FILTERS = { 
+	"ClientReadNet",
+	"to access the quit menu",
+	"ParseUniformsTable",
+	"SDL_WINDOWEVENT"
+}
 
 -- has time to visually clear messages been reached?
 -- (note: only used in scrollable-history mode)
@@ -174,6 +186,13 @@ function widget:KeyPress(key, modifier, isRepeat)
 	end
 end
 
+function reloadMessageBox(msgHistory)
+	Spring.Echo("message history had "..tostring(#msgHistory).." lines")
+	playerMsgHistory = msgHistory
+	numPlayerMessages = #msgHistory
+	scrollToLatestPlayerMessage()
+end
+WG.reloadMessageBox = reloadMessageBox
 
 function mouseOverPlayerMessageBox(x, y)
 	-- use <BOX_BORDER_SIZE>-pixel borders to make resizing less problematic
@@ -348,6 +367,7 @@ end
 
 -- process console line
 function processConsoleLine(line, playerName, playerColor, playerFontStyle)
+	--[[
 	if (FILTER_SYSTEM_MESSAGES == 1) then
 		for _,str in pairs(MESSAGE_FILTERS) do
 			if (string.find(line, str) ~= nil) then
@@ -355,7 +375,8 @@ function processConsoleLine(line, playerName, playerColor, playerFontStyle)
 			end
 		end
 	end
-
+	]]--
+	
 	-- autoscroll if bottom of message
 	-- frame is equal to last message
 	if (messageFrameMax == numPlayerMessages) then
@@ -383,6 +404,14 @@ end
 -- add message to player or system buffer
 function widget:AddConsoleLine(line)
 	if (string.len(line) > 0) then
+		if (FILTER_SYSTEM_MESSAGES == 1) then
+			for _,str in pairs(MESSAGE_FILTERS) do
+				if (string.find(line, str) ~= nil) then
+					return
+				end
+			end
+		end
+	
 		local playerName = getPlayerName(line)
 		local playerColor = getPlayerColor(playerName)
 		local playerFontStyle = getPlayerFontStyle(playerColor)

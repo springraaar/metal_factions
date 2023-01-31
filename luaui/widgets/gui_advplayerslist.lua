@@ -59,6 +59,9 @@ local spGetTeamRulesParam        = Spring.GetTeamRulesParam
 local spGetTimer                 = Spring.GetTimer
 local spDiffTimers               = Spring.DiffTimers
 local spGetGaiaTeamID            = Spring.GetGaiaTeamID 
+local spGetUnitTeam              = Spring.GetUnitTeam
+local spGetUnitAllyTeam          = Spring.GetUnitAllyTeam
+local spGetSpectatingState       = Spring.GetSpectatingState
 
 local gl_Texture          = gl.Texture
 local gl_Rect             = gl.Rect
@@ -171,7 +174,9 @@ local myTeamID
 local myPlayerID
 local mySpecStatus = false
 local specTarget = -1
-
+local selectedUnitsTeamId = -1
+local selectedUnitsAllyId = -1
+	
 --General players/spectator count and tables
 local player = {}
 local teamResources = {}
@@ -1032,6 +1037,12 @@ function widget:DrawScreen()
 	UpdateResources()
 	CheckTime()
 	
+	-- check unit selection, change spectator view
+	local spec, specFullView = spGetSpectatingState()
+	if spec then
+		CheckUnitSelection()
+	end
+	
 	-- cancels the drawing if GUI is hidden
 	if Spring.IsGUIHidden() then
 		return
@@ -1768,23 +1779,95 @@ function GetPlayerColorStr(red,green,blue)
 	return "\255\255\255\255"
 end
 
+function changeToPlayerView(teamID)
+	Spring_SendCommands("specfullview 6")
+	Spring_SendCommands("specteam "..teamID)
+	if (Spring.GetMapDrawMode() ~= "los") then
+		Spring_SendCommands("togglelos")
+	end
+	specTarget = teamID
+end
+
+function changeToGlobalView()
+	Spring_SendCommands("specfullview 3")
+	if (Spring.GetMapDrawMode() ~= "normal") then
+		Spring_SendCommands("togglelos")
+	end
+	specTarget = -1
+end
+
+
 function Spec(teamID, forceFullView)
 	if specTarget ~= teamID and not forceFullView then
+		selectedUnitsTeamId = -1
+		selectedUnitsAllyId = -1
 		Spring_SendCommands("deselect")
-		Spring_SendCommands("specfullview 0")
-		Spring_SendCommands("specteam "..teamID)
-		if (Spring.GetMapDrawMode() ~= "los") then
-			Spring_SendCommands("togglelos")
-		end
-		specTarget = teamID
+		changeToPlayerView(teamID)
 	else
+		selectedUnitsTeamId = -1
+		selectedUnitsAllyId = -1
 		Spring_SendCommands("deselect")
-		Spring_SendCommands("specfullview 1")
-		if (Spring.GetMapDrawMode() ~= "normal") then
-			Spring_SendCommands("togglelos")
-		end
-		specTarget = -1
+		changeToGlobalView()
 	end
+end
+
+function CheckUnitSelection()
+	local selectedUnits = Spring.GetSelectedUnits()
+	local newSelectedUnitsTeamIds = {}
+	local newSelectedUnitsAllyIds = {}
+	local multipleAllyTeamsSelected = false
+	local newSelectedUnitsTeamId = -1
+	local newSelectedUnitsAllyId = -1 
+	
+	local tId = 0
+	local aId = 0
+	for _,uId in ipairs(selectedUnits) do
+		tId = spGetUnitTeam(uId)
+		if tId then
+			aId = spGetUnitAllyTeam(uId)
+			
+			newSelectedUnitsTeamIds[tId] = true
+			newSelectedUnitsAllyIds[aId] = true
+		end
+	end
+
+	for tId,_ in pairs(newSelectedUnitsTeamIds) do
+		if newSelectedUnitsTeamId == -1 then
+			newSelectedUnitsTeamId = tId
+			break
+		end
+	end
+	for aId,_ in pairs(newSelectedUnitsAllyIds) do
+		if newSelectedUnitsAllyId == -1 then
+			newSelectedUnitsAllyId = aId
+		else
+			multipleAllyTeamsSelected = true
+		end
+	end
+	if multipleAllyTeamsSelected then
+		newSelectedUnitsAllyId = -1
+	end
+	
+	--Spring.Echo("allyId="..newSelectedUnitsAllyId.." teamId="..newSelectedUnitsTeamId)
+	-- alliances changed
+	if selectedUnitsAllyId ~= newSelectedUnitsAllyId then
+		-- revert to global view
+		if newSelectedUnitsAllyId == -1 then
+			changeToGlobalView()
+		else
+			changeToPlayerView(newSelectedUnitsTeamId)
+		end
+	else
+		-- team/player changed
+		if newSelectedUnitsAllyId ~= -1 then
+			if selectedUnitsTeamId ~= newSelectedUnitsTeamId then
+				changeToPlayerView(newSelectedUnitsTeamId)
+			end
+		end
+	end
+	
+	selectedUnitsTeamId = newSelectedUnitsTeamId
+	selectedUnitsAllyId = newSelectedUnitsAllyId
 end
 
 function widget:MousePress(x,y,button)

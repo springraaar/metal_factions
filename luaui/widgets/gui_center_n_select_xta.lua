@@ -14,24 +14,28 @@ local select = true
 local unitList = {}
 
 function widget:Update()
-
-  local t = Spring.GetGameSeconds()
-  if t > 1 then
-    widgetHandler:RemoveWidget()
-    return
-  end
-  if  center and t > 0 then
-    --Spring.Echo("center")
-    unitList = Spring.GetTeamUnits(Spring.GetMyTeamID())
-    local x, y, z = Spring.GetUnitPosition(unitList[1])
-    Spring.SetCameraTarget(x, y, z)
-    center = false
-  end
-  if  select 
-  and t > 0 then
-    --Spring.Echo("select")
-    Spring.SelectUnitArray({unitList[1]})
-    select = false
-  end
+	local spec, specFullView = Spring.GetSpectatingState()
+	if spec then 
+		widgetHandler:RemoveWidget()
+	    return
+	end
+	local t = Spring.GetGameSeconds()
+	if t > 1 then
+		widgetHandler:RemoveWidget()
+		return
+	end
+	if  center and t > 0 then
+		--Spring.Echo("center")
+		unitList = Spring.GetTeamUnits(Spring.GetMyTeamID())
+		local x, y, z = Spring.GetUnitPosition(unitList[1])
+		Spring.SetCameraTarget(x, y, z)
+		center = false
+	end
+	if select 
+		and t > 0 then
+		--Spring.Echo("select")
+		Spring.SelectUnitArray({unitList[1]})
+		select = false
+	end
 end
 

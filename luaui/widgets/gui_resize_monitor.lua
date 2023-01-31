@@ -24,6 +24,7 @@ local refTimer = spGetTimer()
 
 
 local reloadWidgetList = {
+	"Message Console",
 	"Red Minimap",
 	"Red Main Menu",
 	"Red Build/Order Menu",
@@ -58,12 +59,15 @@ function widget:DrawScreen()
 	
 		if (delayElapsed) then
 			reload = false
-			Spring.Echo("Game view changed : reloading UI...")
 			
+			local msgHistory = WG.playerMsgHistory
 			for _,name in ipairs(reloadWidgetList) do 
 				disableWidget(name)
 				enableWidget(name)
 			end
+			WG.reloadMessageBox(msgHistory)
+			Spring.Echo("Game view changed : UI adjusted")
+			
 			--spSendCommands("luaui reload")
 		end
 	end

@@ -200,8 +200,8 @@ walk()
 		turn rmid2 to z-axis <0.000000> speed <80.000000> * mASpdFactor / 100;
 		turn lmid2 to z-axis <0.000000> speed <80.000000> * mASpdFactor / 100;
 		
-		turn hips to x-axis <2.000000> speed <20.000000> * mASpdFactor / 100;
-		turn hips to z-axis <-1.000000> speed <15.000000> * mASpdFactor / 100;
+		turn hips to x-axis <2.000000> speed <16.000000> * mASpdFactor / 100;
+		turn hips to z-axis <0.000000> speed <10.000000> * mASpdFactor / 100;
 
 		turn lfrontleg to y-axis <20.000000> speed <100.967033> * mASpdFactor / 100;
 		turn lfrontleg to z-axis <5.016484> speed <550.104396> * mASpdFactor / 100;
@@ -228,6 +228,9 @@ walk()
 	// only vertical
 	if( bMoving && !isJumping )
 	{
+		turn hips to x-axis <-2.000000> speed <16.000000> * mASpdFactor / 100;
+		turn hips to z-axis <1.000000> speed <10.000000> * mASpdFactor / 100;
+
 		//turn lfrontleg to z-axis <-15.016484> speed <60.104396> * mASpdFactor / 100;
 
 		turn lmidleg to z-axis <5.016484> speed <150.104396> * mASpdFactor / 100;
@@ -246,8 +249,8 @@ walk()
 	
 	if( bMoving && !isJumping )
 	{
-		turn hips to x-axis <-2.000000> speed <20.000000> * mASpdFactor / 100;
-		turn hips to z-axis <1.000000> speed <15.000000> * mASpdFactor / 100;
+		turn hips to x-axis <2.000000> speed <16.000000> * mASpdFactor / 100;
+		turn hips to z-axis <0.000000> speed <10.000000> * mASpdFactor / 100;
 
 		turn lfrontleg to y-axis <-40.000000> speed <300.967033> * mASpdFactor / 100;
 		turn lfrontleg to z-axis <-15.016484> speed <60.104396> * mASpdFactor / 100;
@@ -273,6 +276,9 @@ walk()
 	// only vertical
 	if( bMoving && !isJumping )
 	{
+		turn hips to x-axis <-2.000000> speed <16.000000> * mASpdFactor / 100;
+		turn hips to z-axis <-1.000000> speed <10.000000> * mASpdFactor / 100;
+
 		turn rmid2 to z-axis <0.000000> speed <80.000000> * mASpdFactor / 100;
 		turn lmid2 to z-axis <0.000000> speed <80.000000> * mASpdFactor / 100;
 

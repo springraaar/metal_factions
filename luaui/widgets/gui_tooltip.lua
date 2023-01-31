@@ -523,10 +523,13 @@ function generateNewTooltip()
 	end
 	
 	-- compute total buildpower of units selected 
+	local selectedUnits = spGetSelectedUnits() 
 	if selectedUnitsCount >= 1 then
-		for _,u in pairs(spGetSelectedUnits()) do
+		for _,u in pairs(selectedUnits) do
 			local def=UnitDefs[Spring.GetUnitDefID(u)]
-			buildpower = buildpower + def.buildSpeed
+			if def then
+				buildpower = buildpower + def.buildSpeed
+			end
 		end
 	end  
 	--Spring.Echo("\n"..currentTooltip) 
@@ -639,7 +642,7 @@ function generateNewTooltip()
 
 		-- id being calculated way above
 		if not id and selectedUnitsCount >=1 then
-			id = spGetSelectedUnits()[selectedUnitsCount]
+			id = selectedUnits[selectedUnitsCount]
 		end
                 
 		-- many units
@@ -656,7 +659,7 @@ function generateNewTooltip()
 			local totalMetalCost = 0
 			local anyShield = false
 					
-			for _,u in pairs(spGetSelectedUnits()) do
+			for _,u in pairs(selectedUnits) do
 			
 				local hpMod = spGetUnitRulesParam(u,"upgrade_hp")
 				if not hpMod then
@@ -667,33 +670,36 @@ function generateNewTooltip()
 				local ud=UnitDefs[Spring.GetUnitDefID(u)]
 				local metalMake,metalUse,energyMake,energyUse = Spring.GetUnitResources(u)
 				local health,maxHealth,paralyzeDamage,captureProgress,buildProgress = Spring.GetUnitHealth(u)						
-				health = health * hpMod
-				maxHealth = maxHealth * hpMod
-				local hasShield, ShieldPower=Spring.GetUnitShieldState(u)
-				local maxShieldPower = ud.shieldPower
-				if(hasShield) then
-					anyShield = true
-				end
-				
-				-- energy and metal cost
-				totalEnergyCost = totalEnergyCost + ud.energyCost
-				totalMetalCost = totalMetalCost + ud.metalCost
-										
-				if (health and maxHealth) then
-				    totalHealth = totalHealth + health
-				    totalMaxHealth = totalMaxHealth + maxHealth
-				end
-				if (hasShield) then
-				    totalShieldPower = totalShieldPower + ShieldPower
-				    totalMaxShieldPower = totalMaxShieldPower + maxShieldPower
-				end
-				
-				-- energy and metal upkeep
-				if( metalMake and metalUse and energyMake and energyUse) then
-					totalMetalMake = totalMetalMake + metalMake
-					totalMetalUse = totalMetalUse + metalUse
-					totalEnergyMake = totalEnergyMake + energyMake
-					totalEnergyUse = totalEnergyUse + energyUse							
+				if health then
+					health = health * hpMod
+
+					maxHealth = maxHealth * hpMod
+					local hasShield, ShieldPower=Spring.GetUnitShieldState(u)
+					local maxShieldPower = ud.shieldPower
+					if(hasShield) then
+						anyShield = true
+					end
+					
+					-- energy and metal cost
+					totalEnergyCost = totalEnergyCost + ud.energyCost
+					totalMetalCost = totalMetalCost + ud.metalCost
+											
+					if (health and maxHealth) then
+					    totalHealth = totalHealth + health
+					    totalMaxHealth = totalMaxHealth + maxHealth
+					end
+					if (hasShield) then
+					    totalShieldPower = totalShieldPower + ShieldPower
+					    totalMaxShieldPower = totalMaxShieldPower + maxShieldPower
+					end
+					
+					-- energy and metal upkeep
+					if( metalMake and metalUse and energyMake and energyUse) then
+						totalMetalMake = totalMetalMake + metalMake
+						totalMetalUse = totalMetalUse + metalUse
+						totalEnergyMake = totalEnergyMake + energyMake
+						totalEnergyUse = totalEnergyUse + energyUse							
+					end
 				end
 			end
 					
@@ -716,167 +722,171 @@ function generateNewTooltip()
 		elseif id or selectedUnitsCount ==1 then
 			local u=id
 			local ud=UnitDefs[Spring.GetUnitDefID(u)]
-			
+
 			local metalMake,metalUse,energyMake,energyUse = Spring.GetUnitResources(u)
 			local isFriendly = metalMake ~= nil       -- assume only friendly units have this info
 			local teamID = spGetUnitTeam(id) 
 			
 			-- build progress, health and shield
 			local health,maxHealth,paralyzeDamage,captureProgress,buildProgress = Spring.GetUnitHealth(u)
-			stunned_or_beingbuilt, stunned, beingbuilt = Spring.GetUnitIsStunned(u)
-			newTooltip = ud.humanName.." ("..ud.tooltip..")"
-			-- owner
-			local r,g,b = spGetTeamColor(teamID)
-			r,g,b,_ = convertColor(r,g,b,0)
-			newTooltip = newTooltip.." \255"..string.char(floor(255*r))..string.char(floor(255*g))..string.char(floor(255*b))..nameByTeamID[teamID]
-			
-			local hpMod = spGetUnitRulesParam(u,"upgrade_hp")
-			if not hpMod then
-				hpMod = 1
-			else
-				hpMod = 1 + hpMod
-			end
-			health = health * hpMod
-			maxHealth = maxHealth * hpMod
-			-- experience
-			local xp = spGetUnitRulesParam(u,"experience") or 0
-			local xpMod = 1
-			if xp and xp>0 then
-				local xpIndex = min(10,max(floor(11*xp/(xp+1)),0))+1
-				xpMod = 1+0.35*(xp/(xp+1))
-				if(xpIndex > 1) then
-					newTooltip = newTooltip.."\255\255\255\255    Experience: "..xpArr[xpIndex]
+			if ud and health then
+				stunned_or_beingbuilt, stunned, beingbuilt = Spring.GetUnitIsStunned(u)
+				newTooltip = ud.humanName.." ("..ud.tooltip..")"
+				-- owner
+				local r,g,b = spGetTeamColor(teamID)
+				r,g,b,_ = convertColor(r,g,b,0)
+				newTooltip = newTooltip.." \255"..string.char(floor(255*r))..string.char(floor(255*g))..string.char(floor(255*b))..nameByTeamID[teamID]
+				
+				local hpMod = spGetUnitRulesParam(u,"upgrade_hp")
+				if not hpMod then
+					hpMod = 1
+				else
+					hpMod = 1 + hpMod
 				end
-			end
-			local dmgMod = spGetUnitRulesParam(u,"upgrade_damage")
-			if not dmgMod then
-				dmgMod = 1
-			else
-				dmgMod = 1 + dmgMod
-			end
-			local rangeMod = spGetUnitRulesParam(u,"upgrade_range")
-			if not rangeMod then
-				rangeMod = 1
-			else
-				rangeMod = 1 + rangeMod
-			end
-												
-						                        
-			-- paralysis
-			if stunned then
-				newTooltip = newTooltip.."\255\194\173\255   PARALYZED"
-			end
-			-- cloaking
-			if spGetUnitIsCloaked(u) then
-				newTooltip = newTooltip.."\255\170\170\170   CLOAKED"
-			end        
-			-- alliance
-			if isFriendly == false then
-				newTooltip = newTooltip.."    \255\255\0\0ENEMY"	
-			end
-
-			newTooltip = newTooltip.."\n"
-			if buildProgress and buildProgress<1 then
-				newTooltip = newTooltip.."\255\213\213\255".."Build progress: ".."\255\170\170\255"..formatNbr(100*buildProgress).."%\n"
-			end
-
-			-- cost
-			newTooltip = newTooltip.."\255\200\200\200Metal: "..ud.metalCost.."    \255\255\255\0Energy: "..ud.energyCost.."    "..getTooltipTransportability(ud).."\n"
-		
-		
-			local armorTypeStr= "L"
-			if ( Game.armorTypes[ud.armorType] == "armor_heavy" ) then armorTypeStr = "H"
-			elseif ( Game.armorTypes[ud.armorType] == "armor_medium" ) then armorTypeStr = "M" end
-		
-			local hasShield, ShieldPower=Spring.GetUnitShieldState(id)
-			local maxShieldPower = ud.shieldPower
-			if (health ~= nil) then
-				newTooltip = newTooltip.."\255\200\200\200Health: ".."\255\200\200\200"..floor(health).."\255\200\200\200/\255\200\200\200"..floor(maxHealth)..armorTypeLabels[armorTypeStr]
-				if hasShield then newTooltip=newTooltip.."\255\135\135\255      Shield: "..formatNbr(math.min(ShieldPower,maxShieldPower)).."/"..formatNbr(maxShieldPower) end
-			end
-		    
-			-- energy and metal upkeep
-			if isFriendly then
-				newTooltip = newTooltip.."    \255\200\200\200Metal: \255\0\255\0+"..formatNbr(metalMake,1).."\255\255\255\255/\255\255\0\0"..formatNbr(-metalUse,1)
-				newTooltip = newTooltip.."    \255\255\255\0Energy: \255\0\255\0+"..formatNbr(energyMake,1).."\255\255\255\255/\255\255\0\0"..formatNbr(-energyUse,1)
-
-				if ud.customParams and ud.customParams.powergridnode == "1" then
-					newTooltip = newTooltip.."\n"..getTooltipGridNodeData(id)
-				elseif (ud.customParams and ud.customParams.boostspowergrid == "1") or energyMake > 5 or ud.energyStorage > 1000 or (ud.extractsMetal and ud.extractsMetal > 0) then 
-					newTooltip = newTooltip.."    "..getTooltipGridData(id)
-				end
-
-				if ud.windGenerator > 1 then
-					local eMade = spGetUnitRulesParam(u,"energy_made")
-					local eMadeFrames = spGetUnitRulesParam(u,"energy_made_frames")
-					if (eMadeFrames and eMadeFrames > 0) then
-						newTooltip = newTooltip.."\n\255\255\255\0Avg E/s produced: "..formatNbr(eMade*30 / eMadeFrames,2).."\255\255\255\255\n"
+				health = health * hpMod
+				maxHealth = maxHealth * hpMod
+				-- experience
+				local xp = spGetUnitRulesParam(u,"experience") or 0
+				local xpMod = 1
+				if xp and xp>0 then
+					local xpIndex = min(10,max(floor(11*xp/(xp+1)),0))+1
+					xpMod = 1+0.35*(xp/(xp+1))
+					if(xpIndex > 1) then
+						newTooltip = newTooltip.."\255\255\255\255    Experience: "..xpArr[xpIndex]
 					end
 				end
-			end
-		
-			-- weapons
-			newTooltip = newTooltip..getTooltipWeaponData(ud,xpMod,rangeMod,dmgMod).."\n"
-		  
-			-- build power
-			if ud.buildSpeed and ud.buildSpeed > 1 then
-				newTooltip = newTooltip.."\n"..getTooltipBuildPower(ud.buildSpeed)..  "\255\255\255\255\n"
-			end
-                        
-			-- upgrades (upgrade centers only)
-			local isUpgradeCenter = string.find(ud.name, "upgrade_center")
-			local teamId = spGetUnitTeam(u)
-			if isUpgradeCenter then
-				newTooltip = newTooltip..getTooltipUpgradeData(teamId).."\n\n"
-			end
-						
-			-- speed
-			if ud.speed and ud.speed>0 then
-				local speedMod = spGetUnitRulesParam(u,"upgrade_speed")
-				if not speedMod then
-					speedMod = 1
+				local dmgMod = spGetUnitRulesParam(u,"upgrade_damage")
+				if not dmgMod then
+					dmgMod = 1
 				else
-					speedMod = 1 + speedMod
+					dmgMod = 1 + dmgMod
 				end
-				
-				local vx,vy,vz = spGetUnitVelocity(u)
-				local speed = 30*math.sqrt(vx*vx+vz*vz)
-				newTooltip = newTooltip.."\255\193\255\187Speed: \255\134\255\121"..formatNbr(speed).."\255\193\255\187/\255\134\255\121"..formatNbr(ud.speed*speedMod,2).."\255\255\255\255      "
-			end
-
-			if ud.transportCapacity>0 and ud.transportMass>0 and isFriendly then
-				local currentCapacityUsage = 0 
-				local currentMassUsage = 0
-				
-				-- get sum of mass and size for all transported units                                
-				for _,tUnit in pairs(Spring.GetUnitIsTransporting(u)) do
-					local tUd=UnitDefs[Spring.GetUnitDefID(tUnit)]
-					currentCapacityUsage = currentCapacityUsage + tUd.xsize 
-					currentMassUsage = currentMassUsage + tUd.mass
+				local rangeMod = spGetUnitRulesParam(u,"upgrade_range")
+				if not rangeMod then
+					rangeMod = 1
+				else
+					rangeMod = 1 + rangeMod
 				end
-				 
-				newTooltip = newTooltip.."\255\255\255\255Transport: "..formatNbr(min(2,(currentCapacityUsage/ud.transportCapacity))*50,0).."% / "..formatNbr((currentMassUsage/ud.transportMass)*100,0).."%      "
-			end
-
-			-- upgrade summary
-			if not isUpgradeCenter then
-				newTooltip = newTooltip..getTooltipUpgradeLabel(spGetUnitTeam(u))
-			end
- 						
-			if ud.customParams.tip then
-				newTooltip = newTooltip.."\n"..TIP_COLOR_PREFIX..ud.customParams.tip.."\255\255\255\255\n"
-			end
+													
+							                        
+				-- paralysis
+				if stunned then
+					newTooltip = newTooltip.."\255\194\173\255   PARALYZED"
+				end
+				-- cloaking
+				if spGetUnitIsCloaked(u) then
+					newTooltip = newTooltip.."\255\170\170\170   CLOAKED"
+				end        
+				-- alliance
+				if isFriendly == false then
+					newTooltip = newTooltip.."    \255\255\0\0ENEMY"	
+				end
+	
+				newTooltip = newTooltip.."\n"
+				if buildProgress and buildProgress<1 then
+					newTooltip = newTooltip.."\255\213\213\255".."Build progress: ".."\255\170\170\255"..formatNbr(100*buildProgress).."%\n"
+				end
+	
+				-- cost
+				newTooltip = newTooltip.."\255\200\200\200Metal: "..ud.metalCost.."    \255\255\255\0Energy: "..ud.energyCost.."    "..getTooltipTransportability(ud).."\n"
 			
-			--[[
-			metalExtraction = Spring.GetUnitMetalExtraction(u)
-			if (metalExtraction) then
-				local x,y,z = Spring.GetUnitPosition(u)
-				local metalAmount = Spring.GetMetalAmount(x, z )
-				local refExtr = Spring.GetMetalExtraction(x, z )  
-				newTooltip = newTooltip.."\nextracts="..metalExtraction.." amount="..metalAmount.." refExtr="..refExtr
+			
+				local armorTypeStr= "L"
+				if ( Game.armorTypes[ud.armorType] == "armor_heavy" ) then armorTypeStr = "H"
+				elseif ( Game.armorTypes[ud.armorType] == "armor_medium" ) then armorTypeStr = "M" end
+			
+				local hasShield, ShieldPower=Spring.GetUnitShieldState(id)
+				local maxShieldPower = ud.shieldPower
+				if (health ~= nil) then
+					newTooltip = newTooltip.."\255\200\200\200Health: ".."\255\200\200\200"..floor(health).."\255\200\200\200/\255\200\200\200"..floor(maxHealth)..armorTypeLabels[armorTypeStr]
+					if hasShield then newTooltip=newTooltip.."\255\135\135\255      Shield: "..formatNbr(math.min(ShieldPower,maxShieldPower)).."/"..formatNbr(maxShieldPower) end
+				end
+			    
+				-- energy and metal upkeep
+				if isFriendly then
+					newTooltip = newTooltip.."    \255\200\200\200Metal: \255\0\255\0+"..formatNbr(metalMake,1).."\255\255\255\255/\255\255\0\0"..formatNbr(-metalUse,1)
+					newTooltip = newTooltip.."    \255\255\255\0Energy: \255\0\255\0+"..formatNbr(energyMake,1).."\255\255\255\255/\255\255\0\0"..formatNbr(-energyUse,1)
+	
+					if ud.customParams and ud.customParams.powergridnode == "1" then
+						newTooltip = newTooltip.."\n"..getTooltipGridNodeData(id)
+					elseif (ud.customParams and ud.customParams.boostspowergrid == "1") or energyMake > 5 or ud.energyStorage > 1000 or (ud.extractsMetal and ud.extractsMetal > 0) then 
+						newTooltip = newTooltip.."    "..getTooltipGridData(id)
+					end
+	
+					if ud.windGenerator > 1 then
+						local eMade = spGetUnitRulesParam(u,"energy_made")
+						local eMadeFrames = spGetUnitRulesParam(u,"energy_made_frames")
+						if (eMadeFrames and eMadeFrames > 0) then
+							newTooltip = newTooltip.."\n\255\255\255\0Avg E/s produced: "..formatNbr(eMade*30 / eMadeFrames,2).."\255\255\255\255\n"
+						end
+					end
+				end
+			
+				-- weapons
+				newTooltip = newTooltip..getTooltipWeaponData(ud,xpMod,rangeMod,dmgMod).."\n"
+			  
+				-- build power
+				if ud.buildSpeed and ud.buildSpeed > 1 then
+					newTooltip = newTooltip.."\n"..getTooltipBuildPower(ud.buildSpeed)..  "\255\255\255\255\n"
+				end
+	                        
+				-- upgrades (upgrade centers only)
+				local isUpgradeCenter = string.find(ud.name, "upgrade_center")
+				local teamId = spGetUnitTeam(u)
+				if isUpgradeCenter then
+					newTooltip = newTooltip..getTooltipUpgradeData(teamId).."\n\n"
+				end
+							
+				-- speed
+				if ud.speed and ud.speed>0 then
+					local speedMod = spGetUnitRulesParam(u,"upgrade_speed")
+					if not speedMod then
+						speedMod = 1
+					else
+						speedMod = 1 + speedMod
+					end
+					
+					local vx,vy,vz = spGetUnitVelocity(u)
+					local speed = 30*math.sqrt(vx*vx+vz*vz)
+					newTooltip = newTooltip.."\255\193\255\187Speed: \255\134\255\121"..formatNbr(speed).."\255\193\255\187/\255\134\255\121"..formatNbr(ud.speed*speedMod,2).."\255\255\255\255      "
+				end
+	
+				if ud.transportCapacity>0 and ud.transportMass>0 and isFriendly then
+					local currentCapacityUsage = 0 
+					local currentMassUsage = 0
+					
+					-- get sum of mass and size for all transported units                                
+					for _,tUnit in pairs(Spring.GetUnitIsTransporting(u)) do
+						local tUd=UnitDefs[Spring.GetUnitDefID(tUnit)]
+						currentCapacityUsage = currentCapacityUsage + tUd.xsize 
+						currentMassUsage = currentMassUsage + tUd.mass
+					end
+					 
+					newTooltip = newTooltip.."\255\255\255\255Transport: "..formatNbr(min(2,(currentCapacityUsage/ud.transportCapacity))*50,0).."% / "..formatNbr((currentMassUsage/ud.transportMass)*100,0).."%      "
+				end
+	
+				-- upgrade summary
+				if not isUpgradeCenter then
+					newTooltip = newTooltip..getTooltipUpgradeLabel(spGetUnitTeam(u))
+				end
+	 						
+				if ud.customParams.tip then
+					newTooltip = newTooltip.."\n"..TIP_COLOR_PREFIX..ud.customParams.tip.."\255\255\255\255\n"
+				end
+				
+				--[[
+				metalExtraction = Spring.GetUnitMetalExtraction(u)
+				if (metalExtraction) then
+					local x,y,z = Spring.GetUnitPosition(u)
+					local metalAmount = Spring.GetMetalAmount(x, z )
+					local refExtr = Spring.GetMetalExtraction(x, z )  
+					newTooltip = newTooltip.."\nextracts="..metalExtraction.." amount="..metalAmount.." refExtr="..refExtr
+				end
+	 			]]--
+			else
+				newTooltip = "Unknown Unit"
 			end
- 			]]--
- 			
+	 			
 			foundTooltipType="liveunit"
 			tempTooltip = newTooltip
 			return newTooltip	
