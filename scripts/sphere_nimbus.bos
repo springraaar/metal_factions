@@ -102,12 +102,18 @@ AimPrimary(heading, pitch)
 	{
 		call-script Open();
 	}
-	call-script updateAimHelper1(heading,pitch,<150>,<1500>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	
+	// if it's not going to be able to fire on the next ~2s, don't try to aim
+	if ((get WEAPON_RELOADSTATE(1)) > (get GAME_FRAME) + 40)) { return(0); }
+	// if the secondary weapon is ready to fire or about to,don't try to aim  (to avoid deadlocks)
+	if ((get WEAPON_RELOADSTATE(2)) < (get GAME_FRAME) + 20)) { return(0); }
+
+	call-script updateAimHelper1(heading,pitch,<250>,<1500>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 	
-	turn torso to y-axis heading speed <150.027473>;
+	turn torso to y-axis heading speed <250.027473>;
 	if (!aimReady1)
 	{
 		wait-for-turn torso around y-axis;
@@ -166,12 +172,15 @@ AimSecondary(heading, pitch)
 		call-script Open();
 	}
 
-	call-script updateAimHelper1(heading,pitch,<150>,<1500>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	// if it's not going to be able to fire on the next ~2s, don't try to aim
+	if ((get WEAPON_RELOADSTATE(2)) > (get GAME_FRAME) + 40)) { return(0); }
+
+	call-script updateAimHelper1(heading,pitch,<250>,<1500>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 	
-	turn torso to y-axis heading speed <150.027473>;
+	turn torso to y-axis heading speed <250.027473>;
 	if (!aimReady1)
 	{
 		wait-for-turn torso around y-axis;

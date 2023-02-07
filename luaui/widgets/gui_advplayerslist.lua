@@ -588,6 +588,9 @@ function SetMaxPlayerNameWidth()
 	local name = ""
 	local nextWidth = 0
 	--UseFont(font)
+	if not t then
+		t = {}
+	end 
 	for _,wplayer in ipairs(t) do
 		name = Spring_GetPlayerInfo(wplayer)
 		nextWidth = GetTextWidth(name)+4+100
@@ -640,6 +643,9 @@ function GetAllPlayers()
 	teamN = table.maxn(allteams) - 1               --remove gaia
 	for i = 0,teamN-1 do
 		local teamPlayers = Spring_GetPlayerList(i, true)
+		if not teamPlayers then
+			teamPlayers = {}
+		end
 		player[i + 32] = CreatePlayerFromTeam(i)
 		for _,playerID in ipairs(teamPlayers) do
 			player[playerID] = CreatePlayer(playerID)
@@ -935,6 +941,9 @@ function SortPlayers(teamID,allyTeamID,vOffset)
 	-- Adds players to the draw list (self first)
 	
 	local playersList       = Spring_GetPlayerList(teamID,true)
+	if not playersList then
+		playersList = {}
+	end
 	local noPlayer          = true
 	local _,_,_, isAi = Spring_GetTeamInfo(teamID)
 	
@@ -990,6 +999,9 @@ function SortSpecs(vOffset)
 	
 	local playersList = Spring_GetPlayerList(_,true)
 	local noSpec = true
+	if not playersList then
+		playersList = {}
+	end 
 	
 	for _,playerID in ipairs(playersList) do
 		_,active,spec = Spring_GetPlayerInfo(playerID)

@@ -364,7 +364,7 @@ end
 
 function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 	local ud = UnitDefs[unitDefId]
-
+	
 	if (ud.isGroundUnit) and (not ud.isBuilding) and (not ud.isImmobile) then
 		moveAnimationUnitIds[unitId] = true
 	end
@@ -621,7 +621,7 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 				--Spring.Echo("aircraft destroyed had physics!")
 				local metalAmount = ud.metalCost * AIRCRAFT_DEBRIS_METAL_FACTOR
 				local fId = nil
-				local radius = ud.xsize*2
+				local radius = spGetUnitRadius(unitId) * 0.8 + ud.metalCost *0.002 
 				local spawnName = nil
 				local smallPieceV = 2
 				local largePieceV = 1
@@ -660,21 +660,24 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 						end
 					end
 				end
+				-- spawn extra death effects
+				--Spring.Echo("spawning death effects for "..unitId.." radius="..radius)
+				spSpawnCEG(extraDeathEffectsCEG, physics[1],physics[2],physics[3],0,1,0,radius,radius)
 			end
 		end
 	-- unit was not fully built but leaves wreckage		
-	elseif (ud and (not isDrone(ud)) and (not isFeatureSpawner(ud)) and (tostring(ud.wreckName) ~= '')  and attackerId ~= nil) then
+	elseif (ud and (not isDrone(ud)) and (not isFeatureSpawner(ud)) and (tostring(ud.wreckName) ~= '') and attackerId ~= nil) then
 		--Spring.Echo("attackerId="..tostring(attackerId).." attackerDefId="..tostring(attackerDefId).." attackerTeamId="..tostring(attackerTeamId))
 		
 		local physics = unitPhysicsById[unitId]
 		
 		if (physics ~= nil) then
-			local radius = spGetUnitRadius(unitId)
+			local radius = spGetUnitRadius(unitId) * 0.8
 			local dx,dy,dz = spGetUnitDirection(unitId)
 			--Spring.Echo("dx="..tostring(dx).." dz="..tostring(dz))
 			
 			-- bigger effect for expensive units
-			radius = radius + ud.metalCost / 1000 
+			radius = radius + ud.metalCost *0.002 
 
 			
 			if (bp > 0.5) then
@@ -698,8 +701,8 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 					
 					-- create actual explosion
 					local createdId = spSpawnProjectile(WeaponDefNames[ud.deathExplosion].id,{
-						["pos"] = {physics[1],physics[2]+radius/3,physics[3]},
-						["end"] = {physics[1],physics[2]+radius/3,physics[3]},
+						["pos"] = {physics[1],physics[2]+radius*0.33,physics[3]},
+						["end"] = {physics[1],physics[2]+radius*0.33,physics[3]},
 						["speed"] = {0,1,0},
 						["owner"] = unitTeam
 					})
@@ -712,6 +715,7 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 				end
 				
 				-- spawn extra death effects
+				--Spring.Echo("spawning death effects for "..unitId.." radius="..radius)
 				spSpawnCEG(extraDeathEffectsCEG, physics[1],physics[2],physics[3],0,1,0,radius,radius)
 			end
 		end	

@@ -310,6 +310,11 @@ if (true) then
 			 --	Spring.Echo(name.." is push resistant")
 			 --	unitDef.pushresistant = 1
 			 --end
+			 
+			 
+			if not canFly and (not unitDef.upright or tonumber(unitDef.upright) == 0) then
+				unitDef.upDirSmoothing = 0.9
+			end
 		else
 			local factionBuilding = false
 			if fakeBuilders[name] then
@@ -371,5 +376,7 @@ if (true) then
 				unitDef.icontype = iconPrefix..iconSuffix
 			end
 		end
+
+
 	end
 end
