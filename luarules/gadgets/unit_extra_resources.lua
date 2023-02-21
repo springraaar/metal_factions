@@ -64,7 +64,8 @@ function gadget:Initialize()
 	-- make wind generation depend on ground height and map profile?
 	groundMin, groundMax = Spring.GetGroundExtremes()
 	groundMin, groundMax = math.max(groundMin,0), math.max(groundMax,1)
-	groundRef = 0.25*groundMax + 0.75*groundMin
+	groundRef = GG.minMetalSpotAltitude
+	--Spring.Echo("minMetalSpotAltitude="..GG.minMetalSpotAltitude.." groundRef="..groundRef)
 end
 
 -- mark relevant units when they finish

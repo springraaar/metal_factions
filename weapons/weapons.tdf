@@ -193,7 +193,7 @@
 	name=Torpedoes;
 	weaponType=TorpedoLauncher;
 	model=weapon_torpedo;
-	range=430;
+	range=440;
 	reloadTime=3;
 	turret=1;
 	flightTime=4;
@@ -219,11 +219,11 @@
 	}
 	[DAMAGE]
 	{
-		default=410;
+		default=400;
 		group_invincible=1;
-		armor_heavy=410.00;//#AUTO#
-		armor_medium=410.00;//#AUTO#
-		armor_light=410.00;//#AUTO#
+		armor_heavy=400.00;//#AUTO#
+		armor_medium=400.00;//#AUTO#
+		armor_light=400.00;//#AUTO#
 	}
 }
 [aven_u6commander_torpedo]
@@ -294,11 +294,11 @@
 	}
 	[DAMAGE]
 	{
-		default=360;
+		default=380;
 		group_invincible=1;
-		armor_heavy=360.00;//#AUTO#
-		armor_medium=360.00;//#AUTO#
-		armor_light=360.00;//#AUTO#
+		armor_heavy=380.00;//#AUTO#
+		armor_medium=380.00;//#AUTO#
+		armor_light=380.00;//#AUTO#
 	}
 }
 [aven_commando_chargedshot]
@@ -605,7 +605,7 @@
   	alphaDecay=0.9;
   	sizeDecay=-0.2;
 	range=650;
-	reloadTime=3.7;
+	reloadTime=3.8;
 	weaponVelocity=450;
 	energyPerShot=250;
 	accuracy=150;
@@ -775,7 +775,7 @@
 	collideFriendly=1;
 	model=weapon_torpedo;
 	range=450;
-	reloadTime=5.2;
+	reloadTime=5.1;
 	turret=1;
 	flightTime=4;
 	subMissile=0;
@@ -814,7 +814,7 @@
 	turret=1;
 	range=420;
 	minIntensity=1.0;
-	reloadTime=0.5;
+	reloadTime=0.334;
 	weaponVelocity=1533;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
 	tolerance=3000;
@@ -846,11 +846,11 @@
 	}
 	[DAMAGE]
 	{
-		default=60;
+		default=48;
 		group_invincible=1;
-		armor_heavy=15.00;//#AUTO#
-		armor_medium=30.00;//#AUTO#
-		armor_light=60.00;//#AUTO#
+		armor_heavy=12.00;//#AUTO#
+		armor_medium=24.00;//#AUTO#
+		armor_light=48.00;//#AUTO#
 	}
 }
 [aven_u6commander_laser]
@@ -890,11 +890,11 @@
 	}
 	[DAMAGE]
 	{
-		default=430;
+		default=420;
 		group_invincible=1;
-		armor_heavy=430.00;//#AUTO#
-		armor_medium=430.00;//#AUTO#
-		armor_light=430.00;//#AUTO#
+		armor_heavy=420.00;//#AUTO#
+		armor_medium=420.00;//#AUTO#
+		armor_light=420.00;//#AUTO#
 	}
 }
 [aven_dazer_disruptor]
@@ -6194,11 +6194,11 @@
 	}
 	[DAMAGE]
 	{
-		default=105;
+		default=102;
 		group_invincible=1;
-		armor_heavy=52.50;//#AUTO#
-		armor_medium=105.00;//#AUTO#
-		armor_light=105.00;//#AUTO#
+		armor_heavy=51.00;//#AUTO#
+		armor_medium=102.00;//#AUTO#
+		armor_light=102.00;//#AUTO#
 	}
 }
 [gear_commander_torpedo]
@@ -6405,11 +6405,11 @@
 	}
 	[DAMAGE]
 	{
-		default=400;
+		default=410;
 		group_invincible=1;
-		armor_heavy=400.00;//#AUTO#
-		armor_medium=400.00;//#AUTO#
-		armor_light=400.00;//#AUTO#
+		armor_heavy=410.00;//#AUTO#
+		armor_medium=410.00;//#AUTO#
+		armor_light=410.00;//#AUTO#
 	}
 }
 [gear_u1commander_flamethrower]
@@ -6589,7 +6589,7 @@
 	accuracy=300;
 	movingAccuracy=600;
 	turret=1;
-	range=765;
+	range=760;
 	reloadTime=4.1;
 	weaponVelocity=400;
 	areaOfEffect=90;
@@ -6830,11 +6830,11 @@
 	}
 	[DAMAGE]
 	{
-		default=650;
+		default=640;
 		group_invincible=1;
-		armor_heavy=162.50;//#AUTO#
-		armor_medium=325.00;//#AUTO#
-		armor_light=650.00;//#AUTO#
+		armor_heavy=160.00;//#AUTO#
+		armor_medium=320.00;//#AUTO#
+		armor_light=640.00;//#AUTO#
 	}
 }
 [gear_kano_cannon]
@@ -7565,7 +7565,6 @@
 	cegTag=FASTROCKETTRAIL;
 	turret=1;
 	model=weapon_fastmissile3.3do;
-	texture1=null; //flare//
 	range=1250;
 	reloadTime=3.5;
 	flightTime=6;
@@ -7581,7 +7580,8 @@
 	soundHit=xplosml1;
 	fireStarter=70;
 	tracks=1;
-	smokeTrail=0;
+	smokeTrail=1;
+	texture2=smoketrailfm;
 	tolerance=10000;
 	waterBounce=0;
 	NumBounce=1;
@@ -7609,7 +7609,6 @@
 	cegTag=FASTROCKETTRAIL;
 	turret=1;
 	model=weapon_fastmissile3.3do;
-	texture1=null; //flare//
 	range=1000;
 	reloadTime=5;
 	flightTime=6;
@@ -7625,7 +7624,8 @@
 	soundHit=xplosml1;
 	fireStarter=70;
 	tracks=1;
-	smokeTrail=0;
+	smokeTrail=1;
+	texture2=smoketrailfm;
 	tolerance=10000;
 	waterBounce=0;
 	NumBounce=1;
@@ -7654,7 +7654,6 @@
 	cegTag=FASTROCKETTRAIL;
 	turret=1;
 	model=weapon_fastmissile3.3do;
-	texture1=null; //flare//
 	range=1000;
 	reloadTime=5;
 	flightTime=6;
@@ -7670,7 +7669,8 @@
 	soundHit=xplosml1;
 	fireStarter=70;
 	tracks=1;
-	smokeTrail=0;
+	smokeTrail=1;
+	texture2=smoketrailfm;
 	tolerance=10000;
 	waterBounce=0;
 	NumBounce=1;
@@ -9700,7 +9700,7 @@
 	reloadTime=1;
 	energyPerShot=110;
 	weaponVelocity=1533;
-	areaOfEffect=12;
+	areaOfEffect=8;
 	soundStart=lasrhvy3;
 	soundHit=lasrhit1;
 	fireStarter=90;
@@ -9709,6 +9709,7 @@
 	rgbColor=0.0 0.61 0.0;
 	rgbColor2=0.5 1.0 0.5;
 	tolerance=3000;
+	impulseFactor=0.222;
 	interceptedByShieldType=1;
 	avoidFeature=0;
 	[CUSTOMPARAMS]
@@ -9878,10 +9879,7 @@
 	fireStarter=70;
 	tracks=1;
 	smokeTrail=1;
-	texture1=null; //testing//
-	texture2=null;
-	texture3=null;
-	texture4=null;
+	texture1=null;
 	tolerance=9000;
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -12914,7 +12912,6 @@
 	cegTag=FASTROCKETTRAIL;
 	turret=1;
 	model=weapon_fastmissile2.3do;
-	texture1=null; //flare//
 	range=1250;
 	reloadTime=5;
 	flightTime=6;
@@ -12930,7 +12927,8 @@
 	soundHit=xplosml1;
 	fireStarter=70;
 	tracks=1;
-	smokeTrail=0;
+	smokeTrail=1;
+	texture2=smoketrailfm;
 	tolerance=10000;
 	waterBounce=0;
 	NumBounce=1;
@@ -12958,7 +12956,6 @@
 	cegTag=FASTROCKETTRAIL;
 	turret=1;
 	model=weapon_fastmissile2.3do;
-	texture1=null; //flare//
 	range=1000;
 	reloadTime=6;
 	flightTime=6;
@@ -12974,7 +12971,8 @@
 	soundHit=xplosml1;
 	fireStarter=70;
 	tracks=1;
-	smokeTrail=0;
+	smokeTrail=1;
+	texture2=smoketrailfm;
 	tolerance=10000;
 	waterBounce=0;
 	NumBounce=1;
@@ -13003,7 +13001,6 @@
 	cegTag=FASTROCKETTRAIL;
 	turret=1;
 	model=weapon_fastmissile2.3do;
-	texture1=null; //flare//
 	range=1000;
 	reloadTime=6.8;
 	flightTime=6;
@@ -13019,7 +13016,8 @@
 	soundHit=xplosml1;
 	fireStarter=70;
 	tracks=1;
-	smokeTrail=0;
+	smokeTrail=1;
+	texture2=smoketrailfm;
 	tolerance=10000;
 	waterBounce=0;
 	NumBounce=1;
@@ -14076,11 +14074,11 @@
 	}
 	[DAMAGE]
 	{
-		default=890;
+		default=885;
 		group_invincible=1;
-		armor_heavy=890.00;//#AUTO#
-		armor_medium=890.00;//#AUTO#
-		armor_light=890.00;//#AUTO#
+		armor_heavy=885.00;//#AUTO#
+		armor_medium=885.00;//#AUTO#
+		armor_light=885.00;//#AUTO#
 	}
 }
 [gear_edge_laser2]
@@ -14678,10 +14676,10 @@
 	}
 	[DAMAGE]
 	{
-		default=136;
-		armor_heavy=34.00;//#AUTO#
-		armor_medium=68.00;//#AUTO#
-		armor_light=136.00;//#AUTO#
+		default=134;
+		armor_heavy=33.50;//#AUTO#
+		armor_medium=67.00;//#AUTO#
+		armor_light=134.00;//#AUTO#
 	}
 }
 [claw_u2commander_torpedo]
@@ -14762,10 +14760,10 @@
 	}
 	[DAMAGE]
 	{
-		default=890;
-		armor_heavy=890.00;//#AUTO#
-		armor_medium=890.00;//#AUTO#
-		armor_light=890.00;//#AUTO#
+		default=880;
+		armor_heavy=880.00;//#AUTO#
+		armor_medium=880.00;//#AUTO#
+		armor_light=880.00;//#AUTO#
 	}
 }
 [claw_u3commander_torpedo]
@@ -14874,11 +14872,11 @@
 	}
 	[DAMAGE]
 	{
-		default=620;
+		default=630;
 		group_invincible=1;
-		armor_heavy=620.00;//#AUTO#
-		armor_medium=620.00;//#AUTO#
-		armor_light=620.00;//#AUTO#
+		armor_heavy=630.00;//#AUTO#
+		armor_medium=630.00;//#AUTO#
+		armor_light=630.00;//#AUTO#
 	}
 }
 [claw_roller_rocket]
@@ -17081,7 +17079,6 @@
 	cegTag=FASTROCKETTRAIL;
 	turret=1;
 	model=weapon_fastmissile.3do;
-	texture1=null; //flare//
 	range=1000;
 	reloadTime=5.5;
 	flightTime=6;
@@ -17097,7 +17094,8 @@
 	soundHit=xplosml1;
 	fireStarter=70;
 	tracks=1;
-	smokeTrail=0;
+	smokeTrail=1;
+	texture2=smoketrailfm;
 	tolerance=10000;
 	waterBounce=0;
 	NumBounce=1;
@@ -17126,7 +17124,7 @@
 	cegTag=FASTROCKETTRAIL;
 	turret=1;
 	model=weapon_fastmissile.3do;
-	texture1=null; //flare//
+	texture2=smoketrailfm;
 	range=1000;
 	reloadTime=5.5;
 	flightTime=6;
@@ -17142,7 +17140,7 @@
 	soundHit=xplosml1;
 	fireStarter=70;
 	tracks=1;
-	smokeTrail=0;
+	smokeTrail=1;
 	tolerance=10000;
 	waterBounce=0;
 	NumBounce=1;
@@ -17171,7 +17169,6 @@
 	cegTag=FASTROCKETTRAIL;
 	turret=1;
 	model=weapon_fastmissile.3do;
-	texture1=null; //flare//
 	range=1000;
 	reloadTime=4;
 	flightTime=6;
@@ -17187,7 +17184,8 @@
 	soundHit=xplosml1;
 	fireStarter=70;
 	tracks=1;
-	smokeTrail=0;
+	smokeTrail=1;
+	texture2=smoketrailfm;
 	tolerance=10000;
 	waterBounce=0;
 	NumBounce=1;
@@ -17216,7 +17214,6 @@
 	cegTag=FASTROCKETTRAIL;
 	turret=1;
 	model=weapon_fastmissile.3do;
-	texture1=null; //flare//
 	range=1250;
 	reloadTime=3.4;
 	flightTime=6;
@@ -17232,7 +17229,8 @@
 	soundHit=xplosml1;
 	fireStarter=70;
 	tracks=1;
-	smokeTrail=0;
+	smokeTrail=1;
+	texture2=smoketrailfm;
 	tolerance=10000;
 	waterBounce=0;
 	NumBounce=1;
@@ -18914,7 +18912,7 @@
 	beamTime=0.1;
 	range=500; 
 	reloadTime=0.1;
-	energyPerShot=20;
+	energyPerShot=19;
 	weaponVelocity=400;
   	texture1=lightning2;
   	laserFlareSize=2;
@@ -18958,7 +18956,7 @@
 	beamTime=0.1;
 	range=520; 
 	reloadTime=0.1;
-	energyPerShot=40;
+	energyPerShot=38;
 	weaponVelocity=400;
   	texture1=lightning2;
   	laserFlareSize=2;
@@ -19041,7 +19039,7 @@
 	weaponType=Cannon;
 	turret=1;
 	range=610;
-	reloadTime=6.5;
+	reloadTime=6.4;
 	weaponVelocity=330;
 	areaOfEffect=240;
 	soundStart=novafire;
@@ -19112,11 +19110,11 @@
 	}
 	[DAMAGE]
 	{
-		default=440;
+		default=445;
 		group_invincible=1;
-		armor_heavy=440.00;//#AUTO#
-		armor_medium=440.00;//#AUTO#
-		armor_light=440.00;//#AUTO#
+		armor_heavy=445.00;//#AUTO#
+		armor_medium=445.00;//#AUTO#
+		armor_light=445.00;//#AUTO#
 	}
 }
 [sphere_u4commander_torpedo]
@@ -19151,11 +19149,11 @@
 	}
 	[DAMAGE]
 	{
-		default=400;
+		default=405;
 		group_invincible=1;
-		armor_heavy=400.00;//#AUTO#
-		armor_medium=400.00;//#AUTO#
-		armor_light=400.00;//#AUTO#
+		armor_heavy=405.00;//#AUTO#
+		armor_medium=405.00;//#AUTO#
+		armor_light=405.00;//#AUTO#
 	}
 }
 [sphere_u1commander_torpedo]
@@ -19165,7 +19163,7 @@
 	collideFriendly=1;
 	model=weapon_torpedo;
 	range=440;
-	reloadTime=3.8;
+	reloadTime=3.7;
 	turret=1;
 	flightTime=4;
 	subMissile=0;
@@ -19229,11 +19227,11 @@
 	}
 	[DAMAGE]
 	{
-		default=410;
+		default=420;
 		group_invincible=1;
-		armor_heavy=410.00;//#AUTO#
-		armor_medium=410.00;//#AUTO#
-		armor_light=410.00;//#AUTO#
+		armor_heavy=420.00;//#AUTO#
+		armor_medium=420.00;//#AUTO#
+		armor_light=420.00;//#AUTO#
 	}
 }
 [sphere_u3commander_torpedo]
@@ -19268,11 +19266,11 @@
 	}
 	[DAMAGE]
 	{
-		default=480;
+		default=490;
 		group_invincible=1;
-		armor_heavy=480.00;//#AUTO#
-		armor_medium=480.00;//#AUTO#
-		armor_light=480.00;//#AUTO#
+		armor_heavy=490.00;//#AUTO#
+		armor_medium=490.00;//#AUTO#
+		armor_light=490.00;//#AUTO#
 	}
 }
 [sphere_u5commander_torpedo]
@@ -19346,11 +19344,11 @@
 	}
 	[DAMAGE]
 	{
-		default=410;
+		default=420;
 		group_invincible=1;
-		armor_heavy=410.00;//#AUTO#
-		armor_medium=410.00;//#AUTO#
-		armor_light=410.00;//#AUTO#
+		armor_heavy=420.00;//#AUTO#
+		armor_medium=420.00;//#AUTO#
+		armor_light=420.00;//#AUTO#
 	}
 }
 [sphere_endeavour_cannon]
@@ -20882,7 +20880,7 @@
 	model=weapon_medmsl;
 	cegTag=ROCKETTRAIL2B;
 	range=900;
-	reloadTime=2.2;
+	reloadTime=2.1;
 	weapontimer=0.3;
 	fixedLauncher=1;
 	flightTime=4.5;
@@ -20912,10 +20910,10 @@
 	}
 	[DAMAGE]
 	{
-		default=250;
-		armor_heavy=250.00;//#AUTO#
-		armor_medium=250.00;//#AUTO#
-		armor_light=250.00;//#AUTO#
+		default=270;
+		armor_heavy=270.00;//#AUTO#
+		armor_medium=270.00;//#AUTO#
+		armor_light=270.00;//#AUTO#
 	}
 }
 [sphere_stalwart_missile]
@@ -21690,7 +21688,7 @@
 	visibleShieldRepulse=0;
 	shieldEnergyUse=0;
 	shieldForce=3000;
-	shieldRadius=52;
+	shieldRadius=48;
 	shieldMaxSpeed=2000;
 	shieldPower=1500;
 	shieldStartingPower=1500;
@@ -22274,7 +22272,6 @@
 	cegTag=FASTROCKETTRAIL;
 	turret=1;
 	model=weapon_fastmissile4.3do;
-	texture1=null; //flare//
 	range=1250;
 	reloadTime=5;
 	flightTime=6;
@@ -22290,7 +22287,8 @@
 	soundHit=xplosml1;
 	fireStarter=70;
 	tracks=1;
-	smokeTrail=0;
+	smokeTrail=1;
+	texture2=smoketrailfm;
 	tolerance=10000;
 	waterBounce=0;
 	NumBounce=1;
@@ -22318,7 +22316,6 @@
 	cegTag=FASTROCKETTRAIL;
 	turret=1;
 	model=weapon_fastmissile4.3do;
-	texture1=null; //flare//
 	range=1000;
 	reloadTime=5.5;
 	flightTime=6;
@@ -22334,7 +22331,8 @@
 	soundHit=xplosml1;
 	fireStarter=70;
 	tracks=1;
-	smokeTrail=0;
+	smokeTrail=1;
+	texture2=smoketrailfm;
 	tolerance=10000;
 	waterBounce=0;
 	NumBounce=1;
@@ -23561,53 +23559,6 @@
 	[DAMAGE]
 	{
 		default=10;
-	}
-}
-[sphere_meteor_rockets]
-{
-	name=Rockets;
-	weaponType=MissileLauncher;
-	model=weapon_redrocket2.3do;
-	turret=1;
-	range=550;
-	cylinderTargeting=1;
-	reloadTime=1.2;
-	weaponVelocity=400;
-	startVelocity=350;
-	weaponAcceleration=131;
-	metalPerShot=0;
-	turnRate=13680;
-	areaOfEffect=80;
-	explosionGenerator=custom:ROCKETBLASTWRAPPER;
-	cegTag=ROCKETTRAIL1;
-	texture1=null; //flare//
-	texture2=null;//first segment of missiletrail//
-	texture3=null;//flame//
-	texture4=null;//unknown//
-	soundStart=rocklit1;
-	soundHit=xplomed2;
-	fireStarter=70;
-	smokeTrail=0;
-	tolerance=18000;
-	waterWeapon=0;
-	collideFriendly=1;
-	tracks=0;
-	interceptedByShieldType=1;
-	avoidFeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitPower=3;
-		restrictedAngle=1;
-		expDmgScaling=1;
-		targets=SURFACE;
-	}
-	[DAMAGE]
-	{
-		default=180;
-		group_invincible=1;
-		armor_heavy=180.00;//#AUTO#
-		armor_medium=180.00;//#AUTO#
-		armor_light=180.00;//#AUTO#
 	}
 }
 [sphere_meteor_bomb]

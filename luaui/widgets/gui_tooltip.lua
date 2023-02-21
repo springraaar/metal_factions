@@ -150,6 +150,20 @@ function formatTargets(targets)
 	return result
 end
 
+-- break long tip lines into multiple lines, separate by ". " if necessary
+function formatTipLines(str)
+	local result = ""
+	if string.len(str) > 80 then
+		for _,s in pairs(splitString(str,". ")) do
+			result = result .. s .."\n"
+		end
+	else
+		result = str
+	end
+
+	return result
+end
+
 function widget:Initialize()
 	Spring.SendCommands({"tooltip 0"})
 	
@@ -164,7 +178,7 @@ function widget:Initialize()
 	
 	windGroundMin, windGroundMax = Spring.GetGroundExtremes()
 	windGroundMin, windGroundMax = math.max(windGroundMin,0), math.max(windGroundMax,1)
-	windGroundRef = 0.25*windGroundMax + 0.75*windGroundMin
+	windGroundRef = Spring.GetGameRulesParam("minMetalSpotAltitude")
 
 	-- get players and teams info
 	myPlayerID = Spring.GetLocalPlayerID()
@@ -198,7 +212,7 @@ end
  
  
 function widget:Shutdown()
-        Spring.SendCommands({"tooltip 1"})
+	Spring.SendCommands({"tooltip 1"})
 end
 
 
@@ -628,7 +642,7 @@ function generateNewTooltip()
 			end
 			
 			if fud.customParams.tip then
-				newTooltip = newTooltip.."\n"..TIP_COLOR_PREFIX..fud.customParams.tip.."\255\255\255\255\n"
+				newTooltip = newTooltip.."\n"..TIP_COLOR_PREFIX..formatTipLines(fud.customParams.tip).."\255\255\255\255\n"
 			end
 			
 			foundTooltipType="knownbuildbutton"
@@ -871,7 +885,7 @@ function generateNewTooltip()
 				end
 	 						
 				if ud.customParams.tip then
-					newTooltip = newTooltip.."\n"..TIP_COLOR_PREFIX..ud.customParams.tip.."\255\255\255\255\n"
+					newTooltip = newTooltip.."\n"..TIP_COLOR_PREFIX..formatTipLines(ud.customParams.tip).."\255\255\255\255\n"
 				end
 				
 				--[[

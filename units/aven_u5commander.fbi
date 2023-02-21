@@ -27,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=2880;
+	maxDamage=2900;
 	buildcostmetal=2000;
 	buildcostenergy=20000;
 	buildtime=30000;
@@ -41,9 +41,9 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalmake=2;
+	metalMake=0;
 	metalStorage=0;
-	energyMake=50;
+	energyMake=30;
 	energyUse=0;
 	energyStorage=0;
 
@@ -86,7 +86,7 @@
 	turnRate=1200;
 	acceleration=0.9;
 	brakeRate=0.14;
-	maxVelocity=3.0;
+	maxVelocity=3.03;
 	maxSlope=20;
 	maxWaterDepth=35;
 

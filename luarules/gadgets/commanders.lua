@@ -136,7 +136,7 @@ function gadget:UnitCreated(unitId, unitDefId, teamId)
   		
   		if mod > 1 then
   			local ud = UnitDefs[unitDefId]
-  			spSetUnitCosts(unitId,{buildTime=ud.buildTime*mod})
+  			spSetUnitCosts(unitId,{buildTime=ud.buildTime*mod,energyCost=ud.energyCost*mod,metalCost=ud.metalCost*mod})
   		end
   	
 	-- if commander is created, manage xp

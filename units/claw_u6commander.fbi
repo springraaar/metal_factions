@@ -28,7 +28,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=3450;
+	maxDamage=3520;
 	healtime=100;
 	buildcostmetal=2000;
 	buildcostenergy=20000;
@@ -43,8 +43,8 @@
 	//************************************************************
 	//  Resources
 	//*************
-	metalmake=2;
-	energyMake=50;
+	metalMake=0;
+	energyMake=30;
 	energyUse=0;
 	metalStorage=0;
 	energyStorage=0;
@@ -84,10 +84,10 @@
 	//  Movement
 	//************
 	movementClass=KBOTDS2;
-	turnRate=1150;
-	acceleration=0.7;
-	brakeRate=0.32;
-	maxVelocity=2.2;
+	turnRate=1200;
+	acceleration=0.8;
+	brakeRate=0.42;
+	maxVelocity=2.22;
 	maxSlope=20;
 	maxWaterDepth=35;
 

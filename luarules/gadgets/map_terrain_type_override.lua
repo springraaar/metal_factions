@@ -5,15 +5,17 @@ function gadget:GetInfo()
 		author = "raaar",
 		date = "Aug, 2013",
 		license = "PD",
-		layer = 0,
+		layer = -1,
 		enabled = true
 	}
 end
 
 
-if (not gadgetHandler:IsSyncedCode()) then
-	return false
+if not gadgetHandler:IsSyncedCode() then ------------------------------ SYNCED
+	return
 end
+
+GG.minMetalSpotAltitude = 0
 
 function gadget:Initialize()
 	
@@ -69,6 +71,9 @@ function gadget:Initialize()
 				minHeight = 0
 			end
 			
+			GG.minMetalSpotAltitude = minHeight
+			Spring.SetGameRulesParam("minMetalSpotAltitude",minHeight)
+			
 			local m0,xs,zs,mIdx
 			local measurementOffsets={{0,1},{0,-1},{-1,0},{1,0},{-0.5,-0.5},{-0.5,0.5},{0.5,-0.5},{0.5,0.5},{-0.2,-0.2},{-0.2,0.2},{0.2,-0.2},{0.2,0.2}}
 			local measurement={0,0,0,0,0,0,0,0,0,0,0,0,0}
@@ -96,6 +101,4 @@ function gadget:Initialize()
 			end 
 		end
 	)
-	
 end
-

@@ -324,7 +324,8 @@ end
 local DrawUnitBar
 local DrawFeatureBar
 local DrawStockpile
-
+local IsGUIHidden = Spring.IsGUIHidden
+  
 do
   --//speedup
   local GL_QUADS        = GL.QUADS
@@ -376,6 +377,7 @@ do
   end
 
   function DrawStockpile(numStockpiled,numStockpileQueued)
+    
     --// DRAW STOCKPILED MISSILES
     glColor(1,1,1,1)
     glTexture("luaui/images/nuke.png")
@@ -436,6 +438,10 @@ do
   end
 
   function DrawBars(fullText)
+    if IsGUIHidden() then
+      barsN = 0
+      return
+    end
     local yoffset = 0
     for i=1,barsN do
       local barInfo = bars[i]
@@ -452,11 +458,15 @@ do
       end
       yoffset = yoffset - barHeightL
     end
-
+    
     barsN = 0 --//reset!
   end
 
   function DrawBarsFeature(fullText)
+    if IsGUIHidden() then
+      barsN = 0
+      return
+    end
     local yoffset = 0
     for i=1,barsN do
       local barInfo = bars[i]
@@ -498,6 +508,7 @@ do
   local GetUnitViewPosition  = Spring.GetUnitViewPosition
   local GetUnitStockpile     = Spring.GetUnitStockpile
   local GetUnitRulesParam    = Spring.GetUnitRulesParam
+
   
   local fullText
   local ux, uy, uz
@@ -701,7 +712,7 @@ do
 
       --// DRAW BARS
       DrawBars(fullText)
-
+      
       glPopMatrix()
     end
   end
@@ -775,7 +786,7 @@ do
 
       --// DRAW BARS
       DrawBarsFeature(fullText)
-
+     
       glPopMatrix()
     end
   end

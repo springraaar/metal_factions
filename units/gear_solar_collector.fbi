@@ -5,7 +5,7 @@
 	//********************
 	side=Gear;
 	name=Solar Collector;
-	description=Produces 20 E/s;
+	description=Produces 24 E/s;
 	iconType=energy;
 
 	//************************************************************
@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=850;
+	maxDamage=750;
 	footprintx=5;
 	footprintz=5;
 
@@ -33,7 +33,7 @@
 	//  Resources
 	//*************
 	metalStorage=0;
-	energyMake=20;	
+	energyMake=24;	
 	energyUse=0;
 	energyStorage=0;
 
@@ -92,8 +92,8 @@
 		boostsPowerGrid=1;
 	}
 
-	buildCostEnergy=828;//#AUTO#
-	buildCostMetal=165;//#AUTO#
-	buildTime=1975;//#AUTO#
-	mass=266;//#AUTO#
+	buildCostEnergy=900;//#AUTO#
+	buildCostMetal=180;//#AUTO#
+	buildTime=2145;//#AUTO#
+	mass=246;//#AUTO#
 }

@@ -253,7 +253,7 @@ if (true) then
 		-- increase slope tolerance for buildings
 		if (unitDef.builder and tonumber(unitDef.builder) == 1 and unitDef.footprintx and tonumber(unitDef.footprintx) > 4) then
 			-- probably a factory, be more strict about it to avoid some units getting stuck
-			unitDef.maxslope = 16
+			unitDef.maxslope = 18
 			--Spring.Echo(unitDef.name.." FACTORY")
 		else
 			unitDef.maxslope = 30

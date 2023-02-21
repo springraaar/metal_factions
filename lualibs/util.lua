@@ -183,15 +183,15 @@ function mergeTable(table1,table2)
 	return result
 end
 
-function splitString(input, sep)
-	if sep == nil then
-		sep = "%s"
-	end
-	local t={}
-	for str in string.gmatch(input, "([^"..sep.."]+)") do
-		table.insert(t, str)
-	end
-	return t
+function splitString(input, sep, max)
+    local z = #sep; sep = '^.-'..sep:gsub('[$%%()*+%-.?%[%]^]', '%%%0')
+    local t,n,p, q,r = {},1,1, input:find(sep)
+    while q and n~=max do
+        t[n],n,p = input:sub(q,r-z),n+1,r+1
+        q,r = input:find(sep,p)
+    end
+    t[n] = input:sub(p)
+    return t
 end
 
 -- trim string

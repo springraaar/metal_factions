@@ -17,7 +17,7 @@ energyTransactions() {
 			sleep 100;
 		}
 		if (GET ACTIVATION) {
-			call-script lua_energyTransaction(10);  
+			call-script lua_energyTransaction(12);  
 		}
 		sleep 467;		// 15 frames
 	}

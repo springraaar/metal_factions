@@ -20,7 +20,7 @@
 	soundCategory=SPHERE_COM;
 
 	// ------------------- health/cost/size
-	maxDamage=3430;
+	maxDamage=3470;
 	buildcostmetal=2000;
 	buildcostenergy=20000;
 	buildtime=30000;
@@ -33,8 +33,8 @@
 	power=3750;
 	
 	// ------------------- resources
-	energyMake=50;
-	MetalMake=2;
+	energyMake=30;
+	metalMake=0;
 	energyStorage=0;
 	metalStorage=0;
 	energyUse=0;
@@ -61,10 +61,10 @@
 
 
 	// ------------------- movement
-	maxVelocity=1.96;
+	maxVelocity=2.02;
 	brakeRate=0.8;
-	Acceleration=0.70;
-	turnRate=1000;
+	Acceleration=0.80;
+	turnRate=1100;
 	SteeringMode=2;
 	movementClass=KBOTATUW;
 

@@ -214,6 +214,10 @@ for wdName, wd in pairs(WeaponDefs) do
 	-- TODO disabled for now because it'd make walls untargetable
 	--wd.avoidNeutral = 1
 
+	if (wd.customparams.hitpower) and tonumber(wd.customparams.hitpower) == 1 and not wd.impulsefactor then
+		wd.impulsefactor = 0.3
+	end
+
 	-- make weapon sounds relatively louder
 	processSoundDefaults(wd)
 end
