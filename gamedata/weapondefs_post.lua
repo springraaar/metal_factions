@@ -135,8 +135,37 @@ for wdName, wd in pairs(WeaponDefs) do
 				if not wd.beamdecay then
 					wd.beamdecay = 0.9
 				end
-				if not wd.laserflaresize then
-					wd.laserflaresize = 9
+				
+				-- update thickness and outer layer brightness
+				if (wdName:lower():find("_beam",1,true)) then
+					-- sphere lightning beams
+					wd.thickness=tonumber(wd.thickness)*1.8
+					wd.corethickness=0.55
+					wd.laserflaresize = 1
+					if wd.rgbcolor then
+						local colorStr = ""
+						for w in wd.rgbcolor:gmatch("%S+") do 
+							colorStr = colorStr.." "..(tonumber(w)*1.0)
+						end
+						wd.rgbcolor = colorStr
+					end
+				elseif (wdName:lower():find("_heatray",1,true)) then
+					-- gear heatrays
+					wd.thickness=tonumber(wd.thickness)*6
+					wd.corethickness=0.9
+					wd.laserflaresize = 1.8
+					if wd.rgbcolor then
+						local colorStr = ""
+						for w in wd.rgbcolor:gmatch("%S+") do 
+							colorStr = colorStr.." "..(tonumber(w)*0.7)
+						end
+						wd.rgbcolor = colorStr
+					end
+				else
+					-- other beamlasers
+					wd.thickness=tonumber(wd.thickness)*4.8
+					wd.corethickness=0.35
+					wd.laserflaresize = 2
 				end
 			end
 		elseif (wd.weapontype == "LaserCannon") then

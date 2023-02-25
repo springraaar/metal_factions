@@ -499,6 +499,12 @@ local _iconTypes = {
 		distance=1,
 		size=REF_SIZE
 	},
+	amphibkamikaze={
+		bitmap="icons/amphibkamikaze.tga",
+		radiusadjust=false,
+		distance=1,
+		size=REF_SIZE
+	},
 	amphibashield={
 		bitmap="icons/amphibashield.tga",
 		radiusadjust=false,

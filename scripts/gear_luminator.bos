@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define SPEEDUP_FACTOR	100
+#define SPEEDUP_FACTOR	50
 
 piece  ground, pelvis, tr, tl, sc2,front,f2, rleg, rfoot, lleg, lfoot, turret, lthigh, rthigh,sleeve,barrel,flare, firept1,firept2,firept3,launcher,launcher2,fireptl2;
 
@@ -32,14 +32,14 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 		
 		
 		mAMoveSpd1 = [20.000000] * mASpdFactor / 100;
-		mATurnSpd1 = <235.000000> * (100 + mASpdFactor) / 200;
-		mATurnSpd2 = <110.000000> * (100 + mASpdFactor) / 200;
+		mATurnSpd1 = <225.000000> * (100 + mASpdFactor) / 200;
+		mATurnSpd2 = <120.000000> * (100 + mASpdFactor) / 200;
 		mATurnSpd3 = <30.000000> * (100 + mASpdFactor) / 200;
 
-		mAVertFactor = [0.000000]-[1.500000] * mASpdFactor / SPEEDUP_FACTOR;
-		legAngle1 = <30.000000>;
-		legAngle2 = <15.000000>;
-		legAngle3 = <10.000000>;
+		mAVertFactor = [0.000000]-[6.500000] * mASpdFactor / SPEEDUP_FACTOR;
+		legAngle1 = <35.000000>;
+		legAngle2 = <17.000000>;
+		legAngle3 = <15.000000>;
 		if ( mASpdFactor < SPEEDUP_FACTOR )
 		{
 			legAngle1 = legAngle1 * (SPEEDUP_FACTOR + mASpdFactor) / (2*SPEEDUP_FACTOR);
@@ -109,6 +109,7 @@ walk()
 			turn turret to y-axis <10.000000> speed slowTurnSpd2;
 		}
 		
+		turn lfoot to x-axis legAngle3 speed mATurnSpd1;
 		wait-for-turn lthigh around x-axis;
 		wait-for-turn rthigh around x-axis;
 		wait-for-turn lleg around x-axis;
@@ -118,6 +119,7 @@ walk()
 	// intermediate pose 2 : left stomp ground
 	if( bMoving)
 	{
+		turn pelvis to x-axis <6.000000> speed slowTurnSpd2;
 		turn lfoot to x-axis legAngle3 speed mATurnSpd1*5;
 		wait-for-turn lfoot around x-axis;
 	}
@@ -171,6 +173,7 @@ walk()
 			turn turret to y-axis <-10.000000> speed slowTurnSpd2;
 		}
 
+		turn rfoot to x-axis legAngle3 speed mATurnSpd1;
 		wait-for-turn lthigh around x-axis;
 		wait-for-turn rthigh around x-axis;
 		wait-for-turn lleg around x-axis;
@@ -180,6 +183,7 @@ walk()
 	// intermediate pose 1 : right stomp ground
 	if( bMoving)
 	{
+		turn pelvis to x-axis <6.000000> speed slowTurnSpd2;
 		turn rfoot to x-axis legAngle3 speed mATurnSpd1*5;
 		wait-for-turn rfoot around x-axis;
 	}
