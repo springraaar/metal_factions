@@ -88,10 +88,10 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 		}
 		
 		
-		mAMoveSpd1 = [20.000000] * mASpdFactor / 100;
-		mATurnSpd1 = <315.000000> * (100 + mASpdFactor) / 200;
-		mATurnSpd2 = <200.000000> * (100 + mASpdFactor) / 200;
-		mATurnSpd3 = <50.000000> * (100 + mASpdFactor) / 200;
+		mAMoveSpd1 = [13.000000] * mASpdFactor / 100;
+		mATurnSpd1 = <250.000000> * (100 + mASpdFactor) / 200;
+		mATurnSpd2 = <170.000000> * (100 + mASpdFactor) / 200;
+		mATurnSpd3 = <40.000000> * (100 + mASpdFactor) / 200;
 
 		mAVertFactor = [-2];
 		legAngle1 = <40.000000>;

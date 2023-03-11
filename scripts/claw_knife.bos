@@ -558,12 +558,12 @@ RestoreAfterDelay()
 
 AimPrimary(heading, pitch)
 {
-	call-script updateAimHelper1(heading,pitch,<450>,<450>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	call-script updateAimHelper1(heading,pitch,<650>,<650>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
-	turn turret to y-axis heading speed <450.000000>;
-	turn sleeve to x-axis <0.000000> - pitch speed <450.000000>;
+	turn turret to y-axis heading speed <650.000000>;
+	turn sleeve to x-axis <0.000000> - pitch speed <650.000000>;
 	if ( !aimReady1 )
 	{
 		wait-for-turn turret around y-axis;

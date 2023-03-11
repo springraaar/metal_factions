@@ -134,31 +134,21 @@ StopMoving()
 RestoreAfterDelay1()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
-	call-script stopAimHelper1(<140>,<140>);
-	turn torso to y-axis <0.000000> speed <140.016484>;
-	turn luparm to x-axis <0.000000> speed <145.005495>;
-	turn ruparm to x-axis <0.000000> speed <145.005495>;
+	call-script stopAimHelper1(<240>,<240>);
+	turn torso to y-axis <0.000000> speed <240.016484>;
+	turn luparm to x-axis <0.000000> speed <245.005495>;
+	turn ruparm to x-axis <0.000000> speed <245.005495>;
 }
-
-RestoreAfterDelay2()
-{
-	sleep DEFAULT_WEAPON_RESTORE_DELAY;
-	call-script stopAimHelper1(<140>,<140>);
-	turn torso to y-axis <0.000000> speed <140.016484>;
-	turn ruparm to x-axis <0.000000> speed <145.005495>;
-	lastHeading = 0;
-}
-
 
 AimPrimary(heading, pitch)
 {
-	call-script updateAimHelper1(heading,pitch,<300>,<300>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	call-script updateAimHelper1(heading,pitch,<600>,<600>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
-	turn torso to y-axis heading speed <300.027473>;
-	turn luparm to x-axis <0.000000> - pitch speed <300.038462>;
-	turn ruparm to x-axis <0.000000> - pitch speed <300.038462>;
+	turn torso to y-axis heading speed <600.027473>;
+	turn luparm to x-axis <0.000000> - pitch speed <600.038462>;
+	turn ruparm to x-axis <0.000000> - pitch speed <600.038462>;
 	if (!aimReady1)
 	{
 		wait-for-turn torso around y-axis;
@@ -202,52 +192,6 @@ AimFromPrimary(piecenum)
 	piecenum = torso;
 }
 
-
-AimWeapon2(heading, pitch)
-{
-	call-script updateAimHelper1(heading,pitch,<300>,<300>,HEADING_TOLERANCE,PITCH_TOLERANCE);
-	signal SIG_AIM;
-	set-signal-mask SIG_AIM;
-	bAiming = TRUE;
-	turn torso to y-axis heading speed <300.027473>;
-	turn ruparm to x-axis <0.000000> - pitch speed <300.038462>;
-	if (!aimReady1)
-	{
-		wait-for-turn torso around y-axis;
-		wait-for-turn ruparm around x-axis;
-	}
-	lastHeading = heading;
-	
-	start-script RestoreAfterDelay2();
-	return (1);
-}
-
-
-FireWeapon2()
-{
-	turn rarm to x-axis <40.000000> now;
-	turn rgun to x-axis <-40.000000> now;
-	emit-sfx 1024+1 from rflare;
-	call-script recoil();
-	turn rarm to x-axis <0.000000> speed <230.038462>;
-	turn rgun to x-axis <0.000000> speed <230.038462>;
-	return (1);
-}
-
-QueryWeapon2(piecenum)
-{
-	piecenum = rflare;
-}
-
-AimFromWeapon2(piecenum)
-{
-	piecenum = torso;
-}
-
-SweetSpot(piecenum)
-{
-	piecenum = torso;
-}
 
 Killed(severity, corpsetype)
 {

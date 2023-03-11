@@ -39,12 +39,12 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 		}
 		
 		
-		mAMoveSpd1 = [20.000000] * mASpdFactor / 100;
+		mAMoveSpd1 = [10.000000] * mASpdFactor / 100;
 		mATurnSpd1 = <315.000000> * (100 + mASpdFactor) / 200;
 		mATurnSpd2 = <200.000000> * (100 + mASpdFactor) / 200;
 		mATurnSpd3 = <50.000000> * (100 + mASpdFactor) / 200;
 
-		mAVertFactor = [0.000000]-[1.500000] * mASpdFactor / SPEEDUP_FACTOR;
+		mAVertFactor = [0.000000]-[1.000000] * mASpdFactor / SPEEDUP_FACTOR;
 		legAngle1 = <40.000000>;
 		legAngle2 = <30.000000>;
 		legAngle3 = <15.000000>;
@@ -72,8 +72,8 @@ aimPose(heading, pitch)
 		turn hand to y-axis <70.000000> speed <300.000000>;
 		turn rarm to z-axis <-30.000000> speed <300.000000>;
 
-		turn torso to y-axis <-30>+heading speed <380.000000>;
-		turn ruparm to x-axis <-90.000000> - pitch speed <400.000000>;
+		turn torso to y-axis <-30>+heading speed <580.000000>;
+		turn ruparm to x-axis <-90.000000> - pitch speed <600.000000>;
 		if ( !aimReady1)
 		{
 			wait-for-turn torso around y-axis;
@@ -89,8 +89,8 @@ aimPose(heading, pitch)
 		turn hand to y-axis <0.000000> speed <300.000000>;
 		turn rarm to z-axis <0.000000> speed <300.000000>;
 
-		turn torso to y-axis heading speed <380.000000>;
-		turn ruparm to x-axis <-90.000000> - pitch speed <400.000000>;
+		turn torso to y-axis heading speed <580.000000>;
+		turn ruparm to x-axis <-90.000000> - pitch speed <600.000000>;
 		if ( !aimReady1)
 		{
 			wait-for-turn torso around y-axis;
@@ -119,7 +119,7 @@ walk()
 		turn rfoot to x-axis <0.000000>-legAngle2 speed mATurnSpd1;
 
 		move pelvis to y-axis mAVertFactor speed mAMoveSpd1;
-		turn pelvis to x-axis <4.000000> speed slowTurnSpd2;
+		turn pelvis to x-axis <6.000000> speed slowTurnSpd2;
 		if(!bAiming)
 		{
 			// turn torso left, right arm forward
@@ -140,6 +140,7 @@ walk()
 	// intermediate pose 2 : left stomp ground
 	if( bMoving)
 	{
+		turn pelvis to x-axis <-3.000000> speed slowTurnSpd2;
 		turn lfoot to x-axis legAngle3 speed mATurnSpd1*3;
 		wait-for-turn lfoot around x-axis;
 	}
@@ -188,7 +189,7 @@ walk()
 		turn rfoot to x-axis <0> speed mATurnSpd3;
 		
 		move pelvis to y-axis mAVertFactor speed mAMoveSpd1;
-		turn pelvis to x-axis <4.000000> speed slowTurnSpd2;
+		turn pelvis to x-axis <6.000000> speed slowTurnSpd2;
 		
 		if(!bAiming)
 		{
@@ -209,6 +210,7 @@ walk()
 	// intermediate pose 1 : right stomp ground
 	if( bMoving)
 	{
+		turn pelvis to x-axis <-3.000000> speed slowTurnSpd2;
 		turn rfoot to x-axis legAngle3 speed mATurnSpd1*3;
 		wait-for-turn rfoot around x-axis;
 	}
@@ -386,13 +388,16 @@ QueryPrimary(piecenum)
 
 FirePrimary()
 {
+	move torso to z-axis [-0.300000] now;
 	emit-sfx 1024 + 0 from rfire;
+	sleep 60;
+	move torso to z-axis [0] speed [10];
 	return (0);
 }
 
 AimPrimary(heading, pitch)
 {
-	call-script updateAimHelper1(heading,pitch + <90.000000>,<380>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	call-script updateAimHelper1(heading,pitch + <90.000000>,<580>,<600>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;

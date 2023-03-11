@@ -44,7 +44,7 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 
 		mAVertFactor = [0.000000]-[1.000000] * mASpdFactor / SPEEDUP_FACTOR;
 		legAngle1 = <50.000000>;
-		legAngle2 = <40.000000>;
+		legAngle2 = <30.000000>;
 		legAngle3 = <15.000000>;
 		if ( mASpdFactor < SPEEDUP_FACTOR )
 		{
@@ -125,6 +125,7 @@ walk()
 	if( bMoving)
 	{
 		turn lfoot to x-axis legAngle3 speed mATurnSpd1*5;
+		turn pelvis to x-axis <-4.000000> speed slowTurnSpd2;
 		wait-for-turn lfoot around x-axis;
 	}
 
@@ -185,6 +186,7 @@ walk()
 	if( bMoving)
 	{
 		turn rfoot to x-axis legAngle3 speed mATurnSpd1*5;
+		turn pelvis to x-axis <-4.000000> speed slowTurnSpd2;
 		wait-for-turn rfoot around x-axis;
 	}
 
@@ -236,6 +238,7 @@ MotionControl(moving, aiming, justmoved)
 			if( justmoved )
 			{
 				move pelvis to y-axis [0.000000] speed [0.002777];
+				turn pelvis to x-axis <0.000000> speed <200>;
 				turn rthigh to x-axis <0.000000> speed <200.000000>;
 				turn rleg to x-axis <0.000000> speed <200.000000>;
 				turn rfoot to x-axis <0.000000> speed <200.000000>;
@@ -325,14 +328,14 @@ QueryPrimary(piecenum)
 
 AimPrimary(heading, pitch)
 {
-	call-script updateAimHelper1(heading,pitch,<350>,<350>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	call-script updateAimHelper1(heading,pitch,<650>,<650>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 
-	turn torso to y-axis heading speed <350.000000>;
-	turn luparm to x-axis <0.000000> - pitch speed <350.000000>;
-	turn ruparm to x-axis <0.000000> - pitch speed <350.000000>;
+	turn torso to y-axis heading speed <650.000000>;
+	turn luparm to x-axis <0.000000> - pitch speed <650.000000>;
+	turn ruparm to x-axis <0.000000> - pitch speed <650.000000>;
 	if (!aimReady1)
 	{
 		wait-for-turn torso around y-axis;

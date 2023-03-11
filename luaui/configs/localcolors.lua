@@ -1,7 +1,7 @@
 colors = {
 	myColor		= { 100, 100, 255 },	-- can only be 1 color
-	gaiaColor	= { 200, 200, 200 },	-- can only be 1 color
-	--gaiaColor	= { 255, 70, 70 },	-- red, for screenshots
+	--gaiaColor	= { 200, 200, 200 },	-- can only be 1 color
+	gaiaColor	= { 255, 70, 70 },	-- red, for screenshots
 	
 	allyColors = {						-- as many as needed
 	  { 100, 220, 255 },

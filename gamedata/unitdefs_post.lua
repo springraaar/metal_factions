@@ -291,7 +291,7 @@ if (true) then
 			-- make sure low acceleration units are able to beat drag
 			local minAcceleration = mv / 80
 			if ( tonumber(ac) < minAcceleration ) then
-				--Spring.Echo("increased acceleration of "..name.." from "..tonumber(ac).." to "..minAcceleration)
+				Spring.Echo("increased acceleration of "..name.." from "..tonumber(ac).." to "..minAcceleration)
 				unitDef.acceleration = minAcceleration
 			end
 			

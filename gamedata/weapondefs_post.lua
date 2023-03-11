@@ -163,9 +163,17 @@ for wdName, wd in pairs(WeaponDefs) do
 					end
 				else
 					-- other beamlasers
-					wd.thickness=tonumber(wd.thickness)*4.8
-					wd.corethickness=0.35
-					wd.laserflaresize = 2
+					wd.thickness=tonumber(wd.thickness)*2.5
+					wd.corethickness=0.25
+					wd.laserflaresize = 2.5
+					-- make outer color a function of the core color
+					if wd.rgbcolor2 then
+						local colorStr = ""
+						for w in wd.rgbcolor2:gmatch("%S+") do 
+							colorStr = colorStr.." "..(math.max(tonumber(w)*0.35-0.1,0.125))
+						end
+						wd.rgbcolor = colorStr
+					end
 				end
 			end
 		elseif (wd.weapontype == "LaserCannon") then
@@ -175,6 +183,10 @@ for wdName, wd in pairs(WeaponDefs) do
 				wd.heightmod = 0.5			-- default was 0.8
 			end
 			wd.heightboostfactor = 0.0		-- default was -1.0
+			
+			if (wdName:lower():find("_emg",1,true)) or (wdName:lower():find("_hemg",1,true)) then
+				wd.size = tonumber(wd.size) * 2
+			end
 		elseif (wd.weapontype == "MissileLauncher" ) then
 			wd.heightmod = 0.5			-- default was 0.8
 		elseif (wd.weapontype == "StarburstLauncher" ) then

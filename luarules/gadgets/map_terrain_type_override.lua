@@ -15,9 +15,19 @@ if not gadgetHandler:IsSyncedCode() then ------------------------------ SYNCED
 	return
 end
 
+local WIND_OVERRIDE_THRESHOLD_MIN = 3
+local WIND_OVERRIDE_THRESHOLD_MAX = 10
+
+-- override map wind if it's too low for some maps that are meant for games with very cheap windgens
+local windAvg = (Game.windMin + Game.windMax) * 0.5
+if windAvg >= WIND_OVERRIDE_THRESHOLD_MIN and windAvg <= WIND_OVERRIDE_THRESHOLD_MAX then
+	Spring.SetWind(5,20)
+end 
+
 GG.minMetalSpotAltitude = 0
 
 function gadget:Initialize()
+
 	
 	-- override terrain type movement modifiers
 	local override = {}

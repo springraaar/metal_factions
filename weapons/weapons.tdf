@@ -5137,7 +5137,7 @@
 	range=520;
 	minIntensity=1.0;
 	reloadTime=1.3;
-	energyPerShot=75;
+	energyPerShot=100;
 	weaponVelocity=1533;
 	areaOfEffect=8;
 	soundStart=lasrhvy3;
@@ -5337,7 +5337,7 @@
 	cegTag=PLASMATRAIL1;
 	texture1=cannon;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
-	reloadTime=2.5;
+	reloadTime=2.3;
 	weaponVelocity=328;
 	areaOfEffect=64;
 	soundStart=canlite3;
@@ -5362,11 +5362,11 @@
 	}
 	[DAMAGE]
 	{
-		default=100;
+		default=110;
 		group_invincible=1;
-		armor_heavy=50.00;//#AUTO#
-		armor_medium=100.00;//#AUTO#
-		armor_light=100.00;//#AUTO#
+		armor_heavy=55.00;//#AUTO#
+		armor_medium=110.00;//#AUTO#
+		armor_light=110.00;//#AUTO#
 	}
 }
 [aven_LIGHTLASER]
@@ -6847,7 +6847,7 @@
 	cegTag=PLASMATRAIL2;
 	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
-	reloadTime=3;
+	reloadTime=2.9;
 	weaponVelocity=390;
 	areaOfEffect=80;
 	accuracy=300;
@@ -6872,11 +6872,11 @@
 	}
 	[DAMAGE]
 	{
-		default=220;
+		default=230;
 		group_invincible=1;
-		armor_heavy=220.00;//#AUTO#
-		armor_medium=220.00;//#AUTO#
-		armor_light=220.00;//#AUTO#
+		armor_heavy=230.00;//#AUTO#
+		armor_medium=230.00;//#AUTO#
+		armor_light=230.00;//#AUTO#
 	}
 }
 [gear_crasher_missile]
@@ -8214,7 +8214,7 @@
 	thickness=2.888;
 	coreThickness=0.6;
 	intensity=0.88; 
-	energyPerShot=60;
+	energyPerShot=40;
 	areaOfEffect=8;
 	soundTrigger=1;
 	soundStart=lasrfir3;
@@ -8809,7 +8809,7 @@
 	range=600;
 	accuracy=320;
 	movingAccuracy=620;
-	reloadTime=1.9;
+	reloadTime=1.7;
 	weaponVelocity=290;
 	cegTag=PLASMATRAIL1;
 	texture1=cannon;
@@ -14884,7 +14884,7 @@
 	turret=1;
 	model=weapon_rocket3.3do;
 	range=600;
-	reloadTime=4;
+	reloadTime=3.8;
 	flightTime=2;
 	weaponVelocity=400;
 	startVelocity=350;
@@ -14908,11 +14908,11 @@
 	}
 	[DAMAGE]
 	{
-		default=250;
+		default=260;
 		group_invincible=1;
-		armor_heavy=250.00;//#AUTO#
-		armor_medium=250.00;//#AUTO#
-		armor_light=250.00;//#AUTO#
+		armor_heavy=260.00;//#AUTO#
+		armor_medium=260.00;//#AUTO#
+		armor_light=260.00;//#AUTO#
 	}
 }
 [claw_hazard_rocket]
@@ -19488,7 +19488,7 @@
 	turret=1;
 	range=420;
 	reloadTime=1.5;
-	energyPerShot=15;
+	energyPerShot=18;
 	weaponVelocity=390;
 	accuracy=200;
 	areaOfEffect=24;
@@ -19507,10 +19507,10 @@
 	}
 	[DAMAGE]
 	{
-		default=80;
-		armor_heavy=40.00;//#AUTO#
-		armor_medium=80.00;//#AUTO#
-		armor_light=80.00;//#AUTO#
+		default=90;
+		armor_heavy=45.00;//#AUTO#
+		armor_medium=90.00;//#AUTO#
+		armor_light=90.00;//#AUTO#
 	}
 }
 [sphere_double_blaster]
@@ -23618,7 +23618,6 @@
 	weaponType=BeamLaser;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
 	beamTime=0.35;
-	//beamTTL=2;
 	thickness=4.00;
 	coreThickness=1.0;
 	intensity=0.9;
