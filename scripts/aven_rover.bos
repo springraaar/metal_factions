@@ -3,14 +3,14 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define SPEEDUP_FACTOR 300
+#define SPEEDUP_FACTOR 200
 
 #define HEADING_TOLERANCE	<28>
 #define PITCH_TOLERANCE		<18>
 
-piece  base, flare, turret, sleeve, barrel, hull,bottom, rfrontsup,rfrontwheel,rbacksup,rbackwheel,lbacksup,lbackwheel,lfrontsup,lfrontwheel, base2;
+piece  base, turret, sleeve, lbarrel, rbarrel, lflare, rflare, hull,bottom, rfrontsup,rfrontwheel,rbacksup,rbackwheel,lbacksup,lbackwheel,lfrontsup,lfrontwheel, base2;
 
-static-var  bMoving, bAiming, bSwimming, terrainStatus, wheelSpeed, wheelAcceleration;
+static-var  bMoving, bAiming, bSwimming, terrainStatus, wheelSpeed, wheelSpeed2, wheelAcceleration, wheelAcceleration2, gun_1;
 
 #include "aimhelper1.h"
 
@@ -29,8 +29,10 @@ WheelSpeedControl(maxSpeed,currentSpeed)
 		currentSpeed = get CURRENT_SPEED;
 
 		wheelSpeed = (currentSpeed*SPEEDUP_FACTOR) / maxSpeed * 728;
+		wheelSpeed2 = wheelSpeed * 80/100;
 		wheelAcceleration = wheelSpeed;
-
+		wheelAcceleration2 = wheelSpeed2;
+		
 		sleep 100;
 	}
 }
@@ -66,9 +68,9 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 stopWheels()
 {
-	stop-spin rfrontwheel around x-axis decelerate <50.000000>;
+	stop-spin rfrontwheel around x-axis decelerate <60.000000>;
 	stop-spin rbackwheel around x-axis decelerate <50.000000>;
-	stop-spin lfrontwheel around x-axis decelerate <50.000000>;
+	stop-spin lfrontwheel around x-axis decelerate <60.000000>;
 	stop-spin lbackwheel around x-axis decelerate <50.000000>;
 	return (0);
 }
@@ -77,10 +79,10 @@ walk()
 {
 	if( bMoving )
 	{
-		spin rfrontwheel around x-axis speed wheelSpeed accelerate <40.000000>;
-		spin rbackwheel around x-axis speed wheelSpeed accelerate <40.000000>;
-		spin lfrontwheel around x-axis speed wheelSpeed accelerate <40.000000>;
-		spin lbackwheel around x-axis speed wheelSpeed accelerate <40.000000>;
+		spin rfrontwheel around x-axis speed wheelSpeed accelerate wheelAcceleration;
+		spin rbackwheel around x-axis speed wheelSpeed2 accelerate wheelAcceleration2;
+		spin lfrontwheel around x-axis speed wheelSpeed accelerate wheelAcceleration;
+		spin lbackwheel around x-axis speed wheelSpeed2 accelerate wheelAcceleration2;
 		sleep 200;
 	}
 	return (0);
@@ -138,6 +140,7 @@ Create()
 	bMoving = FALSE;
 	bAiming = FALSE;
 	bSwimming = FALSE;
+	gun_1=0;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script WheelSpeedControl();
 	start-script MotionControl();
@@ -176,13 +179,12 @@ RestoreAfterDelay()
 
 AimPrimary(heading, pitch)
 {
-	call-script updateAimHelper1(heading,pitch,<560>,<560>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	call-script updateAimHelper1(heading,pitch,<500>,<500>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	bAiming = TRUE;
-	turn turret to y-axis heading speed <560.000000>;
-	turn sleeve to x-axis <0.000000> - pitch speed <560.000000>;
-	if (!aimReady1)
+	turn turret to y-axis heading speed <500.000000>;
+	turn sleeve to x-axis <0.000000> - pitch speed <500.000000>;
+	if ( !aimReady1 )
 	{
 		wait-for-turn turret around y-axis;
 		wait-for-turn sleeve around x-axis;
@@ -191,14 +193,24 @@ AimPrimary(heading, pitch)
 	return (1);
 }
 
-
 FirePrimary()
 {
-	move barrel to z-axis [-0.50000] now;
-	emit-sfx 1024 from flare;
-	sleep 100;
-	move barrel to z-axis [0.000000] speed [5.000000];
-	return (1);
+	if (gun_1 == 0) {
+		move lbarrel to z-axis [-1.0] now;
+		emit-sfx 1024 from lflare;
+		sleep 30;
+		move lbarrel to z-axis [0] speed [7];
+		gun_1 = 1;
+		return (0);
+	}
+	if (gun_1 == 1) {
+		move rbarrel to z-axis [-1.0] now;
+		emit-sfx 1024 from rflare;
+		sleep 30;
+		move rbarrel to z-axis [0] speed [7];
+		gun_1 = 0;
+		return (0);
+	}
 }
 
 
@@ -210,8 +222,15 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	piecenum = flare;
-	return (0);
+	if (gun_1 == 0) {
+		piecenum = lflare;
+		return (0);
+	}
+	if (gun_1 == 1) {
+		piecenum = rflare;
+		return (0);
+	}
+
 }
 
 SweetSpot(piecenum)
@@ -235,6 +254,7 @@ Killed(severity, corpsetype)
 	explode bottom type SHATTER;
 	explode turret type SHATTER;
 	explode sleeve type SHATTER;
-	explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode lbarrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode rbarrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
 	return (2);
 }

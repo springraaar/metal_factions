@@ -26,8 +26,8 @@
 	//  Health/Cost/Size
 	//********************
 	maxDamage=900;
-	footprintx=2;
-	footprintz=2;
+	footprintx=3;
+	footprintz=3;
 
 	//************************************************************
 	//  Resources
@@ -60,7 +60,7 @@
 	//  Movement
 	//************
 	movementClass=TANKSH3;
-	turnRate=650;
+	turnRate=730;
 	acceleration=0.25;
 	brakeRate=0.1;
 	maxVelocity=3.5;
@@ -103,8 +103,8 @@
 		builtBy=aven_adv_vehicle_plant;
 		evalfactor=1;
 	}
-	buildCostEnergy=1136;//#AUTO#
-	buildCostMetal=227;//#AUTO#
-	buildTime=2707;//#AUTO#
-	mass=150;//#AUTO#
+	buildCostEnergy=1263;//#AUTO#
+	buildCostMetal=252;//#AUTO#
+	buildTime=3010;//#AUTO#
+	mass=154;//#AUTO#
 }

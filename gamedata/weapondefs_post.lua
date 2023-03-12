@@ -149,6 +149,7 @@ for wdName, wd in pairs(WeaponDefs) do
 						end
 						wd.rgbcolor = colorStr
 					end
+					wd.texture2 = "light"
 				elseif (wdName:lower():find("_heatray",1,true)) then
 					-- gear heatrays
 					wd.thickness=tonumber(wd.thickness)*6

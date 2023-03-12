@@ -37,12 +37,12 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 		}
 		
 		
-		mAMoveSpd1 = [20.000000] * mASpdFactor / 100;
+		mAMoveSpd1 = [10.000000] * mASpdFactor / 100;
 		mATurnSpd1 = <315.000000> * (100 + mASpdFactor) / 200;
 		mATurnSpd2 = <200.000000> * (100 + mASpdFactor) / 200;
 		mATurnSpd3 = <50.000000> * (100 + mASpdFactor) / 200;
 
-		mAVertFactor = [0.000000]-[1.500000] * mASpdFactor / SPEEDUP_FACTOR;
+		mAVertFactor = [0.000000]-[1.000000] * mASpdFactor / SPEEDUP_FACTOR;
 		legAngle1 = <40.000000>;
 		legAngle2 = <30.000000>;
 		legAngle3 = <15.000000>;
@@ -78,7 +78,7 @@ walk()
 		turn rfoot to x-axis <0.000000>-legAngle2 speed mATurnSpd1;
 
 		move pelvis to y-axis mAVertFactor speed mAMoveSpd1;
-		turn pelvis to x-axis <4.000000> speed slowTurnSpd2;
+		turn pelvis to x-axis <6.000000> speed slowTurnSpd2;
 		if(!bAiming)
 		{
 			// turn torso left, right arm forward
@@ -99,6 +99,7 @@ walk()
 	if( bMoving)
 	{
 		turn lfoot to x-axis legAngle3 speed mATurnSpd1*3;
+		turn pelvis to x-axis <-3.000000> speed slowTurnSpd2;
 		wait-for-turn lfoot around x-axis;
 	}
 
@@ -144,7 +145,7 @@ walk()
 		turn rfoot to x-axis <0> speed mATurnSpd3;
 		
 		move pelvis to y-axis mAVertFactor speed mAMoveSpd1;
-		turn pelvis to x-axis <4.000000> speed slowTurnSpd2;
+		turn pelvis to x-axis <6.000000> speed slowTurnSpd2;
 		
 		if(!bAiming)
 		{
@@ -165,6 +166,7 @@ walk()
 	if( bMoving)
 	{
 		turn rfoot to x-axis legAngle3 speed mATurnSpd1*3;
+		turn pelvis to x-axis <-3.000000> speed slowTurnSpd2;
 		wait-for-turn rfoot around x-axis;
 	}
 
