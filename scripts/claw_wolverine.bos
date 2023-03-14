@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define SPEEDUP_FACTOR 300
+#define SPEEDUP_FACTOR 200
 
 #define HEADING_TOLERANCE	<25>
 #define PITCH_TOLERANCE		<15>
@@ -192,10 +192,10 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	move barrel to z-axis [-0.50000] now;
+	move barrel to z-axis [-0.80000] now;
 	emit-sfx 1024 from flare;
 	sleep 100;
-	move barrel to z-axis [0.000000] speed [5.000000];
+	move barrel to z-axis [0.000000] speed [15.000000];
 	return (1);
 }
 

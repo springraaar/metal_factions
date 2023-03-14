@@ -623,10 +623,10 @@ AimTertiary(heading, pitch)
 
 FireTertiary()
 {
-	turn rarm to x-axis <20.000000> now;
-	turn biggun to x-axis <-20.000000> now;
+	turn rarm to x-axis <5.000000> now;
+	turn biggun to x-axis <-5.000000> now;
 	emit-sfx 1024 from rflare;	
-	sleep 250;
+	sleep 150;
 	turn rarm to x-axis <0.000000> speed <130.038462>;
 	turn biggun to x-axis <0.000000> speed <130.038462>;
 	return;

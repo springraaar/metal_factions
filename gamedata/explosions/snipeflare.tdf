@@ -1,3 +1,232 @@
+[REDBOLTFLARE]
+{
+	usedefaultexplosions=0;	
+
+	[LARGEFLASH]
+	{
+		class = CBitmapMuzzleFlame;
+      
+		[properties]
+		{
+			dir = dir;
+			colorMap=0.55 0.2 0.2 0.01 0.45 0.1 0.1 0.01 0 0 0 0.01; 
+			size=12;
+			length=59;
+			sizeGrowth=-0.1;
+			ttl=20;
+			frontOffset=0.05;
+			sideTexture=muzzleside;
+			frontTexture=muzzlefront;
+      	}
+		water=1;
+		air=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+	
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-25 r50,-25 r50,-25 r50;
+			width=22;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.18;
+			color=1, 0.5, 0.5;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=4; 
+	}
+	[smoke_Back]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.5;
+			sizeMod=1.0;
+			pos=0, 1, 3;
+			emitVector=dir;
+			gravity=0, 0.05, 0;
+			colorMap=0.3 0.1 0.1 0.05  0.1 0.1 0.1 0.01 0 0 0 0.01;
+			Texture=smoke;
+			airdrag=0.8;
+			particleLife=40;
+			particleLifeSpread=5;
+			numParticles=10;
+			particleSpeed=1;
+			particleSpeedSpread=10;
+			particleSize=0.4;
+			particleSizeSpread=0.1;
+			emitRot=0;
+			emitRotSpread=10;
+			directional=0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+}
+
+[BLUEBOLTFLARE]
+{
+	usedefaultexplosions=0;	
+
+	[LARGEFLASH]
+	{
+		class = CBitmapMuzzleFlame;
+      
+		[properties]
+		{
+			dir = dir;
+			colorMap=0.3 0.2 0.55 0.01 0.1 0.1 0.45 0.01 0 0 0 0.01; 
+			size=12;
+			length=79;
+			sizeGrowth=-0.1;
+			ttl=24;
+			frontOffset=0.05;
+			sideTexture=muzzleside;
+			frontTexture=muzzlefront;
+      	}
+		water=1;
+		air=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+	
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-25 r50,-25 r50,-25 r50;
+			width=22;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.18;
+			color=0.6, 0.5, 1.0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=4; 
+	}
+	[smoke_Back]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.5;
+			sizeMod=1.0;
+			pos=0, 1, 3;
+			emitVector=dir;
+			gravity=0, 0.05, 0;
+			colorMap=0.15 0.1 0.3 0.05  0.1 0.1 0.1 0.01 0 0 0 0.01;
+			Texture=smoke;
+			airdrag=0.8;
+			particleLife=45;
+			particleLifeSpread=5;
+			numParticles=10;
+			particleSpeed=1;
+			particleSpeedSpread=12;
+			particleSize=0.4;
+			particleSizeSpread=0.1;
+			emitRot=0;
+			emitRotSpread=10;
+			directional=0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+}
+
+[BLUEBOLTFLARE2]
+{
+	usedefaultexplosions=0;	
+
+	[LARGEFLASH]
+	{
+		class = CBitmapMuzzleFlame;
+      
+		[properties]
+		{
+			dir = dir;
+			colorMap=0.2 0.25 0.55 0.01 0.1 0.13 0.45 0.01 0 0 0 0.01; 
+			size=13;
+			length=89;
+			sizeGrowth=-0.1;
+			ttl=30;
+			frontOffset=0.05;
+			sideTexture=muzzleside;
+			frontTexture=muzzlefront;
+      	}
+		water=1;
+		air=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+	
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-25 r50,-25 r50,-25 r50;
+			width=25;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.18;
+			color=0.5, 0.5, 1.0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=4; 
+	}
+	[smoke_Back]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.5;
+			sizeMod=1.0;
+			pos=0, 1, 3;
+			emitVector=dir;
+			gravity=0, 0.05, 0;
+			colorMap=0.1 0.15 0.3 0.05  0.1 0.1 0.1 0.01 0 0 0 0.01;
+			Texture=smoke;
+			airdrag=0.8;
+			particleLife=55;
+			particleLifeSpread=5;
+			numParticles=10;
+			particleSpeed=1;
+			particleSpeedSpread=12;
+			particleSize=0.5;
+			particleSizeSpread=0.1;
+			emitRot=0;
+			emitRotSpread=10;
+			directional=0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+}
+
+
 [SNIPEFLARE]
 {
 	usedefaultexplosions=1;	

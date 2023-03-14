@@ -1354,7 +1354,7 @@ usedefaultexplosions=0;
 {
 	usedefaultexplosions=0;	
 	[_glow]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=45;explosionGenerator=custom:DYNPROJGLOW;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
-	[spikes]
+	[spikesglow]
 	{
 		class=explspike;
 		[properties]
@@ -1373,7 +1373,7 @@ usedefaultexplosions=0;
 		ground=1;
   		count=3; 
 	}
-	[spikescenter]
+	[spikesglow2]
 	{
 		class=explspike;
 		[properties]
@@ -1392,7 +1392,7 @@ usedefaultexplosions=0;
 		ground=1;
   		count=3; 
 	}
-	[spikes2]
+	[spikescenter]
 	{
 		class=explspike;
 		[properties]
@@ -1400,23 +1400,23 @@ usedefaultexplosions=0;
 			pos = 0, 0, 0;
 			dir= -1 r2, -1 r2, -1 r2;
 			width=2;
-			length=18;
-			alpha=0.5;
-			alphadecay=0.2;
+			length=20;
+			alpha=0.9;
+			alphadecay=0.4;
 			color=1.0, 0.8, 0.5;
 
 		}
 		air=1;
 		water=1;
 		ground=1;
-  		count=4; 
+  		count=6; 
 	}
 }
 [FLARETRAIL]
 {
 	usedefaultexplosions=0;	
 	[_glow]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=25;explosionGenerator=custom:DYNPROJGLOW;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
-	[spikes]
+	[spikesglow]
 	{
 		class=explspike;
 		[properties]
@@ -1435,15 +1435,15 @@ usedefaultexplosions=0;
 		ground=1;
   		count=3; 
 	}
-	[spikes2]
+	[spikescenter]
 	{
 		class=explspike;
 		[properties]
 		{
 			pos = 0, 0, 0;
 			dir= -1 r2, -1 r2, -1 r2;
-			width=3;
-			length=7;
+			width=1;
+			length=10;
 			alpha=0.65;
 			alphadecay=0.3;
 			color=1.0, 0.8, 0.5;
@@ -2184,6 +2184,39 @@ usedefaultexplosions=0;
 		ground=1;
   		count=1; 
 	}
+}
+[REDBOLTTRAIL]
+{
+	usedefaultexplosions=0;	
+	[_glow]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=45;explosionGenerator=custom:DYNPROJGLOWRED;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[groundflash]
+	{
+		flashSize = 45;
+		flashAlpha = 0.24;
+		circleGrowth = 0;
+		circleAlpha = 0.1;
+		ttl = 2;
+		color = 1.0, 0.5, 0.5;
+
+	}
+
+}
+[BLUEBOLTTRAIL]
+{
+	usedefaultexplosions=0;	
+	[_glow]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=45;explosionGenerator=custom:DYNPROJGLOWBLUE;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[groundflash]
+	{
+		flashSize = 45;
+		flashAlpha = 0.24;
+		circleGrowth = 0;
+		circleAlpha = 0.1;
+		ttl = 2;
+		color = 0.7, 0.7, 1.0;
+
+	}
+
+
 }
 [COMETPLASMATRAIL]
 {

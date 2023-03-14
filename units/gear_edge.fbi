@@ -61,8 +61,8 @@
 	//  Movement
 	//************
 	movementClass=LARGEBOAT2;
-	turnRate=107;
-	acceleration=0.009;
+	turnRate=115;
+	acceleration=0.015;
 	brakeRate=0.00383106;
 	maxVelocity=0.9;
 	minwaterdepth=10;
@@ -112,7 +112,7 @@
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:yellowflarebig;
-		explosionGenerator1=custom:redflare;
+		explosionGenerator1=custom:REDBOLTFLARE;
 		explosionGenerator2=custom:redflare;
 		explosionGenerator3=custom:UNITFIRE;
 	}
@@ -122,8 +122,8 @@
 		evalfactor=0.85;//SHIP
 		canAreaAttack=1;
 	}
-	buildCostEnergy=37466;//#AUTO#
-	buildCostMetal=7493;//#AUTO#
-	buildTime=89294;//#AUTO#
-	mass=9396;//#AUTO#
+	buildCostEnergy=37510;//#AUTO#
+	buildCostMetal=7502;//#AUTO#
+	buildTime=89400;//#AUTO#
+	mass=9401;//#AUTO#
 }

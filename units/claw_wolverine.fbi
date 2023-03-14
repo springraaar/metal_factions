@@ -20,7 +20,7 @@
 	objectName=claw_wolverine.3do;
 	corpse=claw_wolverine_dead;
 	buildPic=claw_wolverine.png;
-	soundCategory=claw_VEHICLE;
+	soundCategory=CLAW_TANKSML;
 
 	//************************************************************
 	//  Health/Cost/Size
@@ -60,8 +60,8 @@
 	//  Movement
 	//************
 	movementClass=TANKSH3;
-	turnRate=650;
-	acceleration=0.2;
+	turnRate=730;
+	acceleration=0.25;
 	brakeRate=0.08;
 	maxVelocity=3.0;
 	maxSlope=18;
@@ -103,8 +103,8 @@
 		builtBy=claw_adv_vehicle_plant;
 		evalfactor=1;
 	}
-	buildCostEnergy=1322;//#AUTO#
-	buildCostMetal=264;//#AUTO#
-	buildTime=3152;//#AUTO#
-	mass=166;//#AUTO#
+	buildCostEnergy=1283;//#AUTO#
+	buildCostMetal=256;//#AUTO#
+	buildTime=3060;//#AUTO#
+	mass=165;//#AUTO#
 }

@@ -392,7 +392,7 @@
 [aven_discovery_emg]
 {
 	name=E.M.G.;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:EMGFLASHMED;
 	cegTag=EMGTRAIL;
 	texture1=emg;
@@ -406,8 +406,8 @@
 	range=430;
 	reloadTime=0.234;
 	predictBoost=0.27;
-	weaponVelocity=550;
-	sprayAngle=400;
+	weaponVelocity=500;
+	accuracy=250;
 	areaOfEffect=8;
 	soundStart=armsml3;
 	soundHit=emghit;
@@ -432,7 +432,7 @@
 [aven_ranger_emg]
 {
 	name=E.M.G.;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:EMGFLASHMED;
 	cegTag=EMGTRAIL;
 	texture1=emg;
@@ -446,8 +446,8 @@
 	range=440;
 	reloadTime=0.2;
 	predictBoost=0.27;
-	weaponVelocity=550;
-	sprayAngle=400;
+	weaponVelocity=500;
+	accuracy=250;
 	areaOfEffect=8;
 	soundStart=armsml3;
 	soundHit=emghit;
@@ -472,7 +472,7 @@
 [aven_commander_emg]
 {
 	name=E.M.G.;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:EMGFLASHMED;
 	cegTag=EMGTRAIL;
 	texture1=emg;
@@ -487,7 +487,7 @@
 	reloadTime=0.167;
 	predictBoost=0.27;
 	weaponVelocity=500;
-	sprayAngle=300;
+	accuracy=250;
 	areaOfEffect=8;
 	soundStart=armsml3;
 	soundHit=emghit;
@@ -513,7 +513,7 @@
 [aven_u1commander_cannon]
 {
 	name=Plasma Bolt;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:STDNARROWBLASTWRAPPER;
 	cegTag=PLASMATRAIL1;
 	texture1=cannon;
@@ -2366,7 +2366,7 @@
 [aven_dervish_pistols]
 {
 	name=Plasma Bolt;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:STDNARROWBLASTWRAPPER;
 	cegTag=PLASMATRAIL1;
 	texture1=cannon;
@@ -2405,7 +2405,7 @@
 [aven_magnum_cannon]
 {
 	name=Plasma Bolt;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	cegTag=PLASMATRAIL1;
 	texture1=cannon;
 	explosionGenerator=custom:STDNARROWBLASTWRAPPER;
@@ -2444,7 +2444,7 @@
 [aven_racer_cannon]
 {
 	name=Plasma Bolt;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:STDNARROWBLASTWRAPPER;
 	cegTag=PLASMATRAIL1;
 	texture1=cannon;
@@ -2483,7 +2483,7 @@
 [aven_ambassador_cannon]
 {
 	name=Plasma Bolt;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:STDNARROWBLASTWRAPPER;
 	cegTag=PLASMATRAIL1;
 	texture1=cannon;
@@ -4321,12 +4321,10 @@
 [ARMSNIPE_WEAPON] //sniper
 {
 	name=High Energy Bolt;
-	weaponType=LaserCannon;
+	weaponType=Cannon;
 	turret=1;
-	duration=0.10;
 	range=950;
 	minIntensity=1.0;
-	thickness=6;
 	reloadTime=12;
 	energyPerShot=850;
 	weaponVelocity=1533;
@@ -4335,15 +4333,15 @@
 	soundHit=xplolrg1;
 	soundTrigger=1;
 	fireStarter=90;
-	scrollSpeed=0;
-	rgbColor=0.1 0.1 0.71;
-	rgbColor2=0.7 0.7 1.0;
-	explosionGenerator=custom:PURPLELASERBLASTWRAPPER;
-	cegTag=BLUEGLOWMED;
-	texture1=purplelaser;
-	texture2=null;
-	texture3=null;
-	texture4=null;
+	size=3;
+	stages=43;
+  	separation=0.27;
+  	alphaDecay=0.08;
+  	sizeDecay=-0.06;
+	rgbColor=0.6 0.6 1.0;
+	texture1=hebolt;
+	explosionGenerator=custom:BLUELASERBLASTWRAPPER;
+	cegTag=BLUEBOLTTRAIL;
 	impulseFactor=0.222;
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -4351,7 +4349,6 @@
 	{
 		hitPower=3;
 		reaimTime=1;
-		aaRangeBoost=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR2;
 	}
@@ -4367,12 +4364,10 @@
 [aven_excalibur_laser]
 {
 	name=High Energy Bolt;
-	weaponType=LaserCannon;
+	weaponType=Cannon;
 	turret=1;
-	duration=0.12;
 	range=1430;
 	minIntensity=1.0;
-	thickness=8;
 	reloadTime=11;
 	energyPerShot=2600;
 	weaponVelocity=1533;
@@ -4381,15 +4376,15 @@
 	soundHit=xplolrg1;
 	soundTrigger=1;
 	fireStarter=90;
-	scrollSpeed=0;
-	rgbColor=0.3 0.5 0.71;
-	rgbColor2=0.8 0.8 1.0;
-	explosionGenerator=custom:PURPLELASERBLASTWRAPPER;
-	cegTag=BLUEGLOWMED;
-	texture1=purplelaser;
-	texture2=null;
-	texture3=null;
-	texture4=null;
+	size=3.3;
+	stages=56;
+  	separation=0.27;
+  	alphaDecay=0.08;
+  	sizeDecay=-0.06;
+	rgbColor=0.8 0.9 1.0;
+	texture1=hebolt;
+	explosionGenerator=custom:BLUELASERBLASTWRAPPER;
+	cegTag=BLUEBOLTTRAIL;
 	impulseFactor=0.222;
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -4397,7 +4392,6 @@
 	{
 		hitPower=3;
 		reaimTime=1;
-		aaRangeBoost=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR2;
 	}
@@ -4413,12 +4407,10 @@
 [aven_zapper_laser]
 {
 	name=High Energy Bolt;
-	weaponType=LaserCannon;
+	weaponType=Cannon;
 	turret=1;
-	duration=0.10;
 	range=1450;
 	minIntensity=1.0;
-	thickness=6;
 	reloadTime=3.3;
 	energyPerShot=800;
 	weaponVelocity=1533;
@@ -4427,22 +4419,21 @@
 	soundHit=xplolrg1;
 	soundTrigger=1;
 	fireStarter=90;
-	scrollSpeed=0;
-	rgbColor=0.1 0.15 1.0;
-	rgbColor2=0.7 0.8 1.0;
-	explosionGenerator=custom:PURPLELASERBLASTWRAPPER;
-	cegTag=BLUEGLOWMED;
-	texture1=purplelaser;
-	texture2=null;
-	texture3=null;
-	texture4=null;
+	size=3;
+	stages=43;
+  	separation=0.27;
+  	alphaDecay=0.08;
+  	sizeDecay=-0.06;
+	rgbColor=0.6 0.6 1.0;
+	texture1=hebolt;
+	explosionGenerator=custom:BLUELASERBLASTWRAPPER;
+	cegTag=BLUEBOLTTRAIL;
 	impulseFactor=0.222;
 	interceptedByShieldType=1;
 	avoidFeature=0;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
-		aaRangeBoost=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR2;
 	}
@@ -5627,12 +5618,10 @@
 [aven_penetrator_laser]
 {
 	name=High Energy Bolt;
-	weaponType=LaserCannon;
+	weaponType=Cannon;
 	turret=1;
-	duration=0.10;
 	range=1050;
 	minIntensity=1.0;
-	thickness=6;
 	reloadTime=6;
 	energyPerShot=800;
 	weaponVelocity=1533;
@@ -5641,14 +5630,15 @@
 	soundHit=xplolrg1;
 	soundTrigger=1;
 	fireStarter=90;
-	scrollSpeed=0;
-	rgbColor=0.1 0.1 0.71;
-	rgbColor2=0.7 0.7 1.0;
-	explosionGenerator=custom:PURPLELASERBLASTWRAPPER;
-	texture1=purplelaser;
-	texture2=null;
-	texture3=null;
-	texture4=null;
+	size=3;
+	stages=43;
+  	separation=0.27;
+  	alphaDecay=0.08;
+  	sizeDecay=-0.06;
+	rgbColor=0.6 0.6 1.0;
+	texture1=hebolt;
+	explosionGenerator=custom:BLUELASERBLASTWRAPPER;
+	cegTag=BLUEBOLTTRAIL;
 	impulseFactor=0.222;
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -5656,7 +5646,6 @@
 	{
 		hitPower=3;
 		reaimTime=1;
-		aaRangeBoost=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR2;
 	}
@@ -6241,7 +6230,7 @@
 		armor_light=415.00;//#AUTO#
 	}
 }
-[gear_commander_laser2]
+[gear_commander_laser2_old]
 {
 	name=High Energy Bolt;
 	weaponType=LaserCannon;
@@ -6285,13 +6274,54 @@
 		armor_light=650.00;//#AUTO#
 	}
 }
+[gear_commander_laser2]
+{
+	name=High Energy Bolt;
+	weaponType=Cannon;
+	turret=1;
+	range=460;
+	reloadTime=9.2;
+	energyPerShot=650;
+	weaponVelocity=1533;
+	areaOfEffect=8;
+	soundStart=annigun3;
+	soundHit=xplolrg1;
+	fireStarter=90;
+	size=3;
+	stages=39;
+  	separation=0.27;
+  	alphaDecay=0.08;
+  	sizeDecay=-0.06;
+	rgbColor=0.9 0.4 0.4;
+	texture1=hebolt;
+	explosionGenerator=custom:REDLASERBLASTWRAPPER;
+	cegTag=REDBOLTTRAIL;
+	impulseFactor=0.222;
+	interceptedByShieldType=1;
+	avoidFeature=1;
+	avoidNeutral=1;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		reaimTime=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR2;
+	}
+	[DAMAGE]
+	{
+		default=650;
+		group_invincible=1;
+		armor_heavy=650.00;//#AUTO#
+		armor_medium=650.00;//#AUTO#
+		armor_light=650.00;//#AUTO#
+	}
+}
 [gear_rager_laser]
 {
 	name=High Energy Bolt;
-	weaponType=LaserCannon;
+	weaponType=Cannon;
 	turret=1;
 	range=600;
-	duration=0.10;
 	reloadTime=1.5;
 	energyPerShot=500;
 	weaponVelocity=1533;
@@ -6299,15 +6329,15 @@
 	soundStart=annigun3;
 	soundHit=xplolrg1;
 	fireStarter=90;
-	rgbColor=0.7 0.2 0.2;
-	rgbColor2=0.7 0.2 0.2;
+	size=2.8;
+	stages=37;
+  	separation=0.27;
+  	alphaDecay=0.08;
+  	sizeDecay=-0.06;
+	rgbColor=0.8 0.35 0.35;
+	texture1=hebolt;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
-	cegTag=REDGLOWMED;
-	texture1=purplelaser;
-	texture2=null;
-	texture3=null;
-	texture4=null;
-	thickness=5;
+	cegTag=REDBOLTTRAIL;
 	impulseFactor=0.222;
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -6316,7 +6346,6 @@
 		hitPower=3;
 		reaimTime=1;
 		evalFactor=0.5; // slow stockpile
-		aaRangeBoost=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR2;
 	}
@@ -6669,10 +6698,9 @@
 [gear_u3commander_laser2]
 {
 	name=High Energy Bolt;
-	weaponType=LaserCannon;
+	weaponType=Cannon;
 	turret=1;
 	range=530;
-	duration=0.10;
 	reloadTime=10;
 	energyPerShot=1100;
 	weaponVelocity=1533;
@@ -6680,15 +6708,15 @@
 	soundStart=annigun1;
 	soundHit=xplolrg1;
 	fireStarter=90;
-	rgbColor=0.1 0.1 0.71;
-	rgbColor2=0.7 0.7 1.0;
-	explosionGenerator=custom:PURPLELASERBLASTWRAPPER;
-	cegTag=BLUEGLOWMED;
-	texture1=purplelaser;
-	texture2=null;
-	texture3=null;
-	texture4=null;
-	thickness=9;
+	size=3.3;
+	stages=43;
+  	separation=0.27;
+  	alphaDecay=0.08;
+  	sizeDecay=-0.06;
+	rgbColor=0.6 0.6 1.0;
+	texture1=hebolt;
+	explosionGenerator=custom:BLUELASERBLASTWRAPPER;
+	cegTag=BLUEBOLTTRAIL;
 	impulseFactor=0.222;
 	interceptedByShieldType=1;
 	avoidFeature=1;
@@ -10296,47 +10324,6 @@
 		armor_light=50.00;//#AUTO#
 	}
 }
-[aven_skeeter_emg]
-{
-	name=E.M.G.;
-	weaponType=EmgCannon;
-	explosionGenerator=custom:EMGFLASH;
-	cegTag=EMGTRAIL;
-	texture1=emg;
-	size=1.6;
-	rgbColor=1.0 0.7 0.1;
-	stages=2;
-  	separation=0;
-  	alphaDecay=0.3;
-  	sizeDecay=-0.1;
-	turret=1;
-	range=300;
-	reloadTime=0.167;
-	predictBoost=0.27;
-	weaponVelocity=500;
-	accuracy=400;
-	areaOfEffect=8;
-	soundStart=emgsml;
-	soundHit=emghit;
-	soundTrigger=1;
-	tolerance=3000;
-	interceptedByShieldType=1;
-	avoidFeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitPower=1;
-		reaimTime=1;
-		expDmgScaling=1;
-		targets=SURFACE,AIR2;
-	}
-	[DAMAGE]
-	{
-		default=14;
-		armor_heavy=3.50;//#AUTO#
-		armor_medium=7.00;//#AUTO#
-		armor_light=14.00;//#AUTO#
-	}
-}
 [aven_tl_torpedo]
 {
 	name=Torpedoes;
@@ -12601,7 +12588,7 @@
 [aven_gryphon_emg]
 {
 	name=E.M.G.;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	collideFriendly=0;
 	cegTag=EMGTRAIL;
 	texture1=emg;
@@ -12616,7 +12603,7 @@
 	reloadTime=0.134;
 	predictBoost=0.27;
 	weaponVelocity=500;
-	accuracy=400;
+	accuracy=250;
 	areaOfEffect=8;
 	soundStart=armsml3;
 	soundHit=emghit;
@@ -12736,7 +12723,7 @@
 [aven_twister_emg]
 {
 	name=E.M.G.;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	collideFriendly=0;
 	cegTag=EMGTRAIL;
 	texture1=emg;
@@ -12751,7 +12738,7 @@
 	reloadTime=0.234;
 	predictBoost=0.27;
 	weaponVelocity=500;
-	accuracy=400;
+	accuracy=250;
 	areaOfEffect=8;
 	soundStart=emgsml;
 	soundHit=emghit;
@@ -13398,7 +13385,7 @@
 [aven_rover_emg]
 {
 	name=E.M.G.;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:EMGFLASH;
 	cegTag=EMGTRAIL;
 	texture1=emg;
@@ -13412,7 +13399,7 @@
 	range=400;
 	reloadTime=0.134;
 	predictBoost=0.27;
-	weaponVelocity=400;
+	weaponVelocity=500;
 	accuracy=250;
 	areaOfEffect=8;
 	soundStart=emgsml;
@@ -13439,7 +13426,7 @@
 [aven_trooper_emg]
 {
 	name=E.M.G.;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:EMGFLASH;
 	cegTag=EMGTRAIL;
 	texture1=emg;
@@ -13454,7 +13441,7 @@
 	reloadTime=0.167;
 	predictBoost=0.27;
 	weaponVelocity=500;
-	accuracy=200;
+	accuracy=250;
 	areaOfEffect=8;
 	soundStart=emgsml;
 	soundHit=emghit;
@@ -13480,7 +13467,7 @@
 [aven_trooper_hemg]
 {
 	name=H.E.M.G.;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:EMGFLASHMED;
 	cegTag=EMGTRAIL;
 	texture1=emg;
@@ -13522,7 +13509,7 @@
 [aven_warrior_emg]
 {
 	name=E.M.G.;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:EMGFLASH;
 	cegTag=EMGTRAIL;
 	texture1=emg;
@@ -13537,7 +13524,7 @@
 	reloadTime=0.1;
 	predictBoost=0.27;
 	weaponVelocity=500;
-	accuracy=150;
+	accuracy=250;
 	areaOfEffect=8;
 	soundStart=emgsml;
 	soundHit=emghit;
@@ -13611,7 +13598,7 @@
 [aven_skimmer_emg]
 {
 	name=E.M.G.;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:EMGFLASH;
 	cegTag=EMGTRAIL;
 	texture1=emg;
@@ -13622,10 +13609,10 @@
   	alphaDecay=0.3;
   	sizeDecay=-0.1;
 	turret=1;
-	range=400;
+	range=500;
 	reloadTime=0.134;
 	predictBoost=0.27;
-	weaponVelocity=400;
+	weaponVelocity=500;
 	accuracy=250;
 	areaOfEffect=8;
 	soundStart=emgsml;
@@ -14082,10 +14069,9 @@
 [gear_edge_laser2]
 {
 	name=High Energy Bolt;
-	weaponType=LaserCannon;
+	weaponType=Cannon;
 	turret=1;
 	range=1050;
-	duration=0.10;
 	reloadTime=6;
 	energyPerShot=500;
 	weaponVelocity=1533;
@@ -14093,15 +14079,15 @@
 	soundStart=annigun3;
 	soundHit=xplolrg1;
 	fireStarter=90;
-	rgbColor=0.7 0.2 0.2;
-	rgbColor2=0.7 0.2 0.2;
+	size=3;
+	stages=40;
+  	separation=0.27;
+  	alphaDecay=0.08;
+  	sizeDecay=-0.06;
+	rgbColor=1.0 0.5 0.5;
+	texture1=hebolt;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
-	cegTag=REDGLOWMED;
-	texture1=purplelaser;
-	texture2=null;
-	texture3=null;
-	texture4=null;
-	thickness=9;
+	cegTag=REDBOLTTRAIL;
 	impulseFactor=0.222;
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -14109,7 +14095,6 @@
 	{
 		hitPower=3;
 		reaimTime=1;
-		aaRangeBoost=1;
 		expDmgScaling=1;
 		evalFactor=0.90; // less discount than angle restriction
 		targets=SURFACE,AIR2;
@@ -16209,24 +16194,20 @@
 [claw_wolverine_gun]
 {
 	name=Autocannon;
-	weaponType=LaserCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:railgunblastsml;
-	intensity=1;
-	duration=0.05;
-	thickness=1.3;
-	coreThickness=1;
-	scrollSpeed=0;
-	rgbColor=1 0.3 0;
-	rgbColor2=1 0.7 0.2;
-	texture1=railgunshot;
-	texture2=null;
-	texture3=null;
-	texture4=null;
+	size=0.95;
+	stages=35;
+  	separation=1.6;
+  	alphaDecay=0.16;
+  	sizeDecay=0.0;
+	rgbColor=1 0.7 0.2;
+	texture1=cannon;
 	energyPerShot=5;
 	turret=1;
 	range=380;
 	reloadTime=0.234;
-	accuracy=300;
+	accuracy=100;
 	predictBoost=0.5;
 	weaponVelocity=2032;
 	areaOfEffect=8;
@@ -16240,7 +16221,6 @@
 	{
 		hitPower=1;
 		reaimTime=1;
-		aaRangeBoost=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR;
 	}
@@ -16255,24 +16235,20 @@
 [claw_phalanx_gun]
 {
 	name=Autocannon;
-	weaponType=LaserCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:railgunblastsml;
-	intensity=1;
-	duration=0.05;
-	thickness=1.3;
-	coreThickness=1;
-	scrollSpeed=0;
-	rgbColor=1 0.3 0;
-	rgbColor2=1 0.7 0.2;
-	texture1=railgunshot;
-	texture2=null;
-	texture3=null;
-	texture4=null;
+	size=0.95;
+	stages=35;
+  	separation=1.6;
+  	alphaDecay=0.16;
+  	sizeDecay=0.0;
+	rgbColor=1 0.7 2;
+	texture1=cannon;
 	energyPerShot=5;
 	turret=1;
 	range=520;
 	reloadTime=0.2;
-	accuracy=300;
+	accuracy=100;
 	predictBoost=0.5;
 	weaponVelocity=2032;
 	areaOfEffect=8;
@@ -16286,7 +16262,6 @@
 	{
 		hitPower=1;
 		reaimTime=1;
-		aaRangeBoost=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR;
 	}
@@ -16301,19 +16276,15 @@
 [claw_drill_gun]
 {
 	name=Minigun;
-	weaponType=LaserCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:railgunblastsml;
-	intensity=1;
-	duration=0.05;
-	thickness=1.3;
-	coreThickness=1;
-	scrollSpeed=0;
-	rgbColor=1 0.3 0;
-	rgbColor2=1 0.7 0.2;
-	texture1=railgunshot;
-	texture2=null;
-	texture3=null;
-	texture4=null;
+	size=0.95;
+	stages=35;
+  	separation=1.6;
+  	alphaDecay=0.16;
+  	sizeDecay=0.0;
+	rgbColor=1 0.7 0.2;
+	texture1=cannon;
 	energyPerShot=5;
 	turret=1;
 	range=530;
@@ -16331,7 +16302,6 @@
 	[CUSTOMPARAMS]
 	{
 		hitPower=1;
-		aaRangeBoost=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR;
 	}
@@ -16346,18 +16316,15 @@
 [claw_explorer_gun]
 {
 	name=Minigun;
-	weaponType=LaserCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:railgunblastsml;
-	duration=0.05;
-	thickness=1.3;
-	coreThickness=1;
-	scrollSpeed=0;
-	rgbColor=1 0.3 0;
-	rgbColor2=1 0.7 0.2;
-	texture1=railgunshot;
-	texture2=null;
-	texture3=null;
-	texture4=null;
+	size=0.95;
+	stages=35;
+  	separation=1.6;
+  	alphaDecay=0.16;
+  	sizeDecay=0.0;
+	rgbColor=1 0.7 0.2;
+	texture1=cannon;
 	energyPerShot=7;
 	turret=1;
 	range=450;
@@ -16375,7 +16342,6 @@
 	[CUSTOMPARAMS]
 	{
 		hitPower=1;
-		aaRangeBoost=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR;
 	}
@@ -16390,18 +16356,15 @@
 [claw_ravager_gun]
 {
 	name=Minigun;
-	weaponType=LaserCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:railgunblastsml;
-	duration=0.05;
-	thickness=1.3;
-	coreThickness=1;
-	scrollSpeed=0;
-	rgbColor=1 0.3 0;
-	rgbColor2=1 0.7 0.2;
-	texture1=railgunshot;
-	texture2=null;
-	texture3=null;
-	texture4=null;
+	size=0.95;
+	stages=35;
+  	separation=1.6;
+  	alphaDecay=0.16;
+  	sizeDecay=0.0;
+	rgbColor=1 0.7 0.2;
+	texture1=cannon;
 	energyPerShot=5;
 	turret=1;
 	range=520;
@@ -16420,7 +16383,6 @@
 	{
 		hitPower=1;
 		reaimTime=1;
-		aaRangeBoost=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR;
 	}
@@ -16435,18 +16397,15 @@
 [claw_flail_shotgun]
 {
 	name=Shotgun;
-	weaponType=LaserCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:railgunblastsml;
-	duration=0.05;
-	thickness=1.3;
-	coreThickness=1;
-	scrollSpeed=0;
-	rgbColor=1 0.3 0;
-	rgbColor2=1 0.7 0.2;
-	texture1=railgunshot;
-	texture2=null;
-	texture3=null;
-	texture4=null;
+	size=0.95;
+	stages=26;
+  	separation=1.6;
+  	alphaDecay=0.16;
+  	sizeDecay=0.0;
+	rgbColor=1 0.7 0.2;
+	texture1=cannon;
 	energyPerShot=150;
 	turret=1;
 	range=420;
@@ -16481,18 +16440,15 @@
 [claw_breaker_shotgun]
 {
 	name=Shotgun;
-	weaponType=LaserCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:railgunblastsml;
-	duration=0.05;
-	thickness=1.3;
-	coreThickness=1;
-	scrollSpeed=0;
-	rgbColor=1 0.3 0;
-	rgbColor2=1 0.7 0.2;
-	texture1=railgunshot;
-	texture2=null;
-	texture3=null;
-	texture4=null;
+	size=0.95;
+	stages=26;
+  	separation=1.6;
+  	alphaDecay=0.16;
+  	sizeDecay=0.0;
+	rgbColor=1 0.7 0.2;
+	texture1=cannon;
 	energyPerShot=150;
 	turret=1;
 	range=450;
@@ -17249,18 +17205,15 @@
 [claw_brute_gun]
 {
 	name=Minigun;
-	weaponType=LaserCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:railgunblastsml;
-	duration=0.05;
-	thickness=1.3;
-	coreThickness=1;
-	scrollSpeed=0;
-	rgbColor=1 0.3 0;
-	rgbColor2=1 0.7 0.2;
-	texture1=railgunshot;
-	texture2=null;
-	texture3=null;
-	texture4=null;
+	size=0.95;
+	stages=35;
+  	separation=1.6;
+  	alphaDecay=0.14;
+  	sizeDecay=0.0;
+	rgbColor=1 0.5 0;
+	texture1=cannon;
 	energyPerShot=5;
 	turret=1;
 	range=500;
@@ -17279,7 +17232,6 @@
 	{
 		hitPower=1;
 		reaimTime=1;
-		aaRangeBoost=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR;
 	}
@@ -19473,7 +19425,7 @@
 [sphere_bit_blaster]
 {
 	name=Energy Blaster;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:REDBLASTWRAPPER;
 	cegTag=REDGLOWSML;
 	texture1=ecannon;
@@ -19516,7 +19468,7 @@
 [sphere_double_blaster]
 {
 	name=Energy Blaster;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:REDBLASTWRAPPER;
 	cegTag=REDGLOWSML;
 	texture1=ecannon;
@@ -20469,7 +20421,7 @@
 [sphere_hanz_blaster]
 {
 	name=Energy Blaster;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:REDBLASTWRAPPER;
 	cegTag=REDGLOWSML;
 	texture1=ecannon;
@@ -20703,7 +20655,7 @@
 [sphere_charger_blaster]
 {
 	name=Energy Blaster;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:REDBLASTWRAPPER;
 	cegTag=REDGLOWSML;
 	texture1=ecannon;
@@ -20746,7 +20698,7 @@
 [sphere_helix_blaster]
 {
 	name=Energy Blaster;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:REDBLASTWRAPPER;
 	cegTag=REDGLOWSML;
 	texture1=ecannon;
@@ -20789,7 +20741,7 @@
 [sphere_spitfire_blaster]
 {
 	name=Energy Blaster;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	explosionGenerator=custom:REDBLASTWRAPPER;
 	cegTag=REDGLOWSML;
 	texture1=ecannon;
@@ -23703,7 +23655,7 @@
 	weaponType=Cannon;
 	cegTag=DISRUPTORWAVE;
 	energyPerShot=10000;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	turret=1;
 	range=250;
 	cylinderTargeting=1;
@@ -23790,7 +23742,7 @@
 	name=Disruptor Blast;
 	weaponType=Cannon;
 	energyPerShot=0;
-	weaponType=EmgCannon;
+	weaponType=Cannon;
 	turret=1;
 	range=250;
 	cylinderTargeting=1;

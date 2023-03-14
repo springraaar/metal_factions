@@ -2544,7 +2544,7 @@
 		class=CSimpleGroundFlash;
 		[properties]
 		{
-			size = d0.025 5;
+			size = d0.03 3;
 			sizeGrowth = 1;
 			texture=groundflash;
 	     		ttl = d0.05 5;
@@ -2620,7 +2620,7 @@
 [REDLASERBLASTWRAPPER]			// red laser blast wrapper
 {
 	usedefaultexplosions=0;
-	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d1 p0.6 x0;explosionGenerator=custom:REDLASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d1 p0.5 x0;explosionGenerator=custom:REDLASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
 
 
@@ -2637,7 +2637,7 @@
 		class=CSimpleGroundFlash;
 		[properties]
 		{
-			size = d0.025 5;
+			size = d0.03 3;
 			sizeGrowth = 1;
 			texture=groundflash;
 	     		ttl = d0.05 5;
@@ -2714,7 +2714,7 @@
 [GREENLASERBLASTWRAPPER]			// green laser blast wrapper
 {
 	usedefaultexplosions=0;
-	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d1 p0.6 x0;explosionGenerator=custom:GREENLASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d1 p0.5 x0;explosionGenerator=custom:GREENLASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
 
 
@@ -2806,7 +2806,7 @@
 [PURPLELASERBLASTWRAPPER]			// blue laser blast wrapper
 {
 	usedefaultexplosions=0;
-	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d1 p0.6 x0;explosionGenerator=custom:PURPLELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d1 p0.5 x0;explosionGenerator=custom:PURPLELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
 
 [BLUELASERBLAST]			// blue laser blast
@@ -2820,7 +2820,7 @@
 		class=CSimpleGroundFlash;
 		[properties]
 		{
-			size = d0.025 5;
+			size = d0.03 3;
 			sizeGrowth = 1;
 			texture=groundflash;
 	     		ttl = d0.05 5;
@@ -2897,7 +2897,7 @@
 [BLUELASERBLASTWRAPPER]			// blue laser blast wrapper
 {
 	usedefaultexplosions=0;
-	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d1 p0.6 x0;explosionGenerator=custom:BLUELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d1 p0.5 x0;explosionGenerator=custom:BLUELASERBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
 
 
