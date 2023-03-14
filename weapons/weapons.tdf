@@ -1969,12 +1969,10 @@
 [aven_ace_laser]
 {
 	name=High Energy Bolt;
-	weaponType=LaserCannon;
-	duration=0.07;
+	weaponType=Cannon;
 	turret=1;
 	range=600;
 	minIntensity=1.0;
-	thickness=7;
 	reloadTime=8.6;
 	energyPerShot=1600;
 	weaponVelocity=2533;
@@ -1983,15 +1981,15 @@
 	soundHit=xplolrg1;
 	soundTrigger=1;
 	fireStarter=90;
-	scrollSpeed=0;
-	burnBlow=0;
-	rgbColor=0.1 0.15 1.0;
-	rgbColor2=0.7 0.8 1.0;
-	explosionGenerator=custom:PURPLELASERBLASTWRAPPER;
-	texture1=purplelaser;
-	texture2=null;
-	texture3=null;
-	texture4=null;
+	size=3.3;
+	stages=43;
+  	separation=0.27;
+  	alphaDecay=0.08;
+  	sizeDecay=-0.06;
+	rgbColor=0.6 0.6 1.0;
+	texture1=hebolt;
+	explosionGenerator=custom:BLUELASERBLASTWRAPPER;
+	cegTag=BLUEBOLTTRAIL;
 	impulseFactor=0.222;
 	tolerance=8000;
 	interceptedByShieldType=1;
@@ -2000,7 +1998,6 @@
 	{
 		hitPower=3;
 		restrictedAngle=1;
-		aaRangeBoost=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR2;
 	}
@@ -4449,12 +4446,10 @@
 [aven_magnum_laser]
 {
 	name=High Energy Bolt;
-	weaponType=LaserCannon;
+	weaponType=Cannon;
 	turret=1;
-	duration=0.10;
 	range=600;
 	minIntensity=1.0;
-	thickness=6;
 	reloadTime=6.5;
 	energyPerShot=800;
 	weaponVelocity=1533;
@@ -4463,15 +4458,15 @@
 	soundHit=xplolrg1;
 	soundTrigger=1;
 	fireStarter=90;
-	scrollSpeed=0;
-	rgbColor=0.1 0.1 0.71;
-	rgbColor2=0.7 0.7 1.0;
-	explosionGenerator=custom:PURPLELASERBLASTWRAPPER;
-	cegTag=BLUEGLOWMED;
-	texture1=purplelaser;
-	texture2=null;
-	texture3=null;
-	texture4=null;
+	size=3;
+	stages=41;
+  	separation=0.27;
+  	alphaDecay=0.08;
+  	sizeDecay=-0.06;
+	rgbColor=0.6 0.6 1.0;
+	texture1=hebolt;
+	explosionGenerator=custom:BLUELASERBLASTWRAPPER;
+	cegTag=BLUEBOLTTRAIL;
 	impulseFactor=0.222;
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -6228,50 +6223,6 @@
 		armor_heavy=415.00;//#AUTO#
 		armor_medium=415.00;//#AUTO#
 		armor_light=415.00;//#AUTO#
-	}
-}
-[gear_commander_laser2_old]
-{
-	name=High Energy Bolt;
-	weaponType=LaserCannon;
-	turret=1;
-	range=460;
-	duration=0.10;
-	reloadTime=9.2;
-	energyPerShot=650;
-	weaponVelocity=1533;
-	areaOfEffect=8;
-	soundStart=annigun3;
-	soundHit=xplolrg1;
-	fireStarter=90;
-	rgbColor=0.7 0.2 0.2;
-	rgbColor2=0.7 0.2 0.2;
-	explosionGenerator=custom:REDLASERBLASTWRAPPER;
-	cegTag=REDGLOWMED;
-	texture1=purplelaser;
-	texture2=null;
-	texture3=null;
-	texture4=null;
-	thickness=6;
-	impulseFactor=0.222;
-	interceptedByShieldType=1;
-	avoidFeature=1;
-	avoidNeutral=1;
-	[CUSTOMPARAMS]
-	{
-		hitPower=3;
-		reaimTime=1;
-		aaRangeBoost=1;
-		expDmgScaling=1;
-		targets=SURFACE,AIR2;
-	}
-	[DAMAGE]
-	{
-		default=650;
-		group_invincible=1;
-		armor_heavy=650.00;//#AUTO#
-		armor_medium=650.00;//#AUTO#
-		armor_light=650.00;//#AUTO#
 	}
 }
 [gear_commander_laser2]
@@ -13609,7 +13560,7 @@
   	alphaDecay=0.3;
   	sizeDecay=-0.1;
 	turret=1;
-	range=500;
+	range=400;
 	reloadTime=0.134;
 	predictBoost=0.27;
 	weaponVelocity=500;
@@ -16087,49 +16038,6 @@
 	soundHit=xplonuk1;
 	soundTrigger=1;
 	smokeTrail=0;
-	tolerance=3000;
-	interceptedByShieldType=1;
-	avoidFeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitPower=3;
-		expDmgScaling=1;
-		targets=SURFACE;
-	}
-	[DAMAGE]
-	{
-		default=2500;
-		armor_heavy=2500.00;//#AUTO#
-		armor_medium=2500.00;//#AUTO#
-		armor_light=2500.00;//#AUTO#
-	}
-}
-[claw_longhorn_railgun_bolt]
-{
-	name=Long Range Railgun;
-	weaponType=LaserCannon;
-	explosionGenerator=custom:STDNARROWBLASTWRAPPER;
-	intensity=1;
-	duration=0.18;
-	thickness=4.5;
-	coreThickness=2.25;
-	scrollSpeed=0;
-	rgbColor=1 0.3 0;
-	rgbColor2=1 0.7 0.2;
-	texture1=railgunshot;
-	texture2=null;
-	texture3=null;
-	texture4=null;
-	energyPerShot=4300;
-	turret=1;
-	range=4500;
-	reloadTime=13.5;
-	weaponVelocity=2532;
-	accuracy=10;
-	areaOfEffect=64;
-	soundStart=railgunbig;
-	soundHit=xplonuk1;
-	soundTrigger=1;
 	tolerance=3000;
 	interceptedByShieldType=1;
 	avoidFeature=0;
