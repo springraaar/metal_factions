@@ -64,7 +64,7 @@ function tableValToStr ( v )
 		end
 		return '"' .. string.gsub(v,'"', '\\"' ) .. '"'
 	else
-		return "table" == type( v ) and table.tostring( v ) or tostring( v )
+		return "table" == type( v ) and tableToString( v ) or tostring( v )
 	end
 end
 

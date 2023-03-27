@@ -17,7 +17,6 @@ function widget:Initialize()
 	disableWidget("GFX Settings : Low")
 	disableWidget("GFX Settings : Medium")
 
-	Spring.SendCommands("disticon 200")
 	Spring.SendCommands("water 4")
 	Spring.SendCommands("shadows 1")
 	Spring.SetConfigInt("ShadowMapSize",4096,false)

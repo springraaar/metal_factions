@@ -1,3 +1,24 @@
+2023/03/27 ------------------ NOTES v2.10 ----------------------
+
+- AVEN "Ambassador" rockets follow the rectangular trajectory they were supposed to have instead of the triangular trajectory with tracking
+
+- Fixed lua errors when invalid faction was selected, spawn a random commander instead
+(could occur on incompatible maps or due to lobby client issues)
+
+--- UI / Visual / Sounds
+
+- "wall" keybind keyword now cycles through other fortifications
+- Added "energy", "defense" and "factory" keybind keywords that cycle through some energy producing buildings, defenses and nano tower and other factories
+- Default keybindings now use "Q" for power nodes, and "X,C,V" for the "energy","defense" and "factory" keywords
+(existing mf_keys.txt files on LuaUI/Configs will not get automatically overridden, but can be manually edited or replaced to use the new options)
+- Using a hotkey to build a unit or structure cycles the build categories to the corresponding category
+
+- L/M/H graphics settings profiles no longer override the "display-unit-as-icon" distance threshold modifier
+- Menu allows setting the "display-unit-as-icon" distance threshold modifier
+- Slightly increased the size of icons for easier readability
+- Slight improvements to some models and textures
+
+
 2023/03/13 ------------------ NOTES v2.09 ----------------------
 
 - Increase consistency in projectile velocity and accuracy of AVEN EMG weapons

@@ -1,8 +1,8 @@
 function widget:GetInfo()
   return {
-    name      = "Select n Center! - XTA",
-    desc      = "Selects and centers the Commander at the start of the game.",
-    author    = "quantum",
+    name      = "Select n Center!",
+    desc      = "Selects and centers view on commander at the start of the game.",
+    author    = "quantum, modified by raaar",
     date      = "22/06/2007",
     license   = "GNU GPL, v2 or later",
     layer     = 5,
@@ -27,14 +27,18 @@ function widget:Update()
 	if  center and t > 0 then
 		--Spring.Echo("center")
 		unitList = Spring.GetTeamUnits(Spring.GetMyTeamID())
-		local x, y, z = Spring.GetUnitPosition(unitList[1])
-		Spring.SetCameraTarget(x, y, z)
+		if unitList and #unitList > 0 then
+			local x, y, z = Spring.GetUnitPosition(unitList[1])
+			Spring.SetCameraTarget(x, y, z)
+		end
 		center = false
 	end
 	if select 
 		and t > 0 then
 		--Spring.Echo("select")
-		Spring.SelectUnitArray({unitList[1]})
+		if unitList and #unitList > 0 then
+			Spring.SelectUnitArray({unitList[1]})
+		end
 		select = false
 	end
 end

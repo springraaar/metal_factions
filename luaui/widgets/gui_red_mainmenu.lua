@@ -31,6 +31,7 @@ local sSetShareLevel = Spring.SetShareLevel
 local spGetTeamRulesParam = Spring.GetTeamRulesParam
 local spSendLuaRulesMsg = Spring.SendLuaRulesMsg
 local spGetWind = Spring.GetWind
+local spGetConfigInt = Spring.GetConfigInt
 local sformat = string.format
 
 local min = math.min
@@ -40,6 +41,9 @@ local avgWindMod = 1
 
 local menuButton = {}
 local menuPanel = {}
+
+local CHECK_GFXPROFILE = 0
+local CHECK_ICONDIST = 1
 
 local Config = {
 	menuButton = {
@@ -65,7 +69,7 @@ local Config = {
 	},
 	menu = {
 		px = CanvasX -162-6,py = 6,
-		sx = 162,sy = 154, --background size
+		sx = 162,sy = 184, --background size
 		
 		fontsize = 10,
 		maxFontsize = 18 * maxFontSizeFactor,
@@ -119,6 +123,7 @@ local Config = {
 		px = 0,py = 0,
 		name = "gfxLowButton",
 		selectedValue = GFX_LOW,
+		checkType = CHECK_GFXPROFILE,
 		tooltip = {
 			background ="\255\255\255\255Change to a low-detail/high performance graphics settings profile.",
 		},
@@ -127,6 +132,7 @@ local Config = {
 		px = 0,py = 0,
 		name = "gfxMedButton",
 		selectedValue = GFX_MEDIUM,
+		checkType = CHECK_GFXPROFILE,
 		tooltip = {
 			background ="\255\255\255\255Change to a medium-detail graphics settings profile.",
 		},
@@ -135,10 +141,25 @@ local Config = {
 		px = 0,py = 0,
 		name = "gfxHighButton",
 		selectedValue = GFX_HIGH,
+		checkType = CHECK_GFXPROFILE,
 		tooltip = {
 			background ="\255\255\255\255Change to a high-detail graphics settings profile.",
 		},
-	},	
+	},
+	sliderButton = {
+		px = 0,py = 0,
+		name = "sliderButton",
+		margin = 1,
+		padding = 2,
+		selectedValue = 0,
+		checkType = CHECK_ICONDIST,
+		texture = LUAUI_DIRNAME.."images/sliderButton.png",
+		selectedTexture = LUAUI_DIRNAME.."images/sliderButtonSelected.png",
+		textureColor = {1,1,1,1},
+		tooltip = {
+			background ="",
+		}
+	},		
 	backButton = {
 		px = 0,py = 0,
 		name = "backButton",
@@ -313,6 +334,42 @@ local function createMenu(r)
 	end)
 	offsetY = offsetY + 30
 	
+	-- icon distance slider
+	local text = {"text",
+		px=background.px+r.margin,py=background.py+r.margin+offsetY+6,fontsize=r.fontsize,maxFontsize=20 * maxFontSizeFactor,
+		caption="Icon Distance:",
+		options="n", --disable colorcodes
+	}
+	local lb2 = New(text)
+	lb2.color = r.clabel
+
+	-- add "slider" buttons
+	local sliderButtons = {}
+	for i=0,5 do
+		bt = Copy(Config.sliderButton)
+		bt = mergeTable(bt,Config.baseButton)
+		local value = 0
+		if i == 0 then
+			bt.tooltip.background = "\255\255\255\255ALWAYS display units as icons."
+		elseif i == 5 then
+			value = 999
+			bt.tooltip.background = "\255\255\255\255NEVER display units as icons."
+		else
+			value = 100 + 25*i
+			bt.tooltip.background = "\255\255\255\255Change distance modifier from where units become drawn as icons to "..value.."."
+		end
+		bt.selectedValue = value
+		
+		bt.sx = 10
+		bt.px = r.px + r.margin + r.padding + offsetX + 70 + (bt.sx+2)*i
+		bt.py = r.py + r.margin + r.padding + offsetY
+		sliderButtons[i+1] = createButton(bt,"",function(mx,my,self)
+			Spring.SendCommands("disticon "..self.selectedValue)
+		end)
+	end	
+
+	offsetY = offsetY + 30
+	
 	-- resign
 	bt = Copy(Config.resignButton)
 	bt = mergeTable(bt,Config.baseButton)
@@ -335,13 +392,17 @@ local function createMenu(r)
 	
 	
 	background.movableSlaves = {
-		resignButton,quitButton,shareButton,lb,gfxLowButton,gfxMedButton,gfxHighButton,backButton
+		resignButton,quitButton,shareButton,lb,lb2,gfxLowButton,gfxMedButton,gfxHighButton,backButton
 	}
+	for i=1,6 do
+		table.insert(background.movableSlaves,sliderButtons[i])
+	end
 	
-	return {
+	local returnTable = {
 		["background"] = background,
 		["background2"] = background2,
 		["label"] = lb,
+		["label2"] = lb2,
 		["resignButton"] = resignButton,
 		["quitButton"] = quitButton,
 		["shareButton"] = shareButton,
@@ -349,32 +410,43 @@ local function createMenu(r)
 		["gfxMedButton"] = gfxMedButton,
 		["gfxHighButton"] = gfxHighButton,
 		["backButton"] = backButton,
+		["sliderButtons"] = sliderButtons,
 		margin = r.margin,
 		enable = function()
 			background.active = nil
 			background2.active = nil
 			lb.active = nil
+			lb2.active = nil
 			resignButton.enable()
 			quitButton.enable()
 			shareButton.enable()
 			gfxLowButton.enable()
 			gfxMedButton.enable()
 			gfxHighButton.enable()
+			for i=1,6 do
+				sliderButtons[i].enable()
+			end
 			backButton.enable()
 		end,
 		disable = function()
 			background.active = false
 			background2.active = false
 			lb.active = false
+			lb2.active = false
 			resignButton.disable()
 			quitButton.disable()
 			shareButton.disable()
 			gfxLowButton.disable()
 			gfxMedButton.disable()
 			gfxHighButton.disable()
+			for i=1,6 do
+				sliderButtons[i].disable()
+			end
 			backButton.disable()
 		end		
 	}
+	
+	return returnTable
 end
 
 function createButton(r,label,lClickHandler,rClickHandler)
@@ -383,6 +455,7 @@ function createButton(r,label,lClickHandler,rClickHandler)
 		sx=r.sx-r.padding-r.padding,sy=r.sy-r.padding-r.padding,
 		color=r.color2,
 	}
+
 	local background = {"rectangle",
 		px=r.px,py=r.py,
 		sx=r.sx,sy=r.sy,
@@ -391,12 +464,20 @@ function createButton(r,label,lClickHandler,rClickHandler)
 		movable=r.dragbutton,
 		obeyScreenEdge = true,
 		
+		isSelected = false,
 		padding=r.padding,
-		
 		--overrideCursor = true,
 		overrideClick = {1}
 	}
-
+	
+	if r.texture then
+		background.texture = r.texture
+		background.textureColor = r.textureColor
+	end
+	if r.selectedValue then
+		background.selectedValue = r.selectedValue
+		background.checkType = r.checkType
+	end
 	New(background)
 	New(background2)
 
@@ -420,8 +501,7 @@ function createButton(r,label,lClickHandler,rClickHandler)
 		self.border = {1,1,1,0.88}
 	end	
 	background.mouseNotOver = function(mx,my,self)
-		if r.selectedValue and (WG.gfxProfile == r.selectedValue) then
-			--Spring.Echo("selected value = "..r.selectedValue)
+		if self.isSelected == true then
 			background.border = {0,1,0,1}
 			background.color = {0,0.3,0,0.8}
 		else
@@ -429,6 +509,27 @@ function createButton(r,label,lClickHandler,rClickHandler)
 			background.border=r.cborder
 		end 
 	end	
+	background.onUpdate = function(self)
+		if r.checkType then
+			if r.checkType == CHECK_GFXPROFILE then 
+				background.isSelected = WG.gfxProfile == r.selectedValue
+			elseif r.checkType == CHECK_ICONDIST then
+				local dist = spGetConfigInt("UnitIconDist")
+				background.isSelected = math.abs(dist - r.selectedValue) < 25
+			end
+		end
+
+		if self.isSelected == true then
+			if r.selectedTexture then
+				background.texture = r.selectedTexture
+			end
+		else
+			if r.texture then
+				background.texture = r.texture
+			end
+		end 
+	end
+	
 	
 	-- click handling
 	background.mouseClick = {}
@@ -456,6 +557,7 @@ function createButton(r,label,lClickHandler,rClickHandler)
 		end
 	}
 end
+
 
 function showMenu()
 	menuPanel.enable()

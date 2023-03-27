@@ -6,6 +6,7 @@
 
 local REF_SIZE = 1.1
 local COM_SIZE = 1.7
+local SIZE_MULT = 1.05
 
 local _iconTypes = {
 	default = {
@@ -724,6 +725,9 @@ local sizeMods = {
 
 for name,icon in pairs(_iconTypes) do
 	iconTypes[name] = icon
+	if icon.size then
+		icon.size = icon.size * SIZE_MULT
+	end
 	for suf,mult in pairs(sizeMods) do
 		local newName = name..suf
 		local newSize = 1

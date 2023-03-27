@@ -21,7 +21,7 @@ local backgroundTexture = loadscreens[ math.random(#loadscreens) ]
 local aspectRatio
 
 local version = Game.gameVersion
-if version == "workbench" then
+if version == "workbench" or version == "$VERSION" then
 	version = "vX.XX"
 end
 

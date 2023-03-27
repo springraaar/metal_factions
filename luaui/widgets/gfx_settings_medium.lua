@@ -22,7 +22,6 @@ function widget:Initialize()
 	disableWidget("Contrast Adaptive Sharpen")
 	disableWidget("Outline")
 
-	Spring.SendCommands("disticon 200")
 	Spring.SendCommands("water 1")
 	Spring.SendCommands("shadows 2")
 	Spring.SetConfigInt("ShadowMapSize",2048,false)

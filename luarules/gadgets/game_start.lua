@@ -27,14 +27,19 @@ end
 local modOptions = Spring.GetModOptions()
 local commanders = {"aven_commander","gear_commander","claw_commander","sphere_commander"}
 
+local validSide = {
+	random = true,
+	aven = true,
+	gear = true,
+	claw = true,
+	sphere = true
+}
+
+
 local function GetStartUnit(teamID)
     local side = select(5, Spring.GetTeamInfo(teamID))
-    if (side == "") then
-        -- startscript didn't specify a side for this team
-        local sidedata = Spring.GetSideData()
-        if (sidedata and #sidedata > 0) then
-            side = sidedata[1 + teamID % #sidedata].sideName
-        end
+    if (not validSide[side]) then
+    	side = "random"
     end
 
     return Spring.GetSideData(side)

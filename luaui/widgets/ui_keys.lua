@@ -25,25 +25,48 @@ local shouldSelectCom = false
 local customKeybindsFile = "luaui/configs/mf_keys.txt"
 
 local keybindsFileTxt = [[
-// ---------- mf keybind instructions
-// EXAMPLES:
-// this is a comment, remove them from the relevant lines below to enable them, or add your own
-//swap_a_f		// swaps A and F hotkeys (most games use A for attack-move/fight instead of F)
-//MB w wall		// build small wall, any faction
-//MB z areamex		// area metal extractor command
-//MB x areamex2		// area metal extractor command, level 2
-//MB c areamex2h	// area metal extractor command, level 2 (exploiter)
-//MB v build aven_nano_tower,gear_nano_tower,claw_nano_tower,sphere_pole		// try to build units from a list, separated by "," (generally one from each faction)
-//MB v build aven_light_laser_tower,aven_defender,aven_stasis,aven_sentinel		// alternate between trying to build units from a list, separated by ","
-//MB <key> <action>	// supported actions: fight,attack,patrol,repair,guard,reclaim,restore,capture,loadunits,unloadunits,wait,onoff,selfd,priority
+// ---------- MF keybind instructions
+// this is a comment
+//MB <key> <action>		// MF-specific simplified key-action binding    	
+//		MF-specific action list:
+//		- priority   : change build priority
+// 		- fight
+// 		- attack
+//		- patrol
+//		- repair
+//		- guard
+//		- reclaim
+//		- restore	: restores ground to original state
+//		- capture
+//		- loadunits
+//		- unloadunits
+//		- wait
+//		- onoff
+//		- selfd		: self destruct
+//		- priority	: toggles builder resource access priority state
+//		- areamex	: area metal extractor command
+//		- areamex2	: area metal extractor command, level 2
+//		- areamex2h	: area metal extractor command, level 2 (exploiter)
+//		- wall		: cycle between small wall and other passive fortifications 
+//		- energy	: cycle between some energy structures
+//		- defense	: cycle between some defense buildings
+//		- factory	: cycle between nano tower and some factories
+//		- build	<unit1>,<unit2>,...		: cycle between trying to build units from a list, separated by ","
+//
+// add/remove comments from the default bindings on the relevant lines below to disable/enable them
+// or add your own
+// ---------------------------------------
 
+//swap_a_f		// swaps A and F hotkeys (most games use A for attack-move/fight instead of F)
+
+MB q build aven_power_node,gear_power_node,claw_power_node,sphere_power_node
 MB w wall
 MB z areamex
-MB x areamex2
-MB c areamex2h
-MB v build aven_nano_tower,gear_nano_tower,claw_nano_tower,sphere_pole
+MB x energy
+MB c defense
+MB v factory
 
-// ---------- regular keybind instructions
+// ---------- standard keybind instructions
 // bind shift+v buildunit_aven_weaver
 // bind v buildunit_aven_weaver
 // ...
@@ -131,12 +154,37 @@ function widget:Initialize()
 						
 						if ( action == "wall") then
 							unbindKey(key)
-							local unitArray = {"aven_fortification_wall","gear_fortification_wall","claw_fortification_wall","sphere_fortification_wall"}
+							local unitArray = {"aven_fortification_wall","aven_dragons_teeth","aven_large_fortification_wall","aven_fortification_gate","gear_fortification_wall","gear_dragons_teeth","gear_large_fortification_wall","gear_fortification_gate","claw_fortification_wall","claw_dragons_teeth","claw_large_fortification_wall","claw_fortification_gate","sphere_fortification_wall","sphere_dragons_teeth","sphere_large_fortification_wall","sphere_fortification_gate"}
 							for _,u in pairs(unitArray) do
 								Spring.SendCommands("bind "..key.." buildunit_"..u)
 								Spring.SendCommands("bind Shift+"..key.." buildunit_"..u)
 								WG.customHotkeys["build_"..u] = key
 							end
+						elseif ( action == "energy") then
+							unbindKey(key)
+							local unitArray = {"aven_fusion_reactor","aven_solar_collector","aven_wind_generator","aven_tidal_generator","aven_bio_dome","aven_geothermal_powerplant","gear_fusion_power_plant","gear_solar_collector","gear_wind_generator","gear_tidal_generator","gear_mass_burner","gear_geothermal_powerplant","claw_adv_fusion_reactor","claw_solar_collector","claw_wind_generator","claw_tidal_generator","claw_totem","claw_geothermal_powerplant","sphere_adv_fusion_reactor","sphere_fusion_reactor","sphere_wind_generator","sphere_hardened_fission_reactor","sphere_geothermal_powerplant"}
+							for _,u in pairs(unitArray) do
+								Spring.SendCommands("bind "..key.." buildunit_"..u)
+								Spring.SendCommands("bind Shift+"..key.." buildunit_"..u)
+								WG.customHotkeys["build_"..u] = key
+							end
+						elseif ( action == "defense") then
+							unbindKey(key)
+							local unitArray = {"aven_light_laser_tower","aven_pelter","aven_defender","gear_light_laser_tower","gear_lobber","gear_pulverizer","gear_beamer","claw_drill","claw_cache","claw_thumper","claw_hazard","claw_gemini","sphere_stir","sphere_slugger","sphere_shooter","sphere_shine"}
+							for _,u in pairs(unitArray) do
+								Spring.SendCommands("bind "..key.." buildunit_"..u)
+								Spring.SendCommands("bind Shift+"..key.." buildunit_"..u)
+								WG.customHotkeys["build_"..u] = key
+							end
+						elseif ( action == "factory") then
+							unbindKey(key)
+							local unitArray = {"aven_nano_tower","aven_light_plant","aven_aircraft_plant","aven_shipyard","gear_nano_tower","gear_light_plant","gear_aircraft_plant","gear_shipyard","claw_nano_tower","claw_light_plant","claw_aircraft_plant","claw_shipyard","sphere_pole","sphere_light_factory","sphere_aircraft_factory","sphere_shipyard"}
+							for _,u in pairs(unitArray) do
+								Spring.SendCommands("bind "..key.." buildunit_"..u)
+								Spring.SendCommands("bind Shift+"..key.." buildunit_"..u)
+								WG.customHotkeys["build_"..u] = key
+							end
+
 						elseif ( action == "areamex" or action == "areamex2" or action == "areamex2h" ) then
 							unbindKey(key)
 							Spring.SendCommands("bind "..key.." "..action)

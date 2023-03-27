@@ -37,9 +37,9 @@ if (vsy > 1080) then
 	maxFontSizeFactor = vsy / 1080
 end
 
-local sGetSelectedUnitsCount = Spring.GetSelectedUnitsCount
-local sGetActiveCommand = Spring.GetActiveCommand
-local sGetActiveCmdDescs = Spring.GetActiveCmdDescs
+local spGetSelectedUnitsCount = Spring.GetSelectedUnitsCount
+local spGetActiveCommand = Spring.GetActiveCommand
+local spGetActiveCmdDescs = Spring.GetActiveCmdDescs
 local ssub = string.sub
 
 local FILTER_KEY = KEYSYMS.B
@@ -431,8 +431,8 @@ local function CreateGrid(r)
 	local selectHighlight = {"rectangle",
 		px=0,py=0,
 		sx=r.isx,sy=r.isy,
-		color={1,0,0,0.3},
-		border={0.8,0,0,1},
+		color={0,1,0,0.45},
+		border={0.3,1,0.3,1},
 		
 		active=false,
 		onUpdate=function(self)
@@ -489,7 +489,7 @@ local function CreateGrid(r)
 		end,
 		
 		onUpdate=function(self)
-			local _,_,_,curCmdName = sGetActiveCommand()
+			local _,_,_,curCmdName = spGetActiveCommand()
 			if (curCmdName ~= nil) then
 				if (self.cmdName == curCmdName) then
 					selectHighlight.px = self.px
@@ -1047,7 +1047,7 @@ end
 
 local function onWidgetUpdate() --function widget:Update()
 	AutoResizeObjects()
-	SelectedUnitsCount = sGetSelectedUnitsCount()
+	SelectedUnitsCount = spGetSelectedUnitsCount()
 end
 
 --save/load stuff
@@ -1115,7 +1115,7 @@ local function GetCommands()
 	end
 
 	local uName = ""
-	for index,cmd in pairs(sGetActiveCmdDescs()) do
+	for index,cmd in pairs(spGetActiveCmdDescs()) do
 		if (type(cmd) == "table") then
 			--Spring.Echo("id="..cmd.id.." type="..cmd.type.." action="..cmd.action)
 			if (
@@ -1129,6 +1129,7 @@ local function GetCommands()
 				if ((cmd.type == 20) --build building
 				or (ssub(cmd.action,1,10) == "buildunit_")) then
 						uName = ssub(cmd.action,11)
+						cmd.uName = uName
 						cmd.cost = UnitDefNames[uName].metalCost
 						cmd.isBuilder = UnitDefNames[uName].buildSpeed > 0
 						-- update build filter category option flags
@@ -1156,8 +1157,7 @@ local function GetCommands()
 	filteredBuildCmds = {}
 	for i=1,buildCmdsCount do
 		local cmd = buildCmds[i]
-		uName = ssub(cmd.action,11)
-		if checkFilter(uName) then
+		if checkFilter(cmd.uName) then
 			filteredBuildCmdsCount = filteredBuildCmdsCount + 1
 			filteredBuildCmds[filteredBuildCmdsCount] = cmd
 		end
@@ -1243,6 +1243,24 @@ function widget:Update()
 		if (SelectedUnitsCount == 0) then
 			onNewCommands({},{},{},{}) --flush
 			updateHax2 = false
+		end
+	end
+	
+	-- if issuing a build command, cycle build category until the current active command is included 
+	local _,curCmdId,curCmdType,curCmdName = spGetActiveCommand()
+	--Spring.Echo("curCmdId="..tostring(curCmdId).." curCmdType="..tostring(curCmdType).." curCmdName="..tostring(curCmdName))
+	if curCmdId and curCmdId < 0 and curCmdName then
+		local cmdIncluded = false
+		for i=1,filteredBuildCmdsCount do
+			--Spring.Echo("filteredBuildCmds[i]="..tostring(filteredBuildCmds[i]))
+			if filteredBuildCmds[i].uName == curCmdName then
+				cmdIncluded = true
+				break
+			end
+		end
+		if not cmdIncluded then
+			updateFilter(true)
+			updateHax = true
 		end
 	end
 end

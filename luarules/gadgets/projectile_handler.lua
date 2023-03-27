@@ -184,6 +184,7 @@ local destructibleWeaponIds = {
 local highAngleDescentWeaponIds = {
 	-- AVEN
 	[WeaponDefNames["aven_merl_rocket"].id]=true,
+	[WeaponDefNames["aven_ambassador_rocket"].id]=true,
 	[WeaponDefNames["aven_ranger_rocket"].id]=true
 }
 
