@@ -196,6 +196,70 @@
 		count=1;
 	}
 }
+
+[DYNPROJGLOWPURPLE]
+{
+
+	[GLOW]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=1, 0, 0;
+			width=d1;
+			length=d1;
+			alpha=0.15;
+			alphadecay=0.075;
+			color=0.8, 0.7, 0.8;
+
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+	[GLOW2]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=0, 1, 0;
+			width=d1;
+			length=d1;
+			alpha=0.15;
+			alphadecay=0.075;
+			color=0.8, 0.7, 0.8;
+
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+	[GLOW3]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=0, 0, 1;
+			width=d1;
+			length=d1;
+			alpha=0.15;
+			alphadecay=0.075;
+			color=0.8, 0.7, 0.8;
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+}
 [DYNBIGDUSTBLAST]
 {
 	[sparks]
@@ -790,7 +854,7 @@
 		[properties]
 		{
        			color = 0.5 r0.5;
-	       		startSize = d0.2 3 r2;
+	       		startSize = d0.08 3 r2;
 	       		sizeExpansion = d0.005;
 	       		ageSpeed=0.015;
 	       		//size = d0.1 3;
@@ -799,10 +863,10 @@
 	       		speed=0, 1 r0.2, 0;
 		}
 		air=1;
-      		water=1;
+     		water=1;
 		underwater=0;
-	      	ground=1;
-      		count=1;
+      	ground=1;
+     		count=1;
    	}
 	[underwaterpuffs]
 	{
@@ -1240,6 +1304,42 @@
 		underwater=0;
   		count=6;
 	}
+	// glowy puffs
+	[glowypuffs]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.3;
+			sizeMod=1.0;
+			pos=0, 1, 0; 
+			gravity=0, 0.04 d0.0007, 0;
+		
+
+			Texture=smoke;
+			airdrag=0.79;
+			colorMap=0.7 0.6 0.5 0.01 0.2 0.2 0.2 0.2 0.0 0.0 0.0 0.01;
+
+			particleLifeSpread=d0.01 1; 
+			particleSpeedSpread=d0.005 0.5;  
+			particleSizeSpread=d0.01 1;
+		
+			particleLife=d0.04 4;
+			numParticles=d0.03 3; 
+			particleSpeed=d0.011 2;
+			particleSize=d0.08 6;
+		
+			emitVector=0, 1, 0; 
+			emitRot=80;
+			emitRotSpread=15; 
+			directional=0; 
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
 	// main explosion spikes (water)
 	[waterblobs]
 	{
@@ -1514,11 +1614,11 @@
 			sizeGrowth=0.3;
 			sizeMod=1.0;
 			pos=0, 1, 0; 
-			gravity=0, 0, 0;
+			gravity=0, 0.05 d0.001, 0;
 		
 
 			Texture=smoke;
-			airdrag=0.77;
+			airdrag=0.80;
 			colorMap=0.7 0.5 0.4 0.01 0.1 0.1 0.1 0.2 0.0 0.0 0.0 0.01;
 
 			particleLifeSpread=d0.01 1; 
@@ -1526,13 +1626,13 @@
 			particleSizeSpread=d0.01 1;
 		
 			particleLife=d0.08 7;
-			numParticles=d0.03 3; 
-			particleSpeed=d0.015 2; 
+			numParticles=d0.04 3; 
+			particleSpeed=d0.020 2; // 0.015 2
 			particleSize=d0.06 6;
 		
 			emitVector=0, 1, 0; 
 			emitRot=80;
-			emitRotSpread=5; 
+			emitRotSpread=15; 
 			directional=0; 
 		}
 		air=1;
@@ -1550,11 +1650,11 @@
 			sizeGrowth=0.3;
 			sizeMod=1.0;
 			pos=0, 1, 0; 
-			gravity=0, 0, 0;
+			gravity=0,0.05 d0.001, 0;
 		
 
 			Texture=smoke;
-			airdrag=0.77;
+			airdrag=0.80;
 			colorMap=0.3 0.25 0.2 0.01 0.1 0.1 0.15 0.2 0.0 0.0 0.0 0.01;
 
 			particleLifeSpread=d0.01 1; 
@@ -1562,7 +1662,7 @@
 			particleSizeSpread=d0.01 1;
 		
 			particleLife=d0.2 7;
-			numParticles=d0.03 3; 
+			numParticles=d0.04 3; 
 			particleSpeed=d0.010 2; 
 			particleSize=d0.06 6;
 		
@@ -2425,7 +2525,42 @@
 		ground=1;
   		count=6;
 	}
+	// glowy puffs
+	[glowypuffs]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.3;
+			sizeMod=1.0;
+			pos=0, 1, 0; 
+			gravity=0, 0.04 d0.0007, 0;
+		
 
+			Texture=smoke;
+			airdrag=0.79;
+			colorMap=0.8 0.6 0.5 0.01 0.3 0.2 0.2 0.2 0.0 0.0 0.0 0.01;
+
+			particleLifeSpread=d0.01 1; 
+			particleSpeedSpread=d0.005 0.5;  
+			particleSizeSpread=d0.01 1;
+		
+			particleLife=d0.04 4;
+			numParticles=d0.03 3; 
+			particleSpeed=d0.011 2;
+			particleSize=d0.08 6;
+		
+			emitVector=0, 1, 0; 
+			emitRot=80;
+			emitRotSpread=15; 
+			directional=0; 
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
 	// extra wind sphere
 	[_windsphere]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=d1;explosionGenerator=custom:DYNALTWINDSPHERE;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 
@@ -2522,6 +2657,45 @@
 		ground=1;
   		count=6;
 	}
+
+
+	// glowy puffs
+	[glowypuffs]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.3;
+			sizeMod=1.0;
+			pos=0, 1, 0; 
+			gravity=0, 0.04 d0.0007, 0;
+		
+
+			Texture=smoke;
+			airdrag=0.79;
+			colorMap=0.6 0.65 0.7 0.01 0.2 0.2 0.3 0.2 0.0 0.0 0.0 0.01;
+
+			particleLifeSpread=d0.01 1; 
+			particleSpeedSpread=d0.005 0.5;  
+			particleSizeSpread=d0.01 1;
+		
+			particleLife=d0.04 4;
+			numParticles=d0.03 3; 
+			particleSpeed=d0.011 2;
+			particleSize=d0.08 6;
+		
+			emitVector=0, 1, 0; 
+			emitRot=80;
+			emitRotSpread=15; 
+			directional=0; 
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+
 	// extra wind sphere
 	[_windsphere]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=d1;explosionGenerator=custom:DYNALTWINDSPHERE;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }

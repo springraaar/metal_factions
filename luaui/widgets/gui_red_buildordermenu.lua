@@ -39,7 +39,11 @@ end
 
 local spGetSelectedUnitsCount = Spring.GetSelectedUnitsCount
 local spGetActiveCommand = Spring.GetActiveCommand
+local spSetActiveCommand = Spring.SetActiveCommand
 local spGetActiveCmdDescs = Spring.GetActiveCmdDescs
+local spGetBuildSpacing = Spring.GetBuildSpacing
+local spGetBuildFacing = Spring.GetBuildFacing
+local spGetActionHotKeys = Spring.GetActionHotKeys
 local ssub = string.sub
 
 local FILTER_KEY = KEYSYMS.B
@@ -75,6 +79,7 @@ local CLEANUP_TAG = 1
 
 -- custom commands
 VFS.Include("lualibs/custom_cmd.lua")
+VFS.Include("lualibs/util.lua")
 
 local iconCmdPosition = {
 	[CMD.ATTACK] = 1,
@@ -120,6 +125,17 @@ local iconCmdTex = {
 
 
 local spacingList = {0,1,10,20}
+local stdHotkeysByAction = {} 
+
+-- simplify a hotkey string, remove the modifiers
+-- (visually simpler, but may not be a good idea)
+local function simplifyHotkeyStr(str)
+	str = str:lower():gsub("shift","")
+	str = str:gsub("any","")
+	str = str:gsub("ctrl","")
+	str = str:gsub("+","")
+	return str
+end
 
 -- gets tooltip hotkey string
 local function tooltipHotkey(key, action)
@@ -129,8 +145,48 @@ local function tooltipHotkey(key, action)
 	if (WG.customHotkeys and WG.customHotkeys[action]) then
 		key = WG.customHotkeys[action]
 	end
+	-- hardcoded, change this eventually
+	if action == "buildcategory" then
+		key = "B"
+	end
+	if key == nil then
+		key = stdHotkeysByAction[action]
+		if key == nil then
+			local actions = {}
+			if (action == "buildfacing" ) then
+				actions = {"buildfacing inc", "buildfacing desc"}
+			elseif (action == "buildspacing") then
+				actions = {"buildspacing inc", "buildspacing desc"}
+			else
+				actions = {action}
+			end
+			
+			local addedKeys = {}
+			for _,actionStr in pairs(actions) do
+				local hkTable = spGetActionHotKeys(actionStr)
+				if hkTable and #hkTable > 0 then
+					for _,k in pairs(hkTable) do
+						k = simplifyHotkeyStr(k)
+						if key == nil then
+							key = "\""..string.upper(k).."\""
+						else
+							if not addedKeys[k] then
+								key = key.." , ".."\""..string.upper(k).."\""
+							end	
+						end
+						addedKeys[k] = true
+					end
+				end
+			end
+		end
+		if key ~= nil then
+			stdHotkeysByAction[action] = key
+		end
+	else 
+		key = "\""..string.upper(key).."\""
+	end
 	if key ~= nil then
-		return "\255\100\255\100 Hotkey \""..string.upper(key).."\""
+		return "\255\100\255\100 Hotkey "..key.."\255\255\255\255"
 	end
 	return ""
 end
@@ -395,7 +451,7 @@ local function CalcGridHeight(r,rows,hasPages)
 end
 
 local function GetSpacingIndex()
-	local val = Spring.GetBuildSpacing()
+	local val = spGetBuildSpacing()
 	for ind,s in ipairs(spacingList) do
 		if val == s then
 			return ind			
@@ -546,16 +602,15 @@ local function CreateGrid(r)
 	forward.tooltip = "Show Next Page (hotkey \"N\" on build orders menu)"
 	forward.texture = LUAUI_DIRNAME.."Images/buildmenu/next.png"
 	local tspacing = New(Copy(icon,true))
-	--tspacing.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/spacing"..GetSpacingIndex()..".png"
 	tspacing.texture = ":n:"..LUAUI_DIRNAME.."Images/buildmenu/spacing.png"
 	tspacing.caption = "    "..spacingList[GetSpacingIndex()].."    "
-	tspacing.tooltip = "Build Spacing State : spacing is applied on shift-click-drag\n\n\n(click to change)"
+	tspacing.tooltip = "Click to change building spacing."..tooltipHotkey(nil, "buildspacing").."\nNOTE: spacing is applied on shift-click-drag"
 	tspacing.maxFontsize = 15 * maxFontSizeFactor
 	local tfacing = New(Copy(icon,true))
-	tfacing.texture = LUAUI_DIRNAME.."Images/buildmenu/facing"..Spring.GetBuildFacing()..".png"
-	tfacing.tooltip = "Build Orientation State\n\n\n(click to change)"
+	tfacing.texture = LUAUI_DIRNAME.."Images/buildmenu/facing"..spGetBuildFacing()..".png"
+	tfacing.tooltip = "Click to change building orientation."..tooltipHotkey(nil, "buildfacing")
 	local tfilter = New(Copy(iconWide,true))
-	tfilter.tooltip = "Build Options Filter\n\n\n(click to change, or press \"B\")"
+	tfilter.tooltip = "Click to change build options category."..tooltipHotkey(nil,"buildcategory")
 	tfilter.texture = LUAUI_DIRNAME.."Images/buildmenu/filter.png"
 
 	local tqueue = New(Copy(icon,true))
@@ -766,13 +821,13 @@ local function UpdateGrid(g,cmds,orderType,unfilteredCmds)
 			{1,function(mx,my,self)
 				local descIdx = Spring.GetCmdDescIndex(cmd.id)
 				if descIdx then
-					Spring.SetActiveCommand(descIdx,1,true,false,Spring.GetModKeyState())
+					spSetActiveCommand(descIdx,1,true,false,Spring.GetModKeyState())
 				end
 			end},
 			{3,function(mx,my,self)
 				local descIdx = Spring.GetCmdDescIndex(cmd.id)
 				if descIdx then
-					Spring.SetActiveCommand(descIdx,3,false,true,Spring.GetModKeyState())
+					spSetActiveCommand(descIdx,3,false,true,Spring.GetModKeyState())
 				end
 			end},
 		}
@@ -889,32 +944,39 @@ local function UpdateGrid(g,cmds,orderType,unfilteredCmds)
 				else
 					Spring.SetBuildSpacing(spacingList[1])
 				end
-				UpdateGrid(g,cmds,orderType,unfilteredCmds)
+				--UpdateGrid(g,cmds,orderType,unfilteredCmds)
 			end},
 		}
+		g.tspacing.onUpdate = function(self)
+			g.tspacing.caption = "    "..spGetBuildSpacing().."    "
+		end
 		
 		g.tfacing.mouseClick={
 			{1,function(mx,my,self)
-				local val = Spring.GetBuildFacing()
+				local val = spGetBuildFacing()
 				if (val < 3) then
 					Spring.SetBuildFacing(val + 1)
 				else
 					Spring.SetBuildFacing(0)
 				end
 				
-				UpdateGrid(g,cmds,orderType,unfilteredCmds)
+				--UpdateGrid(g,cmds,orderType,unfilteredCmds)
 			end},
 		}
+		g.tfacing.onUpdate = function(self)
+			g.tfacing.texture = LUAUI_DIRNAME.."Images/buildmenu/facing"..spGetBuildFacing()..".png"
+		end
 		g.tqueue.mouseClick={
 			{3,function(mx,my,self)
 				for i=1,#unfilteredCmds do
 					local cmd = unfilteredCmds[i]
-					Spring.SetActiveCommand(Spring.GetCmdDescIndex(cmd.id),3,false,true,false,true,false,true)
+					spSetActiveCommand(Spring.GetCmdDescIndex(cmd.id),3,false,true,false,true,false,true)
 				end
 			end},
 		}		
 		g.tfilter.mouseClick={
 			{1,function(mx,my,self)
+				spSetActiveCommand(-1)
 				updateFilter(true)
 				updateHax = true
 			end},
@@ -947,7 +1009,7 @@ local function UpdateGrid(g,cmds,orderType,unfilteredCmds)
 		end
 		
 		
-		g.tfacing.texture = LUAUI_DIRNAME.."Images/buildmenu/facing"..Spring.GetBuildFacing()..".png"
+		g.tfacing.texture = LUAUI_DIRNAME.."Images/buildmenu/facing"..spGetBuildFacing()..".png"
 		g.tspacing.caption = "    "..spacingList[GetSpacingIndex()].."    "
 		if (totalBuildQueueSize > 0) then
 			g.tqueue.caption = "\n "..totalBuildQueueSize.." "
@@ -1268,6 +1330,7 @@ end
 -- use filter key to cycle through filter options
 function widget:KeyPress(key, modifier, isRepeat)
 	if key == FILTER_KEY  then
+		spSetActiveCommand(-1) 
 		updateFilter(true)
 		updateHax = true
 	end

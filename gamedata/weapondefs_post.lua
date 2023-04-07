@@ -171,7 +171,7 @@ for wdName, wd in pairs(WeaponDefs) do
 					if wd.rgbcolor2 then
 						local colorStr = ""
 						for w in wd.rgbcolor2:gmatch("%S+") do 
-							colorStr = colorStr.." "..(math.max(tonumber(w)*0.35-0.1,0.125))
+							colorStr = colorStr.." "..(math.max(tonumber(w)*0.55-0.1,0.155))
 						end
 						wd.rgbcolor = colorStr
 					end

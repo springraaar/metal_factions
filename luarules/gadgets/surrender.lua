@@ -24,7 +24,7 @@ local CHECK_DELAY_FRAMES = 120
 local unitCostPerAllyTeam = {}
 local aliveCommandersPerAllyTeam = {}
 
-local strongestAllyTeamId = null 
+local strongestAllyTeamId = nil 
 local defeatedAllyIds = {}
 
 local unitDefIdsToIgnore = {

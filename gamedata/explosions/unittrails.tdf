@@ -152,22 +152,22 @@
 		class=CSimpleParticleSystem;
 		[properties]
 		{
-			sizeGrowth=0;
+			sizeGrowth=0.15;
 			sizeMod=1.0;
 			pos=0, 0, 0;
 			emitVector=0, 1, 0;
-			gravity=0, 0, 0;
-			colorMap=0.1 0.2 0.2 1.0    0.1 0.2 0.2 0.1    0.1 0.2 0.2 0.1   0.0 0.0 0.0 0.000;
+			gravity=-0.1 r0.1, -0.1 r0.1, -0.1 r0.1;
+			colorMap=0.02 0.1 0.06 0.01    0.01 0.03 0.03 0.01    0.01 0.01 0.02 0.01   0.0 0.0 0.0 0.000;
 			Texture=smoke;
-			airdrag=0.9;
-			particleLife=2;
-			particleLifeSpread=1;
+			airdrag=0.95;
+			particleLife=35;
+			particleLifeSpread=5;
 			numParticles=1;
 			particleSpeed=1;
 			particleSpeedSpread=1;
-			particleSize=80;
-			particleSizeSpread=5;
-			emitRot=0;
+			particleSize=50;
+			particleSizeSpread=20;
+			emitRot=90;
 			emitRotSpread=45;
 			directional=1;
 			alwaysVisible=0;

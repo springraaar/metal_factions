@@ -29,7 +29,8 @@ local ZEPHYR_RADIUS = 600
 local ZEPHYR_MASS_COST_FACTOR = 1/100 -- applied twice per second
 local WATER_HEIGHT_THRESHOLD = -5
 local UNDERWATER_SLOW_SPEED_THRESHOLD = 0.9*30
-local UNDERWATER_EXTRA_SPEED_MOD = 0.5
+local UNDERWATER_EXTRA_SPEED_MOD = 0.45
+
 
 local spAddUnitDamage = Spring.AddUnitDamage
 local spGetUnitExperience = Spring.GetUnitExperience
@@ -46,6 +47,7 @@ local spGetUnitsInCylinder = Spring.GetUnitsInCylinder
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetAllUnits = Spring.GetAllUnits
 local spGetGroundHeight = Spring.GetGroundHeight
+local spGetGroundNormal = Spring.GetGroundNormal
 local spGetUnitHealth = Spring.GetUnitHealth
 local spSetUnitHealth = Spring.SetUnitHealth
 local spUseUnitResource = Spring.UseUnitResource
@@ -86,6 +88,7 @@ local waterSlowerDefIds = {
 }
 
 local underwaterSlowerDefIds = {}
+local allTerrainDefIds = {}
 
 local flyingSphereDefIds = {
 	[UnitDefNames["sphere_construction_sphere"].id] = true,
@@ -140,6 +143,7 @@ GG.speedModifierUnitIds = {} -- (unitId,modifier)
 local landSlowerUnitIds = {}
 local waterSlowerUnitIds = {}
 local underwaterSlowerUnitIds = {}
+local allTerrainUnitIds = {}
 local lastDamageFrameUnitIds = {}
 local lastFrameDamageAmountByUnitId = {}
 local energyBoostedMovementUnitIds = {}
@@ -157,9 +161,17 @@ local UNIT_RP_PUBLIC_TBL = {public = true}
 
 function gadget:Initialize()
 	for _,ud in pairs(UnitDefs) do
+		-- the "minwaterdepth" check is here to exclude ships and subs?
 		if (ud.minWaterDepth and ud.minWaterDepth < 0) and (ud.isGroundUnit) and (ud.canMove == true) and (not string.find(tostring(ud.moveDef.name),"hover")) then
 			underwaterSlowerDefIds[ud.id] = true
 			--Spring.Echo(ud.name.." moves slower underwater floatonwater="..tostring(ud.floatonwater).." floater="..tostring(ud.floater).." waterline="..tostring(ud.waterline).." mindepth="..tostring(ud.minWaterDepth).." mdname="..tostring(ud.moveDef.name))
+		end
+		
+		if (ud.isGroundUnit) and (ud.canMove == true) then
+			local mdName = tostring(ud.moveDef.name)
+			if mdName == "kbotat" or mdName == "kbotatuw" or mdName == "kbotatuw2" then
+				allTerrainDefIds[ud.id] = true
+			end
 		end
 	end
 end
@@ -174,8 +186,12 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 	elseif (waterSlowerDefIds[unitDefId]) then
 		waterSlowerUnitIds[unitId] = true
 	elseif (underwaterSlowerDefIds[unitDefId]) then
-		underwaterSlowerUnitIds[unitId] = true		
-	elseif (energyBoostedMovementDefIds[unitDefId]) then
+		underwaterSlowerUnitIds[unitId] = UnitDefs[unitDefId]
+	end
+	if allTerrainDefIds[unitDefId] then
+		allTerrainUnitIds[unitId] = UnitDefs[unitDefId]
+	end
+	if (energyBoostedMovementDefIds[unitDefId]) then
 		energyBoostedMovementUnitIds[unitId] = true
 		
 		if (flyingSphereDefIds[unitDefId]) then
@@ -220,6 +236,10 @@ function gadget:GameFrame(n)
 	
 	local ENERGY_BOOSTED_MOVEMENT_CHECK_THRESHOLD = 2000
 	
+	local ALL_TERRAIN_SLOW_SPEED_THRESHOLD = 0.9*30
+	local ALL_TERRAIN_EXTRA_SPEED_MOD = 0.45
+	local ALL_TERRAIN_SLOPE_THRESHOLD = 0.3
+	
 	local autoBuildCEG = "autobuild" 
 	local autoReclaimCEG = "autoreclaim"
 
@@ -242,7 +262,7 @@ function gadget:GameFrame(n)
 		local newSpeedModifierUnitIds = {}
 			
 		-- check modifier for units around each zephyr
-		local x,y,z,h,m,vx,vz,v,mData,spdMod = 0
+		local x,y,z,h,m,vx,vz,v,mData,spdMod,ud,maxSpeed = 0
 		for unitId,data in pairs(zephyrIds) do
 			
 			-- if enabled, apply buff to nearby units that don't have it already
@@ -324,8 +344,7 @@ function gadget:GameFrame(n)
 				end
 			end
 		end
-		
-		for unitId,_ in pairs(underwaterSlowerUnitIds) do
+		for unitId,ud in pairs(underwaterSlowerUnitIds) do
 			x,y,z = spGetUnitPosition(unitId)
 			if x then
 				h = spGetGroundHeight(x,z)
@@ -334,11 +353,27 @@ function gadget:GameFrame(n)
 					if (m == nil) then
 						m = 1
 					end
+
+					maxSpeed = ud.speed * m
+					if (maxSpeed > UNDERWATER_SLOW_SPEED_THRESHOLD) then
+						newSpeedModifierUnitIds[unitId] = m * (UNDERWATER_SLOW_SPEED_THRESHOLD + (maxSpeed-UNDERWATER_SLOW_SPEED_THRESHOLD) * UNDERWATER_EXTRA_SPEED_MOD ) / maxSpeed
+					end	
+				end
+			end
+		end
+		for unitId,ud in pairs(allTerrainUnitIds) do
+			x,y,z = spGetUnitPosition(unitId)
+			if x then
+				_,_,_,h = spGetGroundNormal(x,z)
+				if ( h > ALL_TERRAIN_SLOPE_THRESHOLD ) then
+					m = newSpeedModifierUnitIds[unitId]
+					if (m == nil) then
+						m = 1
+					end
 					
-					mData = spGetUnitMoveTypeData(unitId)
-					if (mData and mData.maxSpeed and mData.maxSpeed > UNDERWATER_SLOW_SPEED_THRESHOLD) then
-						--Spring.Echo("max speed ="..mData.maxSpeed)
-						newSpeedModifierUnitIds[unitId] = m * (UNDERWATER_SLOW_SPEED_THRESHOLD + (mData.maxSpeed-UNDERWATER_SLOW_SPEED_THRESHOLD) * UNDERWATER_EXTRA_SPEED_MOD ) / mData.maxSpeed
+					maxSpeed = ud.speed * m
+					if (maxSpeed > ALL_TERRAIN_SLOW_SPEED_THRESHOLD) then
+						newSpeedModifierUnitIds[unitId] = m * (ALL_TERRAIN_SLOW_SPEED_THRESHOLD + (maxSpeed-ALL_TERRAIN_SLOW_SPEED_THRESHOLD) * ALL_TERRAIN_EXTRA_SPEED_MOD ) / maxSpeed
 					end	
 				end
 			end
@@ -679,11 +714,9 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam)
 	end
 	if (landSlowerUnitIds[unitId]) then
 		landSlowerUnitIds[unitId] = nil
-	end
-	if (waterSlowerUnitIds[unitId]) then
+	elseif (waterSlowerUnitIds[unitId]) then
 		waterSlowerUnitIds[unitId] = nil
-	end
-	if (underwaterSlowerUnitIds[unitId]) then
+	elseif (underwaterSlowerUnitIds[unitId]) then
 		underwaterSlowerUnitIds[unitId] = nil
 	end
 	if zephyrAffectedUnitIds[unitId] then
@@ -700,6 +733,9 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam)
 	end	
 	if (magnetarIds[unitId]) then
 		magnetarIds[unitId] = nil
+	end
+	if allTerrainUnitIds[unitId] then
+		allTerrainUnitIds[unitId] = nil
 	end
 	if (energyBoostedMovementUnitIds[unitId]) then
 		energyBoostedMovementUnitIds[unitId] = nil

@@ -44,7 +44,7 @@ local moveDefs = {
 		MaxSlope=36,
 		CrushStrength=250,
 		depthmodparams=commonDepthModParams,
-		slopemod=6,
+		slopeMod=7,
 	},
 	KBOTHT3 = {
 		FootprintX=3,
@@ -53,7 +53,7 @@ local moveDefs = {
 		MaxSlope=36,
 		CrushStrength=40,
 		depthmodparams=commonDepthModParams,
-		slopemod=6,
+		slopeMod=7,
 	},
 	KBOTHT2 = {
 		FootprintX=3,
@@ -62,7 +62,7 @@ local moveDefs = {
 		MaxSlope=36,
 		CrushStrength=0,
 		depthmodparams=commonDepthModParams,
-		slopemod=6,
+		slopeMod=7,
 	},
 	KBOTUW3 = {
 		FootprintX=3,
@@ -72,7 +72,7 @@ local moveDefs = {
 		MaxSlope=36,
 		CrushStrength=30,
 		depthmodparams=commonDepthModParams,
-		slopemod=6,
+		slopeMod=7,
 	},
 	KBOTAT = {
 		FootprintX=3,
@@ -80,7 +80,7 @@ local moveDefs = {
 		MaxWaterDepth=35,
 		CrushStrength=30,
 		depthmodparams=commonDepthModParams,
-		slopemod=6,
+		slopeMod=7,
 	},
 	TANKBH3 = {
 		FootprintX=3,
@@ -89,7 +89,7 @@ local moveDefs = {
 		MaxSlope=32,
 		CrushStrength=100,
 		depthmodparams=commonDepthModParams,
-		slopemod=6,
+		slopeMod=7,
 	},
 	TANKDH3 = {
 		FootprintX=3,
@@ -99,7 +99,7 @@ local moveDefs = {
 		MaxSlope=31,
 		CrushStrength=30,
 		depthmodparams=commonDepthModParams,
-		slopemod=6,
+		slopeMod=7,
 	},
 	KBOTDS2 = {
 		FootprintX=3,
@@ -109,7 +109,7 @@ local moveDefs = {
 		MaxSlope=36,
 		CrushStrength=150,
 		depthmodparams=commonDepthModParams,
-		slopemod=6,
+		slopeMod=7,
 	},
 	TANKHOVER2 = {
 		FootprintX=2,
@@ -120,7 +120,7 @@ local moveDefs = {
 		BadWaterSlope=255,
 		CrushStrength=10,
 		depthmodparams=commonDepthModParams,
-		slopemod=6,
+		slopeMod=7,
 	},
 	TANKHOVER3 = {
 		FootprintX=3,
@@ -131,7 +131,7 @@ local moveDefs = {
 		BadWaterSlope=255,
 		CrushStrength=30,
 		depthmodparams=commonDepthModParams,
-		slopemod=6,
+		slopeMod=7,
 	},
 	TANKHOVER4 = {
 		FootprintX=4,
@@ -142,7 +142,7 @@ local moveDefs = {
 		BadWaterSlope=255,
 		CrushStrength=150,
 		depthmodparams=commonDepthModParams,
-		slopemod=6,
+		slopeMod=7,
 	},
 	TANKHOVER5 = {
 		FootprintX=5,
@@ -153,7 +153,7 @@ local moveDefs = {
 		BadWaterSlope=255,
 		CrushStrength=250,
 		depthmodparams=commonDepthModParams,
-		slopemod=6,
+		slopeMod=7,
 	},
 	TANKSH2 = {
 		FootprintX=3,
@@ -162,7 +162,7 @@ local moveDefs = {
 		MaxSlope=32,
 		CrushStrength=10,
 		depthmodparams=commonDepthModParams,
-		slopemod=6,
+		slopeMod=7,
 	},
 	TANKSH3 = {
 		FootprintX=3,
@@ -171,7 +171,7 @@ local moveDefs = {
 		MaxSlope=32,
 		CrushStrength=15,
 		depthmodparams=commonDepthModParams,
-		slopemod=6,
+		slopeMod=7,
 	},
 	TANKSH4 = {
 		FootprintX=4,
@@ -180,7 +180,7 @@ local moveDefs = {
 		MaxSlope=32,
 		CrushStrength=150,
 		depthmodparams=commonDepthModParams,
-		slopemod=6,
+		slopeMod=7,
 	},
 	TANKBH4 = {
 		FootprintX=4,
@@ -188,7 +188,7 @@ local moveDefs = {
 		MaxSlope=32,
 		CrushStrength=250,
 		depthmodparams=commonDepthModParams,
-		slopemod=6,
+		slopeMod=7,
 	},
 	BOATSUB = {
 		FootprintX=4,
@@ -212,7 +212,7 @@ local moveDefs = {
 		CrushStrength=150,
 		Submarine=1,
 		depthmodparams=commonDepthModParams,
-		slopemod=6,
+		slopeMod=7,
 	},
 	KBOTATUW2 = {
 		FootprintX=2,
@@ -220,7 +220,7 @@ local moveDefs = {
 		CrushStrength=30,
 		Submarine=1,
 		depthmodparams=commonDepthModParams,
-		slopemod=6,
+		slopeMod=7,
 	},
 	TANKDH5 = {
 		FootprintX=5,
@@ -230,7 +230,7 @@ local moveDefs = {
 		MaxSlope=31,
 		CrushStrength=250,
 		depthmodparams=commonDepthModParams,
-		slopemod=6,
+		slopeMod=7,
 	},
 	TANKDH6 = {
 		FootprintX=6,
@@ -240,7 +240,7 @@ local moveDefs = {
 		MaxSlope=31,
 		CrushStrength=250,
 		depthmodparams=commonDepthModParams,
-		slopemod=6,
+		slopeMod=7,
 	},
 	KBOTUW4 = {
 		FootprintX=4,
@@ -250,7 +250,7 @@ local moveDefs = {
 		MaxSlope=36,
 		CrushStrength=250,
 		depthmodparams=commonDepthModParams,
-		slopemod=6,
+		slopeMod=7,
 	}
 }
 

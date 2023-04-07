@@ -143,148 +143,7 @@
 	collisionVolumeScales=25 6 25;
 	collisionVolumeOffsets=0 0 0;
 }
-[aven_floating_dragons_teeth_dead]
-{
-	world=allworld;
-	description=Floating Dragon's Teeth;
-	category=dragonteeth;
-	object=aven_floating_dragons_teeth;
-	footprintx=2;
-	footprintz=2;
-	height=80;
-	blocking=1;
-	hitdensity=100;
-	metal=20;
-	damage=1500;
-	collisionVolumeType = box;
-	collisionVolumeScales =30 30 30;
-	collisionVolumeOffsets = 0 0 0;
-	collisionVolumeTest = 1;
-	reclaimable=1;
-	autoreclaimable=0;
-	nodrawundergray=1;
-}
-[gear_floating_dragons_teeth_dead]
-{
-	world=allworld;
-	description=Floating Dragon's Teeth;
-	category=dragonteeth;
-	object=gear_floating_dragons_teeth;
-	footprintx=2;
-	footprintz=2;
-	height=80;
-	blocking=1;
-	hitdensity=100;
-	metal=18;
-	damage=1500;
-	collisionVolumeType = box;
-	collisionVolumeScales =30 30 30;
-	collisionVolumeOffsets = 0 0 0;
-	collisionVolumeTest = 1;
-	reclaimable=1;
-	autoreclaimable=0;
-	nodrawundergray=1;
-}
-[aven_fortification_wall_dead]
-{
-	world=allworld;
-	description=Fortification Wall;
-	category=dragonteeth;
-	object=aven_fortification_wall;
-	footprintx=2;
-	footprintz=2;
-	height=65;
-	blocking=1;
-	hitdensity=100;
-	metal=50;
-	damage=4800;
-	reclaimTime=900;
-	crushResistance=1500;
-	collisionVolumeType = box;
-	collisionVolumeScales =30 90 30;
-	collisionVolumeOffsets = 0 0 0;
-	collisionVolumeTest = 1;
-	reclaimable=1;
-	autoreclaimable=0;
-	featuredead=rock_fort;
-	seqnamereclamate=tree1reclamate;
-	reclaimTime=500;
-}
-[gear_fortification_wall_dead]
-{
-	world=allworld;
-	description=Fortification Wall;
-	category=dragonteeth;
-	object=gear_fortification_wall;
-	footprintx=2;
-	footprintz=2;
-	height=65;
-	blocking=1;
-	hitdensity=100;
-	metal=50;
-	damage=4813;
-	reclaimTime=900;
-	crushResistance=1500;
-	collisionVolumeType = box;
-	collisionVolumeScales =30 90 30;
-	collisionVolumeOffsets = 0 0 0;
-	collisionVolumeTest = 1;
-	reclaimable=1;
-	autoreclaimable=0;
-	featuredead=rock_fort;
-	seqnamereclamate=tree1reclamate;
-	reclaimTime=600;
-}
-[claw_fortification_wall_dead]
-{
-	world=allworld;
-	description=Fortification Wall;
-	category=dragonteeth;
-	object=claw_fortification_wall;
-	footprintx=2;
-	footprintz=2;
-	height=65;
-	blocking=1;
-	hitdensity=100;
-	metal=50;
-	damage=4813;
-	reclaimTime=900;
-	crushResistance=1500;
-	collisionVolumeType = box;
-	collisionVolumeScales =30 90 30;
-	collisionVolumeOffsets = 0 0 0;
-	collisionVolumeTest = 1;
-	reclaimable=1;
-	autoreclaimable=0;
-	featuredead=rock_fort;
-	seqnamereclamate=tree1reclamate;
-	reclaimTime=600;
-}
-[sphere_fortification_wall_dead]
-{
-	world=allworld;
-	description=Fortification Wall;
-	category=dragonteeth;
-	object=sphere_fortification_wall;
-	footprintx=2;
-	footprintz=2;
-	height=65;
-	blocking=1;
-	hitdensity=100;
-	metal=50;
-	damage=4800;
-	reclaimTime=900;
-	crushResistance=1500;
-	collisionVolumeType = box;
-	collisionVolumeScales =30 90 30;
-	collisionVolumeOffsets = 0 0 0;
-	collisionVolumeTest = 1;
-	reclaimable=1;
-	autoreclaimable=0;
-	featuredead=rock_fort;
-	seqnamereclamate=tree1reclamate;
-	reclaimTime=500;
-}
+
 [rock_fort]
 {
 	world=allworld;
@@ -296,9 +155,9 @@
 	height=30;
 	blocking=1;
 	hitdensity=100;
-	metal=27;
+	metal=21;
 	damage=2400;
-	reclaimTime=400;
+	reclaimTime=420;
 	crushResistance=500;
 	collisionVolumeType = box;
 	collisionVolumeScales =30 60 30;
@@ -308,7 +167,6 @@
 	autoreclaimable=0;
 	featuredead=rock_teeth;
 	seqnamereclamate=tree1reclamate;
-	reclaimTime=500;
 }
 [rock_fort_large]
 {
@@ -321,9 +179,9 @@
 	height=30;
 	blocking=1;
 	hitdensity=100;
-	metal=224;
-	damage=10000;
-	reclaimTime=3600;
+	metal=96;
+	damage=8000;
+	reclaimTime=1920;
 	crushResistance=500;
 	collisionVolumeType = box;
 	collisionVolumeScales =60 90 60;
@@ -333,7 +191,6 @@
 	autoreclaimable=0;
 	featuredead=rock_fort_large2;
 	seqnamereclamate=tree1reclamate;
-	reclaimTime=4000;
 }
 [rock_fort_large2]
 {
@@ -346,9 +203,9 @@
 	height=15;
 	blocking=1;
 	hitdensity=100;
-	metal=112;
+	metal=29;
 	damage=4000;
-	reclaimTime=1800;
+	reclaimTime=580;
 	collisionVolumeType = box;
 	collisionVolumeScales =50 50 50;
 	collisionVolumeOffsets = 0 -5 0;
@@ -372,10 +229,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	metal=64;
+	metal=29;
 	energy=0;
-	damage=5000;
-	reclaimTime=900;
+	damage=4000;
+	reclaimTime=580;
 	collisionVolumeType=box;
 	collisionVolumeScales=50 6 50;
 	collisionVolumeOffsets=0 0 0;
@@ -392,9 +249,9 @@
 	height=30;
 	blocking=1;
 	hitdensity=100;
-	metal=224;
-	damage=10000;
-	reclaimTime=3600;
+	metal=135;
+	damage=7000;
+	reclaimTime=2700;
 	crushResistance=500;
 	collisionVolumeType = box;
 	collisionVolumeScales =60 90 60;
@@ -417,9 +274,9 @@
 	height=15;
 	blocking=1;
 	hitdensity=100;
-	metal=112;
-	damage=4000;
-	reclaimTime=1800;
+	metal=40;
+	damage=3500;
+	reclaimTime=800;
 	collisionVolumeType = box;
 	collisionVolumeScales =50 50 50;
 	collisionVolumeOffsets = 0 -5 0;
@@ -443,10 +300,10 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	metal=64;
+	metal=40;
 	energy=0;
-	damage=5000;
-	reclaimTime=900;
+	damage=3500;
+	reclaimTime=800;
 	collisionVolumeType=box;
 	collisionVolumeScales=50 6 50;
 	collisionVolumeOffsets=0 0 0;

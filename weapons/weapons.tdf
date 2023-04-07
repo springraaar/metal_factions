@@ -4580,7 +4580,7 @@
 }
 [aven_spiker_missile]
 {
-	name=Heavy Missiles;
+	name=Heavy Anti-Armor Missiles;
 	weaponType=StarburstLauncher;
   	explosionGenerator=custom:ROCKETBLASTWRAPPER;
 	model=weapon_aven_big_missile;
@@ -4591,7 +4591,7 @@
 	texture2=null;//first segment of missiletrail//
 	texture3=null;//flame//
 	texture4=null;//unknown//
-	reloadTime=7;
+	reloadTime=6.5;
 	weapontimer=0.7;
 	flightTime=8;
 	tracks=1;
@@ -4600,7 +4600,7 @@
 	weaponAcceleration=150;
 	startVelocity=130;
 	turnRate=20000;
-	areaOfEffect=64;
+	areaOfEffect=72;
 	metalPerShot=0;
 	soundStart=rocklit1;
 	soundHit=xplomed4;
@@ -4618,11 +4618,11 @@
 	}
 	[DAMAGE]
 	{
-		default=400;
+		default=420;
 		group_invincible=1;
-		armor_heavy=400.00;//#AUTO#
-		armor_medium=400.00;//#AUTO#
-		armor_light=400.00;//#AUTO#
+		armor_heavy=420.00;//#AUTO#
+		armor_medium=420.00;//#AUTO#
+		armor_light=420.00;//#AUTO#
 	}
 }
 [aven_pelter_missile]
@@ -10069,7 +10069,7 @@
 	range=1300;
 	reloadTime=2.5;
 	weaponVelocity=480;
-	areaOfEffect=96;
+	areaOfEffect=100;
 	soundStart=cannhvy6;
 	soundHit=xplomed2;
 	accuracy=200;
@@ -10110,7 +10110,7 @@
 	range=600;
 	reloadTime=1.8;
 	weaponVelocity=390;
-	areaOfEffect=100;
+	areaOfEffect=110;
 	soundStart=cannhvy2;
 	soundHit=xplomed2;
 	tolerance=3000;
@@ -11779,7 +11779,7 @@
 	turnRate=12000;
 	weaponAcceleration=0;
 	fixedLauncher=1;
-	areaOfEffect=96;
+	areaOfEffect=120;
 	metalPerShot=0;
 	soundStart=MISLHVY3;
 	soundHit=xplomed2;
@@ -13429,10 +13429,11 @@
   	alphaDecay=0.5;
   	sizeDecay=-0.2;
 	turret=1;
-	range=590;
+	range=600;
 	reloadTime=0.134;
-	weaponVelocity=600;
-	movingAccuracy=800;
+	weaponVelocity=670;
+	predictBoost=0.25;
+	movingAccuracy=700;
 	sprayAngle=100;
 	areaOfEffect=8;
 	soundStart=armsml3;
@@ -13451,10 +13452,10 @@
 	}
 	[DAMAGE]
 	{
-		default=20;
-		armor_heavy=5.00;//#AUTO#
-		armor_medium=10.00;//#AUTO#
-		armor_light=20.00;//#AUTO#
+		default=22;
+		armor_heavy=5.50;//#AUTO#
+		armor_medium=11.00;//#AUTO#
+		armor_light=22.00;//#AUTO#
 	}
 }
 [aven_warrior_emg]
@@ -16113,7 +16114,7 @@
 	texture1=cannon;
 	energyPerShot=5;
 	turret=1;
-	range=380;
+	range=400;
 	reloadTime=0.234;
 	accuracy=100;
 	predictBoost=0.5;
@@ -16150,7 +16151,7 @@
   	separation=1.6;
   	alphaDecay=0.16;
   	sizeDecay=0.0;
-	rgbColor=1 0.7 2;
+	rgbColor=1 0.7 0.2;
 	texture1=cannon;
 	energyPerShot=5;
 	turret=1;
@@ -16656,15 +16657,15 @@
 		hitPower=1;
 		reaimTime=1;
 		expDmgScaling=1;
-		evalFactor=0.85;//KNIFE
+		evalFactor=0.8;//KNIFE
 		targets=SURFACE;
 	}
 	[DAMAGE]
 	{
-		default=11;
-		armor_heavy=2.75;//#AUTO#
-		armor_medium=5.50;//#AUTO#
-		armor_light=11.00;//#AUTO#
+		default=12;
+		armor_heavy=3.00;//#AUTO#
+		armor_medium=6.00;//#AUTO#
+		armor_light=12.00;//#AUTO#
 	}
 }
 [claw_u6commander_laser]
@@ -17009,7 +17010,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitPower=1;
-		reaimTime=1;
+		reaimTime=5;
 		expDmgScaling=1;
 		targets=SURFACE,AIR;
 	}
@@ -18296,14 +18297,14 @@
 	weaponType=Cannon;
 	highTrajectory=1;
 	size=5.1;
-	rgbColor=1.0 0.8 0.5;
-	stages=5;
-  	separation=0.25;
-  	alphaDecay=0.2;
-  	sizeDecay=-0.1;
-	cegTag=PLASMATRAIL3;
+	rgbColor=0.95 0.9 1.0;
+	stages=7;
+  	separation=0;
+  	alphaDecay=0.95;
+  	sizeDecay=-0.2;
+	cegTag=BLUEPLASMATRAIL4;
 	texture1=ecannon;
-	explosionGenerator=custom:STDBLASTWRAPPER;
+	explosionGenerator=custom:BLUEBLASTWRAPPER;
 	groundBounce=0;
 	waterBounce=0;
 	mygravity=0.1;
@@ -18342,15 +18343,15 @@
 	name=Energized Plasma Cannon;
 	weaponType=Cannon;
 	highTrajectory=1;
-	size=4.1;
-	rgbColor=1.0 0.8 0.5;
-	stages=5;
-  	separation=0.25;
-  	alphaDecay=0.2;
-  	sizeDecay=-0.1;
-	cegTag=PLASMATRAIL3;
+	size=4.5;
+	rgbColor=0.93 0.87 1.0;
+	stages=7;
+  	separation=0;
+  	alphaDecay=0.95;
+  	sizeDecay=-0.2;
+	cegTag=BLUEGLOWMED;
 	texture1=ecannon;
-	explosionGenerator=custom:STDBLASTWRAPPER;
+	explosionGenerator=custom:BLUEBLASTWRAPPER;
 	groundBounce=0;
 	waterBounce=0;
 	mygravity=0.1;
@@ -18389,14 +18390,14 @@
 	name=Energized Plasma Cannon;
 	weaponType=Cannon;
 	size=4.1;
-	rgbColor=1.0 0.8 0.5;
-	stages=5;
-  	separation=0.25;
-  	alphaDecay=0.2;
-  	sizeDecay=-0.1;
-	cegTag=PLASMATRAIL3;
+	rgbColor=0.9 0.85 1.0;
+	stages=7;
+  	separation=0;
+  	alphaDecay=0.95;
+  	sizeDecay=-0.2;
+	cegTag=BLUEGLOWMED;
 	texture1=ecannon;
-	explosionGenerator=custom:STDBLASTWRAPPER;
+	explosionGenerator=custom:BLUEBLASTWRAPPER;
 	groundBounce=0;
 	waterBounce=0;
 	turret=1;
@@ -18435,15 +18436,15 @@
 {
 	name=Energized Plasma Cannon;
 	weaponType=Cannon;
-	size=4.5;
-	rgbColor=1.0 0.8 0.5;
-	stages=5;
-  	separation=0.25;
-  	alphaDecay=0.2;
-  	sizeDecay=-0.1;
-	cegTag=LRPCTRAIL;
-	texture1=ecannon;
-	explosionGenerator=custom:STDBLASTWRAPPER;
+	size=5.5;
+	rgbColor=0.95 0.9 1.0;
+	stages=7;
+  	separation=0;
+  	alphaDecay=0.95;
+  	sizeDecay=-0.2;
+	cegTag=BLUEPLASMATRAIL4;
+	texture1=wbcannon;
+	explosionGenerator=custom:BLUEBLASTWRAPPER;
 	groundBounce=0;
 	waterBounce=0;
 	turret=1;

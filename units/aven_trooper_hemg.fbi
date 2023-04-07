@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=1080;
+	maxDamage=1150;
 	footprintx=2;
 	footprintz=2;
 
@@ -47,9 +47,9 @@
 
 	movementClass=KBOTHT2;
 	turnRate=632;
-	acceleration=0.9;
-	brakeRate=0.5;
-	maxVelocity=1.25;
+	acceleration=0.8;
+	brakeRate=0.4;
+	maxVelocity=1.15;
 	maxSlope=17;
 	maxWaterDepth=12;
 
@@ -82,8 +82,8 @@
 	{
 		explosionGenerator0=custom:EmgFlareMed;
 	}
-	buildCostEnergy=1486;//#AUTO#
-	buildCostMetal=297;//#AUTO#
-	buildTime=3542;//#AUTO#
-	mass=184;//#AUTO#
+	buildCostEnergy=1668;//#AUTO#
+	buildCostMetal=333;//#AUTO#
+	buildTime=3975;//#AUTO#
+	mass=199;//#AUTO#
 }

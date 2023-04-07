@@ -87,6 +87,7 @@ end
 local function unbindKey(key)
 	Spring.SendCommands("unbindkeyset "..key)
 	Spring.SendCommands("unbindkeyset Shift+"..key)
+	Spring.SendCommands("unbindkeyset Any+"..key)
 	WG.unboundDefKeys[key] = true
 end
 
