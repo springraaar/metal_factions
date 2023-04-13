@@ -113,6 +113,7 @@ function widget:Initialize()
 		Spring.CreateDir("luaui/configs")
 		io.output(customKeybindsFile)
 		io.write(keybindsFileTxt)
+		io.close()
 	else
 		keybindsFileTxt = VFS.LoadFile(customKeybindsFile)
 	end

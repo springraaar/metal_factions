@@ -606,7 +606,7 @@ function generateNewTooltip()
 				elseif (fud.maxWaterDepth < 100) then
 					newTooltip = newTooltip.."Buildable on \255\200\200\200LAND\255\255\255\255\n"
 				else
-					newTooltip = newTooltip.."Buildable on \255\200\200\200LAND\255\255\255\255,\255\64\64\255WATER\255\255\255\255\n"
+					newTooltip = newTooltip.."Buildable on \255\200\200\200LAND\255\255\255\255, \255\64\64\255WATER\255\255\255\255\n"
 				end
 			end
 			
