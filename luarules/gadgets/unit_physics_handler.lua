@@ -721,14 +721,12 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 		end	
 	end
 
-
 	-- if nano frame, spawn effects
 	if bp < 1 and bp > 0.35 then
 		local physics = unitPhysicsById[unitId]
-		
 		if (physics ~= nil) then
 			local radius = spGetUnitRadius(unitId)
-			
+						
 			-- bigger effect for expensive units
 			radius = radius + ud.metalCost / 1000 
 			

@@ -20,7 +20,7 @@ static-var  bMoving, bAiming, gun_1;
 
 walk()
 {
-	turn hips to x-axis <10.000000> speed <40.000000>;
+	turn hips to x-axis <5.000000> speed <10.000000>;
 	spin wheel around x-axis speed <200.000000> accelerate <10.000000>;
 	sleep 100;
 	return (0);
@@ -28,7 +28,7 @@ walk()
 
 walklegs()
 {
-	turn hips to x-axis <0.000000> speed <40.000000>;
+	turn hips to x-axis <0.000000> speed <20.000000>;
 	spin wheel around x-axis speed <200.000000> accelerate <10.000000>;
 	sleep 100;
 	return (0);
@@ -86,7 +86,7 @@ MotionControl(moving, aiming, justmoved)
 			{
 				if( justmoved )
 				{
-					turn hips to x-axis <0.000000> speed <40.000000>;
+					turn hips to x-axis <0.000000> speed <20.000000>;
 					stop-spin wheel around x-axis decelerate <40.000000>;
 					if( !aiming )
 					{
@@ -195,7 +195,7 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 35 )
+	if( severity <= 50 )
 	{
 		explode lmisbox type BITMAPONLY | BITMAP2;
 	

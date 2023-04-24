@@ -74,6 +74,7 @@ AimPrimary(heading, pitch, canFire)
 		canFire = get LUA1;
 	}
 	if (!canFire) {
+		//sleep 300;
 		return (0);
 	}
 

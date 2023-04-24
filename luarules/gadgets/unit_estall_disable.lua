@@ -93,17 +93,20 @@ local jammerDefs = {
   [ UnitDefNames['aven_jammer'].id ] = true,
   [ UnitDefNames['aven_eraser'].id ] = true,
   [ UnitDefNames['aven_escort'].id ] = true,
+  [ UnitDefNames['aven_covert_ops_center'].id ] = true,
 
   [ UnitDefNames['gear_radar_jamming_tower'].id ] = true,
   [ UnitDefNames['gear_deleter'].id ] = true,
   [ UnitDefNames['gear_spectre'].id ] = true,
   [ UnitDefNames['gear_phantom'].id ] = true,
+  [ UnitDefNames['gear_covert_ops_center'].id ] = true,
 
   [ UnitDefNames['claw_radar_jamming_tower'].id ] = true,
   [ UnitDefNames['claw_jammer'].id ] = true,
   [ UnitDefNames['claw_shade'].id ] = true,
   [ UnitDefNames['claw_negator'].id ] = true,
   [ UnitDefNames['claw_haze'].id ] = true,
+  [ UnitDefNames['claw_covert_ops_center'].id ] = true,
 
   [ UnitDefNames['sphere_radar_jamming_tower'].id ] = true,
   [ UnitDefNames['sphere_concealer'].id ] = true,

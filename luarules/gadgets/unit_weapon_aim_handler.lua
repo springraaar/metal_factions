@@ -25,12 +25,33 @@ local spGetUnitHealth = Spring.GetUnitHealth
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spSetUnitWeaponState = Spring.SetUnitWeaponState
 local spSetUnitWeaponDamages = Spring.SetUnitWeaponDamages
+local spGetUnitStates = Spring.GetUnitStates
 
 local targetForUnitId = {}
-local trackedWeaponDefIds = {}
+local antiMissileWeaponDefIds = {}
 local lastPriorityForUnitId = {}
 
 local AA_FLAT_RANGE_EXTENSION = 80 
+
+
+local destructibleProjectileDefIds = {
+	[UnitDefNames["aven_premium_nuclear_rocket"].id] = true,
+	[UnitDefNames["aven_nuclear_rocket"].id] = true,
+	[UnitDefNames["aven_dc_rocket"].id] = true,
+	[UnitDefNames["aven_lightning_rocket"].id] = true,
+	[UnitDefNames["gear_premium_nuclear_rocket"].id] = true,
+	[UnitDefNames["gear_nuclear_rocket"].id] = true,
+	[UnitDefNames["gear_dc_rocket"].id] = true,
+	[UnitDefNames["gear_pyroclasm_rocket"].id] = true,
+	[UnitDefNames["claw_premium_nuclear_rocket"].id] = true,
+	[UnitDefNames["claw_nuclear_rocket"].id] = true,
+	[UnitDefNames["claw_dc_rocket"].id] = true,
+	[UnitDefNames["claw_impaler_rocket"].id] = true,
+	[UnitDefNames["sphere_premium_nuclear_rocket"].id] = true,
+	[UnitDefNames["sphere_nuclear_rocket"].id] = true,
+	[UnitDefNames["sphere_dc_rocket"].id] = true,
+	[UnitDefNames["sphere_meteorite_rocket"].id] = true
+}
 
 -- slave weapon indexes (master,slave)
 local slaveWeaponIndexesByUnitDefId = {
@@ -60,22 +81,6 @@ local slaveWeaponIndexesByUnitId = {}
 local airTargettingWeaponIndexesByUnitDefId = {}
 local airTargettingWeaponIndexesByUnitId = {}	-- [uId][wNum] = true/false	
 
--- track unit's weapons
-local function trackWeapons(unitDefID)
-	local ud = UnitDefs[unitDefID]
-	if ud.weapons and ud.weapons[1] and ud.weapons[1].weaponDef then
-		for wNum,w in pairs(ud.weapons) do
-			if not trackedWeaponDefIds[w.weaponDef] then
-				local weap=WeaponDefs[w.weaponDef]
-			    if weap.isShield == false and weap.description ~= "No Weapon" then
-					trackedWeaponDefIds[w.weaponDef] = true 
-					Script.SetWatchWeapon(w.weaponDef,true)
-			    end
-		    end
-		end
-    end
-end
-
 
 -- updates weapon base range + upgrade modifiers on unit
 function updateUnitWeaponRange(unitId, wNum, range)
@@ -104,15 +109,25 @@ function gadget:Initialize()
 			--Spring.Echo(ud.name.." is drone")
 		end
 		
-		-- units with aaRangeBoosted weapons 
 		if ud.weapons and ud.weapons[1] and ud.weapons[1].weaponDef then
 			for wNum,w in pairs(ud.weapons) do
 				local wd=WeaponDefs[w.weaponDef]
-				if wd.customParams and wd.customParams.aarangeboost == "1" then
-					if not airTargettingWeaponIndexesByUnitDefId[id] then
-						airTargettingWeaponIndexesByUnitDefId[id] = {}
+				if wd.isShield == false and wd.description ~= "No Weapon" then
+					Script.SetWatchWeapon(w.weaponDef,true)
+			    end
+			    
+				if wd.customParams then
+					-- anti-missile weapons
+					if wd.customParams.md == "1" then
+						antiMissileWeaponDefIds[wd.id] = true
 					end
-					airTargettingWeaponIndexesByUnitDefId[id][wNum] = wd.range
+					-- units with aaRangeBoosted weapons
+					if wd.customParams.aarangeboost == "1" then
+						if not airTargettingWeaponIndexesByUnitDefId[id] then
+							airTargettingWeaponIndexesByUnitDefId[id] = {}
+						end
+						airTargettingWeaponIndexesByUnitDefId[id][wNum] = wd.range
+					end
 				end
 			end
 		end
@@ -132,9 +147,8 @@ function gadget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOp
 		if cmdParams then
 			local targetId = tonumber(cmdParams[1])
 			if Spring.ValidUnitID(targetId) then
-				--Spring.Echo("target is "..targetId.." / "..UnitDefs[Spring.GetUnitDefID(targetId)].name)
+				--Spring.Echo("target is "..targetId.." / "..UnitDefs[spGetUnitDefID(targetId)].name)
 				targetForUnitId[unitID] = tonumber(cmdParams[1])
-				trackWeapons(unitDefID) -- required for AllowWeaponTarget to be called
 			end
 		end		
 	end
@@ -144,10 +158,20 @@ function gadget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOp
 	end
 end
 
+-- having the callin here makes "AllowWeaponTarget" be reliably called every slowUpdate when enemies are in range
+local states
+function gadget:AllowWeaponTargetCheck(attackerID, attackerWeaponNum, attackerWeaponDefID)
+	--Spring.Echo("f="..spGetGameFrame().." aId="..attackerID.." ALLOWTARGETCHECK")
+	states = spGetUnitStates(attackerID)
+	if states and states.firestate == 0 then
+		return false
+	end
+	return -1
+end
+
 -- weapon target check
 function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attackerWeaponDefID, defaultPriority)
-	--Spring.Echo(attackerID.." ALLOWTARGET "..targetID.." ? prio="..tostring(defaultPriority))
-	--Spring.Echo(attackerID.." has line of fire to "..targetID.." ? "..tostring(Spring.GetUnitWeaponHaveFreeLineOfFire(attackerID,attackerWeaponNum,targetID)))
+	--Spring.Echo("f="..spGetGameFrame().." aId="..attackerID.." ALLOWTARGET "..targetID.." ? prio="..tostring(defaultPriority))
 	
 	if defaultPriority == nil then
 		if lastPriorityForUnitId[attackerID] then
@@ -158,16 +182,23 @@ function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attac
 	else
 		lastPriorityForUnitId[attackerID] = defaultPriority
 	end
-	
+
+	if antiMissileWeaponDefIds[attackerWeaponDefID] == true and GG.enableMDWatchList[attackerID] and GG.enableMDWatchList[attackerID] == 1 then
+		local alerted = spGetUnitRulesParam(attackerID,"md_alert")
+		if alerted == 1 and (not destructibleProjectileDefIds[spGetUnitDefID(targetID)]) then
+			--Spring.Echo("f="..spGetGameFrame().." aId="..attackerID.." target "..targetID.." skipped due to MD alert!")
+			return false,defaultPriority
+		end
+	end
 
 	if targetForUnitId[attackerID] then
 		-- only do this if in range of the target
 		if (spGetUnitWeaponTestRange(attackerID, attackerWeaponNum, targetForUnitId[attackerID]) == true) then
-			--Spring.Echo("in range "..tonumber(targetForUnitId[attackerID]).." / "..UnitDefs[Spring.GetUnitDefID(targetForUnitId[attackerID])].name)
+			--Spring.Echo("in range "..tonumber(targetForUnitId[attackerID]).." / "..UnitDefs[spGetUnitDefID(targetForUnitId[attackerID])].name)
 
 			-- if unit is marked as target, reject all other targets
 			if targetForUnitId[attackerID] == targetID then
-				--Spring.Echo("focus "..tonumber(targetID).." / "..UnitDefs[Spring.GetUnitDefID(targetID)].name)
+				--Spring.Echo("focus "..tonumber(targetID).." / "..UnitDefs[spGetUnitDefID(targetID)].name)
 				return true,defaultPriority
 			else
 				return false,defaultPriority
@@ -186,15 +217,16 @@ function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attac
 			if (GG.lessThan500HPTargetDefIds[defId]) then
 				local f = spGetGameFrame()
 				local lastFireFrame = GG.unitFireFrameByTargetId[targetID]
+				--Spring.Echo("f="..f.." unit "..attackerID.." considering target "..tostring(targetID).." lastFireFrame="..tostring(lastFireFrame))
 				if ( lastFireFrame and (f - lastFireFrame < GG.OKP_FRAMES) ) then
 					--Spring.Echo("f="..f.."unit "..attackerID.." refuses to aim at target "..tostring(targetID))
-					return false,defaultPriority
+					return false
 				end
 			elseif (GG.okpIncendiaryWeaponDefIds[attackerWeaponDefID]) then
 				local f = spGetGameFrame()
 				local lastFireFrame = GG.unitFireFrameByTargetIdIncendiary[targetID]
 				if ( lastFireFrame and (f - lastFireFrame < GG.OKP_FRAMES) ) then
-					--Spring.Echo("f="..f.."unit "..attackerID.." refuses to aim at target "..tostring(targetID))
+					--Spring.Echo("f="..f.." unit "..attackerID.." refuses to aim at target "..tostring(targetID))
 					return false,defaultPriority
 				end
 			end 

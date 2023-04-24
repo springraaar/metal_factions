@@ -1,0 +1,118 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Fury;
+	description=Heavy Gunship;
+	iconType=airfighter;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW VTOL LEVEL2 WEAPON NOTSUB ;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_fury;
+	objectName=claw_fury.3do;
+	buildPic=claw_fury.png;
+	soundCategory=aven_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=6000;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	energyMake=0;
+	energyUse=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canDropFlare=0;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	stealth=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	acceleration=0.35;
+	brakeRate=0.3;
+	maxVelocity=2.8;
+	
+	cruiseAlt=120;
+	turnRate=700;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_fury_railgun;
+	weapon2=claw_fury_laser;
+	slaveTo1=2;
+	explodeAs=HBOMBER;
+	selfDestructAs=HBOMBER;
+
+
+	//************************************************************
+	//  Orders
+	//**********
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	hoverAttack=1;
+	damageModifier=0.66;
+	airStrafe=1;
+	bankingAllowed=0;
+	airHoverFactor=1;
+	upright=1;
+	CanLoopbackAttack=0;
+	collide=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =55 40 50;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=claw_adv_aircraft_plant;
+		tip=Gains 33% dmg resistance when not firing. Laser firing rate reduced to about 25% after 12s of continuous fire;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:emgflarefast;	
+		explosionGenerator1=custom:GLOWSML;
+	}
+	buildCostEnergy=38163;//#AUTO#
+	buildCostMetal=7632;//#AUTO#
+	buildTime=90956;//#AUTO#
+	mass=2022;//#AUTO#
+}

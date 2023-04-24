@@ -67,6 +67,8 @@ local spSpawnProjectile = Spring.SpawnProjectile
 local spAddUnitResource = Spring.AddUnitResource
 local spDestroyUnit = Spring.DestroyUnit
 local spPlaySoundFile = Spring.PlaySoundFile
+local spGetUnitIsCloaked = Spring.GetUnitIsCloaked
+local spSetUnitStealth = Spring.SetUnitStealth
 
 local max = math.max
 local min = math.min
@@ -125,6 +127,14 @@ local cometDefIds = {
 	[UnitDefNames["sphere_atom"].id] = true
 }
 
+
+local covertOpsDefIds = {
+	[UnitDefNames["aven_covert_ops_center"].id] = true,
+	[UnitDefNames["gear_covert_ops_center"].id] = true,
+	[UnitDefNames["claw_covert_ops_center"].id] = true
+}
+
+
 local zephyrDefIds = {
 	[UnitDefNames["aven_zephyr"].id] = true
 }
@@ -148,6 +158,7 @@ local lastDamageFrameUnitIds = {}
 local lastFrameDamageAmountByUnitId = {}
 local energyBoostedMovementUnitIds = {}
 local flyingSphereUnitIds = {}
+local covertOpsUnitIds = {}
 local allUnitIds = {}
 local autoBuildUnitIds = {}
 local latestHPByUnitId = {}
@@ -190,6 +201,9 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 	end
 	if allTerrainDefIds[unitDefId] then
 		allTerrainUnitIds[unitId] = UnitDefs[unitDefId]
+	end
+	if covertOpsDefIds[unitDefId] then
+		covertOpsUnitIds[unitId] = true
 	end
 	if (energyBoostedMovementDefIds[unitDefId]) then
 		energyBoostedMovementUnitIds[unitId] = true
@@ -671,6 +685,41 @@ function gadget:GameFrame(n)
 		end		
 	end
 	
+	-- track how many keystone buildings are active per team
+	local uId,aId,cloaked
+	-- covert ops
+	local covertOpsByAllyId = {}
+	for uId,_ in pairs(covertOpsUnitIds) do
+		aId = spGetUnitAllyTeam(uId)
+		_,_,_,_,bp = spGetUnitHealth(uId)
+		local unitStates = spGetUnitStates(uId)
+		
+		if bp == 1 and unitStates.active then
+			-- set a team rules param indicating
+			if not covertOpsByAllyId[aId] then
+				--Spring.Echo("f="..n.." allyId="..aId.." has covert ops enabled!")
+				covertOpsByAllyId[aId] = true
+			end
+		end
+	end
+	-- update the buff state for units that may use it
+	for _,uId in pairs(allUnits) do
+		ud = UnitDefs[spGetUnitDefID(uId)]
+		if not ud.stealth or ud.stealth == 0 then
+			aId = spGetUnitAllyTeam(uId)
+			cloaked = spGetUnitIsCloaked(uId) 
+			if (covertOpsByAllyId[aId] and cloaked) then
+				--Spring.Echo("f="..n.." uId="..uId.." stealth ON")
+				spSetUnitStealth(uId,true)
+				spSetUnitRulesParam(uId,"stealth",1,UNIT_RP_PUBLIC_TBL)
+			else
+				--Spring.Echo("f="..n.." uId="..uId.." stealth OFF")
+				spSetUnitStealth(uId,false)
+				spSetUnitRulesParam(uId,"stealth",0,UNIT_RP_PUBLIC_TBL)
+			end
+		end
+	end
+	
 	-- update the unit rules param indicating % hp regenerated over the last second or so	
 	local percentRegenPerSecond = 0
 	for _,unitId in pairs(allUnits) do
@@ -736,6 +785,9 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam)
 	end
 	if allTerrainUnitIds[unitId] then
 		allTerrainUnitIds[unitId] = nil
+	end
+	if covertOpsDefIds[unitDefId] then
+		covertOpsUnitIds[unitId] = nil
 	end
 	if (energyBoostedMovementUnitIds[unitId]) then
 		energyBoostedMovementUnitIds[unitId] = nil

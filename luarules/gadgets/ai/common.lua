@@ -1025,6 +1025,7 @@ attackerList =
 	"claw_x",
 	"claw_blizzard",
 	"claw_havoc",
+	"claw_fury",	
 	"claw_predator",
 	"claw_tempest",
 	"claw_dizzy",
@@ -1125,6 +1126,7 @@ airAttackerList =
 	"claw_x",
 	"claw_blizzard",
 	"claw_havoc",
+	"claw_fury",	
 	"claw_trident",
 ------------------------------------------------ SPHERE
 ----------- l1

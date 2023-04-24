@@ -1,0 +1,382 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<35>
+
+piece base,hull,wingsup, wingsup2,bwingl,bwingr,fwingl,fwingr,weapon1,barrel1,flare1,weapon2,barrel2,flare2,lweapon1,lw1door1,lw1door2,lwext1,lwflare1,lweapon2,lw2door1,lw2door2,lwext2,lwflare2,rweapon1,rw1door1,rw1door2,rwext1,rwflare1,rweapon2,rw2door1,rw2door2,rwext2,rwflare2,lj1p,lj2p,rj1p,rj2p,charge1,charge2,charge3,charge4,fdoor1,fdoor2,ljb,rjb;
+
+static-var   gun_1, gun_2, bAiming,isOpen, charges;
+
+#include "aimhelper1.h"
+
+// signal definitions
+#define SIG_AIM				2
+#define SIG_AIM_2			4
+
+#define MAX_CHARGES 75
+#define CHARGE_RELOAD 400
+
+
+thrusterAngleControl(maxSpeed,currentSpeed,thrusterAngle) {
+	while(TRUE) {
+	
+		maxSpeed = get MAX_SPEED;
+		currentSpeed = get CURRENT_SPEED;
+		
+		thrusterAngle = currentSpeed * <30> / maxSpeed;
+		if ( bAiming ) {
+			thrusterAngle = <0>;
+		}
+	
+		if (thrusterAngle > <-45> && thrusterAngle < <45>) {
+			turn ljb to x-axis thrusterangle speed <20>;
+			turn rjb to x-axis thrusterangle speed <20>;
+		}
+	
+		sleep 50;
+	}
+}
+
+
+chargeControl() {
+	while(TRUE) {
+
+		if (charges < MAX_CHARGES) {
+			charges = charges + 1;
+			sleep CHARGE_RELOAD;
+		}
+	
+		sleep 50;
+	}
+}
+
+chargeVisuals() {
+	while(TRUE) {
+		if (charges > 60) {
+			hide charge1;
+			hide charge2;
+			hide charge3;
+			show charge4;
+		} else if (charges > 35) {
+			hide charge1;
+			hide charge2;
+			show charge3;
+			hide charge4;			
+		} else if (charges > 10) {
+			hide charge1;
+			show charge2;
+			hide charge3;
+			hide charge4;			
+		} else {
+			show charge1;
+			hide charge2;
+			hide charge3;
+			hide charge4;
+		}
+		sleep 30;
+	}
+}
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )	{
+		sleep 400;
+	}
+	while( TRUE ) {
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent ) {
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 ) {
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+	return (0);
+}
+
+Open() {
+	set ARMORED to FALSE;
+
+	move lweapon1 to x-axis [-5] speed [80];
+	move lweapon2 to x-axis [-5] speed [80];
+	move rweapon1 to x-axis [5] speed [80];
+	move rweapon2 to x-axis [5] speed [80];
+	
+	wait-for-move lweapon1 along x-axis;
+	
+	turn lweapon1 to z-axis <-10> speed <300>;
+	turn rweapon1 to z-axis <-10> speed <300>;
+	turn lweapon2 to z-axis <10> speed <300>;
+	turn rweapon2 to z-axis <10> speed <300>;
+	
+	move lw1door1 to y-axis [2] speed [20];	
+	move lw1door2 to y-axis [-2] speed [20];
+	move lw2door1 to y-axis [2] speed [20];	
+	move lw2door2 to y-axis [-2] speed [20];
+	
+	move rw1door1 to y-axis [-2] speed [20];
+	move rw1door2 to y-axis [2] speed [20];
+	move rw2door1 to y-axis [-2] speed [20];
+	move rw2door2 to y-axis [2] speed [20];
+
+	move lwext1 to z-axis [10] speed [40];
+	move lwext2 to z-axis [10] speed [40];
+	move rwext1 to z-axis [10] speed [40];
+	move rwext2 to z-axis [10] speed [40];
+
+	turn fdoor1 to x-axis <-65> speed <360>;
+	turn fdoor2 to x-axis <65> speed <360>;
+	move fdoor1 to y-axis [1] speed [30];
+	move fdoor1 to z-axis [-4] speed [30];
+	move fdoor2 to y-axis [-1] speed [30];
+	move fdoor2 to z-axis [-4] speed [30];
+	
+	wait-for-move fdoor1 along z-axis;
+	
+	move barrel1 to z-axis [10] speed [30];
+	move barrel2 to z-axis [10] speed [30];
+	
+	wait-for-move barrel1 along z-axis;
+		
+	isOpen = TRUE;
+	return (0);
+}
+
+Close() {
+	isOpen = FALSE;
+
+	move lwext1 to z-axis [0] speed [20];
+	move lwext2 to z-axis [0] speed [20];
+	move rwext1 to z-axis [0] speed [20];
+	move rwext2 to z-axis [0] speed [20];
+	wait-for-move lwext1 along z-axis;
+
+	move lw1door1 to y-axis [0] speed [20];	
+	move lw1door2 to y-axis [0] speed [20];
+	move lw2door1 to y-axis [0] speed [20];	
+	move lw2door2 to y-axis [0] speed [20];
+	
+	move rw1door1 to y-axis [0] speed [20];
+	move rw1door2 to y-axis [0] speed [20];
+	move rw2door1 to y-axis [0] speed [20];
+	move rw2door2 to y-axis [0] speed [20];
+
+	move barrel1 to z-axis [0] speed [30];
+	move barrel2 to z-axis [0] speed [30];
+	wait-for-move barrel1 along z-axis;
+
+	move fdoor1 to y-axis [0] speed [30];
+	move fdoor1 to z-axis [0] speed [30];
+	move fdoor2 to y-axis [0] speed [30];
+	move fdoor2 to z-axis [0] speed [30];
+
+	wait-for-move fdoor1 along z-axis;
+	turn fdoor1 to x-axis <0> speed <360>;
+	turn fdoor2 to x-axis <0> speed <360>;
+
+	turn lweapon1 to z-axis <0> speed <300>;
+	turn rweapon1 to z-axis <0> speed <300>;
+	turn lweapon2 to z-axis <0> speed <300>;
+	turn rweapon2 to z-axis <0> speed <300>;
+
+	wait-for-turn rweapon1 around z-axis;
+	
+	move lweapon1 to x-axis [0] speed [30];
+	move lweapon2 to x-axis [0] speed [30];
+	move rweapon1 to x-axis [0] speed [30];
+	move rweapon2 to x-axis [0] speed [30];
+
+	
+	set ARMORED to TRUE;
+	return (0); 
+}
+
+
+RestoreAfterDelay() {
+	if((get STANDINGFIREORDERS) > 0) {
+		sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	} else {
+		sleep 600;
+	}
+	call-script stopAimHelper1(<200>,<200>);
+	turn base to y-axis <0> speed <200>;
+	turn hull to x-axis <0> speed <200>;
+	wait-for-turn base around y-axis;
+	wait-for-turn hull around x-axis;
+	call-script Close();
+	bAiming = FALSE;
+}
+
+
+Create() {
+	isOpen = FALSE;
+	charges = MAX_CHARGES;
+	gun_1 = 0;
+	gun_2 = 0;
+	bAiming = FALSE;
+	turn lj1p to x-axis <-90.000000> now;
+	turn lj2p to x-axis <-90.000000> now;
+	turn rj1p to x-axis <-90.000000> now;	
+	turn rj2p to x-axis <-90.000000> now;
+	call-script stopAimHelper1(<1000>,<1000>);
+	start-script chargeControl();
+	start-script chargeVisuals();
+	start-script thrusterAngleControl();
+	start-script SmokeUnit();
+}
+
+Activate() {
+	return(0);
+}
+
+Deactivate() {
+	return(0);
+}
+
+
+FirePrimary() {
+	if(gun_1 == 0) {
+		move barrel1 to z-axis [4] now;
+		emit-sfx 1024+0 from flare1;
+		sleep 100;
+		move barrel1 to z-axis [10] speed [20];
+		gun_1 = 1;
+		return (0);
+	}
+	if(gun_1 == 1) {
+		move barrel2 to z-axis [4] now;
+		emit-sfx 1024+0 from flare2;
+		sleep 100;
+		move barrel2 to z-axis [10] speed [20];
+		gun_1 = 0;
+		return (0);
+	}
+}
+
+QueryPrimary(piecenum) {
+	if(gun_1 == 0 )	{
+		piecenum = flare1;
+	}
+	if(gun_1 == 1 )	{
+		piecenum = flare2;
+	}
+}
+
+AimFromPrimary(piecenum) {
+	piecenum = base;
+	return (0);
+}
+
+AimPrimary(heading, pitch) {
+	if( ! isOpen) {
+		call-script Open();
+	}
+
+	call-script updateAimHelper1(heading,pitch,<200>,<200>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	turn base to y-axis heading speed <200>;
+	turn hull to x-axis <0> - pitch speed <200>;
+	if (!aimReady1) {
+		wait-for-turn base around y-axis;
+		wait-for-turn hull around x-axis;
+	}
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FireSecondary() {
+	charges = charges -1;
+	if(gun_2 == 0) {
+		emit-sfx 1024+1 from lwflare1;
+		sleep 100;
+		gun_2 = 1;
+		return (0);
+	}
+	if(gun_2 == 1) {
+		emit-sfx 1024+1 from rwflare1;
+		sleep 100;
+		gun_2 = 2;
+		return (0);
+	}
+	if(gun_2 == 2) {
+		emit-sfx 1024+1 from lwflare2;
+		sleep 100;
+		gun_2 = 3;
+		return (0);
+	}
+	if(gun_2 == 3) {
+		emit-sfx 1024+1 from rwflare2;
+		sleep 100;
+		gun_2 = 0;
+		return (0);
+	}
+
+}
+
+QuerySecondary(piecenum) {
+	if(gun_2 == 0 )	{
+		piecenum = lwflare1;
+		return (0);
+	}
+	if(gun_2 == 1 )	{
+		piecenum = rwflare1;
+		return (0);
+	}
+	if(gun_2 == 2 )	{
+		piecenum = lwflare2;
+		return (0);
+	}
+	if(gun_2 == 3 )	{
+		piecenum = rwflare2;
+		return (0);
+	}
+
+}
+
+AimFromSecondary(piecenum) {
+	piecenum = base;
+	return (0);
+}
+
+AimSecondary(heading, pitch) {
+	if( ! isOpen) {
+		call-script Open();
+	}
+	call-script updateAimHelper1(heading,pitch,<200>,<200>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM_2;
+	set-signal-mask SIG_AIM_2;
+	bAiming = TRUE;
+	while( charges == 0) {
+		sleep 100;	
+	}
+	if (!aimReady1) {
+		turn base to y-axis heading speed <200>;
+		turn hull to x-axis <0> - pitch speed <200>;
+		wait-for-turn base around y-axis;
+		wait-for-turn hull around x-axis;
+	}
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+Killed(severity, corpsetype) {
+	explode fwingl type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode fwingr type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode weapon1 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode weapon2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode wingsup type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	explode wingsup2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
+	return (3);
+}

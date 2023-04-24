@@ -1505,6 +1505,7 @@
 	tracks=1;
 	burst=2;
 	burstRate=0.2;
+	commandFire=1;
 	smokeTrail=1;
 	cegTag=SMLROCKETTRAIL;
 	weaponType=MissileLauncher;
@@ -7571,6 +7572,7 @@
 	{
 		hitPower=1;
 		expDmgScaling=1;
+		md=1;
 		targets=SURFACE,AIR;
 	}
 	[DAMAGE]
@@ -7616,6 +7618,7 @@
 		hitPower=1;
 		reaimTime=1;
 		expDmgScaling=1;
+		md=1;
 		targets=SURFACE,AIR;
 	}
 	[DAMAGE]
@@ -7661,6 +7664,7 @@
 		hitPower=1;
 		reaimTime=1;
 		expDmgScaling=1;
+		md=1;
 		targets=SURFACE,AIR;
 	}
 	[DAMAGE]
@@ -12878,6 +12882,7 @@
 	{
 		hitPower=1;
 		expDmgScaling=1;
+		md=1;
 		targets=SURFACE,AIR;
 	}
 	[DAMAGE]
@@ -12923,6 +12928,7 @@
 		hitPower=1;
 		reaimTime=1;
 		expDmgScaling=1;
+		md=1;
 		targets=SURFACE,AIR;
 	}
 	[DAMAGE]
@@ -12967,6 +12973,7 @@
 	{
 		hitPower=1;
 		expDmgScaling=1;
+		md=1;
 		targets=SURFACE,AIR;
 	}
 	[DAMAGE]
@@ -15516,6 +15523,51 @@
 		armor_light=75.00;//#AUTO#
 	}
 }
+[claw_fury_laser]
+{
+	name=Rapid-Fire Medium Laser;
+	weaponType=BeamLaser;
+	explosionGenerator=custom:BLUELASERBLASTWRAPPER;
+	intensity=0.85;
+	beamTime=0.1;
+	thickness=2.888;
+	coreThickness=0.6;
+	turret=1;
+	range=600;
+	minIntensity=1.0;
+	reloadTime=0.134;
+	energyPerShot=40;
+	weaponVelocity=1533;
+	areaOfEffect=8;
+	soundTrigger=1;
+	soundStart=furyfire;
+	soundHit=lasrhit2;
+	fireStarter=50;
+	scrollSpeed=0;
+	pulseSpeed=0;
+	rgbColor=0.0 0.0 0.0;
+	rgbColor2=0.8 0.8 0.8;
+	tolerance=6000;
+	impulseFactor=0.222;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		aaRangeBoost=1;
+		reaimTime=1;
+		evalFactor=0.5; // slow stockpile
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=100;
+		armor_heavy=50.00;//#AUTO#
+		armor_medium=100.00;//#AUTO#
+		armor_light=100.00;//#AUTO#
+	}
+}
 [claw_x_laser]
 {
 	name=Light Laser;
@@ -15958,6 +16010,50 @@
 	{
 		hitPower=3;
 		expDmgScaling=1;
+		targets=SURFACE,AIR2;
+	}
+	[DAMAGE]
+	{
+		default=200;
+		armor_heavy=200.00;//#AUTO#
+		armor_medium=200.00;//#AUTO#
+		armor_light=200.00;//#AUTO#
+	}
+}
+[claw_fury_railgun]
+{
+	name=Railgun;
+	weaponType=MissileLauncher;
+	explosionGenerator=custom:STDNARROWBLASTWRAPPER;
+	cegTag=RAILGUNTRAILSML;
+	model=weapon_invisible;
+	turnRate=15000;
+	tracks=0;
+	flightTime=0.8;
+	trajectoryHeight=0.07;
+	texture1=null;
+	texture2=null;
+	texture3=null;
+	texture4=null;
+	energyPerShot=70;
+	turret=1;
+	range=600;
+	reloadTime=0.7;
+	weaponVelocity=1532;
+	startVelocity=1532;
+	accuracy=200;
+	areaOfEffect=24;
+	soundStart=railgunsml;
+	soundHit=railgunhitsml;
+	soundTrigger=1;
+	tolerance=3000;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		expDmgScaling=1;
+		reaimTime=1;
 		targets=SURFACE,AIR2;
 	}
 	[DAMAGE]
@@ -16967,6 +17063,7 @@
 		hitPower=1;
 		reaimTime=1;
 		expDmgScaling=1;
+		md=1;
 		targets=SURFACE,AIR;
 	}
 	[DAMAGE]
@@ -17012,6 +17109,7 @@
 		hitPower=1;
 		reaimTime=5;
 		expDmgScaling=1;
+		md=1;
 		targets=SURFACE,AIR;
 	}
 	[DAMAGE]
@@ -17057,6 +17155,7 @@
 		hitPower=1;
 		reaimTime=1;
 		expDmgScaling=1;
+		md=1;
 		targets=SURFACE,AIR;
 	}
 	[DAMAGE]
@@ -17101,6 +17200,7 @@
 	{
 		hitPower=1;
 		expDmgScaling=1;
+		md=1;
 		targets=SURFACE,AIR;
 	}
 	[DAMAGE]
@@ -18538,6 +18638,7 @@
 	weaponVelocity=600;
 	cegTag=RINGTRAIL;
 	explosionGenerator=custom:RINGBLASTWRAPPER;
+	castShadow=0;
 	areaOfEffect=48;
 	soundStart=ringfire;
 	soundHit=ringhit;
@@ -22162,6 +22263,7 @@
 	{
 		hitPower=1;
 		expDmgScaling=1;
+		md=1;
 		targets=SURFACE,AIR;
 	}
 	[DAMAGE]
@@ -22208,6 +22310,7 @@
 		reaimTime=1;
 		expDmgScaling=1;
 		evalFactor=0.95; // less discount than angle restriction
+		md=1;
 		targets=SURFACE,AIR;
 	}
 	[DAMAGE]
@@ -22429,6 +22532,7 @@
 		reaimTime=1;
 		aaRangeBoost=1;
 		expDmgScaling=1;
+		md=1;
 		targets=SURFACE,AIR;
 	}
 	[DAMAGE]

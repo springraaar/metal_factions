@@ -101,6 +101,7 @@ local gameFrame = 0
 local empDecline = 32/30/40
 
 local min = math.min
+local max = math.max
 local cx, cy, cz = 0,0,0  --// camera pos
 
 local paraUnits   = {}
@@ -432,7 +433,7 @@ do
     barsN = barsN + 1
     local barInfo    = bars[barsN]
     barInfo.title    = title
-    barInfo.progress = progress
+    barInfo.progress = max(progress,0)
     barInfo.color    = color or barColors[color_index]
     barInfo.text     = text
   end

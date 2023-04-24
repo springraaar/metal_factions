@@ -22,6 +22,7 @@ local spGetMouseState = Spring.GetMouseState
 local spGetTimer = Spring.GetTimer
 local spDiffTimers = Spring.DiffTimers
 local spGetVisibleUnits = Spring.GetVisibleUnits
+local spGetAllUnits = Spring.GetAllUnits
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetGroundHeight = Spring.GetGroundHeight
 local spGetSelectedUnitsCount = Spring.GetSelectedUnitsCount
@@ -316,7 +317,7 @@ function widget:Update()
 	if isBuildingPowerNode or selectedGridId then
 		local spec, fullSpec = spGetSpectatingState()
 		local ud2,px,py,pz,gridId2,gridLevel2,refColor,color,highlight,allyId2
-		local units = spGetVisibleUnits(-1,nil,true)
+		local units = spGetAllUnits()
 		local circleList = {} 
 		for _,uId2 in ipairs(units) do
 		 	ud2 = UnitDefs[spGetUnitDefID(uId2)]

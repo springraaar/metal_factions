@@ -43,9 +43,9 @@
 }
 [ARMPW]
 {
-	select1=servtny2;
-	ok1=servtny2;
-	arrived1=servtny2;
+	select1=AVENBOTSMLSEL;
+	ok1=AVENBOTSMLOK;
+	arrived1=AVENBOTSMLSTP;
 	cant1=cantdo4;
 	underattack=warning1;
 	count5=count1;
@@ -783,9 +783,9 @@
 }
 [CORAK]
 {
-	select1=servtny1;
-	ok1=servtny1;
-	arrived1=servtny1;
+	select1=GEARBOTSMLSEL;
+	ok1=GEARBOTSMLOK;
+	arrived1=GEARBOTSMLSTP;
 	cant1=cantdo4;
 	underattack=warning2;
 	count5=count1;
@@ -2140,6 +2140,26 @@
 	cloak=kloak1;
 	uncloak=kloak1un;
 	capture=capture1;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+
+
+
+//------------------------- MISC
+
+[COVERTOPSCENTER]
+{
+	select1=COSEL;
+	underattack=warning1;
+	working=COWORK;
+	activate=COON;
+	deactivate=COOFF;
 	count5=count1;
 	count4=count2;
 	count3=count3;

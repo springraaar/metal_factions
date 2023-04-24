@@ -1,0 +1,101 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Covert Ops Center;
+	description=Provides stealth to cloaked units, drains 300 E/s;
+	iconType=covertops;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW LEVEL2 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_covert_ops_center;
+	objectName=claw_covert_ops_center.3do;
+	corpse=claw_covert_ops_center_dead;
+	script=covert_ops_center.cob;
+	buildPic=claw_covert_ops_center.png;
+	soundCategory=COVERTOPSCENTER;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=5000;
+	footprintx=8;
+	footprintz=8;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=300;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo oooooooo;
+	activateWhenBuilt=1;
+	collisionVolumeType=Box;
+	collisionVolumeScales=105 50 105;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onOffable=1;
+
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=FUSION_BUILDING_BIG;
+	selfDestructAs=FUSION_BUILDING_BIG;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+
+	[CustomParams]
+	{
+		builtBy=claw_l2builder;
+		manualCost=1;
+		tip=When active, cloaked allied units are also invisible to radar;
+	}
+
+	buildCostEnergy=15000;//#AUTO#
+	buildCostMetal=3000;//#AUTO#
+	buildTime=36000;//#AUTO#
+	mass=5000;//#AUTO#
+}

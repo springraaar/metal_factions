@@ -40,6 +40,7 @@ local spGetUnitPiecePosDir = Spring.GetUnitPiecePosDir
 local spGetGroundHeight = Spring.GetGroundHeight
 local spAddUnitDamage = Spring.AddUnitDamage
 local spPlaySoundFile = Spring.PlaySoundFile
+local spSetUnitTarget = Spring.SetUnitTarget
 local floor = math.floor
 
 -------------------------------------------------------------------------------------
@@ -53,7 +54,7 @@ end
 -- map fire frame by target unit id
 GG.unitFireFrameByTargetId = {}
 GG.lessThan500HPTargetDefIds = {}
-GG.OKP_FRAMES = 90		-- 3 seconds
+GG.OKP_FRAMES = 900		-- 3 seconds
 GG.OKP_FRAMES_INCENDIARY = 150		-- 5 seconds
 GG.mobilityModifier = {}
 
@@ -246,15 +247,17 @@ function checkAllowFiring(unitID, unitDefID, teamID, wNum, targetID, type)
 			if (defId and GG.lessThan500HPTargetDefIds[defId]) then
 				local lastFireFrame = GG.unitFireFrameByTargetId[targetID]
 				if ( lastFireFrame and (f - lastFireFrame < GG.OKP_FRAMES) ) then
-					--Spring.Echo("f="..f.."unit "..unitID.." prevented from firing weapon "..wNum.." at target "..tostring(targetID))
+					--Spring.Echo("f="..f.." unit "..unitID.." prevented from firing weapon "..wNum.." at target "..tostring(targetID))
 					result = 0
+					spSetUnitTarget(unitID,nil,false,false,wNum)
 				end
 			end 
 		elseif (type == OKP_TYPE_INCENDIARY) then
 			local lastFireFrame = GG.unitFireFrameByTargetIdIncendiary[targetID]
 			if ( lastFireFrame and (f - lastFireFrame < GG.OKP_FRAMES_INCENDIARY) ) then
-				--Spring.Echo("f="..f.."unit "..unitID.." prevented from firing weapon "..wNum.." at target "..tostring(targetID))
+				--Spring.Echo("f="..f.." unit "..unitID.." prevented from firing weapon "..wNum.." at target "..tostring(targetID))
 				result = 0
+				spSetUnitTarget(unitID,nil,false,false,wNum)
 			end
 		end
 	end

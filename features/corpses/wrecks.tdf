@@ -1740,6 +1740,47 @@
 	collisionVolumeScales=100 9 100;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
+[aven_covert_ops_center_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=aven_corpses;
+	object=aven_covert_ops_center_dead;
+	featuredead=aven_covert_ops_center_heap;
+	footprintx=6;
+	footprintz=6;
+	height=40;
+	blocking=1;
+	hitdensity=100;
+	reclaimable=1;
+	metal=900;//#AUTO#
+	energy=0;//#AUTO#
+	damage=5000;//#AUTO#
+	reclaimTime=18000;//#AUTO#
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=105 30 105;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[aven_covert_ops_center_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=5x5d;
+	footprintx=5;
+	footprintz=5;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	reclaimable=1;
+	metal=270;//#AUTO#
+	energy=0;//#AUTO#
+	damage=5000;//#AUTO#
+	reclaimTime=9000;//#AUTO#
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=105 5 105;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
 [aven_long_range_rocket_platform_dead]
 {
 	world=All Worlds;
@@ -5745,6 +5786,47 @@
 	reclaimTime=7559;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=100 9 100;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[gear_covert_ops_center_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=gear_corpses;
+	object=gear_covert_ops_center_dead;
+	featuredead=gear_covert_ops_center_heap;
+	footprintx=5;
+	footprintz=5;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	reclaimable=1;
+	metal=900;//#AUTO#
+	energy=0;//#AUTO#
+	damage=5000;//#AUTO#
+	reclaimTime=18000;//#AUTO#
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=105 30 105;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[gear_covert_ops_center_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=5x5d;
+	footprintx=5;
+	footprintz=5;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	reclaimable=1;
+	metal=270;//#AUTO#
+	energy=0;//#AUTO#
+	damage=5000;//#AUTO#
+	reclaimTime=9000;//#AUTO#
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=105 5 105;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
 [gear_long_range_rocket_platform_dead]
@@ -13581,6 +13663,46 @@
 	reclaimTime=7522;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=100 9 100;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[claw_covert_ops_center_dead]
+{
+	World=All Worlds;
+	Description=Wreckage;
+	Catagory=claw_corpses;
+	Object=claw_covert_ops_center_dead;
+	Featuredead=claw_covert_ops_center_heap;
+	Footprintx=7;
+	Footprintz=7;
+	Height=24;
+	Blocking=1;
+	HitDensity=100;
+	Reclaimable=1;
+	metal=900;//#AUTO#
+	energy=0;//#AUTO#
+	damage=5000;//#AUTO#
+	reclaimTime=18000;//#AUTO#
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=105 30 105;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[claw_covert_ops_center_heap]
+{
+	World=all;
+	Catagory=heaps;
+	Object=5x5b;
+	Footprintx=5;
+	Footprintz=5;
+	Height=4;
+	Blocking=0;
+	HitDensity=4;
+	Reclaimable=1;
+	metal=270;//#AUTO#
+	energy=0;//#AUTO#
+	damage=5000;//#AUTO#
+	reclaimTime=9000;//#AUTO#
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=105 5 105;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
 [claw_long_range_rocket_platform_dead]

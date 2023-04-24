@@ -48,6 +48,7 @@ local spGetTeamResources = Spring.GetTeamResources
 local spUseUnitResource = Spring.UseUnitResource
 local spDestroyUnit = Spring.DestroyUnit
 local spGetUnitIsDead = Spring.GetUnitIsDead
+local spGetUnitIsStunned = Spring.GetUnitIsStunned
 local spGetGroundHeight = Spring.GetGroundHeight
 
 local hmsx = Game.mapSizeX/2
@@ -258,6 +259,17 @@ function gadget:GameFrame(n)
 		if (ownerDead == nil or ownerDead == true) then
 			spDestroyUnit(uId)
 			droneUnderConstruction[uId] = nil
+		else
+			-- kill drones under construction if the parent unit is stunned
+			-- also triggers if it's loaded in a transport
+			local ownerStunned = spGetUnitIsStunned(ownerId)
+			if ownerStunned then
+				local hp,maxHp,_,_,bp = spGetUnitHealth(uId)
+				if bp < 1 then
+					spDestroyUnit(uId)
+					droneUnderConstruction[uId] = nil
+				end
+			end	
 		end
 	end	
 	
@@ -322,9 +334,9 @@ function gadget:GameFrame(n)
 		local x, y, z, dx, dy, dz, up, px, py, pz
 		local teamId, inQueue
 		for ownerId,limits in pairs(droneOwnersLimits) do
-
+			local ownerStunned = spGetUnitIsStunned(ownerId)
 			-- check rebuild delay
-			if (n - droneOwnersLastBuildStepFrameNumber[ownerId]) >= (DRONE_REBUILD_DELAY_STEPS * DRONE_CHECK_DELAY) then
+			if (not ownerStunned) and (n - droneOwnersLastBuildStepFrameNumber[ownerId]) >= (DRONE_REBUILD_DELAY_STEPS * DRONE_CHECK_DELAY) then
 				-- check if the drone owner is fully built, if not, don't do anything
 				local hp,maxHp,_,_,bp = spGetUnitHealth(ownerId)
 				if bp and bp >= 1 then

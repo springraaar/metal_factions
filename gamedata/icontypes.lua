@@ -488,6 +488,12 @@ local _iconTypes = {
 		distance=1,
 		size=REF_SIZE
 	},
+	covertops={
+		bitmap="icons/covertops.tga",
+		radiusadjust=false,
+		distance=1,
+		size=REF_SIZE
+	},
 	mobileintel={
 		bitmap="icons/mobileintel.tga",
 		radiusadjust=false,

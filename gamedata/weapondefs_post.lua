@@ -171,7 +171,7 @@ for wdName, wd in pairs(WeaponDefs) do
 					if wd.rgbcolor2 then
 						local colorStr = ""
 						for w in wd.rgbcolor2:gmatch("%S+") do 
-							colorStr = colorStr.." "..(math.max(tonumber(w)*0.55-0.1,0.155))
+							colorStr = colorStr.." "..(math.max(tonumber(w)*0.55-0.1,0.165))
 						end
 						wd.rgbcolor = colorStr
 					end
@@ -223,7 +223,7 @@ for wdName, wd in pairs(WeaponDefs) do
 		wd.customparams = {}
 	end
 	if not (wd.customparams.reaimtime) then
-		wd.customparams.reaimtime = 10
+		wd.customparams.reaimtime = 7
 	end
 
 	if wd.areaofeffect then

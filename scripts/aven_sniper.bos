@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define SPEEDUP_FACTOR 200
+#define SPEEDUP_FACTOR 170
 
 #define HEADING_TOLERANCE	<25>
 #define PITCH_TOLERANCE		<15>
@@ -63,7 +63,7 @@ walk()
 	var slowTurnSpd, slowTurnSpd2;
 
 	slowTurnSpd = mATurnSpd2 / 2;
-	slowTurnSpd2 = mATurnSpd2 / 6;
+	slowTurnSpd2 = mATurnSpd2 / 8;
 	
 	
 	// back contact point : right foot behind, left foot forward
@@ -86,7 +86,7 @@ walk()
 			turn luparm to x-axis <10.000000> speed slowTurnSpd;
 			turn lloarm to x-axis <-10.000000> speed slowTurnSpd2;
 
-			turn ruparm to x-axis <0.000000> speed slowTurnSpd;
+			turn ruparm to x-axis <0.000000> speed slowTurnSpd2;
 		}
 		
 		wait-for-turn lthigh around x-axis;
@@ -99,6 +99,7 @@ walk()
 	if( bMoving)
 	{
 		turn lfoot to x-axis legAngle3 speed mATurnSpd1*3;
+		turn pelvis to x-axis <-2.000000> speed slowTurnSpd2;
 		wait-for-turn lfoot around x-axis;
 	}
 
@@ -119,7 +120,7 @@ walk()
 			turn torso to y-axis <0.000000> speed slowTurnSpd2;
 			turn luparm to x-axis <-15.000000> speed slowTurnSpd;
 			turn lloarm to x-axis <-15.000000> speed slowTurnSpd2;
-			turn ruparm to x-axis <10.000000> speed slowTurnSpd;
+			turn ruparm to x-axis <10.000000> speed slowTurnSpd2;
 		}
 
 		move pelvis to y-axis [0.000000] speed mAMoveSpd1;
@@ -152,7 +153,7 @@ walk()
 			turn torso to y-axis <-10.000000> speed slowTurnSpd2;
 			turn luparm to x-axis <-40.000000> speed slowTurnSpd;
 			turn lloarm to x-axis <-20.000000> speed slowTurnSpd2;
-			turn ruparm to x-axis <20.000000> speed slowTurnSpd;
+			turn ruparm to x-axis <20.000000> speed slowTurnSpd2;
 		}
 
 		wait-for-turn lthigh around x-axis;
@@ -165,6 +166,7 @@ walk()
 	if( bMoving)
 	{
 		turn rfoot to x-axis legAngle3 speed mATurnSpd1*3;
+		turn pelvis to x-axis <-2.000000> speed slowTurnSpd2;
 		wait-for-turn rfoot around x-axis;
 	}
 
@@ -186,7 +188,7 @@ walk()
 			turn torso to y-axis <0.000000> speed slowTurnSpd2;
 			turn luparm to x-axis <-15.000000> speed slowTurnSpd;
 			turn lloarm to x-axis <-15.000000> speed slowTurnSpd2;
-			turn ruparm to x-axis <10.000000> speed slowTurnSpd;
+			turn ruparm to x-axis <10.000000> speed slowTurnSpd2;
 		}
 		
 		move pelvis to y-axis [0.000000] speed mAMoveSpd1;

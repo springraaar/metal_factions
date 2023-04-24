@@ -59,7 +59,10 @@ local spSetUnitNoSelect = Spring.SetUnitNoSelect
 local spSetUnitNoMinimap = Spring.SetUnitNoMinimap
 local spSetUnitRadiusAndHeight = Spring.SetUnitRadiusAndHeight
 local spGetTeamList = Spring.GetTeamList
+local spAreTeamsAllied = Spring.AreTeamsAllied
 local spSetUnitEngineDrawMask = Spring.SetUnitEngineDrawMask
+
+include("lualibs/util.lua")
 
 -- aim point over target when far from it
 local LONG_RANGE_ROCKET_FAR_FROM_TARGET_H = 1000		
@@ -94,6 +97,10 @@ local DC_ROCKET_DEPLOY_LIMIT_H = 300
 local DC_ROCKET_AUTO_BUILD_STEPS = 30
 local DC_ROCKET_AUTO_BUILD_FRACTION_PER_STEP = 1/DC_ROCKET_AUTO_BUILD_STEPS
 local DC_ROCKET_DEPLOY_DELAY_FRAMES = 30
+
+local MD_WATCH_UPDATE_FRAMES = 30
+local MD_WATCH_ALERT_SQDISTANCE = 3500*3500
+local UNIT_RP_PUBLIC_TBL = {public = true}
 
 local mapSizeX = Game.mapSizeX
 local mapSizeZ = Game.mapSizeZ
@@ -424,8 +431,8 @@ function gadget:GameFrame(n)
 				local uId = spCreateUnit(info.defId,info.px,info.py,info.pz,0,info.teamId,true,true)
 				-- set it to auto-build itself
 				if uId then
-					spSetUnitRulesParam(uId,"auto_build_fraction_per_step",DC_ROCKET_AUTO_BUILD_FRACTION_PER_STEP,{public = true})	
-					spSetUnitRulesParam(uId,"auto_build_steps",DC_ROCKET_AUTO_BUILD_STEPS,{public = true})
+					spSetUnitRulesParam(uId,"auto_build_fraction_per_step",DC_ROCKET_AUTO_BUILD_FRACTION_PER_STEP,UNIT_RP_PUBLIC_TBL)	
+					spSetUnitRulesParam(uId,"auto_build_steps",DC_ROCKET_AUTO_BUILD_STEPS,UNIT_RP_PUBLIC_TBL)
 				end
 				-- also add a cs beacon temporarily over it to provide los
 				uId = spCreateUnit("cs_beacon",info.px,info.py+500,info.pz,0,info.teamId,false)
@@ -463,6 +470,14 @@ function gadget:GameFrame(n)
 	
 	-- handle destructible long range projectiles
 	local nearCollision = false
+	local MDWatchCheck = n%MD_WATCH_UPDATE_FRAMES == 0
+	if MDWatchCheck == true then
+		-- clear MD alert status
+		for unitId,_ in pairs(GG.enableMDWatchList) do
+			spSetUnitRulesParam(unitId,"md_alert",0,UNIT_RP_PUBLIC_TBL)
+		end		
+	end
+	local alreadyAlertedMDUnitIds = {}
 	for id,ownerId in pairs(destructibleProjectiles) do
 		px,py,pz = spGetProjectilePosition(id)
 		ot = longRangeRocketOriginalTargetsById[id]
@@ -471,6 +486,22 @@ function gadget:GameFrame(n)
 		
 		--Spring.Echo("projectile px="..tostring(px).." otx="..tostring(ot[1]))
 		if (px and ot) then
+			-- mark all enemy units with MD ability within a certain radius as "alerted"
+			for unitId,_ in pairs(GG.enableMDWatchList) do
+				--Spring.Echo("checking MD watch unit "..unitId)
+				if not alreadyAlertedMDUnitIds[unitId] and (not spAreTeamsAllied(spGetUnitTeam(ownerId),spGetUnitTeam(unitId))) then 
+					ux,_,uz = spGetUnitPosition(unitId)
+					if ux then
+						--Spring.Echo("MD watch unit "..unitId.." sqdist="..sqDistance(px,ux,pz,uz))
+						if sqDistance(px,ux,pz,uz) < MD_WATCH_ALERT_SQDISTANCE then
+							--Spring.Echo("incoming enemy missiles near MD watch unit "..unitId)
+							spSetUnitRulesParam(unitId,"md_alert",1,UNIT_RP_PUBLIC_TBL)
+							alreadyAlertedMDUnitIds[unitId] = true
+						end
+					end
+				end
+			end
+		
 			if (tType == string.byte('u') or tType == string.byte('f')) then
 				st = ot
 			end
@@ -766,7 +797,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	
 	if destructibleWeaponIds[weaponDefID] then
 		destructibleProjectiles[proID] = proOwnerID
-		spSetUnitRulesParam(proOwnerID,"destructible_projectile_id",proID,{public = true})
+		spSetUnitRulesParam(proOwnerID,"destructible_projectile_id",proID,UNIT_RP_PUBLIC_TBL)
 		spUnitDetach(proOwnerID)
 		
 		-- mark projectile launch

@@ -197,6 +197,71 @@
 	}
 }
 
+[DYNPROJGLOWRED]
+{
+
+	[GLOW]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=1, 0, 0;
+			width=d1;
+			length=d1;
+			alpha=0.15;
+			alphadecay=0.075;
+			color=0.9, 0.45, 0.2;
+
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+	[GLOW2]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=0, 1, 0;
+			width=d1;
+			length=d1;
+			alpha=0.15;
+			alphadecay=0.075;
+			color=0.9, 0.45, 0.2;
+
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+	[GLOW3]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=0, 0, 1;
+			width=d1;
+			length=d1;
+			alpha=0.15;
+			alphadecay=0.075;
+			color=0.9, 0.45, 0.2;
+
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+}
+
 [DYNPROJGLOWPURPLE]
 {
 
@@ -510,10 +575,10 @@
 		airdrag=0.91;
 		particleLife=d0.07 4;
 		particleLifeSpread=d0.03 1.5;
-		numParticles=d0.02 2;
+		numParticles=d0.025 2;
 		particleSpeed=d0.03 2;
 		particleSpeedSpread=d0.012 1.5;
-		particleSize=d0.012 1.5;
+		particleSize=d0.013 1.5;
 		particleSizeSpread=d0.01 1;
 		emitRot=45;
 		emitRotSpread=45;
@@ -545,7 +610,7 @@
 		numParticles=d0.08 5;
 		particleSpeed=d0.021 2;
 		particleSpeedSpread=d0.005 1;
-		particleSize=d0.02 2;
+		particleSize=d0.025 2;
 		particleSizeSpread=d0.02 1.5;
 		emitRot=25;
 		emitRotSpread=45;
@@ -606,10 +671,10 @@
 		airdrag=0.91;
 		particleLife=d0.09 6;
 		particleLifeSpread=2;
-		numParticles=d0.02 2;
+		numParticles=d0.025 2;
 		particleSpeed=d0.008 2;
 		particleSpeedSpread=d0.005 1;
-		particleSize=d0.06 4;
+		particleSize=d0.07 4;
 		particleSizeSpread=d0.03 1.5;
 		emitRot=25;
 		emitRotSpread=45;
@@ -641,7 +706,7 @@
 			particleSizeSpread=d0.03 1.5;
 		
 			particleLife=d0.09 6;
-			numParticles=2; 
+			numParticles=d0.01 2; 
 			particleSpeed=0; 
 			particleSize=d0.12 4;
 		
@@ -674,10 +739,10 @@
 			particleSpeedSpread=d0.01;  
 			particleSizeSpread=d0.03 1.5;
 		
-			particleLife=d0.09 6;
+			particleLife=d0.1 6;
 			numParticles=d0.02; 
 			particleSpeed=d0.02; 
-			particleSize=d0.06 2;
+			particleSize=d0.07 2;
 		
 			emitVector=0, 1, 0; 
 			emitRot=80;
@@ -832,7 +897,7 @@
 		class=CSimpleGroundFlash;
 		[properties]
 		{
-			size = d0.5 15;
+			size = d0.55 16;
 			sizeGrowth = 0;
 			texture=groundflash;	     		
 	     		ttl = d0.05 5;
@@ -917,8 +982,8 @@
 			pos=0, d0.05 5, 0;
 			//dir=-1 r2,-1 r2,-1 r2;
 			dir=1, 0, 0;
-			width=d0.2 20;
-			length=d0.1 10;
+			width=d0.25 20;
+			length=d0.125 10;
 			alpha=0.2;
 			alphadecay=d0.5 p-1 y0 3x0;
 			color=0.9, 0.8, 0.6;
@@ -938,8 +1003,8 @@
 			pos=0, d0.05 5, 0;
 			//dir=-1 r2,-1 r2,-1 r2;
 			dir=0, 1, 0;
-			width=d0.2 20;
-			length=d0.1 10;
+			width=d0.25 20;
+			length=d0.125 10;
 			alpha=0.2;
 			alphadecay=d0.5 p-1 y0 3x0;
 			color=0.9, 0.8, 0.6;
@@ -959,8 +1024,8 @@
 			pos=0, d0.05 5, 0;
 			//dir=-1 r2,-1 r2,-1 r2;
 			dir=0, 0, 1;
-			width=d0.2 20;
-			length=d0.1 10;
+			width=d0.25 20;
+			length=d0.125 10;
 			alpha=0.2;
 			alphadecay=d0.5 p-1 y0 3x0;
 			color=0.9, 0.8, 0.6;

@@ -195,7 +195,7 @@ AimFromPrimary(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 35 )
+	if( severity <= 50 )
 	{
 		explode head type BITMAPONLY | BITMAP2;
 	
