@@ -171,7 +171,7 @@ AimFromPrimary(piecenum)
 
 AimSecondary(heading, pitch)
 {
-	call-script updateAimHelper1(heading,<0>,<150>,<150>,HEADING_TOLERANCE2,PITCH_TOLERANCE2);
+	call-script updateAimHelper1(heading,pitch,<150>,<150>,HEADING_TOLERANCE2,PITCH_TOLERANCE2);
 	set-signal-mask SIG_AIM;
 	turn turret to y-axis heading speed <150.038462>;
 	turn lbox2 to x-axis <-15.000000> speed <150.000000>;
