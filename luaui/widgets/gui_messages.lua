@@ -479,8 +479,59 @@ function widget:AddConsoleLine(line)
 	end
 end
 
-function widget:DrawScreen()
+function drawAllElements()
+	-- show message box and scroll to latest message on mouse over if it was invisible
+	local mx,my,_,_,_ = GetMouseState()
+	if (not drawPlayerMessages) and mouseOverPlayerMessageBox( mx, my ) then
+		drawVisibilityHint()
+	end
+	
+	-- is it time to scroll back to the latest message?
+	if ((currentFrame - lastPlayerMsgScrollFrame) > DELAY_BEFORE_CLEAR) then
+		scrollToLatestPlayerMessage()
+	end
+	
+	
+	playerBoxFillColor[4] = FILL_ALPHA * playerBoxAlpha
+	playerBoxLineColor[4] = LINE_ALPHA * playerBoxAlpha
+	drawBox(PLAYER_MSG_BOX_X_MIN, PLAYER_MSG_BOX_Y_MAX, PLAYER_MSG_BOX_W, PLAYER_MSG_BOX_H, playerBoxFillColor, playerBoxLineColor)
+	
+	local y = PLAYER_MSG_BOX_Y_MAX - (FONT_SIZE + 6)
+	
+	-- because playerMsgHistory is never reset to {}
+	-- while scrollable history enabled we need another
+	-- way to determine if we should draw messages
+	if (drawPlayerMessages == true) then
+		drawScrollBar()
+	
+		for index = messageFrameMin, messageFrameMax, 1 do
+			if (index <= numPlayerMessages) then
+				if playerMsgHistory[index] ~= nil then
+					local playerColor = playerMsgHistory[index][1]
+					local playerFontStyle = playerMsgHistory[index][2]
+					local playerMessage = playerMsgHistory[index][3]
+					local playerMessageWidth = (gl_GetTextWidth(playerMessage) * FONT_SIZE )
+		
+	
+					local text = playerMessage
+					local style = playerFontStyle
+					if ( USE_COLOR_CODES ) then
+						local colorcode = convertColor(playerColor)
+						text = colorcode..playerMessage
+					else
+						style = playerFontStyle.."n"
+					end
+					gl_Color(playerColor)
+					gl_Text(text, PLAYER_MSG_BOX_X_MIN+5, y, FONT_SIZE, style)
+				end
+			end
+	
+			y = y - FONT_SIZE
+		end
+	end
+end
 
+function widget:DrawScreen()
 	currentFrame = GetGameFrame()
 	
 	-- is it time to hide message box
@@ -491,72 +542,24 @@ function widget:DrawScreen()
 		playerBoxAlpha = MIN_ALPHA
 	end
 
-	local refreshIdx = math_floor(spDiffTimers(spGetTimer(),refTimer)*3)
-	local refreshKey = messageFrameMax
-	-- refresh gl list only a few times per second
-	if (not glList) or refreshIdx ~= glListRefreshIdx or refreshKey ~= glListRefreshKey then
-		if (glList) then
-			glDeleteList(glList)
-		end 
-		glList = glCreateList(function()
-		
-			-- show message box and scroll to latest message on mouse over if it was invisible
-			local mx,my,_,_,_ = GetMouseState()
-			if (not drawPlayerMessages) and mouseOverPlayerMessageBox( mx, my ) then
-				drawVisibilityHint()
-			end
+	-- workaround for AMD gpu crashing due to display list usage on this widget
+	if Platform.glHaveAMD then
+		drawAllElements()
+	else
+		local refreshIdx = math_floor(spDiffTimers(spGetTimer(),refTimer)*3)
+		local refreshKey = messageFrameMax
+		-- refresh gl list only a few times per second
+		if (not glList) or refreshIdx ~= glListRefreshIdx or refreshKey ~= glListRefreshKey then
+			if (glList) then
+				glDeleteList(glList)
+			end 
+			glList = glCreateList(drawAllElements)
 			
-			-- is it time to scroll back to the latest message?
-			if ((currentFrame - lastPlayerMsgScrollFrame) > DELAY_BEFORE_CLEAR) then
-				scrollToLatestPlayerMessage()
-			end
-		
-
-			playerBoxFillColor[4] = FILL_ALPHA * playerBoxAlpha
-			playerBoxLineColor[4] = LINE_ALPHA * playerBoxAlpha
-			drawBox(PLAYER_MSG_BOX_X_MIN, PLAYER_MSG_BOX_Y_MAX, PLAYER_MSG_BOX_W, PLAYER_MSG_BOX_H, playerBoxFillColor, playerBoxLineColor)
-		
-			local y = PLAYER_MSG_BOX_Y_MAX - (FONT_SIZE + 6)
-		
-			-- because playerMsgHistory is never reset to {}
-			-- while scrollable history enabled we need another
-			-- way to determine if we should draw messages
-			if (drawPlayerMessages == true) then
-				drawScrollBar()
-			
-				for index = messageFrameMin, messageFrameMax, 1 do
-					if (index <= numPlayerMessages) then
-						if playerMsgHistory[index] ~= nil then
-							local playerColor = playerMsgHistory[index][1]
-							local playerFontStyle = playerMsgHistory[index][2]
-							local playerMessage = playerMsgHistory[index][3]
-							local playerMessageWidth = (gl_GetTextWidth(playerMessage) * FONT_SIZE )
-				
-		
-							local text = playerMessage
-							local style = playerFontStyle
-							if ( USE_COLOR_CODES ) then
-								local colorcode = convertColor(playerColor)
-								text = colorcode..playerMessage
-							else
-								style = playerFontStyle.."n"
-							end
-							gl_Color(playerColor)
-							gl_Text(text, PLAYER_MSG_BOX_X_MIN+5, y, FONT_SIZE, style)
-						end
-					end
-		
-					y = y - FONT_SIZE
-				end
-			end
-		end)
-		
-		glListRefreshKey = refreshKey
-		glListRefreshIdx = refreshIdx
+			glListRefreshKey = refreshKey
+			glListRefreshIdx = refreshIdx
+		end
+		glCallList(glList)
 	end
-	glCallList(glList)
-
-
 end
 
 function buildTable()

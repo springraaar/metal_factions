@@ -338,7 +338,7 @@ end
 
 function widget:DrawScreen()
 	if not WG.menuShown then
-		-- workaround for AMD crashing if i try to use display lists on this widget
+		-- workaround for AMD gpu crashing if i try to use display lists on this widget
 		if Platform.glHaveAMD then
 			drawAllElements()
 		else
