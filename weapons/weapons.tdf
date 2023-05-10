@@ -10104,27 +10104,29 @@
 }
 [gear_tremor_cannon]
 {
-	name=Plasma Cannon;
+	name=Energized Plasma Cannon;
 	weaponType=Cannon;
 	energyPerShot=0;
 	cegTag=PLASMATRAIL3;
-	texture1=cannon;
+	texture1=ecannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
 	turret=1;
 	range=600;
-	reloadTime=1.8;
+	reloadTime=2.5;
 	weaponVelocity=390;
-	areaOfEffect=110;
+	energyCost=360;
+	areaOfEffect=150;
+	edgeEffectiveness=0.1;
 	soundStart=cannhvy2;
-	soundHit=xplomed2;
+	soundHit=xplolrg5;
 	tolerance=3000;
-	size=3.4;
-	rgbColor=0.9 0.7 0.3;
-	stages=4;
-  	separation=0.4;
-  	alphaDecay=0.24;
-  	sizeDecay=-0.1;
-	accuracy=400;
+	size=4.1;
+	rgbColor=0.9 0.85 0.4;
+	stages=7;
+  	separation=0;
+  	alphaDecay=0.95;
+  	sizeDecay=-0.2;
+	accuracy=200;
 	burnBlow=1;
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -10137,11 +10139,11 @@
 	}
 	[DAMAGE]
 	{
-		default=450;
+		default=660;
 		group_invincible=1;
-		armor_heavy=450.00;//#AUTO#
-		armor_medium=450.00;//#AUTO#
-		armor_light=450.00;//#AUTO#
+		armor_heavy=660.00;//#AUTO#
+		armor_medium=660.00;//#AUTO#
+		armor_light=660.00;//#AUTO#
 	}
 }
 [GRENADO_BLAST]
@@ -10609,7 +10611,7 @@
 }
 [aven_bolter_rocket]
 {
-	name=Heavy Rockets;
+	name=Rockets;
 	weaponType=MissileLauncher;
 	explosionGenerator=custom:ROCKETBLASTWRAPPER;
 	cegTag=ROCKETTRAIL2;
@@ -10660,7 +10662,7 @@
 }
 [aven_salvo_rocket]
 {
-	name=Medium Rockets;
+	name=Rockets;
 	weaponType=MissileLauncher;
 	explosionGenerator=custom:ROCKETBLASTWRAPPER;
 	cegTag=ROCKETTRAIL2;
@@ -14171,7 +14173,7 @@
 }
 [gear_stratos_rocket]
 {
-	name=Heavy Rockets;
+	name=Rockets;
 	weaponType=MissileLauncher;
 	model=weapon_rocket3.3do;
 	turret=0;

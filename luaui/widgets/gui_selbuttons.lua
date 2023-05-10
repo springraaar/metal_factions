@@ -396,7 +396,10 @@ function widget:MouseRelease(x, y, button)
 			end
 		end
 
-		units = spGetSelectedUnitsSorted()
+		units, n = spGetSelectedUnitsSorted()
+		if not units.n then
+			units.n = n or tableLength(units)
+		end
 		if (units.n ~= selUnitTypes) then
 			return -1  -- discard this click
 		end
@@ -503,7 +506,11 @@ function widget:Update(dt)
 end
 
 function updateSelectionInfo()
-	local sCounts = spGetSelectedUnitsCounts()
+	local sCounts,n = spGetSelectedUnitsCounts()
+	if not sCounts.n then
+		sCounts.n = n or tableLength(sCounts)
+	end
+
 	local newSelectionCheck = sCounts.n
 	for key,value in pairs(sCounts) do
 		if key ~= "n" then
@@ -515,7 +522,7 @@ function updateSelectionInfo()
 		--Spring.Echo("selection changed "..spGetGameFrame())
 		selectionCheck = newSelectionCheck
 		selectedUnitCounts = sCounts
-		selUnitTypes = selectedUnitCounts.n;
+		selUnitTypes = selectedUnitCounts.n or 0;
 		selectedUnitCounts.n = nil
 
 		if selUnitTypes > MAX_ICONS then
