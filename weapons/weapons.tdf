@@ -13255,53 +13255,6 @@
 		armor_light=130.00;//#AUTO#
 	}
 }
-[aven_icarus_rocket]
-{
-	name=Rockets;
-	weaponType=MissileLauncher;
-	model=weapon_rocket4.3do;
-	turret=1;
-	range=550;
-	cylinderTargeting=1;
-	reloadTime=2.1;
-	weaponVelocity=400;
-	startVelocity=350;
-	weaponAcceleration=131;
-	metalPerShot=0;
-	turnRate=13680;
-	areaOfEffect=80;
-	explosionGenerator=custom:ROCKETBLASTWRAPPER;
-	cegTag=ROCKETTRAIL1;
-	texture1=null; //flare//
-	texture2=null;//first segment of missiletrail//
-	texture3=null;//flame//
-	texture4=null;//unknown//
-	soundStart=rocklit1;
-	soundHit=xplomed2;
-	fireStarter=70;
-	smokeTrail=0;
-	tolerance=18000;
-	waterWeapon=0;
-	collideFriendly=1;
-	tracks=0;
-	interceptedByShieldType=1;
-	avoidFeature=0;
-	[CUSTOMPARAMS]
-	{
-		hitPower=3;
-		restrictedAngle=1;
-		expDmgScaling=1;
-		targets=SURFACE;
-	}
-	[DAMAGE]
-	{
-		default=300;
-		group_invincible=1;
-		armor_heavy=300.00;//#AUTO#
-		armor_medium=300.00;//#AUTO#
-		armor_light=300.00;//#AUTO#
-	}
-}
 [aven_icarus_bomb]
 {
 	name=Big Bombs;
@@ -13330,7 +13283,6 @@
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
-		restrictedAngle=1;
 		expDmgScaling=1;
 		targets=SURFACE;
 	}
