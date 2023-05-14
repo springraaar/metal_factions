@@ -1,4 +1,4 @@
-#define TA			// This is a TA script
+#define TAK			// This is a TA script
 
 #include "sfxtype.h"
 #include "exptype.h"
@@ -8,14 +8,198 @@
 #define HEADING_TOLERANCE	<25>
 #define PITCH_TOLERANCE		<15>
 
-piece  torso,head,pelvis, flash, rthigh, lthigh, lleg, rleg, lfoot,rfoot,ruparm,rarm,luparm, larm, lloarm, lhand, gun, ground,pack;
+piece  base,torso,head,pelvis, flash, rthigh, lthigh, lleg, rleg, lfoot,rfoot,ruparm,rarm,luparm, larm, lloarm, lhand, gun, pack,dustbase,dustpt1,dustpt2,dustpt3,barrier1,barrier2,barrier3, tshield1,tshield2,tshield3;
 
-static-var  bMoving, bAiming, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
+static-var  bMoving, bAiming, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3, isDeployed, isDeploying;
 
 #include "aimhelper1.h"
 
+lua_setMobility() { return 0; }
+
 // Signal definitions
 #define SIG_AIM				2
+
+
+shake()
+{
+	set CEG_DAMAGE to 12;
+	play-sound( "burrow2", 3 );
+	spin dustbase around y-axis speed <920>;
+	emit-sfx 1024+1 from dustpt1;
+	emit-sfx 1024+1 from dustpt2;
+	emit-sfx 1024+2 from lleg;
+	emit-sfx 1024+2 from rleg;
+	turn base to z-axis <1> speed <10>;
+	sleep 30;
+	emit-sfx 1024+1 from dustpt1;
+	emit-sfx 1024+1 from dustpt3;	
+	turn base to z-axis <-1> speed <10>;
+	sleep 30;
+	emit-sfx 1024+1 from dustpt2;
+	emit-sfx 1024+1 from dustpt3;	
+	turn base to z-axis <1> speed <10>;
+	sleep 30;
+	emit-sfx 1024+1 from dustpt1;
+	emit-sfx 1024+1 from dustpt2;
+	emit-sfx 1024+2 from lleg;
+	emit-sfx 1024+2 from rleg;
+	turn base to z-axis <-1> speed <10>;
+	sleep 30;
+	emit-sfx 1024+1 from dustpt1;
+	emit-sfx 1024+1 from dustpt3;
+	turn base to z-axis <1> speed <10>;
+	sleep 30;
+	emit-sfx 1024+1 from dustpt2;
+	emit-sfx 1024+1 from dustpt3;
+	turn base to z-axis <-1> speed <10>;
+	sleep 30;
+	emit-sfx 1024+1 from dustpt1;
+	emit-sfx 1024+1 from dustpt2;
+	turn base to z-axis <1> speed <10>;
+	sleep 30;
+	emit-sfx 1024+1 from dustpt1;
+	emit-sfx 1024+1 from dustpt3;
+	turn base to z-axis <-1> speed <10>;
+	emit-sfx 1024+2 from lleg;
+	emit-sfx 1024+2 from rleg;
+	sleep 30;
+	emit-sfx 1024+1 from dustpt2;
+	emit-sfx 1024+1 from dustpt3;
+	turn base to z-axis <1> speed <10>;
+	sleep 30;
+	turn base to z-axis <-1> speed <10>;
+	sleep 30;
+	turn base to z-axis <1> speed <10>;
+	sleep 30;
+	turn base to z-axis <-1> speed <10>;
+	sleep 30;
+	turn base to z-axis <0> speed <10>;
+}
+
+deploy()
+{
+	if (!isDeployed)
+	{
+		isDeploying = TRUE;
+		call-script lua_setMobility(0);
+		
+		move barrier1 to y-axis [-12] now;
+		
+		// burrow
+		show barrier1;
+		hide barrier2;
+		hide barrier3;
+		show tshield1;
+		hide tshield2;
+		hide tshield3;
+
+		
+		move barrier1 to y-axis [-3] speed [7];
+
+		call-script shake();
+		call-script shake();
+
+		turn luparm to x-axis <-25.000000> speed <25>;
+		turn lloarm to x-axis <-25.000000> speed <40>;
+
+		hide barrier1;
+		show barrier2;
+		hide barrier3;
+		hide tshield1;
+		show tshield2;
+		hide tshield3;
+
+		
+		call-script shake();
+		call-script shake();
+
+		hide barrier1;
+		hide barrier2;
+		show barrier3;
+		hide tshield1;
+		hide tshield2;
+		show tshield3;
+
+		sleep 100;
+		isDeployed = TRUE;
+		isDeploying = FALSE;
+	}
+}
+
+undeploy()
+{
+	if (isDeployed)
+	{
+		isDeployed = FALSE;
+		isDeploying = TRUE;
+		
+		// unburrow
+		hide barrier1;
+		show barrier2;
+		hide barrier3;
+		hide tshield1;
+		show tshield2;
+		hide tshield3;
+
+		move barrier1 to y-axis [-12] speed [7];
+
+		call-script shake();
+		call-script shake();
+
+		show barrier1;
+		hide barrier2;
+		hide barrier3;
+		show tshield1;
+		hide tshield2;
+		hide tshield3;
+
+		call-script shake();
+		call-script shake();
+
+		turn luparm to x-axis <-15.000000> speed <25>;
+		turn lloarm to x-axis <-15.000000> speed <40>;
+
+		hide barrier1;
+		hide barrier2;
+		hide barrier3;
+		hide tshield1;
+		hide tshield2;
+		hide tshield3;
+
+		
+		sleep 100;
+
+		call-script lua_setMobility(100);
+		isDeploying = FALSE;
+	}
+	isDeployed = FALSE;
+}
+
+
+handleActivation() 
+{
+	while (TRUE)
+	{ 
+		if (isDeployed)
+		{
+			set ARMORED to TRUE;
+		}
+		else
+		{
+			set ARMORED to FALSE;
+		}
+		if (get ACTIVATION) 
+		{
+			call-script deploy();
+		}
+		else
+		{
+			call-script undeploy();
+		}
+		sleep 100;
+	}
+}
+
 
 
 MotionSpeedControl(maxSpeed,currentSpeed)
@@ -271,10 +455,21 @@ Create()
 {
 	bMoving = FALSE;
 	bAiming = FALSE;
+	hide barrier1;
+	hide barrier2;
+	hide barrier3;
+	hide tshield1;
+	hide tshield2;
+	hide tshield3;
+	move barrier1 to y-axis [-11] now;
+	
+	isDeployed = FALSE;
+	set ARMORED to FALSE;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();
 	start-script MotionControl();
 	start-script SmokeUnit();
+	start-script handleActivation();
 }
 
 StartMoving()
@@ -305,6 +500,10 @@ RestoreAfterDelay()
 
 AimPrimary(heading, pitch)
 {
+	if (isDeploying) 
+	{
+		return (0);
+	}
 	if (bMoving) 
 	{
 		call-script updateAimHelper1(heading,pitch,<70>,<70>,HEADING_TOLERANCE,PITCH_TOLERANCE);
@@ -369,7 +568,11 @@ Killed(severity, corpsetype)
 		explode larm type SHATTER;
 		explode luparm type SHATTER;
 		explode rarm type SHATTER;
-		return (1);
+		if (isDeployed) 
+		{
+			return (1);
+		}
+		return (2);
 	}
 	explode head type SHATTER;
 	explode ruparm type SHATTER;
@@ -380,5 +583,5 @@ Killed(severity, corpsetype)
 	explode rleg type SHATTER;
 	explode torso type SHATTER;
 	explode pack type SHATTER;
-	return (2);
+	return (3);
 }

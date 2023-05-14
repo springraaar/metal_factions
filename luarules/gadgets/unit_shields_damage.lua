@@ -798,6 +798,11 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		return damage * factor
 	end
 	
+	-- immobilized units are considered "stuck" and can't be pushed around
+	if GG.mobilityModifier and GG.mobilityModifier[unitID] == 0 then
+		return damage, 0
+	end
+	
 	return damage
 end
 

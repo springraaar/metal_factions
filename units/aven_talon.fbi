@@ -94,6 +94,8 @@
 	onlytargetcategory1=NOTAIR;
 	badTargetCategory2=NOTAIR;
 	badTargetCategory3=NOTAIR;
+	weaponMainDir1=0 -1 0;  //x:0 y:0 z:1 => that's forward!
+	maxAngleDif1=190;
 	explodeAs=BIG_UNITEX;
 	selfDestructAs=BIG_UNIT;
 
@@ -126,8 +128,8 @@
 		explosionGenerator0=custom:rocketflaresml;
 		explosionGenerator1=custom:rocketflaresml;
 	}
-	buildCostEnergy=7006;//#AUTO#
-	buildCostMetal=1401;//#AUTO#
-	buildTime=16699;//#AUTO#
-	mass=393;//#AUTO#
+	buildCostEnergy=7474;//#AUTO#
+	buildCostMetal=1494;//#AUTO#
+	buildTime=17813;//#AUTO#
+	mass=409;//#AUTO#
 }

@@ -1931,18 +1931,19 @@
 	name=Guided Bomb;
 	weaponType=MissileLauncher;
 	model=weapon_medmsl3;
-	turret=0;
-	cegTag=ROCKETTRAIL1;
+	turret=1;
+	cegTag=BOMBTRAIL;
 	range=450;
 	explosionGenerator=custom:ROCKETBLASTWRAPPER;
-	reloadTime=6;
-	flightTime=2.75;
+	reloadTime=4;
+	flightTime=3;
 	weaponVelocity=460;
-	startVelocity=200;
-	weaponAcceleration=100;
-	turnRate=11660;
-	tolerance=8000;
+	startVelocity=100;
+	weaponAcceleration=200;
+	turnRate=31660;
+	tolerance=12000;
 	tracks=1;
+	fixedLauncher=1;
 	areaOfEffect=80;
 	soundStart=rocklit2;
 	soundHit=xplomed2;
@@ -10114,10 +10115,10 @@
 	range=600;
 	reloadTime=2.5;
 	weaponVelocity=390;
-	energyCost=360;
+	energyPerShot=360;
 	areaOfEffect=150;
 	edgeEffectiveness=0.1;
-	soundStart=cannhvy2;
+	soundStart=gearepc;
 	soundHit=xplolrg5;
 	tolerance=3000;
 	size=4.1;
@@ -15164,7 +15165,6 @@
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
-		restrictedAngle=1;
 		expDmgScaling=1;
 		targets=SURFACE;
 	}
@@ -18583,8 +18583,7 @@
 [claw_ringo_ring]
 {
 	name=High Energy Ring Launcher;
-	weaponType=MissileLauncher;
-	trajectoryHeight=0.2;
+	weaponType=Cannon;
 	turret=1;
 	model=weapon_ringsml.3do;
 	range=430;
@@ -18593,8 +18592,6 @@
 	reloadTime=5;
 	flightTime=3.75;
 	texture1=null; //flare//
-	wobble=100;
-	turnRate=6000;
 	weaponVelocity=600;
 	cegTag=RINGTRAILSML;
 	explosionGenerator=custom:RINGBLASTWRAPPER;
@@ -18603,8 +18600,6 @@
 	soundHit=ringhit;
 	energyPerShot=200;
 	tolerance=6000;
-	startVelocity=600;
-	weaponAcceleration=50;
 	interceptedByShieldType=1;
 	impulseFactor=0.4;
 	avoidFeature=0;
@@ -18625,8 +18620,7 @@
 [claw_gyro_ring]
 {
 	name=High Energy Ring Launcher;
-	weaponType=MissileLauncher;
-	trajectoryHeight=0.3;
+	weaponType=Cannon;
 	turret=1;
 	model=weapon_ring.3do;
 	range=1000;
@@ -18637,7 +18631,7 @@
 	texture1=null; //flare//
 	wobble=100;
 	turnRate=6000;
-	weaponVelocity=600;
+	weaponVelocity=700;
 	cegTag=RINGTRAIL;
 	explosionGenerator=custom:RINGBLASTWRAPPER;
 	castShadow=0;
@@ -18646,8 +18640,6 @@
 	soundHit=ringhit;
 	energyPerShot=400;
 	tolerance=3000;
-	startVelocity=300;
-	weaponAcceleration=50;
 	interceptedByShieldType=1;
 	impulseFactor=0.4;
 	avoidFeature=0;
@@ -18668,18 +18660,14 @@
 [claw_dynamo_ring]
 {
 	name=Supercharged Energy Ring Launcher;
-	weaponType=MissileLauncher;
+	weaponType=Cannon;
 	turret=1;
 	model=weapon_ring2.3do;
-	trajectoryHeight=0.05;
 	range=1050;
 	reloadTime=15;
-	flightTime=5.75;
 	texture1=null; //flare//
 	noexplode=1;
-	turnRate=6000;
 	weaponVelocity=900;
-	startVelocity=900;
 	edgeEffectiveness=1;
 	cegTag=RINGTRAILBIG;
 	explosionGenerator=custom:RINGBIGBLASTWRAPPER;
@@ -18687,7 +18675,7 @@
 	soundStart=ringfire2;
 	soundHit=ringhit;
 	energyPerShot=3500;
-	tolerance=3000;
+	tolerance=5000;
 	interceptedByShieldType=1;
 	impulseFactor=0.4;
 	avoidFeature=0;
@@ -23566,7 +23554,6 @@
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
-		restrictedAngle=1;
 		expDmgScaling=1;
 		targets=SURFACE;
 	}

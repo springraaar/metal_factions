@@ -48,6 +48,12 @@ function widget:Initialize()
 		widgetHandler:RemoveWidget()
 		return true
 	end
+	-- change default fly state for all aircraft to "fly"
+	for udId,ud in pairs(UnitDefs) do
+		if ud.canFly then
+			defaultFlyState[udId] = 0
+		end 
+	end
 end
 
 -- enforce default fly idle states

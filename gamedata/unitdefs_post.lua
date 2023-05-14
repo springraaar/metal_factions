@@ -304,13 +304,20 @@ if (true) then
 				end
 			end
 		
+			-- amplify turn rates for ground units that turn relatively fast
+			local tr = tonumber(unitDef.turnrate)
+			if (not canFly) and tr and tr > 700 then
+				unitDef.turnrate = tr + (tr-700) * 1.6
+				--Spring.Echo("increased turnrate of "..name.." from "..tr.." to "..unitDef.turnrate)
+			end
+			
+			
 			-- make heavy units push resistant
 			-- TODO disabled because units would get stuck in each other
 			 --if unitDef.buildcostmetal and unitDef.mass and (tonumber(unitDef.buildcostmetal) > 2000 or tonumber(unitDef.mass) > 1500) then
 			 --	Spring.Echo(name.." is push resistant")
 			 --	unitDef.pushresistant = 1
 			 --end
-			 
 			 
 			if not canFly and (not unitDef.upright or tonumber(unitDef.upright) == 0) then
 				unitDef.upDirSmoothing = 0.9

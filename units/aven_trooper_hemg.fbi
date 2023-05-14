@@ -46,10 +46,10 @@
 	upright=1;
 
 	movementClass=KBOTHT2;
-	turnRate=632;
+	turnRate=732;
 	acceleration=0.8;
 	brakeRate=0.4;
-	maxVelocity=1.15;
+	maxVelocity=1.05;
 	maxSlope=17;
 	maxWaterDepth=12;
 
@@ -67,6 +67,10 @@
 	//**********
 	noAutoFire=0;
 	moveState=0;
+	onOffable=1;
+	activateWhenBuilt=0;
+
+	damageModifier=0.5;
 
 	collisionVolumeType = box;
 	collisionVolumeScales =22 38 22;
@@ -76,14 +80,16 @@
 	[CustomParams]
 	{
 		builtBy=aven_light_plant,aven_adv_kbot_lab;
-		tip=Significantly reduced aim rate and accuracy when moving;
+		tip=Set to ON to fortify, becoming immobile but gaining 50% damage resistance. Significantly reduced aim rate and accuracy when moving;
 	}
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:EmgFlareMed;
+		explosionGenerator1=custom:burrow;
+		explosionGenerator2=custom:buildglow;
 	}
-	buildCostEnergy=1668;//#AUTO#
-	buildCostMetal=333;//#AUTO#
-	buildTime=3975;//#AUTO#
-	mass=199;//#AUTO#
+	buildCostEnergy=1749;//#AUTO#
+	buildCostMetal=349;//#AUTO#
+	buildTime=4170;//#AUTO#
+	mass=201;//#AUTO#
 }

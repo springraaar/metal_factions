@@ -3254,6 +3254,13 @@
 	//[_flash]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=d1.5;explosionGenerator=custom:DYNGROUNDFLASH;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
 
+[BURROW]			// poofs when burrowing/deploying
+{
+	usedefaultexplosions=0;
+	[_dust]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=d4;explosionGenerator=custom:DYNCOLLISION;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+
+
 // DC rocket blast wrapper
 [DCROCKETBLASTWRAPPER]			
 {
