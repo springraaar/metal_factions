@@ -70,6 +70,19 @@ local Sounds = {
 			file = "sounds/genericcmd.wav",
 			in3d = "false",
 		},
+		ComsatFire = {
+			file = "sounds/comsatfire.wav",
+			gain = 1,
+			gainmod = 0,
+			pitchmod = 0.05,
+			pitch = 1,
+			in3d = true,
+			maxdist = 2500,
+			maxconcurrent = 12,
+			dopplerscale = 0,
+			priority = 0,
+			rolloff = 1,
+		},
 		default = {
 			--- new since 89.0
 			--- you can overwrite the fallback profile here (used when no corresponding SoundItem is defined for a sound)
@@ -82,7 +95,7 @@ local Sounds = {
 			maxconcurrent = 12,
 			dopplerscale = 0,
 			priority = 0,
-			rolloff = 0.22,
+			rolloff = 0.3,
 		},
 	},
 }

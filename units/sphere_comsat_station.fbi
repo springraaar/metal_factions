@@ -80,20 +80,11 @@
 	//  Orders
 	//**********
 	noAutoFire=0;
-	firestandorders=1;
-	standingfireorder=2;
-	defaultmissiontype=GUARD_NOMOVE;
+	fireState=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=0;
-	designation=ARM-SRDS;
-	downloadable=1;
-	shootme=1;
-	threed=1;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =70 50 70;
 	collisionVolumeOffsets = 0 0 0;

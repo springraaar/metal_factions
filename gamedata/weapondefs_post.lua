@@ -193,7 +193,6 @@ for wdName, wd in pairs(WeaponDefs) do
 		elseif (wd.weapontype == "StarburstLauncher" ) then
 			wd.cylindertargeting = 2
 		end
-
 		
 		-- override mygravity for cannons if not specified
 		if (wd.weapontype == "Cannon") then
