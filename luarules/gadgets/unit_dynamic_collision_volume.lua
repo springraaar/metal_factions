@@ -20,12 +20,17 @@ local spSetUnitRadiusAndHeight = Spring.SetUnitRadiusAndHeight
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spSetUnitBlocking = Spring.SetUnitBlocking
 local spGetUnitBlocking = Spring.GetUnitBlocking
+local spGetUnitPosition = Spring.GetUnitPosition
+local spGetGroundHeight = Spring.GetGroundHeight
 local spGetUnitDefID = Spring.GetUnitDefID
+local spGetGameFrame = Spring.GetGameFrame
+local max = math.max
 
 local popupUnits = {}		--list of pop-up style units
 local unitCollisionVolume = include("luaRules/configs/collision_volumes.lua")	--pop-up style unit collision volume definitions
 local unitXYZSizeOffset = {}     -- <uId,{sizeX,sizeY,sizeZ,offsetX,offsetY,offsetZ}>
-local unitBlocking = {} --   <uId,{isBlocking, isSolidObjectCollidable,isProjectileCollidable,isRaySegmentCollidable,crushable,blockEnemyPushing,blockHeightChanges}>
+local unitBlocking = {} --   <uId,{isBlocking, isSolidObjectCollidable,isProjectileCollidable,isRaySegmentCollidable,crushable,blockEnemyPushing,blockHeightChanges,builderID,blockFixRequired,ud}>
+
 
 local BP_SIZE_LIMIT = 0.8
 local BP_REDUCED_FP_LIMIT = 0.2
@@ -80,11 +85,27 @@ local constructionTowers = {
 
 local csBeaconIds = {}
 
+
+function disableUnitBlocking(unitID,builderID,blockFixRequired,ud)
+	if not (ud.isBuilding or constructionTowers[ud.name]) then
+		local isb,issoc,ispc,isrsc,cr,bep,bhc = spGetUnitBlocking(unitID)
+		unitBlocking[unitID] = {isb,issoc,ispc,isrsc,cr,bep,bhc,builderID,blockFixRequired,ud}
+		-- prevent big units from making the previously built unit stuck
+		spSetUnitBlocking(unitID,false,false,ispc,isrsc,cr,bep,bhc)	
+	end
+end
+
+
+function restoreUnitBlocking(unitID)
+	local bData = unitBlocking[unitID]
+	spSetUnitBlocking(unitID,bData[1],bData[2],bData[3],bData[4],bData[5],bData[6],bData[7])
+end 
+
 if (gadgetHandler:IsSyncedCode()) then
 
 	--Reduces the diameter of default (unspecified) collision volume for 3DO models,
 	--for S3O models it's not needed and will in fact result in wrong collision volume
-	function gadget:UnitCreated(unitID, unitDefID, unitTeam)
+	function gadget:UnitCreated(unitID, unitDefID, unitTeam, builderID)
 		local xs, ys, zs, xo, yo, zo, vtype, htype, axis, _ = spGetUnitCollisionVolumeData(unitID)
 		local ud = UnitDefs[unitDefID]
 		-- added radius reduction for submarines
@@ -106,11 +127,9 @@ if (gadgetHandler:IsSyncedCode()) then
 		
 		if not csBeaconIds[unitID] then
 			unitXYZSizeOffset[unitID] = {xs,ys,zs,xo,yo,zo}
-			local isb,issoc,ispc,isrsc,cr,bep,bhc = spGetUnitBlocking(unitID)
+			
 			if not (ud.isBuilding or constructionTowers[ud.name]) then
-				unitBlocking[unitID] = {isb,issoc,ispc,isrsc,cr,bep,bhc}
-				-- prevent big units from making the previously built unit stuck
-				spSetUnitBlocking(unitID,false,false,ispc,isrsc,cr,bep,bhc)	
+				disableUnitBlocking(unitID,builderID,spGetGameFrame(),ud)
 			end
 		end
 
@@ -140,7 +159,8 @@ if (gadgetHandler:IsSyncedCode()) then
 	function gadget:UnitFinished(unitID, unitDefID, unitTeam)
 		if not csBeaconIds[unitID] then
 			-- check if a unit is pop-up type (the list must be entered manually)
-			local un = UnitDefs[unitDefID].name
+			local ud = UnitDefs[unitDefID]
+			local un = ud.name
 			if unitCollisionVolume[un] then
 				popupUnits[unitID]=un
 			end
@@ -158,8 +178,14 @@ if (gadgetHandler:IsSyncedCode()) then
 				
 				-- restore the blocking status							
 				if (unitBlocking[unitID]) then
-					local bData = unitBlocking[unitID]
-					spSetUnitBlocking(unitID,bData[1],bData[2],bData[3],bData[4],bData[5],bData[6],bData[7])	
+					if not ud.canFly then 
+						restoreUnitBlocking(unitID)
+					else
+						-- for flying units, mark it
+						-- it needs some checks before the block status to avoid locking the factory
+						-- TODO remove when engine gets fixed
+						unitBlocking[unitID][9] = true			
+					end
 				end
 				
 				spSetUnitCollisionVolumeData(unitID, xs, ys, zs, xo, yo, zo, vtype, htype, axis)
@@ -219,6 +245,7 @@ if (gadgetHandler:IsSyncedCode()) then
 		-- runs 6 times per second
 		if (n%5 == 0) then
 			local xs, ys, zs, xo, yo, zo, vtype, htype, axis, disabled
+			local py,h
 			local val = 0
 			for uId,data in pairs(unitXYZSizeOffset) do
 				local _,_,_,_,bp = spGetUnitHealth(uId)
@@ -311,12 +338,31 @@ if (gadgetHandler:IsSyncedCode()) then
 							end
 						end
 					end
+					
+					-- restore the blocking status for flying units
+					-- but only after get high above the factory
+					-- TODO : workaround for engine issue, remove when possible
+					if bp == 1 then		
+						local data = unitBlocking[uId] 
+						if data then
+							local blockFixRequired = data[9]
+							if ud.canFly and blockFixRequired then
+								px,py,pz = spGetUnitPosition(uId)
+								if (px) then
+									h = max(spGetGroundHeight(px,pz),0)
+									if h and py > h + 60 then 
+										data[9] = false
+										restoreUnitBlocking(uId)
+										--Spring.Echo("blocking restored for flying unit "..uId.." h="..(py-h))
+									end
+								end
+							
+							end
+						end
+					end
 				end
 			end
 		end
-		
-		
-
 		
 		-- remove collision volume for cs beacons
 		-- this is here because it wasn't working on unitcreated, for some reason 

@@ -48,15 +48,20 @@ end
 local function SpawnStartUnit(teamID)
     local startUnit = GetStartUnit(teamID)
     local factionStr = ''
-
+	local wasRandom = false
     if startUnit == "random" then
     	factionStr = 'random_'
     	local idx = math.random(1,#commanders)
        	startUnit = commanders[idx]
+       	wasRandom = true
     end
+ 
     factionStr = factionStr..string.sub(startUnit,0,string.find(startUnit,"_")-1) 
     Spring.SetTeamRulesParam(teamID, 'faction', factionStr , {public=true})
-    
+    if wasRandom then
+    	Spring.SendMessageToTeam( teamID, "Random faction assigned : "..string.upper(string.sub(startUnit,0,string.find(startUnit,"_")-1) ) )
+    end
+        
     if (startUnit and startUnit ~= "") then
 		-- spawn the specified start unit
 		local x,y,z

@@ -515,13 +515,13 @@ function gadget:GameFrame(n)
 			
 			ud = UnitDefs[spGetUnitDefID(unitId)]
 			-- hydrobot regen
-			if (ud and ud.customParams and ud.customParams.hydrobotregen == 1) then
+			if (ud and ud.customParams and ud.customParams.hydrobotregen == "1") then
 				-- check if on water
 				_,_,_,_,y,_ = spGetUnitPosition(unitId,true)
 				
 				if (y < -2) then
 					r = r + 2
-					phpR = phpR + 0.1
+					phpR = phpR + 0.001
 				end
 			end
 				

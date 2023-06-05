@@ -101,6 +101,7 @@ end
 
 function gadget:UnitCreated(unitId, unitDefId, team)
 	if UnitDefs[unitDefId].customParams.canareaattack=="1" then
+		--Spring.Echo("unit "..UnitDefs[unitDefId].name.." can area attack")
 		range[unitDefId] = WeaponDefs[UnitDefs[unitDefId].weapons[1].weaponDef].range
 		Spring.InsertUnitCmdDesc(unitId,aadesc)
 	end

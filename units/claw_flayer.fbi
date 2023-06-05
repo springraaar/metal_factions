@@ -3,39 +3,36 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Gear;
-	name=Thud;
-	description=Artillery Robot;
-	iconType=mobileartilleryfs;
+	side=Claw;
+	name=Flayer;
+	description=Minigunner Aircraft;
+	iconType=airfighter;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR LEVEL1 WEAPON NOTAIR NOTSUB;
+	category=CLAW VTOL LEVEL2 WEAPON NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitName=gear_thud;
-	objectName=gear_thud.3do;
-	corpse=gear_thud_dead;
-	buildPic=gear_thud.png;
-	soundCategory=COR_KBOT;
+	unitName=claw_flayer;
+	objectName=claw_flayer.3do;
+	buildPic=claw_flayer.png;
+	soundCategory=aven_VTOL;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=1280; 
-	footprintx=3;
-	footprintz=3;
+	maxDamage=3300;
+	footprintx=4;
+	footprintz=4;
 
 	//************************************************************
 	//  Resources
 	//*************
-	metalStorage=0;
 	energyMake=0;
 	energyUse=0;
-	energyStorage=0;
 
 	//************************************************************
 	//  Building
@@ -44,70 +41,74 @@
 	//************************************************************
 	//  Constructor
 	//***************
-	builder=0;
-	workerTime=0;
 
 	//************************************************************
 	//  Abilities
 	//*************
 	canAttack=1;
+	canDropFlare=0;
+	canFly=1;
 	canGuard=1;
 	canMove=1;
 	canPatrol=1;
 	canStop=1;
-	upright=1;
+	stealth=0;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementClass=KBOTHT3;
-	turnRate=950;
-	acceleration=0.715527;
-	brakeRate=0.4;
-	maxVelocity=1.25;
-	maxSlope=14;
-	maxWaterDepth=12;
+	acceleration=0.3;
+	brakeRate=0.2;
+	maxVelocity=2.7;
+	
+	cruiseAlt=120;
+	turnRate=600;
+
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
-	sightDistance=500;
+	sightDistance=600;
 	radarDistance=0;
 
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=gear_thud_cannon;
-	noChaseCategory=VTOL;
-	badTargetCategory1=VTOL;
-	explodeAs=SMALL_UNITEX;
-	selfDestructAs=SMALL_UNIT;
+	weapon1=claw_flayer_gun;
+	explodeAs=BIG_UNIT;
+	selfDestructAs=BIG_UNIT;
+
 
 	//************************************************************
 	//  Orders
 	//**********
-	noAutoFire=0;
 
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	hightrajectory=2;
+	hoverAttack=1;
+	airStrafe=1;
+	bankingAllowed=0;
+	airHoverFactor=1;
+	upright=1;
+	CanLoopbackAttack=0;
+	collide=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =30 37 30;
-	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeScales =45 40 40;
+	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
 	[CustomParams]
 	{
-		builtBy=gear_light_plant,gear_adv_kbot_lab;
+		builtBy=claw_adv_aircraft_plant;
 	}
 	[SFXTypes]
 	{
-		explosionGenerator0=custom:yellowflaresml;
+		explosionGenerator0=custom:railgunflaresml;	
+		explosionGenerator1=custom:GLOWSML;
 	}
-
-	buildCostEnergy=1658;//#AUTO#
-	buildCostMetal=331;//#AUTO#
-	buildTime=3952;//#AUTO#
-	mass=215;//#AUTO#
+	buildCostEnergy=7807;//#AUTO#
+	buildCostMetal=1561;//#AUTO#
+	buildTime=18608;//#AUTO#
+	mass=672;//#AUTO#
 }

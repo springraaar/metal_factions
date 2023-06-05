@@ -419,11 +419,17 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=15, piece="rjp", onActive=true,down=true}}
   },
   claw_fury = {
-    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=35, piece="lj1p", onActive=true,down=true}},
-    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=35, piece="lj2p", onActive=true,down=true}},
-    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=35, piece="rj1p", onActive=true,down=true}},
-    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=35, piece="rj2p", onActive=true,down=true}}
+    {class='AirJet',options={color={0.3,0.1,0}, width=10, length=35, piece="lj1p", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=10, length=35, piece="lj2p", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=10, length=35, piece="rj1p", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=10, length=35, piece="rj2p", onActive=true,down=true}}
   },      
+  claw_flayer = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=30, piece="lj1p", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=30, piece="lj2p", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=30, piece="rj1p", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=30, piece="rj2p", onActive=true,down=true}}
+  },
   ----------------- SPHERE
   sphere_probe = {
     {class='AirJet',options={color={0.3,0.1,0}, width=4, length=30, piece="jp1", onActive=true}}

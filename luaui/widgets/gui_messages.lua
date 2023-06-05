@@ -68,6 +68,7 @@ local MESSAGE_FILTERS = {
 	"ClientReadNet",
 	"to access the quit menu",
 	"ParseUniformsTable",
+	"SpecTeamAction",
 	"SDL_WINDOWEVENT"
 }
 

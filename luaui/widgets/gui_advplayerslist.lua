@@ -128,6 +128,7 @@ local takebPic        = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/takeb.png"
 local seespecPic      = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/seespec.png"
 local resourcesPic      = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/resources.png"
 local positionPic      = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/position.png"
+local clearMarksPic     = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/clearMarks.png"
 
 local sidePics        = {}  -- loaded in Sem_sidePics function
 local sidePicsWO      = {}  -- loaded in Sem_sidePics function
@@ -272,6 +273,7 @@ local newSide		  = {}
 --------------- chat button stuff
 
 
+local clearMarksButton				= {}
 local chatTypeButton				= {}
 local glColor 						= gl.Color
 local glRect						= gl.Rect
@@ -299,9 +301,9 @@ local CHAT_SPECTATORS = 2
 
 local chatType = CHAT_ALL
 local chatTypeLabels = {
-	[CHAT_ALL] = "Everyone",
-	[CHAT_ALLIES] = "Allies",
-	[CHAT_SPECTATORS] = "Spectators"
+	[CHAT_ALL] = "Chat : All",
+	[CHAT_ALLIES] = "Chat : Ally",
+	[CHAT_SPECTATORS] = "Chat : Spec"
 
 }
 
@@ -318,7 +320,7 @@ local function isOnButton(x, y, BLcornerX, BLcornerY,TRcornerX,TRcornerY)
 	                      and y <= TRcornerY
 end
 
-function updateChatTypeSizesPositions()
+function updateExtraButtonGeometry()
 	if (vsy ~= 1080) then
 		scaleFactor = vsy/1080
 	else
@@ -330,11 +332,20 @@ function updateChatTypeSizesPositions()
 	chatTypeButton.x2 = vsx - 1
 	chatTypeButton.y1 = widgetPosY + widgetHeight + 1
 	chatTypeButton.y2 = widgetPosY + widgetHeight + 1 + refBoxSizeY*scaleFactor
+
+	--gl_Texture(chatTypePic)
+	--gl_TexRect(chatTypeButton.x1 - 1 - (chatTypeButton.y2-chatTypeButton.y1), chatTypeButton.y1, chatTypeButton.x1 - 1, chatTypeButton.y2)
+	
+	clearMarksButton.x1 = chatTypeButton.x1 - 2 - (chatTypeButton.y2-chatTypeButton.y1)
+	clearMarksButton.x2 = chatTypeButton.x1 - 2
+	clearMarksButton.y1 = chatTypeButton.y1
+	clearMarksButton.y2 = chatTypeButton.y2
 end
 
 function widget:IsAbove(mx,my)
 	if not Spring.IsGUIHidden() then
 		chatTypeButton.above = isOnButton(mx, my, chatTypeButton["x1"],chatTypeButton["y1"],chatTypeButton["x2"],chatTypeButton["y2"])
+		clearMarksButton.above = isOnButton(mx, my, clearMarksButton["x1"],clearMarksButton["y1"],clearMarksButton["x2"],clearMarksButton["y2"])
 	end
 	return false		
 end	
@@ -670,7 +681,7 @@ function Init()
 	SortList()
 	SetModulesPositionX()
 	GeometryChange()
-	updateChatTypeSizesPositions()
+	updateExtraButtonGeometry()
 end
 
 function widget:Initialize()
@@ -1061,8 +1072,10 @@ function widget:DrawScreen()
 	end
 	
 	local refreshIdx = floor(spDiffTimers(spGetTimer(),refTimer)*5)
-	-- refresh gl list only a few times per second
-	if (not glList) or refreshIdx ~= glListRefreshIdx then
+	local forceRefresh = isOnButton(mouseX, mouseY, widgetPosX, widgetPosY,widgetPosX + widgetWidth,chatTypeButton.y2)
+	
+	-- refresh gl list only a few times per second, unless mouse is over the widget
+	if (not glList) or forceRefresh or refreshIdx ~= glListRefreshIdx then
 		if (glList) then
 			glDeleteList(glList)
 		end 
@@ -1070,14 +1083,9 @@ function widget:DrawScreen()
 			-- draws the background
 			DrawBackground()
 			
-			-- draws the main list
-			DrawList()
-		
-			-- draws share energy/metal sliders
-			DrawShareSlider()
-			
 			-- draw chat type button
 			if chatTypeButton.above then
+				tipText = "Click to change the chat mode between All/Allies/Spectators"
 				glColor(cLight)
 			else
 				glColor(cBack)
@@ -1096,16 +1104,41 @@ function widget:DrawScreen()
 			glRect(chatTypeButton.x2-1,chatTypeButton.y1,chatTypeButton.x2,chatTypeButton.y2)
 			glRect(chatTypeButton.x1,chatTypeButton.y1,chatTypeButton.x2,chatTypeButton.y1+1)
 			glRect(chatTypeButton.x1,chatTypeButton.y2-1,chatTypeButton.x2,chatTypeButton.y2)
-			gl_Color(1,1,1,1)			
+			gl_Color(1,1,1,1)
+
+			-- draw clear marks button
+			if clearMarksButton.above then
+				tipText = "Click to clear player drawings on the map"
+				glColor(cLight)
+			else
+				glColor(cBack)
+			end
+			glRect(clearMarksButton.x1,clearMarksButton.y1,clearMarksButton.x2,clearMarksButton.y2)
+			glColor(cWhite)
+			gl_Texture(clearMarksPic)
+			gl_TexRect(clearMarksButton.x1, clearMarksButton.y1, clearMarksButton.x2, clearMarksButton.y2)
+			gl_Texture(false)
+			if clearMarksButton.above then
+				glColor(cLightBorder)
+			else
+				glColor(cBorder)
+			end
+			glRect(clearMarksButton.x1,clearMarksButton.y1,clearMarksButton.x1+1,clearMarksButton.y2)
+			glRect(clearMarksButton.x2-1,clearMarksButton.y1,clearMarksButton.x2,clearMarksButton.y2)
+			glRect(clearMarksButton.x1,clearMarksButton.y1,clearMarksButton.x2,clearMarksButton.y1+1)
+			glRect(clearMarksButton.x1,clearMarksButton.y2-1,clearMarksButton.x2,clearMarksButton.y2)
+			gl_Color(1,1,1,1)
+						
+			-- draws the main list
+			DrawList()
+		
+			-- draws share energy/metal sliders
+			DrawShareSlider()
+
 		end)
 		glListRefreshIdx = refreshIdx
 	end
 	glCallList(glList)
-		
-			
-	-- wouldn't work inside the list for some reason
-	gl_Texture(chatTypePic)
-	gl_TexRect(chatTypeButton.x1 - 1 - (chatTypeButton.y2-chatTypeButton.y1), chatTypeButton.y1, chatTypeButton.x1 - 1, chatTypeButton.y2)
 end
 
 function UpdateResources()
@@ -1752,9 +1785,9 @@ function SetSidePics()
 					sidePicsWO[team] = ":n:luaui/images/advplayerslist/noWO.png"
 				end
 			else
-				if teamside ~= "" then
-					Echo("Image missing for side "..teamside..", using default.")
-				end
+				--if teamside ~= "" then
+				--	Echo("Image missing for side "..teamside..", using default.")
+				--end
 				sidePics[team] = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/default.png"
 				sidePicsWO[team] = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/defaultWO.png"
 			end
@@ -1896,6 +1929,8 @@ function widget:MousePress(x,y,button)
 				chatType = CHAT_ALL
 				Spring.SendCommands("ChatAll")
 			end
+		elseif clearMarksButton.above then	
+			Spring.SendCommands("clearmapmarks")
 		end
 	end
 	
@@ -2504,6 +2539,11 @@ function CheckPlayersChange()
 					if table.maxn(Spring_GetPlayerList(player[i].team,true)) == 0 then   -- (update the no players team)
 						player[player[i].team + 32] = CreatePlayerFromTeam(player[i].team)
 					end
+					if player[i].team ~= nil then
+						-- send message to yourself to signal the player's change to spectator
+						Spring.SendMessageToPlayer(myPlayerID,"<PLAYER"..i.."> resigned and is now spectating" )
+					end
+
 					player[i].team = nil                                                 -- remove team
 				end
 				player[i].spec = spec                                                  -- consider player as spec
@@ -2560,7 +2600,7 @@ function CheckPlayersChange()
 		SortList()
 		SetModulesPositionX()    -- change the X size if needed (change of widest name)
 	end
-	updateChatTypeSizesPositions()
+	updateExtraButtonGeometry()
 end
 
 function updateTake(allyTeamID)
@@ -2620,7 +2660,7 @@ function widget:TeamDied(teamID)
 	player[teamID+32]        = CreatePlayerFromTeam(teamID)
 	player[teamID+32].totake = false
 	SortList()
-	updateChatTypeSizesPositions()
+	updateExtraButtonGeometry()
 end
 
 function widget:ViewResize(viewSizeX, viewSizeY)
@@ -2639,7 +2679,7 @@ function widget:ViewResize(viewSizeX, viewSizeY)
 	widgetRight = vsx
 	widgetPosX = widgetRight - widgetWidth
 	
-	updateChatTypeSizesPositions()
+	updateExtraButtonGeometry()
 end
 
 

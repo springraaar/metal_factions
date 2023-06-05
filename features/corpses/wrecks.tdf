@@ -7094,7 +7094,7 @@
 	metal=93;//#AUTO#
 	energy=0;//#AUTO#
 	damage=1000;//#AUTO#
-	reclaimTime=1867;//#AUTO#
+	reclaimTime=1869;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=17 15 38;//#AUTO#
 	collisionVolumeOffsets=0 -6 0;//#AUTO#
@@ -8132,10 +8132,10 @@
 	blocking=1;
 	hitdensity=100;
 	reclaimable=1;
-	metal=77;//#AUTO#
+	metal=99;//#AUTO#
 	energy=0;//#AUTO#
-	damage=1100;//#AUTO#
-	reclaimTime=1536;//#AUTO#
+	damage=1280;//#AUTO#
+	reclaimTime=1976;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=30 22 30;//#AUTO#
 	collisionVolumeOffsets=0 -1 0;//#AUTO#
@@ -8152,10 +8152,10 @@
 	blocking=0;
 	hitdensity=100;
 	reclaimable=1;
-	metal=23;//#AUTO#
+	metal=29;//#AUTO#
 	energy=0;//#AUTO#
-	damage=1100;//#AUTO#
-	reclaimTime=768;//#AUTO#
+	damage=1280;//#AUTO#
+	reclaimTime=988;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=30 4 30;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
@@ -15372,6 +15372,47 @@
 	reclaimTime=820;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=20 5 20;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[claw_ogre_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=claw_corpses;
+	object=claw_ogre_dead;
+	featuredead=claw_ogre_heap;
+	footprintx=3;
+	footprintz=3;
+	height=15;
+	blocking=1;
+	hitdensity=100;
+	reclaimable=1;
+	metal=140;//#AUTO#
+	energy=0;//#AUTO#
+	damage=1450;//#AUTO#
+	reclaimTime=2795;//#AUTO#
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=35 24 30;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[claw_ogre_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3b;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	reclaimable=1;
+	metal=42;//#AUTO#
+	energy=0;//#AUTO#
+	damage=1450;//#AUTO#
+	reclaimTime=1397;//#AUTO#
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=35 4 30;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
 [claw_jester_dead]

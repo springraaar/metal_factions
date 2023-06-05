@@ -1,0 +1,84 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	side=Claw;
+	Name=Ogre;
+	Description=Medium Rocket Robot;
+	iconType=mobileartilleryfs;
+
+	// ------------------- categories
+	Category=CLAW LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=claw_ogre;
+	objectName=claw_ogre.3do;
+	buildPic=claw_ogre.png;
+	soundCategory=CLAW_BOTSML;
+	Corpse=claw_ogre_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=3;
+	FootprintZ=3;
+	maxDamage=1450;
+
+
+	// ------------------- resources
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	Builder=0;
+
+	// ------------------- movement
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=0.9;
+	brakeRate=0.05;
+	Acceleration=0.25;
+	turnRate=850;
+	movementClass=KBOTHT2;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=claw_ogre_rocket;
+	onlytargetcategory1=NOTAIR;
+	noChaseCategory=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+
+	// ------------------- orders
+
+	// ------------------- misc
+	noAutoFire=0;
+	Upright=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 40 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=claw_light_plant,claw_adv_kbot_plant;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflaremed;
+	}
+	buildCostEnergy=2345;//#AUTO#
+	buildCostMetal=469;//#AUTO#
+	buildTime=5590;//#AUTO#
+	mass=518;//#AUTO#
+}

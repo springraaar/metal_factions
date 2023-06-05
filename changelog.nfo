@@ -1,3 +1,31 @@
+2023/06/05 ------------------ NOTES v2.20 ----------------------
+
+--- New units
+
+- CLAW "Flayer" : L2 Minigunner Aircraft
+- CLAW "Ogre" : L1 Medium Rocket Robot
+
+--- Balance / Mechanics
+
+- Fixed an issue which could cause built air units to block further construction on the factory until they were destroyed
+(workaround for an engine bug)
+
+- Reduced cost of DC rockets from 1500m to 1400m
+
+- GEAR "Searcher" laser has 5% less range but deals 10% more damage/s
+- GEAR "Thud" is slightly bigger with more HP and range increased from 600 to 700, but slightly slower and more expensive
+
+- Fixed GEAR hydrobot regeneration on water not working as intended
+
+--- UI / Visual / Sounds
+
+- Added button to clear map drawings and modified the chat mode button for more clarity (they also get tooltips)
+- Fixed an issue with low refresh rate when mouse is over the players list that made the "on-pointer" tooltip look laggy
+- Assigned faction is shown on the commander name and on a text line when the game starts
+- No longer show messages when changing between different player views when spectating
+- Show a message when a player resigns and changes to spectator
+
+
 2023/05/14 ------------------ NOTES v2.19 ----------------------
 
 --- Balance / Mechanics
