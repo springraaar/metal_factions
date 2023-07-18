@@ -18,6 +18,17 @@ static-var  restore_delay, gun_1, bMoving;
 // Signal definitions
 #define SIG_AIM				2
 
+RockUnit(anglex, anglez)
+{
+	anglex = anglex * 100/200;
+	anglez = anglez * 100/200;
+	turn base to x-axis anglex speed <40.005495>;
+	turn base to z-axis <0>-anglez speed <40.005495>;
+	wait-for-turn base around z-axis;
+	wait-for-turn base around x-axis;
+	turn base to z-axis <0.000000> speed <15.000000>;
+	turn base to x-axis <0.000000> speed <15.000000>;
+}
 
 StartMoving()
 {

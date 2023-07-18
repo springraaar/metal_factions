@@ -1,0 +1,95 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	side=Sphere;
+	Name=Rumble;
+	Description=Light Artillery;
+	iconType=mobileartillery;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=sphere_rumble;
+	objectName=sphere_rumble.3do;
+	buildPic=sphere_rumble.png;
+	soundCategory=SPHERE_TANKSML;
+	Corpse=sphere_rumble_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=3;
+	FootprintZ=3;
+	maxDamage=1000;
+	flankingBonusMode=3;
+	flankingBonusMax=1.33;
+	flankingBonusMin=0.75;
+
+	// ------------------- resources
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	Builder=0;
+
+	// ------------------- movement
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.3;
+	brakeRate=0.09;
+	Acceleration=0.1;
+	turnRate=460;
+	movementClass=TANKSH3;
+	maxreversevelocity=0.65;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_rumble_cannon;
+	onlyTargetCategory1=NOTAIR;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+	highTrajectory=2;
+
+	// ------------------- orders
+
+	// ------------------- misc
+	noAutoFire=0;
+
+	leavetracks=1;
+	trackoffset=8;
+	trackstrength=5;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=35;
+
+	collisionVolumeType = box;
+	collisionVolumeScales =26 20 36;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_light_factory,sphere_adv_vehicle_factory;
+		tip=+25% dmg resistance on front, -25% when hit from behind;
+		optional=1;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:yellowflaresml;
+	}
+	buildCostEnergy=1449;//#AUTO#
+	buildCostMetal=289;//#AUTO#
+	buildTime=3454;//#AUTO#
+	mass=346;//#AUTO#
+}

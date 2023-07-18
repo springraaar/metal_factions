@@ -1,0 +1,91 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	side=Sphere;
+	Name=King Crab;
+	Description=Amphibious Heavy Brawler Robot;
+	iconType=amphibmulti;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=sphere_king_crab;
+	objectName=sphere_king_crab.3do;
+	buildPic=sphere_king_crab.png;
+	soundCategory=SPHERE_BOTBIG;
+	Corpse=sphere_king_crab_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=4;
+	FootprintZ=4;
+	maxDamage=6500;
+
+	// ------------------- resources
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	Builder=0;
+
+	// ------------------- movement
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.60;
+	brakeRate=0.45;
+	Acceleration=0.35;
+	turnRate=900;
+	movementClass=KBOTUW4;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=480;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_king_crab_blaster;
+	badTargetCategory1=VTOL;
+	Weapon2=sphere_king_crab_missile;
+	onlyTargetCategory2=NOTAIR;
+	noChaseCategory=VTOL;
+	Weapon3=sphere_king_crab_shield;
+	explodeAs=EXPLOSIVE_UNIT_BLAST;
+	selfDestructAs=EXPLOSIVE_UNIT_BLAST;
+
+
+	// ------------------- orders
+
+	// ------------------- misc
+	noAutoFire=0;
+	Upright=0;
+	collisionVolumeType = box;
+	collisionVolumeScales =48 48 48;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	activatewhenbuilt = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_adv_kbot_factory;
+		optional=1;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:kcflare;
+		explosionGenerator1=custom:rocketflaremed;
+		explosionGenerator2=custom:kcaim;
+	}
+	buildCostEnergy=28432;//#AUTO#
+	buildCostMetal=5686;//#AUTO#
+	buildTime=67763;//#AUTO#
+	mass=5504;//#AUTO#
+}

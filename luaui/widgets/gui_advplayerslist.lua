@@ -90,6 +90,9 @@ local modf = math.modf
 local max = math.max
 local min = math.min
 
+VFS.Include("lualibs/constants.lua")
+
+
 --------------------------------------------------------------------------------
 -- IMAGES
 --------------------------------------------------------------------------------
@@ -286,12 +289,7 @@ local refBoxSizeY = 30
 local itemSizeY = 16 * scaleFactor 
 local fontSize = refFontSize * scaleFactor
 	
--- colors
-local cLight						= {1, 1, 1, 0.5}
-local cLightBorder					= {1, 1, 1, 1}
 local cWhite						= {1, 1, 1, 1}
-local cBorder						= {0, 0, 0, 1}		
-local cBack							= {0, 0, 0, 0.6}
 
 local addedBrightness = 0.2 -- to avoid white outline on players
 
@@ -1086,19 +1084,19 @@ function widget:DrawScreen()
 			-- draw chat type button
 			if chatTypeButton.above then
 				tipText = "Click to change the chat mode between All/Allies/Spectators"
-				glColor(cLight)
+				glColor(UI_BTN_BG_OVER)
 			else
-				glColor(cBack)
+				glColor(UI_BTN_BG)
 			end
 			glRect(chatTypeButton.x1,chatTypeButton.y1,chatTypeButton.x2,chatTypeButton.y2)
-			glColor(cWhite)
+			glColor(UI_BTN_TEXT)
 			-- chat button text
 			gl_Text(chatTypeLabels[chatType],(chatTypeButton.x1 + chatTypeButton.x2) /2, (chatTypeButton.y1 + chatTypeButton.y2) / 2-GetTextHeight(chatTypeLabels[chatType])/2,fontSize,"c")
 			-- chat type button border
 			if chatTypeButton.above then
-				glColor(cLightBorder)
+				glColor(UI_BTN_BORDER_OVER)
 			else
-				glColor(cBorder)
+				glColor(UI_BTN_BORDER)
 			end
 			glRect(chatTypeButton.x1,chatTypeButton.y1,chatTypeButton.x1+1,chatTypeButton.y2)
 			glRect(chatTypeButton.x2-1,chatTypeButton.y1,chatTypeButton.x2,chatTypeButton.y2)
@@ -1109,9 +1107,9 @@ function widget:DrawScreen()
 			-- draw clear marks button
 			if clearMarksButton.above then
 				tipText = "Click to clear player drawings on the map"
-				glColor(cLight)
+				glColor(UI_BTN_BG_OVER)
 			else
-				glColor(cBack)
+				glColor(UI_BTN_BG)
 			end
 			glRect(clearMarksButton.x1,clearMarksButton.y1,clearMarksButton.x2,clearMarksButton.y2)
 			glColor(cWhite)
@@ -1119,9 +1117,9 @@ function widget:DrawScreen()
 			gl_TexRect(clearMarksButton.x1, clearMarksButton.y1, clearMarksButton.x2, clearMarksButton.y2)
 			gl_Texture(false)
 			if clearMarksButton.above then
-				glColor(cLightBorder)
+				glColor(UI_BTN_BORDER_OVER)
 			else
-				glColor(cBorder)
+				glColor(UI_BTN_BORDER)
 			end
 			glRect(clearMarksButton.x1,clearMarksButton.y1,clearMarksButton.x1+1,clearMarksButton.y2)
 			glRect(clearMarksButton.x2-1,clearMarksButton.y1,clearMarksButton.x2,clearMarksButton.y2)

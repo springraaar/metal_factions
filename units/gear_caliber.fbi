@@ -96,7 +96,7 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	damagemodifier=0.5;
+	damageModifier=0.5;
 	collisionVolumeType = box;
 	collisionVolumeScales =40 60 60;
 	collisionVolumeOffsets = 0 -5 0;
@@ -107,7 +107,7 @@
 	{
 		builtBy=gear_hydrobot_plant;
 		tip=Regenerates 2+0.1%HP/s in water. Use ON/OFF toggle deployment mode. Can only fire if deployed but cannot move. Gains 50% dmg resistance when closed;
-		evalfactor=0.85; //can't fire while moving
+		evalfactor=0.75; //can't fire while moving
 		hydrobotRegen=1;
 	}
 
@@ -117,8 +117,8 @@
 		explosionGenerator1=custom:burrow;
 	}
 
-	buildCostEnergy=14705;//#AUTO#
-	buildCostMetal=2941;//#AUTO#
-	buildTime=35048;//#AUTO#
-	mass=1730;//#AUTO#
+	buildCostEnergy=12975;//#AUTO#
+	buildCostMetal=2595;//#AUTO#
+	buildTime=30925;//#AUTO#
+	mass=1615;//#AUTO#
 }

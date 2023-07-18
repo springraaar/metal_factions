@@ -4330,6 +4330,8 @@ taskQueues = {
 	aven_long_range_rocket_platform = lRRocketPlatform,
 	aven_premium_nuclear_rocket = unblockableNuke,
 	aven_comsat_station = comsatStation,
+	aven_trooper_hemg = atkSupporterAct,
+	aven_cadence = atkSupporterAct,
 ------------------- GEAR
 	gear_commander_respawner = respawner,
 	gear_commander = gearCommander,

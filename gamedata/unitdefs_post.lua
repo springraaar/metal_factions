@@ -181,6 +181,7 @@ local conditionalEnergyGenerators = {
 -- units which use the build radius as effect radius
 local fakeBuilders = {
 	claw_totem = true,
+	claw_tombstone = true,
 	aven_power_node = true,
 	gear_power_node = true,
 	claw_power_node = true,

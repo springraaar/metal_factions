@@ -5,7 +5,7 @@
 	//********************
 	side=Claw;
 	name=Maul;
-	description=Artillery Ship;
+	description=Very Heavy Mortar Ship;
 	iconType=shipartillery;
 
 	//************************************************************
@@ -25,16 +25,16 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=1800;
-	footprintx=4;
-	footprintz=4;
+	maxDamage=8000;
+	footprintx=6;
+	footprintz=6;
 
 	//************************************************************
 	//  Resources
 	//*************
 	metalStorage=0;
-	energyMake=5;
-	energyUse=5;
+	energyMake=0;
+	energyUse=0;
 	energyStorage=0;
 
 	//************************************************************
@@ -63,9 +63,9 @@
 	//************
 	movementClass=LARGEBOAT;
 	turnRate=250;
-	acceleration=0.025;
+	acceleration=0.03;
 	brakeRate=0.009;
-	maxVelocity=1.6;
+	maxVelocity=1.0;
 	minwaterdepth=16;
 	waterline=0;
 
@@ -81,10 +81,9 @@
 	//***********
 	weapon1=claw_maul_cannon;
 	noChaseCategory=VTOL;
-	badTargetCategory1=VTOL;
+	onlyTargetCategory1=NOTAIR;
 	explodeAs=BIG_UNITEX;
 	selfDestructAs=BIG_UNIT;
-	hightrajectory=2;
 
 	//************************************************************
 	//  Orders
@@ -96,7 +95,7 @@
 	//*****************
 	scale=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =60 45 70;
+	collisionVolumeScales =74 50 90;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
@@ -107,10 +106,10 @@
 	}
 	[SFXTypes]
 	{
-		explosionGenerator0=custom:yellowflaremed;
+		explosionGenerator0=custom:blueflarebig;
 	}
-	buildCostEnergy=10192;//#AUTO#
-	buildCostMetal=2038;//#AUTO#
-	buildTime=24291;//#AUTO#
-	mass=1129;//#AUTO#
+	buildCostEnergy=26668;//#AUTO#
+	buildCostMetal=5333;//#AUTO#
+	buildTime=63560;//#AUTO#
+	mass=6044;//#AUTO#
 }

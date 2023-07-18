@@ -1,0 +1,114 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Intimidator (Naval Series);
+	description=Precise Long Range Artillery Ship;
+	iconType=shipartillery;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_intimidator_ns;
+	objectName=gear_intimidator_ns.3do;
+	corpse=gear_intimidator_ns_dead;
+	buildPic=gear_intimidator_ns.png;
+	soundCategory=aven_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=7500;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	floater=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=LARGEBOAT;
+	turnRate=154;
+	acceleration=0.035;
+	brakeRate=0.005;
+	maxVelocity=0.9;
+	minwaterdepth=30;
+	waterline=2;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=250;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_intimidator_ns_cannon;
+	onlytargetcategory1=NOTAIR;
+	explodeAs=EXPLOSIVE_UNIT_BLAST;
+	selfDestructAs=EXPLOSIVE_UNIT_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	moveState=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =65 55 120;
+	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeTest = 1;
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:yellowflarebig;
+	}
+	[customParams] 
+	{
+		builtBy=gear_adv_shipyard;
+		evalfactor=0.85;//SHIP
+	}
+	buildCostEnergy=63027;//#AUTO#
+	buildCostMetal=12605;//#AUTO#
+	buildTime=150215;//#AUTO#
+	mass=9722;//#AUTO#
+}

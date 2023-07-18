@@ -44,6 +44,12 @@ local _iconTypes = {
 		distance=1,
 		size=REF_SIZE
 	},
+	airkamikaze={
+		bitmap="icons/airkamikaze.tga",
+		radiusadjust=false,
+		distance=1,
+		size=REF_SIZE
+	},
 	airassault={
 		bitmap="icons/airassault.tga",
 		radiusadjust=false,
@@ -148,6 +154,12 @@ local _iconTypes = {
 	},
 	sub={
 		bitmap="icons/sub.tga",
+		radiusadjust=false,
+		distance=1,
+		size=REF_SIZE
+	},
+	subkamikaze={
+		bitmap="icons/subkamikaze.tga",
 		radiusadjust=false,
 		distance=1,
 		size=REF_SIZE

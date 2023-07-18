@@ -136,7 +136,7 @@ for wdName, wd in pairs(WeaponDefs) do
 					wd.beamdecay = 0.9
 				end
 				
-				-- update thickness and outer layer brightness
+				-- update thickness and outer layer brightness, increase beamtime
 				if (wdName:lower():find("_beam",1,true)) then
 					-- sphere lightning beams
 					wd.thickness=tonumber(wd.thickness)*1.8
@@ -174,6 +174,11 @@ for wdName, wd in pairs(WeaponDefs) do
 							colorStr = colorStr.." "..(math.max(tonumber(w)*0.55-0.1,0.165))
 						end
 						wd.rgbcolor = colorStr
+					end
+					-- add 1 frame to short beam times
+					local bt = tonumber(wd.beamtime)
+					if bt < 0.1 then
+						wd.beamtime = bt + 0.034
 					end
 				end
 			end

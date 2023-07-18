@@ -3375,6 +3375,260 @@ usedefaultexplosions=0;
 
 
 
+[disruptorstormeffect]
+{
+	usedefaultexplosions=0;	
+	[glow1]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=1, 0, 0;
+			width=20;
+			length=20;
+			alpha=0.2;
+			alphadecay=0.02;
+			color=0.7, 0.85, 1.0;
+
+		}
+		unit=1;
+		air=1;
+		water=1;
+		ground=1;
+  		count=1; 
+	}
+	[glow2]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=0, 1, 0;
+			width=20;
+			length=20;
+			alpha=0.2;
+			alphadecay=0.02;
+			color=0.7, 0.85, 1.0;
+
+		}
+		unit=1;
+		air=1;
+		water=1;
+		ground=1;
+  		count=1; 
+	}
+	[glow3]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=0, 0, 1;
+			width=20;
+			length=20;
+			alpha=0.2;
+			alphadecay=0.02;
+			color=0.7, 0.85, 1.0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=1; 
+		unit=1;
+	}
+
+	[exhale2]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.3;
+			sizeMod=1.0;
+			pos=0, 1, 0; 
+			gravity=0, 0.1, 0;
+			
+	
+			Texture=lightweb2;
+			airdrag=0.6;
+			colorMap=0.9 0.9 1.0 0.02   0.6 0.6 0.7 0.02    0.2 0.2 0.25 0.02    0.0 0.0 0.0 0.0;
+	
+			particleLifeSpread=10; 
+			particleSpeedSpread=2;  
+			particleSizeSpread=3;   
+			
+			particleLife=15;
+			numParticles=r2; 
+			particleSpeed=1; 
+			particleSize=4;
+			
+			
+			emitVector=0, 1, 0; 
+			emitRot=80;
+			emitRotSpread=20;
+			directional=0; 
+		}
+		air=1;
+		unit=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+	[exhale2]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.3;
+			sizeMod=1.0;
+			pos=0, 1, 0; 
+			gravity=0, 0.1, 0;
+			
+	
+			Texture=lightweb1;
+			airdrag=0.6;
+			colorMap=0.9 0.9 1.0 0.02   0.6 0.6 0.7 0.02    0.2 0.2 0.25 0.02    0.0 0.0 0.0 0.0;
+	
+			particleLifeSpread=10; 
+			particleSpeedSpread=2;  
+			particleSizeSpread=3;   
+			
+			particleLife=15;
+			numParticles=r2; 
+			particleSpeed=1; 
+			particleSize=4;
+			
+			
+			emitVector=0, 1, 0; 
+			emitRot=80;
+			emitRotSpread=20;
+			directional=0; 
+		}
+		air=1;
+		unit=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+	[exhale3]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.3;
+			sizeMod=1.0;
+			pos=0, 1, 0; 
+			gravity=0, r0.2, 0;
+			
+	
+			Texture=smoke;
+			airdrag=0.6;
+			colorMap=0.0 0.0 0.0 0.0   0.05 0.075 0.1 0.02   0.05 0.05 0.05 0.02    0.0 0.0 0.0 0.02;
+	
+			particleLifeSpread=20; 
+			particleSpeedSpread=0;  
+			particleSizeSpread=10;   
+			
+			particleLife=100;
+			numParticles=2; 
+			particleSpeed=0; 
+			particleSize=30;
+			
+			
+			emitVector=0, 1, 0; 
+			emitRot=80;
+			emitRotSpread=40;
+			directional=0; 
+		}
+		air=1;
+		unit=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+	
+	
+	[groundflash]
+	{
+		flashSize = 60;
+		flashAlpha = 0.01;
+		circleGrowth = 0;
+		circleAlpha = 0.0;
+		ttl = 15;
+		color = 0.3,0.45,0.6;
+	}
+	usedefaultexplosions=0;	
+	[spikes]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=-1.0 r2,-1.0 r2,-1.0 r2;
+			width=20;
+			length=20;
+			alpha=0.1;
+			alphadecay=0.01;
+			color=0.6, 0.8, 1.0;
+			alwaysVisible=1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=2; 
+	}
+}
+[disruptorstorm]
+{
+	[effects] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=-70 r140,0,-70 r140;
+			delay=i3 r1;
+			explosionGenerator=custom:disruptorstormeffect;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=3;
+	}
+
+	[groundflash]
+	{
+		flashSize = 200;
+		flashAlpha = 0.1;
+		circleGrowth = 0;
+		circleAlpha = 0.0;
+		ttl = 100;
+		color = 0.2,0.45,0.6;
+	}
+	usedefaultexplosions=0;	
+	[spikes]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			pos=-30 r60,-30 r60,-30 r60;
+			dir=-1.0 r2,-1.0 r2,-1.0 r2;
+			width=50;
+			length=80;
+			alpha=0.05;
+			alphadecay=0.001;
+			color=0.1, 0.8, 1.0;
+			alwaysVisible=1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=8; 
+	}
+}
+
+
 [LRPCTRAIL]
 {
 	usedefaultexplosions=0;	
@@ -3934,7 +4188,7 @@ usedefaultexplosions=0;
 			width=30;
 			length=10;
 			alpha=0.2;
-			alphadecay=0.05;
+			alphadecay=0.1;
 			color=1.0, 0.3, 0.1;
 		}
 		air=1;
@@ -3957,6 +4211,35 @@ usedefaultexplosions=0;
      		ground=1;
 	      	water=1;
 		underwater=1;
+		count=1;
+	}
+	[smoke_Back]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.5;
+			sizeMod=1.0;
+			pos=0, 0, 0;
+			emitVector=dir;
+			gravity=0, 0, 0;
+			colorMap=0.7 0.6 0.1 0.01   0.4 0.2 0.0 0.01   0.0 0.0 0.0 0.01;
+			Texture=smoke;
+			airdrag=0.91;
+			particleLife=3;
+			particleLifeSpread=1;
+			numParticles=1;
+			particleSpeed=1.07;
+			particleSpeedSpread=0.2;
+			particleSize=7;
+			particleSizeSpread=6;
+			emitRot=0;
+			emitRotSpread=0.1;
+			directional=0;
+		}
+		air=1;
+		water=1;
+		ground=1;
 		count=1;
 	}
 }
@@ -4001,3 +4284,115 @@ usedefaultexplosions=0;
   		count=4; 
 	}
 }
+
+[TOPTRAIL]
+{
+	usedefaultexplosions=0;	
+	//[_glow]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=35;explosionGenerator=custom:DYNPROJGLOW;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[spikes]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=-1.0 r2,-1.0 r2,-1.0 r2;
+			width=30;
+			length=10;
+			alpha=0.2;
+			alphadecay=0.03;
+			color=0.7, 0.7, 1.0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=1; 
+	}
+	[flash]
+	{
+		class=CSimpleGroundFlash;
+		[properties]
+		{
+			size = 46;
+			sizeGrowth = 2;
+			texture=groundflash;	     		
+	     		ttl = 2;
+     			colormap = 0.7 0.7 1.0 0.1    0.05 0.05 0.05 0.1;
+		}
+		air=0;
+     		ground=1;
+	      	water=1;
+		underwater=1;
+		count=1;
+	}
+	[smoke_Back]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.5;
+			sizeMod=1.0;
+			pos=0, 0, 0;
+			emitVector=dir;
+			gravity=0, 0, 0;
+			colorMap=0.1 0.1 0.4 0.01   0.05 0.05 0.3 0.01   0.0 0.0 0.0 0.01;
+			Texture=smoke;
+			airdrag=0.91;
+			particleLife=8;
+			particleLifeSpread=1;
+			numParticles=1;
+			particleSpeed=1.67;
+			particleSpeedSpread=0.5;
+			particleSize=7;
+			particleSizeSpread=6;
+			emitRot=0;
+			emitRotSpread=0.1;
+			directional=0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+}
+
+
+[KCTRAIL]
+{
+	usedefaultexplosions=0;	
+	[_glow]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=35;explosionGenerator=custom:DYNPROJGLOW;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[spikes]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=-1.0 r2,-1.0 r2,-1.0 r2;
+			width=1;
+			length=10;
+			alpha=0.8;
+			alphadecay=0.7;
+			color=1.0, 1.0, 1.0;
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=6; 
+	}
+	[flash]
+	{
+		class=CSimpleGroundFlash;
+		[properties]
+		{
+			size = 36;
+			sizeGrowth = 2;
+			texture=groundflash;	     		
+	     		ttl = 2;
+     			colormap = 0.8 0.8 0.8 0.1    0.05 0.05 0.05 0.1;
+		}
+		air=0;
+     		ground=1;
+	      	water=1;
+		underwater=1;
+		count=1;
+	}
+
+}
+

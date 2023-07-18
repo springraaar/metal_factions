@@ -75,7 +75,6 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 		sleep sleeptime;
 	}
 	return (0);
-	// Build by COBBLER Ver4.0 Copyright @1998 DIGITAL CONCEPT SOFTWARE (MANU@inext.fr) / http://www.annihilationcenter.com/DCS/  
 }
 
 HitByWeapon(Func_Var_1, Func_Var_2)
@@ -102,7 +101,7 @@ RestoreAfterDelay()
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
 	call-script stopAimHelper1(<100>,<100>);
 	turn turret to y-axis <0.000000> speed <100.000000>;
-	turn sleeve to y-axis <0.000000> speed <100.000000>;
+	turn sleeve to x-axis <0.000000> speed <100.000000>;
 }
 
 AimPrimary(heading, pitch, canFire)

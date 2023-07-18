@@ -43,7 +43,7 @@ Open()
 {
 	SET ARMORED to FALSE;
 
-	move turbase to y-axis [40] speed [40];
+	move turbase to y-axis [40] speed [160];
 	wait-for-move turbase along y-axis;
 
 	canAim = TRUE;
@@ -54,11 +54,11 @@ Close()
 {
 	canAim = FALSE;
 
-	turn sleeve to x-axis <0.000000> speed <300.000000>;
-	turn turret to y-axis <0.000000> speed <300.000000>;
-	move turbase to y-axis [0] speed [30];
-	wait-for-turn sleeve around x-axis;
-	wait-for-turn turret around y-axis;
+	//turn sleeve to x-axis <0.000000> speed <300.000000>;
+	//turn turret to y-axis <0.000000> speed <300.000000>;
+	move turbase to y-axis [0] speed [160];
+	//wait-for-turn sleeve around x-axis;
+	//wait-for-turn turret around y-axis;
 	wait-for-move turbase along y-axis;
 
 	SET ARMORED to TRUE;
@@ -129,7 +129,7 @@ AimPrimary(heading, pitch)
 		call-script Open();
 	}
 	//turn sleeve to x-axis <0.000000> - pitch speed <200.000000>;
-	turn turret to y-axis heading speed <200.000000>;
+	turn turret to y-axis heading speed <300.000000>;
 	//wait-for-turn sleeve around x-axis;
 	wait-for-turn turret around y-axis;
 	start-script RestoreAfterDelay();

@@ -1,3 +1,100 @@
+2023/07/18 ------------------ NOTES v2.21 ----------------------
+
+--- New units
+
+- CLAW "Maul" : L2 Very heavy mortar ship
+(the existing "Maul" gets renamed as explained below)
+- added "Naval Series" ship variants for the long range plasma cannons
+
+OPTIONAL
+- AVEN "Lone Trooper" : L1 Infantry Robot
+- AVEN "Stormtrooper" : L1 Assault Robot
+- AVEN "Trooper (Anti-Armor)" : L1 Fire Support Robot
+- AVEN "Techno" : L2 Amphibious Cloakable Laser Tank
+- AVEN "Cadence" : L2 Deployable Artillery Vehicle
+- AVEN "Stormfront" : L2 Disruptor Storm Bomber
+- GEAR "Igniter (Flamethrower)" : L1 Raider Vehicle
+- GEAR "Seeker" : L1 Anti-armor Kamikaze Aircraft
+- GEAR "Firefly" : L1 Incendiary Kamikaze Aircraft
+- GEAR "Axle" : L2 Amphibious Medium Tank
+- GEAR "Ruiner" : L2 Heavy Artillery Vehicle
+- GEAR "Minion" : L2 Infantry Hydrobot
+- GEAR "Bulwark" : L2 Armored Assault/Artillery Hydrobot
+- CLAW "Heavy Crawler" : L2 Armored Artillery Robot
+- CLAW "Porcupine" : L1 Skirmisher Vehicle
+- CLAW "Blaster" : L1 Riot Tank
+- CLAW "Trigger" : L1 Infantry Robot
+- CLAW "Tombstone" / "Avenger" : L1 Morphable Obelisk / Cloakable Assassin Robot
+- CLAW "Top" : L2 Fast Assault Spinbot
+- CLAW "Striker" : L1 Light Laser Tank
+- SPHERE "Duron" : L2 Amphibious Tough Heavy Tank
+- SPHERE "Boulder" : L2 Amphibious Tough Assault Robot
+- SPHERE "Returner" : L1 Auto-Reviving Infantry Robot
+- SPHERE "Revenant" : L2 All-terrain Auto-Reviving Infantry Robot
+- SPHERE "Buster" : L2 All-terrain Raider Robot
+- SPHERE "Nova" : L2 Heavy Mortar Vehicle
+- SPHERE "King Crab" : L2 Amphibious Heavy Brawler Robot
+- SPHERE "Scrapper" : L1 Raider Aircraft
+- SPHERE "Tuber" : L1 Armored Riot Robot
+- SPHERE "Rumble" : L1 Light Artillery Vehicle
+
+
+--- Balance / Mechanics
+
+- Increased AVEN "Duster" range to 700 and adjusted cost
+- Increased AVEN laser trooper range to 450 and adjusted cost
+- AVEN "HEMG" trooper can no longer be easily pushed around
+- AVEN, GEAR and SPHERE L1 bomber aircraft's bombs are now labeled as "anti-armor" and have reduced area of effect, but slightly shorter reload time
+- AVEN "Ghost" bomb modified to deal 5000H damage with much smaller AOE, but cost is increased by 33%
+(still much better at assassinating heavy targets)
+- AVEN "Raptor" has slightly increased HP and dmg/s and slightly lower range
+
+- Increased GEAR "Box" HP from 1850 to 1950 and adjusted cost
+- Reduced range by about 10% and increased rate of fire by about 25% for GEAR "Moe" and "Barrager"
+
+- CLAW "Grunt" HP increased to 980 and adjusted cost
+- CLAW "Hazard" open/close animation speed quadrupled
+- CLAW "Roller" HP increased to 1020 and adjusted cost
+- Current CLAW "Maul" is renamed to "Pounder (Naval Series)" due to model similarities and also gets the same weapon
+- Removed high trajectory mode from CLAW "Pounder"
+- Current CLAW "Striker" is renamed to "Striker (Naval Series)" and a land variant is added on the Boar chassis
+- CLAW "Sword" has significantly faster turret turn rate
+
+- SPHERE "Stout" has increased turret turn rate
+- Increased SPHERE "Slicer" range to 460 and adjusted cost
+
+- Advanced construction subs move deeper underwater to avoid being targeted by surface weapons
+
+- Slightly increased the damage/s of battleships' main cannon towers and adjusted costs
+
+- Increased discount of artillery that needs to stop/deploy to fire from 15% to 25%
+
+- Increased beam duration for L/M lasers by 1 frame for better visibility
+
+- Scaling with experience used for HP now also affects SPHERE small shields, but increases their regeneration instead
+(scaling is the same as HP : up to +70%)
+
+- Existing units that changed to optional:
+. GEAR "Rhino"
+. GEAR "Cloakable Cube"
+. GEAR "Rager"
+. CLAW "Ringo"
+. CLAW "Flayer"
+
+
+--- UI / Visual / Sounds
+
+- Added "Optional Units" panel that lets players configure their set for each faction
+(accessible through a new button on the main menu)
+
+- Added "manual fire" command default to "N" hotkey
+(only GEAR "Bulwark" has a manual fired secondary weapon at the moment)
+
+- Added command to toggle drone production ON/OFF
+
+- Slightly improved 3d models and animations for many CLAW robots
+
+
 2023/06/05 ------------------ NOTES v2.20 ----------------------
 
 --- New units

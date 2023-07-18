@@ -260,16 +260,20 @@ function gadget:GameFrame(n)
 			spDestroyUnit(uId)
 			droneUnderConstruction[uId] = nil
 		else
-			-- kill drones under construction if the parent unit is stunned
-			-- also triggers if it's loaded in a transport
-			local ownerStunned = spGetUnitIsStunned(ownerId)
-			if ownerStunned then
-				local hp,maxHp,_,_,bp = spGetUnitHealth(uId)
-				if bp < 1 then
+			-- check drones under construction, kill them in some situations
+			local hp,maxHp,_,_,bp = spGetUnitHealth(uId)
+			if bp < 1 then
+				-- kill drones under construction if the parent unit is stunned
+				-- also triggers if it's loaded in a transport
+				local ownerStunned = spGetUnitIsStunned(ownerId)
+				-- or if the drone production command is set to off
+				local droneProduction = spGetUnitRulesParam(ownerId,"droneProduction")
+				
+				if ownerStunned or (droneProduction and tonumber(droneProduction) == 0) then
 					spDestroyUnit(uId)
 					droneUnderConstruction[uId] = nil
-				end
-			end	
+				end	
+			end
 		end
 	end	
 	
@@ -335,8 +339,10 @@ function gadget:GameFrame(n)
 		local teamId, inQueue
 		for ownerId,limits in pairs(droneOwnersLimits) do
 			local ownerStunned = spGetUnitIsStunned(ownerId)
+			local droneProduction = spGetUnitRulesParam(ownerId,"droneProduction")
+			
 			-- check rebuild delay
-			if (not ownerStunned) and (n - droneOwnersLastBuildStepFrameNumber[ownerId]) >= (DRONE_REBUILD_DELAY_STEPS * DRONE_CHECK_DELAY) then
+			if (not (ownerStunned or (droneProduction and tonumber(droneProduction) == 0))) and (n - droneOwnersLastBuildStepFrameNumber[ownerId]) >= (DRONE_REBUILD_DELAY_STEPS * DRONE_CHECK_DELAY) then
 				-- check if the drone owner is fully built, if not, don't do anything
 				local hp,maxHp,_,_,bp = spGetUnitHealth(ownerId)
 				if bp and bp >= 1 then

@@ -263,3 +263,72 @@ function isCommander(ud)
 	end
 	return false
 end
+
+-- returns faction name derived from unit name or false if invalid
+function getFactionFromUName(str)
+	if not str then
+		return false
+	end
+	
+	if (str:find("^aven_" ) ~= nil) then
+		return "aven"
+	elseif (str:find("^gear_" ) ~= nil) then
+		return "gear"
+	elseif (str:find("^claw_" ) ~= nil) then
+		return "claw"
+	elseif (str:find("^sphere_" ) ~= nil) then
+		return "sphere"
+	end
+	
+	return false
+end
+
+-- returns a table with the optional unit status for each unit for a given team and a map with the count of units by faction
+function getOptionalUnitsFromText(teamId,text)
+	--Spring.Echo("optional units text : \n"..text)
+	local teamOptTable = {}
+	local countByFaction = {
+		aven = 0,
+		gear = 0,
+		claw = 0,
+		sphere = 0
+	}
+	
+	-- check the player's list and enable the ones that match, up to the limit
+	for s in text:gmatch("[^\r\n]+") do
+		local uName = s:match( "^%s*(.-)%s*$" )
+		local faction = getFactionFromUName(uName)
+		local ud = UnitDefNames[uName]
+		
+		if ud and ud.customParams and ud.customParams.optional == "1" and countByFaction[faction] < MAX_OPTIONAL_UNITS_BY_FACTION then
+			countByFaction[faction] = countByFaction[faction] + 1
+			teamOptTable[ud.id] = true
+		end
+	end
+	return teamOptTable,countByFaction
+end
+
+
+-- returns a table with the optional unit status for each unit for a given team and a map with the count of units by faction
+function getOptionalUnitsFromArray(teamId,unitsArr)
+	local teamOptTable = {}
+	local countByFaction = {
+		aven = 0,
+		gear = 0,
+		claw = 0,
+		sphere = 0
+	}
+
+	-- check the player's list and enable the ones that match, up to the limit
+	for _,s in ipairs(unitsArr) do
+		local uName = s:match( "^%s*(.-)%s*$" )
+		local faction = getFactionFromUName(uName)
+		local ud = UnitDefNames[uName]
+
+		if ud and ud.customParams and ud.customParams.optional == "1" and countByFaction[faction] < MAX_OPTIONAL_UNITS_BY_FACTION then
+			countByFaction[faction] = countByFaction[faction] + 1
+			teamOptTable[ud.id] = true
+		end
+	end
+	return teamOptTable,countByFaction
+end

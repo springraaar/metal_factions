@@ -34,7 +34,7 @@ local barAlpha  = 0.9
 
 local featureBarHeight = 3
 local featureBarWidth  = 10
-local featureBarAlpha  = 0.6
+local featureBarAlpha  = 0.9
 
 local drawBarTitles = true
 local titlesAlpha   = 0.9*barAlpha
@@ -81,15 +81,15 @@ local barColors = {
   emp_p   = { 0.40,0.40,0.80,barAlpha },
   emp_b   = { 0.60,0.60,0.90,barAlpha },
   capture = { 1.00,0.50,0.00,barAlpha },
-  build   = { 0.75,0.75,0.75,barAlpha },
+  build   = { 0.65,0.75,0.65,barAlpha },
   stock   = { 0.50,0.50,0.50,barAlpha },
   reload  = { 0.00,0.60,0.60,barAlpha },
   jump    = { 0.0,0.50,0.00,barAlpha },
   shield  = { 0.20,0.60,0.60,barAlpha },
   dash    = { 0.4,0.4,0.53,barAlpha },
 
-  resurrect = { 1.00,0.50,0.00,featureBarAlpha },
-  reclaim   = { 0.75,0.75,0.75,featureBarAlpha },
+  resurrect = { 0.40,0.20,0.40,featureBarAlpha },
+  reclaim   = { 0.5,0.5,0.6,featureBarAlpha },
 }
 
 --------------------------------------------------------------------------------

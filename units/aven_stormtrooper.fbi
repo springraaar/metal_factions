@@ -1,0 +1,84 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Stormtrooper;
+	description=Assault Robot;
+	iconType=mobileassault;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_stormtrooper;
+	objectName=aven_stormtrooper.3do;
+	corpse=aven_stormtrooper_dead;
+	buildPic=aven_stormtrooper.png;
+	soundCategory=ARMPW;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1150;
+	footprintx=2;
+	footprintz=2;
+
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+
+	builder=0;
+	workerTime=0;
+
+	canAttack=1;
+	canGuard=1;
+	canMove=1.1;
+	canPatrol=1;
+	canStop=1;
+	upright=1;
+
+	movementClass=KBOTHT2;
+	turnRate=1132;
+	acceleration=1.1;
+	brakeRate=2.0;
+	maxVelocity=1.8;
+	maxSlope=17;
+	maxWaterDepth=12;
+
+	sightDistance=500;
+	radarDistance=0;
+
+	weapon1=aven_stormtrooper_emg;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+	noAutoFire=0;
+	collisionVolumeType = box;
+	collisionVolumeScales =17 30 17;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=aven_light_plant,aven_adv_kbot_lab;
+		optional=1;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:EmgFlare;
+	}
+	buildCostEnergy=1071;//#AUTO#
+	buildCostMetal=214;//#AUTO#
+	buildTime=2553;//#AUTO#
+	mass=358;//#AUTO#
+}

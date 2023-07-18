@@ -401,6 +401,9 @@ local function processMouseEvents(o)
 	o.checkedForMouse = nil
 	
 	if (o[2] == 2) then --text
+		if not o.getWidth then
+			Spring.Echo(dump(o))
+		end
 		o.sx = o.getWidth()
 		o.sy = o.getHeight()
 	end
@@ -605,12 +608,12 @@ function widget:Initialize()
 				t[m] = o
 				r = o
 			end
-			
+
 			r.delete = function()
 				r.scheduledForDeletion = true
 			end
 			
-			if (r.caption) then
+			if (r.caption or (r[2] and r[2] == 2)) then
 				r.getWidth = function()
 					return getTextWidth(r)
 				end

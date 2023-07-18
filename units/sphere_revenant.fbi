@@ -1,0 +1,123 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Revenant;
+	description=All-terrain Auto-Reviving Infantry Robot;
+	iconType=allterrainfighter;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_revenant;
+	objectName=sphere_revenant.3do;
+	corpse=sphere_revenant_dead;
+	buildPic=sphere_revenant.png;
+	soundCategory=SPHERE_BOTMED;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=2200;
+	footprintx=3;
+	footprintz=3;
+	autoHeal=15;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canAttack=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=KBOTATUW;
+	turnRate=1180;
+	acceleration=1.1;
+	brakeRate=1;
+	maxVelocity=1.6;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	Weapon1=sphere_revenant_laser;
+	weaponMainDir1=0 1 0;
+	maxAngleDif1=280;
+	Weapon2=sphere_revenant_beam;
+	weaponMainDir2=0 1 0;
+	maxAngleDif2=280;
+	badTargetCategory1=VTOL;
+	badTargetCategory2=NOTAIR;
+	noChaseCategory=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+
+	collisionVolumeType = box;
+	collisionVolumeScales =32 40 30;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_adv_kbot_factory;
+		tip=Regenerates 15 HP/s. Wreckage auto-revives with 50% HP after 60s if undisturbed;
+		optional=1;
+		evalFactor=1.4; // auto-revive
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:redflare;
+		explosionGenerator1=custom:glowsml;
+	}
+
+	buildCostEnergy=8540;//#AUTO#
+	buildCostMetal=1708;//#AUTO#
+	buildTime=20353;//#AUTO#
+	mass=1119;//#AUTO#
+}

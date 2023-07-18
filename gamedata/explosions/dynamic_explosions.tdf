@@ -1587,11 +1587,20 @@
 
 
 
-[STDNARROWBLASTWRAPPER]			// standard yellow blast wrapper
+[STDNARROWBLASTWRAPPER]			// standard yellow blast wrapper, narrower
 {
 	usedefaultexplosions=0;
 	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d1 p0.6 x0;explosionGenerator=custom:STDNARROWBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
+
+[AARMORBLASTWRAPPER]			// intense narrow blast
+{
+	usedefaultexplosions=0;
+	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=8 y0 d0.8 p0.6 x0;explosionGenerator=custom:STDNARROWBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=10;damage=8 y0 d0.8 p0.6 x0;explosionGenerator=custom:STDNARROWBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+
+
 
 [FLAREBLASTWRAPPER]			// flare blast wrapper
 {
@@ -2243,6 +2252,69 @@
 			length=60;
 			alpha=0.4;
 			alphadecay=0.01;
+			color=1.0, 0.9, 1.0;
+		}
+		air=0;
+		water=1;
+		underwater=0;
+		ground=0;
+  		count=4;
+	}
+
+}
+
+[SEEKERBLASTWRAPPER]
+{
+	usedefaultexplosions=0;
+	[_stdblast1]{class=CExpGenSpawner;[properties]{pos=0,40,0;delay=0;damage=400;explosionGenerator=custom:ROCKETBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=0,30,0;delay=5;damage=300;explosionGenerator=custom:ROCKETBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+
+
+	[gflash]
+	{
+		class=CSimpleGroundFlash;
+		[properties]
+		{
+			size = 40;
+			sizeGrowth = 1;
+			texture=groundflash;
+	     		ttl = 70;
+     			colormap = 1 1 1 0.5    1 1 1 0;
+		}
+		air=0;
+     		ground=1;
+	      	water=0;
+		underwater=1;
+		count=1;
+	}
+	[blobs]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=-1 r2,-1 r2,-1 r2;
+			width=15;
+			length=30;
+			alpha=0.4;
+			alphadecay=0.015;
+			color=1.0, 0.9, 0.8;
+		}
+		air=1;
+		water=0;
+		ground=1;
+		underwater=0;
+  		count=4;
+	}
+	[waterblobs]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=-1 r2,-1 r2,-1 r2;
+			width=15;
+			length=30;
+			alpha=0.4;
+			alphadecay=0.015;
 			color=1.0, 0.9, 1.0;
 		}
 		air=0;

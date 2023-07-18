@@ -1,0 +1,87 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	side=Sphere;
+	Name=Returner;
+	Description=Auto-Reviving Infantry Robot;
+	iconType=mobileartilleryfs;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=sphere_returner;
+	objectName=sphere_returner.3do;
+	buildPic=sphere_returner.png;
+	soundCategory=SPHERE_BOTSML;
+	Corpse=sphere_returner_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=2;
+	FootprintZ=2;
+	maxDamage=1000;
+	autoHeal=10;
+
+	// ------------------- resources
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	Builder=0;
+
+	// ------------------- movement
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.7;
+	brakeRate=0.45;
+	Acceleration=0.85;
+	turnRate=1250;
+	movementClass=KBOTHT2;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_returner_blaster;
+	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+
+	// ------------------- orders
+
+	// ------------------- misc
+	noAutoFire=0;
+	Upright=1;
+	collisionVolumeType = box;
+	collisionVolumeScales=15 28 15;
+	collisionVolumeOffsets= 0 0 0;
+	collisionVolumeTest= 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_light_factory,sphere_adv_kbot_factory;
+		tip=Regenerates 10 HP/s. Wreckage auto-revives with 50% HP after 60s if undisturbed;
+		optional=1;
+		evalFactor=1.4; // auto-revive
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:redflare;
+	}
+	buildCostEnergy=1373;//#AUTO#
+	buildCostMetal=274;//#AUTO#
+	buildTime=3272;//#AUTO#
+	mass=170;//#AUTO#
+}

@@ -31,6 +31,8 @@ include("luarules/gadgets/ai/common.lua")
 include("luarules/gadgets/ai/AI.lua")
 include("luarules/gadgets/ai/MapHandler.lua")
 
+finishLoadingUnitTypeSets()
+
 ---------------------------------------------- auxiliary functions
 
 function registerUnit()

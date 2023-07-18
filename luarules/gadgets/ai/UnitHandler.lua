@@ -1,5 +1,3 @@
-include("luarules/gadgets/ai/common.lua")
- 
 UnitHandler = {}
 UnitHandler.__index = UnitHandler
 

@@ -1,0 +1,134 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Stormfront;
+	description=Wide Area Disruptor Bomber;
+	iconType=airbomber;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN VTOL LEVEL2 WEAPON NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_stormfront;
+	objectName=aven_stormfront.3do;
+	buildPic=aven_stormfront.png;
+	soundCategory=aven_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=4000;
+	footprintx=6;
+	footprintz=6;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canDropFlare=0;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnRate=256;
+	acceleration=0.2;
+	brakeRate=0.03;
+	maxVelocity=8.3;
+	maxSlope=10;
+	
+	cruiseAlt=210;
+
+	// flight behaviour
+	wingDrag=0.07;      //0.07
+	wingAngle=0.08;	//0.08;
+	drag=0.08;		//0.08
+	frontToSpeed=0.1;  //0.1
+	speedToFront=0.07; //0.07
+	myGravity=0.4; //0.4
+	maxBank=0.8;	//0.8
+	maxPitch=0.45;	//0.45
+	turnRadius=400; //500
+	maxAileron=0.009;	//0.015
+	maxElevator=0.008;	//0.01
+	maxRudder=0.007;  //0.004
+	maxAcc=0.65; //0.065
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_stormfront_bomb;
+	noChaseCategory=UNDERWATER;
+	onlytargetcategory1=NOTAIR;
+	explodeAs=HBOMBER;
+	selfDestructAs=HBOMBER;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	flaredelay=0.3;
+	flaredropvector=0 0 -1;
+	flareefficieny=0.25;
+	flarereload=3;
+	collide=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =55 15 70;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	
+	[CustomParams]
+	{
+		builtBy=aven_adv_aircraft_plant;
+		tip=Each bomb's storm effect lasts 30s, dealing up to 60(M) disruptor dmg/s;
+		manualCost=1;
+		optional=1;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=rocketflaresml;
+	}
+	buildCostEnergy=20000;//#AUTO#
+	buildCostMetal=4000;//#AUTO#
+	buildTime=48000;//#AUTO#
+	mass=1000;//#AUTO#
+}

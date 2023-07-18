@@ -6,7 +6,9 @@
 #define HEADING_TOLERANCE	<15>
 #define PITCH_TOLERANCE		<15>
 
-piece  base, turbase, turret, l1,l2,l3, holder, sleeve, barrel, flare, wake1, wake2, hull, bottom, right, rbottom, left, lbottom;
+piece  base, turbase, turret, sleeve, lbsup, lbarrel, lflare, rbsup, rbarrel,rflare,wake1, wake2, hull, bottom, right, rbottom, left, lbottom;
+
+static-var gun_1;
 
 #include "aimhelper1.h"
 
@@ -43,8 +45,19 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 	return (0);
 }
 
+RockUnit(anglex, anglez)
+{
+	turn base to x-axis anglex speed <30.005495>;
+	turn base to z-axis <0>-anglez speed <30.005495>;
+	wait-for-turn base around z-axis;
+	wait-for-turn base around x-axis;
+	turn base to z-axis <0.000000> speed <15.000000>;
+	turn base to x-axis <0.000000> speed <15.000000>;
+}
+
 Create()
 {
+	gun_1=0;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script SmokeUnit();
 	return (0);
@@ -96,10 +109,24 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	move barrel to z-axis [-6.000000] now;
-	emit-sfx 1024+0 from flare;
-	sleep 100;
-	move barrel to z-axis [0.000000] speed [4.000000];
+	if (gun_1 == 0) 
+	{
+		move lbarrel to z-axis [-6.000000] now;
+		emit-sfx 1024+0 from lflare;
+		sleep 100;
+		move lbarrel to z-axis [0.000000] speed [8.000000];
+		gun_1 = 1;	
+		return (0);
+	}
+	if (gun_1 == 1) 
+	{
+		move rbarrel to z-axis [-6.000000] now;
+		emit-sfx 1024+0 from rflare;
+		sleep 100;
+		move rbarrel to z-axis [0.000000] speed [8.000000];
+		gun_1 = 0;	
+		return (0);
+	}
 }
 
 AimFromPrimary(piecenum)
@@ -110,24 +137,26 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	piecenum = flare;
+	if (gun_1 == 0) 
+	{
+		piecenum = lflare;
+		return (0);
+	} else {
+		piecenum = rflare;
+		return (0);
+	
+	}
 }
 
 
-
-SweetSpot(piecenum)
-{
-	piecenum = turret;
-	return (0);
-}
 
 Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
 		explode turret type SHATTER;
-		explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-		explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+		explode lbsup type SHATTER;
+		explode rbsup type SHATTER;
 		return (1);
 	}
 
@@ -137,7 +166,8 @@ Killed(severity, corpsetype)
 	explode lbottom type SHATTER;
 	explode rbottom type SHATTER;
 	explode turret type SHATTER;
-	explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
-	explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode lbsup type SHATTER;
+	explode rbsup type SHATTER;
+
 	return (2);
 }

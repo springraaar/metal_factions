@@ -1,0 +1,88 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Lone Trooper;
+	description=Infantry Robot;
+	iconType=mobilefighter;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_lone_trooper;
+	objectName=aven_lone_trooper.3do;
+	corpse=aven_lone_trooper_dead;
+	buildPic=aven_lone_trooper.png;
+	soundCategory=ARMPW;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1000;
+	footprintx=2;
+	footprintz=2;
+
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+	autoheal=5;
+
+	builder=0;
+	workerTime=0;
+
+	canAttack=1;
+	canGuard=1;
+	canMove=1.1;
+	canPatrol=1;
+	canStop=1;
+	upright=1;
+
+	movementClass=KBOTHT2;
+	turnRate=1232;
+	acceleration=1.1;
+	brakeRate=18.0;
+	maxVelocity=1.7;
+	maxSlope=17;
+	maxWaterDepth=12;
+
+	sightDistance=500;
+	radarDistance=0;
+
+	weapon1=aven_lone_trooper_emg;
+	weapon2=aven_lone_trooper_emg2;
+	badTargetCategory1=VTOL;
+	badTargetCategory2=VTOL;
+	noChaseCategory=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+	noAutoFire=0;
+	collisionVolumeType = box;
+	collisionVolumeScales =17 32 17;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=aven_light_plant,aven_adv_kbot_lab;
+		tip=Regenerates 5 HP/s. Stronger weapon used only if there are no other friendly units within 350 distance;
+		optional=1;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:EmgFlare;
+		explosionGenerator1=custom:EmgFlareMed;
+	}
+	buildCostEnergy=1043;//#AUTO#
+	buildCostMetal=208;//#AUTO#
+	buildTime=2486;//#AUTO#
+	mass=159;//#AUTO#
+}

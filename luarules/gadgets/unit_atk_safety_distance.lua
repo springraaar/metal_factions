@@ -11,7 +11,10 @@ function gadget:GetInfo()
 end
 
 
-local specialCases = {}
+local specialCases = {
+	gear_firefly = 0,
+	gear_seeker = 0,
+}
 
 local DEFAULT_DISTANCE = 370.0
 

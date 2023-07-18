@@ -63,8 +63,8 @@ AimPrimary(heading, pitch)
 {
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	turn sleeve to x-axis <0.000000> - pitch speed <90.000000>;
-	turn turret to y-axis heading speed <90.000000>;
+	turn sleeve to x-axis <0.000000> - pitch speed <180.000000>;
+	turn turret to y-axis heading speed <180.000000>;
 	wait-for-turn sleeve around x-axis;
 	wait-for-turn turret around y-axis;
 	start-script RestoreAfterDelay();

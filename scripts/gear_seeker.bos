@@ -1,0 +1,82 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, lwing, rwing, lbody, rbody, center, weapon, firept, ljet, rjet, ljp, rjp, b2;
+
+static-var  isFlying;
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+
+Create()
+{
+	isFlying = FALSE;
+	start-script SmokeUnit();
+}
+
+Activate()
+{
+	isFlying = TRUE;
+}
+
+Deactivate()
+{
+	isFlying = FALSE;
+}
+
+AimPrimary()
+{
+	if(!isFlying)
+	{
+		return (0);
+	}
+	return (1);
+}
+
+FirePrimary()
+{
+	emit-sfx 1024+0 from firept;
+	get KILL_UNIT(get MY_ID, FALSE, TRUE);
+	return (1);
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = firept;
+}
+
+Killed(severity, corpsetype)
+{
+	explode center type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode lwing type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	explode rwing type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	return(1);
+
+}

@@ -149,22 +149,24 @@ end
 
 local function UnitParalysed(uID, uDefID, uTeam)
 	local cDefs = convertCapacities[uDefID]
-    if cDefs then
-      if teamMMList[uTeam][cDefs.e][uID].built then
-				teamMMList[uTeam][cDefs.e][uID].emped = true
-        AdjustTeamCapacity(uTeam, -cDefs.c, cDefs.e)
-      end
-    end
+	if cDefs then
+		local uState = teamMMList[uTeam][cDefs.e][uID]
+		if uState and uState.built then
+			uState.emped = true
+			AdjustTeamCapacity(uTeam, -cDefs.c, cDefs.e)
+		end
+	end
 end
 
 local function UnitParalysisOver(uID, uDefID, uTeam)
 	local cDefs = convertCapacities[uDefID]
-    if cDefs then
-			if (teamMMList[uTeam][cDefs.e][uID] and teamMMList[uTeam][cDefs.e][uID].built) then
-				teamMMList[uTeam][cDefs.e][uID].emped = false
-				AdjustTeamCapacity(uTeam, cDefs.c, cDefs.e)
-			end
-    end
+	if cDefs then
+		local uState = teamMMList[uTeam][cDefs.e][uID]
+		if (uState and uState.built) then
+			uState.emped = false
+			AdjustTeamCapacity(uTeam, cDefs.c, cDefs.e)
+		end
+	end
 end
 
 ----------------------------------------------------------------

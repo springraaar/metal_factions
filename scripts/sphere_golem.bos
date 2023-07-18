@@ -46,7 +46,7 @@ walk()
 	if( bMoving )
 	{
 		/* X */
-		turn hips to x-axis <-3.000000> speed <20.000000> * mASpdFactor / 100;
+		turn hips to x-axis <-1.000000> speed <10.000000> * mASpdFactor / 100;
 			
 		/* Y */
 		turn leg4 to y-axis <-80.000000> speed <260.000000> * mASpdFactor / 100;
@@ -60,7 +60,7 @@ walk()
 		/* Z */
 		turn bleg4 to z-axis <-20.000000> speed <260.000000> * mASpdFactor / 100;
 		turn bleg to z-axis <-20.000000> speed <260.000000> * mASpdFactor / 100;
-		turn hips to z-axis <3.000000> speed <20.000000> * mASpdFactor / 100;
+		turn hips to z-axis <1.000000> speed <10.000000> * mASpdFactor / 100;
 
 		/* move */
 		move hips to x-axis [-0.2500000] speed [2.000000] * mASpdFactor / 100;
@@ -76,7 +76,7 @@ walk()
 	if( bMoving )
 	{
 		/* X */
-		turn hips to x-axis <3.000000> speed <20.000000> * mASpdFactor / 100;
+		turn hips to x-axis <1.000000> speed <10.000000> * mASpdFactor / 100;
 		
 		/* Y */
 		turn leg4 to y-axis <-35.000000> speed <200.000000> * mASpdFactor / 100;
@@ -90,7 +90,7 @@ walk()
 		/* Z */
 		turn bleg4 to z-axis <0.000000> speed <260.000000> * mASpdFactor / 100;
 		turn bleg to z-axis <0.000000> speed <260.000000> * mASpdFactor / 100;
-		turn hips to z-axis <3.000000> speed <20.000000> * mASpdFactor / 100;
+		turn hips to z-axis <1.000000> speed <10.000000> * mASpdFactor / 100;
 		
 		/* move */
 		move hips to x-axis [0.000000] speed [2.000000] * mASpdFactor / 100;
@@ -105,7 +105,7 @@ walk()
 	if( bMoving )
 	{
 		/* X */
-		turn hips to x-axis <-3.000000> speed <20.000000> * mASpdFactor / 100;
+		turn hips to x-axis <-1.000000> speed <10.000000> * mASpdFactor / 100;
 
 		/* Y */
 		turn leg4 to y-axis <-5.000000> speed <140.000000> * mASpdFactor / 100;
@@ -119,7 +119,7 @@ walk()
 		/* Z */
 		turn bleg2 to z-axis <20.000000> speed <260.000000> * mASpdFactor / 100;
 		turn bleg3 to z-axis <20.000000> speed <260.000000> * mASpdFactor / 100;
-		turn hips to z-axis <-3.000000> speed <20.000000> * mASpdFactor / 100;
+		turn hips to z-axis <-1.000000> speed <10.000000> * mASpdFactor / 100;
 
 
 		/* move */
@@ -134,7 +134,7 @@ walk()
 	}
 	if( bMoving )
 	{
-		turn hips to x-axis <3.000000> speed <20.000000> * mASpdFactor / 100;
+		turn hips to x-axis <1.000000> speed <10.000000> * mASpdFactor / 100;
 
 		/* Y */
 		turn leg4 to y-axis <-15.000000> speed <140.000000> * mASpdFactor / 100;
@@ -148,7 +148,7 @@ walk()
 		/* Z */
 		turn bleg3 to z-axis <0.000000> speed <260.000000> * mASpdFactor / 100;
 		turn bleg2 to z-axis <0.000000> speed <260.000000> * mASpdFactor / 100;
-		turn hips to z-axis <3.000000> speed <20.000000> * mASpdFactor / 100;
+		turn hips to z-axis <1.000000> speed <20.000000> * mASpdFactor / 100;
 
 		/* move */
 		move hips to x-axis [0.000000] speed [2.000000] * mASpdFactor / 100;

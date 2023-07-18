@@ -27,6 +27,8 @@ local minSpread            = 8 --weapons with this spread or less are ignored
 local numAoECircles        = 9
 local pointSizeMult        = 2048
 
+VFS.Include("lualibs/util.lua")
+
 --------------------------------------------------------------------------------
 --vars
 --------------------------------------------------------------------------------
@@ -184,6 +186,9 @@ local function getWeaponInfo(weaponDef, unitDef)
 	local mobile = unitDef.speed > 0
 	local waterWeapon = weaponDef.waterWeapon
 	local ee = weaponDef.edgeEffectiveness
+	local cp = weaponDef.customParams
+	local spreadRadius = (cp and cp.spreadradius) and tonumber(cp.spreadradius) or 0
+				
 	if (weaponDef.cylinderTargetting >= 100) then
 		retData = {type = "orbital", scatter = scatter}
 	elseif (weaponType == "Cannon") then
@@ -227,6 +232,14 @@ local function getWeaponInfo(weaponDef, unitDef)
 		retData = {type = "direct", scatter = scatter, range = weaponDef.range}
 	end
 	
+	--TODO range was not always set before, i wonder why...
+	retData.range = weaponDef.range
+	
+	if spreadRadius > 0 then
+		retData.type = "orbital"
+		retData.scatter = spreadRadius
+	end
+	
 	if not weaponDef.impactOnly then
 		retData.aoe = aoe
 	else
@@ -251,7 +264,7 @@ local function SetupUnitDef(unitDefID, unitDef)
       local weaponDef = WeaponDefs[weapon.weaponDef]
       if (weaponDef) then
 		local aoe = weaponDef.damageAreaOfEffect
-        if (num == 3 and unitDef.canManualFire) then
+        if (unitDef.canManualFire) then
           dgunInfo[unitDefID] = getWeaponInfo(weaponDef, unitDef)
         elseif (not weaponDef.isShield 
                 and not ToBool(weaponDef.interceptor)
@@ -622,7 +635,7 @@ function widget:DrawWorld()
   local _, cmd, _ = GetActiveCommand()
   local info, unitID
   
-  if extraDrawRange and selUnitID and cmd == CMD_ATTACK then
+  if extraDrawRange and selUnitID and (cmd == CMD_ATTACK or cmd == CMD_MANUALFIRE) then
     local fx, fy, fz = GetUnitPosition(selUnitID)
     if fx then
       -- get the unit's range circles

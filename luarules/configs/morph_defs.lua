@@ -178,7 +178,17 @@ local morphDefs = {
 			metal = 1500,
 			text = 'Morph to Slayer Form : Greatly increased speed and firepower. Reduced range.'
 		}
-	},	
+	},
+	claw_tombstone = {
+		{
+			into = 'claw_avenger',
+			time = 30,
+			cmdname = 'Avenger Form',
+			charge = 1,
+			text = 'Morph to Avenger : Cloakable Assassin Robot'
+		}
+		
+	},
 ------------------------------------------------ SPHERE
 	sphere_commander = 	{
 		{

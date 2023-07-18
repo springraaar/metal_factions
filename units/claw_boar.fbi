@@ -60,7 +60,7 @@
 	//  Movement
 	//************
 	movementClass=TANKSH3;
-	turnRate=370;
+	turnRate=460;
 	acceleration=0.2;
 	brakeRate=0.0976563;
 	maxVelocity=2.25;
@@ -97,7 +97,7 @@
 	tracktype=StdTank;
 	trackwidth=30;
 	collisionVolumeType = box;
-	collisionVolumeScales =29 19 32;
+	collisionVolumeScales =29 19 34;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 
@@ -109,8 +109,8 @@
 	{
 	explosionGenerator0=custom:yellowflaresml;
 	}
-	buildCostEnergy=1370;//#AUTO#
-	buildCostMetal=274;//#AUTO#
-	buildTime=3266;//#AUTO#
-	mass=378;//#AUTO#
+	buildCostEnergy=1380;//#AUTO#
+	buildCostMetal=276;//#AUTO#
+	buildTime=3290;//#AUTO#
+	mass=379;//#AUTO#
 }

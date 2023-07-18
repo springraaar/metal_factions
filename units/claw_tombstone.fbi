@@ -1,0 +1,106 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Tombstone;
+	description=Morphable Obelisk;
+	iconType=staticassault;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW LEVEL1 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_tombstone;
+	objectName=claw_tombstone.3do;
+	corpse=claw_tombstone_dead;
+	buildPic=claw_tombstone.png;
+	soundCategory=aven_MSTOR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=2500;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	metalMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=ooo ooo ooo;
+	activateWhenBuilt=1;
+	collisionvolumetype=cyly;
+	collisionVolumeScales=30 40 30;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+	buildDistance=600;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onOffable=0;
+	activateWhenBuilt=1;
+	autoheal=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	canAttack=0;
+	canFight=0;
+	canGuard=0;
+	canPatrol=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+
+	[CustomParams]
+	{
+		builtBy=claw_l1builder,claw_l2builder;
+		manualCost=1;
+		tip=Charges up from destroyed units within 600 radius. When 1000m charge is full, can morph into a cloakable assassin robot. Further charges add experience;
+		optional=1;
+	}
+	buildCostEnergy=1500;
+	buildCostMetal=300;
+	buildTime=3600;
+	mass=1500;
+}

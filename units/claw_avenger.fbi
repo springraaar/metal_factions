@@ -1,0 +1,117 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Avenger;
+	description=Cloakable Assassin Robot;
+	iconType=mobileraider;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_avenger;
+	objectName=claw_avenger.3do;
+	corpse=claw_avenger_dead;
+	buildPic=claw_avenger.png;
+	soundCategory=CLAW_BOTSML;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1200;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	upright=1;
+	canCloak=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=KBOTHT2;
+	turnRate=1310;
+	acceleration=1.0;
+	brakeRate=0.1;
+	maxVelocity=2.3;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	cloakCost=30;
+	cloakCostMoving=60;
+	minCloakDistance=70;
+
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_avenger_laser;
+	badTargetCategory1=NOTAIR;
+	noChaseCategory=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =17 30 17;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:glowsml;
+	}
+
+	[CustomParams]
+	{
+		builtBy=claw_tombstone;
+		tip=Weapon loses up to 30% damage over its range;
+		evalFactor=0.85;
+	}
+
+	buildCostEnergy=1582;//#AUTO#
+	buildCostMetal=316;//#AUTO#
+	buildTime=3771;//#AUTO#
+	mass=202;//#AUTO#
+}

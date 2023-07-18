@@ -2,7 +2,7 @@ function widget:GetInfo()
 	return {
 	version   = "8.1",
 	name      = "Red Build/Order Menu",
-	desc      = "Requires Red UI Framework",
+	desc      = "Build/Order Menu. Requires Red UI Framework",
 	author    = "Regret, modified by raaar",
 	date      = "August 9, 2009", --modified by raaar, sep 2015
 	license   = "GNU GPL, v2 or later",
@@ -83,23 +83,24 @@ VFS.Include("lualibs/util.lua")
 
 local iconCmdPosition = {
 	[CMD.ATTACK] = 1,
-	[CMD.FIGHT] = 2,
-	[CMD.MOVE] = 3,
-	[CMD_JUMP] = 4,
-	[CMD_DASH] = 5,	
-	[CMD.PATROL] = 6,
-	[CMD.GUARD] = 7,	
-	[CMD.WAIT] = 8,
-	[CMD.STOP] = 9,
-	[CMD.LOAD_UNITS] = 10,
-	[CMD.UNLOAD_UNITS] = 11,
-	[CMD.REPAIR] = 12,
-	[CMD.RECLAIM] = 13,
-	[CMD.RESTORE] = 14,
-	[CMD.CAPTURE] = 15,
-	[CMD_AREAMEX] = 16,
-	[CMD_UPGRADEMEX] = 17,
-	[CMD_UPGRADEMEX2] = 18
+	[CMD.MANUALFIRE] = 2,
+	[CMD.FIGHT] = 3,
+	[CMD.MOVE] = 4,
+	[CMD_JUMP] = 5,
+	[CMD_DASH] = 6,	
+	[CMD.PATROL] = 7,
+	[CMD.GUARD] = 8,	
+	[CMD.WAIT] = 9,
+	[CMD.STOP] = 10,
+	[CMD.LOAD_UNITS] = 11,
+	[CMD.UNLOAD_UNITS] = 12,
+	[CMD.REPAIR] = 13,
+	[CMD.RECLAIM] = 14,
+	[CMD.RESTORE] = 15,
+	[CMD.CAPTURE] = 16,
+	[CMD_AREAMEX] = 17,
+	[CMD_UPGRADEMEX] = 18,
+	[CMD_UPGRADEMEX2] = 19
 }
 
 local iconCmdTex = {
@@ -107,6 +108,7 @@ local iconCmdTex = {
 	[CMD_JUMP] = "icon_jump.png",
 	[CMD_DASH] = "icon_dash.png",
 	[CMD.ATTACK] = "icon_attack.png",
+	[CMD.MANUALFIRE] = "icon_manualfire.png",
 	[CMD.FIGHT] = "icon_fight.png",
 	[CMD.REPAIR] = "icon_repair.png",
 	[CMD.PATROL] = "icon_patrol.png",
@@ -126,6 +128,7 @@ local iconCmdTex = {
 
 local spacingList = {0,1,10,20}
 local stdHotkeysByAction = {} 
+local optionalUnitNames = {}
 
 -- simplify a hotkey string, remove the modifiers
 -- (visually simpler, but may not be a good idea)
@@ -224,6 +227,8 @@ local function tooltipExtension(tooltip,cmdAction)
 			tooltip = tooltip .. "."..tooltipHotkey(nil,"areamex2")
 		elseif cmdAction == "areamex2h" then
 			tooltip = tooltip .. "."..tooltipHotkey(nil,"areamex2h")
+		elseif cmdAction == "manualfire" then
+			tooltip = tooltip .. "."..tooltipHotkey(nil,"manualfire")
 		elseif cmdAction == "onoff" then
 			tooltip = tooltip .. "."..tooltipHotkey(nil,"onoff")
 		elseif cmdAction and string.sub(cmdAction,1,9) == "buildunit" and tooltip:find("Unit disabled") == nil then
@@ -1037,6 +1042,13 @@ function nextBuildOptionsPage()
 end
 
 function widget:Initialize()
+	-- optional unit names
+	for id, ud in pairs (UnitDefs) do
+		local cp = ud.customParams
+		if cp and cp.optional == "1" then
+			optionalUnitNames[ud.name] = true
+		end
+	end
 	
 	-- initialize filter tables
 	for i=1,#filterLabel do
@@ -1177,6 +1189,7 @@ local function GetCommands()
 	end
 
 	local uName = ""
+	local ud = nil
 	for index,cmd in pairs(spGetActiveCmdDescs()) do
 		if (type(cmd) == "table") then
 			--Spring.Echo("id="..cmd.id.." type="..cmd.type.." action="..cmd.action)
@@ -1190,15 +1203,20 @@ local function GetCommands()
 			) then
 				if ((cmd.type == 20) --build building
 				or (ssub(cmd.action,1,10) == "buildunit_")) then
-						uName = ssub(cmd.action,11)
-						cmd.uName = uName
-						cmd.cost = UnitDefNames[uName].metalCost
-						cmd.isBuilder = UnitDefNames[uName].buildSpeed > 0
+					uName = ssub(cmd.action,11)
+					cmd.uName = uName
+					ud = UnitDefNames[uName]
+					-- omit build item options for disabled optional units
+					if not (cmd.disabled and optionalUnitNames[uName]) then 
+						cmd.cost = ud.metalCost
+						cmd.isBuilder = ud.buildSpeed > 0
+						
 						-- update build filter category option flags
 						checkEnableCategory(uName)
 						
 						buildCmdsCount = buildCmdsCount + 1
 						buildCmds[buildCmdsCount] = cmd
+					end
 				elseif (iconCmdTex[cmd.id]) then
 					cmd.position = iconCmdPosition[cmd.id]
 					iconOtherCmdsCount = iconOtherCmdsCount + 1

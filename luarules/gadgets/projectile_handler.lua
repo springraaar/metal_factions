@@ -61,6 +61,7 @@ local spSetUnitRadiusAndHeight = Spring.SetUnitRadiusAndHeight
 local spGetTeamList = Spring.GetTeamList
 local spAreTeamsAllied = Spring.AreTeamsAllied
 local spSetUnitEngineDrawMask = Spring.SetUnitEngineDrawMask
+local spGetProjectileDefID = Spring.GetProjectileDefID
 
 include("lualibs/util.lua")
 
@@ -110,6 +111,7 @@ local STEP_DELAY = 6 		-- process steps every N frames
 local FIRE_AOE_STEPS = 100	-- 20 seconds
 local FIRE_AOE_STEPS_AIR = 35	-- 7 seconds
 local FIRE_AOE_STEPS_AIR_H = 100
+local DISRUPTOR_STORM_STEPS = 150	-- 30 seconds
 
 local projectileWasUnderwater = {}
 
@@ -123,6 +125,9 @@ local comsatWeaponId = WeaponDefNames["comsat_beacon"].id
 local scoperWeaponId = WeaponDefNames["scoper_beacon"].id
 local dynamoWeaponId = WeaponDefNames["claw_dynamo_ring"].id
 local atomWeaponId = WeaponDefNames["sphere_atom_cannon"].id
+local disruptorStormWeaponId = WeaponDefNames["aven_stormfront_bomb"].id
+local disruptorStormWeaponEffectId = WeaponDefNames["disruptor_storm_effect"].id
+
 
 local DYNAMO_RING_MAX_DAMAGE = 5000
 local DYNAMO_RING_BASE_DAMAGE = 3000
@@ -131,25 +136,8 @@ local DYNAMO_RING_GROUND_HP = 800
 
 local DYNAMO_RING_FEATURE_DISCOUNT = 0.25
 
-local fireAOEWeaponIds = {
-	-- GEAR
-	[WeaponDefNames["gear_canister"].id]=true,
-	[WeaponDefNames["gear_eruptor"].id]=true,
-	[WeaponDefNames["gear_mass_burner"].id]=true,
-	[WeaponDefNames["gear_canister_fireball"].id]=true,
-	[WeaponDefNames["gear_eruptor_fireball"].id]=true,
-	[WeaponDefNames["gear_firestorm_missile"].id]=true,
-	[WeaponDefNames["gear_igniter_missile"].id]=true,
-	[WeaponDefNames["gear_incendiary_mine_missile"].id]=true,
-	[WeaponDefNames["gear_u1commander_missile"].id]=true,
-	[WeaponDefNames["gear_barrel_missile2"].id]=true,
-	[WeaponDefNames["gear_pyroclasm_submunition"].id]=true,
-	[WeaponDefNames["gear_pyroclasm_rocket_d"].id]=true,
-	[WeaponDefNames["gear_u5commander_fireball"].id]=true
-}
-
+local fireAOEWeaponIds = {}
 local torpedoWeaponIds = {}
-
 
 
 local smartTrackingWeaponIds = {
@@ -192,7 +180,8 @@ local highAngleDescentWeaponIds = {
 	-- AVEN
 	[WeaponDefNames["aven_merl_rocket"].id]=true,
 	[WeaponDefNames["aven_ambassador_rocket"].id]=true,
-	[WeaponDefNames["aven_ranger_rocket"].id]=true
+	[WeaponDefNames["aven_ranger_rocket"].id]=true,
+	[WeaponDefNames["gear_bulwark_rocket"].id]=true
 }
 
 local premiumRocketWeaponIds = {
@@ -222,8 +211,11 @@ local disruptorEffectProjectiles = {}
 local torpedoProjectiles = {}
 local smartTrackingProjectiles = {}
 local fireAOEProjectiles = {}
+local disruptorStormProjectiles = {}
 local fireAOEEffectProjectiles = {}
+local disruptorStormEffectProjectiles = {}
 local fireAOEPositions = {}
+local disruptorStormPositions = {}
 local magnetarProjectiles = {}
 local destructibleProjectiles = {}
 local dcRockets = {}
@@ -310,6 +302,12 @@ function gadget:Initialize()
 		if wd and wd.type == "TorpedoLauncher" then
 			torpedoWeaponIds[wd.id] = true
 		end
+		if wd and wd.customParams then
+			local fireAoeType = wd.customParams.burnaoe
+			if fireAoeType and tonumber(fireAoeType) > 0 then
+				fireAOEWeaponIds[wd.id] = true
+			end
+		end
 	end 
 
 	-- track disruptor wave projectiles
@@ -344,7 +342,7 @@ function gadget:Initialize()
 		Script.SetWatchWeapon(id,true)
 	end
 	
-	-- track destructible projectiles
+	-- track high angle descent rocket projectiles
 	for id,_ in pairs(highAngleDescentWeaponIds) do
 		Script.SetWatchWeapon(id,true)
 	end
@@ -382,6 +380,14 @@ function gadget:GameFrame(n)
 		-- remove table entry
 		fireAOEEffectProjectiles[id] = nil
 	end
+	-- explode disruptor storm aoe effect projectiles
+	for id,ownerId in pairs(disruptorStormEffectProjectiles) do
+		-- explode projectile
+		spSetProjectileCollision(id)
+		
+		-- remove table entry
+		disruptorStormEffectProjectiles[id] = nil
+	end	
 	
 	-- dc rocket construction tower spawn
 	for id,info in pairs(dcRocketSpawn) do
@@ -450,6 +456,7 @@ function gadget:GameFrame(n)
 	local px,py,pz = 0
 	local ot = nil
 	local tType,st = nil
+	local wd,cp,spreadRadius
 	for id,ownerId in pairs(highAngleDescentProjectiles) do
 		px,py,pz = spGetProjectilePosition(id)
 		ot = highAngleDescentOriginalTargetsById[id]
@@ -460,12 +467,21 @@ function gadget:GameFrame(n)
 				st = ot
 			end
 			
+			-- if close to original target, go towards it
 			if (isCloseToTarget(px,pz,st[1],st[3],HIGH_ANGLE_DESCENT_FAR_TARGET_DIST)) then
-				-- if close to original target, go towards it
-				spSetProjectileTarget(id,ot[1],ot[2],ot[3])
+				wd = WeaponDefs[spGetProjectileDefID(id)]
+				cp = wd.customParams
+				spreadRadius = (cp and cp.spreadradius) and tonumber(cp.spreadradius) or 0
+				
+				if spreadRadius > 0 then
+					spSetProjectileTarget(id,ot[1]-0.7*spreadRadius+1.4*random(spreadRadius),ot[2],ot[3]-0.7*spreadRadius+1.4*random(spreadRadius))
+				else
+					spSetProjectileTarget(id,ot[1],ot[2],ot[3])
+				end
+				-- remove from table
+				highAngleDescentProjectiles[id] = nil
 			end
 		end
-	
 	end
 	
 	-- handle destructible long range projectiles
@@ -728,7 +744,7 @@ function gadget:GameFrame(n)
 		disruptorEffectProjectiles[createdId] = ownerId
 	end
 
-	-- generate fire aoe effect projectiles
+	-- generate fire aoe and similar effect projectiles
 	if(n%STEP_DELAY == 0) then
 		for id,data in pairs(fireAOEPositions) do
 
@@ -746,6 +762,26 @@ function gadget:GameFrame(n)
 				fireAOEPositions[id] = data
 			else
 				fireAOEPositions[id] = nil
+			end
+		end
+		
+		for id,data in pairs(disruptorStormPositions) do
+			-- spawn secondary explosion effects every 0.6s instead of 0.2s
+			if (data.steps % 3 == 0) then
+				local createdId = spSpawnProjectile(data.effect,{
+					["pos"] = {data.px,data.py,data.pz},
+					["end"] = {data.px,data.py+3,data.pz},
+					["speed"] = {0,1,0},
+					["owner"] = data.ownerId
+				})
+				disruptorStormEffectProjectiles[createdId] = data.ownerId
+			end
+			-- update table
+			if (data.steps > 1) then
+				data.steps = data.steps - 1
+				disruptorStormPositions[id] = data
+			else
+				disruptorStormPositions[id] = nil
 			end
 		end
 	end
@@ -857,6 +893,10 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		fireAOEProjectiles[proID] = proOwnerID
 		return
 	end
+	if weaponDefID == disruptorStormWeaponId then
+		disruptorStormProjectiles[proID] = proOwnerID
+		return
+	end
 	if weaponDefID == comsatWeaponId then
 		comsatProjectiles[proID] = proOwnerID
 		return
@@ -917,7 +957,7 @@ function gadget:ProjectileDestroyed(proID)
 		-- spawn fire effect at position
 		local px,py,pz = spGetProjectilePosition(proID)
 		local h = spGetGroundHeight(px,pz)
-		local weaponDefId = Spring.GetProjectileDefID(proID)
+		local weaponDefId = spGetProjectileDefID(proID)
 		local effect = fireAOEWeaponEffectId
 		if ((WeaponDefs[weaponDefId].customParams.burnaoe) == "2") then
 			effect = fireAOEWeaponEffectId2
@@ -933,6 +973,20 @@ function gadget:ProjectileDestroyed(proID)
 			fireAOEPositions[proID]={px=px,py=py,pz=pz,steps=steps,ownerId=fireAOEProjectiles[proID],effect=effect}
 		end
 		fireAOEProjectiles[proID] = nil
+	elseif disruptorStormProjectiles[proID] then
+
+		-- spawn fire effect at position
+		local px,py,pz = spGetProjectilePosition(proID)
+		local h = spGetGroundHeight(px,pz)
+		local weaponDefId = spGetProjectileDefID(proID)
+		local effect = disruptorStormWeaponEffectId
+
+		-- do not spawn fire effect in water, and spawn with reduced duration in air
+		if (h > 0) then
+			local steps = DISRUPTOR_STORM_STEPS
+			disruptorStormPositions[proID]={px=px,py=py,pz=pz,steps=steps,ownerId=disruptorStormProjectiles[proID],effect=effect}
+		end
+		disruptorStormProjectiles[proID] = nil
 	elseif comsatProjectiles[proID] then
 		-- spawn unit to provide LOS
 		local ownerId = comsatProjectiles[proID]

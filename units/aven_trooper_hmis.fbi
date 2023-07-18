@@ -1,0 +1,85 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Trooper (H. Missile);
+	description=Fire Support Robot;
+	iconType=mobileheavyfs;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_trooper_hmis;
+	objectName=aven_trooper_hmis.3do;
+	corpse=aven_trooper_hmis_dead;
+	buildPic=aven_trooper_hmis.png;
+	soundCategory=ARMPW;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1000;
+	footprintx=2;
+	footprintz=2;
+
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+
+	builder=0;
+	workerTime=0;
+
+	canAttack=1;
+	canGuard=1;
+	canMove=1.1;
+	canPatrol=1;
+	canStop=1;
+	upright=1;
+
+	movementClass=KBOTHT2;
+	turnRate=1132;
+	acceleration=1.1;
+	brakeRate=1.0;
+	maxVelocity=1.3;
+	maxSlope=17;
+	maxWaterDepth=12;
+
+	sightDistance=500;
+	radarDistance=0;
+
+	weapon1=aven_trooper_hmis_missile;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+	noAutoFire=0;
+
+	collisionVolumeType = box;
+	collisionVolumeScales =22 35 22;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=aven_light_plant,aven_adv_kbot_lab;
+		optional=1;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:ROCKETFLARESML;
+	}
+	buildCostEnergy=1457;//#AUTO#
+	buildCostMetal=291;//#AUTO#
+	buildTime=3474;//#AUTO#
+	mass=173;//#AUTO#
+}

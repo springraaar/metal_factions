@@ -10,7 +10,7 @@
 
 piece  base, flash,flash2, turret, sleeve, barrel,barrel2,b1,b2,t1, t2,bb, t1cover,t2cover;
 
-static-var  arma;
+static-var  gun_1;
 
 #include "aimhelper1.h"
 
@@ -48,9 +48,21 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 }
 
 
+RockUnit(anglex, anglez)
+{
+	anglex = anglex * 100/200;
+	anglez = anglez * 100/200;
+	turn base to x-axis anglex speed <40.005495>;
+	turn base to z-axis <0>-anglez speed <40.005495>;
+	wait-for-turn base around z-axis;
+	wait-for-turn base around x-axis;
+	turn base to z-axis <0.000000> speed <15.000000>;
+	turn base to x-axis <0.000000> speed <15.000000>;
+}
+
 Create()
 {
-	arma=111;
+	gun_1 = 0;
 	start-script SmokeUnit();
 	start-script AnimateTracks();
 }
@@ -82,22 +94,21 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	if (arma==111){
-
-	move barrel to z-axis [-2.000000] speed [40.000000];
-	emit-sfx 1024 from flash;
-	sleep 150;
-	move barrel to z-axis [0.000000] speed [4.000000];
-	arma=222;
-	return 0;
+	if (gun_1 == 0) {
+		move barrel to z-axis [-3.000000] now;
+		emit-sfx 1024 from flash;
+		sleep 150;
+		move barrel to z-axis [0.000000] speed [10.000000];
+		gun_1 = 1;
+		return 0;
 	}
-	if (arma==222){
-	emit-sfx 1024 from flash2;
-	move barrel2 to z-axis [-2.000000] speed [40.000000];
-	sleep 150;
-	move barrel2 to z-axis [0.000000] speed [4.000000];
-	arma=111;
-	return 0;
+	if (gun_1 == 1) {
+		emit-sfx 1024 from flash2;
+		move barrel2 to z-axis [-3.000000] now;
+		sleep 150;
+		move barrel2 to z-axis [0.000000] speed [10.000000];
+		gun_1 = 0;
+		return 0;
 	}
 }
 
@@ -108,11 +119,13 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if (arma==111){
-	piecenum = flash;
+	if (gun_1 == 0) {
+		piecenum = flash;
+		return (0);
 	}
-	if (arma==222){
-	piecenum=flash2;
+	if (gun_1 == 1) {
+		piecenum = flash2;
+		return (0);
 	}
 }
 
@@ -120,9 +133,9 @@ Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		explode barrel type BITMAPONLY | BITMAP1;
-		explode sleeve type BITMAPONLY | BITMAP1;
-		explode turret type BITMAPONLY | BITMAP4;
+		explode barrel type SHATTER;
+		explode sleeve type SHATTER;
+		explode turret type SHATTER;
 		return (1);
 	}
 	explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;

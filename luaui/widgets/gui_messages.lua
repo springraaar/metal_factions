@@ -13,6 +13,7 @@ function widget:GetInfo()
 	}
 end
 
+VFS.Include("lualibs/constants.lua")
 
 local BOX_BORDER_SIZE				= 1
 local PLAYER_MSG_BOX_MIN_W		= BOX_BORDER_SIZE * 4
@@ -697,7 +698,7 @@ function drawScrollBar()
 	scrollBarCoords.y2 = PLAYER_MSG_BOX_Y_MAX - 5
 		
 	-- outer box
-	drawBox(PLAYER_MSG_BOX_X_MAX - (boxWidth+5), scrollBarCoords.y2, boxWidth, boxHeight, {0.1, 0.1, 0.1, 0.6},  {0.4, 0.4, 0.4, 1})
+	drawBox(PLAYER_MSG_BOX_X_MAX - (boxWidth+5), scrollBarCoords.y2, boxWidth, boxHeight, UI_SCROLLBAR_BOX_BG,  UI_SCROLLBAR_BOX_BORDER)
 
 	-- messageFrameMin : first line visible
 	-- messageFrameMax : last line visible
@@ -720,7 +721,7 @@ function drawScrollBar()
 	end 
 	
 	-- inner box / bar
-	drawBox(PLAYER_MSG_BOX_X_MAX - (boxWidth+5)+(boxWidth-barWidth)/2, PLAYER_MSG_BOX_Y_MAX-7-barOffset, barWidth, barHeight, {1.0, 1.0, 1.0, 1},  {0.8, 0.8,0.8, 1})
+	drawBox(PLAYER_MSG_BOX_X_MAX - (boxWidth+5)+(boxWidth-barWidth)/2, PLAYER_MSG_BOX_Y_MAX-7-barOffset, barWidth, barHeight, UI_SCROLLBAR_INNER_BG, UI_SCROLLBAR_INNER_BORDER)
 	
 end
 

@@ -42,6 +42,7 @@ local keybindsFileTxt = [[
 //		- unloadunits
 //		- wait
 //		- onoff
+//		- manualfire
 //		- selfd		: self destruct
 //		- priority	: toggles builder resource access priority state
 //		- areamex	: area metal extractor command
@@ -108,7 +109,7 @@ function widget:Initialize()
    
 	-- create a custom keybinds file with default content if it's missing
 	if not VFS.FileExists(customKeybindsFile) then
-		Spring.Echo("creating mf keybinds file with default content at "..customKeybindsFile)
+		Spring.Echo("creating MF keybinds file with default content in "..customKeybindsFile)
 		Spring.CreateDir("luaui")
 		Spring.CreateDir("luaui/configs")
 		io.output(customKeybindsFile)
@@ -242,7 +243,14 @@ function widget:Initialize()
 			WG.customHotkeys["dash"] = "d"
 		end
 	end
-
+	if (not WG.unboundDefKeys or not WG.unboundDefKeys["n"]) then
+		if (not WG.customHotkeys["manualfire"]) then
+			unbindKey("n")
+			Spring.SendCommands("bind n manualfire")
+			Spring.SendCommands("bind Shift+n manualfire")
+			WG.customHotkeys["manualfire"] = "n"
+		end
+	end
 end
 
 

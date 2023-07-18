@@ -19,6 +19,8 @@ local spGetUnitShieldState = Spring.GetUnitShieldState
 local spSetUnitShieldState = Spring.SetUnitShieldState
 local spAreTeamsAllied = Spring.AreTeamsAllied
 local spGetUnitTeam = Spring.GetUnitTeam
+local spGetUnitExperience = Spring.GetUnitExperience
+local spUseUnitResource = Spring.UseUnitResource 
 
 if (not gadgetHandler:IsSyncedCode()) then
     return
@@ -37,6 +39,7 @@ local SHIELD_SHARING_EFF_SML = 1.0
 local SHIELD_SHARING_STEP_FRAMES = 15	-- twice per second
 
 local shieldMaxByDefIds = {}
+local shieldRegenByDefIds = {}
 local shieldSQRadiusByDefIds = {}
 
 local largeShieldDefIds = {
@@ -62,6 +65,7 @@ function gadget:Initialize()
 				local wd=WeaponDefs[w.weaponDef]
 			    if wd.isShield == true then
 			    	shieldMaxByDefIds[ud.id] = wd.shieldPower
+			    	shieldRegenByDefIds[ud.id] = {regen=wd.shieldPowerRegen ,regenE=wd.shieldPowerRegenEnergy}
 					shieldSQRadiusByDefIds[ud.id] = wd.shieldRadius * wd.shieldRadius
 			    end
 			end
@@ -78,7 +82,7 @@ function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 	end
 end
 
--- extra income for wind generators
+-- shield extra regen and sharing mechanics
 function gadget:GameFrame(n)
 	for uId,uDefId in pairs(shieldUnits) do
 		local _,_,_,_,bp = spGetUnitHealth(uId)
@@ -99,6 +103,39 @@ function gadget:GameFrame(n)
 	
 	-- for each large shield unit, get nearby shielded units
 	local x,x2,z,z2,oldShieldPower,oldShieldPower2,maxShieldPower,maxShieldPower2,amountDrained,powerFraction,powerFraction2,amountNeeded,amountAvailable,drainFromSmlShield,drainLimit,totalAmountDrained
+	local srd,xp,xpMod,baseRegen, baseRegenE,addedRegen,addedRegenE,maxAddedRegen,maxAddedRegenE
+	for uId,uDefId in pairs(shieldUnits) do
+		-- shield enabled, see if there's extra regen to add
+		shieldEnabled,oldShieldPower = spGetUnitShieldState(uId)
+		if shieldEnabled and (not largeShieldUnits[uId]) then		
+			xp = spGetUnitExperience(uId)
+			maxShieldPower = shieldMaxByDefIds[uDefId]	
+
+			if xp > 0 and oldShieldPower < maxShieldPower then
+				srd = shieldRegenByDefIds[uDefId]
+				-- per-second values from the defs are halved because this runs twice per second
+				baseRegen = srd.regen * 0.5
+				baseRegenE = srd.regenE * 0.5
+				
+				xpMod = 0
+	            if xp and xp > 0 then
+	        		xpMod = 0.70*(xp/(xp+1))
+	            end		 
+	        	maxAddedRegen = baseRegen * xpMod
+	        	maxAddedRegenE = baseRegenE * xpMod
+
+				-- calculate extra shield points to regen and energy to use
+				-- if available, add it	
+				addedRegen = min(maxAddedRegen,maxShieldPower-oldShieldPower)
+				addedRegenE = maxAddedRegenE * addedRegen / maxAddedRegen
+				if addedRegen > 0 and spUseUnitResource( uId, "e", addedRegenE) then
+					--Spring.Echo("shielded unit "..uId.." got extra shield regen : "..(addedRegen*2).." pts/s, "..(addedRegenE*2).." energy drain/s , xpMod="..xpMod.." s="..Spring.GetGameSeconds().." "..oldShieldPower.."/"..maxShieldPower)
+					spSetUnitShieldState(uId, oldShieldPower+addedRegen)
+				end
+			end
+		end
+	end
+	
 	for uId,uDefId in pairs(largeShieldUnits) do
 		shieldEnabled,oldShieldPower = spGetUnitShieldState(uId)
 		

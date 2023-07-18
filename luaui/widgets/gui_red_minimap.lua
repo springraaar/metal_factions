@@ -2,7 +2,7 @@ function widget:GetInfo()
 	return {
 	version   = "1",
 	name      = "Red Minimap",
-	desc      = "Requires Red UI Framework",
+	desc      = "Minimap Panel. Requires Red UI Framework",
 	author    = "raaar, based on widget by Regret",
 	date      = "2022",
 	license   = "GNU GPL, v2 or later",

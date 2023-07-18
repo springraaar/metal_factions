@@ -36,7 +36,9 @@ local echo  = Spring.Echo
 --      commented out turning unit off at lines 396 and 425, was giving errors in spring 95.0
 -- Changes by raaar (12/2016):
 --      added some checks to prevent errors when players resign while commander is being morphed
-  
+
+--TODO needs cleanup, removal of non-mf stuff
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 --
@@ -46,6 +48,11 @@ local MAX_MORPH = 0 --// will increase dynamically
 
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
 local spGetUnitCommands = Spring.GetUnitCommands
+
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spGetUnitExperience = Spring.GetUnitExperience
+local spGetUnitDefID = Spring.GetUnitDefID
+local spPlaySoundFile = Spring.PlaySoundFile
 
 --------------------------------------------------------------------------------
 --  COMMON
@@ -111,6 +118,8 @@ local XpMorphUnits = {}
 local devolution = true            --// remove upgrade capabilities after factory destruction?
 local stopMorphOnDevolution = true --// should morphing stop during devolution
 
+GG.CMD_AVENGER_MORPH = false
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
@@ -146,6 +155,10 @@ local GetUnitRank = function() return 0 end
 local spGetUnitPosition = Spring.GetUnitPosition
 local spSpawnCEG = Spring.SpawnCEG
 local morphCEG = "morph"
+
+local morphFinishCEG = "SmallNano"
+local morphFinishSound = "Sounds/NECRNAN2.wav"
+
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -194,6 +207,7 @@ local function BuildMorphDef(udSrc, morphData)
     newData.xp   = morphData.xp or 0
     newData.rank = morphData.rank or 0
     newData.facing = morphData.facing
+    newData.charge = morphData.charge or 0
     local require = -1
     if (morphData.require) then
       require = (UnitDefNames[defNamesL[string.lower(morphData.require)] or -1] or {}).id
@@ -209,7 +223,10 @@ local function BuildMorphDef(udSrc, morphData)
     newData.cmd     = CMD_MORPH      + MAX_MORPH
     newData.stopCmd = CMD_MORPH_STOP + MAX_MORPH
     MAX_MORPH = MAX_MORPH + 1
-
+	if udDst.name == "claw_avenger" then
+		GG.CMD_AVENGER_MORPH = newData.cmd
+	end
+	
 	newData.texture = morphData.texture
 	if morphData.text then
 		newData.text = string.gsub(morphData.text, "$$unitname", udSrc.humanName)
@@ -260,7 +277,7 @@ local function UnitReqCheck(teamID, reqUnit)
   return ((teamReqUnits[teamID][reqUnit] or 0) > 0)
 end
 
-local function GetMorphToolTip(unitID, unitDefID, teamID, morphDef, teamTech, unitXP, unitRank, teamOwnsReqUnit)
+local function GetMorphToolTip(unitID, unitDefID, teamID, morphDef, teamTech, unitXP, unitRank, teamOwnsReqUnit,unitCharge)
   local ud = UnitDefs[morphDef.into]
   local tt = 'morphunit_'..ud.name
   if (morphDef.text ~= nil) then
@@ -277,50 +294,68 @@ local function GetMorphToolTip(unitID, unitDefID, teamID, morphDef, teamTech, un
   if (morphDef.time > 0) then
   	tt = tt .. '\255\213\213\255    Time:\255\170\170\255 '   .. morphDef.time .. 's\n'
   end	
-
   if (morphDef.tech > teamTech) or
      (morphDef.xp > unitXP) or
      (morphDef.rank > unitRank) or
-     (not teamOwnsReqUnit)
+     (not teamOwnsReqUnit) or
+     (morphDef.charge > unitCharge)
   then
     tt = tt .. RedStr .. 'needs'
     if (morphDef.tech>teamTech) then tt = tt .. ' level: ' .. morphDef.tech end
     if (morphDef.xp>unitXP)     then tt = tt .. ' xp: '    .. string.format('%.2f',morphDef.xp) end
     if (morphDef.rank>unitRank) then tt = tt .. ' rank: '  .. morphDef.rank .. ' (' .. string.format('%.2f',RankToXp(unitDefID,morphDef.rank)) .. 'xp)' end
     if (not teamOwnsReqUnit)	then tt = tt .. ' unit: '  .. UnitDefs[morphDef.require].humanName end
+    if (morphDef.charge>unitCharge) then tt = tt .. ' charge: '  .. string.format('%.2f',morphDef.charge*100)..'%'  end    
   end
   return tt
 end
 
-local function UpdateMorphReqs(teamID)
-  local morphCmdDesc = {}
+local function disabledCondition(morphDef, teamTech, unitXP, unitRank, teamOwnsReqUnit, unitCharge)
+	return (morphDef.tech > teamTech)or(morphDef.rank > unitRank)or(morphDef.xp > unitXP)or(not teamOwnsReqUnit) or(morphDef.charge > unitCharge)
+end
 
-  local teamTech  = teamTechLevel[teamID] or 0
-  local teamUnits = Spring.GetTeamUnits(teamID)
-  for n=1,#teamUnits do
-    local unitID   = teamUnits[n]
-    local unitXP   = Spring.GetUnitExperience(unitID)
+local function updateUnitMorphReqs(unitID,teamID,morphCmdDesc)
+	if not morphCmdDesc then
+		morphCmdDesc = {}
+	end
+
+	local teamTech  = teamTechLevel[teamID] or 0
+    local unitXP   = spGetUnitExperience(unitID)
     local unitRank = GetUnitRank(unitID)
-    local unitDefID = Spring.GetUnitDefID(unitID)
+    local unitDefID = spGetUnitDefID(unitID)
     local morphDefs = morphDefs[unitDefID] or {}
-
+	local unitCharge = spGetUnitRulesParam(unitID,"charge") or 0
+	
     for _,morphDef in pairs(morphDefs) do
       local cmdDescID = Spring.FindUnitCmdDesc(unitID, morphDef.cmd)
       if (cmdDescID) then
         local teamOwnsReqUnit = UnitReqCheck(teamID,morphDef.require)
-        morphCmdDesc.disabled = (morphDef.tech > teamTech)or(morphDef.rank > unitRank)or(morphDef.xp > unitXP)or(not teamOwnsReqUnit)
-        morphCmdDesc.tooltip  = GetMorphToolTip(unitID, unitDefID, teamID, morphDef, teamTech, unitXP, unitRank, teamOwnsReqUnit)
+        morphCmdDesc.disabled = disabledCondition(morphDef, teamTech, unitXP, unitRank, teamOwnsReqUnit, unitCharge)
+        morphCmdDesc.tooltip  = GetMorphToolTip(unitID, unitDefID, teamID, morphDef, teamTech, unitXP, unitRank, teamOwnsReqUnit, unitCharge)
         Spring.EditUnitCmdDesc(unitID, cmdDescID, morphCmdDesc)
       end
     end
+end
+GG.updateUnitMorphReqs = updateUnitMorphReqs
+
+local function UpdateMorphReqs(teamID)
+  local morphCmdDesc = {}
+
+  local teamUnits = Spring.GetTeamUnits(teamID)
+  for n=1,#teamUnits do
+    local unitID   = teamUnits[n]
+    updateUnitMorphReqs(unitID,teamID,morphCmdDesc)
   end
 end
 
+
+
 local function AddMorphCmdDesc(unitID, unitDefID, teamID, morphDef, teamTech)
-  local unitXP   = Spring.GetUnitExperience(unitID)
+  local unitXP   = spGetUnitExperience(unitID)
   local unitRank = GetUnitRank(unitID)
   local teamOwnsReqUnit = UnitReqCheck(teamID,morphDef.require)
-  morphCmdDesc.tooltip = GetMorphToolTip(unitID, unitDefID, teamID, morphDef, teamTech, unitXP, unitRank, teamOwnsReqUnit)
+  local unitCharge = spGetUnitRulesParam(unitID,"charge") or 0
+  morphCmdDesc.tooltip = GetMorphToolTip(unitID, unitDefID, teamID, morphDef, teamTech, unitXP, unitRank, teamOwnsReqUnit, unitCharge)
   
   if morphDef.texture then
 	morphCmdDesc.texture = "LuaRules/Images/Morph/".. morphDef.texture
@@ -329,7 +364,7 @@ local function AddMorphCmdDesc(unitID, unitDefID, teamID, morphDef, teamTech)
   end
   morphCmdDesc.name = morphDef.cmdname
   
-  morphCmdDesc.disabled= (morphDef.tech > teamTech)or(morphDef.rank > unitRank)or(morphDef.xp > unitXP)or(not teamOwnsReqUnit)
+  morphCmdDesc.disabled= disabledCondition(morphDef, teamTech, unitXP, unitRank, teamOwnsReqUnit, unitCharge) 
 
   morphCmdDesc.id = morphDef.cmd
 
@@ -489,25 +524,10 @@ local function FinishMorph(unitID, morphData)
 	    -- nothing here for now
 	  end
 	  
-	  --------------------TODO ZK leftover? needs cleanup
-	  if (hostName ~= nil) and PWUnits[unitID] then
-	    -- send planetwars deployment message
-	    PWUnit = PWUnits[unitID]
-	    PWUnit.currentDef=udDst
-		local data = PWUnit.owner..","..defName..","..math.floor(px)..","..math.floor(pz)..",".."S" -- todo determine and apply smart orientation of the structure
-		Spring.SendCommands("w "..hostName.." pwmorph:"..data)
-		extraUnitMorphDefs[unitID] = nil
-		GG.PlanetWars.units[unitID] = nil
-		GG.PlanetWars.units[newUnit] = PWUnit
-		SendToUnsynced('PWCreate', unitTeam, newUnit)
-	  elseif (not morphData.def.facing) then  -- set rotation only if unit is not planetwars and facing is not true
-	    --Spring.Echo(morphData.def.facing)
-	    --Spring.SetUnitRotation(newUnit, 0, -h * math.pi / 32768, 0)
-	  end
 	
 	
 	  --//copy experience
-	  local newXp = Spring.GetUnitExperience(unitID)*XpScale
+	  local newXp = spGetUnitExperience(unitID)*XpScale
 	  local nextMorph = morphDefs[morphData.def.into]
 	  if nextMorph~= nil and nextMorph.into ~= nil then nextMorph = {morphDefs[morphData.def.into]} end
 	  if (nextMorph) then --//determine the lowest xp req. of all next possible morphs
@@ -560,6 +580,10 @@ local function FinishMorph(unitID, morphData)
 	  if oldShieldState and Spring.GetUnitShieldState(newUnit) then
 	    Spring.SetUnitShieldState(newUnit, enabled,oldShieldState)
 	  end
+	
+	  local radius = 30
+	  spSpawnCEG(morphFinishCEG, px,py,pz,0,1,0,radius,radius)
+	  spPlaySoundFile(morphFinishSound, radius/50, px,py,pz)
 	
 	  -- FIX : unit lineage was disabled in 84.0
 	  --local lineage = Spring.GetUnitLineage(unitID)
@@ -777,15 +801,16 @@ function UnitRanked(unitID,unitDefID,teamID,newRank,oldRank)
 
   if (morphDefSet) then
     local teamTech = teamTechLevel[teamID] or 0
-    local unitXP   = Spring.GetUnitExperience(unitID)
+    local unitXP   = spGetUnitExperience(unitID)
     for _, morphDef in pairs(morphDefSet) do
       if (morphDef) then
         local cmdDescID = Spring.FindUnitCmdDesc(unitID, morphDef.cmd)
         if (cmdDescID) then
           local morphCmdDesc = {}
           local teamOwnsReqUnit = UnitReqCheck(teamID,morphDef.require)
-          morphCmdDesc.disabled = (morphDef.tech > teamTech)or(morphDef.rank > newRank)or(morphDef.xp > unitXP)or(not teamOwnsReqUnit)
-          morphCmdDesc.tooltip  = GetMorphToolTip(unitID, unitDefID, teamID, morphDef, teamTech, unitXP, newRank, teamOwnsReqUnit)
+          local unitCharge = spGetUnitRulesParam(unitID,"charge") or 0
+          morphCmdDesc.disabled = disabledCondition(morphDef, teamTech, unitXP, newRank, teamOwnsReqUnit, unitCharge)
+          morphCmdDesc.tooltip  = GetMorphToolTip(unitID, unitDefID, teamID, morphDef, teamTech, unitXP, newRank, teamOwnsReqUnit, unitCharge)
           Spring.EditUnitCmdDesc(unitID, cmdDescID, morphCmdDesc)
         end
       end
@@ -868,7 +893,7 @@ function gadget:GameFrame(n)
       if (morphDefSet) then
         local teamID   = unitdata.team
         local teamTech = teamTechLevel[teamID] or 0
-        local unitXP   = Spring.GetUnitExperience(unitID)
+        local unitXP   = spGetUnitExperience(unitID)
         local unitRank = GetUnitRank(unitID)
 
         local xpMorphLeft = false
@@ -878,8 +903,9 @@ function gadget:GameFrame(n)
             if (cmdDescID) then
               local morphCmdDesc = {}
               local teamOwnsReqUnit = UnitReqCheck(teamID,morphDef.require)
-              morphCmdDesc.disabled = (morphDef.tech > teamTech)or(morphDef.rank > unitRank)or(morphDef.xp > unitXP)or(not teamOwnsReqUnit)
-              morphCmdDesc.tooltip  = GetMorphToolTip(unitID, unitDefID, teamID, morphDef, teamTech, unitXP, unitRank, teamOwnsReqUnit)
+              local unitCharge = spGetUnitRulesParam(unitID,"charge") or 0
+              morphCmdDesc.disabled = disabledCondition(morphDef, teamTech, unitXP, unitRank, teamOwnsReqUnit, unitCharge) 
+              morphCmdDesc.tooltip  = GetMorphToolTip(unitID, unitDefID, teamID, morphDef, teamTech, unitXP, unitRank, teamOwnsReqUnit,unitCharge)
               Spring.EditUnitCmdDesc(unitID, cmdDescID, morphCmdDesc)
 
               xpMorphLeft = morphCmdDesc.disabled or xpMorphLeft
@@ -934,11 +960,13 @@ function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOpt
     --  return false
     end
   elseif (cmdID >= CMD_MORPH and cmdID < CMD_MORPH+MAX_MORPH) then
+  	local unitCharge = spGetUnitRulesParam(unitID,"charge") or 0
     local morphDef = (morphDefs[unitDefID] or {})[cmdID] or extraUnitMorphDefs[unitID]
     if ((morphDef)and
         (morphDef.tech<=teamTechLevel[teamID])and
         (morphDef.rank<=GetUnitRank(unitID))and
-        (morphDef.xp<=Spring.GetUnitExperience(unitID))and
+        (morphDef.xp<=spGetUnitExperience(unitID))and
+        (morphDef.charge<=unitCharge) and
         (UnitReqCheck(teamID, morphDef.require)) )
     then
       if (isFactory(unitDefID)) then

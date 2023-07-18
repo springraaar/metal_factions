@@ -14,6 +14,8 @@ end
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
 
+include("lualibs/util.lua")
+
 if (not gadgetHandler:IsSyncedCode()) then
     return
 end
@@ -69,9 +71,13 @@ local spSetFeatureResources = Spring.SetFeatureResources
 local spCreateFeature = Spring.CreateFeature
 local spAddUnitImpulse = Spring.AddUnitImpulse
 local spGetUnitCollisionVolumeData = Spring.GetUnitCollisionVolumeData
-
-local mcDisable = Spring.MoveCtrl.Disable
-local mcEnable = Spring.MoveCtrl.Enable
+local spGetFeatureDefID = Spring.GetFeatureDefID 
+local spGetFeatureTeam = Spring.GetFeatureTeam 
+local spGetFeatureDirection = Spring.GetFeatureDirection
+local spDestroyFeature = Spring.DestroyFeature
+local spCreateUnit = Spring.CreateUnit
+local spSetFeatureResurrect = Spring.SetFeatureResurrect
+local spGetFeatureResources = Spring.GetFeatureResources
 
 local random = math.random
 local floor = math.floor
@@ -112,6 +118,10 @@ local scoperBeacons = {}
 local comsatBeaconDefId = UnitDefNames["cs_beacon"].id
 local scoperBeaconDefId = UnitDefNames["scoper_beacon"].id
 
+local noWreckDefIds = {}
+local dropWreckShardsDefIds = {}
+local nanoDestructionMightLeaveWreckDefIds = {}
+
 
 local TOTEM_COST_FRACTION = 0.03
 local TOTEM_MAX_CHARGES = 1000
@@ -120,23 +130,27 @@ local TOTEM_SQ_RADIUS = 600*600
 local totemDefId = UnitDefNames["claw_totem"].id
 local totemUnitIds = {}
 
+local TOMBSTONE_COST_FRACTION = 1
+local TOMBSTONE_MAX_CHARGES = 1000
+local TOMBSTONE_MAX_METAL = 1000
+local TOMBSTONE_SQ_RADIUS = 600*600
+local tombstoneDefId = UnitDefNames["claw_tombstone"].id
+local tombstoneUnitIds = {}
 
 local maxSlopeByUnitDefId = {}
 local floatingGroundDefIds = {}
 local stuckGroundUnitIds = {}
 
+local autoResurrectFeatureDefIds = {
+	[FeatureDefNames["sphere_returner_dead"].id] = {"sphere_returner",60*30},
+	[FeatureDefNames["sphere_revenant_dead"].id] = {"sphere_revenant",60*30}
+}
+local autoResurrectFeatures = {}   -- featureID, {unitName,creationFrame,totalFrames,remainingFrames,teamId} 
+local createCEG = "buildcreated"
+local buildCEG = "buildprogress"
+
 GG.destructibleProjectilesDestroyed = {}
 
-local aircraftMovementFixDefIds = {
-	[UnitDefNames["aven_swift"].id] = true,
-	[UnitDefNames["aven_falcon"].id] = true,
-	[UnitDefNames["aven_talon"].id] = true,
-	[UnitDefNames["gear_dash"].id] = true,
-	[UnitDefNames["gear_vector"].id] = true,
-	[UnitDefNames["claw_hornet"].id] = true,
-	[UnitDefNames["claw_x"].id] = true,
-	[UnitDefNames["sphere_twilight"].id] = true
-}
 
 local destructibleProjectileDefIds = {
 	[UnitDefNames["aven_premium_nuclear_rocket"].id] = true,
@@ -163,19 +177,6 @@ local destructibleProjectileInitialPositionByUnitId = {}
 local mapSizeX = Game.mapSizeX
 local mapSizeZ = Game.mapSizeZ
 
-local MAP_SAFETY_TOLERANCE = 1500
-local mapSafetyPoints = {
-	{x=100,z=100},
-	{x=mapSizeX/2,z=100},
-	{x=mapSizeX-100,z=100},
-
-	{x=100,z=mapSizeZ/2},
-	{x=mapSizeX-100,z=mapSizeZ/2},
-
-	{x=100,z=mapSizeZ/2},
-	{x=mapSizeX/2,z=mapSizeZ/2},
-	{x=mapSizeX-100,z=mapSizeZ-100}
-}
 
 local function sqDistance(x1,x2,z1,z2)
 	return (x2-x1)*(x2-x1)+(z2-z1)*(z2-z1)
@@ -272,15 +273,6 @@ end
 local function updateFeaturePhysics(featureId)
 	x,y,z = spGetFeaturePosition(featureId)
 	vx,vy,vz,v = spGetFeatureVelocity(featureId)
-	
-	-- make sure features that are nearly completely stopped but aren't, stop
-	-- workaround for shaking aircraft debris
-	-- TODO not working...
-	--if v > 0 and v < 0.5 then
-	--	spSetFeatureMoveCtrl(featureId,false,1,1,1,1,1,1,1,1,1)
-	--	spSetFeatureVelocity(featureId,0,vy,0)
-	--	spSetFeatureRotation(featureId,0,0,0)
-	--end 
 end
 
 -- checks if a unit is stuck by testing slope
@@ -341,24 +333,77 @@ local function isFeatureSpawner(ud)
   return(ud and ud.isFeature == true)
 end
 
-
-function gadget:Initialize()
-	-- for each safety point, add the "y"
-	for _,p in pairs(mapSafetyPoints) do
-		p.y = spGetGroundHeight(p.x,p.z) + 100
+-- check if relevant enemy unit that was destroyed is within radius of totems or similar units
+local function checkDeathTrackersRadius(ud,unitId)
+	local metalCost = 0
+	if ud.customParams and ud.customParams.iscommander then
+		metalCost = 500
+		--Spring.Echo("commander died")
+	else
+		metalCost = ud.metalCost
 	end
 	
-	for defId,unitDef in pairs(UnitDefs) do
-		if unitDef ~= nil and (not unitDef.isImmobile) and not (unitDef.canFly) then
-			if unitDef.moveDef and unitDef.moveDef.maxSlope and unitDef.moveDef.maxSlope < 0.5 then
-				maxSlopeByUnitDefId[defId] = unitDef.moveDef.maxSlope
+	-- totem
+	local totalTotemChargesToAdd = TOTEM_COST_FRACTION * metalCost * TOTEM_MAX_CHARGES / TOTEM_MAX_METAL  
+	local physics = unitPhysicsById[unitId]
+	local totemPhysics = nil
+	local affectedTotemIds = {}
+	for tId,_ in pairs(totemUnitIds) do
+		totemPhysics = unitPhysicsById[tId]
+		if sqDistance(physics[1],totemPhysics[1],physics[3],totemPhysics[3]) < TOTEM_SQ_RADIUS then
+			affectedTotemIds[#affectedTotemIds+1] = tId
+		end
+	end
+	local affectedTotems = #affectedTotemIds
+	for _,tId in ipairs(affectedTotemIds) do
+		--Spring.Echo("totem "..tId.." charges="..floor(totalTotemChargesToAdd / affectedTotems))
+		spCallCOBScript(tId, "addCharges", 0, floor(totalTotemChargesToAdd / affectedTotems))
+	end
+	
+	-- tombstone
+	local totalTombstoneChargesToAdd = TOMBSTONE_COST_FRACTION * metalCost * TOMBSTONE_MAX_CHARGES / TOMBSTONE_MAX_METAL  
+	local physics = unitPhysicsById[unitId]
+	local tombstonePhysics = nil
+	local affectedTombstoneIds = {}
+	for tId,_ in pairs(tombstoneUnitIds) do
+		tombstonePhysics = unitPhysicsById[tId]
+		if sqDistance(physics[1],tombstonePhysics[1],physics[3],tombstonePhysics[3]) < TOMBSTONE_SQ_RADIUS then
+			affectedTombstoneIds[#affectedTombstoneIds+1] = tId
+		end
+	end
+	local affectedTombstones = #affectedTombstoneIds
+	for _,tId in ipairs(affectedTombstoneIds) do
+		-- Spring.Echo("tombstone "..tId.." charges="..floor(totalTombstoneChargesToAdd / affectedTombstones))
+		spCallCOBScript(tId, "addCharges", 0, floor(totalTombstoneChargesToAdd / affectedTombstones))
+	end
+end
+
+
+------------------------------------------- engine callins
+
+function gadget:Initialize()
+	for defId,ud in pairs(UnitDefs) do
+		local cp = ud.customParams
+		if cp and cp.nowreck == "1" then
+			noWreckDefIds[defId] = true
+		end
+		if (not ud.isImmobile) and not (ud.canFly) then
+			if ud.moveDef and ud.moveDef.maxSlope and ud.moveDef.maxSlope < 0.5 then
+				maxSlopeByUnitDefId[defId] = ud.moveDef.maxSlope
 				--Spring.Echo(unitDef.name.." maxSlope="..unitDef.moveDef.maxSlope)
 				
-				if (string.find(tostring(unitDef.moveDef.name),"hover")) then
+				if (string.find(tostring(ud.moveDef.name),"hover")) then
 					floatingGroundDefIds[defId] = true
 				end
 			end 
 		end
+
+		if (not noWreckDefIds[defId]) and ud.canFly == true and (not destructibleProjectileDefIds[defId]) and (defId ~= comsatBeaconDefId) and (defId ~= scoperBeaconDefId) and (not isDrone(ud)) and tostring(ud.wreckName) == ''  then
+			dropWreckShardsDefIds[defId] = true
+		elseif (not isDrone(ud)) and (not isFeatureSpawner(ud)) and (tostring(ud.wreckName) ~= '') then
+			nanoDestructionMightLeaveWreckDefIds[defId] = true
+		end
+
 	end
 end
 
@@ -374,6 +419,8 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 	end
 	if (unitDefId == totemDefId ) then
 		totemUnitIds[unitId] = true
+	elseif (unitDefId == tombstoneDefId ) then
+		tombstoneUnitIds[unitId] = true
 	end
 
 	if (unitDefId == comsatBeaconDefId ) then
@@ -525,7 +572,54 @@ function gadget:GameFrame(n)
 	end
 
 	-- feature physics
+	local arInfo,sx,recLeft, progress, tId,size
 	for featureId,oldPhysics in pairs(featurePhysicsById) do
+		-- handle auto-resurrection
+		arInfo = autoResurrectFeatures[featureId]
+		if arInfo then
+			arInfo[4] = arInfo[4] - 1
+			if arInfo[4] < 900 then -- only start 30s later
+				_,_,_,_,recLeft,_ = spGetFeatureResources(featureId)
+				if recLeft == 1 then
+					progress = 1 - arInfo[4]/(arInfo[3]-900) 
+					spSetFeatureResurrect(featureId, arInfo[1],0,progress )
+					sx = spGetFeatureCollisionVolumeData(featureId)
+					
+					-- show effects					
+					size = sx*0.25*(1+2*progress)
+					x = oldPhysics[1]
+					y = oldPhysics[2]
+					z = oldPhysics[3]
+
+					if arInfo[4] % 3 == 0 then
+						spSpawnCEG( buildCEG, x -size*0.5 +random()*size, y+random()*size+3, z-size*0.5+random()*size,0,1,0,1,size*0.15)
+						spSpawnCEG( buildCEG, x -size*0.5 +random()*size, y+random()*size+3, z-size*0.5+random()*size,0,1,0,1,size*0.15)
+					end
+					
+					-- if finished.. 
+					if progress == 1 then
+						tId = spGetFeatureTeam(featureId)
+						local dx,dy,dz = spGetFeatureDirection(featureId)
+							 			
+						-- remove the feature
+						spDestroyFeature(featureId)
+						 
+						-- spawn the unit with 50% hp
+						local uId = spCreateUnit(arInfo[1],x,y,z,0,tId,false)
+						if uId then
+							Spring.SetUnitDirection(uId,dx,dy,dz)
+							local _,maxHealth,_,_,_ = Spring.GetUnitHealth(uId) 
+							spSetUnitHealth(uId,maxHealth * 0.5)
+							spSpawnCEG( createCEG, x , y+3, z,0,1,0,1,size*0.2)
+						end
+					end
+				else
+					-- already partially reclaimed, disable auto-resurrect
+					spSetFeatureResurrect(featureId, arInfo[1],0,0 )
+					autoResurrectFeatures[featureId] = nil
+				end
+			end
+		end
 	
 		-- get updated physics
 		updateFeaturePhysics(featureId)
@@ -589,7 +683,10 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 	end
 	if (totemUnitIds[unitId] ) then
 		totemUnitIds[unitId] = nil
+	elseif (tombstoneUnitIds[unitId] ) then
+		tombstoneUnitIds[unitId] = nil
 	end
+	
 	if comsatBeacons[unitId] then
 		comsatBeacons[unitId] = nil
 	end
@@ -606,18 +703,15 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 		destructibleProjectileInitialPositionByUnitId[unitId] = nil
 		GG.destructibleProjectilesDestroyed[unitId] = true
 	end
-	
+
 	local _,_,_,_,bp = spGetUnitHealth(unitId)
-	local checkTotems = false
 	-- if unit is an aircraft which leaves no wreckage, spawn some debris
 	local ud = UnitDefs[unitDefId]
-	--Spring.Echo("unit destroyed")
-	if ud and ud.canFly == true and (not destructibleProjectileDefIds[unitDefId]) and (unitDefId ~= comsatBeaconDefId) and (unitDefId ~= scoperBeaconDefId) and not isDrone(ud) and tostring(ud.wreckName) == '' then
+	if dropWreckShardsDefIds[unitDefId] == true then
 		if bp > 0.999 or (attackerId ~= nil and bp > 0.5) then
 			--Spring.Echo("aircraft destroyed "..tostring(ud.wreckName))
 			local physics = unitPhysicsById[unitId]
 			if (physics ~= nil) then
-				checkTotems = true
 				--Spring.Echo("aircraft destroyed had physics!")
 				local metalAmount = ud.metalCost * AIRCRAFT_DEBRIS_METAL_FACTOR
 				local fId = nil
@@ -666,7 +760,7 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 			end
 		end
 	-- unit was not fully built but leaves wreckage		
-	elseif (ud and (not isDrone(ud)) and (not isFeatureSpawner(ud)) and (tostring(ud.wreckName) ~= '') and attackerId ~= nil) then
+	elseif (nanoDestructionMightLeaveWreckDefIds[unitDefId] and attackerId ~= nil) then
 		--Spring.Echo("attackerId="..tostring(attackerId).." attackerDefId="..tostring(attackerDefId).." attackerTeamId="..tostring(attackerTeamId))
 		
 		local physics = unitPhysicsById[unitId]
@@ -735,31 +829,11 @@ function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDe
 		end
 	end
 
-	-- charge totems (only from fully built units)
+	-- charge totems and tombstones (only from fully built units)
 	if ud and bp == 1 and (not destructibleProjectileDefIds[unitDefId]) and (unitDefId ~= comsatBeaconDefId) and (unitDefId ~= scoperBeaconDefId) and not isDrone(ud) then
-		local metalCost = 0
-		if ud.customParams and ud.customParams.iscommander then
-			metalCost = 500
-			--Spring.Echo("commander died")
-		else
-			metalCost = ud.metalCost
-		end
-		local totalTotemChargesToAdd = TOTEM_COST_FRACTION * metalCost * TOTEM_MAX_CHARGES / TOTEM_MAX_METAL  
-		local physics = unitPhysicsById[unitId]
-		local totemPhysics = nil
-		local affectedTotemIds = {}
-		for tId,_ in pairs(totemUnitIds) do
-			totemPhysics = unitPhysicsById[tId]
-			if sqDistance(physics[1],totemPhysics[1],physics[3],totemPhysics[3]) < TOTEM_SQ_RADIUS then
-				affectedTotemIds[#affectedTotemIds+1] = tId
-			end
-		end
-		local affectedTotems = #affectedTotemIds
-		for _,tId in ipairs(affectedTotemIds) do
-			--Spring.Echo("totem "..tId.." charges="..floor(totalTotemChargesToAdd / affectedTotems))
-			spCallCOBScript(tId, "addCharges", 0, floor(totalTotemChargesToAdd / affectedTotems))
-		end
+		checkDeathTrackersRadius(ud,unitId)
 	end
+
 	unitPhysicsById[unitId] = nil
 end
 
@@ -773,12 +847,19 @@ function gadget:FeatureCreated(featureId, allyTeam)
 	if (xs and xo) then
 		spSetFeatureMidAndAimPos(featureId,0, ys*0.5, 0,0, ys*0.75+yo,0,true)
 	end
+	
+	local arDefInfo = autoResurrectFeatureDefIds[spGetFeatureDefID(featureId)]
+	if arDefInfo then
+		-- Spring.Echo("auto-resurrect feature "..featureId)
+		autoResurrectFeatures[featureId] = {arDefInfo[1],spGetGameFrame(),arDefInfo[2],arDefInfo[2]}
+	end
 end
 
 -- cleanup when features are destroyed
 function gadget:FeatureDestroyed(featureId, allyTeam)
 	featureIds[featureId] = nil
 	featurePhysicsById[featureId] = nil
+	autoResurrectFeatures[featureId] = nil
 end
 
 

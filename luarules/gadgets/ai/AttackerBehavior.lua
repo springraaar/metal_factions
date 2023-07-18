@@ -1,4 +1,3 @@
-include("luarules/gadgets/ai/common.lua")
 include("luarules/gadgets/ai/CommonUnitBehavior.lua")
  
 AttackerBehavior = {}

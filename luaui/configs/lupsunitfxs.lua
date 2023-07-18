@@ -22,6 +22,9 @@ effectUnitDefs = {
   sphere_golem = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
   },
+  sphere_king_crab = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },  
   sphere_charger = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
   },
@@ -120,6 +123,11 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=30, piece="ljp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=30, piece="rjp", onActive=true}}
   },
+  aven_stormfront = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=40, piece="ljp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=40, piece="rjp", onActive=true}},
+	{class='AirJet',options={color={0.3,0.1,0}, width=7, length=40, piece="cjp", onActive=true}}    
+  },  
   aven_gale = {
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=30, piece="ljp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=30, piece="rjp", onActive=true}}
@@ -233,6 +241,14 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=3, length=30, piece="ljp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=3, length=30, piece="rjp", onActive=true}}
   },
+  gear_firefly = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=3, length=25, piece="ljp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=3, length=25, piece="rjp", onActive=true}}
+  },
+  gear_seeker = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=3, length=25, piece="ljp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=3, length=25, piece="rjp", onActive=true}}
+  },  
   gear_zipper = {
     {class='AirJet',options={color={0.3,0.1,0}, width=3, length=25, piece="ljp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=3, length=25, piece="rjp", onActive=true}}
@@ -448,6 +464,9 @@ effectUnitDefs = {
   sphere_moth = {
     {class='AirJet',options={color={0.3,0.1,0}, width=4, length=25, piece="jp1", onActive=true}}
   },  
+  sphere_scrapper = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=27, piece="jp1", onActive=true}}
+  },
   sphere_construction_aircraft = {
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=30, piece="jp1", onActive=true}}
   },

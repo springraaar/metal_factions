@@ -1,0 +1,122 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Cadence;
+	description=Deployable Artillery Vehicle;
+	iconType=mobileartillery;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_cadence;
+	objectName=aven_cadence.3do;
+	corpse=aven_cadence_dead;
+	buildPic=aven_cadence.png;
+	soundCategory=aven_VEHICLE;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1500;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=0;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	onOffable=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=TANKSH3;
+	turnRate=400;
+	acceleration=0.1;
+	brakeRate=0.27;
+	maxVelocity=1.8;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_cadence_cannon;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+	onlytargetcategory1=NOTAIR;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	moveState=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	leavetracks=1;
+	trackoffset=6;
+	trackstrength=5;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=35;
+	collisionVolumeType = box;
+	collisionVolumeScales =40 25 50;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+
+	[customParams] 
+	{
+		builtBy=aven_adv_vehicle_plant;
+		tip=Use ON/OFF toggle deployment mode. Can only fire if deployed but cannot move;
+		evalfactor=0.75; //can't fire while moving
+		optional=1;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:yellowflarebig;
+		explosionGenerator1=custom:burrow;
+	}
+
+	buildCostEnergy=6268;//#AUTO#
+	buildCostMetal=1253;//#AUTO#
+	buildTime=14940;//#AUTO#
+	mass=792;//#AUTO#
+}

@@ -498,11 +498,12 @@ function gadget:GameFrame(n)
 				end
 			end
 		end
-		
+	
 		-- check regeneration due to upgrades
 		-- and other properties
 		local regen = 0
 		local health,maxHealth,bp = 0
+		local oldCaptureFraction = 0
 		for _,unitId in pairs(allUnits) do
 			r = spGetUnitRulesParam(unitId, "upgrade_regen")
 			if (not r) then
@@ -540,10 +541,8 @@ function gadget:GameFrame(n)
 				end
 				--Spring.Echo(unitId.." : upgraded regen : "..regen)
 			end
-		end
 
-		-- idle regeneration
-		for _,unitId in pairs(allUnits) do
+			-- idle regeneration			
 			if (not lastDamageFrameUnitIds[unitId] or (n - lastDamageFrameUnitIds[unitId] > IDLE_REGEN_FRAMES) ) then
 				local health,maxHealth,_,_,bp = spGetUnitHealth(unitId)
 				
@@ -558,17 +557,13 @@ function gadget:GameFrame(n)
 					end
 				end
 			end
-		end
-		
-		-- capture rate degeneration, if it didn't increase on the last second, the unit is not being captured
-		-- start degenerating immediately
-		local oldCaptureFraction = 0
-		for _,unitId in pairs(allUnits) do
+			
+			-- capture rate degeneration, if it didn't increase on the last second, the unit is not being captured
+			-- start degenerating immediately
 			oldCaptureFraction = lastCaptureStateByUnitId[unitId]
 			if not oldCaptureFraction then
 				oldCaptureFraction = 0
 			end
-			
 			local health,maxHealth,_,cp,bp = spGetUnitHealth(unitId)
 			--Spring.Echo("uId="..unitId.." cp="..tostring(cp).." oldcp="..oldCaptureFraction)
 			if (cp and cp > 0 and cp <= oldCaptureFraction) then
@@ -578,7 +573,6 @@ function gadget:GameFrame(n)
 			lastCaptureStateByUnitId[unitId] = cp
 		end
 	end
-	
 
 	if (n%AUTO_BUILD_STEP_FRAMES == 0) then
 		local health,maxHealth,bp,x,y,z = 0

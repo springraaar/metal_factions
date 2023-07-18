@@ -4,7 +4,7 @@
 	//  Unit Description
 	//********************
 	side=Aven;
-	name=Trooper (Heavy E.M.G);
+	name=Trooper (Heavy EMG);
 	description=Fire Support Robot;
 	iconType=mobileartilleryfs;
 
@@ -69,7 +69,7 @@
 	moveState=0;
 	onOffable=1;
 	activateWhenBuilt=0;
-
+	pushResistant=1;
 	damageModifier=0.5;
 
 	collisionVolumeType = box;

@@ -1,7 +1,7 @@
 function widget:GetInfo()
 	return {
 	name      = "Red Main Menu",
-	desc      = "Requires Red UI Framework",
+	desc      = "Main Menu. Requires Red UI Framework",
 	author    = "raaar",
 	date      = "2023",
 	license   = "PD",
@@ -55,11 +55,10 @@ local Config = {
 		margin = 6,
 		
 		padding = 8, -- for border effect
-		color2 = {1,1,1,0.022}, -- for border effect
 		
-		cbackground = {0,0,0,0.6},
-		cborder = {0,0,0,0.88},
-		clabel = {0.9,0.9,0.9,1},
+		cbackground = UI_BTN_BG,
+		cborder = UI_BTN_BORDER,
+		clabel = UI_BTN_TEXT,
 		
 		name = "MENUBUTTON",
 		
@@ -69,17 +68,16 @@ local Config = {
 	},
 	menu = {
 		px = CanvasX -162-6,py = 6,
-		sx = 162,sy = 184, --background size
+		sx = 162,sy = 214, --background size
 		
 		fontsize = 10,
 		maxFontsize = 18 * maxFontSizeFactor,
 		margin = 6,
-		padding = 0, -- for border effect
-		color2 = {1,1,1,0.022}, -- for border effect
+		padding = 0,
 		
-		cbackground = {0,0,0,0.4},
-		cborder = {0,0,0,0.88},
-		clabel = {0.9,0.9,0.9,1},
+		cbackground = UI_BG_NOTEXT,
+		cborder = UI_BORDER,
+		clabel = UI_TEXT,
 		
 		name = "MENU",
 		
@@ -93,10 +91,9 @@ local Config = {
 		maxFontsize = 18 * maxFontSizeFactor,
 		margin = 6,
 		padding = 8, -- for border effect
-		color2 = {1,1,1,0.022}, -- for border effect
-		cbackground = {0,0,0,0.6},
-		cborder = {0,0,0,0.88},
-		clabel = {0.9,0.9,0.9,1},
+		cbackground = UI_BTN_BG,
+		cborder = UI_BTN_BORDER,
+		clabel = UI_BTN_TEXT,
 	},
 	resignButton = {
 		px = 0,py = 0,
@@ -165,6 +162,13 @@ local Config = {
 		name = "backButton",
 		tooltip = {
 			background ="\255\255\255\255Close menu panel.",
+		},
+	},
+	optionalUnitsButton = {
+		px = 0,py = 0,
+		name = "optionalUnitsButton",
+		tooltip = {
+			background ="\255\255\255\255Open the optional unit selection panel.",
 		},
 	},
 }
@@ -255,11 +259,6 @@ local function AutoResizeObjects()
 end
 
 local function createMenu(r)
-	local background2 = {"rectangle",
-		px=r.px+r.padding,py=r.py+r.padding,
-		sx=r.sx-r.padding-r.padding,sy=r.sy-r.padding-r.padding,
-		color=r.color2,
-	}
 	local background = {"rectangle",
 		px=r.px,py=r.py,
 		sx=r.sx,sy=r.sy,
@@ -274,7 +273,6 @@ local function createMenu(r)
 		overrideClick = {1},
 	}
 	New(background)
-	New(background2)
 	
 	local offsetY = 0
 	local offsetX = 0
@@ -370,6 +368,16 @@ local function createMenu(r)
 
 	offsetY = offsetY + 30
 	
+	-- optional units
+	bt = Copy(Config.optionalUnitsButton)
+	bt = mergeTable(bt,Config.baseButton)
+	bt.px = r.px + r.margin + r.padding + offsetX
+	bt.py = r.py + r.margin + r.padding + offsetY
+	local optionalUnitsButton = createButton(bt,"Optional Units",function(mx,my,self)
+		showOptionalUnitsPanel()
+	end)
+	offsetY = offsetY + 30
+	
 	-- resign
 	bt = Copy(Config.resignButton)
 	bt = mergeTable(bt,Config.baseButton)
@@ -392,7 +400,7 @@ local function createMenu(r)
 	
 	
 	background.movableSlaves = {
-		resignButton,quitButton,shareButton,lb,lb2,gfxLowButton,gfxMedButton,gfxHighButton,backButton
+		resignButton,quitButton,shareButton,lb,lb2,gfxLowButton,gfxMedButton,gfxHighButton,backButton,optionalUnitsButton
 	}
 	for i=1,6 do
 		table.insert(background.movableSlaves,sliderButtons[i])
@@ -400,7 +408,6 @@ local function createMenu(r)
 	
 	local returnTable = {
 		["background"] = background,
-		["background2"] = background2,
 		["label"] = lb,
 		["label2"] = lb2,
 		["resignButton"] = resignButton,
@@ -410,11 +417,11 @@ local function createMenu(r)
 		["gfxMedButton"] = gfxMedButton,
 		["gfxHighButton"] = gfxHighButton,
 		["backButton"] = backButton,
+		["optionalUnitsButton"] = optionalUnitsButton,
 		["sliderButtons"] = sliderButtons,
 		margin = r.margin,
 		enable = function()
 			background.active = nil
-			background2.active = nil
 			lb.active = nil
 			lb2.active = nil
 			resignButton.enable()
@@ -427,10 +434,10 @@ local function createMenu(r)
 				sliderButtons[i].enable()
 			end
 			backButton.enable()
+			optionalUnitsButton.enable()
 		end,
 		disable = function()
 			background.active = false
-			background2.active = false
 			lb.active = false
 			lb2.active = false
 			resignButton.disable()
@@ -443,6 +450,7 @@ local function createMenu(r)
 				sliderButtons[i].disable()
 			end
 			backButton.disable()
+			optionalUnitsButton.disable()
 		end		
 	}
 	
@@ -450,12 +458,6 @@ local function createMenu(r)
 end
 
 function createButton(r,label,lClickHandler,rClickHandler)
-	local background2 = {"rectangle",
-		px=r.px+r.padding,py=r.py+r.padding,
-		sx=r.sx-r.padding-r.padding,sy=r.sy-r.padding-r.padding,
-		color=r.color2,
-	}
-
 	local background = {"rectangle",
 		px=r.px,py=r.py,
 		sx=r.sx,sy=r.sy,
@@ -479,7 +481,6 @@ function createButton(r,label,lClickHandler,rClickHandler)
 		background.checkType = r.checkType
 	end
 	New(background)
-	New(background2)
 
 	local text = {"text",
 		px=background.px+r.margin,py=background.py+r.margin,fontsize=r.fontsize,maxFontsize=20 * maxFontSizeFactor,
@@ -494,21 +495,27 @@ function createButton(r,label,lClickHandler,rClickHandler)
 		lb
 	}
 
-	-- mouse over handling	
+	-- mouse over handling
 	background.mouseOver = function(mx,my,self) 
 		SetTooltip(r.tooltip.background)
-		self.color = {0.5,0.5,0.5,0.6}
-		self.border = {1,1,1,0.88}
+		if self.isSelected == true then
+			self.color = UI_BTN_BG_SELECTED_OVER
+			self.border = UI_BTN_BORDER_SELECTED_OVER			
+		else
+			self.color = UI_BTN_BG_OVER
+			self.border = UI_BTN_BORDER_OVER
+		end
 	end	
 	background.mouseNotOver = function(mx,my,self)
 		if self.isSelected == true then
-			background.border = {0,1,0,1}
-			background.color = {0,0.3,0,0.8}
+			self.color = UI_BTN_BG_SELECTED
+			self.border = UI_BTN_BORDER_SELECTED
 		else
-			background.color=r.cbackground
-			background.border=r.cborder
+			self.color = UI_BTN_BG
+			self.border = UI_BTN_BORDER
 		end 
 	end	
+
 	background.onUpdate = function(self)
 		if r.checkType then
 			if r.checkType == CHECK_GFXPROFILE then 
@@ -542,17 +549,14 @@ function createButton(r,label,lClickHandler,rClickHandler)
 	
 	return {
 		["background"] = background,
-		["background2"] = background2,
 		["label"] = lb,
 		margin = r.margin,
 		enable = function()
 			background.active = nil
-			background2.active = nil
 			lb.active = nil
 		end,
 		disable = function()
 			background.active = false
-			background2.active = false
 			lb.active = false
 		end
 	}
@@ -572,6 +576,16 @@ function hideMenu()
 end
 WG.showMenu = showMenu
 WG.hideMenu = hideMenu
+
+function showOptionalUnitsPanel()
+	hideMenu()
+	if (WG.showOptionalUnitsPanel) then
+		WG.showOptionalUnitsPanel()
+	end
+end
+
+
+------------------------------------ callins
 
 function widget:Initialize()
 	PassedStartupCheck = RedUIchecks()

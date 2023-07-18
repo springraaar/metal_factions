@@ -1,7 +1,7 @@
 function widget:GetInfo()
 	return {
 	name      = "Red Resource Bars",
-	desc      = "Requires Red UI Framework",
+	desc      = "Resource bars and related information. Requires Red UI Framework",
 	author    = "Regret, modified by raaar",
 	date      = "29 may 2015",
 	license   = "GNU GPL, v2 or later",

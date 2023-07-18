@@ -1,4 +1,8 @@
+----------------------------- GENERAL INCLUDES
 
+include("lualibs/constants.lua")
+include("lualibs/util.lua")
+include("lualibs/custom_cmd.lua")
 
 ----------------------------- CONSTANTS
 
@@ -241,7 +245,6 @@ MAP_PROFILE_AIRONLY = 4
 
 
 -- commands
-include("lualibs/custom_cmd.lua")
 
 CMD_FEATURE_ID_OFFSET = Game.maxUnits
 
@@ -864,284 +867,9 @@ multiBuildBuildings = {
 	sphere_metal_maker = 48
 }
 
-attackerList = 
-{
------------------------------------------------- AVEN
------------ l1
-	"aven_runner",
-	"aven_trooper",
-	"aven_trooper_laser",
-	"aven_trooper_hemg",
-	"aven_wheeler",
-	"aven_kit",
-	"aven_warrior",
-	"aven_jethro",
-
-	"aven_bold",
-	"aven_jeffy",
-	"aven_samson",
-	"aven_duster",
-
-	"aven_swift",
-	"aven_tornado",
-	"aven_twister",
------------ l2
-	"aven_rover",
-	"aven_magnum",
-	"aven_sniper",
-	"aven_dazer",
-	"aven_weaver",
-	"aven_spiker",
-	"aven_shocker",
-	"aven_knight",
-	"aven_dervish",
-	"aven_bolter",
-	"aven_commando",
-	"aven_stalker",
-	"aven_raptor",
-	
-	"aven_racer",
-	"aven_centurion",
-	"aven_tribune",
-	"aven_javelin",
-	"aven_slider",
-	"aven_skein",
-	"aven_slider_s",	
-	"aven_swatter",
-	"aven_skimmer",
-	"aven_salvo",
-	"aven_excalibur",
-	"aven_turbulence",		
-	"aven_penetrator",
-	"aven_merl",
-	"aven_priest",
-	"aven_kodiak",
-	"aven_tsunami",
-	"aven_catfish",
-	"aven_valiant",
-
-	"aven_icarus",
-	"aven_gryphon",
-	"aven_falcon",
-	"aven_talon",
-
------------------------------------------------- GEAR
------------ l1
-	"gear_pinion",
-	"gear_thud",
-	"gear_kano",
-	"gear_crasher",
-	"gear_box",
-	"gear_harasser",
-	"gear_canister",
-	"gear_instigator",
-	"gear_assaulter",
-	"gear_igniter",
-	
-	"gear_dash",
-	"gear_zipper",
-	"gear_knocker",
-
------------ l2
-	"gear_bandit",
-	"gear_cube",
-	"gear_cloakable_cube",
-	"gear_rager",
-	"gear_moe",
-	"gear_rattler",
-	"gear_psycho",
-	"gear_titan",
-	"gear_big_bob",
-	"gear_barrel",
-	"gear_pyro",
-
-	"gear_metalhead",
-	"gear_hopper",
-	"gear_salamander",
-	"gear_snapper",
-	"gear_stilts",
-	"gear_marauder",
-	"gear_marooner",
-	"gear_overcharger",
-	"gear_rexapod",
-	"gear_proteus",
-	"gear_heater",
-	"gear_reaper",
-	"gear_thresher",
-	"gear_tremor",
-	"gear_diplomat",
-	"gear_rhino",
-	"gear_tensor",
-	"gear_might",
-	"gear_mobile_artillery",
-	"gear_eruptor",
-	"gear_flareon",
-	"gear_luminator",
-	"gear_lesser_luminator",
-
-	"gear_vector",
-	"gear_stratos",
-	"gear_whirlpool",
-	"gear_firestorm",
-	
------------------------------------------------- CLAW
-	"claw_wolverine",
-	"claw_grunt",
-	"claw_piston",
-	"claw_chisel",
-	"claw_jester",
-	"claw_ringo",
-	"claw_boar",
-	"claw_knife",
-	"claw_roller",
-	"claw_ogre",
-	"claw_centaur",
-	"claw_brute",
-	"claw_nucleus",
-	"claw_bishop",
-	"claw_sickle",
-	"claw_pounder",
-	"claw_shrieker",
-	"claw_armadon",
-	"claw_bullfrog",
-	"claw_mega",
-	"claw_ravager",
-	"claw_breaker",
-	"claw_halberd",
-	"claw_crawler",
-	"claw_cutter",
-	"claw_flail",
-	"claw_scythe",
-	"claw_trajector",
-	"claw_speeder",
-	"claw_striker",
-	"claw_sword",
-	"claw_wrecker",
-	"claw_drakkar",
-	"claw_spine",
-	"claw_monster",
-	"claw_hornet",
-	"claw_boomer",
-	"claw_boomer_m",
-	"claw_x",
-	"claw_blizzard",
-	"claw_havoc",
-	"claw_fury",
-	"claw_flayer",	
-	"claw_predator",
-	"claw_tempest",
-	"claw_dizzy",
-	"claw_gyro",
-	"claw_dancer",
-	"claw_mace",
-	"claw_lash",
-	"claw_dynamo",
-	"claw_pike",
------------------------------------------------- SPHERE
-	"sphere_mite",
-	"sphere_bit",
-	"sphere_gaunt",
-	"sphere_slicer",
-	"sphere_rock",
-	"sphere_needles",
-	"sphere_crustle",
-	"sphere_trike",
-	"sphere_double",
-	"sphere_hanz",
-	"sphere_tick",
-	"sphere_masher",
-	"sphere_trax",
-	"sphere_pulsar",
-	"sphere_glare",
-	"sphere_quad",
-	"sphere_reaver",
-	"sphere_bulk",
-	"sphere_monolith",
-	"sphere_slammer",
-	"sphere_golem",
-	"sphere_chub",
-	"sphere_ark",
-	"sphere_hanz",
-	"sphere_charger",
-	"sphere_skiff",
-	"sphere_reacher",
-	"sphere_endeavour",
-	"sphere_helix",
-	"sphere_needles",
-	"sphere_moth",
-	"sphere_tycho",
-	"sphere_spitfire",
-	"sphere_meteor",
-	"sphere_twilight",
-	"sphere_hermit",
-	"sphere_nimbus",
-	"sphere_aster",
-	"sphere_gazer",
-	"sphere_comet",
-	"sphere_atom",
-	"sphere_chroma",
-	"sphere_dipole",
-	"sphere_cluster",
-	"sphere_cluster_module_laser",
-	"sphere_cluster_module_bomb"
-}
-
-
-airAttackerList = 
-{
------------------------------------------------- AVEN
------------ l1
-
-	"aven_swift",
-	"aven_tornado",
-	"aven_twister",
-	"aven_gale",
------------ l2
-	"aven_icarus",
-	"aven_gryphon",
-	"aven_falcon",
-	"aven_talon",
-	"aven_ace",
-	"aven_ghost",
-	"aven_albatross",
-
------------------------------------------------- GEAR
------------ l1
-	"gear_dash",
-	"gear_zipper",
-	"gear_knocker",
-
------------ l2
-
-	"gear_vector",
-	"gear_stratos",
-	"gear_firestorm",
-	"gear_whirlpool",
-
------------------------------------------------- CLAW
------------ l1
-	"claw_hornet",
-	"claw_boomer",
-	"claw_boomer_m",
-	"claw_shredder",
------------ l2
-	"claw_x",
-	"claw_blizzard",
-	"claw_havoc",
-	"claw_fury",	
-	"claw_trident",
------------------------------------------------- SPHERE
------------ l1
-	"sphere_moth",
-	"sphere_tycho",
-	"sphere_blower",
------------ l2
-	"sphere_meteor",
-	"sphere_twilight",
-	"sphere_spitfire",      
-	"sphere_neptune"
-}
-
+attackerList = {}
+airAttackerList = {}
+seaAttackerList = {}
 
 unitAbleToHitUnderwater = {
 ------------------------------------------------ AVEN
@@ -1210,6 +938,7 @@ unitAbleToHitUnderwater = {
 	sphere_pluto = true,
 	sphere_oyster = true,
 	sphere_crab = true,
+	sphere_king_crab = true,
 	sphere_slugger = true,
 	sphere_cluster = true,
 	sphere_cluster_module_bomb = true,
@@ -1217,123 +946,7 @@ unitAbleToHitUnderwater = {
 }
 
 
-seaAttackerList = 
-{
------------------------------------------------- AVEN
------------ l1
-
-	"aven_skeeter",
-	"aven_crusader",
-	"aven_vanguard",
-	"aven_lurker",
-	"aven_stinger",
------------ l2
-	"aven_ranger",
-	"aven_conqueror",
-	"aven_piranha",
-	"aven_emperor",
-	"aven_fletcher",
-	"aven_rush",
-	"aven_valiant",
------------------------------------------------- GEAR
------------ l1
-	"gear_searcher",
-	"gear_enforcer",
-	"gear_viking",
-	"gear_snake",
-	"gear_blowfish",
-
------------ l2
-
-	"gear_noser",
-	"gear_executioner",
-	"gear_edge",
-	"gear_jigsaw",
-	"gear_strainer",
------------------------------------------------- CLAW
------------ l1
-	"claw_speeder",
-	"claw_striker",
-	"claw_sword",
-	"claw_spine",
-	"claw_hunter",
------------ l2
-	"claw_drakkar",
-	"claw_monster",
-	"claw_wrecker",
-	"claw_maul",
-	"claw_phalanx",	
------------------------------------------------- SPHERE
------------ l1
-	"sphere_skiff",
-	"sphere_endeavour",
-	"sphere_carp",
-	"sphere_reacher",
-	"sphere_targe",
------------ l2
-	"sphere_pluto",
-	"sphere_stalwart",
-	"sphere_stresser"
-}
-
-l1ConstructorList = 
-{
------------------------------------------------- AVEN
-	"aven_construction_kbot",
-	"aven_construction_aircraft",
-	"aven_construction_ship",
-	"aven_nano_tower",
------------------------------------------------- GEAR
-	"gear_construction_kbot",
-	"gear_construction_aircraft",
-	"gear_construction_ship",
-	"gear_nano_tower",	
------------------------------------------------- CLAW
-	"claw_construction_kbot",
-	"claw_construction_aircraft",
-	"claw_construction_ship",
-	"claw_nano_tower",
-
------------------------------------------------- SPHERE
-	"sphere_construction_vehicle",
-	"sphere_construction_aircraft",
-	"sphere_construction_ship",
-	"sphere_pole"
-}
-
-
-l2ConstructorList = 
-{
------------------------------------------------- AVEN
-	"aven_adv_construction_kbot",
-	"aven_adv_construction_vehicle",
-	"aven_adv_construction_aircraft",
-	"aven_adv_construction_sub",
-	"aven_construction_hovercraft",	
------------------------------------------------- GEAR
-	"gear_adv_construction_kbot",
-	"gear_adv_construction_vehicle",
-	"gear_adv_construction_aircraft",
-	"gear_adv_construction_sub",
-	"gear_adv_construction_hydrobot",
------------------------------------------------- CLAW
-	"claw_adv_construction_kbot",
-	"claw_adv_construction_vehicle",
-	"claw_adv_construction_aircraft",
-	"claw_adv_construction_ship",
-	"claw_adv_construction_spinbot",	
-
------------------------------------------------- SPHERE
-	"sphere_adv_construction_kbot",
-	"sphere_adv_construction_vehicle",
-	"sphere_adv_construction_aircraft",
-	"sphere_construction_sphere",
-	"sphere_adv_construction_sub"
-}
-
-
-supporterList = 
-{
+supporterList = {
 ------------------------------------------------ AVEN
 	"aven_peeper",
 	"aven_marky",
@@ -1515,8 +1128,6 @@ unitTypeSets = {
 	[TYPE_AIR_ATTACKER] = listToSet(airAttackerList),
 	[TYPE_SEA_ATTACKER] = listToSet(seaAttackerList),
 	[TYPE_AMPHIBIOUS_ATTACKER] = listToSet(seaAttackerList),
-	[TYPE_L1_CONSTRUCTOR] = listToSet(l1ConstructorList),		-- not used
-	[TYPE_L2_CONSTRUCTOR] = listToSet(l2ConstructorList),		-- not used
 	[TYPE_BASE] = tableToSet({mohoMineByFaction,geoByFaction,fusionByFaction,lvl1PlantByFaction,lvl2PlantByFaction,lev1HeavyDefenseByFaction,lev1ArtilleryDefenseByFaction,lev2ArtilleryDefenseByFaction,lev2LongRangeArtilleryByFaction,heavyAAByFaction,comsatByFaction}),
 	[TYPE_LIGHT_AA] = tableToSet(lightAAByFaction),
 	[TYPE_MEDIUM_AA] = tableToSet(mediumAAByFaction),
@@ -1530,3 +1141,24 @@ unitTypeSets = {
 	[TYPE_FAKE_WEAPON] = tableToSet({comsatByFaction}),
 	[TYPE_NUKE] = tableToSet({unblockableNukeByFaction})
 }
+
+function finishLoadingUnitTypeSets()
+	attackers = {}
+	airAttackers = {}
+	seaAttackers = {}
+	unitTypeSets[TYPE_ATTACKER] = attackers
+	unitTypeSets[TYPE_AIR_ATTACKER] = airAttackers
+	unitTypeSets[TYPE_SEA_ATTACKER] = seaAttackers
+	
+	for udId,ud in pairs(UnitDefs) do
+		if not ud.isBuilding and ud.weapons and (not fakeWeaponUnits[ud.name]) and ud.weapons[1] and ud.weapons[1].weaponDef then
+			attackers[ud.name] = true
+			if (ud.isAirUnit and ud.speed > 60) then
+				airAttackers[ud.name] = true			
+			elseif string.find(tostring(ud.moveDef.name),"boat") then
+				seaAttackers[ud.name] = true
+			end
+	    end
+		
+	end
+end

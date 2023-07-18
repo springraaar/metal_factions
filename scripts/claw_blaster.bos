@@ -1,0 +1,131 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 	100
+
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
+piece  gp, base, flash, turret, holder, sleeve, barrel,base2,t1,t2,t1cover,t2cover;
+
+#include "aimhelper1.h"
+
+// Signal definitions
+#define SIG_AIM				2
+
+#include "tankthreads.h"
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+}
+
+RockUnit(anglex, anglez)
+{
+	turn base to x-axis anglex speed <50.005495>;
+	turn base to z-axis <0>-anglez speed <50.005495>;
+	wait-for-turn base around z-axis;
+	wait-for-turn base around x-axis;
+	turn base to z-axis <0.000000> speed <20.000000>;
+	turn base to x-axis <0.000000> speed <20.000000>;
+}
+
+
+Create()
+{
+	call-script stopAimHelper1(<1000>,<1000>);
+	start-script SmokeUnit();
+	start-script AnimateTracks();
+}
+
+RestoreAfterDelay()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<80>,<80>);
+	turn turret to y-axis <0.000000> speed <80.016484>;
+	turn sleeve to x-axis <0.000000> speed <80.005495>;
+}
+
+AimPrimary(heading, pitch)
+{
+	call-script updateAimHelper1(heading,pitch,<150>,<150>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn turret to y-axis heading speed <150.038462>;
+	turn sleeve to x-axis <0.000000> - pitch speed <150.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary()
+{
+	move barrel to z-axis [-5.000000] now;
+	emit-sfx 1024 from flash;
+	sleep 150;
+	move barrel to z-axis [0.000000] speed [14.000000];
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flash;
+}
+
+SweetSpot(piecenum)
+{
+	piecenum = base;
+}
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		explode barrel type BITMAPONLY | BITMAP1;
+		explode sleeve type BITMAPONLY | BITMAP1;
+		explode base type BITMAPONLY | BITMAP2;
+		explode flash type BITMAPONLY | BITMAP3;
+		explode turret type BITMAPONLY | BITMAP4;
+		return (1);
+	}
+	explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode base type BITMAPONLY | BITMAP2;
+	explode flash type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
+	explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode t1cover type SHATTER;
+	explode t2cover type SHATTER;
+	return (2);
+}

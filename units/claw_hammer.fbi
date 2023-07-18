@@ -108,7 +108,7 @@
 	{
 		builtBy=claw_spinbot_plant;
 		tip=Use ON/OFF toggle deployment mode. Can only fire if deployed but cannot move. Gains 33% dmg resistance when closed;
-		evalfactor=0.85; //can't fire while moving
+		evalfactor=0.75; //can't fire while moving
 	}
 
 	[SFXTypes]
@@ -117,8 +117,8 @@
 		explosionGenerator1=custom:burrow;
 	}
 
-	buildCostEnergy=13434;//#AUTO#
-	buildCostMetal=2686;//#AUTO#
-	buildTime=32018;//#AUTO#
-	mass=2792;//#AUTO#
+	buildCostEnergy=11853;//#AUTO#
+	buildCostMetal=2370;//#AUTO#
+	buildTime=28251;//#AUTO#
+	mass=2624;//#AUTO#
 }

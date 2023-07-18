@@ -85,8 +85,6 @@ walk()
 			turn torso to y-axis <10.000000> speed slowTurnSpd2;
 			turn luparm to x-axis <10.000000> speed slowTurnSpd;
 			turn lloarm to x-axis <-10.000000> speed slowTurnSpd2;
-
-			turn ruparm to x-axis <0.000000> speed slowTurnSpd;
 		}
 		
 		wait-for-turn lthigh around x-axis;
@@ -120,7 +118,6 @@ walk()
 			turn torso to y-axis <0.000000> speed slowTurnSpd2;
 			turn luparm to x-axis <-15.000000> speed slowTurnSpd;
 			turn lloarm to x-axis <-15.000000> speed slowTurnSpd2;
-			turn ruparm to x-axis <10.000000> speed slowTurnSpd;
 		}
 
 		move pelvis to y-axis [0.000000] speed mAMoveSpd1;
@@ -153,7 +150,6 @@ walk()
 			turn torso to y-axis <-10.000000> speed slowTurnSpd2;
 			turn luparm to x-axis <-40.000000> speed slowTurnSpd;
 			turn lloarm to x-axis <-20.000000> speed slowTurnSpd2;
-			turn ruparm to x-axis <20.000000> speed slowTurnSpd;
 		}
 
 		wait-for-turn lthigh around x-axis;
@@ -188,7 +184,6 @@ walk()
 			turn torso to y-axis <0.000000> speed slowTurnSpd2;
 			turn luparm to x-axis <-15.000000> speed slowTurnSpd;
 			turn lloarm to x-axis <-15.000000> speed slowTurnSpd2;
-			turn ruparm to x-axis <10.000000> speed slowTurnSpd;
 		}
 		
 		move pelvis to y-axis [0.000000] speed mAMoveSpd1;

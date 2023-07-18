@@ -1,8 +1,7 @@
-include("luarules/gadgets/ai/common.lua")
 include("luarules/gadgets/ai/modules.lua")
 include("luarules/gadgets/ai/AttackerBehavior.lua")
 include("luarules/gadgets/ai/TaskQueueBehavior.lua")
-include("LuaLibs/json.lua")
+include("lualibs/json.lua")
 
 AI = {}
 AI.__index = AI
@@ -293,6 +292,15 @@ function AI:Init()
 			-- Echo("added "..newModule:name().." module") --DEBUG
 		end
 	end
+	
+	-- load optional units
+	local currentStrategy = self.currentStrategy
+	local unitsArr = {}
+	for s in defaultOptionalUnitsText:gmatch("[^\r\n]+") do
+		local uName = s:match( "^%s*(.-)%s*$" )
+		unitsArr[#unitsArr+1] = uName
+	end
+	GG.loadOptionalUnitsFromArrayForTeam(self.id,currentStrategy.optionalUnits and currentStrategy.optionalUnits or unitsArr)
 	
 	-- table with unit behaviors indexed by unitId
 	self.unitBehaviors = {}

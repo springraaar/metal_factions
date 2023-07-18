@@ -163,28 +163,7 @@ local burningImmuneDefIds = {
 	[UnitDefNames["gear_burner"].id] = true
 }
 
-local burningEffectWeaponDefIds = {
-	[WeaponDefNames["gear_pyro_flamethrower"].id] = true,
-	[WeaponDefNames["gear_u1commander_flamethrower"].id] = true,
-	[WeaponDefNames["gear_cube_flamethrower"].id] = true,
-	[WeaponDefNames["gear_burner_flamethrower"].id] = true,
-	[WeaponDefNames["gear_heater_flamethrower"].id] = true,
-	[WeaponDefNames["gear_canister_fireball"].id] = true,
-	[WeaponDefNames["gear_firestorm_missile"].id] = true,
-	[WeaponDefNames["gear_igniter_missile"].id] = true,
-	[WeaponDefNames["gear_incendiary_mine_missile"].id] = true,
-	[WeaponDefNames["gear_u1commander_missile"].id] = true,
-	[WeaponDefNames["gear_barrel_missile2"].id] = true,
-	[WeaponDefNames["gear_eruptor_fireball"].id] = true,
-	[WeaponDefNames["gear_u5commander_fireball"].id] = true,
-	[WeaponDefNames["gear_pyroclasm_rocket_d"].id] = true,
-	[WeaponDefNames["gear_pyroclasm_submunition"].id] = true,
-	[WeaponDefNames["gear_canister"].id] = true,
-	[WeaponDefNames["gear_eruptor"].id] = true,
-	[WeaponDefNames["gear_mass_burner"].id] = true,
-	[WeaponDefNames["gear_fire_effect"].id] = true,
-	[WeaponDefNames["gear_fire_effect2"].id] = true
-}
+local burningEffectWeaponDefIds = {}
 
 local burningAOEPerStepWeaponDefIds = {
 	[WeaponDefNames["gear_fire_effect"].id] = true,
@@ -300,8 +279,15 @@ function gadget:Initialize()
 	-- find weapon hitpower, paralyzer status and
     for _,wd in pairs(WeaponDefs) do        
 		hitpower = POWER_L
-		if wd.customParams and wd.customParams.hitpower then
-			hitpower = tonumber(wd.customParams.hitpower)
+ 		
+ 		if wd and wd.customParams then
+			if wd.customParams.hitpower then
+				hitpower = tonumber(wd.customParams.hitpower)
+			end
+			local burnType = wd.customParams.burn
+			if burnType and tonumber(burnType) > 0 then
+				burningEffectWeaponDefIds[wd.id] = true
+			end
 		end
  		
  		if wd.customParams and wd.customParams.expdmgscaling then

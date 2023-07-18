@@ -1333,6 +1333,90 @@
 	}
 	[_sparks]{class=CExpGenSpawner;[properties]{pos=-100 r200,0,-100 r200;delay=r20;explosionGenerator=custom:ELECTRICSEQUENCE;}air=1;ground=1;water=1;underwater=1;unit=1;count=3;}
 }
+
+[DISRSTORMBOMBBLAST]
+{
+	usedefaultexplosions=0;
+	[spikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-7 r14,-7 r14,-7 r14;
+			width=22;
+			length=1; //60;
+			alpha=1;
+			alphadecay=0.1;
+			color=0.5, 0.6, 1.0;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=5; 
+  		underwater=1;
+	}
+	[_windsphere]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=350;explosionGenerator=custom:DYNALTWINDSPHERE;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+
+	[Flakspikes]
+	{
+		class=explspike;
+		[properties]
+		{
+			dir=-45 r90,-45 r90,-45 r90;
+			width=0.7 r3;
+			length=5;
+			alpha=0.4 r0.45;
+			alphadecay=0.1 r0.25;
+			color=1.0, 0.6 r0.4, 0.1;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=4; 
+  		underwater=1;
+	}
+
+	[G_blast2]//base explo// 
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.14;
+			sizeMod=1.0;
+			pos=0, 10, 0;  
+			gravity=0, 0, 0;
+		
+			colorMap=0.2 0.3 0.3 0.01 	0.15 0.15 0.15 0.01 	0.05 0.1 0.1 0.01 	0.0 0.0 0.00 0.0;
+
+			Texture=purplecloud;
+			airdrag=0.7;
+			
+			particleLifeSpread=10; 
+			particleSpeedSpread=9;  
+			particleSizeSpread=10;   
+			
+			particleLife=30; 
+			numParticles=18; 
+			particleSpeed=20; 
+			particleSize=38;
+			
+			
+			emitVector=0, 1, 0; 
+			emitRot=80;
+			emitRotSpread=5; 
+			directional=1; 
+		}
+	air=1;
+	water=1;
+	ground=1;
+	count=1;
+	underwater=1;
+	}
+	[_sparks]{class=CExpGenSpawner;[properties]{pos=-80 r160,0,-80 r160;delay=r20;explosionGenerator=custom:ELECTRICSEQUENCE;}air=1;ground=1;water=1;underwater=1;unit=1;count=2;}
+}
+
 [EMPEFFECT]
 {
 	usedefaultexplosions=0;

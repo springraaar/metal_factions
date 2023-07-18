@@ -1,0 +1,365 @@
+#define TAK			// This is a TAK script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 100
+
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
+piece  base, pivot, wake1, wake2, tbase, spinner, bottom, b2, d2, s1, s2,s3,d3, base1, turret, spike, sleeve,flare,e1,e2,e3,e4,e5,e6,tspinner;
+
+static-var  bAiming, bSwimming, terrainStatus, waterSpeed, landSpeed, isDeployed;
+
+lua_setMobility() { return 0; }
+
+#include "aimhelper1.h"
+
+// Signal definitions
+#define SIG_MOVE			2
+#define SIG_AIM				4
+
+#include "spinbot.h"
+
+
+spinEffect(i)
+{
+	set CEG_DAMAGE to 10;
+	play-sound( "topspin", 100 );
+	i = 0;
+	while (i < 10)
+	{
+		
+		emit-sfx 1024+1 from e1;
+		emit-sfx 1024+1 from e2;
+		emit-sfx 1024+1 from e3;
+		emit-sfx 1024+1 from e4;
+		emit-sfx 1024+1 from e5;
+		emit-sfx 1024+1 from e6;
+		sleep 30;
+		i = i+1;
+	}
+	
+}
+
+
+deploy()
+{
+
+	if (!isDeployed)
+	{
+		call-script lua_setMobility(50);
+		
+		turn turret to y-axis <0> now;
+		spin tbase around y-axis speed <1720> accelerate <20>;
+		sleep 1000;
+		isDeployed = TRUE;
+		spin tbase around y-axis speed <1720> accelerate <520>;
+		set ARMORED to TRUE;
+	}
+}
+
+undeploy()
+{
+	if (isDeployed)
+	{
+		isDeployed = FALSE;
+		set ARMORED to FALSE;
+		call-script stopAimHelper1(<1000>,<1000>);
+
+
+		turn turret to y-axis <0> now;
+		turn tbase to y-axis <0> speed <720>;
+		sleep 1000;
+		
+		wait-for-turn tbase around y-axis;
+
+		call-script lua_setMobility(100);
+	}
+	isDeployed = FALSE;
+}
+
+
+handleActivation()
+{
+	while (TRUE)
+	{ 
+		if (get ACTIVATION) 
+		{
+			call-script deploy();
+			if (isDeployed)
+			{
+				call-script spinEffect();
+			}
+			else
+			{
+				sleep 100;
+			}
+		}
+		else
+		{
+			call-script undeploy();
+			sleep 100;
+		}
+	}
+}
+
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype)
+{
+	var Func_Var_4;
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from turret;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+	return (0);
+}
+
+stopWheels()
+{
+	if (get BUILD_PERCENT_LEFT) 
+	{
+		stop-spin spinner around y-axis;
+		return (0);
+	}
+	spin spinner around y-axis speed <200.000000>;
+	return (0);
+}
+
+
+walk(last)
+{
+	last = 0;
+	while ( TRUE )
+	{
+		
+		if ( last != (wheelSpeed / 8) )
+		{
+			spin spinner around y-axis speed <200.000000> + wheelSpeed; // accelerate wheelAcceleration;
+			last = wheelSpeed / 8;
+		}
+		if (isDeployed) 
+		{
+			pivotAngle = <0>;
+		}
+		turn pivot to x-axis pivotAngle speed <30.000000>;
+		sleep 100;
+	}
+	return (0);
+}
+
+
+
+closelegs()
+{
+	// nothing to do here
+	call-script stopWheels();
+	sleep 100;
+	return (0);
+}
+
+openlegs()
+{
+	// nothing to do here
+	sleep 100;
+
+	return (0);
+}
+
+swim()
+{
+	sleep 500;
+	call-script closelegs();
+	return (0);
+}
+
+MotionControl(justMoved)
+{
+	justMoved = TRUE;
+	while( TRUE )
+	{
+		// over water
+		if( ( !bSwimming ) AND (terrainStatus == 2 OR terrainStatus == 1))
+		{
+			call-script closelegs();
+			bSwimming = TRUE;
+			justMoved = TRUE;
+		}
+		// over land
+		if( bSwimming AND terrainStatus == 4 )
+		{
+			call-script openlegs();
+			bSwimming = FALSE;
+			justMoved = TRUE;
+		}
+		if( bMoving )
+		{
+			if( bSwimming )
+			{
+				//set MAX_SPEED to waterSpeed; // REPLACED BY GADGET
+				//set UPRIGHT to TRUE;
+				call-script walk();
+			}
+			if( !bSwimming )
+			{
+				//set MAX_SPEED to landSpeed; // REPLACED BY GADGET
+				//set UPRIGHT to FALSE;
+				call-script walk();
+			}
+			justMoved = TRUE;
+		}
+		if( !bMoving )
+		{
+			if( justMoved AND ( !bSwimming ) )
+			{
+				call-script stopWheels();
+	
+				justMoved = FALSE;
+			}
+			sleep 100;
+		}
+	}
+	return (0);
+}
+
+Create()
+{
+	set ARMORED to FALSE;
+	landSpeed = get MAX_SPEED;
+	waterSpeed = landSpeed * 100/150;
+	//landSpeed = waterSpeed;	// same as land
+	
+	bMoving = FALSE;
+	bAiming = FALSE;
+	bSwimming = FALSE;
+	isDeployed = FALSE;
+	spin tspinner around y-axis speed <77>;
+	call-script stopAimHelper1(<1000>,<1000>);
+	start-script MotionControl();
+	start-script WheelSpeedControl();
+	start-script SmokeUnit();
+	start-script handleActivation();
+	return (0);
+}
+
+StartMoving()
+{
+	bMoving = TRUE;
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while( TRUE )
+	{
+		if( terrainStatus == 2 )
+		{
+			emit-sfx 2 from wake1;
+			emit-sfx 2 from wake2;
+		}
+		if( terrainStatus == 1 )
+		{
+			emit-sfx 2 from wake1;
+			emit-sfx 2 from wake2;
+		}
+		sleep 250;
+	}
+	return (0);
+}
+
+StopMoving()
+{
+	bMoving = FALSE;
+	signal SIG_MOVE;
+	return (0);
+}
+
+setSFXoccupy(Func_Var_1)
+{
+	terrainStatus = Func_Var_1;
+	return (0);
+}
+
+
+RestoreAfterDelay()
+{
+	sleep 1000;
+	call-script stopAimHelper1(<400>,<400>);
+	turn turret to y-axis <0.000000> speed <400.000000>;
+	bAiming = FALSE;
+	return (0);
+}
+
+
+AimPrimary(heading, pitch)
+{
+	if (isDeployed || (get ACTIVATION) )
+	{
+		return 0;
+	}
+
+	call-script updateAimHelper1(heading,pitch,<600>,<600>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	turn turret to y-axis heading speed <600.000000>;
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+	}
+
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+
+FirePrimary()
+{
+	emit-sfx 1024 from flare;
+	return (1);
+}
+
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+	return (0);
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare;
+	return (0);
+}
+
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		explode turret type SHATTER;
+		return (1);
+	}
+	explode base1 type SHATTER;
+	explode turret type SHATTER;
+	explode spinner type SHATTER;
+	return (2);
+}

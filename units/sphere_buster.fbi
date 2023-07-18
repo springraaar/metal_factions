@@ -1,0 +1,115 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Buster;
+	description=All-terrain Raider Robot;
+	iconType=allterrainraider;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_buster;
+	objectName=sphere_buster.3do;
+	corpse=sphere_buster_dead;
+	buildPic=sphere_buster.png;
+	soundCategory=CORAK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=600;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalmake=0;
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canAttack=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=KBOTATUW2;
+	turnRate=1400;
+	acceleration=1.1;
+	brakeRate=1;
+	maxVelocity=2.8;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	Weapon1=sphere_buster_bomb;
+	weaponMainDir1=0 1 0;
+	maxAngleDif1=280;
+	onlyTargetCategory1=NOTAIR;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+
+	collisionVolumeType = box;
+	collisionVolumeScales =20 14 20;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_adv_kbot_factory;
+		optional=1;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflaresml;
+	}
+
+	buildCostEnergy=847;//#AUTO#
+	buildCostMetal=169;//#AUTO#
+	buildTime=2020;//#AUTO#
+	mass=103;//#AUTO#
+}

@@ -24,6 +24,7 @@ local spGetAllyTeamList = Spring.GetAllyTeamList
 local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 local spGetTeamList = Spring.GetTeamList
 local spGetUnitsInCylinder = Spring.GetUnitsInCylinder
+local spGetUnitsInSphere = Spring.GetUnitsInSphere
 local spGetUnitsInRectangle = Spring.GetUnitsInRectangle
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGetUnitTransporter = Spring.GetUnitTransporter
@@ -41,6 +42,11 @@ local spGetGroundHeight = Spring.GetGroundHeight
 local spAddUnitDamage = Spring.AddUnitDamage
 local spPlaySoundFile = Spring.PlaySoundFile
 local spSetUnitTarget = Spring.SetUnitTarget
+local spSetUnitExperience = Spring.SetUnitExperience
+local spGetUnitExperience = Spring.GetUnitExperience 
+local spFindUnitCmdDesc = Spring.FindUnitCmdDesc 
+local spEditUnitCmdDesc = Spring.EditUnitCmdDesc
+
 local floor = math.floor
 
 -------------------------------------------------------------------------------------
@@ -100,6 +106,8 @@ local spawnUnitByType = {
 }
 
 local selfBurnFireWeaponId = WeaponDefNames["gear_pyro_flamethrower"].id
+
+local ignoreUnitDefIds = {}
 
 -------------------------------------------------------------------------------------
 -------------------------------------------------------------------------------------
@@ -517,6 +525,43 @@ function playSound(unitID, unitDefID, teamID, soundId, volume)
 	spPlaySoundFile(sounds[soundId], volume/100, x, y, z)
 end
 
+-- remove the calling unit from the game
+function removeSelf(unitID, unitDefID, teamID)
+	Spring.DestroyUnit(unitID,false,true)	
+	return 0
+end
+
+-- handle charge updates
+function chargeUpdated(unitID, unitDefID, teamID,charges,maxCharges,excessChargesLatestUpd)
+	spSetUnitRulesParam(unitID,"charge",charges/maxCharges,{public = true})
+
+	-- tombstone mechanics (currently the only unit)
+	if charges == maxCharges then
+		spSetUnitExperience( unitID, spGetUnitExperience(unitID)+excessChargesLatestUpd/5000)
+		GG.updateUnitMorphReqs(unitID,teamID,nil)
+	end
+	return 0
+end
+
+
+-- check if unit is alone within a given radius (no allies, excluding dummy units)
+function checkAlone(unitID, unitDefID, teamID,radius)
+	local x, y, z = spGetUnitPosition(unitID)
+	local allyId = spGetUnitAllyTeam(unitID)
+	
+	for _,tId in pairs(spGetTeamList(allyId)) do
+		for _,uId in pairs(spGetUnitsInSphere(x,y,z,radius,tId)) do
+			if uId  ~= unitID and (not ignoreUnitDefIds[spGetUnitDefID(uId)]) then
+				--Spring.Echo("is not alone")
+				return 0 
+			end
+		end
+	end		
+	
+	return 1
+end
+
+
 
 ---------------------------------------- CALLINS
 
@@ -528,6 +573,12 @@ function gadget:Initialize()
     		GG.lessThan500HPTargetDefIds[ud.id] = true
     	end
     end
+	-- find units that are to be ignored when accessing combat power etc.
+    for udId,ud in pairs(UnitDefs) do
+    	if ud.customParams and ud.customParams.combatignore then
+    		ignoreUnitDefIds[udId] = true
+    	end
+    end    
     
     -- init comsat position map
     for _,allyId in pairs(spGetAllyTeamList()) do
@@ -584,3 +635,6 @@ gadgetHandler:RegisterGlobal("getPieceHeightDiff", getPieceHeightDiff)
 gadgetHandler:RegisterGlobal("spawnUnit", spawnUnit)
 gadgetHandler:RegisterGlobal("selfIgnite", selfIgnite)
 gadgetHandler:RegisterGlobal("playSound", playSound)
+gadgetHandler:RegisterGlobal("removeSelf", removeSelf)
+gadgetHandler:RegisterGlobal("chargeUpdated", chargeUpdated)
+gadgetHandler:RegisterGlobal("checkAlone", checkAlone)
