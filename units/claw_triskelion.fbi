@@ -1,0 +1,89 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	side=Claw;
+	name=Triskelion;
+	description=Amphibious Armored Assault Robot;
+	iconType=amphibassault;
+
+	// ------------------- categories
+	Category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=claw_triskelion;
+	objectName=claw_triskelion.3do;
+	buildPic=claw_triskelion.png;
+	soundCategory=CLAW_BOTBIG;
+	corpse=claw_triskelion_dead;
+
+
+	// ------------------- health/cost/size
+	footprintX=3;
+	footprintZ=3;
+	maxDamage=5500;
+
+
+	// ------------------- resources
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	builder=0;
+
+	// ------------------- movement
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=0.7;
+	brakeRate=0.25;
+	acceleration=0.15;
+	turnRate=650;
+	movementClass=KBOTUW4;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+
+	// ------------------- weapons
+	weapon1=claw_triskelion_laser1;
+	weapon2=claw_triskelion_laser2;
+	weapon3=claw_triskelion_laser3;
+	badTargetCategory1=VTOL;
+	badTargetCategory2=VTOL;
+	badTargetCategory3=NOTAIR;
+	noChaseCategory=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+
+	// ------------------- orders
+
+	// ------------------- misc
+	noAutoFire=0;
+	upright=0;
+	collisionVolumeType = box;
+	collisionVolumeScales =35 60 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	[CustomParams]
+	{
+		builtBy=claw_adv_kbot_plant;
+		optional=1;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:blueflaresml;
+		explosionGenerator1=custom:glowsml;
+	}
+	buildCostEnergy=8499;//#AUTO#
+	buildCostMetal=1699;//#AUTO#
+	buildTime=20258;//#AUTO#
+	mass=3106;//#AUTO#
+}

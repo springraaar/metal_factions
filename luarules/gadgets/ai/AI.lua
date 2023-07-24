@@ -111,6 +111,15 @@ function AI:setStrategy(side,strategyStr,noMessage,playerId)
 	if (self.currentStrategy and self.currentStrategy.otherRetreatHealth) then
 		self.otherRetreatHealth = self.currentStrategy.otherRetreatHealth
 	end
+	
+	-- load optional units
+	local currentStrategy = self.currentStrategy
+	local unitsArr = {}
+	for s in defaultOptionalUnitsText:gmatch("[^\r\n]+") do
+		local uName = s:match( "^%s*(.-)%s*$" )
+		unitsArr[#unitsArr+1] = uName
+	end
+	GG.loadOptionalUnitsFromArrayForTeam(self.id,(currentStrategy and currentStrategy.optionalUnits) and currentStrategy.optionalUnits or unitsArr)
 end
 
 function AI:updateSideStrategy(side)
@@ -292,15 +301,6 @@ function AI:Init()
 			-- Echo("added "..newModule:name().." module") --DEBUG
 		end
 	end
-	
-	-- load optional units
-	local currentStrategy = self.currentStrategy
-	local unitsArr = {}
-	for s in defaultOptionalUnitsText:gmatch("[^\r\n]+") do
-		local uName = s:match( "^%s*(.-)%s*$" )
-		unitsArr[#unitsArr+1] = uName
-	end
-	GG.loadOptionalUnitsFromArrayForTeam(self.id,currentStrategy.optionalUnits and currentStrategy.optionalUnits or unitsArr)
 	
 	-- table with unit behaviors indexed by unitId
 	self.unitBehaviors = {}

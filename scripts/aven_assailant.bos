@@ -3,22 +3,21 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define SPEEDUP_FACTOR	300
+#define SPEEDUP_FACTOR	360
 
 #define HEADING_TOLERANCE	<25>
 #define PITCH_TOLERANCE		<15>
 
+piece  torso, hips, rfoot, lfoot, launcher, lthigh,lpack,rpack, rthigh, rleg, lleg, ground, l1,l2,r1,r2,lfirept1,lfirept2,rfirept1,rfirept2, t2;
 
-piece  torso, firept, hips, rfoot, lfoot, launcher, lthigh,pack, rthigh, rleg, lleg, ground, l1, t2, sleeve, s1,s2,barrel1,flare1,barrel2,flare2, door1, door2;
-
-static-var  gun_1, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mADelay1, legAngle1, legAngle2, legAngle3, bMoving, bAiming;
+static-var  gun_1,  mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mADelay1, legAngle1, legAngle2, legAngle3, bMoving, bAiming;
 
 #include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_MOVE			2
 #define SIG_AIM				4
-#define SIG_AIM2			8
+
 
 MotionSpeedControl(maxSpeed,currentSpeed)
 {
@@ -39,14 +38,14 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 		}
 		
 		
-		mAMoveSpd1 = [10.000000] * mASpdFactor / 100;
+		mAMoveSpd1 = [5.000000] * mASpdFactor / 100;
 		mATurnSpd1 = <315.000000> * (100 + mASpdFactor) / 200;
-		mATurnSpd2 = <210.000000> * (100 + mASpdFactor) / 200;
-		mATurnSpd3 = <140.000000> * (100 + mASpdFactor) / 200;
+		mATurnSpd2 = <200.000000> * (100 + mASpdFactor) / 200;
+		mATurnSpd3 = <50.000000> * (100 + mASpdFactor) / 200;
 
-		legAngle1 = <40.000000>;
+		legAngle1 = <45.000000>;
 		legAngle2 = <30.000000>;
-		legAngle3 = <5.000000>;
+		legAngle3 = <15.000000>;
 		if ( mASpdFactor < 100 )
 		{
 			legAngle1 = legAngle1 * (100 + mASpdFactor) / 200;
@@ -88,13 +87,13 @@ walk()
 		turn rfoot to x-axis <0.000000>-legAngle2 speed mATurnSpd1;
 
 		move hips to y-axis [-0.500000] speed mAMoveSpd1;
-		move hips to z-axis [3.000000] speed mAMoveSpd1;
+		move hips to z-axis [2.000000] speed mAMoveSpd1;
 		turn hips to x-axis <4.000000> speed slowTurnSpd2;
 
 		if(!bAiming)
 		{
 			// turn torso left, right arm forward
-			turn torso to y-axis <3.000000> speed slowTurnSpd2;
+			turn torso to y-axis <5.000000> speed slowTurnSpd2;
 		}
 		
 		wait-for-turn lthigh around x-axis;
@@ -122,7 +121,7 @@ walk()
 
 		sleep mADelay1;
 		move hips to y-axis [0.000000] speed mAMoveSpd1;
-		move hips to z-axis [-3.000000] speed mAMoveSpd1;
+		move hips to z-axis [0.000000] speed mAMoveSpd1;
 		turn hips to x-axis <0.000000> speed slowTurnSpd2;
 		
 		wait-for-turn lthigh around x-axis;
@@ -144,13 +143,13 @@ walk()
 		turn rfoot to x-axis legAngle3 speed mATurnSpd1;
 		
 		move hips to y-axis [-0.500000] speed mAMoveSpd1;
-		move hips to z-axis [3.000000] speed mAMoveSpd1;
+		move hips to z-axis [2.000000] speed mAMoveSpd1;
 		turn hips to x-axis <4.000000> speed slowTurnSpd2;
 		
 		if(!bAiming)
 		{
 			// turn torso right, left arm forward
-			turn torso to y-axis <-3.000000> speed slowTurnSpd2;
+			turn torso to y-axis <-10.000000> speed slowTurnSpd2;
 		}
 
 		sleep mADelay1;
@@ -180,7 +179,7 @@ walk()
 		
 		sleep mADelay1;
 		move hips to y-axis [0.000000] speed mAMoveSpd1;
-		move hips to z-axis [-3.000000] speed mAMoveSpd1;
+		move hips to z-axis [0.000000] speed mAMoveSpd1;
 		turn hips to x-axis <0.000000> speed slowTurnSpd2;
 		
 		wait-for-turn lthigh around x-axis;
@@ -241,7 +240,6 @@ MotionControl(moving, aiming, justmoved)
 			if( justMoved )
 			{
 				move hips to y-axis [0.000000] speed [25.000000];
-				move hips to z-axis [0.000000] speed [25.000000];
 				turn hips to x-axis <0.000000> speed <20.000000>;
 				turn rthigh to x-axis <0.000000> speed <200.000000>;
 				turn rleg to x-axis <0.000000> speed <200.000000>;
@@ -278,7 +276,7 @@ StopMoving()
 
 Create()
 {
-	gun_1 = [0];
+	gun_1 = 0;
 	bMoving = FALSE;
 	bAiming = FALSE;
 	call-script stopAimHelper1(<1000>,<1000>);
@@ -288,11 +286,6 @@ Create()
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = torso;
-	return (0);
-}
 
 AimFromPrimary(piecenum)
 {
@@ -301,139 +294,108 @@ AimFromPrimary(piecenum)
 }
 
 
-AimFromSecondary(piecenum)
-{
-	piecenum = torso;
-	return (0);
-}
-
 QueryPrimary(piecenum)
 {
-	if( gun_1 == [0] )
+	if( gun_1 == 0 )
 	{
-		piecenum = flare1;
+		piecenum = lfirept1;
 		return 0;
 	}
-	if( gun_1 == [1] )
+	if( gun_1 == 1 )
 	{
-		piecenum = flare2;
+		piecenum = rfirept1;
 		return 0;
 	}
-	return (0);
+	if( gun_1 == 2 )
+	{
+		piecenum = lfirept2;
+		return 0;
+	}
+	if( gun_1 == 3 )
+	{
+		piecenum = rfirept2;
+		return 0;
+	}	
 }
 
-
-QuerySecondary(piecenum)
-{
-	piecenum = firept;
-	return (0);
-}
 RestoreAfterDelay()
 {
-	set-signal-mask SIG_AIM;
-	set-signal-mask SIG_AIM2;
-	sleep 5000;
-	call-script stopAimHelper1(<100>,<100>);
-	turn torso to y-axis <0.000000> speed <100.000000>;
-	turn launcher to x-axis <0.000000> speed <100.000000>;
-	turn sleeve to x-axis <0.000000> speed <100.000000>;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<200>,<200>);
+	turn torso to y-axis <0.000000> speed <200.000000>;
+	turn launcher to x-axis <0.000000> speed <200.000000>;
 	bAiming = FALSE;
 	return (0);
 }
 
 AimPrimary(heading, pitch)
 {
-	call-script updateAimHelper1(heading,pitch,<300>,<300>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	call-script updateAimHelper1(heading,pitch,<320>,<320>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
-	turn torso to y-axis heading speed <300.000000>;
-	turn sleeve to x-axis <0.000000> - pitch speed <300.000000>;
+	turn torso to y-axis heading speed <320.000000>;
+	turn launcher to x-axis <0.000000> - pitch speed <320.000000>;
 	if (!aimReady1)
 	{
 		wait-for-turn torso around y-axis;
-		wait-for-turn sleeve around x-axis;
+		wait-for-turn launcher around x-axis;
 	}
 	start-script RestoreAfterDelay();
 	return (1);
 }
 
-
-
-AimSecondary(heading, pitch)
+Shot1()
 {
-	call-script updateAimHelper1(heading,pitch,<300>,<300>,HEADING_TOLERANCE,PITCH_TOLERANCE);
-	signal SIG_AIM2;
-	set-signal-mask SIG_AIM2;
-	bAiming = TRUE;
-	turn torso to y-axis heading speed <300.000000>;
-	//turn launcher to x-axis <0.000000> - pitch speed <290.000000>;
-	if (!aimReady1)
+	if( gun_1 == 0 )
 	{
-		wait-for-turn torso around y-axis;
+		emit-sfx 1024 + 1 from lfirept1;
+		gun_1 = 1;
+		return (0);
 	}
-	//wait-for-turn launcher around x-axis;
-	//start-script RestoreAfterDelay();
-	return (1);
-}
-
-
-Shot2()
-{
-	turn door1 to y-axis <-90.000000> now;
-	turn door2 to y-axis <90.000000> now;
-	emit-sfx 1024 + 1 from firept;
-	sleep 1500;
-	turn door1 to y-axis <0.000000> speed <130.000000>;
-	turn door2 to y-axis <0.000000> speed <130.000000>;
-	return (0);
-}
-
-FirePrimary()
-{
-	if( gun_1 == [0] )
+	if( gun_1 == 1 )
 	{
-		emit-sfx 1024 + 0 from flare1;
-		sleep 160;
-		gun_1 = [1];
-		return 0;
+		emit-sfx 1024 + 1 from rfirept1;
+		gun_1 = 2;
+		return (0);
 	}
-	if( gun_1 == [1] )
+	if( gun_1 == 2 )
 	{
-		emit-sfx 1024 + 0 from flare2;
-		sleep 160;
-		gun_1 = [0];
-		return 0;
+		emit-sfx 1024 + 1 from lfirept2;
+		gun_1 = 3;
+		return (0);
+	}
+	if( gun_1 == 3 )
+	{
+		emit-sfx 1024 + 1 from rfirept2;
+		gun_1 = 0;
+		return (0);
 	}
 
-	return 0;
+
 }
 
-
-FireSecondary()
-{
-	return 0;
-}
 
 Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		explode t2 type SHATTER | BITMAP2;
-		explode s1 type SHATTER | BITMAP2;
-		explode s2 type SHATTER | BITMAP2;
-		explode pack type SHATTER | BITMAP2;
+		explode launcher type SHATTER;
+		explode lpack type SHATTER;
+		explode rpack type SHATTER;
 		return (1);
 	}
-	explode torso type SHATTER | BITMAP2;
-	explode t2 type SHATTER | BITMAP2;
-	explode s1 type SHATTER | BITMAP2;
-	explode s2 type SHATTER | BITMAP2;
-	explode pack type SHATTER | BITMAP2;
-	explode lthigh type SHATTER | BITMAP2;
-	explode lleg type SHATTER | BITMAP2;
-	explode rthigh type SHATTER | BITMAP2;
-	explode rleg type SHATTER | BITMAP2;
-	
+
+	explode launcher type SHATTER;
+	explode lfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode lleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode lthigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode hips type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode rfoot type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
+	explode rleg type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP5;
+	explode rthigh type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode torso type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
+	explode lpack type SHATTER;
+	explode rpack type SHATTER;
 	return (2);
 }

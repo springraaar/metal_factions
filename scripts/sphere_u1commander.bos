@@ -70,7 +70,7 @@ MotionSpeedControl(minSpeed, maxSpeed,currentSpeed)
 	maxSpeed = get MAX_SPEED;
 	currentSpeed = 0;
 	mASpdFactor = SPEEDUP_FACTOR;
-	minSpeed = SPEEDUP_FACTOR;
+	minSpeed = SPEEDUP_FACTOR * 100/140;
 	
 	while(TRUE)
 	{
@@ -450,14 +450,14 @@ AimPrimary(heading, pitch)
 		sleep 100;
 		return (0);
 	}
-	call-script updateAimHelper1(heading,pitch,<400>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	call-script updateAimHelper1(heading,pitch,<600>,<600>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 	
 	//aim1=TRUE;
-	turn turret1 to y-axis heading speed <400.027473>;
-	turn sleeve1 to x-axis <0.000000> - pitch speed <400.038462>;
+	turn turret1 to y-axis heading speed <600.027473>;
+	turn sleeve1 to x-axis <0.000000> - pitch speed <600.038462>;
 	if ( !aimReady1 )
 	{
 		wait-for-turn turret1 around y-axis;
@@ -494,14 +494,14 @@ AimSecondary(heading, pitch)
 		sleep 100;
 		return (0);
 	}
-	call-script updateAimHelper2(heading,pitch,<400>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	call-script updateAimHelper2(heading,pitch,<600>,<600>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 	
 	//aim1=TRUE;
-	turn turret2 to y-axis heading speed <400.027473>;
-	turn sleeve2 to x-axis <0.000000> - pitch speed <400.038462>;
+	turn turret2 to y-axis heading speed <600.027473>;
+	turn sleeve2 to x-axis <0.000000> - pitch speed <600.038462>;
 	if (!aimReady2)
 	{
 		wait-for-turn turret2 around y-axis;
@@ -616,14 +616,14 @@ AimWeapon4(heading, pitch)
 		sleep 100;
 		return (0);
 	}
-	call-script updateAimHelper3(heading,pitch,<400>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	call-script updateAimHelper3(heading,pitch,<600>,<600>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM3;
 	set-signal-mask SIG_AIM3;
 	bAiming = TRUE;
 	
 	//aim1=TRUE;
-	turn turret3 to y-axis heading speed <400.027473>;
-	turn sleeve3 to x-axis <0.000000> - pitch speed <400.038462>;
+	turn turret3 to y-axis heading speed <600.027473>;
+	turn sleeve3 to x-axis <0.000000> - pitch speed <600.038462>;
 	if ( !aimReady3 )
 	{
 		wait-for-turn turret3 around y-axis;

@@ -10,13 +10,33 @@
 
 piece  GP, base, legs,lfrontleg, lmidleg,rmidleg, rfrontleg,lbackleg,rbackleg, rmid2, rback2, lback2,rfront2,lmid2,lfront2,body,sphere,sphere2, turret, sleeve, barrel, flash, front, turbase;
 
-static-var  bMoving,bAiming, nanopiece, justmoved;
+static-var  bMoving,bAiming, nanopiece, justmoved, mASpdFactor;
 
 #include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				2
 
+MotionSpeedControl(minSpeed, maxSpeed,currentSpeed)
+{
+	maxSpeed = get MAX_SPEED;
+	currentSpeed = 0;
+	mASpdFactor = SPEEDUP_FACTOR;
+	minSpeed = 3 * SPEEDUP_FACTOR / 4;
+	
+	while(TRUE)
+	{
+		currentSpeed = get CURRENT_SPEED;
+		mASpdFactor = SPEEDUP_FACTOR * currentSpeed / maxSpeed;
+
+		if ( mASpdFactor < minSpeed )
+		{
+			mASpdFactor = minSpeed;
+		}
+
+		sleep 60;
+	}
+}
 
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
@@ -50,99 +70,88 @@ walk()
 {
 	if( bMoving )
 	{
-		turn rmid2 to z-axis <0.000000> speed <80.000000> * SPEEDUP_FACTOR / 100;
-		turn lmid2 to z-axis <0.000000> speed <80.000000> * SPEEDUP_FACTOR / 100;
+		turn rmid2 to z-axis <0.000000> speed <80.000000> * mASpdFactor / 100;
+		turn lmid2 to z-axis <0.000000> speed <80.000000> * mASpdFactor / 100;
 		
-		turn base to x-axis <2.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
-		turn base to z-axis <-1.000000> speed <15.000000> * SPEEDUP_FACTOR / 100;
+		turn base to x-axis <2.000000> speed <20.000000> * mASpdFactor / 100;
+		turn base to z-axis <0.000000> speed <15.000000> * mASpdFactor / 100;
 
-		turn lfrontleg to y-axis <20.000000> speed <150.967033> * SPEEDUP_FACTOR / 100;
-		turn lfrontleg to z-axis <5.016484> speed <750.104396> * SPEEDUP_FACTOR / 100;
+		turn lfrontleg to y-axis <20.000000> speed <150.967033> * mASpdFactor / 100;
+		turn lfrontleg to z-axis <5.016484> speed <750.104396> * mASpdFactor / 100;
 
-		turn lmidleg to y-axis <-20.000000> speed <300.038462> * SPEEDUP_FACTOR / 100;
-		turn lmidleg to z-axis <-15.016484> speed <90.104396> * SPEEDUP_FACTOR / 100;
+		turn lmidleg to y-axis <-20.000000> speed <300.038462> * mASpdFactor / 100;
+		turn lmidleg to z-axis <-15.016484> speed <90.104396> * mASpdFactor / 100;
 
-		turn lbackleg to y-axis <55.060440> speed <120.038462> * SPEEDUP_FACTOR / 100;
-		turn lbackleg to z-axis <5.016484> speed <750.104396> * SPEEDUP_FACTOR / 100;
+		turn lbackleg to y-axis <55.060440> speed <120.038462> * mASpdFactor / 100;
+		turn lbackleg to z-axis <5.016484> speed <750.104396> * mASpdFactor / 100;
 		
-		turn rfrontleg to y-axis <50.412088> speed <450.060440> * SPEEDUP_FACTOR / 100;
-		turn rfrontleg to z-axis <15.016484> speed <90.104396> * SPEEDUP_FACTOR / 100;
+		turn rfrontleg to y-axis <50.412088> speed <450.060440> * mASpdFactor / 100;
+		turn rfrontleg to z-axis <15.016484> speed <90.104396> * mASpdFactor / 100;
 		
-		turn rmidleg to y-axis <-20.093407> speed <150.368132> * SPEEDUP_FACTOR / 100;
-		turn rmidleg to z-axis <-5.016484> speed <750.104396> * SPEEDUP_FACTOR / 100;
+		turn rmidleg to y-axis <-20.093407> speed <150.368132> * mASpdFactor / 100;
+		turn rmidleg to z-axis <-5.016484> speed <750.104396> * mASpdFactor / 100;
 		
-		turn rbackleg to y-axis <15.137363> speed <450.681319> * SPEEDUP_FACTOR / 100;
-		turn rbackleg to z-axis <15.016484> speed <90.104396> * SPEEDUP_FACTOR / 100;
+		turn rbackleg to y-axis <15.137363> speed <450.681319> * mASpdFactor / 100;
+		turn rbackleg to z-axis <15.016484> speed <90.104396> * mASpdFactor / 100;
 		
 		
-		sleep 134 * 100 / SPEEDUP_FACTOR;
+		sleep 134 * 100 / mASpdFactor;
 	}
 
 	// only vertical
 	if( bMoving )
 	{
-		//turn lfrontleg to z-axis <-15.016484> speed <60.104396> * SPEEDUP_FACTOR / 100;
+		turn base to x-axis <-2.000000> speed <20.000000> * mASpdFactor / 100;
+		turn base to z-axis <1.000000> speed <15.000000> * mASpdFactor / 100;
 
-		turn lmidleg to z-axis <5.016484> speed <225.104396> * SPEEDUP_FACTOR / 100;
-
-		//turn lbackleg to z-axis <-15.016484> speed <60.104396> * SPEEDUP_FACTOR / 100;
-
-		turn rfrontleg to z-axis <-5.016484> speed <255.104396> * SPEEDUP_FACTOR / 100;
+		turn lmidleg to z-axis <5.016484> speed <225.104396> * mASpdFactor / 100;
+		turn rfrontleg to z-axis <-5.016484> speed <255.104396> * mASpdFactor / 100;
+		turn rbackleg to z-axis <-5.016484> speed <225.104396> * mASpdFactor / 100;
 		
-		//turn rmidleg to z-axis <15.016484> speed <60.104396> * SPEEDUP_FACTOR / 100;
-		
-		turn rbackleg to z-axis <-5.016484> speed <225.104396> * SPEEDUP_FACTOR / 100;
-		
-		sleep 134 * 100 / SPEEDUP_FACTOR;
+		sleep 134 * 100 / mASpdFactor;
 	}
 	
 	
 	if( bMoving )
 	{
-		turn base to x-axis <-2.000000> speed <20.000000> * SPEEDUP_FACTOR / 100;
-		turn base to z-axis <1.000000> speed <15.000000> * SPEEDUP_FACTOR / 100;
+		turn base to x-axis <2.000000> speed <20.000000> * mASpdFactor / 100;
+		turn base to z-axis <0.000000> speed <15.000000> * mASpdFactor / 100;
 
-		turn lfrontleg to y-axis <-50.000000> speed <450.967033> * SPEEDUP_FACTOR / 100;
-		turn lfrontleg to z-axis <-15.016484> speed <90.104396> * SPEEDUP_FACTOR / 100;
+		turn lfrontleg to y-axis <-50.000000> speed <450.967033> * mASpdFactor / 100;
+		turn lfrontleg to z-axis <-15.016484> speed <90.104396> * mASpdFactor / 100;
 
-		turn lmidleg to y-axis <20.000000> speed <150.038462> * SPEEDUP_FACTOR / 100;
-		turn lmidleg to z-axis <5.016484> speed <750.104396> * SPEEDUP_FACTOR / 100;
+		turn lmidleg to y-axis <20.000000> speed <150.038462> * mASpdFactor / 100;
+		turn lmidleg to z-axis <5.016484> speed <750.104396> * mASpdFactor / 100;
 
-		turn lbackleg to y-axis <-15.060440> speed <450.038462> * SPEEDUP_FACTOR / 100;
-		turn lbackleg to z-axis <-15.016484> speed <90.104396> * SPEEDUP_FACTOR / 100;
+		turn lbackleg to y-axis <-15.060440> speed <450.038462> * mASpdFactor / 100;
+		turn lbackleg to z-axis <-15.016484> speed <90.104396> * mASpdFactor / 100;
 
-		turn rfrontleg to y-axis <-20.412088> speed <150.060440> * SPEEDUP_FACTOR / 100;
-		turn rfrontleg to z-axis <-5.016484> speed <750.104396> * SPEEDUP_FACTOR / 100;
+		turn rfrontleg to y-axis <-20.412088> speed <150.060440> * mASpdFactor / 100;
+		turn rfrontleg to z-axis <-5.016484> speed <750.104396> * mASpdFactor / 100;
 		
-		turn rmidleg to y-axis <20.093407> speed <450.368132> * SPEEDUP_FACTOR / 100;
-		turn rmidleg to z-axis <15.016484> speed <90.104396> * SPEEDUP_FACTOR / 100;
+		turn rmidleg to y-axis <20.093407> speed <450.368132> * mASpdFactor / 100;
+		turn rmidleg to z-axis <15.016484> speed <90.104396> * mASpdFactor / 100;
 		
-		turn rbackleg to y-axis <-55.137363> speed <180.681319> * SPEEDUP_FACTOR / 100;
-		turn rbackleg to z-axis <-5.016484> speed <750.104396> * SPEEDUP_FACTOR / 100;
+		turn rbackleg to y-axis <-55.137363> speed <180.681319> * mASpdFactor / 100;
+		turn rbackleg to z-axis <-5.016484> speed <750.104396> * mASpdFactor / 100;
 		
-		sleep 134 * 100 / SPEEDUP_FACTOR;
+		sleep 134 * 100 / mASpdFactor;
 	}
 	
 	// only vertical
 	if( bMoving )
 	{
-		turn rmid2 to z-axis <0.000000> speed <80.000000> * SPEEDUP_FACTOR / 100;
-		turn lmid2 to z-axis <0.000000> speed <80.000000> * SPEEDUP_FACTOR / 100;
+		turn base to x-axis <2.000000> speed <20.000000> * mASpdFactor / 100;
+		turn base to z-axis <-1.000000> speed <15.000000> * mASpdFactor / 100;
 
-		turn lfrontleg to z-axis <5.016484> speed <150.104396> * SPEEDUP_FACTOR / 100;
+		turn rmid2 to z-axis <0.000000> speed <80.000000> * mASpdFactor / 100;
+		turn lmid2 to z-axis <0.000000> speed <80.000000> * mASpdFactor / 100;
 
-		//turn lmidleg to z-axis <-15.016484> speed <60.104396> * SPEEDUP_FACTOR / 100;
-
-		turn lbackleg to z-axis <5.016484> speed <150.104396> * SPEEDUP_FACTOR / 100;
+		turn lfrontleg to z-axis <5.016484> speed <150.104396> * mASpdFactor / 100;
+		turn lbackleg to z-axis <5.016484> speed <150.104396> * mASpdFactor / 100;
+		turn rmidleg to z-axis <-5.016484> speed <150.104396> * mASpdFactor / 100;
 		
-		//turn rfrontleg to z-axis <15.016484> speed <60.104396> * SPEEDUP_FACTOR / 100;
-		
-		turn rmidleg to z-axis <-5.016484> speed <150.104396> * SPEEDUP_FACTOR / 100;
-		
-		//turn rbackleg to z-axis <15.016484> speed <60.104396> * SPEEDUP_FACTOR / 100;
-		
-		
-		sleep 134 * 100 / SPEEDUP_FACTOR;
+		sleep 134 * 100 / mASpdFactor;
 	}
 	
 }
@@ -212,6 +221,7 @@ Create()
 	bMoving = FALSE;
 	justmoved = FALSE;
 	call-script stopAimHelper1(<1000>,<1000>);
+	start-script MotionSpeedControl();
 	start-script MotionControl();
 	start-script SmokeUnit();
 	

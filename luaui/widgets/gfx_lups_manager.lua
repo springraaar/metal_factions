@@ -201,6 +201,11 @@ local function loadShieldFXOpts(fx,unitID,unitDefID)
 		    end
 		end
     end
+    
+    if (fx.options.heightFactor) then
+		local pos = fx.options.pos or {0, 0, 0}
+		fx.options.pos = { pos[1], spGetUnitHeight(unitID)*fx.options.heightFactor, pos[3] }
+	end
 end
 
 local function deRegisterUnitAndClearFX(unitID)
@@ -224,7 +229,7 @@ local function UnitFinished(_,unitID,unitDefID)
 			local fx = effects[i]
 			if (not fx.options) then
 				Spring.Log(widget:GetInfo().name, LOG.ERROR, "LUPS DEBUG GRRR", UnitDefs[unitDefID].name, fx and fx.class)
-			return
+				return
 			end
 
 			if (fx.class=="AirJet") then
@@ -240,13 +245,9 @@ local function UnitFinished(_,unitID,unitDefID)
 			if (fx.class=="GroundFlash") then
 				fx.options.pos = { spGetUnitPosition(unitID) }
 			end
-			if (fx.options.heightFactor) then
-				local pos = fx.options.pos or {0, 0, 0}
-				fx.options.pos = { pos[1], spGetUnitHeight(unitID)*fx.options.heightFactor, pos[3] }
-			end
 
 			fx.options.unit = unitID
-      		--Spring.Echo("adding lups fx "..fx.class.." to "..unitID)
+      		--Spring.Echo("UnitFinished : adding lups fx "..fx.class.." to "..unitID.." : "..tableToString(fx))
 			AddFxs( unitID,LupsAddFX(fx.class,fx.options) )
 			fx.options.unit = nil
 		end
@@ -285,6 +286,7 @@ local function UnitEnteredLos(_,unitID)
 				fx.options.pos = { spGetUnitPosition(unitID) }
 			end
 			fx.options.unit = unitID
+			--Spring.Echo("UnitEnteredLos : adding lups fx "..fx.class.." to "..unitID.." : "..tableToString(fx))
 			AddFxs( unitID,LupsAddFX(fx.class,fx.options) )
 			fx.options.unit = nil
 		end

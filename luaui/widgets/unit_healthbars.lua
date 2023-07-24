@@ -56,7 +56,7 @@ local drawUnitsOnFire    = true
 local drawJumpJet        = Spring.GetGameRulesParam("jumpJets")
 local drawMorphOverlay   = true
 local drawDamageOverlay  = true
-local drawDashOverlay    = true
+local drawDashOverlay    = false
 
 local stockpileH = 24
 local stockpileW = 12
@@ -87,6 +87,7 @@ local barColors = {
   jump    = { 0.0,0.50,0.00,barAlpha },
   shield  = { 0.20,0.60,0.60,barAlpha },
   dash    = { 0.4,0.4,0.53,barAlpha },
+  dashBlink    = { 0.7,0.7,0.96,barAlpha },
 
   resurrect = { 0.40,0.20,0.40,featureBarAlpha },
   reclaim   = { 0.5,0.5,0.6,featureBarAlpha },
@@ -690,8 +691,11 @@ do
       --// DASH
       if (ci.canDash) then
         local dashReload = GetUnitRulesParam(unitID,"dashReload")
-        if (dashReload and (dashReload>0) and (dashReload<1)) then
-          AddBar("DASH",dashReload,"dash",(fullText and floor(dashReload*100)..'%') or '')
+        if (dashReload and (dashReload>=0) and (dashReload<1)) then
+          local dashFrames = GetUnitRulesParam(unitID,"dashFrames")
+          local isDashingEffect = (dashReload == 0 and (spGetGameFrame())%2==0)
+          local remainingEffect = dashFrames / 120
+          AddBar(dashReload == 0 and "<< DASHING >>" or "DASH",isDashingEffect and remainingEffect or dashReload,isDashingEffect and "dashBlink" or "dash",(fullText and floor(dashReload*100)..'%') or '')
         end
       end
 

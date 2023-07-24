@@ -68,7 +68,7 @@ MotionSpeedControl(minSpeed, maxSpeed,currentSpeed)
 	maxSpeed = get MAX_SPEED;
 	currentSpeed = 0;
 	mASpdFactor = SPEEDUP_FACTOR;
-	minSpeed = SPEEDUP_FACTOR;
+	minSpeed = SPEEDUP_FACTOR * 100/140;
 	
 	while(TRUE)
 	{

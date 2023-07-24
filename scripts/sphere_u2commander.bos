@@ -67,7 +67,7 @@ MotionSpeedControl(minSpeed, maxSpeed,currentSpeed)
 	maxSpeed = get MAX_SPEED;
 	currentSpeed = 0;
 	mASpdFactor = SPEEDUP_FACTOR;
-	minSpeed = SPEEDUP_FACTOR;
+	minSpeed = SPEEDUP_FACTOR * 100/140;
 	
 	while(TRUE)
 	{
@@ -435,14 +435,14 @@ AimPrimary(heading, pitch)
 		sleep 100;
 		return (0);
 	}
-	call-script updateAimHelper1(heading,pitch,<400>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	call-script updateAimHelper1(heading,pitch,<600>,<600>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 	
 	//aim1=TRUE;
-	turn turret1 to y-axis heading speed <400.027473>;
-	turn sleeve1 to x-axis <0.000000> - pitch speed <400.038462>;
+	turn turret1 to y-axis heading speed <600.027473>;
+	turn sleeve1 to x-axis <0.000000> - pitch speed <600.038462>;
 	if ( !aimReady1 )
 	{
 		wait-for-turn turret1 around y-axis;
@@ -576,43 +576,6 @@ AimTertiary(heading, pitch)
 	return (1);
 }
 
-
-AimFromWeapon4(piecenum)
-{
-	piecenum = turret3;
-}
-
-QueryWeapon4(piecenum)
-{
-	piecenum = flare3;
-}
-
-FireWeapon4()
-{
-	emit-sfx 1024 + 0 from sphere;
-	return 1;
-}
-
-
-AimWeapon4(heading, pitch)
-{
-	if( bUnderwater || bBuilding)
-	{
-		sleep 100;
-		return (0);
-	}
-	signal SIG_AIM2;
-	set-signal-mask SIG_AIM2;
-	bAiming = TRUE;
-	
-	//aim1=TRUE;
-	turn turret3 to y-axis heading speed <400.027473>;
-	turn sleeve3 to x-axis <0.000000> - pitch speed <400.038462>;
-	wait-for-turn turret3 around y-axis;
-	wait-for-turn sleeve3 around x-axis;
-	start-script RestoreAfterDelayWeapon();
-	return (1);
-}
 
 
 Killed(severity, corpsetype)

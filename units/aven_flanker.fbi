@@ -4,9 +4,9 @@
 	//  Unit Description
 	//********************
 	side=Aven;
-	name=Raptor;
-	description=Heavy Fast Attack Robot;
-	iconType=mobileraider;
+	name=Flanker;
+	description=Amphibious Fast Assault Tank;
+	iconType=amphibassault;
 
 	//************************************************************
 	//  Categories
@@ -16,16 +16,16 @@
 	//************************************************************
 	//  External Specs
 	//******************
-	unitName=aven_raptor;
-	objectName=aven_raptor.3do;
-	corpse=aven_raptor_dead;
-	buildPic=aven_raptor.png;
-	soundCategory=MAVERICK;
+	unitName=aven_flanker;
+	objectName=aven_flanker.3do;
+	corpse=aven_flanker_dead;
+	buildPic=aven_flanker.png;
+	soundCategory=aven_TANK;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=4200;
+	maxDamage=3200;
 	footprintx=3;
 	footprintz=3;
 
@@ -55,18 +55,17 @@
 	canMove=1;
 	canPatrol=1;
 	canStop=1;
-	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementClass=KBOTHT3;
-	turnRate=1100;
-	acceleration=0.7;
-	brakeRate=0.1;
-	maxVelocity=2.6;
-	maxSlope=20;
-	maxWaterDepth=12;
+	movementClass=TANKBH4;
+	turnRate=450;
+	acceleration=0.5625;
+	brakeRate=0.0962939;
+	maxVelocity=2.20;
+	maxSlope=12;
+	maxWaterDepth=100;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -77,12 +76,9 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=aven_raptor_laser;
-	weapon2=aven_raptor_rocket;
-	slaveto2=1;
+	weapon1=aven_flanker_cannon;
 	noChaseCategory=VTOL;
 	badTargetCategory1=VTOL;
-	onlytargetcategory2=NOTAIR;
 	explodeAs=BIG_UNITEX;
 	selfDestructAs=BIG_UNIT;
 
@@ -94,23 +90,28 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
+	leavetracks=1;
+	trackoffset=8;
+	trackstrength=8;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=43;
 	collisionVolumeType = box;
-	collisionVolumeScales =38 55 40;
-	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeScales =35 25 45;
+	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
-
-	[customParams] 
+	[CustomParams]
 	{
-		builtBy=aven_adv_kbot_lab;
+		builtBy=aven_adv_vehicle_plant;
+		optional=1;
 	}
 	[SFXTypes]
 	{
-		explosionGenerator0=custom:greenflare;
-		explosionGenerator1=custom:rocketflaremed;
+		explosionGenerator0=custom:yellowflaremed;
 	}
-	buildCostEnergy=13629;//#AUTO#
-	buildCostMetal=2725;//#AUTO#
-	buildTime=32483;//#AUTO#
-	mass=1958;//#AUTO#
+	buildCostEnergy=4702;//#AUTO#
+	buildCostMetal=940;//#AUTO#
+	buildTime=11206;//#AUTO#
+	mass=1781;//#AUTO#
 }

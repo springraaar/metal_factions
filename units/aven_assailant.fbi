@@ -4,28 +4,28 @@
 	//  Unit Description
 	//********************
 	side=Aven;
-	name=Raptor;
-	description=Heavy Fast Attack Robot;
-	iconType=mobileraider;
+	name=Assailant;
+	description=Fast Assault/Raider Robot;
+	iconType=mobileassault;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB;
+	category=AVEN LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitName=aven_raptor;
-	objectName=aven_raptor.3do;
-	corpse=aven_raptor_dead;
-	buildPic=aven_raptor.png;
-	soundCategory=MAVERICK;
+	unitName=aven_assailant;
+	objectName=aven_assailant.3do;
+	corpse=aven_assailant_dead;
+	buildPic=aven_assailant.png;
+	soundCategory=aven_KBOT;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=4200;
+	maxDamage=2350;
 	footprintx=3;
 	footprintz=3;
 
@@ -60,12 +60,12 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementClass=KBOTHT3;
-	turnRate=1100;
-	acceleration=0.7;
-	brakeRate=0.1;
-	maxVelocity=2.6;
-	maxSlope=20;
+	movementClass=KBOTHT2;
+	turnRate=1205;
+	acceleration=1.0;
+	brakeRate=0.3;
+	maxVelocity=2.7;
+	maxSlope=14;
 	maxWaterDepth=12;
 
 	//************************************************************
@@ -77,12 +77,9 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=aven_raptor_laser;
-	weapon2=aven_raptor_rocket;
-	slaveto2=1;
+	weapon1=aven_assailant_rocket;
 	noChaseCategory=VTOL;
-	badTargetCategory1=VTOL;
-	onlytargetcategory2=NOTAIR;
+	onlytargetcategory1=NOTAIR;
 	explodeAs=BIG_UNITEX;
 	selfDestructAs=BIG_UNIT;
 
@@ -95,22 +92,21 @@
 	//  Miscellaneous
 	//*****************
 	collisionVolumeType = box;
-	collisionVolumeScales =38 55 40;
+	collisionVolumeScales =25 42 25;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-
 
 	[customParams] 
 	{
 		builtBy=aven_adv_kbot_lab;
+		optional=1;
 	}
 	[SFXTypes]
 	{
-		explosionGenerator0=custom:greenflare;
-		explosionGenerator1=custom:rocketflaremed;
+		explosionGenerator0=custom:rocketflaresml;
 	}
-	buildCostEnergy=13629;//#AUTO#
-	buildCostMetal=2725;//#AUTO#
-	buildTime=32483;//#AUTO#
-	mass=1958;//#AUTO#
+	buildCostEnergy=4326;//#AUTO#
+	buildCostMetal=865;//#AUTO#
+	buildTime=10312;//#AUTO#
+	mass=875;//#AUTO#
 }

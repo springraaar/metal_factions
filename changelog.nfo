@@ -1,3 +1,41 @@
+2023/07/24 ------------------ NOTES v2.23 ----------------------
+
+
+--- New units
+
+OPTIONAL
+- AVEN "Flanker" : L2 Amphibious Fast Assault Tank
+- AVEN "Assailant" : L2 Fast Assault/Raider Robot
+- CLAW "Triskelion" : L2 Amphibious Armored Assault Robot
+
+
+--- Balance / Mechanics
+
+- Fixed issue that prevented AVEN "Stormtrooper" from being buildable by the light units factory
+
+- AVEN "Raptor" is slightly slower but got HP and dmg/s significantly increased and cost adjusted
+(model is also slightly bigger)
+
+- Increased weapon aim rate for continuous beams on SPHERE commanders and also slightly for a few heavy tanks
+- Increased SPHERE "Rain-Maker" range from 600 to 710 and adjusted cost 
+
+--- UI / Visual / Sounds
+
+- Removed blinking effect from dashing units
+- Dash bar is now drawn as progressively shrinking as the effect wears out
+
+- Fixed an issue that could cause personal shields to be drawn off-center
+
+- Slightly improved walk animations for some units (mostly sphere all-terrain)
+
+
+--- AI
+
+- AI players get optional unit set loaded whenever they change strategy
+(they're no longer locked to a specific set when the game starts, unlike human players)
+
+
+
 2023/07/18 ------------------ NOTES v2.22 ----------------------
 
 --- New units
