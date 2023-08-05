@@ -84,6 +84,7 @@ Create()
 {
 	statechg_DesiredState = 0;
 	statechg_StateChanging = 0;
+	turn firept to x-axis <90.000000> now;
 	call-script InitState();
 	start-script SmokeUnit();
 }

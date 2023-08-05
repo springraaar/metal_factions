@@ -24,7 +24,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=700;
+	maxDamage=1450;
 	footprintx=4;
 	footprintz=4;
 
@@ -59,10 +59,10 @@
 	//************************************************************
 	//  Movement
 	//************
-	turnRate=356;
+	turnRate=410;
 	acceleration=0.25;
 	brakeRate=0.15;
-	maxVelocity=7.75;
+	maxVelocity=6.5;
 	maxSlope=10;
 	
 	cruiseAlt=210;
@@ -124,8 +124,8 @@
 	[SFXTypes]
 	{
 	}
-	buildCostEnergy=2641;//#AUTO#
-	buildCostMetal=528;//#AUTO#
-	buildTime=6294;//#AUTO#
-	mass=175;//#AUTO#
+	buildCostEnergy=5406;//#AUTO#
+	buildCostMetal=1081;//#AUTO#
+	buildTime=12885;//#AUTO#
+	mass=361;//#AUTO#
 }

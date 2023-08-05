@@ -284,6 +284,7 @@ function gadget:GameFrame(n)
 			local uName = UnitDefs[spGetUnitDefID(unitId)].name
 			local set = {} 
 			
+			local hasAny = false
 			hasLight = spGetUnitRulesParam(unitId, "upgrade_light_drones")
 			if hasLight then
 				hasLight = tonumber(hasLight)
@@ -306,30 +307,38 @@ function gadget:GameFrame(n)
 			end
 						
 			if hasLight and hasLight > 0 then
+				hasAny = true
 				set[droneNamesForUnitDefName[uName]["light_drones"]] = hasLight * 3
 			end
 			if hasMedium and hasMedium > 0 then
+				hasAny = true
 				set[droneNamesForUnitDefName[uName]["medium_drone"]] = hasMedium * 1
 			end
 			if hasBuilder and hasBuilder > 0 then
+				hasAny = true
 				set[droneNamesForUnitDefName[uName]["builder_drone"]] = hasBuilder * 1
 			end
 			if hasStealth and hasStealth > 0 then
+				hasAny = true
 				set[droneNamesForUnitDefName[uName]["stealth_drone"]] = hasStealth * 1
 			end
 			if hasTransport and hasTransport > 0 then
+				hasAny = true
 				set[droneNamesForUnitDefName[uName]["transport_drone"]] = hasTransport * 1
 			end			
 
-			droneOwnersLimits[unitId] = set
-			if droneOwnersQueues[unitId] == nil then
-				droneOwnersQueues[unitId] = {}
-			end
-			if droneOwnersDrones[unitId] == nil then
-				droneOwnersDrones[unitId] = {}
-			end
-			if droneOwnersLastBuildStepFrameNumber[unitId] == nil then
-				droneOwnersLastBuildStepFrameNumber[unitId] = 0
+			-- update the tables only if it has any drones or has had in the past
+			if hasAny or droneOwnersLimits[unitId] then
+				droneOwnersLimits[unitId] = set
+				if droneOwnersQueues[unitId] == nil then
+					droneOwnersQueues[unitId] = {}
+				end
+				if droneOwnersDrones[unitId] == nil then
+					droneOwnersDrones[unitId] = {}
+				end
+				if droneOwnersLastBuildStepFrameNumber[unitId] == nil then
+					droneOwnersLastBuildStepFrameNumber[unitId] = 0
+				end
 			end
 		end
 

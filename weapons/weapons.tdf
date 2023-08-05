@@ -1971,7 +1971,7 @@
 		armor_light=400.00;//#AUTO#
 	}
 }
-[aven_thunder_bomb]
+[aven_thunder_bomb_old]
 {
 	name=Anti-Armor Bomb;
 	weaponType=MissileLauncher;
@@ -2189,7 +2189,7 @@
 	reloadTime=60;
 	flightTime=2.75;
 	fixedLauncher=0;
-	cylinderTargeting=1;
+	cylinderTargeting=2;
 	weaponVelocity=460;
 	startVelocity=200;
 	weaponAcceleration=60;
@@ -8058,7 +8058,7 @@
 		armor_light=800.00;//#AUTO#
 	}
 }
-[gear_shadow_bomb]
+[gear_shadow_bomb_old]
 {
 	name=Anti-Armor Bomb;
 	weaponType=MissileLauncher;
@@ -8095,6 +8095,46 @@
 		armor_heavy=650.00;//#AUTO#
 		armor_medium=650.00;//#AUTO#
 		armor_light=650.00;//#AUTO#
+	}
+}
+[gear_shadow_bomb]
+{
+	name=Big Bombs;
+	weaponType=MissileLauncher;
+	model=weapon_bigbomb;
+	turret=1;
+	cylinderTargeting=2;
+	cegTag=BOMBTRAILBIG;
+	range=430;
+	explosionGenerator=custom:ROCKETBLASTWRAPPER;
+	reloadTime=11;
+	flightTime=2.75;
+	weaponVelocity=350;
+	startVelocity=150;
+	fixedLauncher=1;
+	weaponAcceleration=100;
+	turnRate=25000;
+	areaOfEffect=120;
+	soundStart=rocklit2;
+	soundHit=xplolrg2;
+	myGravity=0.6;
+	collideFriendly=0;
+	avoidFriendly=0;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		expDmgScaling=1;
+		targets=SURFACE;
+	}
+	[DAMAGE]
+	{
+		default=800;
+    		group_invincible=1;
+		armor_heavy=800.00;//#AUTO#
+		armor_medium=800.00;//#AUTO#
+		armor_light=800.00;//#AUTO#
 	}
 }
 [gear_rexapod_cannon]
@@ -13170,6 +13210,7 @@
 	name=Scope Scan;
 	weaponType=MissileLauncher;
 	trajectoryHeight=0.1;
+	cylinderTargeting=2;
 	turret=1;
 	flightTime=10.75;
 	turnRate=260000;
@@ -13997,7 +14038,7 @@
 	weaponType=MissileLauncher;
 	model=weapon_bigbomb;
 	turret=1;
-	cylinderTargeting=1;
+	cylinderTargeting=2;
 	cegTag=BOMBTRAILBIG;
 	range=480;
 	explosionGenerator=custom:ROCKETBLASTWRAPPER;
@@ -14008,7 +14049,47 @@
 	fixedLauncher=1;
 	weaponAcceleration=100;
 	turnRate=25000;
-	areaOfEffect=100;
+	areaOfEffect=120;
+	soundStart=rocklit2;
+	soundHit=xplolrg2;
+	myGravity=0.6;
+	collideFriendly=0;
+	avoidFriendly=0;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		expDmgScaling=1;
+		targets=SURFACE;
+	}
+	[DAMAGE]
+	{
+		default=800;
+    		group_invincible=1;
+		armor_heavy=800.00;//#AUTO#
+		armor_medium=800.00;//#AUTO#
+		armor_light=800.00;//#AUTO#
+	}
+}
+[aven_thunder_bomb]
+{
+	name=Big Bombs;
+	weaponType=MissileLauncher;
+	model=weapon_bigbomb;
+	turret=1;
+	cylinderTargeting=2;
+	cegTag=BOMBTRAILBIG;
+	range=430;
+	explosionGenerator=custom:ROCKETBLASTWRAPPER;
+	reloadTime=11.5;
+	flightTime=2.75;
+	weaponVelocity=350;
+	startVelocity=150;
+	fixedLauncher=1;
+	weaponAcceleration=100;
+	turnRate=25000;
+	areaOfEffect=120;
 	soundStart=rocklit2;
 	soundHit=xplolrg2;
 	myGravity=0.6;
@@ -15088,7 +15169,7 @@
 	model=weapon_rocket3.3do;
 	turret=0;
 	range=480;
-	cylinderTargeting=1;
+	cylinderTargeting=2;
 	reloadTime=1.7;
 	burst=2;
 	burstRate=0.1;
@@ -16096,7 +16177,7 @@
 	weaponType=MissileLauncher;
 	model=weapon_bigbomb;
 	turret=1;
-	cylinderTargeting=1;
+	cylinderTargeting=2;
 	cegTag=BOMBTRAILBIG;
 	range=450;
 	explosionGenerator=custom:ROCKETBLASTWRAPPER;
@@ -22215,7 +22296,7 @@
 		armor_light=600.00;//#AUTO#
 	}
 }
-[sphere_manta_bomb]
+[sphere_manta_bomb_old]
 {
 	name=Anti-Armor Bomb;
 	weaponType=MissileLauncher;
@@ -25614,7 +25695,7 @@
 	weaponType=MissileLauncher;
 	model=weapon_bigbomb;
 	turret=1;
-	cylinderTargeting=1;
+	cylinderTargeting=2;
 	cegTag=BOMBTRAILBIG;
 	range=480;
 	explosionGenerator=custom:ROCKETBLASTWRAPPER;
@@ -25648,13 +25729,52 @@
 		armor_light=800.00;//#AUTO#
 	}
 }
+[sphere_manta_bomb]
+{
+	name=Big Bombs;
+	weaponType=MissileLauncher;
+	model=weapon_bigbomb;
+	turret=1;
+	cylinderTargeting=2;
+	cegTag=BOMBTRAILBIG;
+	range=430;
+	explosionGenerator=custom:ROCKETBLASTWRAPPER;
+	reloadTime=12.5;
+	flightTime=2.75;
+	weaponVelocity=350;
+	startVelocity=150;
+	fixedLauncher=1;
+	weaponAcceleration=100;
+	turnRate=25000;
+	areaOfEffect=120;
+	soundStart=rocklit2;
+	soundHit=xplolrg2;
+	myGravity=0.6;
+	collideFriendly=0;
+	avoidFriendly=0;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		expDmgScaling=1;
+		targets=SURFACE;
+	}
+	[DAMAGE]
+	{
+		default=800;
+    		group_invincible=1;
+		armor_heavy=800.00;//#AUTO#
+		armor_medium=800.00;//#AUTO#
+		armor_light=800.00;//#AUTO#
+	}
+}
 [sphere_tuber_bomb]
 {
 	name=Big Bombs;
 	weaponType=MissileLauncher;
 	model=weapon_bigbomb;
 	turret=1;
-	cylinderTargeting=1;
 	cegTag=BOMBTRAILBIG;
 	texture1=null;
 	range=400;
@@ -25784,7 +25904,7 @@
 	weaponType=Cannon;
 	turret=1;
 	range=200;
-	cylinderTargeting=1;
+	cylinderTargeting=2;
 	noSelfDamage=0;
 	texture1=null;
 	texture2=null;
@@ -25871,7 +25991,7 @@
 	weaponType=Cannon;
 	turret=1;
 	range=250;
-	cylinderTargeting=1;
+	cylinderTargeting=2;
 	noSelfDamage=1;
 	texture1=null;
 	texture2=null;

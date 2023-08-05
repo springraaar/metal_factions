@@ -67,10 +67,8 @@ local trackedCommands = {
 
 
 local enabledUnitNames = {
-	aven_thunder = true,
-	gear_shadow = true,
 	gear_cascade = true,
-	sphere_manta = true
+	aven_stormfront = true
 }
 
 local reactionDelayFramesByUnitDefId = {

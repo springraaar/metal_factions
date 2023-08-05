@@ -85,6 +85,7 @@ RequestState(requestedstate, currentstate)
 Create()
 {
 	Static_Var_2 = 0;
+	turn bombpt to x-axis <90.000000> now;
 	call-script InitState();
 	start-script SmokeUnit();
 }

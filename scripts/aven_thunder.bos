@@ -98,6 +98,7 @@ RequestState(requestedstate, currentstate)
 Create()
 {
 	isFlying = FALSE;
+	turn flare to x-axis <90.000000> now;
 	call-script InitState();
 	start-script SmokeUnit();
 }
