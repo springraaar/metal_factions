@@ -182,7 +182,7 @@ local moveDefs = {
 		depthmodparams=commonDepthModParams,
 		slopeMod=7,
 	},
-	TANKBH4 = {
+	TANKDH4 = {
 		FootprintX=4,
 		FootprintZ=4,
 		MaxSlope=32,

@@ -1,9 +1,17 @@
+2023/08/15 ------------------ NOTES v2.25 ----------------------
+
+--- Balance / Mechanics
+
+- Fixed an issue where units would ignore fire-at-ground orders when other enemy units are within range
+(it's been there since v2.12 and made scopers hard to use)
+
+
 2023/08/05 ------------------ NOTES v2.24 ----------------------
 
 --- Balance / Mechanics
 
-- fixed SPHERE "Scrapper" not being buildable
-- fixed GEAR "Dash" having less sight range than intended
+- Fixed SPHERE "Scrapper" not being buildable
+- Fixed GEAR "Dash" having less sight range than intended
 
 - AVEN, GEAR and SPHERE L1 bomber aircraft got slower and twice as expensive, but have double HP and more broadly effective bombs
 (hold fire and hit-n-run are now disabled by default to avoid confusing new players)
@@ -194,7 +202,7 @@ OPTIONAL
 --- Balance / Mechanics
 
 - Increased cost of AVEN, CLAW and SPHERE heavy bombers (the bomb was wrongly rated as having angle restriction despite not having it)
-- AVEN "Talon" has better bombs with higher dmg/s and 360º firing ability but is slightly more expensive
+- AVEN "Talon" has better bombs with higher dmg/s and 360  firing ability but is slightly more expensive
 
 - Set significant energy cost to fire GEAR "Tremor"'s weapon and slightly reduced cost (missed the last update)
 (it also gets a more unique firing sound)
@@ -1520,7 +1528,7 @@ OTHER
 
 --- Balance / Mechanics
 
-- AVEN "Racer" had its turret turn rate increased from 180º/s to 280º/s
+- AVEN "Racer" had its turret turn rate increased from 180 /s to 280 /s
 (it also got smooth-aiming which updates every frame, like most mobile units have)
 
 - GEAR "Box" changes from 100L dps to 74 M dps and a bit more energy intensiveness and 8% increased cost
@@ -1592,7 +1600,7 @@ OTHER
 --- UI / Visual / Audio
 
 - added camera flip widget, bound to ctrl-shift-o 
-(rotates player view 180º : SW becomes NW)
+(rotates player view 180  : SW becomes NW)
 
 - combat experience is now visible for enemy units as well
 - combat experience icons will show up above each unit
@@ -1998,7 +2006,7 @@ TARGETING / AIR
 - all lasers, heat rays, energy bolts and miniguns get +80 base range when firing at air units specifically
 (it only applies after the target has been acquired and reverts immediately once it dies or gets out of range)
 
-- slightly reduced the range of the 360º weapons on level 2 fighter aircraft
+- slightly reduced the range of the 360  weapons on level 2 fighter aircraft
 (the evaluation formula was adjusted to increase their cost a bit so they end up about even)
 (they no longer outrange the forward weapons even if upgraded)
 
@@ -2185,7 +2193,7 @@ OTHER
 - SPHERE "Gazer" flying sphere and commander forms now deal about 50% more damage per shot and have about 50% higher reload time
 (They also got new visuals. The commander got its HP reduced from 4600 to 4500 to compensate)
 
-- modified how the 360º weapons on strafing level 2 fighters are accounted for and slightly reduced their range and damage to compensate
+- modified how the 360  weapons on strafing level 2 fighters are accounted for and slightly reduced their range and damage to compensate
 - GEAR "Vector"'s flare no longer gets cylindrical targetting with 2x height boost due to being a "missile" type
 (this was letting it outrange ground-based lasers too easily)
 
@@ -2518,7 +2526,7 @@ FIGHTERS / AIR
 - GEAR "Firestorm" : increased HP by 50%, reduced speed by 20% and adjusted cost
 - SPHERE "Meteor" will no longer try to chase enemy air targets
 - AVEN "Falcon" and "Talon" have shorter range, shorter reload time missiles and fire them 1 by 1
-- AVEN "Falcon" has a secondary 460 range high dmg/s laser turret with 360º firing
+- AVEN "Falcon" has a secondary 460 range high dmg/s laser turret with 360  firing
 - CLAW "Hornet" has range reduced from 450 to 350 but higher damage/s and faster reload time
 - CLAW "X" is now slower, tougher and has 4 secondary 460 range lasers
 - increased range and cost of most units with lasers with less than 400 range by about 10% so they're more able to shoot at aircraft
@@ -2763,7 +2771,7 @@ UNDERWATER
 
 
 AIR
-- make AVEN, CLAW and SPHERE heavy bombers shoot in 360º and fly higher (they get slightly more expensive though)
+- make AVEN, CLAW and SPHERE heavy bombers shoot in 360  and fly higher (they get slightly more expensive though)
 - improved maneuverability of some aircraft, namely SPHERE "Moth" which had particularly less acceleration that similar aircraft
 
 DRONES
@@ -2833,7 +2841,7 @@ DRONES
 
 - 5% damage increase on GEAR "Blazer" form commander
 
-- All-terrain units now have an 80º blind spot in a downward direction to avoid them firing through their body when targetting units on cliff tops from cliff sides
+- All-terrain units now have an 80  blind spot in a downward direction to avoid them firing through their body when targetting units on cliff tops from cliff sides
 (this restriction should be barely noticeable and may be increased in the future)
 
 - tough GEAR units with relatively short range fire attacks can no longer be set on fire (they still take direct and area fire damage, though)

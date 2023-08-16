@@ -159,11 +159,15 @@ function gadget:UnitCommand(unitID, unitDefID, unitTeam, cmdID, cmdParams, cmdOp
 end
 
 -- having the callin here makes "AllowWeaponTarget" be reliably called every slowUpdate when enemies are in range
-local states
+local states,tType,isUserTarget
 function gadget:AllowWeaponTargetCheck(attackerID, attackerWeaponNum, attackerWeaponDefID)
 	--Spring.Echo("f="..spGetGameFrame().." aId="..attackerID.." ALLOWTARGETCHECK")
 	states = spGetUnitStates(attackerID)
 	if states and states.firestate == 0 then
+		return false
+	end
+	tType,isUserTarget,_ = spGetUnitWeaponTarget(attackerID,attackerWeaponNum)
+	if isUserTarget then
 		return false
 	end
 	return -1
