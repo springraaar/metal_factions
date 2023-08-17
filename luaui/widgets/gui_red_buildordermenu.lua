@@ -1209,7 +1209,7 @@ local function GetCommands()
 					-- omit build item options for disabled optional units
 					if not (cmd.disabled and optionalUnitNames[uName]) then 
 						cmd.cost = ud.metalCost
-						cmd.isBuilder = ud.buildSpeed > 0
+						cmd.isBuilder = ud.buildSpeed > 1
 						
 						-- update build filter category option flags
 						checkEnableCategory(uName)
