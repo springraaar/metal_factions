@@ -1,26 +1,26 @@
 [UNITINFO]
-{
+	{
 	// ------------------- description
-	side=Sphere;
-	Name=Quad;
-	Description=Fast Attack Vehicle;
-	iconType=mobileraider;
+	side=Gear;
+	Name=Crocodile;
+	Description=Heavy Assault Hydrobot;
+	iconType=amphibassault;
 
 	// ------------------- categories
-	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+	Category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	// ------------------- external specs
-	unitName=sphere_quad;
-	objectName=sphere_quad.3do;
-	buildPic=sphere_quad.png;
-	soundCategory=SPHERE_TANKSML;
-	Corpse=sphere_quad_dead;
+	unitName=gear_crocodile;
+	objectName=gear_crocodile.3do;
+	buildPic=gear_crocodile.png;
+	soundCategory=COR_KBOT;
+	Corpse=gear_crocodile_dead;
 
 
 	// ------------------- health/cost/size
 	FootprintX=3;
 	FootprintZ=3;
-	maxDamage=1000;
+	maxDamage=3300;
 
 
 	// ------------------- resources
@@ -38,55 +38,48 @@
 	Builder=0;
 
 	// ------------------- movement
-	maxWaterDepth=12;
-	maxSlope=17;
-	maxVelocity=3.1;
+	maxVelocity=1.6;
 	brakeRate=0.2;
-	Acceleration=0.4;
-	turnRate=650;
-	turnInPlace=1;
-	movementClass=TANKSH3;
+	Acceleration=0.8;
+	turnRate=780;
+	movementClass=KBOTUW4;
 
 	// ------------------- scout
 	sightDistance=500;
 	radarDistance=0;
+	sonarDistance=250;
 
 
 	// ------------------- weapons
-	Weapon1=sphere_quad_laser;
+	Weapon1=gear_crocodile_cannon;
 	badTargetCategory1=NOTAIR;
 	noChaseCategory=VTOL;
-	explodeAs=SMALL_UNITEX;
-	selfDestructAs=SMALL_UNIT;
-
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
 
 	// ------------------- orders
 
+
 	// ------------------- misc
 	noAutoFire=0;
-
-	leavetracks=1;
-	trackoffset=8;
-	trackstrength=5;
-	trackstretch=1;
-	tracktype=StdTank;
-	trackwidth=35;
-
+	Upright=0;
 	collisionVolumeType = box;
-	collisionVolumeScales =30 20 30;
+	collisionVolumeScales =32 30 44;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-
 	[CustomParams]
 	{
-		builtBy=sphere_adv_vehicle_factory;
+		builtBy=gear_hydrobot_plant;
+		tip=Regenerates 2+0.1%HP/s in water;
+		hydrobotRegen=1;
+		optional=1;
 	}
 	[SFXTypes]
 	{
-		explosionGenerator0=custom:GLOWSML;
+		explosionGenerator0=custom:yellowflaremed;
 	}
-	buildCostEnergy=1940;//#AUTO#
-	buildCostMetal=388;//#AUTO#
-	buildTime=4625;//#AUTO#
-	mass=379;//#AUTO#
+	buildCostEnergy=5178;//#AUTO#
+	buildCostMetal=1035;//#AUTO#
+	buildTime=12342;//#AUTO#
+	mass=1872;//#AUTO#
 }

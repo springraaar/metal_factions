@@ -5,8 +5,8 @@
 	//********************
 	side=Aven;
 	name=Shocker;
-	description=Assault Robot;
-	iconType=mobileassault;
+	description=Amphibious Assault Robot;
+	iconType=amphibassault;
 
 	//************************************************************
 	//  Categories
@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=3200;
+	maxDamage=3400;
 	footprintx=3;
 	footprintz=3;
 
@@ -60,7 +60,7 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementClass=KBOTHT3;
+	movementClass=KBOTUW3;
 	turnRate=1060;
 	acceleration=0.9;
 	brakeRate=1.7;
@@ -104,8 +104,8 @@
 	{
 		explosionGenerator0=custom:ElectricFlare;
 	}
-	buildCostEnergy=4173;//#AUTO#
-	buildCostMetal=834;//#AUTO#
-	buildTime=9946;//#AUTO#
-	mass=1724;//#AUTO#
+	buildCostEnergy=4325;//#AUTO#
+	buildCostMetal=865;//#AUTO#
+	buildTime=10308;//#AUTO#
+	mass=1821;//#AUTO#
 }

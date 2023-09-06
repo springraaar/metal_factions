@@ -3,31 +3,32 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Gear;
-	name=Pyro;
-	description=Fast Raider Robot;
-	iconType=mobileraider;
+	side=Aven;
+	name=Maximus;
+	description=Amphibious Heavy Assault/Riot Robot;
+	iconType=amphibmulti;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
+	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitName=gear_pyro;
-	objectName=gear_pyro.3do;
-	corpse=gear_pyro_dead;
-	buildPic=gear_pyro.png;
-	soundCategory=COR_KBOT;
+	unitName=aven_maximus;
+	objectName=aven_maximus.3do;
+	corpse=aven_maximus_dead;
+	buildPic=aven_maximus.png;
+	soundCategory=MAVERICK;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=1500;
-	footprintx=2;
-	footprintz=2;
+	maxDamage=11500;
+	footprintx=4;
+	footprintz=4;
+	autoHeal=30;
 
 	//************************************************************
 	//  Resources
@@ -60,13 +61,11 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementClass=KBOTUW3;
-	turnRate=1350;
+	movementClass=KBOTUW4;
+	turnRate=1000;
 	acceleration=1.0;
-	brakeRate=1;
-	maxVelocity=2.4;
-	maxSlope=17;
-	maxWaterDepth=25;
+	brakeRate=1.5;
+	maxVelocity=1.6;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -77,11 +76,13 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=gear_pyro_flamethrower;
+	weapon1=aven_maximus_cannon;
+	weapon2=aven_maximus_missile;
 	noChaseCategory=VTOL;
 	badTargetCategory1=VTOL;
-	explodeAs=CORPYRO_BLAST;
-	selfDestructAs=SMALL_BUILDING;
+	badTargetCategory2=VTOL;
+	explodeAs=EXPLOSIVE_UNIT_BLAST;
+	selfDestructAs=EXPLOSIVE_UNIT_BLAST;
 
 	//************************************************************
 	//  Orders
@@ -91,37 +92,25 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	noselfdamage=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =28 40 28;
+	collisionVolumeScales =55 80 45;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 
+	[customParams] 
+	{
+		builtBy=aven_adv_kbot_lab;
+		tip=Regenerates 30HP/s;
+		optional=1;
+	}
 	[SFXTypes]
 	{
-		explosionGenerator0=custom:FireFlare;
-		explosionGenerator1=custom:JUMPASC;
-		explosionGenerator2=custom:JUMPASC2;
-		explosionGenerator3=custom:JUMPDESC;
-		explosionGenerator4=custom:JUMPDESC2;
+		explosionGenerator0=custom:blueflaresml;
+		explosionGenerator1=custom:rocketflaremed;
 	}
 
-	[CustomParams]
-	{
-		builtBy=gear_adv_kbot_lab;
-		tip=Targets burn for 210(M) dmg over 7s. Can jump (10s reload);
-		canJump=1;
-		evalfactor=1.02;//JUMP
-		jumpType=pyro;
-		jumpMod=1.00;
-	}
-
-	//************************************************************
-	//  To be removed
-	//*****************
-
-	buildCostEnergy=2855;//#AUTO#
-	buildCostMetal=571;//#AUTO#
-	buildTime=6804;//#AUTO#
-	mass=565;//#AUTO#
+	buildCostEnergy=45616;//#AUTO#
+	buildCostMetal=9123;//#AUTO#
+	buildTime=108720;//#AUTO#
+	mass=9465;//#AUTO#
 }

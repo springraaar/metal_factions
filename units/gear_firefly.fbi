@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR VTOL LEVEL1 WEAPON NOTSUB;
+	category=GEAR VTOL LEVEL2 WEAPON NOTSUB;
 
 	//************************************************************
 	//  External Specs
@@ -114,17 +114,18 @@
 
 	[CustomParams]
 	{
-		builtBy=gear_aircraft_plant,gear_adv_aircraft_plant;
+		builtBy=gear_adv_aircraft_plant;
 		optional=1;
 		manualCost=1;
 		noWreck=1;
+		tip=Burns ground for 20s, dealing up to 60(M) dmg/s. Affected units burn for 210(M) dmg over 7s;
 	}
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:ROCKETFLAREMED;		
 	}
-	buildCostEnergy=1000;//#AUTO#
-	buildCostMetal=200;//#AUTO#
-	buildTime=2400;//#AUTO#
+	buildCostEnergy=1250;//#AUTO#
+	buildCostMetal=250;//#AUTO#
+	buildTime=3000;//#AUTO#
 	mass=50;//#AUTO#
 }

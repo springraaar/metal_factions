@@ -1337,11 +1337,11 @@
 	}
 	[DAMAGE]
 	{
-		default=90;
+		default=100;
 		group_invincible=1;
-		armor_heavy=45.00;//#AUTO#
-		armor_medium=90.00;//#AUTO#
-		armor_light=90.00;//#AUTO#
+		armor_heavy=50.00;//#AUTO#
+		armor_medium=100.00;//#AUTO#
+		armor_light=100.00;//#AUTO#
 	}
 }
 [aven_stalker_laser2]
@@ -1388,6 +1388,50 @@
 		armor_heavy=12.50;//#AUTO#
 		armor_medium=25.00;//#AUTO#
 		armor_light=50.00;//#AUTO#
+	}
+}
+[aven_flow_laser]
+{
+	name=Laser;
+	weaponType=BeamLaser;
+	explosionGenerator=custom:REDLASERBLASTWRAPPER;
+	beamTime=0.1;
+	thickness=2.888;
+	coreThickness=0.6;
+	intensity=0.9;
+	turret=1;
+	range=450;
+	minIntensity=1.0;
+	reloadTime=1;
+	energyPerShot=20;
+	weaponVelocity=1533;
+	areaOfEffect=8;
+	soundStart=lasrfir3;
+	soundHit=lasrhit2;
+	fireStarter=20;
+	scrollSpeed=0;
+	pulseSpeed=0;
+	rgbColor=0.51 0.0 0.0;
+	rgbColor2=1.0 0.4 0.4;
+	tolerance=3000;
+	impulseFactor=0.222;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		reaimTime=1;
+		aaRangeBoost=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=110;
+		group_invincible=1;
+		armor_heavy=55.00;//#AUTO#
+		armor_medium=110.00;//#AUTO#
+		armor_light=110.00;//#AUTO#
 	}
 }
 [aven_medium_drone_laser]
@@ -1623,7 +1667,7 @@
 	model=weapon_medmsl2.3do;
 	texture1=null; //flare//
 	range=950;
-	reloadTime=1;
+	reloadTime=0.9;
 	flightTime=4;
 	weaponVelocity=550;
 	startVelocity=450;
@@ -1652,11 +1696,11 @@
 	}
 	[DAMAGE]
 	{
-		default=150;
+		default=180;
 		group_invincible=1;
-		armor_heavy=75.00;//#AUTO#
-		armor_medium=150.00;//#AUTO#
-		armor_light=150.00;//#AUTO#
+		armor_heavy=90.00;//#AUTO#
+		armor_medium=180.00;//#AUTO#
+		armor_light=180.00;//#AUTO#
 	}
 }
 [aven_ambassador_missile]
@@ -4765,6 +4809,53 @@
 	fixedLauncher=1;
 	weaponVelocity=500;
 	weaponAcceleration=150;
+	startVelocity=130;
+	turnRate=20000;
+	areaOfEffect=72;
+	metalPerShot=0;
+	soundStart=rocklit1;
+	soundHit=xplomed4;
+	fireStarter=100;
+	smokeTrail=0;
+	tolerance=4000;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	avoidGround=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		expDmgScaling=1;
+		targets=SURFACE,AIR2;
+	}
+	[DAMAGE]
+	{
+		default=420;
+		group_invincible=1;
+		armor_heavy=420.00;//#AUTO#
+		armor_medium=420.00;//#AUTO#
+		armor_light=420.00;//#AUTO#
+	}
+}
+[aven_maximus_missile]
+{
+	name=Anti-Armor Missiles;
+	weaponType=StarburstLauncher;
+  	explosionGenerator=custom:ROCKETBLASTWRAPPER;
+	model=weapon_aven_big_missile;
+	range=800;
+	cegTag=ROCKETTRAIL2;
+  	explosionGenerator=custom:ROCKETBLASTWRAPPER;
+	texture1=null; //flare//
+	texture2=null;//first segment of missiletrail//
+	texture3=null;//flame//
+	texture4=null;//unknown//
+	reloadTime=2.1;
+	weapontimer=0.3;
+	flightTime=7;
+	tracks=1;
+	fixedLauncher=1;
+	weaponVelocity=500;
+	weaponAcceleration=250;
 	startVelocity=130;
 	turnRate=20000;
 	areaOfEffect=72;
@@ -9213,6 +9304,45 @@
 		armor_light=260.00;//#AUTO#
 	}
 }
+[gear_crocodile_cannon]
+{
+	name=Plasma Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=500;
+	reloadTime=1.8;
+	explosionGenerator=custom:STDBLASTWRAPPER;
+	cegTag=PLASMATRAIL1;
+	texture1=cannon;
+	weaponVelocity=365;
+	areaOfEffect=80;
+	soundStart=cannon4;
+	soundHit=xplomed2;
+	tolerance=3000;
+	size=3.2;
+	rgbColor=0.7 0.6 0.3;
+	stages=3;
+  	separation=0.5;
+  	alphaDecay=0.3;
+  	sizeDecay=-0.1;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		reaimTime=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR2;
+	}
+	[DAMAGE]
+	{
+		default=260;
+		group_invincible=1;
+		armor_heavy=260.00;//#AUTO#
+		armor_medium=260.00;//#AUTO#
+		armor_light=260.00;//#AUTO#
+	}
+}
 [gear_enforcer_cannon]
 {
 	name=Plasma Cannon;
@@ -9587,7 +9717,7 @@
 	cegTag=ROCKETTRAIL3;
 	turret=1;
 	model=weapon_seeker.3do;
-	range=200;
+	range=180;
 	reloadTime=999;
 	flightTime=3;
 	fixedLauncher=1;
@@ -11911,7 +12041,7 @@
 	cegTag=ROCKETTRAIL3;
 	turret=1;
 	model=weapon_firefly.3do;
-	range=200;
+	range=180;
 	reloadTime=999;
 	flightTime=3;
 	fixedLauncher=1;
@@ -12633,6 +12763,54 @@
 		armor_heavy=50.00;//#AUTO#
 		armor_medium=100.00;//#AUTO#
 		armor_light=100.00;//#AUTO#
+	}
+}
+[aven_maximus_cannon]
+{
+	name=Pusher Pulse Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=650;
+	reloadTime=0.267;
+	weaponVelocity=700;
+	areaOfEffect=140;
+	edgeEffectiveness=0.0;
+	soundStart=tsunamifire;
+	soundHit=xploflak1;
+	tolerance=12000;
+	burnBlow=1;
+	accuracy=1000;
+	energyPerShot=60;
+	explosionGenerator=custom:TSUNAMIBLASTWRAPPER;
+	cegTag=glowsml;
+	texture1=ecannon;
+	size=3;
+	rgbColor=0.25 0.35 0.45;
+	stages=2;
+  	separation=0.0;
+  	alphaDecay=0.8;
+  	sizeDecay=-3;
+  	craterMult=0.125;
+	impulseBoost=1;
+	impulseFactor=8;
+	proximityPriority=0;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		reaimTime=1;
+		evalFactor=1.1;  // high impulse
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=120;
+		group_invincible=1;
+		armor_heavy=60.00;//#AUTO#
+		armor_medium=120.00;//#AUTO#
+		armor_light=120.00;//#AUTO#
 	}
 }
 [LARGE_BUILDING]

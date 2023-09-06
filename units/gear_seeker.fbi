@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=GEAR VTOL LEVEL1 WEAPON NOTSUB;
+	category=GEAR VTOL LEVEL2 WEAPON NOTSUB;
 
 	//************************************************************
 	//  External Specs
@@ -114,7 +114,7 @@
 
 	[CustomParams]
 	{
-		builtBy=gear_aircraft_plant,gear_adv_aircraft_plant;
+		builtBy=gear_adv_aircraft_plant;
 		optional=1;
 		manualCost=1;
 		noWreck=1;
@@ -123,8 +123,8 @@
 	{
 		explosionGenerator0=custom:ROCKETFLAREMED;		
 	}
-	buildCostEnergy=850;//#AUTO#
-	buildCostMetal=170;//#AUTO#
-	buildTime=2040;//#AUTO#
+	buildCostEnergy=1000;//#AUTO#
+	buildCostMetal=200;//#AUTO#
+	buildTime=2400;//#AUTO#
 	mass=50;//#AUTO#
 }

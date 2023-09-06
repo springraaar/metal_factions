@@ -62,6 +62,7 @@ local spGetGaiaTeamID            = Spring.GetGaiaTeamID
 local spGetUnitTeam              = Spring.GetUnitTeam
 local spGetUnitAllyTeam          = Spring.GetUnitAllyTeam
 local spGetSpectatingState       = Spring.GetSpectatingState
+local spIsReplay                 = Spring.IsReplay
 
 local gl_Texture          = gl.Texture
 local gl_Rect             = gl.Rect
@@ -2585,7 +2586,7 @@ function CheckPlayersChange()
 			player[i].cpu     = cpuUsage*100-((cpuUsage*100)%1)
 			
 			-- send warning message to yourself if player is lagging behind
-			if player[i].spec == false then
+			if player[i].spec == false and (not spIsReplay()) then
 				if (tonumber(player[i].ping) > PLAYER_LAG_WARNING_THRESHOLD_MS and (f > 0 and (not latestLagWarningByPlayer[i] or f - latestLagWarningByPlayer[i] > PLAYER_LAG_WARNING_DELAY_F ))) then
 					Spring.SendMessageToPlayer(myPlayerID,"WARNING: <PLAYER"..i.."> is lagging behind "..(floor(tonumber(player[i].ping)/1000)).."s" )
 					Spring.SendCommands("pause 1") -- pause the game
