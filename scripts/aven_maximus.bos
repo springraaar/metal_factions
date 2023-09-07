@@ -316,6 +316,8 @@ RestoreAfterDelay()
 	turn lshoulder to x-axis <0.000000> speed <350.027473>;
 	turn torso to y-axis <0.000000> speed <140.038462>;
 	wait-for-turn rshoulder around x-axis;
+	wait-for-turn lshoulder around x-axis;
+	wait-for-turn torso around y-axis;
 	bAiming = FALSE;
 	return (0);
 }

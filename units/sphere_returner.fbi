@@ -74,14 +74,14 @@
 		builtBy=sphere_light_factory,sphere_adv_kbot_factory;
 		tip=Regenerates 10 HP/s. Wreckage auto-revives with 50% HP after 60s if undisturbed;
 		optional=1;
-		evalFactor=1.4; // auto-revive
+		evalFactor=1.3; // auto-revive
 	}
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:redflare;
 	}
-	buildCostEnergy=1373;//#AUTO#
-	buildCostMetal=274;//#AUTO#
-	buildTime=3272;//#AUTO#
-	mass=170;//#AUTO#
+	buildCostEnergy=1275;//#AUTO#
+	buildCostMetal=255;//#AUTO#
+	buildTime=3038;//#AUTO#
+	mass=167;//#AUTO#
 }

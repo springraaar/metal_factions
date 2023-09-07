@@ -108,7 +108,7 @@
 		builtBy=sphere_adv_kbot_factory;
 		tip=Regenerates 15 HP/s. Wreckage auto-revives with 50% HP after 60s if undisturbed;
 		optional=1;
-		evalFactor=1.4; // auto-revive
+		evalFactor=1.3; // auto-revive
 	}
 	[SFXTypes]
 	{
@@ -116,8 +116,8 @@
 		explosionGenerator1=custom:glowsml;
 	}
 
-	buildCostEnergy=8540;//#AUTO#
-	buildCostMetal=1708;//#AUTO#
-	buildTime=20353;//#AUTO#
-	mass=1119;//#AUTO#
+	buildCostEnergy=7930;//#AUTO#
+	buildCostMetal=1586;//#AUTO#
+	buildTime=18900;//#AUTO#
+	mass=1078;//#AUTO#
 }
