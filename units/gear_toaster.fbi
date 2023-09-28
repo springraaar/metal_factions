@@ -41,7 +41,7 @@
 	//************
 	yardMap=ooo ooo ooo;
 	collisionVolumeType=Box;
-	collisionVolumeScales=44 35 44;
+	collisionVolumeScales=44 40 44;
 	collisionVolumeOffsets=0 0 0;
 	collisionVolumeTest = 1;
 
@@ -62,7 +62,8 @@
 	//  Movement
 	//************
 	maxSlope=20;
-	maxWaterDepth=0;
+	floater=1;
+	waterline=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -89,7 +90,6 @@
 	//  Miscellaneous
 	//*****************
 	damagemodifier=0.5;
-	digger=1;
 
 	[CustomParams]
 	{

@@ -10938,6 +10938,35 @@
 		armor_light=3200.00;//#AUTO#
 	}
 }
+[HELLBURNER_BLAST]
+{
+	name=Hellburner Blast;
+	weaponType=Cannon;
+	turret=1;
+	range=480;
+	reloadTime=3.6;
+	weaponVelocity=250;
+	areaOfEffect=660;
+	soundStart=largegun;
+	soundHit=xplonuk3;
+	edgeEffectiveness=0.1;
+	explosionGenerator=custom:LARGEBLASTWRAPPER2;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	waterWeapon=1;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+	}
+	[DAMAGE]
+	{
+		default=3200;
+		group_invincible=1;
+		armor_heavy=3200.00;//#AUTO#
+		armor_medium=3200.00;//#AUTO#
+		armor_light=3200.00;//#AUTO#
+	}
+}
 [CRAWL_BLAST]
 {
 	name=Crawling Bomb;
@@ -11571,6 +11600,54 @@
 	}
 }
 [gear_heater_flamethrower]
+{
+	name=Flame Thrower;
+	weaponType=Flame;
+	explosionGenerator=custom:flamethrowerblast;
+	cegTag=flametrail;
+	noSelfDamage=1;
+	soundTrigger=1;
+	texture1=flamer;
+	texture2=null;
+	texture3=null;
+	texture4=null;
+	turret=1;
+	range=260;
+	reloadTime=0.167;
+	weaponVelocity=270;
+	areaOfEffect=40;
+	burst=5;
+	burstRate=0.01;
+	sprayAngle=1048;
+	soundStart=flamstart;
+	soundHit=flamlit1;
+	fireStarter=100;
+	groundBounce=1;
+	tolerance=8000;
+	size=0.26;	
+	sizeGrowth=0.6;
+	colorMap=0.8 0.8 0.8 0.8    0.7 0.7 0.3 0.8  0.3 0.0 0.0 0.0;
+	collisionSize=30;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		burn=1;
+		reaimTime=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR2;
+	}
+	[DAMAGE]
+	{
+		default=9;
+		group_invincible=1;
+		armor_heavy=4.50;//#AUTO#
+		armor_medium=9.00;//#AUTO#
+		armor_light=9.00;//#AUTO#
+	}
+}
+[gear_hellburner_flamethrower]
 {
 	name=Flame Thrower;
 	weaponType=Flame;
@@ -19273,6 +19350,47 @@
 		armor_light=350.00;//#AUTO#
 	}
 }
+[claw_cleaver_cannon]
+{
+	name=Plasma Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=850;
+	size=3.4;
+	rgbColor=0.9 0.7 0.3;
+	stages=4;
+  	separation=0.4;
+  	alphaDecay=0.24;
+  	sizeDecay=-0.1;
+	energyPerShot=0;
+	reloadTime=2.5;
+	weaponVelocity=500;
+	areaOfEffect=80;
+	cegTag=PLASMATRAIL2;
+	texture1=cannon;
+	explosionGenerator=custom:STDBLASTWRAPPER;
+	soundStart=cannhvy6;
+	soundHit=xplomed2;
+	accuracy=200;
+	movingAccuracy=500;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		reaimTime=1;
+		expDmgScaling=1;
+		targets=SURFACE;
+	}
+	[DAMAGE]
+	{
+		default=400;
+		group_invincible=1;
+		armor_heavy=400.00;//#AUTO#
+		armor_medium=400.00;//#AUTO#
+		armor_light=400.00;//#AUTO#
+	}
+}
 [claw_sickle_laser]
 {
 	name=Medium Laser;
@@ -23016,6 +23134,50 @@
 		armor_heavy=250.00;//#AUTO#
 		armor_medium=250.00;//#AUTO#
 		armor_light=250.00;//#AUTO#
+	}
+}
+[sphere_contender_missile]
+{
+	name=Anti-Armor Missiles;
+	weaponType=MissileLauncher;
+	explosionGenerator=custom:ROCKETBLASTWRAPPER;
+	model=weapon_medmsl4;
+	cegTag=ROCKETTRAIL2B;
+	turret=1;
+	range=800;
+	reloadTime=3.3;
+	trajectoryHeight=0.1;
+	flightTime=3.5;
+	weaponVelocity=600;
+	startVelocity=300;
+	weaponAcceleration=66;
+	turnRate=24000;
+	areaOfEffect=64;
+	metalPerShot=0;
+	soundStart=rocklit1;
+	soundHit=xplomed2;
+	fireStarter=70;
+	tracks=1;
+	smokeTrail=0;
+	texture1=null; //testing//
+	texture2=null;
+	texture3=null;
+	texture4=null;
+	tolerance=9000;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=270;
+		armor_heavy=270.00;//#AUTO#
+		armor_medium=270.00;//#AUTO#
+		armor_light=270.00;//#AUTO#
 	}
 }
 [sphere_golem_cannon]

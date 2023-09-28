@@ -34,8 +34,8 @@ local unitCollisionVolume = {}
 
 --------------------------------------------- GEAR
 unitCollisionVolume["gear_toaster"] = {
-	on={44,30,44,0,0,0,2,1,0},
-	off={44,15,44,0,0,0,2,1,0},
+	on={44,36,44,0,0,0,2,1,0},
+	off={44,18,44,0,0,0,2,1,0},
 }
 
 unitCollisionVolume["gear_missilator"] = {
@@ -54,7 +54,7 @@ unitCollisionVolume["gear_pulverizer"] = {
 }
 
 unitCollisionVolume["gear_beamer"] = {
-	on={38,60,38,0,0,0,2,1,0},
+	on={38,50,38,0,0,0,2,1,0},
 	off={38,15,38,0,0,0,2,1,0},
 }
 

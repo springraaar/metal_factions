@@ -3,8 +3,8 @@
 	// ------------------- description
 	side=Sphere;
 	Name=Trax;
-	Description=Medium Tank;
-	iconType=mobileassault;
+	Description=Amphibious Medium Tank;
+	iconType=amphibassault;
 
 	// ------------------- categories
 	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
@@ -44,7 +44,7 @@
 	brakeRate=0.1;
 	Acceleration=0.12;
 	turnRate=500;
-	movementClass=TANKSH3;
+	movementClass=TANKDH3;
 
 	// ------------------- scout
 	sightDistance=500;

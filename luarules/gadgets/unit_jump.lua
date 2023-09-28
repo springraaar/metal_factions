@@ -529,6 +529,11 @@ local function Jump(unitID, goal, origCmdParams, mustJump)
 		local hitStructure, structureCollisionData
 		local halfJump
 		local i = 0
+		-- previous frame targets
+		local x1=start[1]
+		local y1=start[2]
+		local z1=start[3]
+				
 		while i <= 1 do
 			if (not spValidUnitID(unitID) or spGetUnitIsDead(unitID)) then 
 				return 
@@ -540,7 +545,7 @@ local function Jump(unitID, goal, origCmdParams, mustJump)
 			local x = start[1] + vector[1]*i
 			local y = start[2] + vector[2]*i + (1-(2*i-1)^2)*height -- parabola
 			local z = start[3] + vector[3]*i
-			
+			--Spring.Echo(spGetGameFrame().." jumping dx="..(x0-x1).." dy="..(y0-y1).." dz="..(z0-z1))
 			--mcSetPosition(unitID, x, y, z)  -- force position? disabled / original did this
 			
 			if x0 then
@@ -548,10 +553,12 @@ local function Jump(unitID, goal, origCmdParams, mustJump)
 				
 				-- slow start
 				local boostMod = 0.6 + 0.4*i 
-				
-				vx = boostMod*(x - x0)  
-				vy = boostMod*(y - y0) 
-				vz = boostMod*(z - z0) 
+
+				-- accept offsets in target positions if there's something pushing the units off
+				-- (makes movement smoother when a group jumps towards the same point and the units collide throughout) 
+				vx = boostMod*(x - (x0*0.1+x1*0.9))  
+				vy = boostMod*(y - (y0*0.1+y1*0.9)) 
+				vz = boostMod*(z - (z0*0.1+z1*0.9)) 
 				
 				jumping[unitID] = {vx, vy, vz}
 				
@@ -592,12 +599,15 @@ local function Jump(unitID, goal, origCmdParams, mustJump)
 					structureCollisionData = GetLandStructureCheckValues(goal[1], goal[3], radius)
 				end
 			end
-			
+
+			x1 = x
+			y1 = y
+			z1 = z			
 			if structureCollisionData and CheckStructureCollision(structureCollisionData, x, y, z) then
 				hitStructure = {x, y, z}
 				break
 			end
-			
+
 			Sleep()
 			i = i + step
 		end
@@ -620,13 +630,16 @@ local function Jump(unitID, goal, origCmdParams, mustJump)
 			spGiveOrderToUnit(unitID,CMD_WAIT, {}, 0)
 		end
 		
+		--TODO this doesn't work well, check/fix eventually
+		-- (setPosition disabled because by this point the jump may be already offset due to other collisions) 
 		if hitStructure then
 			-- Add unstick impulse to make the jumper bound on the structure.
 			spAddUnitImpulse(unitID, 3,0,3)
 			spAddUnitImpulse(unitID, 0,-0.5,0)
 			spAddUnitImpulse(unitID, -3,0,-3)
+			
 			-- Set position because the unit may snap to the ground.
-			spSetUnitPosition(unitID, hitStructure[1], hitStructure[2], hitStructure[3])
+			--spSetUnitPosition(unitID, hitStructure[1], hitStructure[2], hitStructure[3])
 		end
 
 		Sleep()

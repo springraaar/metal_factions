@@ -3,9 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, stand, logo1, logo2, ldoor, rdoor, turret, left, right, slholder, sleeve, barrel1, flare1, barrel2, flare2, tlogo, s22,s32, aimpt;
+piece  base, stand, logo1, logo2, ldoor, rdoor, turret, left, right, slholder, sleeve, barrel1, flare1, barrel2, flare2, tlogo, s22,s32, aimpt, floatbase;
 
-static-var gun_1, isOpen;
+static-var gun_1, isOpen, isFloating;
 
 // Signal definitions
 #define SIG_AIM				2
@@ -49,9 +49,9 @@ open()
 	turn ldoor to z-axis <90.000000> speed <380.000000>;
 	wait-for-turn ldoor around z-axis;
 	
-	move rdoor to y-axis  [-25.000000] speed [150.000000];
-	move ldoor to y-axis  [-25.000000] speed [150.000000];
-	move stand to y-axis [44.000000] speed [280.000000];
+	move rdoor to y-axis  [-15.000000] speed [150.000000];
+	move ldoor to y-axis  [-15.000000] speed [150.000000];
+	move stand to y-axis [38.000000] speed [280.000000];
 	wait-for-move ldoor along y-axis;
 	wait-for-move stand along y-axis;
 	isOpen = TRUE;
@@ -156,6 +156,16 @@ Create()
 {
 	move aimpt to y-axis [45.000000] now;
 	turn turret to y-axis <45.000000> now;
+
+	hide floatbase;
+	isFloating = FALSE;
+	if ( GET GROUND_WATER_HEIGHT(GET UNIT_XZ) < [0])
+	{
+		isFloating = TRUE;
+		show floatbase;
+		move base to y-axis [2] now;
+	}
+	
 	isOpen = FALSE;
 	gun_1 = [0];
 	start-script close();
@@ -204,28 +214,26 @@ QueryPrimary(piecenum)
 	}	
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = turret;
-	return (0);
-}
-
-Stop()
-{
-	get PRINT(9999);
-}
-
 Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
+		if (isFloating) 
+		{
+			corpsetype = 1;
+		}
+		if (!isFloating) 
+		{
+			corpsetype = 2;
+		}
 		explode sleeve type SHATTER;
 		explode barrel2 type SHATTER;
 		explode barrel1 type SHATTER;
 		explode s22 type SHATTER;
 		explode s32 type SHATTER;		
-		return (1);
+		return corpsetype;
 	}
+
 	explode base type SHATTER;
 	explode stand type SHATTER;
 	explode turret type SHATTER;
@@ -234,5 +242,5 @@ Killed(severity, corpsetype)
 	explode barrel1 type SHATTER;
 	explode ldoor type SHATTER;
 	explode rdoor type SHATTER;
-	return (2);
+	return (3);
 }

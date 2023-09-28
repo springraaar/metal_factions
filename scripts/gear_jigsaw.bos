@@ -30,10 +30,10 @@ open()
 		turn rdoor2 to z-axis <-90.000000> speed <180.000000>;
 		turn ldoor2 to z-axis <90.000000> speed <180.000000>;
 		wait-for-turn ldoor around z-axis;
-		move rdoor to y-axis  [-15.000000] speed [30.000000];
-		move ldoor to y-axis  [-15.000000] speed [30.000000];
-		move rdoor2 to y-axis  [-13.000000] speed [30.000000];
-		move ldoor2 to y-axis  [-13.000000] speed [30.000000];
+		move rdoor to y-axis  [-14.000000] speed [30.000000];
+		move ldoor to y-axis  [-14.000000] speed [30.000000];
+		move rdoor2 to y-axis  [-11.000000] speed [30.000000];
+		move ldoor2 to y-axis  [-11.000000] speed [30.000000];
 		wait-for-move ldoor along y-axis;
 
 		move stand to y-axis [25.000000] speed [80.000000];

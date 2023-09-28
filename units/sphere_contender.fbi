@@ -1,0 +1,89 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	side=Sphere;
+	Name=Contender;
+	Description=Amphibious Skirmisher Tank;
+	iconType=amphibiousheavyfs;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=sphere_contender;
+	objectName=sphere_contender.3do;
+	buildPic=sphere_contender.png;
+	soundCategory=sphere_TANKSML;
+	Corpse=sphere_contender_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=3;
+	FootprintZ=3;
+	maxDamage=2600;
+
+
+	// ------------------- resources
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	Builder=0;
+
+	// ------------------- movement
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.6;
+	brakeRate=0.1;
+	Acceleration=0.12;
+	turnRate=500;
+	movementClass=TANKDH3;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_contender_missile;
+	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+
+	// ------------------- orders
+
+	// ------------------- misc
+	noAutoFire=0;
+	leavetracks=1;
+	trackoffset=8;
+	trackstrength=5;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=35;
+	collisionVolumeType = box;
+	collisionVolumeScales =31 28 31;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_adv_vehicle_factory;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflaremed;
+	}
+	buildCostEnergy=6260;//#AUTO#
+	buildCostMetal=1252;//#AUTO#
+	buildTime=14920;//#AUTO#
+	mass=1067;//#AUTO#
+}

@@ -42,8 +42,8 @@
 	//************
 	yardMap=ooo ooo ooo;
 	collisionVolumeType = CylY;
-	collisionVolumeScales =38 63 38;
-	collisionVolumeOffsets = 0 8 0;
+	collisionVolumeScales =38 50 38;
+	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
 	//************************************************************
@@ -63,7 +63,8 @@
 	//  Movement
 	//************
 	maxSlope=20;
-	maxWaterDepth=2;
+	floater=1;
+	waterline=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -95,7 +96,7 @@
 
 	[SFXTypes]
 	{
-		explosionGenerator0=custom:GLOWSML;
+		explosionGenerator0=custom:REDFLARE;
 	}
 
 	buildCostEnergy=3996;//#AUTO#

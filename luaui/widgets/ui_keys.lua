@@ -288,7 +288,7 @@ function widget:KeyPress(key, mods, isRepeat)
 	elseif (key == KEYSYMS.F4) then
 		Spring.SendCommands("showmetalmap")
 	elseif (key == KEYSYMS.F10) then
-		Spring.SendCommands("screenshot png")
+		Spring.SendCommands("screenshot png 100")
 	end
 end
 

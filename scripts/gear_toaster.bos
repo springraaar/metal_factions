@@ -3,9 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, stand, logo1, logo2, ldoor, rdoor, turret, slholder,sleeve, barrel, flare1, tlogo, s2,s3,left,right, aimpt;
+piece  base, stand, logo1, logo2, ldoor, rdoor, turret, slholder,sleeve, barrel, flare1, tlogo, s2,s3,left,right, aimpt,floatbase;
 
-static-var isOpen;
+static-var isOpen,isFloating;
 
 // Signal definitions
 #define SIG_AIM				2
@@ -50,8 +50,8 @@ open()
 		turn ldoor to z-axis <90.000000> speed <180.000000>;
 		wait-for-turn ldoor around z-axis;
 
-		move rdoor to y-axis  [-25.000000] speed [50.000000];
-		move ldoor to y-axis  [-25.000000] speed [50.000000];
+		move rdoor to y-axis  [-17.000000] speed [50.000000];
+		move ldoor to y-axis  [-17.000000] speed [50.000000];
 		move stand to y-axis [27.000000] speed [80.000000];
 		move slholder to y-axis [0.000000] speed [38.000000];
 		wait-for-move ldoor along y-axis;
@@ -138,7 +138,15 @@ checkClose(fireState,previousFireState)
 
 Create()
 {
-	dont-cache flare1;
+	hide floatbase;
+	isFloating = FALSE;
+	if ( GET GROUND_WATER_HEIGHT(GET UNIT_XZ) < [0])
+	{
+		isFloating = TRUE;
+		show floatbase;
+		move base to y-axis [2] now;
+	}
+	
 	move aimpt to y-axis [35.000000] now;
 	move slholder to y-axis [-5.000000] now;
 	turn slholder to x-axis <90.000000> now;
@@ -149,6 +157,19 @@ Create()
 	start-script close();
 	start-script checkClose();
 	return (0);
+}
+
+RockUnit(anglex, anglez)
+{
+	if (isFloating)
+	{
+		turn base to x-axis anglex speed <40.005495>;
+		turn base to z-axis <0>-anglez speed <40.005495>;
+		wait-for-turn base around z-axis;
+		wait-for-turn base around x-axis;
+		turn base to z-axis <0.000000> speed <10.000000>;
+		turn base to x-axis <0.000000> speed <10.000000>;
+	}
 }
 
 AimPrimary(heading, pitch)
@@ -189,25 +210,30 @@ QueryPrimary(piecenum)
 	return (0);	
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = sleeve;
-	return (0);
-}
 
 Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
+		if (isFloating) 
+		{
+			corpsetype = 1;
+		}
+		if (!isFloating) 
+		{
+			corpsetype = 2;
+		}
+		explode turret type SHATTER;
 		explode sleeve type SHATTER;
 		explode barrel type SHATTER;
-		return (1);
+		return corpsetype;
 	}
+	
 	explode sleeve type SHATTER;
 	explode tlogo type SHATTER;
 	explode base type SHATTER;
 	explode stand type SHATTER;
 	explode turret type SHATTER;
 	explode barrel type SHATTER;
-	return (2);
+	return (3);
 }

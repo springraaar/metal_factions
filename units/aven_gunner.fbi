@@ -58,7 +58,8 @@
 	//  Movement
 	//************
 	maxSlope=20;
-	maxWaterDepth=11;
+	floater=1;
+	waterline=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -83,10 +84,9 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	digger=1;
 	collisionVolumeType=CylY;
-	collisionVolumeScales=38 46 38;
-	collisionVolumeOffsets=0 0 0;
+	collisionVolumeScales=40 50 40;
+	collisionVolumeOffsets=0 -2 0;
 	collisionVolumeTest = 1;
 
 	[SFXTypes]

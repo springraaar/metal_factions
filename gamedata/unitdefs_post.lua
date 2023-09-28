@@ -208,6 +208,7 @@ local selfDUnits = {
 	gear_mine = true,
 	gear_grenado = true,
 	gear_exploder = true,
+	gear_hellburner = true,
 	-- CLAW
 	claw_commander = true,
 	claw_u1commander = true,

@@ -1,0 +1,119 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Hellburner;
+	description=Fast Assault/Kamikaze Ship;
+	iconType=shipkamikaze;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_hellburner;
+	objectName=gear_hellburner.3do;
+	buildPic=gear_hellburner.png;
+	soundCategory=gear_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=5800;
+	footprintx=4;
+	footprintz=4;
+	flankingBonusMode=3;
+	flankingBonusMax=1.33;
+	flankingBonusMin=0.75;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	floater=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=LARGEBOAT;
+	turnRate=164;
+	acceleration=0.03;
+	brakeRate=0.005;
+	maxVelocity=1.75;
+	minwaterdepth=30;
+	waterline=1;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=600;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_hellburner_flamethrower;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=HELLBURNER_BLAST;
+	selfDestructAs=HELLBURNER_BLAST;
+	selfDestructCountdown=0.5;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =45 50 70;
+	collisionVolumeOffsets = 0 -14 0;
+	collisionVolumeTest = 1;
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:FireFlare;
+	}
+	[CustomParams]
+	{
+		builtBy=gear_adv_shipyard;
+		evalfactor=0.85;//SHIP
+		tip=use CTRL-D to self-destruct and deal up to 3200(H) damage in a wide area. +/-25% front-to-back dmg resistance. Targets burn for 210(M) dmg over 7s;
+		offensiveExplosion=1;
+	}
+	buildCostEnergy=11220;//#AUTO#
+	buildCostMetal=2244;//#AUTO#
+	buildTime=26741;//#AUTO#
+	mass=3516;//#AUTO#
+}

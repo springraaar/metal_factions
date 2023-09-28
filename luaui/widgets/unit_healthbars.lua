@@ -1,15 +1,3 @@
--- $Id: unit_healthbars.lua 4481 2009-04-25 18:38:05Z carrepairer $
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
---
---  author:  jK
---
---  Copyright (C) 2007,2008,2009.
---  Licensed under the terms of the GNU GPL, v2 or later.
---
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
-
 function widget:GetInfo()
   return {
     name      = "HealthBars",
@@ -22,22 +10,20 @@ function widget:GetInfo()
   }
 end
 
--- nov 2016 : added green glow overlay for morphing units
--- may 2015 : make sure reload bar is presented to highest reload time weapon (not primary weapon, as that was unreliable)
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
 local barHeight = 3
 local barWidth  = 14  --// (barWidth)x2 total width!!!
-local barAlpha  = 0.9
+local barAlpha  = 1
 
 local featureBarHeight = 3
 local featureBarWidth  = 10
-local featureBarAlpha  = 0.9
+local featureBarAlpha  = 1
 
 local drawBarTitles = true
-local titlesAlpha   = 0.9*barAlpha
+local titlesAlpha   = barAlpha
 
 local drawFullHealthBars = false
 
@@ -119,11 +105,14 @@ local barFeatureDList
 
 local unitArmorTypeTable = {}
 
+local isAMDGPU = Platform.glHaveAMD
+
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
 --// speedup (there are a lot more localizations, but they are in limited scope cos we are running out of upvalues)
 local glColor         = gl.Color
+local glVertex         = gl.Vertex
 local glMyText        = gl.FogCoord
 local floor           = math.floor
 local spGetGameFrame = Spring.GetGameFrame 
@@ -143,6 +132,28 @@ do
     end
   end
 end --//end do
+
+function barGL(width,height,y)
+	if not y then
+		y = 0
+	end
+	glColor(bBorder)	-- color irrelevant here
+	glVertex(-width,y,        0,0)
+	glVertex(-width,y,        width*2,0)
+	glVertex(-width,y+height,width*2,0)
+	glVertex(-width,y+height,0,0)
+end
+
+function barBackGL(width,height,y)
+	if not y then
+		y = 0
+	end
+	glColor(bBorder)
+	glVertex(-width-bBorderThickness,y+height+bBorderThickness,0,1)
+	glVertex(width+bBorderThickness,y+height+bBorderThickness,0,1)
+	glVertex(width+bBorderThickness,y-bBorderThickness,0,1)
+	glVertex(-width-bBorderThickness,y-bBorderThickness,0,1)
+end
 
 function widget:Initialize()
   --// catch f9
@@ -241,34 +252,13 @@ function widget:Initialize()
 
     if (barShader) then
       barDList = gl.CreateList(function()
-        gl.BeginEnd(GL.QUADS,function()
-          
-          gl.Color(bBorder);
-          gl.Vertex(-barWidth-bBorderThickness,barHeight+bBorderThickness,0,1);
-          gl.Vertex(barWidth+bBorderThickness,barHeight+bBorderThickness,0,1);
-          gl.Vertex(barWidth+bBorderThickness,0-bBorderThickness,0,1);
-          gl.Vertex(-barWidth-bBorderThickness,0-bBorderThickness,0,1);
-          
-          gl.Vertex(-barWidth,0,        0,0);
-          gl.Vertex(-barWidth,0,        barWidth*2,0);
-          gl.Vertex(-barWidth,barHeight,barWidth*2,0);
-          gl.Vertex(-barWidth,barHeight,0,0);
-        end)
+        gl.BeginEnd(GL.QUADS,barBackGL,barWidth,barHeight,nil)
+        gl.BeginEnd(GL.QUADS,barGL,barWidth,barHeight,nil)
       end)
 
       barFeatureDList = gl.CreateList(function()
-        gl.BeginEnd(GL.QUADS,function()
-          gl.Color(bBorder);
-          gl.Vertex(-featureBarWidth-bBorderThickness,featureBarHeight+bBorderThickness,0,1);
-          gl.Vertex(featureBarWidth+bBorderThickness,featureBarHeight+bBorderThickness,0,1);
-          gl.Vertex(featureBarWidth+bBorderThickness,0-bBorderThickness,0,1);
-          gl.Vertex(-featureBarWidth-bBorderThickness,0-bBorderThickness,0,1);
-
-          gl.Vertex(-featureBarWidth,0,               0,0);
-          gl.Vertex(-featureBarWidth,0,               featureBarWidth*2,0);
-          gl.Vertex(-featureBarWidth,featureBarHeight,featureBarWidth*2,0);
-          gl.Vertex(-featureBarWidth,featureBarHeight,0,0);
-        end)
+        gl.BeginEnd(GL.QUADS,barBackGL,featureBarWidth,featureBarHeight,nil)
+        gl.BeginEnd(GL.QUADS,barGL,featureBarWidth,featureBarHeight,nil)
       end)
     end
   end
@@ -354,13 +344,13 @@ do
       glMultiTexCoord(1,color)
       glMultiTexCoord(2,percent,offsetY)
       glCallList(barDList)
-      return;
+      return
     end
 
     brightClr[1] = color[1]*1.5; brightClr[2] = color[2]*1.5; brightClr[3] = color[3]*1.5; brightClr[4] = color[4]
-    local progress_pos= -barWidth+barWidth*2*percent-1
+    local progress_pos= -barWidth+barWidth*2*percent
     local bar_Height  = barHeight+offsetY
-    if percent<1 then glBeginEnd(GL_QUADS,DrawGradient,progress_pos, bar_Height, barWidth, offsetY, bkTop,bkBottom) end
+    glBeginEnd(GL_QUADS,barBackGL,barWidth,barHeight,offsetY)
     glBeginEnd(GL_QUADS,DrawGradient,-barWidth, bar_Height, progress_pos, offsetY,brightClr,color)
   end
 
@@ -369,12 +359,12 @@ do
       glMultiTexCoord(1,color)
       glMultiTexCoord(2,percent,offsetY)
       glCallList(barFeatureDList)
-      return;
+      return
     end
 
     brightClr[1] = color[1]*1.5; brightClr[2] = color[2]*1.5; brightClr[3] = color[3]*1.5; brightClr[4] = color[4]
     local progress_pos = -featureBarWidth+featureBarWidth*2*percent
-    glBeginEnd(GL_QUADS,DrawGradient,progress_pos, featureBarHeight+offsetY, featureBarWidth, offsetY, fbkTop,fbkBottom)
+    glBeginEnd(GL_QUADS,barBackGL,featureBarWidth,featureBarHeight,offsetY)
     glBeginEnd(GL_QUADS,DrawGradient,-featureBarWidth, featureBarHeight+offsetY, progress_pos, offsetY, brightClr,color)
   end
 
