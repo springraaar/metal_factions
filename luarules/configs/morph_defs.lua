@@ -74,7 +74,15 @@ local morphDefs = {
 			energy = 10000,
 			metal = 1500,
 			text = 'Morph to Gamma Form : Laser skirmisher with increased range and firepower against heavy units.'
-		}
+		},
+		{
+			into = 'aven_u7commander',
+			time = 30,
+			cmdname = 'Psi Form',
+			energy = 10000,
+			metal = 1500,
+			text = 'Morph to Psi Form : Very fast raider/riot form with reduced range and build speed.'
+		},
 	},
 ------------------------------------------------ GEAR
 	gear_commander = 	{
@@ -125,7 +133,15 @@ local morphDefs = {
 			energy = 10000,
 			metal = 1500,
 			text = 'Morph to Blazer Form : Heavy fire support form with dual Heat Rays. Greatly increased firepower and range.'
-		}
+		},
+		{
+			into = 'gear_u7commander',
+			time = 30,
+			cmdname = 'Battler Form',
+			energy = 10000,
+			metal = 1500,
+			text = 'Morph to Battler Form : Versatile brawler with slightly increased speed, HP and Cannon+Laser+Flare weapon mix.'
+		}		
 
 	},	
 ------------------------------------------------ CLAW
@@ -177,6 +193,14 @@ local morphDefs = {
 			energy = 10000,
 			metal = 1500,
 			text = 'Morph to Slayer Form : Greatly increased speed and firepower. Reduced range.'
+		},
+		{
+			into = 'claw_u7commander',
+			time = 30,
+			cmdname = 'Blaster Form',
+			energy = 10000,
+			metal = 1500,
+			text = 'Morph to Blaster Form : Riot form with greatly increased AOE. Slower speed.'
 		}
 	},
 	claw_tombstone = {
@@ -238,7 +262,15 @@ local morphDefs = {
 			energy = 10000,
 			metal = 1500,
 			text = 'Morph to Nova Form : Weapon has huge area of effect and can shoot in high-trajectory mode. Heavy armor. Slower speed.'
-		}		
+		},
+		{
+			into = 'sphere_u7commander',
+			time = 30,
+			cmdname = 'Scrapper Form',
+			energy = 10000,
+			metal = 1500,
+			text = 'Morph to Scrapper Form : Fast raider/assault with high dmg/s but low range and anti-air ability.'
+		},
 	},
 	sphere_emerald_sphere = {
 		{

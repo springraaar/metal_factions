@@ -96,12 +96,20 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 			mASpdFactor = 3 * SPEEDUP_FACTOR / 4;
 		}
 		
-		// these are doubled relative to normal walk piece turn speeds
+		// these are doubled relative to normal walk piece turn speeds when running
 		mAMoveSpd1 = [20.000000] * mASpdFactor / 50;
-		mATurnSpd1 = <315.000000> * (100 + mASpdFactor) / 100;
-		mATurnSpd2 = <200.000000> * (100 + mASpdFactor) / 100;
-		mATurnSpd3 = <50.000000> * (100 + mASpdFactor) / 100;
-	
+		if (shouldRun)
+		{
+			mATurnSpd1 = <315.000000> * (100 + mASpdFactor) / 100;
+			mATurnSpd2 = <200.000000> * (100 + mASpdFactor) / 100;
+			mATurnSpd3 = <50.000000> * (100 + mASpdFactor) / 100;
+		}
+		else
+		{
+			mATurnSpd1 = <315.000000> * (100 + mASpdFactor) / 200;
+			mATurnSpd2 = <200.000000> * (100 + mASpdFactor) / 200;
+			mATurnSpd3 = <50.000000> * (100 + mASpdFactor) / 200;
+		}
 		mAVertFactor = [-2];
 		legAngle1 = <40.000000>;
 		legAngle2 = <20.000000>;

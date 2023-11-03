@@ -791,7 +791,7 @@ function generateNewTooltip()
 				if spGetUnitIsCloaked(u) then
 					newTooltip = newTooltip.."\255\170\170\170   CLOAKED"
 				end        
-				if tonumber(ud.stealth) == 1 or spGetUnitRulesParam(u,"stealth") == 1 then
+				if ud.stealth == true or spGetUnitRulesParam(u,"stealth") == 1 then
 					newTooltip = newTooltip.."\255\200\150\150   STEALTH"
 				end        
 

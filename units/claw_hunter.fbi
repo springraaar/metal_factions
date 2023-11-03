@@ -63,8 +63,8 @@
 	//************
 	movementClass=smallboat;
 	turnRate=650;
-	acceleration=0.8;
-	brakeRate=0.015;
+	acceleration=0.4;
+	brakeRate=0.03;
 	maxVelocity=2.5;
 	minwaterdepth=12;
 	waterline=0;
@@ -105,8 +105,8 @@
 		evalfactor=0.85;//SHIP
 	}
 
-	buildCostEnergy=2406;//#AUTO#
-	buildCostMetal=481;//#AUTO#
-	buildTime=5735;//#AUTO#
-	mass=560;//#AUTO#
+	buildCostEnergy=2355;//#AUTO#
+	buildCostMetal=471;//#AUTO#
+	buildTime=5613;//#AUTO#
+	mass=557;//#AUTO#
 }

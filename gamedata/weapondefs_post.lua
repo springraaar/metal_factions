@@ -221,7 +221,7 @@ for wdName, wd in pairs(WeaponDefs) do
 	-- without this it would only run twice per second (?)
 	-- wd.allownonblockingaim = 1
 	if (wd.tolerance ~= nil and wd.range ~= nil) then
-		wd.firetolerance = 32000 -- wd.tolerance * 0.5
+		wd.firetolerance = math.max(tonumber(wd.tolerance),8000)
 	end
 	if not (wd.customparams) then
 		wd.customparams = {}

@@ -590,17 +590,20 @@ FireSecondary()
 {
 	if (gun_2 == [0]) {
 		move ltorpedo to z-axis [-3.500000] now;
-		sleep 1000;
-		move ltorpedo to z-axis [0.000000] speed [9.000000];
+		sleep 100;
 		gun_2 = [1];
+		sleep 500;
+		move ltorpedo to z-axis [0.000000] speed [9.000000];
+		
 		return;
 	}
 
 	if (gun_2 == [1]) {
 		move rtorpedo to z-axis [-3.500000] now;
-		sleep 1000;
-		move rtorpedo to z-axis [0.000000] speed [9.000000];
+		sleep 100;
 		gun_2 = [0];
+		sleep 500;
+		move rtorpedo to z-axis [0.000000] speed [9.000000];
 		return;
 	}
 }

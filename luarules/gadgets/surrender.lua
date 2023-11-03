@@ -14,6 +14,7 @@ include("LuaLibs/Util.lua")
 
 
 local spSetTeamRulesParam = Spring.SetTeamRulesParam
+local spSetTeamShareLevel = Spring.SetTeamShareLevel 
 
 local SURRENDER_THRESHOLD = 0.040 -- 4% of the "strength" of the strongest team
 local AI_SURRENDER_FACTOR = 0.5
@@ -60,8 +61,8 @@ function gadget:GameFrame(n)
 		
 		for i=1,#allyTeamList do
 			local aId = allyTeamList[i]
-	        unitCostPerAllyTeam[aId] = 0
-	        aliveCommandersPerAllyTeam[aId] = 0
+			unitCostPerAllyTeam[aId] = 0
+			aliveCommandersPerAllyTeam[aId] = 0
 		end
 		
 		local allyId = 0
@@ -77,25 +78,25 @@ function gadget:GameFrame(n)
 		    	allyId = Spring.GetUnitAllyTeam(uId)
 		    	udId = Spring.GetUnitDefID(uId)
 				if (not unitDefIdsToIgnore[udId]) then
-		    		ud = UnitDefs[udId]
-		    		cost = getWeightedCost(ud)
-		    	
-			    	unitCostPerAllyTeam[allyId] = unitCostPerAllyTeam[allyId] + cost
-		    		if (isCommander(ud)) then
-			    		teamCommanderIds[teamId] = uId
-		    			aliveCommandersPerAllyTeam[allyId] = aliveCommandersPerAllyTeam[allyId] + 1 
-		    		end
-		    	end
-	    	end
-	    end
-	    
-
+					ud = UnitDefs[udId]
+					cost = getWeightedCost(ud)
+					
+					unitCostPerAllyTeam[allyId] = unitCostPerAllyTeam[allyId] + cost
+					if (isCommander(ud)) then
+						teamCommanderIds[teamId] = uId
+						aliveCommandersPerAllyTeam[allyId] = aliveCommandersPerAllyTeam[allyId] + 1 
+					end
+				end
+			end
+		end
+		
+		
 		for _,allyId in ipairs(allyTeamList) do
 			if (unitCostPerAllyTeam[allyId] > maxAllyTeamCost) then
 				maxAllyTeamCost = unitCostPerAllyTeam[allyId]
 			end 
 		end
-
+		
 		local teamList = spGetTeamList()
 		for i=1,#teamList do
 			local id = teamList[i]
@@ -119,20 +120,26 @@ function gadget:GameFrame(n)
 						end
 					end
 		        end
-		        --Spring.Echo('team '..tostring(id).. ' has leader '..tostring(leaderId))
-		        -- when a player resigns, explode its commander
-		        if (leaderId < 0 and teamCommanderIds[id] and teamCommanderIds[id] > 0) then
-		        	spDestroyUnit(teamCommanderIds[id])
+				--Spring.Echo('team '..tostring(id).. ' has leader '..tostring(leaderId))
+				-- when a player resigns, explode its commander
+				if ((isDead or leaderId < 0) and teamCommanderIds[id] and teamCommanderIds[id] > 0) then
+					spDestroyUnit(teamCommanderIds[id])
+		        end
+
+				-- set resource sharing threshold to minimum for dead teams to let allies spend its stores		        
+		        if isDead then
+					spSetTeamShareLevel( id, "metal", 0) 
+					spSetTeamShareLevel( id, "energy", 0)		        
 		        end
 		        
-		        local teamValueMod = aliveCommandersPerAllyTeam[allyId] > 0 and 1 or NO_COMMANDER_SURRENDER_FACTOR
-		        teamValueMod = teamValueMod * (isAI and AI_SURRENDER_FACTOR or 1)   
-		        if playersDisconnected then
-		        	teamValueMod = teamValueMod * DISCONNECT_SURRENDER_FACTOR
-		        end
+				local teamValueMod = aliveCommandersPerAllyTeam[allyId] > 0 and 1 or NO_COMMANDER_SURRENDER_FACTOR
+				teamValueMod = teamValueMod * (isAI and AI_SURRENDER_FACTOR or 1)   
+				if playersDisconnected then
+					teamValueMod = teamValueMod * DISCONNECT_SURRENDER_FACTOR
+				end
 		        
-		        if maxAllyTeamCost > 0 and not isDead then 
-			        teamValueMod = teamValueMod * unitCostPerAllyTeam[allyId] / maxAllyTeamCost
+				if maxAllyTeamCost > 0 and not isDead then 
+					teamValueMod = teamValueMod * unitCostPerAllyTeam[allyId] / maxAllyTeamCost
 			        
 					-- if severely disadvantaged, surrender        
 					if teamValueMod < SURRENDER_THRESHOLD then

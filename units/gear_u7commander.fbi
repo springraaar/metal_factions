@@ -1,0 +1,155 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Commander;
+	description=Battler Form;
+	iconType=gear_commander;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR COMMANDER LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_u7commander;
+	objectName=gear_u7commander.3do;
+	buildPic=gear_u7commander.png;
+	soundCategory=gear_COM;
+	corpse=gear_u7commander_dead;
+	script=gear_u7commander.cob;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=4050;
+	buildcostmetal=2000;
+	buildcostenergy=20000;
+	buildtime=30000;
+	footprintx=3;
+	footprintz=3;
+	mass=2000;
+	reclaimable=0;
+	capturable=0;
+	power=3750;
+	
+	//************************************************************
+	//  Resources
+	//*************
+	metalMake=0;
+	energyMake=30;
+	energyUse=0;
+	metalStorage=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=1;
+	buildDistance=200;
+	workerTime=300;
+        repairSpeed=300;
+        reclaimSpeed=300;
+        terraformSpeed=600;
+        capturespeed=200;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	cancapture=1;
+	candgun=0;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	upright=1;
+	autoheal=12;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=KBOTDS2;
+	turnRate=1100;
+	acceleration=0.65;
+	brakeRate=0.32;
+	maxVelocity=1.56;
+	maxSlope=20;
+	maxWaterDepth=35;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=800;
+	sonarDistance=800;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_u7commander_cannon;
+	weapon2=gear_u7commander_torpedo;
+	weapon3=gear_u7commander_laser;
+	weapon4=gear_u7commander_flare;
+	noChaseCategory=VTOL;
+	onlytargetcategory2=NOTAIR;
+	badTargetCategory1=VTOL;
+	badTargetCategory3=NOTAIR;
+	badTargetCategory4=NOTAIR;
+	explodeAs=gear_commander_nanoblast;
+	selfDestructAs=gear_commander_nanoblast;
+
+	//************************************************************
+	//  Orders
+	//**********
+	moveState=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	cloakCost=50;
+	cloakCostMoving=150;
+	hideDamage=0;
+	minCloakDistance=170;
+	showPlayerName=1;
+	leavetracks=1;
+	trackoffset=0;
+	trackstrength=8;
+	trackstretch=1;
+	tracktype=ComTrack;
+	trackwidth=22;
+	collisionVolumeType = box;
+	collisionVolumeScales =36 45 32;
+	collisionVolumeOffsets = 0 1 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		buildertype=gear_l1builder;
+		isCommander=1;
+		canJump=1;
+		jumpType=commander;
+		jumpMod=1.0;
+		manualCost=1;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:yellowflaremed;
+		explosionGenerator1=custom:Nano;
+		explosionGenerator2=custom:rocketflaresml;
+		explosionGenerator3=custom:JUMPASC;
+		explosionGenerator4=custom:JUMPASC2;
+		explosionGenerator5=custom:JUMPDESC;
+		explosionGenerator6=custom:JUMPDESC2;
+		explosionGenerator7=custom:glowsml;
+	}
+}

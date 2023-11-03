@@ -91,7 +91,9 @@ effectUnitDefs = {
   sphere_u6commander = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
   },
-  
+  sphere_u7commander = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },  
   --// AIRCRAFT JETS (and air shields)//----------------------------
 
   ----------------- AVEN

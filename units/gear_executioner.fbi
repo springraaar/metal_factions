@@ -62,9 +62,9 @@
 	//  Movement
 	//************
 	movementClass=LARGEBOAT;
-	turnRate=164;
-	acceleration=0.03;
-	brakeRate=0.005;
+	turnRate=250;
+	acceleration=0.1;
+	brakeRate=0.04;
 	maxVelocity=1.75;
 	minwaterdepth=30;
 	waterline=1;
@@ -82,10 +82,10 @@
 	weapon1=gear_executioner_cannon;
 	weapon3=COREDEPTHCHARGE;
 	noChaseCategory=VTOL;
-	badTargetCategory1=VTOL;
+	onlyTargetCategory1=NOTAIR;
 	onlytargetcategory3=NOTAIR;
 	explodeAs=HUGE_UNIT;
-	selfDestructAs=CRAWL_BLASTSML;
+	selfDestructAs=HUGE_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -113,8 +113,8 @@
 		canAreaAttack=1;
 		evalfactor=0.85;//SHIP
 	}
-	buildCostEnergy=17241;//#AUTO#
-	buildCostMetal=3448;//#AUTO#
-	buildTime=41093;//#AUTO#
-	mass=4158;//#AUTO#
+	buildCostEnergy=17528;//#AUTO#
+	buildCostMetal=3505;//#AUTO#
+	buildTime=41775;//#AUTO#
+	mass=4189;//#AUTO#
 }

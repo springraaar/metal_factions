@@ -5,13 +5,13 @@
 	//********************
 	side=Claw;
 	name=Cleaver;
-	description=Amphibious Heavy Support Tank;
-	iconType=amphibartilleryfs;
+	description=Fast Assault Ship;
+	iconType=shipassault;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
+	category=CLAW LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
@@ -20,14 +20,17 @@
 	objectName=claw_cleaver.3do;
 	corpse=claw_cleaver_dead;
 	buildPic=claw_cleaver.png;
-	soundCategory=CLAW_TANKBIG;
+	soundCategory=gear_SHIP;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=3200;
-	footprintx=3;
-	footprintz=3;
+	maxDamage=4250;
+	footprintx=4;
+	footprintz=4;
+	flankingBonusMode=3;
+	flankingBonusMax=1.33;
+	flankingBonusMin=0.75;
 
 	//************************************************************
 	//  Resources
@@ -40,6 +43,7 @@
 	//************************************************************
 	//  Building
 	//************
+	activateWhenBuilt=1;
 
 	//************************************************************
 	//  Constructor
@@ -55,33 +59,36 @@
 	canMove=1;
 	canPatrol=1;
 	canStop=1;
+	floater=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementClass=TANKDH4;
-	turnRate=500;
-	acceleration=0.05;
-	brakeRate=0.06;
-	maxVelocity=1.45;
-	maxSlope=12;
-	maxWaterDepth=0;
+	movementClass=smallboat;
+	turnRate=480;
+	acceleration=0.25;
+	brakeRate=0.03;
+	maxVelocity=2.3;
+	minwaterdepth=12;
+	waterline=0;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
 	//*********************
 	sightDistance=500;
 	radarDistance=0;
+	sonarDistance=450;
 
 	//************************************************************
 	//  Weapons
 	//***********
 	weapon1=claw_cleaver_cannon;
-	onlyTargetCategory1=NOTAIR;
+	weapon2=claw_cleaver_depthcharge;
 	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	onlyTargetCategory2=NOTAIR;
 	explodeAs=BIG_UNITEX;
 	selfDestructAs=BIG_UNIT;
-	
 
 	//************************************************************
 	//  Orders
@@ -91,28 +98,24 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	leavetracks=1;
-	trackoffset=5;
-	trackstrength=6;
-	trackstretch=1;
-	tracktype=StdTank;
-	trackwidth=33;
+	scale=0.6;
 	collisionVolumeType = box;
-	collisionVolumeScales =38 26 50;
-	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeScales =35 40 60;
+	collisionVolumeOffsets = 0 -10 0;
 	collisionVolumeTest = 1;
-
 
 	[CustomParams]
 	{
-		builtBy=claw_adv_vehicle_plant;
+		builtBy=claw_adv_shipyard;
+		tip=+25% dmg resistance on front, -25% when hit from behind;
+		evalfactor=0.85;//SHIP
 	}
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:yellowflaremed;
 	}
-	buildCostEnergy=9108;//#AUTO#
-	buildCostMetal=1821;//#AUTO#
-	buildTime=21708;//#AUTO#
-	mass=2251;//#AUTO#
+	buildCostEnergy=6239;//#AUTO#
+	buildCostMetal=1247;//#AUTO#
+	buildTime=14870;//#AUTO#
+	mass=2365;//#AUTO#
 }

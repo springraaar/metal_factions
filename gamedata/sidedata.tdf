@@ -448,8 +448,9 @@
 		canbuild14=aven_valiant;
 		canbuild15=aven_catfish;
 		canbuild16=aven_conqueror;
-		canbuild17=aven_emperor;
-		canbuild18=aven_standoff_ns;
+		canbuild17=aven_intrepid;
+		canbuild18=aven_emperor;
+		canbuild19=aven_standoff_ns;
 	}
 	[aven_adv_vehicle_plant]
 	{
@@ -1957,6 +1958,48 @@
 		canbuild38=gear_burner;
 		canbuild39=gear_long_range_rocket_platform;
 	}
+	[gear_u7commander]
+	{
+		canbuild1=gear_metal_extractor;
+		canbuild2=gear_solar_collector;
+		canbuild3=gear_mass_burner;
+		canbuild4=gear_wind_generator;
+		canbuild5=gear_energy_storage;
+		canbuild6=gear_metal_storage;
+		canbuild7=gear_power_node;
+		canbuild8=gear_scout_pad;
+		canbuild9=gear_light_plant;
+		canbuild10=gear_aircraft_plant;
+		canbuild11=gear_shipyard;
+		canbuild12=gear_mine;
+		canbuild13=gear_incendiary_mine;
+		canbuild14=gear_light_laser_tower;
+		canbuild15=gear_lobber;
+		canbuild16=gear_radar_tower;
+		canbuild17=gear_adv_kbot_lab;
+		canbuild18=gear_hydrobot_plant;
+		canbuild19=gear_geothermal_powerplant;
+		canbuild20=gear_blaze;
+		canbuild21=gear_beamer;
+		canbuild22=gear_pulverizer;
+		canbuild23=gear_dragons_teeth;
+		canbuild24=gear_fortification_wall;
+		canbuild25=gear_large_fortification_wall;
+		canbuild26=gear_fortification_gate;
+		canbuild27=gear_toaster;
+		canbuild28=gear_comsat_station;
+		canbuild29=gear_sonar_station;
+		canbuild30=gear_tidal_generator;
+		canbuild31=gear_torpedo_launcher;
+		canbuild32=gear_adv_vehicle_plant;
+		canbuild33=gear_adv_aircraft_plant;
+		canbuild34=gear_adv_shipyard;
+		canbuild35=gear_commander_respawner;
+		canbuild36=gear_upgrade_center;
+		canbuild37=gear_nano_tower;
+		canbuild38=gear_burner;
+		canbuild39=gear_long_range_rocket_platform;
+	}	
 	[gear_construction_ship]
 	{
 		canbuild1=gear_metal_extractor;
@@ -2514,6 +2557,46 @@
 		canbuild36=claw_nano_tower;
 		canbuild37=claw_long_range_rocket_platform;
 	}
+	[claw_u7commander]
+	{
+		canbuild1=claw_metal_extractor;
+		canbuild2=claw_solar_collector;
+		canbuild3=claw_wind_generator;
+		canbuild4=claw_energy_storage;
+		canbuild5=claw_metal_storage;
+		canbuild6=claw_power_node;
+		canbuild7=claw_totem;
+		canbuild8=claw_tombstone;
+		canbuild9=claw_scout_pad;
+		canbuild10=claw_light_plant;
+		canbuild11=claw_aircraft_plant;
+		canbuild12=claw_shipyard;
+		canbuild13=claw_drill;
+		canbuild14=claw_cache;
+		canbuild15=claw_hazard;
+		canbuild16=claw_radar_tower;
+		canbuild17=claw_adv_kbot_plant;
+		canbuild18=claw_geothermal_powerplant;
+		canbuild19=claw_piercer;
+		canbuild20=claw_gemini;
+		canbuild21=claw_dragons_teeth;
+		canbuild22=claw_fortification_wall;
+		canbuild23=claw_large_fortification_wall;
+		canbuild24=claw_fortification_gate;
+		canbuild25=claw_thumper;
+		canbuild26=claw_comsat_station;
+		canbuild27=claw_sonar_station;
+		canbuild28=claw_tidal_generator;
+		canbuild29=claw_sinker;
+		canbuild30=claw_adv_vehicle_plant;
+		canbuild31=claw_adv_aircraft_plant;
+		canbuild32=claw_adv_shipyard;
+		canbuild33=claw_spinbot_plant;
+		canbuild34=claw_commander_respawner;
+		canbuild35=claw_upgrade_center;
+		canbuild36=claw_nano_tower;
+		canbuild37=claw_long_range_rocket_platform;
+	}	
 	[claw_nano_tower]
 	{
 		canbuild1=claw_metal_extractor;
@@ -3125,14 +3208,15 @@
 		canbuild7=claw_sword;
 		canbuild8=claw_negator;
 		canbuild9=claw_explorer;
-		canbuild10=claw_maul;
-		canbuild11=claw_pounder_ns;
-		canbuild12=claw_monster;
-		canbuild13=claw_bullfrog;
-		canbuild14=claw_phalanx;
-		canbuild15=claw_drakkar;
-		canbuild16=claw_wrecker;
-		canbuild17=claw_longhorn_ns;
+		canbuild10=claw_cleaver;
+		canbuild11=claw_maul;
+		canbuild12=claw_pounder_ns;
+		canbuild13=claw_monster;
+		canbuild14=claw_bullfrog;
+		canbuild15=claw_phalanx;
+		canbuild16=claw_drakkar;
+		canbuild17=claw_wrecker;
+		canbuild18=claw_longhorn_ns;
 	}
 	[claw_spinbot_plant]
 	{
@@ -3413,6 +3497,45 @@
 		canbuild36=sphere_long_range_rocket_platform;
 	}
 	[sphere_u6commander]
+	{
+		canbuild1=sphere_metal_extractor;
+		canbuild2=sphere_fusion_reactor;
+		canbuild3=sphere_hardened_fission_reactor;
+		canbuild4=sphere_wind_generator;
+		canbuild5=sphere_energy_storage;
+		canbuild6=sphere_metal_storage;
+		canbuild7=sphere_power_node;
+		canbuild8=sphere_scout_pad;
+		canbuild9=sphere_light_factory;
+		canbuild10=sphere_aircraft_factory;
+		canbuild11=sphere_shipyard;
+		canbuild12=sphere_stir;
+		canbuild13=sphere_slugger;
+		canbuild14=sphere_shooter;
+		canbuild15=sphere_radar_tower;
+		canbuild16=sphere_adv_kbot_factory;
+		canbuild17=sphere_geothermal_powerplant;
+		canbuild18=sphere_shine;
+		canbuild19=sphere_lancer;
+		canbuild20=sphere_dragons_teeth;
+		canbuild21=sphere_fortification_wall;
+		canbuild22=sphere_large_fortification_wall;
+		canbuild23=sphere_fortification_gate;
+		canbuild24=sphere_stout;
+		canbuild25=sphere_comsat_station;
+		canbuild26=sphere_sonar_station;
+		canbuild27=sphere_tidal_generator;
+		canbuild28=sphere_clam;
+		canbuild29=sphere_adv_vehicle_factory;
+		canbuild30=sphere_adv_aircraft_factory;
+		canbuild31=sphere_adv_shipyard;
+		canbuild32=sphere_sphere_factory;
+		canbuild33=sphere_commander_respawner;
+		canbuild34=sphere_upgrade_center;
+		canbuild35=sphere_pole;
+		canbuild36=sphere_long_range_rocket_platform;
+	}
+	[sphere_u7commander]
 	{
 		canbuild1=sphere_metal_extractor;
 		canbuild2=sphere_fusion_reactor;

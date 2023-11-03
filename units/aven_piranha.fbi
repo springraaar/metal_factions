@@ -5,7 +5,7 @@
 	//********************
 	side=Aven;
 	name=Piranha;
-	description=Heavy Attack Submarine;
+	description=Fire Support Submarine;
 	iconType=subartilleryfs;
 
 	//************************************************************
@@ -63,9 +63,9 @@
 	//  Movement
 	//************
 	movementClass=BOATSUB5;
-	turnRate=389;
+	turnRate=500;
 	acceleration=0.2;
-	brakeRate=0.1;
+	brakeRate=0.07;
 	maxVelocity=1.8;
 	maxreversevelocity=0.9;
 	minwaterdepth=15;
@@ -109,8 +109,8 @@
 		explosionGenerator0=custom:ROCKETFLARESML;
 	}
 
-	buildCostEnergy=7261;//#AUTO#
-	buildCostMetal=1452;//#AUTO#
-	buildTime=17305;//#AUTO#
-	mass=909;//#AUTO#
+	buildCostEnergy=7300;//#AUTO#
+	buildCostMetal=1460;//#AUTO#
+	buildTime=17400;//#AUTO#
+	mass=911;//#AUTO#
 }

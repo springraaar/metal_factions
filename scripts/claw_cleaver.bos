@@ -3,20 +3,20 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define SPEEDUP_FACTOR 	80
-
 #define HEADING_TOLERANCE	<25>
 #define PITCH_TOLERANCE		<15>
 
-piece  gp, base, flash, turret, holder, sleeve, barrel,base2,farmor,barmor, t1, t2, t1cover,t2cover;
+piece  base, hull, turret, l1,l2,l3,l4, sleeve, barrel, flash, barrel2, flash2, wake1, wake2, front, fbottom, back, bbottom, chargept;
+
+static-var  gun_1;
 
 
 #include "aimhelper1.h"
 
 // Signal definitions
-#define SIG_AIM				2
+#define SIG_MOVE			2
+#define SIG_AIM				4
 
-#include "tankthreads.h"
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
@@ -43,33 +43,44 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 		}
 		sleep sleeptime;
 	}
-}
-
-RockUnit(anglex, anglez)
-{
-	anglex = anglex * 100/200;
-	anglez = anglez * 100/200;
-	turn base to x-axis anglex speed <40.005495>;
-	turn base to z-axis <0>-anglez speed <40.005495>;
-	wait-for-turn base around z-axis;
-	wait-for-turn base around x-axis;
-	turn base to z-axis <0.000000> speed <15.000000>;
-	turn base to x-axis <0.000000> speed <15.000000>;
+	return (0);
 }
 
 Create()
 {
 	call-script stopAimHelper1(<1000>,<1000>);
+	gun_1 = 0;
 	start-script SmokeUnit();
-	start-script AnimateTracks();
+	return (0);
 }
+
 
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
-	call-script stopAimHelper1(<90>,<90>);
-	turn turret to y-axis <0.000000> speed <90.016484>;
-	turn sleeve to x-axis <0.000000> speed <90.005495>;
+	call-script stopAimHelper1(<100>,<100>);
+	turn turret to y-axis <0.000000> speed <100.000000>;
+	turn sleeve to x-axis <0.000000> speed <100.000000>;
+	return (0);
+}
+
+StartMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while( TRUE )
+	{
+		emit-sfx 2 from wake1;
+		emit-sfx 2 from wake2;
+		sleep 450;
+	}
+	return (0);
+}
+
+StopMoving()
+{
+	signal SIG_MOVE;
+	return (0);
 }
 
 AimPrimary(heading, pitch)
@@ -77,7 +88,7 @@ AimPrimary(heading, pitch)
 	call-script updateAimHelper1(heading,pitch,<150>,<150>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
-	turn turret to y-axis heading speed <150.038462>;
+	turn turret to y-axis heading speed <150.000000>;
 	turn sleeve to x-axis <0.000000> - pitch speed <150.000000>;
 	if (!aimReady1)
 	{
@@ -90,37 +101,76 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	move barrel to z-axis [-6.000000] now;
-	emit-sfx 1024 from flash;
-	sleep 250;
-	move barrel to z-axis [0.000000] speed [10.000000];
+	if(gun_1 == 0)
+	{
+		move barrel to z-axis [-3.500000] now;
+		emit-sfx 1024 from flash;
+		sleep 100;
+		gun_1 = 1;
+		move barrel to z-axis [0.000000] speed [9.000000];
+	}
+	else
+	{
+		move barrel2 to z-axis [-3.500000] now;
+		emit-sfx 1024 from flash2;
+		sleep 100;
+		gun_1 = 0;
+		move barrel2 to z-axis [0.000000] speed [9.000000];
+	}
+	return (0);
 }
 
 AimFromPrimary(piecenum)
 {
 	piecenum = turret;
+	return (0);
 }
 
 QueryPrimary(piecenum)
 {
-	piecenum = flash;
+	if( gun_1 == 0) 
+	{
+		piecenum = flash;
+	}
+	else
+	{
+		piecenum = flash2;
+	}
 }
+
+
+AimSecondary(heading, pitch)
+{
+	return (1);
+}
+
+FireSecondary()
+{
+	return (0);
+}
+
+AimFromSecondary(piecenum)
+{
+	piecenum = chargept;
+	return (0);
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = chargept;
+}
+
 
 Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		explode barrel type SHATTER;
-		explode sleeve type SHATTER;
-		explode turret type SHATTER;
+		explode hull type SHATTER;
 		return (1);
 	}
-	explode barrel type SHATTER;
-	explode sleeve type SHATTER;
-	explode turret type SHATTER;
-	explode t1cover type SHATTER;
-	explode t2cover type SHATTER;
-	explode farmor type SHATTER;
-	explode barmor type SHATTER;
+	explode hull type SHATTER;
+	explode front type SHATTER;
+	explode back type SHATTER;
+	explode bbottom type SHATTER;
 	return (2);
 }

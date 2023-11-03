@@ -17,6 +17,7 @@ end
 local vignetteTexture	= ":n:"..LUAUI_DIRNAME.."Images/vignette.dds"
 local signTexture	= ":n:"..LUAUI_DIRNAME.."Images/commanderWarning.dds"
 
+
 local duration = 1.2
 local maxOpacity = 0.6
 local opacity = 0

@@ -63,9 +63,9 @@
 	//  Movement
 	//************
 	movementClass=BOATSUB;
-	turnRate=350;
-	acceleration=0.16;
-	brakeRate=0.1;
+	turnRate=500;
+	acceleration=0.2;
+	brakeRate=0.05;
 	maxVelocity=1.65;
 	maxreversevelocity=0.82;
 	minwaterdepth=20;
@@ -110,8 +110,8 @@
 		explosionGenerator0=custom:ROCKETFLARESML;
 	}
 
-	buildCostEnergy=1481;//#AUTO#
-	buildCostMetal=296;//#AUTO#
-	buildTime=3529;//#AUTO#
-	mass=174;//#AUTO#
+	buildCostEnergy=1507;//#AUTO#
+	buildCostMetal=301;//#AUTO#
+	buildTime=3591;//#AUTO#
+	mass=175;//#AUTO#
 }

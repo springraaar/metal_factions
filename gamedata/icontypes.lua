@@ -152,6 +152,12 @@ local _iconTypes = {
 		distance=1,
 		size=REF_SIZE
 	},
+	shipkamikaze={
+		bitmap="icons/shipkamikaze.tga",
+		radiusadjust=false,
+		distance=1,
+		size=REF_SIZE
+	},
 	sub={
 		bitmap="icons/sub.tga",
 		radiusadjust=false,

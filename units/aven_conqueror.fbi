@@ -62,9 +62,9 @@
 	//  Movement
 	//************
 	movementClass=LARGEBOAT;
-	turnRate=184;
-	acceleration=0.035;
-	brakeRate=0.005;
+	turnRate=300;
+	acceleration=0.1;
+	brakeRate=0.03;
 	maxVelocity=1.8;
 	minwaterdepth=30;
 	waterline=2;
@@ -82,10 +82,10 @@
 	weapon1=aven_conqueror_cannon;
 	weapon2=COREDEPTHCHARGE;
 	noChaseCategory=VTOL;
-	badTargetCategory1=VTOL;
-	onlytargetcategory2=NOTAIR;
+	onlyTargetCategory1=NOTAIR;
+	onlyTargetCategory2=NOTAIR;
 	explodeAs=HUGE_UNIT;
-	selfDestructAs=CRAWL_BLASTSML;
+	selfDestructAs=HUGE_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -113,8 +113,8 @@
 		evalfactor=0.85;//SHIP
 		canAreaAttack=1;
 	}
-	buildCostEnergy=15409;//#AUTO#
-	buildCostMetal=3081;//#AUTO#
-	buildTime=36726;//#AUTO#
-	mass=3643;//#AUTO#
+	buildCostEnergy=15696;//#AUTO#
+	buildCostMetal=3139;//#AUTO#
+	buildTime=37410;//#AUTO#
+	mass=3674;//#AUTO#
 }

@@ -8,7 +8,7 @@
 #define HEADING_TOLERANCE	<30>
 #define PITCH_TOLERANCE		<20>
 
-piece ground, hips,legs,rmidleg,rmid2,rfrontleg,rfront2,rbackleg,rback2,lbackleg,lback2,lmidleg,lmid2,lfrontleg,lfront2,torso,turret2,sleeve2,arc2, weapon2,flare2,torpedo,nanospinner,p1,p2,p3,p4,p5,p6, sphere, turret1, sleeve1, flare1, shieldpt,jumpback,ljumpjets,rjumpjets,rbjetpt,rfjetpt,lbjetpt,lfjetpt;
+piece ground, hips,legs,rmidleg,rmid2,rfrontleg,rfront2,rbackleg,rback2,lbackleg,lback2,lmidleg,lmid2,lfrontleg,lfront2,torso,turret2,sleeve2,arc2, arc22,weapon2,flare2,torpedo,nanospinner,p1,p2,p3,p4,p5,p6, sphere, turret1, sleeve1, flare1, shieldpt,jumpback,ljumpjets,rjumpjets,rbjetpt,rfjetpt,lbjetpt,lfjetpt;
 
 static-var bMoving,bAiming,bUnderwater, canAim1, canAim2, bBuilding, nanoPt, mASpdFactor;
 
@@ -128,6 +128,7 @@ checkUnderwater()
 				//show torpedo stuff 			
  				move torpedo to z-axis [0.000000] now;
  				show arc2;
+ 				show arc22;
  				show weapon2;
  				show torpedo;
  				
@@ -141,6 +142,7 @@ checkUnderwater()
 				hide torpedo;
 				hide weapon2;
 				hide arc2;
+				hide arc22;
 				move torpedo to z-axis [0.000000] now;
 				
 				//TODO show weapon morph stuff
@@ -321,19 +323,6 @@ MotionControl(moving, aiming, justmoved)
 	}
 }
 
-
-LaserEffect()
-{
-	//while(TRUE)
-	//{
-	//	if(aim1 == TRUE)
-	//	{
-	//		emit-sfx 1024 + 1 from p1;
-	//	}
-	//	sleep 100;
-	//}
-}
-
 Build()
 {
 	while(TRUE)
@@ -350,13 +339,12 @@ Build()
 Create()
 {
 	hide arc2;
+	hide arc22;
 	hide weapon2;
 	hide torpedo;
 	bMoving=FALSE;
 	bAiming=FALSE;
 	bUnderwater = FALSE;
-	//aim1=FALSE;
-	//aim2=FALSE;
 	bBuilding = FALSE;
 	canAim1 = TRUE;
 	canAim2 = FALSE;
@@ -368,21 +356,14 @@ Create()
 	start-script MotionSpeedControl();	
 	start-script MotionControl();
 	start-script checkUnderwater();
-	//start-script LaserEffect();
 	start-script Build();
 	spin nanospinner around y-axis speed <720.000000>;
 }
 
 
 
-SweetSpot(piecenum)
-{
-	piecenum = sphere;
-}
-
 RestoreAfterDelayWeapon()
 {
-	//aim1=FALSE;
 	sleep 5000;
 	call-script stopAimHelper1(<100>,<100>);	
 	turn turret1 to y-axis <0.000000> speed <100.016484>;
@@ -391,7 +372,6 @@ RestoreAfterDelayWeapon()
 }
 RestoreAfterDelayWeapon2()
 {
-	//aim1=FALSE;
 	sleep 5000;
 	call-script stopAimHelper2(<100>,<100>);	
 	turn turret2 to y-axis <0.000000> speed <100.016484>;
@@ -399,14 +379,6 @@ RestoreAfterDelayWeapon2()
 	bAiming = FALSE;
 }
 
-RestoreAfterDelayNano()
-{
-	//aim2=FALSE;
-	sleep 5000;
-	//stop-spin turret2 around y-axis;
-	//stop-spin sleeve2 around x-axis;
-
-}
 
 AimFromPrimary(piecenum)
 {
@@ -437,7 +409,6 @@ AimPrimary(heading, pitch)
 	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
 	
-	//aim1=TRUE;
 	turn turret1 to y-axis heading speed <600.027473>;
 	turn sleeve1 to x-axis <0.000000> - pitch speed <600.038462>;
 	if ( !aimReady1 )
@@ -481,7 +452,6 @@ AimSecondary(heading, pitch)
 	set-signal-mask SIG_AIM2;
 	bAiming = TRUE;
 	
-	//aim1=TRUE;
 	turn turret2 to y-axis heading speed <400.027473>;
 	turn sleeve2 to x-axis <0.000000> - pitch speed <400.038462>;
 	if (!aimReady2)
@@ -551,9 +521,6 @@ StopBuilding()
 
 	bBuilding = FALSE;
 	set INBUILDSTANCE to 0;
-
-	//start-script RestoreAfterDelayNano();	
-	//start-script RestoreAfterDelayWeapon();
 }
 
 QueryTertiary(piecenum)
@@ -575,7 +542,6 @@ AimTertiary(heading, pitch)
 
 Killed(severity, corpsetype)
 {
-	//aim1 = FALSE;
 	bBuilding = FALSE;
 	
 	if( severity <= 25 )

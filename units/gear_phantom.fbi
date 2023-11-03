@@ -62,9 +62,9 @@
 	//  Movement
 	//************
 	movementClass=Smallboat;
-	turnRate=375;
-	acceleration=0.08;
-	brakeRate=0.01;
+	turnRate=400;
+	acceleration=0.2;
+	brakeRate=0.03;
 	maxVelocity=2.3;
 	minwaterdepth=6;
 	waterline=0.5;
@@ -105,8 +105,8 @@
 	{
 		explosionGenerator0=custom:UNITFIRE;
 	}
-	buildCostEnergy=2963;//#AUTO#
-	buildCostMetal=592;//#AUTO#
-	buildTime=7061;//#AUTO#
-	mass=567;//#AUTO#
+	buildCostEnergy=3000;//#AUTO#
+	buildCostMetal=600;//#AUTO#
+	buildTime=7151;//#AUTO#
+	mass=570;//#AUTO#
 }

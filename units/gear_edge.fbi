@@ -61,9 +61,9 @@
 	//  Movement
 	//************
 	movementClass=LARGEBOAT2;
-	turnRate=115;
-	acceleration=0.015;
-	brakeRate=0.00383106;
+	turnRate=160;
+	acceleration=0.03;
+	brakeRate=0.02;
 	maxVelocity=0.9;
 	minwaterdepth=10;
 	waterline=2;
@@ -122,8 +122,8 @@
 		evalfactor=0.85;//SHIP
 		canAreaAttack=1;
 	}
-	buildCostEnergy=39075;//#AUTO#
-	buildCostMetal=7815;//#AUTO#
-	buildTime=93129;//#AUTO#
-	mass=9568;//#AUTO#
+	buildCostEnergy=39271;//#AUTO#
+	buildCostMetal=7854;//#AUTO#
+	buildTime=93597;//#AUTO#
+	mass=9588;//#AUTO#
 }

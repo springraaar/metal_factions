@@ -1455,7 +1455,49 @@ usedefaultexplosions=0;
   		count=4; 
 	}
 }
+[FLARETRAIL2]
+{
+	usedefaultexplosions=0;	
+	[_glow]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=32;explosionGenerator=custom:DYNPROJGLOW;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[spikesglow]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos = 0, 0, 0;
+			dir= -1 r2, -1 r2, -1 r2;
+			width=12;
+			length=12;
+			alpha=0.1;
+			alphadecay=0.02;
+			color=1.0, 0.8, 0.3;
 
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=3; 
+	}
+	[spikescenter]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos = 0, 0, 0;
+			dir= -1 r2, -1 r2, -1 r2;
+			width=2;
+			length=10;
+			alpha=0.75;
+			alphadecay=0.3;
+			color=1.0, 0.8, 0.5;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=4; 
+	}
+}
 [AMPROCKETTRAIL]
 {
 	usedefaultexplosions=0;	
@@ -4108,7 +4150,7 @@ usedefaultexplosions=0;
 [PLASMATRAIL3]
 {
 	usedefaultexplosions=0;	
-	[_glow]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=45;explosionGenerator=custom:DYNPROJGLOW;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_glow]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=42;explosionGenerator=custom:DYNPROJGLOW;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 	[flash]
 	{
 		class=CSimpleGroundFlash;
@@ -4118,7 +4160,7 @@ usedefaultexplosions=0;
 			sizeGrowth = 2;
 			texture=groundflash;	     		
 	     		ttl = 2;
-     			colormap = 1 0.7 0.2 0.1    0.05 0.05 0.05 0.1;
+     			colormap = 0.9 0.7 0.2 0.1    0.05 0.05 0.05 0.1;
 		}
 		air=0;
      		ground=1;

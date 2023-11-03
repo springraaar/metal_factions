@@ -1,0 +1,123 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Intrepid;
+	description=Multipurpose Heavy Cruiser;
+	iconType=shipmulti;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_intrepid;
+	objectName=aven_intrepid.3do;
+	corpse=aven_intrepid_dead;
+	buildPic=aven_intrepid.png;
+	soundCategory=aven_SHIP;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=7500;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	floater=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=LARGEBOAT;
+	turnRate=250;
+	acceleration=0.1;
+	brakeRate=0.05;
+	maxVelocity=1.4;
+	minwaterdepth=30;
+	waterline=2;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=400;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_intrepid_cannon;
+	weapon2=aven_intrepid_laser;
+	weapon3=aven_intrepid_missile;
+	noChaseCategory=VTOL;
+	onlyTargetCategory1=NOTAIR;
+	badTargetcategory2=NOTAIR;
+	badTargetcategory3=VTOL;
+	explodeAs=HUGE_UNIT;
+	selfDestructAs=HUGE_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	moveState=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	scale=0.5;
+	collisionVolumeType = box;
+	collisionVolumeScales =50 60 110;
+	collisionVolumeOffsets = 0 -10 0;
+	collisionVolumeTest = 1;
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:yellowflarebig;
+		explosionGenerator1=custom:glowsml;
+		explosionGenerator2=custom:rocketflaremed;
+	}
+	[customParams] 
+	{
+		builtBy=aven_adv_shipyard;
+		evalfactor=0.85;//SHIP
+		canAreaAttack=1;
+	}
+	buildCostEnergy=25006;//#AUTO#
+	buildCostMetal=5001;//#AUTO#
+	buildTime=59599;//#AUTO#
+	mass=5667;//#AUTO#
+}

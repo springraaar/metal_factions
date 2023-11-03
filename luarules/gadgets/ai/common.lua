@@ -914,6 +914,7 @@ unitAbleToHitUnderwater = {
 	claw_u4commander = true,
 	claw_u5commander = true,
 	claw_u6commander = true,
+	claw_u7commander = true,
 	claw_spine = true,
 	claw_sinker = true,
 	claw_monster = true,
@@ -930,6 +931,7 @@ unitAbleToHitUnderwater = {
 	sphere_u4commander = true,
 	sphere_u5commander = true,
 	sphere_u6commander = true,
+	sphere_u7commander = true,
 	sphere_carp = true,
 	sphere_skiff = true,
 	sphere_targe = true,
@@ -1077,7 +1079,7 @@ mohoMineByFaction = { [side1Name] = "aven_moho_mine", [side2Name] = "gear_moho_m
 powerNodeByFaction = { [side1Name] = "aven_power_node", [side2Name] = "gear_power_node", [side3Name] = "claw_power_node", [side4Name] = "sphere_power_node"}
 fusionByFaction = { [side1Name] = "aven_fusion_reactor", [side2Name] = "gear_fusion_power_plant", [side3Name] = "claw_adv_fusion_reactor", [side4Name] = "sphere_adv_fusion_reactor"}
 advRadarByFaction = { [side1Name] = "aven_advanced_radar_tower", [side2Name] = "gear_advanced_radar_tower", [side3Name] = "claw_advanced_radar_tower", [side4Name] = "sphere_adv_radar_tower"}
-commanderMorphByFaction = {[side1Name] = {"aven_u1commander","aven_u2commander","aven_u3commander","aven_u4commander","aven_u5commander","aven_u6commander"}, [side2Name] = {"gear_u1commander","gear_u2commander","gear_u3commander","gear_u4commander","gear_u5commander","gear_u6commander"}, [side3Name] = {"claw_u1commander","claw_u2commander","claw_u3commander","claw_u4commander","claw_u5commander","claw_u6commander"}, [side4Name] = {"sphere_u1commander","sphere_u2commander","sphere_u3commander","sphere_u4commander","sphere_u5commander","sphere_u6commander"}}
+commanderMorphByFaction = {[side1Name] = {"aven_u1commander","aven_u2commander","aven_u3commander","aven_u4commander","aven_u5commander","aven_u6commander","aven_u7commander"}, [side2Name] = {"gear_u1commander","gear_u2commander","gear_u3commander","gear_u4commander","gear_u5commander","gear_u6commander","gear_u7commander"}, [side3Name] = {"claw_u1commander","claw_u2commander","claw_u3commander","claw_u4commander","claw_u5commander","claw_u6commander","claw_u7commander"}, [side4Name] = {"sphere_u1commander","sphere_u2commander","sphere_u3commander","sphere_u4commander","sphere_u5commander","sphere_u6commander","sphere_u7commander"}}
 airRepairPadByFaction = { [side1Name] = "aven_air_repair_pad", [side2Name] = "gear_air_repair_pad", [side3Name] = "claw_air_repair_pad", [side4Name] = "sphere_air_repair_pad"}
 commanderMorphCmdByFaction = {[side1Name] = {31433,31434,31435,31436}, [side2Name] = {31427,31428,31429,31430}, [side3Name] = {31423,31424,31425,31426}, [side4Name] = {31412,31413,31414,31415}}
 nanoTowerFaction =  { [side1Name] = "aven_nano_tower", [side2Name] = "gear_nano_tower", [side3Name] = "claw_nano_tower", [side4Name] = "sphere_pole"}

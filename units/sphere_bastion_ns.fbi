@@ -62,9 +62,9 @@
 	//  Movement
 	//************
 	movementClass=LARGEBOAT;
-	turnRate=154;
-	acceleration=0.035;
-	brakeRate=0.005;
+	turnRate=160;
+	acceleration=0.05;
+	brakeRate=0.02;
 	maxVelocity=0.9;
 	minwaterdepth=30;
 	waterline=2;
@@ -107,8 +107,8 @@
 		builtBy=sphere_adv_shipyard;
 		evalfactor=0.85;//SHIP
 	}
-	buildCostEnergy=58419;//#AUTO#
-	buildCostMetal=11683;//#AUTO#
-	buildTime=139232;//#AUTO#
-	mass=9430;//#AUTO#
+	buildCostEnergy=58505;//#AUTO#
+	buildCostMetal=11701;//#AUTO#
+	buildTime=139438;//#AUTO#
+	mass=9440;//#AUTO#
 }

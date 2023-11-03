@@ -48,24 +48,28 @@ local advCommanderDefIds = {
 	[UnitDefNames['aven_u4commander'].id] = true,
 	[UnitDefNames['aven_u5commander'].id] = true,
 	[UnitDefNames['aven_u6commander'].id] = true,
+	[UnitDefNames['aven_u7commander'].id] = true,
 	[UnitDefNames['gear_u1commander'].id] = true,
 	[UnitDefNames['gear_u2commander'].id] = true,
 	[UnitDefNames['gear_u3commander'].id] = true,
 	[UnitDefNames['gear_u4commander'].id] = true,
 	[UnitDefNames['gear_u5commander'].id] = true,
 	[UnitDefNames['gear_u6commander'].id] = true,
+	[UnitDefNames['gear_u7commander'].id] = true,
 	[UnitDefNames['claw_u1commander'].id] = true,
 	[UnitDefNames['claw_u2commander'].id] = true,
 	[UnitDefNames['claw_u3commander'].id] = true,
 	[UnitDefNames['claw_u4commander'].id] = true,
 	[UnitDefNames['claw_u5commander'].id] = true,
 	[UnitDefNames['claw_u6commander'].id] = true,
+	[UnitDefNames['claw_u7commander'].id] = true,
 	[UnitDefNames['sphere_u1commander'].id] = true,
 	[UnitDefNames['sphere_u2commander'].id] = true,
 	[UnitDefNames['sphere_u3commander'].id] = true,
 	[UnitDefNames['sphere_u4commander'].id] = true,	
 	[UnitDefNames['sphere_u5commander'].id] = true,
-	[UnitDefNames['sphere_u6commander'].id] = true
+	[UnitDefNames['sphere_u6commander'].id] = true,
+	[UnitDefNames['sphere_u7commander'].id] = true
 }
 
 

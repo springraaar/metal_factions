@@ -5,7 +5,7 @@
 	//********************
 	side=Gear;
 	name=Noser;
-	description=Heavy Attack Submarine;
+	description=Fire Support Submarine;
 	iconType=subartilleryfs;
 
 	//************************************************************
@@ -63,9 +63,9 @@
 	//  Movement
 	//************
 	movementClass=BOATSUB5;
-	turnRate=353;
-	acceleration=0.08;
-	brakeRate=0.1;
+	turnRate=500;
+	acceleration=0.15;
+	brakeRate=0.06;
 	maxVelocity=1.6;
 	maxreversevelocity=0.8;
 	minwaterdepth=15;
@@ -111,8 +111,8 @@
 		explosionGenerator0=custom:ROCKETFLARESML;
 	}
 
-	buildCostEnergy=8068;//#AUTO#
-	buildCostMetal=1613;//#AUTO#
-	buildTime=19230;//#AUTO#
-	mass=1000;//#AUTO#
+	buildCostEnergy=8194;//#AUTO#
+	buildCostMetal=1638;//#AUTO#
+	buildTime=19530;//#AUTO#
+	mass=1008;//#AUTO#
 }

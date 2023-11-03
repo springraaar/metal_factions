@@ -58,6 +58,25 @@ local bfcolormap = {}
 local bBorder   = { 0.0,0.0,0.0,barAlpha }
 local bBorderThickness = 0.8 
 
+
+local hpColorByArmorType = {
+	[0] = {0.59,0.59,1.0,barAlpha},		-- L (default)
+	[2] = {0.59,0.59,1.0,barAlpha},		-- L
+	[3] = {0.94,0.94,0.5,barAlpha},		-- M
+	[1] = {0.88,0.64,0.49,barAlpha}		-- H
+}
+local armorTypeTextures = {
+	[0] = ":l:luaui/images/armor_L.png",	-- L (default)
+	[2] = ":l:luaui/images/armor_L.png",	-- L
+	[3] = ":l:luaui/images/armor_M.png",	-- M
+	[1] = ":l:luaui/images/armor_H.png"		-- H
+}
+local armorTypeLabels = {
+	[0] = "\255\150\150\255(L)\255\255\255\255",	-- L (default)
+	[2] = "\255\150\150\255(L)\255\255\255\255",	-- L
+	[3] = "\255\160\140\50(M)\255\255\255\255",		-- M
+	[1] = "\255\200\110\100(H)\255\255\255\255"		-- H
+}
 local fbkBottom   = { 0.40,0.40,0.40,featureBarAlpha }
 local fbkTop      = { 0.06,0.06,0.06,featureBarAlpha }
 local fhpcolormap = { {0.8, 0.0, 0.0, featureBarAlpha},  {0.8, 0.6, 0.0, featureBarAlpha}, {0.0,0.70,0.0,featureBarAlpha} }
@@ -102,8 +121,6 @@ local dashUnits = {}
 local barShader
 local barDList
 local barFeatureDList
-
-local unitArmorTypeTable = {}
 
 local isAMDGPU = Platform.glHaveAMD
 
@@ -155,6 +172,7 @@ function barBackGL(width,height,y)
 	glVertex(-width-bBorderThickness,y-bBorderThickness,0,1)
 end
 
+
 function widget:Initialize()
   --// catch f9
   Spring.SendCommands({"showhealthbars 0"})
@@ -180,17 +198,6 @@ function widget:Initialize()
     local shieldDefID = ud.shieldWeaponDef
     ud.shieldPower = ((shieldDefID)and(WeaponDefs[shieldDefID].shieldPower))or(-1)
 
-
-	-- find units armor types and large shield unit def ids
-	-- TODO not used, remove?
-	local armorTypeStr = "L"
-    if ( Game.armorTypes[ud.armorType] == "armor_heavy" ) then
-    	armorTypeStr = "H"
-    elseif ( Game.armorTypes[ud.armorType] == "armor_medium" ) then 
-    	armorTypeStr = "M" 
-    end
-	unitArmorTypeTable[ud.id] = armorTypeStr
-
   end
 
   --// link morph callins
@@ -208,7 +215,8 @@ function widget:Initialize()
   end
 
   --// create bar shader
-  if (gl.CreateShader) then
+  -- TODO disabled barShader usage because it prevents the armor-type texture on the unit bar from appearing
+  if (false and gl.CreateShader) then
     barShader = gl.CreateShader({
       vertex = [[
         #define barColor gl_MultiTexCoord1
@@ -339,19 +347,29 @@ do
   end
 
   local brightClr = {}
-  function DrawUnitBar(offsetY,percent,color)
-    if (barShader) then
-      glMultiTexCoord(1,color)
-      glMultiTexCoord(2,percent,offsetY)
-      glCallList(barDList)
-      return
+  function DrawUnitBar(offsetY,percent,color,armorType)
+    -- don't use the shader for the HP bar that has color2 set
+    -- workaround for the icon texture not appearing in that case 
+    if armorType then 
+      glColor(hpColorByArmorType[armorType])
+	  gl.Texture(armorTypeTextures[armorType])
+	  gl.TexRect(barWidth+bBorderThickness,offsetY-4*bBorderThickness,barWidth*1.6+bBorderThickness,offsetY+barHeight+4*bBorderThickness)
+	  gl.Texture(false)
+    else
+      if (barShader) then
+        glMultiTexCoord(1,color)
+        glMultiTexCoord(2,percent,offsetY)
+        glCallList(barDList)
+        return
+      end
     end
-
+    
     brightClr[1] = color[1]*1.5; brightClr[2] = color[2]*1.5; brightClr[3] = color[3]*1.5; brightClr[4] = color[4]
     local progress_pos= -barWidth+barWidth*2*percent
     local bar_Height  = barHeight+offsetY
     glBeginEnd(GL_QUADS,barBackGL,barWidth,barHeight,offsetY)
     glBeginEnd(GL_QUADS,DrawGradient,-barWidth, bar_Height, progress_pos, offsetY,brightClr,color)
+
   end
 
   function DrawFeatureBar(offsetY,percent,color)
@@ -420,13 +438,14 @@ do
 
   for i=1,maxBars do bars[i] = {} end
 
-  function AddBar(title,progress,color_index,text,color)
+  function AddBar(title,progress,color_index,text,color,armorType)
     barsN = barsN + 1
     local barInfo    = bars[barsN]
     barInfo.title    = title
     barInfo.progress = max(progress,0)
     barInfo.color    = color or barColors[color_index]
     barInfo.text     = text
+    barInfo.armorType = armorType
   end
 
   function DrawBars(fullText)
@@ -437,7 +456,7 @@ do
     local yoffset = 0
     for i=1,barsN do
       local barInfo = bars[i]
-      DrawUnitBar(yoffset,barInfo.progress,barInfo.color)
+      DrawUnitBar(yoffset,barInfo.progress,barInfo.color,barInfo.armorType)
       if (fullText) then
         if (barShader) then glMyText(1) end
         glColor(1,1,1,barAlpha)
@@ -502,21 +521,22 @@ do
   local GetUnitRulesParam    = Spring.GetUnitRulesParam
 
   
-  local fullText
+  
   local ux, uy, uz
   local dx, dy, dz, dist
   local hp, hp100, emp, morph
   local reload,reloaded,reloadFrame
   local numStockpiled,numStockpileQueued
   local customInfo = {}
-  local ci
 
   function DrawUnitInfos(unitID,unitDefID, ud)
     local health,maxHealth,paralyzeDamage,capture,build
     local MAGNETAR_DEF_ID = UnitDefNames["sphere_magnetar"].id
     local DMG_OVERLAY_HP_FRAC = 0.8
     local DMG_OVERLAY_OPACITY = 0.4
-
+    local ci
+    local fullText
+      
     if (not customInfo[unitDefID]) then
    
       -- find the weapon with the highest reload time
@@ -533,7 +553,7 @@ do
           end
         end
       end
-    
+      
       customInfo[unitDefID] = {
         height        = ud.height+14,
         canJump       = (ud.customParams.canjump=="1")or(GetUnitRulesParam(unitID,"jumpReload")),
@@ -542,6 +562,7 @@ do
         canStockpile  = ud.canStockpile,
         reloadTime    = maxReloadTime,
         primaryWeapon = maxReloadTimeIndex,
+        armorType     = ud.armorType
       }
     end
     ci = customInfo[unitDefID]
@@ -607,7 +628,8 @@ do
           damagedUnits[#damagedUnits+1]={unitID,(DMG_OVERLAY_HP_FRAC-hp) * DMG_OVERLAY_OPACITY}
        	end
         if (drawFullHealthBars)or(hp100<100) then
-          AddBar("HP",hp,nil,(fullText and hp100..'%') or '',bfcolormap[hp100])
+          --AddBar("HP",hp,nil,(fullText and hp100..'%') or '',bfcolormap[hp100])
+          AddBar("HP "..armorTypeLabels[ci.armorType],hp,nil,(fullText and hp100..'%') or '',bfcolormap[hp100],ci.armorType)
         end
       end
 

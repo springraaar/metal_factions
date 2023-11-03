@@ -57,6 +57,7 @@
 	canStop=1;
 	upright=1;
 	canCloak=1;
+	stealth=1;
 
 	//************************************************************
 	//  Movement
@@ -106,7 +107,7 @@
 	[CustomParams]
 	{
 		builtBy=claw_tombstone;
-		tip=Weapon loses up to 30% damage over its range;
+		tip=Weapon loses up to 30% damage over its range. Radar stealth;
 		evalFactor=0.85;
 	}
 
