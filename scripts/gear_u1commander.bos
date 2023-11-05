@@ -128,7 +128,7 @@ Build()
 
 checkUnderwater()
 {
-	var currentHeight, oldState;
+	var currentHeight, oldState, i;
 	while(TRUE)
 	{   
  		currentHeight = GET GROUND_WATER_HEIGHT(GET UNIT_XZ);
@@ -150,13 +150,21 @@ checkUnderwater()
  		{
 			if(bUnderwater)
 			{
+				canAim1 = FALSE;
 				//hide flamer stuff
 				hide lflamer;
 				hide rflamer;
  				
-				//TODO show weapon morph stuff
-				sleep 10;
-				
+				// effects
+				i=0;
+				while(i < 5)
+				{
+					emit-sfx 1024+8 from lflamer;
+					emit-sfx 1024+8 from rflamer;
+					i=i+1;
+					sleep 100;
+				}
+								
 				//show torpedo stuff 			
  				move ltorpedo to z-axis [0.000000] now;
  				show ltorpgun;
@@ -164,14 +172,23 @@ checkUnderwater()
  				move rtorpedo to z-axis [0.000000] now;
  				show rtorpgun;
  				show rtorpedo;
- 				
 
-				sleep 200;
-				canAim1 = FALSE;
+				// effects
+				i=0;
+				while(i < 5)
+				{
+					emit-sfx 1024+8 from ltorpgun;
+					emit-sfx 1024+8 from rtorpgun;
+					i=i+1;
+					sleep 100;
+				}
+
  				canAim2 = TRUE;
 			}
 			if(!bUnderwater)
 			{
+ 				canAim2 = FALSE;
+ 				
 				//hide torpedo stuff
 				hide ltorpedo;
 				hide ltorpgun;
@@ -180,17 +197,31 @@ checkUnderwater()
 				hide rtorpgun;
 				move rtorpedo to z-axis [0.000000] now;
 
-
-				//TODO show weapon morph stuff
-				sleep 10;
+				// effects
+				i=0;
+				while(i < 5)
+				{
+					emit-sfx 1024+8 from ltorpgun;
+					emit-sfx 1024+8 from rtorpgun;
+					i=i+1;
+					sleep 100;
+				}
 
 				//show flamer stuff 			
  				show lflamer;
  				show rflamer;
  		
- 				sleep 200;	
+				// effects
+				i=0;
+				while(i < 5)
+				{
+					emit-sfx 1024+8 from lflamer;
+					emit-sfx 1024+8 from rflamer;
+					i=i+1;
+					sleep 100;
+				}
+
  				canAim1 = TRUE;
- 				canAim2 = FALSE;
 			}
  		}
  		
@@ -622,8 +653,12 @@ QueryTertiary(piecenum)
 
 AimTertiary(heading, pitch)
 {
+	if( bBuilding || !canAim1)
+	{
+		return (0);
+	}
+
 	bAiming = TRUE;
-	//bDgunning = TRUE;
 
 	return (1);
 }

@@ -99,7 +99,7 @@ StopMoving()
 
 checkUnderwater()
 {
-	var currentHeight, oldState;
+	var currentHeight, oldState, i;
 	while(TRUE)
 	{   
  		currentHeight = GET GROUND_WATER_HEIGHT(GET UNIT_XZ);
@@ -121,11 +121,17 @@ checkUnderwater()
  		{
 			if(bUnderwater)
 			{
+ 				canAim1 = FALSE;
 				//no beam stuff to hide
 				
-				//TODO show weapon morph stuff
-				sleep 1000;
-
+ 				// effects
+				i=0;
+				while(i < 5)
+				{
+					emit-sfx 1024+8 from weapon2;
+					i=i+1;
+					sleep 100;
+				}
 				
 				//show torpedo stuff 			
  				move torpedo to z-axis [0.000000] now;
@@ -134,12 +140,20 @@ checkUnderwater()
  				show weapon2;
  				show torpedo;
  				
- 				sleep 200;
- 				canAim1 = FALSE;
+ 				// effects
+				i=0;
+				while(i < 5)
+				{
+					emit-sfx 1024+8 from weapon2;
+					i=i+1;
+					sleep 100;
+				}
+
  				canAim2 = TRUE;
 			}
 			if(!bUnderwater)
 			{
+ 				canAim2 = FALSE;
 				//hide torpedo stuff
 				hide torpedo;
 				hide weapon2;
@@ -147,15 +161,19 @@ checkUnderwater()
 				hide arc22;
 				move torpedo to z-axis [0.000000] now;
 				
-				//TODO show weapon morph stuff
-				sleep 1000;
+ 				// effects
+				i=0;
+				while(i < 10)
+				{
+					emit-sfx 1024+8 from weapon2;
+					i=i+1;
+					sleep 100;
+				}
 
 				//no beam stuff to show
 
 				sleep 200;
  				canAim1 = TRUE;
- 				canAim2 = FALSE;
- 				
 			}
  		}
  		
@@ -400,7 +418,7 @@ FirePrimary()
 
 AimPrimary(heading, pitch)
 {
-	if( bUnderwater || bBuilding)
+	if( !canAim1 || bBuilding)
 	{
 		sleep 100;
 		return (0);
@@ -443,7 +461,7 @@ FireSecondary()
 
 AimSecondary(heading, pitch)
 {
-	if( !bUnderwater || bBuilding)
+	if( !canAim2 || bBuilding)
 	{
 		sleep 100;
 		return (0);

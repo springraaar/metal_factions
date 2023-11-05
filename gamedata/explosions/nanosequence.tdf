@@ -506,6 +506,40 @@
 	}
 }
 
+
+
+[WEAPONCHANGE]
+{
+	[nanoparticles] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=-8 r16,0,-8 r6;
+			explosionGenerator=custom:DRONEBUILDNANO;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		underwater=1;
+		count=1;
+	}
+	[glow1] 
+	{
+		class=CExpGenSpawner;
+		[properties]
+		{
+			pos=0,0,0;
+			explosionGenerator=custom:BUILDGLOW;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		underwater=1;
+		count=1;
+	}
+}
+
 [AUTOBUILD]
 {
 	[nanoparticles] 

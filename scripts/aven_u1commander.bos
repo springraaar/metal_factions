@@ -159,7 +159,7 @@ Build()
 
 checkUnderwater()
 {
-	var currentHeight, oldState;
+	var currentHeight, oldState, i;
 	while(TRUE)
 	{   
  		currentHeight = GET GROUND_WATER_HEIGHT(GET UNIT_XZ);
@@ -181,41 +181,69 @@ checkUnderwater()
  		{
 			if(bUnderwater)
 			{
+				canAim1 = FALSE;
+				
 				//hide emg stuff
 				hide lemg;
 				hide lc2;
  				
-				//TODO show weapon morph stuff
-				sleep 10;
+				// effects
+				i=0;
+				while(i < 5)
+				{
+					emit-sfx 1024+8 from lemg;
+					i=i+1;
+					sleep 100;
+				}
 				
 				//show torpedo stuff 			
  				move torpedo to y-axis [0.000000] now;
  				show torpgun;
  				show torpedo;
  				
-
-				sleep 200;
-				canAim1 = FALSE;
+ 				// effects
+ 				i=0;
+				while(i < 5)
+				{
+					emit-sfx 1024+8 from torpgun;
+					i=i+1;
+					sleep 100;
+				}
+				
  				canAim2 = TRUE;
 			}
 			if(!bUnderwater)
 			{
+ 				canAim2 = FALSE;
+ 				
 				//hide torpedo stuff
 				hide torpedo;
 				hide torpgun;
 				move torpedo to y-axis [0.000000] now;
 
-
-				//TODO show weapon morph stuff
-				sleep 10;
+ 				// effects
+ 				i=0;
+				while(i < 5)
+				{
+					emit-sfx 1024+8 from torpgun;
+					i=i+1;
+					sleep 100;
+				}
 
 				//show emg stuff 			
  				show lemg;
  				show lc2;
  		
- 				sleep 200;	
+ 				// effects
+ 				i=0;
+				while(i < 5)
+				{
+					emit-sfx 1024+8 from lemg;
+					i=i+1;
+					sleep 100;
+				}
+
  				canAim1 = TRUE;
- 				canAim2 = FALSE;
 			}
  		}
  		
@@ -613,7 +641,11 @@ QueryTertiary(piecenum)
 AimTertiary(heading, pitch)
 {
 	bAiming = TRUE;
-	
+	if( bBuilding || !canAim1)
+	{
+		sleep 100;
+		return (0);
+	}
 	// if it's not going to be able to fire on the next ~2s, don't try to aim
 	if ((get WEAPON_RELOADSTATE(3)) > (get GAME_FRAME) + 40)) { return(0); }
 

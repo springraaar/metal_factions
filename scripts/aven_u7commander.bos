@@ -146,7 +146,7 @@ Build()
 
 checkUnderwater()
 {
-	var currentHeight, oldState;
+	var currentHeight, oldState,i;
 	while(TRUE)
 	{   
  		currentHeight = GET GROUND_WATER_HEIGHT(GET UNIT_XZ);
@@ -168,14 +168,22 @@ checkUnderwater()
  		{
 			if(bUnderwater)
 			{
+				canAim1 = FALSE;
 				//hide weapon stuff
 				hide lgun;
 				hide lbar;
 				hide rgun;
 				hide rbar;
  				
-				//TODO show weapon morph stuff
-				sleep 10;
+				// effects
+				i=0;
+				while(i < 5)
+				{
+					emit-sfx 1024+8 from lgun;
+					emit-sfx 1024+8 from rgun;
+					i=i+1;
+					sleep 100;
+				}
 				
 				//show torpedo stuff 			
  				move ltorpedo to y-axis [0.000000] now;
@@ -184,14 +192,22 @@ checkUnderwater()
  				move rtorpedo to y-axis [0.000000] now;
  				show rtorpgun;
  				show rtorpedo;
- 				
 
-				sleep 200;
-				canAim1 = FALSE;
+				// effects
+				i=0;
+				while(i < 5)
+				{
+					emit-sfx 1024+8 from ltorpgun;
+					emit-sfx 1024+8 from rtorpgun;
+					i=i+1;
+					sleep 100;
+				} 				
+
  				canAim2 = TRUE;
 			}
 			if(!bUnderwater)
 			{
+ 				canAim2 = FALSE;
 				//hide torpedo stuff
 				hide ltorpedo;
 				hide ltorpgun;
@@ -200,9 +216,15 @@ checkUnderwater()
 				hide rtorpgun;
 				move rtorpedo to y-axis [0.000000] now;
 
-
-				//TODO show weapon morph stuff
-				sleep 10;
+				// effects
+				i=0;
+				while(i < 5)
+				{
+					emit-sfx 1024+8 from ltorpgun;
+					emit-sfx 1024+8 from rtorpgun;
+					i=i+1;
+					sleep 100;
+				} 				
 
 				//show weapon stuff 			
 				show lgun;
@@ -210,10 +232,17 @@ checkUnderwater()
 				show rgun;
 				show rbar;
 
+				// effects
+				i=0;
+				while(i < 5)
+				{
+					emit-sfx 1024+8 from lgun;
+					emit-sfx 1024+8 from rgun;
+					i=i+1;
+					sleep 100;
+				} 				
  		
- 				sleep 200;	
  				canAim1 = TRUE;
- 				canAim2 = FALSE;
 			}
  		}
  		
