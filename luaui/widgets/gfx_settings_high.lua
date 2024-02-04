@@ -17,6 +17,9 @@ function widget:Initialize()
 	disableWidget("GFX Settings : Low")
 	disableWidget("GFX Settings : Medium")
 
+	-- other widgets
+	enableWidget("Bloom Shader")
+	
 	Spring.SendCommands("water 4")
 	Spring.SendCommands("shadows 1")
 	Spring.SetConfigInt("ShadowMapSize",4096,false)
@@ -40,6 +43,10 @@ function widget:Initialize()
  	Spring.SetConfigInt("LuaShaders",1,false)
  	Spring.SetConfigInt("ROAM",1,false)
  	Spring.SetConfigInt("MSAALevel",4,false)
+ 	
+ 	Spring.SetConfigInt("AllowDeferredMapRendering",1,false)
+ 	Spring.SetConfigInt("AllowDeferredModelRendering",1,false)
+ 	
 
 	WG.gfxProfile = GFX_HIGH
 

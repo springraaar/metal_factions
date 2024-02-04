@@ -3,8 +3,8 @@
 	// ------------------- description
 	side=Sphere;
 	Name=Tuber;
-	Description=Armored Riot Robot;
-	iconType=mobileassault;
+	Description=Bursty Fire Support Robot;
+	iconType=mobileartilleryfs;
 
 	// ------------------- categories
 	category=SPHERE LEVEL1 WEAPON NOTAIR NOTSUB;
@@ -19,7 +19,7 @@
 	// ------------------- health/cost/size
 	FootprintX=3;
 	FootprintZ=3;
-	maxDamage=2400;
+	maxDamage=2100;
 
 	// ------------------- resources
 	energyUse=0;
@@ -76,8 +76,8 @@
 		explosionGenerator0=custom:rocketflaremed;
 	}
 
-	buildCostEnergy=2014;//#AUTO#
-	buildCostMetal=402;//#AUTO#
-	buildTime=4801;//#AUTO#
-	mass=734;//#AUTO#
+	buildCostEnergy=2581;//#AUTO#
+	buildCostMetal=516;//#AUTO#
+	buildTime=6152;//#AUTO#
+	mass=697;//#AUTO#
 }

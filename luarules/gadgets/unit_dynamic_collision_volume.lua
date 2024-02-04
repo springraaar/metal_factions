@@ -24,6 +24,7 @@ local spGetUnitPosition = Spring.GetUnitPosition
 local spGetGroundHeight = Spring.GetGroundHeight
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetGameFrame = Spring.GetGameFrame
+local spSetFactoryBuggerOff = Spring.SetFactoryBuggerOff
 local max = math.max
 
 local popupUnits = {}		--list of pop-up style units
@@ -136,6 +137,14 @@ if (gadgetHandler:IsSyncedCode()) then
 		-- reduce size of aircraft factories
 		if (airFactories[ud.name]) then 
 			spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.25, ys*0.5)
+		end
+		
+		-- modify bugger off properties for factories
+		if ud.isFactory  and ud.buildOptions then
+			--Spring.Echo("unit "..ud.name.." is a factory with radius = "..(xs+zs)*0.5)
+			local offset = 0
+			local radius = (xs+zs)*0.25
+			spSetFactoryBuggerOff(unitID, true, 0, radius, 0)
 		end
 		
 		-- reduce size of unit under construction

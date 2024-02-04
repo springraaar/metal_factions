@@ -787,10 +787,10 @@
 	blocking=1;
 	hitdensity=100;
 	reclaimable=1;
-	metal=1167;//#AUTO#
+	metal=1168;//#AUTO#
 	energy=0;//#AUTO#
 	damage=6000;//#AUTO#
-	reclaimTime=23187;//#AUTO#
+	reclaimTime=23205;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=55 24 65;//#AUTO#
 	collisionVolumeOffsets=0 3 0;//#AUTO#
@@ -810,7 +810,7 @@
 	metal=350;//#AUTO#
 	energy=0;//#AUTO#
 	damage=6000;//#AUTO#
-	reclaimTime=11593;//#AUTO#
+	reclaimTime=11602;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=55 4 65;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
@@ -2703,6 +2703,47 @@
 	reclaimTime=27328;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=55 8 45;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[aven_paladin_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=aven_corpses;
+	object=aven_paladin_dead;
+	featuredead=aven_paladin_heap;
+	footprintx=4;
+	footprintz=4;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	reclaimable=1;
+	metal=1687;//#AUTO#
+	energy=0;//#AUTO#
+	damage=6500;//#AUTO#
+	reclaimTime=33518;//#AUTO#
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=45 33 35;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[aven_paladin_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=6x6a;
+	footprintx=6;
+	footprintz=6;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	reclaimable=1;
+	metal=506;//#AUTO#
+	energy=0;//#AUTO#
+	damage=6500;//#AUTO#
+	reclaimTime=16759;//#AUTO#
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=45 6 35;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
 [aven_knight_dead]
@@ -10685,10 +10726,10 @@
 	blocking=1;
 	hitdensity=100;
 	reclaimable=1;
-	metal=120;//#AUTO#
+	metal=154;//#AUTO#
 	energy=0;//#AUTO#
-	damage=2400;//#AUTO#
-	reclaimTime=2400;//#AUTO#
+	damage=2100;//#AUTO#
+	reclaimTime=3076;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=32 19 32;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
@@ -10705,10 +10746,10 @@
 	blocking=0;
 	hitdensity=100;
 	reclaimable=1;
-	metal=36;//#AUTO#
+	metal=46;//#AUTO#
 	energy=0;//#AUTO#
-	damage=2400;//#AUTO#
-	reclaimTime=1200;//#AUTO#
+	damage=2100;//#AUTO#
+	reclaimTime=1538;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=32 3 32;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
@@ -11120,6 +11161,47 @@
 	reclaimTime=2068;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=38 4 38;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[sphere_excisor_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=sphere_corpses;
+	object=sphere_excisor_dead;
+	featuredead=sphere_excisor_heap;
+	footprintx=4;
+	footprintz=4;
+	height=18;
+	blocking=1;
+	hitdensity=100;
+	reclaimable=1;
+	metal=384;//#AUTO#
+	energy=0;//#AUTO#
+	damage=2300;//#AUTO#
+	reclaimTime=7627;//#AUTO#
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=35 21 35;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[sphere_excisor_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=4x4a;
+	footprintx=4;
+	footprintz=4;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	reclaimable=1;
+	metal=115;//#AUTO#
+	energy=0;//#AUTO#
+	damage=2300;//#AUTO#
+	reclaimTime=3813;//#AUTO#
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=35 4 35;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
 [sphere_charger_dead]
@@ -13435,7 +13517,7 @@
 	metal=987;//#AUTO#
 	energy=0;//#AUTO#
 	damage=8000;//#AUTO#
-	reclaimTime=19603;//#AUTO#
+	reclaimTime=19613;//#AUTO#
 	collisionVolumeType=sphere;//#AUTO#
 	collisionVolumeScales=65 39 65;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
@@ -13455,7 +13537,7 @@
 	metal=296;//#AUTO#
 	energy=0;//#AUTO#
 	damage=8000;//#AUTO#
-	reclaimTime=9801;//#AUTO#
+	reclaimTime=9806;//#AUTO#
 	collisionVolumeType=sphere;//#AUTO#
 	collisionVolumeScales=65 7 65;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
@@ -16881,10 +16963,10 @@
 	blocking=1;
 	hitdensity=100;
 	reclaimable=1;
-	metal=94;//#AUTO#
+	metal=107;//#AUTO#
 	energy=0;//#AUTO#
 	damage=1200;//#AUTO#
-	reclaimTime=1885;//#AUTO#
+	reclaimTime=2136;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=17 18 17;//#AUTO#
 	collisionVolumeOffsets=0 -1 0;//#AUTO#
@@ -16901,10 +16983,10 @@
 	blocking=0;
 	hitdensity=100;
 	reclaimable=1;
-	metal=28;//#AUTO#
+	metal=32;//#AUTO#
 	energy=0;//#AUTO#
 	damage=1200;//#AUTO#
-	reclaimTime=942;//#AUTO#
+	reclaimTime=1068;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=17 3 17;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#

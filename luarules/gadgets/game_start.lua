@@ -42,6 +42,12 @@ local function GetStartUnit(teamID)
     	side = "random"
     end
 
+	-- check for ingame faction selection
+	local ingameSide = Spring.GetTeamRulesParam(teamID,"faction_selected")
+	if ingameSide and validSide[ingameSide] then
+		side = ingameSide
+	end
+
     return Spring.GetSideData(side)
 end
 

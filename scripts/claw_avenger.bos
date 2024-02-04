@@ -10,7 +10,7 @@
 #define PITCH_TOLERANCE		<25>
 
 
-piece  torso, luparm, larm, lgun, lg1,lflare1, ruparm, rarm, rgun, rg1, rflare1, pelvis, head, lthigh, rthigh, rleg, lleg, lfoot, rfoot;
+piece  torso, luparm, larm, lgun, lg1,lflare1, ruparm, rarm, rgun, rg1, rflare1, pelvis, lthigh, rthigh, rleg, lleg, lfoot, rfoot;
 
 static-var  bMoving, bAiming, firept1, mASpdFactor, moveSpd1, turnSpd1, turnSpd2, turnSpd3;
 
@@ -53,7 +53,6 @@ walk()
 	if( bMoving)
 	{
 		move pelvis to y-axis [-1.750000] speed moveSpd1;
-		move head to y-axis [0.000000] speed moveSpd1;
 		turn pelvis to x-axis <6.692308> speed turnSpd3;
 		turn lthigh to x-axis <-41.791209> speed turnSpd2;
 		turn rthigh to x-axis <17.593407> speed turnSpd2;

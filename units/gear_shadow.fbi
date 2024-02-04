@@ -5,7 +5,7 @@
 	//********************
 	side=Gear;
 	name=Shadow;
-	description=Bomber;
+	description=Hit-n-Run Bomber;
 	iconType=airbomber;
 
 	//************************************************************
@@ -95,8 +95,8 @@
 	//  Weapons
 	//***********
 	weapon1=gear_shadow_bomb;
-	weaponMainDir1=0 -1 1;
-	maxAngleDif1=120;
+	weaponMainDir1=0 -1 0.1;
+	maxAngleDif1=180;
 	onlytargetcategory1=NOTAIR;
 	noChaseCategory=UNDERWATER;
 	explodeAs=BIG_UNITEX;
@@ -125,8 +125,8 @@
 	{
 	}
 
-	buildCostEnergy=5409;//#AUTO#
-	buildCostMetal=1081;//#AUTO#
-	buildTime=12893;//#AUTO#
-	mass=382;//#AUTO#
+	buildCostEnergy=3776;//#AUTO#
+	buildCostMetal=755;//#AUTO#
+	buildTime=9000;//#AUTO#
+	mass=328;//#AUTO#
 }

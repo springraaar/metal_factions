@@ -102,9 +102,10 @@ local fmod = math.fmod
 
 
 local builtinDroneUpgrades = {
-	[UnitDefNames["gear_adv_construction_kbot"].id] = "upgrade_transport_drone",
-	[UnitDefNames["gear_adv_construction_hydrobot"].id] = "upgrade_transport_drone",
-	[UnitDefNames["aven_skein"].id] = "upgrade_light_drones"
+	[UnitDefNames["gear_adv_construction_kbot"].id] = {{"upgrade_transport_drone",1}},
+	[UnitDefNames["gear_adv_construction_hydrobot"].id] = {{"upgrade_transport_drone",1}},
+	[UnitDefNames["aven_skein"].id] = {{"upgrade_light_drones",1}},
+	[UnitDefNames["aven_paladin"].id] = {{"upgrade_builder_drone",2}}
 }
 
 local noUpgradeUnitDefIds = {
@@ -376,7 +377,9 @@ function updateUnitModifiers(unitId, unitDefId, teamId)
 	
 	-- keep drone upgrades set for some units
 	if builtinDroneUpgrades[unitDefId] then
-		spSetUnitRulesParam(unitId, builtinDroneUpgrades[unitDefId],1,{public = true})
+		for _,upgData in pairs(builtinDroneUpgrades[unitDefId]) do
+			spSetUnitRulesParam(unitId, upgData[1],upgData[2],{public = true})
+		end
 	end
 end
 

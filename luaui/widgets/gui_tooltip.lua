@@ -889,7 +889,7 @@ function generateNewTooltip()
 				end
 	 						
 				if ud.customParams.tip then
-					newTooltip = newTooltip.."\n"..TIP_COLOR_PREFIX..formatTipLines(ud.customParams.tip).."\255\255\255\255\n"
+					newTooltip = newTooltip.."\n"..TIP_COLOR_PREFIX..formatTipLines(ud.customParams.tip).."\255\255\255\255"
 				end
 				
 				--[[

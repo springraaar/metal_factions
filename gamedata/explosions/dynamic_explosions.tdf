@@ -1587,8 +1587,8 @@
 [AARMORBLASTWRAPPER]			// intense narrow blast
 {
 	usedefaultexplosions=0;
-	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=8 y0 d0.8 p0.6 x0;explosionGenerator=custom:STDNARROWBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
-	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=10;damage=8 y0 d0.8 p0.6 x0;explosionGenerator=custom:STDNARROWBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=4 y0 d0.8 p0.6 x0;explosionGenerator=custom:STDBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=6;damage=4 y0 d0.8 p0.6 x0;explosionGenerator=custom:STDBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
 
 

@@ -219,6 +219,7 @@ local selfDUnits = {
 	claw_u5commander = true,
 	claw_u6commander = true,
 	claw_u7commander = true,
+	claw_avenger = true,
 	-- SPHERE
 	sphere_commander = true,
 	sphere_u1commander = true,
@@ -323,7 +324,12 @@ if (true) then
 			 --	Spring.Echo(name.." is push resistant")
 			 --	unitDef.pushresistant = 1
 			 --end
-			 
+			-- just make all ground units push resistant 
+			--if not canFly then
+				--Spring.Echo(name.." is push resistant")
+			--	unitDef.pushresistant = 1
+			--end
+			
 			if not canFly and (not unitDef.upright or tonumber(unitDef.upright) == 0) then
 				unitDef.upDirSmoothing = 0.9
 			end

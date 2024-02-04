@@ -5,7 +5,7 @@
 	//********************
 	side=Aven;
 	name=Thunder;
-	description=Bomber;
+	description=Hit-n-Run Bomber;
 	iconType=airbomber;
 
 	//************************************************************
@@ -95,8 +95,8 @@
 	//  Weapons
 	//***********
 	weapon1=aven_thunder_bomb;
-	weaponMainDir1=0 -1 1;
-	maxAngleDif1=120;
+	weaponMainDir1=0 -1 0.1;
+	maxAngleDif1=180;
 	onlytargetcategory1=NOTAIR;
 	noChaseCategory=UNDERWATER;
 	explodeAs=BIG_UNITEX;
@@ -124,8 +124,8 @@
 	[SFXTypes]
 	{
 	}
-	buildCostEnergy=5406;//#AUTO#
-	buildCostMetal=1081;//#AUTO#
-	buildTime=12885;//#AUTO#
-	mass=361;//#AUTO#
+	buildCostEnergy=3816;//#AUTO#
+	buildCostMetal=763;//#AUTO#
+	buildTime=9095;//#AUTO#
+	mass=308;//#AUTO#
 }

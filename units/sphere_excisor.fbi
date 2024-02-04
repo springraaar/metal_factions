@@ -1,0 +1,88 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	side=Sphere;
+	Name=Excisor;
+	Description=Amphibious Shielded Fire Support Robot;
+	iconType=amphibheavyfs;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=sphere_excisor;
+	objectName=sphere_excisor.3do;
+	buildPic=sphere_excisor.png;
+	soundCategory=SPHERE_BOTMED;
+	Corpse=sphere_excisor_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=3;
+	FootprintZ=3;
+	maxDamage=2300;
+
+
+	// ------------------- resources
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	Builder=0;
+
+	// ------------------- movement
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.35;
+	brakeRate=0.35;
+	Acceleration=0.2;
+	turnRate=1080;
+	movementClass=KBOTUW3;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_excisor_laser;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	Weapon2=sphere_excisor_shield;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNITEX;
+
+
+	// ------------------- orders
+
+	// ------------------- misc
+	noAutoFire=0;
+	Upright=0;
+	collisionVolumeType = box;
+	collisionVolumeScales = 35 35 35;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+	TransportByEnemy=0;
+
+	[CustomParams]
+	{
+		builtBy=sphere_adv_kbot_factory;
+		optional=1;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:REDFLARE;
+	}
+
+	buildCostEnergy=6401;//#AUTO#
+	buildCostMetal=1280;//#AUTO#
+	buildTime=15255;//#AUTO#
+	mass=1001;//#AUTO#
+}

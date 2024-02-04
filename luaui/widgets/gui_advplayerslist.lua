@@ -92,7 +92,7 @@ local max = math.max
 local min = math.min
 
 VFS.Include("lualibs/constants.lua")
-
+VFS.Include("lualibs/util.lua")
 
 --------------------------------------------------------------------------------
 -- IMAGES
@@ -134,6 +134,7 @@ local resourcesPic      = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/resources
 local positionPic      = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/position.png"
 local clearMarksPic     = ":n:"..LUAUI_DIRNAME.."Images/advplayerslist/clearMarks.png"
 
+local sides           = {}  -- select side by team id
 local sidePics        = {}  -- loaded in Sem_sidePics function
 local sidePicsWO      = {}  -- loaded in Sem_sidePics function
 
@@ -271,7 +272,6 @@ local separatorOffset = 3 * scaleFactor
 local playerOffset    = 19 * scaleFactor
 local drawList        = {}
 local teamN
-local newSide		  = {}
 
 
 --------------- chat button stuff
@@ -649,9 +649,17 @@ end
 
 function GetAllPlayers()
 	local noplayer
+	local tside,ingameSide
 	local allteams   = Spring_GetTeamList()
 	teamN = table.maxn(allteams) - 1               --remove gaia
 	for i = 0,teamN-1 do
+		_,_,_,_,tside = Spring_GetTeamInfo(i)
+		ingameSide = spGetTeamRulesParam(i,"faction_selected")
+		if ingameSide then
+			tside = ingameSide
+		end
+		sides[i] = tside
+	
 		local teamPlayers = Spring_GetPlayerList(i, true)
 		if not teamPlayers then
 			teamPlayers = {}
@@ -673,10 +681,9 @@ function GetAllPlayers()
 end
 
 function Init()
-	SetNewSides()
-	SetSidePics()
 	SetPingCpuColors()
 	InitializePlayers()
+	SetSidePics()
 	SortList()
 	SetModulesPositionX()
 	GeometryChange()
@@ -1720,29 +1727,6 @@ function GetPingLvl(ping)
 	end
 end
 
--- Listen for other widgets that tell if a player has changed side. 1 = arm, 2 = core. Expand at will to include more factions.
---function widget:RecvLuaMsg(msg, playerID)
---	local sidePrefix = '195' -- set by widget gui_commchange.lua
---	local sms = string.sub(msg, string.len(sidePrefix)+1) 
---	
---	local side = tonumber(string.sub(sms,1,1))
---	
---	if side == 1 then
---		newSide[playerID] = 1
---	elseif side == 2 then
---		newSide[playerID] = 2
---	end
---	SetSidePics()
---end
-
--- Set up array to handle dynamic side changes
-function SetNewSides()
-	teamList = Spring_GetTeamList()
-	for _, team in ipairs(teamList) do
-		if not newSide[team] then newSide[team] = 0 end
-	end
-end
-
 function SetSidePics()
 
 -- Loads the side pics and side pics outlines for each side.
@@ -1753,42 +1737,30 @@ function SetSidePics()
 
 	teamList = Spring_GetTeamList()
 	for _, team in ipairs(teamList) do
-		_,_,_,_,teamside = Spring_GetTeamInfo(team)
-		if newSide[team] and newSide[team] > 0 then
-			if newSide[team] == 1 then
-				teamside = "aven"
-			elseif newSide[team] == 2 then
-				teamside = "gear"
-			elseif newSide[team] == 3 then
-				teamside = "claw"
-			elseif newSide[team] == 4 then
-				teamside = "sphere"
-			elseif newSide[team] == 5 then
-				teamside = "random"
-			end
-		end
-		
-		if VFS.FileExists(LUAUI_DIRNAME.."images/advplayerslist/"..teamside..".png") then
-			sidePics[team] = ":n:luaui/images/advplayerslist/"..teamside..".png"
-			if VFS.FileExists(LUAUI_DIRNAME.."images/advplayerslist/"..teamside.."WO.png") then
-				sidePicsWO[team] = ":n:luaui/images/advplayerslist/"..teamside.."WO.png"
-			else
-				sidePicsWO[team] = ":n:luaui/images/advplayerslist/noWO.png"
-			end
-		else
-			if VFS.FileExists(LUAUI_DIRNAME.."images/advplayerslist/"..teamside.."_default.png") then
-				sidePics[team] = ":n:luaui/images/advplayerslist/"..teamside.."_default.png"
-				if VFS.FileExists(LUAUI_DIRNAME.."images/advplayerslist/"..teamside.."WO_default.png") then
-					sidePicsWO[team] = ":n:luaui/images/advplayerslist/"..teamside.."WO_default.png"
+		teamside = sides[team]
+		if teamside then
+			if VFS.FileExists(LUAUI_DIRNAME.."images/advplayerslist/"..teamside..".png") then
+				sidePics[team] = ":n:luaui/images/advplayerslist/"..teamside..".png"
+				if VFS.FileExists(LUAUI_DIRNAME.."images/advplayerslist/"..teamside.."WO.png") then
+					sidePicsWO[team] = ":n:luaui/images/advplayerslist/"..teamside.."WO.png"
 				else
 					sidePicsWO[team] = ":n:luaui/images/advplayerslist/noWO.png"
 				end
 			else
-				--if teamside ~= "" then
-				--	Echo("Image missing for side "..teamside..", using default.")
-				--end
-				sidePics[team] = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/default.png"
-				sidePicsWO[team] = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/defaultWO.png"
+				if VFS.FileExists(LUAUI_DIRNAME.."images/advplayerslist/"..teamside.."_default.png") then
+					sidePics[team] = ":n:luaui/images/advplayerslist/"..teamside.."_default.png"
+					if VFS.FileExists(LUAUI_DIRNAME.."images/advplayerslist/"..teamside.."WO_default.png") then
+						sidePicsWO[team] = ":n:luaui/images/advplayerslist/"..teamside.."WO_default.png"
+					else
+						sidePicsWO[team] = ":n:luaui/images/advplayerslist/noWO.png"
+					end
+				else
+					--if teamside ~= "" then
+					--	Echo("Image missing for side "..teamside..", using default.")
+					--end
+					sidePics[team] = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/default.png"
+					sidePicsWO[team] = ":n:"..LUAUI_DIRNAME.."images/advplayerslist/defaultWO.png"
+				end
 			end
 		end
 	end
@@ -2434,6 +2406,7 @@ end
 
 function CheckPlayersChange()
 	local sorting = false
+	local updateSidePics = false
 	local f = spGetGameFrame() 
 
 	-- reset ally team income counter
@@ -2490,8 +2463,9 @@ function CheckPlayersChange()
 			end
 		end
 	end
-	-- set relative resource position
+	
 	for _,teamId in ipairs(Spring_GetTeamList()) do
+		-- set relative resource position
 		if (teamResources[teamId]) then
 			if maxIncome > 0 then
 				teamResources[teamId].relIncome = floor(teamResources[teamId].income * 100 / maxIncome)
@@ -2503,6 +2477,13 @@ function CheckPlayersChange()
 			player[teamId+32] = CreatePlayerFromTeam(teamId)
 			player[teamId+32].resignProcessed = true	
 			sorting = true	
+		end
+		
+		-- update sides
+		local ingameSide = spGetTeamRulesParam(teamId,"faction_selected")
+		if ingameSide and ingameSide ~= sides[teamId] then
+			updateSidePics = true
+			sides[teamId] = ingameSide
 		end
 	end
 	
@@ -2599,6 +2580,9 @@ function CheckPlayersChange()
 		SortList()
 		SetModulesPositionX()    -- change the X size if needed (change of widest name)
 	end
+	if updateSidePics == true then
+		SetSidePics()
+	end
 	updateExtraButtonGeometry()
 end
 
@@ -2644,15 +2628,6 @@ function widget:GameStart()
 	Spring.SendCommands("info 0")
 	
 	Init()
-end
-
-function widget:Update(frame)
-	local gs = Spring_GetGameSeconds()
-	if gs < 1 then
-		if gs > 0 then
-			Init() 
-		end
-	end
 end
 
 function widget:TeamDied(teamID)

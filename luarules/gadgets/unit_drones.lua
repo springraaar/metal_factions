@@ -185,6 +185,7 @@ local droneNamesForUnitDefName = {
 	aven_u6commander = avenDrones,
 	aven_u7commander = avenDrones,	
 	aven_skein = avenDrones,
+	aven_paladin = avenDrones,
 	gear_adv_construction_kbot = gearDrones,
 	gear_adv_construction_hydrobot = gearDrones,
 	gear_commander = gearDrones,

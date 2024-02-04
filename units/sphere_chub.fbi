@@ -3,8 +3,8 @@
 	// ------------------- description
 	side=Sphere;
 	Name=Chub;
-	Description=Armored Missile Robot;
-	iconType=mobilefs;
+	Description=Amphibious Armored Missile Robot;
+	iconType=amphibfs;
 
 	// ------------------- categories
 	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
@@ -43,7 +43,7 @@
 	brakeRate=0.35;
 	Acceleration=0.15;
 	turnRate=950;
-	movementClass=KBOTHT3;
+	movementClass=KBOTUW3;
 
 	// ------------------- scout
 	sightDistance=500;

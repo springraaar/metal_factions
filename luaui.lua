@@ -16,12 +16,13 @@ LUAUI_DIRNAME = 'luaui/'
 VFS.DEF_MODE = VFS.RAW_FIRST
 local STARTUP_FILENAME = LUAUI_DIRNAME .. 'mfmain.lua'
 
+VFS.Include("lualibs/security.lua") -- security overrides
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
 do
-  -- use a versionned directory name if it exists
+  -- use a versioned directory name if it exists
   local sansslash = string.sub(LUAUI_DIRNAME, 1, -2)
   local versiondir = sansslash .. '-' .. Engine.version .. '/'
   if (VFS.FileExists(versiondir  .. 'mfmain.lua', VFS.RAW_ONLY)) then

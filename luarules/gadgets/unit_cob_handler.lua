@@ -300,7 +300,10 @@ end
 local COMSAT_ZONE_SIZE = 512
 --TODO this is probably slow, but should be ok as there are relatively few comsats in play 
 function getComsatZoneIndex(px,pz)
-	return floor(px/COMSAT_ZONE_SIZE) .."_".. floor(pz/COMSAT_ZONE_SIZE) 
+	if px and pz then
+		return floor(px/COMSAT_ZONE_SIZE) .."_".. floor(pz/COMSAT_ZONE_SIZE)
+	end
+	return "0_0"
 end
 
 -- checks if a unit is allowed to fire at a target

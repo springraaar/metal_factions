@@ -27,10 +27,6 @@ end
 include("keysym.h.lua")
 
 
-local NeededFrameworkVersion = 8.1
-local CanvasX,CanvasY = 1272,734 --resolution in which the widget was made (for 1:1 size)
---TODO review this, use numbers that make more sense
---1272,734 == 1280,768 windowed
 local vsx, vsy = gl.GetViewSizes()
 local maxFontSizeFactor = 1
 if (vsy > 1080) then
@@ -60,7 +56,6 @@ local hasOptions = {}
 local buildOptionsTable = {}
 local latestBuildCmds = {}
 local latestUnfilteredBuildCmds = {}
-local scale = 1			--- gui scale
 
 local ICON_FLAT_HEIGHT = 15
 local ICON_FLAT2_HEIGHT = 32
@@ -80,6 +75,7 @@ local CLEANUP_TAG = 1
 -- custom commands
 VFS.Include("lualibs/custom_cmd.lua")
 VFS.Include("lualibs/util.lua")
+VFS.Include("luaui/headers/redui_aux.lua")
 
 local iconCmdPosition = {
 	[CMD.ATTACK] = 1,
@@ -313,37 +309,6 @@ local Config = {
 	},	
 }
 
-local function IncludeRedUIFrameworkFunctions()
-	New = WG.Red.New(widget)
-	Copy = WG.Red.Copytable
-	setTooltip = WG.Red.SetTooltip
-	getSetTooltip = WG.Red.GetSetTooltip
-	screen = WG.Red.Screen
-	getWidgetObjects = WG.Red.GetWidgetObjects
-	cleanupTaggedObjects = WG.Red.CleanupTaggedObjects
-end
-
-local function RedUIchecks()
-	local color = "\255\255\255\1"
-	local passed = true
-	if (type(WG.Red)~="table") then
-		Spring.Echo(color..widget:GetInfo().name.." requires Red UI Framework.")
-		passed = false
-	elseif (type(WG.Red.Screen)~="table") then
-		Spring.Echo(color..widget:GetInfo().name..">> strange error.")
-		passed = false
-	elseif (WG.Red.Version < NeededFrameworkVersion) then
-		Spring.Echo(color..widget:GetInfo().name..">> update your Red UI Framework.")
-		passed = false
-	end
-	if (not passed) then
-		widgetHandler:ToggleWidget(widget:GetInfo().name)
-		return false
-	end
-	IncludeRedUIFrameworkFunctions()
-	return true
-end
-
 -- adjust Y offsets of grids to attach them to each other
 local function adjustGridYOffsets()
 	local buildMenuH = buildMenu.background.sy
@@ -397,54 +362,10 @@ local function adjustGridYOffsets()
 	end
 end
 
-local function AutoResizeObjects() --autoresize v2
-	if (LastAutoResizeX==nil) then
-		LastAutoResizeX = CanvasX
-		LastAutoResizeY = CanvasY
-	end
-	local lx,ly = LastAutoResizeX,LastAutoResizeY
-	local vsx,vsy = screen.vsx,screen.vsy
-	--local vsx,vsy = 3940,2160
-	if ((lx ~= vsx) or (ly ~= vsy)) then
-		local objects = getWidgetObjects(widget)
-		scale = vsy/ly
-		maxFontSizeFactor = scale
-		local skippedObjects = {}
-		for i=1,#objects do
-			local o = objects[i]
-			local adjust = 0
-			if ((o.movableSlaves) and (#o.movableSlaves > 0)) then
-				adjust = (o.px*scale+o.sx*scale)-vsx
-				if (((o.px+o.sx)-lx) == 0) then
-					o._moveduetoresize = true
-				end
-			end
-			if (o.px) then o.px = o.px * scale end
-			if (o.py) then o.py = o.py * scale end
-			if (o.sx) then o.sx = o.sx * scale end
-			if (o.sy) then o.sy = o.sy * scale end
-			if (o.fontsize) then o.fontsize = o.fontsize * scale end
-			if (adjust > 0) then
-				o._moveduetoresize = true
-				o.px = o.px - adjust
-				for j=1,#o.movableSlaves do
-					local s = o.movableSlaves[j]
-					s.px = s.px - adjust/scale
-				end
-			elseif ((adjust < 0) and o._moveduetoresize) then
-				o._moveduetoresize = nil
-				o.px = o.px - adjust
-				for j=1,#o.movableSlaves do
-					local s = o.movableSlaves[j]
-					s.px = s.px - adjust/scale
-				end
-			end
-		end
-		LastAutoResizeX,LastAutoResizeY = vsx,vsy
-	end
-	
-	adjustGridYOffsets()
-end
+function getScale(vsx,lx,vsy,ly)
+	return vsy/ly
+end 
+
 local function CalcGridHeight(r,rows,hasPages)
 
 	local result = r.isy*(rows) + (hasPages and ICON_FLAT_HEIGHT or 0)+ r.iSpreadY * (rows) + r.margin*2
@@ -1100,6 +1021,7 @@ function widget:Initialize()
 	iconOrderMenu.page = 1
 	
 	AutoResizeObjects() --fix for displacement on crash issue
+	adjustGridYOffsets()
 end
 
 local function onNewCommands(filteredBuildCmds,buildCmds,otherCmds,iconOtherCmds)
@@ -1121,38 +1043,9 @@ end
 
 local function onWidgetUpdate() --function widget:Update()
 	AutoResizeObjects()
+	adjustGridYOffsets()
 	SelectedUnitsCount = spGetSelectedUnitsCount()
 end
-
---save/load stuff
---currently only position
-
---[[  FIXME: commented out, something was making this not work properly if left enabled
-function widget:GetConfigData() --save config
-	if (PassedStartupCheck) then
-		local vsy = screen.vsy
-		local unscale = CanvasY/vsy --needed due to autoresize, stores unresized variables
-		Config.buildMenu.px = buildMenu.background.px * unscale
-		Config.buildMenu.py = buildMenu.background.py * unscale
-		Config.orderMenu.px = orderMenu.background.px * unscale
-		Config.orderMenu.py = orderMenu.background.py * unscale
-		Config.iconOrderMenu.px = iconOrderMenu.background.px * unscale
-		Config.iconOrderMenu.py = iconOrderMenu.background.py * unscale
-
-		return {Config=Config}
-	end
-end
-function widget:SetConfigData(data) --load config
-	if (data.Config ~= nil) then
-		Config.buildMenu.px = data.Config.buildMenu.px
-		Config.buildMenu.py = data.Config.buildMenu.py
-		Config.orderMenu.px = data.Config.orderMenu.px
-		Config.orderMenu.py = data.Config.orderMenu.py
-		Config.iconOrderMenu.px = data.Config.iconOrderMenu.px
-		Config.iconOrderMenu.py = data.Config.iconOrderMenu.py
-	end
-end
-]]
 
 
 --lots of hacks under this line ------------- overrides/disables default spring menu layout and gets current orders + filters out some commands
@@ -1276,6 +1169,8 @@ local function GetCommands()
 	
 	return filteredBuildCmds,buildCmds,otherCmds,iconOtherCmds
 end
+
+
 local hijackAttempts = 0
 local layoutPing = 54352 --random number
 local function hijackLayout()

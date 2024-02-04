@@ -5,7 +5,7 @@
 	//********************
 	side=Sphere;
 	name=Manta;
-	description=Bomber;
+	description=Hit-n-Run Bomber;
 	iconType=airbomber;
 
 	//************************************************************
@@ -97,8 +97,8 @@
 	//***********
 	weapon1=sphere_manta_bomb;
 	noChaseCategory=UNDERWATER;
-	weaponMainDir1=0 -1 1;
-	maxAngleDif1=120;
+	weaponMainDir1=0 -1 0.1;
+	maxAngleDif1=180;
 	onlytargetcategory1=NOTAIR;
 	explodeAs=BIG_UNITEX;
 	selfDestructAs=BIG_UNIT;
@@ -126,8 +126,8 @@
 	[SFXTypes]
 	{
 	}
-	buildCostEnergy=5161;//#AUTO#
-	buildCostMetal=1032;//#AUTO#
-	buildTime=12302;//#AUTO#
-	mass=384;//#AUTO#
+	buildCostEnergy=3804;//#AUTO#
+	buildCostMetal=760;//#AUTO#
+	buildTime=9068;//#AUTO#
+	mass=339;//#AUTO#
 }

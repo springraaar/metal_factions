@@ -6,7 +6,7 @@ function widget:GetInfo()
 		date      = "28-5-2008",
 		license   = "",
 		layer     = 9,
-		enabled   = false
+		enabled   = true
 	}
 end
 
@@ -183,8 +183,8 @@ widget:ViewResize(widgetHandler:GetViewSizes())
 
 
 local mapMargin = 20000
-local darkenMapOpacity = 0.8
-local darkenWorldOpacity = 0.1
+local darkenMapOpacity = 0.8	-- was 0.8
+local darkenWorldOpacity = 0.1	-- was 0.1
 
 local msx = Game.mapSizeX
 local msz = Game.mapSizeZ

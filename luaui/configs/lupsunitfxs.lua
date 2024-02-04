@@ -28,6 +28,9 @@ effectUnitDefs = {
   sphere_charger = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
   },
+  sphere_excisor = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+  },
   sphere_rain = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
   },

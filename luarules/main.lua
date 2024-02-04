@@ -6,5 +6,5 @@ if (select == nil) then
   end
 end
 
-
+VFS.Include("lualibs/security.lua") -- security overrides
 VFS.Include("LuaGadgets/gadgets.lua")

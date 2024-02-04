@@ -26,6 +26,7 @@ local spGetFeatureDefID = Spring.GetFeatureDefID
 local CMD_CLEARWRECKS = "CLEARWRECKS"
 local CMD_RESETUPGRADES = "RESETUPGRADES"
 local CMD_SANDBOX = "SANDBOX"
+local CMD_PICKFACTION = "PICKFACTION"
 
 include("lualibs/util.lua")
 
@@ -77,8 +78,16 @@ function processExternalCommand(msg,playerId,pName,teamId,allyId, active,spectat
 			else
 				spEcho("GAME : SANDBOX command requires cheat mode.")
 			end
+		elseif (command == CMD_PICKFACTION and active) then
+			-- change side/faction
+			if (Spring.GetGameFrame() <= 0) then
+				side = parameters[shift+2]
+				if side then	
+			 		Spring.SetTeamRulesParam(teamId, 'faction_selected', side , {public=true})
+			 		--Spring.Echo("faction set to "..side.." for team "..teamId)
+				end				
+			end
 		end
-
 	end
 end
 

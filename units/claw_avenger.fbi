@@ -76,6 +76,7 @@
 	cloakCost=30;
 	cloakCostMoving=60;
 	minCloakDistance=70;
+	initCloaked=1;
 
 
 	//************************************************************
@@ -84,8 +85,9 @@
 	weapon1=claw_avenger_laser;
 	badTargetCategory1=NOTAIR;
 	noChaseCategory=VTOL;
-	explodeAs=SMALL_UNITEX;
-	selfDestructAs=SMALL_UNIT;
+	explodeAs=CLAW_AVENGER_BLAST;
+	selfDestructAs=CLAW_AVENGER_BLAST;
+	selfDestructCountdown=0.5;
 
 	//************************************************************
 	//  Orders
@@ -107,12 +109,13 @@
 	[CustomParams]
 	{
 		builtBy=claw_tombstone;
-		tip=Weapon loses up to 30% damage over its range. Radar stealth;
+		tip=Weapon loses up to 30% damage over its range. Radar stealth. Explodes for 1000(H) damage in a small area;
 		evalFactor=0.85;
+		offensiveExplosion=1;
 	}
 
-	buildCostEnergy=1582;//#AUTO#
-	buildCostMetal=316;//#AUTO#
-	buildTime=3771;//#AUTO#
-	mass=202;//#AUTO#
+	buildCostEnergy=1793;//#AUTO#
+	buildCostMetal=358;//#AUTO#
+	buildTime=4273;//#AUTO#
+	mass=209;//#AUTO#
 }

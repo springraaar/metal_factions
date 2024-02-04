@@ -11,9 +11,6 @@ function widget:GetInfo()
 	}
 end
 
-local NeededFrameworkVersion = 8.1
-local CanvasX,CanvasY = 1280,734 --resolution in which the widget was made (for 1:1 size)
---1272,734 == 1280,768 windowed
 local vsx, vsy = gl.GetViewSizes()
 local maxFontSizeFactor = 1
 if (vsy > 1080) then
@@ -23,7 +20,7 @@ end
 VFS.Include("lualibs/constants.lua")
 VFS.Include("lualibs/custom_cmd.lua")
 VFS.Include("lualibs/util.lua")
-
+VFS.Include("luaui/headers/redui_aux.lua")
 
 local sGetMyTeamID = Spring.GetMyTeamID
 local sGetTeamResources = Spring.GetTeamResources
@@ -177,80 +174,10 @@ local function setHPLevel(res,level)
 	spSendLuaRulesMsg(msg)
 end
 
-local function IncludeRedUIFrameworkFunctions()
-	New = WG.Red.New(widget)
-	Copy = WG.Red.Copytable
-	SetTooltip = WG.Red.SetTooltip
-	GetSetTooltip = WG.Red.GetSetTooltip
-	Screen = WG.Red.Screen
-	GetWidgetObjects = WG.Red.GetWidgetObjects
+function getScale(vsx,lx,vsy,ly)
+	return (vsy/ly + vsx/lx) * 0.5 
 end
 
-local function RedUIchecks()
-	local color = "\255\255\255\1"
-	local passed = true
-	if (type(WG.Red)~="table") then
-		Spring.Echo(color..widget:GetInfo().name.." requires Red UI Framework.")
-		passed = false
-	elseif (type(WG.Red.Screen)~="table") then
-		Spring.Echo(color..widget:GetInfo().name..">> strange error.")
-		passed = false
-	elseif (WG.Red.Version < NeededFrameworkVersion) then
-		Spring.Echo(color..widget:GetInfo().name..">> update your Red UI Framework.")
-		passed = false
-	end
-	if (not passed) then
-		widgetHandler:ToggleWidget(widget:GetInfo().name)
-		return false
-	end
-	IncludeRedUIFrameworkFunctions()
-	return true
-end
-
-local function AutoResizeObjects() --autoresize v2
-	if (LastAutoResizeX==nil) then
-		LastAutoResizeX = CanvasX
-		LastAutoResizeY = CanvasY
-	end
-	local lx,ly = LastAutoResizeX,LastAutoResizeY
-	local vsx,vsy = Screen.vsx,Screen.vsy
-	if ((lx ~= vsx) or (ly ~= vsy)) then
-		local objects = GetWidgetObjects(widget)
-		local scale = (vsy/ly + vsx/lx) * 0.5 
-		local skippedobjects = {}
-		for i=1,#objects do
-			local o = objects[i]
-			local adjust = 0
-			if ((o.movableSlaves) and (#o.movableSlaves > 0)) then
-				adjust = (o.px*scale+o.sx*scale)-vsx
-				if (((o.px+o.sx)-lx) == 0) then
-					o._moveduetoresize = true
-				end
-			end
-			if (o.px) then o.px = o.px * scale end
-			if (o.py) then o.py = o.py * scale end
-			if (o.sx) then o.sx = o.sx * scale end
-			if (o.sy) then o.sy = o.sy * scale end
-			if (o.fontsize) then o.fontsize = o.fontsize * scale end
-			if (adjust > 0) then
-				o._moveduetoresize = true
-				o.px = o.px - adjust
-				for j=1,#o.movableSlaves do
-					local s = o.movableSlaves[j]
-					s.px = s.px - adjust/scale
-				end
-			elseif ((adjust < 0) and o._moveduetoresize) then
-				o._moveduetoresize = nil
-				o.px = o.px - adjust
-				for j=1,#o.movableSlaves do
-					local s = o.movableSlaves[j]
-					s.px = s.px - adjust/scale
-				end
-			end
-		end
-		LastAutoResizeX,LastAutoResizeY = vsx,vsy
-	end
-end
 
 local function short(n,f)
 	if (f == nil) then
@@ -387,12 +314,12 @@ local function createbar(r)
 	storage.fontsize = r.fontsize*0.88
 	
 	--tooltip
-	background.mouseOver = function(mx,my,self) SetTooltip(r.tooltip.background) end
-	income.mouseOver = function(mx,my,self) SetTooltip(r.tooltip.income) end
-	pull.mouseOver = function(mx,my,self) SetTooltip(r.tooltip.pull) end
-	expense.mouseOver = function(mx,my,self) SetTooltip(r.tooltip.expense) end
-	storage.mouseOver = function(mx,my,self) SetTooltip(r.tooltip.storage) end
-	current.mouseOver = function(mx,my,self) SetTooltip(r.tooltip.current) end
+	background.mouseOver = function(mx,my,self) setTooltip(r.tooltip.background) end
+	income.mouseOver = function(mx,my,self) setTooltip(r.tooltip.income) end
+	pull.mouseOver = function(mx,my,self) setTooltip(r.tooltip.pull) end
+	expense.mouseOver = function(mx,my,self) setTooltip(r.tooltip.expense) end
+	storage.mouseOver = function(mx,my,self) setTooltip(r.tooltip.storage) end
+	current.mouseOver = function(mx,my,self) setTooltip(r.tooltip.current) end
 	
 
 	return {
@@ -474,7 +401,7 @@ local function createWind(r)
 	--currentValue.fontsize = r.fontsize*0.93
 	
 	--tooltip
-	background.mouseOver = function(mx,my,self) SetTooltip(r.tooltip.background) end	
+	background.mouseOver = function(mx,my,self) setTooltip(r.tooltip.background) end	
 
 	return {
 		["background"] = background,
@@ -537,7 +464,7 @@ local function createTidal(r)
 	--baseValue.fontsize = r.fontsize*0.93
 	
 	--tooltip
-	background.mouseOver = function(mx,my,self) SetTooltip(r.tooltip.background) end
+	background.mouseOver = function(mx,my,self) setTooltip(r.tooltip.background) end
 	
 
 	return {
@@ -659,28 +586,3 @@ function widget:Update()
 		lastFrame = gameFrame
 	end
 end
-
---save/load stuff
---currently only position
---[[
-function widget:GetConfigData() --save config
-	if (PassedStartupCheck) then
-		local vsy = Screen.vsy
-		local unscale = CanvasY/vsy --needed due to autoresize, stores unresized variables
-		Config.metal.px = metal.background.px * unscale
-		Config.metal.py = metal.background.py * unscale
-		Config.energy.px = energy.background.px * unscale
-		Config.energy.py = energy.background.py * unscale
-		return {Config=Config}
-	end
-	
-end
-function widget:SetConfigData(data) --load config
-	if (data.Config ~= nil) then
-		Config.metal.px = data.Config.metal.px
-		Config.metal.py = data.Config.metal.py
-		Config.energy.px = data.Config.energy.px
-		Config.energy.py = data.Config.energy.py
-	end
-end
---]]

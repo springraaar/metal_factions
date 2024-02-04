@@ -390,7 +390,7 @@ function gadget:Initialize()
 		if (not ud.isImmobile) and not (ud.canFly) then
 			if ud.moveDef and ud.moveDef.maxSlope and ud.moveDef.maxSlope < 0.5 then
 				maxSlopeByUnitDefId[defId] = ud.moveDef.maxSlope
-				--Spring.Echo(unitDef.name.." maxSlope="..unitDef.moveDef.maxSlope)
+				--Spring.Echo(ud.name.." maxSlope="..ud.moveDef.maxSlope)
 				
 				if (string.find(tostring(ud.moveDef.name),"hover")) then
 					floatingGroundDefIds[defId] = true

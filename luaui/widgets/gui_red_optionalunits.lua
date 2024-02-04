@@ -11,19 +11,16 @@ function widget:GetInfo()
 	}
 end
 
-local NeededFrameworkVersion = 8.1
-local CanvasX,CanvasY = 1272,734  --resolution in which the widget was made (for 1:1 size)
 local vsx, vsy = gl.GetViewSizes()
 local maxFontSizeFactor = 1
 if (vsy > 1080) then
 	maxFontSizeFactor = vsy / 1080
 end	
-local scale = 1			--- gui scale
 
 VFS.Include("lualibs/constants.lua")
 VFS.Include("lualibs/custom_cmd.lua")
 VFS.Include("lualibs/util.lua")
-
+VFS.Include("luaui/headers/redui_aux.lua")
 
 local spGetMyTeamID = Spring.GetMyTeamID
 local spGetTeamRulesParam = Spring.GetTeamRulesParam
@@ -195,90 +192,10 @@ local Config = {
 	},
 }
 
-local function IncludeRedUIFrameworkFunctions()
-	New = WG.Red.New(widget)
-	Copy = WG.Red.Copytable
-	SetTooltip = WG.Red.SetTooltip
-	GetSetTooltip = WG.Red.GetSetTooltip
-	Screen = WG.Red.Screen
-	GetWidgetObjects = WG.Red.GetWidgetObjects
+function getScale(vsx,lx,vsy,ly)
+	return vsx/lx
 end
 
-local function RedUIchecks()
-	local color = "\255\255\255\1"
-	local passed = true
-	if (type(WG.Red)~="table") then
-		Spring.Echo(color..widget:GetInfo().name.." requires Red UI Framework.")
-		passed = false
-	elseif (type(WG.Red.Screen)~="table") then
-		Spring.Echo(color..widget:GetInfo().name..">> strange error.")
-		passed = false
-	elseif (WG.Red.Version < NeededFrameworkVersion) then
-		Spring.Echo(color..widget:GetInfo().name..">> update your Red UI Framework.")
-		passed = false
-	end
-	if (not passed) then
-		widgetHandler:ToggleWidget(widget:GetInfo().name)
-		return false
-	end
-	IncludeRedUIFrameworkFunctions()
-	return true
-end
-
-
-local function AutoResizeObjects()
-	if (LastAutoResizeX==nil) then
-		LastAutoResizeX = CanvasX
-		LastAutoResizeY = CanvasY
-	end
-	local lx,ly = LastAutoResizeX,LastAutoResizeY
-	local vsx,vsy = Screen.vsx,Screen.vsy
-	if ((lx ~= vsx) or (ly ~= vsy)) then
-		local objects = GetWidgetObjects(widget)
-		--local scale = (vsy/ly + vsx/lx) * 0.5 
-		local scale = vsx/lx
-		local skippedobjects = {}
-		for i=1,#objects do
-			local o = objects[i]
-			local adjust = 0
-			if ((o.movableSlaves) and (#o.movableSlaves > 0)) then
-				adjust = (o.px*scale+o.sx*scale)-vsx
-				if (((o.px+o.sx)-lx) == 0) then
-					o._moveduetoresize = true
-				end
-			end
-			if (o.px) then o.px = o.px * scale end
-			if (o.py) then o.py = o.py * scale end
-			if (o.sx) then o.sx = o.sx * scale end
-			if (o.sy) then o.sy = o.sy * scale end
-			if (o.fontsize) then o.fontsize = o.fontsize * scale end
-			if (o.px) then
-				if (adjust > 0) then
-					o._moveduetoresize = true
-					o.px = o.px - adjust
-					for j=1,#o.movableSlaves do
-						local s = o.movableSlaves[j]
-						if s and s.px then
-							s.px = s.px - adjust/scale
-						end
-					end
-				elseif ((adjust < 0) and o._moveduetoresize) then
-					o._moveduetoresize = nil
-					o.px = o.px - adjust
-					for j=1,#o.movableSlaves do
-						local s = o.movableSlaves[j]
-						if s and s.px then
-							s.px = s.px - adjust/scale
-						end
-					end
-				end
-			else
-				Spring.Echo(o.name.." has no px")
-			end
-		end
-		LastAutoResizeX,LastAutoResizeY = vsx,vsy
-	end
-end
 
 local function createMainPanel(r)
 	local background = {"rectangle",
@@ -527,7 +444,7 @@ function createUnitRow(r,lClickHandler)
 
 	-- mouse over handling	
 	background.mouseOver = function(mx,my,self) 
-		SetTooltip(self.tooltip)
+		setTooltip(self.tooltip)
 		if self.isSelected == true then
 			background.border = UI_BTN_BORDER_SELECTED_OVER
 			background.color = UI_BTN_BG_SELECTED_OVER
@@ -667,7 +584,7 @@ function createButton(r,label,lClickHandler,rClickHandler)
 
 	-- mouse over handling	
 	background.mouseOver = function(mx,my,self) 
-		SetTooltip(r.tooltip.background)
+		setTooltip(r.tooltip.background)
 		if self.isSelected == true then
 			self.color = UI_BTN_BG_SELECTED_OVER
 			self.border = UI_BTN_BORDER_SELECTED_OVER			

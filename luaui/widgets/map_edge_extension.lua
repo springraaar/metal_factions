@@ -8,7 +8,7 @@ function widget:GetInfo()
     author    = "Pako",
     date      = "2010.10.27 - 2011.10.29", --YYYY.MM.DD, created - updated
     license   = "GPL",
-    layer     = 3,
+    layer     = -999,
     enabled   = true,
     --detailsDefault = 3
   }
@@ -342,7 +342,7 @@ local function DrawOMap(useMirrorShader)
 end
 
 function widget:Initialize()
-	
+	Spring.Echo("MAP EDGE EXTENSION")
 	if not drawingEnabled then
 		return
 	end
