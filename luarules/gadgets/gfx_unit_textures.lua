@@ -395,7 +395,8 @@ local function ExecuteDrawPass(drawPass)
 	local _, fullView = Spring.GetSpectatingState()
 	
 	for shaderId, data in pairs(unitDrawBins[drawPass]) do
-		gl.Culling(GL.FRONT)
+		--gl.Culling(GL.FRONT) -- disabled because fails for 0-thickness objects like radar dishes
+		gl.Culling(false)
 		for _, texAndObj in pairs(data) do
 			for bp, tex in pairs(texAndObj.textures) do
 				gl.Texture(bp, tex)
