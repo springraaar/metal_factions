@@ -256,7 +256,7 @@ function gadget:GameFrame(n)
 	
 	local autoBuildCEG = "autobuild" 
 	local autoReclaimCEG = "autoreclaim"
-
+	
 	for uId,p in pairs(autoBuildUnitIds) do
 		spSpawnCEG(p[4] and autoBuildCEG or autoReclaimCEG, p[1],p[2],p[3])
 	end
@@ -523,6 +523,15 @@ function gadget:GameFrame(n)
 				if (y < -2) then
 					r = r + 2
 					phpR = phpR + 0.001
+				end
+			end
+			-- hydron regen
+			if (ud and ud.customParams and ud.customParams.hydronregen == "1") then
+				-- check if armored
+				armored,_ = Spring.GetUnitArmored(unitId)
+				
+				if (armored) then
+					r = r + 40
 				end
 			end
 				

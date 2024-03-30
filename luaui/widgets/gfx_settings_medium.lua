@@ -30,7 +30,7 @@ function widget:Initialize()
 	Spring.SetConfigInt("MaxNanoParticles",15000,false)
 	Spring.SendCommands("grounddetail 140")	
 	Spring.SetConfigInt("GroundDecals",4,false)
-	Spring.SetConfigInt("GroundScarAlphaFade",1,false)
+	-- Spring.SetConfigInt("GroundScarAlphaFade",1,false) -- apparently it's read only
  	Spring.SetConfigFloat("snd_airAbsorption",0.1,false)
  	Spring.SetConfigInt("UseSDLAudio",1,false)
  	Spring.SetConfigInt("UseEFX",1,false)

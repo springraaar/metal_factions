@@ -7,6 +7,9 @@ piece  base, center, c3, c2, spinner, s2, s3, s4,b1,b2,b3,b4,b5;
 
 static-var  rotSpeed, statechg_DesiredState, statechg_StateChanging;
 
+#define STATE_OFF	0
+#define STATE_ON	1
+
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
 {
@@ -38,19 +41,25 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 Go()
 {
-	spin spinner around y-axis speed rotSpeed accelerate <30>;
-	return (0);
+	if (statechg_DesiredState == STATE_ON)
+	{
+		spin spinner around y-axis speed rotSpeed accelerate <30>;
+	}
+	return (0);	
 }
 
 Stop()
 {
-	stop-spin spinner around y-axis decelerate <20>;
+	if (statechg_DesiredState == STATE_OFF)
+	{
+		stop-spin spinner around y-axis decelerate <20>;
+	}
 	return (0);
 }
 
 InitState()
 {
-	statechg_DesiredState = TRUE;
+	statechg_DesiredState = STATE_OFF;
 	statechg_StateChanging = FALSE;
 	return (0);
 }
@@ -67,15 +76,15 @@ RequestState(requestedstate, currentstate)
 	statechg_DesiredState = requestedstate;
 	while( statechg_DesiredState != currentstate )
 	{
-		if( statechg_DesiredState == 0 )
+		if( statechg_DesiredState == STATE_ON )
 		{
 			call-script Go();
-			currentstate = 0;
+			currentstate = STATE_ON;
 		}
-		if( statechg_DesiredState == 1 )
+		if( statechg_DesiredState == STATE_OFF )
 		{
 			call-script Stop();
-			currentstate = 1;
+			currentstate = STATE_OFF;
 		}
 	}
 	statechg_StateChanging = FALSE;
@@ -92,25 +101,19 @@ Create()
 
 Activate()
 {
-	start-script RequestState(0);
+	start-script RequestState(STATE_ON);
 	return (0);
 }
 
 Deactivate()
 {
-	start-script RequestState(1);
+	start-script RequestState(STATE_OFF);
 	return (0);
 }
 
 SetSpeed(Func_Var_1)
 {
 	rotSpeed = Func_Var_1 * 13;
-	return (0);
-}
-
-SweetSpot(piecenum)
-{
-	piecenum = base;
 	return (0);
 }
 

@@ -395,6 +395,7 @@ if (true) then
 			end
 		end
 
-
+		-- override buildeeBuildRadius
+		unitDef.buildeebuildradius = 0
 	end
 end

@@ -11,6 +11,10 @@ static-var  statechg_DesiredState, statechg_StateChanging, rotSpeed, bUnderwater
 // signal definitions
 #define SIG_ACTIVATE 	2
 
+#define STATE_OFF	0
+#define STATE_ON	1
+
+
 
 checkUnderwater()
 {
@@ -100,31 +104,37 @@ SmokeUnit(healthpercent, sleeptime, smoketype)
 
 Go()
 {
-	if (bUnderwater)
+	if (statechg_DesiredState == STATE_ON)
 	{
-		spin waterspinner around y-axis speed rotSpeed accelerate <30.032967>;
-		return (0);
+		if (bUnderwater)
+		{
+			spin waterspinner around y-axis speed rotSpeed accelerate <30.032967>;
+			return (0);
+		}
+		spin spinner around y-axis speed rotSpeed accelerate <30.032967>;
 	}
-	spin spinner around y-axis speed rotSpeed accelerate <30.032967>;
 	return (0);
 }
 
 Stop()
 {
-	if (bUnderwater)
+	if (statechg_DesiredState == STATE_OFF)
 	{
-		stop-spin waterspinner around y-axis decelerate <20.000000>;
-		wait-for-turn waterspinner around y-axis;
-		return (0);
+		if (bUnderwater)
+		{
+			stop-spin waterspinner around y-axis decelerate <20.000000>;
+			wait-for-turn waterspinner around y-axis;
+			return (0);
+		}
+		stop-spin spinner around y-axis decelerate <20.000000>;
+		wait-for-turn spinner around y-axis;
 	}
-	stop-spin spinner around y-axis decelerate <20.000000>;
-	wait-for-turn spinner around y-axis;
 	return (0);
 }
 
 InitState()
 {
-	statechg_DesiredState = TRUE;
+	statechg_DesiredState = STATE_OFF;
 	statechg_StateChanging = FALSE;
 	return (0);
 }
@@ -141,15 +151,15 @@ RequestState(requestedstate, currentstate)
 	statechg_DesiredState = requestedstate;
 	while( statechg_DesiredState != currentstate )
 	{
-		if( statechg_DesiredState == 0 )
+		if( statechg_DesiredState == STATE_ON )
 		{
 			call-script Go();
-			currentstate = 0;
+			currentstate = STATE_ON;
 		}
-		if( statechg_DesiredState == 1 )
+		if( statechg_DesiredState == STATE_OFF )
 		{
 			call-script Stop();
-			currentstate = 1;
+			currentstate = STATE_OFF;
 		}
 	}
 	statechg_StateChanging = FALSE;
@@ -170,7 +180,7 @@ Create()
 
 Activate()
 {
-	start-script RequestState(0);
+	start-script RequestState(STATE_ON);
 	signal SIG_ACTIVATE;
 	set-signal-mask SIG_ACTIVATE;
 	while( TRUE )
@@ -188,7 +198,7 @@ Activate()
 
 Deactivate()
 {
-	start-script RequestState(1);
+	start-script RequestState(STATE_OFF);
 	signal SIG_ACTIVATE;
 	return (0);
 }
@@ -199,12 +209,6 @@ SetSpeed(modifier)
 	return (0);
 }
 
-
-SweetSpot(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
 
 Killed(severity, corpsetype)
 {

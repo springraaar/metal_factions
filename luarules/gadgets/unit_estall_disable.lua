@@ -40,6 +40,7 @@ local spGetGameSeconds    = Spring.GetGameSeconds
 local spGetTeamList = Spring.GetTeamList
 local spGetUnitHealth = Spring.GetUnitHealth
 local spCallCOBScript = Spring.CallCOBScript
+local spGetUnitIsStunned = Spring.GetUnitIsStunned 
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -218,14 +219,14 @@ function gadget:GameFrame(n)
 						end				
 					end
 					
-					-- disable units that aren't fully built or if they're set to "off"
+					-- enforce disabled state in certain situations
 					local _,_,_,_,bp = spGetUnitHealth(unitID)
-					if (bp and bp < 1) or (not unitStates.active) or (disabledUnits[unitID]) then
+					if (bp and bp < 1) or spGetUnitIsStunned(unitID) or (not unitStates.active) or (disabledUnits[unitID]) then
 						spCallCOBScript(unitID, "Deactivate", 0)
-						--Spring.Echo("deactivating... "..unitID)
+						-- Spring.Echo("deactivating... "..unitID)
 					else
 						spCallCOBScript(unitID, "Activate", 0)
-						--Spring.Echo("activating... "..unitID)
+						-- Spring.Echo("activating... "..unitID)
 					end
 				end
 			end

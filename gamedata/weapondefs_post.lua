@@ -264,6 +264,11 @@ for wdName, wd in pairs(WeaponDefs) do
 		wd.impulsefactor = 0.3
 	end
 
+	-- disable engine explosion scars
+	-- TODO enable them eventually?
+	wd.explosionscar = false
+
+
 	-- make weapon sounds relatively louder
 	processSoundDefaults(wd)
 end

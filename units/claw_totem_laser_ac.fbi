@@ -1,0 +1,111 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Totem (Laser/Autocannon);
+	description=Hardened Armed Resource Collector;
+	iconType=staticmulti;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW ENERGY METAL LEVEL1 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_totem_laser_ac;
+	objectName=claw_totem_laser_ac.3do;
+	corpse=claw_totem_laser_ac_dead;
+	buildPic=claw_totem_laser_ac.png;
+	soundCategory=aven_MSTOR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=5000;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=10;
+	metalMake=0.1;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=ooo ooo ooo;
+	activateWhenBuilt=1;
+	collisionvolumetype=cyly;
+	collisionVolumeScales=45 75 45;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+	buildDistance=600;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	onOffable=0;
+	activateWhenBuilt=1;
+	autoheal=15;
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_totem_laser;
+	weapon2=claw_totem_gun;
+	explodeAs=SMALL_BUILDINGEX;
+	selfDestructAs=SMALL_BUILDING;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	canAttack=1;
+	canGuard=1;
+	canStop=1;
+
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+
+	[CustomParams]
+	{
+		manualCost=1;
+		tip=Regenerates 15 HP/s. Absorbs 3% cost of destroyed units within 600 radius, adding +6m/s and +30E/s for up to 50s (max 300m);
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:blueflaresml;
+		explosionGenerator1=custom:railgunflaresml;
+	}
+	buildCostEnergy=8500;
+	buildCostMetal=1700;
+	buildTime=20400;
+	mass=2000;
+}

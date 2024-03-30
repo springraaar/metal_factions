@@ -1,0 +1,523 @@
+#define TAK			// This is a TAK script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
+#define SHIELD_DOWN		1
+#define SHIELD_FORMING	2
+#define SHIELD_ACTIVE	3
+
+
+#define SHIELD_FORMING_FX	1029
+#define SHIELD_ACTIVE_FX	1025
+#define SHIELD_BREAK_FX		1030
+#define SHIELD_HIT_FX		1028
+
+
+piece  base, turret, wake1, wake2, wake3, wake4, sleeve1, barrel1, flare1, sleeve2, barrel2, flare2,jpt1,jpt2,jpt3,jpt4,jpt5,jpt6,jpt7,jpt8, shieldbase,sb1,spt1,sb2,spt2,sb3,spt3,sb4,spt4,sb5,spt5,sb6,spt6,sb7,spt7,sb8,spt8,sb9,spt9,sb10,spt10,sb11,spt11,sb12,spt12,sb13,spt13,sb14,spt14,sb15,spt15,sb16,spt16,sb17,spt17,sb18,spt18,sb19,spt19,sb20,spt20,sb21,spt21,sb22,spt22,sb23,spt23,sb24,spt24,sb25,spt25, sb26,spt26,sb27,spt27;
+
+static-var  wobbleDir, gun_1, shieldState, isOnWater;
+
+#include "aimhelper1.h"
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_MOVE			4
+#define SIG_HIT				8
+
+
+
+#include "jumpvars.h"
+
+showJumpGear() {
+	// nothing to do
+}
+
+hideJumpGear() {
+	// nothing to do
+}
+
+showJumpEffects(descending, frames) {
+	if (descending) {
+		emit-sfx 1024+3 from jpt1;
+		emit-sfx 1024+3 from jpt2;
+		emit-sfx 1024+3 from jpt3;
+		emit-sfx 1024+3 from jpt4;
+		emit-sfx 1024+3 from jpt5;
+		emit-sfx 1024+3 from jpt6;
+		emit-sfx 1024+3 from jpt7;
+		emit-sfx 1024+3 from jpt8;
+		if (frames == JUMP_SND_FRAMES) {
+			play-sound( "jumpdesc", 1 );
+		}
+	} else {
+		if (frames == 0 ) {
+			play-sound( "jumpstart", 1 );
+		} else {
+			if (frames == JUMP_SND_FRAMES) {
+				play-sound( "jumpasc", 1 );
+			}
+		}
+		emit-sfx 1024+2 from jpt1;
+		emit-sfx 1024+2 from jpt2;
+		emit-sfx 1024+2 from jpt3;
+		emit-sfx 1024+2 from jpt4;
+		emit-sfx 1024+2 from jpt5;
+		emit-sfx 1024+2 from jpt6;
+		emit-sfx 1024+2 from jpt7;
+		emit-sfx 1024+2 from jpt8;
+	}
+}
+
+#include "jump.h"
+
+wobbleUnit(wasJumping)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	wasJumping = FALSE;
+	while( TRUE )
+	{
+		if (isJumping) 
+		{
+			move base to y-axis [-4.000000] speed [10.2500000];
+			wasJumping = TRUE;
+			sleep 100;
+		} 
+		else if (wasJumping)
+		{
+			move base to y-axis [0.000000] speed [4.000000];
+			wasJumping = FALSE;
+			sleep 1000;
+		}
+		else
+		{
+			if( wobbleDir == 1 )
+			{
+				move base to y-axis [1.000000] speed [1.2500000];
+			}
+			if( wobbleDir == 0 )
+			{
+				move base to y-axis [-1.000000] speed [1.2500000];
+			}
+			wobbleDir = !wobbleDir;
+			sleep 750;
+		}
+	}
+	return (0);
+}
+
+emitShieldCEG(fxID)
+{
+	// upper
+	emit-sfx fxID from spt1;
+	emit-sfx fxID from spt2;
+	emit-sfx fxID from spt3;
+	emit-sfx fxID from spt4;
+	emit-sfx fxID from spt5;
+	emit-sfx fxID from spt6;
+	emit-sfx fxID from spt7;
+	emit-sfx fxID from spt8;
+	// lower
+	emit-sfx fxID from spt9;
+	emit-sfx fxID from spt10;
+	emit-sfx fxID from spt11;
+	emit-sfx fxID from spt12;
+	emit-sfx fxID from spt13;
+	emit-sfx fxID from spt14;
+	emit-sfx fxID from spt15;
+	emit-sfx fxID from spt16;
+	// belt
+	emit-sfx fxID from spt17;
+	emit-sfx fxID from spt18;
+	emit-sfx fxID from spt19;
+	emit-sfx fxID from spt20;
+	emit-sfx fxID from spt21;
+	emit-sfx fxID from spt22;
+	emit-sfx fxID from spt23;
+	emit-sfx fxID from spt24;
+
+
+	// bottom
+	emit-sfx fxID from spt25;
+	// top
+	emit-sfx fxID from spt26;
+	emit-sfx fxID from spt27;
+}
+
+HitByWeapon(anglex,anglez)
+{
+	signal SIG_HIT;
+	set-signal-mask SIG_HIT;
+	if (shieldState == SHIELD_ACTIVE )
+	{
+		call-script emitShieldCEG(SHIELD_HIT_FX);
+		spin shieldbase around y-axis speed <360>;
+		sleep 500;
+		stop-spin shieldbase around y-axis decelerate <5>;
+		sleep 1500;
+		spin shieldbase around y-axis speed <50>;
+	}
+}
+
+
+shieldStateControl(formCounter)
+{
+	while(TRUE) 
+	{
+		while( get BUILD_PERCENT_LEFT )
+		{
+			sleep 100;
+		}
+
+		// if shield is down and on water, try to reform it
+		if ((shieldState == SHIELD_DOWN) && (isOnWater))
+		{
+			formCounter = 0;
+			shieldState = SHIELD_FORMING;
+			while (formCounter < 3)
+			{
+				sleep 1000;
+				if( (isOnWater) && (shieldState == SHIELD_FORMING))
+				{
+					formCounter = formCounter +1;
+				}
+				else
+				{
+					break;
+				}
+			}
+			if (formCounter >= 3) 
+			{
+				shieldState = SHIELD_ACTIVE;
+				set ARMORED to TRUE;
+			}
+			else
+			{
+				shieldState = SHIELD_DOWN;
+				set ARMORED to FALSE;
+			}
+		}
+
+
+		sleep 100;
+	}
+}
+
+
+shieldDisruptionControl(healthPercent, oldHealthPercent,oldHealthPercent2,oldHealthPercent3,oldHealthPercent4,oldHealthPercent5,oldHealthPercent6)
+{
+	oldHealthPercent = 100;
+	oldHealthPercent2 = 100;
+	oldHealthPercent3 = 100;
+	oldHealthPercent4 = 100;
+	oldHealthPercent5 = 100;
+	oldHealthPercent6 = 100;
+	
+	
+	while(TRUE) 
+	{
+		while( get BUILD_PERCENT_LEFT )
+		{
+			sleep 100;
+		}
+
+		// taking 15% HP in damage or more within 3 seconds breaks shield and disrupts the charging process
+		healthPercent = get HEALTH;
+		if( (oldHealthPercent6 - healthpercent) > 15 )
+		{
+			if (shieldState > SHIELD_DOWN ) 
+			{
+				call-script emitShieldCEG(SHIELD_BREAK_FX);
+				shieldState = SHIELD_DOWN;
+				set ARMORED to FALSE;
+			}
+
+			// override all measurements to prevent retriggering a second later
+			oldHealthPercent6 = healthPercent;
+			oldHealthPercent5 = healthPercent;
+			oldHealthPercent4 = healthPercent;
+			oldHealthPercent3 = healthPercent;
+			oldHealthPercent2 = healthPercent;
+			oldHealthPercent = healthPercent;
+		} 
+		else 
+		{
+			oldHealthPercent6 = oldHealthPercent5;
+			oldHealthPercent5 = oldHealthPercent4;
+			oldHealthPercent4 = oldHealthPercent3;
+			oldHealthPercent3 = oldHealthPercent2;
+			oldHealthPercent2 = oldHealthPercent;
+			oldHealthPercent = healthPercent;
+		}
+		sleep 500;
+	}
+}
+
+shieldFX()
+{
+	while (TRUE)
+	{
+		if (shieldState == SHIELD_ACTIVE )
+		{
+			call-script emitShieldCEG(SHIELD_ACTIVE_FX);
+		}
+		else if (shieldState == SHIELD_FORMING)
+		{
+			call-script emitShieldCEG(SHIELD_FORMING_FX);
+		}
+		sleep 30;
+	}
+}
+
+smokeUnit(healthpercent, sleeptime, smoketype)
+{
+	while( get BUILD_PERCENT_LEFT )
+	{
+		sleep 400;
+	}
+	while( TRUE )
+	{
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 )
+		{
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent )
+			{
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 )
+		{
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+	return (0);
+}
+
+StartMoving()
+{
+	signal SIG_MOVE;
+	set-signal-mask SIG_MOVE;
+	while( TRUE )
+	{
+		if( isOnWater )
+		{
+			emit-sfx 5 from wake1;
+			emit-sfx 5 from wake2;
+			emit-sfx 5 from wake3;
+			emit-sfx 5 from wake4;
+		}
+		sleep 300;
+	}
+	return (0);
+}
+
+StopMoving()
+{
+}
+
+checkWater()
+{
+	while(TRUE) 
+	{
+		//TODO this ignores if it's lava or death fog
+		isOnWater = (GET GROUND_WATER_HEIGHT(GET UNIT_XZ)) < [-5] && (GET UNIT_Y) == 0 ;
+	
+		sleep 100;
+	}
+}
+
+Create()
+{
+	// turn jets down
+	turn jpt1 to x-axis <-90> now;
+	turn jpt2 to x-axis <-90> now;
+	turn jpt3 to x-axis <-90> now;
+	turn jpt4 to x-axis <-90> now;
+	turn jpt5 to x-axis <-90> now;
+	turn jpt6 to x-axis <-90> now;
+	turn jpt7 to x-axis <-90> now;
+	turn jpt8 to x-axis <-90> now;
+	
+	// spread shield points around
+	
+	// upper
+	turn sb1 to y-axis <45> now;
+	turn sb2 to y-axis <90> now;
+	turn sb3 to y-axis <135> now;
+	turn sb4 to y-axis <180> now;
+	turn sb5 to y-axis <225> now;
+	turn sb6 to y-axis <270> now;
+	turn sb7 to y-axis <315> now;
+	turn sb8 to y-axis <360> now;
+
+	// lower
+	turn sb9 to y-axis <45> now;
+	turn sb10 to y-axis <90> now;
+	turn sb11 to y-axis <135> now;
+	turn sb12 to y-axis <180> now;
+	turn sb13 to y-axis <225> now;
+	turn sb14 to y-axis <270> now;
+	turn sb15 to y-axis <315> now;
+	turn sb16 to y-axis <360> now;
+	// belt
+	turn sb17 to y-axis <25> now;
+	turn sb18 to y-axis <70> now;
+	turn sb19 to y-axis <115> now;
+	turn sb20 to y-axis <160> now;
+	turn sb21 to y-axis <205> now;
+	turn sb22 to y-axis <250> now;
+	turn sb23 to y-axis <295> now;
+	turn sb24 to y-axis <340> now;
+	
+	// bottom
+	turn sb25 to y-axis <0> now;
+	// top
+	turn sb26 to y-axis <180> now;
+	turn sb27 to y-axis <360> now;
+
+	// upper
+	turn sb1 to z-axis <-45> now;
+	turn sb2 to z-axis <-55> now;
+	turn sb3 to z-axis <-35> now;
+	turn sb4 to z-axis <-45> now;
+	turn sb5 to z-axis <-45> now;
+	turn sb6 to z-axis <-25> now;
+	turn sb7 to z-axis <-35> now;
+	turn sb8 to z-axis <-45> now;
+
+	// lower
+	turn sb9 to z-axis <45> now;
+	turn sb10 to z-axis <35> now;
+	turn sb11 to z-axis <55> now;
+	turn sb12 to z-axis <45> now;
+	turn sb13 to z-axis <25> now;
+	turn sb14 to z-axis <45> now;
+	turn sb15 to z-axis <25> now;
+	turn sb16 to z-axis <35> now;
+
+	// belt
+	turn sb17 to z-axis <5> now;
+	turn sb18 to z-axis <-5> now;
+	turn sb19 to z-axis <0> now;
+	turn sb20 to z-axis <5> now;
+	turn sb21 to z-axis <-5> now;
+	turn sb22 to z-axis <0> now;
+	turn sb23 to z-axis <5> now;
+	turn sb24 to z-axis <-5> now;
+
+	// bottom
+	turn sb25 to z-axis <80> now;
+	// top
+	turn sb26 to z-axis <-75> now;
+	turn sb27 to z-axis <-70> now;
+
+	spin shieldbase around y-axis speed <50>;
+
+	isOnWater = FALSE;
+	shieldState = SHIELD_DOWN;	
+	set ARMORED to FALSE;
+	gun_1 = 0;
+	call-script stopAimHelper1(<1000>,<1000>);
+	start-script checkWater();
+	start-script initJump();
+	start-script shieldStateControl();
+	start-script shieldDisruptionControl();
+	start-script shieldFX();
+	start-script wobbleUnit();
+	start-script smokeUnit();
+	return (0);
+}
+
+
+RestoreAfterDelay()
+{
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
+	turn turret to y-axis <0.000000> speed <100.000000>;
+	turn sleeve1 to x-axis <0.000000> speed <100.000000>;
+	turn sleeve2 to x-axis <0.000000> speed <100.000000>;
+	return (0);
+}
+
+AimPrimary(heading, pitch)
+{
+	call-script updateAimHelper1(heading,pitch,<130>,<130>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn turret to y-axis heading speed <130.000000>;
+	turn sleeve1 to x-axis <0.000000> - pitch speed <130.000000>;
+	turn sleeve2 to x-axis <0.000000> - pitch speed <130.000000>;
+	if (!aimReady1)
+	{ 
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve1 around x-axis;
+		wait-for-turn sleeve2 around x-axis;
+	}
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+
+Shot1()
+{
+	if (gun_1==0)
+	{
+		emit-sfx 1024 from flare1;
+		return 0;
+	}
+	else
+	{
+		emit-sfx 1024 from flare2;
+		return 0;
+	}
+}
+
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret;
+	return (0);
+}
+
+QueryPrimary(piecenum)
+{
+	if (gun_1 == 0) {
+		piecenum = flare1;
+		gun_1 = 1;
+	} else {
+		piecenum = flare2;
+		gun_1 = 0;
+	}
+	return (0);
+}
+
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		explode barrel1 type SHATTER;
+		explode sleeve1 type SHATTER;
+		explode barrel2 type SHATTER;
+		explode sleeve2 type SHATTER;
+
+		explode turret type SHATTER;
+		return (1);
+	}
+	explode barrel1 type SHATTER;
+	explode sleeve1 type SHATTER;
+	explode barrel2 type SHATTER;
+	explode sleeve2 type SHATTER;
+	explode turret type SHATTER;
+	return (2);
+}

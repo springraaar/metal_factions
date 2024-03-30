@@ -1444,3 +1444,278 @@
 		count=1;
 	}
 }
+
+[WATERSHIELD]
+{
+	usedefaultexplosions=0;
+
+	[water_drops]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.7;
+			sizeMod=1.0;
+			pos=0, 0, 0; 
+			emitVector=dir;
+			gravity=0, -0.05, 0;  
+			colorMap=0.5 0.5 0.7 0.08   0.4 0.4 0.6 0.06   0.3 0.3 0.5 0.04;
+			Texture=waterdropcloud;
+			airdrag=0.91;
+			particleLife=8;
+			particleLifeSpread=3;
+			numParticles=0.01 r1;	// 1% chance
+			particleSpeed=1;
+			particleSpeedSpread=1;
+			particleSize=8;
+			particleSizeSpread=2;
+			emitRot=0;
+			emitRotSpread=35;
+			directional=0;
+			alwaysVisible=0;
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+	[water_puffs]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0;
+			sizeMod=1.0;
+			pos=0, 0, 0; 
+			emitVector=dir;
+			gravity=0, 0, 0;  
+			colorMap=0.13 0.13 0.165 0.01   0.1 0.1 0.14 0.005   0.07 0.07 0.11 0.0025;
+			Texture=watershield;
+			airdrag=0;
+			particleLife=2;
+			particleLifeSpread=0;
+			numParticles=1;
+			particleSpeed=0;
+			particleSpeedSpread=0;
+			particleSize=13;
+			particleSizeSpread=0;
+			emitRot=0;
+			emitRotSpread=0;
+			directional=0;
+			alwaysVisible=0;
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+}
+
+[WATERSHIELDHIT]
+{
+	usedefaultexplosions=0;
+
+	[water_drops]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+		sizeGrowth=0.7;
+		sizeMod=1.0;
+		pos=0, 0, 0; 
+		emitVector=dir;
+		gravity=0, -0.05, 0;  
+		colorMap=0.5 0.5 0.7 0.08   0.4 0.4 0.6 0.06   0.3 0.3 0.5 0.04;
+		Texture=waterdropcloud;
+		airdrag=0.91;
+		particleLife=8;
+		particleLifeSpread=3;
+		numParticles=0.1 r1;	// 10% chance
+		particleSpeed=1;
+		particleSpeedSpread=1;
+		particleSize=8;
+		particleSizeSpread=2;
+		emitRot=0;
+		emitRotSpread=35;
+		directional=0;
+		alwaysVisible=0;
+		}
+	air=1;
+	water=1;
+	underwater=1;
+	ground=1;
+	count=1;
+	}
+	[water_puffs]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0;
+			sizeMod=1.0;
+			pos=0, 0, 0; 
+			emitVector=dir;
+			gravity=0, 0, 0;  
+			colorMap=0.2 0.2 0.25 0.01   0.16 0.16 0.20 0.005   0.05 0.05 0.08 0.0025;
+			Texture=watershield;
+			airdrag=0;
+			particleLife=4;
+			particleLifeSpread=0;
+			numParticles=1;
+			particleSpeed=0;
+			particleSpeedSpread=0;
+			particleSize=13;
+			particleSizeSpread=3;
+			emitRot=0;
+			emitRotSpread=0;
+			directional=0;
+			alwaysVisible=0;
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+}
+
+[WATERSHIELDBREAK]
+{
+	usedefaultexplosions=0;
+
+	[water_drops]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.7;
+			sizeMod=1.0;
+			pos=0, 0, 0; 
+			emitVector=dir;
+			gravity=0, -0.2, 0;  
+			colorMap=0.5 0.5 0.7 0.08   0.4 0.4 0.6 0.06   0.1 0.1 0.2 0.04;
+			Texture=waterdropcloud;
+			airdrag=0.91;
+			particleLife=16;
+			particleLifeSpread=6;
+			numParticles=1;
+			particleSpeed=1;
+			particleSpeedSpread=1;
+			particleSize=8;
+			particleSizeSpread=2;
+			emitRot=0;
+			emitRotSpread=35;
+			directional=0;
+			alwaysVisible=0;
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+	[water_puffs]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.7;
+			sizeMod=1.0;
+			pos=0, 0, 0; 
+			emitVector=dir;
+		    gravity=0, 0.1, 0;  
+			colorMap=0.3 0.3 0.4 0.01   0.2 0.2 0.25 0.005   0.01 0.01 0.03 0.0025;
+			Texture=smoke;
+			airdrag=0.91;
+			particleLife=10;
+			particleLifeSpread=4;
+			numParticles=1;
+			particleSpeed=1;
+			particleSpeedSpread=0.5;
+			particleSize=12;
+			particleSizeSpread=4;
+			emitRot=0;
+			emitRotSpread=35;
+			directional=0;
+			alwaysVisible=0;
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+}
+
+
+[WATERSHIELDFORM]
+{
+	usedefaultexplosions=0;	
+
+	[water_puffs]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0;
+			sizeMod=1.0;
+			pos=0, 0, 0; 
+			emitVector=dir;
+			gravity=0, 0, 0;  
+			colorMap = 0.01 0.01 0.02 0.0025   0.08 0.08 0.10 0.005   0.1 0.1 0.13 0.01;
+			Texture=watershield;
+			airdrag=0;
+			particleLife=2;
+			particleLifeSpread=0;
+			numParticles=1;
+			particleSpeed=0;
+			particleSpeedSpread=0;
+			particleSize=13;
+			particleSizeSpread=0;
+			emitRot=0;
+			emitRotSpread=0;
+			directional=0;
+			alwaysVisible=0;
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+	[accretion]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=-1.6;
+			sizeMod=1.0;
+			pos=-1 r2, -1 r2,-1 r2; 
+			emitVector=dir;
+			gravity=0, 0.0, 0;  
+			colorMap=0 0 0 0.0   0.35 0.35 0.42 0.2   0.45 0.45 0.52 0.2  0.35 0.35 0.42 0.1 0 0 0 0.0;
+			Texture=waterdropcloud;
+			airdrag=0.91;
+			particleLife=20;
+			particleLifeSpread=1;
+			numParticles=0.1 r1;
+			particleSpeed=0;
+			particleSpeedSpread=0;
+			particleSize=30;
+			particleSizeSpread=10;
+			emitRot=0;
+			emitRotSpread=60;
+			directional=1;
+			alwaysVisible=0;
+		}
+		air=1;
+		unit=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+
+}

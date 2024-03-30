@@ -335,6 +335,16 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="rjp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=8, length=40, piece="cjp", onActive=true}}
   },  
+  gear_hydron = {
+    {class='AirJet',options={color={0.05,0.03,0.01}, width=10, length=15, piece="jpt1", onActive=true, down=true}},
+    {class='AirJet',options={color={0.05,0.03,0.01}, width=10, length=15, piece="jpt2", onActive=true, down=true}},
+    {class='AirJet',options={color={0.05,0.03,0.01}, width=10, length=15, piece="jpt3", onActive=true, down=true}},
+    {class='AirJet',options={color={0.05,0.03,0.01}, width=10, length=15, piece="jpt4", onActive=true, down=true}},
+    {class='AirJet',options={color={0.05,0.03,0.01}, width=10, length=15, piece="jpt5", onActive=true, down=true}},
+    {class='AirJet',options={color={0.05,0.03,0.01}, width=10, length=15, piece="jpt6", onActive=true, down=true}},
+    {class='AirJet',options={color={0.05,0.03,0.01}, width=10, length=15, piece="jpt7", onActive=true, down=true}},
+    {class='AirJet',options={color={0.05,0.03,0.01}, width=10, length=15, piece="jpt8", onActive=true, down=true}}
+  },
   gear_knocker = {
     {class='AirJet',options={color={0.3,0.1,0}, width=4, length=25, piece="ljp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=4, length=30, piece="rjp", onActive=true}},

@@ -84,6 +84,14 @@ local morphDefs = {
 			text = 'Morph to Psi Form : Very fast raider/riot form with reduced range and build speed.'
 		},
 	},
+	aven_moho_mine = {
+		{
+			into = 'aven_exploiter',
+			time = 30,
+			cmdname = 'Exploiter Form',
+			text = 'Morph to Exploiter'
+		}
+	},	
 ------------------------------------------------ GEAR
 	gear_commander = 	{
 		{
@@ -143,6 +151,14 @@ local morphDefs = {
 			text = 'Morph to Battler Form : Versatile brawler with slightly increased speed, HP and Cannon+Laser+Flare weapon mix.'
 		}		
 
+	},	
+	gear_moho_mine = {
+		{
+			into = 'gear_exploiter',
+			time = 30,
+			cmdname = 'Exploiter Form',
+			text = 'Morph to Exploiter'
+		}
 	},	
 ------------------------------------------------ CLAW
 	claw_commander = 	{
@@ -211,7 +227,30 @@ local morphDefs = {
 			charge = 1,
 			text = 'Morph to Avenger : Cloakable Assassin Robot'
 		}
-		
+	},
+	claw_totem = {
+		{
+			into = 'claw_totem_laser',
+			time = 20,
+			cmdname = 'Totem with Laser Turret',
+			text = 'Morph to add a Medium Laser Turret'
+		}
+	},
+	claw_totem_laser = {
+		{
+			into = 'claw_totem_laser_ac',
+			time = 20,
+			cmdname = 'Totem with Laser and Autocannon turrets',
+			text = 'Morph to add an Autocannon Turret'
+		}
+	},
+	claw_moho_mine = {
+		{
+			into = 'claw_exploiter',
+			time = 30,
+			cmdname = 'Exploiter Form',
+			text = 'Morph to Exploiter'
+		}
 	},
 ------------------------------------------------ SPHERE
 	sphere_commander = 	{
@@ -299,7 +338,15 @@ local morphDefs = {
 			metal = 600,
 			text = 'Morph to Obsidian Form : slightly increased range, HP and H damage type.'
 		}
-	}
+	},
+	sphere_moho_mine = {
+		{
+			into = 'sphere_exploiter',
+			time = 30,
+			cmdname = 'Exploiter Form',
+			text = 'Morph to Exploiter'
+		}
+	},	
 }
 
 --

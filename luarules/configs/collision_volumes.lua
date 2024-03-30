@@ -63,6 +63,12 @@ unitCollisionVolume["gear_burner"] = {
 	off={50,20,50,0,0,0,1,1,1},
 }
 
+
+unitCollisionVolume["gear_caliber"] = {
+	on={38,50,52,0,0,0,2,1,1},
+	off={38,38,52,0,0,0,2,1,1},
+}
+
 --------------------------------------------- CLAW
 
 unitCollisionVolume["claw_hyper"] = {

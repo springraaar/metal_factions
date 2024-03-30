@@ -110,6 +110,19 @@ local jumpDefTemplates = {
 		cannotJumpMidair = false,
 		jumpSpreadException = false,
 	},
+	hydron = {
+		range = 350,
+		speed = 4,
+		reload = 15,
+		delay = 0,
+		height = 250,
+
+		requiresUpgrade = false,			
+		noJumpHandling =  false,
+		rotateMidAir = false,
+		cannotJumpMidair = false,
+		jumpSpreadException = false,
+	},	
 	grenado = {
 		range = 250,
 		speed = 6,

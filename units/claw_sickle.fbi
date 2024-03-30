@@ -5,8 +5,8 @@
 	//********************
 	side=Claw;
 	name=Sickle;
-	description=All-terrain Cloakable Attack Robot;
-	iconType=allterrainfighter;
+	description=All-terrain Cloakable Raider Robot;
+	iconType=allterrainraider;
 
 	//************************************************************
 	//  Categories
@@ -63,7 +63,7 @@
 	turnRate=1320;
 	acceleration=1.52588;
 	brakeRate=1.52588;
-	maxVelocity=1.7;
+	maxVelocity=1.9;
 	maxWaterDepth=12;
 
 	//************************************************************
@@ -96,10 +96,8 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	noselfdamage=1;
-	paralyzetime=5;   
 	collisionVolumeType = box;
-	collisionVolumeScales =28 23 28;
+	collisionVolumeScales =32 26 32;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 
@@ -112,8 +110,8 @@
 		explosionGenerator0=custom:blueflaresml;
 	}
 
-	buildCostEnergy=2100;//#AUTO#
-	buildCostMetal=420;//#AUTO#
-	buildTime=5005;//#AUTO#
-	mass=390;//#AUTO#
+	buildCostEnergy=2209;//#AUTO#
+	buildCostMetal=441;//#AUTO#
+	buildTime=5266;//#AUTO#
+	mass=397;//#AUTO#
 }

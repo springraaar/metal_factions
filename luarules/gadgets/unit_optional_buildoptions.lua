@@ -10,6 +10,7 @@ function gadget:GetInfo()
 	}
 end
 
+--TODO reloading luarules ingame clears optional build options for all players
 
 local spFindUnitCmdDesc = Spring.FindUnitCmdDesc 
 local spInsertUnitCmdDesc = Spring.InsertUnitCmdDesc 
@@ -17,6 +18,9 @@ local spEditUnitCmdDesc = Spring.EditUnitCmdDesc
 local spGetTeamList = Spring.GetTeamList 
 local spGetPlayerInfo = Spring.GetPlayerInfo
 local spSendLuaRulesMsg = Spring.SendLuaRulesMsg
+local spGetAllUnits = Spring.GetAllUnits
+local spGetUnitDefID = Spring.GetUnitDefID
+local spGetUnitTeam = Spring.GetUnitTeam
 
 include("lualibs/constants.lua")
 include("lualibs/util.lua")
@@ -106,7 +110,6 @@ function gadget:RecvLuaMsg(msg, playerId)
 		-- extract text from message properly (compressed text may have the separator)
 		local optionalUnitsTextCompressed = string.sub(msg,string.len(EXTERNAL_CMD_SETOPTIONALUNITS)+2)
 		local optionalUnitsText = VFS.ZlibDecompress(optionalUnitsTextCompressed)
-		local valid = true
 		
 		optionalUnitDefIdsByTeam[teamId], countByFaction = getOptionalUnitsFromText(teamId,optionalUnitsText)
 		
@@ -120,6 +123,17 @@ function gadget:RecvLuaMsg(msg, playerId)
 	end
 end
 
+-- fix the optional build options for builders immediately after the game starts
+-- as the updated options were set and locked-in after they spawned 
+local startSpawnedBuildersFixRequired = true
+function gadget:GameFrame(f)
+	if f > 0 and startSpawnedBuildersFixRequired then
+		startSpawnedBuildersFixRequired = false
+		for _,uId in ipairs(spGetAllUnits()) do
+			gadget:UnitCreated(uId, spGetUnitDefID(uId), spGetUnitTeam(uId))
+		end
+	end
+end
 
 ------------------------------------------ UNSYNCED
 else

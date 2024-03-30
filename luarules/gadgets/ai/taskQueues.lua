@@ -907,8 +907,9 @@ function commanderRoam(self)
 	local basePos = self.ai.unitHandler.basePos
 	
 	--log("commander roam "..#(self.ai.unitHandler.raiderPath[PF_UNIT_AMPHIBIOUS]),self.ai) --DEBUG
-	
-	-- if far away, move there first
+
+	-- TODO, same behavior on both situations?
+	-- in any case, commander roam is malfunctioning as commander gets stuck patrolling in base near factory 
 	if (distance(self.pos,basePos) < HUGE_RADIUS) then
 		self:orderToClosestCellAlongPath(self.ai.unitHandler.raiderPath[PF_UNIT_AMPHIBIOUS], {CMD.MOVE,CMD.MOVE}, false, true)
 	else

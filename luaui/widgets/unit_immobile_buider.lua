@@ -38,6 +38,7 @@ local spGetUnitDefID    = Spring.GetUnitDefID
 local spGetUnitPosition = Spring.GetUnitPosition
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
 local spGetFeaturePosition = Spring.GetFeaturePosition
+local spGetFeatureRadius = Spring.GetFeatureRadius
 local spValidUnitID = Spring.ValidUnitID
 local spValidFeatureID = Spring.ValidFeatureID
 local spGetUnitStates = Spring.GetUnitStates
@@ -45,7 +46,8 @@ local spGetUnitStates = Spring.GetUnitStates
 local hmsx = Game.mapSizeX/2
 local hmsz = Game.mapSizeZ/2
 
-local BUILD_RADIUS_SQUARED = 300*300
+local BUILD_RADIUS = 300
+local BUILD_RADIUS_SQUARED = BUILD_RADIUS*BUILD_RADIUS
 
 local function sqDistance(x1,z1,x2,z2)
 	return ((x2-x1)^2+(z2-z1)^2)
@@ -162,14 +164,15 @@ function widget:GameFrame(frame)
 				if trackedCommands[cmd["id"]] and cmd["params"] then
 	  	  			--Spring.Echo(CMD[cmd["id"]].." params="..printArr(cmd["params"]))
 					if cmd["params"] then
+						local featureExtraRadius = 0
 						if #cmd["params"] == 1 or #cmd["params"] == 5 then
 							local targetId = tonumber(cmd["params"][1])
-
 							-- subtract maxunits from reclaim commands which target specific features
 							if cmd["id"] == CMD.RECLAIM and targetId > Game.maxUnits then
 								targetId = targetId - Game.maxUnits
+								featureExtraRadius = spGetFeatureRadius(targetId)
 								tx,_,tz = spGetFeaturePosition(cmd["id"] == CMD.RECLAIM and (targetId) or targetId)
-								--Spring.Echo("FEATURE "..CMD[cmd["id"]].." cmds="..printArr(cmd["params"]).." at ("..tostring(tx)..","..tostring(tz)..")")
+								-- Spring.Echo("FEATURE "..CMD[cmd["id"]].." cmds="..printArr(cmd["params"]).." at ("..tostring(tx)..","..tostring(tz)..") buildeeRadius="..buildeeBuildRadius)
 							else
 								tx,_,tz = spGetUnitPosition(targetId)
 								--Spring.Echo("UNIT "..CMD[cmd["id"]].." "..printArr(cmd["params"]))
@@ -179,9 +182,16 @@ function widget:GameFrame(frame)
 							tz = cmd["params"][3]
 							--Spring.Echo("OTHER "..CMD[cmd["id"]].." "..printArr(cmd["params"]))
 						end
-	
+						
 						x,_,z = spGetUnitPosition(unitID)
-						if (tx and tz and sqDistance(x,z,tx,tz) > BUILD_RADIUS_SQUARED) then
+						if featureExtraRadius and featureExtraRadius > 0 then
+							local testRadiusSQ = featureExtraRadius + BUILD_RADIUS
+							testRadiusSQ = testRadiusSQ*testRadiusSQ
+							if (tx and tz and sqDistance(x,z,tx,tz) > testRadiusSQ) then
+								spGiveOrderToUnit(unitID, CMD_STOP,{},{})
+								--Spring.Echo("Immobile builder at ("..tostring(x)..","..tostring(z)..") cannot reach ("..tostring(tx)..","..tostring(tz).."): orders canceled")
+							end
+						elseif (tx and tz and sqDistance(x,z,tx,tz) > BUILD_RADIUS_SQUARED) then
 							spGiveOrderToUnit(unitID, CMD_STOP,{},{})
 							--Spring.Echo("Immobile builder at ("..tostring(x)..","..tostring(z)..") cannot reach ("..tostring(tx)..","..tostring(tz).."): orders canceled")
 						end

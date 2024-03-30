@@ -752,6 +752,7 @@
 		reaimTime=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR2;
+		scar=1w;
 	}
 	[DAMAGE]
 	{
@@ -974,6 +975,7 @@
 		reaimTime=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR2;
+		scar=1w;
 	}
 	[DAMAGE]
 	{
@@ -1020,6 +1022,7 @@
 		reaimTime=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR2;
+		scar=1w;
 	}
 	[DAMAGE]
 	{
@@ -1065,6 +1068,7 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=SURFACE,AIR2;
+		scar=1w;
 	}
 	[DAMAGE]
 	{
@@ -1113,6 +1117,7 @@
 		reaimTime=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR;
+		noScar=1;
 	}
 	[DAMAGE]
 	{
@@ -1155,6 +1160,7 @@
 		hitPower=1;
 		shockwave=1;
 		expDmgScaling=1;
+		noScar=1;
 	}
 	[DAMAGE]
 	{
@@ -2164,6 +2170,7 @@
 		evalFactor=1.65; // compensation for the evaluator's factor for non-hoverattack air types
 		expDmgScaling=1;
 		targets=SURFACE;
+		scar=1wburn;
 	}
 	[DAMAGE]
 	{
@@ -8223,6 +8230,7 @@
 		burnAoe=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR;
+		scar=1wburn;
 	}
 	[DAMAGE]
 	{
@@ -9187,6 +9195,53 @@
 		armor_heavy=50.00;//#AUTO#
 		armor_medium=100.00;//#AUTO#
 		armor_light=100.00;//#AUTO#
+	}
+}
+[gear_hydron_laser]
+{
+	name=Medium Laser;
+	weaponType=BeamLaser;
+	turret=1;
+	range=550;
+	minIntensity=1.0;
+	reloadTime=0.7;
+	weaponVelocity=1533;
+	explosionGenerator=custom:REDLASERBLASTWRAPPER;
+	tolerance=3000;
+	beamTime=0.1;
+	thickness=2.888;
+	coreThickness=0.6;
+	intensity=0.88; 
+	energyPerShot=80;
+	projectiles=2;
+	areaOfEffect=8;
+	soundTrigger=1;
+	soundStart=lasrfir3;
+	soundHit=lasrhit2;
+	fireStarter=30;
+	scrollSpeed=0;
+	pulseSpeed=0;
+	rgbColor=0.51 0.0 0.0;
+	rgbColor2=1.0 0.4 0.4;
+	tolerance=3000;
+	impulseFactor=0.222;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		reaimTime=1;
+		aaRangeBoost=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=130;
+		group_invincible=1;
+		armor_heavy=65.00;//#AUTO#
+		armor_medium=130.00;//#AUTO#
+		armor_light=130.00;//#AUTO#
 	}
 }
 [gear_monitor_laser]
@@ -10418,6 +10473,7 @@
 		hitPower=2;
 		burn=1;
 		burnAoe=1;
+		scar=1wburn;
 	}
 	[DAMAGE]
 	{
@@ -10447,6 +10503,7 @@
 		hitPower=2;
 		burn=1;
 		burnAoe=2;
+		scar=1wburn;
 	}
 	[DAMAGE]
 	{
@@ -12127,6 +12184,7 @@
 		hitPower=2;
 		burn=1;
 		expDmgScaling=1;
+		noScar=1;
 	}
 	[DAMAGE]
 	{
@@ -12170,6 +12228,7 @@
 		hitPower=2;
 		burn=1;
 		expDmgScaling=1;
+		noScar=1;
 	}
 	[DAMAGE]
 	{
@@ -12212,6 +12271,7 @@
 	{
 		hitPower=3;
 		expDmgScaling=1;
+		noScar=1;
 	}
 	[DAMAGE]
 	{
@@ -12263,6 +12323,7 @@
 		reaimTime=1;
 		expDmgScaling=1;
 		targets=SURFACE;
+		scar=1wburn;
 	}
 	[DAMAGE]
 	{
@@ -12313,6 +12374,7 @@
 		burnAoe=2;
 		expDmgScaling=1;
 		targets=SURFACE;
+		scar=1wburn;
 	}
 	[DAMAGE]
 	{
@@ -12368,52 +12430,6 @@
 		armor_light=900.00;//#AUTO#
 	}
 }
-[gear_firestorm_rocket]
-{
-	name=Incendiary Rockets;
-	weaponType=MissileLauncher;
-	explosionGenerator=custom:fireballboommed;
-	cegTag=ROCKETTRAIL1;
-	turret=0;
-	model=weapon_incrocket.3do;
-	range=450;
-	reloadTime=1.7;
-	flightTime=1.9;
-	fixedLauncher=1;
-	weaponVelocity=300;
-	startVelocity=300;
-	weaponAcceleration=30;
-	areaOfEffect=120;
-	metalPerShot=0;
-	soundStart=rocklit1;
-	soundHit=firebombsml;
-	fireStarter=70;
-	smokeTrail=0;
-	tolerance=9000;
-	interceptedByShieldType=1;
-	collideFriendly=0;
-	avoidFeature=0;
-	tracks=0;
-	turnRate=20000;
-	wobble=5500;
-	[CUSTOMPARAMS]
-	{
-		hitPower=1;
-		burn=1;
-		burnAoe=1;
-		restrictedAngle=1;
-		expDmgScaling=1;
-		targets=SURFACE,AIR;
-	}
-	[DAMAGE]
-	{
-		default=200;
-		group_invincible=1;
-		armor_heavy=50.00;//#AUTO#
-		armor_medium=100.00;//#AUTO#
-		armor_light=200.00;//#AUTO#
-	}
-}
 [gear_firestorm_missile]
 {
 	name=Incendiary Missiles;
@@ -12450,6 +12466,7 @@
 		restrictedAngle=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR;
+		scar=1wburn;
 	}
 	[DAMAGE]
 	{
@@ -12497,6 +12514,7 @@
 		burnAoe=2;
 		expDmgScaling=1;
 		targets=SURFACE,AIR;
+		scar=1wburn;
 	}
 	[DAMAGE]
 	{
@@ -13877,6 +13895,7 @@
 		hitPower=1;
 		action=Reveal Area/180s;
 		targets=SURFACE;
+		noScar=1;
 	}
 	[DAMAGE]
 	{
@@ -13924,6 +13943,7 @@
 		reaimTime=1;
 		action=Reveal Area;
 		targets=SURFACE;
+		noScar=1;
 	}
 	[DAMAGE]
 	{
@@ -18080,6 +18100,46 @@
 		armor_light=20.00;//#AUTO#
 	}
 }
+[claw_totem_gun]
+{
+	name=Autocannon;
+	weaponType=Cannon;
+	explosionGenerator=custom:railgunblastsml;
+	size=0.95;
+	stages=35;
+  	separation=1.6;
+  	alphaDecay=0.16;
+  	sizeDecay=0.0;
+	rgbColor=1 0.7 0.2;
+	texture1=cannon;
+	energyPerShot=5;
+	turret=1;
+	range=540;
+	reloadTime=0.134;
+	accuracy=80;
+	predictBoost=0.5;
+	weaponVelocity=2032;
+	areaOfEffect=8;
+	soundStart=armsml1;
+	soundHit=comfire1;
+	soundTrigger=1;
+	tolerance=1500;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=20;
+		armor_heavy=5.00;//#AUTO#
+		armor_medium=10.00;//#AUTO#
+		armor_light=20.00;//#AUTO#
+	}
+}
 [claw_drill_gun]
 {
 	name=Minigun;
@@ -19947,27 +20007,27 @@
 }
 [claw_sickle_laser]
 {
-	name=Medium Laser;
+	name=High Energy Laser;
 	weaponType=BeamLaser;
 	explosionGenerator=custom:BLUELASERBLASTWRAPPER;
+	energyPerShot=110;
 	intensity=0.85;
-	beamTime=0.1;
-	thickness=2.888;
-	coreThickness=0.6;
-	energyPerShot=50;
+	beamTime=0.15;
+	thickness=3.234;
+	coreThickness=0.8;
 	turret=1;
-	range=460;
+	range=420;
 	minIntensity=1.0;
-	reloadTime=1.5;
+	reloadTime=2.3;
 	weaponVelocity=1533;
 	areaOfEffect=8;
 	soundTrigger=1;
-	soundStart=lasrlit2;
-	soundHit=lasrhit2;
+	soundStart=lasrfir2;
+	soundHit=lasrhit1;
 	fireStarter=50;
 	scrollSpeed=0;
 	pulseSpeed=0;
-	rgbColor=0.3 0.3 1.0;
+	rgbColor=0.5 0.4 1.0;
 	rgbColor2=0.1 0.3 1.0;
 	tolerance=3000;
 	impulseFactor=0.222;
@@ -19975,7 +20035,7 @@
 	avoidFeature=0;
 	[CUSTOMPARAMS]
 	{
-		hitPower=2;
+		hitPower=3;
 		reaimTime=1;
 		aaRangeBoost=1;
 		expDmgScaling=1;
@@ -19983,10 +20043,10 @@
 	}
 	[DAMAGE]
 	{
-		default=150;
-		armor_heavy=75.00;//#AUTO#
-		armor_medium=150.00;//#AUTO#
-		armor_light=150.00;//#AUTO#
+		default=220;
+		armor_heavy=220.00;//#AUTO#
+		armor_medium=220.00;//#AUTO#
+		armor_light=220.00;//#AUTO#
 	}
 }
 [claw_scythe_laser]
@@ -20549,6 +20609,49 @@
 		armor_heavy=60.00;//#AUTO#
 		armor_medium=120.00;//#AUTO#
 		armor_light=120.00;//#AUTO#
+	}
+}
+[claw_totem_laser]
+{
+	name=Medium Laser;
+	weaponType=BeamLaser;
+	explosionGenerator=custom:BLUELASERBLASTWRAPPER;
+	intensity=0.85;
+	beamTime=0.1;
+	thickness=2.888;
+	coreThickness=0.6;
+	energyPerShot=40;
+	turret=1;
+	range=750;
+	minIntensity=1.0;
+	reloadTime=1.0;
+	weaponVelocity=1533;
+	areaOfEffect=8;
+	soundTrigger=1;
+	soundStart=lasrlit2;
+	soundHit=lasrhit2;
+	fireStarter=50;
+	scrollSpeed=0;
+	pulseSpeed=0;
+	rgbColor=0.3 0.3 1.0;
+	rgbColor2=0.1 0.3 1.0;
+	tolerance=3000;
+	impulseFactor=0.222;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		aaRangeBoost=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=130;
+		armor_heavy=65.00;//#AUTO#
+		armor_medium=130.00;//#AUTO#
+		armor_light=130.00;//#AUTO#
 	}
 }
 [claw_cutter_laser]
@@ -23326,6 +23429,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
+		noScar=1;
 	}
 	[DAMAGE]
 	{
@@ -26947,6 +27051,7 @@
 		hitPower=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR;
+		noScar=1;
 	}
 	[DAMAGE]
 	{
@@ -26984,6 +27089,7 @@
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
+		noScar=1;
 	}
 	[DAMAGE]
 	{
@@ -27034,6 +27140,7 @@
 		hitPower=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR;
+		noScar=1;
 	}
 	[DAMAGE]
 	{

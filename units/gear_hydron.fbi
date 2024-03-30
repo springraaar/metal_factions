@@ -1,0 +1,128 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Hydron;
+	description=Armored Assault Hydrobot;
+	iconType=amphibassault;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN WEAPON LEVEL2 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_hydron;
+	objectName=gear_hydron.3do;
+	corpse=gear_hydron_dead;
+	buildPic=gear_hydron.png;
+	soundCategory=aven_HOVER_MID;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=6200;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+	onOffable=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canhover=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=TANKHOVER3;
+	turnRate=420;
+	acceleration=0.04;
+	brakeRate=0.09;
+	maxVelocity=0.8;
+	maxSlope=16;
+	maxWaterDepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_hydron_laser;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	activateWhenBuilt=1;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =40 40 40;
+	collisionVolumeOffsets = 0 5 0;
+	collisionVolumeTest = 1;
+	damageModifier=0.8;
+
+	[CustomParams]
+	{
+		builtBy=gear_hydrobot_plant;
+		hydronRegen=1;
+		canJump=1;
+		jumpType=hydron;
+		jumpMod=1;
+		evalFactor=1.2; // jump + shield gimmicks
+		tip=Hydro-Shield grants 40 HP/s regen and 20% dmg resistance. Hydro-Shield drops on taking 15% HP dmg over 3s and reforms only over water. Can jump (350 range, 15s reload);
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:GLOWSML;
+		explosionGenerator1=custom:WATERSHIELD;
+		explosionGenerator2=custom:JUMPASC;
+		explosionGenerator3=custom:JUMPDESC;
+		explosionGenerator4=custom:WATERSHIELDHIT;
+		explosionGenerator5=custom:WATERSHIELDFORM;
+		explosionGenerator6=custom:WATERSHIELDBREAK;
+	}
+
+	buildCostEnergy=13370;//#AUTO#
+	buildCostMetal=2674;//#AUTO#
+	buildTime=31867;//#AUTO#
+	mass=3906;//#AUTO#
+}

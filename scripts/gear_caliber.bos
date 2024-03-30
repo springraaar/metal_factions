@@ -36,6 +36,7 @@ deploy()
 {
 	if (!isDeployed)
 	{
+		set ARMORED to FALSE;
 		call-script lua_setMobility(0);
 		
 		// open
@@ -93,6 +94,8 @@ undeploy()
 		turn door1 to z-axis <0.000000> speed <500.000000>;
 		turn door2 to z-axis <0.000000> speed <500.000000>;
 		wait-for-turn door1 around z-axis;
+
+		set ARMORED to TRUE;
 	}
 	isDeployed = FALSE;
 }
@@ -329,6 +332,7 @@ Create()
 	bAiming = FALSE;
 	bSwimming = FALSE;
 	isDeployed = FALSE;
+	set ARMORED to TRUE;
 	lastHeading = 0;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();

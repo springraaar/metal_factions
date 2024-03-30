@@ -7,7 +7,7 @@ return {
 	license   = "GNU GPL, v2 or later",
 	layer     = math.huge,
 	handler   = true,
-	enabled   = false, 
+	enabled   = true, 
 }
 end
 

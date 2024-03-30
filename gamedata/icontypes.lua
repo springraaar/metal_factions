@@ -242,6 +242,12 @@ local _iconTypes = {
 		distance=1,
 		size=REF_SIZE
 	},
+	staticmulti={
+		bitmap="icons/staticmulti.tga",
+		radiusadjust=false,
+		distance=1,
+		size=REF_SIZE
+	},
 	staticashield={
 		bitmap="icons/staticashield.tga",
 		radiusadjust=false,
