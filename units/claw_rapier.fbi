@@ -3,29 +3,29 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Aven;
-	name=Racer;
-	description=Fast Attack Vehicle;
-	iconType=mobileraider;
+	side=Claw;
+	name=Rapier;
+	description=Medium Infantry Robot;
+	iconType=mobilefighter;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB;
+	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitName=aven_racer;
-	objectName=aven_racer.3do;
-	corpse=aven_racer_dead;
-	buildPic=aven_racer.png;
-	soundCategory=aven_TANK;
+	unitName=claw_rapier;
+	objectName=claw_rapier.3do;
+	corpse=claw_rapier_dead;
+	buildPic=claw_rapier.png;
+	soundCategory=CLAW_BOTMED;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=1650;
+	maxDamage=1600;
 	footprintx=3;
 	footprintz=3;
 
@@ -55,18 +55,18 @@
 	canMove=1;
 	canPatrol=1;
 	canStop=1;
+	upright=1;
 
 	//************************************************************
 	//  Movement
 	//************
-	movementClass=TANKSH3;
-	turnRate=650;
-	acceleration=0.64; 
-	brakeRate=0.13;
-	maxVelocity=3.4;
-	maxSlope=10;
-	maxWaterDepth=12;
-	turnInPlace=1;
+	movementClass=KBOTHT2;
+	turnRate=1310;
+	acceleration=0.9;
+	brakeRate=0.1;
+	maxVelocity=1.6;
+	maxSlope=17;
+	maxWaterDepth=25;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -77,9 +77,9 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=aven_racer_cannon;
-	noChaseCategory=VTOL;
+	weapon1=claw_rapier_railgun;
 	badTargetCategory1=VTOL;
+	noChaseCategory=VTOL;
 	explodeAs=BIG_UNITEX;
 	selfDestructAs=BIG_UNIT;
 
@@ -91,28 +91,23 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	leavetracks=1;
-	trackoffset=3;
-	trackstrength=6;
-	trackstretch=1;
-	tracktype=StdTank;
-	trackwidth=24;
 	collisionVolumeType = box;
-	collisionVolumeScales =30 20 38;
+	collisionVolumeScales =25 40 20;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
-
-	[customParams] 
-	{
-		builtBy=aven_adv_vehicle_plant;
-	}
 	[SFXTypes]
 	{
 		explosionGenerator0=custom:yellowflaresml;
 	}
 
-	buildCostEnergy=3381;//#AUTO#
-	buildCostMetal=676;//#AUTO#
-	buildTime=8058;//#AUTO#
-	mass=637;//#AUTO#
+	[CustomParams]
+	{
+		builtBy=claw_adv_kbot_plant;
+		optional=1;
+	}
+
+	buildCostEnergy=4939;//#AUTO#
+	buildCostMetal=987;//#AUTO#
+	buildTime=11773;//#AUTO#
+	mass=729;//#AUTO#
 }

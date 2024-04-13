@@ -651,17 +651,15 @@ function TaskQueueBehavior:processItem(value, checkResources, checkAssistNearby)
 	end
 end
 
-
 function TaskQueueBehavior:retreat()
 	local tmpFrame = spGetGameFrame()
 	
 	if (self.lastRetreatOrderFrame or 0) + ORDER_DELAY_FRAMES < tmpFrame then
 		local selfPos = self.pos
 
-
 		if not self.isCommander and ( abs(selfPos.x - self.ai.unitHandler.basePos.x) > RETREAT_RADIUS or abs(selfPos.z - self.ai.unitHandler.basePos.z) > RETREAT_RADIUS  ) then
-			local px = self.ai.unitHandler.basePos.x - BIG_RADIUS/2 + random( 1, BIG_RADIUS)
-			local pz = self.ai.unitHandler.basePos.z - BIG_RADIUS/2 + random( 1, BIG_RADIUS)
+			local px = self.ai.unitHandler.basePos.x - RETREAT_RADIUS/2 + random( 1, RETREAT_RADIUS)
+			local pz = self.ai.unitHandler.basePos.z - RETREAT_RADIUS/2 + random( 1, RETREAT_RADIUS)
 			
 			spGiveOrderToUnit(self.unitId,CMD.MOVE,{px,spGetGroundHeight(px,pz),pz},EMPTY_TABLE)
 		else

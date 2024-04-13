@@ -418,9 +418,15 @@ function gadget:GameFrame(n)
 		end
 		
 		-- for each drone
-		local ox, oy, oz, odx, ody, odz
+		local ox, oy, oz, odx, ody, odz, ovOffset
 		for ownerId,drones in pairs(droneOwnersDrones) do
 			ox, oy, oz, odx, ody, odz = getUnitPositionAndDirection(ownerId)
+			ovOffset = spGetUnitVelocity(ownerId)
+			if (ovOffset) then
+				 ovOffset = ovOffset * 180	-- offset to where owner's going to be in 6s
+			else
+				ovOffset = 0
+			end 
 			
 			for uName,uIdSet in pairs(drones) do
 				for i,uId in pairs(uIdSet) do
@@ -484,19 +490,19 @@ function gadget:GameFrame(n)
 								droneUnderConstruction[uId] = nil
 							elseif ( dist > droneLeashSQDistances[uName]) then
 								--Spring.Echo("strayed too far "..n.." dist="..dist)
-								spGiveOrderToUnit(uId, CMD.MOVE, { (x+ox)/2, 0, (z+oz)/2 }, {})
+								spGiveOrderToUnit(uId, CMD.MOVE, { (x+ox+odx*ovOffset)/2, 0, (z+oz+odz*ovOffset)/2 }, {})
 							else
 								-- if idle, fight or patrol nearby position
 								local cmds = spGetUnitCommands(uId,3)
 			      				if (cmds and (#cmds <= 0)) then
 			      					if stealthDrones[uName] or transportDrones[uName] then
-			      						local px = ox + random(-200,200)
-			      						local pz = oz + random(-200,200)
+			      						local px = ox + random(-200,200)+odx*ovOffset
+			      						local pz = oz + random(-200,200)+odz*ovOffset
 			      						
 										spGiveOrderToUnit(uId, CMD.MOVE, { px, spGetGroundHeight(px,pz), pz }, {})
 			      					else
-			      						local px = ox + random(-200,200)
-			      						local pz = oz + random(-200,200)
+			      						local px = ox + random(-200,200)+odz*ovOffset
+			      						local pz = oz + random(-200,200)+odz*ovOffset
 			      					
 			        					spGiveOrderToUnit(uId, CMD.FIGHT, { px, spGetGroundHeight(px,pz), pz }, {})
 			        				end

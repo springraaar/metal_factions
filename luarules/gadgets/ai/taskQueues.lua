@@ -304,7 +304,12 @@ function metalExtractorNearbyIfSafe(self)
 	end
 
 	if self.isAdvBuilder then
-		unitName = advMetalExtractor(self)
+		local sStage = self.ai.currentStrategyStage
+		if sStage > 1 then
+			unitName = advMetalExtractor(self)
+		else
+			unitName = mexByFaction[self.unitSide]
+		end
 	else
 		unitName = mexByFaction[self.unitSide]
 	end
@@ -369,7 +374,7 @@ function changeQueueToCommanderBaseBuilderIfNeeded(self)
 				self:changeQueue(commanderBaseBuilderQueueByFaction[self.unitSide])
 			end
 			self.isAttackMode = false
-			--log("changed to base builder commander!",self.ai)
+			-- log("changed to base builder commander!",self.ai) --DEBUG
 		end
 	end
 	return SKIP_THIS_TASK
@@ -401,7 +406,7 @@ function changeQueueToCommanderAttackerIfNeeded(self)
 			self:changeQueue(commanderAtkQueueByFaction[self.unitSide])
 		end
 		self.isAttackMode = true
-		--log("changed to attack commander!",self.ai)
+		--log("changed to attack commander!",self.ai) --DEBUG
 	end
 
 	return SKIP_THIS_TASK
@@ -769,8 +774,6 @@ function staticBriefAreaPatrol(self)
 	return {action="wait", frames=STATIC_AREA_PATROL_FRAMES}
 end
 
-
-
 function commanderBriefAreaPatrol(self)
 	--if (countOwnUnitsInRadius(self,nil, self.pos, 600, 4, TYPE_L1_PLANT) < 1 and countOwnUnitsInRadius(self,nil, self.pos, 600, 4, TYPE_L2_PLANT) < 1) then
 		-- do nothing
@@ -906,14 +909,14 @@ function commanderRoam(self)
 	--local atkPos = self.ai.unitHandler.unitGroups[UNIT_GROUP_RAIDERS].centerPos
 	local basePos = self.ai.unitHandler.basePos
 	
-	--log("commander roam "..#(self.ai.unitHandler.raiderPath[PF_UNIT_AMPHIBIOUS]),self.ai) --DEBUG
+	-- log("commander roam "..#(self.ai.unitHandler.raiderPath[PF_UNIT_AMPHIBIOUS]),self.ai) --DEBUG
+	local raidingPathCellList = self.ai.unitHandler.raiderPath[PF_UNIT_AMPHIBIOUS]
 
-	-- TODO, same behavior on both situations?
-	-- in any case, commander roam is malfunctioning as commander gets stuck patrolling in base near factory 
+	-- ensure safety only when moving far away from base
 	if (distance(self.pos,basePos) < HUGE_RADIUS) then
-		self:orderToClosestCellAlongPath(self.ai.unitHandler.raiderPath[PF_UNIT_AMPHIBIOUS], {CMD.MOVE,CMD.MOVE}, false, true)
+		self:orderToClosestCellAlongPath(raidingPathCellList, {CMD.MOVE,CMD.MOVE}, false, false)
 	else
-		self:orderToClosestCellAlongPath(self.ai.unitHandler.raiderPath[PF_UNIT_AMPHIBIOUS], {CMD.MOVE,CMD.MOVE}, false, true)
+		self:orderToClosestCellAlongPath(raidingPathCellList, {CMD.MOVE,CMD.MOVE}, false, true)
 	end
 	
 	return {action="wait_idle", frames=120}
@@ -3742,7 +3745,17 @@ function stratCommanderAction(self)
 			end
 		end
 	end
+	
+	-- build a bit of energy generation early in the game
+	--log("com checking energy : E="..incomeE.." minE="..minEnergyIncome,self.ai) --DEBUG
+	if sStage == 1 and ((incomeE < minEnergyIncome - 100) or currentLevelE < 0.25*storageE) then
 		
+		action = L1EnergyGenerator(self)
+		if (action ~= SKIP_THIS_TASK) then
+			return action
+		end
+	end
+	
 	-- metal and energy generation : try to reach min income
 	if (incomeM < comAttackerMetalIncome) then
 		if not self.couldNotFindMetalSpot then
@@ -3962,15 +3975,10 @@ function stratMobileBuilderAction(self)
 		if (action ~= SKIP_THIS_TASK) then
 			return action
 		end
-		if (self.isAdvBuilder) then
+		if (self.isAdvBuilder and sStage > 1) then
 			action = fusionIfNeeded(self)
 			if (action ~= SKIP_THIS_TASK) then
 				return action
-			elseif incomeE < L1_ENERGY_EFF_THRESHOLD then
-				action = L1EnergyGenerator(self)
-				if (action ~= SKIP_THIS_TASK) then
-					return action
-				end
 			end
 		elseif incomeE < L1_ENERGY_EFF_THRESHOLD then
 			action = L1EnergyGenerator(self)
@@ -4059,7 +4067,7 @@ function stratMobileBuilderAction(self)
 
 	-- power nodes
 	--log(spGetGameFrame().." power node check : nextNode="..tostring(self.ai.unitHandler.nextPowerNodeCell),self.ai)
-	if (self.ai.unitHandler.nextPowerNodeCell) then
+	if (sStage > 1 and self.ai.unitHandler.nextPowerNodeCell) then
 		return powerNodeByFaction[self.unitSide]
 	end
 	
@@ -4209,7 +4217,7 @@ function stratPlantAction(self)
 					local minCount = props.min 
 					
 					local currentCount =  countOwnUnits(self,uName, 9999, nil)
-					--Spring.Echo(spGetGameFrame().." HERE2 plant "..uName.." cnt="..currentCount.." maxCnt="..props.weight*mobileUnitCount / totalWeight) --DEBUG
+					--log(spGetGameFrame().." HERE2 plant "..uName.." cnt="..currentCount.." minCnt="..minCount.." maxCnt="..maxCnt.." curFrac="..props.weight*mobileUnitCount / totalWeight,self.ai) --DEBUG
 					local maxCount = props.max
 					if checkAllowedConditions(self,props) then
 						if (mobileUnitCount == 0) then
@@ -4264,7 +4272,11 @@ function stratUpgradeCenterAction(self)
 
 	return SKIP_THIS_TASK
 end
-	
+
+-- set to wait to just use the automatic orders from the drone gadget
+drone = {
+	{action = "wait", frames = 300}
+}
 
 stratCommander = {
 	stratCommanderAction,
@@ -4334,6 +4346,11 @@ taskQueues = {
 	aven_comsat_station = comsatStation,
 	aven_trooper_hemg = atkSupporterAct,
 	aven_cadence = atkSupporterAct,
+	aven_light_drone = drone,
+	aven_medium_drone = drone,
+	aven_stealth_drone = drone,
+	aven_adv_construction_drone = drone,
+	aven_transport_drone = drone,	
 ------------------- GEAR
 	gear_commander_respawner = respawner,
 	gear_commander = gearCommander,
@@ -4375,6 +4392,11 @@ taskQueues = {
 	gear_premium_nuclear_rocket = unblockableNuke,
 	gear_comsat_station = comsatStation,
 	gear_caliber = atkSupporterAct,
+	gear_light_drone = drone,
+	gear_medium_drone = drone,
+	gear_stealth_drone = drone,
+	gear_adv_construction_drone = drone,
+	gear_transport_drone = drone,	
 ------------------- CLAW
 	claw_commander_respawner = respawner,
 	claw_commander = clawCommander,
@@ -4384,6 +4406,7 @@ taskQueues = {
 	claw_u4commander = clawUCommander,
 	claw_u5commander = clawUCommander,
 	claw_u6commander = clawUCommander,
+	claw_u7commander = clawUCommander,
 	claw_construction_kbot = clawLev1Con,
 	claw_construction_aircraft = clawLev1Con,
 	claw_construction_ship = clawLev1Con,
@@ -4414,6 +4437,11 @@ taskQueues = {
 	claw_long_range_rocket_platform = lRRocketPlatform,
 	claw_premium_nuclear_rocket = unblockableNuke,
 	claw_comsat_station = comsatStation,
+	claw_light_drone = drone,
+	claw_medium_drone = drone,
+	claw_stealth_drone = drone,
+	claw_adv_construction_drone = drone,
+	claw_transport_drone = drone,	
 ------------------- SPHERE
 	sphere_commander_respawner = respawner,
 	sphere_commander = sphereCommander,
@@ -4454,7 +4482,12 @@ taskQueues = {
 	sphere_probe = airScout,
 	sphere_long_range_rocket_platform = lRRocketPlatform,
 	sphere_premium_nuclear_rocket = unblockableNuke,
-	sphere_comsat_station = comsatStation	
+	sphere_comsat_station = comsatStation,
+	sphere_light_drone = drone,
+	sphere_medium_drone = drone,
+	sphere_stealth_drone = drone,
+	sphere_adv_construction_drone = drone,
+	sphere_transport_drone = drone	
 }
 
 

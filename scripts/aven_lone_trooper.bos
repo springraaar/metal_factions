@@ -9,7 +9,7 @@
 #define PITCH_TOLERANCE		<18>
 
 
-piece  torso, ruparm, luparm, rfire, rarm, larm, rloarm, lloarm,hand, pelvis,rthigh, lthigh, lleg, rleg, rfoot, lfoot, ground, head, r2, coveron, coveroff;
+piece  torso, ruparm, luparm, rfire, rarm, larm, rloarm, lloarm,hand, pelvis,rthigh, lthigh, lleg, rleg, rfoot, lfoot, ground, head, headon, r2, coveron, coveroff;
 
 static-var  bMoving, bAiming, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3, isAlone;
 
@@ -333,13 +333,18 @@ checkAlone()
 		isAlone = GET LUA1;
 
 		if (isAlone) {
+				show headon;
 				show coveron;
+				hide head;
 				hide coveroff;
+				
 		} else {
+				hide headon;
 				hide coveron;
+				show head;
 				show coveroff;
 		}
-		sleep 1000;
+		sleep 500;
 	}
 	return (0);
 }
@@ -350,9 +355,11 @@ Create()
 	isAlone = FALSE;
 	bMoving = FALSE;
 	bAiming = FALSE;
+	hide headon;
 	hide coveron;
+	show head;
 	show coveroff;
-
+	
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();
 	start-script MotionControl();

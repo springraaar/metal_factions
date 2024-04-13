@@ -29,6 +29,7 @@ function AI.create(id, mode, strategyStr, allyId, mapHandler)
 	obj.beaconFrame = nil
 	obj.beaconPos = nil
 	obj.beaconType = "all"
+	obj.beaconAckSent = false
 	obj.allyId = allyId
 	obj.mapHandler = mapHandler
    	obj.strategyOverride = false
@@ -186,6 +187,7 @@ function AI:findStartPos(doRangeCheck, minStartPosDist)
 		-- if beacon is set within the box, use that position
 		if (self.beaconPos ~= nil and self.beaconPos.x > 0) then
 			if (self.beaconPos.x >= xMin and self.beaconPos.x <= xMax and self.beaconPos.z >= zMin and self.beaconPos.z <= zMax) then
+				self:messageAllies("BEACON at ("..self.beaconPos.x..","..self.beaconPos.z..") : start position")
 				return {x=self.beaconPos.x,y=self.beaconPos.y,z=self.beaconPos.z}
 			end
 		end
@@ -302,6 +304,11 @@ function AI:Init()
 		end
 	end
 	
+	-- remove existing marker if any
+	if (self.beaconPos ~= nil) then
+		self:eraseMarkerAllies(self.beaconPos.x,self.beaconPos.y,self.beaconPos.z)
+	end
+			
 	-- table with unit behaviors indexed by unitId
 	self.unitBehaviors = {}
 end
@@ -439,7 +446,8 @@ function AI:processExternalCommand(msg,playerId,teamId,pName,isOwner,spectator)
 			self.beaconSetTeamId = teamId
 			self.beaconFrame = spGetGameFrame()
 			self.beaconPos = newPosition(px,py,pz)
-
+			self.beaconAckSent = false
+			
 			local seconds = floor((self.beaconFrame + BEACON_DURATION_FRAMES) / 30) 
 			local hh = floor(seconds / 3600)
 			local mm = floor(seconds % 3600 / 60)
@@ -449,8 +457,11 @@ function AI:processExternalCommand(msg,playerId,teamId,pName,isOwner,spectator)
    			ss = ss < 10 and "0"..ss or ss
 			
 			--spMarkerAddPoint(px,py,pz,"AI BEACON\nuntil "..hh..":"..mm..":"..ss.."\n("..pName..")")
-			self:markerAllies(px,py,pz,"AI BEACON\nuntil "..hh..":"..mm..":"..ss.."\n("..pName..")")
-
+			if spGetGameFrame() <= 0 then
+				self:markerAllies(px,py,pz,"AI START\n("..pName..")")
+			else
+				self:markerAllies(px,py,pz,"AI BEACON\nuntil "..hh..":"..mm..":"..ss.."\n("..pName..")")
+			end
 		elseif (command == EXTERNAL_CMD_REMOVEBEACON and (msgFromAllies or (isOwner and spectator))) then
 			self.beaconSetPlayerId = playerId
 			self.beaconSetTeamId = teamId

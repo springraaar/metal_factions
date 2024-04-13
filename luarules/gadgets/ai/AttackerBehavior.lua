@@ -90,11 +90,14 @@ function AttackerBehavior:retreat()
 	
 	if (self.lastRetreatOrderFrame or 0) + ORDER_DELAY_FRAMES < tmpFrame then
 		local selfPos = self.pos
-		local basePos = self.ai.unitHandler.basePos
+		local retreatPos = self.ai.unitHandler.retreatPos
 	
-		if ( abs(selfPos.x - basePos.x) > RETREAT_RADIUS or abs(selfPos.z - basePos.z) > RETREAT_RADIUS  ) then
-			local px = basePos.x - BIG_RADIUS/2 + random( 1, BIG_RADIUS)
-			local pz = basePos.z - BIG_RADIUS/2 + random( 1, BIG_RADIUS)
+		-- when beacon is active, keep a tighter formation
+		local moveRadius = (self.ai:isBeaconActive(self.groupId) and (not self.beaconAttack)) and RETREAT_RADIUS_BEACON or RETREAT_RADIUS
+	
+		if ( abs(selfPos.x - retreatPos.x) > moveRadius or abs(selfPos.z - retreatPos.z) > moveRadius  ) then
+			local px = retreatPos.x - moveRadius/2 + random( 1, moveRadius)
+			local pz = retreatPos.z - moveRadius/2 + random( 1, moveRadius)
 			local h = spGetGroundHeight(px,pz)
 			spGiveOrderToUnit(self.unitId,CMD.MOVE,{px,h,pz},EMPTY_TABLE)
 		else
@@ -150,7 +153,6 @@ function AttackerBehavior:deactivate()
 	self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_SEA_ATTACKERS)
 	self.ai.unitHandler:removeRecruit(self,UNIT_GROUP_RAIDERS)	
 end
-
 
 
 -- to prevent artillery from chasing into enemy fire

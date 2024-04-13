@@ -109,6 +109,11 @@ function UnitHandler:Init(ai)
 	self.basePos.y = 0 
 	self.basePos.z = 0 
 
+	self.retreatPos = newPosition()
+	self.retreatPos.x = 0
+	self.retreatPos.y = 0 
+	self.retreatPos.z = 0 
+	
 	self.mostVulnerableCell = nil
 	self.leastVulnerableCell = nil
 	self.closestToBaseCenterCell = nil
@@ -739,6 +744,7 @@ function UnitHandler:detachLandRaidingParty(movementSpeedThreshold)
 		if (v.unitDef.speed > movementSpeedThreshold) then
 			table.remove(self.unitGroups[UNIT_GROUP_ATTACKERS].recruits,i)
 			table.insert(self.unitGroups[UNIT_GROUP_RAIDERS].recruits,v)
+			v.groupId = UNIT_GROUP_RAIDERS
 			unitCount = unitCount + 1
 		end
 	end
@@ -754,32 +760,34 @@ function UnitHandler:reattachRaidersToAttackers(movementSpeedThreshold)
 		if (v.unitDef.speed < movementSpeedThreshold) then
 			table.remove(self.unitGroups[UNIT_GROUP_RAIDERS].recruits,i)
 			table.insert(self.unitGroups[UNIT_GROUP_ATTACKERS].recruits,v)
+			v.groupId = UNIT_GROUP_ATTACKERS
 			unitCount = unitCount + 1
 		end
 	end
 	--log("Moved "..unitCount.." units to the raiding party",self.ai)
 end
 
-function UnitHandler:isRecruit(attkbehavior,gId)
+function UnitHandler:isRecruit(behavior,gId)
 	for i,v in ipairs(self.unitGroups[gId].recruits) do
-		if v == attkbehavior then
+		if v == behavior then
 			return true
 		end
 	end
 	return false
 end
 
-function UnitHandler:addRecruit(attkbehavior, gId)
-	if not self:isRecruit(attkbehavior, gId) then
-		table.insert(self.unitGroups[gId].recruits,attkbehavior)
-		attkbehavior:setMoveState()
+function UnitHandler:addRecruit(behavior, gId)
+	behavior.groupId = gId
+	if not self:isRecruit(behavior, gId) then
+		table.insert(self.unitGroups[gId].recruits,behavior)
+		behavior:setMoveState()
 	end
 end
 
-function UnitHandler:removeRecruit(attkbehavior, gId)
+function UnitHandler:removeRecruit(behavior, gId)
 	for i,v in ipairs(self.unitGroups[gId].recruits) do
-		if v.unitId == attkbehavior.unitId then
-			--log(attkbehavior.unitId.." being removed from recruits",self.ai)
+		if v.unitId == behavior.unitId then
+			--log(behavior.unitId.." being removed from recruits",self.ai)
 			table.remove(self.unitGroups[gId].recruits,i)
 			return true
 		end
@@ -1913,9 +1921,23 @@ function UnitHandler:GameFrame(f)
 	
 	-- update raiding paths for ground and air units
 	if f%159 == 32 + self.ai.frameShift then
-		self.raiderThreatCostReference[PF_UNIT_LAND] = self.unitGroups[UNIT_GROUP_RAIDERS] and self.unitGroups[UNIT_GROUP_RAIDERS].nearCenterCost/2 or 100
-		self.raiderThreatCostReference[PF_UNIT_AMPHIBIOUS] = self.unitGroups[UNIT_GROUP_RAIDERS] and self.unitGroups[UNIT_GROUP_RAIDERS].nearCenterCost/2 or 100
-		self.raiderThreatCostReference[PF_UNIT_AIR] = self.unitGroups[UNIT_GROUP_AIR_ATTACKERS] and self.unitGroups[UNIT_GROUP_AIR_ATTACKERS].nearCenterCost/2 or 100
+		local landRaiderRef = self.unitGroups[UNIT_GROUP_RAIDERS] and self.unitGroups[UNIT_GROUP_RAIDERS].nearCenterCost/2
+		local amphibiousRaiderRef = self.unitGroups[UNIT_GROUP_RAIDERS] and self.unitGroups[UNIT_GROUP_RAIDERS].nearCenterCost/2
+		local airRaiderRef = self.unitGroups[UNIT_GROUP_AIR_ATTACKERS] and self.unitGroups[UNIT_GROUP_AIR_ATTACKERS].nearCenterCost/2
+		if not landRaiderRef or landRaiderRef == 0 then
+			landRaiderRef = 1000
+		end
+		if not amphibiousRaiderRef or amphibiousRaiderRef == 0 then
+			amphibiousRaiderRef = 1000
+		end
+		if not airRaiderRef or airRaiderRef == 0 then
+			airRaiderRef = 1000
+		end
+		self.raiderThreatCostReference[PF_UNIT_LAND] = landRaiderRef
+		self.raiderThreatCostReference[PF_UNIT_AMPHIBIOUS] = amphibiousRaiderRef
+		self.raiderThreatCostReference[PF_UNIT_AIR] = airRaiderRef
+
+		--log("landRaiderRef="..self.raiderThreatCostReference[PF_UNIT_LAND].." amphibiousRaiderRef="..self.raiderThreatCostReference[PF_UNIT_AMPHIBIOUS].." airRaiderRef="..self.raiderThreatCostReference[PF_UNIT_AIR],self.ai) --DEBUG
 		
 		self:updateDistancesForPathingType(PF_UNIT_LAND)
 		self:updateDistancesForPathingType(PF_UNIT_AMPHIBIOUS)
@@ -1982,7 +2004,7 @@ function UnitHandler:GameFrame(f)
 				end
 			end
 			self.raiderPath[PF_UNIT_LAND] = landRaiderPath
-		
+
 			local amphibiousRaiderPath = {}
 			if (amphibiousRaiderPathIndexes) then
 				for i=1,#amphibiousRaiderPathIndexes do
@@ -1997,7 +2019,7 @@ function UnitHandler:GameFrame(f)
 			self.raiderPath[PF_UNIT_AMPHIBIOUS] = amphibiousRaiderPath
 			
 			local airRaiderPath = {}
-				if airRaiderPathIndexes then
+			if airRaiderPathIndexes then
 				for i=1,#airRaiderPathIndexes do
 					local cIdx = airRaiderPathIndexes[i]
 					local cell = self.ai.mapHandler.mapCellList[cIdx]
@@ -2009,9 +2031,9 @@ function UnitHandler:GameFrame(f)
 			end
 			self.raiderPath[PF_UNIT_AIR] = airRaiderPath
 		
-			--log("land raider path = "..#landRaiderPath.."        air raider path = "..#airRaiderPath.." start="..(start.p.x)..","..(start.p.z).." goal="..(goal.p.x)..","..(goal.p.z),self.ai)
+			--log("landRaiderPath="..#landRaiderPath.." amphibiousRaiderPath="..#amphibiousRaiderPath.." airRaiderPath="..#airRaiderPath.." start="..(start.p.x)..","..(start.p.z).." goal="..(goal.p.x)..","..(goal.p.z),self.ai) --DEBUG
 		else
-			--log("raiding paths undefined, start or goal cell missing : start="..tostring(start).." goal="..tostring(goal).." bestCell="..(not bestCell and tostring(bestCell) or (bestCell.xIndex..","..bestCell.zIndex)),self.ai)
+			--log("raiding paths undefined, start or goal cell missing : start="..tostring(start).." goal="..tostring(goal).." bestCell="..(not bestCell and tostring(bestCell) or (bestCell.xIndex..","..bestCell.zIndex)),self.ai) --DEBUG
 		end
 	end
 	
@@ -2174,11 +2196,30 @@ function UnitHandler:GameFrame(f)
 		local cell = getCellFromTableIfExists(self.ai.mapHandler.mapCells,xIndex,zIndex)
 		
 		local d = distance(self.basePos,cell.p)
+		-- clicking close to base triggers retreat/move mode
 		if d < BEACON_BASE_RETREAT_DISTANCE then
 			self.beaconAttack = false
+			-- move to beacon
+			self.retreatPos.x = self.ai.beaconPos.x
+			self.retreatPos.y = self.ai.beaconPos.y
+			self.retreatPos.z = self.ai.beaconPos.z 
 		else 
 			self.beaconAttack = true
+			-- move to base
+			self.retreatPos.x = self.basePos.x
+			self.retreatPos.y = self.basePos.y
+			self.retreatPos.z = self.basePos.z 
 		end
+		
+		if not self.ai.beaconAckSent then
+			self.ai:messageAllies("BEACON at ("..self.ai.beaconPos.x..","..self.ai.beaconPos.z..") : "..(self.beaconAttack and "attack/engage" or "retreat/move"))
+			self.ai.beaconAckSent = true
+		end	
+	else
+		-- move to base
+		self.retreatPos.x = self.basePos.x
+		self.retreatPos.y = self.basePos.y
+		self.retreatPos.z = self.basePos.z 
 	end
 	
 	

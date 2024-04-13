@@ -3209,12 +3209,12 @@
 	blocking=1;
 	hitdensity=100;
 	reclaimable=1;
-	metal=62;//#AUTO#
+	metal=101;//#AUTO#
 	energy=0;//#AUTO#
-	damage=1000;//#AUTO#
-	reclaimTime=1243;//#AUTO#
+	damage=1120;//#AUTO#
+	reclaimTime=2022;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
-	collisionVolumeScales=17 19 17;//#AUTO#
+	collisionVolumeScales=18 20 18;//#AUTO#
 	collisionVolumeOffsets=0 -1 0;//#AUTO#
 }
 [aven_lone_trooper_heap]
@@ -3229,12 +3229,12 @@
 	blocking=0;
 	hitdensity=100;
 	reclaimable=1;
-	metal=18;//#AUTO#
+	metal=30;//#AUTO#
 	energy=0;//#AUTO#
-	damage=1000;//#AUTO#
-	reclaimTime=621;//#AUTO#
+	damage=1120;//#AUTO#
+	reclaimTime=1011;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
-	collisionVolumeScales=17 3 17;//#AUTO#
+	collisionVolumeScales=18 3 18;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
 [aven_trooper_laser_dead]
@@ -3332,10 +3332,10 @@
 	blocking=1;
 	hitdensity=100;
 	reclaimable=1;
-	metal=104;//#AUTO#
+	metal=108;//#AUTO#
 	energy=0;//#AUTO#
 	damage=1150;//#AUTO#
-	reclaimTime=2085;//#AUTO#
+	reclaimTime=2167;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=22 23 22;//#AUTO#
 	collisionVolumeOffsets=0 -1 0;//#AUTO#
@@ -3353,10 +3353,10 @@
 	blocking=1;
 	hitdensity=100;
 	reclaimable=1;
-	metal=104;//#AUTO#
+	metal=108;//#AUTO#
 	energy=0;//#AUTO#
 	damage=1150;//#AUTO#
-	reclaimTime=2085;//#AUTO#
+	reclaimTime=2167;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=22 23 22;//#AUTO#
 	collisionVolumeOffsets=0 -1 0;//#AUTO#
@@ -3373,10 +3373,10 @@
 	blocking=0;
 	hitdensity=100;
 	reclaimable=1;
-	metal=31;//#AUTO#
+	metal=32;//#AUTO#
 	energy=0;//#AUTO#
 	damage=1150;//#AUTO#
-	reclaimTime=1042;//#AUTO#
+	reclaimTime=1083;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=22 4 22;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
@@ -3927,10 +3927,10 @@
 	hitdensity=0;
 	reclaimable=1;
 	featuredead=aven_skimmer_heap;
-	metal=90;//#AUTO#
+	metal=91;//#AUTO#
 	energy=0;//#AUTO#
 	damage=1150;//#AUTO#
-	reclaimTime=1805;//#AUTO#
+	reclaimTime=1816;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=25 9 40;//#AUTO#
 	collisionVolumeOffsets=0 2 0;//#AUTO#
@@ -3950,7 +3950,7 @@
 	metal=27;//#AUTO#
 	energy=0;//#AUTO#
 	damage=1150;//#AUTO#
-	reclaimTime=902;//#AUTO#
+	reclaimTime=908;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=25 2 40;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
@@ -4333,10 +4333,10 @@
 	blocking=1;
 	hitdensity=100;
 	reclaimable=1;
-	metal=201;//#AUTO#
+	metal=202;//#AUTO#
 	energy=0;//#AUTO#
 	damage=1650;//#AUTO#
-	reclaimTime=3999;//#AUTO#
+	reclaimTime=4029;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=30 12 38;//#AUTO#
 	collisionVolumeOffsets=0 -1 0;//#AUTO#
@@ -4356,7 +4356,7 @@
 	metal=60;//#AUTO#
 	energy=0;//#AUTO#
 	damage=1650;//#AUTO#
-	reclaimTime=1999;//#AUTO#
+	reclaimTime=2014;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=30 2 38;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
@@ -6662,10 +6662,10 @@
 	blocking=1;
 	hitdensity=100;
 	reclaimable=1;
-	metal=1865;//#AUTO#
+	metal=2079;//#AUTO#
 	energy=0;//#AUTO#
 	damage=14000;//#AUTO#
-	reclaimTime=37051;//#AUTO#
+	reclaimTime=41309;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=80 33 90;//#AUTO#
 	collisionVolumeOffsets=0 -3 0;//#AUTO#
@@ -6682,10 +6682,10 @@
 	blocking=0;
 	hitdensity=100;
 	reclaimable=1;
-	metal=559;//#AUTO#
+	metal=623;//#AUTO#
 	energy=0;//#AUTO#
 	damage=14000;//#AUTO#
-	reclaimTime=18525;//#AUTO#
+	reclaimTime=20654;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=80 6 90;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
@@ -7935,6 +7935,47 @@
 	energy=0;//#AUTO#
 	damage=1500;//#AUTO#
 	reclaimTime=684;//#AUTO#
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=30 2 30;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[gear_wagon_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=gear_corpses;
+	object=gear_wagon_dead;
+	featuredead=gear_wagon_heap;
+	footprintx=3;
+	footprintz=3;
+	height=20;
+	blocking=1;
+	hitdensity=100;
+	reclaimable=1;
+	metal=143;//#AUTO#
+	energy=0;//#AUTO#
+	damage=1850;//#AUTO#
+	reclaimTime=2846;//#AUTO#
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=30 11 30;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[gear_wagon_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3a;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	reclaimable=1;
+	metal=42;//#AUTO#
+	energy=0;//#AUTO#
+	damage=1850;//#AUTO#
+	reclaimTime=1423;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=30 2 30;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
@@ -12568,10 +12609,10 @@
 	blocking=1;
 	hitdensity=100;
 	reclaimable=1;
-	metal=116;//#AUTO#
+	metal=132;//#AUTO#
 	energy=0;//#AUTO#
-	damage=1000;//#AUTO#
-	reclaimTime=2312;//#AUTO#
+	damage=1250;//#AUTO#
+	reclaimTime=2625;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=30 12 30;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
@@ -12588,10 +12629,10 @@
 	blocking=0;
 	hitdensity=100;
 	reclaimable=1;
-	metal=34;//#AUTO#
+	metal=39;//#AUTO#
 	energy=0;//#AUTO#
-	damage=1000;//#AUTO#
-	reclaimTime=1156;//#AUTO#
+	damage=1250;//#AUTO#
+	reclaimTime=1312;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=30 2 30;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
@@ -17681,10 +17722,10 @@
 	blocking=1;
 	hitdensity=100;
 	reclaimable=1;
-	metal=240;//#AUTO#
+	metal=276;//#AUTO#
 	energy=0;//#AUTO#
-	damage=1750;//#AUTO#
-	reclaimTime=4789;//#AUTO#
+	damage=2000;//#AUTO#
+	reclaimTime=5495;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=25 24 25;//#AUTO#
 	collisionVolumeOffsets=0 -1 0;//#AUTO#
@@ -17701,12 +17742,53 @@
 	blocking=0;
 	hitdensity=100;
 	reclaimable=1;
-	metal=72;//#AUTO#
+	metal=82;//#AUTO#
 	energy=0;//#AUTO#
-	damage=1750;//#AUTO#
-	reclaimTime=2394;//#AUTO#
+	damage=2000;//#AUTO#
+	reclaimTime=2747;//#AUTO#
 	collisionVolumeType=box;//#AUTO#
 	collisionVolumeScales=25 4 25;//#AUTO#
+	collisionVolumeOffsets=0 0 0;//#AUTO#
+}
+[claw_rapier_dead]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=claw_corpses;
+	object=claw_rapier_dead;
+	featuredead=claw_rapier_heap;
+	footprintx=3;
+	footprintz=3;
+	height=25;
+	blocking=1;
+	hitdensity=100;
+	reclaimable=1;
+	metal=296;//#AUTO#
+	energy=0;//#AUTO#
+	damage=1600;//#AUTO#
+	reclaimTime=5886;//#AUTO#
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=25 24 20;//#AUTO#
+	collisionVolumeOffsets=0 -1 0;//#AUTO#
+}
+[claw_rapier_heap]
+{
+	world=All Worlds;
+	description=Wreckage;
+	category=heaps;
+	object=3x3a;
+	footprintx=3;
+	footprintz=3;
+	height=4;
+	blocking=0;
+	hitdensity=100;
+	reclaimable=1;
+	metal=88;//#AUTO#
+	energy=0;//#AUTO#
+	damage=1600;//#AUTO#
+	reclaimTime=2943;//#AUTO#
+	collisionVolumeType=box;//#AUTO#
+	collisionVolumeScales=25 4 20;//#AUTO#
 	collisionVolumeOffsets=0 0 0;//#AUTO#
 }
 [claw_crawler_dead]

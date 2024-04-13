@@ -9,7 +9,10 @@ local Sounds = {
 		},
 		MultiSelect = {
 			--- always play on the front speaker(s)
-			file = "sounds/button9.wav",
+			file = "sounds/multisel.wav",
+			pitch=0.6,
+			pitchmod = 0.25,
+			gain = 0.8,
 			in3d = "false",
 		},
 		MapPoint = {
@@ -68,6 +71,8 @@ local Sounds = {
 		},
 		GenericCommand = {
 			file = "sounds/genericcmd.wav",
+			pitchmod = 0.15,
+			gain = 0.45,
 			in3d = "false",
 		},
 		ComsatFire = {

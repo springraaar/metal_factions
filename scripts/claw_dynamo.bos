@@ -85,14 +85,23 @@ ChargeDisruptionControl(healthPercent, oldHealthPercent,oldHealthPercent2,oldHea
 				call-script lua_resetReload();
 				start-script ChargeControl(); // restore charge updater
 			}
+			// override all measurements to prevent retriggering a second later
+			oldHealthPercent6 = healthPercent;
+			oldHealthPercent5 = healthPercent;
+			oldHealthPercent4 = healthPercent;
+			oldHealthPercent3 = healthPercent;
+			oldHealthPercent2 = healthPercent;
+			oldHealthPercent = healthPercent;
 		}
-		
-		oldHealthPercent6 = oldHealthPercent5;
-		oldHealthPercent5 = oldHealthPercent4;
-		oldHealthPercent4 = oldHealthPercent3;
-		oldHealthPercent3 = oldHealthPercent2;
-		oldHealthPercent2 = oldHealthPercent;
-		oldHealthPercent = healthPercent;
+		else
+		{
+			oldHealthPercent6 = oldHealthPercent5;
+			oldHealthPercent5 = oldHealthPercent4;
+			oldHealthPercent4 = oldHealthPercent3;
+			oldHealthPercent3 = oldHealthPercent2;
+			oldHealthPercent2 = oldHealthPercent;
+			oldHealthPercent = healthPercent;
+		}
 		sleep 500;
 	}
 }
@@ -153,7 +162,7 @@ ChargeFX(previousState) {
 			emit-sfx 1024 + 2 from ringfx;
 			emit-sfx 1024 + 2 from ringfx2;
 		}
-		if (chargeState == [4]) {~
+		if (chargeState == [4]) {
 			if (previousState != chargeState) {
 				spin ringholder around y-axis speed <800>;
 				hide ring1;

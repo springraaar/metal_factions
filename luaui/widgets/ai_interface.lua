@@ -134,10 +134,10 @@ function widget:MousePress(mx,my,button)
 		if pos then 
 			if button == MOUSE_LEFT then
 				Spring.SendLuaRulesMsg("SETBEACON|"..floor(pos[1]).."|"..floor(pos[2]).."|"..floor(pos[3]))	
-				return false	
+				return true	
 			elseif button == MOUSE_RIGHT then
 				Spring.SendLuaRulesMsg("REMOVEBEACON|"..floor(pos[1]).."|"..floor(pos[2]).."|"..floor(pos[3]))	
-				return false	
+				return true	
 			end
 		end
 	end

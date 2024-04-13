@@ -26,6 +26,7 @@ local spGetUnitDefID = Spring.GetUnitDefID
 local spGetGameFrame = Spring.GetGameFrame
 local spSetFactoryBuggerOff = Spring.SetFactoryBuggerOff
 local max = math.max
+local abs = math.abs
 
 local popupUnits = {}		--list of pop-up style units
 local unitCollisionVolume = include("luaRules/configs/collision_volumes.lua")	--pop-up style unit collision volume definitions
@@ -193,7 +194,7 @@ if (gadgetHandler:IsSyncedCode()) then
 						-- for flying units, mark it
 						-- it needs some checks before the block status to avoid locking the factory
 						-- TODO remove when engine gets fixed
-						unitBlocking[unitID][9] = true			
+						unitBlocking[unitID][9] = true
 					end
 				end
 				
@@ -255,6 +256,7 @@ if (gadgetHandler:IsSyncedCode()) then
 		if (n%5 == 0) then
 			local xs, ys, zs, xo, yo, zo, vtype, htype, axis, disabled
 			local py,h
+			local builderPosTest
 			local val = 0
 			for uId,data in pairs(unitXYZSizeOffset) do
 				local _,_,_,_,bp = spGetUnitHealth(uId)
@@ -358,8 +360,17 @@ if (gadgetHandler:IsSyncedCode()) then
 							if ud.canFly and blockFixRequired then
 								px,py,pz = spGetUnitPosition(uId)
 								if (px) then
+									if data[8] then
+										-- check factory position
+										bx,by,bz = spGetUnitPosition(data[8])
+									end
+									builderPosTest = true
+									if bx then
+										-- enable blocking only after flying out of the factory
+										builderPosTest = abs(px-bx) > 100 and abs(pz-bz) > 100 
+									end
 									h = max(spGetGroundHeight(px,pz),0)
-									if h and py > h + 60 then 
+									if h and py > h + 60 and builderPosTest then 
 										data[9] = false
 										restoreUnitBlocking(uId)
 										--Spring.Echo("blocking restored for flying unit "..uId.." h="..(py-h))

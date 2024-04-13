@@ -194,7 +194,7 @@ local function updateAllScars(f)
 	local colorA = 1
 	local colorWeight = 0		-- 0 to 1 along start delay, then down to zero in durationFrames (alpha only)
 	for idx,scar in pairs(scars) do
-		if (f > scar.endFrame) then
+		if (f > scar.endFrame or scar.decalID == 0) then
 			local destroyed = spDestroyGroundDecal(scar.decalID)
 			--Spring.Echo("Decal "..scar.decalID.." destroyed? : "..tostring(destroyed))
 			scars[idx] = nil
@@ -284,17 +284,19 @@ local function addScar(_,px,py,pz,type,radius,h,intensity)
 	
 	-- add the decal
 	local decalID = spCreateGroundDecal()
-	spSetGroundDecalPosAndDims(decalID,scar.px,scar.pz,radius,radius)
-	spSetGroundDecalRotation(decalID,scar.rotation)
-	spSetGroundDecalTexture(decalID,scar.texture,true)
-	spSetGroundDecalAlpha(decalID,scar.color[4])
-	scar.decalID = decalID
-	
-	-- thin nearby scars with radius <= itself
-	-- bigger radius explosions are more likely to trigger this 
-	if (random(0,3)+0.02*radius >  2) then
-		checkRemoveSmallerScars(radius,scar.idx,scar.idx2,scar.idx3)
-	end 
+	if decalID ~= nil then
+		spSetGroundDecalPosAndDims(decalID,scar.px,scar.pz,radius,radius)
+		spSetGroundDecalRotation(decalID,scar.rotation)
+		spSetGroundDecalTexture(decalID,scar.texture,true)
+		spSetGroundDecalAlpha(decalID,scar.color[4])
+		scar.decalID = decalID
+		
+		-- thin nearby scars with radius <= itself
+		-- bigger radius explosions are more likely to trigger this 
+		if (random(0,3)+0.02*radius >  2) then
+			checkRemoveSmallerScars(radius,scar.idx,scar.idx2,scar.idx3)
+		end
+	end
 end
 
 

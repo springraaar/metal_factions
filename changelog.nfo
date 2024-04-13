@@ -1,3 +1,40 @@
+2024/04/13 ------------------ NOTES v2.38 ----------------------
+
+--- New units
+
+OPTIONAL
+- GEAR "Wagon" : L1 Assault/Artillery Vehicle
+- CLAW "Rapier" : L2 Medium Infantry Robot
+
+--- Balance / Mechanics
+
+- AVEN "Lone Trooper" got M armor and slightly increased speed,HP, damage and regeneration, but cost was increased by 70%
+- AVEN "HEMG Trooper" got M armor but got reduced speed and added energy cost to fire and +5% cost
+- AVEN "Racer" and "Skimmer" got slightly increased turn rate
+- Fixed issue that could cause AVEN "Dervish" to not display the movement animations
+
+- GEAR "Might" got cannon range increased from 1300 to 1450 and cost increased by 11%
+
+- CLAW "Flail" gets HP increased by about 15% and speed increased by 10% but costs about 15% more
+
+- SPHERE "Quad" got HP increased to 1250, slightly increased turn rate and cost increased by 13%
+
+- Improved behavior of drones following fast moving units
+
+--- UI / Visual / Sounds 
+
+- Slightly modified some AVEN and CLAW infantry bot 3d models to improve consistency
+- Modified group selection and line-move sounds to be fainter and less "clicky"
+
+--- AI
+
+- AI beacon marker shows a specific message when used to set AI start position
+- Setting AI beacon triggers acknowledgement message indicating whether associated behavior is "attack/engage" or "retreat/move"
+- Significantly increased radius around base where beacons trigger "retreat/move" mode and made the AI cluster the units more
+- Slightly adjusted some strategies and early economy management
+- Roaming commanders are less likely to get stuck patrolling in base forever
+
+
 2024/03/30 ------------------ NOTES v2.37 ----------------------
 
 --- New units

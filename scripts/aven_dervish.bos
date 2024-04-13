@@ -11,7 +11,7 @@
 piece  flare1, flare2, torso, hips, lthigh, rthigh, rleg, lleg, rfoot, head, luparm, lgunbase, lgunshaft, ruparm, rgunbase, rgunshaft, rshoulder, lshoulder,
        larm, rarm, lfoot, lgunbarrel, rgunbarrel;
 
-static-var  Static_Var_1, gun_1, bMoving, bAiming, Static_Var_5, statechg_DesiredState, statechg_StateChanging, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, isOpen, legAngle1, legAngle2, legAngle3;
+static-var  gun_1, bMoving, bAiming, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, isOpen, legAngle1, legAngle2, legAngle3;
 
 #include "aimhelper1.h"
 
@@ -293,19 +293,16 @@ MotionControl(moving, aiming, justmoved)
 		{
 			if( aiming )
 			{
-				Static_Var_5 = 1;
 				call-script walk();
 			}
 			if( !aiming )
 			{
-				Static_Var_5 = 0;
 				call-script walk();
 			}
 			justmoved = TRUE;
 		}
 		if( !moving )
 		{
-			Static_Var_5 = 1;
 			if( justMoved )
 			{
 				move hips to y-axis [0.000000] speed [25.000000];
@@ -338,16 +335,13 @@ Create()
 {
 	bMoving = FALSE;
 	bAiming = FALSE;
-	Static_Var_5 = 1;
 	gun_1 = flare1;
-	Static_Var_1 = 0;
 	isOpen = FALSE;
-	call-script Close();
-	
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
 	start-script SmokeUnit();
 	start-script MotionSpeedControl();
+	call-script Close();
 	return (0);
 }
 

@@ -697,7 +697,7 @@ avenAmphibious = {
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
 				enemyThreatEstimationMult = 1.4,
-				defenseDensityMult = 2,
+				defenseDensityMult = 1,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -740,7 +740,7 @@ avenAmphibious = {
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
 				enemyThreatEstimationMult = 1.3,
-				defenseDensityMult = 2,
+				defenseDensityMult = 1,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -793,7 +793,7 @@ avenAmphibious = {
 				amphibiousMainForce = true,
 				raiderSpeedThreshold = 90,
 				enemyThreatEstimationMult = 1.3,
-				defenseDensityMult = 2,
+				defenseDensityMult = 1,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -852,7 +852,7 @@ avenAmphibious = {
 				amphibiousMainForce = true,
 				raiderSpeedThreshold = 90,
 				enemyThreatEstimationMult = 1.3,
-				defenseDensityMult = 2,
+				defenseDensityMult = 1,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -1688,7 +1688,7 @@ gearAmphibious = {
 				amphibiousMainForce = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 1.4,
-				defenseDensityMult = 2,
+				defenseDensityMult = 1,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -1747,7 +1747,7 @@ gearAmphibious = {
 				amphibiousMainForce = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 1.4,
-				defenseDensityMult = 2,
+				defenseDensityMult = 1,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -2274,7 +2274,7 @@ clawAir = {
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 1.3,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -2315,7 +2315,7 @@ clawAir = {
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 1.3,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -2367,7 +2367,7 @@ clawAir = {
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 1.3,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -2419,7 +2419,7 @@ clawAir = {
 				roamingCommander = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 1.3,
-				defenseDensityMult = 1,
+				defenseDensityMult = 2,
 				forceSpreadFactor = 1
 			},
 			builderRoles = {
@@ -3351,11 +3351,11 @@ sphereAmphibious = {
 	name = "sphereAmphibious",
 	commanderMorphs = { "Emerald Form" },
 	upgradeList = {
-		{name = "upgrade_blue_1_speed" ,max=3},
+		{name = "upgrade_blue_1_speed" ,max=1},
+		{name = "upgrade_green_1_hp" ,max=2},
 		{name = "upgrade_green_1_regen" ,max=2},
 		{name = "upgrade_blue_3_commander_stealth_drone",max=1},
-		{name = "upgrade_blue_2_commander_light_drones", max=1},
-		{name = "upgrade_blue_3_commander_medium_drone",max=1},
+		{name = "upgrade_blue_3_commander_medium_drone",max=2},
 		{name = "upgrade_green_3_regen" ,max=1}
 	},
 	stages = {
@@ -3379,7 +3379,7 @@ sphereAmphibious = {
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
 				enemyThreatEstimationMult = 1.4,
-				defenseDensityMult = 2,
+				defenseDensityMult = 1,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -3396,11 +3396,11 @@ sphereAmphibious = {
 				{name="sphere_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
+				{name="sphere_nimbus",min=3,max=MANY,weight=0.8},
 				{name="sphere_construction_aircraft",min=1,max=3,weight=0.2},
-				{name="sphere_nimbus",min=0,max=MANY,weight=0.6},
 				{name="sphere_cluster",min=0,max=MANY,weight=0.2},
-				{name="sphere_aster",min=1,max=MANY,weight=0.2,includeConditions={THREAT_AIR}},
-				{name="sphere_aster",min=0,max=MANY,weight=0.2},
+				--{name="sphere_aster",min=1,max=MANY,weight=0.2,includeConditions={THREAT_AIR}},
+				--{name="sphere_aster",min=0,max=MANY,weight=0.2},
 				{name="sphere_cluster",min=1,max=MANY,weight=0.4,includeConditions={THREAT_UNDERWATER}},
 			}
 		},
@@ -3424,7 +3424,7 @@ sphereAmphibious = {
 				amphibiousRaiders = true,
 				amphibiousMainForce = true,
 				enemyThreatEstimationMult = 1.4,
-				defenseDensityMult = 2,
+				defenseDensityMult = 1,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -3446,16 +3446,17 @@ sphereAmphibious = {
 				{name="sphere_upgrade_center",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_aircraft",min=0,max=4,weight=0.2},
+				{name="sphere_construction_aircraft",min=0,max=4,weight=0.4},
 				{name="sphere_construction_sphere",min=1,max=4,weight=0.2},
 				{name="sphere_aster",min=1,max=MANY,weight=0.8,includeConditions={THREAT_AIR}},
-				{name="sphere_nimbus",min=1,max=MANY,weight=0.5},
+				{name="sphere_nimbus",min=1,max=MANY,weight=0.8},
+				{name="sphere_dipole",min=1,max=MANY,weight=0.6},
 				{name="sphere_aster",min=1,max=MANY,weight=0.3},
 				{name="sphere_cluster",min=0,max=MANY,weight=0.2},
 				{name="sphere_gazer",min=0,max=MANY,weight=0.3},
 				{name="sphere_cluster",min=1,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
-				{name="sphere_orb",min=1,max=1,weight=0.01},
-				{name="sphere_dipole",min=1,max=MANY,weight=0.3}				
+				{name="sphere_orb",min=1,max=1,weight=0.01}
+								
 			}
 		},
 		------------------ STAGE 3
@@ -3478,7 +3479,7 @@ sphereAmphibious = {
 				amphibiousMainForce = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 1.4,
-				defenseDensityMult = 2,
+				defenseDensityMult = 1,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -3501,7 +3502,7 @@ sphereAmphibious = {
 				{name="sphere_upgrade_center",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="sphere_construction_aircraft",min=2,max=4,weight=0.2},
+				{name="sphere_construction_aircraft",min=2,max=4,weight=0.4},
 				{name="sphere_adv_construction_aircraft",min=2,max=4,weight=0.2},
 				{name="sphere_construction_sphere",min=1,max=2,weight=0.2},
 				{name="sphere_aster",min=1,max=MANY,weight=0.8,includeConditions={THREAT_AIR}},
@@ -3509,7 +3510,7 @@ sphereAmphibious = {
 				{name="sphere_gazer",min=1,max=MANY,weight=0.4},
 				{name="sphere_cluster",min=1,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
 				{name="sphere_orb",min=1,max=1,weight=0.01},
-				{name="sphere_dipole",min=1,max=MANY,weight=0.3},				
+				{name="sphere_dipole",min=1,max=MANY,weight=0.8},				
 				{name="sphere_resolver",min=1,max=2,weight=0.1},
 				{name="sphere_twilight",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="sphere_neptune",min=2,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}}
@@ -3535,7 +3536,7 @@ sphereAmphibious = {
 				amphibiousMainForce = true,
 				raiderSpeedThreshold = 75,
 				enemyThreatEstimationMult = 1.4,
-				defenseDensityMult = 2,
+				defenseDensityMult = 1,
 				forceSpreadFactor = 0.7
 			},
 			builderRoles = {
@@ -3568,7 +3569,7 @@ sphereAmphibious = {
 				{name="sphere_cluster",min=1,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
 				{name="sphere_gazer",min=1,max=MANY,weight=0.6},
 				{name="sphere_orb",min=1,max=1,weight=0.01},
-				{name="sphere_dipole",min=1,max=MANY,weight=0.3},
+				{name="sphere_dipole",min=1,max=MANY,weight=1},
 				{name="sphere_chroma",min=1,max=MANY,weight=0.1},
 				{name="sphere_resolver",min=1,max=2,weight=0.1},
 				{name="sphere_twilight",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},

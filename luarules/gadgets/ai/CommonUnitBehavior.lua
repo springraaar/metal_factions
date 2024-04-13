@@ -76,6 +76,7 @@ function CommonUnitBehavior:commonInit(ai, uId)
 	self.lastOrderFrame = 0
 	self.lastRetreatOrderFrame = 0
 	self.underAttackFrame = 0
+	self.groupId = 0
 end
 
 function CommonUnitBehavior:avoidEnemyAndRetreat()
@@ -492,7 +493,7 @@ end
 function CommonUnitBehavior:orderToClosestCellAlongPath(cellList, order, reverse, ensureSafety)
 	
 	if cellList == nil then
-		--log("OrderToClosestCellAlongPath :: cellList is nil! unit"..self.unitName,self.ai)
+		--log("OrderToClosestCellAlongPath :: cellList is nil! unit "..self.unitName,self.ai) --DEBUG
 		return false
 	end
 	
@@ -509,7 +510,7 @@ function CommonUnitBehavior:orderToClosestCellAlongPath(cellList, order, reverse
 	end
 
 	if(goalCell == nil) then
-		--log("goal cell nil! unit"..self.unitName.." CLSize="..#cellList,self.ai)
+		--log("goal cell nil! unit "..self.unitName.." CLSize="..#cellList,self.ai) --DEBUG
 		return false
 	end
 
@@ -604,6 +605,9 @@ function CommonUnitBehavior:orderToClosestCellAlongPath(cellList, order, reverse
 
 	-- if far from base and the closest cell is far away, path probably changed and now you're lost!
 	if minSQDistance > ALONG_PATH_PANIC_SQ_DIST and (not checkWithinDistance(selfPos,self.ai.unitHandler.basePos,BIG_RADIUS)) then
+		--if (self.isCommander) then
+		--	log(self.unitName.." commander retreating",self.ai) --DEBUG
+		--end
 		self:avoidEnemyAndRetreat()
 		return true
 	end
@@ -617,6 +621,9 @@ function CommonUnitBehavior:orderToClosestCellAlongPath(cellList, order, reverse
 			local px = pos.x - SML_RADIUS/2 + random( 1, SML_RADIUS)
 			local pz = pos.z - SML_RADIUS/2 + random( 1, SML_RADIUS) 
 			spGiveOrderToUnit(self.unitId,CMD.PATROL,{px,spGetGroundHeight(px,pz),pz},CMD.OPT_SHIFT)
+			--if (self.isCommander) then
+			--	log(self.unitName.." withinDistance / commander ordered to patrol",self.ai) --DEBUG
+			--end
 		end
 	else
 		-- if farther away, use order on the cell
@@ -625,14 +632,16 @@ function CommonUnitBehavior:orderToClosestCellAlongPath(cellList, order, reverse
 		if(progressOrder == CMD.FIGHT and (not backTrack) and (self.canFly or self.isCommander)) then
 			local px = pos.x - SML_RADIUS/2 + random( 1, SML_RADIUS)
 			local pz = pos.z - SML_RADIUS/2 + random( 1, SML_RADIUS) 
-			
+			--if (self.isCommander) then
+			--	log(self.unitName.." notWithinDistance / commander ordered to patrol",self.ai) --DEBUG
+			--end
 			spGiveOrderToUnit(self.unitId,CMD.PATROL,{px,spGetGroundHeight(px,pz),pz},CMD.OPT_SHIFT)
 		end
 	end
 	
 	-- commanders and other task queue units need trigger to re-check their tasks if they're set on patrol
 	if self:internalName() == "taskqueuebehavior" then
-		--log(self.unitName.." scheduled to re-check tasks",self.ai) --DEBUG
+		-- log(self.unitName.." scheduled to re-check tasks",self.ai) --DEBUG
 		self.progress = true
 		self.currentProject = "custom"
 		self.waitLeft = 200

@@ -7469,7 +7469,7 @@
 }
 [gear_kano_cannon]
 {
-	name=Heavy Plasma Cannon;
+	name=Plasma Cannon;
 	weaponType=Cannon;
 	turret=1;
 	range=580;
@@ -7506,6 +7506,48 @@
 		armor_heavy=230.00;//#AUTO#
 		armor_medium=230.00;//#AUTO#
 		armor_light=230.00;//#AUTO#
+	}
+}
+[gear_wagon_cannon]
+{
+	name=Plasma Mortar;
+	weaponType=Cannon;
+	turret=1;
+	range=600;
+	highTrajectory=1;
+	cegTag=PLASMATRAIL2;
+	texture1=cannon;
+	explosionGenerator=custom:STDBLASTWRAPPER;
+	reloadTime=4;
+	weaponVelocity=320;
+	areaOfEffect=90;
+	accuracy=100;
+	movingAccuracy=500;
+	soundStart=cannon4;
+	soundHit=xplomed2;
+	tolerance=3000;
+	size=3.2;
+	rgbColor=0.7 0.6 0.3;
+	stages=3;
+  	separation=0.5;
+  	alphaDecay=0.3;
+  	sizeDecay=-0.1;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		reaimTime=1;
+		expDmgScaling=1;
+		targets=SURFACE;
+	}
+	[DAMAGE]
+	{
+		default=250;
+		group_invincible=1;
+		armor_heavy=250.00;//#AUTO#
+		armor_medium=250.00;//#AUTO#
+		armor_light=250.00;//#AUTO#
 	}
 }
 [gear_crasher_missile]
@@ -10116,7 +10158,7 @@
 }
 [gear_psycho_laser]
 {
-	name=Rapid-fire Laser;
+	name=Rapid-Fire Laser;
 	weaponType=BeamLaser;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
 	turret=1;
@@ -10161,7 +10203,7 @@
 }
 [gear_u7commander_laser]
 {
-	name=Rapid-fire Laser;
+	name=Rapid-Fire Laser;
 	weaponType=BeamLaser;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
 	turret=1;
@@ -10206,7 +10248,7 @@
 }
 [gear_hopper_laser]
 {
-	name=Rapid-fire Laser;
+	name=Rapid-Fire Laser;
 	weaponType=BeamLaser;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
 	turret=1;
@@ -10251,7 +10293,7 @@
 }
 [gear_llt_laser]
 {
-	name=Rapid-fire Laser;
+	name=Rapid-Fire Laser;
 	weaponType=BeamLaser;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
 	turret=1;
@@ -10296,7 +10338,7 @@
 }
 [gear_flareon_laser]
 {
-	name=Rapid-fire Laser;
+	name=Rapid-Fire Laser;
 	weaponType=BeamLaser;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
 	turret=1;
@@ -11240,7 +11282,7 @@
 	energyPerShot=0;
 	rgbColor=1 0.33 0.0;
 	turret=1;
-	range=1300;
+	range=1450;
 	reloadTime=2.5;
 	weaponVelocity=480;
 	areaOfEffect=100;
@@ -14245,7 +14287,7 @@
 }
 [aven_falcon_laser]
 {
-	name=Rapid-fire Laser;
+	name=Rapid-Fire Laser;
 	weaponType=BeamLaser;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
 	beamTime=0.05;
@@ -14912,7 +14954,7 @@
   	sizeDecay=-0.1;
 	turret=1;
 	range=440;
-	reloadTime=0.167;
+	reloadTime=0.134;
 	predictBoost=0.27;
 	weaponVelocity=500;
 	accuracy=250;
@@ -14932,10 +14974,10 @@
 	}
 	[DAMAGE]
 	{
-		default=16;
-		armor_heavy=4.00;//#AUTO#
-		armor_medium=8.00;//#AUTO#
-		armor_light=16.00;//#AUTO#
+		default=13;
+		armor_heavy=3.25;//#AUTO#
+		armor_medium=6.50;//#AUTO#
+		armor_light=13.00;//#AUTO#
 	}
 }
 [aven_lone_trooper_emg2]
@@ -14976,10 +15018,10 @@
 	}
 	[DAMAGE]
 	{
-		default=22;
-		armor_heavy=5.50;//#AUTO#
-		armor_medium=11.00;//#AUTO#
-		armor_light=22.00;//#AUTO#
+		default=26;
+		armor_heavy=6.50;//#AUTO#
+		armor_medium=13.00;//#AUTO#
+		armor_light=26.00;//#AUTO#
 	}
 }
 [aven_trooper_hemg]
@@ -14999,6 +15041,7 @@
 	range=600;
 	reloadTime=0.134;
 	weaponVelocity=670;
+	energyPerShot=9;
 	predictBoost=0.25;
 	movingAccuracy=700;
 	sprayAngle=100;
@@ -15916,7 +15959,7 @@
 }
 [gear_stratos_laser]
 {
-	name=Rapid-fire Laser;
+	name=Rapid-Fire Laser;
 	weaponType=BeamLaser;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
 	turret=1;
@@ -18342,6 +18385,48 @@
 		armor_heavy=60.00;//#AUTO#
 		armor_medium=120.00;//#AUTO#
 		armor_light=120.00;//#AUTO#
+	}
+}
+[claw_rapier_railgun]
+{
+	name=Rapid-Fire Light Railgun;
+	weaponType=Cannon;
+	explosionGenerator=custom:STDNARROWBLASTWRAPPER;
+	size=1.8;
+	stages=35;
+  	separation=1.6;
+  	alphaDecay=0.16;
+  	sizeDecay=0.0;
+	rgbColor=1 0.7 0.2;
+	texture1=cannon;
+	energyPerShot=20;
+	turret=1;
+	range=540;
+	reloadTime=0.434;
+	accuracy=100;
+	movingAccuracy=200;
+	predictBoost=0.5;
+	weaponVelocity=2032;
+	areaOfEffect=8;
+	soundStart=railgunsml2;
+	soundHit=railgunhitsml;
+	soundTrigger=1;
+	tolerance=3000;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		reaimTime=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=90;
+		armor_heavy=45.00;//#AUTO#
+		armor_medium=90.00;//#AUTO#
+		armor_light=90.00;//#AUTO#
 	}
 }
 [claw_flail_shotgun]
@@ -25096,7 +25181,7 @@
 }
 [sphere_quad_laser]
 {
-	name=Rapid-fire Laser;
+	name=Rapid-Fire Laser;
 	weaponType=BeamLaser;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
 	intensity=0.85;
@@ -25140,7 +25225,7 @@
 }
 [sphere_echo_laser]
 {
-	name=Rapid-fire Laser;
+	name=Rapid-Fire Laser;
 	weaponType=BeamLaser;	
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
 	intensity=0.85;
@@ -25184,7 +25269,7 @@
 }
 [sphere_slicer_laser]
 {
-	name=Rapid-fire Laser;
+	name=Rapid-Fire Laser;
 	weaponType=BeamLaser;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
 	intensity=0.85;
@@ -25272,7 +25357,7 @@
 }
 [sphere_hermit_laser]
 {
-	name=Rapid-fire Laser;
+	name=Rapid-Fire Laser;
 	weaponType=BeamLaser;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
 	intensity=0.85;
@@ -25540,7 +25625,7 @@
 }
 [sphere_stir_laser]
 {
-	name=Rapid-fire Laser;
+	name=Rapid-Fire Laser;
 	weaponType=BeamLaser;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
 	intensity=0.85;
@@ -25583,7 +25668,7 @@
 }
 [sphere_crab_laser]
 {
-	name=Rapid-fire Laser;
+	name=Rapid-Fire Laser;
 	weaponType=BeamLaser;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
 	intensity=0.85;

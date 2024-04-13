@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=1000;
+	maxDamage=1120;
 	footprintx=2;
 	footprintz=2;
 
@@ -33,7 +33,7 @@
 	energyMake=0;
 	energyUse=0;
 	energyStorage=0;
-	autoheal=5;
+	autoheal=10;
 
 	builder=0;
 	workerTime=0;
@@ -49,7 +49,7 @@
 	turnRate=1232;
 	acceleration=1.1;
 	brakeRate=18.0;
-	maxVelocity=1.7;
+	maxVelocity=1.75;
 	maxSlope=17;
 	maxWaterDepth=12;
 
@@ -66,14 +66,14 @@
 
 	noAutoFire=0;
 	collisionVolumeType = box;
-	collisionVolumeScales =17 32 17;
+	collisionVolumeScales =18 34 18;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 
 	[CustomParams]
 	{
 		builtBy=aven_light_plant,aven_adv_kbot_lab;
-		tip=Regenerates 5 HP/s. Stronger weapon used only if there are no other friendly units within 350 distance;
+		tip=Regenerates 10 HP/s. Stronger weapon used only if there are no other friendly units within 350 distance;
 		optional=1;
 	}
 	[SFXTypes]
@@ -81,8 +81,8 @@
 		explosionGenerator0=custom:EmgFlare;
 		explosionGenerator1=custom:EmgFlareMed;
 	}
-	buildCostEnergy=1043;//#AUTO#
-	buildCostMetal=208;//#AUTO#
-	buildTime=2486;//#AUTO#
-	mass=159;//#AUTO#
+	buildCostEnergy=1697;//#AUTO#
+	buildCostMetal=339;//#AUTO#
+	buildTime=4045;//#AUTO#
+	mass=393;//#AUTO#
 }

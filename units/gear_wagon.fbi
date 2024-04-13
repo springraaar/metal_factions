@@ -3,29 +3,29 @@
 	//************************************************************
 	//  Unit Description
 	//********************
-	side=Aven;
-	name=Racer;
-	description=Fast Attack Vehicle;
-	iconType=mobileraider;
+	side=Gear;
+	name=Wagon;
+	description=Assault/Artillery Vehicle;
+	iconType=mobileartillery;
 
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN LEVEL2 WEAPON NOTAIR NOTSUB;
+	category=GEAR LEVEL1 WEAPON NOTAIR NOTSUB;
 
 	//************************************************************
 	//  External Specs
 	//******************
-	unitName=aven_racer;
-	objectName=aven_racer.3do;
-	corpse=aven_racer_dead;
-	buildPic=aven_racer.png;
-	soundCategory=aven_TANK;
+	unitName=gear_wagon;
+	objectName=gear_wagon.3do;
+	corpse=gear_wagon_dead;
+	buildPic=gear_wagon.png;
+	soundCategory=gear_TANK;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=1650;
+	maxDamage=1850;
 	footprintx=3;
 	footprintz=3;
 
@@ -60,13 +60,12 @@
 	//  Movement
 	//************
 	movementClass=TANKSH3;
-	turnRate=650;
-	acceleration=0.64; 
-	brakeRate=0.13;
-	maxVelocity=3.4;
+	turnRate=440;
+	acceleration=0.2;
+	brakeRate=0.15;
+	maxVelocity=1.8;
 	maxSlope=10;
 	maxWaterDepth=12;
-	turnInPlace=1;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -77,9 +76,9 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=aven_racer_cannon;
+	weapon1=gear_wagon_cannon;
 	noChaseCategory=VTOL;
-	badTargetCategory1=VTOL;
+	onlyTargetCategory1=NOTAIR;
 	explodeAs=BIG_UNITEX;
 	selfDestructAs=BIG_UNIT;
 
@@ -92,27 +91,27 @@
 	//  Miscellaneous
 	//*****************
 	leavetracks=1;
-	trackoffset=3;
-	trackstrength=6;
+	trackoffset=6;
+	trackstrength=5;
 	trackstretch=1;
 	tracktype=StdTank;
-	trackwidth=24;
+	trackwidth=30;
 	collisionVolumeType = box;
-	collisionVolumeScales =30 20 38;
+	collisionVolumeScales =30 19 30;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 
-	[customParams] 
+	[CustomParams]
 	{
-		builtBy=aven_adv_vehicle_plant;
+		builtBy=gear_light_plant,gear_adv_vehicle_plant;
+		optional=1;
 	}
 	[SFXTypes]
 	{
-		explosionGenerator0=custom:yellowflaresml;
+		explosionGenerator0=custom:yellowflaremed;
 	}
-
-	buildCostEnergy=3381;//#AUTO#
-	buildCostMetal=676;//#AUTO#
-	buildTime=8058;//#AUTO#
-	mass=637;//#AUTO#
+	buildCostEnergy=2388;//#AUTO#
+	buildCostMetal=477;//#AUTO#
+	buildTime=5692;//#AUTO#
+	mass=621;//#AUTO#
 }
