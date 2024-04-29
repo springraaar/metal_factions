@@ -324,7 +324,7 @@ function getTooltipWeaponData(ud, xpMod, rangeMod, dmgMod)
 						isDisruptor = true
 					end
 					
-					if (reloadTime > 5) then
+					if (reloadTime >= 5) then
 						if (isDisruptor) then
 							local paralyzeDmg = damage
 							local normalDmg = paralyzeDmg * PARALYZE_DAMAGE_FACTOR

@@ -21,18 +21,6 @@ return {
     desc = 'AI for Metal Factions : Brutal mode : very agressive AI with a built-in resource advantage, variable strategy'
   },
   {
-    name = 'MFAI : easy (classic)',
-    desc = 'AI for Metal Factions : Easy mode (land maps only)'
-  },
-  {
-    name = 'MFAI : normal (classic)',
-    desc = 'AI for Metal Factions : Normal mode (land maps only)'
-  },
-  {
-    name = 'MFAI : brutal (classic)',
-    desc = 'AI for Metal Factions : Brutal mode : very agressive AI with a built-in resource advantage (land maps only)'
-  },
-  {
     name = 'MFAI : normal (air)',
     desc = 'AI for Metal Factions : Normal mode, Air strategy'
   },
@@ -49,6 +37,14 @@ return {
     desc = 'AI for Metal Factions : Normal mode, Amphibious strategy'
   },
   {
+    name = 'MFAI : normal (raider)',
+    desc = 'AI for Metal Factions : Normal mode, Raider strategy'
+  },
+  {
+    name = 'MFAI : normal (navy)',
+    desc = 'AI for Metal Factions : Normal mode, Navy strategy'
+  },
+  {
     name = 'MFAI : brutal (air)',
     desc = 'AI for Metal Factions : Brutal mode, Air strategy'
   },
@@ -63,7 +59,16 @@ return {
   {
     name = 'MFAI : brutal (amphibious)',
     desc = 'AI for Metal Factions : Brutal mode, Amphibious strategy'
+  },
+  {
+    name = 'MFAI : brutal (raider)',
+    desc = 'AI for Metal Factions : Brutal mode, Raider strategy'
+  },
+  {
+    name = 'MFAI : brutal (navy)',
+    desc = 'AI for Metal Factions : Brutal mode, Navy strategy'
   }
+
 }
 
 

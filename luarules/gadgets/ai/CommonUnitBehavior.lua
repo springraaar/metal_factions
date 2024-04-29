@@ -48,6 +48,9 @@ function CommonUnitBehavior:commonInit(ai, uId)
 	self.isFullyBuilt = false	
 	self.isBasePatrolling = false
 	self.pFType = getUnitPFType(self.unitDef)
+	if (pFType == nil and (not self.unitDef.speed > 0)) then
+		log("unit "..self.unitName.." has invalid PF type",self.ai) --DEBUG
+	end
 	self.alongPathIdx = 0
 	self.canFly = (self.unitDef.canFly)
 	self.speed = self.unitDef.speed

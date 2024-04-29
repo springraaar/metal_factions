@@ -1166,8 +1166,8 @@
 		}
 		air=0;
      		ground=1;
-	      water=1;
-		underwater=1;
+		water=0;
+		underwater=0;
 		count=1;
 	}
 	[flash2]
@@ -1184,7 +1184,7 @@
 		}
 		air=1;
      		ground=0;
-	      water=0;
+		water=0;
 		underwater=0;
 		count=0;
 	}
@@ -1193,7 +1193,7 @@
 		class=CSimpleParticleSystem;
 		[properties]
 		{
-			sizeGrowth=2 d0.02;
+			sizeGrowth=2 d0.04;
 			sizeMod=1.0;
 			pos=0, 0, 0; 
 			emitVector=0, 1, 0;
@@ -1210,7 +1210,7 @@
 			particleSizeSpread=0;
 			emitRot=25;
 			emitRotSpread=45;
-			directional=0;
+			directional=1;
 			alwaysVisible=1;
 		}
 		air=1;
@@ -2373,11 +2373,9 @@
 	[_stdblast3]{class=CExpGenSpawner;[properties]{pos=-30 r60,-40,-30 r60;delay=14;damage=800;explosionGenerator=custom:DEBRISBLASTWRAPPER;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
 
-[FEATUREBLAST]			// feature blast
+[ROCKFEATUREBLAST]			// rock/metal feature blast
 {
 	usedefaultexplosions=0;
-	[_std]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=d1;explosionGenerator=custom:STDBLASTEFFECTS;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
-
 
 	// smoke puffs
 	[smokepuffs]
@@ -2388,25 +2386,24 @@
 			sizeGrowth=0.3;
 			sizeMod=1.0;
 			pos=0, 1, 0; 
-			gravity=0, 0, 0;
-		
+			gravity=0, 0.1, 0;
 
 			Texture=smoke;
 			airdrag=0.77;
-			colorMap=0.7 0.5 0.4 0.01 0.1 0.1 0.1 0.2 0.0 0.0 0.0 0.01;
+			colorMap=0.4 0.4 0.4 0.01 0.1 0.1 0.1 0.2 0.0 0.0 0.0 0.01;
 
-			particleLifeSpread=d0.01 1; 
+			particleLifeSpread=d0.02 2; 
 			particleSpeedSpread=d0.005 0.5;  
 			particleSizeSpread=d0.01 1;
 		
-			particleLife=d0.08 12;
-			numParticles=d0.04 6; 
-			particleSpeed=d0.015 2; 
-			particleSize=d0.06 6;
+			particleLife=d0.2 20;
+			numParticles=d0.02 3; 
+			particleSpeed=d0.01 2; 
+			particleSize=d0.08 8;
 		
 			emitVector=0, 1, 0; 
-			emitRot=80;
-			emitRotSpread=5; 
+			emitRot=30;
+			emitRotSpread=20; 
 			directional=0; 
 		}
 		air=1;
@@ -2415,45 +2412,194 @@
 		ground=1;
 		count=1;
 	}
+	[debris]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.2;
+			sizeMod=1.0;
+			pos=0, 0, 0; 
+			emitVector=0, 1, 0;
+			gravity=0, -0.1, 0;  
+			colorMap=0.4 0.4 0.4 0.3   0.3 0.3 0.3 0.2   0.1 0.1 0.1 0.02;
+			Texture=debriscloud;
+			airdrag=0.91;
+			particleLife=d0.08 10;
+			particleLifeSpread=2;
+			numParticles=d0.01 2;
+			particleSpeed=d0.015 1;
+			particleSpeedSpread=d0.01 0.5;
+			particleSize=d0.07 7;
+			particleSizeSpread=d0.03 1.5;
+			emitRot=30;
+			emitRotSpread=20;
+			directional=0;
+			alwaysVisible=0;
+		}
+		air=1;
+		unit=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+
 	[debrisdust]
 	{
 		class=CSimpleParticleSystem;
 		[properties]
 		{
-		sizeGrowth=0.7;
-		sizeMod=1.0;
-		pos=0, 0, 0; 
-		emitVector=0, 1, 0;
-	      gravity=0, -0.3, 0;  
-		//colorMap=1 0.8 0.5 0.01   0.9 0.4 0.2 0.01   0.8 0.2 0 0.01;
-		colorMap=1 1 1 0.8   1 1 1 0.6   1 1 1 0.4;
-		Texture=dustcloud;
-		airdrag=0.91;
-		particleLife=d0.09 10;
-		particleLifeSpread=2;
-		numParticles=d0.02 4;
-		particleSpeed=d0.008 2;
-		particleSpeedSpread=d0.005 1;
-		particleSize=d0.06 6;
-		particleSizeSpread=d0.03 1.5;
-		emitRot=25;
-		emitRotSpread=45;
-		directional=0;
-		alwaysVisible=0;
+			sizeGrowth=0.7;
+			sizeMod=1.0;
+			pos=0, 0, 0; 
+			emitVector=0, 1, 0;
+			gravity=0, -0.1, 0;  
+			colorMap=1 1 1 0.3   0.8 0.8 0.8 0.2   0.1 0.1 0.1 0.02;
+			Texture=dustcloudbig;
+			airdrag=0.91;
+			particleLife=d0.1 12;
+			particleLifeSpread=2;
+			numParticles=d0.02 3;
+			particleSpeed=d0.015 1.5;
+			particleSpeedSpread=d0.005 1;
+			particleSize=d0.10 9;
+			particleSizeSpread=d0.03 1.5;
+			emitRot=30;
+			emitRotSpread=20;
+			directional=0;
+			alwaysVisible=0;
 		}
-	air=1;
-	unit=1;
-	water=1;
-	underwater=1;
-	ground=1;
-	count=1;
+		air=1;
+		unit=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
 	}
 }
 
-[FEATUREBLASTWRAPPER]			// feature blast wrapper
+[ROCKFEATUREBLASTWRAPPER]			// rock/metal feature blast wrapper
 {
 	usedefaultexplosions=0;
-	[_stdblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=6 y0 d1 p0.7 x0 50;explosionGenerator=custom:FEATUREBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_stdblast1]{class=CExpGenSpawner;[properties]{pos=-1 r2 y0 10 d0.2 x0,d0.1,-1 r2 y0 10 d0.2 x0;delay=0;damage=30 d0.8;explosionGenerator=custom:ROCKFEATUREBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=3;}
+	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=-1 r2 y0 10 d0.2 x0,0,-1 r2 y0 10 d0.2 x0;delay=4;damage=40 d1;explosionGenerator=custom:ROCKFEATUREBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=3;}
+	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=-1 r2 y0 10 d0.2 x0,0,-1 r2 y0 10 d0.2 x0;delay=8;damage=40 d1;explosionGenerator=custom:ROCKFEATUREBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=3;}
+
+}
+
+[TREEFEATUREBLAST]			// energy/tree feature blast
+{
+	usedefaultexplosions=0;
+
+	// smoke puffs
+	[smokepuffs]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.3;
+			sizeMod=1.0;
+			pos=0, 1, 0; 
+			gravity=0, 0.1, 0;
+
+			Texture=smoke;
+			airdrag=0.77;
+			colorMap=0.1 0.2 0.1 0.6 	0.07 0.15 0.07 0.4	0.0 0.0 0.0 0.01;
+
+			particleLifeSpread=d0.02 2; 
+			particleSpeedSpread=d0.005 0.5;  
+			particleSizeSpread=d0.01 1;
+		
+			particleLife=d0.2 20;
+			numParticles=d0.02 3; 
+			particleSpeed=d0.01 2; 
+			particleSize=d0.08 8;
+		
+			emitVector=0, 1, 0; 
+			emitRot=30;
+			emitRotSpread=20; 
+			directional=0; 
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+	[debris]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.2;
+			sizeMod=1.0;
+			pos=0, 0, 0; 
+			emitVector=0, 1, 0;
+			gravity=0, -0.1, 0;  
+			colorMap=0.35 0.4 0.35 0.9   0.3 0.3 0.3 0.7   0.1 0.1 0.1 0.02;
+			Texture=treedebriscloud;
+			airdrag=0.91;
+			particleLife=d0.08 10;
+			particleLifeSpread=2;
+			numParticles=d0.01 2;
+			particleSpeed=d0.015 1;
+			particleSpeedSpread=d0.01 0.5;
+			particleSize=d0.07 7;
+			particleSizeSpread=d0.03 1.5;
+			emitRot=30;
+			emitRotSpread=20;
+			directional=0;
+			alwaysVisible=0;
+		}
+		air=1;
+		unit=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+
+	[debrisdust]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.7;
+			sizeMod=1.0;
+			pos=0, 0, 0; 
+			emitVector=0, 1, 0;
+			gravity=0, -0.1, 0;  
+			colorMap=0.1 0.4 0.1 0.9   0.1 0.3 0.1 0.8   0.1 0.2 0.1 0.02;
+			Texture=dustcloud;
+			airdrag=0.91;
+			particleLife=d0.15 14;
+			particleLifeSpread=2;
+			numParticles=d0.03 4;
+			particleSpeed=d0.015 1.5;
+			particleSpeedSpread=d0.005 1;
+			particleSize=d0.10 9;
+			particleSizeSpread=d0.03 1.5;
+			emitRot=30;
+			emitRotSpread=20;
+			directional=0;
+			alwaysVisible=0;
+		}
+		air=1;
+		unit=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
+	}
+}
+
+[TREEFEATUREBLASTWRAPPER]			// energy/tree feature blast wrapper
+{
+	usedefaultexplosions=0;
+	[_stdblast1]{class=CExpGenSpawner;[properties]{pos=-1 r2 y0 10 d0.2 x0,d0.3,-1 r2 y0 10 d0.2 x0;delay=0;damage=30 d0.8;explosionGenerator=custom:TREEFEATUREBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=3;}
+	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=-1 r2 y0 10 d0.2 x0,d0.15,-1 r2 y0 10 d0.2 x0;delay=4;damage=40 d1;explosionGenerator=custom:TREEFEATUREBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=3;}
+	[_stdblast2]{class=CExpGenSpawner;[properties]{pos=-1 r2 y0 10 d0.2 x0,0,-1 r2 y0 10 d0.2 x0;delay=8;damage=40 d1;explosionGenerator=custom:TREEFEATUREBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=3;}
 }
 
 

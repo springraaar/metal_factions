@@ -31,7 +31,7 @@ local targetForUnitId = {}
 local antiMissileWeaponDefIds = {}
 local lastPriorityForUnitId = {}
 
-local AA_FLAT_RANGE_EXTENSION = 80 
+local AA_FLAT_RANGE_EXTENSION = 90 
 
 
 local destructibleProjectileDefIds = {

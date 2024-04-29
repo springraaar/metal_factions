@@ -19,7 +19,7 @@ FORCE_COST_REFERENCE = 1200
 ATK_FAIL_TOLERANCE_COST = 500 
 FORCE_SIZE_MOD_METAL = 0.02
 FREE_METAL_SPOT_EXPANSION_THRESHOLD = 0.8
-ORDER_DELAY_FRAMES = 150
+ORDER_DELAY_FRAMES = 90
 RAIDING_PARTY_TOLERANCE_FRAMES = 18000
 BUILD_SPREAD_DISTANCE = 50
 BUILD_CELL_BUILDING_LIMIT = 8 
@@ -129,6 +129,7 @@ PF_MOVEDEF_CONVERSION = {
 	["tankdh5"] = PF_UNIT_AMPHIBIOUS,
 	["tankdh6"] = PF_UNIT_AMPHIBIOUS,
 	["boatsub"] = PF_UNIT_WATER_DEEP,
+	["boatsub5"] = PF_UNIT_WATER_DEEP,
 	["kbotatuw"] = PF_UNIT_AMPHIBIOUS_AT,
 	["kbotatuw2"] = PF_UNIT_AMPHIBIOUS_AT
 }
@@ -808,8 +809,8 @@ constructionTowers = {
 -- default is PF_UNIT_LAND
 pFConnectionRestrictionsByPlant = {
 	----------- AVEN
-	aven_shipyard = PF_UNIT_AMPHIBIOUS,
-	aven_adv_shipyard = PF_UNIT_AMPHIBIOUS,
+	aven_shipyard = PF_UNIT_WATER_DEEP,
+	aven_adv_shipyard = PF_UNIT_WATER_DEEP,
 	aven_hovercraft_platform = PF_UNIT_AMPHIBIOUS,
 	aven_aircraft_plant = PF_UNIT_AIR,
 	aven_adv_aircraft_plant = PF_UNIT_AIR,
@@ -818,8 +819,8 @@ pFConnectionRestrictionsByPlant = {
 	aven_upgrade_center = PF_UNIT_AIR,
 	aven_nano_tower = PF_UNIT_AIR,
 	----------- GEAR
-	gear_shipyard = PF_UNIT_AMPHIBIOUS,
-	gear_adv_shipyard = PF_UNIT_AMPHIBIOUS,
+	gear_shipyard = PF_UNIT_WATER_DEEP,
+	gear_adv_shipyard = PF_UNIT_WATER_DEEP,
 	gear_aircraft_plant = PF_UNIT_AIR,
 	gear_adv_aircraft_plant = PF_UNIT_AIR,
 	gear_scout_pad = PF_UNIT_AIR,
@@ -827,8 +828,8 @@ pFConnectionRestrictionsByPlant = {
 	gear_upgrade_center = PF_UNIT_AIR,
 	gear_nano_tower = PF_UNIT_AIR,
 	----------- CLAW
-	claw_shipyard = PF_UNIT_AMPHIBIOUS,
-	claw_adv_shipyard = PF_UNIT_AMPHIBIOUS,
+	claw_shipyard = PF_UNIT_WATER_DEEP,
+	claw_adv_shipyard = PF_UNIT_WATER_DEEP,
 	claw_spinbot_plant = PF_UNIT_AMPHIBIOUS,
 	claw_aircraft_plant = PF_UNIT_AIR,
 	claw_adv_aircraft_plant = PF_UNIT_AIR,
@@ -837,8 +838,8 @@ pFConnectionRestrictionsByPlant = {
 	claw_upgrade_center = PF_UNIT_AIR,
 	claw_nano_tower = PF_UNIT_AIR,
 	----------- SPHERE
-	sphere_shipyard = PF_TYPE_AMPHIBIOUS,
-	sphere_adv_shipyard = PF_TYPE_AMPHIBIOUS,
+	sphere_shipyard = PF_UNIT_WATER_DEEP,
+	sphere_adv_shipyard = PF_UNIT_WATER_DEEP,
 	sphere_sphere_factory = PF_UNIT_AIR,
 	sphere_aircraft_factory = PF_UNIT_AIR,
 	sphere_adv_aircraft_factory = PF_UNIT_AIR,
@@ -1065,8 +1066,8 @@ lev1ArtilleryDefenseByFaction = {[side1Name] = {"aven_gunner"}, [side2Name] = {"
 lev2ArtilleryDefenseByFaction = {[side1Name] = {"aven_guardian"}, [side2Name] = {"gear_punisher"}, [side3Name] = {"claw_massacre"}, [side4Name] = {"sphere_banger"}}
 lev2LongRangeArtilleryByFaction = {[side1Name] = {"aven_standoff"}, [side2Name] = {"gear_intimidator"}, [side3Name] = {"claw_longhorn"}, [side4Name] = {"sphere_bastion"}}
 respawnerByFaction = {[side1Name] = "aven_commander_respawner", [side2Name] = "gear_commander_respawner", [side3Name] = "claw_commander_respawner", [side4Name] = "sphere_commander_respawner"}
-lev1PlantByFaction = {[side1Name] = {"aven_light_plant","aven_aircraft_plant"}, [side2Name] = {"gear_light_plant","gear_aircraft_plant"}, [side3Name] = {"claw_light_plant","claw_aircraft_plant"}, [side4Name] = {"sphere_light_factory","sphere_aircraft_factory"}}
-lev2PlantByFaction = {[side1Name] = {"aven_adv_kbot_lab","aven_adv_vehicle_plant","aven_hovercraft_platform","aven_adv_aircraft_plant"}, [side2Name] = {"gear_adv_kbot_lab","gear_adv_vehicle_plant","gear_adv_aircraft_plant","gear_hydrobot_plant"}, [side3Name] = {"claw_adv_kbot_plant","claw_adv_vehicle_plant","claw_spinbot_plant","claw_adv_aircraft_plant"}, [side4Name] = {"sphere_adv_vehicle_factory","sphere_adv_kbot_factory","sphere_sphere_factory","sphere_adv_aircraft_factory"}}
+lev1PlantByFaction = {[side1Name] = {"aven_light_plant","aven_aircraft_plant","aven_shipyard"}, [side2Name] = {"gear_light_plant","gear_aircraft_plant","gear_shipyard"}, [side3Name] = {"claw_light_plant","claw_aircraft_plant","claw_shipyard"}, [side4Name] = {"sphere_light_factory","sphere_aircraft_factory","sphere_shipyard"}}
+lev2PlantByFaction = {[side1Name] = {"aven_adv_kbot_lab","aven_adv_vehicle_plant","aven_hovercraft_platform","aven_adv_aircraft_plant","aven_adv_shipyard"}, [side2Name] = {"gear_adv_kbot_lab","gear_adv_vehicle_plant","gear_adv_aircraft_plant","gear_hydrobot_plant","gear_adv_shipyard"}, [side3Name] = {"claw_adv_kbot_plant","claw_adv_vehicle_plant","claw_spinbot_plant","claw_adv_aircraft_plant","claw_adv_shipyard"}, [side4Name] = {"sphere_adv_vehicle_factory","sphere_adv_kbot_factory","sphere_sphere_factory","sphere_adv_aircraft_factory","sphere_adv_shipyard"}}
 solarByFaction = { [side1Name] = "aven_solar_collector", [side2Name] = "gear_solar_collector", [side3Name] = "claw_solar_collector"}
 windByFaction = { [side1Name] = "aven_wind_generator", [side2Name] = "gear_wind_generator", [side3Name] = "claw_wind_generator", [side4Name] = "sphere_wind_generator"}
 geoByFaction = { [side1Name] = "aven_geothermal_powerplant", [side2Name] = "gear_geothermal_powerplant", [side3Name] = "claw_geothermal_powerplant", [side4Name] = "sphere_geothermal_powerplant"}
@@ -1115,7 +1116,7 @@ unitTypeSets = {
 	[TYPE_LONG_RANGE_ARTILLERY] = tableToSet(lev2LongRangeArtilleryByFaction),
 	[TYPE_RESPAWNER]= tableToSet(respawnerByFaction),
 	[TYPE_L1_PLANT] = tableToSet(lev1PlantByFaction),
-	[TYPE_L2_PLANT] = tableToSet({lev2PlantByFaction,{"aven_adv_shipyard","gear_adv_shipyard","claw_adv_shipyard","sphere_adv_shipyard"}}),
+	[TYPE_L2_PLANT] = tableToSet(lev2PlantByFaction),
 	[TYPE_FUSION] = tableToSet(fusionByFaction),
 	[TYPE_MEX] = tableToSet({mexByFaction,UWMexByFaction}),
 	[TYPE_MOHO] = tableToSet({mohoMineByFaction,UWMohoMineByFaction,hazMexByFaction}),

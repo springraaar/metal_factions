@@ -64,18 +64,17 @@ function AI:setStrategy(side,strategyStr,noMessage,playerId)
 		local mapProfile = self.mapHandler.mapProfile
 		
 		if mapProfile == MAP_PROFILE_LAND_FLAT then
-			viableStrategyStrList = {"assault","skirmisher","amphibious"}
-			strategyStr = viableStrategyStrList[random( 1, #viableStrategyStrList)]
+			viableStrategyStrList = {"assault","skirmisher","amphibious","raider"}
 		elseif mapProfile == MAP_PROFILE_LAND_RUGGED then
-			viableStrategyStrList = {"assault","skirmisher","air","amphibious"}
-			strategyStr = viableStrategyStrList[random( 1, #viableStrategyStrList)]
-		elseif mapProfile == MAP_PROFILE_WATER or mapProfile == MAP_PROFILE_MIXED  then
+			viableStrategyStrList = {"assault","skirmisher","air","amphibious","raider"}
+		elseif mapProfile == MAP_PROFILE_MIXED  then
 			viableStrategyStrList = {"air","amphibious"}
-			strategyStr = viableStrategyStrList[random( 1, #viableStrategyStrList)]
+		elseif mapProfile == MAP_PROFILE_WATER then
+			viableStrategyStrList = {"air","amphibious","navy"}
 		elseif mapProfile == MAP_PROFILE_AIRONLY then
 			viableStrategyStrList = {"air"}
-			strategyStr = viableStrategyStrList[random( 1, #viableStrategyStrList)]
 		end
+		strategyStr = viableStrategyStrList[random( 1, #viableStrategyStrList)]
 		self.currentStrategyStr = strategyStr
 	end
 
@@ -318,7 +317,7 @@ function AI:addUnitBehavior(unitId,unitDefId)
 	-- add behavior
 	local beh = nil
 	un = UnitDefs[unitDefId].name
-	if UnitDefs[unitDefId].isBuilder or setContains(unitTypeSets[TYPE_SUPPORT],un) or taskQueues[un] ~= nil then
+	if UnitDefs[unitDefId].isBuilder or setContains(unitTypeSets[TYPE_SUPPORT],un) or taskQueues[un] ~= nil or sTaskQueues[un] ~= nil then
  		-- log("adding task queue behavior for unit "..un, self)
 		beh = TaskQueueBehavior.create()
 		beh:Init(self,unitId)
@@ -522,6 +521,7 @@ function AI:processExternalCommand(msg,playerId,teamId,pName,isOwner,spectator)
 				local comUId, ud, tmpName = nil
 				local morphName = ""
 				local morphedComFound = false
+				local morphingComFound = false
 				local uX,uZ = 0
 				if (self.useStrategies) then
 					-- get all the AI units, try to find a commander 
@@ -540,6 +540,12 @@ function AI:processExternalCommand(msg,playerId,teamId,pName,isOwner,spectator)
 						end
 	
 						if tq.isCommander then
+							-- abort if AI already has a morphing commander
+							if _G.morphUnits[uId] then
+								morphingComFound = true
+								break
+							end
+
 							local cmds = Spring.GetUnitCmdDescs(uId)
 							comUId = uId
 							uX,_,uZ = spGetUnitPosition(uId,false,false)
@@ -573,6 +579,8 @@ function AI:processExternalCommand(msg,playerId,teamId,pName,isOwner,spectator)
 				else
 					if (morphedComFound) then
 						self:messageAllies("commander already morphed")
+					elseif (morphingComFound) then
+						self:messageAllies("commander already morphing")
 					else
 						self:messageAllies("no commander available to morph, try again later...")
 					end

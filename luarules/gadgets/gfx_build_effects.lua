@@ -34,13 +34,15 @@ local reclaimCEG = "reclaimprogress"
 
 local eceg = "gplasmaballbloom"
 local mceg = "bplasmaballbloom"
-local dceg = "featureblastwrapper"
+local mDestructionCeg = "rockfeatureblastwrapper"
+local treeDestructionCeg = "treefeatureblastwrapper"
 
 
 local random = math.random
 local abs = math.abs
 local floor = math.floor
 local min = math.min
+local sqrt = math.sqrt
 
 local xs, ys, zs, xo, yo, zo, vtype, htype, axis, px,py,pz,offsetX, offsetZ, intensity,bp,oldBp,ud
 
@@ -195,8 +197,15 @@ function gadget:FeatureDestroyed(featureId,allyteam)
 				spPlaySoundFile('Sounds/RECLAIM1.wav', 1, fx, fy, fz)
 			else
 				local radius = tonumber(spGetFeatureRadius(featureId))
-				spSpawnCEG(dceg, fx, fy, fz, 0, 1, 0,radius ,radius)
-				spPlaySoundFile('FEATURECRUSH', 0.7, fx, fy, fz)
+				radius = radius* sqrt(1+ (mm*60+me)*0.00005)
+				-- no metal means vegetation...probably 
+				if mm == 0 then
+					spSpawnCEG(treeDestructionCeg, fx, fy, fz, 0, 1, 0,radius ,radius)
+					spPlaySoundFile('TREEFEATURECRUSH', 0.7, fx, fy, fz)
+				else
+					spSpawnCEG(mDestructionCeg, fx, fy, fz, 0, 1, 0,radius ,radius)
+					spPlaySoundFile('FEATURECRUSH', 0.7, fx, fy, fz)
+				end
 			end
 		end
 	end

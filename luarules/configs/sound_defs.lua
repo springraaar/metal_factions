@@ -1,3 +1,4 @@
+--TODO why is this not on gamedata/sounds.lua ?
 local folder = "sounds/"
 local ambientVolume = 1.0
 
@@ -6,6 +7,23 @@ local name = "FEATURECRUSH"
 soundItems[name] = {
 	name = name,
 	file = folder..name..".ogg",
+	gain = 1.0,
+	pitch = 1.0,
+	pitchMod = 0.1,
+	gainMod = 0.075,
+	priority = -1,
+	maxconcurrent = 6, 
+	maxdist = 2500, 
+	preload = true,
+	in3d = true,
+	rolloff = 0.1,
+	rnd = 1,
+	offset = 0,
+}
+local name = "TREEFEATURECRUSH"
+soundItems[name] = {
+	name = name,
+	file = folder..name..".wav",
 	gain = 1.0,
 	pitch = 1.0,
 	pitchMod = 0.1,

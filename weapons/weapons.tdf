@@ -41,7 +41,7 @@
   	alphaDecay=0.9;
   	sizeDecay=-0.2;
 	range=435;
-	reloadTime=3.7;
+	reloadTime=3.8;
 	weaponVelocity=450;
 	energyPerShot=100;
 	accuracy=150;
@@ -85,7 +85,7 @@
   	alphaDecay=0.9;
   	sizeDecay=-0.2;
 	range=460;
-	reloadTime=2.8;
+	reloadTime=2.9;
 	weaponVelocity=500;
 	energyPerShot=280;
 	accuracy=150;
@@ -644,7 +644,7 @@
   	alphaDecay=0.9;
   	sizeDecay=-0.2;
 	range=650;
-	reloadTime=3.9;
+	reloadTime=4.1;
 	weaponVelocity=450;
 	energyPerShot=250;
 	accuracy=150;
@@ -709,10 +709,10 @@
 	}
 	[DAMAGE]
 	{
-		default=130;
-		armor_heavy=32.50;//#AUTO#
-		armor_medium=65.00;//#AUTO#
-		armor_light=130.00;//#AUTO#
+		default=128;
+		armor_heavy=32.00;//#AUTO#
+		armor_medium=64.00;//#AUTO#
+		armor_light=128.00;//#AUTO#
 	}
 }
 [aven_u3commander_disruptor]
@@ -756,10 +756,10 @@
 	}
 	[DAMAGE]
 	{
-		default=250;
-		armor_heavy=125.00;//#AUTO#
-		armor_medium=250.00;//#AUTO#
-		armor_light=250.00;//#AUTO#
+		default=240;
+		armor_heavy=120.00;//#AUTO#
+		armor_medium=240.00;//#AUTO#
+		armor_light=240.00;//#AUTO#
 	}
 }
 [aven_u4commander_laser]
@@ -7047,11 +7047,11 @@
 	}
 	[DAMAGE]
 	{
-		default=8.5;
+		default=9;
 		group_invincible=1;
-		armor_heavy=4.25;//#AUTO#
-		armor_medium=8.50;//#AUTO#
-		armor_light=8.50;//#AUTO#
+		armor_heavy=4.50;//#AUTO#
+		armor_medium=9.00;//#AUTO#
+		armor_light=9.00;//#AUTO#
 	}
 }
 [gear_u1commander_torpedo]
@@ -7221,7 +7221,7 @@
 	accuracy=300;
 	movingAccuracy=600;
 	turret=1;
-	range=760;
+	range=745;
 	reloadTime=4.1;
 	weaponVelocity=390;
 	areaOfEffect=90;
@@ -7460,11 +7460,11 @@
 	}
 	[DAMAGE]
 	{
-		default=630;
+		default=650;
 		group_invincible=1;
-		armor_heavy=157.50;//#AUTO#
-		armor_medium=315.00;//#AUTO#
-		armor_light=630.00;//#AUTO#
+		armor_heavy=162.50;//#AUTO#
+		armor_medium=325.00;//#AUTO#
+		armor_light=650.00;//#AUTO#
 	}
 }
 [gear_kano_cannon]
@@ -9510,7 +9510,7 @@
 	weaponType=Cannon;
 	turret=1;
 	range=475;
-	reloadTime=1.1;
+	reloadTime=1.2;
 	cegTag=PLASMATRAIL1;
 	texture1=cannon;
 	explosionGenerator=custom:STDBLASTWRAPPER;
@@ -9539,11 +9539,11 @@
 	}
 	[DAMAGE]
 	{
-		default=220;
+		default=225;
 		group_invincible=1;
-		armor_heavy=220.00;//#AUTO#
-		armor_medium=220.00;//#AUTO#
-		armor_light=220.00;//#AUTO#
+		armor_heavy=225.00;//#AUTO#
+		armor_medium=225.00;//#AUTO#
+		armor_light=225.00;//#AUTO#
 	}
 }
 [gear_moe_cannon]
@@ -13296,7 +13296,7 @@
 	tolerance=12000;
 	burnBlow=1;
 	accuracy=1000;
-	energyPerShot=50;
+	energyPerShot=55;
 	explosionGenerator=custom:TSUNAMIBLASTWRAPPER;
 	cegTag=glowsml;
 	texture1=ecannon;
@@ -13322,11 +13322,11 @@
 	}
 	[DAMAGE]
 	{
-		default=110;
+		default=106;
 		group_invincible=1;
-		armor_heavy=55.00;//#AUTO#
-		armor_medium=110.00;//#AUTO#
-		armor_light=110.00;//#AUTO#
+		armor_heavy=53.00;//#AUTO#
+		armor_medium=106.00;//#AUTO#
+		armor_light=106.00;//#AUTO#
 	}
 }
 [aven_maximus_cannon]
@@ -16418,7 +16418,7 @@
 	energyPerShot=400;
 	turret=1;
 	range=650;
-	reloadTime=5.6;
+	reloadTime=5.5;
 	weaponVelocity=1532;
 	startVelocity=1532;
 	accuracy=0;
@@ -17901,7 +17901,7 @@
 	texture4=null;
 	energyPerShot=60;
 	turret=1;
-	range=540;
+	range=545;
 	reloadTime=0.267;
 	weaponVelocity=1532;
 	startVelocity=1532;
@@ -19535,7 +19535,6 @@
 	avoidFeature=0;
 	[CUSTOMPARAMS]
 	{
-		evalFactor=0.85; // compensation for being annoyingly inconsistent
 		hitPower=2;
 		reaimTime=1;
 		expDmgScaling=1;
@@ -19565,11 +19564,11 @@
   	sizeDecay=-2;
   	craterMult=0.125;
 	turret=1;
-	range=520;
+	range=530;
 	reloadTime=2;
 	projectiles=3;
 	weaponVelocity=400;
-	energyPerShot=400;
+	energyPerShot=390;
 	areaOfEffect=170;
 	soundStart=ewbcannon;
 	soundHit=ewbboom;
@@ -19582,7 +19581,6 @@
 	avoidFeature=0;
 	[CUSTOMPARAMS]
 	{
-		evalFactor=1; // compensation for being annoyingly inconsistent?
 		hitPower=2;
 		reaimTime=1;
 		expDmgScaling=1;
@@ -19629,7 +19627,6 @@
 	avoidFeature=0;
 	[CUSTOMPARAMS]
 	{
-		evalFactor=0.85; // compensation for being annoyingly inconsistent
 		hitPower=2;
 		reaimTime=1;
 		expDmgScaling=1;
@@ -21482,7 +21479,7 @@
 	rgbColor=0.1 0.2 0.1;
 	rgbColor2=0.2 0.9 0.6;
 	tolerance=5000;
-	explosionGenerator=custom:OPALBEAMBLAST;
+	explosionGenerator=custom:EMERALDBEAMBLAST;
 	minIntensity=1.0; 
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -21642,7 +21639,7 @@
 	weaponType=Cannon;
 	turret=1;
 	range=610;
-	reloadTime=6.5;
+	reloadTime=6.6;
 	weaponVelocity=330;
 	areaOfEffect=240;
 	soundStart=novafire;
@@ -21674,11 +21671,11 @@
 	}
 	[DAMAGE]
 	{
-		default=1200;
+		default=1170;
 		group_invincible=1;
-		armor_heavy=600.00;//#AUTO#
-		armor_medium=1200.00;//#AUTO#
-		armor_light=1200.00;//#AUTO#
+		armor_heavy=585.00;//#AUTO#
+		armor_medium=1170.00;//#AUTO#
+		armor_light=1170.00;//#AUTO#
 	}
 }
 [sphere_nova_cannon]
@@ -22305,9 +22302,9 @@
 	turret=1;
 	range=412;
 	reloadTime=0.667;
-	energyPerShot=60;
+	energyPerShot=55;
 	projectiles=3;
-	weaponVelocity=390;
+	weaponVelocity=395;
 	accuracy=200;
 	movingAccuracy=400;
 	sprayAngle=1324;
@@ -22327,10 +22324,10 @@
 	}
 	[DAMAGE]
 	{
-		default=100;
-		armor_heavy=50.00;//#AUTO#
-		armor_medium=100.00;//#AUTO#
-		armor_light=100.00;//#AUTO#
+		default=106;
+		armor_heavy=53.00;//#AUTO#
+		armor_medium=106.00;//#AUTO#
+		armor_light=106.00;//#AUTO#
 	}
 }
 [sphere_boulder_blaster]
@@ -24365,12 +24362,13 @@
 	range=1260;
 	accuracy=200;
 	movingAccuracy=350;
+	sprayAngle=300;
 	burst=2;
 	burstRate=0.3;
 	reloadTime=10;
 	flightTime=3.75;
-	wobble=500;
-	turnRate=6000;
+	wobble=0;
+	turnRate=0;
 	weaponVelocity=450;
 	cegTag=ROCKETTRAIL2;
 	explosionGenerator=custom:ROCKETBLASTWRAPPER;
@@ -24407,12 +24405,13 @@
 	range=880;
 	accuracy=300;
 	movingAccuracy=500;
+	sprayAngle=300;
 	burst=2;
 	burstRate=0.3;
 	reloadTime=6.4;
 	flightTime=3.75;
-	wobble=500;
-	turnRate=6000;
+	wobble=0;
+	turnRate=0;
 	weaponVelocity=420;
 	cegTag=ROCKETTRAIL2;
 	explosionGenerator=custom:ROCKETBLASTWRAPPER;
@@ -24748,7 +24747,7 @@
 	texture1=cannon;
 	explosionGenerator=custom:STDSMLBLASTWRAPPER;
 	weaponVelocity=380;
-	areaOfEffect=64;
+	areaOfEffect=80;
 	soundStart=cannon1;
 	soundHit=xplomed4;
 	tolerance=3000;
@@ -25460,12 +25459,13 @@
 	model=weapon_redrocket.3do;
 	range=1350;
 	accuracy=200;
+	sprayAngle=300;
 	burst=2;
 	burstRate=0.3;
 	reloadTime=8;
 	flightTime=3.75;
-	turnRate=6000;
-	wobble=500;
+	turnRate=0;
+	wobble=0;
 	weaponVelocity=450;
 	cegTag=ROCKETTRAIL2;
 	explosionGenerator=custom:ROCKETBLASTWRAPPER;
@@ -25500,12 +25500,13 @@
 	model=weapon_redrocket4.3do;
 	range=1800;
 	accuracy=120;
+	sprayAngle=200;
 	burst=2;
 	burstRate=0.3;
 	reloadTime=5.9;
 	flightTime=6;
-	turnRate=6000;
-	wobble=500;
+	turnRate=0;
+	wobble=0;
 	weaponVelocity=500;
 	cegTag=ROCKETTRAIL2;
 	explosionGenerator=custom:ROCKETBLASTWRAPPER;
@@ -26001,7 +26002,7 @@
 	rgbColor=0.1 0.2 0.1;
 	rgbColor2=0.2 0.9 0.6;
 	tolerance=5000;
-	explosionGenerator=custom:OPALBEAMBLAST;
+	explosionGenerator=custom:EMERALDBEAMBLAST;
 	minIntensity=1.0; 
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -26131,7 +26132,7 @@
 	rgbColor=0.1 0.2 0.1;
 	rgbColor2=0.2 0.9 0.6;
 	tolerance=5000;
-	explosionGenerator=custom:OPALBEAMBLAST;
+	explosionGenerator=custom:EMERALDBEAMBLAST;
 	minIntensity=1.0; 
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -26519,7 +26520,7 @@
 	rgbColor=0.1 0.2 0.1;
 	rgbColor2=0.2 0.9 0.6;
 	tolerance=5000;
-	explosionGenerator=custom:OPALBEAMBLAST;
+	explosionGenerator=custom:EMERALDBEAMBLAST;
 	minIntensity=1.0; 
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -26610,7 +26611,7 @@
 	rgbColor=0.1 0.2 0.1;
 	rgbColor2=0.2 0.9 0.6;
 	tolerance=5000;
-	explosionGenerator=custom:OPALBEAMBLAST;
+	explosionGenerator=custom:EMERALDBEAMBLAST;
 	minIntensity=1.0; 
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -26655,7 +26656,7 @@
 	rgbColor=0.1 0.2 0.1;
 	rgbColor2=0.2 0.9 0.6;
 	tolerance=5000;
-	explosionGenerator=custom:OPALBEAMBLAST;
+	explosionGenerator=custom:EMERALDBEAMBLAST;
 	minIntensity=1.0; 
 	interceptedByShieldType=1;
 	avoidFeature=0;

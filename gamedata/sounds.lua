@@ -2,10 +2,24 @@
 --- other than that, you can give it any name and access it like before with filenames
 local Sounds = {
 	SoundItems = {
+		Victory = {
+			file = "sounds/victory.wav",
+			in3d = "false",
+			maxconcurrent = 1,
+			gain=1,
+		},
+		Defeat = {
+			file = "sounds/defeat.wav",
+			in3d = "false",
+			maxconcurrent = 1,
+			gain=1,
+		},
 		IncomingChat = {
 			--- always play on the front speaker(s)
-			file = "sounds/beep4.wav",
+			file = "sounds/chatmsg.wav",
 			in3d = "false",
+			maxconcurrent = 2,
+			gain=0.05,
 		},
 		MultiSelect = {
 			--- always play on the front speaker(s)
@@ -14,13 +28,16 @@ local Sounds = {
 			pitchmod = 0.25,
 			gain = 0.8,
 			in3d = "false",
+			maxconcurrent = 2,
 		},
 		MapPoint = {
 			--- respect where the point was set, but don't attuenuate in distace
 			--- also, when moving the camera, don't pitch it
-			file = "sounds/beep6.wav",
+			file = "sounds/mappoint.wav",
 			rolloff = 0,
 			dopplerscale = 0,
+			maxconcurrent = 2,
+			gain=0.3,
 		},
 		ExampleSound = {
 			--- some things you can do with this file

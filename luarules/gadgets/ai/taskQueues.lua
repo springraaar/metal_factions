@@ -225,41 +225,6 @@ function assistNearbyConstructionIfNeeded(self,includeMobiles,includeNonBuilders
 end
 
 
--- check if nearby metal resources are mostly on land or on water
-function checkLandOrWater(self)
-	local result = "land"
-	--TODO : make it work with water maps
-	--[[
-	if self.unitId ~= nil then
-
-		local landSpots = 0
-		local waterSpots = 0
-		local xi,zi = getCellXZIndexesForPosition(self.pos)
-		local mapCell = self.ai.mapHandler.mapCells[xi][zi]
-		if (mapCell.isWater == true or mapCell.isDeepWater == true) then
-			waterSpots = mapCell.metalSpotCount 
-		else
-			landSpots = mapCell.metalSpotCount
-		end
-		waterSpots = waterSpots + mapCell.nearbyWaterMetalSpotCount
-		landSpots = landSpots + mapCell.nearbyLandMetalSpotCount
-
-		if ( waterSpots > landSpots ) then
-			result = "water"
-		end
-	end
-	--]]
-	
-	return result
-end
-
-
--- check if nearby metal resources are mostly on land or on water
-function setWaterMode(self)
-	self.isWaterMode = true
-	return SKIP_THIS_TASK
-end
-
 function windSolarIfNeeded(self)
 	-- check if we need power
 	local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
@@ -299,9 +264,6 @@ function metalExtractorNearbyIfSafe(self)
 	
 	local friendlyExtractorCount = self.ai.unitHandler.friendlyExtractorCount or 0
 	local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
-	if not self.ai.useStrategies and friendlyExtractorCount > 10 and incomeM > 30 and storageM > 500 and currentLevelM >= 0.9 * storageM and incomeM > expenseM then
-		return SKIP_THIS_TASK
-	end
 
 	if self.isAdvBuilder then
 		local sStage = self.ai.currentStrategyStage
@@ -368,56 +330,10 @@ function changeQueueToCommanderBaseBuilderIfNeeded(self)
 	
 		-- if low on resource income or factories, rebuild base	
 		if (incomeM < 20 or incomeE < 200) or (countOwnUnits(self,nil,1,TYPE_PLANT) < 1)  then
-			if (self.ai.useStrategies) then 
-				self:changeQueue(stratCommander)
-			else
-				self:changeQueue(commanderBaseBuilderQueueByFaction[self.unitSide])
-			end
+			self:changeQueue(stratCommander)
 			self.isAttackMode = false
 			-- log("changed to base builder commander!",self.ai) --DEBUG
 		end
-	end
-	return SKIP_THIS_TASK
-end
-
-function changeQueueToRoamingCommanderIfNeeded(self)
-
-	-- TODO roaming commanders are ineffective, make them work
-	--if(self.isUpgradedCommander ) and naturallyRoamingCommanders[self.unitName]) then
-	--	self:changeQueue(commanderRoamingQueueByFaction[self.unitSide])
-	--	self.isAttackMode = true
-	--	-- log("changed to roaming commander!",self.ai)
-	--end
-
-	return SKIP_THIS_TASK
-end
-
-
-function changeQueueToCommanderAttackerIfNeeded(self)
-	local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
-	local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
-
-	-- if has decent resource income and factories, go support the attackers
-	if (incomeM > 22 and incomeE > 250 and countOwnUnits(self,nil,2,TYPE_PLANT) > 0 ) then
-		
-		if(self.isUpgradedCommander) then
-			self:changeQueue(taskQueues[self.unitName])
-		else
-			self:changeQueue(commanderAtkQueueByFaction[self.unitSide])
-		end
-		self.isAttackMode = true
-		--log("changed to attack commander!",self.ai) --DEBUG
-	end
-
-	return SKIP_THIS_TASK
-end
-
-
-function changeQueueToWaterCommanderIfNeeded(self)
-	if(checkLandOrWater(self) == "water") then
-		self:changeQueue(commanderWaterQueueByFaction[self.unitSide])
-
-		self.isWaterMode = true
 	end
 	return SKIP_THIS_TASK
 end
@@ -490,7 +406,7 @@ function buildEnergyIfNeeded(self,unitName)
 
 	local threshold = max(max(1.4 * expenseE + 100, 8 * incomeM + 50),300)
 	if incomeE < threshold then
-		-- log("buildEnergyIfNeeded: income "..incomeE..", usage "..expenseE..", building more energy",self.ai)
+		--log("buildEnergyIfNeeded: income "..incomeE..", usage "..expenseE..", building more energy",self.ai)
 		return unitName
 	else
 		return SKIP_THIS_TASK
@@ -594,75 +510,6 @@ function changeQueueToLightGroundRaidersIfNeeded(self)
 	end
 	
 	return SKIP_THIS_TASK
-end
-
-
-function reclaimNearestMexIfNeeded(self)
-	-- try to find nearest mex
-	local ownUnitIds = self.ai.ownUnitIds
-	local tooClose = 2000
-	local mexUnitId = nil
-	local closestDistance = INFINITY
-	local mexPos = nil
-	local dist = 0
-	
-	for uId,_ in pairs(ownUnitIds) do
-		if setContains(unitTypeSets[TYPE_MEX],UnitDefs[spGetUnitDefID(uId)].name) then
-			dist = INFINITY
-			-- if it's not 100% HP, then don't touch it (unless there's REALLY no better choice)
-			-- this prevents a situation when engineer reclaims a mex that is still being built by someone else
-			mexPos = newPosition(spGetUnitPosition(uId,false,false))
-			local _,_,_,_,progress = spGetUnitHealth(uId)
-			
-			if( (mexPos.y > UNDERWATER_THRESHOLD and self.isWaterMode) or (mexPos.y < UNDERWATER_THRESHOLD and not self.isWaterMode) ) then
-				dist = INFINITY
-			elseif progress < 1 then
-				dist = INFINITY
-			elseif areEnemiesNearby(self, mexPos, tooClose) then
-				dist = INFINITY
-			else
-				dist = distance(self.pos,mexPos) 
-			end
-			
-			if dist < closestDistance then
-				mexUnitId = uId
-				closestDistance = dist
-			end
-		end
-	end
-
-	if mexUnitId ~= nil then
-		-- command the engineer to reclaim the mex
-		spGiveOrderToUnit(self.unitId,CMD.RECLAIM,{mexUnitId},EMPTY_TABLE)
-		-- log("MexUpgradeBehavior: unit "..self.unitName.." goes to reclaim a mex",self.ai)
-		
-		-- we'll build the moho here
-		self.mexPos = mexPos
-		self.reclaimedMex = true
-
-		-- wait until it finishes
-		return {action="wait_idle", frames=1800}
-	end
-	
-	return SKIP_THIS_TASK
-end
-
-function mohoIfMexReclaimed(self)
-	if (self.reclaimedMex) then
-		self.reclaimedMex = false
-		self.noDelay = true
-		local unitName = nil
-		
-		if(self.isWaterMode == true) then
-			unitName = UWMohoMineByFaction[self.unitSide]
-		else
-			unitName = mohoMineByFaction[self.unitSide]
-		end
-		-- log("goes to build a moho mine where the mex was reclaimed : "..unitName,self.ai)
-		return unitName		
-	else
-		return SKIP_THIS_TASK
-	end
 end
 
 function advMetalExtractor(self)
@@ -774,29 +621,6 @@ function staticBriefAreaPatrol(self)
 	return {action="wait", frames=STATIC_AREA_PATROL_FRAMES}
 end
 
-function commanderBriefAreaPatrol(self)
-	--if (countOwnUnitsInRadius(self,nil, self.pos, 600, 4, TYPE_L1_PLANT) < 1 and countOwnUnitsInRadius(self,nil, self.pos, 600, 4, TYPE_L2_PLANT) < 1) then
-		-- do nothing
-		--return SKIP_THIS_TASK
-	--end
-	
-	return briefAreaPatrol(self)
-end
-
-function exitPlant(self)
-	local radius = 100
-	p = newPosition()
-	p.x = self.pos.x
-	p.z = self.pos.z+100
-	p.y = self.pos.y
-	spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},EMPTY_TABLE)
-
-	-- log(self.unitName.." ("..self.pos.x..";"..self.pos.z..") exiting factory to ("..p.x..";"..p.z..")",self.ai) --DEBUG
-
-	-- wait a bit to let the move order finish
-	return {action="wait_idle", frames=200}
-end
-
 
 function moveAtkCenter(self)
 	local radius = MED_RADIUS
@@ -873,7 +697,17 @@ end
 
 function patrolAtkCenter(self)
 	local radius = MED_RADIUS
-	local atkPos = self.ai.unitHandler.unitGroups[UNIT_GROUP_ATTACKERS].centerPos
+	
+	local attackerGroup = self.ai.unitHandler.unitGroups[UNIT_GROUP_ATTACKERS]
+	local atkStrength = attackerGroup.nearCenterCost
+	--local raidersStrength = self.ai.unitHandler.unitGroups[UNIT_GROUP_RAIDERS].nearCenterCost
+	local seaAtkStrength = self.ai.unitHandler.unitGroups[UNIT_GROUP_SEA_ATTACKERS].nearCenterCost
+
+	if seaAtkStrength > atkStrength then
+		attackerGroup = self.ai.unitHandler.unitGroups[UNIT_GROUP_SEA_ATTACKERS]
+	end
+
+	local atkPos = attackerGroup.centerPos
 	local basePos = self.ai.unitHandler.basePos
 	
 	local p = newPosition()
@@ -2229,103 +2063,10 @@ upgradeMixedDronesCombat = {
 
 ------------------------------- AVEN
 
--- choices by threat type : AIR, DEFENSES, NORMAL[, UNDERWATER]
-
-function avenL2KbotChoice(self) return choiceByType(self,"aven_weaver",{"aven_knight","aven_bolter"},{"aven_bolter","aven_shocker","aven_dervish","aven_knight","aven_magnum","aven_raptor"}) end
-function avenL1LightChoice(self) return choiceByType(self,"aven_samson",{"aven_bold","aven_duster","aven_duster"},{"aven_samson","aven_trooper","aven_warrior"}) end
-function avenL2VehicleChoice(self) return choiceByType(self,{"aven_javelin","aven_kodiak"},{"aven_merl","aven_merl","aven_centurion"},{"aven_centurion","aven_kodiak"}) end
-function avenL2AirChoice(self) return choiceByType(self,"aven_falcon",{"aven_gryphon", "aven_talon"},{"aven_gryphon","aven_falcon","aven_icarus"},"aven_albatross") end
-function avenL2HoverChoice(self) return choiceByType(self,"aven_swatter",{"aven_turbulence", "aven_excalibur","aven_excalibur"},{"aven_slider","aven_swatter","aven_skimmer"},"aven_slider_s") end
-function avenL2KbotRadar(self) return buildWithLimitedNumber(self,"aven_marky",1) end
-function avenL2KbotRadarJammer(self) return buildWithLimitedNumber(self,"aven_eraser",1) end
-function avenL2VehicleRadar(self) return buildWithLimitedNumber(self,"aven_seer",1) end
-function avenL2VehicleRadarJammer(self) return buildWithLimitedNumber(self,"aven_jammer",1) end
-function avenL2HoverIntel(self) return buildWithLimitedNumber(self,"aven_perceptor",1) end
-function avenL1ShipChoice(self) return choiceByType(self,{"aven_skeeter","aven_vanguard"},"aven_crusader",{"aven_skeeter","aven_vanguard"},"aven_lurker") end
-function avenL2ShipChoice(self) return choiceByType(self,"aven_fletcher",{"aven_conqueror","aven_emperor"},{"aven_conqueror","aven_piranha","aven_fletcher"},"aven_piranha") end
-function avenScoper(self) return buildWithLimitedNumber(self,"aven_scoper",1) end
-
-avenCommander = {
-	brutalPlant,
-	brutalAirPlant,
-	brutalLightDefense,
-	brutalAADefense,
-	brutalHeavyDefense,
-	moveBaseCenter,
-	checkMorph,
-	windSolarIfNeeded,
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	lvl1PlantIfNeeded,
-	--commanderBriefAreaPatrol,
-	areaLimit_L1HeavyDefense,
-	changeQueueToCommanderAttackerIfNeeded,
-	changeQueueToCommanderBaseBuilderIfNeeded,	
-	changeQueueToWaterCommanderIfNeeded,
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	windSolarIfNeeded,
-	areaLimit_Llt,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	moveBaseCenter,
-	areaLimit_Respawner,
-	scoutPadIfNeeded,
-	areaLimit_Llt,
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	areaLimit_Radar,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	changeQueueToCommanderAttackerIfNeeded
-}
-
-
-avenWaterCommander = {
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	tidalIfNeeded,
-	areaLimit_WaterLlt,
-	tidalIfNeeded,
-	areaLimit_Respawner,
-	areaLimit_WaterLlt,	
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	areaLimit_WaterRadar,		
-	lvl1ShipyardIfNeeded,
-	briefAreaPatrol,
-	areaLimit_Llt,
-	storageIfNeeded,
-	storageIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	areaLimit_Respawner,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	changeQueueToCommanderAttackerIfNeeded,
-	lvl2ShipyardIfNeeded,
-	briefAreaPatrol,
-	upgradeCenterIfNeeded,
-	restoreQueue
-}
 
 avenUCommander = {
 	checkMorph,
 	changeQueueToCommanderBaseBuilderIfNeeded,
-	changeQueueToRoamingCommanderIfNeeded,
 	reclaimNearbyFeaturesIfNecessary,
 	metalExtractorNearbyIfSafe,
 	commanderPatrol,
@@ -2345,49 +2086,6 @@ avenURoamingCommander = {
 }
 
 
-avenLev1Con = {
-	{action = "cleanup", frames = CLEANUP_FRAMES},
-	exitPlant,
-	metalExtractorNearbyIfSafe,
-	windSolarIfNeeded,
-	moveBaseCenter,
-	windSolarIfNeeded,
-	areaLimit_Respawner,
-	scoutPadIfNeeded,
-	lvl2PlantIfNeeded,
-	lvl1PlantIfNeeded,
-	changeQueueToMexBuilderIfNeeded,
-	basePatrolIfNeeded,
-	changeQueueToDefenseBuilderIfNeeded,
-	patrolAtkCenterIfNeeded,
-	assistOtherBuilderIfNeeded,
-	windSolarIfNeeded,
-	metalExtractorNearbyIfSafe,
-	areaLimit_L1HeavyDefense,
-	areaLimit_LightAA,
-	geoIfNeeded,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	upgradeCenterIfNeeded,
-	metalExtractorNearbyIfSafe,
-	briefAreaPatrol,
-	areaLimit_L1ArtilleryDefense,
-	storageIfNeeded,
-	areaLimit_LightAA,
-	lvl2PlantIfNeeded,
-	lvl1PlantIfNeeded,
-	briefAreaPatrol,
-	windSolarIfNeeded,
-	areaLimit_L1HeavyDefense,
-	windSolarIfNeeded,
-	areaLimit_L1ArtilleryDefense,
-	areaLimit_Radar,
-	windSolarIfNeeded,
-	storageIfNeeded,
-	geoIfNeeded,
-	areaLimit_Respawner,	
-	moveBaseCenter
-}
 
 
 avenMexBuilder = {
@@ -2417,30 +2115,6 @@ avenLev1DefenseBuilder = {
 	restoreQueue
 }
 
-
-avenLev2Con = {
-	{action = "cleanup", frames = CLEANUP_FRAMES},
-	exitPlant,
-	brutalFusion,
-	airRepairPadIfNeeded,
-	areaLimit_Respawner,
-	changeQueueToMexUpgraderIfNeeded,
-	changeQueueToAdvancedDefenseBuilderIfNeeded,
-	moveSafePos,
-	fusionIfNeeded,
-	lvl1PlantIfNeeded,
-	lvl2PlantIfNeeded,
-	upgradeCenterIfNeeded,
-	areaLimit_L2HeavyAA,
-	areaLimit_AdvRadar,
-	areaLimit_L2ArtilleryDefense,
-	moveVulnerablePos,
-	areaLimit_L2LongRangeArtillery,
-	airRepairPadIfNeeded,
-	{action = "cleanup", frames = CLEANUP_FRAMES},
-	moveBaseCenter	
-}
-
 avenMexUpgrader = {
 	moveSafePos,
 	advMetalExtractor,
@@ -2458,230 +2132,13 @@ avenLev2DefenseBuilder = {
 	restoreQueue	
 }
 
-avenL1GroundRaiders = {
-	"aven_runner",
-	"aven_kit",
-	"aven_wheeler",
-	"aven_runner",
-	"aven_kit",
-	"aven_wheeler",
-	"aven_runner",
-	restoreQueue	
-}
-
-avenLightPlant = {
-	"aven_runner",
-	"aven_samson",
-	"aven_construction_kbot",
-	{action = "randomness", probability = 0.5, value = "aven_construction_kbot"},
-	changeQueueToLightGroundRaidersIfNeeded,
-	avenL1LightChoice,
-	avenL1LightChoice,
-	avenL1LightChoice,
-	"aven_trooper",
-	"aven_bold",
-	{action = "randomness", probability = 0.25, value = "aven_trooper"},
-	{action = "randomness", probability = 0.25, value = "aven_warrior"},
-	"aven_duster",
-	{action = "wait", frames = 128}
-}
-
-avenAircraftPlant = {
-	"aven_swift",
-	"aven_construction_aircraft",
-	{action = "randomness", probability = 0.3, value = "aven_construction_aircraft"},
-	"aven_swift",
-	"aven_tornado",
-	"aven_swift",
-	"aven_twister",
-	"aven_swift",
-	avenScoper,
-	{action = "wait", frames = 128}
-}
-
-avenShipPlant = {
-	"aven_skeeter",
-	"aven_construction_ship",
-	avenL1ShipChoice,
-	avenL1ShipChoice,
-	avenL1ShipChoice,
-	{action = "wait", frames = 128}
-}
-
-avenAdvAircraftPlant = {
-	"aven_falcon",
-	"aven_adv_construction_aircraft",
-	avenScoper,
-	avenL2AirChoice,
-	avenL2AirChoice,
-	avenL2AirChoice,
-	"aven_falcon",
-	"aven_gryphon",
-	"aven_icarus",
-	zephyrIfNeeded,
-	{action = "wait", frames = 128}
-}
-
-avenAdvKbotLab = {
-	"aven_stalker",
-	{action = "randomness", probability = 0.5, value = "aven_stalker"},
-	{action = "randomness", probability = 0.5, value = "aven_stalker"},
-	"aven_adv_construction_kbot",
-	avenL2KbotRadar,
-	avenL2KbotRadarJammer,
-	"aven_knight",
-	avenL2KbotChoice,
-	avenL2KbotChoice,
-	avenL2KbotChoice,
-	avenL2KbotRadar,
-	avenL2KbotRadarJammer,
-	"aven_bolter",
-	"aven_weaver",
-	"aven_sniper",
-	{action = "wait", frames = 128}
-}
-
-avenAdvVehiclePlant = {
-	"aven_racer",
-	{action = "randomness", probability = 0.5, value = "aven_racer"},
-	{action = "randomness", probability = 0.5, value = "aven_racer"},
-	"aven_javelin",
-	"aven_adv_construction_vehicle",
-	avenL2VehicleRadar,
-	avenL2VehicleRadarJammer,
-	"aven_kodiak",
-	avenL2VehicleChoice,
-	avenL2VehicleChoice,
-	avenL2VehicleChoice,
-	avenL2VehicleRadar,
-	avenL2VehicleRadarJammer,
-	"aven_centurion",
-	"aven_merl",	
-	"aven_penetrator",
-	{action = "wait", frames = 128}
-}
-
-
-avenAdvShipPlant = {
-	"aven_piranha",
-	"aven_adv_construction_sub",
-	avenL2ShipChoice,
-	avenL2ShipChoice,
-	avenL2ShipChoice,
-	{action = "wait", frames = 128}
-}
-
-
-avenHovercraftPlant = {
-	"aven_skimmer",
-	"aven_construction_hovercraft",
-	"aven_swatter",
-	avenL2HoverIntel,
-	avenL2HoverChoice,
-	avenL2HoverChoice,
-	avenL2HoverChoice,
-	"aven_slider",
-	"aven_excalibur",
-	avenL2HoverIntel,
-	{action = "randomness", probability = 0.5, value = "aven_turbulence"},
-	{action = "randomness", probability = 0.3, value = "aven_tsunami"},
-	{action = "wait", frames = 128}
-}
 
 ------------------------------- GEAR
 
--- choices by threat type : AIR, DEFENSES, NORMAL[, UNDERWATER]
-
-function gearL2KbotChoice(self) return choiceByType(self,{"gear_titan","gear_barrel"},{"gear_big_bob","gear_moe","gear_moe","gear_lesser_luminator"},{"gear_big_bob","gear_pyro","gear_moe","gear_psycho","gear_titan","gear_barrel"}) end
-function gearL1LightChoice(self) return choiceByType(self,"gear_crasher",{"gear_assaulter","gear_thud","gear_thud"},{"gear_crasher","gear_kano","gear_box","gear_instigator","gear_pinion"}) end
-function gearL2VehicleChoice(self) return choiceByType(self,"gear_marauder",{"gear_mobile_artillery","gear_reaper","gear_eruptor"},{"gear_reaper","gear_marauder","gear_rhino","gear_flareon"}) end
-function gearL2AirChoice(self) return choiceByType(self,"gear_vector",{"gear_stratos","gear_firestorm"},{"gear_vector","gear_stratos","gear_firestorm"},"gear_whirlpool") end
-function gearL2KbotRadar(self) return buildWithLimitedNumber(self,"gear_voyeur",1) end
-function gearL2KbotRadarJammer(self) return buildWithLimitedNumber(self,"gear_spectre",1) end
-function gearL2VehicleRadar(self) return buildWithLimitedNumber(self,"gear_informer",1) end
-function gearL2VehicleRadarJammer(self) return buildWithLimitedNumber(self,"gear_deleter",1) end
-function gearL1ShipChoice(self) return choiceByType(self,{"gear_searcher","gear_viking"},"gear_enforcer",{"gear_searcher","gear_viking"},"gear_snake") end
-function gearL2ShipChoice(self) return choiceByType(self,"gear_shredder",{"gear_executioner","gear_edge"},{"gear_executioner","gear_noser"},"gear_noser") end
-function gearL2HydrobotChoice(self) return choiceByType(self,{"gear_hopper","gear_stilts"},{"gear_caliber","gear_rexapod"},{"gear_salamander","gear_metalhead","gear_caliber","gear_stilts"},"gear_marooner") end
-function gearScoper(self) return buildWithLimitedNumber(self,"gear_zoomer",1) end
-
-gearCommander = {
-	brutalPlant,
-	brutalAirPlant,	
-	brutalLightDefense,
-	brutalAADefense,
-	brutalHeavyDefense,
-	moveBaseCenter,
-	checkMorph,
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	lvl1PlantIfNeeded,
-	--commanderBriefAreaPatrol,
-	areaLimit_L1HeavyDefense,	
-	changeQueueToCommanderAttackerIfNeeded,
-	changeQueueToCommanderBaseBuilderIfNeeded,
-	changeQueueToWaterCommanderIfNeeded,	
-	windSolarIfNeeded,
-	areaLimit_Llt,
-	windSolarIfNeeded,
-	windSolarIfNeeded,	
-	windSolarIfNeeded,	
-	moveBaseCenter,
-	areaLimit_Respawner,
-	scoutPadIfNeeded,
-	areaLimit_Llt,
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	areaLimit_Radar,		
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	changeQueueToCommanderAttackerIfNeeded
-}
-
-
-gearWaterCommander = {
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	tidalIfNeeded,
-	areaLimit_WaterLlt,
-	tidalIfNeeded,
-	areaLimit_Respawner,	
-	areaLimit_WaterLlt,	
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	areaLimit_WaterRadar,		
-	lvl1ShipyardIfNeeded,
-	briefAreaPatrol,
-	areaLimit_Llt,
-	storageIfNeeded,
-	storageIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	areaLimit_Respawner,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	changeQueueToCommanderAttackerIfNeeded,
-	lvl2ShipyardIfNeeded,
-	briefAreaPatrol,
-	upgradeCenterIfNeeded,
-	restoreQueue
-}
 
 gearUCommander = {
 	checkMorph,
 	changeQueueToCommanderBaseBuilderIfNeeded,
-	changeQueueToRoamingCommanderIfNeeded,
 	reclaimNearbyFeaturesIfNecessary,
 	metalExtractorNearbyIfSafe,
 	commanderPatrol,
@@ -2698,52 +2155,6 @@ gearURoamingCommander = {
 	areaLimit_LightAA,
 	areaLimit_Radar,
 	commanderRoam
-}
-
-
-gearLev1Con = {
-	{action = "cleanup", frames = CLEANUP_FRAMES},
-	exitPlant,
-	metalExtractorNearbyIfSafe,
-	windSolarIfNeeded,
-	moveBaseCenter,
-	windSolarIfNeeded,
-	areaLimit_Respawner,	
-	scoutPadIfNeeded,
-	lvl2PlantIfNeeded,
-	lvl1PlantIfNeeded,
-	changeQueueToMexBuilderIfNeeded,
-	basePatrolIfNeeded,
-	changeQueueToDefenseBuilderIfNeeded,
-	patrolAtkCenterIfNeeded,
-	assistOtherBuilderIfNeeded,
-	windSolarIfNeeded,
-	metalExtractorNearbyIfSafe,
-	areaLimit_L1HeavyDefense,
-	areaLimit_LightAA,
-	geoIfNeeded,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	upgradeCenterIfNeeded,
-	metalExtractorNearbyIfSafe,
-	briefAreaPatrol,
-	areaLimit_L1ArtilleryDefense,
-	storageIfNeeded,
-	areaLimit_LightAA,
-	lvl2PlantIfNeeded,
-	lvl1PlantIfNeeded,
-	briefAreaPatrol,
-	windSolarIfNeeded,
-	areaLimit_L1HeavyDefense,
-	windSolarIfNeeded,
-	areaLimit_L1ArtilleryDefense,
-	areaLimit_Radar,
-	geoIfNeeded,
-	windSolarIfNeeded,
-	storageIfNeeded,
-	areaLimit_Respawner,	
-	moveBaseCenter
 }
 
 
@@ -2776,29 +2187,6 @@ gearLev1DefenseBuilder = {
 }
 
 
-gearLev2Con = {
-	{action = "cleanup", frames = CLEANUP_FRAMES},
-	exitPlant,
-	brutalFusion,
-	airRepairPadIfNeeded,
-	areaLimit_Respawner,
-	changeQueueToMexUpgraderIfNeeded,
-	changeQueueToAdvancedDefenseBuilderIfNeeded,
-	moveSafePos,
-	fusionIfNeeded,
-	lvl1PlantIfNeeded,
-	lvl2PlantIfNeeded,
-	upgradeCenterIfNeeded,
-	areaLimit_L2HeavyAA,
-	areaLimit_AdvRadar,
-	areaLimit_L2ArtilleryDefense,
-	moveVulnerablePos,
-	areaLimit_L2LongRangeArtillery,
-	airRepairPadIfNeeded,
-	{action = "cleanup", frames = CLEANUP_FRAMES},
-	moveBaseCenter
-}
-
 gearMexUpgrader = {
 	moveSafePos,
 	advMetalExtractor,
@@ -2817,226 +2205,13 @@ gearLev2DefenseBuilder = {
 	restoreQueue	
 }
 
-gearL1GroundRaiders = {
-	"gear_harasser",
-	{action = "randomness", probability = 0.5, value = "gear_igniter"},
-	{action = "randomness", probability = 0.5, value = "gear_igniter"},
-	"gear_harasser",
-	"gear_igniter",
-	"gear_harasser",
-	"gear_harasser",
-	restoreQueue	
-}
-
-gearLightPlant = {
-	"gear_harasser",
-	"gear_construction_kbot",
-	{action = "randomness", probability = 0.5, value = "gear_construction_kbot"},
-	"gear_pinion",
-	changeQueueToLightGroundRaidersIfNeeded,
-	gearL1LightChoice,
-	gearL1LightChoice,
-	gearL1LightChoice,
-	"gear_instigator",
-	"gear_assaulter",	
-	"gear_kano",
-	"gear_canister",
-	{action = "wait", frames = 128}
-}
-
-gearAircraftPlant = {
-	"gear_dash",
-	"gear_construction_aircraft",
-	{action = "randomness", probability = 0.3, value = "gear_construction_aircraft"},	
-	"gear_dash",
-	"gear_zipper",
-	"gear_dash",
-	"gear_knocker",
-	"gear_dash",
-	gearScoper,
-	{action = "wait", frames = 128}
-}
-
-gearShipPlant = {
-	"gear_searcher",
-	"gear_construction_ship",
-	gearL1ShipChoice,
-	gearL1ShipChoice,
-	gearL1ShipChoice,
-	{action = "wait", frames = 128}
-}
-
-gearAdvAircraftPlant = {
-	"gear_vector",
-	"gear_adv_construction_aircraft",
-	gearScoper,
-	gearL2AirChoice,
-	gearL2AirChoice,
-	gearL2AirChoice,
-	"gear_vector",
-	"gear_firestorm",
-	"gear_stratos",
-	{action = "wait", frames = 128}
-}
-
-gearAdvKbotLab = {
-	"gear_psycho",
-	{action = "randomness", probability = 0.5, value = "gear_psycho"},
-	{action = "randomness", probability = 0.5, value = "gear_psycho"},
-	gearL2KbotRadar,
-	gearL2KbotRadarJammer,
-	"gear_moe",
-	"gear_adv_construction_kbot",
-	"gear_cube",
-	gearL2KbotChoice,
-	gearL2KbotChoice,
-	gearL2KbotChoice,
-	"gear_moe",
-	"gear_big_bob",	
-	gearL2KbotRadar,
-	gearL2KbotRadarJammer,
-	"gear_titan",
-	"gear_lesser_luminator",
-	{action = "randomness", probability = 0.1, value = "gear_luminator"},
-	{action = "wait", frames = 128}
-}
-
-gearAdvVehiclePlant = {
-	"gear_marauder",
-	"gear_adv_construction_vehicle",
-	"gear_igniter",
-	gearL2VehicleRadar,
-	gearL2VehicleRadarJammer,
-	gearL2VehicleChoice,
-	gearL2VehicleChoice,
-	gearL2VehicleChoice,
-	"gear_reaper",
-	"gear_mobile_artillery",	
-	gearL2VehicleRadar,
-	gearL2VehicleRadarJammer,
-	"gear_eruptor",
-	"gear_tremor",	
-	{action = "randomness", probability = 0.2, value = "gear_might"},
-	{action = "wait", frames = 128}
-}
-
-
-gearAdvShipPlant = {
-	"gear_noser",
-	"gear_adv_construction_sub",
-	gearL2ShipChoice,
-	gearL2ShipChoice,
-	gearL2ShipChoice,
-	{action = "wait", frames = 128}
-}
-
-gearHydrobotPlant = {
-	"gear_salamander",
-	"gear_adv_construction_hydrobot",
-	gearL2HydrobotChoice,
-	gearL2HydrobotChoice,
-	gearL2HydrobotChoice,
-	{action = "wait", frames = 128}
-}
 
 ------------------------------- CLAW
 
--- choices by threat type : AIR, DEFENSES, NORMAL[, UNDERWATER]
-
-function clawL1LandChoice(self) return choiceByType(self,"claw_jester",{"claw_grunt","claw_piston","claw_roller"},{"claw_grunt","claw_boar","claw_piston","claw_roller","claw_ringo"}) end
-function clawL2KbotChoice(self) return choiceByType(self,"claw_bishop",{"claw_shrieker","claw_brute","claw_crawler"},{"claw_centaur","claw_brute"}) end
-function clawL2VehicleChoice(self) return choiceByType(self,"claw_ravager",{"claw_pounder","claw_pounder","claw_armadon"},{"claw_halberd","claw_ravager","claw_mega","claw_dynamo"}) end
-function clawL2AirChoice(self) return choiceByType(self,"claw_x","claw_blizzard",{"claw_x","claw_blizzard"},"claw_trident") end
-function clawL2SpinbotChoice(self) return choiceByType(self,{"claw_dizzy","claw_tempest"},"claw_gyro",{"claw_mace","claw_predator","claw_gyro","claw_dizzy"}) end
-function clawL2KbotRadar(self) return buildWithLimitedNumber(self,"claw_revealer",1) end
-function clawL2KbotRadarJammer(self) return buildWithLimitedNumber(self,"claw_shade",1) end
-function clawL2VehicleRadar(self) return buildWithLimitedNumber(self,"claw_seer",1) end
-function clawL2VehicleRadarJammer(self) return buildWithLimitedNumber(self,"claw_jammer",1) end
-function clawL1ShipChoice(self) return choiceByType(self,{"claw_speeder","claw_striker"},"claw_sword",{"claw_speeder","claw_striker"},"claw_spine") end
-function clawL2ShipChoice(self) return choiceByType(self,"claw_predator",{"claw_maul","claw_wrecker"},{"claw_drakkar","claw_monster"},"claw_monster") end
-function clawL2SpinbotRadar(self) return buildWithLimitedNumber(self,"claw_haze",1) end
-function clawScoper(self) return buildWithLimitedNumber(self,"claw_lensor",1) end
-
-clawCommander = {
-	brutalPlant,
-	brutalAirPlant,	
-	brutalLightDefense,
-	brutalAADefense,
-	brutalHeavyDefense,
-	moveBaseCenter,
-	checkMorph,
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	lvl1PlantIfNeeded,
-	--commanderBriefAreaPatrol,
-	areaLimit_MediumAA,
-	--areaLimit_MediumAA,
-	changeQueueToCommanderAttackerIfNeeded,
-	changeQueueToCommanderBaseBuilderIfNeeded,
-	changeQueueToWaterCommanderIfNeeded,
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	windSolarIfNeeded,
-	areaLimit_Llt,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	moveBaseCenter,
-	areaLimit_Respawner,
-	scoutPadIfNeeded,
-	areaLimit_Llt,
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	areaLimit_Radar,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	changeQueueToCommanderAttackerIfNeeded
-}
-
-
-clawWaterCommander = {
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	tidalIfNeeded,
-	areaLimit_WaterLlt,
-	tidalIfNeeded,
-	areaLimit_Respawner,	
-	areaLimit_WaterLlt,	
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	areaLimit_WaterRadar,		
-	lvl1ShipyardIfNeeded,
-	briefAreaPatrol,
-	areaLimit_WaterLlt,
-	storageIfNeeded,
-	storageIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	areaLimit_Respawner,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	changeQueueToCommanderAttackerIfNeeded,
-	lvl2ShipyardIfNeeded,
-	briefAreaPatrol,
-	upgradeCenterIfNeeded,
-	restoreQueue
-}
 
 clawUCommander = {
 	checkMorph,
 	changeQueueToCommanderBaseBuilderIfNeeded,
-	changeQueueToRoamingCommanderIfNeeded,
 	reclaimNearbyFeaturesIfNecessary,
 	metalExtractorNearbyIfSafe,
 	commanderPatrol,
@@ -3055,51 +2230,6 @@ clawURoamingCommander = {
 	areaLimit_MediumAA,
 	areaLimit_Radar,
 	commanderRoam
-}
-
-clawLev1Con = {
-	{action = "cleanup", frames = CLEANUP_FRAMES},
-	exitPlant,
-	metalExtractorNearbyIfSafe,
-	windSolarIfNeeded,
-	moveBaseCenter,
-	windSolarIfNeeded,
-	areaLimit_Respawner,
-	scoutPadIfNeeded,
-	lvl2PlantIfNeeded,
-	lvl1PlantIfNeeded,
-	changeQueueToMexBuilderIfNeeded,
-	basePatrolIfNeeded,
-	changeQueueToDefenseBuilderIfNeeded,
-	patrolAtkCenterIfNeeded,
-	assistOtherBuilderIfNeeded,
-	windSolarIfNeeded,
-	metalExtractorNearbyIfSafe,
-	areaLimit_L1HeavyDefense,
-	areaLimit_MediumAA,
-	geoIfNeeded,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	windSolarIfNeeded,
-	upgradeCenterIfNeeded,
-	metalExtractorNearbyIfSafe,
-	briefAreaPatrol,
-	areaLimit_L1ArtilleryDefense,
-	storageIfNeeded,
-	areaLimit_MediumAA,
-	lvl2PlantIfNeeded,
-	lvl1PlantIfNeeded,
-	briefAreaPatrol,
-	windSolarIfNeeded,
-	areaLimit_L1HeavyDefense,
-	windSolarIfNeeded,
-	areaLimit_L1ArtilleryDefense,
-	areaLimit_Radar,
-	geoIfNeeded,
-	windSolarIfNeeded,
-	storageIfNeeded,
-	areaLimit_Respawner,	
-	moveBaseCenter
 }
 
 
@@ -3133,29 +2263,6 @@ clawLev1DefenseBuilder = {
 }
 
 
-clawLev2Con = {
-	{action = "cleanup", frames = CLEANUP_FRAMES},
-	exitPlant,
-	brutalFusion,
-	airRepairPadIfNeeded,
-	areaLimit_Respawner,
-	changeQueueToMexUpgraderIfNeeded,
-	changeQueueToAdvancedDefenseBuilderIfNeeded,
-	moveSafePos,
-	fusionIfNeeded,
-	lvl1PlantIfNeeded,
-	lvl2PlantIfNeeded,
-	upgradeCenterIfNeeded,
-	areaLimit_L2HeavyAA,
-	areaLimit_AdvRadar,	
-	areaLimit_L2ArtilleryDefense,
-	moveVulnerablePos,
-	areaLimit_L2LongRangeArtillery,
-	airRepairPadIfNeeded,
-	{action = "cleanup", frames = CLEANUP_FRAMES},
-	moveBaseCenter
-}
-
 clawMexUpgrader = {
 	moveSafePos,
 	advMetalExtractor,
@@ -3174,222 +2281,11 @@ clawLev2DefenseBuilder = {
 	restoreQueue	
 }
 
-clawL1GroundRaiders = {
-	"claw_knife",
-	{action = "randomness", probability = 0.5, value = "claw_ringo"},
-	{action = "randomness", probability = 0.5, value = "claw_ringo"},
-	"claw_knife",
-	"claw_ringo",
-	"claw_knife",
-	restoreQueue	
-}
-
-clawPlant = {
-	"claw_knife",
-	"claw_jester",
-	"claw_construction_kbot",
-	{action = "randomness", probability = 0.5, value = "claw_construction_kbot"},
-	changeQueueToLightGroundRaidersIfNeeded,
-	clawL1LandChoice,
-	clawL1LandChoice,
-	clawL1LandChoice,
-	"claw_roller",
-	"claw_grunt",
-	"claw_boar",
-	{action = "wait", frames = 128}
-}
-
-
-clawAircraftPlant = {
-	"claw_hornet",
-	"claw_construction_aircraft",
-	{action = "randomness", probability = 0.3, value = "claw_construction_aircraft"},
-	"claw_hornet",
-	"claw_boomer",
-	"claw_hornet",
-	"claw_boomer_m",
-	"claw_hornet",
-	clawScoper,
-	{action = "wait", frames = 128}
-}
-
-clawShipPlant = {
-	"claw_speeder",
-	"claw_construction_ship",
-	clawL1ShipChoice,
-	clawL1ShipChoice,
-	clawL1ShipChoice,
-	{action = "wait", frames = 128}
-}
-
-clawAdvAircraftPlant = {
-	"claw_x",
-	"claw_adv_construction_aircraft",
-	clawScoper,
-	clawL2AirChoice,
-	clawL2AirChoice,
-	clawL2AirChoice,
-	"claw_x",
-	"claw_blizzard",
-	"claw_x",
-	{action = "randomness", probability = 0.3, value = "claw_havoc"},
-	{action = "wait", frames = 128}
-}
-
-clawAdvKbotLab = {
-	"claw_centaur",
-	{action = "randomness", probability = 0.5, value = "claw_centaur"},
-	{action = "randomness", probability = 0.5, value = "claw_centaur"},
-	"claw_adv_construction_kbot",
-	clawL2KbotRadar,
-	clawL2KbotRadarJammer,
-	"claw_brute",
-	clawL2KbotChoice,
-	clawL2KbotChoice,
-	clawL2KbotChoice,
-	"claw_nucleus",
-	"claw_bishop",	
-	clawL2KbotRadar,
-	clawL2KbotRadarJammer,
-	"claw_shrieker",
-	{action = "wait", frames = 128}
-}
-
-clawAdvVehiclePlant = {
-	"claw_ravager",
-	"claw_adv_construction_vehicle",
-	clawL2VehicleRadar,
-	clawL2VehicleRadarJammer,
-	clawL2VehicleChoice,
-	clawL2VehicleChoice,
-	clawL2VehicleChoice,
-	"claw_halberd",
-	"claw_pounder",
-	{action = "randomness", probability = 0.5, value = "claw_dynamo"},	
-	clawL2VehicleRadar,
-	clawL2VehicleRadarJammer,
-	{action = "randomness", probability = 0.3, value = "claw_pike"},
-	"claw_armadon",	
-	{action = "wait", frames = 128}
-}
-
-clawAdvShipPlant = {
-	"claw_monster",
-	"claw_adv_construction_ship",
-	clawL2ShipChoice,
-	clawL2ShipChoice,
-	clawL2ShipChoice,
-	{action = "wait", frames = 128}
-}
-
-clawSpinbotPlant = {
-	"claw_dizzy",
-	"claw_adv_construction_spinbot",
-	clawL2SpinbotRadar,
-	"claw_gyro",
-	clawL2SpinbotChoice,
-	clawL2SpinbotChoice,
-	clawL2SpinbotChoice,
-	"claw_gyro",
-	clawL2SpinbotRadar,
-	"claw_tempest",
-	{action = "randomness", probability = 0.3, value = "claw_tempest"},
-	{action = "wait", frames = 128}
-}
-
-
 ------------------------------- SPHERE
-
-
--- choices by threat type : AIR, DEFENSES, NORMAL[, UNDERWATER]
-
-function sphereL1LandChoice(self) return choiceByType(self,{"sphere_needles","sphere_needles","sphere_slicer"},"sphere_rock",{"sphere_bit","sphere_rock","sphere_gaunt","sphere_double"}) end
-function sphereL2KbotChoice(self) return choiceByType(self,{"sphere_chub","sphere_chub","sphere_hermit"},{"sphere_ark","sphere_ark","sphere_golem"},{"sphere_hanz","sphere_chub"}) end
-function sphereL2VehicleChoice(self) return choiceByType(self,"sphere_pulsar",{"sphere_slammer","sphere_slammer","sphere_bulk"},{"sphere_pulsar","sphere_trax","sphere_bulk"}) end
-function sphereL2AirChoice(self) return choiceByType(self,"sphere_twilight","sphere_meteor",{"sphere_meteor","sphere_spitfire","sphere_twilight"},"sphere_neptune") end
-function sphereL2SphereChoice(self) return choiceByType(self,"sphere_aster","sphere_gazer",{"sphere_nimbus","sphere_gazer"}) end
-function sphereL2KbotRadar(self) return buildWithLimitedNumber(self,"sphere_sensor",1) end
-function sphereL2KbotRadarJammer(self) return buildWithLimitedNumber(self,"sphere_rain",2) end
-function sphereL2VehicleRadar(self) return buildWithLimitedNumber(self,"sphere_scanner",1) end
-function sphereL2VehicleRadarJammer(self) return buildWithLimitedNumber(self,"sphere_concealer",2) end
-function sphereL1ShipChoice(self) return choiceByType(self,"sphere_reacher","sphere_endeavour",{"sphere_skiff","sphere_endeavour"},"sphere_carp") end
-function sphereL2ShipChoice(self) return choiceByType(self,"sphere_stalwart",{"sphere_stalwart"},{"sphere_helix","sphere_pluto"},"sphere_pluto") end
-function sphereL2SphereIntelligence(self) return buildWithLimitedNumber(self,"sphere_orb",1) end
-function sphereScoper(self) return buildWithLimitedNumber(self,"sphere_resolver",1) end
-
-
-sphereCommander = {
-	brutalPlant,
-	brutalAirPlant,	
-	brutalLightDefense,
-	brutalAADefense,
-	brutalHeavyDefense,
-	moveBaseCenter,
-	checkMorph,
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,	
-	roughFusionIfNeeded,
-	lvl1PlantIfNeeded,
-	--commanderBriefAreaPatrol,
-	areaLimit_MediumAA,
-	changeQueueToCommanderAttackerIfNeeded,
-	changeQueueToCommanderBaseBuilderIfNeeded,
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	areaLimit_Llt,
-	moveBaseCenter,
-	roughFusionIfNeeded,
-	areaLimit_Respawner,
-	scoutPadIfNeeded,
-	areaLimit_Llt,
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	areaLimit_Radar,		
-	changeQueueToWaterCommanderIfNeeded,
-	changeQueueToCommanderAttackerIfNeeded
-}
-
-
-sphereWaterCommander = {
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	tidalIfNeeded,
-	areaLimit_WaterLlt,
-	tidalIfNeeded,
-	areaLimit_Respawner,	
-	areaLimit_WaterLlt,	
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	areaLimit_WaterRadar,		
-	lvl1ShipyardIfNeeded,
-	briefAreaPatrol,
-	areaLimit_WaterLlt,
-	storageIfNeeded,
-	storageIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	areaLimit_Respawner,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	tidalIfNeeded,
-	changeQueueToCommanderAttackerIfNeeded,
-	lvl2ShipyardIfNeeded,
-	briefAreaPatrol,
-	upgradeCenterIfNeeded,
-	restoreQueue
-}
 
 sphereUCommander = {
 	checkMorph,
 	changeQueueToCommanderBaseBuilderIfNeeded,
-	changeQueueToRoamingCommanderIfNeeded,
 	reclaimNearbyFeaturesIfNecessary,
 	metalExtractorNearbyIfSafe,
 	commanderPatrol,
@@ -3408,43 +2304,6 @@ sphereURoamingCommander = {
 	commanderRoam
 }
 
-sphereLev1Con = {
-	{action = "cleanup", frames = CLEANUP_FRAMES},
-	exitPlant,
-	metalExtractorNearbyIfSafe,
-	moveBaseCenter,
-	areaLimit_Respawner,
-	scoutPadIfNeeded,
-	roughFusionIfNeeded,	
-	lvl2PlantIfNeeded,
-	lvl1PlantIfNeeded,
-	changeQueueToMexBuilderIfNeeded,
-	basePatrolIfNeeded,
-	changeQueueToDefenseBuilderIfNeeded,
-	patrolAtkCenterIfNeeded,
-	assistOtherBuilderIfNeeded,
-	areaLimit_Radar,	
-	metalExtractorNearbyIfSafe,
-	metalExtractorNearbyIfSafe,
-	geoIfNeeded,
-	moveSafePos,
-	roughFusionIfNeeded,
-	roughFusionIfNeeded,
-	storageIfNeeded,
-	storageIfNeeded,
-	areaLimit_MediumAA,	
-	moveBaseCenter,
-	areaLimit_L1ArtilleryDefense,
-	upgradeCenterIfNeeded,
-	areaLimit_Respawner,
-	areaLimit_L1HeavyDefense,
-	areaLimit_MediumAA,
-	areaLimit_L1ArtilleryDefense,
-	geoIfNeeded,
-	areaLimit_MediumAA,
-	briefAreaPatrol,
-	roughFusionIfNeeded,
-}
 
 sphereMexBuilder = {
 	"sphere_metal_extractor",
@@ -3475,30 +2334,6 @@ sphereLev1DefenseBuilder = {
 }
 
 
-sphereLev2Con = {
-	{action = "cleanup", frames = CLEANUP_FRAMES},
-	exitPlant,
-	brutalFusion,
-	airRepairPadIfNeeded,
-	areaLimit_Respawner,
-	changeQueueToMexUpgraderIfNeeded,
-	changeQueueToAdvancedDefenseBuilderIfNeeded,
-	moveSafePos,
-	fusionIfNeeded,
-	lvl1PlantIfNeeded,
-	lvl2PlantIfNeeded,
-	upgradeCenterIfNeeded,
-	areaLimit_L2HeavyAA,
-	areaLimit_AdvRadar,	
---	areaLimit_L2ArtilleryDefense,
-	moveVulnerablePos,
-	areaLimit_L2HeavyAA,
-	areaLimit_L2LongRangeArtillery,
-	airRepairPadIfNeeded,
-	{action = "cleanup", frames = CLEANUP_FRAMES},
-	moveBaseCenter	
-}
-
 sphereMexUpgrader = {
 	moveSafePos,
 	advMetalExtractor,
@@ -3517,133 +2352,10 @@ sphereLev2DefenseBuilder = {
 	restoreQueue	
 }
 
-sphereL1GroundRaiders = {
-	"sphere_trike",
-	{action = "randomness", probability = 0.5, value = "sphere_double"},
-	{action = "randomness", probability = 0.5, value = "sphere_double"},
-	{action = "randomness", probability = 0.5, value = "sphere_double"},
-	"sphere_trike",
-	"sphere_double",
-	"sphere_trike",
-	restoreQueue	
-}
-
-spherePlant = {
-	"sphere_trike",
-	"sphere_needles",
-	"sphere_construction_vehicle",
-	{action = "randomness", probability = 0.5, value = "sphere_construction_vehicle"},
-	changeQueueToLightGroundRaidersIfNeeded,
-	{action = "randomness", probability = 0.5, value = "sphere_double"},
-	sphereL1LandChoice,
-	sphereL1LandChoice,
-	sphereL1LandChoice,
-	"sphere_slicer",
-	"sphere_bit",
-	"sphere_gaunt",
-	{action = "wait", frames = 128}
-}
-
-
-sphereAircraftPlant = {
-	"sphere_moth",
-	"sphere_construction_aircraft",
-	{action = "randomness", probability = 0.5, value = "sphere_construction_aircraft"},	
-	"sphere_moth",
-	"sphere_moth",
-	"sphere_moth",
-	"sphere_moth",
-	"sphere_tycho",
-	sphereScoper,
-	{action = "wait", frames = 128}
-}
-
-sphereShipPlant = {
-	"sphere_skiff",
-	"sphere_construction_ship",
-	sphereL1ShipChoice,
-	sphereL1ShipChoice,
-	sphereL1ShipChoice,
-	{action = "wait", frames = 128}
-}
-
-sphereAdvAircraftPlant = {
-	"sphere_spitfire",
-	"sphere_adv_construction_aircraft",
-	sphereScoper,
-	sphereL2AirChoice,
-	sphereL2AirChoice,
-	sphereL2AirChoice,
-	"sphere_twilight",
-	"sphere_meteor",
-	{action = "wait", frames = 128}
-}
-
-sphereAdvKbotLab = {
-	"sphere_hanz",
-	"sphere_adv_construction_kbot",
-	sphereL2KbotRadar,
-	sphereL2KbotRadarJammer,
-	"sphere_chub",
-	sphereL2KbotChoice,
-	sphereL2KbotChoice,
-	sphereL2KbotChoice,
-	"sphere_charger",
-	sphereL2KbotRadar,
-	sphereL2KbotRadarJammer,
-	"sphere_golem",	
-	"sphere_hermit",
-	{action = "wait", frames = 128}
-}
-
-sphereAdvVehiclePlant = {
-	"sphere_quad",
-	{action = "randomness", probability = 0.5, value = "sphere_quad"},
-	{action = "randomness", probability = 0.5, value = "sphere_quad"},
-	"sphere_trax",
-	"sphere_adv_construction_vehicle",
-	sphereL2VehicleRadar,
-	sphereL2VehicleRadarJammer,
-	sphereL2VehicleChoice,
-	sphereL2VehicleChoice,
-	sphereL2VehicleChoice,
-	"sphere_slammer",
-	sphereL2VehicleRadar,
-	sphereL2VehicleRadarJammer,
-	"sphere_bulk",
-	"sphere_shielder",
-	{action = "wait", frames = 128}
-}
-
-sphereSpherePlant = {
-	"sphere_nimbus",
-	"sphere_nimbus",
-	"sphere_construction_sphere",
-	sphereL2SphereIntelligence,
-	sphereL2SphereChoice,
-	sphereL2SphereChoice,
-	sphereL2SphereChoice,
-	"sphere_gazer",
-	sphereL2SphereIntelligence,
-	{action = "randomness", probability = 0.2, value = "sphere_chroma"},
-	{action = "wait", frames = 128}
-}
-
-sphereAdvShipPlant = {
-	"sphere_monster",
-	"sphere_adv_construction_ship",
-	sphereL2ShipChoice,
-	sphereL2ShipChoice,
-	sphereL2ShipChoice,
-	{action = "wait", frames = 128}
-}
-
-
 ------------------------------- unit-queue table
 
 mexUpgraderQueueByFaction = { [side1Name] = avenMexUpgrader, [side2Name] = gearMexUpgrader, [side3Name] = clawMexUpgrader, [side4Name] = sphereMexUpgrader}
 mexBuilderQueueByFaction = { [side1Name] = avenMexBuilder, [side2Name] = gearMexBuilder, [side3Name] = clawMexBuilder, [side4Name] = sphereMexBuilder}
-commanderBaseBuilderQueueByFaction = { [side1Name] = avenCommander, [side2Name] = gearCommander, [side3Name] = clawCommander, [side4Name] = sphereCommander}
 commanderAtkQueueByFaction = { [side1Name] = avenUCommander, [side2Name] = gearUCommander, [side3Name] = clawUCommander, [side4Name] = sphereUCommander}
 commanderRoamingQueueByFaction = { [side1Name] = avenURoamingCommander, [side2Name] = gearURoamingCommander, [side3Name] = clawURoamingCommander, [side4Name] = sphereURoamingCommander}
 commanderWaterQueueByFaction = { [side1Name] = avenWaterCommander, [side2Name] = gearWaterCommander, [side3Name] = clawWaterCommander, [side4Name] = sphereWaterCommander}
@@ -3964,13 +2676,13 @@ function stratMobileBuilderAction(self)
 		minEnergyIncome = targetEnergyIncome
 	end
 	-- metal and energy generation : try to reach min income
-	if (incomeM < minMetalIncome and currentLevelE > 0.5*storageE) then
+	if (incomeM < minMetalIncome and currentLevelE > 0.7*storageE) then
 		action = metalExtractorNearbyIfSafe(self)
 		if action ~= SKIP_THIS_TASK then
 			return action
 		end
 	end	
-	if (incomeE < minEnergyIncome or currentLevelE < 0.5*storageE ) then
+	if (incomeE < minEnergyIncome or currentLevelE < 0.7*storageE ) then
 		action = geoNearbyIfSafe(self)
 		if (action ~= SKIP_THIS_TASK) then
 			return action
@@ -4064,18 +2776,19 @@ function stratMobileBuilderAction(self)
 			return action
 		end
 	end
-
-	-- power nodes
-	--log(spGetGameFrame().." power node check : nextNode="..tostring(self.ai.unitHandler.nextPowerNodeCell),self.ai)
-	if (sStage > 1 and self.ai.unitHandler.nextPowerNodeCell) then
-		return powerNodeByFaction[self.unitSide]
-	end
 	
 	-- set up minimal defense if necessary
 	action = defendNearbyBuildingsIfNeeded(self, 0.1)
 	if action ~= SKIP_THIS_TASK then
 		return action
 	end	
+	
+	if (incomeM > 40 and (not brutalStartDelayActive)) then
+		action = buildWithLimitedNumber(self, comsatByFaction[self.unitSide],min(1 + floor(incomeM/30),6))
+		if action ~= SKIP_THIS_TASK then
+			return action
+		end	
+	end
 	
 	if not focusOnEndGameArmy then
 		-- support buildings
@@ -4106,14 +2819,17 @@ function stratMobileBuilderAction(self)
 				end
 			end
 		end
-		if (incomeM > 50 and (not brutalStartDelayActive)) then
-			action = buildWithLimitedNumber(self, comsatByFaction[self.unitSide],min(1 + floor(incomeM/30),6))
+	
+		-- power nodes
+		--log(spGetGameFrame().." power node check : nextNode="..tostring(self.ai.unitHandler.nextPowerNodeCell),self.ai)
+		if (sStage > 1 and self.ai.unitHandler.nextPowerNodeCell) then
+			action = buildWithLimitedNumber(self, powerNodeByFaction[self.unitSide],min(3 + floor(incomeM/15),20))
 			if action ~= SKIP_THIS_TASK then
 				return action
 			end	
-		end
+		end		
 	end
-
+	
 	-- metal and energy generation : try to reach target income
 	if (incomeM < targetMetalIncome) then
 		if not self.couldNotFindMetalSpot then
@@ -4305,33 +3021,6 @@ stratUpgradeCenter = {
 taskQueues = {
 ------------------- AVEN
 	aven_commander_respawner = respawner,
-	aven_commander = avenCommander,
-	aven_u1commander = avenUCommander,
-	aven_u2commander = avenUCommander,
-	aven_u3commander = avenUCommander,
-	aven_u4commander = avenUCommander,
-	aven_u5commander = avenUCommander,
-	aven_u6commander = avenUCommander,
-	aven_u7commander = avenUCommander,
-	aven_construction_vehicle = avenLev1Con,
-	aven_construction_kbot = avenLev1Con,
-	aven_construction_aircraft = avenLev1Con,
-	aven_construction_ship = avenLev1Con,
-	aven_adv_construction_vehicle = avenLev2Con,
-	aven_adv_construction_kbot = avenLev2Con,
-	aven_construction_hovercraft = avenLev2Con,
-	aven_adv_construction_aircraft = avenLev2Con,	
-	aven_adv_construction_sub = avenLev2Con,
-	aven_nano_tower = staticBuilder,
-	aven_light_plant = avenLightPlant,
-	aven_aircraft_plant = avenAircraftPlant,
-	aven_shipyard = avenShipPlant,
-	aven_adv_kbot_lab = avenAdvKbotLab,
-	aven_adv_vehicle_plant = avenAdvVehiclePlant,
-	aven_adv_aircraft_plant = avenAdvAircraftPlant,
-	aven_hovercraft_platform = avenHovercraftPlant,
-	aven_adv_shipyard = avenAdvShipPlant,
-	aven_upgrade_center = upgradeCenter,
 	aven_scout_pad = scoutPad,
 	aven_marky = atkSupporter,
 	aven_eraser = atkSupporter,
@@ -4353,33 +3042,6 @@ taskQueues = {
 	aven_transport_drone = drone,	
 ------------------- GEAR
 	gear_commander_respawner = respawner,
-	gear_commander = gearCommander,
-	gear_u1commander = gearUCommander,
-	gear_u2commander = gearUCommander,
-	gear_u3commander = gearUCommander,
-	gear_u4commander = gearUCommander,
-	gear_u5commander = gearUCommander,
-	gear_u6commander = gearUCommander,
-	gear_u7commander = gearUCommander,
-	gear_construction_vehicle = gearLev1Con,
-	gear_construction_kbot = gearLev1Con,
-	gear_construction_aircraft = gearLev1Con,
-	gear_construction_ship = gearLev1Con,
-	gear_adv_construction_vehicle = gearLev2Con,
-	gear_adv_construction_kbot = gearLev2Con,
-	gear_adv_construction_aircraft = gearLev2Con,	
-	gear_adv_construction_sub = gearLev2Con,
-	gear_adv_construction_hydrobot = gearLev2Con,
-	gear_nano_tower = staticBuilder,
-	gear_light_plant = gearLightPlant,
-	gear_aircraft_plant = gearAircraftPlant,
-	gear_shipyard = gearShipPlant,
-	gear_adv_kbot_lab = gearAdvKbotLab,
-	gear_adv_vehicle_plant = gearAdvVehiclePlant,
-	gear_adv_aircraft_plant = gearAdvAircraftPlant,
-	gear_adv_shipyard = gearAdvShipPlant,
-	gear_hydrobot_plant = gearHydrobotPlant,
-	gear_upgrade_center = upgradeCenter,
 	gear_scout_pad = scoutPad,
 	gear_voyeur = atkSupporter,
 	gear_spectre = atkSupporter,
@@ -4399,32 +3061,6 @@ taskQueues = {
 	gear_transport_drone = drone,	
 ------------------- CLAW
 	claw_commander_respawner = respawner,
-	claw_commander = clawCommander,
-	claw_u1commander = clawUCommander,
-	claw_u2commander = clawUCommander,
-	claw_u3commander = clawUCommander,
-	claw_u4commander = clawUCommander,
-	claw_u5commander = clawUCommander,
-	claw_u6commander = clawUCommander,
-	claw_u7commander = clawUCommander,
-	claw_construction_kbot = clawLev1Con,
-	claw_construction_aircraft = clawLev1Con,
-	claw_construction_ship = clawLev1Con,
-	claw_adv_construction_vehicle = clawLev2Con,
-	claw_adv_construction_kbot = clawLev2Con,
-	claw_adv_construction_aircraft = clawLev2Con,	
-	claw_adv_construction_spinbot = clawLev2Con,
-	claw_adv_construction_ship = clawLev2Con,
-	claw_nano_tower = staticBuilder,
-	claw_light_plant = clawPlant,
-	claw_aircraft_plant = clawAircraftPlant,
-	claw_shipyard = clawShipPlant,
-	claw_adv_kbot_plant = clawAdvKbotLab,
-	claw_adv_vehicle_plant = clawAdvVehiclePlant,
-	claw_adv_aircraft_plant = clawAdvAircraftPlant,
-	claw_adv_shipyard = clawAdvShipPlant,
-	claw_spinbot_plant = clawSpinbotPlant,
-	claw_upgrade_center = upgradeCenter,
 	claw_scout_pad = scoutPad,
 	claw_revealer = atkSupporter,
 	claw_shade = atkSupporter,
@@ -4444,32 +3080,6 @@ taskQueues = {
 	claw_transport_drone = drone,	
 ------------------- SPHERE
 	sphere_commander_respawner = respawner,
-	sphere_commander = sphereCommander,
-	sphere_u1commander = sphereUCommander,
-	sphere_u2commander = sphereUCommander,
-	sphere_u3commander = sphereUCommander,
-	sphere_u4commander = sphereUCommander,
-	sphere_u5commander = sphereUCommander,
-	sphere_u6commander = sphereUCommander,
-	sphere_u7commander = sphereUCommander,
-	sphere_construction_vehicle = sphereLev1Con,
-	sphere_construction_aircraft = sphereLev1Con,
-	sphere_construction_ship = sphereLev1Con,
-	sphere_adv_construction_vehicle = sphereLev2Con,
-	sphere_adv_construction_kbot = sphereLev2Con,
-	sphere_construction_sphere = atkPatroller,
-	sphere_adv_construction_aircraft = sphereLev2Con,	
-	sphere_adv_construction_sub = sphereLev2Con,
-	sphere_pole = staticBuilder,
-	sphere_light_factory = spherePlant,
-	sphere_aircraft_factory = sphereAircraftPlant,
-	sphere_shipyard = sphereShipPlant,
-	sphere_adv_kbot_factory = sphereAdvKbotLab,
-	sphere_adv_vehicle_factory = sphereAdvVehiclePlant,
-	sphere_adv_aircraft_factory = sphereAdvAircraftPlant,
-	sphere_sphere_factory = sphereSpherePlant,
-	sphere_adv_shipyard = sphereAdvShipPlant,
-	sphere_upgrade_center = upgradeCenter,
 	sphere_scout_pad = scoutPad,
 	sphere_sensor = atkSupporter,
 	sphere_rain = atkSupporter,

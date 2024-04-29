@@ -111,12 +111,11 @@
 	[CustomParams]
 	{
 		builtBy=sphere_scout_pad,sphere_aircraft_factory,sphere_adv_aircraft_factory;
-		evalfactor=0.69;
+		manualCost=1;
 	}
 
-
-	buildCostEnergy=365;//#AUTO#
-	buildCostMetal=73;//#AUTO#
-	buildTime=870;//#AUTO#
+	buildCostEnergy=350;
+	buildCostMetal=70;
+	buildTime=840;
 	mass=30;//#AUTO#
 }

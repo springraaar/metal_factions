@@ -478,6 +478,10 @@ local xpArrSimple = {
 "X"
 }
 
+local VICTORY_SND = "Victory"
+local DEFEAT_SND = "Defeat"
+
+
 local red = "\255"..string.char(171)..string.char(51)..string.char(51)
 local blue = "\255"..string.char(51)..string.char(51)..string.char(151)
 local green = "\255"..string.char(51)..string.char(151)..string.char(51)
@@ -891,8 +895,10 @@ function createAwardsHeader(winnersUndetermined)
 	else
 		if myTeamId >= 0 and victoryStatus and victoryStatus == 1 then
 			endType = 'victory'
+			Spring.PlaySoundFile(VICTORY_SND, 1)
 		elseif myTeamId >= 0 then
 		 	endType = 'defeat'
+		 	Spring.PlaySoundFile(DEFEAT_SND, 1)
 		end
 	end
 	

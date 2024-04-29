@@ -92,7 +92,7 @@ function TaskQueueBehavior:checkPreviousAttempts(uName)
 end
 
 function TaskQueueBehavior:hasQueues()
-	return (taskQueues[self.unitName] ~= nil)
+	return (taskQueues[self.unitName] ~= nil or sTaskQueues[self.unitName] ~= nil)
 end
 
 function TaskQueueBehavior:builderRoleStr()

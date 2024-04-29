@@ -235,6 +235,7 @@ function UnitHandler:Init(ai)
 	self.nukeTargetCell = nil
 	self.beaconAttack = true
 	self.beaconMode = nil --TODO make this work
+	self.beaconOrdersUpdateRequired = false
 	
 	self.brutalPlantDone = false
 	self.brutalAirPlantDone = false	
@@ -593,8 +594,8 @@ end
 
 
 -- order unit behavior entries on the group according to the task set
-function UnitHandler:doTargetting(group)
-	-- log("recruits : "..tostring(#group.recruits),self.ai)
+function UnitHandler:issueOrders(group)
+	-- log("f="..spGetGameFrame().." gId="..group.id.." recruits : "..tostring(#group.recruits),self.ai) --DEBUG
 	local enemyUnitIds = self.ai.enemyUnitIds
 	if enemyUnitIds == nil or tableLength(enemyUnitIds) == 0 then
 		-- log("NO ENEMY UNITS FOUND",self.ai)
@@ -679,7 +680,7 @@ function UnitHandler:doTargetting(group)
 			for i,recruit in ipairs(group.recruits) do
 				-- if target is armed and unit is far from center of atk force, move to center
 				-- else, attack the cell
-				if (not targetDefended) or (not recruit:attackRegroupCenterIfNeeded(group.centerPos, radius)) then
+				if recruit.isFullyBuilt and ((not targetDefended) or (not recruit:attackRegroupCenterIfNeeded(group.centerPos, radius))) then
 					if (not recruit.isSeriouslyDamaged ) then
 						evade = (not allIn) and (not self.isEasyMode) and #group.recruits < 200 and not recruit.canFly
 						if not (evade and recruit:evadeIfNeeded()) then
@@ -698,37 +699,38 @@ function UnitHandler:doTargetting(group)
 		end
 	elseif( task == TASK_RETREAT ) then
 		for i,recruit in ipairs(group.recruits) do
-			if(group.id == UNIT_GROUP_RAIDERS or group.id == UNIT_GROUP_AIR_ATTACKERS ) then
-			
-
-				if (not recruit.isSeriouslyDamaged ) then					
-					-- advance along raiding path
-					recruit:orderToClosestCellAlongPath(group.id == UNIT_GROUP_RAIDERS and self.raiderPath[amphibiousRaiders and PF_UNIT_AMPHIBIOUS or PF_UNIT_LAND] or self.raiderPath[PF_UNIT_AIR], {CMD.FIGHT,CMD.MOVE}, false, true)
+			if recruit.isFullyBuilt then
+				if(group.id == UNIT_GROUP_RAIDERS or group.id == UNIT_GROUP_AIR_ATTACKERS ) then
+					if (not recruit.isSeriouslyDamaged ) then					
+						-- advance along raiding path
+						recruit:orderToClosestCellAlongPath(group.id == UNIT_GROUP_RAIDERS and self.raiderPath[amphibiousRaiders and PF_UNIT_AMPHIBIOUS or PF_UNIT_LAND] or self.raiderPath[PF_UNIT_AIR], {CMD.FIGHT,CMD.MOVE}, false, true)
+					else
+						-- retreat along raiding path
+						recruit:orderToClosestCellAlongPath(group.id == UNIT_GROUP_RAIDERS and self.raiderPath[amphibiousRaiders and PF_UNIT_AMPHIBIOUS or PF_UNIT_LAND] or self.raiderPath[PF_UNIT_AIR], CMD.MOVE, true, true)
+					end
 				else
-					-- retreat along raiding path
-					recruit:orderToClosestCellAlongPath(group.id == UNIT_GROUP_RAIDERS and self.raiderPath[amphibiousRaiders and PF_UNIT_AMPHIBIOUS or PF_UNIT_LAND] or self.raiderPath[PF_UNIT_AIR], CMD.MOVE, true, true)
-				end
-			else
-				if not recruit:attackRegroupCenterIfNeeded(group.centerPos, radius) then
-					recruit:avoidEnemyAndRetreat()
+					if not recruit:attackRegroupCenterIfNeeded(group.centerPos, radius) then
+						recruit:avoidEnemyAndRetreat()
+					end
 				end
 			end
 		end
 	-- default behavior (same as retreat, for now)
 	else
 		for i,recruit in ipairs(group.recruits) do
-			if(group.id == UNIT_GROUP_RAIDERS or group.id == UNIT_GROUP_AIR_ATTACKERS) then
-
-				if (not recruit.isSeriouslyDamaged ) then					
-					-- advance along raiding path
-					recruit:orderToClosestCellAlongPath(group.id == UNIT_GROUP_RAIDERS and self.raiderPath[amphibiousRaiders and PF_UNIT_AMPHIBIOUS or PF_UNIT_LAND] or self.raiderPath[PF_UNIT_AIR], {CMD.FIGHT,CMD.MOVE}, false, true)
+			if recruit.isFullyBuilt then
+				if(group.id == UNIT_GROUP_RAIDERS or group.id == UNIT_GROUP_AIR_ATTACKERS) then
+					if (not recruit.isSeriouslyDamaged ) then					
+						-- advance along raiding path
+						recruit:orderToClosestCellAlongPath(group.id == UNIT_GROUP_RAIDERS and self.raiderPath[amphibiousRaiders and PF_UNIT_AMPHIBIOUS or PF_UNIT_LAND] or self.raiderPath[PF_UNIT_AIR], {CMD.FIGHT,CMD.MOVE}, false, true)
+					else
+						-- retreat along raiding path
+						recruit:orderToClosestCellAlongPath(group.id == UNIT_GROUP_RAIDERS and self.raiderPath[amphibiousRaiders and PF_UNIT_AMPHIBIOUS or PF_UNIT_LAND] or self.raiderPath[PF_UNIT_AIR], CMD.MOVE, true, true)
+					end
 				else
-					-- retreat along raiding path
-					recruit:orderToClosestCellAlongPath(group.id == UNIT_GROUP_RAIDERS and self.raiderPath[amphibiousRaiders and PF_UNIT_AMPHIBIOUS or PF_UNIT_LAND] or self.raiderPath[PF_UNIT_AIR], CMD.MOVE, true, true)
-				end
-			else
-				if not recruit:attackRegroupCenterIfNeeded(group.centerPos, radius) then
-					recruit:avoidEnemyAndRetreat()
+					if not recruit:attackRegroupCenterIfNeeded(group.centerPos, radius) then
+						recruit:avoidEnemyAndRetreat()
+					end
 				end
 			end
 		end
@@ -2065,7 +2067,7 @@ function UnitHandler:GameFrame(f)
 			oldGroupNearCenterCount = group.nearCenterCount
 			local groupX = 0
 			local groupZ = 0
-			local groupCount = #recruits
+			local groupCount = 0
 			local groupCost = 0
 			local groupNearCenterX = 0
 			local groupNearCenterZ = 0
@@ -2076,7 +2078,7 @@ function UnitHandler:GameFrame(f)
 			local groupAvgSpeed = 0
 			local forceInclusionRadius = gId == UNIT_GROUP_AIR_ATTACKERS and FORCE_INCLUSION_RADIUS_AIR or FORCE_INCLUSION_RADIUS
 			local groupNearCenterAntiUWCost = 0
-
+			local upos,un,cost
 			-- air units are allowed to stray farther away from center
 			if (group.id == UNIT_GROUP_AIR_ATTACKERS) then
 				forceInclusionRadius = forceInclusionRadius * (1 + sqrt(groupCount/8))
@@ -2101,39 +2103,42 @@ function UnitHandler:GameFrame(f)
 			end
 			
 			for _,behavior in ipairs(recruits) do
-				local upos = newPosition(spGetUnitPosition(behavior.unitId,false,false))
-				local un = behavior.unitName
-				local cost = behavior.unitCost
-				-- assume damaged units are worth half as much
-				if (behavior.isSeriouslyDamaged == true) then
-					cost = cost / 2
-				end
-				if cost > 0 then
-					groupAvgHpCostRatio = groupAvgHpCostRatio + behavior.maxHp
-					groupAvgRange = groupAvgRange + cost*behavior.maxRange
-					groupAvgSpeed = groupAvgSpeed + cost*behavior.speed
-				end
-				
-				-- check center
-				-- ignore units too far from center
-				if checkWithinMapBounds(upos.x,upos.z) then
-					groupX = groupX + upos.x
-					groupZ = groupZ + upos.z
+				if behavior.isFullyBuilt then
+					groupCount = groupCount + 1
+					upos = newPosition(spGetUnitPosition(behavior.unitId,false,false))
+					un = behavior.unitName
+					cost = behavior.unitCost
+					-- assume damaged units are worth half as much
+					if (behavior.isSeriouslyDamaged == true) then
+						cost = cost / 2
+					end
+					if cost > 0 then
+						groupAvgHpCostRatio = groupAvgHpCostRatio + behavior.maxHp
+						groupAvgRange = groupAvgRange + cost*behavior.maxRange
+						groupAvgSpeed = groupAvgSpeed + cost*behavior.speed
+					end
 					
-					if ((#recruits < 2 or oldGroupNearCenterCount < 2) or distance(group.oldCenterPos, upos) < forceInclusionRadius) then
-						groupNearCenterX = groupNearCenterX + upos.x
-						groupNearCenterZ = groupNearCenterZ + upos.z
-					
-						groupNearCenterCost = groupNearCenterCost + cost 
-						groupNearCenterCount = groupNearCenterCount + 1
+					-- check center
+					-- ignore units too far from center
+					if checkWithinMapBounds(upos.x,upos.z) then
+						groupX = groupX + upos.x
+						groupZ = groupZ + upos.z
 						
-						if unitAbleToHitUnderwater[un] then
-							groupNearCenterAntiUWCost = groupNearCenterAntiUWCost + cost
-						end
-					end 
+						if ((#recruits < 2 or oldGroupNearCenterCount < 2) or distance(group.oldCenterPos, upos) < forceInclusionRadius) then
+							groupNearCenterX = groupNearCenterX + upos.x
+							groupNearCenterZ = groupNearCenterZ + upos.z
+						
+							groupNearCenterCost = groupNearCenterCost + cost 
+							groupNearCenterCount = groupNearCenterCount + 1
+							
+							if unitAbleToHitUnderwater[un] then
+								groupNearCenterAntiUWCost = groupNearCenterAntiUWCost + cost
+							end
+						end 
+					end
+	
+					groupCost = groupCost + cost
 				end
-
-				groupCost = groupCost + cost
 			end
 
 			if groupCount > 0 and groupNearCenterCount > 0 then
@@ -2183,7 +2188,8 @@ function UnitHandler:GameFrame(f)
 			--if (self.ai.id == 1 ) then 
 			--	Spring.MarkerAddPoint(groupX,500,groupZ,(group.id == UNIT_GROUP_ATTACKERS and "ATTACKERS" or (group.id == UNIT_GROUP_RAIDERS and "RAIDERS" or "OTHER")).."\n"..group.nearCenterCount.."/"..(#recruits)) --DEBUG
 			--end
-			group.oldCenterPos = group.centerPos
+			group.oldCenterPos.x = group.centerPos.x
+			group.oldCenterPos.z = group.centerPos.z
 			group.oldCenterPosFrame = f
 			-- log("group "..gId.." center ("..groupNearCenterCount.." / "..groupNearCenterCost..") : ("..groupX..";"..groupZ..")",self.ai) --DEBUG
 		end
@@ -2214,7 +2220,16 @@ function UnitHandler:GameFrame(f)
 		if not self.ai.beaconAckSent then
 			self.ai:messageAllies("BEACON at ("..self.ai.beaconPos.x..","..self.ai.beaconPos.z..") : "..(self.beaconAttack and "attack/engage" or "retreat/move"))
 			self.ai.beaconAckSent = true
+			self.beaconOrdersUpdateRequired = true 
 		end	
+		
+		-- override group center positions to match the beacon
+		for gId,group in pairs(self.unitGroups) do
+			if self.ai:isBeaconActive(gId) then
+				group.centerPos.x = self.ai.beaconPos.x
+				group.centerPos.z = self.ai.beaconPos.z
+			end
+		end
 	else
 		-- move to base
 		self.retreatPos.x = self.basePos.x
@@ -2224,7 +2239,7 @@ function UnitHandler:GameFrame(f)
 	
 	
 	-- define task for each group
-	if f%199 == 52 + self.ai.frameShift then
+	if (self.beaconOrdersUpdateRequired and f%30 == 10 + self.ai.frameShift) or f%199 == 52 + self.ai.frameShift then
 		local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
 		local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
 		
@@ -2250,6 +2265,14 @@ function UnitHandler:GameFrame(f)
 		local minForceCost = 0
 		local oldTargetCell = nil
 		for gId,group in pairs(self.unitGroups) do
+			--if (self.ai.id == 1 and group.id == UNIT_GROUP_ATTACKERS) then
+			--	Spring.SendCommands("ClearMapMarks")
+			--	for i,recruit in ipairs(group.recruits) do
+			--		Spring.MarkerAddPoint(recruit.pos.x,recruit.pos.y,recruit.pos.z,recruit.unitName) --DEBUG				
+			--	end
+			--	Spring.MarkerAddPoint(group.centerPos.x,group.centerPos.y,group.centerPos.z,"GROUP nearCenterCost="..tostring(group.nearCenterCost)) --DEBUG
+			--end
+
 			oldTargetCell = group.targetCell
 			local groupCenterPos = group.centerPos
 			minForceCost = self.refForceCost
@@ -2262,10 +2285,6 @@ function UnitHandler:GameFrame(f)
 			local bestCell = nil
 			local bestValue = -INFINITY
 			local bestCellThreatAlongPath = 0
-			
-			--if (self.ai.id == 1 and group.id == UNIT_GROUP_ATTACKERS) then 
-			--	Spring.SendCommands("ClearMapMarks")
-			--end
 			
 			-- AI beacon override
 			if self.ai:isBeaconActive(group.id) then
@@ -2359,9 +2378,11 @@ function UnitHandler:GameFrame(f)
 	end
 	
 	-- issue orders to units in attack groups according to the current corresponding task
-	if f%60 == 4 + self.ai.frameShift then
+	if (self.beaconOrdersUpdateRequired and f%30 == 15 + self.ai.frameShift) or f%60 == 4 + self.ai.frameShift then
 		for gId,group in pairs(self.unitGroups) do
-			self:doTargetting(group)
+			self:issueOrders(group)
 		end
+
+		self.beaconOrdersUpdateRequired = false
 	end
 end

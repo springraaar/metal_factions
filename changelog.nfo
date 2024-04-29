@@ -1,3 +1,35 @@
+2024/04/28 ------------------ NOTES v2.39 ----------------------
+
+--- Balance / Mechanics
+
+- Fixed error when issuing #AI COMMORPH commands when the commander is already morphing
+- SPHERE red artillery rockets were made slightly less precise within each burst
+- SPHERE "Stout" AOE increased from 64 to 80
+
+- Increased cost of units with non-L cannon weapons with the "near-miss-explosion-trigger" ability by 2-4%
+- Reduced cost of relatively tough units, especially slow ground ones, by 1-4%
+- Reduced cost of units with non-tracking and non-laser weapons by 1-3%
+- Increased cost of air units, including fast flying spheres, by 1-2%
+- Air scout costs manually fixed at 70m
+
+- Increased after-engagement range boost of lasers vs air units from 80 to 90
+
+--- UI / Visual / Sounds 
+
+- Added distinct sound and visual effects for destruction of rocks/wrecks and tree features
+- Modified chat message and map marker sounds
+- Added matching sound effect for when the victory/defeat panel is displayed
+
+--- AI
+
+- Unit group tracking ignores units under construction
+- Units regroup towards the beacon position and react faster
+- Fixed issue which caused the AI to build too many power nodes too early and very rarely build comsat stations
+- Added "Raider" and "Navy" strategies
+- Removed "classic" AI modes
+
+
+
 2024/04/13 ------------------ NOTES v2.38 ----------------------
 
 --- New units
