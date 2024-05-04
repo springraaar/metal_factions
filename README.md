@@ -1,7 +1,7 @@
 Metal Factions
 ======
 
-Metal Factions is a FREE 3D real time strategy game that runs on the Spring RTS engine.
+Metal Factions is a FREE 3D real time strategy game that runs on the SpringRTS/Recoil engine.
 
 It's an evolving game that currently features four factions: AVEN, GEAR, CLAW and SPHERE.
 
