@@ -19,7 +19,7 @@ local Sounds = {
 			file = "sounds/chatmsg.wav",
 			in3d = "false",
 			maxconcurrent = 2,
-			gain=0.05,
+			gain=0.1,
 		},
 		MultiSelect = {
 			--- always play on the front speaker(s)
@@ -37,7 +37,7 @@ local Sounds = {
 			rolloff = 0,
 			dopplerscale = 0,
 			maxconcurrent = 2,
-			gain=0.3,
+			gain=0.4,
 		},
 		ExampleSound = {
 			--- some things you can do with this file

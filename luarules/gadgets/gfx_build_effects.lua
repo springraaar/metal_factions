@@ -24,6 +24,7 @@ local spGetFeatureCollisionVolumeData = Spring.GetFeatureCollisionVolumeData
 local spGetFeatureRadius = Spring.GetFeatureRadius
 local spGetUnitDefId = Spring.GetUnitDefID
 local spPlaySoundFile = Spring.PlaySoundFile
+local spGetGameFrame = Spring.GetGameFrame
 
 local oldBpByUnitId = {}
 local oldBpByFeatureId = {}
@@ -182,29 +183,32 @@ function gadget:FeatureDestroyed(featureId,allyteam)
 	if (oldBpByFeatureId[featureId]) then
 		oldBpByFeatureId[featureId] = nil
 	end
-	
-	local fx,fy,fz=spGetFeaturePosition(featureId)
-	if (fx ~= nil) then
-		local rm, mm, re, me, rl = spGetFeatureResources(featureId)
-		if (rm ~= nil) then
-			if me > mm and rl == 0 then
-				local radius = tonumber(spGetFeatureRadius(featureId))
-				spSpawnCEG(eceg, fx, fy, fz,0,1,0,radius,radius)
-				spPlaySoundFile('Sounds/RECLAIM1.wav', 1, fx, fy, fz)
-			elseif mm >= me and rl == 0 then
-				local radius = tonumber(spGetFeatureRadius(featureId))
-				spSpawnCEG(mceg, fx, fy, fz,0,1,0,radius,radius)
-				spPlaySoundFile('Sounds/RECLAIM1.wav', 1, fx, fy, fz)
-			else
-				local radius = tonumber(spGetFeatureRadius(featureId))
-				radius = radius* sqrt(1+ (mm*60+me)*0.00005)
-				-- no metal means vegetation...probably 
-				if mm == 0 then
-					spSpawnCEG(treeDestructionCeg, fx, fy, fz, 0, 1, 0,radius ,radius)
-					spPlaySoundFile('TREEFEATURECRUSH', 0.7, fx, fy, fz)
+
+	-- skip the first few frames to avoid triggering during feature setup/cleanup	
+	if spGetGameFrame() > 5 then
+		local fx,fy,fz=spGetFeaturePosition(featureId)
+		if (fx ~= nil) then
+			local rm, mm, re, me, rl = spGetFeatureResources(featureId)
+			if (rm ~= nil) then
+				if me > mm and rl == 0 then
+					local radius = tonumber(spGetFeatureRadius(featureId))
+					spSpawnCEG(eceg, fx, fy, fz,0,1,0,radius,radius)
+					spPlaySoundFile('Sounds/RECLAIM1.wav', 1, fx, fy, fz)
+				elseif mm >= me and rl == 0 then
+					local radius = tonumber(spGetFeatureRadius(featureId))
+					spSpawnCEG(mceg, fx, fy, fz,0,1,0,radius,radius)
+					spPlaySoundFile('Sounds/RECLAIM1.wav', 1, fx, fy, fz)
 				else
-					spSpawnCEG(mDestructionCeg, fx, fy, fz, 0, 1, 0,radius ,radius)
-					spPlaySoundFile('FEATURECRUSH', 0.7, fx, fy, fz)
+					local radius = tonumber(spGetFeatureRadius(featureId))
+					radius = radius* sqrt(1+ (mm*60+me)*0.00005)
+					-- no metal means vegetation...probably 
+					if mm == 0 then
+						spSpawnCEG(treeDestructionCeg, fx, fy, fz, 0, 1, 0,radius ,radius)
+						spPlaySoundFile('TREEFEATURECRUSH', 0.7, fx, fy, fz)
+					else
+						spSpawnCEG(mDestructionCeg, fx, fy, fz, 0, 1, 0,radius ,radius)
+						spPlaySoundFile('FEATURECRUSH', 0.7, fx, fy, fz)
+					end
 				end
 			end
 		end

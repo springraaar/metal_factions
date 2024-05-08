@@ -2,10 +2,10 @@
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
 --
---  file:    lups_wrapper.lua
---  brief:   Lups (Lua Particle System) Widget Wrapper
+--  file:    lups.lua
+--  brief:   Lups (Lua Particle System) Gadget Wrapper
 --  authors: jK
---  last updated: 10 Nov. 2007
+--  last updated: 07 Nov. 2007
 --
 --  Copyright (C) 2007.
 --  Licensed under the terms of the GNU GPL, v2 or later.
@@ -14,18 +14,5 @@
 ---------------------------------------------------------------------------------------------
 
 if (not gadgetHandler:IsSyncedCode()) then
-  VFS.Include("lups/lups.lua")
-
-  --// auto install lups.cfg
-  if VFS.FileExists("lups/lups.cfg",VFS.ZIP) then
-    local newFile = VFS.LoadFile("lups/lups.cfg",VFS.ZIP);
-  
-    if (not VFS.FileExists("lups.cfg",VFS.RAW_ONLY)) then
-      local f=io.open("lups.cfg",'w+');
-      if (f) then
-        f:write(newFile);
-      end
-      f:close();
-    end
-  end
+  VFS.Include("lups/lups.lua",nil,VFS.ZIP_ONLY)
 end
