@@ -1,7 +1,7 @@
 local modinfo = {
 	name='Metal Factions',
 	shortName='metal_factions',
-	version='$VERSION',
+	version='v2.41b',
 	game='',
 	shortGame='',
 	mutator= 'Official',
