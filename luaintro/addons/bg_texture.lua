@@ -27,7 +27,7 @@ end
 
 local vsx, vsy = gl.GetViewSizes()
 local refFontSize = 32
-local refBoxSizeX = 100
+local refBoxSizeX = string.len(version)*20
 local refBoxSizeY = 44
 local fontSize = refFontSize
 local scaleFactor = 1
