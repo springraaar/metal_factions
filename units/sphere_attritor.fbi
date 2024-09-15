@@ -1,0 +1,120 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Sphere;
+	name=Attritor;
+	description=All-terrain Heavy Drone Swarm Controller;
+	iconType=allterrainmulti;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=sphere_attritor;
+	objectName=sphere_attritor.3do;
+	corpse=sphere_attritor_dead;
+	buildPic=sphere_attritor.png;
+	soundCategory=SPHERE_BOTBIG;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=11000;
+	autoHeal=20;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=KBOTATUW;
+	turnRate=700;
+	acceleration=0.6;
+	brakeRate=0.5;
+	maxVelocity=0.8;
+	maxWaterDepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=sphere_attritor_laser;
+	weapon2=sphere_attritor_missile;
+	weapon3=sphere_attritor_shield;
+	weaponMainDir1=0.0 0.2 1;
+	maxAngleDif1=170;
+	badTargetCategory2=VTOL;
+	explodeAs=HUGE_UNIT;
+	selfDestructAs=HUGE_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =55 45 65;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:glowsml;
+		explosionGenerator1=custom:rocketflaremed;
+
+	}
+	[CustomParams]
+	{
+		builtBy=sphere_adv_kbot_factory;
+		optional=1;
+		manualCost=1;
+		tip=Regenerates 20HP/s. Spawns light drones (max x6) and medium drones (max x2);
+		hasTurnButton=1;
+	}
+	buildCostEnergy=32500;//#AUTO#
+	buildCostMetal=6500;//#AUTO#
+	buildTime=78000;//#AUTO#
+	mass=6000;//#AUTO#
+}

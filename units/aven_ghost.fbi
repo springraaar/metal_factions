@@ -11,7 +11,7 @@
 	//************************************************************
 	//  Categories
 	//**************
-	category=AVEN VTOL LEVEL2 WEAPON NOTSUB  ;
+	category=AVEN VTOL LEVEL2 WEAPON NOTSUB;
 
 	//************************************************************
 	//  External Specs
@@ -66,7 +66,7 @@
 	maxVelocity=5.0;
 	maxSlope=10;
 	maxWaterDepth=2;
-	cruiseAlt=230;
+	cruiseAlt=300;
 	hoverAttack=1;
 	upright=1;
 
@@ -96,7 +96,7 @@
 	// stealth
 	cloakCost=150;
 	cloakCostMoving=300;
-	minCloakDistance=250;
+	minCloakDistance=200;
 
 
 	//************************************************************
@@ -118,8 +118,6 @@
 	//  Miscellaneous
 	//*****************
 	bankingallowed=0;
-	scale=1;
-
 	collide=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =70 15 40;

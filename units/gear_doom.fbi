@@ -1,0 +1,121 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Doom;
+	description=Amphibious Nuclear Kamikaze Tank;
+	iconType=amphibkamikaze;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_doom;
+	objectName=gear_doom.3do;
+	buildPic=gear_doom.png;
+	soundCategory=gear_TANK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=11000;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	kamikaze=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=TANKDH4;
+	turnRate=250;
+	acceleration=0.3;
+	brakeRate=0.3;
+	maxVelocity=1;
+	maxSlope=16;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=DOOM_BLAST;
+	selfDestructAs=DOOM_BLAST;
+	kamikazeDistance=250;
+	selfDestructCountdown=0.5;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	leavetracks=1;
+	trackoffset=8;
+	trackstrength=10;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=48;
+	collisionVolumeType = box;
+	collisionVolumeScales =68 45 68;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=gear_adv_vehicle_plant;
+		optional=1;
+		offensiveExplosion=1;
+		manualCost=1;
+		tip=use CTRL-D to self-destruct and deal up to 13000(H) damage in 400 radius;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:yellowflarebig;
+		explosionGenerator1=custom:redflare;
+		explosionGenerator2=custom:UnitFire;
+	}
+	buildCostEnergy=25000;//#AUTO#
+	buildCostMetal=5000;//#AUTO#
+	buildTime=60000;//#AUTO#
+	mass=6000;//#AUTO#
+}

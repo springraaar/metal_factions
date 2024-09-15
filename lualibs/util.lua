@@ -233,6 +233,7 @@ function log(inStr, ai)
 end
 
 local xd
+local yd
 local zd
 function distance(pos1,pos2)
 	xd = pos1.x-pos2.x
@@ -245,6 +246,14 @@ function sqDistance(x1,x2,z1,z2)
 	xd = x1-x2
 	zd = z1-z2
 	sqDist = xd*xd + zd*zd
+	return sqDist
+end
+
+function sqDistance3D(x1,x2,y1,y2,z1,z2)
+	xd = x1-x2
+	yd = y1-y2
+	zd = z1-z2
+	sqDist = xd*xd + yd*yd + zd*zd
 	return sqDist
 end
 

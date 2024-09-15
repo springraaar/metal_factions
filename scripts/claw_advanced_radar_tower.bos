@@ -3,9 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, turret, base2, dish;
+piece  base, turret, base2, dish, floatbase, fb2;
 
-static-var  statechg_DesiredState, statechg_StateChanging;
+static-var  statechg_DesiredState, statechg_StateChanging, isFloating;
 
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
@@ -84,10 +84,15 @@ RequestState(requestedstate, currentstate)
 
 Create()
 {
-	dont-shade dish;
-	dont-shade turret;
-	dont-cache dish;
-	dont-cache turret;
+	hide floatbase;
+	hide fb2;
+	isFloating = FALSE;
+	if ( GET GROUND_WATER_HEIGHT(GET UNIT_XZ) < [0])
+	{
+		isFloating = TRUE;
+		show floatbase;
+		show fb2;
+	}
 	call-script InitState();
 	start-script SmokeUnit();
 	return (0);
@@ -115,12 +120,21 @@ Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		explode dish type SHATTER;
-		explode turret type SHATTER;
-		return (1);
+		if (isFloating) 
+		{
+			corpsetype = 1;
+		}
+		else
+		{
+			corpsetype = 2;
+		}
+		explode dish type SHATTER | BITMAP1;
+		explode base2 type SHATTER | BITMAP1;
+		return corpsetype;
 	}
-	explode base type SHATTER;
-	explode dish type FALL | FIRE | SMOKE | EXPLODE_ON_HIT | BITMAP2;
-	explode turret type SHATTER;
-	return (2);
+
+	corpsetype = 3;
+	explode dish type SHATTER | BITMAP1;
+	explode base2 type SHATTER | BITMAP1;
+	return corpsetype;
 }

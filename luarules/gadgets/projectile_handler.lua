@@ -102,6 +102,7 @@ local DC_ROCKET_DEPLOY_DELAY_FRAMES = 30
 local MD_WATCH_UPDATE_FRAMES = 30
 local MD_WATCH_ALERT_SQDISTANCE = 3500*3500
 local UNIT_RP_PUBLIC_TBL = {public = true}
+local UNIT_RP_ALLIED_TBL = {allied = true}
 
 local mapSizeX = Game.mapSizeX
 local mapSizeZ = Game.mapSizeZ
@@ -862,7 +863,9 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 			 end
 		else
 			longRangeRocketOriginalTargetsById[proID] = tInfo
+			
 		end
+		spSetUnitRulesParam(proOwnerID,"originalTargetPos",tInfo[1].."|"..tInfo[2].."|"..tInfo[3],UNIT_RP_ALLIED_TBL)
 		
 		-- if far from original target, go towards the point high above it, randomly offset to spread out
 		if (premiumRocketWeaponIds[weaponDefID]) then
@@ -981,8 +984,7 @@ function gadget:ProjectileDestroyed(proID)
 		local weaponDefId = spGetProjectileDefID(proID)
 		local effect = disruptorStormWeaponEffectId
 
-		-- do not spawn fire effect in water, and spawn with reduced duration in air
-		if (h > 0) then
+		if (py > -5) then
 			local steps = DISRUPTOR_STORM_STEPS
 			disruptorStormPositions[proID]={px=px,py=py,pz=pz,steps=steps,ownerId=disruptorStormProjectiles[proID],effect=effect}
 		end

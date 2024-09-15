@@ -77,8 +77,8 @@
 	weapon1=aven_standoff_cannon;
 	badTargetCategory1=VTOL;
 	onlytargetcategory1=NOTAIR;
-	explodeAs=ATOMIC_BLASTSML;
-	selfDestructAs=ATOMIC_BLAST;
+	explodeAs=LRPC_BLAST;
+	selfDestructAs=LRPC_BLAST;
 
 	//************************************************************
 	//  Orders
@@ -97,8 +97,8 @@
 		builtBy=aven_l2builder;
 		canAreaAttack=1;
 	}
-	buildCostEnergy=53112;//#AUTO#
-	buildCostMetal=10622;//#AUTO#
-	buildTime=126584;//#AUTO#
-	mass=9556;//#AUTO#
+	buildCostEnergy=53167;//#AUTO#
+	buildCostMetal=10633;//#AUTO#
+	buildTime=126715;//#AUTO#
+	mass=9562;//#AUTO#
 }

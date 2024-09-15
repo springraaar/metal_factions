@@ -196,7 +196,7 @@ local function updateAllScars(f)
 	for idx,scar in pairs(scars) do
 		if (f > scar.endFrame or scar.decalID == 0) then
 			local destroyed = spDestroyGroundDecal(scar.decalID)
-			--Spring.Echo("Decal "..scar.decalID.." destroyed? : "..tostring(destroyed))
+			--Spring.Echo("Decal "..scar.decalID.." destroyed/faded : "..tostring(destroyed))
 			scars[idx] = nil
 		elseif (f >= scar.startFrame) then
 			
@@ -275,7 +275,7 @@ local function addScar(_,px,py,pz,type,radius,h,intensity)
 		local replacementScar = scars[scar.idx.."r"]
 		if replacementScar then
 			local destroyed = spDestroyGroundDecal(replacementScar.decalID)
-			--Spring.Echo("Decal "..replacementScar.decalID.." destroyed? : "..tostring(destroyed))
+			--Spring.Echo("Decal "..replacementScar.decalID.." destroyed/replaced : "..tostring(destroyed))
 		end
 		scars[scar.idx.."r"] = scar
 	else
@@ -283,12 +283,14 @@ local function addScar(_,px,py,pz,type,radius,h,intensity)
 	end
 	
 	-- add the decal
+	--Spring.Echo("adding scar")
 	local decalID = spCreateGroundDecal()
 	if decalID ~= nil then
+		--Spring.Echo("added scar "..decalID.." texture="..scar.texture.." alpha="..scar.color[4].." durS="..scar.durationFrames/30)
 		spSetGroundDecalPosAndDims(decalID,scar.px,scar.pz,radius,radius)
 		spSetGroundDecalRotation(decalID,scar.rotation)
 		spSetGroundDecalTexture(decalID,scar.texture,true)
-		spSetGroundDecalAlpha(decalID,scar.color[4])
+		spSetGroundDecalAlpha(decalID,0.01)
 		scar.decalID = decalID
 		
 		-- thin nearby scars with radius <= itself
@@ -312,6 +314,7 @@ function gadget:Shutdown()
 end
 
 function gadget:GameFrame(f)
+
 	-- reduce scar duration in denser battles, for performance reasons
 	if (f % 50 == 0) then
 		nScars = tableLength(scars)
@@ -333,7 +336,7 @@ function gadget:GameFrame(f)
 		if not allDecals then
 			allDecals = {}
 		end
-		--Spring.Echo("#scars : "..nScars.." #decals : "..nDecals.." "..tableToString(allDecals))
+		--Spring.Echo("#scars : "..nScars.." #decals : "..nDecals) --.." "..tableToString(allDecals))
 	end
 
 	if (f%2 == 0) then

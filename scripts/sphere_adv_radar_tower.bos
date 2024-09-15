@@ -3,9 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, dish, ear1, ear2;
+piece  base, dish, ear1, ear2, floatbase, fb2;
 
-static-var  statechg_DesiredState, statechg_StateChanging;
+static-var  statechg_DesiredState, statechg_StateChanging, isFloating;
 
 
 SmokeUnit(healthpercent, sleeptime, smoketype)
@@ -88,12 +88,15 @@ RequestState(requestedstate, currentstate)
 
 Create()
 {
-	dont-cache dish;
-	dont-cache ear1;
-	dont-cache ear2;
-	dont-shade dish;
-	dont-shade ear1;
-	dont-shade ear2;
+	hide floatbase;
+	hide fb2;
+	isFloating = FALSE;
+	if ( GET GROUND_WATER_HEIGHT(GET UNIT_XZ) < [0])
+	{
+		isFloating = TRUE;
+		show floatbase;
+		show fb2;
+	}
 	call-script InitState();
 	start-script SmokeUnit();
 	return (0);
@@ -115,15 +118,24 @@ Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		explode dish type SHATTER;
-		explode ear1 type SHATTER;
-		explode ear2 type SHATTER;
-		return (1);
+		if (isFloating) 
+		{
+			corpsetype = 1;
+		}
+		else
+		{
+			corpsetype = 2;
+		}
+		explode dish type SHATTER | BITMAP1;
+		explode ear1 type SHATTER | BITMAP1;
+		explode ear2 type SHATTER | BITMAP1;
+		return corpsetype;
 	}
-	
-	explode base type SHATTER;
-	explode dish type SHATTER | EXPLODE_ON_HIT | BITMAP2;
-	explode ear1 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-	explode ear2 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
-	return (2);
+
+	corpsetype = 3;
+	explode base type SHATTER | BITMAP1;
+	explode dish type SHATTER | BITMAP1;
+	explode ear1 type SHATTER | BITMAP1;
+	explode ear2 type SHATTER | BITMAP1;
+	return corpsetype;
 }

@@ -43,6 +43,10 @@ local keybindsFileTxt = [[
 //		- wait
 //		- onoff
 //		- manualfire
+//		- settarget : marks a position or unit set for attack with priority if in range
+//		- settargetnoground : marks a unit for attack with priority if in range
+//		- canceltarget : removes priority targetting
+//		- lofobsavoidance : toggles line-of-fire obstacle avoidance mode
 //		- selfd		: self destruct
 //		- priority	: toggles builder resource access priority state
 //		- areamex	: area metal extractor command
@@ -251,6 +255,15 @@ function widget:Initialize()
 			WG.customHotkeys["manualfire"] = "n"
 		end
 	end
+	if (not WG.unboundDefKeys or not WG.unboundDefKeys["y"]) then
+		if (not WG.customHotkeys["settarget"]) then
+			unbindKey("y")
+			Spring.SendCommands("bind y settarget")
+			Spring.SendCommands("bind Shift+y settarget")
+			WG.customHotkeys["settarget"] = "y"
+		end
+	end
+
 end
 
 

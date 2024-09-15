@@ -3965,7 +3965,7 @@ clawNavy = {
 			},
 			mobileUnits = {
 				{name="claw_construction_ship",min=1,max=3,weight=0.5},
-				{name="claw_adv_construction_ship",min=1,max=4,weight=0.5},
+				{name="claw_adv_construction_sub",min=1,max=4,weight=0.5},
 				{name="claw_hunter",min=0,max=MANY,weight=0.4},
 				{name="claw_spine",min=0,max=MANY,weight=0.4},
 				{name="claw_phalanx",min=1,max=MANY,weight=0.8,includeConditions={THREAT_AIR}},
@@ -4025,7 +4025,7 @@ clawNavy = {
 			mobileUnits = {
 				{name="claw_adv_construction_aircraft",min=2,max=4,weight=0.5},
 				{name="claw_construction_ship",min=1,max=3,weight=0.5},
-				{name="claw_adv_construction_ship",min=1,max=4,weight=0.5},				
+				{name="claw_adv_construction_sub",min=1,max=4,weight=0.5},				
 				{name="claw_hunter",min=0,max=MANY,weight=0.2},
 				{name="claw_phalanx",min=1,max=MANY,weight=0.8,includeConditions={THREAT_AIR}},
 				{name="claw_monster",min=1,max=MANY,weight=0.8,includeConditions={THREAT_UNDERWATER}},
@@ -4090,7 +4090,7 @@ clawNavy = {
 			mobileUnits = {
 				{name="claw_adv_construction_aircraft",min=2,max=4,weight=0.5},
 				{name="claw_construction_ship",min=1,max=3,weight=0.5},
-				{name="claw_adv_construction_ship",min=1,max=4,weight=0.5},				
+				{name="claw_adv_construction_sub",min=1,max=4,weight=0.5},				
 				{name="claw_phalanx",min=1,max=MANY,weight=0.8,includeConditions={THREAT_AIR}},
 				{name="claw_monster",min=1,max=MANY,weight=0.8,includeConditions={THREAT_UNDERWATER}},
 				{name="claw_monster",min=0,max=MANY,weight=0.4},

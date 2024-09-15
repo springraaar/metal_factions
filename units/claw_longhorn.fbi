@@ -76,8 +76,8 @@
 	weapon1=claw_longhorn_railgun;
 	noChaseCategory=VTOL;
 	onlyTargetCategory1=NOTAIR;
-	explodeAs=ATOMIC_BLASTSML;
-	selfDestructAs=ATOMIC_BLAST;
+	explodeAs=LRPC_BLAST;
+	selfDestructAs=LRPC_BLAST;
 
 	//************************************************************
 	//  Orders
@@ -97,8 +97,8 @@
 	{
 		explosionGenerator0=custom:railgunflarebig;
 	}
-	buildCostEnergy=67138;//#AUTO#
-	buildCostMetal=13427;//#AUTO#
-	buildTime=160012;//#AUTO#
-	mass=10950;//#AUTO#
+	buildCostEnergy=67193;//#AUTO#
+	buildCostMetal=13438;//#AUTO#
+	buildTime=160143;//#AUTO#
+	mass=10958;//#AUTO#
 }

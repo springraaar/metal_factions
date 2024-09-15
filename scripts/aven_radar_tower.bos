@@ -121,13 +121,13 @@ SweetSpot(piecenum)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 250 )
+	if( severity <= 50 )
 	{
 		if (isFloating) 
 		{
 			corpsetype = 1;
 		}
-		if (!isFloating) 
+		else
 		{
 			corpsetype = 2;
 		}

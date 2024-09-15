@@ -43,7 +43,6 @@ local selUnitID
 local circleList
 local secondPart = 0
 local mouseDistance = 1000
-local extraDrawRange
 
 local vsx, vsy = gl.GetViewSizes()
 local scaleFactor = 1
@@ -64,6 +63,7 @@ local GetUnitPosition        = Spring.GetUnitPosition
 local GetUnitRadius          = Spring.GetUnitRadius
 local GetUnitStates          = Spring.GetUnitStates
 local TraceScreenRay         = Spring.TraceScreenRay
+local IsAboveMiniMap         = Spring.IsAboveMiniMap  
 local spGetUnitDefId         = Spring.GetUnitDefID
 local spGetUnitWeaponState   = Spring.GetUnitWeaponState
 local CMD_ATTACK             = CMD.ATTACK
@@ -321,11 +321,6 @@ local function UpdateSelection()
 	        aoeUnitID = GetRepUnitID(unitIDs)
 	      end
 	    end
-		--extraDrawRange = UnitDefs[unitDefID] and UnitDefs[unitDefID].customParams and UnitDefs[unitDefID].customParams.extradrawrange
-		extraDrawRange = true
-		if extraDrawRange then
-			selUnitID = GetRepUnitID(unitIDs)
-		end
 	end
  end
 end
@@ -634,38 +629,6 @@ function widget:DrawWorld()
   if (not tx) then return end
   local _, cmd, _ = GetActiveCommand()
   local info, unitID
-  
-  if extraDrawRange and selUnitID and (cmd == CMD_ATTACK or cmd == CMD_MANUALFIRE) then
-    local fx, fy, fz = GetUnitPosition(selUnitID)
-    if fx then
-      -- get the unit's range circles
-      local range = 0
-      local unitDefId = spGetUnitDefId(selUnitID)
-      if (unitDefId ~= nil) then
-        local ud = UnitDefs[unitDefId]
-	
-        -- show range circles for all non-shield weapons other than the primary (which is already shown)
-        if ud.weapons and ud.weapons[1] and ud.weapons[1].weaponDef then
-          for wNum,w in pairs(ud.weapons) do
-            local wd=WeaponDefs[w.weaponDef]
-            if wNum > 1 and wd.isShield == false and wd.description ~= "No Weapon" then
-              range = spGetUnitWeaponState(selUnitID,wNum,"range")
-              if range then
-                if (wd.type == "TorpedoLauncher") then
-                  glColor(0.7, 0.35, 1, 0.5)
-                else
-                  glColor(1, 0.35, 0.35, 0.5)
-                end
-                glLineWidth(2*scaleFactor)
-                glDrawGroundCircle(fx, fy, fz, range, 50)
-                glColor(1,1,1,1)
-              end
-            end
-          end
-        end
-      end
-	end
-  end
   
   if (cmd == CMD_ATTACK and aoeUnitDefID) then 
     info = aoeDefInfo[aoeUnitDefID]

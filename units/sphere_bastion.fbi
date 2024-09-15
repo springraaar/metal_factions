@@ -76,8 +76,8 @@
 	weapon1=sphere_bastion_cannon;
 	badTargetCategory1=VTOL;
 	onlytargetcategory1=NOTAIR;
-	explodeAs=ATOMIC_BLASTSML;
-	selfDestructAs=ATOMIC_BLAST;
+	explodeAs=LRPC_BLAST;
+	selfDestructAs=LRPC_BLAST;
 
 	//************************************************************
 	//  Orders
@@ -97,8 +97,8 @@
 		builtBy=sphere_l2builder;
 		canAreaAttack=1;
 	}
-	buildCostEnergy=52559;//#AUTO#
-	buildCostMetal=10511;//#AUTO#
-	buildTime=125266;//#AUTO#
-	mass=16810;//#AUTO#
+	buildCostEnergy=52614;//#AUTO#
+	buildCostMetal=10522;//#AUTO#
+	buildTime=125397;//#AUTO#
+	mass=16822;//#AUTO#
 }

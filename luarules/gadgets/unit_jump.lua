@@ -88,9 +88,9 @@ local jumping = {}
 local goalSet = {}
 
 
-local JUMP_UPG_SPEED_BONUS = 0.1
+local JUMP_UPG_SPEED_BONUS = 0.15
 local JUMP_UPG_RANGE_BONUS = 0.1  
-local JUMP_UPG_HEIGHT_BONUS = 0.1
+local JUMP_UPG_HEIGHT_BONUS = 0.05
 local JUMP_UPG_RELOAD_REDUCTION = 0.25
 
 --------------------------------------------------------------------------------
@@ -99,10 +99,10 @@ local JUMP_UPG_RELOAD_REDUCTION = 0.25
 local jumpDefTemplates = {
 	commander = {
 		range = 400,
-		speed = 5,
+		speed = 6,
 		reload = 15,
 		delay = 0,
-		height = 350,
+		height = 280,
 
 		requiresUpgrade = true,			
 		noJumpHandling =  false,
@@ -112,7 +112,7 @@ local jumpDefTemplates = {
 	},
 	hydron = {
 		range = 350,
-		speed = 4,
+		speed = 4.5,
 		reload = 15,
 		delay = 0,
 		height = 250,
@@ -125,7 +125,7 @@ local jumpDefTemplates = {
 	},	
 	grenado = {
 		range = 250,
-		speed = 6,
+		speed = 7,
 		reload = 15,
 		delay = 0,
 		height = 150,
@@ -138,7 +138,7 @@ local jumpDefTemplates = {
 	},
 	hopper = {
 		range = 400,
-		speed = 6,
+		speed = 6.5,
 		reload = 10,
 		delay = 0,
 		height = 350,
@@ -151,10 +151,10 @@ local jumpDefTemplates = {
 	},
 	flail = {
 		range = 350,
-		speed = 6,
+		speed = 6.5,
 		reload = 10,
 		delay = 0,
-		height = 300,
+		height = 280,
 
 		requiresUpgrade = false,			
 		noJumpHandling =  false,
@@ -164,10 +164,10 @@ local jumpDefTemplates = {
 	},	
 	pyro = {
 		range = 350,
-		speed = 6,
+		speed = 7.5,
 		reload = 10,
 		delay = 0,
-		height = 200,
+		height = 150,
 
 		requiresUpgrade = false,			
 		noJumpHandling =  false,
@@ -177,7 +177,7 @@ local jumpDefTemplates = {
 	},
 	exploder = {
 		range = 350,
-		speed = 6,
+		speed = 7,
 		reload = 10,
 		delay = 0,
 		height = 200,
@@ -190,10 +190,10 @@ local jumpDefTemplates = {
 	},
 	commando = {
 		range = 350,
-		speed = 6,
+		speed = 6.5,
 		reload = 10,
 		delay = 0,
-		height = 300,
+		height = 280,
 
 		requiresUpgrade = false,			
 		noJumpHandling =  false,
@@ -203,10 +203,10 @@ local jumpDefTemplates = {
 	},
 	hydrobotcon = {
 		range = 350,
-		speed = 4.5,
+		speed = 5.5,
 		reload = 10,
 		delay = 0,
-		height = 300,
+		height = 280,
 
 		requiresUpgrade = false,			
 		noJumpHandling =  false,
@@ -226,7 +226,7 @@ for id, ud in pairs (UnitDefs) do
 		local modifier = tonumber(cp.jumpmod)
 		baseJumpDefs[id] = {
 			range = jTemplate.range * modifier,
-			speed = jTemplate.speed * modifier,
+			speed = jTemplate.speed * modifier*modifier,
 			reload = jTemplate.reload,
 			delay = jTemplate.delay,
 			height = jTemplate.height * modifier,

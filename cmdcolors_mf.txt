@@ -78,10 +78,10 @@ selectedLineWidth  1.8
 selectedBlendSrc   src_alpha
 selectedBlendDst   one_minus_src_alpha
 
-rangeAttack          1.0  0.3  0.3  0.75
+rangeAttack          1.0  0.3  0.3  0.0		// hidden / drawn by widget
 rangeBuild           0.3  1.0  0.3  0.75
-rangeRadar           0.3  1.0  0.3  0.75
-rangeSonar           0.3  0.3  1.0  0.75
+rangeRadar           0.3  1.0  0.3  0.0		// hidden / drawn by widget
+rangeSonar           0.3  0.3  1.0  0.0		// hidden / drawn by widget
 rangeSeismic         0.8  0.1  0.8  0.75
 rangeJammer          1.0  0.3  0.3  0.75
 rangeSonarJammer     1.0  0.3  0.3  0.75

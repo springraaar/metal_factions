@@ -1,0 +1,112 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Pinion (M);
+	description=Infantry Robot;
+	iconType=mobilefighter;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_pinion_m;
+	objectName=gear_pinion_m.3do;
+	corpse=gear_pinion_m_dead;
+	buildPic=gear_pinion_m.png;
+	soundCategory=CORAK;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=850;
+	footprintx=2;
+	footprintz=2;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=KBOTHT2;
+	turnRate=1100;
+	acceleration=1.2;
+	brakeRate=1.5;
+	maxVelocity=1.6;
+	maxSlope=17;
+	maxWaterDepth=25;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_pinion_m_laser;
+	badTargetCategory1=NOTAIR;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =20 35 25;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=gear_light_plant,gear_adv_kbot_lab;
+		optional=1;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:GLOWSML;
+	}
+
+	buildCostEnergy=1059;//#AUTO#
+	buildCostMetal=211;//#AUTO#
+	buildTime=2526;//#AUTO#
+	mass=141;//#AUTO#
+}

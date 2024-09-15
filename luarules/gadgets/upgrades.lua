@@ -93,6 +93,7 @@ local spSetUnitWeaponState = Spring.SetUnitWeaponState
 local spGetTeamInfo = Spring.GetTeamInfo
 local spGetUnitHealth = Spring.GetUnitHealth
 local spSetUnitWeaponDamages = Spring.SetUnitWeaponDamages
+local spSetUnitSensorRadius = Spring.SetUnitSensorRadius
 
 local min = math.min
 local floor = math.floor
@@ -102,10 +103,12 @@ local fmod = math.fmod
 
 
 local builtinDroneUpgrades = {
+	[UnitDefNames["aven_skein"].id] = {{"upgrade_light_drones",1}},
+	[UnitDefNames["aven_paladin"].id] = {{"upgrade_builder_drone",2}},
+	[UnitDefNames["aven_archangel"].id] = {{"upgrade_light_drones",2},{"upgrade_builder_drone",3}},
 	[UnitDefNames["gear_adv_construction_kbot"].id] = {{"upgrade_transport_drone",1}},
 	[UnitDefNames["gear_adv_construction_hydrobot"].id] = {{"upgrade_transport_drone",1}},
-	[UnitDefNames["aven_skein"].id] = {{"upgrade_light_drones",1}},
-	[UnitDefNames["aven_paladin"].id] = {{"upgrade_builder_drone",2}}
+	[UnitDefNames["sphere_attritor"].id] = {{"upgrade_light_drones",2},{"upgrade_medium_drone",2}}
 }
 
 local noUpgradeUnitDefIds = {
@@ -203,7 +206,9 @@ function updatePlayerModifiers(teamId)
 	local blueCount = 0
 	local playerUpgradesList = ""
 	local playerUpgradesModifiers = ""
-
+	local commanderRangeMult = 1
+	local armedRangeMult = 1
+	
 	-- modifiers
 	for type,mods in pairs(playerMods) do
 		playerUpgradesModifiers = playerUpgradesModifiers..type..": " 
@@ -222,6 +227,11 @@ function updatePlayerModifiers(teamId)
 			if (modName == "damage") then
 				modStr = COLOR_RED.."damage +"..formatNbr(modValue*100,0).."%"
 			elseif (modName == "range") then
+				if (type=="commander") then
+					commanderRangeMult = commanderRangeMult + modValue
+				elseif (type=="armed") then
+					armedRangeMult = armedRangeMult + modValue
+				end
 				modStr = COLOR_RED.."range +"..formatNbr(modValue*100,1).."%"
 			elseif (modName == "speed") then
 				modStr = (modValue > 0 and COLOR_BLUE or "").."speed "..(modValue > 0 and "+" or "")..formatNbr(modValue*100,0).."%"
@@ -299,6 +309,8 @@ function updatePlayerModifiers(teamId)
 	spSetTeamRulesParam(teamId,"upgrade_status", playerUpgradesStr,{public = true})
 	spSetTeamRulesParam(teamId,"upgrade_list",playerUpgradesList,{public = true})
 	spSetTeamRulesParam(teamId,"upgrade_modifiers",playerUpgradesModifiers,{public = true})
+	spSetTeamRulesParam(teamId,"upgrade_commander_range_mult",commanderRangeMult,{public = true})
+	spSetTeamRulesParam(teamId,"upgrade_armed_range_mult",armedRangeMult,{public = true})
 	-- for AI
 	spSetTeamRulesParam(teamId,"upgrade_allowed_minor", (limitsByType[TYPE_MINOR]-minorCount),{public = true})
 	spSetTeamRulesParam(teamId,"upgrade_allowed_commander", (limitsByType[TYPE_COMMANDER]-commanderCount),{public = true})
@@ -319,6 +331,7 @@ function updateUnitModifiers(unitId, unitDefId, teamId)
 		unitMods = modifiersByPlayerId[teamId].commander
 	else
 		local hasWeapons = false
+		local hasRadarOrSonar = false
 		local weap = nil
 		if ud.weapons and ud.weapons[1] and ud.weapons[1].weaponDef then
 			for _,w in pairs(ud.weapons) do
@@ -328,8 +341,11 @@ function updateUnitModifiers(unitId, unitDefId, teamId)
 				end
 			end
 		end
+		if ud.radarRadius > 0 or ud.sonarRadius > 300 then
+			hasRadarOrSonar = true
+		end
 		
-		if hasWeapons then
+		if hasWeapons or hasRadarOrSonar then
 			unitMods = modifiersByPlayerId[teamId].armed
 		else
 			unitMods = modifiersByPlayerId[teamId].other
@@ -402,6 +418,12 @@ function updateUnitWeaponRange(unitId, modifier)
 			    end
 			end
 	    end
+	    
+	    -- update radar and sonar ranges
+	    local originalRadarRadius = ud.radarRadius
+	    local originalSonarRadius = ud.sonarRadius
+	    spSetUnitSensorRadius(unitId, "radar",  originalRadarRadius * (1 + modifier))
+	    spSetUnitSensorRadius(unitId, "sonar",  originalSonarRadius * (1 + modifier))
 	end
 end
 -- applies weapon damage modifier on unit

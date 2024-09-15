@@ -1,0 +1,127 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Scorpitron;
+	description=All-terrain Cloakable Heavy Ambush Robot;
+	iconType=allterrainfighter;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_scorpitron;
+	objectName=claw_scorpitron.3do;
+	corpse=claw_scorpitron_dead;
+	buildPic=claw_scorpitron.png;
+	soundCategory=CLAW_BOTBIG;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=6400;
+	autoHeal=20;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=KBOTATUW;
+	turnRate=820;
+	acceleration=0.6;
+	brakeRate=0.5;
+	maxVelocity=1.1;
+	maxWaterDepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_scorpitron_laser;
+	weapon2=claw_scorpitron_laser;
+	weapon3=claw_scorpitron_cannon;
+	weaponMainDir1=-0.2 0.2 1;
+	maxAngleDif1=180;
+	weaponMainDir2=0.2 0.2 1;
+	maxAngleDif2=180;
+	weaponMainDir3=0 1 -0.2;
+	maxAngleDif3=280;
+	badTargetCategory3=VTOL;
+	explodeAs=HUGE_UNIT;
+	selfDestructAs=HUGE_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	// ------------------- stealth
+	cloakCost=80;
+	cloakCostMoving=160;
+	minCloakDistance=200;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =45 35 65;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:glowsml;
+		explosionGenerator1=custom:yellowflarebig;
+
+	}
+	[CustomParams]
+	{
+		builtBy=claw_adv_kbot_plant;
+		optional=1;
+		tip=Regenerates 20HP/s. Laser firing rate reduced to about 25% after 12s of continuous fire;
+		hasTurnButton=1;
+	}
+	buildCostEnergy=16551;//#AUTO#
+	buildCostMetal=3310;//#AUTO#
+	buildTime=39448;//#AUTO#
+	mass=4325;//#AUTO#
+}

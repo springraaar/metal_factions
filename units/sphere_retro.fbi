@@ -1,0 +1,101 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	side=Sphere;
+	Name=Retro;
+	Description=Amphibious Skirmisher Tank;
+	iconType=amphibartilleryfs;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=sphere_retro;
+	objectName=sphere_retro.3do;
+	buildPic=sphere_retro.png;
+	soundCategory=gear_TANK;
+	Corpse=sphere_retro_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=3;
+	FootprintZ=3;
+	maxDamage=4000;
+	flankingBonusMode=3;
+	flankingBonusMax=1.5;
+	flankingBonusMin=0.66;
+	flankingBonusDir=0 0 -1;
+
+	// ------------------- resources
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	Builder=0;
+
+	// ------------------- movement
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=1.8;
+	brakeRate=0.1;
+	Acceleration=0.12;
+	turnRate=500;
+	movementClass=TANKDH3;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+
+	// ------------------- weapons
+	weapon1=sphere_retro_cannon;
+	weapon2=sphere_retro_bomb;
+	weaponMainDir2=0 0 -1;
+	maxAngleDif2=80;
+	badTargetCategory1=VTOL;
+	onlyTargetCategory2=NOTAIR;
+	noChaseCategory=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+
+	// ------------------- orders
+
+	// ------------------- misc
+	noAutoFire=0;
+	leavetracks=1;
+	trackoffset=8;
+	trackstrength=5;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=35;
+	collisionVolumeType = box;
+	collisionVolumeScales =33 28 40;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_adv_vehicle_factory;
+		optional=1;
+		tip=-33% dmg resistance on front, +33% when hit from behind;
+		hasTurnButton=1;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:yellowflaremed;
+		explosionGenerator1=custom:rocketflaresml;
+
+	}
+	buildCostEnergy=6379;//#AUTO#
+	buildCostMetal=1275;//#AUTO#
+	buildTime=15203;//#AUTO#
+	mass=2280;//#AUTO#
+}

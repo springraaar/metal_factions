@@ -1,4 +1,70 @@
-2024/05/08 ------------------ NOTES v2.41 ----------------------
+2024/09/15 ------------------ NOTES v2.42 ----------------------
+
+--- Engine
+
+- updated the springRTS/Recoil engine compatibility recommendation to "105.1.1-2584-g9f9cdbf BAR105"
+
+--- New units
+
+- SPHERE "Buzzer" : L2 Armored Anti-Swarm Ship
+
+OPTIONAL
+- AVEN "Flint" : L1 Light Infantry Robot
+- AVEN "Archangel" : L2 Heavy Disruptor Gunship / Drone Swarm Controller
+- GEAR "Pinion (M)" : L1 Infantry Robot
+- GEAR "Doom" : L2 Amphibious Nuclear Kamikaze Tank
+- CLAW "Scorpitron" : L2 All-Terrain Cloakable Heavy Ambush Robot
+- SPHERE "Attritor" : L2 All-Terrain Heavy Drone Swarm Controller
+- SPHERE "Retro" : L2 Skirmisher Tank
+
+--- Balance / Mechanics
+
+- AVEN "Ghost" flies higher and had its decloak radius reduced (less likely to decloak when flying over enemy ground units)
+- AVEN "Stormfront" bombs' damage increased from 300 to 420 but lingering aoe dms/s reduced from 180D(M) to 100D(M)
+- Stormfront's storm effects now also linger over water for 30s (same as land and air)
+- Slightly reduced turn rates for AVEN "Paladin" and "Maximus" so they're a bit worse at dodging artillery fire
+- Increased turret turn rates for AVEN "Kodiak"
+- Increased GEAR "Assaulter" HP by 5% and cost by 4%
+- GEAR "Grenado" and "Hellburner" explosions had their damage and AOE increased but damage type changed from H to M
+- Increased CLAW "Blizzard" dmg/s by 35% and cost by 20%
+- Increased CLAW "Thumper" collision volume to match its height
+- CLAW "Dancer" is bigger, tougher, faster and more expensive and got weapon replaced by 520 range guided amphibious bombs
+(its sonar now covers the weapon range)
+- Replaced CLAW L2 construction ship with a construction sub
+- Fixed SPHERE red artillery rockets overshooting their targets
+- SPHERE "Stresser" gets slightly bigger and tougher and has a new H anti-armor missile launcher
+- SPHERE "Stalwart" has slightly higher dmg/s on the weapons but about 8% increased cost
+- Changed SPHERE L2 construction sub to be M armored and be slightly faster, tougher and more expensive
+ (in line with the other factions)
+
+- Added toggle between default weapon targetting behavior or an avoidance mode which ignores enemies behind obstacles such as walls or wrecks
+- Range upgrades now increase radar and sonar radius as well
+- Advanced radar towers are now buildable on water
+- Speed upgrades and modifiers also affect turn rate
+- Dash speed boost increased from +30-60% to +40-70%
+- H armor units take 20% less damage from AOE
+- Slightly increased the collision volume for long range rockets that can be shot down
+- Lingering AOE effects got their dmg/s limits changed to 300 (fire) and 500P+166 (disruptor storm)
+- Jump heights reduced by about 5-15% and movement speed increased by about 10-25% (bigger effect for relatively fast units)
+- Death explosions' damage type changed from H to M for larger ones and M to L for smaller ones
+- Adjusted cloak costs of combat units to be about 10E/s per 400m cost (2x when moving)
+- Amphibious ships are no longer buildable from the L2 vehicle factories
+
+--- UI / Visual / Sounds 
+
+- Optional units selection panel opens up on the current selected faction instead of AVEN
+- When ordering single units to attack or placing buildings, show dark red circle indicating their death blast radius (if relevant)
+- Attack and sensor ranges are now shown scaled by upgrades when placing buildings
+- Fixed minimap warning circles animations when units are taking damage
+- Added warning circles on map and minimap marking incoming allied long range rockets (nukes, etc.)
+- Added "Set-Target" command, which lets units mark a target to attack when possible without disrupting movement (default hotkey "Y")
+(uses the same gadget as BAR)
+- Added distinct sound/visual effects for huge explosions dealing M and H damage
+- Added "Turn" command for units with directional weapons
+- Added "Auto-Group" widget : alt+[1-9] sets auto-group for selected unit types, alt+0 clears auto-groups
+
+
+2024/05/08 ------------------ NOTES v2.41c ----------------------
 
 - Fixed rare lups-related error
 - Modified chat message and map marker sounds yet again

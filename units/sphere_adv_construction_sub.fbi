@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=1900;
+	maxDamage=2200;
 	footprintx=4;
 	footprintz=4;
 
@@ -69,8 +69,8 @@
 	turnRate=556;
 	acceleration=0.1;
 	brakeRate=0.08;
-	maxVelocity=1.9;
-	maxreversevelocity=0.95;
+	maxVelocity=2.0;
+	maxreversevelocity=1.0;
 	minwaterdepth=20;
 
 	//************************************************************
@@ -111,8 +111,8 @@
 		explosionGenerator1=custom:UNITFIRE;
 	}
 
-	buildCostEnergy=3421;//#AUTO#
-	buildCostMetal=684;//#AUTO#
-	buildTime=8154;//#AUTO#
-	mass=351;//#AUTO#
+	buildCostEnergy=4422;//#AUTO#
+	buildCostMetal=884;//#AUTO#
+	buildTime=10540;//#AUTO#
+	mass=844;//#AUTO#
 }

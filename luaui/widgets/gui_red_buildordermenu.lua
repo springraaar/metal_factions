@@ -81,30 +81,34 @@ local iconCmdPosition = {
 	[CMD.ATTACK] = 1,
 	[CMD.MANUALFIRE] = 2,
 	[CMD.FIGHT] = 3,
-	[CMD.MOVE] = 4,
-	[CMD_JUMP] = 5,
-	[CMD_DASH] = 6,	
-	[CMD.PATROL] = 7,
-	[CMD.GUARD] = 8,	
-	[CMD.WAIT] = 9,
-	[CMD.STOP] = 10,
-	[CMD.LOAD_UNITS] = 11,
-	[CMD.UNLOAD_UNITS] = 12,
-	[CMD.REPAIR] = 13,
-	[CMD.RECLAIM] = 14,
-	[CMD.RESTORE] = 15,
-	[CMD.CAPTURE] = 16,
-	[CMD_AREAMEX] = 17,
-	[CMD_UPGRADEMEX] = 18,
-	[CMD_UPGRADEMEX2] = 19
+	[CMD_UNIT_SET_TARGET] = 4,
+	[CMD.MOVE] = 5,
+	[CMD_TURN] = 6,
+	[CMD_JUMP] = 7,
+	[CMD_DASH] = 8,	
+	[CMD.PATROL] = 9,
+	[CMD.GUARD] = 10,	
+	[CMD.WAIT] = 11,
+	[CMD.STOP] = 12,
+	[CMD.LOAD_UNITS] = 13,
+	[CMD.UNLOAD_UNITS] = 14,
+	[CMD.REPAIR] = 15,
+	[CMD.RECLAIM] = 16,
+	[CMD.RESTORE] = 17,
+	[CMD.CAPTURE] = 18,
+	[CMD_AREAMEX] = 19,
+	[CMD_UPGRADEMEX] = 20,
+	[CMD_UPGRADEMEX2] = 21
 }
 
 local iconCmdTex = {
 	[CMD.MOVE] = "icon_move.png",
 	[CMD_JUMP] = "icon_jump.png",
+	[CMD_TURN] = "icon_turn.png",
 	[CMD_DASH] = "icon_dash.png",
 	[CMD.ATTACK] = "icon_attack.png",
 	[CMD.MANUALFIRE] = "icon_manualfire.png",
+	[CMD_UNIT_SET_TARGET] = "icon_settarget.png",
 	[CMD.FIGHT] = "icon_fight.png",
 	[CMD.REPAIR] = "icon_repair.png",
 	[CMD.PATROL] = "icon_patrol.png",
@@ -205,6 +209,8 @@ local function tooltipExtension(tooltip,cmdAction)
 			tooltip = tooltip .. "."..tooltipHotkey("j","jump")
 		elseif cmdAction == "dash" then
 			tooltip = tooltip .. "."..tooltipHotkey("j","dash")
+		elseif cmdAction == "turn" then
+			tooltip = tooltip .. "."..tooltipHotkey(nil,"turn")
 		elseif cmdAction == "attack" then
 			tooltip = tooltip .. ". Click-drag to attack targets within an area."..tooltipHotkey("a","attack")
 		elseif cmdAction == "fight" then
@@ -217,6 +223,8 @@ local function tooltipExtension(tooltip,cmdAction)
 			tooltip = tooltip .. ". Click-drag to reclaim targets within an area."..tooltipHotkey("e","reclaim")
 		elseif cmdAction == "cloak" then
 			tooltip = tooltip .. ". Also toggles fire state."..tooltipHotkey("k","cloak")
+		elseif cmdAction == "settarget" then
+			tooltip = tooltip .. ". Click-drag to mark enemies within an area."..tooltipHotkey("y","settarget")
 		elseif cmdAction == "areamex" then
 			tooltip = tooltip .. "."..tooltipHotkey(nil,"areamex")
 		elseif cmdAction == "areamex2" then
@@ -1065,6 +1073,8 @@ local function GetCommands()
 		[7] = true, --deathwait
 		[6] = true, --timewait
 		[135] = true, --autorepairlevel
+		[CMD_UNIT_SET_TARGET_NO_GROUND] = true,
+		[CMD_UNIT_CANCEL_TARGET] = true,
 	}
 	
 	local buildCmds = {}

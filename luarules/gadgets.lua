@@ -247,6 +247,7 @@ end
 --------------------------------------------------------------------------------
 
 function gadgetHandler:Initialize()
+	Spring.Echo("HERE!")
   local unsortedGadgets = {}
 
   -- get the gadget names

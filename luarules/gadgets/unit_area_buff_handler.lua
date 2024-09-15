@@ -233,9 +233,9 @@ end
 
 function gadget:GameFrame(n)
 	local allUnits = spGetAllUnits()
-	local DASH_SPEED_MOD = 0.3
-	local DASH_SPEED_MOD_MIN = 0.3
-	local DASH_SPEED_MOD_MAX = 0.6
+	local DASH_SPEED_MOD = 0.4
+	local DASH_SPEED_MOD_MIN = 0.4
+	local DASH_SPEED_MOD_MAX = 0.7
 	local DASH_BASE_SPEED_REF = 45
 
 	-- idle here means not taking damage for a while
@@ -822,32 +822,24 @@ function updateUnitSpeedModifier(unitId, modifier)
 		local spd =  ud.speed * modifier
 		local turnRate = ud.turnRate
 		-- disable turn rate for immobilized units
-		if (modifier == 0) then
+		if (modifier > 1) then
+			turnRate = turnRate * modifier
+		elseif (modifier == 0) then
 			turnRate = 0
 		end
-		--local isJumping = spGetUnitRulesParam(unitId,"is_jumping")
-		--isJumping = isJumping and (isJumping == 1)
-		 
+		
 		-- strafe air
-		if (ud.canFly and ud.isStrafingAirUnit and not ud.hoverAttack) then 
-			spSetAirMoveTypeData(unitId,{maxSpeed=spd,maxWantedSpeed=spd})
-			--spSetAirMoveTypeData(unitId,"useWantedSpeed[0]",false)
-			--spSetAirMoveTypeData(unitId,"useWantedSpeed[1]",false)
-			--enforceSpeedChange(unitId,spd)
+		if (ud.canFly and ud.isStrafingAirUnit and not ud.hoverAttack) then
+			local acceleration = ud.maxAcc * modifier 
+			spSetAirMoveTypeData(unitId,{maxSpeed=spd,maxWantedSpeed=spd,maxAcc=acceleration})
 		-- hover air
 		elseif (ud.canFly and ud.isHoveringAirUnit) then
-			spSetGunshipMoveTypeData(unitId,{maxSpeed=spd,maxWantedSpeed=spd})
-			--spSetGunshipMoveTypeData(unitId,"useWantedSpeed[0]",false)
-			--spSetGunshipMoveTypeData(unitId,"useWantedSpeed[1]",false)
-			--enforceSpeedChange(unitId,spd)
+			--TODO acceleration??
+			spSetGunshipMoveTypeData(unitId,{maxSpeed=spd,maxWantedSpeed=spd,turnRate=turnRate})
 		-- ground
-		elseif (ud.canMove and not ud.isBuilding) then	
-			--if not isJumping then 
-				spSetGroundMoveTypeData(unitId,{maxSpeed=spd,maxWantedSpeed=spd,turnRate=turnRate})
-			--end
-			--spSetGroundMoveTypeData(unitId,"useWantedSpeed[0]",false)
-			--spSetGroundMoveTypeData(unitId,"useWantedSpeed[1]",false)
-			--enforceSpeedChange(unitId,spd)
+		elseif (ud.canMove and not ud.isBuilding) then
+			--TODO acceleration??	
+			spSetGroundMoveTypeData(unitId,{maxSpeed=spd,maxWantedSpeed=spd,turnRate=turnRate})
 		end
 	end
 end

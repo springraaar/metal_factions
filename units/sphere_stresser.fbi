@@ -25,7 +25,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=4500;
+	maxDamage=5500;
 	footprintx=6;
 	footprintz=6;
 
@@ -80,14 +80,16 @@
 	//***********
 	weapon1=sphere_stresser_missile;
 	weaponMainDir1=0 0 -1;
-	maxAngleDif1=300;
+	maxAngleDif1=320;
 	weapon2=sphere_stresser_missile2;
 	weaponMainDir2=0 0 1;
-	maxAngleDif2=300;
+	maxAngleDif2=320;
 	weapon3=sphere_stresser_shield;
+	weapon4=sphere_stresser_missile3;
 	noChaseCategory=WEAPON;
 	badTargetCategory1=NOTAIR;
 	badTargetCategory2=NOTAIR;
+	badTargetCategory4=VTOL;
 	explodeAs=HUGE_UNIT;
 	selfDestructAs=HUGE_UNIT;
 
@@ -100,8 +102,8 @@
 	//  Miscellaneous
 	//*****************
 	collisionVolumeType = box;
-	collisionVolumeScales =50 65 90;
-	collisionVolumeOffsets = 0 -20 0;
+	collisionVolumeScales =50 70 95;
+	collisionVolumeOffsets = 0 -15 0;
 	collisionVolumeTest = 1;
 
 	[CustomParams]
@@ -115,8 +117,8 @@
 		explosionGenerator1=custom:rocketflaresml;
 		explosionGenerator2=custom:UNITFIRE;
 	}
-	buildCostEnergy=12598;//#AUTO#
-	buildCostMetal=2519;//#AUTO#
-	buildTime=30025;//#AUTO#
-	mass=3143;//#AUTO#
+	buildCostEnergy=20123;//#AUTO#
+	buildCostMetal=4024;//#AUTO#
+	buildTime=47961;//#AUTO#
+	mass=4346;//#AUTO#
 }

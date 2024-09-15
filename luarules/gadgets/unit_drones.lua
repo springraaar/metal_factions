@@ -61,13 +61,12 @@ local random = math.random
 
 local idleFrames = 30
 
-local droneOwnersLimits = {}  -- set of drone unit names and limits by unit id  
-local droneOwnersDrones = {}  -- set of drone unit names and quantities by unit id
+local droneOwnersLimits = {}  -- map of drone unit names and limits by unit id  
+local droneOwnersDrones = {}  -- map of drone unit names and active quantities by unit id
 local droneOwnersQueues = {}  -- list of drone unit names to be spawned by unit id
-local droneOwnersLastBuildStepFrameNumber = {} -- last build step for each drone owner
-local droneUnderConstruction = {}  -- list of drone ids under construction by owner id
-local droneBuildStalled = {}
-local droneOwnersByDrone = {}	-- owner id by drone id
+local droneOwnersLastBuildStepFrameNumber = {} -- last build step for each drone owner and spawn point
+local droneExtraProperties = {}	-- {owner id, spawn point index, spawn point offsets} by drone id
+local droneUnderConstruction = {}  -- extra properties by drone id (as above) but only for drones under construction
 
 GG.droneOwnersDrones = droneOwnersDrones
 
@@ -83,8 +82,6 @@ local DRONE_BUILD_ENERGY_FACTOR = 1.0
 local DRONE_BUILD_ENERGY_MIN = 500
 
 local DRONE_CONSTRUCTION_Y = 100
-local DRONE_CONSTRUCTION_Y_SKEIN = 35
-local skeinDefId = UnitDefNames["aven_skein"].id
 
 local LIGHT_DRONE_LEASH_DISTANCE = 600
 local BUILDER_DRONE_LEASH_DISTANCE = 600
@@ -184,6 +181,7 @@ local droneNamesForUnitDefName = {
 	aven_u5commander = avenDrones,
 	aven_u6commander = avenDrones,
 	aven_u7commander = avenDrones,	
+	aven_archangel = avenDrones,
 	aven_skein = avenDrones,
 	aven_paladin = avenDrones,
 	gear_adv_construction_kbot = gearDrones,
@@ -211,8 +209,24 @@ local droneNamesForUnitDefName = {
 	sphere_u4commander = sphereDrones,
 	sphere_u5commander = sphereDrones,
 	sphere_u6commander = sphereDrones,
-	sphere_u7commander = sphereDrones
+	sphere_u7commander = sphereDrones,
+	sphere_attritor = sphereDrones
 }
+
+-- array of spawn points, each with x,y,z offset properties as array entries
+local droneSpawnPointsByDefId = {
+	[UnitDefNames["aven_archangel"].id] = {{0,90,0},{-50,-12,0},{50,-12,0}},		
+	[UnitDefNames["aven_skein"].id] = {{0,35,0}},
+	[UnitDefNames["sphere_attritor"].id] = {{-32,70,-25},{32,70,-25}}
+}
+
+-- add a default spawn point for all others
+for uName,_ in pairs(droneNamesForUnitDefName) do
+	local defId = UnitDefNames[uName].id
+	if not droneSpawnPointsByDefId[defId] then
+		droneSpawnPointsByDefId[defId] = {{0,DRONE_CONSTRUCTION_Y,0}}
+	end
+end
 
 local droneBuildCEG = "dronebuild"
 
@@ -259,7 +273,8 @@ function gadget:GameFrame(n)
 	end
 	markedForDestruction = {}
 	-- another check to ensure drones are destroyed if the parent unit is no longer functional 
-	for uId,ownerId in pairs(droneOwnersByDrone) do
+	for uId,props in pairs(droneExtraProperties) do
+		local ownerId = props[1]
 		local ownerDead = spGetUnitIsDead(ownerId)
 		if (ownerDead == nil or ownerDead == true) then
 			spDestroyUnit(uId)
@@ -286,7 +301,8 @@ function gadget:GameFrame(n)
 		-- update table of units with drones
 		local hasDrones = nil
 		for _,unitId in pairs(spGetAllUnits()) do
-			local uName = UnitDefs[spGetUnitDefID(unitId)].name
+			local ud = UnitDefs[spGetUnitDefID(unitId)]
+			local uName = ud.name
 			local set = {} 
 			
 			local hasAny = false
@@ -342,78 +358,95 @@ function gadget:GameFrame(n)
 					droneOwnersDrones[unitId] = {}
 				end
 				if droneOwnersLastBuildStepFrameNumber[unitId] == nil then
-					droneOwnersLastBuildStepFrameNumber[unitId] = 0
+					local spawnPointsInfo = droneSpawnPointsByDefId[ud.id]
+					if spawnPointsInfo then
+						local t = {}
+						for i=1,#spawnPointsInfo do
+							t[i] = 0
+						end
+						droneOwnersLastBuildStepFrameNumber[unitId] = t
+					else	-- 1 spawn point
+						droneOwnersLastBuildStepFrameNumber[unitId] = {0}
+					end
 				end
 			end
 		end
 
 		
-		-- for each droner unit
+		-- for each drone owner unit
 		local x, y, z, dx, dy, dz, up, px, py, pz
 		local teamId, inQueue
 		for ownerId,limits in pairs(droneOwnersLimits) do
 			local ownerStunned = spGetUnitIsStunned(ownerId)
 			local droneProduction = spGetUnitRulesParam(ownerId,"droneProduction")
+			local droneProductionDisabled = (droneProduction and tonumber(droneProduction) == 0)
+			local ownerDefId = spGetUnitDefID(ownerId)
+			local canBuild = false
+			local hp,maxHp,_,_,bp = spGetUnitHealth(ownerId)
+			local ownerBuilt = bp and bp >= 1
 			
-			-- check rebuild delay
-			if (not (ownerStunned or (droneProduction and tonumber(droneProduction) == 0))) and (n - droneOwnersLastBuildStepFrameNumber[ownerId]) >= (DRONE_REBUILD_DELAY_STEPS * DRONE_CHECK_DELAY) then
-				-- check if the drone owner is fully built, if not, don't do anything
-				local hp,maxHp,_,_,bp = spGetUnitHealth(ownerId)
-				if bp and bp >= 1 then
-					-- if has less drones than the allowed limits alive + in queue, add to queue
-					for uName,uLimit in pairs(limits) do
-						inQueue = 0
-						-- count drones of that type previously added to build queue
-						if #droneOwnersQueues[ownerId] > 0 then
-	 						for i,n in ipairs(droneOwnersQueues[ownerId]) do
-	 							if n == uName then
-	 								inQueue = inQueue + 1
-	 							end
-	 						end
-	 					end
-						--Spring.Echo("QUEUE "..uName.." : "..inQueue.." ALIVE : "..(droneOwnersDrones[ownerId][uName] and #droneOwnersDrones[ownerId][uName] or 0) )
-						if not droneOwnersDrones[ownerId][uName] or (#droneOwnersDrones[ownerId][uName] + inQueue < uLimit) then
-							table.insert(droneOwnersQueues[ownerId],1,uName)
-						end
-					end
-				
-					-- if queue is not empty, remove from queue and spawn new drone
-					if #droneOwnersQueues[ownerId] > 0 then
-						-- get team
-						teamId = spGetUnitTeam(ownerId)
-					
-						local uName = table.remove(droneOwnersQueues[ownerId])
-						if (not droneOwnersDrones[ownerId][uName]) then
-							droneOwnersDrones[ownerId][uName] = {}
-						end
-						
-						-- check again if count of drones already alive is below limit
-						-- do this because of reasons
-						local yOffset = (spGetUnitDefID(ownerId)== skeinDefId) and DRONE_CONSTRUCTION_Y_SKEIN or DRONE_CONSTRUCTION_Y
-						if #droneOwnersDrones[ownerId][uName] < limits[uName] then
-							-- spawn drone
-							x, y, z, dx, dy, dz = getUnitPositionAndDirection(ownerId)
-							if y then		
-								_,up,_ = spGetUnitVectors(ownerId)
-								px = x + up[1] * yOffset
-								py = y + up[2] * yOffset
-								pz = z + up[3] * yOffset
-								local droneId = spCreateUnit(uName,px,py,pz,0,teamId,true)
-								
-								if droneId and droneId > 0 then
-									spSetUnitDirection(droneId, dx, dy, dz)
-									-- add to drone owner's set
-									droneOwnersDrones[ownerId][uName][#(droneOwnersDrones[ownerId][uName]) + 1] = droneId
-									droneOwnersByDrone[droneId] = ownerId
-								end
-								
-								droneOwnersLastBuildStepFrameNumber[ownerId] = n
+			-- if owner built and not disabled, check each spawn point
+			local spawnPointsInfo = droneSpawnPointsByDefId[ownerDefId]
+			if spawnPointsInfo and (not (ownerStunned or droneProductionDisabled)) and bp and bp >= 1 then
+				for pIdx,pInfo in ipairs(spawnPointsInfo) do
+					local lastBuildFrame = droneOwnersLastBuildStepFrameNumber[ownerId][pIdx] 						
+					-- check rebuild delay
+					if 	(n - lastBuildFrame) >= (DRONE_REBUILD_DELAY_STEPS * DRONE_CHECK_DELAY) then
+						-- if has less drones than the allowed limits alive + in queue, add to queue
+						for uName,uLimit in pairs(limits) do
+							inQueue = 0
+							-- count drones of that type previously added to build queue
+							if #droneOwnersQueues[ownerId] > 0 then
+		 						for i,n in ipairs(droneOwnersQueues[ownerId]) do
+		 							if n == uName then
+		 								inQueue = inQueue + 1
+		 							end
+		 						end
+		 					end
+							--Spring.Echo("QUEUE "..uName.." : "..inQueue.." ALIVE : "..(droneOwnersDrones[ownerId][uName] and #droneOwnersDrones[ownerId][uName] or 0) )
+							if not droneOwnersDrones[ownerId][uName] or (#droneOwnersDrones[ownerId][uName] + inQueue < uLimit) then
+								table.insert(droneOwnersQueues[ownerId],1,uName)
 							end
-						else
-							--Spring.Echo("extra "..uName.." was in queue")
+						end
+					
+						-- if queue is not empty, remove from queue and spawn new drone
+						if #droneOwnersQueues[ownerId] > 0 then
+							-- get team
+							teamId = spGetUnitTeam(ownerId)
+						
+							local uName = table.remove(droneOwnersQueues[ownerId])
+							if (not droneOwnersDrones[ownerId][uName]) then
+								droneOwnersDrones[ownerId][uName] = {}
+							end
+
+							-- spawn drone							
+							local xOffset = pInfo[1]
+							local yOffset = pInfo[2]
+							local zOffset = pInfo[3]
+							if #droneOwnersDrones[ownerId][uName] < limits[uName] then
+								x, y, z, dx, dy, dz = getUnitPositionAndDirection(ownerId)
+								if y then		
+									front,up,right = spGetUnitVectors(ownerId)
+									px = x + front[1] * zOffset + up[1] * yOffset + right[1] * xOffset
+									py = y + front[2] * zOffset + up[2] * yOffset + right[2] * xOffset
+									pz = z + front[3] * zOffset + up[3] * yOffset + right[3] * xOffset
+									local droneId = spCreateUnit(uName,px,py,pz,0,teamId,true)
+									
+									if droneId and droneId > 0 then
+										spSetUnitDirection(droneId, dx, dy, dz)
+										-- add to drone owner's set
+										droneOwnersDrones[ownerId][uName][#(droneOwnersDrones[ownerId][uName]) + 1] = droneId
+										droneExtraProperties[droneId] = {ownerId,pIdx,pInfo}
+									end
+									
+									droneOwnersLastBuildStepFrameNumber[ownerId][pIdx] = n
+								end
+							else
+								--Spring.Echo("extra "..uName.." was in queue")
+							end
 						end
 					end
-				end
+				end	
 			end
 		end
 		
@@ -466,19 +499,18 @@ function gadget:GameFrame(n)
 						
 						--Spring.Echo("drone hp="..hp.." newHp="..newHp)
 						
+						droneOwnersLastBuildStepFrameNumber[ownerId][droneExtraProperties[uId][2]] = n
+						droneUnderConstruction[uId] = droneExtraProperties[uId]
+
 						-- check resources
 						if drainEnergyIfAvailable(uId,ownerId,DRONE_BUILD_ENERGY_MIN, drainE ) then
 							spSetUnitHealth(uId, {health = newHp, build = newBp})
-							droneBuildStalled[uId] = nil
+							droneUnderConstruction[uId][4] = nil
 						else
-							droneBuildStalled[uId] = bp
+							droneUnderConstruction[uId][4] = bp
 						end
-						
-						droneOwnersLastBuildStepFrameNumber[ownerId] = n
-						droneUnderConstruction[uId] = ownerId
 					else
 						droneUnderConstruction[uId] = nil
-						droneBuildStalled[uId] = nil
 						
 						-- if too far from owner, move closer
 						x,_,z = spGetUnitPosition(uId)
@@ -518,24 +550,31 @@ function gadget:GameFrame(n)
 	-- update position and speed for drones under construction
 	-- match owner's position to "attach" them to point above owner
 	-- also show effect
-	local ox, oy, oz, odx, ody, odz, ovx, ovy, ovz, orx, ory, orz, px,py,pz
-	for uId,ownerId in pairs(droneUnderConstruction) do
+	local ox, oy, oz, odx, ody, odz, ovx, ovy, ovz, orx, ory, orz, px,py,pz,xOffset,yOffset,Zoffset,front,up,right,ownerId,pInfo,buildStalledAt
+	for uId,props in pairs(droneUnderConstruction) do
+		ownerId = props[1]
+		pInfo = props[3]
+		buildStalledAt = props[4] 
 		if markedForDestruction[uId] then
 			markedForDestruction[uId] = nil
 		else
 			ox, oy, oz, odx, ody, odz = getUnitPositionAndDirection(ownerId)
 			ovx,ovy,ovz = spGetUnitVelocity(ownerId)
 			orx,ory,rvz = spGetUnitRotation(ownerId)
-			local yOffset = (spGetUnitDefID(ownerId)== skeinDefId) and DRONE_CONSTRUCTION_Y_SKEIN or DRONE_CONSTRUCTION_Y
+			
+			xOffset = pInfo[1]
+			yOffset = pInfo[2]
+			zOffset = pInfo[3]
+
 			if ox then
-				_,up,_ = spGetUnitVectors(ownerId)
-				px = ox + up[1] * yOffset
-				py = oy + up[2] * yOffset
-				pz = oz + up[3] * yOffset
+				front,up,right = spGetUnitVectors(ownerId)
+				px = ox + front[1] * zOffset + up[1] * yOffset + right[1] * xOffset
+				py = oy + front[2] * zOffset + up[2] * yOffset + right[2] * xOffset
+				pz = oz + front[3] * zOffset + up[3] * yOffset + right[3] * xOffset
 	
 				spSetUnitPhysics(uId,px,py,pz,ovx,ovy,ovz,orx,ory,0,0,0,0)
 				
-				if not droneBuildStalled[uId] then
+				if not buildStalledAt then
 					if n%2 == 0 then
 						spSpawnCEG(droneBuildCEG, px,py,pz)
 					end
@@ -549,8 +588,8 @@ end
 function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 	local ud = UnitDefs[unitDefID] 
 	if isDrone(ud) then
-		if droneOwnersByDrone[unitID] then
-			droneOwnersByDrone[unitID] = nil
+		if droneExtraProperties[unitID] then
+			droneExtraProperties[unitID] = nil
 		end
 		--Spring.Echo("drone died "..unitID)
 		droneUnderConstruction[unitID] = nil
@@ -565,25 +604,23 @@ function gadget:UnitDestroyed(unitID, unitDefID, unitTeam)
 				end 
 			end
 		end
-	elseif isCommander(ud) then
-		if droneOwnersDrones[unitID] then
-
-			-- kill all drones owned by the dying commander
-			local drones = droneOwnersDrones[unitID]
-			for uName,uIdSet in pairs(drones) do
-				--Spring.Echo("set had "..#uIdSet.." drones")
-				for _,uId in pairs(uIdSet) do
-					--Spring.Echo("Commander died, killing drone "..uId)
-					markedForDestruction[uId] = unitID
-				end 
-			end
-			
-			-- empty sets
-			droneOwnersLimits[unitID] = nil
-			droneOwnersDrones[unitID] = nil
-			droneOwnersQueues[unitID] = nil
-			droneOwnersLastBuildStepFrameNumber[unitID] = nil
+	elseif droneOwnersDrones[unitID] then
+		-- kill all drones owned by the dying unit
+		local drones = droneOwnersDrones[unitID]
+		for uName,uIdSet in pairs(drones) do
+			--Spring.Echo("set had "..#uIdSet.." drones")
+			for _,uId in pairs(uIdSet) do
+				--Spring.Echo("Commander died, killing drone "..uId)
+				markedForDestruction[uId] = unitID
+			end 
 		end
+		
+		-- empty sets
+		droneOwnersLimits[unitID] = nil
+		droneOwnersDrones[unitID] = nil
+		droneOwnersQueues[unitID] = nil
+		droneOwnersLastBuildStepFrameNumber[unitID] = nil
+
 	end
 end
 

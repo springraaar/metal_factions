@@ -76,8 +76,8 @@
 	weapon1=gear_intimidator_cannon;
 	badTargetCategory1=VTOL;
 	onlytargetcategory1=NOTAIR;
-	explodeAs=ATOMIC_BLASTSML;
-	selfDestructAs=ATOMIC_BLAST;
+	explodeAs=LRPC_BLAST;
+	selfDestructAs=LRPC_BLAST;
 
 	//************************************************************
 	//  Orders
@@ -97,8 +97,8 @@
 		builtBy=gear_l2builder;
 		canAreaAttack=1;
 	}
-	buildCostEnergy=55410;//#AUTO#
-	buildCostMetal=11082;//#AUTO#
-	buildTime=132062;//#AUTO#
-	mass=15420;//#AUTO#
+	buildCostEnergy=55465;//#AUTO#
+	buildCostMetal=11093;//#AUTO#
+	buildTime=132193;//#AUTO#
+	mass=15432;//#AUTO#
 }

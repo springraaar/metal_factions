@@ -34,6 +34,9 @@ effectUnitDefs = {
   sphere_rain = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
   },
+  sphere_attritor = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.4}, areaShieldSphere)}
+  },  
   sphere_pulsar = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
   },
@@ -74,7 +77,7 @@ effectUnitDefs = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.65}, atomShieldSphere)}
   },
   sphere_stresser = {
-	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.3}, areaShieldSphere)}
   },  
   sphere_u1commander = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
@@ -216,7 +219,14 @@ effectUnitDefs = {
   aven_zephyr = {
     {class='AirJet',options={color={0.3,0.1,0}, width=7, length=40, piece="ljp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=7, length=40, piece="rjp", onActive=true}}
-  },    
+  },
+  aven_archangel = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=8, length=30, piece="lj1p", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=8, length=30, piece="lj2p", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=8, length=30, piece="rj1p", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=8, length=30, piece="rj2p", onActive=true,down=true}}
+  },
+  
   ----------------- GEAR
   gear_fink = {
     {class='AirJet',options={color={0.3,0.1,0}, width=4, length=30, piece="jp1", onActive=true}}

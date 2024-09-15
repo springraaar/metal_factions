@@ -1,7 +1,7 @@
 function widget:GetInfo()
   return {
     name      = "Minimap Events (MF version)",
-    desc      = "Display ally events and battle damages in the minimap",
+    desc      = "Display indicators on map/minimap for units under attack and long range rocket impacts",
     author    = "raaar, based on widget by trepan",
     date      = "2019",
     license   = "PD",
@@ -13,7 +13,6 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
--- Automatically generated local definitions
 
 local GL_LINE_LOOP           = GL.LINE_LOOP
 local GL_ONE                 = GL.ONE
@@ -44,64 +43,103 @@ local spGetUnitPosition      = Spring.GetUnitPosition
 local spGetUnitViewPosition  = Spring.GetUnitViewPosition
 local spIsUnitAllied         = Spring.IsUnitAllied
 local spGetGameFrame         = Spring.GetGameFrame
+local spGetVisibleProjectiles = Spring.GetVisibleProjectiles
+local spGetMyAllyTeamID = Spring.GetMyAllyTeamID
+local spGetProjectileDefID = Spring.GetProjectileDefID
+local spGetProjectileTarget = Spring.GetProjectileTarget
+local spGetProjectilePosition = Spring.GetProjectilePosition
+local spGetProjectileOwnerID = Spring.GetProjectileOwnerID
+local spGetUnitRulesParam = Spring.GetUnitRulesParam
 
 local floor = math.floor
 
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
+VFS.Include("lualibs/util.lua")
 
-local xMapSize = Game.mapX * 512
-local yMapSize = Game.mapY * 512
-local pxScale = 1  -- (xMapSize / minimap xPixels)
-local pyScale = 1  -- (yMapSize / minimap yPixels)
+local vsx, vsy = gl.GetViewSizes()
+local scaleFactor = 1
+if (vsy > 1080) then
+	scaleFactor = vsy / 1080
+end	
 
+local LINE_WIDTH = 2
+local MINIMAP_LINE_WIDTH = 1
+local alpha = 0.3
+local warningColor1    = { 1.0, 0.0, 0.0, 0.2 }
+local warningColor2    = { 1.0, 1.0, 0.0, 0.2 }
 
-local lineWidth = 2  -- set to 0 to remove outlines
-local circleDivs = 16
-local circleList = 0
-local alpha = 0.2
-local damageColor    = { 1.0, 0.2, 0.0, alpha }
+local impactColor1    = { 1.0, 1.0, 0.0, 0.3 }
+local impactColor2    = { 1.0, 0.5, 0.0, 0.3 }
+
 
 local EVENT_DURATION_FRAMES = 45
 local damageEvents = {}
 local lastDamageEventZones = {}
-local REDUNDANT_EVENT_FRAMES = 30
+local REDUNDANT_EVENT_FRAMES = 90
 local zx = 0
 local zz = 0
 
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------
+local lRRocketsInFlight = {}		-- map {proId,{wdId,maxSQDist,targetPos,aoe,active}}
+
+
+----------------------------------------------- auxiliary functions
+
+VFS.Include("lualibs/circles.lua")
+
+local function updateCirclesToDraw()
+	circlesToDraw = {}			-- x,y,z,radius,color
+	minimapCirclesToDraw = {}	-- x,z,radius,color
+
+	-- update circles for damage events
+	local currentFrame = spGetGameFrame()
+	local px,pz,f,scale
+	for i,ev in pairs(damageEvents) do
+	    px = ev.px
+	    pz = ev.pz
+	    f = ev.f
+    
+		scale = 20 * (1 - (currentFrame - f) / EVENT_DURATION_FRAMES) 
+    
+		if (scale > 1) then
+    		--Spring.Echo("px="..px.." pz="..pz.." scale="..tonumber(scale))
+    		minimapCirclesToDraw[#minimapCirclesToDraw+1] = {px,pz,scale*20,warningColor1}
+    		minimapCirclesToDraw[#minimapCirclesToDraw+1] = {px,pz,scale*20+100,warningColor2}
+		else
+			damageEvents[i] = nil
+		end
+	end
+	
+	-- update circles for long range rocket impacts
+	for proId,props in pairs(lRRocketsInFlight) do
+		local maxDist = props.maxSQDist
+		local maxRadius = props.aoe
+		local x,y,z = spGetProjectilePosition(proId)
+		local targetPos = props.targetPos 
+		local tx = targetPos[1]
+		local ty = targetPos[2]
+		local tz = targetPos[3]
+		if y and maxDist > 0 then
+			local curDist =  sqDistance3D(x,tx,y,ty,z,tz)
+			local drawRadius = maxRadius * min(sqrt(curDist/maxDist),1)
+			addCircle(tx,ty,tz,drawRadius,impactColor1,true)
+			addCircle(tx,ty,tz,maxRadius,impactColor2,true)
+		else
+			lRRocketsInFlight[proId] = nil
+		end
+	end
+end
+
+
+
+----------------------------------------------- engine callins
 
 function widget:Initialize()
-
-  circleList = glCreateList(function()
-    glBeginEnd(GL_TRIANGLE_FAN, function()
-      for i = 0, circleDivs - 1 do
-        local r = 2.0 * math.pi * (i / circleDivs)
-        local cosv = math.cos(r)
-        local sinv = math.sin(r)
-        glTexCoord(cosv, sinv)
-        glVertex(cosv, 0, sinv)
-      end
-    end)
-    if (lineWidth > 0) then
-      glBeginEnd(GL_LINE_LOOP, function()
-        for i = 0, circleDivs - 1 do
-          local r = 2.0 * math.pi * (i / circleDivs)
-          local cosv = math.cos(r)
-          local sinv = math.sin(r)
-          glTexCoord(cosv, sinv)
-          glVertex(cosv, 0, sinv)
-        end
-      end)
-    end
-  end)
+	initCircleDLists()
 end
-
 
 function widget:Shutdown()
-  glDeleteList(circleList)
+	removeCircleDLists()
 end
+
 
 function widget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer)
 	if (not spIsUnitAllied(unitID)) then
@@ -133,53 +171,33 @@ function widget:UnitDamaged(unitID, unitDefID, unitTeam, damage, paralyzer)
 	end
 end
 
+function widget:Update(dt)
+	timeSinceLastCircleUpdate = timeSinceLastCircleUpdate + dt
+	-- limit circles update rate to ~17x per second 
+	if timeSinceLastCircleUpdate > 0.06 then
+		updateCirclesToDraw()
+		timeSinceLastCircleUpdate = 0
+	end
+end
+
 function widget:DrawInMiniMap(xSize, ySize)
-	if (next(damageEvents)  == nil) then
-		return
-	end
---  glSmoothing(false, false, false)
---  glBlending(GL_SRC_ALPHA, GL_ONE)
-	glLineWidth(lineWidth)
-
-	-- setup the pixel scales
-	pxScale = xMapSize / xSize
-	pyScale = yMapSize / ySize
-
 	glPushMatrix()
-
-	glLoadIdentity()
-	glTranslate(0, 1, 0)
-	glScale(1 / xMapSize, 1 / yMapSize, 1)
-	glRotate(90, 1, 0, 0)
-
-	local currentFrame = spGetGameFrame()
-	local px,pz,f,scale
-	for i,ev in pairs(damageEvents) do
-	    px = ev.px
-	    pz = ev.pz
-	    f = ev.f
-    
-		scale = 20 * (1 - (currentFrame - f) / EVENT_DURATION_FRAMES) 
-    
-		if (scale > 1) then
-    		--Spring.Echo("px="..px.." pz="..pz.." scale="..tonumber(scale))
-			glColor(damageColor)
-			glPushMatrix()
-			glTranslate(px, 0, pz)
-			glScale(scale*pxScale, 1, scale*pyScale)
-			glCallList(circleList)
-			glPopMatrix()
-		else
-			damageEvents[i] = nil
-		end
+	glCallList(minimapTransformDList)
+	
+	glLineWidth(MINIMAP_LINE_WIDTH)
+	for _,circle in ipairs(minimapCirclesToDraw) do
+		drawMinimapCircle(circle[1],circle[2],circle[3],circle[4])
 	end
-
-
 	glPopMatrix()
-	glLineWidth(1)
 	glColor(1,1,1,1)
---  glBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
---  glSmoothing(true, true, false)
+end
+
+function widget:DrawWorld()
+	glLineWidth(LINE_WIDTH)
+	for _,circle in ipairs(circlesToDraw) do
+		drawGroundCircle(circle[1],circle[2],circle[3],circle[4],circle[5])
+	end
+	glColor(1,1,1,1)
 end
 
 function widget:GameFrame(f)
@@ -192,7 +210,34 @@ function widget:GameFrame(f)
 			end
 		end
 	end
+	-- check allied projectiles for long range rockets in flight, track them 
+	if (f%30 == 0) then
+		local allyId = spGetMyAllyTeamID() 
+		local projectiles = spGetVisibleProjectiles(allyId)
+		
+		for _,proId in pairs(projectiles) do
+			if not lRRocketsInFlight[proId] then
+				local wdId = spGetProjectileDefID(proId)
+				local wd = WeaponDefs[wdId]
+				if wd and wd.customParams and tonumber(wd.customParams.drawimpactindicator) == 1 then
+					local sx,sy,sz = spGetProjectilePosition(proId)
+					
+					local ownerUnitId = spGetProjectileOwnerID(proId)
+					
+					local originalTargetStr = spGetUnitRulesParam(ownerUnitId,"originalTargetPos")
+					if originalTargetStr then
+						local components = splitString(originalTargetStr,"|")
+						tx = tonumber(components[1]) 
+						ty = tonumber(components[2])
+						tz = tonumber(components[3])
+						
+						if (sy and ty) then
+							local maxSQDist = sqDistance3D(sx,tx,sy,ty,sz,tz)			
+							lRRocketsInFlight[proId] = {wdId,maxSQDist=maxSQDist,targetPos={tx,ty,tz},aoe=wd.damageAreaOfEffect }
+						end 
+					end
+				end
+			end
+		end
+	end
 end 
-
---------------------------------------------------------------------------------
---------------------------------------------------------------------------------

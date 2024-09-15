@@ -195,6 +195,8 @@ function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attac
 		end
 	end
 
+	-- TODO broken logic/remove? (replaced by settarget command anyway)
+	--[[
 	if targetForUnitId[attackerID] then
 		-- only do this if in range of the target
 		if (spGetUnitWeaponTestRange(attackerID, attackerWeaponNum, targetForUnitId[attackerID]) == true) then
@@ -212,7 +214,7 @@ function gadget:AllowWeaponTarget(attackerID, targetID, attackerWeaponNum, attac
 			targetForUnitId[attackerID] = nil
 		end
 	end
-	
+	]]--
 	
 	if targetID and tonumber(targetID) > 0 then
 		-- avoid aiming at targets that are marked as about to die

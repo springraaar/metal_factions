@@ -94,7 +94,7 @@ if (vsy > 1080) then
 end	
 local iconSizeX = math.floor(ICON_SIZE*scaleFactor)
 local iconSizeY = iconSizeX
-local fontSize = iconSizeY * 0.5
+local fontSize = iconSizeY * 0.4
 
 local selRectMinX = 0
 local selRectMaxX = 0
@@ -225,7 +225,18 @@ local function drawUnitDefTexture(type, unitDefID, iconPos, count)
 
 	-- draw the count text
 	glColor(1, 1, 1)
-	glText(count, (xmin + xmax) * 0.5, (ymin + ymax)* 0.5 - fontSize*0.5, fontSize, "oc")
+	glText(count, xmid, ymid - fontSize*0.5, fontSize, "oc")
+	
+	-- draw the autogroup text, if any
+	local nAG = WG.autoGroupByUDefId[unitDefID]
+	if nAG then
+		glColor(0.3, 1, 0.3)
+		local xAG = 0.85*xmin + 0.15*xmax
+		local yAG = 0.15*ymin + 0.85*ymax
+		local fontSizeAG = fontSize*0.7
+		glText(nAG, xAG, yAG - fontSizeAG*0.5, fontSizeAG, "oc")
+		glColor(1, 1, 1)
+	end
 	
 	if type == TYPE_IDLE_BUILDER then
 		-- draw builder-type border
@@ -627,7 +638,7 @@ function widget:ViewResize(viewSizeX, viewSizeY)
 	end
 	iconSizeX = math.floor(52*scaleFactor)
 	iconSizeY = iconSizeX
-	fontSize = iconSizeY * 0.5
+	fontSize = iconSizeY * 0.4
 end
 
 -------------------------------------------------------------------------------

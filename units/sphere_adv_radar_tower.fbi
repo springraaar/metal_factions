@@ -41,10 +41,6 @@
 	//  Building
 	//************
 	yardMap=oooo oooo oooo oooo;
-	collisionvolumetype=cyly;
-	collisionVolumeScales=50 70 50;
-	collisionVolumeOffsets=0 0 0;
-	collisionVolumeTest = 1;
 	activateWhenBuilt=1;
 
 	//************************************************************
@@ -62,7 +58,6 @@
 	//  Movement
 	//************
 	maxSlope=10;
-	maxWaterDepth=22;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -84,6 +79,12 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
+	collisionvolumetype=cyly;
+	collisionVolumeScales=50 70 50;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+	floater=1;
+	waterline=0;
 
 	[CustomParams]
 	{

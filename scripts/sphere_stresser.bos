@@ -6,7 +6,7 @@
 #define HEADING_TOLERANCE	<25>
 #define PITCH_TOLERANCE		<20>
 
-piece  base, hull, bottom, h2,turret, sleeve, barrel, flare, turret2, sleeve2, b1,f1,b2,f2,b3,f3,b4,f4, wake1, wake2, depthcharge, shieldpt;
+piece  base, hull, bottom, h2,turret, sleeve, barrel, flare, turret2, sleeve2, b1,f1,b2,f2,b3,f3,b4,f4, wake1, wake2, depthcharge, shieldpt,fdoor1,fdoor2,fmispt,fhole;
 
 static-var  gun_2;
 
@@ -241,11 +241,36 @@ FireTertiary()
 {
 	return(0);
 }
-SweetSpot(piecenum)
+
+
+AimWeapon4(heading, pitch)
 {
-	piecenum = hull;
+	return (1);
+}
+
+FireWeapon4()
+{
+	turn fdoor1 to z-axis <-40.000000> speed <400.000000>;
+	turn fdoor2 to z-axis <40.000000> speed <400.000000>;
+	emit-sfx 1024 from fmispt;
+	sleep 100;
+	sleep 1000;
+	turn fdoor1 to z-axis <0.000000> speed <80.000000>;
+	turn fdoor2 to z-axis <0.000000> speed <80.000000>;
+}
+
+AimFromWeapon4(piecenum)
+{
+	piecenum = fhole;
 	return (0);
 }
+
+QueryWeapon4(piecenum)
+{
+	piecenum = fmispt;
+	return (0);
+}
+
 
 Killed(severity, corpsetype)
 {

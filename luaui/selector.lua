@@ -230,6 +230,7 @@ function widget:DrawScreen()
   gl.BeginText()
 
   -- draw the header
+  gl.Color(0.8, 0.8, 0.8, 1.0)
   gl.Text("Widget Selector", midx, maxy + 5, fontSize * 1.25, "oc")
 
   -- draw the box
@@ -243,7 +244,7 @@ function widget:DrawScreen()
     { v = { minx, maxy }, t = { minx * ts, maxy * ts } } 
   })
   gl.Texture(false)
-
+  gl.Color(1, 1, 1, 1)
 
   -- draw the widget labels
   local mx,my,lmb,mmb,rmb = Spring.GetMouseState()

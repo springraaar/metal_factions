@@ -36,7 +36,7 @@ AnimateTracks(current,maxSpeed,currentSpeed, delay)
 		currentSpeed = get CURRENT_SPEED;
 		
 		delay = 140 * 100 / SPEEDUP_FACTOR;
-		if ( currentSpeed > 0 AND bMoving )
+		if ( bMoving )
 		{
 			delay = delay - ((currentSpeed * 100) / maxSpeed);
 			

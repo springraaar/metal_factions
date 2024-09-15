@@ -5,7 +5,7 @@
 
 piece  base, aimh, aimv, jet, nano1, nano2, nanospray1, nanospray2, front, nose, back, turret;
 
-static-var  Static_Var_1, bBuilding, nanoPt;
+static-var  buildHeading, bBuilding, nanoPt;
 
 // Signal definitions
 #define SIG_MOVE			2
@@ -32,7 +32,7 @@ StopMoving()
 
 Go()
 {
-	turn turret to y-axis Static_Var_1 speed <240.000000>;
+	turn turret to y-axis buildHeading speed <240.000000>;
 	wait-for-turn turret around y-axis;
 	set INBUILDSTANCE to 1;
 	return (0);
@@ -49,7 +49,7 @@ Stop()
 
 Create()
 {
-	Static_Var_1 = 0;
+	buildHeading = 0;
 	nanoPt = [0];
 	return (0);
 }
@@ -58,7 +58,7 @@ Create()
 StartBuilding(Func_Var_1)
 {
 	signal SIG_BUILD;
-	Static_Var_1 = Func_Var_1;
+	buildHeading = Func_Var_1;
 	start-script Go();
 	return (0);
 }
@@ -89,50 +89,25 @@ QueryNanoPiece(piecenum)
 	return (0);
 }
 
-TargetHeading(Func_Var_1)
+TargetHeading(heading)
 {
-	Static_Var_1 = 0 - Func_Var_1;
-	return (0);
-}
-
-SweetSpot(piecenum)
-{
-	piecenum = base;
+	buildHeading = 0 - heading;
 	return (0);
 }
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
+	if( severity <= 50 )
 	{
 		corpsetype = 1;
 		explode nose type SHATTER | EXPLODE_ON_HIT | BITMAP5;
 		explode back type SHATTER | EXPLODE_ON_HIT | BITMAP5;
 		explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		return (0);
-	}
-	if( severity <= 50 )
-	{
-		corpsetype = 2;
-		explode front type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		explode nose type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		explode back type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		return (0);
-	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode front type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		explode nose type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		explode back type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-		return (0);
 	}
 	corpsetype = 3;
 	explode front type SHATTER | EXPLODE_ON_HIT | BITMAP5;
 	explode nose type SHATTER | EXPLODE_ON_HIT | BITMAP5;
 	explode back type SHATTER | EXPLODE_ON_HIT | BITMAP5;
 	explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP5;
-	return (0);
+	return (corpsetype);
 }

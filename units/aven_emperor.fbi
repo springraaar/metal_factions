@@ -5,7 +5,7 @@
 	//********************
 	side=Aven;
 	name=Emperor;
-	description=Battleship;
+	description=Artillery Battleship;
 	iconType=sea;
 	iconType=shipmulti;
 
@@ -90,7 +90,7 @@
 	badTargetCategory2=VTOL;
 	badTargetCategory3=VTOL;
 	explodeAs=HUGE_UNIT;
-	selfDestructAs=ATOMIC_BLASTSML;
+	selfDestructAs=HUGE_UNIT;
 
 	//************************************************************
 	//  Orders
@@ -121,6 +121,7 @@
 		builtBy=aven_adv_shipyard;
 		canAreaAttack=1;
 		evalfactor=0.85;//SHIP
+		hasTurnButton=1;
 	}
 	buildCostEnergy=33471;//#AUTO#
 	buildCostMetal=6694;//#AUTO#

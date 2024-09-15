@@ -52,6 +52,7 @@ local submarines = {
 	gear_adv_construction_sub = true,
 	claw_spine = true,
 	claw_monster = true,
+	claw_adv_construction_sub = true,
 	sphere_carp = true,
 	sphere_pluto = true,
 	sphere_adv_construction_sub = true

@@ -183,7 +183,7 @@ local function sqDistance(x1,x2,z1,z2)
 end 
  
 
-local x,y,z,vx,vy,vz,v,h,rx,ry,rz, enableGC
+local x,y,z,vx,vy,vz,v,h,rx,ry,rz, enableGC,rv
 local nx,ny,nz,slope
 local physics, transportedUnits
 local function updateUnitPhysics(unitId)
@@ -434,7 +434,7 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 		destructibleProjectileUnitIds[unitId] = true
 	end
 
-	-- x,y,z,vx,vy,vz,h,enableGC,rx,ry,rz,v		
+	-- x,y,z,vx,vy,vz,h,enableGC,rx,ry,rz,v
 	unitPhysicsById[unitId] = {0,0,0,0,0,0,0,false,0,0,0,0}
 end
 
@@ -483,7 +483,11 @@ function gadget:GameFrame(n)
 			-- workaround for engine not calling StartMoving when it should in some situations
 			if (doMoveAnimCheck) then
 				if moveAnimationUnitIds[unitId] then
-					if abs(vx) > 0.1 or abs(vz) > 0.1 then
+					-- a sort of rotational speed
+					rv = abs(rx - oldPhysics[9]) + abs(ry - oldPhysics[10]) + abs(rz - oldPhysics[11])  
+					
+					--Spring.Echo("vx="..vx.." vz="..vz.." rx="..rx.." ry="..ry.." rz="..rz.." rv="..rv)
+					if abs(vx) > 0.1 or abs(vz) > 0.1 or rv > 0 then
 						if abs(h) < 3 or y <= 0 then
 							spCallCOBScript(unitId,"StartMoving",0)
 						end

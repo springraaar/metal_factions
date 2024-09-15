@@ -50,7 +50,7 @@ local dashCmdDesc = {
 	name    = 'Dash',
 	cursor  = 'Dash',
 	action  = 'dash',
-	tooltip = 'Dash: Boost movement speed 30-60% for 4 seconds, 1 minute reload',
+	tooltip = 'Dash: Boost movement speed 40-70% for 4 seconds, 1 minute reload',
 }
 
 

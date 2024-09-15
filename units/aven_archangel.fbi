@@ -1,0 +1,119 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Archangel;
+	description=Heavy Disruptor Gunship / Drone Swarm Controller;
+	iconType=airmulti;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN VTOL LEVEL2 WEAPON NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_archangel;
+	objectName=aven_archangel.3do;
+	buildPic=aven_archangel.png;
+	soundCategory=aven_VTOL;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=6200;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	energyMake=0;
+	energyUse=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canDropFlare=0;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	stealth=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	acceleration=0.3;
+	brakeRate=0.2;
+	maxVelocity=2.7;
+	
+	cruiseAlt=120;
+	turnRate=600;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_archangel_laser;
+	weapon2=aven_archangel_laser;
+	weapon3=aven_archangel_laser;
+	explodeAs=HBOMBER;
+	selfDestructAs=HBOMBER;
+
+
+	//************************************************************
+	//  Orders
+	//**********
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	hoverAttack=1;
+	airStrafe=1;
+	bankingAllowed=0;
+	airHoverFactor=1;
+	upright=1;
+	CanLoopbackAttack=0;
+	collide=1;
+	collisionVolumeType = cylinder;
+	collisionVolumeScales =65 65 25;
+	collisionVolumeOffsets = 0 10 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=aven_adv_aircraft_plant;
+		optional=1;
+		manualCost=1;
+		tip=Spawns light drones (max x6) and construction drones (max x3);
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:railgunflaresml;	
+		explosionGenerator1=custom:disrbeamtrail;
+	}
+	buildCostEnergy=40000;//#AUTO#
+	buildCostMetal=8000;//#AUTO#
+	buildTime=96000;//#AUTO#
+	mass=2000;//#AUTO#
+}

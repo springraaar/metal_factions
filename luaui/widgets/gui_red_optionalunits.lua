@@ -743,7 +743,23 @@ end
 
 
 function showOptionalUnitsPanel()
-	--Spring.Echo(tableToString(mainPanel))
+	-- open the panel showing optionals for the currently selected faction 
+	local myTeamId = spGetMyTeamID()
+	local _,_,_,_, faction, _,_ = Spring.GetTeamInfo(myTeamId)
+	local validFactions = {
+		aven = true,
+		gear = true,
+		claw = true,
+		sphere = true
+	}
+	local factionFromWidget = spGetTeamRulesParam(myTeamId, 'faction_selected')
+	if factionFromWidget then 
+		faction = factionFromWidget
+	end
+	if validFactions[faction] then
+		selectedFaction = faction
+	end
+	
 	mainPanel.enable()
 	showUnits(selectedFaction)
 	WG.optionalUnitsPanelShown = true

@@ -1,7 +1,7 @@
 function gadget:GetInfo()
 	return {
-		name = "Map speed modifier disabler",
-		desc = "Disables map speed modifiers for all but impassable terrain.",
+		name = "Map property overrides",
+		desc = "Modifies various properties of maps.",
 		author = "raaar",
 		date = "Aug, 2013",
 		license = "PD",
