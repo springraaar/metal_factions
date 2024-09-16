@@ -341,3 +341,22 @@ function getOptionalUnitsFromArray(teamId,unitsArr)
 	end
 	return teamOptTable,countByFaction
 end
+
+-- ensure the external cfg directory exists
+function ensureCfgDirExists()
+	Spring.CreateDir("LuaUI")
+	Spring.CreateDir("LuaUI/Config")
+end
+
+-- move old LuaUI auxiliary config/data file to the new recommended location
+-- assume the new location directory already exists (LuaUI/Config)
+function checkMoveCfgFile(oldFile,newFile)
+	local oldFileExists = VFS.FileExists(oldFile)
+	local newFileExists = VFS.FileExists(newFile)
+	if oldFileExists and not newFileExists then
+		ensureCfgDirExists()
+		-- copy old cfg file to new location
+		os.rename(oldFile,newFile)
+		Spring.Echo(oldFile.." moved to "..newFile)		
+	end
+end

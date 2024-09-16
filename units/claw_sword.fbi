@@ -107,8 +107,9 @@
 	[CustomParams]
 	{
 		builtBy=claw_shipyard,claw_adv_shipyard;
-		tip=+25% dmg resistance on front, -25% when hit from behind. Laser Cutter loses up to 30% damage over its range;
+		tip=+/-25% front-to-back dmg resistance. Laser Cutter loses up to 30% damage over its range;
 		evalfactor=0.85;//SHIP
+		hasTurnButton=1;
 	}
 	[SFXTypes]
 	{

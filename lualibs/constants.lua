@@ -8,7 +8,7 @@ EXCESS_WIND_REDUCTION_MULT = 0.85 		-- to compensate for the fact that the actua
 ------------- OPTIONAL UNITS
 
 MAX_OPTIONAL_UNITS_BY_FACTION = 6
-optionalUnitsFile = "luaui/configs/mf_optional_units.txt"
+optionalUnitsFile = "LuaUI/Config/mf_optional_units.txt"
 defaultOptionalUnitsText = [[
 aven_lone_trooper
 aven_stormtrooper

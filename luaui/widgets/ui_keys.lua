@@ -15,6 +15,7 @@ include("keysym.h.lua")
 
 -- custom commands
 VFS.Include("lualibs/custom_cmd.lua")
+VFS.Include("lualibs/util.lua")
 
 local menuSecond = -1
 WG.customHotkeys = {}
@@ -22,7 +23,7 @@ WG.unboundDefKeys = {}
 local shouldShowMenu = false
 local shouldSelectCom = false
 
-local customKeybindsFile = "luaui/configs/mf_keys.txt"
+local customKeybindsFile = "LuaUI/Config/mf_keys.txt"
 
 local keybindsFileTxt = [[
 // ---------- MF keybind instructions
@@ -110,12 +111,12 @@ function widget:Initialize()
 	Spring.SendCommands("unbindaction showmetalmap")
 	Spring.SendCommands("unbind esc quitmenu")
 	Spring.SendCommands("unbind shift+esc quitmenu")
-   
+  
 	-- create a custom keybinds file with default content if it's missing
+    checkMoveCfgFile("luaui/configs/mf_keys.txt", customKeybindsFile)
 	if not VFS.FileExists(customKeybindsFile) then
 		Spring.Echo("creating MF keybinds file with default content in "..customKeybindsFile)
-		Spring.CreateDir("luaui")
-		Spring.CreateDir("luaui/configs")
+		ensureCfgDirExists()
 		io.output(customKeybindsFile)
 		io.write(keybindsFileTxt)
 		io.close()

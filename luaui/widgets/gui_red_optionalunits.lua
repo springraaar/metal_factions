@@ -792,8 +792,7 @@ function saveOptionalUnitSelection()
 	
 	Spring.Echo("saving MF optional units file in "..optionalUnitsFile)
 	if not VFS.FileExists(optionalUnitsFile) then
-		Spring.CreateDir("luaui")
-		Spring.CreateDir("luaui/configs")
+		ensureCfgDirExists()
 		io.output(optionalUnitsFile)
 		io.write(outText)
 		io.close()
@@ -903,6 +902,8 @@ end
 ------------------------------------ callins
 
 function widget:Initialize()
+	checkMoveCfgFile("luaui/configs/mf_optional_units.txt",optionalUnitsFile)
+
 	PassedStartupCheck = RedUIchecks()
 	if (not PassedStartupCheck) then return end
 

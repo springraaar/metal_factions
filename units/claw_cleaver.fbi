@@ -107,8 +107,9 @@
 	[CustomParams]
 	{
 		builtBy=claw_adv_shipyard;
-		tip=+25% dmg resistance on front, -25% when hit from behind;
+		tip=+/-25% front-to-back dmg resistance;
 		evalfactor=0.85;//SHIP
+		hasTurnButton=1;
 	}
 	[SFXTypes]
 	{

@@ -6,7 +6,10 @@ Spring.Restart = nil
 function overrides()
 	-- use whitelist of allowed files to read/write
 	local fileRWWhiteList = {
-		["luaui/Config/metal_factions.lua"] = true,
+		["LuaUI/Config/metal_factions.lua"] = true,
+		["LuaUI/Config/mf_strategies.json"] = true,
+		["LuaUI/Config/mf_keys.txt"] = true,
+		["LuaUI/Config/mf_optional_units.txt"] = true,
 		["luaui/configs/mf_strategies.json"] = true,
 		["luaui/configs/mf_keys.txt"] = true,
 		["luaui/configs/mf_optional_units.txt"] = true,
@@ -24,8 +27,15 @@ function overrides()
 				Spring.Echo("WARNING : Attempting to os.remove file "..file.." : BLOCKED")
 			end
 		end
+		local osRename = os.rename
+		os.rename = function(oldFile,newFile)
+			if (fileRWWhiteList[oldFile] and fileRWWhiteList[newFile]) then
+				return osRename(oldFile,newFile)
+			else
+				Spring.Echo("WARNING : Attempting to os.rename "..oldFile.." to "..newFile.." : BLOCKED")
+			end
+		end
 		os.execute = nil
-		os.rename = nil
 	end
 
 	if io then

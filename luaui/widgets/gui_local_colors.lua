@@ -13,13 +13,11 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
-options_path = 'Settings/Interface/Local Team Colors'
 options = {
 	simpleColors = {
 		name = "Simple Colors",
 		type = 'bool',
 		value = false,
-		desc = 'All allies are green, all enemies are red.',
 		OnChange = function() widget:Initialize() end
 	},
 }
@@ -27,11 +25,10 @@ options = {
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
+--TODO file exists and is readable from game package only, maybe fix 
 if VFS.FileExists("luaui/Configs/LocalColors.lua") then -- user override
 	colorCFG = VFS.Include("luaui/configs/LocalColors.lua")
 	Spring.Echo("Loaded local team color config.")
-elseif VFS.FileExists("luaui/configs/ZKTeamColors.lua") then
-	colorCFG = VFS.Include("luaui/configs/ZKTeamColors.lua")
 else
 	error("missing file: Luaui/Configs/LocalColors.lua")
 end

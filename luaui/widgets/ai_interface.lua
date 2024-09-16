@@ -34,6 +34,9 @@ local AI_MSG_PREFIX = "#AI"
 local GAME_MSG_PREFIX = "#GAME"
 
 local customStrategiesChecked = false
+local customStrategiesFile = "LuaUI/Config/mf_strategies.json"
+
+VFS.Include("lualibs/util.lua")
 
 ---------- helper functions
 
@@ -85,7 +88,6 @@ function getPlayerIdFromName(playerName)
 	return playerId
 end
 
-local customStrategiesFile = "luaui/configs/mf_strategies.json"
 
 ---------- callins
 
@@ -95,9 +97,10 @@ end
 function widget:GameFrame(n)
 	if ( customStrategiesChecked == false and n > 1 ) then
 		customStrategiesChecked = true
+		checkMoveCfgFile("luaui/configs/mf_strategies.json",customStrategiesFile)
+		
 		-- try to load custom strategies
 		if VFS.FileExists(customStrategiesFile) then
-			
 			local text = VFS.LoadFile(customStrategiesFile)
 			--Spring.Echo("len widget "..string.len(text))
 			local compressedText = VFS.ZlibCompress(text)

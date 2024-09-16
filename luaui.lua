@@ -12,7 +12,9 @@
 --------------------------------------------------------------------------------
 
 LUAUI_VERSION = "LuaUI v0.3"
-LUAUI_DIRNAME = 'luaui/'
+LUAUI_DIRNAME = 'LuaUI/'		-- compatibility with lua files loaded from the engine directory outside base
+								-- available only on VFS.RAW which is case-sensitive on linux 
+								-- game package uses "luaui" but VFS.GAME is case insensitive so it doesn't matter 
 VFS.DEF_MODE = VFS.RAW_FIRST
 local STARTUP_FILENAME = LUAUI_DIRNAME .. 'mfmain.lua'
 

@@ -30,7 +30,7 @@ local gl = gl
 local CONFIG_FILENAME    = LUAUI_DIRNAME .. 'Config/' .. Game.modShortName .. '.lua'
 local WIDGET_DIRNAME     = LUAUI_DIRNAME .. 'Widgets/'
 
-local SELECTOR_BASENAME = 'selector.lua'
+local SELECTOR_BASENAME = 'mfselector.lua'
 
 local SAFEWRAP = 1
 -- 0: disabled
@@ -343,38 +343,8 @@ local function GetWidgetInfo(name, mode)
   end
 end
 
-function printFileAvailability(file)
-	local availabilityStr = file.." : "
-	if VFS.LoadFile(file,VFS.RAW) then
-		availabilityStr = availabilityStr .. " RAW"
-	end
-	if VFS.LoadFile(file,VFS.GAME) then
-		availabilityStr = availabilityStr .. " GAME"
-	end
-	if VFS.LoadFile(file,VFS.MAP) then
-		availabilityStr = availabilityStr .. " MAP"
-	end
-	if VFS.LoadFile(file,VFS.BASE) then
-		availabilityStr = availabilityStr .. " BASE"
-	end
-	if VFS.LoadFile(file,VFS.ZIP) then
-		availabilityStr = availabilityStr .. " ZIP"
-	end
-	if VFS.LoadFile(file,VFS.ZIP_FIRST) then
-		availabilityStr = availabilityStr .. " ZIP_FIRST"
-	end
-	if VFS.LoadFile(file,VFS.RAW_FIRST) then
-		availabilityStr = availabilityStr .. " RAW_FIRST"
-	end
-	
-	Spring.Echo(availabilityStr)
-end
-
 function widgetHandler:Initialize()
   self:LoadConfigData()
-
-	printFileAvailability(LUAUI_DIRNAME ..'selector.lua')
-	printFileAvailability(LUAUI_DIRNAME ..'mfwidgets.lua')
 
   local autoUserWidgets = Spring.GetConfigInt('LuaAutoEnableUserWidgets', 1)
   self.autoUserWidgets = (autoUserWidgets ~= 0)
@@ -439,7 +409,7 @@ end
 
 function widgetHandler:LoadWidget(filename, fromZip)
   local basename = Basename(filename)
-  local text = VFS.LoadFile(filename, VFS.ZIP_FIRST)
+  local text = VFS.LoadFile(filename)
   if (text == nil) then
     Spring.Log(section, LOG.ERROR, 'Failed to load: ' .. basename .. '  (missing file: ' .. filename ..')')
     return nil
