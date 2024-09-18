@@ -12,7 +12,6 @@ end
 
 include("lualibs/custom_cmd.lua")
 
-
 --export to CMD table
 CMD.CMD_UNIT_SET_TARGET_NO_GROUND = CMD_UNIT_SET_TARGET_NO_GROUND
 CMD[CMD_UNIT_SET_TARGET_NO_GROUND] = 'UNIT_SET_TARGET_NO_GROUND'
@@ -23,9 +22,12 @@ CMD[CMD_UNIT_CANCEL_TARGET] = 'UNIT_CANCEL_TARGET'
 CMD.UNIT_SET_TARGET_RECTANGLE = CMD_UNIT_SET_TARGET_RECTANGLE
 CMD[CMD_UNIT_SET_TARGET_RECTANGLE] = 'UNIT_SET_TARGET_RECTANGLE'
 
+local OPTS_ALT_TABLE = {alt=true}
+local CMD_ATTACK_TABLE = {CMD.ATTACK}
 local deleteMaxDistance = 30
 
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
+local spGiveOrderToUnit = Spring.GiveOrderToUnit
 
 function GG.GetUnitTarget(unitID)
 	local targetID = spGetUnitRulesParam(unitID, "targetID")
@@ -363,6 +365,9 @@ if gadgetHandler:IsSyncedCode() then
 	local function processCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions)
 		if cmdID == CMD_UNIT_SET_TARGET_NO_GROUND or cmdID == CMD_UNIT_SET_TARGET or cmdID == CMD_UNIT_SET_TARGET_RECTANGLE then
 			if validUnits[unitDefID] then
+				-- set-target commands remove attack commands from the queue, to avoid conflict
+				local removed = spGiveOrderToUnit(unitID, CMD.REMOVE, CMD_ATTACK_TABLE, OPTS_ALT_TABLE )
+				
 				local weaponList = unitWeapons[unitDefID]
 				local append = cmdOptions.shift or false
 				local userTarget = not cmdOptions.internal
@@ -526,6 +531,12 @@ if gadgetHandler:IsSyncedCode() then
 				end
 			end
 			return true
+		elseif cmdID == CMD.ATTACK then
+			-- direct attack commands override the set-target to avoid conflicting behavior
+			if unitTargets[unitID] then
+				removeUnit(unitID)
+			end
+			return false
 		end
 	end
 
@@ -664,8 +675,8 @@ else	-- UNSYNCED
 	local _, fullview = spGetSpectatingState()
 
 	local lineWidth = 1.4
-	local queueColour = { 1, 0.75, 0, 0.3 }
-	local commandColour = { 1, 0.5, 0, 0.3 }
+	local queueColour = { 1, 0.75, 0, 0.5 }
+	local commandColour = { 1, 0.75, 0, 0.7 }
 
 	local drawAllTargets = {}
 	local drawTarget = {}
