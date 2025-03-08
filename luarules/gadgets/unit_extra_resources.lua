@@ -49,6 +49,8 @@ local spGetUnitHealth = Spring.GetUnitHealth
 local spSetUnitRulesParam = Spring.SetUnitRulesParam 
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetUnitPosition = Spring.GetUnitPosition
+local spCallCOBScript = Spring.CallCOBScript
+local spGetHeadingFromVector = Spring.GetHeadingFromVector
 
 local totalWindStrength = 0
 local totalWindStrFrames = 0
@@ -66,10 +68,14 @@ function gadget:Initialize()
 	groundMin, groundMax = math.max(groundMin,0), math.max(groundMax,1)
 	groundRef = GG.minMetalSpotAltitude
 	--Spring.Echo("minMetalSpotAltitude="..GG.minMetalSpotAltitude.." groundRef="..groundRef)
+	
+	for _, unitID in ipairs(Spring.GetAllUnits()) do
+		gadget:UnitCreated(unitID, Spring.GetUnitDefID(unitID))
+	end
 end
 
--- mark relevant units when they finish
-function gadget:UnitFinished(unitID, unitDefID, unitTeam)
+-- mark relevant units when they're created
+function gadget:UnitCreated(unitID, unitDefID, unitTeam)
 	
 	if windGeneratorUnitDefIds[unitDefID] then
 		windGeneratorIds[unitID] = true
@@ -88,8 +94,10 @@ function gadget:GameFrame(n)
 	end
 
 	-------------------- update wind generators
-	local _, _, _, windStrength, x, _, z = spGetWind()
-	windStrength = (math.min(windStrength,WIND_STR_CAP) / 2)
+	local _,_,_,wStr,dx,_,dz = spGetWind()
+	local cobWStr = wStr * 3000
+	local wHeading = spGetHeadingFromVector(-dx,-dz) 
+	windStrength = (math.min(wStr,WIND_STR_CAP) / 2)
 	
 	-- reduce wind strength to match the actual average it's supposed to have
 	windStrength = windStrength * EXCESS_WIND_REDUCTION_MULT
@@ -132,6 +140,11 @@ function gadget:GameFrame(n)
 			end
 			spSetUnitRulesParam(unitID,"energy_made",oldEMade+energyMake/2)
 			spSetUnitRulesParam(unitID,"energy_made_frames",oldEMadeFrames+INCOME_DELAY_FRAMES)
+
+			-- call scripts to adjust direction and speed
+			--TODO workaround for engine only doing it every 15s, remove when no longer needed
+			spCallCOBScript(unitID,"SetSpeed",0,cobWStr)
+			spCallCOBScript(unitID,"SetDirection",0,wHeading)
 		end
 	end
 	

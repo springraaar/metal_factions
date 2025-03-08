@@ -54,7 +54,7 @@ activationControl(buildPercentLeft)
 		if ( buildPercentLeft == 0 && windSpeed > 0)
 		{
 			spin fan around z-axis speed windSpeed;
-			turn cradle to y-axis windAngle speed <20.000000>;
+			turn cradle to y-axis windAngle speed <60.000000>;
 		}
 		else
 		{

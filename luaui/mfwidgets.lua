@@ -199,6 +199,7 @@ local callInLists = {
   'TweakIsAbove',
   'TweakGetTooltip',
   'GameProgress',		-- added here
+  'UnsyncedHeightMapUpdate',
   'RecvFromSynced',
   'TextInput',
   "TextEditing",
@@ -2071,6 +2072,12 @@ function widgetHandler:GameProgress(frameNum)
   for _,w in ipairs(self.GameProgressList) do
     w:GameProgress(frameNum)
   end
+end
+
+function widgetHandler:UnsyncedHeightMapUpdate(x1, z1, x2, z2)
+	for _, w in ipairs(self.UnsyncedHeightMapUpdateList) do			-- the zk code had r_ipairs here
+		w:UnsyncedHeightMapUpdate(x1, z1, x2, z2)
+	end
 end
 
 function widgetHandler:Pong(pingTag, pktSendTime, pktRecvTime)

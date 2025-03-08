@@ -69,6 +69,7 @@ local slaveWeaponIndexesByUnitDefId = {
 	[UnitDefNames["claw_brute"].id] = {1,2},
 	-- SPHERE
 	[UnitDefNames["sphere_charger"].id] = {1,2},
+	[UnitDefNames["sphere_radiant"].id] = {1,3},
 }
 
 -- done unit def ids

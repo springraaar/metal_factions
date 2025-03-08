@@ -12,6 +12,8 @@ end
 
 local o = 111 -- 'o' key
 
+local spGetCameraState = Spring.GetCameraState
+
 function widget:KeyPress(key,mods,isRepeat)
 	--Spring.Echo(key)
 	if key ~= o then return end
@@ -19,7 +21,7 @@ function widget:KeyPress(key,mods,isRepeat)
 	if mods.ctrl ~= true then return end
 	if mods.shift ~= true then return end
 		
-	local camState = Spring.GetCameraState()
+	local camState = spGetCameraState()
 	--Spring.Echo(camState.mode)
 	if camState.mode ~= 1 and camState.mode ~= 5 then return end --do nothing unless overhead cam or smooth cam
 	--Spring.Echo(camState.flipped)

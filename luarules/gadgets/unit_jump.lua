@@ -3,7 +3,7 @@ function gadget:GetInfo()
 			name    = "Jumpjets",
 			desc    = "Gives units the jump ability",
 			author  = "quantum, modified by raaar",
-			date    = "May 14, 2008", -- updated in 2021, by raaar
+			date    = "May 14, 2008", -- modified by raaar, 2021+
 			license = "GNU GPL, v2 or later",
 			layer   = 0,
 			enabled = true,
@@ -36,9 +36,12 @@ local CMD_MOVE   = CMD.MOVE
 local CMD_REMOVE = CMD.REMOVE
 local privateTable = {private = true}
 
+local spSpawnCEG             = Spring.SpawnCEG
+local spGetUnitRadius        = Spring.GetUnitRadius
 local spGetHeadingFromVector = Spring.GetHeadingFromVector
 local spGetUnitPosition      = Spring.GetUnitPosition
 local spGetUnitRotation      = Spring.GetUnitRotation
+local spSetUnitRotation      = Spring.SetUnitRotation
 local spInsertUnitCmdDesc    = Spring.InsertUnitCmdDesc
 local spRemoveUnitCmdDesc    = Spring.RemoveUnitCmdDesc
 local spSetUnitRulesParam    = Spring.SetUnitRulesParam
@@ -92,6 +95,9 @@ local JUMP_UPG_SPEED_BONUS = 0.15
 local JUMP_UPG_RANGE_BONUS = 0.1  
 local JUMP_UPG_HEIGHT_BONUS = 0.05
 local JUMP_UPG_RELOAD_REDUCTION = 0.25
+
+local jumpStartCEG = "COLLISION"
+local jumpEndCEG = "COLLISION"
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -150,6 +156,19 @@ local jumpDefTemplates = {
 		jumpSpreadException = false,
 	},
 	flail = {
+		range = 350,
+		speed = 6.5,
+		reload = 10,
+		delay = 0,
+		height = 280,
+
+		requiresUpgrade = false,			
+		noJumpHandling =  false,
+		rotateMidAir = false,
+		cannotJumpMidair = false,
+		jumpSpreadException = false,
+	},
+	hulk = {
 		range = 350,
 		speed = 6.5,
 		reload = 10,
@@ -322,7 +341,6 @@ local function GetLandStructureCheckValues(x, z, myRadius)
 	
 	-- Find the nearby structure which most likely caused the jump
 	-- to be a structure jump.
-	local spGetUnitRadius = Spring.GetUnitRadius
 	
 	for i = 1, #units do
 		local unitID = units[i]
@@ -481,30 +499,19 @@ local function Jump(unitID, goal, origCmdParams, mustJump)
 	
 	jumping[unitID] = {vector[1]*step, vector[2]*step, vector[3]*step}
 
-	--mcEnable(unitID) -- disable engine physics? original did this
 	spSetUnitVelocity(unitID,0,0,0)
-	--spSetUnitLeaveTracks(unitID, false)
 	
 	spSetUnitRulesParam(unitID, "is_jumping", 1)
 	spSetUnitRulesParam(unitID, "jump_goal_x", goal[1], privateTable)
 	spSetUnitRulesParam(unitID, "jump_goal_z", goal[3], privateTable)
 	spCallCOBScript(unitID, "setJumping", 0, 1, 0)
 
-
-	--env = Spring.UnitScript.GetScriptEnv(unitID)
 	
 	if (delay == 0) then
-		--spCallCOBScript(unitID, "beginJump", 0)
-		--Spring.UnitScript.CallAsUnit(unitID,env.beginJump,turn,lineDist,flightDist,duration)
 		if rotateMidAir then
 			mcSetRotation(unitID, 0, (2^15 - startHeading)/rotUnit, 0) -- keep current heading
 			mcSetRotationVelocity(unitID, 0, -turn/rotUnit*step, 0)
 		end
-		if PLAY_SOUND and (not cannotJumpMidair) then	-- don't make sound if we jump with legs instead of jets
-			--GG.PlayFogHiddenSound("Jump", UnitDefs[unitDefID].mass/10, start[1], start[2], start[3])
-		end
-	else
-		--Spring.UnitScript.CallAsUnit(unitID,env.preJump,turn,lineDist,flightDist,duration)
 	end
 	spSetUnitRulesParam(unitID,"jumpReload",0)
 
@@ -516,11 +523,6 @@ local function Jump(unitID, goal, origCmdParams, mustJump)
 			
 			if (not spValidUnitID(unitID) or spGetUnitIsDead(unitID)) then 
 				return 
-			end
-			--Spring.UnitScript.CallAsUnit(unitID,env.beginJump)
-			--spCallCOBScript(unitID, "beginJump", 0)
-			if PLAY_SOUND and (not cannotJumpMidair) then	-- don't make sound if we jump with legs instead of jets
-				--GG.PlayFogHiddenSound("Jump", UnitDefs[unitDefID].mass/10, start[1], start[2], start[3])
 			end
 
 			if rotateMidAir then
@@ -547,6 +549,12 @@ local function Jump(unitID, goal, origCmdParams, mustJump)
 		local y1=start[2]
 		local z1=start[3]
 				
+		-- for start/end effects
+		local uRadius = spGetUnitRadius(unitID)
+		local startEfRadius = uRadius * 2
+		local endEfRadius = uRadius*2.5
+		spSpawnCEG(jumpStartCEG, x1,startHeight+5,z1,0,1,0,startEfRadius,startEfRadius)
+
 		while i <= 1 do
 			if (not spValidUnitID(unitID) or spGetUnitIsDead(unitID)) then 
 				return 
@@ -559,14 +567,11 @@ local function Jump(unitID, goal, origCmdParams, mustJump)
 			local y = start[2] + vector[2]*i + (1-(2*i-1)^2)*height -- parabola
 			local z = start[3] + vector[3]*i
 			--Spring.Echo(spGetGameFrame().." jumping dx="..(x0-x1).." dy="..(y0-y1).." dz="..(z0-z1))
-			--mcSetPosition(unitID, x, y, z)  -- force position? disabled / original did this
 			
 			if x0 then
-				--jumping[unitID] = {x - x0, y - y0, z - z0}
-				
 				-- slow start
-				local boostMod = 0.6 + 0.4*i 
-
+				local boostMod = min(0.1 + 2*i,1.8) 
+				
 				-- accept offsets in target positions if there's something pushing the units off
 				-- (makes movement smoother when a group jumps towards the same point and the units collide throughout) 
 				vx = boostMod*(x - (x0*0.1+x1*0.9))  
@@ -577,7 +582,7 @@ local function Jump(unitID, goal, origCmdParams, mustJump)
 				
 				-- turn the unit upright in case it wasn't
 				local rx,ry,rz = spGetUnitRotation(unitID)
-				Spring.SetUnitRotation(unitID,rx/2,ry,rz/2)
+				spSetUnitRotation(unitID,rx/2,ry,rz/2)
 				
 				--Spring.Echo(spGetGameFrame().." : set impulse=("..((x - x0))..","..((y - y0))..","..((z - z0))..")  oldv=("..(vx0)..","..(vy0)..","..(vz0)..")")
 				
@@ -593,11 +598,7 @@ local function Jump(unitID, goal, origCmdParams, mustJump)
 						spAddUnitImpulse(unitID,vx, max(vy,-maxImpulse), vz)
 					end
 				end
-				
-				--spSetUnitVelocity(unitID, (x - x0), (y - y0), (z - z0))  -- original did this 
 			end
-
-			--Spring.UnitScript.CallAsUnit(unitID, env.jumping, i * 100)
 		
 			if (not halfJump and i > 0.5) then
 				spCallCOBScript(unitID, "setJumping", 0, 1, 1)
@@ -608,8 +609,7 @@ local function Jump(unitID, goal, origCmdParams, mustJump)
 				-- was otherwise high and flat enough for pathing. This means that a structure (or feature) is at the
 				-- land location.
 				if not spTestMoveOrderX(unitDefID, goal[1], goal[2], goal[3]) then
-					local radius = Spring.GetUnitRadius(unitID)
-					structureCollisionData = GetLandStructureCheckValues(goal[1], goal[3], radius)
+					structureCollisionData = GetLandStructureCheckValues(goal[1], goal[3], uRadius)
 				end
 			end
 
@@ -625,23 +625,18 @@ local function Jump(unitID, goal, origCmdParams, mustJump)
 			i = i + step
 		end
 
-		--Spring.UnitScript.CallAsUnit(unitID,env.endJump)
-		if PLAY_SOUND then
-			--GG.PlayFogHiddenSound("JumpLand", UnitDefs[unitDefID].mass/10, goal[1], goal[2], goal[3])
-		end
 		local jumpEndTime = spGetGameSeconds()
 		lastJumpPosition[unitID] = origCmdParams
 		jumping[unitID] = nil
-		--spSetUnitLeaveTracks(unitID, true)
-		--spSetUnitVelocity(unitID, 0, 0, 0)
+
 		spSetUnitRulesParam(unitID, "is_jumping", 0)
 		spCallCOBScript(unitID, "setJumping", 0, 0, 0)
-		--mcDisable(unitID)      -- original did this
 
 		if spValidUnitID(unitID) and (not spGetUnitIsDead(unitID)) then
 			spGiveOrderToUnit(unitID,CMD_WAIT, {}, 0)
 			spGiveOrderToUnit(unitID,CMD_WAIT, {}, 0)
 		end
+
 		
 		--TODO this doesn't work well, check/fix eventually
 		-- (setPosition disabled because by this point the jump may be already offset due to other collisions) 
@@ -651,8 +646,9 @@ local function Jump(unitID, goal, origCmdParams, mustJump)
 			spAddUnitImpulse(unitID, 0,-0.5,0)
 			spAddUnitImpulse(unitID, -3,0,-3)
 			
-			-- Set position because the unit may snap to the ground.
-			--spSetUnitPosition(unitID, hitStructure[1], hitStructure[2], hitStructure[3])
+			spSpawnCEG(jumpEndCEG, x1,spGetGroundHeight(x1,z1)+5,z1,0,1,0,endEfRadius*0.6,endEfRadius*0.6)
+		else
+			spSpawnCEG(jumpEndCEG, x1,spGetGroundHeight(x1,z1)+5,z1,0,1,0,endEfRadius,endEfRadius)
 		end
 
 		Sleep()

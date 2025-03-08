@@ -1,0 +1,102 @@
+[UNITINFO]
+{
+	// ------------------- description
+	side=Sphere;
+	name=Radiant;
+	description=Heavy Riot Sphere;
+	iconType=fspherefighter;
+
+	// ------------------- categories
+	category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+
+	// ------------------- external specs
+	unitName=sphere_radiant;
+	objectName=sphere_radiant.3do;
+	Corpse=sphere_radiant_dead;
+	buildPic=sphere_radiant.png;
+	soundCategory=SPHERE_SPHEREBIG;
+
+	// ------------------- health/cost/size
+	maxDamage=7500;
+	FootprintX=4;
+	FootprintZ=4;
+	
+	// ------------------- resources
+	energyMake=0;
+	MetalMake=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyUse=0;
+
+	// ------------------- constructor
+	builder=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	onOffable=0;
+
+
+	// ------------------- movement
+	canFly=1;
+	maxVelocity=0.8;
+	brakeRate=0.03;
+	Acceleration=0.03;
+	turnRate=632;
+	cruiseAlt=100;
+	hoverAttack=1;
+	airStrafe=0;
+	airHoverFactor=0.1;
+	upright=1;
+	bankingallowed=0;
+	useSmoothMesh=1;
+	verticalSpeed=0.8;
+
+	// ------------------- scout
+	sightDistance=600;
+	radarDistance=0;
+	sonarDistance=0;
+
+	// ------------------- weapons
+	weapon1=sphere_radiant_wave;
+	weapon2=sphere_radiant_shield;
+	weapon3=sphere_radiant_laser;
+	slaveTo1=3;
+	noChaseCategory=VTOL;
+	explodeAs=PENETRATOR_BLAST;
+	selfDestructAs=PENETRATOR_BLAST;
+
+	// ------------------- orders
+	moveState=0;
+
+	// ------------------- misc
+	minAirbasePower=99999;
+	activateWhenBuilt=0;
+	collisionVolumeType = sphere;
+	collisionVolumeScales =50 50 50;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_sphere_factory;
+		energyCostMoving=125;
+		tip=Requires 125E/s to move;
+		optional=1;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:radiantflare;
+		explosionGenerator1=custom:radiantglow1;
+		explosionGenerator2=custom:radiantglow2;
+		explosionGenerator3=custom:redflare;
+	}
+	buildCostEnergy=14887;//#AUTO#
+	buildCostMetal=2977;//#AUTO#
+	buildTime=35482;//#AUTO#
+	mass=4587;//#AUTO#
+}

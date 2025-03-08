@@ -168,8 +168,8 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 										-- check if factories can be built on nearby terrain
 										validPosFound = 0
 										dxi,dzi = 0
-										for dxi = -140, 140, 140 do
-											for dzi = -140, 140, 140 do
+										for dxi = -128, 128, 64 do
+											for dzi = -128, 128, 64 do
 												if not (dxi == 0 and dzi == 0) then
 													buildTest,blockingFId = spTestBuildOrder(staticBuilderTestUnitDefId, testPos.x + dxi, testPos.y, testPos.z + dzi,0)
 													if (blockingFId == nil and (buildTest == 1 or buildTest == 2)) then
@@ -191,7 +191,7 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 										end
 										-- only test south exit if it isn't an air unit factory or upg center
 										if typeToTest ~= PF_UNIT_AIR then
-											buildTest = spTestBuildOrder(ud.id, testPos.x, testPos.y, testPos.z + 100,0)
+											buildTest = spTestBuildOrder(ud.id, testPos.x, testPos.y, testPos.z + 96,0)
 											if (buildTest ~= 1 and buildTest ~= 2) then
 												valid = false
 											end
@@ -358,31 +358,6 @@ function BuildSiteHandler:closestBuildSpot(builderBehavior, ud, minimumDistance,
 					end
 				end
 			end
-
-			-- OLD search method, remove?					
-			--[[
-			-- try near 12 positions in growing circumferences around the target position
-			local searchAngle = nil
-			local searchPos = nil
-			local searchRadius = nil
-			for i=1,12,1 do
-				local searchRadius = BUILD_SEARCH_RADIUS * (floor(i/6)+1)
-				searchAngle = (i - 1) / 3 * math.pi
-				searchPos = newPosition()
-				searchPos.x = floor((targetPos.x + searchRadius * math.cos(searchAngle)) / 16 + 0.5) * 16
-				searchPos.z = floor((targetPos.z + searchRadius * math.sin(searchAngle)) / 16 + 0.5) * 16
-				searchPos.y = targetPos.y
-	
-				if ud.name == 'aven_fusion_reactor' then
-					Spring.MarkerAddPoint(searchPos.x,500,searchPos.z,"FUSION? r="..searchRadius) --DEBUG 
-				end
-				-- test position
-				pos = self:findClosestBuildSite(ud, searchPos, searchRadius, minDistance, builderBehavior)	
-				if pos ~= nil then
-					break
-				end
-			end
-			]]--
 		end
 	end
 	

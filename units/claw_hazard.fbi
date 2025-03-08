@@ -5,8 +5,8 @@
 	//********************
 	side=Claw;
 	name=Hazard;
-	description=Disguised Pop-up Rocket Launcher;
-	iconType=staticartilleryfs;
+	description=Disguised Pop-up Armored Riot Cannon;
+	iconType=staticassault;
 
 	//************************************************************
 	//  Categories
@@ -73,8 +73,8 @@
 	//************************************************************
 	//  Weapons
 	//***********
-	weapon1=claw_hazard_rocket;
-	onlytargetcategory1=NOTAIR;
+	weapon1=claw_hazard_cannon;
+	badTargetCategory1=VTOL;
 	explodeAs=LARGE_BUILDINGEX;
 	selfDestructAs=LARGE_BUILDING;
 
@@ -97,10 +97,10 @@
 
 	[SFXTypes]
 	{
-		explosionGenerator0=custom:ROCKETFLARESML;
+		explosionGenerator0=custom:YELLOWFLAREMED;
 	}
-	buildCostEnergy=1559;//#AUTO#
-	buildCostMetal=311;//#AUTO#
-	buildTime=3717;//#AUTO#
-	mass=1930;//#AUTO#
+	buildCostEnergy=1910;//#AUTO#
+	buildCostMetal=382;//#AUTO#
+	buildTime=4554;//#AUTO#
+	mass=2006;//#AUTO#
 }

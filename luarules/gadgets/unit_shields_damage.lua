@@ -121,6 +121,7 @@ local BURNING_SOUND = "Sounds/BURN1.wav"
 local EMP_CEG = "ElectricSequenceSML2"
 local EMP_SOUND = 'Sounds/Lashit.wav'
 
+
 local UNIT_DAMAGE_DEALT_XP = 0.12    	-- 100%HP damage dealt to enemy unit of equal value is converted to experience using this factor
 
 local UNIT_DAMAGE_TAKEN_XP = 0.06		-- 100%HP damage taken from enemies is converted to experience using this factor
@@ -628,11 +629,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	if checkDroneBeaconTargetting(attackerID,weaponDefID,unitID) == 1 then
 		return 0
 	end
-			
-	-- disable bass self-damage
-	if (weaponDefID == disruptorWaveEffectWeaponDefId and unitDefID == disruptorWaveUnitDefId) then
-		return 0
-	end
+
 	-- disable magnetar self-damage
 	if ( unitDefID == magnetarUnitDefId and (weaponDefID == magnetarWeaponDefId or weaponDefID == magnetarAuraWeaponDefId)) then
 		return 0,0	
@@ -683,6 +680,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 		end
 	end
 	 
+
 	-- increase damage due to veteran status for most weapons
 	-- to compensate for not getting reload time reduction
 	local xpMod = 1 

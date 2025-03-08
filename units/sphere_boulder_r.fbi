@@ -1,0 +1,87 @@
+[UNITINFO]
+	{
+	// ------------------- description
+	side=Sphere;
+	Name=Boulder (Enhanced);
+	Description=Amphibious Tough Assault Robot;
+	iconType=amphibassault;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	// ------------------- external specs
+	unitName=sphere_boulder_r;
+	objectName=sphere_boulder_r.3do;
+	buildPic=sphere_boulder_r.png;
+	script=sphere_boulder.cob;
+	soundCategory=SPHERE_BOTMED;
+	Corpse=sphere_boulder_r_dead;
+
+
+	// ------------------- health/cost/size
+	FootprintX=4;
+	FootprintZ=4;
+	maxDamage=6000;
+	autoHeal=30;
+
+	// ------------------- resources
+	energyUse=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyMake=0;
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	Builder=0;
+
+	// ------------------- movement
+	maxWaterDepth=12;
+	maxSlope=17;
+	maxVelocity=0.8;
+	brakeRate=0.35;
+	Acceleration=0.25;
+	turnRate=750;
+	movementClass=KBOTUW4;
+
+	// ------------------- scout
+	sightDistance=500;
+	radarDistance=0;
+
+
+	// ------------------- weapons
+	Weapon1=sphere_boulder_blaster;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	// ------------------- orders
+
+	// ------------------- misc
+	noAutoFire=0;
+	Upright=0;
+	collisionVolumeType = box;
+	collisionVolumeScales =39 44 39;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_boulder;
+		tip=Regenerates 30 HP/s;
+		evalFactor=0.9;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:redflare;
+	}
+
+	buildCostEnergy=3778;//#AUTO#
+	buildCostMetal=755;//#AUTO#
+	buildTime=9004;//#AUTO#
+	mass=2802;//#AUTO#
+}

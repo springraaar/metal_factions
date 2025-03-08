@@ -1,0 +1,162 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
+piece ground, hips,torso,turret,sleeve,front, front2, front3,front4, flare, sphere,shieldpt, luparm, ruparm,lflare,rflare;
+	
+static-var bMoving,bAiming, gun_1;
+
+#include "aimhelper1.h"
+
+// Signal definitions
+#define SIG_AIM				2
+
+
+aimingMode(built) {
+	built = FALSE;
+	while(TRUE)
+	{
+		if( get BUILD_PERCENT_LEFT ) {
+			built = FALSE;
+			sleep 100;
+		} else {
+			if (!built) {
+				built = TRUE;				
+			}
+	
+			if (bAiming) {
+				show front4;
+				hide front3;
+				emit-sfx 1024+1 from flare;
+				spin front2 around z-axis speed <360.000000>;
+			} else {
+				spin front2 around z-axis speed <120.000000>;
+				show front3;
+				hide front4;
+			}
+		}
+		sleep 30;
+	}
+}
+
+Create() {
+	bMoving=FALSE;
+	bAiming=FALSE;
+	gun_1=0;
+	call-script stopAimHelper1(<1000>,<1000>);
+	start-script aimingMode();
+}
+
+RestoreAfterDelayWeapon() {
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
+	turn torso to y-axis <0.000000> speed <100.016484>;
+	turn sleeve to x-axis <0.000000> speed <100.005495>;
+	turn luparm to x-axis <0.000000> speed <100.005495>;
+	turn ruparm to x-axis <0.000000> speed <100.005495>;
+	bAiming = FALSE;
+}
+
+
+AimFromPrimary(piecenum) {
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum) {
+	piecenum = flare;
+}
+
+FirePrimary() {
+	emit-sfx 1024 + 0 from flare;
+	return 1;
+}
+
+
+AimPrimary(heading, pitch) {
+	call-script updateAimHelper1(heading,pitch,<300>,<300>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	
+	//aim1=TRUE;
+	turn torso to y-axis heading speed <300.027473>;
+	turn sleeve to x-axis <0.000000> - pitch speed <300.038462>;
+	if (!aimReady1) {
+		wait-for-turn torso around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
+	start-script RestoreAfterDelayWeapon();
+	return (1);
+}
+
+
+AimFromSecondary(piecenum) {
+	piecenum = shieldpt;
+	return (0);
+}
+
+QuerySecondary(piecenum) {
+	piecenum = shieldpt;
+	return (0);
+}
+
+AimFromTertiary(piecenum) {
+	piecenum = torso;
+}
+
+QueryTertiary(piecenum) {
+	if (gun_1 == 0) {
+		piecenum = lflare;
+	} else {
+		piecenum = rflare;
+	}
+}
+
+FireTertiary() {
+	if (gun_1 == 0) {
+		emit-sfx 1024 + 3 from lflare;
+		sleep 150;	
+		gun_1 = 1;
+	} else {
+		emit-sfx 1024 + 3 from rflare;
+		sleep 150;	
+		gun_1 = 0;
+	}
+	return 1;
+}
+
+
+AimTertiary(heading, pitch) {
+	call-script updateAimHelper1(heading,pitch,<300>,<300>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	
+	turn torso to y-axis heading speed <300.027473>;
+	turn luparm to x-axis <0.000000> - pitch speed <300.038462>;
+	turn ruparm to x-axis <0.000000> - pitch speed <300.038462>;
+	if (!aimReady1)	{
+		wait-for-turn torso around y-axis;
+		wait-for-turn luparm around x-axis;
+		wait-for-turn ruparm around x-axis;
+	}
+	start-script RestoreAfterDelayWeapon();
+	return (1);
+}
+
+
+Killed(severity, corpsetype) {
+	if( severity <= 50 ) {
+		explode sphere type SHATTER | BITMAP4;
+		explode sphere type SHATTER | BITMAP4;
+		return (1);
+	}
+	explode sphere type SHATTER | BITMAP4;
+	explode sphere type SHATTER | BITMAP4;
+	return (2);
+}
+

@@ -13,19 +13,23 @@ end
 
 local showWarningMessage = 0
 local currentEngineVersion = "???"
-local recommendedEngineVersion = "105.1.1-2584-g9f9cdbf BAR105"
+local recommendedEngineVersion = "2025.01.6"
 
---SYNCED CODE
-if (gadgetHandler:IsSyncedCode()) then
+--UNSYNCED CODE
+if not (gadgetHandler:IsSyncedCode()) then
 
 function gadget:Initialize()
+	--Spring.Echo("Engine.version="..tostring(Engine.version))
+	--Spring.Echo("Engine.versionFull="..tostring(Engine.versionFull))
+	--Spring.Echo("Engine.versionPatchSet="..tostring(Engine.versionPatchSet))
+	
 	if (Engine and Engine.version) then
-		currentEngineVersion = Engine.version
+		currentEngineVersion = Engine.versionFull
 	elseif (Game and Game.version) then
 		currentEngineVersion = Game.version
 	end
 	
-	if (not string.find(currentEngineVersion,"BAR105"))   then
+	if (not string.find(currentEngineVersion,"2025."))   then
 		showWarningMessage = 1
 	end 
 end

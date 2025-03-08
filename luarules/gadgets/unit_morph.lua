@@ -43,6 +43,7 @@ local echo  = Spring.Echo
 --------------------------------------------------------------------------------
 --
 include("lualibs/custom_cmd.lua")
+include("lualibs/constants.lua")
 
 local MAX_MORPH = 0 --// will increase dynamically
 
@@ -106,7 +107,7 @@ if (gadgetHandler:IsSyncedCode()) then
 --  SYNCED
 --------------------------------------------------------------------------------
 
-include("luaRules/colors.h.lua")
+include("LuaGadgets/colors.h.lua")	-- from basecontent
 
 local stopPenalty  = 0.667
 local morphPenalty = 1.0
@@ -119,6 +120,8 @@ local devolution = true            --// remove upgrade capabilities after factor
 local stopMorphOnDevolution = true --// should morphing stop during devolution
 
 GG.CMD_AVENGER_MORPH = false
+local xpArr = {"","I","II","III","IV","V","VI","VII","VIII","IX","X"}
+
 
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
@@ -302,7 +305,12 @@ local function GetMorphToolTip(unitID, unitDefID, teamID, morphDef, teamTech, un
   then
     tt = tt .. RedStr .. 'needs'
     if (morphDef.tech>teamTech) then tt = tt .. ' level: ' .. morphDef.tech end
-    if (morphDef.xp>unitXP)     then tt = tt .. ' xp: '    .. string.format('%.2f',morphDef.xp) end
+    if (morphDef.xp>unitXP)     then
+    	local xpIndex = math.min(10,math.max(math.floor(11*morphDef.xp/(morphDef.xp+1)),0))+1 
+    	--Spring.Echo("morphDef.xp="..morphDef.xp.." xpIndex="..xpIndex.." str="..xpArr[xpIndex])
+    	--tt = tt .. ' xp: '    .. string.format('%.2f',morphDef.xp) 
+    	tt = tt .. ' xp: '    .. xpArr[xpIndex]
+    end
     if (morphDef.rank>unitRank) then tt = tt .. ' rank: '  .. morphDef.rank .. ' (' .. string.format('%.2f',RankToXp(unitDefID,morphDef.rank)) .. 'xp)' end
     if (not teamOwnsReqUnit)	then tt = tt .. ' unit: '  .. UnitDefs[morphDef.require].humanName end
     if (morphDef.charge>unitCharge) then tt = tt .. ' charge: '  .. string.format('%.2f',morphDef.charge*100)..'%'  end    

@@ -3,8 +3,8 @@
 	// ------------------- description
 	side=Claw;
 	Name=Nucleus;
-	Description=Heavy Fire Support Robot;
-	iconType=mobileartilleryfs;
+	Description=Amphibious Heavy Riot/Artillery Robot;
+	iconType=amphibiousartilleryfs;
 
 	// ------------------- categories
 	Category=CLAW LEVEL2 WEAPON NOTAIR NOTSUB;
@@ -20,7 +20,7 @@
 	// ------------------- health/cost/size
 	FootprintX=3;
 	FootprintZ=3;
-	maxDamage=2500;
+	maxDamage=3500;
 
 
 	// ------------------- resources
@@ -40,11 +40,11 @@
 	// ------------------- movement
 	maxWaterDepth=12;
 	maxSlope=17;
-	maxVelocity=1.0;
+	maxVelocity=0.9;
 	brakeRate=0.25;
 	Acceleration=0.15;
 	turnRate=650;
-	movementClass=KBOTHT3;
+	movementClass=KBOTUW4;
 
 	// ------------------- scout
 	sightDistance=500;
@@ -55,8 +55,8 @@
 	Weapon1=claw_nucleus_cannon;
 	hightrajectory=2;
 	badTargetCategory1=VTOL;
-	explodeAs=BIG_UNIT;
-	selfDestructAs=BIG_UNIT;
+	explodeAs=EXPLOSIVE_UNIT_BLAST;
+	selfDestructAs=EXPLOSIVE_UNIT_BLAST;
 
 
 	// ------------------- orders
@@ -65,7 +65,7 @@
 	noAutoFire=0;
 	Upright=1;
 	collisionVolumeType = box;
-	collisionVolumeScales =35 40 35;
+	collisionVolumeScales =37 42 37;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
@@ -77,8 +77,8 @@
 	{
 		explosionGenerator0=custom:blueflarebig;
 	}
-	buildCostEnergy=7103;//#AUTO#
-	buildCostMetal=1420;//#AUTO#
-	buildTime=16928;//#AUTO#
-	mass=1098;//#AUTO#
+	buildCostEnergy=8800;//#AUTO#
+	buildCostMetal=1760;//#AUTO#
+	buildTime=20973;//#AUTO#
+	mass=1461;//#AUTO#
 }

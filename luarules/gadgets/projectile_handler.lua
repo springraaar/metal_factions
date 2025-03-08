@@ -311,7 +311,7 @@ function gadget:Initialize()
 		end
 	end 
 
-	-- track disruptor wave projectiles
+	-- track wave projectiles
 	Script.SetWatchWeapon(disruptorWeaponId,true)
 	
 	-- track magnetar projectiles
@@ -788,9 +788,10 @@ function gadget:GameFrame(n)
 	end
 end
 
+local projectileCreationFrame = {}
 -- add tracked projectiles to table on creation
 function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
-
+	--projectileCreationFrame[proID] = spGetGameFrame() 
 	-- make atom firing drain own shield
 	if (atomWeaponId == weaponDefID) then
 		spSetUnitShieldState(proOwnerID, 0)
@@ -803,6 +804,7 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 		disruptorProjectiles[proID] = proOwnerID
 		return
 	end
+
 	if torpedoWeaponIds[weaponDefID] then
 		torpedoProjectiles[proID] = true
 		return
@@ -917,6 +919,9 @@ end
 
 -- remove tracked projectiles from table on destruction or trigger other effects
 function gadget:ProjectileDestroyed(proID)
+	--Spring.Echo("impact after "..((spGetGameFrame()-projectileCreationFrame[proID])/30).." s")
+	--projectileCreationFrame[proID] = nil
+
 	if smartTrackingProjectiles[proID] then
 		smartTrackingProjectiles[proID] = nil
 	end

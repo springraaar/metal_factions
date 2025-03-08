@@ -487,7 +487,7 @@ function gadget:GameFrame(n)
 					rv = abs(rx - oldPhysics[9]) + abs(ry - oldPhysics[10]) + abs(rz - oldPhysics[11])  
 					
 					--Spring.Echo("vx="..vx.." vz="..vz.." rx="..rx.." ry="..ry.." rz="..rz.." rv="..rv)
-					if abs(vx) > 0.1 or abs(vz) > 0.1 or rv > 0 then
+					if abs(vx) > 0.1 or abs(vz) > 0.1 or rv > 0.01 then
 						if abs(h) < 3 or y <= 0 then
 							spCallCOBScript(unitId,"StartMoving",0)
 						end

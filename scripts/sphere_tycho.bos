@@ -3,9 +3,14 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
+#define HEADING_TOLERANCE	<35>
+#define PITCH_TOLERANCE		<45>
+
 piece  base, basetop,basetop2,basebottom, launcher,m1,m2,m3, wing1, wing2, shieldpt, w1, w2, jetsup, jetsup2, barrel1, barrel2, barrel3, flare1, flare2, flare3,ljp,rjp,bjp;
 
 static-var  statechg_DesiredState, statechg_StateChanging, gun_1, isFlying;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				2
@@ -89,9 +94,10 @@ RequestState(requestedstate, currentstate)
 
 Create()
 {
-	gun_1 = [0];
+	gun_1 = 0;
 	isFlying = FALSE;
 	turn bjp to x-axis <-90.000000> now;
+	call-script stopAimHelper1(<1000>,<1000>);
 	call-script InitState();
 	start-script SmokeUnit();
 	return (0);
@@ -109,20 +115,16 @@ Deactivate()
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
-
 restoreAfterDelay()
 {
-	sleep 3000;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<200>,<200>);
 	turn base to y-axis <0> speed <200>;
 }
 
 AimPrimary(heading,pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<250>,<500>,HEADING_TOLERANCE,PITCH_TOLERANCE);
 	signal SIG_AIM;
 	set-signal-mask SIG_AIM;
 	if(!isFlying)
@@ -130,8 +132,11 @@ AimPrimary(heading,pitch)
 		return (0);
 	}
 	
-	turn base to y-axis heading speed <200>;
-	wait-for-turn base around y-axis;
+	turn base to y-axis heading speed <300>;
+	if ( !aimReady1 )
+	{
+		wait-for-turn base around y-axis;
+	}
 	start-script restoreAfterDelay();
 	return (1);
 }
@@ -143,22 +148,22 @@ Shot1()
 
 FirePrimary()
 {
-	if (gun_1 == [0]) {
+	if (gun_1 == 0) {
 		emit-sfx 1024+0 from flare1;
 		sleep 50;
-		gun_1 = [1];
+		gun_1 = 1;
 		return (0);
 	}
-	if (gun_1 == [1]) {
+	if (gun_1 == 1) {
 		emit-sfx 1024+0 from flare2;
 		sleep 50;
-		gun_1 = [2];
+		gun_1 = 2;
 		return (0);
 	}
-	if (gun_1 == [2]) {
+	if (gun_1 == 2) {
 		emit-sfx 1024+0 from flare3;
 		sleep 50;
-		gun_1 = [0];
+		gun_1 = 0;
 		return (0);
 	}	
 	return (0);
@@ -171,13 +176,13 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if (gun_1 == [0]) {
+	if (gun_1 == 0) {
 		piecenum = flare1;
 	}
-	if (gun_1 == [1]) {
+	if (gun_1 == 1) {
 		piecenum = flare2;
 	}
-	if (gun_1 == [2]) {
+	if (gun_1 == 2) {
 		piecenum = flare3;
 	}
 }
@@ -187,7 +192,6 @@ QueryPrimary(piecenum)
 
 Killed(severity, corpsetype)
 {
-	corpsetype = 3;
 	explode w1 type SHATTER | BITMAP2;
 	explode w2 type SHATTER | BITMAP2;
 	explode basebottom type SHATTER | BITMAP3;

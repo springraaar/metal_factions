@@ -1,0 +1,125 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Aven;
+	name=Schiltron;
+	description=Line Infantry Robot;
+	iconType=mobilefighter;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=AVEN LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=aven_schiltron;
+	objectName=aven_schiltron.3do;
+	corpse=aven_schiltron_dead;
+	buildPic=aven_schiltron.png;
+	soundCategory=aven_KBOT;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1800;
+	footprintx=3;
+	footprintz=3;
+	flankingBonusMode=3;
+	flankingBonusMax=1.5;
+	flankingBonusMin=0.66;
+	flankingBonusDir=-0.707 0 0.707;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	stealth=0;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=KBOTHT3;
+	turnRate=1050;
+	acceleration=0.9;
+	brakeRate=1.0;
+	maxVelocity=1.36;
+	maxSlope=17;
+	maxWaterDepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=aven_schiltron_laser;
+	weapon2=aven_schiltron_missile;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	weaponMainDir1=0.1 0 1;
+	maxAngleDif1=90;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+	moveState=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =30 42 25;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=aven_adv_kbot_lab;
+		tip=+/-33% shield-to-back dmg resistance;
+		optional=1;
+		hasTurnButton=1;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:redflare;
+		explosionGenerator1=custom:rocketflaremed;
+	}
+
+	buildCostEnergy=4379;//#AUTO#
+	buildCostMetal=875;//#AUTO#
+	buildTime=10437;//#AUTO#
+	mass=741;//#AUTO#
+}

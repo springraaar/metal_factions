@@ -24,9 +24,9 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=1500;
-	footprintx=5;
-	footprintz=5;
+	maxDamage=2000;
+	footprintx=4;
+	footprintz=4;
 
 	//************************************************************
 	//  Resources
@@ -59,13 +59,13 @@
 	//************************************************************
 	//  Movement
 	//************
-	turnRate=550;
-	acceleration=0.25;
-	brakeRate=0.08;
+	turnRate=450;
+	acceleration=0.17;
+	brakeRate=0.07;
 	maxVelocity=2.8;
 	maxSlope=10;
 	maxWaterDepth=10;
-	cruiseAlt=170;
+	cruiseAlt=140;
 
 
 	//************************************************************
@@ -100,8 +100,8 @@
 	airHoverFactor=-1;
 	collide=1;
 	collisionVolumeType = sphere;
-	collisionVolumeScales =45 30 45;
-	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeScales =45 35 45;
+	collisionVolumeOffsets = 0 -8 0;
 	collisionVolumeTest = 1;
 
 	[CustomParams]
@@ -110,10 +110,10 @@
 	}
 	[SFXTypes]
 	{
-		explosionGenerator0=custom:glowsml;
+		explosionGenerator0=custom:rocketflaresml;
 	}
-	buildCostEnergy=2846;//#AUTO#
-	buildCostMetal=569;//#AUTO#
-	buildTime=6783;//#AUTO#
-	mass=282;//#AUTO#
+	buildCostEnergy=3872;//#AUTO#
+	buildCostMetal=774;//#AUTO#
+	buildTime=9229;//#AUTO#
+	mass=379;//#AUTO#
 }

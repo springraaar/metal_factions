@@ -169,7 +169,7 @@ local Sounds = {
 			maxconcurrent = 12,
 			dopplerscale = 0,
 			priority = 0,
-			rolloff = 0.4,
+			rolloff = 0.5,
 		},
 	},
 }

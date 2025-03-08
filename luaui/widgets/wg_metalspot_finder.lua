@@ -229,7 +229,7 @@ function GetSpots()
 		g.x = (gMinX + gMaxX) * 0.5
 		g.z = (g.minZ + g.maxZ) * 0.5
 		g.y = spGetGroundHeight(g.x, g.z)
-		
+		g.worth = g.worth/1000
 		spots[#spots + 1] = g
 	end
 	return spots

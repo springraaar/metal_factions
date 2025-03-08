@@ -54,7 +54,7 @@ activationControl(buildPercentLeft)
 		buildPercentLeft = get(BUILD_PERCENT_LEFT);
 		if ( buildPercentLeft == 0 && windSpeed > 0)
 		{
-			turn post to y-axis windAngle speed <20.000000>;
+			turn post to y-axis windAngle speed <60.000000>;
 		}
 		else
 		{

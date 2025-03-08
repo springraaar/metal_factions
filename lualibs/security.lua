@@ -16,6 +16,7 @@ function overrides()
 		["cmdcolors_mf.txt"] = true,
 		["cmdcolors.tmp"] = true,
 		["cmdcolors.txt"] = true,
+		["metalmap.ppm"] = true,
 	}
 
 	if os then

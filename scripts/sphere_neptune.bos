@@ -3,9 +3,14 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, basetop,basetop2,basebottom, launcher,m1,f1,m2,m3, wing1, wing2, shieldpt, w1, w2, jetsup, jetsup2,ljp,rjp;
+#define HEADING_TOLERANCE	<35>
+#define PITCH_TOLERANCE		<45>
+
+piece  base, basetop,basetop2,basebottom, launcher,m1,f1,m2,m3, wing1, wing2, shieldpt, w1, w2, jetsup, jetsup2,ljp,rjp,bjp;
 
 static-var  statechg_DesiredState, statechg_StateChanging, isFlying;
+
+#include "aimhelper1.h"
 
 // Signal definitions
 #define SIG_AIM				2
@@ -90,7 +95,9 @@ RequestState(requestedstate, currentstate)
 Create()
 {
 	turn f1 to x-axis <-45.000000> now;
+	turn bjp to x-axis <-90.000000> now;
 	isFlying = FALSE;
+	call-script stopAimHelper1(<1000>,<1000>);
 	call-script InitState();
 	start-script SmokeUnit();
 	return (0);
@@ -108,32 +115,40 @@ Deactivate()
 	return (0);
 }
 
-SweetSpot(piecenum)
+restoreAfterDelay()
 {
-	piecenum = base;
-	return (0);
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<200>,<200>);
+	turn base to y-axis <0> speed <200>;
 }
 
-
-AimPrimary()
+AimPrimary(heading,pitch)
 {
+	call-script updateAimHelper1(heading,pitch,<250>,<500>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+
 	if(!isFlying)
 	{
 		return (0);
 	}
+	turn base to y-axis heading speed <300>;
+	if ( !aimReady1 )
+	{
+		wait-for-turn base around y-axis;
+	}
+	start-script restoreAfterDelay();
+	
 	return (1);
-}
-
-Shot1()
-{
-	return 0;
 }
 
 FirePrimary()
 {
+	turn m2 to x-axis <30> now;
+	emit-sfx 1024+0 from f1;
+	sleep 1000;
+	turn m2 to x-axis <0> speed <40>;
 	return (0);
-
-
 }
 
 AimFromPrimary(piecenum)
@@ -160,13 +175,8 @@ AimFromSecondary(piecenum)
 	return (0);
 }
 
-AimSecondary(heading, pitch)
-{
-	return (1);
-}
 Killed(severity, corpsetype)
 {
-	corpsetype = 3;
 	explode w1 type SHATTER | BITMAP2;
 	explode w2 type SHATTER | BITMAP2;
 	explode basebottom type SHATTER | BITMAP3;

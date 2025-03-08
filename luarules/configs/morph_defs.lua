@@ -346,7 +346,16 @@ local morphDefs = {
 			cmdname = 'Exploiter Form',
 			text = 'Morph to Exploiter'
 		}
-	},	
+	},
+	sphere_boulder = {
+		{
+			into = 'sphere_boulder_r',
+			time = 10,
+			xp=0.22223,
+			cmdname = 'Enhanced Form',
+			text = 'Morph to Enhanced Form : improves HP and regeneration. Requires "II" experience.'
+		}
+	},
 }
 
 --

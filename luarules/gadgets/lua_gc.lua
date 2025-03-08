@@ -6,13 +6,13 @@ function gadget:GetInfo()
       date = "2022",
       license = "PD",
       layer = 0,
-      enabled = true,
+      enabled = false,
    }
 end
 
 GC_FRAMES = 11
 
-VFS.Include("luarules/system.lua")
+--TODO disabled in early 2025, 0.75% of early game load, probably pointless
 
 --UNSYNCED CODE
 if not gadgetHandler:IsSyncedCode() then

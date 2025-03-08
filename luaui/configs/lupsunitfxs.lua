@@ -58,6 +58,9 @@ effectUnitDefs = {
   sphere_gazer = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.75}, areaShieldSphere)}
   },
+  sphere_radiant = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.75}, areaShieldSphere)}
+  },
   sphere_comet = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.65}, areaShieldSphere)}
   },
@@ -560,6 +563,7 @@ effectUnitDefs = {
   sphere_neptune = {
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=25, piece="ljp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=25, piece="rjp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=28, piece="bjp", onActive=true,down=true}},
     {class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.35}, areaShieldSphere)}
   },  
   sphere_tycho = {

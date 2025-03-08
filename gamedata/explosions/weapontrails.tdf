@@ -2651,6 +2651,41 @@ usedefaultexplosions=0;
   		count=1; 
 	}
 }
+[RADIANTWAVE]
+{
+	usedefaultexplosions=0;	
+	[groundflash]
+	{
+		flashSize = 80;
+		flashAlpha = 0.36;
+		circleGrowth = 0;
+		circleAlpha = 0.1;
+		ttl = 4;
+		color = 1.0, 0.8, 0.5;
+
+		air=0;
+		water=1;
+		ground=1;
+  		count=1; 
+	}
+	[GLOWCENTER]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=-1 r2, -1 r2, -1 r2;
+			width=80;
+			length=90;
+			alpha=0.6;
+			alphadecay=0.45;
+			color=1.0, 0.8, 0.5;
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=1; 
+	}
+}
 
 [FIREBALLTRAIL2]
 {

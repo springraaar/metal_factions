@@ -1592,6 +1592,49 @@
 }
 
 
+[RADIANTEFFECT2]
+{
+	usedefaultexplosions=0;
+	// do nothing
+}
+
+[RADIANTWAVEBLAST]
+{
+	usedefaultexplosions=0;	
+	[groundflash]
+	{
+		flashSize = 200;
+		flashAlpha = 0.3;
+		circleGrowth = 0;
+		circleAlpha = 0.2;
+		ttl = 35;
+		color = 1.0, 0.8, 0.5;
+
+		air=0;
+		water=1;
+		ground=1;
+  		count=1; 
+	}
+	[GLOW]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=-2 r4, -2 r4, -2 r4;
+			width=100;
+			length=120;
+			alpha=0.20;
+			alphadecay=0.01;
+			color=1.0, 0.8, 0.5;
+		}
+		air=1;
+		water=1;
+		ground=1;
+  		count=3; 
+	}
+}
+
+
 [HEATRAYBOOMSML]
 {
 	usedefaultexplosions=0;	

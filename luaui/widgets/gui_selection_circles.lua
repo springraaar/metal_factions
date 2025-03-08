@@ -167,7 +167,6 @@ function widget:DrawWorldPreUnit()
   --
   -- Mark selected units 
   --
-  glPolygonOffset(false)
   glDepthTest(false)
 
   glLineWidth(2.0)

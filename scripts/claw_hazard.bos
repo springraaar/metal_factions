@@ -3,9 +3,9 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, turbase, turret, sleeve, llauncher, lflare,rlauncher,rflare,r2,l2, b1,b2,bottom, sides, aimpt;
+piece  base, turbase, turret, holder, sleeve, barrel,flash, bottom, aimpt;
 
-static-var  gun_1,canAim;
+static-var  canAim;
 
 // Signal definitions
 #define SIG_AIM				2
@@ -45,7 +45,8 @@ Open()
 
 	move turbase to y-axis [40] speed [160];
 	wait-for-move turbase along y-axis;
-
+	move holder to z-axis [8] speed [30];
+	wait-for-move holder along z-axis;
 	canAim = TRUE;
 }
 
@@ -54,11 +55,13 @@ Close()
 {
 	canAim = FALSE;
 
-	//turn sleeve to x-axis <0.000000> speed <300.000000>;
-	//turn turret to y-axis <0.000000> speed <300.000000>;
+	turn sleeve to x-axis <0.000000> speed <300.000000>;
+	turn turret to y-axis <0.000000> speed <300.000000>;
+	wait-for-turn sleeve around x-axis;
+	wait-for-turn turret around y-axis;
+	move holder to z-axis [0] speed [30];
+	wait-for-move holder along z-axis;
 	move turbase to y-axis [0] speed [160];
-	//wait-for-turn sleeve around x-axis;
-	//wait-for-turn turret around y-axis;
 	wait-for-move turbase along y-axis;
 
 	SET ARMORED to TRUE;
@@ -99,21 +102,13 @@ checkClose(fireState,previousFireState)
 
 Create()
 {
-	hide lflare;
-	hide rflare;
 	move aimpt to y-axis [40.000000] now;
-	gun_1=[0];
 	canAim = FALSE;
 	start-script SmokeUnit();
 	start-script Close();
 	start-script checkClose();
 }
 
-
-SweetSpot(piecenum)
-{
-	piecenum = turret;
-}
 
 AimFromPrimary(piecenum)
 {
@@ -128,9 +123,9 @@ AimPrimary(heading, pitch)
 	{
 		call-script Open();
 	}
-	//turn sleeve to x-axis <0.000000> - pitch speed <200.000000>;
+	turn sleeve to x-axis <0.000000> - pitch/2 speed <200.000000>;
 	turn turret to y-axis heading speed <300.000000>;
-	//wait-for-turn sleeve around x-axis;
+	wait-for-turn sleeve around x-axis;
 	wait-for-turn turret around y-axis;
 	start-script RestoreAfterDelay();
 	return (1);
@@ -138,46 +133,26 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	if (gun_1 == [0])
-	{
-		emit-sfx 1024+0 from lflare;
-		sleep 50;
-		gun_1 = [1];
-		return(1);
-	}
-	if (gun_1 == [1])
-	{
-		emit-sfx 1024+0 from rflare;
-		sleep 50;
-		gun_1 = [0];
-		return(1);
-	}
+	move barrel to z-axis [-3] now;
+	emit-sfx 1024+0 from flash;
+	sleep 120;
+	move barrel to z-axis [0] speed [8];
+	return(1);
 }
 
 QueryPrimary(piecenum)
 {
-	if (gun_1 == [0])
-	{
-		piecenum = lflare;
-	}
-	if (gun_1 == [1])
-	{
-		piecenum = rflare;
-	}
+	piecenum = flash;
 }
 
 Killed(severity, corpsetype)
 {
-	hide lflare;
-	hide rflare;
-	
 	if( severity <= 50 )
 	{
 		return (1);
 	}
 
-	explode llauncher type SHATTER | BITMAP4;
-	explode rlauncher type SHATTER | BITMAP4;
-	explode sides type SHATTER | BITMAP4;
+	explode turret type SHATTER | BITMAP4;
+	explode sleeve type SHATTER | BITMAP4;
 	return (2);
 }

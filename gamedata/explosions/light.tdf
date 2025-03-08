@@ -932,6 +932,129 @@
 
 
 
+[RADIANTGLOW1]
+{
+	[GLOW1]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=1, r0.2, r0.2;
+			width=20;
+			length=20;
+			alpha=0.16;
+			alphadecay=0.04;
+			color=1.0, 0.9, 0.5;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+	[GLOW2]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=r0.2, 1, r0.2;
+			width=20;
+			length=20;
+			alpha=0.16;
+			alphadecay=0.04;
+			color=1.0, 0.9, 0.5;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+	[GLOW3]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=r0.2, r0.2, 1;
+			width=20;
+			length=20;
+			alpha=0.16;
+			alphadecay=0.04;
+			color=1.0, 0.9, 0.5;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+}
+
+[RADIANTGLOW2]
+{
+	[GLOW1]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=1, r0.2, r0.2;
+			width=35;
+			length=35;
+			alpha=0.3;
+			alphadecay=0.08;
+			color=1, 0.9, 0.5;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+	[GLOW2]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=r0.2, 1, r0.2;
+			width=35;
+			length=35;
+			alpha=0.3;
+			alphadecay=0.08;
+			color=1, 0.9, 0.5;
+
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+	[GLOW3]
+	{
+		class=explspike;
+		[properties]
+		{
+			pos=0, 0, 0;
+			dir=r0.2, r0.2, 1;
+			width=35;
+			length=35;
+			alpha=0.3;
+			alphadecay=0.08;
+			color=1, 0.9, 0.5;
+		}
+		air=1;
+		water=1;
+		ground=1;
+		count=1;
+	}
+}
+
+
+
 [PNODEGLOW1]
 {
 	useAirLos=0;

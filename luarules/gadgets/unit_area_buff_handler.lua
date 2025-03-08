@@ -110,6 +110,7 @@ local energyBoostedMovementDefIds = {
 	[UnitDefNames["sphere_nimbus"].id] = 0.5,
 	[UnitDefNames["sphere_aster"].id] = 0.5,
 	[UnitDefNames["sphere_gazer"].id] = 0.5,
+	[UnitDefNames["sphere_radiant"].id] = 0.5,
 	[UnitDefNames["sphere_magnetar"].id] = 0.5,
 	[UnitDefNames["sphere_chroma"].id] = 0.5,
 	[UnitDefNames["sphere_orb"].id] = 0.5,

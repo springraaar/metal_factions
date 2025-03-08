@@ -64,6 +64,3 @@ UI_BTN_BORDER_SELECTED_OVER = {0.3,1,0.3,1}
 UI_BTN_TEXT = {1.0,1.0,1.0,1}
 UI_BTN_TEXT_OVER = {0.9,0.9,0.9,1}	-- not used
 
-
-
-

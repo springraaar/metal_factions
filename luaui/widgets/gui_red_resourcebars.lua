@@ -526,9 +526,9 @@ local function updateWind(r)
 	
 	local maxWind = Game.windMax * WIND_INCOME_MULTIPLIER * EXCESS_WIND_REDUCTION_MULT
 	local fraction = windStrength / maxWind
-	local mod = min(1,(fraction-0.3)/0.4)*(1+avgWindMod)*0.5
+	local mod = min(1,max(fraction-0.3,0)/0.4)*(1+avgWindMod)*0.5
 	-- get color 
-	r.currentValue.color = {1-mod*0.3,mod,mod*0.4,1}
+	r.currentValue.color = {max(1-mod*0.3,0),mod,mod*0.4,1}
 	r.currentValue.caption = formatNbr(windStrength,1)
 end
 

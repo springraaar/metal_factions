@@ -24,7 +24,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=2300;
+	maxDamage=2500;
 	footprintx=5;
 	footprintz=5;
 
@@ -79,8 +79,6 @@
 	//  Weapons
 	//***********
 	weapon1=sphere_neptune_torpedo;
-	weaponMainDir1=0 -1 0.2;
-	maxAngleDif1=120;
 	weapon2=sphere_neptune_shield;
 	onlytargetcategory1=NOTAIR;
 	explodeAs=BIG_UNIT;
@@ -102,7 +100,7 @@
 	
 	collide=1;
 	collisionVolumeType = sphere;
-	collisionVolumeScales =60 25 60;
+	collisionVolumeScales =60 35 60;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
@@ -114,8 +112,8 @@
 	{
 		explosionGenerator0=custom:rocketflaremed;
 	}
-	buildCostEnergy=8716;//#AUTO#
-	buildCostMetal=1743;//#AUTO#
-	buildTime=20774;//#AUTO#
-	mass=578;//#AUTO#
+	buildCostEnergy=11304;//#AUTO#
+	buildCostMetal=2260;//#AUTO#
+	buildTime=26943;//#AUTO#
+	mass=689;//#AUTO#
 }

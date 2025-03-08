@@ -332,7 +332,7 @@ if (true) then
 			--end
 			
 			if not canFly and (not unitDef.upright or tonumber(unitDef.upright) == 0) then
-				unitDef.upDirSmoothing = 0.9
+				unitDef.upDirSmoothing = 0.5
 			end
 		else
 			local factionBuilding = false

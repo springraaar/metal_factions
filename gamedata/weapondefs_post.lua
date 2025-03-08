@@ -185,10 +185,21 @@ for wdName, wd in pairs(WeaponDefs) do
 		elseif (wd.weapontype == "LaserCannon") then
 			wd.heightmod = 1.0		-- default was 1.0
 		elseif (wd.weapontype == "Cannon" or wd.weapontype == "EmgCannon" ) then
-			if wd.range and tonumber(wd.range) > 380 then
+			--if wd.range and tonumber(wd.range) > 380 then
 				wd.heightmod = 0.5			-- default was 0.8
+			--else
+			--	wd.heightmod = 1
+			--end
+
+			-- set heightboostfactor to let them hit further against lower ground to compensate for range reduction against higher ground
+			-- only for gravity-affected projectiles with curved trajectories
+			if (not wd.mygravity and not wd.heightboostfactor) then
+				wd.heightboostfactor=0.6
 			end
-			wd.heightboostfactor = 0.0		-- default was -1.0
+			-- override mygravity for cannons if not specified
+			if (not wd.mygravity) then
+				wd.mygravity = 0.17
+			end
 			
 			if (wdName:lower():find("_emg",1,true)) or (wdName:lower():find("_hemg",1,true)) then
 				wd.size = tonumber(wd.size) * 2
@@ -198,14 +209,12 @@ for wdName, wd in pairs(WeaponDefs) do
 		elseif (wd.weapontype == "StarburstLauncher" ) then
 			wd.cylindertargeting = 2
 		end
-		
-		-- override mygravity for cannons if not specified
-		if (wd.weapontype == "Cannon") then
-			if (not wd.mygravity) then
-				wd.mygravity = 0.1
-			end
+
+		-- increase projectile velocity (more relevant for slow projectiles, especially if they're long ranged)
+		if wd.weaponvelocity and wd.range then
+			wd.weaponvelocity=tonumber(wd.weaponvelocity)*1.05+tonumber(wd.range)*0.03+25
 		end
-		
+
 		-- range compensation for lasercannons due to engine bug
 		-- https://springrts.com/mantis/view.php?id=6384
 		if (wd.weapontype == "LaserCannon") then

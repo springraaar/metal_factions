@@ -77,11 +77,11 @@
 		class=CExploSpikeProjectile;
 		[properties]
 		{
-			dir=dir;
+			dir=-0.7 r1.4, -0.7 r1.4, -0.7 r1.4;
 			width=30;
 			length=23;
-			alpha=0.3;
-			alphadecay=0.05;
+			alpha=0.1;
+			alphadecay=0.015;
 			color=0.9, 0.8, 0.6;
 
 		}
@@ -89,7 +89,7 @@
 		water=1;
 		underwater=1;
 		ground=1;
-  		count=1; 
+  		count=3; 
 	}
 }
 [EMGFLARE]
@@ -229,7 +229,7 @@
 		class=CExploSpikeProjectile;
 		[properties]
 		{
-			dir=dir;
+			dir=-0.7 r1.4, -0.7 r1.4, -0.7 r1.4;
 			width=30;
 			length=23;
 			alpha=0.3;
@@ -305,7 +305,7 @@
 		class=CExploSpikeProjectile;
 		[properties]
 		{
-			dir=dir;
+			dir=-0.7 r1.4, -0.7 r1.4, -0.7 r1.4;
 			width=30;
 			length=23;
 			alpha=0.3;
@@ -370,11 +370,11 @@
 		class=CExploSpikeProjectile;
 		[properties]
 		{
-			dir=dir;
+			dir=-0.7 r1.4, -0.7 r1.4, -0.7 r1.4;
 			width=40;
 			length=30;
-			alpha=0.3;
-			alphadecay=0.05;
+			alpha=0.1;
+			alphadecay=0.015;
 			color=0.9, 0.8, 0.6;
 
 		}
@@ -382,7 +382,7 @@
 		water=1;
 		underwater=1;
 		ground=1;
-  		count=1; 
+  		count=3; 
 	}
 	[GROUNDFLASH]
 	{
@@ -444,11 +444,11 @@
 		class=CExploSpikeProjectile;
 		[properties]
 		{
-			dir=dir;
+			dir=-0.7 r1.4, -0.7 r1.4, -0.7 r1.4;
 			width=80;
 			length=60;
-			alpha=0.3;
-			alphadecay=0.045;
+			alpha=0.1;
+			alphadecay=0.015;
 			color=0.9, 0.8, 0.6;
 
 		}
@@ -456,7 +456,7 @@
 		water=1;
 		underwater=1;
 		ground=1;
-  		count=1; 
+  		count=3; 
 	}
 	[GROUNDFLASH]
 	{
@@ -664,11 +664,11 @@
 		class=CExploSpikeProjectile;
 		[properties]
 		{
-			dir=dir;
+			dir=-0.7 r1.4, -0.7 r1.4, -0.7 r1.4;
 			width=30;
 			length=23;
-			alpha=0.3;
-			alphadecay=0.06;
+			alpha=0.1;
+			alphadecay=0.02;
 			color=0.9, 0.8, 0.6;
 
 		}
@@ -676,7 +676,7 @@
 		water=1;
 		ground=1;
 		underwater=1;
-  		count=1; 
+  		count=3; 
 	}
 	[GROUNDFLASH]
 	{
@@ -736,11 +736,11 @@
 		class=CExploSpikeProjectile;
 		[properties]
 		{
-			dir=dir;
+			dir=-0.7 r1.4, -0.7 r1.4, -0.7 r1.4;
 			width=45;
 			length=36;
-			alpha=0.3;
-			alphadecay=0.045;
+			alpha=0.1;
+			alphadecay=0.015;
 			color=0.9, 0.8, 0.6;
 
 		}
@@ -748,7 +748,7 @@
 		water=1;
 		underwater=1;
 		ground=1;
-  		count=1; 
+  		count=3; 
 	}
 	[GROUNDFLASH]
 	{
@@ -812,6 +812,77 @@
 			width=60;
 			length=45;
 			alpha=0.1;
+			alphadecay=0.01;
+			color=0.9, 0.8, 0.6;
+
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+  		count=3; 
+	}
+	[GROUNDFLASH]
+	{
+		flashSize = 50;
+		flashAlpha = 0.15;
+		circleGrowth = 0;
+		circleAlpha = 0.1;
+		ttl = 10;
+		color = 1.0,0.9,0.2;
+
+	}
+}
+
+[RADIANTFLARE]
+{
+	usedefaultexplosions=0;	
+
+	[GLOWCENTER]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=-0.7 r1.4, -0.7 r1.4, -0.7 r1.4;
+			width=45;
+			length=36;
+			alpha=0.2;
+			alphadecay=0.01;
+			color=0.9, 0.8, 0.6;
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+  		count=3; 
+	}
+	[GLOWCENTER2]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=-0.7 r1.4, -0.7 r1.4, -0.7 r1.4;
+			width=24;
+			length=18;
+			alpha=0.3;
+			alphadecay=0.1;
+			color=0.9, 0.8, 0.6;
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+  		count=3; 
+	}
+	[GLOW]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=-0.7 r1.4, -0.7 r1.4, -0.7 r1.4;
+			width=60;
+			length=45;
+			alpha=0.2;
 			alphadecay=0.01;
 			color=0.9, 0.8, 0.6;
 

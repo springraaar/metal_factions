@@ -1,3 +1,57 @@
+2025/03/08 ------------------ NOTES v2.45 ----------------------
+
+--- Engine
+
+- updated the springRTS/Recoil engine compatibility recommendation to "2025.01.6"
+
+
+--- New units
+
+OPTIONAL
+- AVEN "Schiltron" : L2 Line Infantry Robot		
+- SPHERE "Radiant" : L2 Heavy Riot Sphere
+- CLAW "Hulk" : L2 Amphibious Heavy Assault/Riot Robot
+
+
+--- Balance / Mechanics
+
+- Relatively slow projectiles are now about 10-20% faster (effect is bigger for slower projectiles with longer range)
+- Cannon projectiles are subjected to slightly higher gravity to compensate for the speed increase and keep trajectory arcs
+- Ground-based Cannon projectiles get range boost when firing downhill to compensate for penalty when firing uphill
+(up to about 10% in practice and the base range is still a 2x-tall ellipsoid)
+
+- L2 heavy fighter aircraft deal about 50% higher burst damage on the forward facing weapons but have higher reload times
+
+- Jump movement starts slower and speeds up
+
+- CLAW "Hazard" had rockets replaced by a more broadly effective EWB plasma cannon, but gets about 20% more expensive
+- CLAW "Nucleus" is slightly bigger and stronger with better range and HP, but more expensive and explodes violently
+- CLAW "Brute" and "Nucleus" are now amphibious
+- SPHERE "Twilight"'s forward facing weapon changed to bursty flash beams and shield increased from 600 to 720
+- SPHERE "Boulder" can morph into an enhanced form with +1000HP and +30HP/s regen, but requires "II" experience
+- SPHERE emerald beam linger times reduced from 3 frames to 2, so it performs when used by or against fast units
+- SPHERE "Tycho" is bigger, stronger and more expensive. Shoots 3 rocket bursts, but has less range and maneuverability
+- SPHERE "Neptune" got slight HP and cost increase and 360º aiming (similar to Tycho)
+
+
+--- UI / Visual / Sounds 
+
+- Wind generators now update their direction and speed more frequently
+- Fixed wind indicator color for very low wind values
+- Fixed how selection circles overlay over some map effects
+- Sounds get slightly quieter faster as view zooms out
+- F4 resource view now shows metal amounts and reliably highlights metal spots over decals (relevant for some maps)
+- Jumping units now consistently trigger a dusty "poof" on the ground when starting and landing
+- Fixed range/event circles on minimap being drawn on the wrong when camera is flipped (ctrl-shift-o)
+- Improve range circles to better match the range of various weapons (spherical, cylindrical, ellipsoid, etc.)
+- Slightly improved textures and animations on a few units
+
+
+--- Other
+
+- Removal of some files that were unused/replaceable by the default ones packaged with the engine
+
+
 2024/09/17 ------------------ NOTES v2.44 ----------------------
 
 - Fixed Set-Target interaction with attack commands and made the lines more visible
