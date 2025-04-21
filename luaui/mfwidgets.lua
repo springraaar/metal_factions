@@ -1262,7 +1262,6 @@ function widgetHandler:DrawScreen()
   return
 end
 
-
 function widgetHandler:DrawGenesis()
   for _,w in ripairs(self.DrawGenesisList) do
     w:DrawGenesis()

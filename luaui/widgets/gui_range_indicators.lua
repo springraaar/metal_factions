@@ -163,7 +163,7 @@ local function updateCirclesToDraw()
 	local hoveredUnitId = nil
  
  	local newSelCount = spGetSelectedUnitsCount()
- 	if newSelCount ~= selectedUnitsCount then
+ 	if WG.unitSelectionChanged then
  		selectedUnitsCount = newSelCount
  		
  		selectedUnitsByDefIdWCost = {}
@@ -306,7 +306,7 @@ end
 function widget:Update(dt)
 	timeSinceLastCircleUpdate = timeSinceLastCircleUpdate + dt
 	-- limit circles update rate to 30x per second 
-	if timeSinceLastCircleUpdate > 0.03 then
+	if timeSinceLastCircleUpdate > 0.03 or WG.unitSelectionChanged then
 		updateCirclesToDraw()
 		timeSinceLastCircleUpdate = 0
 

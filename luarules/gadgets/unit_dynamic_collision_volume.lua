@@ -122,9 +122,9 @@ if (gadgetHandler:IsSyncedCode()) then
 			csBeaconIds[unitID] = true
 		elseif (ud.canFly) then 
 			if (ud.transportCapacity>0) then
-				spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.7/2, ys*0.7)
+				spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.5/2, ys*0.5)
 			else
-				spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.7/2, ys*0.7)
+				spSetUnitRadiusAndHeight(unitID, (xs+zs)*0.5/2, ys*0.5)
 			end
 		end
 		

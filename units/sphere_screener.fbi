@@ -63,8 +63,8 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementClass=TANKHOVER4;
-	turnRate=245;
+	movementClass=AMPHBOAT4;
+	turnRate=325;
 	acceleration=0.03;
 	brakeRate=0.02;
 	maxVelocity=1.5;
@@ -103,7 +103,6 @@
 	collisionVolumeScales =50 70 90;
 	collisionVolumeOffsets = 0 -15 0;
 	collisionVolumeTest = 1;
-	waterline=8;
 
 	[CustomParams]
 	{
@@ -122,8 +121,8 @@
 	explosionGenerator1=custom:UNITFIRE;
 	}
 
-	buildCostEnergy=21460;//#AUTO#
-	buildCostMetal=4292;//#AUTO#
-	buildTime=51148;//#AUTO#
-	mass=3889;//#AUTO#
+	buildCostEnergy=21621;//#AUTO#
+	buildCostMetal=4324;//#AUTO#
+	buildTime=51532;//#AUTO#
+	mass=3906;//#AUTO#
 }

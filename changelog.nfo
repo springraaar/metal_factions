@@ -1,3 +1,31 @@
+2025/04/21 ------------------ NOTES v2.46 ----------------------
+
+--- New units
+
+- SPHERE "Slammer (Naval Series)" : L2 ship variant of the vehicle rocket artillery
+- Assault and Artillery morph options for GEAR "Proteus"
+
+
+--- Balance / Mechanics
+
+- Reduced cost of all floating units and structures with short range depth charges and, to a lesser degree, torpedoes
+- Disabled logic that'd make units slide down if stuck on impassable terrain because it'd sometimes make units fall through cliff edges
+- Slightly reduced aircraft's radius to avoid an engine issue where they hover near ground instead of landing
+- Fixed floating amphibious units not sinking to match their waterline definition due to a recent engine change
+- GEAR "Lesser Luminator" is now amphibious
+- Fixed CLAW "Trident" excessively avoiding firing at positions near friendly units
+- Increased maneuverability of amphibious ships
+
+
+--- UI / Visual / Sounds 
+
+- Fixed CLAW "Nucleus" icon
+- Modified the "Low" graphics preset to avoid an issue where projectiles and many effects would no longer render
+- Fixed faction selector being cut when on windowed mode
+- Fixed weapon range indicators not updating when selection changed to same numbers of units (derp)
+- Slightly improved 3D models of some ships and wrecks
+
+
 2025/03/08 ------------------ NOTES v2.45 ----------------------
 
 --- Engine

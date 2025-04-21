@@ -64,7 +64,7 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementClass=TANKHOVER4;
+	movementClass=AMPHBOAT4;
 	turnRate=645;
 	acceleration=0.09;
 	brakeRate=0.03;
@@ -96,7 +96,7 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	damagemodifier=0.66;
+	damageModifier=0.66;
 	collisionVolumeType = box;
 	collisionVolumeScales =40 60 40;
 	collisionVolumeOffsets = 0 -5 0;
@@ -107,7 +107,7 @@
 	[CustomParams]
 	{
 		builtBy=claw_spinbot_plant;
-		tip=Use ON/OFF toggle deployment mode. Can only fire if deployed but cannot move. Gains 33% dmg resistance when closed;
+		tip=Use ON/OFF to toggle deployment mode. Can only fire if deployed but cannot move. Gains 33% dmg resistance when closed;
 		evalfactor=0.75; //can't fire while moving
 	}
 

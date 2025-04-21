@@ -62,9 +62,9 @@
 	//************************************************************
 	//  Movement
 	//************
-	movementClass=TANKHOVER5;
-	turnRate=145;
-	acceleration=0.03;
+	movementClass=AMPHBOAT5;
+	turnRate=240;
+	acceleration=0.04;
 	brakeRate=0.02;
 	maxVelocity=1.9;
 	maxWaterDepth=1000;
@@ -104,7 +104,6 @@
 	collisionVolumeScales =40 50 80;
 	collisionVolumeOffsets = 0 -15 0;
 	collisionVolumeTest = 1;
-	waterline=6;
 
 	[CustomParams]
 	{
@@ -121,8 +120,8 @@
 		explosionGenerator2=custom:redflare;
 	}
 
-	buildCostEnergy=13844;//#AUTO#
-	buildCostMetal=2768;//#AUTO#
-	buildTime=32996;//#AUTO#
-	mass=3156;//#AUTO#
+	buildCostEnergy=14010;//#AUTO#
+	buildCostMetal=2802;//#AUTO#
+	buildTime=33391;//#AUTO#
+	mass=3174;//#AUTO#
 }

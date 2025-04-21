@@ -461,7 +461,7 @@ function gadget:GameFrame(n)
 		end
 	end
 	local doMoveAnimCheck = n%MOVING_CHECK_DELAY_FRAMES == 0
-	local doStuckCheck = n%STUCK_CHECK_DELAY_FRAMES == 0
+	local doStuckCheck = false 		-- n%STUCK_CHECK_DELAY_FRAMES == 0
 	local ys,submergedDepth,fullySubmergedDepth
 	-- check unit physics
 	for unitId,oldPhysics in pairs(unitPhysicsById) do
@@ -529,6 +529,7 @@ function gadget:GameFrame(n)
 			end
 		
 			-- check if unit is stuck
+			-- TODO disabled in april 2025 due to making units fall through cliff edges when they shouldn't
 			if (doStuckCheck) then
 				if (checkStuck(unitId,defId,x,y,z,v)) then
 					if not stuckGroundUnitIds[unitId] then

@@ -383,6 +383,17 @@ function selectFaction(faction)
 	
 end
 
+
+function getScale(vsx,lx,vsy,ly)
+	local hConstrainedScale = vsx/lx
+	local vConstrainedScale = vsy/ly
+	
+	if (vConstrainedScale < hConstrainedScale) then
+		return vConstrainedScale
+	end
+	return vsy/ly
+end
+
 ------------------------------------ callins
 
 function widget:Initialize()

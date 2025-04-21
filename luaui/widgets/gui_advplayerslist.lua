@@ -63,6 +63,8 @@ local spGetUnitTeam              = Spring.GetUnitTeam
 local spGetUnitAllyTeam          = Spring.GetUnitAllyTeam
 local spGetSpectatingState       = Spring.GetSpectatingState
 local spIsReplay                 = Spring.IsReplay
+local spGetSelectedUnits         = Spring.GetSelectedUnits
+local spGetSelectedUnitsCount    = Spring.GetSelectedUnitsCount
 
 local gl_Texture          = gl.Texture
 local gl_Rect             = gl.Rect
@@ -1054,7 +1056,6 @@ local glList = nil
 local glListRefreshIdx = -1
 local refTimer = spGetTimer()
 function widget:DrawScreen()
-
 	local vOffset                 = 0         -- position of the next object to draw
 	local firstDrawnPlayer, firstEnemy, previousAllyTeam = true, true, nil
 	local mouseX,mouseY           = Spring_GetMouseState()
@@ -1796,7 +1797,7 @@ function GetPlayerColorStr(red,green,blue)
 end
 
 function changeToPlayerView(teamID)
-	Spring_SendCommands("specfullview 6")
+	Spring_SendCommands("specfullview 2")
 	Spring_SendCommands("specteam "..teamID)
 	if (Spring.GetMapDrawMode() ~= "los") then
 		Spring_SendCommands("togglelos")
@@ -1828,9 +1829,7 @@ function Spec(teamID, forceFullView)
 end
 
 function CheckUnitSelection()
-	local selectedUnits = Spring.GetSelectedUnits()
-	local newSelectedUnitsTeamIds = {}
-	local newSelectedUnitsAllyIds = {}
+	local selectedUnits = spGetSelectedUnits()
 	local multipleAllyTeamsSelected = false
 	local newSelectedUnitsTeamId = -1
 	local newSelectedUnitsAllyId = -1 
@@ -1842,28 +1841,21 @@ function CheckUnitSelection()
 		if tId then
 			aId = spGetUnitAllyTeam(uId)
 			
-			newSelectedUnitsTeamIds[tId] = true
-			newSelectedUnitsAllyIds[aId] = true
-		end
-	end
-
-	for tId,_ in pairs(newSelectedUnitsTeamIds) do
-		if newSelectedUnitsTeamId == -1 then
-			newSelectedUnitsTeamId = tId
-			break
-		end
-	end
-	for aId,_ in pairs(newSelectedUnitsAllyIds) do
-		if newSelectedUnitsAllyId == -1 then
-			newSelectedUnitsAllyId = aId
-		else
-			multipleAllyTeamsSelected = true
+			if newSelectedUnitsTeamId == -1 then
+				newSelectedUnitsTeamId = tId
+			end
+			if newSelectedUnitsAllyId == -1 then
+				newSelectedUnitsAllyId = aId
+			elseif (newSelectedUnitsAllyId ~= aId) then
+				multipleAllyTeamsSelected = true
+				break
+			end
 		end
 	end
 	if multipleAllyTeamsSelected then
 		newSelectedUnitsAllyId = -1
 	end
-	
+
 	--Spring.Echo("allyId="..newSelectedUnitsAllyId.." teamId="..newSelectedUnitsTeamId)
 	-- alliances changed
 	if selectedUnitsAllyId ~= newSelectedUnitsAllyId then
@@ -1881,7 +1873,7 @@ function CheckUnitSelection()
 			end
 		end
 	end
-	
+
 	selectedUnitsTeamId = newSelectedUnitsTeamId
 	selectedUnitsAllyId = newSelectedUnitsAllyId
 end
@@ -1980,9 +1972,9 @@ function widget:MousePress(x,y,button)
 										if clickedPlayer.team == myTeamID then                                                        --
 											Spring_SendCommands("say a: I need unit support!")                                        -- (ask)
 										else                                                                                          --
-											local suc = Spring.GetSelectedUnitsCount()
+											local suc = spGetSelectedUnitsCount()
 											Spring_SendCommands("say a: I gave "..suc.." units to "..clickedPlayer.name..".")
-											local su = Spring.GetSelectedUnits()
+											local su = spGetSelectedUnits()
 											for _,uid in ipairs(su) do
 												local ux,uy,uz = Spring.GetUnitPosition(uid)
 												Spring.MarkerAddPoint(ux,uy,uz)

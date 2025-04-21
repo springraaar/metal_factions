@@ -2527,6 +2527,7 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=WATER;
+		evalFactor=0.7; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -2565,6 +2566,7 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=WATER;
+		evalFactor=0.7; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -2603,6 +2605,7 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=WATER;
+		evalFactor=0.7; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -2641,6 +2644,7 @@
 		hitPower=3;
 		expDmgScaling=1;
 		targets=WATER;
+		evalFactor=0.7; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -2679,7 +2683,7 @@
 		hitPower=1;
 		expDmgScaling=1;
 		targets=WATER;
-		evalFactor=0.6; //niche
+		evalFactor=0.7; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -2718,6 +2722,7 @@
 		hitPower=3;
 		expDmgScaling=1;
 		targets=WATER;
+		evalFactor=0.7; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -2756,7 +2761,7 @@
 		hitPower=1;
 		expDmgScaling=1;
 		targets=WATER;
-		evalFactor=0.6; //niche
+		evalFactor=0.7; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -6499,6 +6504,7 @@
 		hitPower=3;
 		expDmgScaling=1;
 		targets=WATER;
+		evalFactor=0.85; //surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -7373,6 +7379,48 @@
 		armor_heavy=250.00;//#AUTO#
 		armor_medium=250.00;//#AUTO#
 		armor_light=250.00;//#AUTO#
+	}
+}
+[gear_proteus_artillery_cannon]
+{
+	name=Plasma Mortar;
+	weaponType=Cannon;
+	turret=1;
+	range=960;
+	highTrajectory=1;
+	cegTag=PLASMATRAIL2;
+	texture1=cannon;
+	explosionGenerator=custom:STDBLASTWRAPPER;
+	reloadTime=2.5;
+	weaponVelocity=450;
+	areaOfEffect=120;
+	accuracy=100;
+	movingAccuracy=200;
+	soundStart=cannon4;
+	soundHit=xplomed2;
+	tolerance=3000;
+	size=3.4;
+	rgbColor=0.9 0.7 0.3;
+	stages=4;
+  	separation=0.4;
+  	alphaDecay=0.24;
+  	sizeDecay=-0.1;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		reaimTime=1;
+		expDmgScaling=1;
+		targets=SURFACE;
+	}
+	[DAMAGE]
+	{
+		default=450;
+		group_invincible=1;
+		armor_heavy=450.00;//#AUTO#
+		armor_medium=450.00;//#AUTO#
+		armor_light=450.00;//#AUTO#
 	}
 }
 [gear_crasher_missile]
@@ -8444,6 +8492,7 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=WATER;
+		evalFactor=0.7; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -8452,6 +8501,45 @@
 		armor_heavy=62.50;//#AUTO#
 		armor_medium=125.00;//#AUTO#
 		armor_light=125.00;//#AUTO#
+	}
+}
+[gear_proteus_assault_depthcharge]
+{
+	name=Depth Charges;
+	weaponType=TorpedoLauncher;
+	turret=1;
+	model=weapon_DEPTHCHARGE;
+	range=400;
+	reloadTime=1.8;
+	flightTime=6;
+	weaponVelocity=130;
+	startVelocity=100;
+	weaponAcceleration=15;
+	turnRate=25000;
+	areaOfEffect=42;
+	soundStart=torpedo3;
+	soundHit=xplodep2;
+	subMissile=0;
+	tracks=1;
+	waterWeapon=1;
+	tolerance=4000;
+	explosionGenerator=custom:TORPEDOBLASTWRAPPER;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		expDmgScaling=1;
+		targets=WATER;
+		evalFactor=0.7; //short-range-surface-to-water-only niche
+	}
+	[DAMAGE]
+	{
+		default=140;
+		group_invincible=1;
+		armor_heavy=70.00;//#AUTO#
+		armor_medium=140.00;//#AUTO#
+		armor_light=140.00;//#AUTO#
 	}
 }
 [gear_searcher_laser]
@@ -8812,6 +8900,51 @@
 	fireStarter=30;
 	scrollSpeed=0;
 	pulseSpeed=0;
+	rgbColor=0.51 0.0 0.0;
+	rgbColor2=1.0 0.4 0.4;
+	tolerance=3000;
+	impulseFactor=0.222;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		reaimTime=1;
+		aaRangeBoost=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=120;
+		group_invincible=1;
+		armor_heavy=60.00;//#AUTO#
+		armor_medium=120.00;//#AUTO#
+		armor_light=120.00;//#AUTO#
+	}
+}
+[gear_proteus_assault_laser]
+{
+	name=Medium laser;
+	weaponType=BeamLaser;
+	explosionGenerator=custom:REDLASERBLASTWRAPPER;
+	beamTime=0.1;
+	thickness=2.888;
+	coreThickness=0.6;
+	intensity=0.9; 
+	turret=1;
+	range=700;
+	minIntensity=1.0;
+	reloadTime=0.9;
+	weaponVelocity=1533; 
+	areaOfEffect=8;
+	soundTrigger=1;
+	soundStart=lasrfir3;
+	soundHit=lasrhit2;
+	fireStarter=70;
+	scrollSpeed=0;
+	pulseSpeed=0;
+	energyPerShot=30;
 	rgbColor=0.51 0.0 0.0;
 	rgbColor2=1.0 0.4 0.4;
 	tolerance=3000;
@@ -9570,6 +9703,45 @@
 		armor_light=260.00;//#AUTO#
 	}
 }
+[gear_proteus_assault_cannon]
+{
+	name=Plasma Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=700;
+	reloadTime=1.2;
+	explosionGenerator=custom:STDBLASTWRAPPER;
+	cegTag=PLASMATRAIL1;
+	texture1=cannon;
+	weaponVelocity=365;
+	areaOfEffect=80;
+	soundStart=cannon4;
+	soundHit=xplomed2;
+	tolerance=3000;
+	size=3.2;
+	rgbColor=0.7 0.6 0.3;
+	stages=3;
+  	separation=0.5;
+  	alphaDecay=0.3;
+  	sizeDecay=-0.1;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		reaimTime=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR2;
+	}
+	[DAMAGE]
+	{
+		default=260;
+		group_invincible=1;
+		armor_heavy=260.00;//#AUTO#
+		armor_medium=260.00;//#AUTO#
+		armor_light=260.00;//#AUTO#
+	}
+}
 [gear_enforcer_cannon]
 {
 	name=Plasma Cannon;
@@ -9884,6 +10056,7 @@
 		expDmgScaling=1;
 		reaimTime=1;
 		targets=WATER;
+		evalFactor=0.85; //surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -11213,6 +11386,7 @@
 		hitPower=3;
 		expDmgScaling=1;
 		targets=WATER;
+		evalFactor=0.85; //surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -11786,6 +11960,57 @@
 		armor_heavy=50.00;//#AUTO#
 		armor_medium=100.00;//#AUTO#
 		armor_light=200.00;//#AUTO#
+	}
+}
+[gear_proteus_artillery_fireball]
+{
+	name=Fireball Cannon;
+	weaponType=Cannon;	
+	highTrajectory=1;
+	turret=1;
+	range=960;
+	reloadTime=3;
+	energyPerShot=0;
+	weaponVelocity=440;
+	collisionSize=10;
+	areaOfEffect=120;
+	edgeEffectiveness=0;
+	impulseFactor=0.1;
+	accuracy=140;
+	movingAccuracy=240;
+	soundStart=canlite2;
+	soundHit=firebombsml;
+	fireStarter=70;
+	explosionGenerator=custom:fireballboommed;
+	cegTag=fireballtrail3;
+	texture1=fcannon;
+	rgbColor=0.7 0.3 0.0;
+	size=4.00;
+	stages=7;
+  	separation=0.0;
+  	alphaDecay=0.8;
+  	sizeDecay=-0.11;
+	tolerance=8000;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	avoidGround=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		burn=1;
+		burnAoe=1;
+		reaimTime=1;
+		expDmgScaling=1;
+		targets=SURFACE;
+		scar=1wburn;
+	}
+	[DAMAGE]
+	{
+		default=300;
+		group_invincible=1;
+		armor_heavy=75.00;//#AUTO#
+		armor_medium=150.00;//#AUTO#
+		armor_light=300.00;//#AUTO#
 	}
 }
 [gear_eruptor_fireball]
@@ -16291,21 +16516,21 @@
 	weaponAcceleration=30;
 	areaOfEffect=60;
 	metalPerShot=0;
-	sprayAngle=6000;
+	sprayAngle=0;
 	soundStart=amprockfire;
 	soundHit=xplomed5;
 	fireStarter=70;
 	fixedLauncher=1;
 	waterWeapon=1;
 	smokeTrail=0;
-	tolerance=4500;
+	tolerance=5000;
 	interceptedByShieldType=1;
 	collideFriendly=0;
 	avoidFeature=0;
 	tracks=0;
-	turnRate=9000;
-	dance=20;
-	wobble=2500;
+	turnRate=16000;
+	dance=15;
+	wobble=9000;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
@@ -18002,6 +18227,7 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=WATER;
+		evalFactor=0.7; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -18040,6 +18266,7 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=WATER;
+		evalFactor=0.7; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -18078,6 +18305,7 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=WATER;
+		evalFactor=0.7; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -18116,7 +18344,7 @@
 		hitPower=1;
 		expDmgScaling=1;
 		targets=WATER;
-		evalFactor=0.6; //niche
+		evalFactor=0.7; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -18157,6 +18385,7 @@
 		hitPower=3;
 		expDmgScaling=1;
 		targets=WATER;
+		evalFactor=0.85; //surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -20158,6 +20387,7 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=WATER;
+		evalFactor=0.7; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -21700,6 +21930,7 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=WATER;
+		evalFactor=0.7; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -21716,7 +21947,7 @@
 	weaponType=TorpedoLauncher;
 	turret=1;
 	model=weapon_DEPTHCHARGE;
-	range=350;
+	range=340;
 	reloadTime=3;
 	flightTime=6;
 	weaponVelocity=130;
@@ -21738,6 +21969,7 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=WATER;
+		evalFactor=0.7; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -22775,7 +23007,7 @@
 	thickness=2.123;
 	coreThickness=0.55;
 	turret=1;
-	range=410;
+	range=390;
 	minIntensity=1.0;
 	reloadTime=1;
 	weaponVelocity=1533;
@@ -22802,10 +23034,10 @@
 	}
 	[DAMAGE]
 	{
-		default=40;
-		armor_heavy=10.00;//#AUTO#
-		armor_medium=20.00;//#AUTO#
-		armor_light=40.00;//#AUTO#
+		default=45;
+		armor_heavy=11.25;//#AUTO#
+		armor_medium=22.50;//#AUTO#
+		armor_light=45.00;//#AUTO#
 	}
 }
 [sphere_carp_torpedo]
@@ -22878,6 +23110,7 @@
 		expDmgScaling=1;
 		reaimTime=1;
 		targets=WATER;
+		evalFactor=0.85; //surface-to-water-only niche
 	}
 	[DAMAGE]
 	{

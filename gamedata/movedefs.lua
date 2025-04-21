@@ -6,6 +6,10 @@
 --
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
+local SPEEDMOD_TANK = 0
+local SPEEDMOD_BOT = 1
+local SPEEDMOD_HOVER = 2
+local SPEEDMOD_SHIP = 3
 
 local commonDepthModParams = {
 	quadraticCoeff = 0,
@@ -152,6 +156,45 @@ local moveDefs = {
 		MaxWaterSlope=255,
 		BadWaterSlope=255,
 		CrushStrength=250,
+		depthmodparams=commonDepthModParams,
+		slopeMod=7,
+	},
+	AMPHBOAT3 = {
+		FootprintX=4,
+		FootprintZ=4,
+		MaxSlope=26,
+		BadSlope=26,
+		MaxWaterSlope=255,
+		BadWaterSlope=255,
+		CrushStrength=50,
+		WaterLine=6,
+		speedModClass=SPEEDMOD_HOVER,
+		depthmodparams=commonDepthModParams,
+		slopeMod=7,
+	},
+	AMPHBOAT4 = {
+		FootprintX=4,
+		FootprintZ=4,
+		MaxSlope=26,
+		BadSlope=26,
+		MaxWaterSlope=255,
+		BadWaterSlope=255,
+		CrushStrength=150,
+		WaterLine=8,
+		speedModClass=SPEEDMOD_HOVER,
+		depthmodparams=commonDepthModParams,
+		slopeMod=7,
+	},
+	AMPHBOAT5 = {
+		FootprintX=5,
+		FootprintZ=5,
+		MaxSlope=26,
+		BadSlope=26,
+		MaxWaterSlope=255,
+		BadWaterSlope=255,
+		CrushStrength=150,
+		WaterLine=10,
+		speedModClass=SPEEDMOD_HOVER,
 		depthmodparams=commonDepthModParams,
 		slopeMod=7,
 	},

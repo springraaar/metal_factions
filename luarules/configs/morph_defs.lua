@@ -159,7 +159,21 @@ local morphDefs = {
 			cmdname = 'Exploiter Form',
 			text = 'Morph to Exploiter'
 		}
-	},	
+	},
+	gear_proteus = {
+		{
+			into = 'gear_proteus_assault',
+			time = 20,
+			cmdname = 'Assault Form',
+			text = 'Morph to Assault Form'
+		},
+		{
+			into = 'gear_proteus_artillery',
+			time = 20,
+			cmdname = 'Artillery Form',
+			text = 'Morph to Artillery Form'
+		},
+	},
 ------------------------------------------------ CLAW
 	claw_commander = 	{
 		{
