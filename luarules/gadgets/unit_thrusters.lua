@@ -60,7 +60,6 @@ function airThrust(unitID, unitDefID, teamID)
 --	 LupsApi.AddParticles('Jet', { unit=unitID, piece="jp1", pos={0,0,0}, life=10, repeatEffect=true, size=50, colormap1={1,0.8,0.5,0.5}, colormap2={1,1,1,0.5} }) 
 	 
 	--spSpawnCEG("JETSML",px,py,pz,-dx,-dy,-dz,0,fThrust)		
-	Echo("ft = "..fThrust.." vt = "..vThrust )
 	return fThrust, vThrust 
 end
 

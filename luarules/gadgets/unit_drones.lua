@@ -194,6 +194,7 @@ local droneNamesForUnitDefName = {
 	gear_u5commander = gearDrones,
 	gear_u6commander = gearDrones,
 	gear_u7commander = gearDrones,
+	gear_machinist = gearDrones,
 	claw_commander = clawDrones,
 	claw_u1commander = clawDrones,
 	claw_u2commander = clawDrones,
@@ -217,6 +218,7 @@ local droneNamesForUnitDefName = {
 local droneSpawnPointsByDefId = {
 	[UnitDefNames["aven_archangel"].id] = {{0,90,0},{-50,-12,0},{50,-12,0}},		
 	[UnitDefNames["aven_skein"].id] = {{0,35,0}},
+	[UnitDefNames["gear_machinist"].id] = {{-22,70,5},{22,70,5}},
 	[UnitDefNames["sphere_attritor"].id] = {{-32,70,-25},{32,70,-25}}
 }
 

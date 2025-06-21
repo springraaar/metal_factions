@@ -20,7 +20,7 @@
 	objectName=aven_crusader.3do;
 	corpse=aven_crusader_dead;
 	buildPic=aven_crusader.png;
-	soundCategory=aven_SHIP;
+	soundCategory=aven_SHIPMED;
 
 	//************************************************************
 	//  Health/Cost/Size
@@ -80,7 +80,7 @@
 	//  Weapons
 	//***********
 	weapon1=aven_crusader_cannon;
-	weapon2=ARMDEPTHCHARGE;
+	weapon2=aven_crusader_depthcharge;
 	onlytargetcategory2=NOTAIR;
 	explodeAs=BIG_UNITEX;
 	selfDestructAs=BIG_UNIT;
@@ -109,8 +109,8 @@
 	explosionGenerator0=custom:yellowflaremed;
 	explosionGenerator1=custom:UNITFIRE;
 	}
-	buildCostEnergy=4317;//#AUTO#
-	buildCostMetal=863;//#AUTO#
-	buildTime=10290;//#AUTO#
-	mass=975;//#AUTO#
+	buildCostEnergy=4334;//#AUTO#
+	buildCostMetal=866;//#AUTO#
+	buildTime=10330;//#AUTO#
+	mass=976;//#AUTO#
 }

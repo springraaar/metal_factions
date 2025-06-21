@@ -178,16 +178,6 @@ local conditionalEnergyGenerators = {
 	claw_solar_collector = true
 } 
 
--- units which use the build radius as effect radius
-local fakeBuilders = {
-	claw_totem = true,
-	claw_tombstone = true,
-	aven_power_node = true,
-	gear_power_node = true,
-	claw_power_node = true,
-	sphere_power_node = true
-}
-
 local selfDUnits = {
 	-- AVEN
 	aven_commander = true,
@@ -302,13 +292,25 @@ if (true) then
 				unitDef.acceleration = minAcceleration
 			end
 			
-			-- remove excessive brakerate from aircraft
+			-- aircraft-specific
 			local canFly = unitDef.canfly
 			local br = tonumber(unitDef.brakerate)
 			if (canFly) then
+				-- remove excessive brakerate from aircraft
 				if (br > 0.5) then
 					unitDef.brakerate = br / 5
 				end
+				
+				if (unitDef.hoverattack and tonumber(unitDef.hoverattack) == 1) then
+					local airHoverFactor = tonumber(unitDef.airhoverfactor)
+					
+					-- change default hoverfactor to 2 so they move around a bit when hovering
+					-- looks more natural, also breaks fly/land 
+					if airHoverFactor == -1 then
+						unitDef.airhoverfactor = 2
+					end
+				end
+				
 			end
 		
 			-- amplify turn rates for ground units that turn relatively fast
@@ -336,10 +338,6 @@ if (true) then
 			end
 		else
 			local factionBuilding = false
-			if fakeBuilders[name] then
-				unitDef.builder = true
-				unitDef.workertime = 1
-			end
 			
 			if string.sub(name,1,5) == "aven_" then
 				unitDef.buildinggrounddecaltype = "building_aven.dds"
@@ -394,6 +392,11 @@ if (true) then
 				local iconSuffix = "s"..math.max(0,math.min(math.floor(sizeMod),9))
 				unitDef.icontype = iconPrefix..iconSuffix
 			end
+		end
+
+		-- increase power rating for drones (lowers xp gain and raises enemy xp gain)
+		if unitDef.customparams and tonumber(unitDef.customparams.isdrone) == 1 then
+			unitDef.power = (tonumber(unitDef.buildcostmetal) + tonumber(unitDef.buildcostenergy)/60) * 1.5
 		end
 
 		-- override buildeeBuildRadius

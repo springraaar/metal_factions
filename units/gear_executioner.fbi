@@ -20,7 +20,7 @@
 	objectName=gear_executioner.3do;
 	corpse=gear_executioner_dead;
 	buildPic=gear_executioner.png;
-	soundCategory=gear_SHIP;
+	soundCategory=gear_SHIPMED;
 
 	//************************************************************
 	//  Health/Cost/Size
@@ -80,7 +80,7 @@
 	//  Weapons
 	//***********
 	weapon1=gear_executioner_cannon;
-	weapon3=COREDEPTHCHARGE;
+	weapon3=gear_executioner_depthcharge;
 	noChaseCategory=VTOL;
 	onlyTargetCategory1=NOTAIR;
 	onlytargetcategory3=NOTAIR;
@@ -113,8 +113,8 @@
 		canAreaAttack=1;
 		evalfactor=0.85;//SHIP
 	}
-	buildCostEnergy=17230;//#AUTO#
-	buildCostMetal=3446;//#AUTO#
-	buildTime=41066;//#AUTO#
-	mass=4157;//#AUTO#
+	buildCostEnergy=17357;//#AUTO#
+	buildCostMetal=3471;//#AUTO#
+	buildTime=41368;//#AUTO#
+	mass=4171;//#AUTO#
 }

@@ -20,7 +20,7 @@
 	objectName=gear_enforcer.3do;
 	corpse=gear_enforcer_dead;
 	buildPic=gear_enforcer.png;
-	soundCategory=gear_SHIP;
+	soundCategory=gear_SHIPMED;
 
 	//************************************************************
 	//  Health/Cost/Size
@@ -80,7 +80,7 @@
 	//  Weapons
 	//***********
 	weapon1=gear_enforcer_cannon;
-	weapon2=ARMDEPTHCHARGE;
+	weapon2=gear_enforcer_depthcharge;
 	noChaseCategory=VTOL;
 	badTargetCategory1=VTOL;
 	onlytargetcategory2=NOTAIR;
@@ -111,8 +111,8 @@
 	explosionGenerator0=custom:yellowflaremed;
 	explosionGenerator1=custom:UNITFIRE;
 	}
-	buildCostEnergy=4371;//#AUTO#
-	buildCostMetal=874;//#AUTO#
-	buildTime=10419;//#AUTO#
-	mass=991;//#AUTO#
+	buildCostEnergy=4386;//#AUTO#
+	buildCostMetal=877;//#AUTO#
+	buildTime=10455;//#AUTO#
+	mass=992;//#AUTO#
 }

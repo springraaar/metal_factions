@@ -5,7 +5,7 @@
 	//********************
 	side=Claw;
 	name=Speeder;
-	description=Scout Ship;
+	description=Scout/Light Missile Ship;
 	iconType=shipfs;
 
 	//************************************************************
@@ -20,7 +20,7 @@
 	objectName=claw_speeder.3do;
 	corpse=claw_speeder_dead;
 	buildPic=claw_speeder.png;
-	soundCategory=aven_SHIP;
+	soundCategory=CLAW_SHIPSML;
 
 	//************************************************************
 	//  Health/Cost/Size
@@ -62,7 +62,7 @@
 	//  Movement
 	//************
 	movementClass=smallboat;
-	turnRate=700;
+	turnRate=800;
 	acceleration=0.72;
 	brakeRate=0.03;
 	maxVelocity=3.2;
@@ -106,8 +106,8 @@
 	{
 		explosionGenerator0=custom:rocketflaresml;
 	}
-	buildCostEnergy=977;//#AUTO#
-	buildCostMetal=195;//#AUTO#
-	buildTime=2329;//#AUTO#
+	buildCostEnergy=981;//#AUTO#
+	buildCostMetal=196;//#AUTO#
+	buildTime=2338;//#AUTO#
 	mass=120;//#AUTO#
 }

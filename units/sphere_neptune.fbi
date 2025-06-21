@@ -19,7 +19,7 @@
 	unitName=sphere_neptune;
 	objectName=sphere_neptune.3do;
 	buildPic=sphere_neptune.png;
-	soundCategory=aven_VTOL;
+	soundCategory=SPHERE_AIRMED;
 
 	//************************************************************
 	//  Health/Cost/Size
@@ -65,7 +65,7 @@
 	maxVelocity=3.5;
 	maxSlope=10;
 	maxWaterDepth=10;
-	cruiseAlt=130;
+	cruiseAlt=120;
 
 
 	//************************************************************
@@ -112,8 +112,8 @@
 	{
 		explosionGenerator0=custom:rocketflaremed;
 	}
-	buildCostEnergy=11304;//#AUTO#
-	buildCostMetal=2260;//#AUTO#
-	buildTime=26943;//#AUTO#
-	mass=689;//#AUTO#
+	buildCostEnergy=10348;//#AUTO#
+	buildCostMetal=2069;//#AUTO#
+	buildTime=24664;//#AUTO#
+	mass=657;//#AUTO#
 }

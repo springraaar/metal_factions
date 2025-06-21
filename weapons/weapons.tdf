@@ -1118,6 +1118,7 @@
 		expDmgScaling=1;
 		targets=SURFACE,AIR;
 		noScar=1;
+		shockwave=1;
 	}
 	[DAMAGE]
 	{
@@ -1159,7 +1160,6 @@
 	[CUSTOMPARAMS]
 	{
 		hitPower=1;
-		shockwave=1;
 		expDmgScaling=1;
 		noScar=1;
 	}
@@ -2254,7 +2254,7 @@
 	model=weapon_bigbomb;
 	turret=1;
 	cegTag=BOMBTRAIL;
-	range=450;
+	range=440;
 	explosionGenerator=custom:AARMORBLASTWRAPPER;
 	reloadTime=25;
 	flightTime=2.75;
@@ -2499,7 +2499,7 @@
 		armor_light=5000.00;//#AUTO#
 	}
 }
-[ARMDEPTHCHARGE]
+[aven_crusader_depthcharge]
 {
 	name=Depth Charges;
 	weaponType=TorpedoLauncher;
@@ -2527,15 +2527,15 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=WATER;
-		evalFactor=0.7; //short-range-surface-to-water-only niche
+		evalFactor=0.66; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
-		default=133;
+		default=150;
 		group_invincible=1;
-		armor_heavy=66.50;//#AUTO#
-		armor_medium=133.00;//#AUTO#
-		armor_light=133.00;//#AUTO#
+		armor_heavy=75.00;//#AUTO#
+		armor_medium=150.00;//#AUTO#
+		armor_light=150.00;//#AUTO#
 	}
 }
 [aven_vanguard_depthcharge]
@@ -2566,7 +2566,7 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=WATER;
-		evalFactor=0.7; //short-range-surface-to-water-only niche
+		evalFactor=0.66; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -2605,7 +2605,7 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=WATER;
-		evalFactor=0.7; //short-range-surface-to-water-only niche
+		evalFactor=0.66; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -2614,6 +2614,45 @@
 		armor_heavy=62.50;//#AUTO#
 		armor_medium=125.00;//#AUTO#
 		armor_light=125.00;//#AUTO#
+	}
+}
+[aven_conqueror_depthcharge]
+{
+	name=Depth Charges;
+	weaponType=TorpedoLauncher;
+	turret=1;
+	model=weapon_DEPTHCHARGE;
+	range=380;
+	reloadTime=2.0;
+	flightTime=6;
+	weaponVelocity=130;
+	startVelocity=100;
+	weaponAcceleration=15;
+	turnRate=25000;
+	areaOfEffect=42;
+	soundStart=torpedo3;
+	soundHit=xplodep2;
+	subMissile=0;
+	tracks=1;
+	waterWeapon=1;
+	tolerance=4000;
+	explosionGenerator=custom:TORPEDOBLASTWRAPPER;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		expDmgScaling=1;
+		targets=WATER;
+		evalFactor=0.66; //short-range-surface-to-water-only niche
+	}
+	[DAMAGE]
+	{
+		default=150;
+		group_invincible=1;
+		armor_heavy=75.00;//#AUTO#
+		armor_medium=150.00;//#AUTO#
+		armor_light=150.00;//#AUTO#
 	}
 }
 [aven_slider_s_depthcharge]
@@ -2644,7 +2683,7 @@
 		hitPower=3;
 		expDmgScaling=1;
 		targets=WATER;
-		evalFactor=0.7; //short-range-surface-to-water-only niche
+		evalFactor=0.66; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -2683,7 +2722,7 @@
 		hitPower=1;
 		expDmgScaling=1;
 		targets=WATER;
-		evalFactor=0.7; //short-range-surface-to-water-only niche
+		evalFactor=0.66; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -2722,7 +2761,7 @@
 		hitPower=3;
 		expDmgScaling=1;
 		targets=WATER;
-		evalFactor=0.7; //short-range-surface-to-water-only niche
+		evalFactor=0.66; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -2761,7 +2800,7 @@
 		hitPower=1;
 		expDmgScaling=1;
 		targets=WATER;
-		evalFactor=0.7; //short-range-surface-to-water-only niche
+		evalFactor=0.66; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -4675,7 +4714,7 @@
 	waterWeapon=1;
 	turret=0;
 	model=weapon_torpedo;
-	range=450;
+	range=400;
 	reloadTime=2;
 	weaponVelocity=200;
 	startVelocity=100;
@@ -6866,6 +6905,7 @@
 	size=0.26;	
 	sizeGrowth=0.6;
 	colorMap=0.8 0.8 0.8 0.8    0.7 0.7 0.3 0.8  0.3 0.0 0.0 0.0;
+	flameGFXTime=1.1;
 	collisionSize=30;
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -7527,6 +7567,53 @@
 	texture3=null;//flame//
 	texture4=null;//unknown//
 	reloadTime=6;
+	weapontimer=0.5;
+	flightTime=8;
+	tracks=1;
+	fixedLauncher=1;
+	weaponVelocity=500;
+	weaponAcceleration=150;
+	startVelocity=130;
+	turnRate=20000;
+	areaOfEffect=64;
+	metalPerShot=0;
+	soundStart=rocklit1;
+	soundHit=xplomed4;
+	fireStarter=100;
+	smokeTrail=0;
+	tolerance=4000;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	avoidGround=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=400;
+		group_invincible=1;
+		armor_heavy=400.00;//#AUTO#
+		armor_medium=400.00;//#AUTO#
+		armor_light=400.00;//#AUTO#
+	}
+}
+[gear_machinist_missile]
+{
+	name=Heavy Missiles;
+	weaponType=StarburstLauncher;
+  	explosionGenerator=custom:ROCKETBLASTWRAPPER;
+	model=weapon_gear_big_missile;
+	range=750;
+	cegTag=ROCKETTRAIL2;
+  	explosionGenerator=custom:ROCKETBLASTWRAPPER;
+	texture1=null; //flare//
+	texture2=null;//first segment of missiletrail//
+	texture3=null;//flame//
+	texture4=null;//unknown//
+	reloadTime=5;
 	weapontimer=0.5;
 	flightTime=8;
 	tracks=1;
@@ -8340,7 +8427,7 @@
 	mygravity=0.6;
 	turret=1;
 	model=weapon_advtorpedo;
-	range=450;
+	range=400;
 	reloadTime=7;
 	flightTime=6;
 	weaponVelocity=300;
@@ -8382,7 +8469,7 @@
 	model=weapon_bigbomb;
 	turret=1;
 	cegTag=BOMBTRAIL;
-	range=450;
+	range=440;
 	explosionGenerator=custom:AARMORBLASTWRAPPER;
 	reloadTime=25;
 	flightTime=2.75;
@@ -8464,14 +8551,14 @@
 		armor_light=320.00;//#AUTO#
 	}
 }
-[COREDEPTHCHARGE]
+[gear_executioner_depthcharge]
 {
 	name=Depth Charges;
 	weaponType=TorpedoLauncher;
 	turret=1;
 	model=weapon_DEPTHCHARGE;
-	range=400;
-	reloadTime=3.0;
+	range=380;
+	reloadTime=2.0;
 	flightTime=6;
 	weaponVelocity=130;
 	startVelocity=100;
@@ -8492,15 +8579,54 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=WATER;
-		evalFactor=0.7; //short-range-surface-to-water-only niche
+		evalFactor=0.66; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
-		default=125;
+		default=150;
 		group_invincible=1;
-		armor_heavy=62.50;//#AUTO#
-		armor_medium=125.00;//#AUTO#
-		armor_light=125.00;//#AUTO#
+		armor_heavy=75.00;//#AUTO#
+		armor_medium=150.00;//#AUTO#
+		armor_light=150.00;//#AUTO#
+	}
+}
+[gear_enforcer_depthcharge]
+{
+	name=Depth Charges;
+	weaponType=TorpedoLauncher;
+	turret=1;
+	model=weapon_DEPTHCHARGE;
+	range=350;
+	reloadTime=3;
+	flightTime=5;
+	weaponVelocity=130;
+	startVelocity=100;
+	weaponAcceleration=15;
+	turnRate=18000;
+	areaOfEffect=48;
+	soundStart=torpedo3;
+	soundHit=xplodep2;
+	subMissile=0;
+	tracks=1;
+	waterWeapon=1;
+	tolerance=4000;
+	explosionGenerator=custom:TORPEDOBLASTWRAPPER;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		expDmgScaling=1;
+		targets=WATER;
+		evalFactor=0.66; //short-range-surface-to-water-only niche
+	}
+	[DAMAGE]
+	{
+		default=150;
+		group_invincible=1;
+		armor_heavy=75.00;//#AUTO#
+		armor_medium=150.00;//#AUTO#
+		armor_light=150.00;//#AUTO#
 	}
 }
 [gear_proteus_assault_depthcharge]
@@ -8531,7 +8657,7 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=WATER;
-		evalFactor=0.7; //short-range-surface-to-water-only niche
+		evalFactor=0.66; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -8540,6 +8666,45 @@
 		armor_heavy=70.00;//#AUTO#
 		armor_medium=140.00;//#AUTO#
 		armor_light=140.00;//#AUTO#
+	}
+}
+[gear_tidebreaker_depthcharge]
+{
+	name=Depth Charges;
+	weaponType=TorpedoLauncher;
+	turret=1;
+	model=weapon_DEPTHCHARGE;
+	range=380;
+	reloadTime=0.7;
+	flightTime=5;
+	weaponVelocity=130;
+	startVelocity=100;
+	weaponAcceleration=15;
+	turnRate=18000;
+	areaOfEffect=48;
+	soundStart=torpedo3;
+	soundHit=xplodep2;
+	subMissile=0;
+	tracks=1;
+	waterWeapon=1;
+	tolerance=4000;
+	explosionGenerator=custom:TORPEDOBLASTWRAPPER;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		expDmgScaling=1;
+		targets=WATER;
+		evalFactor=0.66; //short-range-surface-to-water-only niche
+	}
+	[DAMAGE]
+	{
+		default=150;
+		group_invincible=1;
+		armor_heavy=75.00;//#AUTO#
+		armor_medium=150.00;//#AUTO#
+		armor_light=150.00;//#AUTO#
 	}
 }
 [gear_searcher_laser]
@@ -10448,6 +10613,7 @@
 	size=0.26;	
 	sizeGrowth=0.6;
 	colorMap=0.9 0.9 0.9 0.8    0.8 0.8 0.3 0.8  0.4 0.0 0.0 0.0;
+	flameGFXTime=1.1;
 	collisionSize=30;
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -10456,6 +10622,58 @@
 		hitPower=2;
 		burn=1;
 		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=10;
+		group_invincible=1;
+		armor_heavy=5.00;//#AUTO#
+		armor_medium=10.00;//#AUTO#
+		armor_light=10.00;//#AUTO#
+	}
+}
+[gear_maw_flamethrower]
+{
+	name=Flame Thrower;
+	weaponType=Flame;
+	explosionGenerator=custom:flamethrowerblast;
+	cegTag=flametrail;
+	noSelfDamage=1;
+	soundTrigger=1;
+	texture1=flamer;
+	texture2=null;
+	texture3=null;
+	texture4=null;
+	turret=1;
+	range=360;
+	reloadTime=0.1;
+	weaponVelocity=310;
+	areaOfEffect=80;
+	projectiles=3;
+	burst=3;
+	burstRate=0.032;
+	sprayAngle=2000;
+	soundStart=flamstart;
+	soundHit=flamlit1;
+	fireStarter=100;
+	groundBounce=1;
+	bounceSlip=0.3;
+	bounceRebound=0.1;
+	tolerance=8000;
+	size=0.26;	
+	sizeGrowth=0.6;
+	colorMap=0.9 0.9 0.9 0.8    0.8 0.8 0.3 0.8  0.4 0.0 0.0 0.0;
+	flameGFXTime=1.1;
+	collisionSize=30;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		burn=1;
+		expDmgScaling=1;
+		reaimTime=1;
 		targets=SURFACE,AIR;
 	}
 	[DAMAGE]
@@ -11564,6 +11782,7 @@
 	size=0.26;	
 	sizeGrowth=0.6;
 	colorMap=0.8 0.8 0.8 0.8    0.7 0.7 0.3 0.8  0.3 0.0 0.0 0.0;
+	flameGFXTime=1.1;
 	collisionSize=30;
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -11601,7 +11820,6 @@
 	reloadTime=0.167;
 	weaponVelocity=245;
 	areaOfEffect=40;
-	flameGFXTime=1.1;
 	burst=5;
 	burstRate=0.01;
 	sprayAngle=1008;
@@ -11613,6 +11831,7 @@
 	size=0.20;	
 	sizeGrowth=0.6;
 	colorMap=0.6 0.6 0.6 0.8    0.6 0.6 0.3 0.8  0.3 0.0 0.0 0.0;
+	flameGFXTime=1.1;
 	collisionSize=30;
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -11661,6 +11880,7 @@
 	size=0.26;	
 	sizeGrowth=0.6;
 	colorMap=0.8 0.8 0.8 0.8    0.7 0.7 0.3 0.8  0.3 0.0 0.0 0.0;
+	flameGFXTime=1.1;
 	collisionSize=30;
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -11709,6 +11929,7 @@
 	size=0.26;	
 	sizeGrowth=0.6;
 	colorMap=0.8 0.8 0.8 0.8    0.7 0.7 0.3 0.8  0.3 0.0 0.0 0.0;
+	flameGFXTime=1.1;
 	collisionSize=30;
 	interceptedByShieldType=1;
 	avoidFeature=0;
@@ -11753,6 +11974,7 @@
 	soundHit=flamlit1;
 	fireStarter=100;
 	groundBounce=1;
+	flameGFXTime=1.1;
 	tolerance=8000;
 	size=0.26;	
 	sizeGrowth=0.6;
@@ -14381,7 +14603,7 @@
 	model=weapon_missile.3do;
 	texture1=null; //flare//
 	range=660;
-	reloadTime=5.4;
+	reloadTime=5.0;
 	burst=2;
 	burstRate=0.2;
 	flightTime=3.75;
@@ -18227,15 +18449,15 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=WATER;
-		evalFactor=0.7; //short-range-surface-to-water-only niche
+		evalFactor=0.66; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
-		default=133;
+		default=150;
 		group_invincible=1;
-		armor_heavy=66.50;//#AUTO#
-		armor_medium=133.00;//#AUTO#
-		armor_light=133.00;//#AUTO#
+		armor_heavy=75.00;//#AUTO#
+		armor_medium=150.00;//#AUTO#
+		armor_light=150.00;//#AUTO#
 	}
 }
 [claw_sword_depthcharge]
@@ -18266,15 +18488,15 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=WATER;
-		evalFactor=0.7; //short-range-surface-to-water-only niche
+		evalFactor=0.66; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
-		default=133;
+		default=150;
 		group_invincible=1;
-		armor_heavy=66.50;//#AUTO#
-		armor_medium=133.00;//#AUTO#
-		armor_light=133.00;//#AUTO#
+		armor_heavy=75.00;//#AUTO#
+		armor_medium=150.00;//#AUTO#
+		armor_light=150.00;//#AUTO#
 	}
 }
 [claw_hunter_depthcharge]
@@ -18305,15 +18527,15 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=WATER;
-		evalFactor=0.7; //short-range-surface-to-water-only niche
+		evalFactor=0.66; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
-		default=133;
+		default=150;
 		group_invincible=1;
-		armor_heavy=66.50;//#AUTO#
-		armor_medium=133.00;//#AUTO#
-		armor_light=133.00;//#AUTO#
+		armor_heavy=75.00;//#AUTO#
+		armor_medium=150.00;//#AUTO#
+		armor_light=150.00;//#AUTO#
 	}
 }
 [claw_hunter_depthcharge2]
@@ -18344,7 +18566,7 @@
 		hitPower=1;
 		expDmgScaling=1;
 		targets=WATER;
-		evalFactor=0.7; //short-range-surface-to-water-only niche
+		evalFactor=0.66; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
@@ -19546,6 +19768,47 @@
 		armor_light=230.00;//#AUTO#
 	}
 }
+[claw_cerberus_cannon]
+{
+	name=Plasma Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=840;
+	cegTag=PLASMATRAIL1;
+	texture1=cannon;
+	explosionGenerator=custom:STDBLASTWRAPPER;
+	reloadTime=1.1;
+	weaponVelocity=400;
+	areaOfEffect=80;
+	accuracy=200;
+	movingAccuracy=500;
+	soundStart=cannon4;
+	soundHit=xplomed2;
+	tolerance=3000;
+	size=3.2;
+	rgbColor=0.7 0.6 0.3;
+	stages=3;
+  	separation=0.5;
+  	alphaDecay=0.3;
+  	sizeDecay=-0.1;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		reaimTime=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR2;
+	}
+	[DAMAGE]
+	{
+		default=230;
+		group_invincible=1;
+		armor_heavy=230.00;//#AUTO#
+		armor_medium=230.00;//#AUTO#
+		armor_light=230.00;//#AUTO#
+	}
+}
 [claw_cleaver_cannon]
 {
 	name=Plasma Cannon;
@@ -20344,7 +20607,7 @@
 	tolerance=4000;
 	interceptedByShieldType=1;
 	avoidFeature=0;
-	avoidGround=0;
+	avoidGround=1;
 	[CUSTOMPARAMS]
 	{
 		hitPower=3;
@@ -20387,15 +20650,15 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=WATER;
-		evalFactor=0.7; //short-range-surface-to-water-only niche
+		evalFactor=0.66; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
-		default=120;
+		default=150;
 		group_invincible=1;
-		armor_heavy=60.00;//#AUTO#
-		armor_medium=120.00;//#AUTO#
-		armor_light=120.00;//#AUTO#
+		armor_heavy=75.00;//#AUTO#
+		armor_medium=150.00;//#AUTO#
+		armor_light=150.00;//#AUTO#
 	}
 }
 [claw_drakkar_torpedo]
@@ -21126,6 +21389,46 @@
 		armor_heavy=800.00;//#AUTO#
 		armor_medium=800.00;//#AUTO#
 		armor_light=800.00;//#AUTO#
+	}
+}
+[claw_cyclon_ring]
+{
+	name=High Energy Ring Launcher;
+	weaponType=Cannon;
+	turret=1;
+	model=weapon_ring3.3do;
+	range=750;
+	accuracy=100;
+	movingAccuracy=200;
+	reloadTime=7.5;
+	flightTime=6.2;
+	texture1=null; //flare//
+	wobble=100;
+	turnRate=6000;
+	weaponVelocity=700;
+	cegTag=RINGTRAIL;
+	explosionGenerator=custom:RINGBLASTWRAPPER;
+	castShadow=0;
+	areaOfEffect=48;
+	soundStart=ringfire;
+	soundHit=ringhit;
+	energyPerShot=300;
+	tolerance=3000;
+	interceptedByShieldType=1;
+	impulseFactor=0.4;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		expDmgScaling=1;
+		targets=SURFACE;
+	}
+	[DAMAGE]
+	{
+		default=600;
+		armor_heavy=600.00;//#AUTO#
+		armor_medium=600.00;//#AUTO#
+		armor_light=600.00;//#AUTO#
 	}
 }
 [claw_dynamo_ring]
@@ -21930,15 +22233,15 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=WATER;
-		evalFactor=0.7; //short-range-surface-to-water-only niche
+		evalFactor=0.66; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
-		default=133;
+		default=150;
 		group_invincible=1;
-		armor_heavy=66.50;//#AUTO#
-		armor_medium=133.00;//#AUTO#
-		armor_light=133.00;//#AUTO#
+		armor_heavy=75.00;//#AUTO#
+		armor_medium=150.00;//#AUTO#
+		armor_light=150.00;//#AUTO#
 	}
 }
 [sphere_skiff_depthcharge]
@@ -21948,7 +22251,7 @@
 	turret=1;
 	model=weapon_DEPTHCHARGE;
 	range=340;
-	reloadTime=3;
+	reloadTime=2.1;
 	flightTime=6;
 	weaponVelocity=130;
 	startVelocity=100;
@@ -21969,15 +22272,15 @@
 		hitPower=2;
 		expDmgScaling=1;
 		targets=WATER;
-		evalFactor=0.7; //short-range-surface-to-water-only niche
+		evalFactor=0.66; //short-range-surface-to-water-only niche
 	}
 	[DAMAGE]
 	{
-		default=133;
+		default=150;
 		group_invincible=1;
-		armor_heavy=66.50;//#AUTO#
-		armor_medium=133.00;//#AUTO#
-		armor_light=133.00;//#AUTO#
+		armor_heavy=75.00;//#AUTO#
+		armor_medium=150.00;//#AUTO#
+		armor_light=150.00;//#AUTO#
 	}
 }
 [sphere_bit_blaster]
@@ -22349,7 +22652,7 @@
 	model=weapon_missile.3do;
 	texture1=null; //flare//
 	range=660;
-	reloadTime=2.7;
+	reloadTime=2.5;
 	flightTime=3.75;
 	trajectoryHeight=0.1;
 	weaponVelocity=760;
@@ -22708,7 +23011,7 @@
 	mygravity=0.6;
 	turret=1;
 	model=weapon_torpedo;
-	range=450;
+	range=400;
 	reloadTime=1.8;
 	flightTime=6;
 	weaponVelocity=300;
@@ -23007,7 +23310,7 @@
 	thickness=2.123;
 	coreThickness=0.55;
 	turret=1;
-	range=390;
+	range=400;
 	minIntensity=1.0;
 	reloadTime=1;
 	weaponVelocity=1533;
@@ -23034,10 +23337,10 @@
 	}
 	[DAMAGE]
 	{
-		default=45;
-		armor_heavy=11.25;//#AUTO#
-		armor_medium=22.50;//#AUTO#
-		armor_light=45.00;//#AUTO#
+		default=60;
+		armor_heavy=15.00;//#AUTO#
+		armor_medium=30.00;//#AUTO#
+		armor_light=60.00;//#AUTO#
 	}
 }
 [sphere_carp_torpedo]
@@ -23252,7 +23555,7 @@
 	model=weapon_bigbomb;
 	turret=1;
 	cegTag=BOMBTRAIL;
-	range=450;
+	range=440;
 	explosionGenerator=custom:AARMORBLASTWRAPPER;
 	reloadTime=25;
 	flightTime=2.75;
@@ -24023,6 +24326,47 @@
 	weaponVelocity=700;
 	startVelocity=250;
 	weaponAcceleration=130;
+	turnRate=33000;
+	areaOfEffect=48;
+	metalPerShot=0;
+	soundStart=misfire1;
+	soundHit=mishit1;
+	fireStarter=70;
+	tracks=1;
+	fixedLauncher=1;
+	smokeTrail=1;
+	texture1=null;
+	tolerance=9000;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=110;
+		armor_heavy=27.50;//#AUTO#
+		armor_medium=55.00;//#AUTO#
+		armor_light=110.00;//#AUTO#
+	}
+}
+[sphere_nebula_missile]
+{
+	name=Missiles;
+	weaponType=StarburstLauncher;
+	explosionGenerator=custom:ROCKETSMLBLASTWRAPPER;
+	model=weapon_smlmsl.3do;
+	cegTag=SMLROCKETTRAIL;
+	range=650;
+	reloadTime=0.8;
+	weapontimer=0.4;
+	flightTime=6;
+	weaponVelocity=700;
+	startVelocity=250;
+	weaponAcceleration=200;
 	turnRate=33000;
 	areaOfEffect=48;
 	metalPerShot=0;
@@ -26059,7 +26403,7 @@
 	visibleShieldRepulse=0;
 	shieldEnergyUse=0;
 	shieldForce=3000;
-	shieldRadius=80;
+	shieldRadius=70;
 	shieldMaxSpeed=2000;
 	shieldPower=3000;
 	shieldStartingPower=3000;
@@ -26645,6 +26989,32 @@
 		default=10;
 	}
 }
+[sphere_nebula_shield]
+{
+	name=Energy shield;
+	weaponType=Shield;
+	smartShield=1;
+	exteriorShield=0;
+	visibleShield=1;
+	visibleShieldRepulse=0;
+	shieldEnergyUse=0;
+	shieldForce=1000;
+	shieldRadius=58;
+	shieldMaxSpeed=2000;
+	shieldPower=1500;
+	shieldStartingPower=1500;
+	shieldPowerRegen=30;
+	shieldPowerRegenEnergy=60;
+	shieldInterceptType=2;
+	shieldGoodColor=0.9 0.9 1.0 1;
+	shieldBadColor=0.6 0.2 0.2 0.05;
+	shieldAlpha=0.5;
+	visibleShieldHitFrames=5;
+	[DAMAGE]
+	{
+		default=10;
+	}
+}
 [sphere_neptune_shield]
 {
 	name=Energy shield;
@@ -26782,6 +27152,54 @@
 		airLaser=1;
 		aaRangeBoost=1;
 		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=300;
+		group_invincible=1;
+		armor_heavy=75.00;//#AUTO#
+		armor_medium=150.00;//#AUTO#
+		armor_light=300.00;//#AUTO#
+	}
+}
+[sphere_nebula_laser]
+{
+	name=Flash Beam;
+	weaponType=BeamLaser;
+	explosionGenerator=custom:FLASHBLASTWRAPPER;
+	beamTime=0.03;
+	thickness=2.588;
+	coreThickness=1.5;
+	intensity=0.8;
+	turret=1;
+	range=650;
+	minIntensity=1.0;
+	beamTTL=60;
+	beamDecay=0.9;
+	reloadTime=1.2;
+	energyPerShot=100;
+	weaponVelocity=1533;
+	areaOfEffect=8;
+	soundStart=flashlaser;
+	soundHit=lasrhit2;
+	fireStarter=20;
+	scrollSpeed=0;
+	pulseSpeed=0;
+	rgbColor=0.0 0.5 0.0;
+	rgbColor2=1.0 1.0 1.0;
+	tolerance=3000;
+	impulseFactor=0.0222;
+	craterMult=0.05;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		airLaser=1;
+		aaRangeBoost=1;
+		expDmgScaling=1;
+		reaimTime=1;
 		targets=SURFACE,AIR;
 	}
 	[DAMAGE]
@@ -27287,8 +27705,6 @@
 	soundStart=rocklit2;
 	soundHit=xplolrg2;
 	myGravity=0.6;
-	collideFriendly=0;
-	avoidFriendly=0;
 	interceptedByShieldType=1;
 	avoidFeature=0;
 	[CUSTOMPARAMS]

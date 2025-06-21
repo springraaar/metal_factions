@@ -108,6 +108,7 @@ local builtinDroneUpgrades = {
 	[UnitDefNames["aven_archangel"].id] = {{"upgrade_light_drones",2},{"upgrade_builder_drone",3}},
 	[UnitDefNames["gear_adv_construction_kbot"].id] = {{"upgrade_transport_drone",1}},
 	[UnitDefNames["gear_adv_construction_hydrobot"].id] = {{"upgrade_transport_drone",1}},
+	[UnitDefNames["gear_machinist"].id] = {{"upgrade_light_drones",1},{"upgrade_builder_drone",2}},
 	[UnitDefNames["sphere_attritor"].id] = {{"upgrade_light_drones",2},{"upgrade_medium_drone",2}}
 }
 

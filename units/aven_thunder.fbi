@@ -19,12 +19,12 @@
 	unitName=aven_thunder;
 	objectName=aven_thunder.3do;
 	buildPic=aven_thunder.png;
-	soundCategory=aven_VTOL;
+	soundCategory=AVEN_AIRMED;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=1450;
+	maxDamage=1400;
 	footprintx=4;
 	footprintz=4;
 
@@ -62,10 +62,10 @@
 	turnRate=410;
 	acceleration=0.25;
 	brakeRate=0.15;
-	maxVelocity=6.5;
+	maxVelocity=6.0;
 	maxSlope=10;
 	
-	cruiseAlt=210;
+	cruiseAlt=195;
 	hoverAttack=1;
 	upright=1;
 
@@ -124,8 +124,8 @@
 	[SFXTypes]
 	{
 	}
-	buildCostEnergy=3846;//#AUTO#
-	buildCostMetal=769;//#AUTO#
-	buildTime=9166;//#AUTO#
-	mass=309;//#AUTO#
+	buildCostEnergy=3497;//#AUTO#
+	buildCostMetal=699;//#AUTO#
+	buildTime=8335;//#AUTO#
+	mass=291;//#AUTO#
 }

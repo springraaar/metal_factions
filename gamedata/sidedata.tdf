@@ -1135,6 +1135,7 @@
 		canbuild16=gear_carrier_l;
 		canbuild17=gear_carrier;
 		canbuild18=gear_carrier_b;
+		canbuild19=gear_maw;
 	}
 	[gear_long_range_rocket_platform]
 	{
@@ -1539,9 +1540,10 @@
 		canbuild20=gear_rager;
 		canbuild21=gear_lesser_luminator;
 		canbuild22=gear_big_bob;
-		canbuild23=gear_grenado;
-		canbuild24=gear_titan;
-		canbuild25=gear_luminator;
+		canbuild23=gear_machinist;
+		canbuild24=gear_grenado;
+		canbuild25=gear_titan;
+		canbuild26=gear_luminator;
 	}
 	[gear_hydrobot_plant]
 	{
@@ -1586,19 +1588,20 @@
 		canbuild2=gear_adv_construction_sub;
 		canbuild3=gear_searcher;
 		canbuild4=gear_viking;
-		canbuild5=gear_enforcer;
-		canbuild6=gear_snake;
-		canbuild7=gear_blowfish;
-		canbuild8=gear_noser;
-		canbuild9=gear_phantom;
-		canbuild10=gear_monitor;
-		canbuild11=gear_strainer;
-		canbuild12=gear_hellburner;
-		canbuild13=gear_executioner;
-		canbuild14=gear_proteus;
-		canbuild15=gear_jigsaw;
-		canbuild16=gear_edge;
-		canbuild17=gear_intimidator_ns;
+		canbuild5=gear_tidebreaker;
+		canbuild6=gear_enforcer;
+		canbuild7=gear_snake;
+		canbuild8=gear_blowfish;
+		canbuild9=gear_noser;
+		canbuild10=gear_phantom;
+		canbuild11=gear_monitor;
+		canbuild12=gear_strainer;
+		canbuild13=gear_hellburner;
+		canbuild14=gear_executioner;
+		canbuild15=gear_proteus;
+		canbuild16=gear_jigsaw;
+		canbuild17=gear_edge;
+		canbuild18=gear_intimidator_ns;
 	}
 	[gear_adv_vehicle_plant]
 	{
@@ -2277,8 +2280,9 @@
 		canbuild3=gear_snake;
 		canbuild4=gear_blowfish;
 		canbuild5=gear_viking;
-		canbuild6=gear_enforcer;
-		canbuild7=gear_monitor;
+		canbuild6=gear_tidebreaker;
+		canbuild7=gear_enforcer;
+		canbuild8=gear_monitor;
 	}
 	[gear_light_plant]
 	{
@@ -3184,6 +3188,7 @@
 		canbuild25=claw_shrieker;
 		canbuild26=claw_heavy_crawler;
 		canbuild27=claw_scorpitron;
+		canbuild28=claw_cerberus;
 	}
 	[claw_light_plant]
 	{
@@ -3247,6 +3252,7 @@
 		canbuild5=claw_hunter;
 		canbuild6=claw_sword;
 		canbuild7=claw_explorer;
+		canbuild8=claw_cyclon;
 	}
 	[claw_adv_shipyard]
 	{
@@ -3259,15 +3265,16 @@
 		canbuild7=claw_sword;
 		canbuild8=claw_negator;
 		canbuild9=claw_explorer;
-		canbuild10=claw_cleaver;
-		canbuild11=claw_maul;
-		canbuild12=claw_pounder_ns;
-		canbuild13=claw_monster;
-		canbuild14=claw_bullfrog;
-		canbuild15=claw_phalanx;
-		canbuild16=claw_drakkar;
-		canbuild17=claw_wrecker;
-		canbuild18=claw_longhorn_ns;
+		canbuild10=claw_cyclon;
+		canbuild11=claw_cleaver;
+		canbuild12=claw_maul;
+		canbuild13=claw_pounder_ns;
+		canbuild14=claw_monster;
+		canbuild15=claw_bullfrog;
+		canbuild16=claw_phalanx;
+		canbuild17=claw_drakkar;
+		canbuild18=claw_wrecker;
+		canbuild19=claw_longhorn_ns;
 	}
 	[claw_spinbot_plant]
 	{
@@ -3683,11 +3690,12 @@
 	{
 		canbuild1=sphere_construction_ship;
 		canbuild2=sphere_skiff;
-		canbuild3=sphere_reacher;
-		canbuild4=sphere_carp;
-		canbuild5=sphere_targe;
-		canbuild6=sphere_endeavour;
-		canbuild7=sphere_echo;
+		canbuild3=sphere_skiff_s;
+		canbuild4=sphere_reacher;
+		canbuild5=sphere_carp;
+		canbuild6=sphere_targe;
+		canbuild7=sphere_endeavour;
+		canbuild8=sphere_echo;
 	}
 	[sphere_construction_vehicle]
 	{
@@ -3895,26 +3903,28 @@
 		canbuild14=sphere_lifter_l;
 		canbuild15=sphere_lifter;
 		canbuild16=sphere_lifter_b;
+		canbuild17=sphere_nebula;
 	}
 	[sphere_adv_shipyard]
 	{
 		canbuild1=sphere_construction_ship;
 		canbuild2=sphere_adv_construction_sub;
 		canbuild3=sphere_skiff;
-		canbuild4=sphere_reacher;
-		canbuild5=sphere_carp;
-		canbuild6=sphere_targe;
-		canbuild7=sphere_endeavour;
-		canbuild8=sphere_mist;
-		canbuild9=sphere_echo;
-		canbuild10=sphere_helix;
-		canbuild11=sphere_slammer_ns;
-		canbuild12=sphere_screener;
-		canbuild13=sphere_pluto;
-		canbuild14=sphere_buzzer;
-		canbuild15=sphere_stresser;
-		canbuild16=sphere_stalwart;
-		canbuild17=sphere_bastion_ns;
+		canbuild4=sphere_skiff_s;
+		canbuild5=sphere_reacher;
+		canbuild6=sphere_carp;
+		canbuild7=sphere_targe;
+		canbuild8=sphere_endeavour;
+		canbuild9=sphere_mist;
+		canbuild10=sphere_echo;
+		canbuild11=sphere_helix;
+		canbuild12=sphere_slammer_ns;
+		canbuild13=sphere_screener;
+		canbuild14=sphere_pluto;
+		canbuild15=sphere_buzzer;
+		canbuild16=sphere_stresser;
+		canbuild17=sphere_stalwart;
+		canbuild18=sphere_bastion_ns;
 	}
 	[sphere_sphere_factory]
 	{

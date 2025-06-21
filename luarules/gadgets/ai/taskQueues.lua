@@ -2442,9 +2442,13 @@ function stratCommanderAction(self)
 	if (options and targetBuildings) then
 		for i,props in ipairs(targetBuildings) do
 			local minCount = props.min 
+			local extraMin = 0
 			local uName = props.name
 			if options[uName] == true and (buildsFactories or constructionTowers[uName]) then
-				if (checkAllowedConditions(self,props) and countOwnUnits(self,uName, 99, nil) < minCount) then
+				if constructionTowers[uName] then 
+					extraMin = self.ai.extraConTowers
+				end
+				if (checkAllowedConditions(self,props) and countOwnUnits(self,uName, 99, nil) < minCount+extraMin) then
 		
 					-- if unit is far away from base center, move to center and then retry
 					if farFromBaseCenter(self)  then

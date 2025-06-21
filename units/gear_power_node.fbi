@@ -44,7 +44,7 @@
 	//************
 	yardMap=oo oo;
 	collisionvolumetype=cyly;
-	collisionVolumeScales=18 45 18;
+	collisionVolumeScales=22 50 22;
 	collisionVolumeOffsets=0 0 0;
 	collisionVolumeTest = 1;
 
@@ -97,6 +97,7 @@
 		manualCost=1;
 		powerGridNode=1;
 		tip=Connects nearby energy production/storage, metal extractors and other nodes in 500 radius;
+		abilityRadius=500;
 	}
 	[SFXTypes]
 	{

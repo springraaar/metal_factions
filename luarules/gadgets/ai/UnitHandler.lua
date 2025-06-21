@@ -2059,6 +2059,8 @@ function UnitHandler:GameFrame(f)
 		end
 		--log("AI "..self.ai.id.." attackers="..#(self.unitGroups[UNIT_GROUP_ATTACKERS].recruits).." raiders="..#(self.unitGroups[UNIT_GROUP_RAIDERS].recruits).." airAttackers"..#(self.unitGroups[UNIT_GROUP_AIR_ATTACKERS].recruits),self.ai)	
 	end
+	
+
 	-- update status and positions for each group
 	if f%59 == 13 + self.ai.frameShift then
 		-- iterate through own units : members of unit groups

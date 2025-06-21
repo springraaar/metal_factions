@@ -2073,7 +2073,7 @@ gearAmphibious = {
 				{name="gear_commander_respawner",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_kbot",min=1,max=2,weight=0.2,excludeConditions={CONDITION_WATER}},
+				{name="gear_construction_kbot",min=1,max=3,weight=0.2,excludeConditions={CONDITION_WATER}},
 				{name="gear_construction_ship",min=1,max=2,weight=0.2,includeConditions={CONDITION_WATER}},
 				{name="gear_salamander",min=0,max=MANY,weight=0.6},
 				{name="gear_metalhead",min=0,max=MANY,weight=0.3},
@@ -2124,8 +2124,8 @@ gearAmphibious = {
 				{name="gear_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_kbot",min=1,max=6,weight=0.2,excludeConditions={CONDITION_WATER}},
-				{name="gear_construction_ship",min=1,max=6,weight=0.2,includeConditions={CONDITION_WATER}},
+				{name="gear_construction_kbot",min=2,max=6,weight=0.2,excludeConditions={CONDITION_WATER}},
+				{name="gear_construction_ship",min=2,max=6,weight=0.2,includeConditions={CONDITION_WATER}},
 				{name="gear_adv_construction_hydrobot",min=1,max=4,weight=0.3},
 				{name="gear_salamander",min=1,max=MANY,weight=0.8},
 				{name="gear_metalhead",min=1,max=MANY,weight=0.4},
@@ -2180,8 +2180,8 @@ gearAmphibious = {
 				{name="gear_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_kbot",min=1,max=6,weight=0.2,excludeConditions={CONDITION_WATER}},
-				{name="gear_construction_ship",min=1,max=6,weight=0.2,includeConditions={CONDITION_WATER}},
+				{name="gear_construction_kbot",min=2,max=6,weight=0.2,excludeConditions={CONDITION_WATER}},
+				{name="gear_construction_ship",min=2,max=6,weight=0.2,includeConditions={CONDITION_WATER}},
 				{name="gear_adv_construction_hydrobot",min=2,max=4,weight=0.3},
 				{name="gear_adv_construction_aircraft",min=1,max=5,weight=0.1},
 				{name="gear_salamander",min=1,max=MANY,weight=0.8},
@@ -2241,10 +2241,10 @@ gearAmphibious = {
 				{name="gear_scout_pad",min=1,max=1}
 			},
 			mobileUnits = {
-				{name="gear_construction_kbot",min=1,max=8,weight=0.2,excludeConditions={CONDITION_WATER}},
-				{name="gear_construction_ship",min=1,max=8,weight=0.2,includeConditions={CONDITION_WATER}},
+				{name="gear_construction_kbot",min=2,max=8,weight=0.2,excludeConditions={CONDITION_WATER}},
+				{name="gear_construction_ship",min=2,max=8,weight=0.2,includeConditions={CONDITION_WATER}},
 				{name="gear_adv_construction_hydrobot",min=2,max=8,weight=0.3},
-				{name="gear_adv_construction_aircraft",min=1,max=8,weight=0.1},
+				{name="gear_adv_construction_aircraft",min=2,max=8,weight=0.1},
 				{name="gear_salamander",min=1,max=MANY,weight=0.8},
 				{name="gear_metalhead",min=1,max=MANY,weight=0.4},
 				{name="gear_buoy",min=1,max=3,weight=0.01},
@@ -3913,10 +3913,11 @@ clawNavy = {
 			mobileUnits = {
 				{name="claw_hunter",min=0,max=MANY,weight=0.4},
 				{name="claw_construction_ship",min=1,max=4,weight=0.4},
-				{name="claw_striker",min=0,max=MANY,weight=0.4},
+				{name="claw_striker_ns",min=0,max=MANY,weight=0.4},
 				{name="claw_striker_ns",min=1,max=MANY,weight=0.8,includeConditions={THREAT_AIR}},
 				{name="claw_spine",min=1,max=MANY,weight=0.8,includeConditions={THREAT_UNDERWATER}},
 				{name="claw_spine",min=0,max=MANY,weight=0.4},
+				{name="claw_cyclon",min=0,max=MANY,weight=0.4},
 				{name="claw_sword",min=0,max=MANY,weight=0.8},
 				{name="claw_explorer",min=1,max=1,weight=0.1}
 			}
@@ -3973,9 +3974,9 @@ clawNavy = {
 				{name="claw_monster",min=0,max=MANY,weight=0.4},
 				{name="claw_pounder_ns",min=0,max=MANY,weight=0.8},
 				{name="claw_explorer",min=1,max=1,weight=0.1},				
-				{name="claw_phalanx",min=0,max=MANY,weight=0.4},
+				{name="claw_phalanx",min=0,max=MANY,weight=0.6},
 				{name="claw_drakkar",min=0,max=MANY,weight=0.4},
-				{name="claw_pounder_ns",min=0,max=MANY,weight=0.4},
+				{name="claw_pounder_ns",min=0,max=MANY,weight=0.6},
 				{name="claw_negator",min=1,max=1,weight=0.1}
 			}
 		},

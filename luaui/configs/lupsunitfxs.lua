@@ -56,28 +56,28 @@ effectUnitDefs = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
   },  
   sphere_gazer = {
-	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.75}, areaShieldSphere)}
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=1.0}, areaShieldSphere)}
   },
   sphere_radiant = {
-	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.75}, areaShieldSphere)}
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=1.0}, areaShieldSphere)}
   },
   sphere_comet = {
-	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.65}, areaShieldSphere)}
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.9}, areaShieldSphere)}
   },
   sphere_construction_sphere = {
-	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.75}, areaShieldSphere)}
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=1.0}, areaShieldSphere)}
   },
   sphere_aster = {
-	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.75}, areaShieldSphere)}
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=1.0}, areaShieldSphere)}
   },
   sphere_chroma = {
-	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.85}, areaShieldSphere)}
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=1.2}, areaShieldSphere)}
   },
   sphere_dipole = {
-	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.65}, areaShieldSphere)}
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.9}, areaShieldSphere)}
   },
   sphere_atom = {
-	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.65}, atomShieldSphere)}
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.9}, atomShieldSphere)}
   },
   sphere_stresser = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.3}, areaShieldSphere)}
@@ -363,7 +363,16 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=4, length=30, piece="rjp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=25, piece="cjp", onActive=true}}
   },     
-
+  gear_maw = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=25, piece="jp1", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=25, piece="jp2", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=25, piece="jp3", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=25, piece="jp4", onActive=true, down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="ljp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="rjp", onActive=true}},
+	{class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="ljp2", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=35, piece="rjp2", onActive=true}}    
+  },
   ----------------- CLAW
   claw_spotter = {
     {class='AirJet',options={color={0.3,0.1,0}, width=4, length=30, piece="jp1", onActive=true}}
@@ -571,7 +580,17 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=25, piece="rjp", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=8, length=25, piece="bjp", onActive=true,down=true}},
   },  
-
+  sphere_nebula = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=30, piece="jp1", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=30, piece="jp2", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=30, piece="jp3", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=30, piece="jp4", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=30, piece="jp5", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=30, piece="jp6", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=30, piece="jp7", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=30, piece="jp8", onActive=true,down=true}},
+    {class='ShieldSphere', options=MergeTable({margin=2, heightFactor=1}, areaShieldSphere)}
+  },
   --// OTHER
   
 }

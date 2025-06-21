@@ -20,7 +20,7 @@
 	objectName=aven_conqueror.3do;
 	corpse=aven_conqueror_dead;
 	buildPic=aven_conqueror.png;
-	soundCategory=aven_SHIP;
+	soundCategory=aven_SHIPMED;
 
 	//************************************************************
 	//  Health/Cost/Size
@@ -80,7 +80,7 @@
 	//  Weapons
 	//***********
 	weapon1=aven_conqueror_cannon;
-	weapon2=COREDEPTHCHARGE;
+	weapon2=aven_conqueror_depthcharge;
 	noChaseCategory=VTOL;
 	onlyTargetCategory1=NOTAIR;
 	onlyTargetCategory2=NOTAIR;
@@ -113,8 +113,8 @@
 		evalfactor=0.85;//SHIP
 		canAreaAttack=1;
 	}
-	buildCostEnergy=15433;//#AUTO#
-	buildCostMetal=3086;//#AUTO#
-	buildTime=36782;//#AUTO#
-	mass=3645;//#AUTO#
+	buildCostEnergy=15556;//#AUTO#
+	buildCostMetal=3111;//#AUTO#
+	buildTime=37076;//#AUTO#
+	mass=3659;//#AUTO#
 }

@@ -22,6 +22,7 @@ function MapHandler:Init()
 	self.isMetalMap = true
 	self.allowBuildingOverMetalSpots = false  
 	self.waterDoesDamage = Game.waterDamage > 0
+	self.debugBuildSpotChecks = 0
 	
 	-- load metal spot list
 	-- try first with lower resolution grid
@@ -414,6 +415,10 @@ local CHECKi2 = nil
 function MapHandler:checkConnection(p1,p2,unitPathingType)
 	if (unitPathingType == PF_UNIT_AMPHIBIOUS_AT) or (unitPathingType == PF_UNIT_AIR) then
 		--TODO fails for lava
+		return true
+	end
+	if (unitPathingType == nil) then
+		-- building, likely a construction tower
 		return true
 	end
 	

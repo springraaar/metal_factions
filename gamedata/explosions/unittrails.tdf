@@ -1745,3 +1745,27 @@
 	}
 
 }
+
+
+[NEBAIM]
+{
+	usedefaultexplosions=0;
+	[GLOWCENTER]
+	{
+		class=CExploSpikeProjectile;
+		[properties]
+		{
+			dir=-1 r2, -1 r2, -1 r2;
+			width=7;
+			length=7;
+			alpha=0.2;
+			alphadecay=0.02;
+			color=0.9, 1.0, 0.9;
+		}
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+  		count=2; 
+	}
+}

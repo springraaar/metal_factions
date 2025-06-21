@@ -1,0 +1,119 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=GEAR;
+	name=Maw;
+	description=Heavy Flamer Aircraft;
+	iconType=airassault;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR VTOL LEVEL2 WEAPON NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_maw;
+	objectName=gear_maw.3do;
+	buildPic=gear_maw.png;
+	soundCategory=GEAR_AIRMED;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=9000;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	turnRate=700;
+	acceleration=0.53;
+	brakeRate=0.3;
+	maxVelocity=2.8;
+	maxSlope=10;
+	
+	cruiseAlt=110;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_maw_flamethrower;
+	badTargetCategory1=VTOL;
+	weaponMainDir1=0 -0 1;
+	maxAngleDif1=250;       
+	explodeAs=HBOMBER;
+	selfDestructAs=HBOMBER;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	damageModifier=0.80;
+	hoverAttack=1;
+	scale=1;
+	airHoverFactor=-1;
+	bankingallowed=0;
+	upright=1;
+	collide=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =60 35 45;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=gear_adv_aircraft_plant;
+		tip=Gains 20% dmg resistance when closed. Targets burn for 210(M) dmg over 7s;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:fireflare;
+	}
+	buildCostEnergy=24682;//#AUTO#
+	buildCostMetal=4936;//#AUTO#
+	buildTime=58825;//#AUTO#
+	mass=1947;//#AUTO#
+}

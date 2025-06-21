@@ -20,12 +20,12 @@
 	objectName=claw_hunter.3do;
 	corpse=claw_hunter_dead;
 	buildPic=claw_hunter.png;
-	soundCategory=gear_SHIP;
+	soundCategory=CLAW_SHIPMED;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=1600;
+	maxDamage=1650;
 	footprintx=4;
 	footprintz=4;
 
@@ -105,8 +105,8 @@
 		evalfactor=0.85;//SHIP
 	}
 
-	buildCostEnergy=2115;//#AUTO#
-	buildCostMetal=423;//#AUTO#
-	buildTime=5042;//#AUTO#
-	mass=541;//#AUTO#
+	buildCostEnergy=2174;//#AUTO#
+	buildCostMetal=434;//#AUTO#
+	buildTime=5183;//#AUTO#
+	mass=557;//#AUTO#
 }

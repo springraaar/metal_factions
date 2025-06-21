@@ -28,7 +28,7 @@ local BIGGER_RADIUS_EXT_THRESHOLD = 0.0012
 
 local METAL_EXTRACTION_FACTOR = 0.001
 local ENERGY_STORAGE_GRID_FACTOR = 0.01 
-local EXTRACTION_BONUS_GRID_STR_REFERENCE = 500
+local EXTRACTION_BONUS_GRID_STR_REFERENCE = 400		-- 2x this energy would boost one 1 connected basic mex mult by +50% 
 
 local GRID_CHECK_FRAMES = 30
 
@@ -105,13 +105,13 @@ function getGridExtractionBonus(grid)
 end
 
 function getGridLevel(grid)
-	if grid.gridStrength > 10000 then
+	if grid.gridStrength > 8000 then
 		return 5
-	elseif grid.gridStrength > 5000 then
+	elseif grid.gridStrength > 4000 then
 		return 4
-	elseif grid.gridStrength > 2000 then
+	elseif grid.gridStrength > 1600 then
 		return 3
-	elseif grid.gridStrength > 500 then
+	elseif grid.gridStrength > 400 then
 		return 2
 	elseif grid.gridStrength > 10 then
 		return 1

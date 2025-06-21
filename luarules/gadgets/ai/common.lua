@@ -608,7 +608,7 @@ function checkWithinDistance(pos,center,maxDistance)
 end
 
 function getUnitPFType(unitDef)
-	pFtype = nil
+	local pFType = nil
 	
 	if unitDef ~= nil and (not unitDef.isImmobile) then
 		if (unitDef.canFly) then
@@ -814,7 +814,7 @@ pFConnectionRestrictionsByPlant = {
 	----------- AVEN
 	aven_shipyard = PF_UNIT_WATER_DEEP,
 	aven_adv_shipyard = PF_UNIT_WATER_DEEP,
-	aven_hovercraft_platform = PF_UNIT_AMPHIBIOUS,
+	aven_hovercraft_platform = PF_UNIT_AMPHIBIOUS_FLOATER,
 	aven_aircraft_plant = PF_UNIT_AIR,
 	aven_adv_aircraft_plant = PF_UNIT_AIR,
 	aven_scout_pad = PF_UNIT_AIR,
@@ -828,12 +828,13 @@ pFConnectionRestrictionsByPlant = {
 	gear_adv_aircraft_plant = PF_UNIT_AIR,
 	gear_scout_pad = PF_UNIT_AIR,
 	gear_commander_respawner = PF_UNIT_AMPHIBIOUS,
+	gear_hydrobot_plant = PF_UNIT_AMPHIBIOUS,
 	gear_upgrade_center = PF_UNIT_AIR,
 	gear_nano_tower = PF_UNIT_AIR,
 	----------- CLAW
 	claw_shipyard = PF_UNIT_WATER_DEEP,
 	claw_adv_shipyard = PF_UNIT_WATER_DEEP,
-	claw_spinbot_plant = PF_UNIT_AMPHIBIOUS,
+	claw_spinbot_plant = PF_UNIT_AMPHIBIOUS_FLOATER,
 	claw_aircraft_plant = PF_UNIT_AIR,
 	claw_adv_aircraft_plant = PF_UNIT_AIR,
 	claw_scout_pad = PF_UNIT_AIR,
@@ -903,6 +904,7 @@ unitAbleToHitUnderwater = {
 	gear_u6commander = true,
 	gear_snake = true,
 	gear_viking = true,
+	gear_tidebreaker = true,
 	gear_torpedo_launcher = true,
 	gear_noser = true,
 	gear_advanced_torpedo_launcher = true,
@@ -938,7 +940,7 @@ unitAbleToHitUnderwater = {
 	sphere_u6commander = true,
 	sphere_u7commander = true,
 	sphere_carp = true,
-	sphere_skiff = true,
+	sphere_skiff_s = true,
 	sphere_targe = true,
 	sphere_clam = true,
 	sphere_pluto = true,
@@ -1157,11 +1159,12 @@ function finishLoadingUnitTypeSets()
 	unitTypeSets[TYPE_SEA_ATTACKER] = seaAttackers
 	
 	for udId,ud in pairs(UnitDefs) do
+		local pFType = getUnitPFType(ud)
 		if not ud.isBuilding and ud.weapons and (not fakeWeaponUnits[ud.name]) and ud.weapons[1] and ud.weapons[1].weaponDef then
 			attackers[ud.name] = true
-			if (ud.isAirUnit and ud.speed > 60) then
+			if (pFType == PF_UNIT_AIR and ud.speed > 60) then
 				airAttackers[ud.name] = true			
-			elseif string.find(tostring(ud.moveDef.name),"boat") then
+			elseif pFType == PF_UNIT_WATER or pFType == PF_UNIT_WATER_DEEP then
 				seaAttackers[ud.name] = true
 			end
 	    end

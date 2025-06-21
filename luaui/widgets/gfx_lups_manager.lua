@@ -345,7 +345,6 @@ local function GameFrame(_,n)
 					effects = props.effects
 					vx, vy, vz, v = spGetUnitVelocity(unitID)
 					dx, dy, dz = spGetUnitDirection(unitID)
-					
 					maxV = ud.speed
 					if (vx ~= nil and maxV ~= 0) then
 						xzAlignFactor = (vx * dx + vz * dz)

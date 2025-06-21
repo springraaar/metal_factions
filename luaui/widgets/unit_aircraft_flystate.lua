@@ -19,6 +19,7 @@ local spGiveOrderToUnit  = Spring.GiveOrderToUnit
 
 local defaultFlyState = {
 -------------------- AVEN
+	[UnitDefNames["aven_ace"].id] = 1,
 	[UnitDefNames["aven_atlas_l"].id] = 0,
 	[UnitDefNames["aven_atlas"].id] = 0,
 	[UnitDefNames["aven_atlas_b"].id] = 0,
@@ -50,7 +51,7 @@ function widget:Initialize()
 	end
 	-- change default fly state for all aircraft to "fly"
 	for udId,ud in pairs(UnitDefs) do
-		if ud.canFly then
+		if ud.canFly and not defaultFlyState[udId] then
 			defaultFlyState[udId] = 0
 		end 
 	end

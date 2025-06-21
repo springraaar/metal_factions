@@ -19,12 +19,12 @@
 	unitName=sphere_manta;
 	objectName=sphere_manta.3do;
 	buildPic=sphere_manta.png;
-	soundCategory=aven_VTOL;
+	soundCategory=SPHERE_AIRMED;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=1700;
+	maxDamage=1500;
 	footprintx=3;
 	footprintz=3;
 
@@ -62,10 +62,10 @@
 	turnRate=390;
 	acceleration=0.2;
 	brakeRate=0.15;
-	maxVelocity=5.6;
+	maxVelocity=5.5;
 	maxSlope=10;
 	
-	cruiseAlt=210;
+	cruiseAlt=195;
 	hoverAttack=1;
 	upright=1;
 
@@ -126,8 +126,8 @@
 	[SFXTypes]
 	{
 	}
-	buildCostEnergy=3832;//#AUTO#
-	buildCostMetal=766;//#AUTO#
-	buildTime=9133;//#AUTO#
-	mass=340;//#AUTO#
+	buildCostEnergy=3427;//#AUTO#
+	buildCostMetal=685;//#AUTO#
+	buildTime=8167;//#AUTO#
+	mass=301;//#AUTO#
 }

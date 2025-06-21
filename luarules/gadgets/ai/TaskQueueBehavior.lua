@@ -516,6 +516,16 @@ function TaskQueueBehavior:processItem(value, checkResources, checkAssistNearby)
 							--log(self.unitName.." at ( "..selfPos.x.." ; "..selfPos.z..") could not find build spot for "..value,self.ai)
 							-- mark that the attempt failed
 							self:markBuildFailure(ud.name)
+							
+							-- if it failed to find spot for the first factory, get AI to build an extra con tower somewher eelse
+							if setContains(unitTypeSets[TYPE_PLANT],value) and countOwnUnits(self,ud.name, 2, nil) == 0 then
+								local f = spGetGameFrame()
+								if (f - self.ai.extraConTowerFrame > 3000) then
+									--log(self.unitName.." at ( "..selfPos.x.." ; "..selfPos.z..") could not find build spot for "..value.." : +1 con tower",self.ai)
+									self.ai.extraConTowers = self.ai.extraConTowers +1
+									self.ai.extraConTowerFrame = f
+								end
+							end
 							success = false
 						end
 						

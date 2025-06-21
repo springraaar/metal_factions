@@ -1,0 +1,114 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Machinist;
+	description=Amphibious Drone Controller Robot;
+	iconType=amphibmulti;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_machinist;
+	objectName=gear_machinist.3do;
+	corpse=gear_machinist_dead;
+	buildPic=gear_machinist.png;
+	soundCategory=GEAR_BOTBIG;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=4200;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	upright=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=KBOTUW4;
+	turnRate=900;
+	acceleration=0.7;
+	brakeRate=0.7;
+	maxVelocity=1.45;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_machinist_missile;
+	noChaseCategory=VTOL;
+	badTargetCategory1=VTOL;
+	explodeAs=BIG_UNIT;
+	selfDestructAs=BIG_UNIT;
+
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	collisionVolumeType = box;
+	collisionVolumeScales =40 55 30;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:rocketflaresml;
+	}
+	[CustomParams]
+	{
+		builtBy=gear_adv_kbot_lab;
+		optional=1;
+		manualCost=1;
+		tip=Spawns light drones (max x3) and adv. construction drones (max x2);
+	}
+
+	buildCostEnergy=15000;//#AUTO#
+	buildCostMetal=3000;//#AUTO#
+	buildTime=36000;//#AUTO#
+	mass=2200;//#AUTO#
+}

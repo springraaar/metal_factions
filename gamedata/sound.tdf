@@ -584,11 +584,11 @@
 	count0=count6;
 	canceldestruct=cancel2;
 }
-[aven_SHIP]
+[aven_SHIPSML]
 {
-	select1=sharmsel;
-	ok1=sharmmov;
-	arrived1=sharmstp;
+	select1=AVENSHIPSMLSEL;
+	ok1=SHIPMOVE;
+	arrived1=SHIPSTOP;
 	cant1=cantdo4;
 	underattack=warning1;
 	count5=count1;
@@ -599,6 +599,37 @@
 	count0=count6;
 	canceldestruct=cancel2;
 }
+[aven_SHIPMED]
+{
+	select1=AVENSHIPMEDSEL;
+	ok1=SHIPMOVE;
+	arrived1=SHIPSTOP;
+	cant1=cantdo4;
+	underattack=warning1;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+[aven_SHIPBIG]
+{
+	select1=AVENSHIPBIGSEL;
+	ok1=SHIPMOVEBIG;
+	arrived1=SHIPSTOPBIG;
+	cant1=cantdo4;
+	underattack=warning1;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+
 [aven_SOLAR]
 {
 	select1=solar1;
@@ -738,9 +769,39 @@
 	count0=count6;
 	canceldestruct=cancel2;
 }
-[aven_VTOL]
+[AVEN_AIRSML]
 {
-	select1=vtolarac;
+	select1=AVENAIRSMLSEL;
+	ok1=VTOLOK1;
+	arrived1=VTOLSTP1;
+	cant1=cantdo4;
+	underattack=warning1;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+[AVEN_AIRMED]
+{
+	select1=AVENAIRMEDSEL;
+	ok1=VTOLOK1;
+	arrived1=VTOLSTP1;
+	cant1=cantdo4;
+	underattack=warning1;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+[AVEN_AIRBIG]
+{
+	select1=AVENAIRBIGSEL;
 	ok1=VTOLOK1;
 	arrived1=VTOLSTP1;
 	cant1=cantdo4;
@@ -1153,11 +1214,41 @@
 	count0=count6;
 	canceldestruct=cancel2;
 }
-[gear_SHIP]
+[gear_SHIPSML]
 {
-	select1=shcorsel;
-	ok1=shcormov;
-	arrived1=shcorstp;
+	select1=GEARSHIPSMLSEL;
+	ok1=SHIPMOVE;
+	arrived1=SHIPSTOP;
+	cant1=cantdo4;
+	underattack=warning2;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+[gear_SHIPMED]
+{
+	select1=GEARSHIPMEDSEL;
+	ok1=SHIPMOVE;
+	arrived1=SHIPSTOP;
+	cant1=cantdo4;
+	underattack=warning2;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+[gear_SHIPBIG]
+{
+	select1=GEARSHIPBIGSEL;
+	ok1=SHIPMOVEBIG;
+	arrived1=SHIPSTOPBIG;
 	cant1=cantdo4;
 	underattack=warning2;
 	count5=count1;
@@ -1310,9 +1401,39 @@
 	count0=count6;
 	canceldestruct=cancel2;
 }
-[gear_VTOL]
+[GEAR_AIRSML]
 {
-	select1=vtolcrac;
+	select1=GEARAIRSMLSEL;
+	ok1=VTOLOK2;
+	arrived1=VTOLSTP2;
+	cant1=cantdo4;
+	underattack=warning2;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+[GEAR_AIRMED]
+{
+	select1=GEARAIRMEDSEL;
+	ok1=VTOLOK2;
+	arrived1=VTOLSTP2;
+	cant1=cantdo4;
+	underattack=warning2;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+[GEAR_AIRBIG]
+{
+	select1=GEARAIRBIGSEL;
 	ok1=VTOLOK2;
 	arrived1=VTOLSTP2;
 	cant1=cantdo4;
@@ -1962,7 +2083,96 @@
 	count0=count6;
 	canceldestruct=cancel2;
 }
-
+[CLAW_AIRSML]
+{
+	select1=CLAWAIRSMLSEL;
+	ok1=VTOLOK1;
+	arrived1=VTOLSTP1;
+	cant1=cantdo4;
+	underattack=warning1;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+[CLAW_AIRMED]
+{
+	select1=CLAWAIRMEDSEL;
+	ok1=VTOLOK1;
+	arrived1=VTOLSTP1;
+	cant1=cantdo4;
+	underattack=warning1;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+[CLAW_AIRBIG]
+{
+	select1=CLAWAIRBIGSEL;
+	ok1=VTOLOK1;
+	arrived1=VTOLSTP1;
+	cant1=cantdo4;
+	underattack=warning1;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+[CLAW_SHIPSML]
+{
+	select1=CLAWSHIPSMLSEL;
+	ok1=SHIPMOVE;
+	arrived1=SHIPSTOP;
+	cant1=cantdo4;
+	underattack=warning1;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+[CLAW_SHIPMED]
+{
+	select1=CLAWSHIPMEDSEL;
+	ok1=SHIPMOVE;
+	arrived1=SHIPSTOP;
+	cant1=cantdo4;
+	underattack=warning1;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+[CLAW_SHIPBIG]
+{
+	select1=CLAWSHIPBIGSEL;
+	ok1=SHIPMOVEBIG;
+	arrived1=SHIPSTOPBIG;
+	cant1=cantdo4;
+	underattack=warning1;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
 
 //------------------------- SPHERE
 
@@ -2149,6 +2359,97 @@
 	canceldestruct=cancel2;
 }
 
+[SPHERE_AIRSML]
+{
+	select1=vtolcrac;
+	ok1=VTOLOK2;
+	arrived1=VTOLSTP2;
+	cant1=cantdo4;
+	underattack=warning2;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+[SPHERE_AIRMED]
+{
+	select1=vtolcrac;
+	ok1=VTOLOK2;
+	arrived1=VTOLSTP2;
+	cant1=cantdo4;
+	underattack=warning2;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+[SPHERE_AIRBIG]
+{
+	select1=vtolcrac;
+	ok1=VTOLOK2;
+	arrived1=VTOLSTP2;
+	cant1=cantdo4;
+	underattack=warning2;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+
+[SPHERE_SHIPSML]
+{
+	select1=SPHERESHIPSMLSEL;
+	ok1=SHIPMOVE;
+	arrived1=SHIPSTOP;
+	cant1=cantdo4;
+	underattack=warning2;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+[SPHERE_SHIPMED]
+{
+	select1=SPHERESHIPMEDSEL;
+	ok1=SHIPMOVE;
+	arrived1=SHIPSTOP;
+	cant1=cantdo4;
+	underattack=warning2;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
+[SPHERE_SHIPBIG]
+{
+	select1=SPHERESHIPBIGSEL;
+	ok1=SHIPMOVEBIG;
+	arrived1=SHIPSTOPBIG;
+	cant1=cantdo4;
+	underattack=warning2;
+	count5=count1;
+	count4=count2;
+	count3=count3;
+	count2=count4;
+	count1=count5;
+	count0=count6;
+	canceldestruct=cancel2;
+}
 
 
 //------------------------- MISC

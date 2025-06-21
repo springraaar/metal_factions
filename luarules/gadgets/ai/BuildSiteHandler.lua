@@ -48,6 +48,12 @@ function BuildSiteHandler:checkBuildOrder(xi,zi,unitName,builderId)
 	return 0
 end
 
+function BuildSiteHandler:debugInvalidBuildSiteMarker(behavior,stillValid,pos,invalidityLabel)
+	if self.isStaticBuilder and stillValid then
+		Spring.MarkerAddPoint(pos.x,pos.y,pos.z,invalidityLabel) --DEBUG
+	end
+end
+
 function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minDistance, builderBehavior)
 	local testPos = newPosition(searchPos.x,searchPos.y,searchPos.z)
 
@@ -57,7 +63,7 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 	local xMax = searchPos.x + searchRadius
 	local zMin = searchPos.z - searchRadius
 	local zMax = searchPos.z + searchRadius
-	local step = 48
+	local step = 80
 	
 	local radius = spGetUnitDefDimensions(ud.id).radius
 	-- built in sets of 4, assume double radius
@@ -75,7 +81,7 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 	local mapCell = getNearbyCellIfExists(self.ai.mapHandler.mapCells,searchPos)
 	-- use higher resolution for static builders
 	if isStaticBuilder then
-		step = 24
+		step = 48
 		--Spring.SendCommands("clearmapmarks") 
 	end
 	local isTargetExplosive = setContains(unitTypeSets[TYPE_FUSION],ud.name)
@@ -119,6 +125,8 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 			for z = zMin, zMax, step do
 				-- check z map bounds
 				if (z > self.mapMinZ) and (z < self.mapMaxZ) then
+					--self.ai.mapHandler.debugBuildSpotChecks = self.ai.mapHandler.debugBuildSpotChecks+1		--DEBUG
+				
 					testPos.z = z
 					valid = true
 					-- do a search radius test for static builders
@@ -131,8 +139,8 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 
 					buildTest = 0
 					testPos.y = spGetGroundHeight(x,z)
-					--if isStaticBuilder then
-					--	Spring.MarkerAddPoint(testPos.x,testPos.y,testPos.z,valid and "b" or "-") --DEBUG
+					--if isStaticBuilder and (not valid) then
+					--	Spring.MarkerAddPoint(testPos.x,testPos.y,testPos.z,"-") --DEBUG
 					--end
 					
 					if valid and (builderBehavior.isWaterMode or testPos.y >= 0) then
@@ -180,6 +188,7 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 										end
 										--Spring.MarkerAddPoint(testPos.x,testPos.y,testPos.z,validPosFound) --DEBUG								
 										if (validPosFound < 6) then
+											--self:debugInvalidBuildSiteMarker(builderBehavior,valid,testPos,"NF") --DEBUG
 											valid = false
 										end
 									else
@@ -193,6 +202,7 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 										if typeToTest ~= PF_UNIT_AIR then
 											buildTest = spTestBuildOrder(ud.id, testPos.x, testPos.y, testPos.z + 96,0)
 											if (buildTest ~= 1 and buildTest ~= 2) then
+												--self:debugInvalidBuildSiteMarker(builderBehavior,valid,testPos,"EXIT") --DEBUG
 												valid = false
 											end
 											
@@ -203,6 +213,7 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 													-- check if unit violates minimum distance from nearby metal spots
 													for _,sPos in ipairs(mapCell.nearbyMetalSpots) do
 														if (checkWithinDistance(checkPos,sPos,160)) then
+															--self:debugInvalidBuildSiteMarker(builderBehavior,valid,testPos,"MEX") --DEBUG
 															valid = false
 															break
 														end
@@ -213,6 +224,7 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 	
 										-- check connection to base
 										if not self.ai.mapHandler:checkConnection(self.ai.unitHandler.basePos, testPos,typeToTest) then									
+											--self:debugInvalidBuildSiteMarker(builderBehavior,valid,testPos,"BC") --DEBUG
 											valid = false
 										end
 									end
@@ -222,8 +234,9 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 								if (isMetalMap == false and self.ai.mapHandler.allowBuildingOverMetalSpots == false) then
 									-- check if unit violates minimum distance from nearby metal spots
 									for _,sPos in ipairs(mapCell.nearbyMetalSpots) do
-										--Spring.MarkerAddPoint(sPos.x,sPos.y,sPos.z,"SPOT") --DEBUG
+										--Spring.MarkerAddPoint(sPos.x,sPos.y,sPos.z,"SPOT2") --DEBUG
 										if (checkWithinDistance(testPos,sPos,testRadius+134)) then
+											--self:debugInvalidBuildSiteMarker(builderBehavior,valid,testPos,"MEX2") --DEBUG
 											valid = false
 											break
 										end
@@ -235,6 +248,7 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 								-- check if unit violates minimum distance from nearby geothermal spots
 								for _,sPos in ipairs(self.ai.mapHandler.geoSpots) do
 									if (checkWithinDistance(testPos,sPos,testRadius+120)) then
+										--self:debugInvalidBuildSiteMarker(builderBehavior,valid,testPos,"GEO") --DEBUG
 										valid = false
 										break
 									end
@@ -268,6 +282,7 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 										end
 									end
 									if (checkWithinDistance(testPos,uPos,testRadius+uRadius)) then
+										self:debugInvalidBuildSiteMarker(builderBehavior,valid,testPos,"MD") --DEBUG										
 										valid = false
 										break
 									end
@@ -283,6 +298,7 @@ function BuildSiteHandler:findClosestBuildSite(ud, searchPos, searchRadius, minD
 								for _,uId in pairs(spGetUnitsInCylinder(x,z-80,160)) do
 									uDef = UnitDefs[spGetUnitDefID(uId)]
 									if uDef and setContains(unitTypeSets[TYPE_PLANT],uDef.name) then
+										self:debugInvalidBuildSiteMarker(builderBehavior,valid,testPos,"EXIT2") --DEBUG
 										valid = false
 										break
 									end

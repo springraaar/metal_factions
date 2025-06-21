@@ -51,6 +51,7 @@ local spGetUnitRulesParam = Spring.GetUnitRulesParam
 local spGetUnitPosition = Spring.GetUnitPosition
 local spCallCOBScript = Spring.CallCOBScript
 local spGetHeadingFromVector = Spring.GetHeadingFromVector
+local spGetUnitHeading = Spring.GetUnitHeading
 
 local totalWindStrength = 0
 local totalWindStrFrames = 0
@@ -144,7 +145,7 @@ function gadget:GameFrame(n)
 			-- call scripts to adjust direction and speed
 			--TODO workaround for engine only doing it every 15s, remove when no longer needed
 			spCallCOBScript(unitID,"SetSpeed",0,cobWStr)
-			spCallCOBScript(unitID,"SetDirection",0,wHeading)
+			spCallCOBScript(unitID,"SetDirection",0,wHeading-spGetUnitHeading(unitID))
 		end
 	end
 	

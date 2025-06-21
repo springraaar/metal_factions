@@ -469,7 +469,7 @@ function gadget:GameFrame(n)
 		for unitId,modifier in pairs(newSpeedModifierUnitIds) do
 			local oldMod = GG.speedModifierUnitIds[unitId]
 			if modifier ~= oldMod and (oldMod == nil or math.abs(modifier - oldMod) > 0.001) then
-				--Spring.Echo("ggmod="..tostring(oldMod).." mod="..modifier)
+				--Spring.Echo("oldmod="..tostring(oldMod).." mod="..modifier)
 				updateUnitSpeedModifier(unitId,modifier)
 			end
 		end
@@ -833,8 +833,10 @@ function updateUnitSpeedModifier(unitId, modifier)
 		
 		-- strafe air
 		if (ud.canFly and ud.isStrafingAirUnit and not ud.hoverAttack) then
-			local acceleration = ud.maxAcc * modifier 
-			spSetAirMoveTypeData(unitId,{maxSpeed=spd,maxWantedSpeed=spd,maxAcc=acceleration})
+			--local acceleration = ud.maxAcc * modifier 
+			--TODO fix this? removed the acceleration scaling because it breaks the max velocity adjustments, somehow
+			--spSetAirMoveTypeData(unitId,{maxSpeed=spd,maxWantedSpeed=spd,maxAcc=acceleration})
+			spSetAirMoveTypeData(unitId,{maxSpeed=spd,maxWantedSpeed=spd})
 		-- hover air
 		elseif (ud.canFly and ud.isHoveringAirUnit) then
 			--TODO acceleration??

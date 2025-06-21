@@ -78,6 +78,7 @@ local spDestroyFeature = Spring.DestroyFeature
 local spCreateUnit = Spring.CreateUnit
 local spSetFeatureResurrect = Spring.SetFeatureResurrect
 local spGetFeatureResources = Spring.GetFeatureResources
+local spSetGunshipMoveTypeData = Spring.MoveCtrl.SetGunshipMoveTypeData
 
 local random = math.random
 local floor = math.floor
@@ -413,6 +414,17 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 	if (ud.isGroundUnit) and (not ud.isBuilding) and (not ud.isImmobile) then
 		moveAnimationUnitIds[unitId] = true
 	end
+	
+	-- make hover air units move a bit while hovering on the spot
+	--TODO tried several drift values and it does nothing, apparently
+	--[[if (ud.canFly and ud.isHoveringAirUnit) then
+		local drift = 2
+		if ud.customParams and ud.customParams.drift then
+			drift = tonumber(ud.customParams.drift)
+		end
+		spSetGunshipMoveTypeData(unitId,{maxDrift=drift})
+	end
+	]]--
 	
 	if ud.name == "sphere_magnetar" then
 		magnetarUnitIds[unitId] = true
@@ -876,6 +888,23 @@ function gadget:AllowCommand(unitId, unitDefId, unitTeam, cmdId, cmdParams, cmdO
 			return false
 		end
 	end 
+
+	-- change aircraft's ability to land
+	--TODO as of 2025.04.04, this will let hoverAirTypes with airHoverFactor > 0 land, but then the thruster effects stop working properly 
+	--[[
+	if cmdId == CMD.IDLEMODE then
+		local ud = UnitDefs[unitDefId]
+		if (ud.canFly and ud.isHoveringAirUnit) then
+			if cmdParams and cmdParams[1] == 0 then
+				spSetGunshipMoveTypeData(unitId,{dontLand=true})	
+				--spCallCOBScript(unitId, "Activate", 0)
+				--spGiveOrderToUnit(unitId, CMD.ONOFF, { 1 }, { })
+			else
+				spSetGunshipMoveTypeData(unitId,{dontLand=false})
+			end
+		end
+	end 
+	]]--
 	return true
 end
 

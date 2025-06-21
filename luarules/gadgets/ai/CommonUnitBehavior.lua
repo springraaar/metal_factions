@@ -48,8 +48,8 @@ function CommonUnitBehavior:commonInit(ai, uId)
 	self.isFullyBuilt = false	
 	self.isBasePatrolling = false
 	self.pFType = getUnitPFType(self.unitDef)
-	if (pFType == nil and (not self.unitDef.speed > 0)) then
-		log("unit "..self.unitName.." has invalid PF type",self.ai) --DEBUG
+	if (self.pFType == nil and (not (self.unitDef.speed == 0))) then
+		log("unit "..self.unitName.." has invalid PF type : "..tostring(self.pFType),self.ai) --DEBUG
 	end
 	self.alongPathIdx = 0
 	self.canFly = (self.unitDef.canFly)
@@ -69,7 +69,11 @@ function CommonUnitBehavior:commonInit(ai, uId)
 	end
 	self.maxHp = self.unitDef.health
 	self.armorType = self.unitDef.armorType
-	self.isAssault = (self.maxHp * hpEvaluationFactorByArmorType[self.armorType] / self.unitCost > ASSAULT_HEALTH_COST_RATIO)
+	if (self.armorType and hpEvaluationFactorByArmorType[self.armorType] and self.unitCost > 0) then
+		self.isAssault = (self.maxHp * hpEvaluationFactorByArmorType[self.armorType] / self.unitCost > ASSAULT_HEALTH_COST_RATIO)
+	else
+		self.isAssault = false
+	end
 	--self.noEvadeUnit = (not self.isCommander) and self.isAssault
 	-- evade! always evade?
 	self.noEvadeUnit = false

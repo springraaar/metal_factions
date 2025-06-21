@@ -1,3 +1,66 @@
+2025/06/21 ------------------ NOTES v2.47 ----------------------
+
+--- Engine
+
+- updated the springRTS/Recoil engine compatibility recommendation to "2025.04.10"
+
+
+--- New units
+
+- GEAR "Maw" : L2 Heavy Flamer Aircraft
+- GEAR "Tidebreaker" : L1 Assault/Anti-Sub Ship	
+- SPHERE "Nebula" : L2 Heavy Skirmisher/Jammer Aircraft
+- CLAW "Cyclon" : L1 Ring Launcher Ship	
+- SPHERE "Skiff" split into two units, one with laser and one with depthcharge
+
+OPTIONAL
+- GEAR "Machinist" : L2 Amphibious Heavy Drone Controller Robot
+- CLAW "Cerberus" : L2 Fast Heavy Skirmisher/Artillery Robot
+
+
+--- Balance / Mechanics
+
+- Reduced power grid's energy scaling requirement by 20% and slightly increased power nodes' 3D model size
+
+- Slightly increased damage and reduced cost of most depth charge weapons even further
+- AVEN "Vanguard" got cheaper and no longer has depth charges so it's more cost-effective against land and air units
+- AVEN and GEAR cruisers have significantly higher dmg/s on the depth charges
+
+- Aircraft able to hover move around slightly while hovering on a spot
+- Fixed an issue where dash and upgrade-related speed modifiers were breaking the speed (too high or too low) of non-hovering aircraft
+- Drones gain experience 50% slower and give enemies experience 50% faster when damaged or destroyed
+- Construction drones default to normal build priority
+- AVEN "Thunder", GEAR "Shadow" and SPHERE "Manta" got slightly weaker but more affordable (burst damage/cost increased)
+- AVEN "Ace" now defaults to "land" instead of flying
+- GEAR "Whirlpool" got about twice the HP, less speed and adjusted cost
+- Aircraft with torpedoes fly a bit lower and have slightly reduced range and cost
+
+- Units with directional armor take a bit less damage from the weak direction (it's now a neutral trait if the unit's being hit from opposing directions)
+
+
+--- Sound/Visuals
+
+- Improved variety of sounds for air and ship units for the various factions 
+- Fixed dynamic orientation for rotated wind generators
+- Fixed distortion effect on AVEN "Bass" projectiles
+- Fixed flying sphere shields being vertically off-center
+- Slightly modified unit icons for better contrast between unit types (namely builder vs non-builder)
+
+
+--- UI
+
+- Number keys only focus camera on group on double-press (previously they'd focus the group if already fully selected)
+- Units with special radius-based abilities are no longer wrongly selected by ctrl+B (radius is now white, not green)
+- Resource spot highlight view automatically enables when issuing area-metal-extractor commands
+
+
+--- AI
+
+- Fixed issue with some CLAW Spinbots being assigned to the wrong group (led to some unit types idling at base or not moving where they should)
+- Fixed issues which could cause AI to break and never build their first factory, namely GEAR amphibious strategy starting on water positions
+- Lowered build site checks' resolution to improve performance
+
+
 2025/04/21 ------------------ NOTES v2.46 ----------------------
 
 --- New units

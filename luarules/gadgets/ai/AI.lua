@@ -36,7 +36,8 @@ function AI.create(id, mode, strategyStr, allyId, mapHandler)
 	obj.humanStrategyStr = nil
 	obj.humanDefenseDensityMult = nil
 	obj.upgradesBuiltByName = {}
-	
+	obj.extraConTowers = 0
+	obj.extraConTowerFrame = 0
 	
 	obj.commanderRetreatHealth = UNIT_RETREAT_HEALTH
 	obj.assaultRetreatHealth = ASSAULT_RETREAT_HEALTH
@@ -646,7 +647,6 @@ function AI:GameFrame(n)
 	if self.gameEnd == true then
 		return
 	end
-	
 	if (n > 100) and (not self.sentStartupHelpMsg) then
 		local strategiesStr = ""
 		for i,str in ipairs(availableStrategyIds) do

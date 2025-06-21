@@ -48,6 +48,8 @@ end
 --SYNCED CODE
 if (gadgetHandler:IsSyncedCode()) then
 
+mapHandler = nil
+
 ---------------------------------------------- engine callins
 
 function gadget:Initialize()
@@ -55,7 +57,7 @@ function gadget:Initialize()
 	local numberOfmFAITeams = 0
 	local teamList = spGetTeamList()
 	local allyIdsWithHumans = {}
-	local mapHandler = nil	
+		
 	for i=1,#teamList do
 		local id = teamList[i]
 		local _,_,_,isAI,side,allyId = spGetTeamInfo(id)
@@ -143,6 +145,12 @@ function gadget:GameFrame(n)
 			showAIWarningMessage = 0
 		end	
 	end
+	
+	-- DEBUG
+	--if n%3000 == 0 then
+	--	Spring.Echo("100s elapsed, buildSpotChecks="..mapHandler.debugBuildSpotChecks)
+	--	mapHandler.debugBuildSpotChecks = 0
+	--end
 	
 	-- for each AI...
     for _,thisAI in ipairs(mFAIs) do

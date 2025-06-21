@@ -20,7 +20,7 @@
 	objectName=gear_searcher.3do;
 	corpse=gear_searcher_dead;
 	buildPic=gear_searcher.png;
-	soundCategory=gear_SHIP;
+	soundCategory=gear_SHIPSML;
 
 	//************************************************************
 	//  Health/Cost/Size
@@ -61,7 +61,7 @@
 	//  Movement
 	//************
 	movementClass=smallboat;
-	turnRate=619;
+	turnRate=700;
 	acceleration=0.3;
 	brakeRate=0.03;
 	maxVelocity=2.7;
@@ -107,8 +107,8 @@
 		explosionGenerator0=custom:GLOWSML;
 		explosionGenerator1=custom:rocketflaresml;
 	}
-	buildCostEnergy=1542;//#AUTO#
-	buildCostMetal=308;//#AUTO#
-	buildTime=3676;//#AUTO#
-	mass=352;//#AUTO#
+	buildCostEnergy=1548;//#AUTO#
+	buildCostMetal=309;//#AUTO#
+	buildTime=3690;//#AUTO#
+	mass=353;//#AUTO#
 }

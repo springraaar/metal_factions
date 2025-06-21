@@ -19,12 +19,12 @@
 	unitName=gear_whirlpool;
 	objectName=gear_whirlpool.3do;
 	buildPic=gear_whirlpool.png;
-	soundCategory=gear_VTOL;
+	soundCategory=GEAR_AIRMED;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=950;
+	maxDamage=1750;
 	footprintx=4;
 	footprintz=4;
 
@@ -59,13 +59,13 @@
 	//************************************************************
 	//  Movement
 	//************
-	turnRate=345;
-	acceleration=0.175;
+	turnRate=445;
+	acceleration=0.3;
 	brakeRate=0.15;
-	maxVelocity=7.3;
+	maxVelocity=5.3;
 	maxSlope=10;
 	maxWaterDepth=3;
-	cruiseAlt=150;
+	cruiseAlt=120;
 	hoverAttack=1;
 	upright=1;
 
@@ -120,8 +120,8 @@
 	{
 		builtBy=gear_adv_aircraft_plant;
 	}
-	buildCostEnergy=6391;//#AUTO#
-	buildCostMetal=1278;//#AUTO#
-	buildTime=15232;//#AUTO#
-	mass=331;//#AUTO#
+	buildCostEnergy=6725;//#AUTO#
+	buildCostMetal=1345;//#AUTO#
+	buildTime=16029;//#AUTO#
+	mass=442;//#AUTO#
 }

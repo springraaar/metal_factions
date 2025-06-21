@@ -53,7 +53,6 @@
 	//***************
 	builder=0;
 	workerTime=0;
-	buildDistance=600;
 
 	//************************************************************
 	//  Abilities
@@ -97,6 +96,7 @@
 		builtBy=claw_l1builder,claw_l2builder;
 		manualCost=1;
 		tip=Regenerates 15 HP/s. Absorbs 3% cost of destroyed units within 600 radius, adding +6m/s and +30E/s for up to 50s (max 300m);
+		abilityRadius=600;
 	}
 	buildCostEnergy=3000;
 	buildCostMetal=600;

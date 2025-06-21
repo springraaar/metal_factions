@@ -264,7 +264,17 @@ function widget:Initialize()
 			WG.customHotkeys["settarget"] = "y"
 		end
 	end
-
+	-- workaround for default engine behavior where it focuses group when key is pressed if it was already fully selected
+	-- should consistently require double-press to focus
+	for i=0,9 do
+		local key=""..i
+		if (not WG.unboundDefKeys or not WG.unboundDefKeys[key]) then
+			unbindKey(key)
+			Spring.SendCommands("bind "..key..","..key.." group focus "..key)
+			Spring.SendCommands("bind "..key.." group select "..key)
+			Spring.SendCommands("bind Ctrl+"..key.." group set "..key)
+		end
+	end
 end
 
 

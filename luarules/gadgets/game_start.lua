@@ -39,7 +39,7 @@ local validSide = {
 local function GetStartUnit(teamID)
     local side = select(5, Spring.GetTeamInfo(teamID))
     if (not validSide[side]) then
-    	side = "random"
+    	side = "gear"
     end
 
 	-- check for ingame faction selection

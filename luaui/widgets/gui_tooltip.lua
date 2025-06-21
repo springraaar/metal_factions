@@ -54,6 +54,9 @@ local spIsGUIHidden = Spring.IsGUIHidden
 local spGetCurrentTooltip = Spring.GetCurrentTooltip
 local spGetDrawFrame = Spring.GetDrawFrame 
 local spGetActiveCommand = Spring.GetActiveCommand
+local spGetGroundHeight = Spring.GetGroundHeight
+local spGetSmoothMeshHeight = Spring.GetSmoothMeshHeight
+local spGetGroundNormal = Spring.GetGroundNormal
 
 local glBlending = gl.Blending
 local glColor = gl.Color
@@ -520,9 +523,9 @@ function generateNewTooltip()
 		if gx and gz then
 			newTooltip=newTooltip.."\255\255\255\255\n("..floor(gx+0.5)..","..floor(gz+0.5)..")"
 			
-			local h = Spring.GetGroundHeight(gx,gz)
-			local airMeshH = Spring.GetSmoothMeshHeight(gx,gz)
-			local _,_,_,slope = Spring.GetGroundNormal(gx,gz,true)  
+			local h = spGetGroundHeight(gx,gz)
+			local airMeshH = spGetSmoothMeshHeight(gx,gz)
+			local _,_,_,slope = spGetGroundNormal(gx,gz,true)  
 			newTooltip=newTooltip.."\n\nAltitude "..floor(h).."\n\nAir Mesh Altitude "..floor(airMeshH).."\n\nSlope "..slope
 		end
 		foundTooltipType="terrain"

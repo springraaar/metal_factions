@@ -19,12 +19,12 @@
 	unitName=gear_shadow;
 	objectName=gear_shadow.3do;
 	buildPic=gear_shadow.png;
-	soundCategory=gear_VTOL;
+	soundCategory=GEAR_AIRMED;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=1620;
+	maxDamage=1460;
 	footprintx=3;
 	footprintz=3;
 
@@ -62,10 +62,10 @@
 	turnRate=400;
 	acceleration=0.2;
 	brakeRate=0.15;
-	maxVelocity=5.8;
+	maxVelocity=5.6;
 	maxSlope=10;
 	
-	cruiseAlt=210;
+	cruiseAlt=195;
 	hoverAttack=1;
 	upright=1;
 
@@ -125,8 +125,8 @@
 	{
 	}
 
-	buildCostEnergy=3804;//#AUTO#
-	buildCostMetal=760;//#AUTO#
-	buildTime=9066;//#AUTO#
-	mass=329;//#AUTO#
+	buildCostEnergy=3411;//#AUTO#
+	buildCostMetal=682;//#AUTO#
+	buildTime=8129;//#AUTO#
+	mass=296;//#AUTO#
 }

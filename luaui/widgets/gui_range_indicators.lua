@@ -76,6 +76,7 @@ local torpedoAttackRangeColor = {1, 0.3, 0.3, 0.75}		--TODO not used atm
 local radarRangeColor = {0.3, 1, 0.3, 0.75}
 local sonarRangeColor = {0.3, 0.3, 1, 0.75}
 local deathBlastRangeColor = {0.5, 0, 0, 0.75}
+local abilityRangeColor = {1, 1, 1.0, 0.6}
 
 local LINE_WIDTH = 1.8 * scaleFactor
 local MINIMAP_LINE_WIDTH = 1.5 * scaleFactor
@@ -150,6 +151,9 @@ local function checkAddUnitRanges(ud,teamId,x,y,z)
 	end
 	if ud.sonarRadius and ud.sonarRadius > 0 then
 		addCircle(x,y,z,ud.sonarRadius*rangeMult,sonarRangeColor,true)
+	end
+	if ud.customParams and ud.customParams.abilityradius then
+		addCircle(x,y,z,tonumber(ud.customParams.abilityradius),abilityRangeColor,true)
 	end
 end
 

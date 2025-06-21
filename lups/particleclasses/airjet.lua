@@ -319,7 +319,7 @@ local GL_QUADS        = GL.QUADS
 local function BeginEndDrawList(self)
   local color = self.color
   local ev    = self.emitVector 
-  glMultiTexCoord(0,self.jitterWidthScale,self.jitterLengthScale,self.width/self.length,self.distortion)
+  glMultiTexCoord(0,self.jitterWidthScale,self.jitterLengthScale,self.length > 0 and self.width/self.length or 0,self.distortion)
   glMultiTexCoord(1,ev[1],ev[2],ev[3],1)
   glMultiTexCoord(2,color[1],color[2],color[3],self.animSpeed)
 
@@ -342,19 +342,19 @@ local function BeginEndDrawList(self)
 
   w = self.width
   l = w
-  glVertex(-l,-w/2,1,0)
-  glVertex(l/4,-w/2,1,1)
-  glVertex(l/4,w/2,0,1)
-  glVertex(-l,w/2,0,0)
+  glVertex(-l,-w,1,0)
+  glVertex(l/4,-w,1,1)
+  glVertex(l/4,w,0,1)
+  glVertex(-l,w,0,0)
 
   glMultiTexCoord(0,self.jitterWidthScale,self.jitterWidthScale,1,self.distortion)
   glMultiTexCoord(1,1,0,0,1)
   glMultiTexCoord(2,color[1],color[2],color[3],self.animSpeed)
 
-  glVertex(-l,-w/2,1,0)
-  glVertex(l/4,-w/2,1,1)
-  glVertex(l/4,w/2,0,1)
-  glVertex(-l,w/2,0,0)
+  glVertex(-l,-w,1,0)
+  glVertex(l/4,-w,1,1)
+  glVertex(l/4,w,0,1)
+  glVertex(-l,w,0,0)
 
 end
 
