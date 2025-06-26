@@ -739,6 +739,37 @@ function patrolAtkCenter(self)
 	return {action="wait", frames=120}
 end
 
+function patrolSafeZone(self)
+	local radius = MED_RADIUS
+	
+	local basePos = self.ai.unitHandler.basePos
+	
+	local p = newPosition()
+	p.y = 0
+		
+	if ( basePos.x > 0 and basePos.z > 0) then
+		p.x = basePos.x-radius/2+random(1,radius)
+		p.z = basePos.z-radius/2+random(1,radius)
+	else
+		-- do nothing
+		return SKIP_THIS_TASK
+	end
+
+	local f = spGetGameFrame()
+	
+	-- do not give the orders if already there
+	if (distance(self.pos,p) > BIG_RADIUS) then
+		spGiveOrderToUnit(self.unitId,CMD.MOVE,{p.x,p.y,p.z},EMPTY_TABLE)			
+		spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS),0,p.z - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS)},CMD.OPT_SHIFT)
+	else
+		spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x,p.y,p.z},EMPTY_TABLE)			
+		spGiveOrderToUnit(self.unitId,CMD.PATROL,{p.x - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS),0,p.z - BRIEF_AREA_PATROL_RADIUS/2 + random( 1, BRIEF_AREA_PATROL_RADIUS)},CMD.OPT_SHIFT)
+	end
+	
+	return {action="wait", frames=120}
+end
+
+
 function commanderRoam(self)
 	--local atkPos = self.ai.unitHandler.unitGroups[UNIT_GROUP_RAIDERS].centerPos
 	local basePos = self.ai.unitHandler.basePos
@@ -1928,6 +1959,10 @@ atkPatroller = {
 	{action = "wait", frames = 32}
 }
 
+safeZonePatroller = {
+	patrolSafeZone,
+	{action = "wait", frames = 32}
+}
 
 builderAtkPatroller = {
 	metalExtractorNearbyIfSafe,
@@ -3135,6 +3170,8 @@ sTaskQueues = {
 	aven_hovercraft_platform = stratPlant,
 	aven_adv_shipyard = stratPlant,
 	aven_upgrade_center = stratUpgradeCenter,
+	aven_flying_solar_collector = safeZonePatroller,
+	aven_mobile_fusion = safeZonePatroller,
 ------------------- GEAR
 	gear_commander = stratCommander,
 	gear_u1commander = stratCommander,

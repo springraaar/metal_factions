@@ -1,0 +1,161 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+piece  base, as1,as2,as3,as4,as5,as6,panel12,panel22,panel32,panel42,panel52,panel62,arm1, arm2, arm3, arm4, arm5,arm6,arm12,arm22,arm32,arm42,arm52,arm62, jp1,jp2,jp3,jp4, b2, base2, base3, base4;
+
+static-var  bMoving, isOpen;
+
+open(){
+	if (!isOpen) {
+		turn arm1 to z-axis <0> speed <80>;
+		turn arm2 to z-axis <0> speed <80>;
+		turn arm3 to z-axis <0> speed <80>;
+		turn arm4 to z-axis <0> speed <80>;
+		turn arm5 to z-axis <0> speed <80>;
+		turn arm6 to z-axis <0> speed <80>;
+
+		turn arm12 to z-axis <0> speed <80>;
+		turn arm22 to z-axis <0> speed <80>;
+		turn arm32 to z-axis <0> speed <80>;
+		turn arm42 to z-axis <0> speed <80>;
+		turn arm52 to z-axis <0> speed <80>;
+		turn arm62 to z-axis <0> speed <80>;
+	
+		wait-for-turn arm62 around z-axis;
+		isOpen = TRUE;
+	}
+}
+
+
+close() {
+	if (isOpen) {
+		isOpen = FALSE;
+
+		turn arm1 to z-axis <60> speed <80>;
+		turn arm2 to z-axis <60> speed <80>;
+		turn arm3 to z-axis <60> speed <80>;
+		turn arm4 to z-axis <60> speed <80>;
+		turn arm5 to z-axis <60> speed <80>;
+		turn arm6 to z-axis <60> speed <80>;
+
+		turn arm12 to z-axis <-130> speed <80>;
+		turn arm22 to z-axis <-130> speed <80>;
+		turn arm32 to z-axis <-130> speed <80>;
+		turn arm42 to z-axis <-130> speed <80>;
+		turn arm52 to z-axis <-130> speed <80>;
+		turn arm62 to z-axis <-130> speed <80>;
+	}	
+
+}
+
+
+SmokeUnit(healthpercent, sleeptime, smoketype) {
+	while( get BUILD_PERCENT_LEFT ) {
+		sleep 400;
+	}
+	while( TRUE ) {
+		healthpercent = get HEALTH;
+		if( healthpercent < 66 ) {
+			smoketype = 256 | 2;
+			if( Rand( 1, 66 ) < healthpercent ) {
+				smoketype = 256 | 1;
+			}
+			emit-sfx smoketype from base;
+		}
+		sleeptime = healthpercent * 50;
+		if( sleeptime < 200 ) {
+			sleeptime = 200;
+		}
+		sleep sleeptime;
+	}
+	return (0);
+}
+
+
+
+Create() {
+	turn jp1 to x-axis <-90.000000> now;
+	turn jp2 to x-axis <-90.000000> now;
+	turn jp3 to x-axis <-90.000000> now;
+	turn jp4 to x-axis <-90.000000> now;
+
+	turn arm1 to z-axis <60>  now;
+	turn arm2 to z-axis <60>  now;
+	turn arm3 to z-axis <60>  now;
+	turn arm4 to z-axis <60>  now;
+	turn arm5 to z-axis <60>  now;
+	turn arm6 to z-axis <60>  now;
+
+	turn arm12 to z-axis <-130>  now;
+	turn arm22 to z-axis <-130>  now;
+	turn arm32 to z-axis <-130>  now;
+	turn arm42 to z-axis <-130>  now;
+	turn arm52 to z-axis <-130>  now;
+	turn arm62 to z-axis <-130>  now;
+
+	turn as1 to y-axis <30.000000> now;
+	turn as2 to y-axis <90.000000> now;
+	turn as3 to y-axis <150.000000> now;
+	turn as4 to y-axis <210.000000> now;
+	turn as5 to y-axis <270.000000> now;
+	turn as6 to y-axis <330.000000> now;
+
+	bMoving = FALSE;
+	start-script SmokeUnit();
+	return (0);
+}
+
+
+Activate() {
+	call-script open();
+	return (0);
+}
+
+
+Deactivate() {
+	call-script close();
+	return (0);
+}
+
+StopMoving() {
+	bMoving = FALSE;
+	return (0);
+}
+
+StartMoving() {
+	bMoving = TRUE;
+	return (0);
+}
+
+
+Killed(severity, corpsetype) {
+	explode arm1 type SHATTER;
+	explode arm2 type SHATTER;
+	explode arm3 type SHATTER;
+	explode arm4 type SHATTER;
+	explode arm5 type SHATTER;
+	explode arm6 type SHATTER;
+
+	explode arm12 type SHATTER;
+	explode arm22 type SHATTER;
+	explode arm32 type SHATTER;
+	explode arm42 type SHATTER;
+	explode arm52 type SHATTER;
+	explode arm62 type SHATTER;
+
+	explode base2 type SHATTER;
+	explode base3 type SHATTER;
+	explode base4 type SHATTER;
+	
+	
+	explode panel12 type SHATTER;
+	explode panel22 type SHATTER;
+	explode panel32 type SHATTER;
+	explode panel42 type SHATTER;
+	explode panel52 type SHATTER;
+	explode panel62 type SHATTER;
+
+	return (1);
+}

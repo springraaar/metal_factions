@@ -50,6 +50,12 @@ local _iconTypes = {
 		distance=1,
 		size=REF_SIZE
 	},
+	airenergy={
+		bitmap="icons/airenergy.tga",
+		radiusadjust=false,
+		distance=1,
+		size=REF_SIZE
+	},
 	airassault={
 		bitmap="icons/airassault.tga",
 		radiusadjust=false,
@@ -526,6 +532,12 @@ local _iconTypes = {
 	},
 	amphib={
 		bitmap="icons/amphib.tga",
+		radiusadjust=false,
+		distance=1,
+		size=REF_SIZE
+	},
+	amphibenergy={
+		bitmap="icons/amphibenergy.tga",
 		radiusadjust=false,
 		distance=1,
 		size=REF_SIZE

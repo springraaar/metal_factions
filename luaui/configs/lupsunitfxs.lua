@@ -124,6 +124,12 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=15, piece="ljp", onActive=true,down=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=15, piece="rjp", onActive=true,down=true}}
   },
+  aven_flying_solar_collector = {
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=18, piece="jp1", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=18, piece="jp2", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=18, piece="jp3", onActive=true,down=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=6, length=18, piece="jp4", onActive=true,down=true}}
+  },
   aven_twister = {
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=30, piece="jp1", onActive=true}}
   },
