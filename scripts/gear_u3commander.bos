@@ -226,6 +226,8 @@ walk()
 {
 	var slowTurnSpd, slowTurnSpd2;
 
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+	
 	slowTurnSpd = mATurnSpd2 / 4;
 	slowTurnSpd2 = mATurnSpd2 / 12;
 	
@@ -389,17 +391,9 @@ MotionControl()
 		if( moving )
 		{
 			justMoved = TRUE;
-			if( aiming )
-			{
-				call-script walk();
-			}
-			if( !aiming )
-			{
-				call-script walk();
-			}
-			
+			call-script walk();
 		}
-		if( !moving )
+		else
 		{
 			if( justMoved )
 			{
@@ -439,7 +433,7 @@ Create()
 	bUnderwater = FALSE;
 	canAim1 = TRUE;
 	canAim2 = FALSE;
-	gun_1=[0];
+	gun_1=0;
 	bAiming = 0;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script initJump();
@@ -459,12 +453,6 @@ StartMoving()
 StopMoving()
 {
 	bMoving = FALSE;
-	return;
-}
-
-SweetSpot(piecenum)
-{
-	piecenum = torso;
 	return;
 }
 
@@ -534,25 +522,25 @@ FirePrimary()
 	emit-sfx 1024 + 2 from lflare;
 
 	// turn barrel to next position
-	if( gun_1 == [0] )
+	if( gun_1 == 0 )
 	{
 		sleep 500;
 		turn lbarrels to z-axis <120.000000> speed <1200.000000>;
-		gun_1 = [1];
+		gun_1 = 1;
 		return (0);
 	}
-	if( gun_1 == [1] )
+	if( gun_1 == 1 )
 	{
 		sleep 500;
 		turn lbarrels to z-axis <240.000000> speed <1200.000000>;
-		gun_1 = [2];
+		gun_1 = 2;
 		return (0);
 	}
-	if( gun_1 == [2] )
+	if( gun_1 == 2 )
 	{
 		sleep 500;
 		turn lbarrels to z-axis <360.000000> speed <1200.000000>;
-		gun_1 = [0];
+		gun_1 = 0;
 		return (0);
 	}
 

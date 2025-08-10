@@ -45,6 +45,8 @@ MotionSpeedControl(minSpeed, maxSpeed,currentSpeed)
 
 walk()
 {
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+
 	if( bMoving )
 	{
 		/* X */
@@ -163,35 +165,7 @@ walk()
 	}
 }
 
-
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from torso;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
-
-MotionControl(moving, aiming, justmoved)
+MotionControl(moving, aiming, justMoved)
 {
 	spin rotor around z-axis speed <150.000000>;
 	while( TRUE )
@@ -200,12 +174,12 @@ MotionControl(moving, aiming, justmoved)
 		aiming = bAiming;
 		if( moving )
 		{
-			justmoved = TRUE;
+			justMoved = TRUE;
 			call-script walk();
 		}
-		if( !moving )
+		else
 		{
-			if( justmoved )
+			if( justMoved )
 			{
 				turn leg1 to x-axis <0.000000> speed <360.000000>;
 				turn leg2 to x-axis <0.000000> speed <360.000000>;
@@ -230,7 +204,7 @@ MotionControl(moving, aiming, justmoved)
 				turn bleg4 to z-axis <0.000000> speed <160.000000>;
 				turn bleg3 to z-axis <0.000000> speed <160.000000>;
 				turn bleg to z-axis <0.000000> speed <160.000000>;
-				justmoved = FALSE;
+				justMoved = FALSE;
 			}
 			sleep 100;
 		}
@@ -246,7 +220,6 @@ Create()
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();
 	start-script MotionControl();
-	start-script SmokeUnit();
 }
 
 
@@ -353,12 +326,6 @@ AimFromSecondary(piecenum)
 {
 	piecenum = torso;
 }
-
-SweetSpot(piecenum)
-{
-	piecenum = torso;
-}
-
 
 QueryTertiary(piecenum)
 {

@@ -54,7 +54,7 @@ local spUseUnitResource = Spring.UseUnitResource
 local spGetUnitVelocity = Spring.GetUnitVelocity
 local spSetRelativeVelocity = Spring.MoveCtrl.SetRelativeVelocity
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
-local spGetCommandQueue = Spring.GetCommandQueue
+local spGetUnitCommands = Spring.GetUnitCommands
 local spGetGameFrame = Spring.GetGameFrame
 local spGetUnitIsActive = Spring.GetUnitIsActive
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
@@ -851,7 +851,7 @@ end
 
 -- workaround for units not receiving the speed boost until receiving new orders
 function enforceSpeedChange(unitId,speed)
-	local cmds = spGetCommandQueue(unitId, 8)
+	local cmds = spGetUnitCommands(unitId, 8)
 	if #cmds >= 1 then
 		for i,cmd in ipairs(cmds) do
 			if cmds[i] and cmds[i].id == CMD.SET_WANTED_MAX_SPEED then

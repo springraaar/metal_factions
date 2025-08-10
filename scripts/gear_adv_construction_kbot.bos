@@ -7,39 +7,12 @@
 
 piece  base, torso, left,right,t2, hips, leg1,bleg,leg2,bleg2,leg3,bleg3,leg4,bleg4,legsup1, legsup2, legsup3, legsup4, nano, beam, nano2, beam2, t3;
 
-static-var  bMoving,bAiming, restore_delay, nanopiece, justmoved, bBuilding;
+static-var  bMoving,bAiming, nanopiece, justMoved, bBuilding;
 
 // Signal definitions
 #define SIG_AIM				2
 
 
-
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
 
 BuildFX()
 {
@@ -55,6 +28,7 @@ BuildFX()
 	return (0);
 }
 
+//TODO walk cycle missing speed scaling
 walk()
 {
 	if( bMoving )
@@ -177,29 +151,29 @@ walk()
 
 Stop()
 {
-				turn leg1 to x-axis <0.000000> speed <360.000000>;
-				turn leg2 to x-axis <0.000000> speed <360.000000>;
-				turn leg3 to x-axis <0.000000> speed <360.000000>;
-				turn leg4 to x-axis <0.000000> speed <360.000000>;
-				turn leg1 to y-axis <45.000000> speed <360.000000>;
-				turn leg2 to y-axis <-45.000000> speed <360.000000>;
-				turn leg3 to y-axis <45.000000> speed <360.000000>;
-				turn leg4 to y-axis <-45.000000> speed <360.000000>;
-			
-				turn leg1 to z-axis <0.000000> speed <360.000000>;
-				turn leg2 to z-axis <0.000000> speed <360.000000>;
-				turn leg3 to z-axis <0.000000> speed <360.000000>;
-				turn leg4 to z-axis <0.000000> speed <360.000000>;
-				turn hips to z-axis <0.000000> speed <260.000000>;
-				turn hips to x-axis <0.000000> speed <360.000000>;
-	
-				move hips to x-axis [0.000000] speed [3.000000];
-				move hips to z-axis [0.000000] speed [3.000000];
+	turn leg1 to x-axis <0.000000> speed <360.000000>;
+	turn leg2 to x-axis <0.000000> speed <360.000000>;
+	turn leg3 to x-axis <0.000000> speed <360.000000>;
+	turn leg4 to x-axis <0.000000> speed <360.000000>;
+	turn leg1 to y-axis <45.000000> speed <360.000000>;
+	turn leg2 to y-axis <-45.000000> speed <360.000000>;
+	turn leg3 to y-axis <45.000000> speed <360.000000>;
+	turn leg4 to y-axis <-45.000000> speed <360.000000>;
 
-				turn bleg2 to z-axis <0.000000> speed <160.000000>;
-				turn bleg4 to z-axis <0.000000> speed <160.000000>;
-				turn bleg3 to z-axis <0.000000> speed <160.000000>;
-				turn bleg to z-axis <0.000000> speed <160.000000>;
+	turn leg1 to z-axis <0.000000> speed <360.000000>;
+	turn leg2 to z-axis <0.000000> speed <360.000000>;
+	turn leg3 to z-axis <0.000000> speed <360.000000>;
+	turn leg4 to z-axis <0.000000> speed <360.000000>;
+	turn hips to z-axis <0.000000> speed <260.000000>;
+	turn hips to x-axis <0.000000> speed <360.000000>;
+
+	move hips to x-axis [0.000000] speed [3.000000];
+	move hips to z-axis [0.000000] speed [3.000000];
+
+	turn bleg2 to z-axis <0.000000> speed <160.000000>;
+	turn bleg4 to z-axis <0.000000> speed <160.000000>;
+	turn bleg3 to z-axis <0.000000> speed <160.000000>;
+	turn bleg to z-axis <0.000000> speed <160.000000>;
 
 }
 
@@ -209,15 +183,15 @@ MotionControl()
 	{
 		if( bMoving )
 		{
-			justmoved=TRUE;
+			justMoved=TRUE;
 			call-script walk();
 		}
-		if( !bMoving )
+		else
 		{
-			if(justmoved)
+			if(justMoved)
 			{
 				call-script Stop();
-				justmoved=FALSE;
+				justMoved=FALSE;
 			}
 			sleep 100;
 		}
@@ -238,11 +212,10 @@ Create()
 {
 	
 	bMoving = FALSE;
-	justmoved = FALSE;
+	justMoved = FALSE;
 	bBuilding = FALSE;
-	nanopiece = [0];
+	nanopiece = 0;
 	start-script MotionControl();
-	start-script SmokeUnit();
 	start-script BuildFX();
 	
 }
@@ -257,18 +230,17 @@ RestoreAfterDelay()
 
 QueryNanoPiece(piecenum)
 {
-	if( nanopiece == [0])
+	if( nanopiece == 0)
 	{
 		piecenum = beam;
-		nanopiece = [1];
-		return 0;
+		nanopiece = 1;
 	}
-	if( nanopiece == [1])
+	else
 	{
 		piecenum = beam2;
-		nanopiece = [0];
-		return 0;
+		nanopiece = 0;
 	}
+	return (0);
 }
 
 

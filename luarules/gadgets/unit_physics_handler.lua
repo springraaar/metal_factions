@@ -40,7 +40,7 @@ local spSetUnitRotation = Spring.SetUnitRotation
 local spSetUnitPosition = Spring.SetUnitPosition
 local spSetUnitDirection = Spring.SetUnitDirection
 local spGiveOrderToUnit = Spring.GiveOrderToUnit
-local spGetCommandQueue = Spring.GetCommandQueue
+local spGetUnitCommands = Spring.GetUnitCommands
 local spGetGameFrame = Spring.GetGameFrame
 local spGetUnitIsActive = Spring.GetUnitIsActive
 local spGetUnitRulesParam = Spring.GetUnitRulesParam
@@ -97,6 +97,9 @@ local nanoExplosionCEG = "NANOFRAMEBLAST"
 local nanoExplosionSound = "Sounds/NECRNAN2.wav"
 local extraDeathEffectsCEG = "EXTRADEATHEFFECTS"
 
+local damagedSmoke1CEG = "DAMAGEDSMOKE1"
+local damagedSmoke2CEG = "DAMAGEDSMOKE2"
+
 local STUCK_CHECK_DELAY_FRAMES = 10
 local MOVING_CHECK_DELAY_FRAMES = 10
 local COLLISION_SPEED_THRESHOLD = 5
@@ -118,7 +121,7 @@ local comsatBeacons = {}
 local scoperBeacons = {}
 local comsatBeaconDefId = UnitDefNames["cs_beacon"].id
 local scoperBeaconDefId = UnitDefNames["scoper_beacon"].id
-
+		
 local noWreckDefIds = {}
 local dropWreckShardsDefIds = {}
 local nanoDestructionMightLeaveWreckDefIds = {}
@@ -152,6 +155,8 @@ local buildCEG = "buildprogress"
 
 GG.destructibleProjectilesDestroyed = {}
 
+local unitCreationFrame = {}
+
 
 local destructibleProjectileDefIds = {
 	[UnitDefNames["aven_premium_nuclear_rocket"].id] = true,
@@ -173,6 +178,9 @@ local destructibleProjectileDefIds = {
 }
 local destructibleProjectileUnitIds = {}
 local destructibleProjectileInitialPositionByUnitId = {}
+
+local noSmokeDefIds = {}
+local noPhysicsDefIds = {}
 
 -- these are used to warp back aircraft that flew off the map due to an engine bug
 local mapSizeX = Game.mapSizeX
@@ -399,6 +407,14 @@ function gadget:Initialize()
 			end 
 		end
 
+		if (cp and cp.nodmgsmoke == "1") then
+			noSmokeDefIds[defId] = true
+		end
+
+		if (cp and cp.nophysics == "1") then 
+			noPhysicsDefIds[defId] = true
+		end
+
 		if (not noWreckDefIds[defId]) and ud.canFly == true and (not destructibleProjectileDefIds[defId]) and (defId ~= comsatBeaconDefId) and (defId ~= scoperBeaconDefId) and (not isDrone(ud)) and tostring(ud.wreckName) == ''  then
 			dropWreckShardsDefIds[defId] = true
 		elseif (not isDrone(ud)) and (not isFeatureSpawner(ud)) and (tostring(ud.wreckName) ~= '') then
@@ -412,6 +428,7 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 	local ud = UnitDefs[unitDefId]
 	
 	if (ud.isGroundUnit) and (not ud.isBuilding) and (not ud.isImmobile) then
+		unitCreationFrame[unitId] = spGetGameFrame()
 		moveAnimationUnitIds[unitId] = true
 	end
 	
@@ -441,9 +458,14 @@ function gadget:UnitCreated(unitId, unitDefId, unitTeam)
 	if (unitDefId == scoperBeaconDefId ) then
 		scoperBeacons[unitId] = 1
 	end
+
 	
 	if destructibleProjectileDefIds[unitDefId] then
 		destructibleProjectileUnitIds[unitId] = true
+	end
+
+	if noPhysicsDefIds[unitDefId] then
+		return
 	end
 
 	-- x,y,z,vx,vy,vz,h,enableGC,rx,ry,rz,v
@@ -472,9 +494,23 @@ function gadget:GameFrame(n)
 			scoperBeacons[uId] = frames + 1
 		end
 	end
+	
+	local PHYSICS_X = 1
+	local PHYSICS_Y = 2
+	local PHYSICS_Z = 3
+	local PHYSICS_VX = 4
+	local PHYSICS_VY = 5
+	local PHYSICS_VZ = 6
+	local PHYSICS_H = 7
+	local PHYSICS_EGC = 8
+	local PHYSICS_RX = 9
+	local PHYSICS_RY = 10
+	local PHYSICS_RZ = 11
+	local PHYSICS_V = 12
+	
 	local doMoveAnimCheck = n%MOVING_CHECK_DELAY_FRAMES == 0
 	local doStuckCheck = false 		-- n%STUCK_CHECK_DELAY_FRAMES == 0
-	local ys,submergedDepth,fullySubmergedDepth
+	local ys,submergedDepth,fullySubmergedDepth,health,maxHealth,bp
 	-- check unit physics
 	for unitId,oldPhysics in pairs(unitPhysicsById) do
 		local defId = spGetUnitDefID(unitId)
@@ -489,14 +525,14 @@ function gadget:GameFrame(n)
 			if h > GROUND_COLLISION_H_THRESHOLD then
 				enableGC = true
 			else 
-				enableGC = oldPhysics[8]
+				enableGC = oldPhysics[PHYSICS_EGC]
 			end
 			
 			-- workaround for engine not calling StartMoving when it should in some situations
 			if (doMoveAnimCheck) then
-				if moveAnimationUnitIds[unitId] then
+				if moveAnimationUnitIds[unitId] and (n-unitCreationFrame[unitId] > 3) then
 					-- a sort of rotational speed
-					rv = abs(rx - oldPhysics[9]) + abs(ry - oldPhysics[10]) + abs(rz - oldPhysics[11])  
+					rv = abs(rx - oldPhysics[PHYSICS_RX]) + abs(ry - oldPhysics[PHYSICS_RY]) + abs(rz - oldPhysics[PHYSICS_RZ])  
 					
 					--Spring.Echo("vx="..vx.." vz="..vz.." rx="..rx.." ry="..ry.." rz="..rz.." rv="..rv)
 					if abs(vx) > 0.1 or abs(vz) > 0.1 or rv > 0.01 then
@@ -511,12 +547,12 @@ function gadget:GameFrame(n)
 
 			if (groundHeight > 0) then
 				-- check for high speed ground impact
-				if oldPhysics[7] > 0 and h <= 0 and enableGC == true then
+				if oldPhysics[PHYSICS_H] > 0 and h <= 0 and enableGC == true then
 					
 					-- only trigger this if moving fast
-					if abs(oldPhysics[5]) > COLLISION_SPEED_THRESHOLD then
-						local radius = spGetUnitRadius(unitId) * 2 * (1 + COLLISION_SPEED_MOD * abs(oldPhysics[5]))
-						--Spring.Echo("unit "..unitId.." ground collision at frame "..n.." radius="..radius.." speed="..abs(oldPhysics[5]))
+					if abs(oldPhysics[PHYSICS_VY]) > COLLISION_SPEED_THRESHOLD then
+						local radius = spGetUnitRadius(unitId) * 2 * (1 + COLLISION_SPEED_MOD * abs(oldPhysics[PHYSICS_VY]))
+						--Spring.Echo("unit "..unitId.." ground collision at frame "..n.." radius="..radius.." speed="..abs(oldPhysics[PHYSICS_VY]))
 						spSpawnCEG(groundCollisionCEG, x,groundHeight+5,z,0,1,0,radius,radius)
 						spPlaySoundFile(groundCollisionSound, math.min(1,math.max(0.2,radius/50)), x, y, z)
 						enableGC = false
@@ -524,11 +560,11 @@ function gadget:GameFrame(n)
 				end
 			else
 				-- check for high speed water impact
-				if (oldPhysics[2] > 0 and y <= 0) or (oldPhysics[2] <= 0 and y > 0 ) then
-					if abs(oldPhysics[5]) > COLLISION_SPEED_THRESHOLD then
-						local radius = spGetUnitRadius(unitId) * 2 * (1 + COLLISION_SPEED_MOD * abs(oldPhysics[5]))
+				if (oldPhysics[PHYSICS_Y] > 0 and y <= 0) or (oldPhysics[PHYSICS_Y] <= 0 and y > 0 ) then
+					if abs(oldPhysics[PHYSICS_VY]) > COLLISION_SPEED_THRESHOLD then
+						local radius = spGetUnitRadius(unitId) * 2 * (1 + COLLISION_SPEED_MOD * abs(oldPhysics[PHYSICS_VY]))
 						-- ascending collision is less intense
-						if oldPhysics[5] > 0 then
+						if oldPhysics[PHYSICS_VY] > 0 then
 							radius = radius * 0.66
 						end
 						
@@ -556,6 +592,30 @@ function gadget:GameFrame(n)
 				end
 			end
 			
+			-- emit damage-related smoke fx
+			if (n%12 == 0) then
+				if not noSmokeDefIds[defId] then 
+					health,maxHealth,_,_,bp = spGetUnitHealth(unitId)
+					if (bp and bp > 0.9) then
+						if (health < maxHealth) then
+							local hFraction = health/maxHealth
+							local radius = spGetUnitRadius(unitId)*0.9
+							local halfRadius = radius * 0.5
+							if hFraction < 0.8 then 
+								if random() > hFraction then
+									spSpawnCEG(damagedSmoke1CEG, x - halfRadius + random()*radius,y+random()*halfRadius,z - halfRadius + random()*radius,0,1,0,radius,radius)
+								end
+							end
+							if hFraction < 0.35 then 
+								if random() > hFraction then
+									spSpawnCEG(damagedSmoke2CEG, x - halfRadius + random()*radius,y+random()*halfRadius,z - halfRadius + random()*radius,0,1,0,radius,radius)
+								end
+							end
+						end
+					end
+				end
+			end
+			
 			-- update submerged status
 			 _, ys, _, _, _, _, _, _, _,_ = spGetUnitCollisionVolumeData(unitId)
 			submergedDepth = 0
@@ -573,18 +633,18 @@ function gadget:GameFrame(n)
 			--Spring.Echo("unitId="..unitId.." submergedDepth="..submergedDepth.." fullySubmergedDepth="..fullySubmergedDepth)
 			
 			-- update physics
-			oldPhysics[1] = x
-			oldPhysics[2] = y
-			oldPhysics[3] = z
-			oldPhysics[4] = vx
-			oldPhysics[5] = vy
-			oldPhysics[6] = vz
-			oldPhysics[7] = h
-			oldPhysics[8] = enableGC
-			oldPhysics[9] = rx
-			oldPhysics[10] = ry
-			oldPhysics[11] = rz
-			oldPhysics[12] = v
+			oldPhysics[PHYSICS_X] = x
+			oldPhysics[PHYSICS_Y] = y
+			oldPhysics[PHYSICS_Z] = z
+			oldPhysics[PHYSICS_VX] = vx
+			oldPhysics[PHYSICS_VY] = vy
+			oldPhysics[PHYSICS_VZ] = vz
+			oldPhysics[PHYSICS_H] = h
+			oldPhysics[PHYSICS_EGC] = enableGC
+			oldPhysics[PHYSICS_RX] = rx
+			oldPhysics[PHYSICS_RY] = ry
+			oldPhysics[PHYSICS_RZ] = rz
+			oldPhysics[PHYSICS_V] = v
 		end
 	end
 
@@ -604,9 +664,9 @@ function gadget:GameFrame(n)
 					
 					-- show effects					
 					size = sx*0.25*(1+2*progress)
-					x = oldPhysics[1]
-					y = oldPhysics[2]
-					z = oldPhysics[3]
+					x = oldPhysics[PHYSICS_X]
+					y = oldPhysics[PHYSICS_Y]
+					z = oldPhysics[PHYSICS_Z]
 
 					if arInfo[4] % 3 == 0 then
 						spSpawnCEG( buildCEG, x -size*0.5 +random()*size, y+random()*size+3, z-size*0.5+random()*size,0,1,0,1,size*0.15)
@@ -647,16 +707,16 @@ function gadget:GameFrame(n)
 		if h > GROUND_COLLISION_H_THRESHOLD then
 			enableGC = true
 		else 
-			enableGC = oldPhysics[8]
+			enableGC = oldPhysics[PHYSICS_EGC]
 		end
 		
 		if (groundHeight > 0) then
 			-- check for high speed ground impact
-			if oldPhysics[7] > 0 and h <= 0 and enableGC == true then
+			if oldPhysics[PHYSICS_H] > 0 and h <= 0 and enableGC == true then
 				
 				-- only trigger this if moving fast
-				if abs(oldPhysics[5]) > COLLISION_SPEED_THRESHOLD then
-					local radius = spGetFeatureRadius(featureId) * 2 * (1 + COLLISION_SPEED_MOD * abs(oldPhysics[5]))
+				if abs(oldPhysics[PHYSICS_VY]) > COLLISION_SPEED_THRESHOLD then
+					local radius = spGetFeatureRadius(featureId) * 2 * (1 + COLLISION_SPEED_MOD * abs(oldPhysics[PHYSICS_VY]))
 					--Spring.Echo("feature "..featureId.." ground collision at frame "..n.." radius="..radius)
 					spSpawnCEG(groundCollisionCEG, x,groundHeight+5,z,0,1,0,radius,radius)
 					spPlaySoundFile(groundCollisionSound, math.min(1,math.max(0.2,radius/50)), x, y, z)
@@ -665,9 +725,9 @@ function gadget:GameFrame(n)
 			end
 		else
 			-- check for high speed water impact
-			if oldPhysics[2] > 0 and y <= 0 then
-				if abs(oldPhysics[5]) > COLLISION_SPEED_THRESHOLD then
-					local radius = spGetFeatureRadius(featureId) * 2 * (1 + COLLISION_SPEED_MOD * abs(oldPhysics[5]))
+			if oldPhysics[PHYSICS_Y] > 0 and y <= 0 then
+				if abs(oldPhysics[PHYSICS_VY]) > COLLISION_SPEED_THRESHOLD then
+					local radius = spGetFeatureRadius(featureId) * 2 * (1 + COLLISION_SPEED_MOD * abs(oldPhysics[PHYSICS_VY]))
 					--Spring.Echo("feature "..featureId.." water collision at frame "..n.." radius="..radius)
 					spSpawnCEG(waterCollisionCEG, x,3,z,0,1,0,radius,radius)
 					spPlaySoundFile(waterCollisionSound, math.min(1,math.max(0.2,radius/50)), x, y, z)
@@ -677,14 +737,14 @@ function gadget:GameFrame(n)
 		end
 		
 		-- update physics
-		oldPhysics[1] = x
-		oldPhysics[2] = y
-		oldPhysics[3] = z
-		oldPhysics[4] = vx
-		oldPhysics[5] = vy
-		oldPhysics[6] = vz
-		oldPhysics[7] = h
-		oldPhysics[8] = enableGC
+		oldPhysics[PHYSICS_X] = x
+		oldPhysics[PHYSICS_Y] = y
+		oldPhysics[PHYSICS_Z] = z
+		oldPhysics[PHYSICS_VX] = vx
+		oldPhysics[PHYSICS_VY] = vy
+		oldPhysics[PHYSICS_VZ] = vz
+		oldPhysics[PHYSICS_H] = h
+		oldPhysics[PHYSICS_EGC] = enableGC
 	end
 end
 
@@ -692,6 +752,10 @@ end
 function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDefId, attackerTeamId)
 	-- remove entries from tables when unit is destroyed
 	if (moveAnimationUnitIds[unitId]) then
+		if unitCreationFrame[unitId] then
+			unitCreationFrame[unitId] = nil
+		end
+
 		moveAnimationUnitIds[unitId] = nil
 	end
 

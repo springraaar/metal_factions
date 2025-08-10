@@ -60,6 +60,8 @@ walk()
 {
 	var slowTurnSpd, slowTurnSpd2;
 
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+
 	slowTurnSpd = mATurnSpd2 / 4;
 	slowTurnSpd2 = mATurnSpd2 / 12;
 	
@@ -200,36 +202,9 @@ walk()
 }
 
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from torso;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
-
 MotionControl(moving, aiming, justmoved)
 {
-	justmoved = TRUE;
+	justMoved = TRUE;
 	while( TRUE )
 	{
 		moving = bMoving;
@@ -237,11 +212,11 @@ MotionControl(moving, aiming, justmoved)
 		if( moving )
 		{
 			call-script walk();
-			justmoved = TRUE;
+			justMoved = TRUE;
 		}
 		else
 		{
-			if( justmoved )
+			if( justMoved )
 			{
 				move r_thigh to y-axis [0.000000] speed [10.000000];
 				move l_thigh to y-axis [0.000000] speed [10.000000];
@@ -256,7 +231,7 @@ MotionControl(moving, aiming, justmoved)
 				{
 					turn torso to y-axis <0.000000> speed <90.016484>;
 				}
-				justmoved = FALSE;
+				justMoved = FALSE;
 			}
 			sleep 100;
 		}
@@ -286,7 +261,6 @@ Create()
 	bAiming = FALSE;
 	start-script aimTracker();
 	start-script MotionControl();
-	start-script SmokeUnit();
 	start-script MotionSpeedControl();
 }
 
@@ -355,19 +329,8 @@ AimPrimary(heading, pitch)
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		explode c3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-		explode c4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-		explode c2 type SHATTER | BITMAP5;
-		explode left type SHATTER | BITMAP5;
-		explode right type SHATTER | BITMAP5;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
 		explode c3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
 		explode c4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
 		explode c2 type SHATTER | BITMAP5;
@@ -377,23 +340,8 @@ Killed(severity, corpsetype)
 		explode canister type SHATTER | BITMAP5;		
 		explode rfoot type SHATTER | BITMAP5;
 		explode lfoot type SHATTER | BITMAP5;
-		return (0);
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		explode c3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-		explode c4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-		explode c2 type SHATTER | BITMAP5;
-		explode left type SHATTER | BITMAP5;
-		explode right type SHATTER | BITMAP5;
-		explode barrel type SHATTER | BITMAP5;
-		explode canister type SHATTER | BITMAP5;		
-		explode rfoot type SHATTER | BITMAP5;
-		explode lfoot type SHATTER | BITMAP5;
-		return (0);
-	}
-	corpsetype = 3;
 	explode c3 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
 	explode c4 type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
 	explode c2 type SHATTER | BITMAP5;
@@ -403,4 +351,5 @@ Killed(severity, corpsetype)
 	explode canister type SHATTER | BITMAP5;		
 	explode rfoot type SHATTER | BITMAP5;
 	explode lfoot type SHATTER | BITMAP5;
+	return(2);
 }

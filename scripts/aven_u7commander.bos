@@ -256,6 +256,8 @@ walk()
 {
 	var slowTurnSpd, slowTurnSpd2;
 
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+
 	slowTurnSpd = mATurnSpd2 / 2;
 	slowTurnSpd2 = mATurnSpd2 / 6;
 	
@@ -417,6 +419,8 @@ walk()
 
 run()
 {
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+
 	if (isJumping) {
 		move pelvis to y-axis [0.000000] speed [35.000000];
 		turn pelvis to x-axis <0.000000> speed <30.000000>;
@@ -600,11 +604,10 @@ MotionControl()
 		if( moving )
 		{
 			justMoved = TRUE;
-			if (!shouldRun) {
-				call-script walk();
-			}
 			if (shouldRun) {
 				call-script run();
+			} else {
+				call-script walk();
 			}
 		}
 		if( !moving )

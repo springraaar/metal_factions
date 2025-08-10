@@ -1170,17 +1170,23 @@ function createAllyTeamGraph(allyId,data)
 
 	--gets vertex's from array and plots them
 	local drawValueLine = function()
-		for i = 1, #unitValueGraphArray do
-			local ordinate = unitValueGraphArray[i]
-			gl.Vertex((i - 1)/(#unitValueGraphArray - 1), ordinate/uvMax)
+		local points = #unitValueGraphArray
+		if points > 1 then
+			for i = 1, points do
+				local ordinate = unitValueGraphArray[i]
+				gl.Vertex((i - 1)/(points - 1), ordinate/uvMax)
+			end
 		end
 	end
 	
 	
 	local drawIncomeLine = function()
-		for i = 1, #resourceIncomeGraphArray do
-			local ordinate = resourceIncomeGraphArray[i]
-			gl.Vertex((i - 1)/(#resourceIncomeGraphArray - 1), ordinate/riMax)
+		local points = #resourceIncomeGraphArray
+		if points > 1 then
+			for i = 1, points do
+				local ordinate = resourceIncomeGraphArray[i]
+				gl.Vertex((i - 1)/(points - 1), ordinate/riMax)
+			end
 		end
 	end
 	

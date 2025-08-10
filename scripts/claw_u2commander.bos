@@ -11,7 +11,7 @@
 
 piece  torso, luparm, larm, lgun, lnanospray, lmispad,lflare1,lflare2, lflare3, l1,l2,l3, ruparm, rarm, rgun, rnanospray, rmispad, rflare1, rflare2, rflare3, r1,r2,r3, pelvis, head, backhead, backhead2, lthigh, rthigh, rleg, lleg, lfoot, rfoot, ltorpgun, ltorpflare,rtorpgun,rtorpflare, lknee,rknee, lnano, rnano,jumpback,jbl,jbr,jb,lbjetpt,rbjetpt,jumpjets,lfjet,rfjet,lfjetpt,rfjetpt;
 
-static-var  bMoving, bBuilding, bAiming, Static_Var_5, Static_Var_6, bDgunning, bUnderwater, canAim1, canAim2, firept1, firept2, firept3, nanopt1, mASpdFactor, moveSpd1, turnSpd1, turnSpd2, turnSpd3;
+static-var  bMoving, bBuilding, bAiming, bDgunning, bUnderwater, canAim1, canAim2, firept1, firept2, nanopt1, mASpdFactor, moveSpd1, turnSpd1, turnSpd2, turnSpd3;
 
 #include "aimhelper1.h"
 
@@ -96,40 +96,6 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 		sleep 60;
 	}
 }
-
-Sing()
-{
-	Static_Var_6 = Rand( 0, 9 );
-	if( Static_Var_6 == 0 )
-	{
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		return (0);
-	}
-	if( Static_Var_6 == 1 )
-	{
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		return (0);
-	}
-	if( Static_Var_6 > 1 AND Static_Var_6 < 10 )
-	{
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		return (0);
-	}
-}
-
-
 
 
 // shows nano effect while building
@@ -244,6 +210,8 @@ checkUnderwater()
 
 walk()
 {
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+
 	if (isJumping) {
 		turn pelvis to x-axis <0.000000> speed <200.000000>;
 		move pelvis to y-axis [0.000000] speed [20.500000];
@@ -495,7 +463,7 @@ MotionControl()
 			justMoved = TRUE;
 			call-script walk();
 		}
-		if( !moving )
+		else
 		{
 			if( justMoved )
 			{
@@ -515,10 +483,6 @@ MotionControl()
 
 Create()
 {
-	//hide rflare;
-	//hide lflare;
-	//hide nanospray;
-	//hide torpedo;
 	hide ltorpgun;
 	hide rtorpgun;
 	bMoving = FALSE;
@@ -528,10 +492,9 @@ Create()
 	canAim1 = TRUE;
 	canAim2 = FALSE;
 	bAiming = FALSE;
-	firept1 = [0];
-	firept2 = [0];
-	firept3 = [0];
-	nanopt1 = [0];
+	firept1 = 0;
+	firept2 = 0;
+	nanopt1 = 0;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script initJump();
 	start-script MotionSpeedControl();
@@ -553,25 +516,17 @@ StopMoving()
 	return;
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = torso;
-	return;
-}
-
 QueryNanoPiece(piecenum)
 {
-	if(nanopt1 == [0])
+	if(nanopt1 == 0)
 	{
 		piecenum = lnanospray;
-		nanopt1 = [1];
-		return;
+		nanopt1 = 1;
 	}
-	if(nanopt1 == [1])
+	else
 	{
 		piecenum = rnanospray;
-		nanopt1 = [0];
-		return;
+		nanopt1 = 0;
 	}
 }
 
@@ -606,40 +561,40 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if(firept1 == [0])
+	if(firept1 == 0)
 	{
 		piecenum = lflare1;
-		firept1=[1];
+		firept1=1;
 		return;
 	}
-	if(firept1 == [1])
+	if(firept1 == 1)
 	{
 		piecenum = rflare1;
-		firept1=[2];
+		firept1=2;
 		return;
 	}
-	if(firept1 == [2])
+	if(firept1 == 2)
 	{
 		piecenum = lflare2;
-		firept1=[3];
+		firept1=3;
 		return;
 	}
-	if(firept1 == [3])
+	if(firept1 == 3)
 	{
 		piecenum = rflare2;
-		firept1=[4];
+		firept1=4;
 		return;
 	}	
-	if(firept1 == [4])
+	if(firept1 == 4)
 	{
 		piecenum = lflare3;
-		firept1=[5];
+		firept1=5;
 		return;
 	}
-	if(firept1 == [5])
+	if(firept1 == 5)
 	{
 		piecenum = rflare3;
-		firept1=[0];
+		firept1=0;
 		return;
 	}	
 }
@@ -679,20 +634,20 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	if( firept1==[0] || firept1==[1] )
+	if( firept1==0 || firept1==1 )
 	{
 		emit-sfx 1024 + 0 from lflare1;
 		emit-sfx 1024 + 0 from rflare1;
 		return;
 	}
-	if( firept1==[2] || firept1==[3])
+	if( firept1==2 || firept1==3)
 	{
 		
 		emit-sfx 1024 + 0 from lflare2;
 		emit-sfx 1024 + 0 from rflare2;
 		return;
 	}
-	if( firept1==[4] || firept1==[5])
+	if( firept1==4 || firept1==5)
 	{
 		
 		emit-sfx 1024 + 0 from lflare3;
@@ -710,15 +665,13 @@ AimFromSecondary(piecenum)
 
 QuerySecondary(piecenum)
 {
-	if(firept2 == [0])
+	if(firept2 == 0)
 	{
 		piecenum = ltorpflare;
-		return;
 	}
-	if(firept2 == [1])
+	else
 	{
 		piecenum = rtorpflare;
-		return;	
 	}
 }
 
@@ -757,126 +710,16 @@ AimSecondary(heading, pitch)
 
 FireSecondary()
 {
-	if(firept2 == [0])
+	if(firept2 == 0)
 	{
 		sleep 10;
-		firept2 = [1];
-		return;
+		firept2 = 1;
 	}
-	if(firept2 == [1])
+	else
 	{
 		sleep 10;
-		firept2 = [0];
-		return;	
+		firept2 = 0;
 	}
-}
-
-AimFromTertiary(piecenum)
-{
-	piecenum = torso;
-	return;
-}
-
-QueryTertiary(piecenum)
-{
-	if(firept3 == [0])
-	{
-		piecenum = lflare1;
-		firept3 = [1];
-		return;
-	}
-	if(firept3 == [1])
-	{
-		piecenum = rflare1;
-		firept3 = [2];
-		return;
-	}
-	if(firept3 == [2])
-	{
-		piecenum = lflare2;
-		firept3 = [3];
-		return;
-	}
-	if(firept3 == [3])
-	{
-		piecenum = rflare2;
-		firept3 = [4];
-		return;
-	}
-	if(firept3 == [4])
-	{
-		piecenum = lflare3;
-		firept3 = [5];
-		return;
-	}
-	if(firept3 == [5])
-	{
-		piecenum = rflare3;
-		firept3 = [0];
-		return;
-	}
-
-}
-
-AimTertiary(heading, pitch)
-{
-	signal SIG_AIM;
-	set-signal-mask SIG_AIM;
-	bAiming = TRUE;
-	bDgunning = TRUE;
-
-	turn torso to y-axis heading speed <300.093407>;
-	turn ruparm to x-axis <0.000000> - pitch speed <245.000000>;
-	turn luparm to x-axis <0.000000> - pitch speed <245.000000>;
-	turn rgun to x-axis <0.000000> speed <310.000000>;
-	turn lgun to x-axis <0.000000> speed <310.000000>;
-	turn larm to y-axis <0.000000> speed <300.000000>;
-	turn rarm to y-axis <0.000000> speed <300.000000>;
-	wait-for-turn larm around y-axis;
-	wait-for-turn rarm around y-axis;
-	wait-for-turn torso around y-axis;
-	wait-for-turn ruparm around x-axis;
-	wait-for-turn luparm around x-axis;
-	wait-for-turn rgun around x-axis;
-	wait-for-turn lgun around x-axis;
-	start-script RestorePosition();
-
-	return (1);
-}
-
-Shot3(zero)
-{
-	if( firept3==[0])
-	{
-		emit-sfx 1024 + 2 from lflare1;
-		return;
-	}
-	if( firept3==[1])
-	{
-		emit-sfx 1024 + 2 from rflare1;
-		return;
-	}
-	if( firept3==[2])
-	{
-		emit-sfx 1024 + 2 from lflare2;
-		return;
-	}
-	if( firept3==[3])
-	{
-		emit-sfx 1024 + 2 from rflare2;
-		return;
-	}
-	if( firept3==[4])
-	{
-		emit-sfx 1024 + 2 from lflare3;
-		return;
-	}
-	if( firept3==[5])
-	{
-		emit-sfx 1024 + 2 from rflare3;
-		return;
-	}
-
 }
 
 StartBuilding(heading, pitch)

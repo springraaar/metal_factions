@@ -11,7 +11,7 @@
 piece  groundx2,torso, firept, hips, l_thigh, r_thigh,head, h2, luparm, ruparm, rarm, larm, rleg,
        rfoot, lleg, lfoot, lgun, l2, r2, rgun, barrel, fshield, bshield, lshield, tbase, lbase,rbase;
 
-static-var  bMoving, bAiming, Static_Var_4, bDefending,mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
+static-var  bMoving, bAiming, bDefending,mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
 
 #include "aimhelper1.h"
 
@@ -111,10 +111,11 @@ walk()
 {
 	var slowTurnSpd, slowTurnSpd2;
 
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+
 	slowTurnSpd = mATurnSpd2 / 2;
 	slowTurnSpd2 = mATurnSpd2 / 6;
-	
-	
+
 	// back contact point : right foot behind, left foot forward
 	if( bMoving )
 	{
@@ -246,36 +247,9 @@ walk()
 }
 
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
+MotionControl(moving, aiming, justMoved)
 {
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from torso;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
-
-MotionControl(moving, aiming, justmoved)
-{
-	justmoved = TRUE;
+	justMoved = TRUE;
 	while( TRUE )
 	{
 		moving = bMoving;
@@ -284,11 +258,11 @@ MotionControl(moving, aiming, justmoved)
 		{
 			call-script defend(FALSE);
 			call-script walk();
-			justmoved = TRUE;
+			justMoved = TRUE;
 		}
-		if( !moving )
+		else
 		{
-			if( justmoved )
+			if( justMoved )
 			{
 				turn head to y-axis <0.000000> speed <157.313187>;
 				turn r_thigh to x-axis <0.000000> speed <200.038462>;
@@ -309,7 +283,7 @@ MotionControl(moving, aiming, justmoved)
 					turn larm to x-axis <0.000000> speed <200.038462>;
 					turn luparm to x-axis <0.000000> speed <200.038462>;
 				}
-				justmoved = FALSE;
+				justMoved = FALSE;
 			}
 			call-script defend(TRUE);
 			sleep 100;
@@ -322,13 +296,11 @@ Create()
 	bMoving = FALSE;
 	bAiming = FALSE;
 	bDefending = FALSE;
-	Static_Var_4 = 0;
 	turn lbase to x-axis <-20.000000> speed <100.000000>;
 	turn rbase to x-axis <-20.000000> speed <100.000000>;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();	
 	start-script MotionControl();
-	start-script SmokeUnit();
 }
 
 StartMoving()
@@ -339,11 +311,6 @@ StartMoving()
 StopMoving()
 {
 	bMoving = FALSE;
-}
-
-SweetSpot(piecenum)
-{
-	piecenum = torso;
 }
 
 RestoreAfterDelay()
@@ -393,7 +360,6 @@ AimPrimary(heading, pitch)
 	start-script RestoreAfterDelay();
 	return (1);
 }
-
 
 
 Killed(severity, corpsetype)

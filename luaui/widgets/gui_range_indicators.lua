@@ -100,15 +100,17 @@ VFS.Include("lualibs/circles.lua")
 
 
 local function getRangeType(wd)
-	if wd.heightMod and wd.heightMod == 1 then
-		return RANGE_TYPE_SPH
-	elseif wd.heightMod and wd.heightMod == 0.5 then
-		if wd.cylinderTargeting == 1 then
-			return RANGE_TYPE_CYL
-		elseif wd.heightBoostFactor > 0 then
-			return RANGE_TYPE_EHB
-		else
-			return RANGE_TYPE_ELL
+	if wd.cylinderTargeting > 0 then
+		return RANGE_TYPE_CYL
+	else	
+		if wd.heightMod and wd.heightMod == 1 then
+			return RANGE_TYPE_SPH
+		elseif wd.heightMod and wd.heightMod == 0.5 then
+			if wd.heightBoostFactor > 0 then
+				return RANGE_TYPE_EHB
+			else
+				return RANGE_TYPE_ELL
+			end
 		end
 	end
 	return nil

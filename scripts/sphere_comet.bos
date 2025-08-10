@@ -92,19 +92,12 @@ Create()
 {
 
 	energyBoostedMovement = FALSE;
-	firept1 = [0];
+	firept1 = 0;
 	bMoving=FALSE;
 	bAiming=FALSE;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
 	start-script Effect();
-}
-
-
-
-SweetSpot(piecenum)
-{
-	piecenum = sphere;
 }
 
 RestoreAfterDelayWeapon()
@@ -126,17 +119,17 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if(firept1 == [0])
+	if(firept1 == 0)
 	{
 		piecenum = flare1;
 		return;
 	}
-	if(firept1 == [1])
+	if(firept1 == 1)
 	{
 		piecenum = flare2;
 		return;
 	}
-	if(firept1 == [2])
+	if(firept1 == 2)
 	{
 		piecenum = flare3;
 		return;
@@ -146,32 +139,32 @@ QueryPrimary(piecenum)
 
 FirePrimary()
 {
-	if( firept1==[0] )
+	if( firept1==0 )
 	{
 		emit-sfx 1024 + 0 from flare1;
 		//move mis1 to z-axis [-5.000000] now;
 		sleep 100;
-		firept1=[1];
+		firept1=1;
 		sleep 1000;
 		//move mis1 to z-axis [0.000000] speed [6.000000];
 		return (0);
 	}
-	if( firept1==[1] )
+	if( firept1==1 )
 	{
 		emit-sfx 1024 + 0 from flare2;
 		//move mis2 to z-axis [-5.000000] now;
 		sleep 100;
-		firept1=[2];
+		firept1=2;
 		sleep 1000;
 		//move mis2 to z-axis [0.000000] speed [6.000000];
 		return (0);
 	}
-	if( firept1==[2] )
+	if( firept1==2 )
 	{
 		emit-sfx 1024 + 0 from flare3;
 		//move mis3 to z-axis [-5.000000] now;
 		sleep 100;
-		firept1=[0];
+		firept1=0;
 		sleep 1000;
 		//move mis3 to z-axis [0.000000] speed [6.000000];
 		return (0);

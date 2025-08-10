@@ -7,40 +7,13 @@
 
 piece  GP, base, legs,lfrontleg, lmidleg,rmidleg, rfrontleg,lbackleg,rbackleg, rmid2, rback2, lback2,rfront2,lmid2,lfront2,body,sphere,sphere2, turret,nano1,nano2,beam1,beam2;
 
-static-var  bMoving,bAiming, restore_delay, nanopiece, justmoved, bBuilding;
+static-var  bMoving,bAiming, nanopiece, justMoved, bBuilding;
 
 
 // Signal definitions
 #define SIG_AIM				2
 
 
-
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
 
 
 BuildFX()
@@ -57,6 +30,7 @@ BuildFX()
 	return (0);
 }
 
+//TODO walk cycle missing speed scaling
 walk()
 {
 	if( bMoving )
@@ -189,15 +163,15 @@ MotionControl()
 	{
 		if( bMoving )
 		{
-			justmoved=TRUE;
+			justMoved=TRUE;
 			call-script walk();
 		}
-		if( !bMoving )
+		else
 		{
-			if(justmoved)
+			if(justMoved)
 			{
 				call-script Stop();
-				justmoved=FALSE;
+				justMoved=FALSE;
 			}
 			sleep 100;
 		}
@@ -218,11 +192,10 @@ Create()
 {
 	
 	bMoving = FALSE;
-	justmoved = FALSE;
-	nanopiece=111;
+	justMoved = FALSE;
+	nanopiece=0;
 	bBuilding = FALSE;
 	start-script MotionControl();
-	start-script SmokeUnit();
 	start-script BuildFX();
 }
 
@@ -236,17 +209,15 @@ RestoreAfterDelay()
 
 QueryNanoPiece(piecenum)
 {
-	if( nanopiece == 111 )
+	if( nanopiece == 0 )
 	{
 		piecenum = beam1;
-		nanopiece = 222;
-		return (0);
+		nanopiece = 1;
 	}
-	if( nanopiece == 222 )
+	else
 	{
 		piecenum = beam2;
-		nanopiece = 111;
-		return (0);
+		nanopiece = 0;
 	}
 }
 

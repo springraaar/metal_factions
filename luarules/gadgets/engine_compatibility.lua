@@ -13,7 +13,7 @@ end
 
 local showWarningMessage = 0
 local currentEngineVersion = "???"
-local recommendedEngineVersion = "2025.04.10"
+local recommendedEngineVersion = "2025.06.04"
 
 --UNSYNCED CODE
 if not (gadgetHandler:IsSyncedCode()) then

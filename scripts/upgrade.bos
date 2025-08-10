@@ -6,18 +6,8 @@
 
 piece base;
 
-
-
-
-Create()
-{
-
-}
-
-
-
 Killed(severity, corpsetype)
 {
-	corpsetype = 3;
+	return (0);
 }
 

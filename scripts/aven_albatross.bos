@@ -5,19 +5,10 @@
 
 piece  base, rwing, lwing, tail, jet, weapon, weapon21, weapon22,barrel1, flare1,flare21, flare22, base2, base3, base4,base5, lwing2, rwing2,jp1;
 
-static-var  statechg_DesiredState, statechg_StateChanging, Static_Var_5, isFlying, gun_2;
+static-var  statechg_DesiredState, statechg_StateChanging, isFlying, gun_2;
 
 #define SIG_AIM 	2
 
-
-Crashing(Func_Var_1)
-{
-	Func_Var_1 = get HEALTH;
-	if( Func_Var_1 < 0 )
-	{
-		Static_Var_5 = 2;
-	}
-}
 
 activatescr()
 {
@@ -42,32 +33,6 @@ deactivatescr()
 	sleep 66;
 }
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
 
 InitState()
 {
@@ -106,9 +71,7 @@ Create()
 {
 	isFlying = FALSE;
 	call-script InitState();
-	gun_2 = [0];
-	start-script SmokeUnit();
-	start-script Crashing();
+	gun_2 = 0;
 }
 
 Activate()
@@ -160,46 +123,35 @@ AimSecondary()
 
 FireSecondary()
 {
-	if (gun_2 == [0])
+	if (gun_2 == 0)
 	{
-		//emit-sfx 1024 from flare21;
 		sleep 50;
-		gun_2 = [1];
+		gun_2 = 1;
 		return (0);
 	}
-	if (gun_2 == [1])
+	else
 	{
-		//emit-sfx 1024 from flare22;
 		sleep 50;
-		gun_2 = [0];
+		gun_2 = 0;
 		return (0);
 	}
 }
 
 QuerySecondary(piecenum)
 {
-	if (gun_2 == [0])
+	if (gun_2 == 0)
 	{
 		piecenum = flare21;
-		return (0);
 	}
-	if (gun_2 == [1])
+	else
 	{
 		piecenum = flare22;
-		return (0);
 	}
-}
-
-SweetSpot(piecenum)
-{
-	piecenum = base;
+	return (0);
 }
 
 Killed(severity, corpsetype)
 {
-	//start-script Crashing();
-
-	corpsetype = 3;
 	explode base2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
 	explode lwing type SHATTER | EXPLODE_ON_HIT | BITMAP5;
 	explode rwing type SHATTER | EXPLODE_ON_HIT | BITMAP5;
@@ -210,4 +162,5 @@ Killed(severity, corpsetype)
 	explode rwing2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
 	explode weapon type SHATTER | EXPLODE_ON_HIT | BITMAP5;
 	explode tail type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	return (1);
 }

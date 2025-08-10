@@ -5,17 +5,8 @@
 
 piece  base, rwing, lwing, tail, jet, weapon,barrel,flare, base2, base3, jp1, barrels;
 
-static-var  statechg_DesiredState, statechg_StateChanging, Static_Var_5, isFlying, drumpos;
+static-var  statechg_DesiredState, statechg_StateChanging, isFlying, drumpos;
 
-
-Crashing(Func_Var_1)
-{
-	Func_Var_1 = get HEALTH;
-	if( Func_Var_1 < 0 )
-	{
-		Static_Var_5 = 2;
-	}
-}
 
 activatescr()
 {
@@ -38,33 +29,6 @@ deactivatescr()
 		// nothing to do here
 	}
 	sleep 66;
-}
-
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
 }
 
 InitState()
@@ -103,10 +67,8 @@ RequestState(requestedstate, currentstate)
 Create()
 {
 	isFlying = FALSE;
-	drumpos = [0];
+	drumpos = 0;
 	call-script InitState();
-	start-script SmokeUnit();
-	start-script Crashing();
 }
 
 Activate()
@@ -131,26 +93,26 @@ AimPrimary()
 FirePrimary()
 {
 	emit-sfx 1024 from flare;
-	if( drumpos == [0] )
+	if( drumpos == 0 )
 	{
 		sleep 100;
-		drumpos = [1];
+		drumpos = 1;
 		sleep 300;
 		turn barrels to z-axis <0.000000> speed <400.093407>;
 		return 0;
 	}
-	if( drumpos == [1] )
+	if( drumpos == 1 )
 	{
 		sleep 100;
-		drumpos = [2];
+		drumpos = 2;
 		sleep 300;
 		turn barrels to z-axis <120.000000> speed <400.093407>;
 		return 0;
 	}
-	if( drumpos == [2] )
+	if( drumpos == 2 )
 	{
 		sleep 100;
-		drumpos = [0];
+		drumpos = 0;
 		sleep 300;
 		turn barrels to z-axis <0.000000> - <120.027473> speed <400.093407>;
 		return 0;
@@ -162,18 +124,11 @@ QueryPrimary(piecenum)
 	piecenum = flare;
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-}
-
 Killed(severity, corpsetype)
 {
-	//start-script Crashing();
-
-	corpsetype = 3;
 	explode base2 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
 	explode lwing type SHATTER | EXPLODE_ON_HIT | BITMAP5;
 	explode rwing type SHATTER | EXPLODE_ON_HIT | BITMAP5;
 	explode base3 type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	return (0);
 }

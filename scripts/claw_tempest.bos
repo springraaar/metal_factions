@@ -21,34 +21,6 @@ static-var  bAiming, bSwimming, gun_2, gun_1, terrainStatus, waterSpeed, landSpe
 
 #include "spinbot.h"
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	var Func_Var_4;
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from turret;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-	return (0);
-}
 
 stopWheels()
 {
@@ -158,14 +130,15 @@ Create()
 	landSpeed = get MAX_SPEED;
 	waterSpeed = landSpeed * 100/150;
 	//landSpeed = waterSpeed;	// same as land
-	
+
+	gun_1=0;
+	gun_2=0;	
 	bMoving = FALSE;
 	bAiming = FALSE;
 	bSwimming = FALSE;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
 	start-script WheelSpeedControl();
-	start-script SmokeUnit();
 	return (0);
 }
 
@@ -235,46 +208,46 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	if (gun_1 == [0])
+	if (gun_1 == 0)
 	{
 		emit-sfx 1024 from rflare11;
 		sleep 30;
-		gun_1 = [1];
+		gun_1 = 1;
 		return (0);
 	}
-	if (gun_1 == [1])
+	if (gun_1 == 1)
 	{
 		emit-sfx 1024 from rflare21;
 		sleep 30;
-		gun_1 = [2];
+		gun_1 = 2;
 		return (0);
 	}
-	if (gun_1 == [2])
+	if (gun_1 == 2)
 	{
 		emit-sfx 1024 from rflare12;
 		sleep 30;
-		gun_1 = [3];
+		gun_1 = 3;
 		return (0);
 	}
-	if (gun_1 == [3])
+	if (gun_1 == 3)
 	{
 		emit-sfx 1024 from rflare22;
 		sleep 30;
-		gun_1 = [4];
+		gun_1 = 4;
 		return (0);
 	}
-	if (gun_1 == [4])
+	if (gun_1 == 4)
 	{
 		emit-sfx 1024 from rflare13;
 		sleep 30;
-		gun_1 = [5];
+		gun_1 = 5;
 		return (0);
 	}
-	if (gun_1 == [5])
+	if (gun_1 == 5)
 	{
 		emit-sfx 1024 from rflare23;
 		sleep 30;
-		gun_1 = [0];
+		gun_1 = 0;
 		return (0);
 	}
 }
@@ -289,43 +262,38 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if (gun_1 == [0])
+	if (gun_1 == 0)
 	{
 		piecenum = rflare11;
 		return (0);
 	}
-	if (gun_1 == [1])
+	if (gun_1 == 1)
 	{
 		piecenum = rflare21;
 		return (0);
 	}
-	if (gun_1 == [2])
+	if (gun_1 == 2)
 	{
 		piecenum = rflare12;
 		return (0);
 	}
-	if (gun_1 == [3])
+	if (gun_1 == 3)
 	{
 		piecenum = rflare22;
 		return (0);
 	}
-	if (gun_1 == [4])
+	if (gun_1 == 4)
 	{
 		piecenum = rflare13;
 		return (0);
 	}
-	if (gun_1 == [5])
+	if (gun_1 == 5)
 	{
 		piecenum = rflare23;
 		return (0);
 	}
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = turret;
-	return (0);
-}
 
 AimSecondary(heading, pitch)
 {
@@ -346,46 +314,46 @@ AimSecondary(heading, pitch)
 
 FireSecondary()
 {
-	if (gun_2 == [0])
+	if (gun_2 == 0)
 	{
 		emit-sfx 1024 from lflare11;
 		sleep 30;
-		gun_2 = [1];
+		gun_2 = 1;
 		return (0);
 	}
-	if (gun_2 == [1])
+	if (gun_2 == 1)
 	{
 		emit-sfx 1024 from lflare21;
 		sleep 30;
-		gun_2 = [2];
+		gun_2 = 2;
 		return (0);
 	}
-	if (gun_2 == [2])
+	if (gun_2 == 2)
 	{
 		emit-sfx 1024 from lflare12;
 		sleep 30;
-		gun_2 = [3];
+		gun_2 = 3;
 		return (0);
 	}
-	if (gun_2 == [3])
+	if (gun_2 == 3)
 	{
 		emit-sfx 1024 from lflare22;
 		sleep 30;
-		gun_2 = [4];
+		gun_2 = 4;
 		return (0);
 	}
-	if (gun_2 == [4])
+	if (gun_2 == 4)
 	{
 		emit-sfx 1024 from lflare13;
 		sleep 30;
-		gun_2 = [5];
+		gun_2 = 5;
 		return (0);
 	}
-	if (gun_2 == [5])
+	if (gun_2 == 5)
 	{
 		emit-sfx 1024 from lflare23;
 		sleep 30;
-		gun_2 = [0];
+		gun_2 = 0;
 		return (0);
 	}
 }
@@ -399,32 +367,32 @@ AimFromSecondary(piecenum)
 
 QuerySecondary(piecenum)
 {
-	if (gun_2 == [0])
+	if (gun_2 == 0)
 	{
 		piecenum = lflare11;
 		return (0);
 	}
-	if (gun_2 == [1])
+	if (gun_2 == 1)
 	{
 		piecenum = lflare21;
 		return (0);
 	}
-	if (gun_2 == [2])
+	if (gun_2 == 2)
 	{
 		piecenum = lflare12;
 		return (0);
 	}
-	if (gun_2 == [3])
+	if (gun_2 == 3)
 	{
 		piecenum = lflare22;
 		return (0);
 	}
-	if (gun_2 == [4])
+	if (gun_2 == 4)
 	{
 		piecenum = lflare13;
 		return (0);
 	}
-	if (gun_2 == [5])
+	if (gun_2 == 5)
 	{
 		piecenum = lflare23;
 		return (0);

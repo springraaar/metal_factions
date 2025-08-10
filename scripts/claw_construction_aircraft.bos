@@ -20,42 +20,6 @@ deactivatescr()
 	return (0);
 }
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	var Func_Var_4;
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			Func_Var_4 = Rand( 1, 2 );
-			if( Func_Var_4 == 1 )
-			{
-				emit-sfx smoketype from fwingl;
-			}
-			if( Func_Var_4 == 2 )
-			{
-				emit-sfx smoketype from fwingr;
-			}
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-	return (0);
-}
 
 InitState()
 {
@@ -94,7 +58,6 @@ RequestState(requestedstate, currentstate)
 Create()
 {
 	call-script InitState();
-	start-script SmokeUnit();
 	return (0);
 }
 
@@ -128,15 +91,9 @@ QueryNanoPiece(piecenum)
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
 
 Killed(severity, corpsetype)
 {
-	corpsetype = 3;
 	explode bwingl type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 	explode bwingr type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 	explode hull type SHATTER | EXPLODE_ON_HIT | BITMAP1;

@@ -52,6 +52,8 @@ MotionSpeedControl(minSpeed, maxSpeed,currentSpeed)
 
 walk()
 {
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+
 	if( bMoving )
 	{
 		
@@ -128,34 +130,8 @@ walk()
 
 
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from body;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
 
-MotionControl(moving, aiming, justmoved)
+MotionControl(moving, aiming, justMoved)
 {
 	while( TRUE )
 	{
@@ -163,12 +139,12 @@ MotionControl(moving, aiming, justmoved)
 		aiming = bAiming;
 		if( moving )
 		{
-			justmoved = TRUE;
+			justMoved = TRUE;
 			call-script walk();
 		}
-		if( !moving )
+		else
 		{
-			if( justmoved )
+			if( justMoved )
 			{
 				turn lbackleg to x-axis <0.000000> speed <260.000000>;
 				turn rbackleg to x-axis <0.000000> speed <260.000000>;
@@ -192,7 +168,7 @@ MotionControl(moving, aiming, justmoved)
 				turn back to y-axis <0> speed <20> * mASpdFactor / 100;
 
 
-				justmoved = FALSE;
+				justMoved = FALSE;
 			}
 			sleep 100;
 		}
@@ -207,7 +183,6 @@ Create()
 	gun_1 = 0;
 	start-script MotionSpeedControl();
 	start-script MotionControl();
-	start-script SmokeUnit();
 }
 
 

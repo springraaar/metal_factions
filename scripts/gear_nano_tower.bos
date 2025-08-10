@@ -5,14 +5,14 @@
 
 piece  base, b2, aim, emitnano;
 
-static-var  Static_Var_1, Static_Var_2, statechg_DesiredState, statechg_StateChanging, isBuilding;
+static-var  buildHeading, statechg_DesiredState, statechg_StateChanging, isBuilding;
 
 
 Build()
 {
 	while(TRUE)
 	{
-		if( isBuilding == [1] )
+		if( isBuilding == 1 )
 		{
 			emit-sfx 1024 + 0 from emitnano;
 			sleep 60;
@@ -33,39 +33,11 @@ Deactivatescr()
 	return (0);
 }
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from aim;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-	return (0);
-}
-
 Go()
 {
 	call-script Activatescr();
-	isBuilding = [1];
-	turn aim to y-axis Static_Var_1 speed <400.000000>;
+	isBuilding = 1;
+	turn aim to y-axis buildHeading speed <400.000000>;
 	wait-for-turn aim around y-axis;
 	set INBUILDSTANCE to 1;
 	return (0);
@@ -74,7 +46,7 @@ Go()
 Stop()
 {
 	set INBUILDSTANCE to 0;
-	isBuilding = [0];
+	isBuilding = 0;
 	call-script Deactivatescr();
 	return (0);
 }
@@ -116,17 +88,15 @@ RequestState(requestedstate, currentstate)
 Create()
 {
 	call-script InitState();
-	start-script SmokeUnit();
-	Static_Var_1 = 0;
-	Static_Var_2 = 5000;
-	isBuilding = [0];
+	buildHeading = 0;
+	isBuilding = 0;
 	start-script Build();
 	return (0);
 }
 
 RestoreAfterDelay()
 {
-	sleep Static_Var_2;
+	sleep DEFAULT_BUILDER_RESTORE_DELAY;
 	turn aim to y-axis <0.000000> speed <100.000000>;
 	wait-for-turn aim around y-axis;
 	return (0);
@@ -146,7 +116,7 @@ Deactivate()
 
 StartBuilding(Func_Var_1)
 {
-	Static_Var_1 = Func_Var_1;
+	buildHeading = Func_Var_1;
 	start-script RequestState(0);
 	return (0);
 }
@@ -165,15 +135,10 @@ QueryNanoPiece(piecenum)
 
 TargetHeading(Func_Var_1)
 {
-	Static_Var_1 = 0 - Func_Var_1;
+	buildHeading = 0 - Func_Var_1;
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = aim;
-	return (0);
-}
 
 Killed(severity, corpsetype)
 {

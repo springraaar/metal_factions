@@ -10,7 +10,7 @@
 
 piece  groundx2, hips, torso,tl,tr,sleeve,barrel,flare, leg1, bleg, leg2, bleg2, leg3, bleg3, leg4, bleg4;
 
-static-var  bMoving, bAiming, justmoved, mASpdFactor;
+static-var  bMoving, bAiming, justMoved, mASpdFactor;
 
 #include "aimhelper1.h"
 
@@ -51,6 +51,8 @@ RockUnit(anglex, anglez)
 
 walk()
 {
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+
 	if( bMoving )
 	{
 		/* X */
@@ -178,12 +180,12 @@ MotionControl(moving)
 		moving = bMoving;
 		if( moving )
 		{
-			justmoved = TRUE;
+			justMoved = TRUE;
 			call-script walk();
 		}
-		if( !moving )
+		else
 		{
-			if( justmoved )
+			if( justMoved )
 			{
 				turn leg1 to x-axis <0.000000> speed <360.000000>;
 				turn leg2 to x-axis <0.000000> speed <360.000000>;
@@ -209,37 +211,10 @@ MotionControl(moving)
 				turn bleg3 to z-axis <0.000000> speed <160.000000>;
 				turn bleg to z-axis <0.000000> speed <160.000000>;
 
-				justmoved = FALSE;
+				justMoved = FALSE;
 			}
 			sleep 100;
 		}
-	}
-}
-
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from torso;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
 	}
 }
 
@@ -247,11 +222,10 @@ Create()
 {
 	bMoving = FALSE;
 	bAiming = FALSE;
-	justmoved=FALSE;
+	justMoved=FALSE;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();
 	start-script MotionControl();
-	start-script SmokeUnit();
 }
 
 StartMoving()
@@ -303,11 +277,6 @@ QueryPrimary(piecenum)
 }
 
 AimFromPrimary(piecenum)
-{
-	piecenum = torso;
-}
-
-SweetSpot(piecenum)
 {
 	piecenum = torso;
 }

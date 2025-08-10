@@ -11,35 +11,6 @@ static-var isFloating;
 #define SIG_AIM				2
 
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
-
-
-
 Create()
 {
 	hide floatbase;
@@ -52,7 +23,6 @@ Create()
 		show fb2;
 	}
 	hide flare;
-	start-script SmokeUnit();
 }
 
 
@@ -93,10 +63,6 @@ QueryPrimary(piecenum)
 	piecenum = flare;
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-}
 
 Killed(severity, corpsetype)
 {

@@ -258,6 +258,8 @@ walk()
 {
 	var slowTurnSpd, slowTurnSpd2;
 
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+
 	slowTurnSpd = mATurnSpd2 / 4;
 	slowTurnSpd2 = mATurnSpd2 / 12;
 	
@@ -422,17 +424,9 @@ MotionControl()
 		if( moving )
 		{
 			justMoved = TRUE;
-			if( aiming )
-			{
-				call-script walk();
-			}
-			if( !aiming )
-			{
-				call-script walk();
-			}
-			
+			call-script walk();			
 		}
-		if( !moving )
+		else
 		{
 			if( justMoved )
 			{
@@ -491,12 +485,6 @@ StartMoving()
 StopMoving()
 {
 	bMoving = FALSE;
-	return;
-}
-
-SweetSpot(piecenum)
-{
-	piecenum = torso;
 	return;
 }
 

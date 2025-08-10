@@ -11,49 +11,14 @@ static-var  restore_delay,gun_1;
 #define SIG_AIM				2
 
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
-
-
 Create()
 {
-	gun_1=[0];
-	restore_delay = 10000;
-	start-script SmokeUnit();
-}
-
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
+	gun_1=0;
 }
 
 RestoreAfterDelay()
 {
-	sleep restore_delay;
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
 	turn turret to y-axis <0.000000> speed <60.016484>;
 	turn sleeve to x-axis <0.000000> speed <60.005495>;
 }
@@ -71,40 +36,35 @@ AimPrimary(heading, pitch)
 	return (1);
 }
 
-FirePrimary()
-{
-}
 
 Shot1()
 {
-	if( gun_1 == [0] )
+	if( gun_1 == 0 )
 	{
 		move barrel to z-axis [-3.000000] now;
 		emit-sfx 1024 from flash;
 		sleep 100;
-		gun_1 = [1];
+		gun_1 = 1;
 		move barrel to z-axis [0.000000] speed [12.000000];
-		return (0);
 	}
-	if( gun_1 == [1] )
+	else
 	{
 		move barrel2 to z-axis [-3.000000] now;
 		emit-sfx 1024 from flash2;
 		sleep 100;
-		gun_1 = [0];
+		gun_1 = 0;
 		move barrel2 to z-axis [0.000000] speed [12.000000];
-		return (0);
 	}
 }
 
 
 QueryPrimary(piecenum)
 {
-	if( gun_1 == [0] )
+	if( gun_1 == 0 )
 	{
 		piecenum = flash;
 	}
-	if( gun_1 == [1] )
+	else
 	{
 		piecenum = flash2;
 	}
@@ -115,47 +75,19 @@ AimFromPrimary(piecenum)
 	piecenum = turret;
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = turret;
-}
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 25 )
-	{
-		corpsetype = 1;
-		
-		explode sleeve type BITMAPONLY | BITMAP1;
-		explode base type BITMAPONLY | BITMAP2;
-		explode flash type BITMAPONLY | BITMAP3;
-		explode turret type BITMAPONLY | BITMAP4;
-		return (0);
-	}
 	if( severity <= 50 )
 	{
-		corpsetype = 2;
-		
-		explode sleeve type FALL | BITMAP1;
-		explode base type BITMAPONLY | BITMAP2;
-		explode flash type FALL | BITMAP3;
-		explode turret type SHATTER | BITMAP4;
-		return (0);
+		explode sleeve type SHATTER;
+		explode turret type SHATTER;
+		return (1);
 	}
-	if( severity <= 99 )
-	{
-		corpsetype = 3;
-		
-		explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-		explode base type BITMAPONLY | BITMAP2;
-		explode flash type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-		explode turret type SHATTER | BITMAP4;
-		return (0);
-	}
-	corpsetype = 3;
 
-	explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
-	explode base type BITMAPONLY | BITMAP2;
-	explode flash type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP3;
-	explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode base2 type SHATTER;
+	explode base3 type SHATTER;
+	explode sleeve type SHATTER;
+	explode turret type SHATTER;
+	return (2);
 }

@@ -17,68 +17,12 @@ static-var  gun_1, gun_2, bAiming;
 #define SIG_AIM_2			4
 
 
-lua_HeavyGunshipStrafe() { return 0; }
-
-HeavyGunshipStrafe()
-{
-	while (TRUE)
-	{
-		if( bAiming )
-		{
-			//call-script lua_HeavyGunshipStrafe();
-		}
-		sleep 200;
-	}
-}
-
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
-
 Create()
 {
-	gun_1 = [0];
-	gun_2 = [0];
+	gun_1 = 0;
+	gun_2 = 0;
 	bAiming = FALSE;
 	call-script stopAimHelper1(<1000>,<1000>);
-	start-script SmokeUnit();
-	//start-script HeavyGunshipStrafe();
-}
-
-Activate()
-{
-}
-
-Deactivate()
-{
-}
-
-SweetSpot(piecenum)
-{
-	piecenum = base;
 }
 
 RestoreAfterDelay()
@@ -88,8 +32,6 @@ RestoreAfterDelay()
 	turn turret to y-axis <0.000000> speed <150.000000>;
 	turn sleeve to x-axis <0.000000> speed <150.000000>;
 	bAiming = FALSE;
-	//call-script lua_HeavyGunshipStrafe();
-	//turn base to x-axis <0.000000> speed <45.000000>;
 }
 
 AimFromSecondary(piecenum)
@@ -121,28 +63,28 @@ AimSecondary(heading, pitch)
 
 FireSecondary()
 {
-	if( gun_2 == [0] )
+	if( gun_2 == 0 )
 	{
 		emit-sfx 1024+0 from flare;
 		sleep 100;
 		turn barrel to z-axis <120.000000> speed <720.000000>;
-		gun_2 = [1];
+		gun_2 = 1;
 		return 0 ;
 	}
-	if( gun_2 == [1] )
+	if( gun_2 == 1 )
 	{
 		emit-sfx 1024+0 from flare;
 		sleep 100;
 		turn barrel to z-axis <240.000000> speed <720.000000>;
-		gun_2 = [2];
+		gun_2 = 2;
 		return 0 ;
 	}
-	if( gun_2 == [2] )
+	if( gun_2 == 2 )
 	{
 		emit-sfx 1024+0 from flare;
 		sleep 100;
 		turn barrel to z-axis <360.000000> speed <720.000000>;
-		gun_2 = [0];
+		gun_2 = 0;
 		return 0 ;
 	}
 
@@ -152,22 +94,22 @@ FireSecondary()
 
 QueryPrimary(piecenum)
 {
-	if(gun_1 == [0])
+	if(gun_1 == 0)
 	{
 		piecenum = firept1;
 		return 0;
 	}
-	if(gun_1 == [1])
+	if(gun_1 == 1)
 	{
 		piecenum = firept2;
 		return 0;
 	}
-	if(gun_1 == [2])
+	if(gun_1 == 2)
 	{
 		piecenum = firept3;
 		return 0;
 	}
-	if(gun_1 == [3])
+	if(gun_1 == 3)
 	{
 		piecenum = firept4;
 		return 0;
@@ -181,28 +123,28 @@ AimFromPrimary(piecenum)
 
 Shot1()
 {
-	if(gun_1 == [0])
+	if(gun_1 == 0)
 	{
 		emit-sfx 1024+1 from firept1;
-		gun_1 = [1];
+		gun_1 = 1;
 		return 0;
 	}
-	if(gun_1 == [1])
+	if(gun_1 == 1)
 	{
 		emit-sfx 1024+1 from firept2;
-		gun_1 = [2];
+		gun_1 = 2;
 		return 0;
 	}
-	if(gun_1 == [2])
+	if(gun_1 == 2)
 	{
 		emit-sfx 1024+1 from firept3;
-		gun_1 = [3];
+		gun_1 = 3;
 		return 0;
 	}
-	if(gun_1 == [3])
+	if(gun_1 == 3)
 	{
 		emit-sfx 1024+1 from firept4;
-		gun_1 = [0];
+		gun_1 = 0;
 		return 0;
 	}	
 }
@@ -213,8 +155,6 @@ AimPrimary()
 	set-signal-mask SIG_AIM;
 	
 	bAiming = TRUE;
-	//call-script lua_HeavyGunshipStrafe();
-	//turn base to x-axis <-45.000000> speed <45.000000>;
 	start-script RestoreAfterDelay();
 	return (1);
 }
@@ -222,7 +162,6 @@ AimPrimary()
 
 Killed(severity, corpsetype)
 {
-	corpsetype = 3;
 	explode center type SHATTER | BITMAP5;
 	explode lw2 type SHATTER | BITMAP5;
 	explode rw2 type SHATTER | BITMAP5;
@@ -233,4 +172,5 @@ Killed(severity, corpsetype)
 	explode rjet type SHATTER | BITMAP1;
 	explode lwing type SHATTER | EXPLODE_ON_HIT | BITMAP5;
 	explode rwing type SHATTER | EXPLODE_ON_HIT | BITMAP5;
+	return (0);
 }

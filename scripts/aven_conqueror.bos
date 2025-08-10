@@ -10,169 +10,13 @@ piece  ignite1, ignite2, ignite3, ignite4, ignite5, flare1, flare2, flare3, base
 
 #include "aimhelper1.h"
 
-static-var  gun_1, Static_Var_3, Static_Var_4, Static_Var_5, Static_Var_6, Static_Var_7;
+static-var  gun_1;
 
 // Signal definitions
 #define SIG_AIM				2
 #define SIG_MOVE			4
 
 
-FlameControl()
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		if( Static_Var_3 )
-		{
-			emit-sfx 1024 + 1 from ignite1;
-			sleep 10;
-		}
-		if( Static_Var_4 )
-		{
-			emit-sfx 1024 + 1 from ignite2;
-			sleep 10;
-		}
-		if( Static_Var_5 )
-		{
-			emit-sfx 1024 + 1 from ignite3;
-			sleep 10;
-		}
-		if( Static_Var_6 )
-		{
-			emit-sfx 1024 + 1 from ignite4;
-			sleep 10;
-		}
-		if( Static_Var_7 )
-		{
-			emit-sfx 1024 + 1 from ignite5;
-			sleep 10;
-		}
-		sleep 10;
-		return (0);
-	}
-	sleep 10;
-	return (0);
-}
-
-Flameon(Func_Var_1, Func_Var_2, Func_Var_3)
-{
-	start-script FlameControl();
-	Func_Var_3 = get HEALTH;
-	if( Func_Var_3 <= 80 )
-	{
-		if( Static_Var_3 == 0 )
-		{
-			Static_Var_3 = 1;
-			sleep 10;
-		}
-	}
-	if( Func_Var_3 <= 60 )
-	{
-		if( Static_Var_4 == 0 )
-		{
-			Static_Var_4 = 1;
-			sleep 10;
-		}
-	}
-	if( Func_Var_3 <= 45 )
-	{
-		if( Static_Var_5 == 0 )
-		{
-			Static_Var_5 = 1;
-			sleep 10;
-		}
-	}
-	if( Func_Var_3 <= 25 )
-	{
-		if( Static_Var_6 == 0 )
-		{
-			Static_Var_6 = 1;
-			sleep 10;
-		}
-	}
-	if( Func_Var_3 <= 10 )
-	{
-		if( Static_Var_7 == 0 )
-		{
-			Static_Var_7 = 1;
-			sleep 10;
-		}
-	}
-	if( Func_Var_3 >= 90 )
-	{
-		if( Static_Var_3 == 1 )
-		{
-			Static_Var_3 = 0;
-			sleep 10;
-		}
-	}
-	if( Func_Var_3 >= 90 )
-	{
-		if( Static_Var_4 == 1 )
-		{
-			Static_Var_4 = 0;
-			sleep 10;
-		}
-	}
-	if( Func_Var_3 >= 55 )
-	{
-		if( Static_Var_5 == 1 )
-		{
-			Static_Var_5 = 0;
-			sleep 10;
-		}
-	}
-	if( Func_Var_3 >= 35 )
-	{
-		if( Static_Var_6 == 1 )
-		{
-			Static_Var_6 = 0;
-			sleep 10;
-		}
-	}
-	if( Func_Var_3 >= 20 )
-	{
-		if( Static_Var_7 == 1 )
-		{
-			Static_Var_7 = 0;
-			sleep 10;
-		}
-	}
-	start-script Flameon();
-	sleep 10;
-	return (0);
-}
-
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-	return (0);
-}
 
 Create()
 {
@@ -184,15 +28,8 @@ Create()
 	hide ignite3;
 	hide ignite4;
 	hide ignite5;
-	Static_Var_3 = 0;
-	Static_Var_4 = 0;
-	Static_Var_5 = 0;
-	Static_Var_6 = 0;
-	Static_Var_7 = 0;
-	gun_1 = [0];
+	gun_1 = 0;
 	call-script stopAimHelper1(<1000>,<1000>);
-	start-script SmokeUnit();
-	start-script Flameon();
 	return (0);
 }
 
@@ -247,24 +84,23 @@ AimSecondary(heading, pitch)
 
 FirePrimary()
 {
-	if( gun_1 == [0] )
+	if( gun_1 == 0 )
 	{
 		move barrel1 to z-axis [-7.500000] now;
 		emit-sfx 1024 + 0 from flare1;
 		move barrel1 to z-axis [0.000000] speed [7.500000];
 		sleep 200;
-		gun_1 = [1];
-		return (0);
+		gun_1 = 1;
 	}
-	if( gun_1 == [1] )
+	else
 	{
 		move barrel2 to z-axis [-7.500000] now;
 		emit-sfx 1024 + 0 from flare2;
 		sleep 200;
 		move barrel2 to z-axis [0.000000] speed [7.500000];
-		gun_1 = [0];
-		return (0);
+		gun_1 = 0;
 	}
+	return (0);
 }
 
 AimFromPrimary(piecenum)
@@ -286,11 +122,11 @@ AimFromSecondary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if( gun_1 == [0] )
+	if( gun_1 == 0 )
 	{
 		piecenum = flare1;
 	}
-	if( gun_1 == [1] )
+	else
 	{
 		piecenum = flare2;
 	}

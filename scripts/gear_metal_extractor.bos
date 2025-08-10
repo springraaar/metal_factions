@@ -5,46 +5,18 @@
 
 piece  base, center, c3, c2, spinner, s2, s3, b1,b2,b3,b4;
 
-static-var  Static_Var_1, Static_Var_2, Static_Var_3, statechg_DesiredState, statechg_StateChanging;
+static-var  rotSpeed, spinAccel, spinDecel, statechg_DesiredState, statechg_StateChanging;
 
-
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-	return (0);
-}
 
 Go()
 {
-	spin spinner around y-axis speed Static_Var_1 accelerate Static_Var_2;
+	spin spinner around y-axis speed rotSpeed accelerate spinAccel;
 	return (0);
 }
 
 Stop()
 {
-	stop-spin spinner around y-axis decelerate Static_Var_3;
+	stop-spin spinner around y-axis decelerate spinDecel;
 	return (0);
 }
 
@@ -84,11 +56,10 @@ RequestState(requestedstate, currentstate)
 
 Create()
 {
-	Static_Var_1 = 0;
-	Static_Var_2 = 91;
-	Static_Var_3 = 182;
+	rotSpeed = 0;//TODO normalize mex speeds
+	spinAccel = 91;
+	spinDecel = 182;
 	call-script InitState();
-	start-script SmokeUnit();
 	return (0);
 }
 
@@ -106,15 +77,10 @@ Deactivate()
 
 SetSpeed(Func_Var_1)
 {
-	Static_Var_1 = Func_Var_1 * 25;
+	rotSpeed = Func_Var_1 * 25;
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
 
 Killed(severity, corpsetype)
 {

@@ -7,7 +7,6 @@
 #define PITCH_TOLERANCE		<35>
 
 
-
 piece ground, hips,torso,support,flare1,sphere;
 	
 
@@ -15,8 +14,6 @@ piece ground, hips,torso,support,flare1,sphere;
 
 // Signal definitions
 #define SIG_AIM				2
-
-lua_spawnUnit() { return 0; }
 
 
 Create()

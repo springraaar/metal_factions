@@ -62,6 +62,8 @@ walk()
 {
 	var slowTurnSpd, slowTurnSpd2;
 
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+
 	slowTurnSpd = mATurnSpd2 / 2;
 	slowTurnSpd2 = mATurnSpd2 / 8;
 	
@@ -203,36 +205,10 @@ walk()
 	return;
 }
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from torso;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
 
-MotionControl(moving, aiming, justmoved)
+MotionControl(moving, aiming, justMoved)
 {
-	justmoved = TRUE;
+	justMoved = TRUE;
 	while( TRUE )
 	{
 		moving = bMoving;
@@ -240,11 +216,11 @@ MotionControl(moving, aiming, justmoved)
 		if( moving )
 		{
 			call-script walk();
-			justmoved = TRUE;
+			justMoved = TRUE;
 		}
-		if( !moving )
+		else
 		{
-			if( justmoved )
+			if( justMoved )
 			{
 				move pelvis to y-axis [0.000000] speed [25.000000];
 				turn pelvis to x-axis <0.000000> speed <20.000000>;
@@ -261,7 +237,7 @@ MotionControl(moving, aiming, justmoved)
 					turn ruparm to x-axis <0.000000> speed <100.000000>;
 					turn lloarm to x-axis <-20.000000> speed <150.000000>;					
 				}
-				justmoved = FALSE;
+				justMoved = FALSE;
 			}
 			sleep 100;
 		}
@@ -275,7 +251,6 @@ Create()
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();
 	start-script MotionControl();
-	start-script SmokeUnit();
 }
 
 StartMoving()
@@ -286,11 +261,6 @@ StartMoving()
 StopMoving()
 {
 	bMoving = FALSE;
-}
-
-SweetSpot(piecenum)
-{
-	piecenum = torso;
 }
 
 RestoreAfterDelay()

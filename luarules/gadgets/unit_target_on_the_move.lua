@@ -3,7 +3,7 @@ function gadget:GetInfo()
 		name = "Target on the move",
 		desc = "Adds a command to set a priority attack target",
 		author = "Google Frog, adapted by BrainDamage, added priority to Dgun by doo",
-		date = "06/05/2013",
+		date = "06/05/2013, modified by raaar 2025+",
 		license = "GNU GPL, v2 or later",
 		layer = 0,
 		enabled = true,
@@ -62,7 +62,8 @@ if gadgetHandler:IsSyncedCode() then
 	local spGetUnitsInRectangle = Spring.GetUnitsInRectangle
 	local spGetUnitsInCylinder = Spring.GetUnitsInCylinder
 	local spSetUnitRulesParam = Spring.SetUnitRulesParam
-	local spGetCommandQueue = Spring.GetCommandQueue
+	local spGetUnitCommands = Spring.GetUnitCommands
+	local spGetUnitCommandCount = Spring.GetUnitCommandCount
 	local spGetUnitCurrentCommand = Spring.GetUnitCurrentCommand
 	local spGiveOrderArrayToUnitArray = Spring.GiveOrderArrayToUnitArray
 	local spGetUnitWeaponTryTarget = Spring.GetUnitWeaponTryTarget
@@ -567,7 +568,7 @@ if gadgetHandler:IsSyncedCode() then
 				pausedTargets[unitID] = nil
 			end
 		else
-			local activeCommandIsDgun = spGetCommandQueue(unitID, 0) ~= 0 and spGetCommandQueue(unitID, 1)[1].id == CMD_DGUN
+			local activeCommandIsDgun = spGetUnitCommandCount(unitID) ~= 0 and spGetUnitCommands(unitID, 1)[1].id == CMD_DGUN
 			if pausedTargets[unitID] and not activeCommandIsDgun then
 				if waitingForInsertRemoval[unitID] then
 					waitingForInsertRemoval[unitID] = nil
@@ -581,7 +582,7 @@ if gadgetHandler:IsSyncedCode() then
 	end
 
 	function gadget:AllowCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions, cmdTag, playerID, fromSynced, fromLua)
-		if spGetCommandQueue(unitID, 0) == 0 or not cmdOptions.meta then
+		if spGetUnitCommandCount(unitID) == 0 or not cmdOptions.meta then
 			if processCommand(unitID, unitDefID, teamID, cmdID, cmdParams, cmdOptions) then
 				return false --command was used & fully processed, so block command
 			elseif cmdID == CMD_STOP then

@@ -16,6 +16,7 @@ static-var  bMoving, justMoved, gun_1;
 
 #define SIG_AIM 2
 
+//TODO missing walk cycle speed scaling
 walk()
 {
 	if( bMoving )
@@ -131,34 +132,6 @@ Stop()
 	turn leg3 to z-axis <0.000000> speed <237.000000>;
 }
 
-SmokeUnit(Func_Var_1, Func_Var_2, Func_Var_3)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		Func_Var_1 = get HEALTH;
-		if( Func_Var_1 < 66 )
-		{
-			Func_Var_3 = 256 | 2;
-			if( Rand( 1, 66 ) < Func_Var_1 )
-			{
-				Func_Var_3 = 256 | 1;
-			}
-			emit-sfx Func_Var_3 from base;
-		}
-		Func_Var_2 = Func_Var_1 * 50;
-		if( Func_Var_2 < 200 )
-		{
-			Func_Var_2 = 200;
-		}
-		sleep Func_Var_2;
-	}
-	return;
-}
-
 MotionControl()
 {
 	var moving;
@@ -187,11 +160,10 @@ Create()
 	justMoved = FALSE;
 	hide flare1;
 	hide flare2;
-	gun_1 = [0];
+	gun_1 = 0;
 	bMoving = 0;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
-	start-script SmokeUnit();
 	return;
 }
 
@@ -244,18 +216,17 @@ AimPrimary(heading, pitch)
 
 Shot1()
 {
-	if(gun_1 == [0])
+	if(gun_1 == 0)
 	{
 		emit-sfx 1024+0 from flare1;
-		gun_1 = [1];
-		return 0;
+		gun_1 = 1;
 	}
-	if(gun_1 == [1])
+	else
 	{
 		emit-sfx 1024+0 from flare2;
-		gun_1 = [0];
-		return 0;
+		gun_1 = 0;
 	}
+	return (0);
 }
 
 AimFromPrimary(piecenum)
@@ -266,11 +237,11 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if(gun_1 == [0])
+	if(gun_1 == 0)
 	{
 		piecenum = flare1;
 	}
-	if(gun_1 == [1])
+	else
 	{
 		piecenum = flare2;
 	}	

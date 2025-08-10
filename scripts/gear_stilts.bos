@@ -160,9 +160,10 @@ MotionSpeedControl(minSpeed, maxSpeed,currentSpeed)
 
 walk()
 {
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+	
 	if( bMoving )
 	{
-		
 		//turn hips to x-axis <2.000000> speed <20.000000> * mASpdFactor / 100;
 		//turn hips to z-axis <-1.000000> speed <15.000000> * mASpdFactor / 100;
 		move hips to z-axis [-2.300000] speed [4]* mASpdFactor / 100;
@@ -230,35 +231,7 @@ walk()
 }
 
 
-
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from body;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
-
-MotionControl(moving, aiming, justmoved)
+MotionControl(moving, aiming, justMoved)
 {
 	while( TRUE )
 	{
@@ -266,12 +239,12 @@ MotionControl(moving, aiming, justmoved)
 		aiming = bAiming;
 		if( moving )
 		{
-			justmoved = TRUE;
+			justMoved = TRUE;
 			call-script walk();
 		}
 		if( !moving )
 		{
-			if( justmoved )
+			if( justMoved )
 			{
 				turn lbackleg to x-axis <0.000000> speed <260.000000>;
 				turn rbackleg to x-axis <0.000000> speed <260.000000>;
@@ -293,7 +266,7 @@ MotionControl(moving, aiming, justmoved)
 				move hips to z-axis [0.000000] speed [3.000000];
 
 
-				justmoved = FALSE;
+				justMoved = FALSE;
 			}
 			sleep 100;
 		}
@@ -311,7 +284,6 @@ Create()
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();
 	start-script MotionControl();
-	start-script SmokeUnit();
 	start-script handleActivation();
 }
 

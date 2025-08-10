@@ -84,8 +84,9 @@ showJumpEffects(descending, frames) {
 #include "jump.h"
 
 
+//TODO walk cycle missing speed scaling
 walk()
-{
+{	
 	if (isJumping) {
 		sleep 100;
 		return;
@@ -209,38 +210,9 @@ walk()
 }
 
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
+MotionControl(moving, justjumped, justMoved)
 {
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from body;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
-
-
-
-MotionControl(moving, justjumped, justmoved)
-{
-	justmoved = TRUE;
+	justMoved = TRUE;
 	justjumped = FALSE;
 	while( TRUE )
 	{
@@ -250,7 +222,7 @@ MotionControl(moving, justjumped, justmoved)
 		if( moving )
 		{
 			call-script walk();
-			justmoved = TRUE;
+			justMoved = TRUE;
 		}
 		if (isJumping) 
 		{
@@ -277,7 +249,7 @@ MotionControl(moving, justjumped, justmoved)
 		}
 		if( !moving )
 		{
-			if( justmoved )
+			if( justMoved )
 			{
 				turn leg1 to x-axis <0.000000> speed <360.000000>;
 				turn leg2 to x-axis <0.000000> speed <360.000000>;
@@ -302,7 +274,7 @@ MotionControl(moving, justjumped, justmoved)
 				turn bleg4 to z-axis <0.000000> speed <160.000000>;
 				turn bleg3 to z-axis <0.000000> speed <160.000000>;
 				turn bleg to z-axis <0.000000> speed <160.000000>;
-				justmoved = FALSE;
+				justMoved = FALSE;
 			}
 			sleep 100;
 		}
@@ -315,7 +287,6 @@ Create()
 
 	start-script initJump();
 	start-script MotionControl();
-	start-script SmokeUnit();
 	start-script setHasJump(1);
 }
 StartMoving()

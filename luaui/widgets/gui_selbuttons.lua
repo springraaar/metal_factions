@@ -60,7 +60,7 @@ local spSelectUnitArray        = Spring.SelectUnitArray
 local spSelectUnitMap          = Spring.SelectUnitMap
 local spSendCommands           = Spring.SendCommands
 local spGetFullBuildQueue      = Spring.GetFullBuildQueue
-local spGetCommandQueue        = Spring.GetCommandQueue
+local spGetUnitCommandCount    = Spring.GetUnitCommandCount
 local spGetUnitDefID           = Spring.GetUnitDefID 
 local spGetGameFrame           = Spring.GetGameFrame
 local spGetUnitHealth          = Spring.GetUnitHealth
@@ -166,7 +166,7 @@ local function isIdleBuilder(unitID)
 				if ud.isFactory then
 					return true 
 				else
-					if spGetCommandQueue(unitID,_,false) == 0 then
+					if spGetUnitCommandCount(unitID) == 0 then
 						return true
 					end
 				end

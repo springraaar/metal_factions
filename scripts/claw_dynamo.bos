@@ -26,7 +26,7 @@ ChargeControl(healthPercent, oldHealthPercent)
 	while(TRUE) {
 		while( get BUILD_PERCENT_LEFT )
 		{
-			chargeState = [0];
+			chargeState = 0;
 			sleep 100;
 		}
 		
@@ -35,15 +35,15 @@ ChargeControl(healthPercent, oldHealthPercent)
 		}
 		
 		if (isReady == FALSE) {
-			chargeState = [0];
+			chargeState = 0;
 			sleep reloadTime / 5;
-			chargeState = [1];
+			chargeState = 1;
 			sleep reloadTime / 5;
-			chargeState = [2];
+			chargeState = 2;
 			sleep reloadTime / 5;
-			chargeState = [3];
+			chargeState = 3;
 			sleep reloadTime / 5;
-			chargeState = [4];
+			chargeState = 4;
 			sleep reloadTime / 5;
 			isReady = TRUE;
 		}
@@ -71,9 +71,9 @@ ChargeDisruptionControl(healthPercent, oldHealthPercent,oldHealthPercent2,oldHea
 		
 		if( (oldHealthPercent3 - healthpercent) > 15 || ( get TRANSPORT_ID ) > 0 )
 		{
-			if (chargeState > [0] ) {
+			if (chargeState > 0 ) {
 				signal SIG_RESET; // kill charge updater
-				chargeState = [0];
+				chargeState = 0;
 				isReady = FALSE;
 				set CEG_DAMAGE to 20;
 				emit-sfx 1024+5 from flare;
@@ -111,7 +111,7 @@ ChargeFX(previousState) {
 
 	while(TRUE) {
 		
-		if (chargeState == [0]) {
+		if (chargeState == 0) {
 			if (previousState != chargeState) {
 				stop-spin ringholder around y-axis;
 				hide ring1;
@@ -120,7 +120,7 @@ ChargeFX(previousState) {
 				hide ring4;
 			}
 		}
-		if (chargeState == [1]) {
+		if (chargeState == 1) {
 			if (previousState != chargeState) {
 				emit-sfx 1024+4 from flare;
 				emit-sfx 1024+4 from ring1;
@@ -138,7 +138,7 @@ ChargeFX(previousState) {
 			emit-sfx 1024 + 0 from ringfx;
 			emit-sfx 1024 + 0 from ringfx2;
 		}
-		if (chargeState == [2]) {
+		if (chargeState == 2) {
 			if (previousState != chargeState) {
 				spin ringholder around y-axis speed <400>;
 				hide ring1;
@@ -150,7 +150,7 @@ ChargeFX(previousState) {
 			emit-sfx 1024 + 1 from ringfx;
 			emit-sfx 1024 + 1 from ringfx2;
 		}		
-		if (chargeState == [3]) {
+		if (chargeState == 3) {
 			if (previousState != chargeState) {
 				spin ringholder around y-axis speed <600>;
 				hide ring1;
@@ -162,7 +162,7 @@ ChargeFX(previousState) {
 			emit-sfx 1024 + 2 from ringfx;
 			emit-sfx 1024 + 2 from ringfx2;
 		}
-		if (chargeState == [4]) {
+		if (chargeState == 4) {
 			if (previousState != chargeState) {
 				spin ringholder around y-axis speed <800>;
 				hide ring1;
@@ -188,32 +188,6 @@ resetReload() {
 	call-script lua_resetReload();
 }
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
 
 RockUnit(anglex, anglez)
 {
@@ -234,18 +208,15 @@ Create()
 	hide ring4;
 	restore_delay = 5000;
 	
-	
-	
 	bMoving = FALSE;
 	isReady = FALSE;
-	chargeState = [0];
+	chargeState = 0;
 	reloadTime = 15000;
 	
 	start-script ChargeDisruptionControl();
 	start-script ChargeControl();
 	start-script ChargeFX();
 
-	start-script SmokeUnit();
 	start-script AnimateTracks();
 	start-script resetReload();
 }
@@ -281,7 +252,7 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	chargeState = [0];
+	chargeState = 0;
 	hide ring1;
 	hide ring2;
 	hide ring3;

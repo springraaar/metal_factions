@@ -10,7 +10,7 @@
 
 piece  groundx2, hips, torso,tl,tr,sleeve,barrel,flare,sleeve2,barrel2,flare2,slpt, leg1, bleg, leg2, bleg2, leg3, bleg3, leg4, bleg4,tc,tl2,tr2;
 
-static-var  bMoving, bAiming, justmoved, gun_1, mASpdFactor;
+static-var  bMoving, bAiming, justMoved, gun_1, mASpdFactor;
 
 #include "aimhelper1.h"
 
@@ -40,6 +40,8 @@ MotionSpeedControl(minSpeed, maxSpeed,currentSpeed)
 
 walk()
 {
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+
 	if( bMoving )
 	{
 		/* X */
@@ -159,8 +161,6 @@ walk()
 }
 
 
-
-
 MotionControl(moving)
 {
 	while( TRUE )
@@ -168,12 +168,12 @@ MotionControl(moving)
 		moving = bMoving;
 		if( moving )
 		{
-			justmoved = TRUE;
+			justMoved = TRUE;
 			call-script walk();
 		}
-		if( !moving )
+		else
 		{
-			if( justmoved )
+			if( justMoved )
 			{
 				turn leg1 to x-axis <0.000000> speed <360.000000>;
 				turn leg2 to x-axis <0.000000> speed <360.000000>;
@@ -199,37 +199,10 @@ MotionControl(moving)
 				turn bleg3 to z-axis <0.000000> speed <160.000000>;
 				turn bleg to z-axis <0.000000> speed <160.000000>;
 
-				justmoved = FALSE;
+				justMoved = FALSE;
 			}
 			sleep 100;
 		}
-	}
-}
-
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from torso;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
 	}
 }
 
@@ -237,12 +210,11 @@ Create()
 {
 	bMoving = FALSE;
 	bAiming = FALSE;
-	justmoved=FALSE;
-	gun_1=[0];
+	justMoved=FALSE;
+	gun_1=0;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();
 	start-script MotionControl();
-	start-script SmokeUnit();
 }
 
 StartMoving()
@@ -285,42 +257,33 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	if (gun_1 == [0])
+	if (gun_1 == 0)
 	{
 		emit-sfx 1024 + 0 from flare;
 		sleep 50;
-		gun_1 = [1];
-		return 0;
+		gun_1 = 1;
 	}
-	if (gun_1 == [1])
+	else
 	{
 		emit-sfx 1024 + 0 from flare2;
 		sleep 50;
-		gun_1 = [0];
-		return 0;
+		gun_1 = 0;
 	}
 }
 
 QueryPrimary(piecenum)
 {
-	if (gun_1 == [0])
+	if (gun_1 == 0)
 	{
 		piecenum = flare;
-		return 0;
 	}
-	if (gun_1 == [1])
+	else
 	{
 		piecenum = flare2;
-		return 0;
 	}
 }
 
 AimFromPrimary(piecenum)
-{
-	piecenum = torso;
-}
-
-SweetSpot(piecenum)
 {
 	piecenum = torso;
 }

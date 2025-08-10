@@ -180,27 +180,6 @@ resetReload() {
 
 
 
-SmokeUnit(healthpercent, sleeptime, smoketype) {
-	while( get BUILD_PERCENT_LEFT )	{
-		sleep 400;
-	}
-	while( TRUE ) {
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 ) {
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent ) {
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 ) {
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-	return (0);
-}
 
 Create() {
 	hide ring1;
@@ -216,7 +195,6 @@ Create() {
 	start-script ChargeDisruptionControl();
 	start-script ChargeControl();
 	start-script ChargeFX();
-	start-script SmokeUnit();
 	start-script resetReload();
 	return (0);
 }
@@ -268,7 +246,7 @@ AimFromPrimary(piecenum) {
 
 
 FirePrimary() {
-	chargeState = [0];
+	chargeState = 0;
 	hide ring1;
 	hide ring2;
 	hide ring3;

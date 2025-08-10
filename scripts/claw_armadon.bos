@@ -19,39 +19,12 @@ static-var  gun_1;
 
 #include "tankthreads.h"
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
 
 Create()
 {
 	call-script stopAimHelper1(<1000>,<1000>);
-	start-script SmokeUnit();
 	start-script AnimateTracks();
-	gun_1 = [0];
+	gun_1 = 0;
 }
 
 RestoreAfterDelay()
@@ -80,30 +53,30 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	if(gun_1 == [0])
+	if(gun_1 == 0)
 	{
 		move barrel to z-axis [-3.500000] now;
 		emit-sfx 1024 from flash;
 		sleep 100;
-		gun_1 = [1];
+		gun_1 = 1;
 		move barrel to z-axis [0.000000] speed [9.000000];
 		return (0);
 	}
-	if(gun_1 == [1])
+	if(gun_1 == 1)
 	{
 		move barrel2 to z-axis [-3.500000] now;
 		emit-sfx 1024 from flash2;
 		sleep 100;
-		gun_1 = [2];
+		gun_1 = 2;
 		move barrel2 to z-axis [0.000000] speed [9.000000];
 		return (0);
 	}
-	if(gun_1 == [2])
+	if(gun_1 == 2)
 	{
 		move barrel3 to z-axis [-3.500000] now;
 		emit-sfx 1024 from flash3;
 		sleep 100;
-		gun_1 = [0];
+		gun_1 = 0;
 		move barrel3 to z-axis [0.000000] speed [9.000000];
 		return (0);
 	}		
@@ -116,15 +89,15 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if(gun_1 == [0])
+	if(gun_1 == 0)
 	{
 		piecenum = flash;
 	}
-	if(gun_1 == [1])
+	else if(gun_1 == 1)
 	{
 		piecenum = flash2;
 	}
-	if(gun_1 == [2])
+	else if(gun_1 == 2)
 	{
 		piecenum = flash3;
 	}	

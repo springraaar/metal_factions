@@ -465,7 +465,7 @@ function gadget:Initialize()
 			matrixMode = 0,
 		}
 	})
-	Spring.Echo("gfx_unit_textures fwd log", gl.GetShaderLog())
+	--Spring.Echo("gfx_unit_textures fwd log", gl.GetShaderLog())
 	if fwdShader == nil then
 		gadgetHandler:RemoveGadget()
 		return
@@ -493,7 +493,7 @@ function gadget:Initialize()
 			matrixMode = 0,
 		}
 	})
-	Spring.Echo("gfx_unit_textures dfr log", gl.GetShaderLog())
+	--Spring.Echo("gfx_unit_textures dfr log", gl.GetShaderLog())
 	if dfrShader == nil then
 		gadgetHandler:RemoveGadget()
 		return

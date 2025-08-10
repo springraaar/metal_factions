@@ -11,7 +11,7 @@
 
 piece  torso, ruparm, luparm, rbigflash, nanospray, pelvis, lf1, lf2, head, lthigh, rthigh, lloarm, rloarm, rleg, lleg, rfoot,lfoot, torpgun,torpedo, lfirept2, h2, nano, launcher, launcher2, rgun, t2,t3,t4,lshoulder,rshoulder,jumpback,jbwings,lbjetpt,rbjetpt,jumpjets,lfjet,rfjet,lfjetpt,rfjetpt;
 
-static-var  bMoving, bBuilding, bDgunning,bAiming, Static_Var_6, bUnderwater, canAim1, canAim2, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, gun_1, legAngle1, legAngle2, legAngle3;
+static-var  bMoving, bBuilding, bDgunning,bAiming, bUnderwater, canAim1, canAim2, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, gun_1, legAngle1, legAngle2, legAngle3;
 
 #include "aimhelper1.h"
 
@@ -105,39 +105,6 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 		}
 	
 		sleep 60;
-	}
-}
-
-
-Sing()
-{
-	Static_Var_6 = Rand( 0, 9 );
-	if( Static_Var_6 == 0 )
-	{
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		return (0);
-	}
-	if( Static_Var_6 == 1 )
-	{
-		play-sound( "ArmCom1", 15 );
-		play-sound( "ArmCom1", 15 );
-		play-sound( "ArmCom1", 15 );
-		play-sound( "ArmCom1", 15 );
-		play-sound( "ArmCom1", 15 );
-		return (0);
-	}
-	if( Static_Var_6 > 1 AND Static_Var_6 < 10 )
-	{
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		return (0);
 	}
 }
 
@@ -258,6 +225,8 @@ walk()
 {
 	var slowTurnSpd, slowTurnSpd2;
 
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+	
 	slowTurnSpd = mATurnSpd2 / 2;
 	slowTurnSpd2 = mATurnSpd2 / 6;
 	
@@ -432,16 +401,9 @@ MotionControl()
 		if( moving )
 		{
 			justMoved = TRUE;
-			if( aiming )
-			{
-				call-script walk();
-			}
-			if( !aiming )
-			{
-				call-script walk();
-			}
+			call-script walk();
 		}
-		if( !moving )
+		else
 		{
 			if( justMoved )
 			{
@@ -486,7 +448,7 @@ Create()
 	bAiming = FALSE;
 	canAim1 = TRUE;
 	canAim2 = FALSE;
-	gun_1 = [0];
+	gun_1 = 0;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script initJump();
 	start-script MotionSpeedControl();
@@ -505,12 +467,6 @@ StartMoving()
 StopMoving()
 {
 	bMoving = FALSE;
-	return;
-}
-
-SweetSpot(piecenum)
-{
-	piecenum = torso;
 	return;
 }
 
@@ -547,14 +503,15 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if(gun_1 == [0])
+	if(gun_1 == 0)
 	{
 		piecenum = lf1;
 	}
-	if(gun_1 == [1])
+	else
 	{
 		piecenum = lf2;
-	}	
+	}
+	return(0);
 }
 
 
@@ -586,20 +543,19 @@ AimPrimary(heading, pitch)
 
 Shot1()
 {
-	if(gun_1 == [0])
+	if(gun_1 == 0)
 	{
 		emit-sfx 1024+2 from lf1;
 		sleep 50;
-		gun_1 = [1];
-		return 0;
+		gun_1 = 1;
 	}
-	if(gun_1 == [1])
+	else
 	{
 		emit-sfx 1024+2 from lf2;
 		sleep 50;
-		gun_1 = [0];
-		return 0;
+		gun_1 = 0;
 	}
+	return (0);
 }
 
 FirePrimary()

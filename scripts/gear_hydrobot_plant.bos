@@ -71,41 +71,6 @@ deactivatescr()
 	sleep 100;
 }
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from nano1;
-		}
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from nano2;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
 
 OpenYard()
 {
@@ -179,36 +144,35 @@ RequestState(requestedstate, currentstate)
 
 Create()
 {
-	nanoPt = 111;
+	nanoPt = 0;
 	call-script InitState();
-	start-script SmokeUnit();
 	start-script Build();
 }
 
 QueryNanoPiece(piecenum)
 {
-	if( nanoPt == 111 )
+	if( nanoPt == 0 )
 	{
 		piecenum = beam1;
-		nanoPt = 222;
+		nanoPt = 1;
 		return (0);
 	}
-	if( nanoPt == 222 )
+	if( nanoPt == 1 )
 	{
 		piecenum = beam2;
-		nanoPt = 333;
+		nanoPt = 2;
 		return (0);
 	}
-	if( nanoPt == 333 )
+	if( nanoPt == 2 )
 	{
 		piecenum = beam3;
-		nanoPt = 444;
+		nanoPt = 3;
 		return (0);
 	}
-	if( nanoPt == 444 )
+	if( nanoPt == 3 )
 	{
 		piecenum = beam4;
-		nanoPt = 111;
+		nanoPt = 0;
 		return (0);
 	}
 
@@ -242,11 +206,6 @@ StopBuilding()
 QueryBuildInfo(piecenum)
 {
 	piecenum = pad;
-}
-
-SweetSpot(piecenum)
-{
-	piecenum = base;
 }
 
 Killed(severity, corpsetype)

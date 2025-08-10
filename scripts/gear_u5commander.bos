@@ -11,7 +11,7 @@
 
 piece  torso, ruparm, luparm, larm, rarm, lflare,rflare, pelvis, rnano,rnanospray, lnano, lnanospray, lgun,lbg2,lbg3,lbg4,lbg5,lfirept,ltorpgun,ltorpedo,rgun,rbg2,rbg3,rbg4,rbg5,rfirept,rtorpgun,rtorpedo, head, h2, h3, pack, lthigh, rthigh, rleg, lleg, lfoot, rfoot,jumpback,jbl,jbr,lbjetpt,rbjetpt,jumpjets,lfjet,rfjet,lfjetpt,rfjetpt;
 
-static-var  bMoving, bBuilding, bAiming, Static_Var_6, bDgunning, bUnderwater, canAim1, canAim2, gun_1,gun_2,nano1,mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
+static-var  bMoving, bBuilding, bAiming, bDgunning, bUnderwater, canAim1, canAim2, gun_1,gun_2,nano1,mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
 
 #include "aimhelper1.h"
 
@@ -106,40 +106,6 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 		sleep 60;
 	}
 }
-
-Sing()
-{
-	Static_Var_6 = Rand( 0, 9 );
-	if( Static_Var_6 == 0 )
-	{
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		return (0);
-	}
-	if( Static_Var_6 == 1 )
-	{
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		return (0);
-	}
-	if( Static_Var_6 > 1 AND Static_Var_6 < 10 )
-	{
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		return (0);
-	}
-}
-
-
 
 
 // shows nano effect while building
@@ -265,6 +231,8 @@ checkUnderwater()
 walk()
 {
 	var slowTurnSpd, slowTurnSpd2;
+	
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
 
 	slowTurnSpd = mATurnSpd2 / 4;
 	slowTurnSpd2 = mATurnSpd2 / 12;
@@ -428,17 +396,9 @@ MotionControl()
 		if( moving )
 		{
 			justMoved = TRUE;
-			if( aiming )
-			{
-				call-script walk();
-			}
-			if( !aiming )
-			{
-				call-script walk();
-			}
-			
+			call-script walk();
 		}
-		if( !moving )
+		else
 		{
 			if( justMoved )
 			{
@@ -482,9 +442,9 @@ Create()
 	bUnderwater = FALSE;
 	canAim1 = TRUE;
 	canAim2 = FALSE;
-	gun_1=[0];
-	gun_2=[0];
-	nano1=[0];
+	gun_1=0;
+	gun_2=0;
+	nano1=0;
 	bAiming = 0;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script initJump();
@@ -507,24 +467,16 @@ StopMoving()
 	return;
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = torso;
-	return;
-}
-
 QueryNanoPiece(piecenum)
 {
-	if (nano1 == [0]) {
+	if (nano1 == 0) {
 		piecenum = lnanospray;
-		nano1 = [1];
-		return;
-	}
-	if (nano1 == [1]) {
+		nano1 = 1;
+	} else {
 		piecenum = rnanospray;
-		nano1 = [0];
-		return;
+		nano1 = 0;
 	}	
+	return (0);
 }
 
 RestorePosition()
@@ -550,14 +502,12 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if (gun_1 == [0]) {
+	if (gun_1 == 0) {
 		piecenum = lflare;
-		return;
-	}
-	if (gun_1 == [1]) {
+	} else {
 		piecenum = rflare;
-		return;
 	}
+	return (0);
 }
 
 AimPrimary(heading, pitch)
@@ -590,26 +540,24 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	if (gun_1 == [0]) {
+	if (gun_1 == 0) {
 		turn larm to x-axis <20.000000> now;
 		turn lgun to x-axis <-30.000000> now;
 		emit-sfx 1024 from lflare;	
 		sleep 250;
 		turn larm to x-axis <0.000000> speed <130.038462>;
 		turn lgun to x-axis <0.000000> speed <260.038462>;
-		gun_1 = [1];
-		return;
-	}
-	if (gun_1 == [1]) {
+		gun_1 = 1;
+	} else {
 		turn rarm to x-axis <20.000000> now;
 		turn rgun to x-axis <-30.000000> now;
 		emit-sfx 1024 from rflare;	
 		sleep 250;
 		turn rarm to x-axis <0.000000> speed <130.038462>;
 		turn rgun to x-axis <0.000000> speed <260.038462>;
-		gun_1 = [0];
-		return;
-	}	
+		gun_1 = 0;
+	}
+	return (0);
 }
 
 
@@ -621,10 +569,9 @@ AimFromSecondary(piecenum)
 
 QuerySecondary(piecenum)
 {
-	if(gun_2 == [0]) {
+	if(gun_2 == 0) {
 		piecenum = lfirept;
-	}
-	if(gun_2 == [1]) {
+	} else {
 		piecenum = rfirept;
 	}
 	return;
@@ -658,22 +605,20 @@ AimSecondary(heading, pitch)
 
 FireSecondary()
 {
-	if (gun_2 == [0]) {
+	if (gun_2 == 0) {
 		move ltorpedo to z-axis [-3.500000] now;
 		sleep 100;
-		gun_2 = [1];
+		gun_2 = 1;
 		sleep 900;
 		move ltorpedo to z-axis [0.000000] speed [9.000000];
-		return;
-	}
-	if (gun_2 == [1]) {
+	} else {
 		move rtorpedo to z-axis [-3.500000] now;
 		sleep 100;
-		gun_2 = [0];
+		gun_2 = 0;
 		sleep 900;
 		move rtorpedo to z-axis [0.000000] speed [9.000000];
-		return;
 	}
+	return (0);
 }
 
 

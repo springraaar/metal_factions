@@ -10,7 +10,7 @@ piece  base, sup, fork, body1,body2, lleg1, lleg2, lleg3,
        rleg3, rleg2, rleg1, bodysect1, head, turretholder,  rleg22,
        rleg33, rleg11, lleg33, lleg22, lleg11;
 
-static-var  bMoving, Static_Var_2, Static_Var_4, Static_Var_5, Static_Var_6, mASpdFactor;
+static-var  bMoving, mASpdFactor;
 
 // Signal definitions
 
@@ -39,32 +39,6 @@ MotionSpeedControl(minSpeed, maxSpeed,currentSpeed)
 }
 
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
 
 HitByWeapon(Func_Var_1, Func_Var_2)
 {
@@ -78,6 +52,8 @@ HitByWeapon(Func_Var_1, Func_Var_2)
 
 walk()
 {
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+
 	if( bMoving )
 	{
 		turn rleg22 to z-axis <0.000000> speed <80.000000> * mASpdFactor / 100;
@@ -181,18 +157,24 @@ Stop()
 
 }
 
-MotionControl(moving)
+MotionControl(moving,justMoved)
 {
+	justMoved = TRUE;
 	while( TRUE )
 	{
 		moving = bMoving;
 		if( moving )
 		{
+			justMoved=TRUE;
 			call-script walk();
 		}
-		if( !moving )
+		else
 		{
-			call-script Stop();
+			if (justMoved)
+			{
+				call-script Stop();
+				justMoved = FALSE;
+			}
 			sleep 100;
 		}
 	}
@@ -215,15 +197,12 @@ Deactivate()
 Create()
 {
 	bMoving = FALSE;
-	Static_Var_4 = 0;
-	Static_Var_5 = 2;
 	turn lleg3 to y-axis <20.000000> speed <300.000000>;
 	turn rleg3 to y-axis <-20.000000> speed <300.000000>;
 	turn rleg1 to y-axis <30.000000> speed <300.000000>;
 	turn lleg1 to y-axis <-30.000000> speed <300.000000>;
 	start-script MotionSpeedControl();
 	start-script MotionControl();
-	start-script SmokeUnit();
 }
 
 StartMoving()
@@ -236,38 +215,24 @@ StopMoving()
 	bMoving = FALSE;
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-}
-
 
 Killed(severity, corpsetype)
 {
 
 	if( severity <= 50 )
 	{
-		explode base type BITMAPONLY | BITMAP3;
 		explode head type SHATTER | SMOKE | EXPLODE_ON_HIT | BITMAP3;
-		explode bodysect1 type BITMAPONLY | BITMAP3;
 		explode lleg1 type SHATTER | BITMAP4;
-		explode lleg2 type BITMAPONLY | BITMAP3;
 		explode lleg3 type SHATTER | BITMAP5;
-		explode rleg3 type BITMAPONLY | BITMAP3;
 		explode rleg2 type FALL | EXPLODE_ON_HIT | BITMAP3;
-		explode rleg1 type BITMAPONLY | BITMAP5;
-		explode turretholder type BITMAPONLY | BITMAP5;
 		return (1);
 	}
-	explode base type BITMAPONLY | BITMAP3;
 	explode head type SHATTER | EXPLODE_ON_HIT | BITMAP3;
-	explode bodysect1 type BITMAPONLY | BITMAP3;
-	explode lleg1 type BITMAPONLY | BITMAP4;
-	explode lleg2 type BITMAPONLY | BITMAP3;
-	explode lleg3 type BITMAPONLY | BITMAP5;
-	explode rleg3 type BITMAPONLY | BITMAP3;
+	explode bodysect1 type SHATTER;
+	explode lleg1 type SHATTER;
+	explode lleg2 type SHATTER;
+	explode lleg3 type SHATTER;
 	explode rleg2 type FALL | EXPLODE_ON_HIT | BITMAP3;
-	explode rleg1 type BITMAPONLY | BITMAP5;
-	explode turretholder type BITMAPONLY | BITMAP5;
+	explode turretholder type SHATTER;
 	return (2);
 }

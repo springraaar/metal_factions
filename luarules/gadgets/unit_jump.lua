@@ -48,7 +48,8 @@ local spSetUnitRulesParam    = Spring.SetUnitRulesParam
 local spGetUnitRulesParam    = Spring.GetUnitRulesParam
 local spSetUnitNoMinimap     = Spring.SetUnitNoMinimap
 local spGetUnitIsStunned     = Spring.GetUnitIsStunned
-local spGetCommandQueue      = Spring.GetCommandQueue
+local spGetUnitCommands      = Spring.GetUnitCommands
+local spGetUnitCurrentCommand= Spring.GetUnitCurrentCommand
 local spGiveOrderToUnit      = Spring.GiveOrderToUnit
 local spGetUnitVelocity      = Spring.GetUnitVelocity
 local spSetUnitVelocity      = Spring.SetUnitVelocity
@@ -870,17 +871,17 @@ function gadget:UnitFromFactory(unitID, unitDefID, unitTeam, facID, facDefID)
 		-- The first command in the queue is a move command added by the engine.
 		local cmdID_1, cmdID_2, cmdTag_1
 		if Spring.Utilities.COMPAT_GET_ORDER then
-			local queue = Spring.GetCommandQueue(unitID, 2)
+			local queue = spGetUnitCommands(unitID, 2)
 			if queue and queue[1] and queue[2] then
 				cmdID_1, cmdID_2, cmdTag_1 = queue[1].id, queue[2].id, queue[1].tag
 			end
 		else
-			cmdID_1, _, cmdTag_1 = Spring.GetUnitCurrentCommand(unitID)
-			cmdID_2 = Spring.GetUnitCurrentCommand(unitID, 2)
+			cmdID_1, _, cmdTag_1 = spGetUnitCurrentCommand(unitID)
+			cmdID_2 = spGetUnitCurrentCommand(unitID, 2)
 		end
 		if cmdID_1 and cmdID_2 then
 			if cmdID_1 == CMD_MOVE and cmdID_2 == CMD_JUMP then
-				Spring.GiveOrderToUnit(unitID, CMD_REMOVE, {cmdTag_1}, 0)
+				spGiveOrderToUnit(unitID, CMD_REMOVE, {cmdTag_1}, 0)
 			end
 		end
 	end

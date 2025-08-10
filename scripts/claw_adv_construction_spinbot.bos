@@ -7,7 +7,7 @@
 
 piece  base, pivot, wake1, wake2, turret, larm, rarm, rnano, lnano, lbeam, rbeam,head,spike, spinner, bottom, b2, d2, s1, s2,s3,d3, base1, base2,base3;
 
-static-var  bAiming, bBuilding, Static_Var_3, bSwimming, nanoPt, restore_delay, terrainStatus, Static_Var_8, waterSpeed, landSpeed;
+static-var  bAiming, bBuilding, bSwimming, nanoPt, terrainStatus, waterSpeed, landSpeed;
 
 // Signal definitions
 #define SIG_MOVE			2
@@ -29,34 +29,6 @@ BuildFX()
 	return (0);
 }
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	var Func_Var_4;
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from turret;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-	return (0);
-}
 
 stopWheels()
 {
@@ -133,7 +105,6 @@ MotionControl(justMoved)
 		}
 		if( bMoving )
 		{
-			Static_Var_3 = 1;
 			if( bSwimming )
 			{
 				//set MAX_SPEED to waterSpeed; // REPLACED BY GADGET
@@ -150,7 +121,6 @@ MotionControl(justMoved)
 		}
 		if( !bMoving )
 		{
-			Static_Var_3 = 1;
 			if( justMoved AND ( !bSwimming ) )
 			{
 				call-script stopWheels();
@@ -170,15 +140,11 @@ Create()
 	
 	bMoving = FALSE;
 	bAiming = FALSE;
-	nanoPt = [0];
-	Static_Var_3 = 1;
+	nanoPt = 0;
 	bSwimming = FALSE;
-	Static_Var_8 = 1;
-	restore_delay = 3000;
 	start-script MotionControl();
 	start-script WheelSpeedControl();
 	start-script BuildFX();
-	start-script SmokeUnit();
 	return (0);
 }
 
@@ -217,11 +183,6 @@ setSFXoccupy(Func_Var_1)
 	return (0);
 }
 
-SetMaxReloadTime(Func_Var_1)
-{
-	restore_delay = Func_Var_1 * 2;
-	return (0);
-}
 
 RestoreAfterDelay()
 {
@@ -233,18 +194,17 @@ RestoreAfterDelay()
 
 QueryNanoPiece(piecenum)
 {
-	if( nanoPt == [0] )
+	if( nanoPt == 0 )
 	{
 		piecenum = lbeam;
-		nanoPt = [1];
-		return (0);
+		nanoPt = 1;
 	}
-	if( nanoPt == [1] )
+	else
 	{
 		piecenum = rbeam;
-		nanoPt = [0];
-		return (0);
+		nanoPt = 0;
 	}
+	return (0);
 }
 
 

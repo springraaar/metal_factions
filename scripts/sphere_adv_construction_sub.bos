@@ -109,6 +109,7 @@ Stop()
 Create()
 {
 	buildHeading = 0;
+	nanoPiece=0;
 	isOpen = FALSE;
 	start-script Build();
 	return (0);
@@ -135,17 +136,15 @@ StopBuilding()
 
 QueryNanoPiece(piecenum)
 {
-	if( nanoPiece == [0] )
+	if( nanoPiece == 0 )
 	{
 		piecenum = beam1;
-		nanoPiece = [1];
-		return (0);
+		nanoPiece = 1;
 	}
-	if( nanoPiece == [1] )
+	else
 	{
 		piecenum = beam2;
-		nanoPiece = [0];
-		return (0);
+		nanoPiece = 0;
 	}
 }
 

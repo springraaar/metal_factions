@@ -11,7 +11,7 @@
 
 piece  torso, ruparm, luparm, larm, rarm, lgun, rgun, rbarrel, lbarrel, lnanospray, rnanospray,pelvis, lflare, rflare, head, h2, pack, lthigh, rthigh, lnano, rnano, ltbarrel, rtbarrel, rleg, lleg, lfoot, rfoot, lknee, rknee,jumpback,jbl,jbr,lbjetpt,rbjetpt,jumpjets,lfjet,rfjet,lfjetpt,rfjetpt,flarept,lsleeve2,lflare2,rsleeve2,rflare2;
 
-static-var  bMoving, firePoint, firePoint2, firePoint3, nanoPt, bBuilding, Static_Var_3, bAiming, bHeadAiming, Static_Var_5, Static_Var_6, bDgunning, bUnderwater, canAim1, canAim2, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
+static-var  bMoving, firePoint, firePoint2, firePoint3, nanoPt, bBuilding, bAiming, bHeadAiming, bDgunning, bUnderwater, canAim1, canAim2, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
 
 #include "aimhelper1.h"
 #include "aimhelper2.h"
@@ -109,40 +109,6 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 		sleep 60;
 	}
 }
-
-Sing()
-{
-	Static_Var_6 = Rand( 0, 9 );
-	if( Static_Var_6 == 0 )
-	{
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		return (0);
-	}
-	if( Static_Var_6 == 1 )
-	{
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		return (0);
-	}
-	if( Static_Var_6 > 1 AND Static_Var_6 < 10 )
-	{
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		return (0);
-	}
-}
-
-
 
 
 // shows nano effect while building
@@ -263,6 +229,8 @@ checkUnderwater()
 walk()
 {
 	var slowTurnSpd, slowTurnSpd2;
+
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
 
 	slowTurnSpd = mATurnSpd2 / 4;
 	slowTurnSpd2 = mATurnSpd2 / 12;
@@ -426,17 +394,9 @@ MotionControl()
 		if( moving )
 		{
 			justMoved = TRUE;
-			if( aiming )
-			{
-				call-script walk();
-			}
-			if( !aiming )
-			{
-				call-script walk();
-			}
-			
+			call-script walk();
 		}
-		if( !moving )
+		else
 		{
 			if( justMoved )
 			{
@@ -505,18 +465,17 @@ StopMoving()
 
 QueryNanoPiece(piecenum)
 {
-	if (nanoPt == [0])
+	if (nanoPt == 0)
 	{
 		piecenum = lnanospray;
-		nanoPt = [1];
-		return;
+		nanoPt = 1;
 	}
-	if (nanoPt == [1])
+	else
 	{
 		piecenum = rnanospray;
-		nanoPt = [0];
-		return;
+		nanoPt = 0;
 	}
+	return (0);
 }
 
 RestorePosition()
@@ -611,7 +570,6 @@ Shot1()
 		turn lgun to x-axis <0.000000> speed <30.038462>;
 		move lbarrel to z-axis[0.000000] speed [8.000000];
 		firePoint = 1;
-		return (1);
 	}
 	else
 	{
@@ -623,8 +581,8 @@ Shot1()
 		turn rgun to x-axis <0.000000> speed <30.038462>;
 		move rbarrel to z-axis[0.000000] speed [8.000000];
 		firePoint = 0;
-		return (1);
 	}
+	return (1);
 }
 
 

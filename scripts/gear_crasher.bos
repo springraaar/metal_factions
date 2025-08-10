@@ -10,7 +10,7 @@
 
 piece  firept1, firept2, turret, gunbase, pelvis, lleg, rleg, gun1, gun2, ground;
 
-static-var  gun_3, bMoving, bAiming;
+static-var  gun_1, bMoving, bAiming;
 
 #include "aimhelper1.h"
 
@@ -18,7 +18,7 @@ static-var  gun_3, bMoving, bAiming;
 #define SIG_MOVE			2
 #define SIG_AIM				4
 
-
+//TODO missing walk cycle speed scaling
 walk()
 {
 	if( bMoving )
@@ -194,34 +194,6 @@ walk()
 	return (0);
 }
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from turret;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-	return (0);
-}
-
 
 StartMoving()
 {
@@ -234,30 +206,23 @@ StopMoving()
 }
 
 
-MotionControl(moving, aiming, justmoved)
+MotionControl(moving, aiming, justMoved)
 {
 	while( TRUE )
 	{
-		justmoved = TRUE;
+		justMoved = TRUE;
 		while( TRUE )
 		{
 			moving = bMoving;
 			aiming = bAiming;
 			if( moving )
 			{
-				if( aiming )
-				{
-					call-script walk();
-				}
-				if( !aiming )
-				{
-					call-script walk();
-				}
-				justmoved = TRUE;
+				call-script walk();
+				justMoved = TRUE;
 			}
-			if( !moving )
+			else
 			{
-				if( justmoved )
+				if( justMoved )
 				{
 					move lleg to z-axis [0.000000] speed [20.000000];
 					move rleg to z-axis [0.000000] speed [20.000000];
@@ -269,7 +234,7 @@ MotionControl(moving, aiming, justmoved)
 					{
 						turn gunbase to x-axis <0.000000> speed <200.038462>;
 					}
-					justmoved = FALSE;
+					justMoved = FALSE;
 				}
 				sleep 100;
 			}
@@ -280,18 +245,12 @@ MotionControl(moving, aiming, justmoved)
 
 Create()
 {
-	gun_3 = [0];
+	gun_1 = 0;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
-	start-script SmokeUnit();
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = pelvis;
-	return (0);
-}
 
 AimFromPrimary(piecenum)
 {
@@ -301,11 +260,11 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if( gun_3 == [0] )
+	if( gun_1 == 0 )
 	{
 		piecenum = firept1;
 	}
-	if( gun_3 == [1] )
+	else
 	{
 		piecenum = firept2;
 	}
@@ -339,25 +298,24 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	if( gun_3 == [0] )
+	if( gun_1 == 0 )
 	{
 		emit-sfx 1024+0 from firept1;
 		sleep 100;
-		gun_3 = [1];
-		return (0);
+		gun_1 = 1;
 	}
-	if( gun_3 == [1] )
+	else
 	{
 		emit-sfx 1024+0 from firept1;
 		sleep 100;
-		gun_3 = [0];
+		gun_1 = 0;
 	}
 	return (0);
 }
 
 Killed(severity, corpsetype)
 {
-	if( severity <= 35 )
+	if( severity <= 50 )
 	{
 		explode firept1 type FALL | BITMAP1;
 		explode firept2 type FALL | BITMAP2;

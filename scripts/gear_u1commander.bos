@@ -235,6 +235,8 @@ walk()
 {
 	var slowTurnSpd, slowTurnSpd2;
 
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+
 	slowTurnSpd = mATurnSpd2 / 4;
 	slowTurnSpd2 = mATurnSpd2 / 12;
 	
@@ -398,17 +400,9 @@ MotionControl()
 		if( moving )
 		{
 			justMoved = TRUE;
-			if( aiming )
-			{
-				call-script walk();
-			}
-			if( !aiming )
-			{
-				call-script walk();
-			}
-			
+			call-script walk();
 		}
-		if( !moving )
+		else
 		{
 			if( justMoved )
 			{
@@ -448,9 +442,9 @@ Create()
 	bUnderwater = FALSE;
 	canAim1 = TRUE;
 	canAim2 = FALSE;
-	gun_1 = [0];
-	gun_2 = [0];
-	nanoPt= [0];
+	gun_1 = 0;
+	gun_2 = 0;
+	nanoPt= 0;
 	bAiming = 0;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script initJump();
@@ -473,24 +467,16 @@ StopMoving()
 	return;
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = torso;
-	return;
-}
-
 QueryNanoPiece(piecenum)
 {
-	if (nanoPt == [0] ) {
+	if (nanoPt == 0 ) {
 		piecenum = lnanospray;
-		nanoPt = [1];
-		return;
-	}
-	if (nanoPt == [1] ) {
+		nanoPt = 1;
+	} else {
 		piecenum = rnanospray;
-		nanoPt = [0];
-		return;
+		nanoPt = 0;
 	}
+	return;
 }
 
 RestorePosition()
@@ -520,11 +506,10 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if (gun_1 == [0]) {
+	if (gun_1 == 0) {
 		piecenum = lfirept;
 		return;
-	}
-	if (gun_1 == [1]) {
+	} else {
 		piecenum = rfirept;
 		return;
 	}
@@ -559,17 +544,14 @@ AimPrimary(heading, pitch)
 
 Shot1(test)
 {
-	if (gun_1 == [0]) {
+	if (gun_1 == 0) {
 		emit-sfx 1024 + 2 from lfirept;
-		gun_1 = [1];
-		return;
-	}
-
-	if (gun_1 == [1]) {
+		gun_1 = 1;
+	} else {
 		emit-sfx 1024 + 2 from rfirept;
-		gun_1 = [0];
-		return;
+		gun_1 = 0;
 	}
+	return;
 }
 
 AimFromSecondary(piecenum)
@@ -580,13 +562,10 @@ AimFromSecondary(piecenum)
 
 QuerySecondary(piecenum)
 {
-	if (gun_2 == [0]) {
+	if (gun_2 == 0) {
 		piecenum = lflare;
-		return;
-	}
-	if (gun_2 == [1]) {
+	} else {
 		piecenum = rflare;
-		return;
 	}
 	return;
 }
@@ -619,24 +598,20 @@ AimSecondary(heading, pitch)
 
 FireSecondary()
 {
-	if (gun_2 == [0]) {
+	if (gun_2 == 0) {
 		move ltorpedo to z-axis [-3.500000] now;
 		sleep 100;
-		gun_2 = [1];
+		gun_2 = 1;
 		sleep 500;
 		move ltorpedo to z-axis [0.000000] speed [9.000000];
-		
-		return;
-	}
-
-	if (gun_2 == [1]) {
+	} else {
 		move rtorpedo to z-axis [-3.500000] now;
 		sleep 100;
-		gun_2 = [0];
+		gun_2 = 0;
 		sleep 500;
 		move rtorpedo to z-axis [0.000000] speed [9.000000];
-		return;
 	}
+	return;
 }
 
 AimFromTertiary(piecenum)

@@ -42,32 +42,6 @@ MotionSpeedControl(minSpeed, maxSpeed,currentSpeed)
 	}
 }
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
 
 HitByWeapon(Func_Var_1, Func_Var_2)
 {
@@ -81,6 +55,8 @@ HitByWeapon(Func_Var_1, Func_Var_2)
 
 walk()
 {
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+
 	if( bMoving )
 	{
 		turn rleg22 to z-axis <0.000000> speed <80.000000> * mASpdFactor / 100;
@@ -182,18 +158,24 @@ Stop()
 
 }
 
-MotionControl(moving)
+MotionControl(moving,justMoved)
 {
+	justMoved = TRUE;
 	while( TRUE )
 	{
 		moving = bMoving;
 		if( moving )
 		{
+			justMoved = TRUE;
 			call-script walk();
 		}
-		if( !moving )
+		else
 		{
-			call-script Stop();
+			if (justMoved)
+			{
+				call-script Stop();
+				justMoved = FALSE;
+			}
 			sleep 100;
 		}
 	}
@@ -203,14 +185,13 @@ Create()
 {
 	bMoving = FALSE;
 	isOpen = FALSE;
-	gun_1 = [0];
+	gun_1 = 0;
 	turn lleg3 to y-axis <20.000000> speed <300.000000>;
 	turn rleg3 to y-axis <-20.000000> speed <300.000000>;
 	turn rleg1 to y-axis <30.000000> speed <300.000000>;
 	turn lleg1 to y-axis <-30.000000> speed <300.000000>;
 	start-script MotionSpeedControl();
 	start-script MotionControl();
-	start-script SmokeUnit();
 }
 
 StartMoving()
@@ -255,10 +236,6 @@ RestoreAfterDelay()
 	call-script Close();
 	return (0);
 }
-SweetSpot(piecenum)
-{
-	piecenum = base;
-}
 
 AimPrimary(heading, pitch)
 {
@@ -274,19 +251,17 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	if (gun_1 == [0])
+	if (gun_1 == 0)
 	{
 		emit-sfx 1024+0 from flare1;
 		sleep 100;
-		gun_1 = [1];
-		return (0);
+		gun_1 = 1;
 	}
-	if (gun_1 == [1])
+	else
 	{
 		emit-sfx 1024+0 from flare2;
 		sleep 100;
-		gun_1 = [0];
-		return (0);
+		gun_1 = 0;
 	}
 }
 
@@ -297,15 +272,13 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if (gun_1 == [0])
+	if (gun_1 == 0)
 	{
 		piecenum = flare1;
-		return (0);
 	}
-	if (gun_1 == [1])
+	else
 	{
 		piecenum = flare2;
-		return (0);
 	}
 }
 

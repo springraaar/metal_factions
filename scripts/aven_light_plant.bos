@@ -3,17 +3,16 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-piece  base, pad, beam1, beam2, side1, side2, door2, door1,
-       plate2, plate1, nano2, nano1, post1, post2;
+piece  base, pad, beam1, beam2, side1, side2, door2, door1,plate2, plate1, nano2, nano1, post1, post2;
 
-static-var  Static_Var_1, Static_Var_2, Static_Var_3, Static_Var_4, Static_Var_5;
+static-var  nanoPt, desiredState, stateChanging, bBuilding;
 
 
 Build()
 {
 	while (TRUE)
 	{
-		if( Static_Var_5 == 1 )
+		if( bBuilding == 1 )
 		{
 			emit-sfx 1024 + 0 from beam1;
 			emit-sfx 1024 + 0 from beam2;
@@ -94,33 +93,6 @@ deactivatescr()
 	sleep 20;
 }
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
-
 OpenYard()
 {
 	set YARD_OPEN to 1;
@@ -147,17 +119,6 @@ CloseYard()
 
 Go()
 {
-	dont-cache door2;
-	dont-cache door1;
-	dont-cache nano1;
-	dont-cache nano2;
-	dont-cache pad;
-	dont-cache plate1;
-	dont-cache plate2;
-	dont-cache post1;
-	dont-cache post2;
-	dont-cache side1;
-	dont-cache side2;
 	call-script activatescr();
 	call-script OpenYard();
 	set INBUILDSTANCE to 1;
@@ -165,91 +126,62 @@ Go()
 
 Stop()
 {
-	Static_Var_5 = 0;
+	bBuilding = 0;
 	set INBUILDSTANCE to 0;
 	call-script CloseYard();
 	call-script deactivatescr();
-	cache door2;
-	cache door1;
-	cache nano1;
-	cache nano2;
-	cache pad;
-	cache plate1;
-	cache plate2;
-	cache post1;
-	cache post2;
-	cache side1;
-	cache side2;
 }
 
 InitState()
 {
-	Static_Var_3 = 1;
-	Static_Var_4 = 0;
+	desiredState = 1;
+	stateChanging = 0;
 }
 
 RequestState(requestedstate, currentstate)
 {
-	if( Static_Var_4 )
+	if( stateChanging )
 	{
-		Static_Var_3 = requestedstate;
+		desiredState = requestedstate;
 		return (0);
 	}
-	Static_Var_4 = 1;
-	currentstate = Static_Var_3;
-	Static_Var_3 = requestedstate;
-	while( Static_Var_3 != currentstate )
+	stateChanging = 1;
+	currentstate = desiredState;
+	desiredState = requestedstate;
+	while( desiredState != currentstate )
 	{
-		if( Static_Var_3 == 0 )
+		if( desiredState == 0 )
 		{
 			call-script Go();
 			currentstate = 0;
 		}
-		if( Static_Var_3 == 1 )
+		if( desiredState == 1 )
 		{
 			call-script Stop();
 			currentstate = 1;
 		}
 	}
-	Static_Var_4 = 0;
+	stateChanging = 0;
 }
 
 Create()
 {
-	dont-shade door2;
-	dont-shade door1;
-	dont-shade nano1;
-	dont-shade nano2;
-	dont-shade pad;
-	dont-shade plate1;
-	dont-shade plate2;
-	dont-shade post1;
-	dont-shade post2;
-	dont-shade side1;
-	dont-shade side2;
-	Static_Var_2 = 0;
-	Static_Var_1 = 0;
+	nanoPt = 0;
 	call-script InitState();
-	start-script SmokeUnit();
 	start-script Build();
 }
 
 QueryNanoPiece(piecenum)
 {
-	if( Static_Var_1 == 0 )
+	if( nanoPt == 0 )
 	{
 		piecenum = beam1;
 	}
-	if( Static_Var_1 != 0 )
+	else
 	{
 		piecenum = beam2;
 	}
-	Static_Var_1 = !Static_Var_1;
-}
-
-Demo()
-{
-	Static_Var_2 = 1;
+	nanoPt = !nanoPt;
 }
 
 Activate()
@@ -262,32 +194,24 @@ Deactivate()
 {
 	signal 2;
 	set-signal-mask 2;
-	if( !Static_Var_2 )
-	{
-		sleep 5000;
-	}
+	sleep 5000;
 	set-signal-mask 0;
 	start-script RequestState(1);
 }
 
 StartBuilding()
 {
-	Static_Var_5 = 1;
+	bBuilding = 1;
 }
 
 StopBuilding()
 {
-	Static_Var_5 = 0;
+	bBuilding = 0;
 }
 
 QueryBuildInfo(piecenum)
 {
 	piecenum = pad;
-}
-
-SweetSpot(piecenum)
-{
-	piecenum = base;
 }
 
 Killed(severity, corpsetype)
@@ -314,5 +238,4 @@ Killed(severity, corpsetype)
 	explode plate1 type SHATTER;
 	explode plate2 type SHATTER;
 	return (2);
-
 }

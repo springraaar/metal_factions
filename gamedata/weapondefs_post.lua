@@ -122,7 +122,7 @@ for wdName, wd in pairs(WeaponDefs) do
 			wd.heightmod = 1
 			wd.heightboostfactor = 0
 		elseif (wd.weapontype == "BeamLaser") then
-			wd.heightmod = 1.0		-- default was 1.0
+			wd.heightmod = 0.5		-- default was 1.0
 			-- fading effect for beams proportional to damage
 			if wd.damage and wd.damage.default then
 				if not wd.beamttl then
@@ -187,11 +187,7 @@ for wdName, wd in pairs(WeaponDefs) do
 		elseif (wd.weapontype == "LaserCannon") then
 			wd.heightmod = 1.0		-- default was 1.0
 		elseif (wd.weapontype == "Cannon" or wd.weapontype == "EmgCannon" ) then
-			--if wd.range and tonumber(wd.range) > 380 then
-				wd.heightmod = 0.5			-- default was 0.8
-			--else
-			--	wd.heightmod = 1
-			--end
+			wd.heightmod = 0.5			-- default was 0.8
 
 			-- set heightboostfactor to let them hit further against lower ground to compensate for range reduction against higher ground
 			-- only for gravity-affected projectiles with curved trajectories

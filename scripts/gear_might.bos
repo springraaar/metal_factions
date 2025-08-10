@@ -59,23 +59,6 @@ RestoreAfterDelay5()
 	turn sleeve5 to x-axis <0.000000> speed <150.010989>;
 	return;
 }
-DamageControl(Func_Var_1)
-{
-	while( TRUE )
-	{
-		Func_Var_1 = get HEALTH;
-		if( Func_Var_1 < 50 )
-		{
-			emit-sfx 256 | 1 from sleeve;
-			if( Func_Var_1 < 25 )
-			{
-				emit-sfx 256 | 2 from turret;
-			}
-		}
-		sleep 1000;
-	}
-	return;
-}
 
 
 AimFromWeapon1(piecenum)
@@ -86,16 +69,15 @@ AimFromWeapon1(piecenum)
 
 QueryWeapon1(piecenum)
 {
-	if( gun_1 == [0])
+	if( gun_1 == 0)
 	{
 		piecenum = lflare;
-		return (0);
 	}
-	if ( gun_1 == [1])
+	else
 	{
 		piecenum = rflare;
-		return (0);
 	}
+	return (0);	
 }
 
 AimWeapon1(heading, pitch)
@@ -116,23 +98,21 @@ AimWeapon1(heading, pitch)
 
 FireWeapon1()
 {
-	if( gun_1 == [0] )
+	if( gun_1 == 0 )
 	{
 		move lbarrel to z-axis [-8.000000] now;
 		emit-sfx 1024 from lflare;
 		sleep 150;
 		move lbarrel to z-axis [0.000000] speed [10.000000];
-		gun_1 = [1];
-		return (0);
+		gun_1 = 1;
 	}
-	if ( gun_1 == [1] )
+	else
 	{
 		move rbarrel to z-axis [-8.000000] now;
 		emit-sfx 1024 from rflare;
 		sleep 150;
 		move rbarrel to z-axis [0.000000] speed [10.000000];
-		gun_1 = [0];
-		return (0);
+		gun_1 = 0;;
 	}
 	return;
 }
@@ -280,7 +260,7 @@ Killed(severity, corpsetype)
 
 Create()
 {
-	gun_1 = [0];
+	gun_1 = 0;
 	turn turret4 to y-axis <180.000000> now;
 	turn turret5 to y-axis <180.000000> now;
 	call-script stopAimHelper1(<1000>,<1000>);
@@ -288,7 +268,6 @@ Create()
 	{
 		sleep 250;
 	}
-	start-script DamageControl();
 	start-script AnimateTracks();
 	return;
 }

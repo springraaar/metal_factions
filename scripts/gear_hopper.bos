@@ -66,6 +66,7 @@ showJumpEffects(descending, frames) {
 #include "jump.h"
 
 
+//TODO walk cycle missing speed scaling
 walk()
 {
 
@@ -348,42 +349,13 @@ walk()
 		turn lfoot to x-axis <-16.527473> speed <3.736264> * SPEEDUP_FACTOR / 100;
 		sleep 94 * 100 / SPEEDUP_FACTOR;
 	}
-	//sleep 94;
-}
-
-
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from torso;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
 }
 
 
 
-MotionControl(moving, aiming, justmoved)
+MotionControl(moving, aiming, justMoved)
 {
-	justmoved = TRUE;
+	justMoved = TRUE;
 	while( TRUE )
 	{
 		moving = bMoving;
@@ -392,11 +364,11 @@ MotionControl(moving, aiming, justmoved)
 		if( moving )
 		{
 			call-script walk();
-			justmoved = TRUE;
+			justMoved = TRUE;
 		}
 		if( !moving )
 		{
-			if( justmoved )
+			if( justMoved )
 			{
 				move r_thigh to y-axis [0.000000] speed [10.000000];
 				move l_thigh to y-axis [0.000000] speed [10.000000];
@@ -415,7 +387,7 @@ MotionControl(moving, aiming, justmoved)
 					turn larm to x-axis <0.000000> speed <200.038462>;
 					turn luparm to x-axis <0.000000> speed <200.038462>;
 				}
-				justmoved = FALSE;
+				justMoved = FALSE;
 			}
 			sleep 100;
 		}
@@ -435,7 +407,6 @@ Create()
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script initJump();
 	start-script MotionControl();
-	start-script SmokeUnit();
 	start-script setHasJump(1);
 }
 StartMoving()
@@ -446,11 +417,6 @@ StartMoving()
 StopMoving()
 {
 	bMoving = FALSE;
-}
-
-SweetSpot(piecenum)
-{
-	piecenum = torso;
 }
 
 RestoreAfterDelay()
@@ -478,13 +444,12 @@ QueryPrimary(piecenum)
 	if( gun_1 == 0 )
 	{
 		piecenum = lgf;
-		return;
 	}
-	if( gun_1 == 1 )
+	else
 	{
 		piecenum = rgf;
-		return;
 	}
+	return (0);
 }
 
 Shot1()

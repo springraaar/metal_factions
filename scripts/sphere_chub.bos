@@ -10,7 +10,7 @@
 
 piece  groundx2, hips, torso,tl,tr,sleeve,b1, b2, b3, b4, f1,f2,f3,f4, s2,leg1, bleg, leg2, bleg2, leg3, bleg3, leg4, bleg4;
 
-static-var  bMoving, bAiming, justmoved, gun_1, mASpdFactor;
+static-var  bMoving, bAiming, justMoved, gun_1, mASpdFactor;
 
 #include "aimhelper1.h"
 
@@ -41,6 +41,8 @@ MotionSpeedControl(minSpeed, maxSpeed,currentSpeed)
 
 walk()
 {
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+	
 	if( bMoving )
 	{
 		/* X */
@@ -169,12 +171,12 @@ MotionControl(moving)
 		moving = bMoving;
 		if( moving )
 		{
-			justmoved = TRUE;
+			justMoved = TRUE;
 			call-script walk();
 		}
-		if( !moving )
+		else
 		{
-			if( justmoved )
+			if( justMoved )
 			{
 				turn leg1 to x-axis <0.000000> speed <360.000000>;
 				turn leg2 to x-axis <0.000000> speed <360.000000>;
@@ -200,37 +202,10 @@ MotionControl(moving)
 				turn bleg3 to z-axis <0.000000> speed <160.000000>;
 				turn bleg to z-axis <0.000000> speed <160.000000>;
 
-				justmoved = FALSE;
+				justMoved = FALSE;
 			}
 			sleep 100;
 		}
-	}
-}
-
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from torso;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
 	}
 }
 
@@ -238,12 +213,11 @@ Create()
 {
 	bMoving = FALSE;
 	bAiming = FALSE;
-	justmoved=FALSE;
-	gun_1 = [0];
+	justMoved=FALSE;
+	gun_1 = 0;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();
 	start-script MotionControl();
-	start-script SmokeUnit();
 }
 
 StartMoving()
@@ -286,54 +260,54 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	if (gun_1 == [0])
+	if (gun_1 == 0)
 	{
 		emit-sfx 1024 + 0 from f1;
 		sleep 130;
-		gun_1 = [1];
+		gun_1 = 1;
 		return (0);
 	}
-	if (gun_1 == [1])
+	if (gun_1 == 1)
 	{
 		emit-sfx 1024 + 0 from f2;
 		sleep 130;
-		gun_1 = [2];
+		gun_1 = 2;
 		return (0);
 	}
-	if (gun_1 == [2])
+	if (gun_1 == 2)
 	{
 		emit-sfx 1024 + 0 from f3;
 		sleep 130;
-		gun_1 = [3];
+		gun_1 = 3;
 		return (0);
 	}
-	if (gun_1 == [3])
+	if (gun_1 == 3)
 	{
 		emit-sfx 1024 + 0 from f4;
 		sleep 130;
-		gun_1 = [0];
+		gun_1 = 0;
 		return (0);
 	}			
 }
 
 QueryPrimary(piecenum)
 {
-	if (gun_1 == [0])
+	if (gun_1 == 0)
 	{
 		piecenum = f1;
 		return (0);
 	}
-	if (gun_1 == [1])
+	if (gun_1 == 1)
 	{
 		piecenum = f2;
 		return (0);
 	}
-	if (gun_1 == [2])
+	if (gun_1 == 2)
 	{
 		piecenum = f3;
 		return (0);
 	}
-	if (gun_1 == [3])
+	if (gun_1 == 3)
 	{
 		piecenum = f4;
 		return (0);

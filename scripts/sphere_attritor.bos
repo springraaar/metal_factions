@@ -38,29 +38,9 @@ MotionSpeedControl(minSpeed, maxSpeed,currentSpeed) {
 }
 
 
-SmokeUnit(healthpercent, sleeptime, smoketype) {
-	while( get BUILD_PERCENT_LEFT )	{
-		sleep 400;
-	}
-	while( TRUE ) {
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 ) {
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent ) {
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from tbase;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 ) {
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
-
-
 walk() {
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+
 	if( bMoving) {
 		turn rmid2 to z-axis <0.000000> speed <80.000000> * mASpdFactor / 100;
 		turn lmid2 to z-axis <0.000000> speed <80.000000> * mASpdFactor / 100;
@@ -202,7 +182,6 @@ Create() {
 	call-script stopAimHelper1(<1000>,<1000>);	
 	start-script MotionSpeedControl();
 	start-script MotionControl();
-	start-script SmokeUnit();
 }
 
 RestoreAfterDelay() {

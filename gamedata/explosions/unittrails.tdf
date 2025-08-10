@@ -1151,7 +1151,7 @@
 			emitRot=25;
 			emitRotSpread=45;
 			directional=0;
-			alwaysVisible=1;
+			alwaysVisible=0;
 		}
 		air=0;
 		water=1;
@@ -1247,7 +1247,7 @@
 			emitRot=25;
 			emitRotSpread=45;
 			directional=0;
-			alwaysVisible=1;
+			alwaysVisible=0;
 		}
 		air=0;
 		water=1;
@@ -1307,7 +1307,7 @@
 			emitRot=25;
 			emitRotSpread=45;
 			directional=0;
-			alwaysVisible=1;
+			alwaysVisible=0;
 		}
 		air=0;
 		water=1;
@@ -1365,7 +1365,7 @@
 			emitRot=25;
 			emitRotSpread=45;
 			directional=0;
-			alwaysVisible=1;
+			alwaysVisible=0;
 		}
 		air=0;
 		water=1;
@@ -1430,10 +1430,12 @@
 			texture=groundflash;
 	     		ttl = 20 d0.4;
      			colormap = 0.5 0.5 0.5 0.5   0 0 0 0;
+			alwaysVisible=0;
+			useAirLos=0;
 		}
 		air=0;
      		ground=1;
-	      water=0;
+		water=0;
 		underwater=1;
 		count=1;
 	}
@@ -1461,6 +1463,7 @@
 			emitRotSpread=35;
 			directional=0;
 			alwaysVisible=0;
+			useAirLos=0;
 		}
 		air=1;
 		unit=1;
@@ -1499,6 +1502,7 @@
 			emitRotSpread=35;
 			directional=0;
 			alwaysVisible=0;
+			useAirLos=0;
 		}
 		air=1;
 		water=1;
@@ -1530,6 +1534,7 @@
 			emitRotSpread=0;
 			directional=0;
 			alwaysVisible=0;
+			useAirLos=0;
 		}
 		air=1;
 		water=1;
@@ -1548,31 +1553,32 @@
 		class=CSimpleParticleSystem;
 		[properties]
 		{
-		sizeGrowth=0.7;
-		sizeMod=1.0;
-		pos=0, 0, 0; 
-		emitVector=dir;
-		gravity=0, -0.05, 0;  
-		colorMap=0.5 0.5 0.7 0.08   0.4 0.4 0.6 0.06   0.3 0.3 0.5 0.04;
-		Texture=waterdropcloud;
-		airdrag=0.91;
-		particleLife=8;
-		particleLifeSpread=3;
-		numParticles=0.1 r1;	// 10% chance
-		particleSpeed=1;
-		particleSpeedSpread=1;
-		particleSize=8;
-		particleSizeSpread=2;
-		emitRot=0;
-		emitRotSpread=35;
-		directional=0;
-		alwaysVisible=0;
+			sizeGrowth=0.7;
+			sizeMod=1.0;
+			pos=0, 0, 0; 
+			emitVector=dir;
+			gravity=0, -0.05, 0;  
+			colorMap=0.5 0.5 0.7 0.08   0.4 0.4 0.6 0.06   0.3 0.3 0.5 0.04;
+			Texture=waterdropcloud;
+			airdrag=0.91;
+			particleLife=8;
+			particleLifeSpread=3;
+			numParticles=0.1 r1;	// 10% chance
+			particleSpeed=1;
+			particleSpeedSpread=1;
+			particleSize=8;
+			particleSizeSpread=2;
+			emitRot=0;
+			emitRotSpread=35;
+			directional=0;
+			alwaysVisible=0;
+			useAirLos=0;
 		}
-	air=1;
-	water=1;
-	underwater=1;
-	ground=1;
-	count=1;
+		air=1;
+		water=1;
+		underwater=1;
+		ground=1;
+		count=1;
 	}
 	[water_puffs]
 	{
@@ -1598,6 +1604,7 @@
 			emitRotSpread=0;
 			directional=0;
 			alwaysVisible=0;
+			useAirLos=0;
 		}
 		air=1;
 		water=1;
@@ -1635,6 +1642,7 @@
 			emitRotSpread=35;
 			directional=0;
 			alwaysVisible=0;
+			useAirLos=0;
 		}
 		air=1;
 		water=1;
@@ -1651,7 +1659,7 @@
 			sizeMod=1.0;
 			pos=0, 0, 0; 
 			emitVector=dir;
-		    gravity=0, 0.1, 0;  
+			gravity=0, 0.1, 0;  
 			colorMap=0.3 0.3 0.4 0.01   0.2 0.2 0.25 0.005   0.01 0.01 0.03 0.0025;
 			Texture=smoke;
 			airdrag=0.91;
@@ -1666,6 +1674,7 @@
 			emitRotSpread=35;
 			directional=0;
 			alwaysVisible=0;
+			useAirLos=0;
 		}
 		air=1;
 		water=1;
@@ -1704,6 +1713,7 @@
 			emitRotSpread=0;
 			directional=0;
 			alwaysVisible=0;
+			useAirLos=0;
 		}
 		air=1;
 		water=1;
@@ -1735,6 +1745,7 @@
 			emitRotSpread=60;
 			directional=1;
 			alwaysVisible=0;
+			useAirLos=0;
 		}
 		air=1;
 		unit=1;
@@ -1761,6 +1772,7 @@
 			alpha=0.2;
 			alphadecay=0.02;
 			color=0.9, 1.0, 0.9;
+			alwaysVisible=0;
 		}
 		air=1;
 		water=1;
@@ -1768,4 +1780,76 @@
 		ground=1;
   		count=2; 
 	}
+}
+
+[DAMAGEDSMOKE1]
+{
+	[puffs]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.45;
+			sizeMod=1.01;
+			pos=0, -0,-0; 
+			emitVector=dir;
+			gravity=0, 0.15, 0;  
+			colorMap=0.4 0.4 0.4 0.2   0.5 0.5 0.5 0.15  0.5 0.5 0.5 0.1   0 0 0 0.0;
+			Texture=smoke;
+			airdrag=0.91;
+			particleLife=26 d0.13;
+			particleLifeSpread=1;
+			numParticles=1;
+			particleSpeed=1;
+			particleSpeedSpread=0.5;
+			particleSize=d0.15 3;
+			particleSizeSpread=d0.05 2;
+			emitRot=0;
+			emitRotSpread=30;
+			directional=1;
+			alwaysVisible=0;
+			useAirLos=0;
+		}
+		air=1;
+     		water=1;
+		underwater=0;
+		ground=1;
+     		count=1;
+  	}
+}
+
+[DAMAGEDSMOKE2]
+{
+	[puffs]
+	{
+		class=CSimpleParticleSystem;
+		[properties]
+		{
+			sizeGrowth=0.45;
+			sizeMod=1.01;
+			pos=0, -0,-0; 
+			emitVector=dir;
+			gravity=0, 0.13, 0;  
+			colorMap=0.0 0.0 0.0 1   0.0 0.0 0.0 1   0.0 0.0 0.0 0.0;
+			Texture=smoke;
+			airdrag=0.91;
+			particleLife=28 d0.18;
+			particleLifeSpread=1;
+			numParticles=1;
+			particleSpeed=1;
+			particleSpeedSpread=0.5;
+			particleSize=d0.19 4;
+			particleSizeSpread=d0.05 2;
+			emitRot=0;
+			emitRotSpread=30;
+			directional=1;
+			alwaysVisible=0;
+			useAirLos=0;
+		}
+		air=1;
+     		water=1;
+		underwater=0;
+		ground=1;
+     		count=1;
+  	}
 }

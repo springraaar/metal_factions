@@ -11,7 +11,7 @@
 
 piece  torso, ruparm, luparm, larm, rarm, nanospray, laser, pelvis, lflare, firept, head, h2, pack, lthigh, rthigh, nanogun, torpgun, biggun, rleg, lleg, lfoot, rfoot, torpedo, bg2, lknee, rknee,jumpback,jbl,jbr,lbjetpt,rbjetpt,jumpjets,lfjet,rfjet,lfjetpt,rfjetpt;
 
-static-var  bMoving, bBuilding, bAiming, Static_Var_6, bDgunning, bUnderwater, canAim1, canAim2,  mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
+static-var  bMoving, bBuilding, bAiming, bDgunning, bUnderwater, canAim1, canAim2,  mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3;
 
 #include "aimhelper1.h"
 
@@ -105,40 +105,6 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 		sleep 60;
 	}
 }
-
-Sing()
-{
-	Static_Var_6 = Rand( 0, 9 );
-	if( Static_Var_6 == 0 )
-	{
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		return (0);
-	}
-	if( Static_Var_6 == 1 )
-	{
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		return (0);
-	}
-	if( Static_Var_6 > 1 AND Static_Var_6 < 10 )
-	{
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		return (0);
-	}
-}
-
-
 
 
 // shows nano effect while building
@@ -253,6 +219,8 @@ checkUnderwater()
 walk()
 {
 	var slowTurnSpd, slowTurnSpd2;
+
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
 
 	slowTurnSpd = mATurnSpd2 / 4;
 	slowTurnSpd2 = mATurnSpd2 / 12;
@@ -416,17 +384,9 @@ MotionControl()
 		if( moving )
 		{
 			justMoved = TRUE;
-			if( aiming )
-			{
-				call-script walk();
-			}
-			if( !aiming )
-			{
-				call-script walk();
-			}
-			
+			call-script walk();
 		}
-		if( !moving )
+		else
 		{
 			if( justMoved )
 			{
@@ -484,12 +444,6 @@ StartMoving()
 StopMoving()
 {
 	bMoving = FALSE;
-	return;
-}
-
-SweetSpot(piecenum)
-{
-	piecenum = torso;
 	return;
 }
 

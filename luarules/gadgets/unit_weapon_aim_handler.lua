@@ -31,7 +31,7 @@ local targetForUnitId = {}
 local antiMissileWeaponDefIds = {}
 local lastPriorityForUnitId = {}
 
-local AA_FLAT_RANGE_EXTENSION = 90 
+local AA_FLAT_RANGE_EXTENSION = 70 
 
 
 local destructibleProjectileDefIds = {
@@ -123,12 +123,14 @@ function gadget:Initialize()
 						antiMissileWeaponDefIds[wd.id] = true
 					end
 					-- units with aaRangeBoosted weapons
+					
 					if wd.customParams.aarangeboost == "1" then
 						if not airTargettingWeaponIndexesByUnitDefId[id] then
 							airTargettingWeaponIndexesByUnitDefId[id] = {}
 						end
 						airTargettingWeaponIndexesByUnitDefId[id][wNum] = wd.range
 					end
+					
 				end
 			end
 		end

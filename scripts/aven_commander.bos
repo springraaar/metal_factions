@@ -251,6 +251,8 @@ walk()
 {
 	var slowTurnSpd, slowTurnSpd2;
 
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+	
 	slowTurnSpd = mATurnSpd2 / 2;
 	slowTurnSpd2 = mATurnSpd2 / 6;
 	
@@ -496,11 +498,6 @@ StopMoving()
 	return;
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = torso;
-	return;
-}
 
 QueryNanoPiece(piecenum)
 {

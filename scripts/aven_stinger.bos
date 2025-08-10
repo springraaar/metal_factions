@@ -5,7 +5,6 @@
 
 piece  flare, base, tail, aimh, aimv, jet,turret,front,turbase,pack;
 
-static-var  gun_1;
 
 // Signal definitions
 #define SIG_MOVE			2
@@ -13,7 +12,6 @@ static-var  gun_1;
 
 Create()
 {
-	gun_1 = [0];
 	return (0);
 }
 

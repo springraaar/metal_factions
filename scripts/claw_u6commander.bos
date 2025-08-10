@@ -12,7 +12,7 @@
 
 piece  torso, luparm, larm, lgun, lnanospray, lg1,lflare1, l1,l2,l3, ruparm, rarm, rgun, rnanospray, rg1, rflare1, r1,r2,r3, pelvis, head, spike1,spike2,spike3, lthigh, rthigh, rleg, lleg, lfoot, rfoot, ltorpgun, ltorpflare,rtorpgun,rtorpflare, emit3, lnano, rnano,jumpback,jbl,jbr,jb,lbjetpt,rbjetpt,jumpjets,lfjet,rfjet,lfjetpt,rfjetpt;
 
-static-var  bMoving, bBuilding, Static_Var_3, bAiming, Static_Var_5, Static_Var_6, bDgunning, bUnderwater, canAim1, canAim2, firept1, firept2, firept3, nanopt1, mASpdFactor, moveSpd1, turnSpd1, turnSpd2, turnSpd3;
+static-var  bMoving, bBuilding, bAiming, bDgunning, bUnderwater, canAim1, canAim2, firept1, firept2, nanopt1, mASpdFactor, moveSpd1, turnSpd1, turnSpd2, turnSpd3;
 
 #include "aimhelper1.h"
 
@@ -97,40 +97,6 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 		sleep 60;
 	}
 }
-
-Sing()
-{
-	Static_Var_6 = Rand( 0, 9 );
-	if( Static_Var_6 == 0 )
-	{
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		return (0);
-	}
-	if( Static_Var_6 == 1 )
-	{
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		return (0);
-	}
-	if( Static_Var_6 > 1 AND Static_Var_6 < 10 )
-	{
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		return (0);
-	}
-}
-
-
 
 
 // shows nano effect while building
@@ -247,6 +213,8 @@ checkUnderwater()
 
 walk()
 {
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+
 	if (isJumping) {
 		turn pelvis to x-axis <0.000000> speed <200.000000>;
 		move pelvis to y-axis [0.000000] speed [20.500000];
@@ -517,10 +485,6 @@ MotionControl()
 
 Create()
 {
-	//hide rflare;
-	//hide lflare;
-	//hide nanospray;
-	//hide torpedo;
 	hide ltorpgun;
 	hide rtorpgun;
 	bMoving = FALSE;
@@ -530,10 +494,9 @@ Create()
 	canAim1 = TRUE;
 	canAim2 = FALSE;
 	bAiming = FALSE;
-	firept1 = [0];
-	firept2 = [0];
-	firept3 = [0];
-	nanopt1 = [0];
+	firept1 = 0;
+	firept2 = 0;
+	nanopt1 = 0;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script initJump();
 	start-script MotionSpeedControl();
@@ -555,25 +518,17 @@ StopMoving()
 	return;
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = torso;
-	return;
-}
-
 QueryNanoPiece(piecenum)
 {
-	if(nanopt1 == [0])
+	if(nanopt1 == 0)
 	{
 		piecenum = lnanospray;
-		nanopt1 = [1];
-		return;
+		nanopt1 = 1;
 	}
-	if(nanopt1 == [1])
+	else
 	{
 		piecenum = rnanospray;
-		nanopt1 = [0];
-		return;
+		nanopt1 = 0;
 	}
 }
 
@@ -607,15 +562,13 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if (firept1 == [0])
+	if (firept1 == 0)
 	{
 		piecenum = lflare1;
-		return 0;
 	}
-	if (firept1 == [1])
+	else
 	{
 		piecenum = rflare1;
-		return 0;
 	}
 }
 
@@ -655,19 +608,17 @@ AimPrimary(heading, pitch)
 
 Shot1()
 {
-	if (firept1 == [0])
+	if (firept1 == 0)
 	{
 		emit-sfx 1024 from lflare1;
 		sleep 300;
-		firept1 = [1];
-		return 0;
+		firept1 = 1;
 	}
-	if (firept1 == [1])
+	else
 	{
 		emit-sfx 1024 from rflare1;
 		sleep 300;
-		firept1 = [0];
-		return 0;
+		firept1 = 0;
 	}
 }
 
@@ -681,15 +632,13 @@ AimFromSecondary(piecenum)
 
 QuerySecondary(piecenum)
 {
-	if(firept2 == [0])
+	if(firept2 == 0)
 	{
 		piecenum = ltorpflare;
-		return;
 	}
-	if(firept2 == [1])
+	else
 	{
 		piecenum = rtorpflare;
-		return;	
 	}
 }
 
@@ -728,17 +677,15 @@ AimSecondary(heading, pitch)
 
 FireSecondary()
 {
-	if(firept2 == [0])
+	if(firept2 == 0)
 	{
 		sleep 10;
-		firept2 = [1];
-		return;
+		firept2 = 1;
 	}
-	if(firept2 == [1])
+	else
 	{
 		sleep 10;
-		firept2 = [0];
-		return;	
+		firept2 = 0;
 	}
 }
 

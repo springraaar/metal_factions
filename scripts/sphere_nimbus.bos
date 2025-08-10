@@ -47,18 +47,13 @@ Create()
 	move mis to z-axis [-5.500000] now;
 
 	isOpen = FALSE;
-	firept2 = [0];
+	firept2 = 0;
 	bMoving=FALSE;
 	bAiming=FALSE;
 	call-script stopAimHelper1(<1000>,<1000>);
 }
 
 
-
-SweetSpot(piecenum)
-{
-	piecenum = sphere;
-}
 
 RestoreAfterDelayWeapon()
 {
@@ -132,34 +127,30 @@ AimFromSecondary(piecenum)
 
 QuerySecondary(piecenum)
 {
-	if(firept2 == [0])
+	if(firept2 == 0)
 	{
 		piecenum = lflare1;
-		return;
 	}
-	if(firept2 == [1])
+	else
 	{
 		piecenum = lflare2;
-		return;
 	}
 }
 
 
 FireSecondary()
 {
-
-	if( firept2==[0] )
+	if( firept2==0 )
 	{
 		emit-sfx 1024 + 0 from lflare1;
 		sleep 50;
-		firept2=[1];
-		return (0);
+		firept2=1;
 	}
-	if( firept2==[1] )
+	else
 	{
 		emit-sfx 1024 + 0 from lflare2;
-		firept2=[0];
-		return (0);
+		sleep 50;
+		firept2=0;
 	}
 }
 

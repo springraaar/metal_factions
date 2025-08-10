@@ -7,7 +7,7 @@
 
 piece  GP, base, legs,lfrontleg, lmidleg,rmidleg, rfrontleg,lbackleg,rbackleg, rmid2, rback2, lback2,rfront2,lmid2,lfront2,body,sphere,sphere2, turret1,turret2,turret3, turret4 ,mispt1,mispt2,mispt3, mispt4, hole1,hole2,hole3, hole4, front, f2, f3, jammerbase, spinner, shieldpt;
 
-static-var  bMoving,bAiming, restore_delay, nanopiece, justmoved, gun_1, mASpdFactor;
+static-var  bMoving,bAiming, nanopiece, justMoved, gun_1, mASpdFactor;
 
 // Signal definitions
 #define SIG_AIM				2
@@ -35,37 +35,11 @@ MotionSpeedControl(minSpeed, maxSpeed,currentSpeed)
 }
 
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
-
-
 
 walk()
 {
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+
 	if( bMoving )
 	{
 		turn rmid2 to z-axis <0.000000> speed <80.000000> * mASpdFactor / 100;
@@ -239,15 +213,15 @@ MotionControl()
 	{
 		if( bMoving )
 		{
-			justmoved=TRUE;
+			justMoved=TRUE;
 			call-script walk();
 		}
-		if( !bMoving )
+		else
 		{
-			if(justmoved)
+			if(justMoved)
 			{
 				call-script Stop();
-				justmoved=FALSE;
+				justMoved=FALSE;
 			}
 			sleep 100;
 		}
@@ -282,12 +256,11 @@ Create()
 {
 	
 	bMoving = FALSE;
-	justmoved = FALSE;
-	gun_1 = [0];
+	justMoved = FALSE;
+	gun_1 = 0;
 	start-script Close();
 	start-script MotionSpeedControl();
 	start-script MotionControl();
-	start-script SmokeUnit();
 	
 }
 
@@ -311,54 +284,54 @@ AimPrimary()
 
 FirePrimary()
 {
-	if (gun_1 == [0])
+	if (gun_1 == 0)
 	{
 		emit-sfx 1024 from mispt1;
 		sleep 50;
-		gun_1 = [1];
+		gun_1 = 1;
 		return (0);
 	}
-	if (gun_1 == [1])
+	if (gun_1 == 1)
 	{
 		emit-sfx 1024 from mispt2;
 		sleep 50;
-		gun_1 = [2];
+		gun_1 = 2;
 		return (0);
 	}
-	if (gun_1 == [2])
+	if (gun_1 == 2)
 	{
 		emit-sfx 1024 from mispt3;
 		sleep 50;
-		gun_1 = [3];
+		gun_1 = 3;
 		return (0);
 	}
-	if (gun_1 == [3])
+	if (gun_1 == 3)
 	{
 		emit-sfx 1024 from mispt4;
 		sleep 50;
-		gun_1 = [0];
+		gun_1 = 0;
 		return (0);
 	}
 }
 
 AimFromPrimary(piecenum)
 {
-	if(gun_1 == [0])
+	if(gun_1 == 0)
 	{
 		piecenum = turret1;
 		return 0;
 	}
-	if(gun_1 == [1])
+	if(gun_1 == 1)
 	{
 		piecenum = turret2;
 		return 0;
 	}
-	if(gun_1 == [2])
+	if(gun_1 == 2)
 	{
 		piecenum = turret3;
 		return 0;
 	}
-	if(gun_1 == [3])
+	if(gun_1 == 3)
 	{
 		piecenum = turret4;
 		return 0;
@@ -367,22 +340,22 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if(gun_1 == [0])
+	if(gun_1 == 0)
 	{
 		piecenum = mispt1;
 		return 0;
 	}
-	if(gun_1 == [1])
+	if(gun_1 == 1)
 	{
 		piecenum = mispt2;
 		return 0;
 	}
-	if(gun_1 == [2])
+	if(gun_1 == 2)
 	{
 		piecenum = mispt3;
 		return 0;
 	}
-	if(gun_1 == [3])
+	if(gun_1 == 3)
 	{
 		piecenum = mispt4;
 		return 0;
@@ -404,11 +377,6 @@ QuerySecondary(piecenum)
 AimSecondary(heading, pitch)
 {
 	return (1);
-}
-
-SweetSpot(piecenum)
-{
-	piecenum = body;
 }
 
 Killed(severity, corpsetype)

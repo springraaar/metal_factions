@@ -35,38 +35,11 @@ walklegs()
 	return (0);
 }
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from torso;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
-
-MotionControl(moving, aiming, justmoved)
+MotionControl(moving, aiming, justMoved)
 {
 	while( TRUE )
 	{
-		justmoved = TRUE;
+		justMoved = TRUE;
 		while( TRUE )
 		{
 			moving = bMoving;
@@ -81,11 +54,11 @@ MotionControl(moving, aiming, justmoved)
 				{
 					call-script walk();
 				}
-				justmoved = TRUE;
+				justMoved = TRUE;
 			}
-			if( !moving )
+			else
 			{
-				if( justmoved )
+				if( justMoved )
 				{
 					turn hips to x-axis <0.000000> speed <20.000000>;
 					stop-spin wheel around x-axis decelerate <50.000000>;
@@ -94,7 +67,7 @@ MotionControl(moving, aiming, justmoved)
 						turn torso to y-axis <0.000000> speed <90.016484>;
 						turn sleeve to x-axis <0.000000> speed <200.038462>;
 					}
-					justmoved = FALSE;
+					justMoved = FALSE;
 				}
 				sleep 100;
 			}
@@ -109,7 +82,6 @@ Create()
 	bAiming = FALSE;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
-	start-script SmokeUnit();
 }
 
 StartMoving()
@@ -166,29 +138,19 @@ AimFromPrimary(piecenum)
 	piecenum = torso;
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = torso;
-}
 
 Killed(severity, corpsetype)
 {
 	if( severity <= 50 )
 	{
-		explode tl type BITMAPONLY | BITMAP2;
-	
-		explode h2 type BITMAPONLY | BITMAP2;
-		explode tr type BITMAPONLY | BITMAP4;
-	
-		explode sleeve type BITMAPONLY | BITMAP4;
-		explode torso type BITMAPONLY | BITMAP5;
+		explode tl type SHATTER;
+		explode tr type SHATTER;
+		explode sleeve type SHATTER;
 		return (1);
 	}
 	explode tl type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
-
 	explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP2;
 	explode tr type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
-
 	explode sleeve type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP4;
 	explode torso type SHATTER | EXPLODE_ON_HIT | BITMAP5;
 	return (2);

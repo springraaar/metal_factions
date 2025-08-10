@@ -38,7 +38,7 @@ function AttackerBehavior:attackCell(centerPos, cell)
 		targetRadius = targetRadius * (1 + 0.02 * self.ai.unitHandler.attackerCount)
 				
 		-- check current target
-		local cmdTable = spGetCommandQueue(self.unitId,1)
+		local cmdTable = spGetUnitCommands(self.unitId,1)
 		if ( cmdTable and table.getn(cmdTable) > 0 and (cmdTable[1]["id"] == CMD.ATTACK or cmdTable[1]["id"] == CMD.FIGHT) and cmdTable[1]["params"] ) then
 			local currentTargetPos = newPosition(cmdTable[1]["params"][1],cmdTable[1]["params"][2],cmdTable[1]["params"][3])
 			-- log("current attack pos = ("..currentTargetPos.x..","..currentTargetPos.z..")")

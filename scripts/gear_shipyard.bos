@@ -11,20 +11,6 @@ static-var  spray, statechg_DesiredState, statechg_StateChanging, bBuilding;
 #define SIG_ACTIVATE			2
 
 
-Standby()
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 100;
-	}
-	//while( TRUE )
-	//{
-		//emit-sfx 1024 + 1 from base;
-		//sleep 700;
-	//}
-	return (0);
-}
-
 Build()
 {
 	while (TRUE)
@@ -63,34 +49,6 @@ deactivatescr()
 	wait-for-move platform1 along y-axis;
 	
 	sleep 100;
-}
-
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-	return (0);
 }
 
 OpenYard()
@@ -173,28 +131,25 @@ RequestState(requestedstate, currentstate)
 
 Create()
 {
-	spray = [0];
+	spray = 0;
 	call-script InitState();
-	start-script SmokeUnit();
 	start-script Build();
-	start-script Standby();
 	return (0);
 }
 
 QueryNanoPiece(piecenum)
 {
-	if( spray == [0] )
+	if( spray == 0 )
 	{
 		piecenum = beam1;
-		spray = [1];
-		return (0);
+		spray = 1;
 	}
-	if( spray == [1] )
+	else
 	{
 		piecenum = beam2;
-		spray = [0];
-		return (0);
+		spray = 0;
 	}
+	return (0);
 }
 
 
@@ -218,12 +173,6 @@ Deactivate()
 QueryBuildInfo(piecenum)
 {
 	piecenum = buildpt;
-	return (0);
-}
-
-SweetSpot(piecenum)
-{
-	piecenum = base;
 	return (0);
 }
 

@@ -59,6 +59,8 @@ RockUnit(anglex, anglez)
 
 walk()
 {
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+
 	// start left forward, right back
 	if( bMoving)
 	{
@@ -176,36 +178,9 @@ walk()
 }
 
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
+MotionControl(moving, aiming, justMoved)
 {
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from torso;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
-
-MotionControl(moving, aiming, justmoved)
-{
-	justmoved = TRUE;
+	justMoved = TRUE;
 	while( TRUE )
 	{
 		moving = bMoving;
@@ -213,11 +188,11 @@ MotionControl(moving, aiming, justmoved)
 		if( moving )
 		{
 			call-script walk();
-			justmoved = TRUE;
+			justMoved = TRUE;
 		}
-		if( !moving )
+		else
 		{
-			if( justmoved )
+			if( justMoved )
 			{
 				turn torso to x-axis <0.000000> speed <100.038462>;
 				move pelvis to y-axis [0.000000] speed [1.000000];
@@ -235,7 +210,7 @@ MotionControl(moving, aiming, justmoved)
 					turn lloarm to x-axis <0.000000> speed <200.038462>;
 					turn luparm to x-axis <0.000000> speed <200.038462>;
 				}
-				justmoved = FALSE;
+				justMoved = FALSE;
 			}
 			sleep 100;
 		}
@@ -250,7 +225,6 @@ Create()
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();
 	start-script MotionControl();
-	start-script SmokeUnit();
 }
 
 StartMoving()
@@ -323,10 +297,8 @@ FirePrimary()
 		gun_1 = 1;
 		turn rloarm to x-axis <0.000000> speed <230.038462>;
 		turn r2 to x-axis <0.000000> speed <230.038462>;
-		sleep 150;
-		return (0);
 	}
-	if( gun_1 == 1 )
+	else
 	{
 		turn lloarm to x-axis <40.000000> now;
 		turn l2 to x-axis <-40.000000> now;
@@ -335,8 +307,6 @@ FirePrimary()
 		gun_1 = 0;
 		turn lloarm to x-axis <0.000000> speed <230.038462>;
 		turn l2 to x-axis <0.000000> speed <230.038462>;
-		sleep 150;
-		return (0);
 	}
 }
 

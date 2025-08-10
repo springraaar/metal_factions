@@ -8,7 +8,7 @@
 
 piece  base, turret1, sleeve1, barrel11, flare11, barrel12, flare12, turret2, sleeve2, flare2, b2,  wake1, wake2, turret3, sleeve3, barrel3, flare3, turret4, sleeve4, barrel4, flare4, tur2, tur3, logo, logo2, tl, tr, b22;
 
-static-var  gun_2, bAiming, gun_1, lastHeading,  Static_Var_6, Static_Var_7;
+static-var  gun_2, bAiming, gun_1;
 
 #include "aimhelper1.h"
 #include "aimhelper2.h"
@@ -21,126 +21,23 @@ static-var  gun_2, bAiming, gun_1, lastHeading,  Static_Var_6, Static_Var_7;
 #define SIG_MOVE			128
 
 
-Abs(Func_Var_1)
-{
-	if( Func_Var_1 >= 0 )
-	{
-		Static_Var_6 = Func_Var_1;
-	}
-	else
-	{
-		Static_Var_6 = 0 - Func_Var_1;
-	}
-	return (0);
-}
-
-ProjXPW(Func_Var_1, Func_Var_2)
-{
-	if( Func_Var_2 < -21840 )
-	{
-		Static_Var_6 = Func_Var_1 * ( Func_Var_2 + 32760 ) / 10920;
-	}
-	else if( Func_Var_2 > 21840 )
-	{
-		Static_Var_6 = Func_Var_1 * ( 32760 - Func_Var_2 ) / 10920;
-	}
-	else if( Func_Var_2 < -10920 )
-	{
-		Static_Var_6 = 0 - Func_Var_1;
-	}
-	else if( Func_Var_2 > 10920 )
-	{
-		Static_Var_6 = Func_Var_1;
-	}
-	else
-	{
-		Static_Var_6 = Func_Var_1 * Func_Var_2 / 10920;
-	}
-	return (0);
-}
-
-ProjZPW(Func_Var_1, Func_Var_2)
-{
-	if( Func_Var_2 < -27300 OR Func_Var_2 > 27300 )
-	{
-		Static_Var_6 = 0 - Func_Var_1;
-	}
-	else if( Func_Var_2 > 5460 )
-	{
-		Static_Var_6 = Func_Var_1 * ( 16380 - Func_Var_2 ) / 10920;
-	}
-	else if( Func_Var_2 < -5460 )
-	{
-		Static_Var_6 = Func_Var_1 * ( Func_Var_2 + 16380 ) / 10920;
-	}
-	else
-	{
-		Static_Var_6 = Func_Var_1;
-	}
-	return (0);
-}
-
-RockZInit()
-{
-	Static_Var_7 = 0;
-	return (0);
-}
-
-RockZ(Func_Var_1, Func_Var_2)
-{
-	signal 16;
-	set-signal-mask 16;
-	call-script ProjXPW(10920 / Func_Var_2,Func_Var_1);
-	Static_Var_7 = Static_Var_7 + Static_Var_6;
-	call-script Abs(Static_Var_7);
-	while( Static_Var_6 > 91 )
-	{
-		turn base to z-axis Static_Var_7 speed Static_Var_6 * <0.016484>;
-		wait-for-turn base around z-axis;
-		Static_Var_7 = Static_Var_7 * -1 / 2;
-		call-script Abs(Static_Var_7);
-	}
-	turn base to z-axis <0.000000> speed <0.500000> * <0.016484>;
-	return (0);
-}
-
-SmokeUnit(healthpercent, sleeptime, smoketype)
+animateBarrel()
 {
 	while( get BUILD_PERCENT_LEFT )
 	{
 		sleep 400;
 	}
 	spin b2 around z-axis speed <120.000000>;
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
 	return (0);
 }
 
 Create()
 {
-	gun_1 = [0];
+	gun_1 = 0;
 	bAiming = TRUE;
 	call-script stopAimHelper1(<1000>,<1000>);
 	call-script stopAimHelper2(<1000>,<1000>);
-	start-script SmokeUnit();
-	call-script RockZInit();
+	start-script animateBarrel();
 	return (0);
 }
 
@@ -249,7 +146,6 @@ AimPrimary(heading, pitch)
 	}
 
 	start-script RestoreAfterDelay();
-	lastHeading = heading;
 	return (1);
 }
 
@@ -270,25 +166,23 @@ FireSecondary()
 
 FirePrimary()
 {
-	//start-script RockZ(-5,lastHeading);
-	if( gun_1 == [0] )
+	if( gun_1 == 0 )
 	{
 		emit-sfx 1024 + 0 from flare11;
 		move barrel11 to z-axis [-6.250000] now;
 		sleep 150;
-		gun_1 = [1];
+		gun_1 = 1;
 		move barrel11 to z-axis [0.000000] speed [4.500000];
-		return (0);
 	}
-	if( gun_1 == [1] )
+	else
 	{
 		emit-sfx 1024 + 0 from flare12;
 		move barrel12 to z-axis [-6.250000] now;
 		sleep 150;
-		gun_1 = [0];
+		gun_1 = 0;
 		move barrel12 to z-axis [0.000000] speed [4.500000];
-		return (0);
 	}
+	return (0);	
 }
 
 AimFromWeapon4(piecenum)
@@ -332,21 +226,14 @@ QuerySecondary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if( gun_1 == [0] )
+	if( gun_1 == 0 )
 	{
 		piecenum = flare11;
-		return (0);
 	}
-	if( gun_1 == [1] )
+	else
 	{
 		piecenum = flare12;
-		return (0);
 	}
-}
-
-SweetSpot(piecenum)
-{
-	piecenum = base;
 	return (0);
 }
 

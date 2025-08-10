@@ -27,20 +27,20 @@ ChargeControl()
 	while(TRUE) {
 		while( get BUILD_PERCENT_LEFT )
 		{
-			chargeState = [0];
+			chargeState = 0;
 			sleep 100;
 		}
 		
 		if (isReady == FALSE) {
-			chargeState = [0];
+			chargeState = 0;
 			sleep reloadTime / 5;
-			chargeState = [1];
+			chargeState = 1;
 			sleep reloadTime / 5;
-			chargeState = [2];
+			chargeState = 2;
 			sleep reloadTime / 5;
-			chargeState = [3];
+			chargeState = 3;
 			sleep reloadTime / 5;
-			chargeState = [4];
+			chargeState = 4;
 			sleep reloadTime / 5;
 			isReady = TRUE;
 		}
@@ -120,19 +120,19 @@ ChargeEffect()
 {
 	while (TRUE)
 	{
-		if (chargeState == [1])
+		if (chargeState == 1)
 		{
 			emit-sfx 1024+2 from flare11;
 			emit-sfx 1024+2 from flare12;
 		}
-		if (chargeState == [2])
+		if (chargeState == 2)
 		{
 			emit-sfx 1024+2 from flare11;
 			emit-sfx 1024+2 from flare12;
 			emit-sfx 1024+2 from flare21;
 			emit-sfx 1024+2 from flare22;
 		}
-		if (chargeState == [3])
+		if (chargeState == 3)
 		{
 			emit-sfx 1024+2 from flare11;
 			emit-sfx 1024+2 from flare12;
@@ -141,7 +141,7 @@ ChargeEffect()
 			emit-sfx 1024+2 from flare31;
 			emit-sfx 1024+2 from flare32;
 		}
-		if (chargeState == [4])
+		if (chargeState == 4)
 		{
 			emit-sfx 1024+3 from flare11;
 			emit-sfx 1024+3 from flare12;
@@ -160,11 +160,11 @@ Create()
 {
 
 	energyBoostedMovement = FALSE;
-	firept1 = [0];
+	firept1 = 0;
 	bMoving=FALSE;
 	bAiming=FALSE;
 	isReady=FALSE;
-	chargeState=[0];
+	chargeState=0;
 	
 	while( get BUILD_PERCENT_LEFT )
 	{
@@ -200,11 +200,6 @@ Create()
 
 
 
-SweetSpot(piecenum)
-{
-	piecenum = sphere;
-}
-
 RestoreAfterDelayWeapon()
 {
 	//aim1=FALSE;
@@ -223,42 +218,42 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if(firept1 == [0])
+	if(firept1 == 0)
 	{
 		piecenum = flare11;
 		return;
 	}
-	if(firept1 == [1])
+	if(firept1 == 1)
 	{
 		piecenum = flare12;
 		return;
 	}
-	if(firept1 == [2])
+	if(firept1 == 2)
 	{
 		piecenum = flare21;
 		return;
 	}
-	if(firept1 == [3])
+	if(firept1 == 3)
 	{
 		piecenum = flare22;
 		return;
 	}
-	if(firept1 == [4])
+	if(firept1 == 4)
 	{
 		piecenum = flare31;
 		return;
 	}
-	if(firept1 == [5])
+	if(firept1 == 5)
 	{
 		piecenum = flare32;
 		return;
 	}
-	if(firept1 == [6])
+	if(firept1 == 6)
 	{
 		piecenum = flare41;
 		return;
 	}
-	if(firept1 == [7])
+	if(firept1 == 7)
 	{
 		piecenum = flare42;
 		return;
@@ -268,56 +263,55 @@ QueryPrimary(piecenum)
 
 Shot1()
 {
-	if( firept1==[0] )
+	if( firept1==0 )
 	{
 		emit-sfx 1024 + 0 from flare11;
-		firept1=[1];
+		firept1=1;
 		return (0);
 	}
-	if( firept1==[1] )
+	if( firept1==1 )
 	{
 		emit-sfx 1024 + 0 from flare12;
-		firept1=[2];
+		firept1=2;
 		return (0);
 	}
-	if( firept1==[2] )
+	if( firept1==2 )
 	{
 		emit-sfx 1024 + 0 from flare21;
-		firept1=[3];
+		firept1=3;
 		return (0);
 	}
-	if( firept1==[3] )
+	if( firept1==3 )
 	{
 		emit-sfx 1024 + 0 from flare22;
-		firept1=[4];
+		firept1=4;
 		return (0);
 	}
-	if( firept1==[4] )
+	if( firept1==4 )
 	{
 		emit-sfx 1024 + 0 from flare31;
-		firept1=[5];
+		firept1=5;
 		return (0);
 	}
-	if( firept1==[5] )
+	if( firept1==5 )
 	{
 		emit-sfx 1024 + 0 from flare32;
-		firept1=[6];
+		firept1=6;
 		return (0);
 	}
-	if( firept1==[6] )
+	if( firept1==6 )
 	{
 		emit-sfx 1024 + 0 from flare41;
-		firept1=[7];
+		firept1=7;
 		return (0);
 	}	
-	if( firept1==[7] )
+	if( firept1==7 )
 	{
 		emit-sfx 1024 + 0 from flare42;
-		firept1=[0];
+		firept1=0;
 		return (0);
 	}	
 }
-
 
 
 AimPrimary(heading, pitch)
@@ -332,7 +326,7 @@ AimPrimary(heading, pitch)
 
 FirePrimary()
 {
-	chargeState = [0];
+	chargeState = 0;
 	isReady = FALSE;
 	emit-sfx 1024 + 4 FROM torso;
 }
@@ -356,7 +350,7 @@ AimSecondary(heading, pitch)
 
 Killed(severity, corpsetype)
 {
-	chargeState = [0];
+	chargeState = 0;
 	if( severity <= 50 )
 	{
 		explode sphere type SHATTER | BITMAP4;

@@ -18,22 +18,15 @@ static-var bMoving,bAiming,firept1;
 
 Create()
 {
-	firept1 = [0];
+	firept1 = 0;
 	bMoving=FALSE;
 	bAiming=FALSE;
 	call-script stopAimHelper1(<1000>,<1000>);
 }
 
 
-
-SweetSpot(piecenum)
-{
-	piecenum = sphere;
-}
-
 RestoreAfterDelayWeapon()
 {
-	//aim1=FALSE;
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
 	call-script stopAimHelper1(<100>,<100>);
 	turn torso to y-axis <0.000000> speed <100.016484>;
@@ -49,32 +42,32 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if(firept1 == [0])
+	if(firept1 == 0)
 	{
 		piecenum = lflare1;
 		return;
 	}
-	if(firept1 == [1])
+	if(firept1 == 1)
 	{
 		piecenum = rflare1;
 		return;
 	}
-	if(firept1 == [2])
+	if(firept1 == 2)
 	{
 		piecenum = lflare2;
 		return;
 	}
-	if(firept1 == [3])
+	if(firept1 == 3)
 	{
 		piecenum = rflare2;
 		return;
 	}	
-	if(firept1 == [4])
+	if(firept1 == 4)
 	{
 		piecenum = lflare3;
 		return;
 	}
-	if(firept1 == [5])
+	if(firept1 == 5)
 	{
 		piecenum = rflare3;
 		return;
@@ -85,41 +78,41 @@ QueryPrimary(piecenum)
 Shot1()
 {
 
-	if( firept1==[0] )
+	if( firept1==0 )
 	{
 		emit-sfx 1024 + 0 from lflare1;
-		firept1=[1];
+		firept1=1;
 		return (0);
 	}
-	if( firept1==[1] )
+	if( firept1==1 )
 	{
 		emit-sfx 1024 + 0 from rflare1;
-		firept1=[2];
+		firept1=2;
 		return (0);
 	}
-	if( firept1==[2] )
+	if( firept1==2 )
 	{
 		emit-sfx 1024 + 0 from lflare2;
-		firept1=[3];
+		firept1=3;
 		return (0);
 	}
-	if( firept1==[3] )
+	if( firept1==3 )
 	{
 		emit-sfx 1024 + 0 from rflare2;
-		firept1=[4];
+		firept1=4;
 		return (0);
 	}
 
-	if( firept1==[4] )
+	if( firept1==4 )
 	{
 		emit-sfx 1024 + 0 from lflare3;
-		firept1=[5];
+		firept1=5;
 		return (0);
 	}
-	if( firept1==[5] )
+	if( firept1==5 )
 	{
 		emit-sfx 1024 + 0 from rflare3;
-		firept1=[0];
+		firept1=0;
 		return (0);
 	}
 }

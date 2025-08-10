@@ -94,6 +94,8 @@ Close()
 
 walk()
 {
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+
 	if( bMoving )
 	{
 		/* X */
@@ -213,36 +215,7 @@ walk()
 }
 
 
-
-
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from torso;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
-
-MotionControl(moving, aiming, justmoved)
+MotionControl(moving, aiming, justMoved)
 {
 	while( TRUE )
 	{
@@ -250,12 +223,12 @@ MotionControl(moving, aiming, justmoved)
 		aiming = bAiming;
 		if( moving )
 		{
-			justmoved = TRUE;
+			justMoved = TRUE;
 			call-script walk();
 		}
-		if( !moving )
+		else
 		{
-			if( justmoved )
+			if( justMoved )
 			{
 				turn leg1 to x-axis <0.000000> speed <260.000000>;
 				turn leg2 to x-axis <0.000000> speed <260.000000>;
@@ -281,7 +254,7 @@ MotionControl(moving, aiming, justmoved)
 				turn bleg3 to z-axis <0.000000> speed <160.000000>;
 				turn bleg to z-axis <0.000000> speed <160.000000>;
 
-				justmoved = FALSE;
+				justMoved = FALSE;
 			}
 			sleep 100;
 		}
@@ -294,12 +267,11 @@ Create()
 	bAiming = FALSE;
 	isOpen = FALSE;
 	bUnderwater = FALSE;
-	firePt2 = [0];
-	firePoint = [0];
+	firePt2 = 0;
+	firePoint = 0;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionSpeedControl();
 	start-script MotionControl();
-	start-script SmokeUnit();
 	start-script checkUnderwater();
 }
 
@@ -329,11 +301,6 @@ StopMoving()
 }
 
 
-SweetSpot(piecenum)
-{
-	piecenum = torso;
-}
-
 RestoreAfterDelay()
 {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
@@ -354,33 +321,29 @@ AimFromSecondary(piecenum)
 
 QuerySecondary(piecenum)
 {
-	if (firePt2==[0])
+	if (firePt2==0)
 	{
 		piecenum = lflare2;
-		return(0);
 	}
-	if (firePt2==[1])
+	else
 	{
 		piecenum = rflare2;
-		return(0);
 	}
 }
 
 FireSecondary()
 {
-	if (firePt2==[0])
+	if (firePt2==0)
 	{
 		emit-sfx 1024+1 from lflare2;
 		sleep 100;
-		firePt2=[1];
-		return (1);
+		firePt2=1;
 	}
-	if (firePt2==[1])
+	else
 	{
 		emit-sfx 1024+1 from rflare2;
 		sleep 100;
-		firePt2=[0];
-		return (1);
+		firePt2=0;
 	}
 }
 
@@ -417,21 +380,19 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if (firePoint==[0])
+	if (firePoint==0)
 	{
 		piecenum = lflare;
-		return(0);
 	}
-	if (firePoint==[1])
+	else
 	{
 		piecenum = rflare;
-		return(0);
 	}
 }
 
 FirePrimary()
 {
-	if(firePoint == [0])
+	if(firePoint == 0)
 	{
 		turn l1 to x-axis <20.000000> now;
 		turn larm to x-axis <-20.000000> now;
@@ -439,10 +400,9 @@ FirePrimary()
 		sleep 150;
 		turn l1 to x-axis <0.000000> speed <130.038462>;
 		turn larm to x-axis <0.000000> speed <130.038462>;
-		firePoint = [1];
-		return (0);
+		firePoint = 1;
 	}
-	if(firePoint == [1])
+	else
 	{
 		turn r1 to x-axis <20.000000> now;
 		turn rarm to x-axis <-20.000000> now;
@@ -450,7 +410,7 @@ FirePrimary()
 		sleep 150;
 		turn r1 to x-axis <0.000000> speed <130.038462>;
 		turn rarm to x-axis <0.000000> speed <130.038462>;
-		firePoint = [0];
+		firePoint = 0;
 		return (0);
 	}
 }

@@ -153,16 +153,15 @@ AimFromWeapon2(piecenum)
 
 QueryWeapon2(piecenum)
 {
-	if (gun_2 == [0])
+	if (gun_2 == 0)
 	{
 		piecenum = flare21;
-		return;
 	}
-	if (gun_2 == [1])
+	else
 	{
 		piecenum = flare22;
-		return;
 	}
+	return(0);
 }
 
 AimWeapon2(heading, pitch)
@@ -184,19 +183,17 @@ AimWeapon2(heading, pitch)
 
 Shot2()
 {
-	if( gun_2 == [0] )
+	if( gun_2 == 0 )
 	{
 		emit-sfx 1024+1 from flare21;
 		sleep 100;
-		gun_2 = [1];
-		return (0);
+		gun_2 = 1;
 	}
-	if (gun_2 == [1])
+	else
 	{
 		emit-sfx 1024+1 from flare22;
 		sleep 100;
-		gun_2 = [0];
-		return (0);
+		gun_2 = 0;
 	}
 	return (0);
 }
@@ -229,7 +226,7 @@ Killed(severity, corpsetype)
 
 Create()
 {
-	gun_2 = [0];
+	gun_2 = 0;
 	bAiming2 = FALSE;
 	isFiring = FALSE;
 	fireHeat = 0;

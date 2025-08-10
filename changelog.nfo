@@ -1,3 +1,27 @@
+2025/08/10 ------------------ NOTES v2.50 ----------------------
+
+--- Engine
+
+- updated the springRTS/Recoil engine compatibility recommendation to "2025.06.04"
+(also replaced usage of deprecated functions to avoid warnings on recent engine builds)
+
+--- Balance / Mechanics
+
+- Modified lasers to have the 2x tall ellipsoid base range volume most other weapons get
+- Reduced the extra AA range compensation from 90 to 70 but extended from lasers to most weapons with fast or tracking projectiles
+
+- Modified nearly all unit scripts to fix various issues, namely 2nd stage wreckage transition at 50% death severity and walk cycle animations not playing sometimes
+
+- Maps with feature definitions that refer to missing models no longer cause the game to crash on the latest engines
+
+--- UI/Visuals
+
+- Improved damage-related smoke trail effects on units
+
+- Fixed some effects being visible outside of LOS when they shouldn't
+
+
+
 2025/06/26 ------------------ NOTES v2.49 ----------------------
 
 --- New units

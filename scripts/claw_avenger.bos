@@ -50,6 +50,8 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 
 walk()
 {
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+	
 	if( bMoving)
 	{
 		move pelvis to y-axis [-1.750000] speed moveSpd1;
@@ -288,7 +290,7 @@ MotionControl()
 			justMoved = TRUE;
 			call-script walk();
 		}
-		if( !moving )
+		else
 		{
 			if( justMoved )
 			{

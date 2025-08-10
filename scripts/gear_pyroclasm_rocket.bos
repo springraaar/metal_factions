@@ -38,11 +38,6 @@ Create()
 	return (0);
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-	return (0);
-}
 
 AimFromPrimary(piecenum) {
 	piecenum = turret;
@@ -149,7 +144,5 @@ FireWeapon7() {
 
 Killed(severity, corpsetype)
 {
-
-	corpsetype = 3;
 	return (0);
 }

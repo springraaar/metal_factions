@@ -11,7 +11,7 @@
 
 piece  torso, ruparm, luparm, larm, rarm, lgun, rgun, rbarrel, rb2,rs1,rfront,rf2,lbarrel,lb2,ls1,lfront,lf2, lnanospray, rnanospray,pelvis, lflare, rflare, head, h2, pack, lthigh, rthigh, lnano, rnano, ltbarrel, rtbarrel, rleg, lleg, lfoot, rfoot, lknee, rknee,jumpback,jbl,jbr,lbjetpt,rbjetpt,jumpjets,lfjet,rfjet,lfjetpt,rfjetpt;
 
-static-var  bMoving, firePoint, firePoint2, nanoPt, bBuilding, Static_Var_3, bAiming, Static_Var_5, Static_Var_6, bDgunning, bUnderwater, canAim1, canAim2, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3, unitFireHeading, fireHeading, isFiring, fireHeat;
+static-var  bMoving, firePoint, firePoint2, nanoPt, bBuilding, bAiming, bDgunning, bUnderwater, canAim1, canAim2, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3, unitFireHeading, fireHeading, isFiring, fireHeat;
 
 #include "aimhelper1.h"
 
@@ -106,40 +106,6 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 		sleep 60;
 	}
 }
-
-Sing()
-{
-	Static_Var_6 = Rand( 0, 9 );
-	if( Static_Var_6 == 0 )
-	{
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		return (0);
-	}
-	if( Static_Var_6 == 1 )
-	{
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		play-sound( "CorCom1", 15 );
-		return (0);
-	}
-	if( Static_Var_6 > 1 AND Static_Var_6 < 10 )
-	{
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		return (0);
-	}
-}
-
-
 
 
 // shows nano effect while building
@@ -275,6 +241,8 @@ checkUnderwater()
 walk()
 {
 	var slowTurnSpd, slowTurnSpd2;
+
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
 
 	slowTurnSpd = mATurnSpd2 / 4;
 	slowTurnSpd2 = mATurnSpd2 / 12;
@@ -438,17 +406,9 @@ MotionControl()
 		if( moving )
 		{
 			justMoved = TRUE;
-			if( aiming )
-			{
-				call-script walk();
-			}
-			if( !aiming )
-			{
-				call-script walk();
-			}
-			
+			call-script walk();
 		}
-		if( !moving )
+		else
 		{
 			if( justMoved )
 			{
@@ -488,26 +448,19 @@ StopMoving()
 	return;
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = torso;
-	return;
-}
-
 QueryNanoPiece(piecenum)
 {
-	if (nanoPt == [0])
+	if (nanoPt == 0)
 	{
 		piecenum = lnanospray;
-		nanoPt = [1];
-		return;
+		nanoPt = 1;
 	}
-	if (nanoPt == [1])
+	else
 	{
 		piecenum = rnanospray;
-		nanoPt = [0];
-		return;
+		nanoPt = 0;
 	}
+	return (0);
 }
 
 RestorePosition(setMask)
@@ -567,9 +520,9 @@ Create()
 	bUnderwater = FALSE;
 	canAim1 = TRUE;
 	canAim2 = FALSE;
-	firePoint = [0];
-	firePoint2 = [0];
-	nanoPt = [0];
+	firePoint = 0;
+	firePoint2 = 0;
+	nanoPt = 0;
 	bAiming = FALSE;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script initJump();
@@ -588,16 +541,15 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if(firePoint == [0])
+	if(firePoint == 0)
 	{
 		piecenum = lflare;
-		return;
 	}
-	if(firePoint == [1])
+	else
 	{
 		piecenum = rflare;
-		return;
 	}
+	return (0);
 }
 
 AimPrimary(heading, pitch)
@@ -637,7 +589,7 @@ FirePrimary()
 {
 	unitFireHeading = get HEADING;
 	isFiring = TRUE;
-	if(firePoint == [0])
+	if(firePoint == 0)
 	{
 		emit-sfx 1024 from lflare;
 		fireHeat = 35;
@@ -664,11 +616,11 @@ FirePrimary()
 			sleep 60;
 		}
 
-		firePoint = [1];
+		firePoint = 1;
 		
 		return (1);
 	}
-	if(firePoint == [1])
+	else
 	{
 		emit-sfx 1024 from rflare;	
 		fireHeat = 35;
@@ -694,7 +646,7 @@ FirePrimary()
 			}
 			sleep 60;
 		}
-		firePoint = [0];
+		firePoint = 0;
 		return (1);
 	}
 }
@@ -708,17 +660,15 @@ AimFromSecondary(piecenum)
 
 QuerySecondary(piecenum)
 {
-	if (firePoint2 == [0])
+	if (firePoint2 == 0)
 	{
 		piecenum = lflare;
-		return;
 	}
-	if (firePoint2 == [1])
+	else
 	{
 		piecenum = rflare;
-		return;
 	}
-
+	return (0);
 }
 
 AimSecondary(heading, pitch)
@@ -751,18 +701,17 @@ AimSecondary(heading, pitch)
 
 FireSecondary()
 {
-	if (firePoint2 == [0])
+	if (firePoint2 == 0)
 	{
 		sleep 100;
-		firePoint2 = [1];
-		return (0);
+		firePoint2 = 1;
 	}
-	if (firePoint2 == [1])
+	else
 	{
 		sleep 100;
-		firePoint2 = [0];
-		return (0);
+		firePoint2 = 0;
 	}
+	return (0);
 }
 
 

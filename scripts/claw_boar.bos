@@ -19,33 +19,6 @@ static-var  gun_1;
 
 #include "tankthreads.h"
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
-
 RockUnit(anglex, anglez)
 {
 	turn base to x-axis anglex speed <50.005495>;
@@ -59,9 +32,8 @@ RockUnit(anglex, anglez)
 
 Create()
 {
-	gun_1=[0];
+	gun_1=0;
 	call-script stopAimHelper1(<1000>,<1000>);
-	start-script SmokeUnit();
 	start-script AnimateTracks();
 }
 
@@ -94,25 +66,23 @@ AimPrimary(heading, pitch)
 
 Shot1()
 {
-	if(gun_1 == [0])
+	if(gun_1 == 0)
 	{
 		move lbarrel to z-axis [-1.000000] now;
 		emit-sfx 1024 from lflash;
 		sleep 50;
 		move lbarrel to z-axis [0.000000] speed [1.000000];
-		gun_1 = [1];
-		return (0);
+		gun_1 = 1;
 	}
-	if(gun_1 == [1])
+	else
 	{
 		move rbarrel to z-axis [-1.000000] now;
 		emit-sfx 1024 from rflash;
 		sleep 50;
 		move rbarrel to z-axis [0.000000] speed [1.000000];
-		gun_1 = [0];
-		return (0);
+		gun_1 = 0;
 	}	
-	
+	return (0);	
 }
 
 AimFromPrimary(piecenum)
@@ -122,19 +92,14 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if( gun_1 == [0])
+	if( gun_1 == 0)
 	{
 		piecenum = lflash;
 	}
-	if( gun_1 == [1])
+	else
 	{
 		piecenum = rflash;
 	}
-}
-
-SweetSpot(piecenum)
-{
-	piecenum = base;
 }
 
 Killed(severity, corpsetype)

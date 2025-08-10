@@ -14,6 +14,7 @@ static-var  bMoving, justMoved, isOpen;
 
 #define SIG_AIM 2
 
+//TODO walk cycle speed scaling
 walk()
 {
 	if( bMoving )
@@ -129,33 +130,6 @@ Stop()
 	turn leg3 to z-axis <0.000000> speed <237.000000>;
 }
 
-SmokeUnit(Func_Var_1, Func_Var_2, Func_Var_3)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		Func_Var_1 = get HEALTH;
-		if( Func_Var_1 < 66 )
-		{
-			Func_Var_3 = 256 | 2;
-			if( Rand( 1, 66 ) < Func_Var_1 )
-			{
-				Func_Var_3 = 256 | 1;
-			}
-			emit-sfx Func_Var_3 from base;
-		}
-		Func_Var_2 = Func_Var_1 * 50;
-		if( Func_Var_2 < 200 )
-		{
-			Func_Var_2 = 200;
-		}
-		sleep Func_Var_2;
-	}
-	return;
-}
 
 MotionControl()
 {
@@ -188,7 +162,6 @@ Create()
 	bMoving = 0;
 	set ARMORED to TRUE;
 	start-script MotionControl();
-	start-script SmokeUnit();
 	return;
 }
 
@@ -202,12 +175,6 @@ StopMoving()
 {
 	bMoving = 0;
 	justMoved = TRUE;
-	return;
-}
-
-SweetSpot(piecenum)
-{
-	piecenum = base;
 	return;
 }
 

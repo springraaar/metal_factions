@@ -19,33 +19,6 @@ static-var  gun_1;
 
 #include "wheelspeed.h"
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
-
 
 HitByWeapon(Func_Var_1, Func_Var_2)
 {
@@ -96,7 +69,6 @@ Create()
 {
 	gun_1=0;
 	call-script stopAimHelper1(<1000>,<1000>);
-	start-script SmokeUnit();
 	start-script WheelSpeedControl();
 	start-script SpinWheels();
 }

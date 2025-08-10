@@ -20,10 +20,6 @@ static-var bMoving,bAiming;
 #define SIG_AIM2				4
 #define SIG_AIM3				8
 
-
-
-
-
 Create()
 {
 	call-script stopAimHelper1(<1000>,<1000>);
@@ -33,12 +29,6 @@ Create()
 	bAiming=FALSE;
 }
 
-
-
-SweetSpot(piecenum)
-{
-	piecenum = sphere;
-}
 
 RestoreAfterDelayWeapon1()
 {
@@ -97,7 +87,6 @@ AimPrimary(heading, pitch)
 	start-script RestoreAfterDelayWeapon1();
 	return (1);
 }
-
 
 
 QuerySecondary(piecenum)

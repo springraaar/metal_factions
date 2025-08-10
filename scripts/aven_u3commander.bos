@@ -11,7 +11,7 @@
 
 piece  torso, ruparm, luparm, lnanopt,rnanopt, pelvis, lfirept,rfirept, head, lthigh, rthigh, lloarm, rloarm, rleg, lleg, rfoot,lfoot, ltorpgun,ltorpedo,lfirept2,rtorpgun,rtorpedo,rfirept2, h2, lnano,rnano, lgun, rgun, t2,t3,t4,lshoulder,rshoulder, jumpback,jbwings,lbjetpt,rbjetpt,jumpjets,lfjet,rfjet,lfjetpt,rfjetpt;
 
-static-var  bMoving, bBuilding, bDgunning,bAiming, Static_Var_6, bUnderwater, canAim1, canAim2, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3, gun_1,gun_2, nanoPt;
+static-var  bMoving, bBuilding, bDgunning,bAiming, bUnderwater, canAim1, canAim2, mATurnSpd1,mATurnSpd2,mATurnSpd3,mASpdFactor, mAMoveSpd1, mAVertFactor, legAngle1, legAngle2, legAngle3, gun_1,gun_2, nanoPt;
 
 #include "aimhelper1.h"
 
@@ -109,38 +109,6 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 	}
 }
 
-
-Sing()
-{
-	Static_Var_6 = Rand( 0, 9 );
-	if( Static_Var_6 == 0 )
-	{
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		play-sound( "honk", 15 );
-		return (0);
-	}
-	if( Static_Var_6 == 1 )
-	{
-		play-sound( "ArmCom1", 15 );
-		play-sound( "ArmCom1", 15 );
-		play-sound( "ArmCom1", 15 );
-		play-sound( "ArmCom1", 15 );
-		play-sound( "ArmCom1", 15 );
-		return (0);
-	}
-	if( Static_Var_6 > 1 AND Static_Var_6 < 10 )
-	{
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		play-sound( "sing", 15 );
-		return (0);
-	}
-}
 
 Build()
 {
@@ -269,6 +237,8 @@ checkUnderwater()
 walk()
 {
 	var slowTurnSpd, slowTurnSpd2;
+
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
 
 	slowTurnSpd = mATurnSpd2 / 2;
 	slowTurnSpd2 = mATurnSpd2 / 6;
@@ -441,16 +411,9 @@ MotionControl()
 		if( moving )
 		{
 			justMoved = TRUE;
-			if( aiming )
-			{
-				call-script walk();
-			}
-			if( !aiming )
-			{
-				call-script walk();
-			}
+			call-script walk();
 		}
-		if( !moving )
+		else
 		{
 			if( justMoved )
 			{
@@ -517,11 +480,6 @@ StopMoving()
 	return;
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = torso;
-	return;
-}
 
 QueryNanoPiece(piecenum)
 {

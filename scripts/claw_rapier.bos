@@ -47,38 +47,11 @@ walklegs()
 	return (0);
 }
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from torso;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
-
 MotionControl(moving, aiming, justmoved)
 {
 	while( TRUE )
 	{
-		justmoved = TRUE;
+		justMoved = TRUE;
 		while( TRUE )
 		{
 			moving = bMoving;
@@ -93,15 +66,15 @@ MotionControl(moving, aiming, justmoved)
 				{
 					call-script walk();
 				}
-				justmoved = TRUE;
+				justMoved = TRUE;
 			}
-			if( !moving )
+			else
 			{
-				if( justmoved )
+				if( justMoved )
 				{
 					turn hips to x-axis <0.000000> speed <100.000000>;
 					stop-spin wheel around x-axis decelerate <50.000000>;
-					justmoved = FALSE;
+					justMoved = FALSE;
 				}
 				sleep 100;
 			}
@@ -117,7 +90,6 @@ Create()
 	gun_1 = 0;
 	call-script stopAimHelper1(<1000>,<1000>);
 	start-script MotionControl();
-	start-script SmokeUnit();
 }
 
 StartMoving()

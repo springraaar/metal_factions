@@ -148,8 +148,6 @@ local smartTrackingWeaponIds = {
 	[WeaponDefNames["gear_vector_missile"].id]=true,
 	[WeaponDefNames["gear_u1commander_missile"].id]=true,
 	[WeaponDefNames["gear_firestorm_missile"].id]=true,
-	-- CLAW
-	[WeaponDefNames["claw_x_aabomb"].id]=true,
 	-- SPHERE
 	[WeaponDefNames["sphere_blower_aabomb"].id]=true
 }

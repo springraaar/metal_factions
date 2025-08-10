@@ -36,36 +36,10 @@ MotionSpeedControl(minSpeed, maxSpeed,currentSpeed)
 }
 
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
+walk()
 {
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from body;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
 
-
-walk2()
-{
 	if( bMoving )
 	{
 		turn base to z-axis <0.000000> speed <10.000000> * mASpdFactor / 100;
@@ -147,12 +121,12 @@ MotionControl()
 	{
 		if( bMoving )
 		{
-			justmoved=TRUE;
-			call-script walk2();
+			justMoved=TRUE;
+			call-script walk();
 		}
-		if (!bMoving)
+		else
 		{
-			if(justmoved)
+			if(justMoved)
 			{
 				turn base to z-axis <0.000000> speed <30.000000> * SPEEDUP_FACTOR / 100;
 				turn base to x-axis <0.000000> speed <10.000000> * SPEEDUP_FACTOR / 100;
@@ -164,6 +138,7 @@ MotionControl()
 				move rforeleg to y-axis [0.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
 				move lhindleg to y-axis [0.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
 				move rhindleg to y-axis [0.000000] speed [20.000000] * SPEEDUP_FACTOR / 100;
+				justMoved = FALSE;
 			}
 			sleep 100;
 		}
@@ -182,14 +157,12 @@ StopMoving()
 
 Create()
 {
-
 	bMoving = FALSE;
-	justmoved=FALSE;
-	gun_1=[0];
+	justMoved=FALSE;
+	gun_1=0;
 	start-script MotionSpeedControl();
 	start-script MotionControl();
-	start-script SmokeUnit();
-	
+
 }
 
 Close1()
@@ -215,37 +188,35 @@ AimPrimary()
 
 FirePrimary()
 {
-	if (gun_1==[0])
+	if (gun_1==0)
 	{
 		turn ldoor1 to z-axis <-30.000000> speed <400.000000>;
 		turn ldoor2 to z-axis <30.000000> speed <400.000000>;
 		emit-sfx 1024 from lmispt;
 		sleep 100;
-		gun_1=[1];
+		gun_1=1;
 		sleep 1000;
 		start-script Close1();
-		return (1);
 	}
-	if (gun_1==[1])
+	else
 	{
 		turn rdoor1 to z-axis <-30.000000> speed <400.000000>;
 		turn rdoor2 to z-axis <30.000000> speed <400.000000>;
 		emit-sfx 1024 from rmispt;
 		sleep 100;
-		gun_1=[0];
+		gun_1=0;
 		sleep 1000;
 		start-script Close2();
-		return (1);
 	}
 }
 
 AimFromPrimary(piecenum)
 {
-	if (gun_1==[0])
+	if (gun_1==0)
 	{
 		piecenum = lturret;
 	}
-	if (gun_1==[1])
+	else
 	{
 		piecenum = rturret;
 	}
@@ -253,11 +224,11 @@ AimFromPrimary(piecenum)
 
 QueryPrimary(piecenum)
 {
-	if (gun_1==[0])
+	if (gun_1==0)
 	{
 		piecenum = lmispt;
 	}
-	if (gun_1==[1])
+	else
 	{
 		piecenum = rmispt;
 	}

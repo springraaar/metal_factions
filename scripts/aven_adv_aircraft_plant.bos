@@ -5,7 +5,7 @@
 
 piece  base, pad, beam1, beam2, side1, side2, door1, door2, plate1, plate2, nano1, nano2, post1, post2, floater;
 
-static-var  Static_Var_1, Static_Var_2, Static_Var_3, Static_Var_4, bBuilding;
+static-var  nanoPt, desiredState, stateChanging, bBuilding;
 
 
 Build()
@@ -81,32 +81,6 @@ deactivatescr()
 	sleep 20;
 }
 
-SmokeUnit(healthpercent, sleeptime, smoketype)
-{
-	while( get BUILD_PERCENT_LEFT )
-	{
-		sleep 400;
-	}
-	while( TRUE )
-	{
-		healthpercent = get HEALTH;
-		if( healthpercent < 66 )
-		{
-			smoketype = 256 | 2;
-			if( Rand( 1, 66 ) < healthpercent )
-			{
-				smoketype = 256 | 1;
-			}
-			emit-sfx smoketype from base;
-		}
-		sleeptime = healthpercent * 50;
-		if( sleeptime < 200 )
-		{
-			sleeptime = 200;
-		}
-		sleep sleeptime;
-	}
-}
 
 OpenYard()
 {
@@ -150,34 +124,34 @@ Stop()
 
 InitState()
 {
-	Static_Var_3 = 1;
-	Static_Var_4 = 0;
+	desiredState = 1;
+	stateChanging = 0;
 }
 
 RequestState(requestedstate, currentstate)
 {
-	if( Static_Var_4 )
+	if( stateChanging )
 	{
-		Static_Var_3 = requestedstate;
+		desiredState = requestedstate;
 		return (0);
 	}
-	Static_Var_4 = 1;
-	currentstate = Static_Var_3;
-	Static_Var_3 = requestedstate;
-	while( Static_Var_3 != currentstate )
+	stateChanging = 1;
+	currentstate = desiredState;
+	desiredState = requestedstate;
+	while( desiredState != currentstate )
 	{
-		if( Static_Var_3 == 0 )
+		if( desiredState == 0 )
 		{
 			call-script Go();
 			currentstate = 0;
 		}
-		if( Static_Var_3 == 1 )
+		if( desiredState == 1 )
 		{
 			call-script Stop();
 			currentstate = 1;
 		}
 	}
-	Static_Var_4 = 0;
+	stateChanging = 0;
 }
 
 Create()
@@ -187,29 +161,22 @@ Create()
 	{
 		show floater;
 	}
-	Static_Var_2 = 0;
-	Static_Var_1 = 0;
+	nanoPt = 0;
 	call-script InitState();
-	start-script SmokeUnit();
 	start-script Build();
 }
 
 QueryNanoPiece(piecenum)
 {
-	if( Static_Var_1 == 0 )
+	if( nanoPt == 0 )
 	{
 		piecenum = beam1;
 	}
-	if( Static_Var_1 != 0 )
+	else
 	{
 		piecenum = beam2;
 	}
-	Static_Var_1 = !Static_Var_1;
-}
-
-Demo()
-{
-	Static_Var_2 = 1;
+	nanoPt = !nanoPt;
 }
 
 Activate()
@@ -222,10 +189,6 @@ Deactivate()
 {
 	signal 2;
 	set-signal-mask 2;
-	if( !Static_Var_2 )
-	{
-		sleep 5000;
-	}
 	set-signal-mask 0;
 	start-script RequestState(1);
 }
@@ -245,10 +208,6 @@ QueryBuildInfo(piecenum)
 	piecenum = pad;
 }
 
-SweetSpot(piecenum)
-{
-	piecenum = base;
-}
 
 Killed(severity, corpsetype)
 {

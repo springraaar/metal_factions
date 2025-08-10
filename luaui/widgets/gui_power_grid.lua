@@ -13,7 +13,6 @@ end
 local spGetActiveCommand = Spring.GetActiveCommand
 local spGetBuildSpacing = Spring.GetBuildSpacing
 local spSetBuildSpacing = Spring.SetBuildSpacing
-local spGetCommandQueue = Spring.GetCommandQueue
 local spIsAboveMiniMap = Spring.IsAboveMiniMap
 local spTraceScreenRay = Spring.TraceScreenRay
 local spGetSelectedUnits = Spring.GetSelectedUnits

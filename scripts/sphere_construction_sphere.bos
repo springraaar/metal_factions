@@ -32,7 +32,7 @@ Create()
 
 	bMoving=FALSE;
 	bBuilding=FALSE;
-	nanoPt = [0];	
+	nanoPt = 0;	
 	start-script Build();
 	spin nanospinner around y-axis speed <720.000000>;
 }
@@ -40,40 +40,40 @@ Create()
 
 QueryNanoPiece(piecenum)
 {
-	if(nanoPt == [0])
+	if(nanoPt == 0)
 	{
 		piecenum = p1;
-		nanoPt = [1];
+		nanoPt = 1;
 		return (0);
 	}
-	if(nanoPt == [1])
+	if(nanoPt == 1)
 	{
 		piecenum = p2;
-		nanoPt = [2];
+		nanoPt = 2;
 		return (0);
 	}
-	if(nanoPt == [2])
+	if(nanoPt == 2)
 	{
 		piecenum = p3;
-		nanoPt = [3];
+		nanoPt = 3;
 		return (0);
 	}
-	if(nanoPt == [3])
+	if(nanoPt == 3)
 	{
 		piecenum = p4;
-		nanoPt = [4];
+		nanoPt = 4;
 		return (0);
 	}
-	if(nanoPt == [4])
+	if(nanoPt == 4)
 	{
 		piecenum = p5;
-		nanoPt = [5];
+		nanoPt = 5;
 		return (0);
 	}
-	if(nanoPt == [5])
+	if(nanoPt == 5)
 	{
 		piecenum = p6;
-		nanoPt = [0];
+		nanoPt = 0;
 		return (0);
 	}
 }
@@ -97,12 +97,6 @@ StopBuilding()
 	bBuilding = FALSE;
 	set INBUILDSTANCE to 0;
 }
-
-SweetSpot(piecenum)
-{
-	piecenum = sphere;
-}
-
 
 AimFromPrimary(piecenum)
 {
