@@ -4,8 +4,8 @@ function widget:GetInfo()
 		name      = "CustomFormations2",
 		desc      = "Allows you to draw your own formation line.",
 		author    = "Niobium", -- Based on 'Custom Formations' by jK and gunblob
-		version   = "v3.3",
-		date      = "Mar, 2010", 
+		version   = "v3.4",
+		date      = "Mar, 2010 (modified by raaar, 2025/08)", 
 		license   = "GNU GPL, v2 or later",
 		layer     = 10000,
 		enabled   = true,
@@ -120,7 +120,7 @@ local spGetSelectedUnits = Spring.GetSelectedUnits
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGiveOrder = Spring.GiveOrder
 local spGetUnitIsTransporting = Spring.GetUnitIsTransporting
-local spGetCommandQueue = Spring.GetCommandQueue
+local spGetUnitCommands = Spring.GetUnitCommands
 local spGetUnitPosition = Spring.GetUnitPosition
 local spTraceScreenRay = Spring.TraceScreenRay
 local spGetGroundHeight = Spring.GetGroundHeight
@@ -170,34 +170,35 @@ local function GetUnitFinalPosition(uID)
 	local ux, uy, uz = spGetUnitPosition(uID)
 	
 	local cmds = spGetUnitCommands(uID,10)
-	for i = #cmds, 1, -1 do
-		
-		local cmd = cmds[i]
-		if (cmd.id < 0) or positionCmds[cmd.id] then
+	if cmds then
+		for i = #cmds, 1, -1 do
 			
-			local params = cmd.params
-			if #params >= 3 then
-				return params[1], params[2], params[3]
-			else
-				if #params == 1 then
-					
-					local pID = params[1]
-					local px, py, pz
-					
-					if pID > maxUnits then
-						px, py, pz = spGetFeaturePosition(pID - maxUnits)
-					else
-						px, py, pz = spGetUnitPosition(pID)
-					end
-					
-					if px then
-						return px, py, pz
+			local cmd = cmds[i]
+			if (cmd.id < 0) or positionCmds[cmd.id] then
+				
+				local params = cmd.params
+				if #params >= 3 then
+					return params[1], params[2], params[3]
+				else
+					if #params == 1 then
+						
+						local pID = params[1]
+						local px, py, pz
+						
+						if pID > maxUnits then
+							px, py, pz = spGetFeaturePosition(pID - maxUnits)
+						else
+							px, py, pz = spGetUnitPosition(pID)
+						end
+						
+						if px then
+							return px, py, pz
+						end
 					end
 				end
 			end
 		end
 	end
-	
 	return ux, uy, uz
 end
 local function SetColor(cmdID, alpha)

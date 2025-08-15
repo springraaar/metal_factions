@@ -23,7 +23,6 @@ spGetGroundInfo = Spring.GetGroundInfo
 spGetGroundHeight = Spring.GetGroundHeight
 spGetGroundNormal = Spring.GetGroundNormal
 spGetUnitDefDimensions = Spring.GetUnitDefDimensions
---spGetCommandQueue = Spring.GetCommandQueue
 spGetUnitCommands = Spring.GetUnitCommands
 spGetUnitCommandCount = Spring.GetUnitCommandCount
 spGetFeatureDefID = Spring.GetFeatureDefID
