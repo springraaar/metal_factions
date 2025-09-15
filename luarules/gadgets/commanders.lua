@@ -29,6 +29,7 @@ local spGetUnitStates = Spring.GetUnitStates
 local spSetUnitCosts = Spring.SetUnitCosts
 local AreTeamsAllied = Spring.AreTeamsAllied
 local spGetTeamList = Spring.GetTeamList
+local spGetUnitAllyTeam = Spring.GetUnitAllyTeam
 
 local markedWreckPositions = {}
 local damagedByEnemyByUnitIdFrame = {}
@@ -118,10 +119,8 @@ function getCommanderTokenMod(teamId)
 	return result
 end
 
--------------------------- SYNCED CODE ONLY
-if (not gadgetHandler:IsSyncedCode()) then
-	return false
-end
+-------------------------- SYNCED CODE
+if ( gadgetHandler:IsSyncedCode()) then
 
 -- load xp when commanders are created
 function gadget:UnitCreated(unitId, unitDefId, teamId)
@@ -210,7 +209,7 @@ function gadget:UnitFinished(unitId, unitDefId, teamId)
 end
 
 -- save xp when commanders are destroyed
-function gadget:UnitDestroyed(unitId, unitDefId, teamId)
+function gadget:UnitDestroyed(unitId, unitDefId, teamId, attackerId, attackerDefId, attackerTeamId)
 	-- cleanup commander tokens table
 	if isCommanderToken(unitDefId) then
 		local tokensTable = commanderTokensByTeam[teamId]
@@ -246,6 +245,11 @@ function gadget:UnitDestroyed(unitId, unitDefId, teamId)
 		end
 		
 		damagedByEnemyByUnitIdFrame[unitId] = nil
+		
+		-- ignore morphs and self-d
+		if attackerId and attackerId > 0 then
+			SendToUnsynced("CommanderDeathEvent",teamId,spGetUnitAllyTeam(unitId))
+		end
 	end
 end
 
@@ -348,3 +352,32 @@ function gadget:GameFrame(n)
 	end	
 end
 
+
+
+--------------------------------------------- UNSYNCED CODE
+else
+
+local spGetMyAllyTeamID = Spring.GetMyAllyTeamID
+local spGetSpectatingState = Spring.GetSpectatingState 
+local spPlaySoundFile = Spring.PlaySoundFile
+
+local function commanderDeathEventHandler(_,teamId,allyId)
+	if (not spGetSpectatingState()) and (spGetMyAllyTeamID() == allyId) then
+		--Spring.Echo("COM LOSS")
+		spPlaySoundFile("sounds/COMLOSS.wav", 0.5)
+	else
+		--Spring.Echo("COM KILL")
+		spPlaySoundFile("sounds/COMKILL.wav", 1)
+	end
+end
+
+function gadget:Initialize()
+	gadgetHandler:AddSyncAction("CommanderDeathEvent",commanderDeathEventHandler)
+end
+
+
+function gadget:Shutdown()
+	gadgetHandler.RemoveSyncAction("CommanderDeathEvent")
+end
+
+end

@@ -21,6 +21,8 @@ local spSendLuaRulesMsg = Spring.SendLuaRulesMsg
 local spGetAllUnits = Spring.GetAllUnits
 local spGetUnitDefID = Spring.GetUnitDefID
 local spGetUnitTeam = Spring.GetUnitTeam
+local spGetGameFrame = Spring.GetGameFrame
+local spGetTeamUnits = Spring.GetTeamUnits
 
 include("lualibs/constants.lua")
 include("lualibs/util.lua")
@@ -31,6 +33,11 @@ local optionalUnitDefIds = {}
 local optionalUnitNames = {}
 
 optionalUnitDefIdsByTeam = {}
+local BC_STATUS_REQUIRED = 1
+local BC_STATUS_DONE = 2
+
+buildersCheckStatusByTeam = {}
+
 
 ------------------------------------------ SYNCED
 
@@ -45,7 +52,6 @@ local function checkUnitBuildOptions(unitId,teamId)
 		local cmdDescId = spFindUnitCmdDesc(unitId, -udId)
 		if (cmdDescId) then
 			local cmdArray = {disabled = (not enabled)}
-			--Spring.Echo("uId="..unitId..", tId="..teamId..", optionalBuildOpt["..UnitDefs[udId].name.."]="..tostring(enabled))
 			spEditUnitCmdDesc(unitId, cmdDescId, cmdArray)
 		end
 	end
@@ -71,7 +77,6 @@ function gadget:Initialize()
 	for id, ud in pairs (UnitDefs) do
 		local cp = ud.customParams
 		if cp and cp.optional == "1" then
-			--Spring.Echo(ud.name.." is OPTIONAL unit")
 			optionalUnitDefIds[ud.id] = true
 			optionalUnitNames[ud.name] = true
 		end
@@ -87,6 +92,8 @@ function gadget:Initialize()
 		for unitId,_ in pairs(optionalUnitDefIds) do
 			teamOptTable[unitId] = false
 		end
+		
+		buildersCheckStatusByTeam[teamId] = BC_STATUS_REQUIRED
     end
     
     -- testing, add an optional unit to team 1
@@ -103,10 +110,10 @@ end
 
 
 function gadget:RecvLuaMsg(msg, playerId)
-	--Spring.Echo("received lua msg from player "..playerId..": "..msg) --DEBUG
 	local pName,active,spectator,teamId,allyId,_,_,_,_,_ = spGetPlayerInfo(playerId)
 
 	if (active and not spectator) and (string.find(msg,EXTERNAL_CMD_SETOPTIONALUNITS) ~= nil ) then
+		--Spring.Echo("opt units | received updated list for team "..teamId.." f="..Spring.GetGameFrame()) --DEBUG
 		-- extract text from message properly (compressed text may have the separator)
 		local optionalUnitsTextCompressed = string.sub(msg,string.len(EXTERNAL_CMD_SETOPTIONALUNITS)+2)
 		local optionalUnitsText = VFS.ZlibDecompress(optionalUnitsTextCompressed)
@@ -120,17 +127,24 @@ function gadget:RecvLuaMsg(msg, playerId)
 				teamOptTable[unitId] = false
 			end
 		end
+		
+		-- mark map to get already existing units updated
+		buildersCheckStatusByTeam[teamId] = BC_STATUS_REQUIRED
 	end
 end
 
 -- fix the optional build options for builders immediately after the game starts
 -- as the updated options were set and locked-in after they spawned 
-local startSpawnedBuildersFixRequired = true
 function gadget:GameFrame(f)
-	if f > 0 and startSpawnedBuildersFixRequired then
-		startSpawnedBuildersFixRequired = false
-		for _,uId in ipairs(spGetAllUnits()) do
-			gadget:UnitCreated(uId, spGetUnitDefID(uId), spGetUnitTeam(uId))
+	if f > 0 and f < 100 then
+		for tId,status in pairs(buildersCheckStatusByTeam) do
+			if status == BC_STATUS_REQUIRED then 
+				--Spring.Echo("opt units | builders check for team "..tId.." f="..f) --DEBUG
+				for _,uId in ipairs(spGetTeamUnits(tId)) do
+					gadget:UnitCreated(uId, spGetUnitDefID(uId), tId)
+				end
+				buildersCheckStatusByTeam[tId] = BC_STATUS_DONE
+			end
 		end
 	end
 end
@@ -150,7 +164,6 @@ function gadget:GameStart()
 		local compressedText = VFS.ZlibCompress(text)
 		local str = EXTERNAL_CMD_SETOPTIONALUNITS.."|"..compressedText
 
-		--Spring.Echo("optional unit selection set")
 		spSendLuaRulesMsg(str)
 	end
 end

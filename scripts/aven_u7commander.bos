@@ -882,10 +882,8 @@ StopBuilding()
 	return;
 }
 
-Killed(Func_Var_1, Func_Var_2)
+Killed(severity)
 {
-	play-sound( "VICTORY2", 60 );
-	sleep 1;
-	play-sound( "VICTORY2", 60 );
-	return;
+	return(0);
 }
+

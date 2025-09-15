@@ -37,6 +37,9 @@ local floor = math.floor
 
 local mainPanel = {}
 
+local gameStarted = false
+local showReadyPanelOnClose = false
+
 local CHECK_UNIT = 0
 local CHECK_FACTION = 1
 
@@ -78,7 +81,7 @@ local myCountByFaction = {
 
 local Config = {
 	mainPanel = {
-		px = CanvasX/4,py = 220,
+		px = CanvasX/4,py = 206,
 		sx = CanvasX/2,sy = 380, --background size
 		
 		fontsize = 10,
@@ -743,6 +746,12 @@ end
 
 
 function showOptionalUnitsPanel()
+    -- hide the ready panel because it overlaps
+	if WG.readyPanelShown == true then
+    	showReadyPanelOnClose = true
+    	WG.hideReadyPanel()
+    end
+
 	-- open the panel showing optionals for the currently selected faction 
 	local myTeamId = spGetMyTeamID()
 	local _,_,_,_, faction, _,_ = Spring.GetTeamInfo(myTeamId)
@@ -768,6 +777,10 @@ end
 function hideOptionalUnitsPanel()
 	mainPanel.disable()
 	WG.optionalUnitsPanelShown = false
+	
+	if not gameStarted and showReadyPanelOnClose then
+    	WG.showReadyPanel()
+    end
 end
 WG.showOptionalUnitsPanel = showOptionalUnitsPanel
 
@@ -950,6 +963,7 @@ function widget:Shutdown()
 end
 
 function widget:GameStart()
+	gameStarted = true
 	local optionalUnitsText = (VFS.FileExists(optionalUnitsFile) and VFS.LoadFile(optionalUnitsFile)) or defaultOptionalUnitsText
 	myActiveOptionalUnitDefIds, _ = getOptionalUnitsFromText(spGetMyTeamID() ,optionalUnitsText)
 end

@@ -1,3 +1,34 @@
+2025/09/15 ------------------ NOTES v2.52 ----------------------
+
+--- Engine
+
+- updated the springRTS/Recoil engine compatibility recommendation to "2025.06.05"
+(fixes an issue with metal extractors from the previous engine build)
+
+
+--- Balance / Mechanics
+
+- Fixed starting commanders ocasionally failing to display optional build options
+
+
+--- UI / Sounds
+
+- Modified "ready" button fit better with the UI and allow players to toggle readiness state and reposition
+- Added sound effects signaling an increase in ready players and for the about-to-start countdown ticks
+- Improved victory and defeat sounds
+- Commander death sounds play differently for kills and losses
+- Fixed outline widget not working for enemy units
+- Player list now shows skill ratings correctly
+
+--- AI
+
+- React faster to AI beacons
+- Beacon retreat/move mode activates when beacon is placed within 1000 range any allied building instead of AI's base
+- Fixed an issue where AI would sometimes not give orders to their armies
+- Fixed naval jammers not behaving properly
+- Will no longer get distracted by air scouts early in the game
+
+
 2025/08/15 ------------------ NOTES v2.51 ----------------------
 
 - Fixed lua errors when issuing shift-queued line formation commands

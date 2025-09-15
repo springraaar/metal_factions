@@ -269,7 +269,7 @@ EXTERNAL_RESPONSE_REMOVEMARKER = "REMOVEMARKER"
 
 
 BEACON_DURATION_FRAMES = 30*120
-BEACON_BASE_RETREAT_DISTANCE = 2000
+BEACON_MOVE_DISTANCE = 1000
 
 -- strategy json constants
 
@@ -371,6 +371,7 @@ TYPE_UW_DEFENSE = 38
 TYPE_FAKE_WEAPON = 39
 TYPE_NUKE = 40
 TYPE_PNODE = 41
+TYPE_BEACON_MOVE_ANCHOR = 42
 
 -- Taskqueuebehavior skips this name
 SKIP_THIS_TASK = "s"
@@ -1004,12 +1005,13 @@ fakeWeaponUnits = {
 
 
 -- units that the AI won't target
-neutralUnits = {
+ignoreUnits = {
 	------------------------------------------------ AVEN
 	aven_dragons_teeth = true,
 	aven_fortification_wall = true,
 	aven_large_fortification_wall = true,
 	aven_fortification_gate = true,
+	aven_peeper = true,
 	------------------------------------------------ GEAR
 	gear_dragons_teeth = true,
 	gear_fortification_wall = true,
@@ -1017,16 +1019,19 @@ neutralUnits = {
 	gear_fortification_gate = true,
 	gear_mine = true,
 	gear_incendiary_mine = true,
+	gear_fink = true,
 	------------------------------------------------ CLAW
 	claw_dragons_teeth = true,
 	claw_fortification_wall = true,
 	claw_large_fortification_wall = true,
 	claw_fortification_gate = true,
+	claw_spotter = true,
 	------------------------------------------------ SPHERE
 	sphere_dragons_teeth = true,
 	sphere_fortification_wall = true,
 	sphere_large_fortification_wall = true,
-	sphere_fortification_gate = true,	
+	sphere_fortification_gate = true,
+	sphere_probe = true,
 	------------------------------------------------ other
 	cs_beacon = true,
 	scoper_beacon = true
@@ -1154,9 +1159,11 @@ function finishLoadingUnitTypeSets()
 	attackers = {}
 	airAttackers = {}
 	seaAttackers = {}
+	beaconMoveAnchors = {}
 	unitTypeSets[TYPE_ATTACKER] = attackers
 	unitTypeSets[TYPE_AIR_ATTACKER] = airAttackers
 	unitTypeSets[TYPE_SEA_ATTACKER] = seaAttackers
+	unitTypeSets[TYPE_BEACON_MOVE_ANCHOR] = beaconMoveAnchors
 	
 	for udId,ud in pairs(UnitDefs) do
 		local pFType = getUnitPFType(ud)
@@ -1169,5 +1176,8 @@ function finishLoadingUnitTypeSets()
 			end
 	    end
 		
+		if ud.isBuilding and ud.metalCost > 100 and (not ignoreUnits[ud.name]) then 
+			beaconMoveAnchors[ud.name] = true
+		end
 	end
 end

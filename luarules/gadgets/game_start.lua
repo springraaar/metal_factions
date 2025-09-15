@@ -39,7 +39,7 @@ local validSide = {
 local function GetStartUnit(teamID)
     local side = select(5, Spring.GetTeamInfo(teamID))
     if (not validSide[side]) then
-    	side = "random"
+    	side = "claw"
     end
 
 	-- check for ingame faction selection
@@ -120,6 +120,19 @@ local function SpawnStartUnit(teamID)
     end
 end
 
+
+function gadget:Initialize()
+	-- mark players ready state if required
+	if Game.startPosType == 2 then
+		local playerList = Spring.GetPlayerList()
+		for _, playerID in pairs(playerList) do
+			local _, _, spectator = Spring.GetPlayerInfo(playerID)
+			if spectator == false then
+				Spring.SetGameRulesParam("player_" .. playerID .. "_readyState",0)
+			end
+		end
+	end
+end
 
 function gadget:GameStart()
     -- only activate if engine didn't already spawn units (compatibility)

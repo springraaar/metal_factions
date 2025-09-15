@@ -14,6 +14,24 @@ local Sounds = {
 			maxconcurrent = 1,
 			gain=1,
 		},
+		StartTick = {
+			file = "luaui/sounds/starttick.wav",
+			in3d = "false",
+			maxconcurrent = 1,
+			gain=1,
+		},		
+		Ready = {
+			file = "luaui/sounds/ready.wav",
+			in3d = "false",
+			maxconcurrent = 1,
+			gain=1,
+		},
+		Starting = {
+			file = "luaui/sounds/starting.wav",
+			in3d = "false",
+			maxconcurrent = 1,
+			gain=1,
+		},		
 		IncomingChat = {
 			--- always play on the front speaker(s)
 			file = "sounds/chatmsg.wav",

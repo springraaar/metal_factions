@@ -560,14 +560,9 @@ AimTertiary(heading, pitch)
 	return (1);
 }
 
-
-
-Killed(severity, corpsetype)
+Killed(severity)
 {
-	bBuilding = FALSE;
-	play-sound( "VICTORY2", 60 );
-	sleep 1;
-	play-sound( "VICTORY2", 60 );
-	return;
+	return(0);
 }
+
 

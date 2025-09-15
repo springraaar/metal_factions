@@ -23,10 +23,12 @@ local spIsCheatingEnabled = Spring.IsCheatingEnabled
 local spGetAllFeatures = Spring.GetAllFeatures
 local spDestroyFeature = Spring.DestroyFeature
 local spGetFeatureDefID = Spring.GetFeatureDefID
+
 local CMD_CLEARWRECKS = "CLEARWRECKS"
 local CMD_RESETUPGRADES = "RESETUPGRADES"
 local CMD_SANDBOX = "SANDBOX"
 local CMD_PICKFACTION = "PICKFACTION"
+local CMD_READYSTATE = "READYSTATE"
 
 include("lualibs/util.lua")
 
@@ -85,6 +87,15 @@ function processExternalCommand(msg,playerId,pName,teamId,allyId, active,spectat
 				if side then	
 			 		Spring.SetTeamRulesParam(teamId, 'faction_selected', side , {public=true})
 			 		--Spring.Echo("faction set to "..side.." for team "..teamId)
+				end				
+			end
+		elseif (command == CMD_READYSTATE and active) then
+			-- change ready state
+			if (Spring.GetGameFrame() <= 0) then
+				readyState = tonumber(parameters[shift+2])
+				if readyState then	
+			 		Spring.SetGameRulesParam('player_'..playerId..'_readyState', readyState)
+			 		--Spring.Echo("ready state set to "..readyState.." for player "..playerId)
 				end				
 			end
 		end

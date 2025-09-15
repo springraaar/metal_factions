@@ -12,23 +12,15 @@
 function widget:GetInfo()
 	return {
 		name      = "AdvPlayersList",
-		desc      = "Players list with useful information / shortcuts. Use tweakmode (ctrl+F11) to customize.",
-		author    = "Marmoth. (Modified by raaar)",
-		date      = "June 1, 2012",
-		version   = "8.2",
+		desc      = "Players list with useful information / shortcuts",
+		author    = "raaar (heavily based on widget by Marmoth)",
+		date      = "2015+",
 		license   = "GNU GPL, v2 or later",
 		layer     = -4,
 		enabled   = true, 
 		handler   = true,
 	}
 end
-
--- modified by raaar, oct 2016
---	. remade buttons
---	. added resource information and bars
---	. replaced rank with trueskill information
---  . removed tip draw check code as it wasn't working properly 
--- modified by raaar, aug 2015 : fixed MFAI label 
 
 
 --------------------------------------------------------------------------------
@@ -65,6 +57,7 @@ local spGetSpectatingState       = Spring.GetSpectatingState
 local spIsReplay                 = Spring.IsReplay
 local spGetSelectedUnits         = Spring.GetSelectedUnits
 local spGetSelectedUnitsCount    = Spring.GetSelectedUnitsCount
+local spGetGameRulesParam        = Spring.GetGameRulesParam
 
 local gl_Texture          = gl.Texture
 local gl_Rect             = gl.Rect
@@ -154,6 +147,19 @@ local fontWOutline    = "luaui/fonts/FreeSansBoldWOutline_14"     -- White outli
 
 local pingCpuColors   = {}
 
+
+local SKILL_LOWER_BOUND = 0
+local SKILL_UPPER_BOUND = 1200
+
+local skillColorArr={
+"\180\90\0",
+"\215\170\0",
+"\245\245\0",
+"\245\245\245",
+"\135\195\250",
+"\20\120\255",
+"\235\50\255"
+}
 
 --------------------------------------------------------------------------------
 -- Time Variables
@@ -381,7 +387,7 @@ m_rank = {
 	spec      = true,
 	play      = true,
 	active    = true,
-	width     = 30 * scaleFactor,
+	width     = 40 * scaleFactor,
 	position  = 2,
 	posX      = 0,
 	pic       = rank8,
@@ -673,7 +679,7 @@ function GetAllPlayers()
 	end
 	specPlayers = Spring_GetTeamList()
 	for _,playerID in ipairs(specPlayers) do
-		local active,_,spec = Spring_GetPlayerInfo(playerID)
+		local _,active,spec = Spring_GetPlayerInfo(playerID)
 		if spec == true then
 			if active == true then
 				player[playerID] = CreatePlayer(playerID)
@@ -704,7 +710,7 @@ end
 function CreatePlayer(playerID)
 
 	local tname,_, tspec, tteam, tallyteam, tping, tcpu, tcountry, trank = Spring_GetPlayerInfo(playerID)
-	local _,_,_,_, tside, tallyteam,incomeMult                         = Spring_GetTeamInfo(tteam)
+	local _,_,_,isAI, tside, tallyteam,incomeMult                         = Spring_GetTeamInfo(tteam)
 	local tred, tgreen, tblue                                            = Spring_GetTeamColor(tteam)
 	tred,tgreen,tblue,_ = convertColor(tred,tgreen,tblue,0) 
 	
@@ -734,11 +740,12 @@ function CreatePlayer(playerID)
 		tdead            = false,
 		spec             = tspec,
 		incomeMult		 = incomeMult,
-		storageM     = nil,
-		storageE     = nil,
-		currentM     = nil,
-		currentE     = nil,
-		relIncome     = nil
+		storageM         = nil,
+		storageE         = nil,
+		currentM         = nil,
+		currentE         = nil,
+		relIncome        = nil,
+		isAI             = isAI
 	}
 	
 end
@@ -807,7 +814,7 @@ function CreatePlayerFromTeam(teamID)
 
 	return {
 		rank             = 8, -- "don't know which" value
-		skill             = tskill,
+		skill            = tskill,
 		name             = tname,
 		team             = teamID,
 		allyteam         = tallyteam,
@@ -820,11 +827,12 @@ function CreatePlayerFromTeam(teamID)
 		dead             = tdead,
 		spec             = false,
 		incomeMult		 = incomeMult,
-		storageM     = nil,
-		storageE     = nil,
-		currentM     = nil,
-		currentE     = nil,
-		relIncome     = nil	
+		storageM         = nil,
+		storageE         = nil,
+		currentM         = nil,
+		currentE         = nil,
+		relIncome        = nil,
+		isAI             = isAI
 	}
 	
 end
@@ -1263,27 +1271,30 @@ function DrawSeparator(vOffset)
 end
 
 function DrawPlayer(playerID, leader, vOffset, mouseX, mouseY)
+	local playerInfo = player[playerID]
+	
 	tipY           = nil
-	local rank     = player[playerID].rank
-	local skill     = player[playerID].skill
-	local name     = player[playerID].name
-	local team     = player[playerID].team
-	local allyteam = player[playerID].allyteam
-	local side     = player[playerID].side
-	local red      = player[playerID].red
-	local green    = player[playerID].green
-	local blue     = player[playerID].blue
-	local dark     = player[playerID].dark
-	local pingLvl  = player[playerID].pingLvl
-	local cpuLvl   = player[playerID].cpuLvl
-	local ping     = player[playerID].ping
-	local cpu      = player[playerID].cpu    
-	local spec     = player[playerID].spec
-	local totake   = player[playerID].totake
-	local needm    = player[playerID].needm
-	local neede    = player[playerID].neede
-	local dead     = player[playerID].dead
-	local incomeMult     = player[playerID].incomeMult
+	local rank     = playerInfo.rank
+	local skill    = playerInfo.skill
+	local name     = playerInfo.name
+	local team     = playerInfo.team
+	local allyteam = playerInfo.allyteam
+	local side     = playerInfo.side
+	local red      = playerInfo.red
+	local green    = playerInfo.green
+	local blue     = playerInfo.blue
+	local dark     = playerInfo.dark
+	local pingLvl  = playerInfo.pingLvl
+	local cpuLvl   = playerInfo.cpuLvl
+	local ping     = playerInfo.ping
+	local cpu      = playerInfo.cpu    
+	local spec     = playerInfo.spec
+	local totake   = playerInfo.totake
+	local needm    = playerInfo.needm
+	local neede    = playerInfo.neede
+	local dead     = playerInfo.dead
+	local isAI     = playerInfo.isAI
+	local incomeMult     = playerInfo.incomeMult
 	local posY     = widgetPosY + widgetHeight - vOffset
 	local hasResourceInfo = nil
 	local energyLevel, metalLevel, relIncome
@@ -1297,6 +1308,16 @@ function DrawPlayer(playerID, leader, vOffset, mouseX, mouseY)
 	if mouseY >= posY and mouseY <= posY + itemSizeY then tipY = true end
 	
 	if spec == false then
+		-- darken/fade colors while not ready, if start pos set to "choose in game"
+		if Game.startPosType == 2 and not isAI then 
+			local ready = spGetGameRulesParam("player_" .. playerID .. "_readyState")
+			if ready ~= 1 then
+				red = 0.25+red*0.2
+				green = 0.25+green*0.2
+				blue = 0.25+blue*0.2
+			end
+		end
+		
 		if leader == true then                              -- take / share buttons
 			if mySpecStatus == false then
 				if allyteam == myAllyTeamID then
@@ -1318,7 +1339,7 @@ function DrawPlayer(playerID, leader, vOffset, mouseX, mouseY)
 				end
 			end
 			gl_Color(red,green,blue,1)	
-			if m_rank.active == true then
+			if m_rank.active == true and (not isAI) then
 			--	if playerID < 32 then
 					DrawRank(skill, posY, dark)
 			--	end
@@ -1375,10 +1396,10 @@ function DrawPlayer(playerID, leader, vOffset, mouseX, mouseY)
 		end
 		
 		if m_point.active == true then
-			if player[playerID].pointTime ~= nil then
-				if player[playerID].allyteam == myAllyTeamID or mySpecStatus == true then
+			if playerInfo.pointTime ~= nil then
+				if playerInfo.allyteam == myAllyTeamID or mySpecStatus == true then
 					--if blink == true then
-						DrawPoint(posY, player[playerID].pointTime-now)
+						DrawPoint(posY, playerInfo.pointTime-now)
 					--end
 					if tipY == true then PointTip(mouseX) end
 				end
@@ -1475,7 +1496,7 @@ function DrawRank(skill, posY, dark)
 	--  show TS skill value instead, if available
 	gl_Color(1,1,1,1)
 	--UseFont(font)
-	TextDraw(skill, m_rank.posX + widgetPosX + 3*scaleFactor, posY + 3*scaleFactor)
+	TextDrawCentered(skill, m_rank.posX + widgetPosX + 0.48*m_rank.width, posY + 3*scaleFactor)
 	gl_Color(1,1,1,1)
 	
 end
@@ -2347,46 +2368,20 @@ function weightedIncome(metal, energy)
 	return metal + energy/60
 end
 
-
 function GetSkill(playerID)
-	local customtable = select(10,Spring_GetPlayerInfo(playerID)) -- player custom table
+	local skillTable = select(11,Spring_GetPlayerInfo(playerID)) -- player custom table
 	local unknown = "\255"..string.char(160)..string.char(160)..string.char(160) .. "?"
 
-	if (customtable and type(customtable) == "table") then
-		local tsMu = customtable.skill
-		local tsSigma = customtable.skilluncertainty
+	if (skillTable and type(skillTable) == "table") then
+		local skillStr = skillTable.skill
 		local tskill = ""
-		if tsMu then
-			tskill = tsMu and tonumber(tsMu:match("%d+%.?%d*")) or 0
-			tskill = round(tskill,0)
-			if string.find(tsMu, ")") then
-				tskill = "\255"..string.char(190)..string.char(140)..string.char(140) .. tskill -- ')' means inferred from lobby rank
-			else
-			
-				-- show privacy mode
-				local priv = ""
-				if string.find(tsMu, "~") then -- '~' means privacy mode is on
-					priv = "\255"..string.char(200)..string.char(200)..string.char(200) .. "*" 		
-				end
-				
-				--show sigma
-				if tsSigma then -- 0 is low sigma, 3 is high sigma
-					tsSigma=tonumber(tsSigma)
-					local tsRed, tsGreen, tsBlue 
-					if tsSigma > 2 then
-						tsRed, tsGreen, tsBlue = 190, 130, 130
-					elseif tsSigma == 2 then
-						tsRed, tsGreen, tsBlue = 140, 140, 140
-					elseif tsSigma == 1 then
-						tsRed, tsGreen, tsBlue = 195, 195, 195
-					elseif tsSigma < 1 then
-						tsRed, tsGreen, tsBlue = 250, 250, 250
-					end
-					tskill = priv .. "\255"..string.char(tsRed)..string.char(tsGreen)..string.char(tsBlue) .. tskill
-				else
-					tskill = priv .. "\255"..string.char(195)..string.char(195)..string.char(195) .. tskill --should never happen
-				end
-			end
+		if skillStr then
+			tskill = skillStr and tonumber(skillStr:match("%d+%.?%d*")) or 0
+			tskill = round(tskill*1.3,0)
+
+			local factor = getScale(tskill, SKILL_LOWER_BOUND, SKILL_UPPER_BOUND);
+			local colorIndex = 1 + math.floor(factor * 6);
+			tskill = "\255"..skillColorArr[colorIndex] .. tskill
 		else
 			tskill = unknown
 		end

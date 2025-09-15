@@ -43,7 +43,7 @@ function AI.create(id, mode, strategyStr, allyId, mapHandler)
 	obj.assaultRetreatHealth = ASSAULT_RETREAT_HEALTH
 	obj.otherRetreatHealth = UNIT_RETREAT_HEALTH
 	
-	obj.frameShift = 7*tonumber(id)	-- used to spread out processing from different AIs across multiple frames
+	obj.frameShift = random(1,8)	-- used to spread out processing from different AIs across multiple frames
 	obj.needStartPosAdjustment = false
 	obj.sentStartupHelpMsg = false
 	
@@ -473,7 +473,7 @@ function AI:processExternalCommand(msg,playerId,teamId,pName,isOwner,spectator)
 			end
 			self.beaconFrame = nil
 			self.beaconPos = nil
-
+			self.beaconAckSent = false
 		elseif (command == EXTERNAL_CMD_STATUS) then
 			if self.useStrategies then
 				self:messageAllies("Current strategy : \""..self.currentStrategyStr.."\" : "..self.currentStrategyName)

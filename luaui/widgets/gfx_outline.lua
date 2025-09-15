@@ -168,7 +168,7 @@ end
 
 function widget:Initialize()
 	for _,unitID in ipairs(spGetVisibleUnits()) do
-		widget:UnitCreated(unitID,spGetUnitDefID(unitID))
+		widget:UnitEnteredLos(unitID, nil, nil, spGetUnitDefID(unitID))
 	end
 
   vsx, vsy = widgetHandler:GetViewSizes()
@@ -386,11 +386,11 @@ function widget:DrawWorldPreUnit()
 end
 
 
-function widget:UnitDestroyed(unitID, unitDefID, unitTeam)
+function widget:UnitLeftLos(unitID, unitTeam, allyTeam, unitDefID)
 	outlinableUnitIds[unitID] = nil
 end
 
-function widget:UnitCreated(unitID, unitDefID, unitTeam)
+function widget:UnitEnteredLos(unitID, unitTeam, allyTeam, unitDefID)
 	if not noOutlineUnitDefIds[unitDefID] then
 		outlinableUnitIds[unitID] = true
 	end

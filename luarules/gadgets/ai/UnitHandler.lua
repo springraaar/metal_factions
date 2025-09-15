@@ -236,6 +236,7 @@ function UnitHandler:Init(ai)
 	self.beaconAttack = true
 	self.beaconMode = nil --TODO make this work
 	self.beaconOrdersUpdateRequired = false
+	self.beaconTaskUpdateRequired = false
 	
 	self.brutalPlantDone = false
 	self.brutalAirPlantDone = false	
@@ -1642,7 +1643,7 @@ function UnitHandler:GameFrame(f)
 			for eId,_ in pairs (enemyUnitIds) do
 				ud = UnitDefs[spGetUnitDefID(eId)]
 				local tmpName = ud.name
-				if (not neutralUnits[tmpName]) then
+				if (not ignoreUnits[tmpName]) then
 					local hasWeapons = #ud.weapons > 0 and (not fakeWeaponUnits[tmpName])
 					local cost = getWeightedCostByName(tmpName)
 					local health,maxHealth,_,_,progress = spGetUnitHealth(eId) 
@@ -2197,31 +2198,45 @@ function UnitHandler:GameFrame(f)
 		end
 	end
 	
-	
 	-- check whether units should attack or retreat towards beacon
 	if self.ai:isBeaconActive() then
-		local xIndex,zIndex = getCellXZIndexesForPosition(self.ai.beaconPos)
-		local cell = getCellFromTableIfExists(self.ai.mapHandler.mapCells,xIndex,zIndex)
-		
-		local d = distance(self.basePos,cell.p)
-		-- clicking close to base triggers retreat/move mode
-		if d < BEACON_BASE_RETREAT_DISTANCE then
-			self.beaconAttack = false
-			-- move to beacon
-			self.retreatPos.x = self.ai.beaconPos.x
-			self.retreatPos.y = self.ai.beaconPos.y
-			self.retreatPos.z = self.ai.beaconPos.z 
-		else 
-			self.beaconAttack = true
-			-- move to base
-			self.retreatPos.x = self.basePos.x
-			self.retreatPos.y = self.basePos.y
-			self.retreatPos.z = self.basePos.z 
-		end
-		
 		if not self.ai.beaconAckSent then
+			-- clicking close to ally buildings triggers retreat/move mode
+			self.beaconAttack = true
+			local units = spGetUnitsInCylinder( self.ai.beaconPos.x,  self.ai.beaconPos.z, BEACON_MOVE_DISTANCE)
+			local tId = nil
+			if (units ~= nil) then
+				for _,uId in pairs(units) do
+					tId = spGetUnitTeam(uId)
+					if (spAreTeamsAllied(tId,self.ai.id)) then
+						ud = UnitDefs[spGetUnitDefID(uId)]
+						if ud ~= nil then
+							local tmpName = ud.name
+				
+							if beaconMoveAnchors[ud.name] then
+								self.beaconAttack = false
+								break
+							end
+						end
+					end
+				end
+			end						
+			
+			if self.beaconAttack == false then
+				-- move to beacon
+				self.retreatPos.x = self.ai.beaconPos.x
+				self.retreatPos.y = self.ai.beaconPos.y
+				self.retreatPos.z = self.ai.beaconPos.z 
+			else 
+				-- move to base
+				self.retreatPos.x = self.basePos.x
+				self.retreatPos.y = self.basePos.y
+				self.retreatPos.z = self.basePos.z 
+			end
+			
 			self.ai:messageAllies("BEACON at ("..self.ai.beaconPos.x..","..self.ai.beaconPos.z..") : "..(self.beaconAttack and "attack/engage" or "retreat/move"))
 			self.ai.beaconAckSent = true
+			self.beaconTaskUpdateRequired = true 
 			self.beaconOrdersUpdateRequired = true 
 		end	
 		
@@ -2241,7 +2256,7 @@ function UnitHandler:GameFrame(f)
 	
 	
 	-- define task for each group
-	if (self.beaconOrdersUpdateRequired and f%30 == 10 + self.ai.frameShift) or f%199 == 52 + self.ai.frameShift then
+	if (self.beaconTaskUpdateRequired and f%15 == 1 + self.ai.frameShift) or f%199 == 52 + self.ai.frameShift then
 		local currentLevelM,storageM,_,incomeM,expenseM,_,_,_ = spGetTeamResources(self.ai.id,"metal")
 		local currentLevelE,storageE,_,incomeE,expenseE,_,_,_ = spGetTeamResources(self.ai.id,"energy")
 		
@@ -2377,10 +2392,11 @@ function UnitHandler:GameFrame(f)
 			
 			group.task = task
 		end
+		self.beaconTaskUpdateRequired = false
 	end
 	
 	-- issue orders to units in attack groups according to the current corresponding task
-	if (self.beaconOrdersUpdateRequired and f%30 == 15 + self.ai.frameShift) or f%60 == 4 + self.ai.frameShift then
+	if (self.beaconOrdersUpdateRequired and f%15 == 5 + self.ai.frameShift) or f%60 == 4 + self.ai.frameShift then
 		for gId,group in pairs(self.unitGroups) do
 			self:issueOrders(group)
 		end
