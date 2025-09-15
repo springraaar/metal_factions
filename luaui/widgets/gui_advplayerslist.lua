@@ -161,6 +161,21 @@ local skillColorArr={
 "\235\50\255"
 }
 
+-- convert skill points to 0-1 range
+function getScale(value, lowerBound, upperBound) 
+
+	if (value < lowerBound) then
+		return 0
+	end
+	if (value >= upperBound) then
+		return 1
+	end
+
+	return (value - lowerBound) / (upperBound - lowerBound)
+end
+
+
+
 --------------------------------------------------------------------------------
 -- Time Variables
 --------------------------------------------------------------------------------
@@ -688,14 +703,36 @@ function GetAllPlayers()
 	end
 end
 
+function updateAllSizesPositions()
+	SetModulesPositionX()
+	GeometryChange()
+	updateExtraButtonGeometry()
+end
+
 function Init()
+	vsx,vsy = gl.GetViewSizes()
+	if (vsy ~= 1080) then
+		scaleFactor = vsy/1080
+	else
+		scaleFactor = 1
+	end
+	widgetRight                                = 1
+	widgetHeight                               = 0
+	widgetWidth                                = 0
+	widgetPosX                                 = vsx-200*scaleFactor
+	widgetPosY                                 = 0
+	expandDown                                 = false
+	expandLeft                                 = false
+	labelOffset     = 20 * scaleFactor
+	separatorOffset = 3 * scaleFactor
+	playerOffset    = 19 * scaleFactor
+	
 	SetPingCpuColors()
 	InitializePlayers()
 	SetSidePics()
 	SortList()
-	SetModulesPositionX()
-	GeometryChange()
-	updateExtraButtonGeometry()
+
+	updateAllSizesPositions()
 end
 
 function widget:Initialize()
@@ -1089,6 +1126,7 @@ function widget:DrawScreen()
 	local refreshIdx = floor(spDiffTimers(spGetTimer(),refTimer)*5)
 	local forceRefresh = isOnButton(mouseX, mouseY, widgetPosX, widgetPosY,widgetPosX + widgetWidth,chatTypeButton.y2)
 	
+	
 	-- refresh gl list only a few times per second, unless mouse is over the widget
 	if (not glList) or forceRefresh or refreshIdx ~= glListRefreshIdx then
 		if (glList) then
@@ -1149,7 +1187,6 @@ function widget:DrawScreen()
 		
 			-- draws share energy/metal sliders
 			DrawShareSlider()
-
 		end)
 		glListRefreshIdx = refreshIdx
 	end
@@ -1226,7 +1263,6 @@ end
 function DrawList()
 	local mouseX,mouseY = Spring_GetMouseState()
 	local leader
-
 	for i, drawObject in ipairs(drawList) do
 		if drawObject == -5 then
 			DrawLabel("SPECS", drawListOffset[i])
@@ -1309,7 +1345,7 @@ function DrawPlayer(playerID, leader, vOffset, mouseX, mouseY)
 	
 	if spec == false then
 		-- darken/fade colors while not ready, if start pos set to "choose in game"
-		if Game.startPosType == 2 and not isAI then 
+		if Game.startPosType == 2 and (not isAI) and (not dead) then 
 			local ready = spGetGameRulesParam("player_" .. playerID .. "_readyState")
 			if ready ~= 1 then
 				red = 0.25+red*0.2
@@ -2377,7 +2413,7 @@ function GetSkill(playerID)
 		local tskill = ""
 		if skillStr then
 			tskill = skillStr and tonumber(skillStr:match("%d+%.?%d*")) or 0
-			tskill = round(tskill*1.3,0)
+			tskill = round(tskill,0)
 
 			local factor = getScale(tskill, SKILL_LOWER_BOUND, SKILL_UPPER_BOUND);
 			local colorIndex = 1 + math.floor(factor * 6);
@@ -2625,6 +2661,8 @@ function widget:TeamDied(teamID)
 end
 
 function widget:ViewResize(viewSizeX, viewSizeY)
+	--TODO remove? redundant with window resize monitor/widget reloader
+	--[[
 	local dx, dy = vsx - viewSizeX, vsy - viewSizeY
 	Echo("view resized from "..vsx.."*"..vsy.." to "..viewSizeX.."*"..viewSizeY.." edown="..tostring(expandDown).." eleft="..tostring(expandLeft))
 	vsx, vsy = viewSizeX, viewSizeY
@@ -2641,6 +2679,7 @@ function widget:ViewResize(viewSizeX, viewSizeY)
 	widgetPosX = widgetRight - widgetWidth
 	
 	updateExtraButtonGeometry()
+	]]--
 end
 
 

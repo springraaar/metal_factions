@@ -23,6 +23,7 @@ local floor = math.floor
 local ceil = math.ceil
 local abs = math.abs
 local random = math.random
+local max = math.max
 local spGetGameFrame = Spring.GetGameFrame
 local spGetProjectilePosition = Spring.GetProjectilePosition
 local spSetProjectileCollision = Spring.SetProjectileCollision
@@ -440,7 +441,7 @@ function gadget:GameFrame(n)
 					spSetUnitRulesParam(uId,"auto_build_steps",DC_ROCKET_AUTO_BUILD_STEPS,UNIT_RP_PUBLIC_TBL)
 				end
 				-- also add a cs beacon temporarily over it to provide los
-				uId = spCreateUnit("cs_beacon",info.px,info.py+500,info.pz,0,info.teamId,false)
+				uId = spCreateUnit("cs_beacon",info.px,max(info.py,0)+500,info.pz,0,info.teamId,false)
 				if uId then
 					spSetUnitNeutral(uId,true)
 					applyNonInteractiveProperties(uId)
@@ -999,7 +1000,7 @@ function gadget:ProjectileDestroyed(proID)
 			local teamId = spGetUnitTeam(ownerId)
 			local px,py,pz = spGetProjectilePosition(proID)
 			if px and teamId ~= nil and teamId >= 0 then
-				local uId = spCreateUnit("cs_beacon",px,py+500,pz,0,teamId,false)
+				local uId = spCreateUnit("cs_beacon",px,max(py,0)+500,pz,0,teamId,false)
 				if uId then
 					spSetUnitNeutral(uId,true)
 					applyNonInteractiveProperties(uId)
@@ -1014,7 +1015,7 @@ function gadget:ProjectileDestroyed(proID)
 			local teamId = spGetUnitTeam(ownerId)
 			local px,py,pz = spGetProjectilePosition(proID)
 			if px and teamId ~= nil and teamId >= 0 then
-				local uId = spCreateUnit("scoper_beacon",px,py+200,pz,0,teamId,false)
+				local uId = spCreateUnit("scoper_beacon",px,max(py,0)+200,pz,0,teamId,false)
 				if uId then
 					spSetUnitNeutral(uId,true)
 					applyNonInteractiveProperties(uId)
