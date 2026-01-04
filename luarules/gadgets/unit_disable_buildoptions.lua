@@ -14,7 +14,7 @@ end
 --config
 --------------------------------------------------------------------------------
 
-local MIN_AVG_WIND = 9
+local MIN_AVG_WIND = 2  -- very low threshold because other gadget overrides low wind to normal values 
 local MIN_TIDAL = 10
 
 --------------------------------------------------------------------------------

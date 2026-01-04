@@ -1,0 +1,159 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 	100
+
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
+
+piece  base, flare, turret, sleeve, barrel, wings, turret2,sleeve2,barrel2,flare2,t1,t2,t1cover,t2cover,body,left,right,b2;
+
+
+#include "aimhelper1.h"
+#include "aimhelper2.h"
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_AIM2 			4
+
+static-var bAiming2,lastHeading;
+
+#include "tankthreads.h"
+
+
+recoil(anglex, anglez)
+{
+	anglex = <-0.300000> * (get KCOS(lastHeading)) / 100;
+	anglez = <-0.300000> * (get KSIN(lastHeading)) / 100;
+	
+	turn base to x-axis anglex speed <150.005495>;
+	turn base to z-axis anglez speed <150.005495>;
+	wait-for-turn base around z-axis;
+	wait-for-turn base around x-axis;
+	turn base to z-axis <0.000000> speed <30.000000>;
+	turn base to x-axis <0.000000> speed <30.000000>;
+}
+
+Create() {
+	bAiming2 = FALSE;
+	lastHeading = <0>;
+	call-script stopAimHelper1(<1000>,<1000>);
+	call-script stopAimHelper2(<1000>,<1000>);
+	start-script AnimateTracks();
+	return (0);
+}
+
+
+RestoreAfterDelay() {
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<180>,<180>);
+	turn turret to y-axis <0.000000> speed <180.000000>;
+	turn sleeve to x-axis <0.000000> speed <180.000000>;
+	if (!bAiming2) {
+		turn turret2 to y-axis <0> speed <180>;
+	}
+	lastHeading = <0>;
+	return (0);
+}
+
+RestoreAfterDelay2() {
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper2(<240>,<240>);
+	turn turret2 to y-axis <0> speed <240>;
+	turn sleeve2 to x-axis <0> speed <240>;
+	bAiming2 = FALSE;
+	return (0);
+}
+
+AimPrimary(heading, pitch) {
+	call-script updateAimHelper1(heading,pitch,<180>,<180>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn turret to y-axis heading speed <180.000000>;
+	turn sleeve to x-axis <0.000000> - pitch speed <180.000000>;
+	if(!bAiming2)
+	{
+		turn turret2 to y-axis heading speed <180>;
+	}
+	if (!aimReady1)
+	{
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
+	lastHeading = heading;
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary() {
+	move barrel to z-axis [-4.000000] now;
+	emit-sfx 1024 + 0 from flare;
+	call-script recoil();
+	sleep 150;
+	move barrel to z-axis [0.000000] speed [15.500000];
+	return (0);
+}
+
+AimFromPrimary(piecenum) {
+	piecenum = turret;
+	return (0);
+}
+
+QueryPrimary(piecenum) {
+	piecenum = flare;
+	return (0);
+}
+
+
+AimSecondary(heading, pitch) {
+	call-script updateAimHelper2(heading,pitch,<400>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM2;
+	set-signal-mask SIG_AIM2;
+	bAiming2 = TRUE;
+	turn turret2 to y-axis heading speed <400.000000>;
+	turn sleeve2 to x-axis <0.000000> - pitch speed <400.000000>;
+	if (!aimReady2)
+	{
+		wait-for-turn turret2 around y-axis;
+		wait-for-turn sleeve2 around x-axis;
+	}
+	start-script RestoreAfterDelay2();
+	return (1);
+}
+
+FireSecondary() {
+	emit-sfx 1024 + 1 from flare2;
+	return (0);
+}
+
+AimFromSecondary(piecenum) {
+	piecenum = turret2;
+	return (0);
+}
+
+QuerySecondary(piecenum) {
+	piecenum = flare2;
+	return (0);
+}
+
+
+Killed(severity, corpsetype)
+{
+	if( severity <= 50 )
+	{
+		explode barrel type SHATTER;
+		explode turret type SHATTER | BITMAP4;
+		return (1);
+	}
+	explode barrel type FALL | SMOKE | FIRE | EXPLODE_ON_HIT | BITMAP1;
+	explode turret type SHATTER | EXPLODE_ON_HIT | BITMAP4;
+	explode t1cover type SHATTER;
+	explode t2cover type SHATTER;
+	explode body type SHATTER;
+	explode left type SHATTER;
+	explode right type SHATTER;
+	return (2);
+}

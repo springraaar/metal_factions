@@ -120,7 +120,7 @@ end
 local function addBlastRadiusIfRelevant(ud,x,y,z)
 	local deathBlastWD = WeaponDefNames[ud.deathExplosion] 
 	local selfDBlastWD = WeaponDefNames[ud.selfDExplosion]
-	if (ud.isImmobile and deathBlastWD and deathBlastWD.damageAreaOfEffect > 100) or (ud.canSelfD and selfDBlastWD and selfDBlastWD.damageAreaOfEffect > 100 and (not (ud.customParams and ud.customParams.iscommander))) then
+	if (ud.isImmobile and deathBlastWD and deathBlastWD.damageAreaOfEffect > 100) or (ud.canSelfD and selfDBlastWD and selfDBlastWD.damageAreaOfEffect > 100 and (not (ud.customParams and ud.customParams.iscommander) or  selfDBlastWD.damageAreaOfEffect > 250)) then
 		local radius = max(deathBlastWD and deathBlastWD.damageAreaOfEffect or 0,(ud.canSelfD and selfDBlastWD) and selfDBlastWD.damageAreaOfEffect or 0)
 		
 		addCircle(x,y,z,radius,deathBlastRangeColor,false,RANGE_TYPE_SPH) 

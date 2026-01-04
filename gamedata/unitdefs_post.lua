@@ -196,6 +196,7 @@ local selfDUnits = {
 	gear_u5commander = true,
 	gear_u6commander = true,
 	gear_u7commander = true,
+	gear_u8commander = true,
 	gear_mine = true,
 	gear_grenado = true,
 	gear_exploder = true,
@@ -210,6 +211,7 @@ local selfDUnits = {
 	claw_u5commander = true,
 	claw_u6commander = true,
 	claw_u7commander = true,
+	claw_u8commander = true,
 	claw_avenger = true,
 	-- SPHERE
 	sphere_commander = true,
@@ -219,7 +221,8 @@ local selfDUnits = {
 	sphere_u4commander = true,
 	sphere_u5commander = true,
 	sphere_u6commander = true,
-	sphere_u7commander = true
+	sphere_u7commander = true,
+	sphere_u8commander = true
 }
 
 

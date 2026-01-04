@@ -6,7 +6,7 @@
 #define HEADING_TOLERANCE	<25>
 #define PITCH_TOLERANCE		<35>
 
-piece base,hull,wingsup, wingsup2,bwingl,bwingr,fwingl,fwingr,weapon1,barrel1,flare1,weapon2,barrel2,flare2,lweapon1,lw1door1,lw1door2,lwext1,lwflare1,lweapon2,lw2door1,lw2door2,lwext2,lwflare2,rweapon1,rw1door1,rw1door2,rwext1,rwflare1,rweapon2,rw2door1,rw2door2,rwext2,rwflare2,lj1p,lj2p,rj1p,rj2p,charge1,charge2,charge3,charge4,fdoor1,fdoor2,ljb,rjb;
+piece base,hull,wingsup, wingsup2,weapon1,barrel1,flare1,weapon2,barrel2,flare2,ls1,ls2,ls3,larm1,larm2,larm3,lweapon1,lw1door1,lw1door2,lwext1,lwflare1,lweapon2,lw2door1,lw2door2,lwext2,lwflare2,lweapon3,lw3door1,lw3door2,lwext3,lwflare3,rs1,rs2,rs3,rarm1,rarm2,rarm3,rweapon1,rw1door1,rw1door2,rwext1,rwflare1,rweapon2,rw2door1,rw2door2,rwext2,rwflare2,rweapon3,rw3door1,rw3door2,rwext3,rwflare3,lj1p,lj2p,rj1p,rj2p,charge1,charge2,charge3,charge4,fdoor1,fdoor2,ljb,rjb,upperlid,lowerlid;
 
 static-var   gun_1, gun_2, bAiming,isOpen, charges;
 
@@ -82,45 +82,83 @@ chargeVisuals() {
 
 Open() {
 	set ARMORED to FALSE;
+	turn upperlid to x-axis <-60> speed <300>;
+	turn lowerlid to x-axis <60> speed <300>;
 
-	move lweapon1 to x-axis [-5] speed [80];
-	move lweapon2 to x-axis [-5] speed [80];
-	move rweapon1 to x-axis [5] speed [80];
-	move rweapon2 to x-axis [5] speed [80];
+	move ls1 to x-axis [-4.35] speed [80];
+	move ls1 to y-axis [2] speed [35];
+	move ls2 to x-axis [-6.4] speed [80];
+	move ls3 to x-axis [-4.35] speed [80];
+	move ls3 to y-axis [-2] speed [35];
 	
-	wait-for-move lweapon1 along x-axis;
+	move rs1 to x-axis [4.35] speed [80];
+	move rs1 to y-axis [2] speed [35];
+	move rs2 to x-axis [6.4] speed [80];
+	move rs3 to x-axis [4.35] speed [80];
+	move rs3 to y-axis [-2] speed [35];
 	
-	turn lweapon1 to z-axis <-10> speed <300>;
-	turn rweapon1 to z-axis <-10> speed <300>;
-	turn lweapon2 to z-axis <10> speed <300>;
-	turn rweapon2 to z-axis <10> speed <300>;
+	wait-for-move ls1 along x-axis;
+
+	move lweapon1 to x-axis [-3] speed [80];
+	move lweapon2 to x-axis [-3] speed [80];
+	move lweapon3 to x-axis [-3] speed [80];
+	move rweapon1 to x-axis [3] speed [80];
+	move rweapon2 to x-axis [3] speed [80];
+	move rweapon3 to x-axis [3] speed [80];
+
+
+	turn larm1 to y-axis <-30> speed <300>;
+	turn larm2 to y-axis <-30> speed <300>;
+	turn larm3 to y-axis <-30> speed <300>;
+	turn lweapon1 to y-axis <25> speed <300>;
+	turn lweapon2 to y-axis <25> speed <300>;
+	turn lweapon3 to y-axis <25> speed <300>;
+	turn rarm1 to y-axis <30> speed <300>;
+	turn rarm2 to y-axis <30> speed <300>;
+	turn rarm3 to y-axis <30> speed <300>;
+	turn rweapon1 to y-axis <-25> speed <300>;
+	turn rweapon2 to y-axis <-25> speed <300>;
+	turn rweapon3 to y-axis <-25> speed <300>;
+
+	move lweapon1 to z-axis [3.4] speed [80];
+	move lweapon2 to z-axis [3.4] speed [80];
+	move lweapon3 to z-axis [3.4] speed [80];
+	move rweapon1 to z-axis [3.4] speed [80];
+	move rweapon2 to z-axis [3.4] speed [80];
+	move rweapon3 to z-axis [3.4] speed [80];
 	
 	move lw1door1 to y-axis [2] speed [20];	
 	move lw1door2 to y-axis [-2] speed [20];
 	move lw2door1 to y-axis [2] speed [20];	
 	move lw2door2 to y-axis [-2] speed [20];
+	move lw3door1 to y-axis [2] speed [20];	
+	move lw3door2 to y-axis [-2] speed [20];
 	
 	move rw1door1 to y-axis [-2] speed [20];
 	move rw1door2 to y-axis [2] speed [20];
 	move rw2door1 to y-axis [-2] speed [20];
 	move rw2door2 to y-axis [2] speed [20];
+	move rw3door1 to y-axis [-2] speed [20];
+	move rw3door2 to y-axis [2] speed [20];
 
-	move lwext1 to z-axis [10] speed [40];
-	move lwext2 to z-axis [10] speed [40];
-	move rwext1 to z-axis [10] speed [40];
-	move rwext2 to z-axis [10] speed [40];
+	move lwext1 to z-axis [10] speed [50];
+	move lwext2 to z-axis [10] speed [50];
+	move lwext3 to z-axis [10] speed [50];
+	move rwext1 to z-axis [10] speed [50];
+	move rwext2 to z-axis [10] speed [50];
+	move rwext3 to z-axis [10] speed [50];
 
-	turn fdoor1 to x-axis <-65> speed <360>;
-	turn fdoor2 to x-axis <65> speed <360>;
-	move fdoor1 to y-axis [1] speed [30];
-	move fdoor1 to z-axis [-4] speed [30];
-	move fdoor2 to y-axis [-1] speed [30];
-	move fdoor2 to z-axis [-4] speed [30];
+	turn fdoor1 to x-axis <-65> speed <460>;
+	turn fdoor2 to x-axis <65> speed <460>;
+	move fdoor1 to y-axis [1] speed [40];
+	move fdoor1 to z-axis [-4] speed [40];
+	move fdoor2 to y-axis [-1] speed [40];
+	move fdoor2 to z-axis [-4] speed [40];
 	
 	wait-for-move fdoor1 along z-axis;
 	
-	move barrel1 to z-axis [10] speed [30];
-	move barrel2 to z-axis [10] speed [30];
+	move barrel1 to z-axis [10] speed [50];
+	move barrel2 to z-axis [10] speed [50];
 	
 	wait-for-move barrel1 along z-axis;
 		
@@ -133,19 +171,25 @@ Close() {
 
 	move lwext1 to z-axis [0] speed [20];
 	move lwext2 to z-axis [0] speed [20];
+	move lwext3 to z-axis [0] speed [20];
 	move rwext1 to z-axis [0] speed [20];
 	move rwext2 to z-axis [0] speed [20];
+	move rwext3 to z-axis [0] speed [20];
 	wait-for-move lwext1 along z-axis;
 
 	move lw1door1 to y-axis [0] speed [20];	
 	move lw1door2 to y-axis [0] speed [20];
 	move lw2door1 to y-axis [0] speed [20];	
 	move lw2door2 to y-axis [0] speed [20];
+	move lw3door1 to y-axis [0] speed [20];	
+	move lw3door2 to y-axis [0] speed [20];
 	
 	move rw1door1 to y-axis [0] speed [20];
 	move rw1door2 to y-axis [0] speed [20];
 	move rw2door1 to y-axis [0] speed [20];
 	move rw2door2 to y-axis [0] speed [20];
+	move rw3door1 to y-axis [0] speed [20];
+	move rw3door2 to y-axis [0] speed [20];
 
 	move barrel1 to z-axis [0] speed [30];
 	move barrel2 to z-axis [0] speed [30];
@@ -160,18 +204,52 @@ Close() {
 	turn fdoor1 to x-axis <0> speed <360>;
 	turn fdoor2 to x-axis <0> speed <360>;
 
-	turn lweapon1 to z-axis <0> speed <300>;
-	turn rweapon1 to z-axis <0> speed <300>;
-	turn lweapon2 to z-axis <0> speed <300>;
-	turn rweapon2 to z-axis <0> speed <300>;
 
-	wait-for-turn rweapon1 around z-axis;
+	turn larm1 to y-axis <0> speed <300>;
+	turn larm2 to y-axis <0> speed <300>;
+	turn larm3 to y-axis <0> speed <300>;
+	turn rarm1 to y-axis <0> speed <300>;
+	turn rarm2 to y-axis <0> speed <300>;
+	turn rarm3 to y-axis <0> speed <300>;
+
+	turn lweapon1 to y-axis <0> speed <300>;
+	turn lweapon2 to y-axis <0> speed <300>;
+	turn lweapon3 to y-axis <0> speed <300>;
+	turn rweapon1 to y-axis <0> speed <300>;
+	turn rweapon2 to y-axis <0> speed <300>;
+	turn rweapon3 to y-axis <0> speed <300>;
+
+	wait-for-turn rweapon1 around y-axis;
+
+	move lweapon1 to x-axis [0] speed [80];
+	move lweapon2 to x-axis [0] speed [80];
+	move lweapon3 to x-axis [0] speed [80];
+	move rweapon1 to x-axis [0] speed [80];
+	move rweapon2 to x-axis [0] speed [80];
+	move rweapon3 to x-axis [0] speed [80];
 	
-	move lweapon1 to x-axis [0] speed [30];
-	move lweapon2 to x-axis [0] speed [30];
-	move rweapon1 to x-axis [0] speed [30];
-	move rweapon2 to x-axis [0] speed [30];
+	move lweapon1 to z-axis [0] speed [30];
+	move lweapon2 to z-axis [0] speed [30];
+	move lweapon3 to z-axis [0] speed [30];
+	move rweapon1 to z-axis [0] speed [30];
+	move rweapon2 to z-axis [0] speed [30];
+	move rweapon3 to z-axis [0] speed [30];
 
+	move ls1 to x-axis [0] speed [30];
+	move ls1 to y-axis [0] speed [13];
+	move ls2 to x-axis [0] speed [30];
+	move ls3 to x-axis [0] speed [30];
+	move ls3 to y-axis [0] speed [13];
+	
+	move rs1 to x-axis [0] speed [30];
+	move rs1 to y-axis [0] speed [13];
+	move rs2 to x-axis [0] speed [30];
+	move rs3 to x-axis [0] speed [30];
+	move rs3 to y-axis [0] speed [13];
+
+	turn upperlid to x-axis <0> speed <300>;
+	turn lowerlid to x-axis <0> speed <300>;
+	wait-for-move ls1 along x-axis;	
 	
 	set ARMORED to TRUE;
 	return (0); 
@@ -200,6 +278,11 @@ Create() {
 	gun_1 = 0;
 	gun_2 = 0;
 	bAiming = FALSE;
+	turn ls1 to z-axis <-20> now;
+	turn ls3 to z-axis <20> now;
+	turn rs1 to z-axis <20> now;
+	turn rs3 to z-axis <-20> now;
+	
 	turn lj1p to x-axis <-90.000000> now;
 	turn lj2p to x-axis <-90.000000> now;
 	turn rj1p to x-axis <-90.000000> now;	
@@ -294,6 +377,18 @@ FireSecondary() {
 	if(gun_2 == 3) {
 		emit-sfx 1024+1 from rwflare2;
 		sleep 100;
+		gun_2 = 4;
+		return (0);
+	}
+	if(gun_2 == 4) {
+		emit-sfx 1024+1 from lwflare3;
+		sleep 100;
+		gun_2 = 5;
+		return (0);
+	}
+	if(gun_2 == 5) {
+		emit-sfx 1024+1 from rwflare3;
+		sleep 100;
 		gun_2 = 0;
 		return (0);
 	}
@@ -315,6 +410,14 @@ QuerySecondary(piecenum) {
 	}
 	if(gun_2 == 3 )	{
 		piecenum = rwflare2;
+		return (0);
+	}
+	if(gun_2 == 4 )	{
+		piecenum = lwflare3;
+		return (0);
+	}
+	if(gun_2 == 5 )	{
+		piecenum = rwflare3;
 		return (0);
 	}
 
@@ -347,8 +450,6 @@ AimSecondary(heading, pitch) {
 }
 
 Killed(severity, corpsetype) {
-	explode fwingl type SHATTER | EXPLODE_ON_HIT | BITMAP1;
-	explode fwingr type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 	explode weapon1 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 	explode weapon2 type SHATTER | EXPLODE_ON_HIT | BITMAP1;
 	explode wingsup type SHATTER | EXPLODE_ON_HIT | BITMAP1;

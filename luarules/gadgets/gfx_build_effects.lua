@@ -204,10 +204,10 @@ function gadget:FeatureDestroyed(featureId,allyteam)
 					-- no metal means vegetation...probably 
 					if mm == 0 then
 						spSpawnCEG(treeDestructionCeg, fx, fy, fz, 0, 1, 0,radius ,radius)
-						spPlaySoundFile('TREEFEATURECRUSH', 0.7, fx, fy, fz)
+						spPlaySoundFile('TREEFEATURECRUSH', 0.5, fx, fy, fz)
 					else
 						spSpawnCEG(mDestructionCeg, fx, fy, fz, 0, 1, 0,radius ,radius)
-						spPlaySoundFile('FEATURECRUSH', 0.7, fx, fy, fz)
+						spPlaySoundFile('FEATURECRUSH', 0.5, fx, fy, fz)
 					end
 				end
 			end

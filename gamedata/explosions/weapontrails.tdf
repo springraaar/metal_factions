@@ -54,109 +54,7 @@
 		count=1;
 	}
 }
-[BIGROCKETTRAIL]
-{
-	usedefaultexplosions=0;	
-	[_glow]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=40;explosionGenerator=custom:DYNPROJGLOW;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
-   [LARGEFLASH]
-   {
-	class = CBitmapMuzzleFlame;
-      
-	[properties]
-      	{
-         	dir = dir;
-         	colorMap=1.0 0.7 0.2 0.01 0.3 0.2 0.1 0.01 0 0 0 0.01; 
-          	size=6;
-          	length=20;
-          	sizeGrowth=0.75;
-          	ttl=4;
-          	frontOffset=0;
-          	sideTexture=muzzleside;
-          	frontTexture=muzzlefront;
-      	}
-   water=1;
-   air=1;
-   underwater=1;
-   ground=1;
-   count=1;
-   }
-	[spikes]
-	{
-		class=explspike;
-		[properties]
-		{
-			dir=-6 r12,-6 r12,-6 r12;
-			width=11;
-			length=5; //60;
-			alpha=1;
-			alphadecay=0.35;
-			color=1.0, 0.7, 0.2;
 
-		}
-		air=1;
-		water=1;
-		ground=1;
-  		count=3; 
-	}
-	[smoke_Front]
-	{
-		class=CSimpleParticleSystem;
-		[properties]
-		{
-			sizeGrowth=0.05;
-			sizeMod=1.0;
-			pos=0, 1, 3;
-			gravity=0, 0.05, 0;
-			emitVector=dir;
-			colorMap=1.0 0.6 0.2 0.01 0.1 0.1 0.1 0.2 0.0 0.0 0.0 0.01;
-			Texture=smoke;
-			airdrag=0.8;
-			particleLife=10;
-			particleLifeSpread=0;
-			numParticles=2;
-			particleSpeed=0;
-			particleSpeedSpread=-2; //12
-			particleSize=2;
-			particleSizeSpread=2;
-			emitRot=0;
-			emitRotSpread=20;
-			directional=0;
-		}
-		air=1;
-		water=1;
-		ground=1;
-		count=1;
-	}
-	[smoke_Back]
-	{
-		class=CSimpleParticleSystem;
-		[properties]
-		{
-			sizeGrowth=0.5;
-			sizeMod=1.0;
-			pos=0, 1, 3;
-			emitVector=dir;
-			gravity=0, 0.05, 0;
-			colorMap=0.6 0.4 0.3 0.01 0.1 0.1 0.1 0.2 0.0 0.0 0.0 0.01;
-			Texture=smoke;
-			airdrag=0.8;
-			particleLife=10;
-			particleLifeSpread=5;
-			numParticles=2;
-			particleSpeed=-2;
-			particleSpeedSpread=-12;
-			particleSize=0.8;
-			particleSizeSpread=0.2;
-			emitRot=0;
-			emitRotSpread=10;
-			directional=0;
-		}
-		air=1;
-		water=1;
-		ground=1;
-		count=1;
-	}
-}
 [LRROCKETTRAIL]
 {
 	usedefaultexplosions=0;	
@@ -1276,6 +1174,27 @@ usedefaultexplosions=0;
 		count=1;
 	}
 }
+[ROCKETTRAIL1SB]
+{
+	usedefaultexplosions=0;	
+	[_delayed]{class=CExpGenSpawner;[properties]{pos=0,0,0;dir=dir;delay=1;damage=d;explosionGenerator=custom:ROCKETTRAIL1;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+[ROCKETTRAIL2SB]
+{
+	usedefaultexplosions=0;	
+	[_delayed]{class=CExpGenSpawner;[properties]{pos=0,0,0;dir=dir;delay=1;damage=d;explosionGenerator=custom:ROCKETTRAIL2;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+[ROCKETTRAIL2BSB]
+{
+	usedefaultexplosions=0;	
+	[_delayed]{class=CExpGenSpawner;[properties]{pos=0,0,0;dir=dir;delay=1;damage=d;explosionGenerator=custom:ROCKETTRAIL2B;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+[ROCKETTRAIL3SB]
+{
+	usedefaultexplosions=0;	
+	[_delayed]{class=CExpGenSpawner;[properties]{pos=0,0,0;dir=dir;delay=1;damage=d;explosionGenerator=custom:ROCKETTRAIL3;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+
 
 [BOMBTRAILSML]
 {
@@ -1846,6 +1765,12 @@ usedefaultexplosions=0;
 	count=1;
 	}
 }
+[FASTROCKETTRAILSB]
+{
+	usedefaultexplosions=0;	
+	[_delayed]{class=CExpGenSpawner;[properties]{pos=0,0,0;dir=dir;delay=1;damage=d;explosionGenerator=custom:FASTROCKETTRAIL;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+
 [SMLROCKETTRAIL]
 {
 	usedefaultexplosions=0;	
@@ -1882,7 +1807,11 @@ usedefaultexplosions=0;
   		count=1; 
 	}
 }
-
+[SMLROCKETTRAILSB]
+{
+	usedefaultexplosions=0;	
+	[_delayed]{class=CExpGenSpawner;[properties]{pos=0,0,0;dir=dir;delay=1;damage=d;explosionGenerator=custom:SMLROCKETTRAIL;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
 
 [FIREBALL]
 {

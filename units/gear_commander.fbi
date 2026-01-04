@@ -18,7 +18,6 @@
 	//  External Specs
 	//******************
 	unitName=gear_commander;
-	unitnumber=94;
 	objectName=gear_commander.3do;
 	buildPic=gear_commander.png;
 	soundCategory=gear_COM;
@@ -28,7 +27,7 @@
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=3280;
+	maxDamage=3310;
 	healtime=100;
 	buildcostmetal=1000;
 	buildcostenergy=10000;
@@ -119,30 +118,18 @@
 	//************************************************************
 	//  Miscellaneous
 	//*****************
-	bmcode=1;
 	cloakCost=50;
 	cloakCostMoving=150;
-	commander=1;
-	designation=CX-D3;
-	downloadable=1;
 	hidedamage=0;
 	immunetoparalyzer=1;
-	maneuverleashlength=640;
 	minCloakDistance=170;
-	norestrict=1;
-	shootme=1;
 	showplayername=1;
-	smoothanim=1;
-	steeringmode=2;
-	threed=1;
 	leavetracks=1;
 	trackoffset=0;
 	trackstrength=8;
 	trackstretch=1;
 	tracktype=ComTrack;
 	trackwidth=22;
-	version=1.2;
-	zbuffer=1;
 	collisionVolumeType = box;
 	collisionVolumeScales =34 38 26;
 	collisionVolumeOffsets = 0 1 0;

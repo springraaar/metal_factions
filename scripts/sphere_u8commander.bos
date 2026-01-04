@@ -1,0 +1,647 @@
+#define TAK			// This is a TAK script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 170
+
+#define HEADING_TOLERANCE	<30>
+#define PITCH_TOLERANCE		<20>
+
+piece ground, hips,legs,rmidleg,rmid2,rfrontleg,rfront2,rbackleg,rback2,lbackleg,lback2,lmidleg,lmid2,lfrontleg,lfront2,torso,turret2,sleeve2,arc2,arc22,weapon2,flare2,torpedo,nanospinner,p1,p2,p3,p4,p5,p6, sphere, turret1, sleeve1,arc1,arc11, frontsup,launcher1,launcher2,flare1,f1,f2,eye,barrel1,barrel2,eb,l1b, turret3, sleeve3, flare3, shieldpt,jumpback,ljumpjets,rjumpjets,rbjetpt,rfjetpt,lbjetpt,lfjetpt;
+
+static-var bMoving,bAiming,bUnderwater, canAim1, canAim2, bBuilding, nanoPt, mASpdFactor, gun_1;
+
+#include "aimhelper1.h"
+#include "aimhelper2.h"
+
+// Signal definitions
+#define SIG_AIM				2
+#define SIG_BUILD			4
+#define SIG_AIM2			8
+
+lua_delayReload() { return 0; }
+
+#include "jumpvars.h"
+
+showJumpGear() {
+	show jumpback;
+	show ljumpjets;
+	show rjumpjets;
+}
+
+hideJumpGear() {
+	hide jumpback;
+	hide ljumpjets;
+	hide rjumpjets;
+}
+
+showJumpEffects(descending, frames) {
+	if (descending) {
+		emit-sfx 1024+6 from lfjetpt;
+		emit-sfx 1024+6 from rfjetpt;
+		emit-sfx 1024+6 from lbjetpt;
+		emit-sfx 1024+6 from rbjetpt;
+		if (frames == JUMP_SND_FRAMES) {
+			play-sound( "jumpdesc", 1 );
+		}
+	} else {
+		if (frames == 0 ) {
+			play-sound( "jumpstart", 1 );
+		} else {
+			if (frames == JUMP_SND_FRAMES) {
+				play-sound( "jumpasc", 1 );
+			}
+		}
+		emit-sfx 1024+4 from lfjetpt;
+		emit-sfx 1024+4 from rfjetpt;
+		emit-sfx 1024+4 from lbjetpt;
+		emit-sfx 1024+4 from rbjetpt;
+	}
+}
+
+#include "jump.h"
+
+MotionSpeedControl(minSpeed, maxSpeed,currentSpeed)
+{
+	maxSpeed = get MAX_SPEED;
+	currentSpeed = 0;
+	mASpdFactor = SPEEDUP_FACTOR;
+	minSpeed = SPEEDUP_FACTOR * 100/140;
+	
+	while(TRUE)
+	{
+		currentSpeed = get CURRENT_SPEED;
+		mASpdFactor = SPEEDUP_FACTOR * currentSpeed / maxSpeed;
+
+		if ( mASpdFactor < minSpeed )
+		{
+			mASpdFactor = minSpeed;
+		}
+
+		sleep 60;
+	}
+}
+
+
+StartMoving()
+{
+	bMoving = TRUE;
+}
+
+StopMoving()
+{
+	bMoving = FALSE;
+}
+
+
+checkUnderwater()
+{
+	var currentHeight, oldState, i;
+	while(TRUE)
+	{   
+ 		currentHeight = GET GROUND_WATER_HEIGHT(GET UNIT_XZ);
+ 		oldState = bUnderwater;
+		
+		// check current state
+		if ( currentHeight < [-30])
+ 		{
+ 			bUnderwater = TRUE;
+		
+ 		}
+ 		if (currentHeight >= [-30])
+ 		{
+ 			bUnderwater = FALSE;
+ 		}
+ 		
+ 		// handle state changes
+ 		if (oldState != bUnderwater)
+ 		{
+			if(bUnderwater)
+			{
+				canAim1 = FALSE;
+				// hide surface stuff
+				hide arc1;
+				hide arc11;
+				hide frontsup;
+				hide launcher1;
+				hide launcher2;
+				hide barrel1;
+				hide barrel2;
+				hide eye;
+				hide eb;
+				hide l1b;
+				
+ 				// effects
+				i=0;
+				while(i < 5)
+				{
+					emit-sfx 1024+8 from weapon2;
+					i=i+1;
+					sleep 100;
+				}
+				
+				//show torpedo stuff 			
+ 				move torpedo to z-axis [0.000000] now;
+ 				show arc2;
+ 				show arc22;
+ 				show weapon2;
+ 				show torpedo;
+ 				
+ 				// effects
+				i=0;
+				while(i < 5)
+				{
+					emit-sfx 1024+8 from weapon2;
+					i=i+1;
+					sleep 100;
+				}
+				
+ 				canAim2 = TRUE;
+			}
+			if(!bUnderwater)
+			{
+ 				canAim2 = FALSE;
+				//hide torpedo stuff
+				hide torpedo;
+				hide weapon2;
+				hide arc2;
+				hide arc22;
+				move torpedo to z-axis [0.000000] now;
+				
+ 				// effects
+				i=0;
+				while(i < 10)
+				{
+					emit-sfx 1024+8 from weapon2;
+					i=i+1;
+					sleep 100;
+				}
+
+				//show surface stuff
+				show arc1;
+				show arc11;
+				show frontsup;
+				show launcher1;
+				show launcher2;
+				show barrel1;
+				show barrel2;
+				show eye;
+				show eb;
+				show l1b;
+ 				canAim1 = TRUE;
+			}
+ 		}
+ 		
+ 		sleep 500;
+	}
+	return 0;	
+}
+
+StopPosition()
+{
+	turn hips to z-axis <0.000000> speed <7.000000>;
+	turn hips to x-axis <0.000000> speed <7.000000>;
+	turn lfrontleg to y-axis <0.000000> speed <237.000000>;
+	turn lfrontleg to z-axis <0.000000> speed <237.000000>;
+	turn lmidleg to y-axis <0.000000> speed <237.000000>;
+	turn lmidleg to z-axis <0.000000> speed <237.000000>;
+	turn lbackleg to y-axis <0.000000> speed <237.000000>;
+	turn lbackleg to z-axis <0.000000> speed <237.000000>;
+	turn rbackleg to y-axis <0.000000> speed <237.000000>;
+	turn rbackleg to z-axis <0.000000> speed <237.000000>;
+	turn rmidleg to y-axis <0.000000> speed <237.000000>;
+	turn rmidleg to z-axis <0.000000> speed <237.000000>;
+	turn rfrontleg to y-axis <0.000000> speed <237.000000>;
+	turn rfrontleg to z-axis <0.000000> speed <237.000000>;
+	turn lbackleg to y-axis <25.000000> speed <300.000000>;
+	turn rbackleg to y-axis <-25.000000> speed <300.000000>;
+	turn rfrontleg to y-axis <25.000000> speed <300.000000>;
+	turn lfrontleg to y-axis <-25.000000> speed <300.000000>;
+	
+	turn rmid2 to z-axis <20.000000> speed <80.000000> * mASpdFactor / 100;
+	turn lmid2 to z-axis <-20.000000> speed <80.000000> * mASpdFactor / 100;
+}
+
+walk()
+{
+	if (mASpdFactor == 0) { sleep 100; return;	}   // skip if control thread hasn't run yet
+	
+	if (isJumping) {
+		call-script StopPosition();
+		sleep 100;
+		return;
+	}
+	if( bMoving && !isJumping)
+	{
+		turn rmid2 to z-axis <0.000000> speed <80.000000> * mASpdFactor / 100;
+		turn lmid2 to z-axis <0.000000> speed <80.000000> * mASpdFactor / 100;
+		
+		turn hips to x-axis <2.000000> speed <16.000000> * mASpdFactor / 100;
+		turn hips to z-axis <0.000000> speed <10.000000> * mASpdFactor / 100;
+
+		turn lfrontleg to y-axis <20.000000> speed <100.967033> * mASpdFactor / 100;
+		turn lfrontleg to z-axis <5.016484> speed <550.104396> * mASpdFactor / 100;
+
+		turn lmidleg to y-axis <-20.000000> speed <300.038462> * mASpdFactor / 100;
+		turn lmidleg to z-axis <-15.016484> speed <60.104396> * mASpdFactor / 100;
+
+		turn lbackleg to y-axis <45.060440> speed <120.038462> * mASpdFactor / 100;
+		turn lbackleg to z-axis <5.016484> speed <550.104396> * mASpdFactor / 100;
+		
+		turn rfrontleg to y-axis <40.412088> speed <300.060440> * mASpdFactor / 100;
+		turn rfrontleg to z-axis <15.016484> speed <60.104396> * mASpdFactor / 100;
+		
+		turn rmidleg to y-axis <-20.093407> speed <100.368132> * mASpdFactor / 100;
+		turn rmidleg to z-axis <-5.016484> speed <550.104396> * mASpdFactor / 100;
+		
+		turn rbackleg to y-axis <15.137363> speed <300.681319> * mASpdFactor / 100;
+		turn rbackleg to z-axis <15.016484> speed <60.104396> * mASpdFactor / 100;
+		
+		
+		sleep 200 * 100 / mASpdFactor;
+	}
+
+	// only vertical
+	if( bMoving && !isJumping)
+	{
+		turn hips to x-axis <-2.000000> speed <16.000000> * mASpdFactor / 100;
+		turn hips to z-axis <1.000000> speed <10.000000> * mASpdFactor / 100;
+
+		//turn lfrontleg to z-axis <-15.016484> speed <60.104396> * mASpdFactor / 100;
+
+		turn lmidleg to z-axis <5.016484> speed <150.104396> * mASpdFactor / 100;
+
+		//turn lbackleg to z-axis <-15.016484> speed <60.104396> * mASpdFactor / 100;
+
+		turn rfrontleg to z-axis <-5.016484> speed <150.104396> * mASpdFactor / 100;
+		
+		//turn rmidleg to z-axis <15.016484> speed <60.104396> * mASpdFactor / 100;
+		
+		turn rbackleg to z-axis <-5.016484> speed <150.104396> * mASpdFactor / 100;
+		
+		sleep 200 * 100 / mASpdFactor;
+	}
+	
+	
+	if( bMoving && !isJumping)
+	{
+		turn hips to x-axis <2.000000> speed <16.000000> * mASpdFactor / 100;
+		turn hips to z-axis <0.000000> speed <10.000000> * mASpdFactor / 100;
+
+		turn lfrontleg to y-axis <-40.000000> speed <300.967033> * mASpdFactor / 100;
+		turn lfrontleg to z-axis <-15.016484> speed <60.104396> * mASpdFactor / 100;
+
+		turn lmidleg to y-axis <20.000000> speed <100.038462> * mASpdFactor / 100;
+		turn lmidleg to z-axis <5.016484> speed <550.104396> * mASpdFactor / 100;
+
+		turn lbackleg to y-axis <-15.060440> speed <300.038462> * mASpdFactor / 100;
+		turn lbackleg to z-axis <-15.016484> speed <60.104396> * mASpdFactor / 100;
+
+		turn rfrontleg to y-axis <-20.412088> speed <100.060440> * mASpdFactor / 100;
+		turn rfrontleg to z-axis <-5.016484> speed <550.104396> * mASpdFactor / 100;
+		
+		turn rmidleg to y-axis <20.093407> speed <300.368132> * mASpdFactor / 100;
+		turn rmidleg to z-axis <15.016484> speed <60.104396> * mASpdFactor / 100;
+		
+		turn rbackleg to y-axis <-45.137363> speed <120.681319> * mASpdFactor / 100;
+		turn rbackleg to z-axis <-5.016484> speed <550.104396> * mASpdFactor / 100;
+		
+		sleep 200 * 100 / mASpdFactor;
+	}
+	
+	// only vertical
+	if( bMoving && !isJumping)
+	{
+		turn hips to x-axis <-2.000000> speed <16.000000> * mASpdFactor / 100;
+		turn hips to z-axis <-1.000000> speed <10.000000> * mASpdFactor / 100;
+
+		turn rmid2 to z-axis <0.000000> speed <80.000000> * mASpdFactor / 100;
+		turn lmid2 to z-axis <0.000000> speed <80.000000> * mASpdFactor / 100;
+
+		turn lfrontleg to z-axis <5.016484> speed <150.104396> * mASpdFactor / 100;
+
+		//turn lmidleg to z-axis <-15.016484> speed <60.104396> * mASpdFactor / 100;
+
+		turn lbackleg to z-axis <5.016484> speed <150.104396> * mASpdFactor / 100;
+		
+		//turn rfrontleg to z-axis <15.016484> speed <60.104396> * mASpdFactor / 100;
+		
+		turn rmidleg to z-axis <-5.016484> speed <150.104396> * mASpdFactor / 100;
+		
+		//turn rbackleg to z-axis <15.016484> speed <60.104396> * mASpdFactor / 100;
+		
+		
+		sleep 200 * 100 / mASpdFactor;
+	}
+	
+}
+
+
+MotionControl(moving, aiming, justMoved)
+{
+	justMoved = TRUE;
+	while( TRUE )
+	{
+		moving = bMoving;
+		aiming = bAiming;
+		if( moving )
+		{
+			call-script walk();
+			justMoved = TRUE;
+		}
+		else
+		{
+			if( justMoved )
+			{
+				start-script StopPosition();
+				justMoved = FALSE;
+			}
+			sleep 100;
+		}
+	}
+}
+
+Build()
+{
+	while(TRUE)
+	{
+		if(bBuilding == TRUE)
+		{
+			emit-sfx 1024 + 1 from nanospinner;	
+			call-script lua_delayReload(3);
+		}
+		sleep 100;
+	}
+}
+
+Create()
+{
+	hide arc2;
+	hide arc22;
+	hide weapon2;
+	hide torpedo;
+	bMoving=FALSE;
+	bAiming=FALSE;
+	bUnderwater = FALSE;
+	bBuilding = FALSE;
+	canAim1 = TRUE;
+	canAim2 = FALSE;
+	nanoPt = 0;	
+
+	call-script stopAimHelper1(<1000>,<1000>);	
+	call-script stopAimHelper2(<1000>,<1000>);	
+	start-script initJump();
+	start-script MotionSpeedControl();
+	start-script MotionControl();
+	start-script checkUnderwater();
+	start-script Build();
+	spin nanospinner around y-axis speed <720.000000>;
+}
+
+
+RestoreAfterDelayWeapon()
+{
+	sleep 5000;
+	call-script stopAimHelper1(<100>,<100>);	
+	turn turret1 to y-axis <0.000000> speed <100.016484>;
+	turn sleeve1 to x-axis <0.000000> speed <100.005495>;
+
+	bAiming = FALSE;
+}
+RestoreAfterDelayWeapon2()
+{
+	sleep 5000;
+	call-script stopAimHelper2(<100>,<100>);	
+	turn turret2 to y-axis <0.000000> speed <100.016484>;
+	turn sleeve2 to x-axis <0.000000> speed <100.005495>;
+
+	bAiming = FALSE;
+}
+
+AimFromPrimary(piecenum)
+{
+	piecenum = turret1;
+}
+
+QueryPrimary(piecenum)
+{
+	piecenum = flare1;
+}
+
+FirePrimary()
+{
+	emit-sfx 1024 + 0 from flare1;
+	return 1;
+}
+
+
+AimPrimary(heading, pitch)
+{
+	if( !canAim1 || bBuilding)
+	{
+		sleep 100;
+		return (0);
+	}
+	call-script updateAimHelper1(heading,pitch,<400>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	
+	turn turret1 to y-axis heading speed <400.027473>;
+	turn sleeve1 to x-axis <0.000000> - pitch speed <400.038462>;
+	if ( !aimReady1 )
+	{
+		wait-for-turn turret1 around y-axis;
+		wait-for-turn sleeve1 around x-axis;
+	}
+
+	start-script RestoreAfterDelayWeapon();
+	return (1);
+}
+
+
+AimFromSecondary(piecenum)
+{
+	piecenum = turret2;
+}
+
+QuerySecondary(piecenum)
+{
+	piecenum = flare2;
+}
+
+FireSecondary()
+{
+	move torpedo to z-axis [-2.000000] now;
+	sleep 1000;
+	move torpedo to z-axis [0.000000] speed [6.000000];
+	return(1);
+}
+
+AimSecondary(heading, pitch)
+{
+	if( !canAim2 || bBuilding)
+	{
+		sleep 100;
+		return (0);
+	}
+	call-script updateAimHelper2(heading,pitch,<400>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM2;
+	set-signal-mask SIG_AIM2;
+	bAiming = TRUE;
+	
+	turn turret2 to y-axis heading speed <400.027473>;
+	turn sleeve2 to x-axis <0.000000> - pitch speed <400.038462>;
+	if (!aimReady2)
+	{
+		wait-for-turn turret2 around y-axis;
+		wait-for-turn sleeve2 around x-axis;
+	}
+	start-script RestoreAfterDelayWeapon2();
+	return (1);
+}
+
+QueryNanoPiece(piecenum)
+{
+	if(nanoPt == 0)
+	{
+		piecenum = p1;
+		nanoPt = 1;
+		return (0);
+	}
+	if(nanoPt == 1)
+	{
+		piecenum = p2;
+		nanoPt = 2;
+		return (0);
+	}
+	if(nanoPt == 2)
+	{
+		piecenum = p3;
+		nanoPt = 3;
+		return (0);
+	}
+	if(nanoPt == 3)
+	{
+		piecenum = p4;
+		nanoPt = 4;
+		return (0);
+	}
+	if(nanoPt == 4)
+	{
+		piecenum = p5;
+		nanoPt = 5;
+		return (0);
+	}
+	if(nanoPt == 5)
+	{
+		piecenum = p6;
+		nanoPt = 0;
+		return (0);
+	}
+}
+
+StartBuilding(heading, pitch)
+{
+	signal SIG_BUILD;
+	set-signal-mask SIG_BUILD;
+
+	bBuilding = TRUE;
+
+	set INBUILDSTANCE to 1;
+}
+
+
+StopBuilding()
+{
+	signal SIG_BUILD;
+	set-signal-mask SIG_BUILD;
+
+	bBuilding = FALSE;
+	set INBUILDSTANCE to 0;
+}
+
+QueryTertiary(piecenum)
+{
+	piecenum = shieldpt;
+	return (0);
+}
+
+AimFromTertiary(piecenum)
+{
+	piecenum = shieldpt;
+	return (0);
+}
+
+AimTertiary(heading, pitch)
+{
+	return (1);
+}
+
+
+AimFromWeapon4(piecenum)
+{
+	piecenum = turret1;
+}
+
+QueryWeapon4(piecenum)
+{
+	if (gun_1 == 0) 
+	{
+		piecenum = f1;
+	}
+	else
+	{
+		piecenum = f2;
+	}
+}
+
+FireWeapon4()
+{
+	if (gun_1 == 0) 
+	{
+		emit-sfx 1024 + 3 from f1;
+		sleep 50;
+		gun_1 = 1;
+	}
+	else
+	{
+		emit-sfx 1024 + 3 from f2;
+		sleep 50;
+		gun_1 = 0;
+	}
+}
+
+
+AimWeapon4(heading, pitch)
+{
+	if( !canAim1 || bBuilding)
+	{
+		sleep 100;
+		return (0);
+	}
+	call-script updateAimHelper1(heading,pitch,<400>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	bAiming = TRUE;
+	
+	turn turret1 to y-axis heading speed <400.027473>;
+	turn sleeve1 to x-axis <0.000000> - pitch speed <400.038462>;
+	if ( !aimReady1 )
+	{
+		wait-for-turn turret1 around y-axis;
+		wait-for-turn sleeve1 around x-axis;
+	}
+
+	start-script RestoreAfterDelayWeapon();
+	return (1);
+}
+
+
+Killed(severity)
+{
+	return(0);
+}
+
+

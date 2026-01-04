@@ -102,7 +102,7 @@
 	tracktype=StdTank;
 	trackwidth=38;
 	collisionVolumeType = box;
-	collisionVolumeScales =30 22 45;
+	collisionVolumeScales =30 26 45;
 	collisionVolumeOffsets = 0 -1 0;
 	collisionVolumeTest = 1;
 
@@ -114,13 +114,13 @@
 
 	[SFXTypes]
 	{
-		explosionGenerator0=custom:yellowflaresml;
+		explosionGenerator0=custom:EMGFLAREFAST;
 		explosionGenerator1=custom:UNITFIRE;
 		explosionGenerator2=custom:rocketflaresml;
 	}
 
-	buildCostEnergy=6080;//#AUTO#
-	buildCostMetal=1216;//#AUTO#
-	buildTime=14492;//#AUTO#
-	mass=1030;//#AUTO#
+	buildCostEnergy=6328;//#AUTO#
+	buildCostMetal=1265;//#AUTO#
+	buildTime=15082;//#AUTO#
+	mass=1046;//#AUTO#
 }

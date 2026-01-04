@@ -478,7 +478,7 @@ local xpArrSimple = {
 "X"
 }
 
-local VICTORY_SND = "Victory"
+local VICTORY_SND = "Victory2"
 local DEFEAT_SND = "Defeat"
 
 

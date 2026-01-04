@@ -83,6 +83,14 @@ local morphDefs = {
 			metal = 1500,
 			text = 'Morph to Psi Form : Very fast raider/riot form with reduced range and build speed.'
 		},
+		{
+			into = 'aven_u8commander',
+			time = 30,
+			cmdname = 'Upsilon Form',
+			energy = 10000,
+			metal = 1500,
+			text = 'Morph to Upsilon Form : Tough skirmisher with good range and high trajectory attacks.'
+		},		
 	},
 	aven_moho_mine = {
 		{
@@ -149,7 +157,15 @@ local morphDefs = {
 			energy = 10000,
 			metal = 1500,
 			text = 'Morph to Battler Form : Versatile brawler with slightly increased speed, HP and Cannon+Laser+Flare weapon mix.'
-		}		
+		},
+		{
+			into = 'gear_u8commander',
+			time = 30,
+			cmdname = 'Bomber Form',
+			energy = 10000,
+			metal = 1500,
+			text = 'Morph to Bomber Form : Fast and tough with short-ranged heavy bomb launcher and big death blast.'
+		}	
 
 	},	
 	gear_moho_mine = {
@@ -231,6 +247,14 @@ local morphDefs = {
 			energy = 10000,
 			metal = 1500,
 			text = 'Morph to Blaster Form : Riot form with greatly increased AOE. Slower speed.'
+		},
+		{
+			into = 'claw_u8commander',
+			time = 30,
+			cmdname = 'Breaker Form',
+			energy = 10000,
+			metal = 1500,
+			text = 'Morph to Breaker Form : Increased speed, durability and power. Reduced range.'
 		}
 	},
 	claw_tombstone = {
@@ -323,6 +347,14 @@ local morphDefs = {
 			energy = 10000,
 			metal = 1500,
 			text = 'Morph to Scrapper Form : Fast raider/assault with high dmg/s but low range and anti-air ability.'
+		},
+		{
+			into = 'sphere_u8commander',
+			time = 30,
+			cmdname = 'Contender Form',
+			energy = 10000,
+			metal = 1500,
+			text = 'Morph to Contender Form : Greatly increased range but mediocre dmg/s.'
 		},
 	},
 	sphere_emerald_sphere = {

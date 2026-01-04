@@ -55,7 +55,7 @@ local function processSoundDefaults(wd)
 		wd.soundhitvolume = 1
 		return
 	end
-	local soundVolume = 1.4 + math.sqrt(defaultDamage * 0.1) * 0.1
+	local soundVolume = math.min(1.5 + math.sqrt(defaultDamage*0.1)*0.2,10)
 	if (not wd.soundstartvolume) then
 		wd.soundstartvolume = soundVolume
 	end
@@ -204,8 +204,14 @@ for wdName, wd in pairs(WeaponDefs) do
 			end
 		elseif (wd.weapontype == "MissileLauncher" ) then
 			wd.heightmod = 0.5			-- default was 0.8
+			wd.smoketime = 30
+			wd.smokeperiod = math.max(8 - tonumber(wd.weaponvelocity) / 200,3)
+			wd.smokesize = math.min(6 + tonumber(wd.damage and wd.damage.default or 0) / 100,20) 
 		elseif (wd.weapontype == "StarburstLauncher" ) then
 			wd.cylindertargeting = 2
+			wd.smoketime = 30
+			wd.smokeperiod = math.max(8 - tonumber(wd.weaponvelocity) / 200,3)
+			wd.smokesize = math.min(6 + tonumber(wd.damage and wd.damage.default or 0) / 100,20)
 		end
 
 		-- increase projectile velocity (more relevant for slow projectiles, especially if they're long ranged)
@@ -272,9 +278,7 @@ for wdName, wd in pairs(WeaponDefs) do
 	end
 
 	-- disable engine explosion scars
-	-- TODO enable them eventually?
 	wd.explosionscar = false
-
 
 	-- make weapon sounds relatively louder
 	processSoundDefaults(wd)

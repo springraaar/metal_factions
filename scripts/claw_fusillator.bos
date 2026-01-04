@@ -1,0 +1,103 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 	85
+
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
+piece  gp, base, flare1,flare2,flare3, turret, holder, sleeve, bholder,barrel1,barrel2,barrel3,base2,l1,l2,l3,l4,farmor,barmor, t1, t2, t1cover,t2cover,sup;
+
+static-var  gun_1;
+
+#include "aimhelper1.h"
+
+// Signal definitions
+#define SIG_AIM				2
+
+#include "tankthreads.h"
+
+
+RockUnit(anglex, anglez) {
+	anglex = anglex;
+	anglez = anglez;
+	turn base to x-axis anglex speed <50.005495>;
+	turn base to z-axis <0>-anglez speed <50.005495>;
+	wait-for-turn base around z-axis;
+	wait-for-turn base around x-axis;
+	turn base to z-axis <0.000000> speed <15.000000>;
+	turn base to x-axis <0.000000> speed <15.000000>;
+}
+
+Create() {
+	gun_1 = 0;
+	call-script stopAimHelper1(<1000>,<1000>);
+	start-script AnimateTracks();
+}
+
+RestoreAfterDelay() {
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<90>,<90>);
+	turn turret to y-axis <0.000000> speed <90.016484>;
+	turn sleeve to x-axis <0.000000> speed <90.005495>;
+}
+
+AimPrimary(heading, pitch) {
+	call-script updateAimHelper1(heading,pitch,<140>,<140>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn turret to y-axis heading speed <140.038462>;
+	turn sleeve to x-axis <0.000000> - pitch speed <140.000000>;
+	if (!aimReady1) {
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary() {
+	move bholder to z-axis [-4.500000] now;
+	emit-sfx 1024 from flare1;
+	emit-sfx 1024 from flare2;
+	emit-sfx 1024 from flare3;
+	sleep 500;
+	move bholder to z-axis [0.000000] speed [3.000000];
+}
+
+AimFromPrimary(piecenum) {
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum) {
+	if (gun_1 == 0) {
+		gun_1 = 1;
+		piecenum = flare1;
+	} else if (gun_1 == 1) {
+		gun_1 = 2;
+		piecenum = flare2;
+	} else {
+		gun_1 = 0;
+		piecenum = flare3;
+	}
+}
+
+Killed(severity, corpsetype) {
+	if( severity <= 50 ) {
+		explode barrel1 type SHATTER;
+		explode sleeve type SHATTER;
+		explode turret type SHATTER;
+		return (1);
+	}
+	explode barrel1 type SHATTER;
+	explode sleeve type SHATTER;
+	explode turret type SHATTER;
+	explode sup type SHATTER;
+	explode t1cover type SHATTER;
+	explode t2cover type SHATTER;
+	explode farmor type SHATTER;
+	explode barmor type SHATTER;
+	return (2);
+}

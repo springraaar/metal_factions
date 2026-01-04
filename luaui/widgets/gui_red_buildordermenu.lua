@@ -1,28 +1,15 @@
 function widget:GetInfo()
 	return {
-	version   = "8.1",
 	name      = "Red Build/Order Menu",
 	desc      = "Build/Order Menu. Requires Red UI Framework",
-	author    = "Regret, modified by raaar",
-	date      = "August 9, 2009", --modified by raaar, sep 2015
+	author    = "raaar (heavily based on widget by Regret",
+	date      = "2015+",
 	license   = "GNU GPL, v2 or later",
 	layer     = 11,
 	enabled   = true,
 	handler   = true,
 	}
 end
-
--- modified by raaar, sep 2015 :
---   . changed build icon rows from 2 to 3
---   . use fixed flatter icon size on fwd/back buttons
-
--- modified by raaar, may 2015 :
---   . added filter of build options by category
---   . added buttons to toggle build facing and spacing
---   . changed many variable names from lowercase to camelCase
---   . changed next and previous page buttons to use images instead of ascii arrows
---   . commented out saving and loading config due to bug
---   . added max font size to text and fixed centering
 
 include("keysym.h.lua")
 
@@ -62,9 +49,7 @@ local ICON_FLAT2_HEIGHT = 32
 local ICON_SML_HEIGHT = 36
 local ICON_NORMAL_HEIGHT = 42
 
-local updateHax = false
-local updateHax2 = true
-local firstUpdate = true
+local layoutUpdateRequired = true
 
 local TYPE_BUILD = 1
 local TYPE_ORDER = 2
@@ -395,7 +380,7 @@ local function GetSpacingIndex()
 	return 1
 end
 
-local function CreateGrid(r)
+local function createGrid(r)
 	-- default to full table
 	local rows = r.iy
 	local columns = r.ix
@@ -678,7 +663,7 @@ function updateFilter(next)
 end
 
 
-local function UpdateGrid(g,cmds,orderType,unfilteredCmds)
+local function updateGrid(g,cmds,orderType,unfilteredCmds)
 	cleanupTaggedObjects(CLEANUP_TAG)
 	local nCommands = #cmds
 	if (nCommands==0) then
@@ -846,7 +831,7 @@ local function UpdateGrid(g,cmds,orderType,unfilteredCmds)
 				if (g.page > g.pageCount) then
 					g.page = 1
 				end
-				UpdateGrid(g,cmds,orderType,unfilteredCmds)
+				updateGrid(g,cmds,orderType,unfilteredCmds)
 			end},
 		}
 		g.backward.mouseClick={
@@ -855,7 +840,7 @@ local function UpdateGrid(g,cmds,orderType,unfilteredCmds)
 				if (g.page < 1) then
 					g.page = g.pageCount
 				end
-				UpdateGrid(g,cmds,orderType,unfilteredCmds)
+				updateGrid(g,cmds,orderType,unfilteredCmds)
 			end},
 		}
 		g.backward.active = nil --activate
@@ -878,7 +863,7 @@ local function UpdateGrid(g,cmds,orderType,unfilteredCmds)
 				else
 					Spring.SetBuildSpacing(spacingList[1])
 				end
-				--UpdateGrid(g,cmds,orderType,unfilteredCmds)
+				--updateGrid(g,cmds,orderType,unfilteredCmds)
 			end},
 		}
 		g.tspacing.onUpdate = function(self)
@@ -894,7 +879,7 @@ local function UpdateGrid(g,cmds,orderType,unfilteredCmds)
 					Spring.SetBuildFacing(0)
 				end
 				
-				--UpdateGrid(g,cmds,orderType,unfilteredCmds)
+				--updateGrid(g,cmds,orderType,unfilteredCmds)
 			end},
 		}
 		g.tfacing.onUpdate = function(self)
@@ -912,7 +897,7 @@ local function UpdateGrid(g,cmds,orderType,unfilteredCmds)
 			{1,function(mx,my,self)
 				spSetActiveCommand(-1)
 				updateFilter(true)
-				updateHax = true
+				layoutUpdateRequired = true
 			end},
 		}
 		
@@ -966,83 +951,22 @@ function nextBuildOptionsPage()
 		if (g.page > g.pageCount) then
 			g.page = 1
 		end
-		UpdateGrid(g,latestBuildCmds,TYPE_BUILD,latestUnfilteredBuildCmds)
+		updateGrid(g,latestBuildCmds,TYPE_BUILD,latestUnfilteredBuildCmds)
 	end				
 end
 
-function widget:Initialize()
-	-- optional unit names
-	for id, ud in pairs (UnitDefs) do
-		local cp = ud.customParams
-		if cp and cp.optional == "1" then
-			optionalUnitNames[ud.name] = true
-		end
-	end
-	
-	-- initialize filter tables
-	for i=1,#filterLabel do
-		buildOptionsTable[i] = {}	
-	end
-	for id,unitDef in pairs(UnitDefs) do
-		local registered = false
-		for cat,val in pairs(unitDef.modCategories) do
-			-- if unit already registered, skip
-			if not registered then
-				if cat == "energy" or cat == "metal" or cat == "storage" then
-					buildOptionsTable[FILTER_ECO][unitDef.name] = true
-					registered = true
-					break
-				elseif cat == "plant" or cat == "nanotower" or cat == "factory" then
-					buildOptionsTable[FILTER_PLANT][unitDef.name] = true
-					registered = true
-					break
-				elseif cat == "upgrade_red"  then
-					buildOptionsTable[FILTER_RED][unitDef.name] = true
-					registered = true
-					break
-				elseif cat == "upgrade_green"  then
-					buildOptionsTable[FILTER_GREEN][unitDef.name] = true
-					registered = true
-					break
-				elseif cat == "upgrade_blue"  then
-					buildOptionsTable[FILTER_BLUE][unitDef.name] = true
-					registered = true
-					break
-				end
-			end
-		end
-		
-		if not registered then
-			buildOptionsTable[FILTER_OTHER][unitDef.name] = true
-		end
-		
-	end
-	PassedStartupCheck = RedUIchecks()
-	if (not PassedStartupCheck) then return end
-		
-	buildMenu = CreateGrid(Config.buildMenu)
-	orderMenu = CreateGrid(Config.orderMenu)
-	iconOrderMenu = CreateGrid(Config.iconOrderMenu)
-	
-	buildMenu.page = 1
-	orderMenu.page = 1
-	iconOrderMenu.page = 1
-	
-	AutoResizeObjects() --fix for displacement on crash issue
-	adjustGridYOffsets()
-end
 
 local function onNewCommands(filteredBuildCmds,buildCmds,otherCmds,iconOtherCmds)
-	if (SelectedUnitsCount==0) then
+	if (selectedUnitsCount==0) then
 		cleanupTaggedObjects(CLEANUP_TAG)
 		buildMenu.page = 1
 		orderMenu.page = 1
 		iconOrderMenu.page = 1
 	end
 	
-	UpdateGrid(buildMenu,filteredBuildCmds,TYPE_BUILD,buildCmds)
-	UpdateGrid(orderMenu,otherCmds,TYPE_ORDER)	
-	UpdateGrid(iconOrderMenu,iconOtherCmds,TYPE_ICONORDER)
+	updateGrid(buildMenu,filteredBuildCmds,TYPE_BUILD,buildCmds)
+	updateGrid(orderMenu,otherCmds,TYPE_ORDER)	
+	updateGrid(iconOrderMenu,iconOtherCmds,TYPE_ICONORDER)
 	
 	adjustGridYOffsets()
 	latestBuildCmds = filteredBuildCmds
@@ -1052,19 +976,10 @@ end
 local function onWidgetUpdate() --function widget:Update()
 	AutoResizeObjects()
 	adjustGridYOffsets()
-	SelectedUnitsCount = spGetSelectedUnitsCount()
+	selectedUnitsCount = spGetSelectedUnitsCount()
 end
 
-
---lots of hacks under this line ------------- overrides/disables default spring menu layout and gets current orders + filters out some commands
-local hijackedLayout = false
-function widget:Shutdown()
-	if (hijackedLayout) then
-		widgetHandler:ConfigLayoutHandler(true)
-		Spring.ForceLayoutUpdate()
-	end
-end
-local function GetCommands()
+local function getCommands()
 	local isHiddenCmd = {
 		[76] = true, --load units clone
 		[65] = true, --selfd
@@ -1181,54 +1096,105 @@ local function GetCommands()
 end
 
 
-local hijackAttempts = 0
-local layoutPing = 54352 --random number
-local function hijackLayout()
-	if (hijackAttempts>5) then
-		Spring.Echo(widget:GetInfo().name.." failed to hijack config layout.")
-		widgetHandler:ToggleWidget(widget:GetInfo().name)
-		return
-	end
+local function disableDefaultBuildMenu()
 	local function dummyLayoutHandler(xIcons, yIcons, cmdCount, commands) --gets called on selection change
-		WG.layoutPingHax = 54352
 		widgetHandler.commands = commands
 		widgetHandler.commands.n = cmdCount
 		widgetHandler:CommandsChanged() --call widget:CommandsChanged()
-		local iconList = {[1337]=9001}
+		local iconList = {}
 		return "", xIcons, yIcons, {}, {}, {}, {}, {}, {}, {}, iconList
 	end
 	widgetHandler:ConfigLayoutHandler(dummyLayoutHandler) --override default build/orderMenu layout
 	Spring.ForceLayoutUpdate()
-	hijackedLayout = true
-	hijackAttempts = hijackAttempts + 1
 end
 
-local function haxLayout()
-	if (WG.layoutPingHax~=layoutPing) then
-		hijackLayout()
+local function enableDefaultBuildMenu()
+	widgetHandler:ConfigLayoutHandler(true)
+	Spring.ForceLayoutUpdate()
+end
+
+
+---------------------------------------------------- engine callins
+
+function widget:Initialize()
+	disableDefaultBuildMenu()
+
+	-- optional unit names
+	for id, ud in pairs (UnitDefs) do
+		local cp = ud.customParams
+		if cp and cp.optional == "1" then
+			optionalUnitNames[ud.name] = true
+		end
 	end
-	WG.layoutPingHax = nil
-	updateHax = true
+	
+	-- initialize filter tables
+	for i=1,#filterLabel do
+		buildOptionsTable[i] = {}	
+	end
+	for id,unitDef in pairs(UnitDefs) do
+		local registered = false
+		for cat,val in pairs(unitDef.modCategories) do
+			-- if unit already registered, skip
+			if not registered then
+				if cat == "energy" or cat == "metal" or cat == "storage" then
+					buildOptionsTable[FILTER_ECO][unitDef.name] = true
+					registered = true
+					break
+				elseif cat == "plant" or cat == "nanotower" or cat == "factory" then
+					buildOptionsTable[FILTER_PLANT][unitDef.name] = true
+					registered = true
+					break
+				elseif cat == "upgrade_red"  then
+					buildOptionsTable[FILTER_RED][unitDef.name] = true
+					registered = true
+					break
+				elseif cat == "upgrade_green"  then
+					buildOptionsTable[FILTER_GREEN][unitDef.name] = true
+					registered = true
+					break
+				elseif cat == "upgrade_blue"  then
+					buildOptionsTable[FILTER_BLUE][unitDef.name] = true
+					registered = true
+					break
+				end
+			end
+		end
+		
+		if not registered then
+			buildOptionsTable[FILTER_OTHER][unitDef.name] = true
+		end
+		
+	end
+	PassedStartupCheck = RedUIchecks()
+	if (not PassedStartupCheck) then return end
+		
+	buildMenu = createGrid(Config.buildMenu)
+	orderMenu = createGrid(Config.orderMenu)
+	iconOrderMenu = createGrid(Config.iconOrderMenu)
+	
+	buildMenu.page = 1
+	orderMenu.page = 1
+	iconOrderMenu.page = 1
+	
+	AutoResizeObjects() --fix for displacement on crash issue
+	adjustGridYOffsets()
 end
+
+function widget:Shutdown()
+	enableDefaultBuildMenu()
+end
+
 function widget:CommandsChanged()
-	haxLayout()
+	layoutUpdateRequired = true
 end
+
 function widget:Update()
 	onWidgetUpdate()
-	if (updateHax or firstUpdate) then
-		if (firstUpdate) then
-			haxLayout()
-			firstUpdate = nil
-		end
-		onNewCommands(GetCommands())
-		updateHax = false
-		updateHax2 = true
-	end
-	if (updateHax2) then
-		if (SelectedUnitsCount == 0) then
-			onNewCommands({},{},{},{}) --flush
-			updateHax2 = false
-		end
+	
+	if layoutUpdateRequired then
+		--onNewCommands({},{},{},{}) --flush <-- previous code did this if selectedUnitCount == 0, but seems unnecessary
+		onNewCommands(getCommands())
+		layoutUpdateRequired = false
 	end
 	
 	-- if issuing a build command, cycle build category until the current active command is included 
@@ -1245,7 +1211,7 @@ function widget:Update()
 		end
 		if not cmdIncluded then
 			updateFilter(true)
-			updateHax = true
+			layoutUpdateRequired = true
 		end
 	end
 end
@@ -1255,10 +1221,10 @@ function widget:KeyPress(key, modifier, isRepeat)
 	if key == FILTER_KEY  then
 		spSetActiveCommand(-1) 
 		updateFilter(true)
-		updateHax = true
+		layoutUpdateRequired = true
 	end
 	if key == PAGE_KEY  then
 		nextBuildOptionsPage()
-		updateHax = true
+		layoutUpdateRequired = true
 	end
 end

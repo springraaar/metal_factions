@@ -2525,7 +2525,7 @@
 		water=1;
 		underwater=1;
 		ground=1;
-		count=1;
+		count=0;		// disabled, for now
 	}
 	[debris]
 	{
@@ -3639,7 +3639,11 @@
 {
 	[_sparks]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=8.5;explosionGenerator=custom:DYNLARGEHMBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
-
+[BCOMBLASTWRAPPER]
+{
+	[_largeblast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=8.5;explosionGenerator=custom:DYNLARGEHMBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+	[_nano]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=10;damage=d;explosionGenerator=custom:GEARCOMNANO;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
 [LARGEHMBLASTWRAPPER3]
 {
 	[_sparks]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;damage=12;explosionGenerator=custom:DYNLARGEHMBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
