@@ -190,8 +190,27 @@ local morphDefs = {
 			text = 'Morph to Artillery Form'
 		},
 	},
+	gear_titan = {
+		{
+			into = 'gear_titan2',
+			time = 25,
+			xp=0.38,
+			cmdname = 'Mk2 Form',
+			text = 'Morph to Mk2 Form. Requires III Experience'
+		}
+	},
+	gear_titan2 = {
+		{
+			into = 'gear_titan3',
+			time = 35,
+			xp=0.84,
+			cmdname = 'Mk3 Form',
+			text = 'Morph to Mk3 Form. Requires V Experience'
+		}
+	},
+
 ------------------------------------------------ CLAW
-	claw_commander = 	{
+	claw_commander = {
 		{
 			into = 'claw_u1commander',
 			time = 30,

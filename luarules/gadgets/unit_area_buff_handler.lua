@@ -18,7 +18,6 @@ if (not gadgetHandler:IsSyncedCode()) then
     return
 end
 
-
 local LAND_WATER_MOD = 0.66
 
 local ZEPHYR_REGEN_PER_SECOND = 4
@@ -70,6 +69,7 @@ local spPlaySoundFile = Spring.PlaySoundFile
 local spGetUnitIsCloaked = Spring.GetUnitIsCloaked
 local spSetUnitStealth = Spring.SetUnitStealth
 
+
 local max = math.max
 local min = math.min
 local floor = math.floor
@@ -103,7 +103,8 @@ local flyingSphereDefIds = {
 	[UnitDefNames["sphere_chroma"].id] = true,
 	[UnitDefNames["sphere_orb"].id] = true,
 	[UnitDefNames["sphere_comet"].id] = true,
-	[UnitDefNames["sphere_atom"].id] = true
+	[UnitDefNames["sphere_atom"].id] = true,
+	[UnitDefNames["sphere_clash"].id] = true
 }
 
 -- units that have energy boosted movement, values are min speeds at which drain is applied
@@ -120,6 +121,7 @@ local energyBoostedMovementDefIds = {
 	[UnitDefNames["sphere_atom"].id] = 1.0,
 	[UnitDefNames["sphere_dipole"].id] = 1.0,
 	[UnitDefNames["sphere_cluster"].id] = 0.5,
+	[UnitDefNames["sphere_clash"].id] = 0.5,
 	[UnitDefNames["sphere_cluster_module_laser"].id] = 0.5,
 	[UnitDefNames["sphere_cluster_module_bomb"].id] = 0.5,
 	[UnitDefNames["aven_ace"].id] = 10.0
@@ -264,12 +266,19 @@ function gadget:GameFrame(n)
 		spSpawnCEG(p[4] and autoBuildCEG or autoReclaimCEG, p[1],p[2],p[3])
 	end
 
-	-- set rules param with experience, for public display
 	local xp = 0
+	local remainingFrames = 0
 	for _,unitId in pairs(allUnits) do
+		-- set rules param with experience, for public display
 		xp = spGetUnitExperience(unitId)
 		if (xp) then
 			spSetUnitRulesParam(unitId, "experience",xp,UNIT_RP_PUBLIC_TBL)
+		end
+		
+		-- update transient property counters
+		remainingFrames = spGetUnitRulesParam(unitId,"teleported_fx_frames")
+		if remainingFrames and remainingFrames > 0 then
+			spSetUnitRulesParam(unitId, "teleported_fx_frames",remainingFrames -1,UNIT_RP_PUBLIC_TBL)
 		end
 	end
 	
@@ -543,6 +552,10 @@ function gadget:GameFrame(n)
 				
 				if (bp and bp > 0.9) then
 					regen = r + phpR * maxHealth
+					-- being on fire halves passive regen
+					if spGetUnitRulesParam(unitId,"on_fire") == 1 then
+						regen = regen * 0.5
+					end
 					if (health < maxHealth) then
 						if maxHealth - health < regen then
 							spSetUnitHealth(unitId,maxHealth)

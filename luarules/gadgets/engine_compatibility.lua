@@ -13,23 +13,33 @@ end
 
 local showWarningMessage = 0
 local currentEngineVersion = "???"
-local recommendedEngineVersion = "2025.06.05"
+local refMajorStr="2025"
+local refMinorStr="06"
+local refPatchSetStr="18"
+local refMajor=tonumber(refMajorStr)
+local refMinor=tonumber(refMinorStr)
+local refPatchSet=tonumber(refPatchSetStr)
 
 --UNSYNCED CODE
 if not (gadgetHandler:IsSyncedCode()) then
 
 function gadget:Initialize()
-	--Spring.Echo("Engine.version="..tostring(Engine.version))
-	--Spring.Echo("Engine.versionFull="..tostring(Engine.versionFull))
-	--Spring.Echo("Engine.versionPatchSet="..tostring(Engine.versionPatchSet))
+	--for k,v in pairs(Engine) do
+	--	Spring.Echo("Engine."..k.."="..tostring(v))	
+	--end
 	
-	if (Engine and Engine.version) then
-		currentEngineVersion = Engine.versionFull
-	elseif (Game and Game.version) then
-		currentEngineVersion = Game.version
-	end
+	local curMajor = tonumber(Engine.versionMajor)
+	local curMinor = tonumber(Engine.versionMinor)
+	local curPatchSet = tonumber(Engine.versionPatchSet)
 	
-	if (not string.find(currentEngineVersion,"2025."))   then
+	if (curMajor > refMajor)
+		or
+		(curMajor == refMajor and curMinor > refMinor)
+		or 
+		(curMajor == refMajor and curMinor == refMinor and curPatchSet >= refPatchSet)
+	then
+		-- should work fine
+	else
 		showWarningMessage = 1
 	end 
 end
@@ -39,7 +49,7 @@ end
 function gadget:GameFrame(n) 
 	if (n%16) == 0 then
 		if (showWarningMessage == 1) then
-			Spring.Echo("---------------------------------------------\nWARNING : unsupported Spring Engine version detected ("..currentEngineVersion.."). Use Spring "..recommendedEngineVersion.. " or later instead.\nGet the latest recommended engine and game versions by joining the MF rooms on the official server.")
+			Spring.Echo("---------------------------------------------\nWARNING : unsupported engine version detected ("..Engine.versionFull.."). Use Recoil "..refMajorStr.."."..refMinorStr.."."..refPatchSetStr.. " or later instead.\nGet the latest recommended engine and game versions by joining the MF rooms on the official server.")
 			showWarningMessage = 0
 			gadgetHandler:RemoveGadget()
 		end	

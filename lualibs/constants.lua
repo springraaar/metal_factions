@@ -22,7 +22,7 @@ gear_igniter_flamer
 gear_axle
 gear_rhino
 gear_ruiner
-claw_ringo
+claw_rapier
 claw_trigger
 claw_porcupine
 claw_blaster

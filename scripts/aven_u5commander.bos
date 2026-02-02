@@ -100,9 +100,9 @@ MotionSpeedControl(maxSpeed,currentSpeed)
 		mAMoveSpd1 = [20.000000] * mASpdFactor / 50;
 		if (shouldRun)
 		{
-			mATurnSpd1 = <315.000000> * (100 + mASpdFactor) / 100;
-			mATurnSpd2 = <200.000000> * (100 + mASpdFactor) / 100;
-			mATurnSpd3 = <50.000000> * (100 + mASpdFactor) / 100;
+			mATurnSpd1 = <285.000000> * (100 + mASpdFactor) / 100;
+			mATurnSpd2 = <160.000000> * (100 + mASpdFactor) / 100;
+			mATurnSpd3 = <40.000000> * (100 + mASpdFactor) / 100;
 		}
 		else
 		{

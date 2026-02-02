@@ -64,13 +64,14 @@ local lastPlayerMsgScrollFrame	= 0
 local PLAYER_COLOR_TABLE			= {}		-- indexed by player name
 local TEAM_COLOR_TABLE				= {}
 
--- message patterns our filter should match
+-- message patterns our filter should match to omit the line
 local MESSAGE_FILTERS = { 
 	"ClientReadNet",
 	"to access the quit menu",
 	"ParseUniformsTable",
 	"SpecTeamAction",
-	"SDL_WINDOWEVENT"
+	"SDL_WINDOWEVENT",
+	"CTextureRenderAtlas::"
 }
 
 -- has time to visually clear messages been reached?

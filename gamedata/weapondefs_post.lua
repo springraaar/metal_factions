@@ -55,7 +55,7 @@ local function processSoundDefaults(wd)
 		wd.soundhitvolume = 1
 		return
 	end
-	local soundVolume = math.min(1.5 + math.sqrt(defaultDamage*0.1)*0.2,10)
+	local soundVolume = math.min(1.55 + math.sqrt(defaultDamage*0.1)*0.14,10)
 	if (not wd.soundstartvolume) then
 		wd.soundstartvolume = soundVolume
 	end

@@ -320,7 +320,7 @@ function widget:Update(dt)
 		if (serverFrame and serverFrame > 0) then
 			percentStr = math.floor(localFrame*100 / serverFrame)
 		end
-		progressCaption = "Synching : " .. percentStr .. "% (" .. parseFrameTime(framesLeft).." ahead)"
+		progressCaption = "Syncing : " .. percentStr .. "% (" .. parseFrameTime(framesLeft).." ahead)"
 	end 
 
 end

@@ -1,0 +1,102 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Advanced Solar Collector;
+	description=Produces 75 E/s;
+	iconType=energy;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW ENERGY LEVEL1 NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_adv_solar_collector;
+	objectName=claw_adv_solar_collector.3do;
+	corpse=claw_adv_solar_collector_dead;
+	buildPic=claw_adv_solar_collector.png;
+	soundCategory=gear_SOLAR;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1200;
+	footprintx=7;
+	footprintz=7;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=75;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+	yardMap=ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo ooooooo;
+	activateWhenBuilt=1;
+	collisionvolumetype=box;
+	collisionVolumeScales=100 20 100;
+	collisionVolumeOffsets=0 0 0;
+	collisionVolumeTest = 1;
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+
+
+	//************************************************************
+	//  Movement
+	//************
+	maxSlope=10;
+	maxWaterDepth=0;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	explodeAs=CLAW_ADVSOLAR_BLAST;
+	selfDestructAs=CLAW_ADVSOLAR_BLAST;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+
+
+	[CustomParams]
+	{
+		builtBy=claw_l1builder,claw_l2builder;
+		boostsPowerGrid=1;
+	}
+
+	//************************************************************
+	//  To be removed
+	//*****************
+
+	buildCostEnergy=2286;//#AUTO#
+	buildCostMetal=457;//#AUTO#
+	buildTime=5450;//#AUTO#
+	mass=452;//#AUTO#
+}

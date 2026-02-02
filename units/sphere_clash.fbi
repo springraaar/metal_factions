@@ -1,0 +1,99 @@
+[UNITINFO]
+{
+	// ------------------- description
+	side=Sphere;
+	Name=Clash;
+	Description=Shielded Assault/Fighter Sphere;
+	iconType=fspherefighter;
+
+	// ------------------- categories
+	Category=SPHERE LEVEL2 WEAPON NOTAIR NOTSUB;
+
+
+	// ------------------- external specs
+	unitName=sphere_clash;
+	objectName=sphere_clash.3do;
+	Corpse=sphere_clash_dead;
+	buildPic=sphere_clash.png;
+	soundCategory=SPHERE_SPHEREMED;
+
+	// ------------------- health/cost/size
+	maxDamage=4200;
+	FootprintX=4;
+	FootprintZ=4;
+	
+	// ------------------- resources
+	energyMake=0;
+	MetalMake=0;
+	energyStorage=0;
+	metalStorage=0;
+	energyUse=0;
+
+	// ------------------- constructor
+	builder=0;
+
+
+	// ------------------- abilities
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	canGuard=1;
+	canAttack=1;
+	onOffable=0;
+
+
+	// ------------------- movement
+	canFly=1;
+	maxVelocity=1.0;
+	brakeRate=0.03;
+	Acceleration=0.03;
+	turnRate=632;
+	cruiseAlt=100;
+	hoverAttack=1;
+	airStrafe=0;
+	airHoverFactor=0.1;
+	upright=1;
+	bankingallowed=0;
+	useSmoothMesh=1;
+	verticalSpeed=1.2;
+
+	// ------------------- scout
+	sightDistance=600;
+	radarDistance=0;
+	sonarDistance=0;
+
+	// ------------------- weapons
+	Weapon1=sphere_clash_laser;
+	Weapon2=sphere_clash_shield;
+	noChaseCategory=VTOL;
+	explodeAs=big_unit;
+	selfDestructAs=big_unit;
+
+	// ------------------- orders
+	movestate=0;
+
+	// ------------------- stealth
+
+	// ------------------- misc
+	minAirbasePower=99999;
+	activateWhenBuilt=0;
+	collisionVolumeType = sphere;
+	collisionVolumeScales = 44 44 44;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=sphere_sphere_factory;
+		energyCostMoving=70;
+		tip=Requires 70E/s to move;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:redflare;
+	}
+	buildCostEnergy=5986;//#AUTO#
+	buildCostMetal=1197;//#AUTO#
+	buildTime=14268;//#AUTO#
+	mass=2318;//#AUTO#
+}

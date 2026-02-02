@@ -9,7 +9,7 @@
 	height=40;
 	blocking=1;
 	hitdensity=100;
-	metal=8;
+	metal=11;
 	damage=1400;
 	reclaimTime=150;
 	crushResistance=500;
@@ -33,7 +33,7 @@
 	height=40;
 	blocking=1;
 	hitdensity=100;
-	metal=8;
+	metal=11;
 	damage=1400;
 	reclaimTime=150;
 	crushResistance=500;
@@ -62,7 +62,7 @@
 	collisionVolumeScales =30 30 30;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	metal=8;
+	metal=11;
 	damage=1400;
 	reclaimTime=150;
 	reclaimable=1;
@@ -86,7 +86,7 @@
 	collisionVolumeScales =30 30 30;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
-	metal=8;
+	metal=11;
 	damage=1400;
 	reclaimTime=150;
 	reclaimable=1;
@@ -105,7 +105,7 @@
 	height=15;
 	blocking=1;
 	hitdensity=100;
-	metal=5;
+	metal=4;
 	damage=800;
 	reclaimTime=100;
 	collisionVolumeType = box;
@@ -131,7 +131,7 @@
 	reclaimable=1;
 	featurereclamate=smudge01;
 	seqnamereclamate=tree1reclamate;
-	metal=3;
+	metal=2;
 	energy=0;
 	damage=500;
 	reclaimTime=70;
@@ -151,12 +151,12 @@
 	height=30;
 	blocking=1;
 	hitdensity=100;
-	metal=21;
-	damage=2400;
+	metal=24;
+	damage=2000;
 	reclaimTime=420;
 	crushResistance=500;
 	collisionVolumeType = box;
-	collisionVolumeScales =30 60 30;
+	collisionVolumeScales =30 45 30;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 	reclaimable=1;

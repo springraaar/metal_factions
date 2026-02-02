@@ -3,7 +3,7 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define SPEEDUP_FACTOR 270
+#define SPEEDUP_FACTOR 200
 
 #define HEADING_TOLERANCE	<25>
 #define PITCH_TOLERANCE		<15>
@@ -16,6 +16,19 @@ static-var  bMoving,bAiming, nanopiece, justmoved, mASpdFactor;
 
 // Signal definitions
 #define SIG_AIM				2
+
+
+RockUnit(anglex, anglez)
+{
+	anglex = anglex * 100/200;
+	anglez = anglez * 100/200;
+	turn base to x-axis anglex speed <40.005495>;
+	turn base to z-axis <0>-anglez speed <40.005495>;
+	wait-for-turn base around z-axis;
+	wait-for-turn base around x-axis;
+	turn base to z-axis <0.000000> speed <15.000000>;
+	turn base to x-axis <0.000000> speed <15.000000>;
+}
 
 MotionSpeedControl(minSpeed, maxSpeed,currentSpeed)
 {

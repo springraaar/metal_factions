@@ -342,11 +342,9 @@ local function DrawOMap(useMirrorShader)
 end
 
 function widget:Initialize()
-	Spring.Echo("MAP EDGE EXTENSION")
 	if not drawingEnabled then
 		return
 	end
-	
 	
 	Spring.SendCommands("mapborder " .. ((options and (options.mapBorderStyle.value == 'cutaway')) and "1" or "0"))
 	

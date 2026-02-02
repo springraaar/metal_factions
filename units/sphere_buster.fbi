@@ -5,7 +5,7 @@
 	//********************
 	side=Sphere;
 	name=Buster;
-	description=All-terrain Raider Robot;
+	description=All-terrain Anti-Armor Raider Robot;
 	iconType=allterrainraider;
 
 	//************************************************************
@@ -20,12 +20,12 @@
 	objectName=sphere_buster.3do;
 	corpse=sphere_buster_dead;
 	buildPic=sphere_buster.png;
-	soundCategory=CORAK;
+	soundCategory=SPHERE_BOTMED;
 
 	//************************************************************
 	//  Health/Cost/Size
 	//********************
-	maxDamage=600;
+	maxDamage=1600;
 	footprintx=3;
 	footprintz=3;
 
@@ -64,7 +64,7 @@
 	turnRate=1400;
 	acceleration=1.1;
 	brakeRate=1;
-	maxVelocity=2.8;
+	maxVelocity=2.6;
 
 	//************************************************************
 	//  Sight/Radar/Sonar
@@ -94,7 +94,7 @@
 	//*****************
 
 	collisionVolumeType = box;
-	collisionVolumeScales =20 14 20;
+	collisionVolumeScales =35 20 35;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
@@ -108,8 +108,8 @@
 		explosionGenerator0=custom:rocketflaresml;
 	}
 
-	buildCostEnergy=834;//#AUTO#
-	buildCostMetal=166;//#AUTO#
-	buildTime=1988;//#AUTO#
-	mass=102;//#AUTO#
+	buildCostEnergy=2809;//#AUTO#
+	buildCostMetal=561;//#AUTO#
+	buildTime=6694;//#AUTO#
+	mass=587;//#AUTO#
 }

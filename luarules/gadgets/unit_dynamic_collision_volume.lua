@@ -10,6 +10,7 @@ function gadget:GetInfo()
   }
 end
 
+include("lualibs/unit_spawner.lua")
 
 local spSetUnitCollisionVolumeData = Spring.SetUnitCollisionVolumeData
 local spSetUnitMidAndAimPos = Spring.SetUnitMidAndAimPos
@@ -203,6 +204,10 @@ if (gadgetHandler:IsSyncedCode()) then
 				spSetUnitMidAndAimPos(unitID,0, ys*0.5, 0,0, ys*0.75+yo,0,true)
 			end
 		end
+		
+		
+		--TODO test/remove
+		--showTeleportedUnitFx(unitID)
 	end
 
 	--check if a pop-up type unit was destroyed

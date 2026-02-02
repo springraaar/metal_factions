@@ -56,10 +56,10 @@ effectUnitDefs = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.5}, areaShieldSphere)}
   },  
   sphere_gazer = {
-	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=1.0}, areaShieldSphere)}
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=1.1}, areaShieldSphere)}
   },
   sphere_radiant = {
-	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=1.0}, areaShieldSphere)}
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=1.2}, areaShieldSphere)}
   },
   sphere_comet = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.9}, areaShieldSphere)}
@@ -68,13 +68,16 @@ effectUnitDefs = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=1.0}, areaShieldSphere)}
   },
   sphere_aster = {
-	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=1.0}, areaShieldSphere)}
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=1.1}, areaShieldSphere)}
   },
   sphere_chroma = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=1.2}, areaShieldSphere)}
   },
   sphere_dipole = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.9}, areaShieldSphere)}
+  },
+  sphere_clash = {
+	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=1.0}, areaShieldSphere)}
   },
   sphere_atom = {
 	{class='ShieldSphere', options=MergeTable({margin=2, heightFactor=0.9}, atomShieldSphere)}

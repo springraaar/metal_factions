@@ -1,0 +1,117 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Titan (Mk2);
+	description=Barely Mobile Amphibious Armored Assault Robot;
+	iconType=amphibassault;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR LEVEL2 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_titan2;
+	objectName=gear_titan2.3do;
+	corpse=gear_titan2_dead;
+	buildPic=gear_titan2.png;
+	soundCategory=GEAR_BOTBIG;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=15000;
+	footprintx=4;
+	footprintz=4;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	upright=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=KBOTUW4;
+	turnRate=300;
+	acceleration=1.2;
+	brakeRate=1.0;
+	maxVelocity=0.45;
+	maxSlope=14;
+	maxWaterDepth=12;
+	turninplace=1;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+	sonarDistance=250;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_titan2_laser;
+	noChaseCategory=VTOL;
+	explodeAs=BIG_UNITEX;
+	selfDestructAs=BIG_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	cantbetransported=0;
+	collisionVolumeType = box;
+	collisionVolumeScales =56 52 56;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=gear_titan;
+		tip=Regenerates 20 HP/s;
+		evalFactor=0.9; // xp locked morph
+	}
+
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:greenflare;
+		explosionGenerator1=custom:unitfire;
+	}
+	buildCostEnergy=21299;//#AUTO#
+	buildCostMetal=4259;//#AUTO#
+	buildTime=50762;//#AUTO#
+	mass=8271;//#AUTO#
+}

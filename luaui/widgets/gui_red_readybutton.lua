@@ -429,6 +429,11 @@ function widget:GameSetup(state, ready, playerStates)
 	return true, ready
 end
 
+function widget:MousePress(mx, my, mButton)
+	if (WG.readyPanelShown and readyState == 1) then 	
+		return true
+	end
+end	
 
 function widget:GameStart()
 	hideReadyPanel()

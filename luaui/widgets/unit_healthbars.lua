@@ -43,6 +43,7 @@ local drawJumpJet        = Spring.GetGameRulesParam("jumpJets")
 local drawMorphOverlay   = true
 local drawDamageOverlay  = true
 local drawDashOverlay    = false
+local drawTeleportedOverlay = true
 
 local stockpileH = 24
 local stockpileW = 12
@@ -117,6 +118,7 @@ local regenUnits = {}
 local UnitMorphs  = {}
 local magnetars   = {}
 local dashUnits = {}
+local teleportedUnits = {}
 
 local barShader
 local barDList
@@ -595,6 +597,11 @@ do
     if (drawDashOverlay) and (GetUnitRulesParam(unitID,"dashFrames") and GetUnitRulesParam(unitID,"dashFrames") > 0) then
       dashUnits[#dashUnits+1]=unitID
     end
+
+    local remainingFrames = GetUnitRulesParam(unitID,"teleported_fx_frames")
+    if remainingFrames and remainingFrames > 0 then
+      teleportedUnits[#teleportedUnits+1]={unitID,remainingFrames}
+    end 
 	
     if (GetUnitRulesParam(unitID,"recent_regen") and GetUnitRulesParam(unitID,"recent_regen") > 1) then
       regenUnits[#regenUnits+1]={unitID,GetUnitRulesParam(unitID,"recent_regen")}
@@ -855,7 +862,7 @@ do
           glUnit(uId,true)
         end
       end
-      local shift = widgetHandler:GetHourTimer() / 20
+      local shift = widgetHandler:GetHourTimer() * 0.05
 
       glTexCoord(0,0)
       glTexGen(GL_T, GL_TEXTURE_GEN_MODE, GL_EYE_LINEAR)
@@ -915,7 +922,7 @@ do
       glPolygonOffset(-2, -2)
       glBlending(GL_SRC_ALPHA, GL_ONE)
 
-      local alpha = (spGetGameFrame() % 5) / 25
+      local alpha = (spGetGameFrame() % 5) * 0.04
       glColor(1,0.3,0,alpha)
       for i=1,#onFireUnits do
         glUnit(onFireUnits[i],true)
@@ -934,10 +941,9 @@ do
       glPolygonOffset(-2, -2)
       glBlending(GL_SRC_ALPHA, GL_ONE)
 
-      local alpha = (spGetGameFrame() % 3) / 3
+      local alpha = (spGetGameFrame() % 3) * 0.333
       for i=1,#regenUnits do
-      	--Spring.Echo("f="..spGetGameFrame().." regen="..tostring(alpha * regenUnits[i][2] / 60))
-      	glColor(0,1,0,alpha * regenUnits[i][2] / 60)
+      	glColor(0,1,0,alpha * regenUnits[i][2] *0.0167)
         glUnit(regenUnits[i][1],true)
       end
 
@@ -955,7 +961,7 @@ do
       glPolygonOffset(-2, -2)
       glBlending(GL_SRC_ALPHA, GL_ONE)
 
-      local alpha = (spGetGameFrame() % 3) / 25
+      local alpha = (spGetGameFrame() % 3) * 0.04
       glColor(1,1,1,alpha)
       for i=1,#dashUnits do
         glUnit(dashUnits[i],true)
@@ -968,6 +974,26 @@ do
       dashUnits = {}
     end
     
+    
+    --// overlay for units that have the been teleported
+    if (teleportedUnits) then
+      glDepthTest(true)
+      glPolygonOffset(-2, -2)
+      glBlending(GL_SRC_ALPHA, GL_ONE)
+
+      local alpha = 0.8
+      for i=1,#teleportedUnits do
+      	glColor(1,1,1,alpha * teleportedUnits[i][2] *0.0333)
+        glUnit(teleportedUnits[i][1],true)
+      end
+
+      glBlending(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
+      glPolygonOffset(false)
+      glDepthTest(false)
+
+      teleportedUnits = {}
+    end
+    
     --// overlay for units morphing
     if (drawMorphOverlay)and(UnitMorphs) then
       glDepthTest(true)
@@ -975,7 +1001,7 @@ do
       glBlending(GL_SRC_ALPHA, GL_ONE)
 
       local alpha = abs((widgetHandler:GetHourTimer() % 2)-1)
-      glColor(0,1,0,alpha/4)
+      glColor(0,1,0,alpha*0.25)
       for uId,_ in pairs(UnitMorphs) do
         glUnit(uId,true)
       end

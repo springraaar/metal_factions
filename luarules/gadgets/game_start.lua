@@ -24,6 +24,8 @@ end
 --------------------------------------------------------------------------------
 --------------------------------------------------------------------------------
 
+include("lualibs/unit_spawner.lua")
+
 local modOptions = Spring.GetModOptions()
 local commanders = {"aven_commander","gear_commander","claw_commander","sphere_commander"}
 
@@ -35,6 +37,7 @@ local validSide = {
 	sphere = true
 }
 
+local idsRequiringTeleportFx = {}
 
 local function GetStartUnit(teamID)
     local side = select(5, Spring.GetTeamInfo(teamID))
@@ -91,6 +94,8 @@ local function SpawnStartUnit(teamID)
             or ((z>Game.mapSizeZ/2) and "north" or "south")
         local unitID = Spring.CreateUnit(startUnit, x, y, z, facing, teamID)
 
+		idsRequiringTeleportFx[unitID] = true
+		
 		-- spawn test units
 		--local xpArr = {0.1, 0.3, 0.4, 0.7, 1, 1.3, 1.8, 2.7, 4.5, 10}
 		--for i=0,9 do
@@ -152,3 +157,12 @@ function gadget:GameStart()
     end
 end
 
+
+function gadget:GameFrame(f)
+	if (f == 1) then
+		for uId,_ in pairs(idsRequiringTeleportFx) do
+			showTeleportedUnitFx(uId)
+			idsRequiringTeleportFx[uId] = nil
+		end
+	end
+end

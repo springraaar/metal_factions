@@ -159,17 +159,6 @@ local dronerWeaponDefIds = {
 	[WeaponDefNames["aven_skein_beacon"].id] = true
 }
 
-local burningImmuneDefIds = {
-	[UnitDefNames["gear_pyro"].id] = true,
-	[UnitDefNames["gear_heater"].id] = true,
-	[UnitDefNames["gear_u1commander"].id] = true,
-	[UnitDefNames["gear_u5commander"].id] = true,
-	[UnitDefNames["gear_firestorm"].id] = true,
-	[UnitDefNames["gear_cloakable_cube"].id] = true,
-	[UnitDefNames["gear_cube"].id] = true,
-	[UnitDefNames["gear_burner"].id] = true
-}
-
 local burningEffectWeaponDefIds = {}
 
 local burningAOEPerStepWeaponDefIds = {
@@ -725,7 +714,7 @@ function gadget:UnitPreDamaged(unitID, unitDefID, unitTeam, damage, paralyzer, w
 	end
 	
 	-- add/refresh burning debuff
-	if ( burningEffectWeaponDefIds[weaponDefID] and (not burningImmuneDefIds[unitDefID])) then
+	if (  burningEffectWeaponDefIds[weaponDefID] and (unitID ~= attackerID)) then
 		unitBurningTable[unitID] = {steps = FIRE_DMG_STEPS,unitDefID = unitDefID, attackerID = attackerID}
 	end
 	

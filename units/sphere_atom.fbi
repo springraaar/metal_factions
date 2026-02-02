@@ -18,7 +18,7 @@
 	soundCategory=SPHERE_SPHERESML;
 
 	// ------------------- health/cost/size
-	maxDamage=3000;
+	maxDamage=4000;
 	FootprintX=3;
 	FootprintZ=3;
 	
@@ -64,7 +64,7 @@
 	// ------------------- weapons
 	Weapon1=sphere_atom_cannon;
 	Weapon2=sphere_atom_shield;
-	badTargetCategory1=VTOL;
+	onlyTargetCategory1=NOTAIR;
 	noChaseCategory=VTOL;
 	explodeAs=BIG_SPHERE_BLAST;
 	selfDestructAs=BIG_SPHERE_BLAST;
@@ -77,15 +77,15 @@
 	minAirbasePower=99999;
 	activateWhenBuilt=0;
 	collisionVolumeType = sphere;
-	collisionVolumeScales =42 42 42;
+	collisionVolumeScales =46 46 46;
 	collisionVolumeOffsets = 0 0 0;
 	collisionVolumeTest = 1;
 
 	[CustomParams]
 	{
 		builtBy=sphere_sphere_factory;
-		energyCostMoving=140;
-		tip=Requires 140E/s to move. Depletes own shield when it fires.;
+		energyCostMoving=180;
+		tip=Requires 180E/s to move. Depletes own shield when it fires.;
 	}
 	[SFXTypes]
 	{
@@ -95,8 +95,8 @@
 		explosionGenerator3=custom:atomcharge2;
 		explosionGenerator4=custom:atomfirewave;
 	}
-	buildCostEnergy=7141;//#AUTO#
-	buildCostMetal=1428;//#AUTO#
-	buildTime=17020;//#AUTO#
-	mass=1226;//#AUTO#
+	buildCostEnergy=11262;//#AUTO#
+	buildCostMetal=2252;//#AUTO#
+	buildTime=26842;//#AUTO#
+	mass=1750;//#AUTO#
 }

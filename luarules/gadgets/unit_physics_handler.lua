@@ -750,6 +750,7 @@ end
 
 -- cleanup when some units are destroyed
 function gadget:UnitDestroyed(unitId, unitDefId, unitTeam,attackerId, attackerDefId, attackerTeamId)
+	--Spring.Echo("DESTROYED uId="..unitId.." udId="..unitDefId.." tId="..unitTeam.." aId="..attackerId.." adId="..attackerDefId.." atId="..attackerTeamId)
 	-- remove entries from tables when unit is destroyed
 	if (moveAnimationUnitIds[unitId]) then
 		if unitCreationFrame[unitId] then
