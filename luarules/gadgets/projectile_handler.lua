@@ -77,10 +77,13 @@ local HIGH_ANGLE_DESCENT_FAR_TARGET_DIST = 250
 local LONG_RANGE_ROCKET_TERMINAL_SQDIST = 800*800
 local LONG_RANGE_ROCKET_SUBMUNITION_SQDIST = 600*600
 
-local LONG_RANGE_ROCKET_NON_TERMINAL_LIMIT_SQV = 277
+local LONG_RANGE_SLOW_ROCKET_NON_TERMINAL_LIMIT_SQV = 177
+local LONG_RANGE_ROCKET_NON_TERMINAL_LIMIT_SQV = 335
 local LONG_RANGE_PREMIUM_ROCKET_NON_TERMINAL_LIMIT_SQV = 2304
-local LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION = 0.95    -- per frame
-local LONG_RANGE_ROCKET_TERMINAL_ACCELERATION = 1.05   -- per frame 
+local LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION = 0.98    -- per frame
+local LONG_RANGE_ROCKET_TERMINAL_ACCELERATION = 1.025   -- per frame
+local LONG_RANGE_PREMIUM_ROCKET_TERMINAL_ACCELERATION = 1.05   -- per frame 
+local LONG_RANGE_SLOW_ROCKET_TERMINAL_ACCELERATION = 1.015   -- per frame
 
 local LONG_RANGE_ROCKET_SUB_TYPE_PYROCLASM = WeaponDefNames["gear_pyroclasm_submunition"].id
 local LONG_RANGE_ROCKET_SUB_TYPE_IMPALER = WeaponDefNames["claw_impaler_submunition"].id
@@ -93,7 +96,7 @@ local submunitionRocketWeaponIds = {
 
 
 -- detonate when very close to target
-local LONG_RANGE_ROCKET_DETONATE_SQDIST = 80*80
+local LONG_RANGE_ROCKET_DETONATE_SQDIST = 70*70
 
 local DC_ROCKET_DEPLOY_LIMIT_H = 300
 local DC_ROCKET_AUTO_BUILD_STEPS = 30
@@ -129,6 +132,17 @@ local dynamoWeaponId = WeaponDefNames["claw_dynamo_ring"].id
 local atomWeaponId = WeaponDefNames["sphere_atom_cannon"].id
 local disruptorStormWeaponId = WeaponDefNames["aven_stormfront_bomb"].id
 local disruptorStormWeaponEffectId = WeaponDefNames["disruptor_storm_effect"].id
+
+local radiantWaveWeaponId = WeaponDefNames["sphere_radiant_wave"].id
+local radiantWaveWeaponEffectIds = {
+ 	WeaponDefNames["sphere_radiant_wave_effect1"].id,
+ 	WeaponDefNames["sphere_radiant_wave_effect2"].id,
+ 	WeaponDefNames["sphere_radiant_wave_effect3"].id,
+ 	WeaponDefNames["sphere_radiant_wave_effect4"].id,
+ 	WeaponDefNames["sphere_radiant_wave_effect5"].id,
+ 	WeaponDefNames["sphere_radiant_wave_effect6"].id
+ }
+
 
 
 local DYNAMO_RING_MAX_DAMAGE = 5000
@@ -184,17 +198,6 @@ local highAngleDescentWeaponIds = {
 	[WeaponDefNames["gear_bulwark_rocket"].id]=true
 }
 
-local premiumRocketWeaponIds = {
-	-- AVEN
-	[WeaponDefNames["aven_premium_nuclear_rocket"].id]=true,
-	-- GEAR
-	[WeaponDefNames["gear_premium_nuclear_rocket"].id]=true,
-	-- CLAW
-	[WeaponDefNames["claw_premium_nuclear_rocket"].id]=true,
-	-- SPHERE
-	[WeaponDefNames["sphere_premium_nuclear_rocket"].id]=true
-}
-
 local dcRocketSpawnWeaponIds = {
 	[WeaponDefNames["aven_dc_rocket"].id]=UnitDefNames["aven_nano_tower"].id,
 	[WeaponDefNames["gear_dc_rocket"].id]=UnitDefNames["gear_nano_tower"].id,
@@ -208,6 +211,7 @@ local highAngleDescentProjectiles = {}
 local highAngleDescentOriginalTargetsById = {}
 local disruptorProjectiles = {}
 local disruptorEffectProjectiles = {}
+local radiantWaveProjectiles = {}
 local torpedoProjectiles = {}
 local smartTrackingProjectiles = {}
 local fireAOEProjectiles = {}
@@ -220,13 +224,19 @@ local magnetarProjectiles = {}
 local destructibleProjectiles = {}
 local dcRockets = {}
 local submunitionRockets = {}
-local premiumRockets = {}
+local lRRocketType = {}
 local comsatProjectiles = {}
 local comsatBeaconDefId = UnitDefNames["cs_beacon"].id
 local scoperProjectiles = {}
 local scoperBeaconDefId = UnitDefNames["scoper_beacon"].id
 local dynamoProjectiles = {}
 dcRocketSpawn = {}
+
+local lRRocketPropsByType = {
+	default = { cruiseSqV = LONG_RANGE_ROCKET_NON_TERMINAL_LIMIT_SQV , terminalBoostAc=LONG_RANGE_ROCKET_TERMINAL_ACCELERATION	},
+	premium = { cruiseSqV = LONG_RANGE_PREMIUM_ROCKET_NON_TERMINAL_LIMIT_SQV, terminalBoostAc=LONG_RANGE_PREMIUM_ROCKET_TERMINAL_ACCELERATION 	},
+	slow = { cruiseSqV = LONG_RANGE_SLOW_ROCKET_NON_TERMINAL_LIMIT_SQV, terminalBoostAc=LONG_RANGE_SLOW_ROCKET_TERMINAL_ACCELERATION 	}
+}
 
 -- is close enough on x-z plane to start diving toward target
 function isCloseToTarget(px,pz,tx,tz,dist)
@@ -289,6 +299,34 @@ end
 --- update enemy launch counts
 local LATEST_LRR_LAUNCH_STREAK_FRAMES = 25*30
 local latestLRRLaunchesByTeamId = {}	-- frame,count 
+
+
+function generateRadiantWaveEffects(gameFrame)
+	-- generate radiant wave effect projectiles
+	local px,py,pz,vx,vy,vz,fireFrame,ownerId,effectIdx
+	for id,data in pairs(radiantWaveProjectiles) do
+		fireFrame = data[1]
+		ownerId = data[2]
+		px,py,pz = spGetProjectilePosition(id)
+		px = px - 15 + math.random(30)
+		py = py - 15 + math.random(30)
+		pz = pz - 15 + math.random(30)
+		
+		vx,vy,vz = spGetProjectileVelocity(id)
+		effectIdx = math.floor(math.min(math.max(0,(gameFrame - fireFrame)*0.1),5))+1
+		
+		createdId = spSpawnProjectile(radiantWaveWeaponEffectIds[effectIdx],{
+			["pos"] = {px,py,pz},
+			["end"] = {px,py+3,pz},
+			["speed"] = {vx,vy,vz},
+			["owner"] = ownerId
+		})
+		--Spring.Echo("spawned proj "..createdId)
+		-- explode it immediately
+		spSetProjectileCollision(createdId)
+		--disruptorEffectProjectiles[createdId] = ownerId
+	end
+end
 
 
 -------------------------- SYNCED CODE ONLY
@@ -526,21 +564,17 @@ function gadget:GameFrame(n)
 			local vx,vy,vz = spGetProjectileVelocity(id)
 			if vx then
 				local sqV = vx*vx+vy*vy+vz*vz
+				local type = lRRocketType[id]
+				local props = lRRocketPropsByType[type]
+				--Spring.Echo("v="..math.sqrt(sqV)*30)
 				if not isTerminalPhase(px,py,pz,ot[1],ot[2],ot[3]) then
-					if premiumRockets[id] then
-						if (sqV > LONG_RANGE_PREMIUM_ROCKET_NON_TERMINAL_LIMIT_SQV) then 
-							--spSetProjectileMoveControl(id,true)
-							spSetProjectileVelocity(id,vx*LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION,vy*LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION,vz*LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION)
-						end
-					else
-						if (sqV > LONG_RANGE_ROCKET_NON_TERMINAL_LIMIT_SQV) then 
-							--spSetProjectileMoveControl(id,true)
-							spSetProjectileVelocity(id,vx*LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION,vy*LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION,vz*LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION)
-						end
+					if (sqV > props.cruiseSqV) then 
+						--spSetProjectileMoveControl(id,true)
+						spSetProjectileVelocity(id,vx*LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION,vy*LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION,vz*LONG_RANGE_ROCKET_NON_TERMINAL_DECELERATION)
 					end
 				else
 					-- terminal phase : speed up
-					spSetProjectileVelocity(id,vx*LONG_RANGE_ROCKET_TERMINAL_ACCELERATION,vy*LONG_RANGE_ROCKET_TERMINAL_ACCELERATION,vz*LONG_RANGE_ROCKET_TERMINAL_ACCELERATION)
+					spSetProjectileVelocity(id,vx*props.terminalBoostAc,vy*props.terminalBoostAc,vz*props.terminalBoostAc)
 					
 					-- if has submunitions, check distance and deploy them
 					if submunitionRockets[id] and vy < 0 and isSubmunitionDeploymentPhase(px,py,pz,ot[1],ot[2],ot[3]) then
@@ -744,6 +778,8 @@ function gadget:GameFrame(n)
 		disruptorEffectProjectiles[createdId] = ownerId
 	end
 
+	generateRadiantWaveEffects(n)
+
 	-- generate fire aoe and similar effect projectiles
 	if(n%STEP_DELAY == 0) then
 		for id,data in pairs(fireAOEPositions) do
@@ -801,6 +837,11 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 	
 	if weaponDefID == disruptorWeaponId then
 		disruptorProjectiles[proID] = proOwnerID
+		return
+	end
+
+	if weaponDefID == radiantWaveWeaponId then
+		radiantWaveProjectiles[proID] = {spGetGameFrame(),proOwnerID}
 		return
 	end
 
@@ -867,9 +908,13 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 			
 		end
 		spSetUnitRulesParam(proOwnerID,"originalTargetPos",tInfo[1].."|"..tInfo[2].."|"..tInfo[3],UNIT_RP_ALLIED_TBL)
+
+		local wd = WeaponDefs[weaponDefID]
+		local lRRType = wd.customParams.lrrtype or "default"
+		lRRocketType[proID] = lRRType
 		
 		-- if far from original target, go towards the point high above it, randomly offset to spread out
-		if (premiumRocketWeaponIds[weaponDefID]) then
+		if (lRRType == "premium") then
 			spSetProjectileTarget(proID,tInfo[1]+50-random(100),tInfo[2]+LONG_RANGE_ROCKET_FAR_FROM_TARGET_H*2,tInfo[3]+50-random(100))
 		else
 			spSetProjectileTarget(proID,tInfo[1]+200-random(400),tInfo[2]+LONG_RANGE_ROCKET_FAR_FROM_TARGET_H,tInfo[3]+200-random(400))
@@ -883,9 +928,6 @@ function gadget:ProjectileCreated(proID, proOwnerID, weaponDefID)
 			submunitionRockets[proID] = submunitionRocketWeaponIds[weaponDefID]
 		end
 		
-		if (premiumRocketWeaponIds[weaponDefID]) then
-			premiumRockets[proID] = true
-		end
 		
 		return
 	end	
@@ -942,8 +984,10 @@ function gadget:ProjectileDestroyed(proID)
 			dcRockets[proID] = nil
 		elseif submunitionRockets[proID] then
 			submunitionRockets[proID] = nil
-		elseif premiumRockets[proID] then
-			premiumRockets[proID] = nil
+		end
+		
+		if lRRocketType[proID] then
+			lRRocketType[proID] = nil
 		end
 
 		-- remove the unit (no explosion)
@@ -953,7 +997,10 @@ function gadget:ProjectileDestroyed(proID)
 		longRangeRocketOriginalTargetsById[proID] = nil
 	end
 
-	if disruptorProjectiles[proID] then
+
+	if radiantWaveProjectiles[proID] then
+		radiantWaveProjectiles[proID] = nil
+	elseif disruptorProjectiles[proID] then
 		disruptorProjectiles[proID] = nil
 	elseif torpedoProjectiles[proID] then
 		torpedoProjectiles[proID] = nil

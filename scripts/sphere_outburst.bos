@@ -1,0 +1,91 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+
+#define HEADING_TOLERANCE	<25>
+#define PITCH_TOLERANCE		<15>
+
+#define SPEEDUP_FACTOR 	100
+
+piece  base, flash, turret, sleeve, t1, t2,base2, t1cover,t2cover, door1,door2;
+
+#include "aimhelper1.h"
+
+// Signal definitions
+#define SIG_AIM				2
+
+#include "tankthreads.h"
+
+RockUnit(anglex, anglez) {
+	anglex = anglex * 100/200;
+	anglez = anglez * 100/200;
+	turn base to x-axis anglex speed <40.005495>;
+	turn base to z-axis <0>-anglez speed <40.005495>;
+	wait-for-turn base around z-axis;
+	wait-for-turn base around x-axis;
+	turn base to z-axis <0.000000> speed <15.000000>;
+	turn base to x-axis <0.000000> speed <15.000000>;
+}
+
+Create() {
+	call-script stopAimHelper1(<1000>,<1000>);
+	start-script AnimateTracks();
+}
+
+
+RestoreAfterDelay() {
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<100>,<100>);
+	turn turret to y-axis <0.000000> speed <100>;
+	turn sleeve to x-axis <0.000000> speed <100>;
+}
+
+AimPrimary(heading, pitch) {
+	call-script updateAimHelper1(heading,pitch,<200>,<200>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn turret to y-axis heading speed <200.038462>;
+	turn sleeve to x-axis <0.000000> - pitch speed <200.000000>;
+	if (!aimReady1) {
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary() {
+	turn door1 to x-axis <-45> now;
+	turn door2 to x-axis <45> now;
+	emit-sfx 1024 from flash;
+	sleep 1000;
+	turn door1 to x-axis <0> speed <30>;
+	turn door2 to x-axis <0> speed <30>;
+}
+
+AimFromPrimary(piecenum) {
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum) {
+	piecenum = flash;
+}
+
+Killed(severity, corpsetype){
+	if( severity <= 50 ) {
+		explode door1 type SHATTER;
+		explode door2 type SHATTER;
+		explode sleeve type SHATTER;
+		return (1);
+	}
+	
+	explode sleeve type SHATTER;
+	explode base type SHATTER;
+	explode base2 type SHATTER;
+	explode turret type SHATTER;
+	explode t1cover type SHATTER;
+	explode t2cover type SHATTER;
+	return (2);
+}

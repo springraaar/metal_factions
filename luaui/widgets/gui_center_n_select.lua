@@ -29,7 +29,15 @@ function widget:Update()
 		unitList = Spring.GetTeamUnits(Spring.GetMyTeamID())
 		if unitList and #unitList > 0 then
 			local x, y, z = Spring.GetUnitPosition(unitList[1])
+			
+			-- fast camera transition to start position when it actually start
 			Spring.SetCameraTarget(x, y, z)
+			state = Spring.GetCameraState()
+			state.height = 2000
+			Spring.SetCameraState(state,0.5)
+			--for k,v in pairs(state) do
+			--	Spring.Echo("state."..k.."="..v)
+			--end
 		end
 		center = false
 	end

@@ -1122,8 +1122,9 @@ function widgetHandler:Shutdown()
   return
 end
 
-function widgetHandler:Update()
-  local deltaTime = Spring.GetLastUpdateSeconds()
+function widgetHandler:Update(dt)
+  local deltaTime = dt or Spring.GetLastUpdateSeconds()
+  
   -- update the hour timer
   hourTimer = (hourTimer + deltaTime) % 3600.0
   for _,w in ipairs(self.UpdateList) do

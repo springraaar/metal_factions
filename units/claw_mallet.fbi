@@ -1,0 +1,116 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Claw;
+	name=Mallet;
+	description=Mortar Vehicle;
+	iconType=mobileartillery;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=CLAW LEVEL1 WEAPON NOTAIR NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=claw_mallet;
+	objectName=claw_mallet.3do;
+	corpse=claw_mallet_dead;
+	buildPic=claw_mallet.png;
+	soundCategory=CLAW_TANKSML;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=1300;
+	footprintx=3;
+	footprintz=3;
+
+	//************************************************************
+	//  Resources
+	//*************
+	metalStorage=0;
+	energyMake=0;
+	energyUse=0;
+	energyStorage=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+	builder=0;
+	workerTime=0;
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+
+	//************************************************************
+	//  Movement
+	//************
+	movementClass=TANKSH3;
+	turnRate=390;
+	acceleration=0.195;
+	brakeRate=0.1;
+	maxVelocity=1.4;
+	maxSlope=10;
+	maxWaterDepth=12;
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=500;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=claw_mallet_cannon;
+	noChaseCategory=VTOL;
+	onlyTargetCategory1=NOTAIR;
+	explodeAs=SMALL_UNITEX;
+	selfDestructAs=SMALL_UNIT;
+
+	//************************************************************
+	//  Orders
+	//**********
+	noAutoFire=0;
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	leavetracks=1;
+	trackoffset=6;
+	trackstrength=5;
+	trackstretch=1;
+	tracktype=StdTank;
+	trackwidth=30;
+	collisionVolumeType = box;
+	collisionVolumeScales =32 17 32;
+	collisionVolumeOffsets = 0 -1 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=claw_light_plant,claw_adv_vehicle_plant;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:yellowflaresml;
+	}
+	buildCostEnergy=2142;//#AUTO#
+	buildCostMetal=428;//#AUTO#
+	buildTime=5106;//#AUTO#
+	mass=467;//#AUTO#
+}

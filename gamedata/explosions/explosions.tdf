@@ -1601,29 +1601,15 @@
 [RADIANTWAVEBLAST]
 {
 	usedefaultexplosions=0;	
-	[groundflash]
-	{
-		flashSize = 200;
-		flashAlpha = 0.3;
-		circleGrowth = 0;
-		circleAlpha = 0.2;
-		ttl = 35;
-		color = 1.0, 0.8, 0.5;
-
-		air=0;
-		water=1;
-		ground=1;
-  		count=1; 
-	}
 	[GLOW]
 	{
 		class=CExploSpikeProjectile;
 		[properties]
 		{
 			dir=-2 r4, -2 r4, -2 r4;
-			width=100;
-			length=120;
-			alpha=0.20;
+			width=d100;
+			length=d120;
+			alpha=0.15 d-0.04;
 			alphadecay=0.01;
 			color=1.0, 0.8, 0.5;
 		}
@@ -1632,6 +1618,121 @@
 		ground=1;
   		count=3; 
 	}
+}
+
+
+[RADIANTWAVEBLAST1]
+{
+	[groundflash]
+	{
+		flashSize = 160;
+		flashAlpha = 0.4;
+		circleGrowth = 0;
+		circleAlpha = 0.25;
+		ttl = 6;
+		color = 1.0, 0.8, 0.5;
+
+		air=0;
+		water=1;
+		ground=1;
+  		count=1; 
+	}
+	[_blast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;dir=dir;damage=1 r0.1;explosionGenerator=custom:RADIANTWAVEBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+[RADIANTWAVEBLAST2]
+{
+	[groundflash]
+	{
+		flashSize = 170;
+		flashAlpha = 0.37;
+		circleGrowth = 0;
+		circleAlpha = 0.24;
+		ttl = 6;
+		color = 1.0, 0.8, 0.5;
+
+		air=0;
+		water=1;
+		ground=1;
+  		count=1; 
+	}
+
+	[_blast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;dir=dir;damage=1.2 r0.12;explosionGenerator=custom:RADIANTWAVEBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+[RADIANTWAVEBLAST3]
+{
+	[groundflash]
+	{
+		flashSize = 180;
+		flashAlpha = 0.34;
+		circleGrowth = 0;
+		circleAlpha = 0.23;
+		ttl = 5;
+		color = 1.0, 0.8, 0.5;
+
+		air=0;
+		water=1;
+		ground=1;
+  		count=1; 
+	}
+
+	[_blast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;dir=dir;damage=1.4 r0.14;explosionGenerator=custom:RADIANTWAVEBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+[RADIANTWAVEBLAST4]
+{
+	[groundflash]
+	{
+		flashSize = 190;
+		flashAlpha = 0.31;
+		circleGrowth = 0;
+		circleAlpha = 0.22;
+		ttl = 5;
+		color = 1.0, 0.8, 0.5;
+
+		air=0;
+		water=1;
+		ground=1;
+  		count=1; 
+	}
+
+	[_blast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;dir=dir;damage=1.6 r0.16;explosionGenerator=custom:RADIANTWAVEBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+[RADIANTWAVEBLAST5]
+{
+	[groundflash]
+	{
+		flashSize = 200;
+		flashAlpha = 0.28;
+		circleGrowth = 0;
+		circleAlpha = 0.2;
+		ttl = 5;
+		color = 1.0, 0.8, 0.5;
+
+		air=0;
+		water=1;
+		ground=1;
+  		count=1; 
+	}
+
+	[_blast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;dir=dir;damage=1.8 r0.18;explosionGenerator=custom:RADIANTWAVEBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
+}
+[RADIANTWAVEBLAST6]
+{
+	[groundflash]
+	{
+		flashSize = 210;
+		flashAlpha = 0.25;
+		circleGrowth = 0;
+		circleAlpha = 0.18;
+		ttl = 5;
+		color = 1.0, 0.8, 0.5;
+
+		air=0;
+		water=1;
+		ground=1;
+  		count=1; 
+	}
+
+	[_blast]{class=CExpGenSpawner;[properties]{pos=0,0,0;delay=0;dir=dir;damage=2 r0.2;explosionGenerator=custom:RADIANTWAVEBLAST;}air=1;ground=1;water=1;underwater=1;unit=1;count=1;}
 }
 
 

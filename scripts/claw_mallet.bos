@@ -1,0 +1,95 @@
+#define TA			// This is a TA script
+
+#include "sfxtype.h"
+#include "exptype.h"
+
+#define SPEEDUP_FACTOR 	80
+
+ #define HEADING_TOLERANCE	<15>
+#define PITCH_TOLERANCE		<15>
+
+
+piece  gp, base, flare, turret, sleeve, barrel,base2,t1,t2,t1cover,t2cover;
+
+#include "aimhelper1.h"
+
+// Signal definitions
+#define SIG_AIM				2
+
+#include "tankthreads.h"
+
+
+RockUnit(anglex, anglez) {
+	turn base to x-axis anglex speed <50.005495>;
+	turn base to z-axis <0>-anglez speed <50.005495>;
+	wait-for-turn base around z-axis;
+	wait-for-turn base around x-axis;
+	turn base to z-axis <0.000000> speed <20.000000>;
+	turn base to x-axis <0.000000> speed <20.000000>;
+}
+
+HitByWeapon(Func_Var_1, Func_Var_2) {
+	turn base to z-axis Func_Var_2 speed <105.016484>;
+	turn base to x-axis Func_Var_1 speed <105.016484>;
+	wait-for-turn base around z-axis;
+	wait-for-turn base around x-axis;
+	turn base to z-axis <0.000000> speed <30.005495>;
+	turn base to x-axis <0.000000> speed <30.005495>;
+}
+
+Create() {
+	turn sleeve to x-axis <-60> now;
+	call-script stopAimHelper1(<1000>,<1000>);
+	start-script AnimateTracks();
+}
+
+RestoreAfterDelay() {
+	sleep DEFAULT_WEAPON_RESTORE_DELAY;
+	call-script stopAimHelper1(<70>,<50>);
+	turn turret to y-axis <0.000000> speed <70>;
+	turn sleeve to x-axis <-60.000000> speed <70>;
+}
+
+AimPrimary(heading, pitch) {
+	call-script updateAimHelper1(heading,pitch,<90>,<90>,HEADING_TOLERANCE,PITCH_TOLERANCE);
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
+	turn turret to y-axis heading speed <90.000000>;
+	turn sleeve to x-axis <0.000000> - pitch speed <90.000000>;
+	if (!aimReady1) {
+		wait-for-turn turret around y-axis;
+		wait-for-turn sleeve around x-axis;
+	}
+	start-script RestoreAfterDelay();
+	return (1);
+}
+
+FirePrimary() {
+	move barrel to z-axis [-3.000000] now;
+	emit-sfx 1024 from flare;
+	sleep 150;
+	move barrel to z-axis [0.000000] speed [9.000000];
+}
+
+AimFromPrimary(piecenum) {
+	piecenum = turret;
+}
+
+QueryPrimary(piecenum) {
+	piecenum = flare;
+}
+
+Killed(severity, corpsetype) {
+	if( severity <= 50 ) {
+		explode turret type SHATTER;
+		explode barrel type SHATTER;
+		return (1);
+	}
+
+	explode base type SHATTER;
+	explode turret type SHATTER;
+	explode sleeve type SHATTER;
+	explode barrel type SHATTER;
+	
+	return (2);
+}

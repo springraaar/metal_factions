@@ -1,0 +1,120 @@
+[UNITINFO]
+{
+	//************************************************************
+	//  Unit Description
+	//********************
+	side=Gear;
+	name=Oppressor;
+	description=Heavy Ground Attack Aircraft;
+	iconType=airbomber;
+
+	//************************************************************
+	//  Categories
+	//**************
+	category=GEAR VTOL LEVEL2 WEAPON NOTSUB;
+
+	//************************************************************
+	//  External Specs
+	//******************
+	unitName=gear_oppressor;
+	objectName=gear_oppressor.3do;
+	buildPic=gear_oppressor.png;
+	soundCategory=GEAR_AIRBIG;
+
+	//************************************************************
+	//  Health/Cost/Size
+	//********************
+	maxDamage=4000;
+	footprintx=5;
+	footprintz=5;
+
+	//************************************************************
+	//  Resources
+	//*************
+	energyMake=0;
+	energyUse=0;
+
+	//************************************************************
+	//  Building
+	//************
+
+	//************************************************************
+	//  Constructor
+	//***************
+
+	//************************************************************
+	//  Abilities
+	//*************
+	canAttack=1;
+	canDropFlare=0;
+	canFly=1;
+	canGuard=1;
+	canMove=1;
+	canPatrol=1;
+	canStop=1;
+	stealth=0;
+
+	//************************************************************
+	//  Movement
+	//************
+	acceleration=0.13;
+	brakeRate=0.1;
+	maxVelocity=4.2;
+	
+	cruiseAlt=130;
+	turnRate=550;
+
+
+	//************************************************************
+	//  Sight/Radar/Sonar
+	//*********************
+	sightDistance=600;
+	radarDistance=0;
+
+	//************************************************************
+	//  Weapons
+	//***********
+	weapon1=gear_oppressor_rocket;
+	weapon2=gear_oppressor_laser;
+	onlytargetcategory1=NOTAIR;
+	badTargetCategory2=NOTAIR;
+	explodeAs=HBOMBER;
+	selfDestructAs=HBOMBER;
+	weaponMainDir1=0 -1 1;
+	maxAngleDif1=90; 
+	weaponMainDir2=0 1 0;
+	maxAngleDif1=200;    
+
+
+	//************************************************************
+	//  Orders
+	//**********
+
+	//************************************************************
+	//  Miscellaneous
+	//*****************
+	hoverAttack=1;
+	airStrafe=1;
+	airHoverFactor=-1;
+	bankingAllowed=0;
+	CanLoopbackAttack=0;
+	collide=1;
+	collisionVolumeType = box;
+	collisionVolumeScales =60 20 55;
+	collisionVolumeOffsets = 0 0 0;
+	collisionVolumeTest = 1;
+
+	[CustomParams]
+	{
+		builtBy=gear_adv_aircraft_plant;
+	}
+	[SFXTypes]
+	{
+		explosionGenerator0=custom:GLOWSML;
+		explosionGenerator1=custom:rocketflaresml;
+	}
+	buildCostEnergy=14487;//#AUTO#
+	buildCostMetal=2897;//#AUTO#
+	buildTime=34529;//#AUTO#
+	mass=982;//#AUTO#
+}

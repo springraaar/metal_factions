@@ -10,6 +10,7 @@ local SIZE_MULT = 1.05
 
 local _iconTypes = {
 	default = {
+		bitmap="icons/circle.tga",
 		size=REF_SIZE,
 		radiusadjust=false,
 		distance=1

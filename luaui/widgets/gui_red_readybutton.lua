@@ -365,6 +365,15 @@ function widget:GameSetup(state, ready, playerStates)
 		mainPanel.label.caption = ""
 		mainPanel.labelStarting.caption = startingStrArr[1]
 		Spring.PlaySoundFile(STARTING_SOUND, 0.5)
+		
+		-- slow camera transition to start position as it's about to start
+		local x,y,z = Spring.GetTeamStartPosition(spGetMyTeamID())
+		if x and x > 0  then
+			Spring.SetCameraTarget(x, y, z)
+			state = Spring.GetCameraState()
+			state.height = 2300
+			Spring.SetCameraState(state,3)
+		end
 	end
 	if gameStarting then
 		startingSeconds = startingSeconds + Spring.GetLastUpdateSeconds()

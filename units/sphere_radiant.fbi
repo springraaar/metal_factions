@@ -85,7 +85,8 @@
 	{
 		builtBy=sphere_sphere_factory;
 		energyCostMoving=125;
-		tip=Requires 125E/s to move;
+		tip=Requires 125E/s to move. Wave deals 200-400(M) dmg/s to units along its path;
+		extraWeaponEval=5;
 		optional=1;
 	}
 	[SFXTypes]
@@ -95,8 +96,8 @@
 		explosionGenerator2=custom:radiantglow2;
 		explosionGenerator3=custom:redflare;
 	}
-	buildCostEnergy=15167;//#AUTO#
-	buildCostMetal=3033;//#AUTO#
-	buildTime=36148;//#AUTO#
-	mass=4617;//#AUTO#
+	buildCostEnergy=16230;//#AUTO#
+	buildCostMetal=3246;//#AUTO#
+	buildTime=38681;//#AUTO#
+	mass=4731;//#AUTO#
 }

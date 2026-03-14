@@ -3,12 +3,12 @@
 #include "sfxtype.h"
 #include "exptype.h"
 
-#define HEADING_TOLERANCE	<30>
+#define HEADING_TOLERANCE	<20>
 #define PITCH_TOLERANCE		<20>
 
-piece  base, b2, weapon1, weapon2, weapon3, weapon4, firept1, firept2, firept3, firept4, turret, sleeve, barrel, flare, lwing, rwing, center,c2, lweapon,rweapon,ljet,rjet,ljet2,rjet2,tbase, lbody,rbody, rw2,lw2,ljp,rjp,ljp2,rjp2;
+piece  base, b2, lf1,lf2,lf3,rf1,rf2,rf3, turret, sleeve, stand,slholder,barrel1, flare1, barrel2,flare2, lwing, rwing, ldoor,rdoor,ljet,rjet,ljet2,rjet2,lbody,rbody, rw2,lw2,ljp,rjp,ljp2,rjp2,jp1,jp2,jp3,jp4;
 
-static-var  gun_1, gun_2, bAiming;
+static-var  gun_1, gun_2, isOpen, bAiming, isFlying;
 
 #include "aimhelper1.h"
 
@@ -17,41 +17,115 @@ static-var  gun_1, gun_2, bAiming;
 #define SIG_AIM_2			4
 
 
-Create()
-{
+
+open() {
+	if(!isOpen)	{
+		set ARMORED to 0;
+		turn rdoor to z-axis <-90.000000> speed <270.000000>;
+		turn ldoor to z-axis <90.000000> speed <270.000000>;
+		wait-for-turn ldoor around z-axis;
+
+		move rdoor to y-axis  [7.000000] speed [60.000000];
+		move ldoor to y-axis  [7.000000] speed [60.000000];
+		move stand to y-axis [-11.500000] speed [70.000000];
+		//move slholder to y-axis [0.000000] speed [38.000000];
+		wait-for-move ldoor along y-axis;
+		wait-for-move stand along y-axis;
+		//wait-for-move slholder along y-axis;
+
+		turn slholder to x-axis <0.000000> speed <300.000000>;
+		wait-for-turn slholder around x-axis;
+
+		move barrel1 to z-axis [0.000000] speed [26.000000];
+		move barrel2 to z-axis [0.000000] speed [26.000000];
+		wait-for-move barrel1 along z-axis;
+
+		isOpen = TRUE;
+	}
+	return (0);
+}
+
+close() {
+	if (isOpen) {
+		isOpen = FALSE;
+		turn turret to y-axis <0.000000> speed <500.000000>;
+		move barrel1 to z-axis [-8.000000] speed [44.000000];
+		move barrel2 to z-axis [-8.000000] speed [44.000000];
+		wait-for-turn turret around y-axis;
+		wait-for-move barrel1 along z-axis;
+
+		//turn slholder to x-axis <90> speed <500.000000>;
+		//wait-for-turn slholder around x-axis;
+
+		move stand to y-axis [0.000000] speed [48.000000];
+		//move slholder to y-axis [5.000000] speed [48.000000];
+		wait-for-move stand along y-axis;
+		//wait-for-move slholder along y-axis;
+
+		move rdoor to y-axis  [0.000000] speed [40.000000];
+		move ldoor to y-axis  [0.000000] speed [40.000000];
+		wait-for-move ldoor along y-axis;
+	
+		turn rdoor to z-axis <0.000000> speed <180.000000>;
+		turn ldoor to z-axis <0.000000> speed <180.000000>;
+		wait-for-turn ldoor around z-axis;
+		
+		set ARMORED to 1;
+	}
+	return (0);
+}
+
+Create() {
 	gun_1 = 0;
 	gun_2 = 0;
+	//move slholder to y-axis [5.000000] now;
+	move barrel1 to z-axis [-8.000000] now;
+	move barrel2 to z-axis [-8.000000] now;
+	isOpen = FALSE;
+	set ARMORED to 1;
+	isFlying = FALSE;
+	start-script close();	
+	isOpen = FALSE;
 	bAiming = FALSE;
 	call-script stopAimHelper1(<1000>,<1000>);
 }
 
-RestoreAfterDelay()
-{
+RestoreAfterDelay() {
 	sleep DEFAULT_WEAPON_RESTORE_DELAY;
 	call-script stopAimHelper1(<150>,<150>);
 	turn turret to y-axis <0.000000> speed <150.000000>;
 	turn sleeve to x-axis <0.000000> speed <150.000000>;
 	bAiming = FALSE;
+	sleep 5000;
+	call-script close();
 }
 
-AimFromSecondary(piecenum)
-{
+AimFromPrimary(piecenum) {
 	piecenum = turret;
 }
 
-QuerySecondary(piecenum)
-{
-	piecenum = flare;
+QueryPrimary(piecenum) {
+	if (gun_1 == 0) {
+		piecenum = flare1;
+	} else {
+		piecenum = flare2;
+	}
 }
 
-AimSecondary(heading, pitch)
-{
-	call-script updateAimHelper1(heading,pitch,<400>,<400>,HEADING_TOLERANCE,PITCH_TOLERANCE);	
-	signal SIG_AIM_2;
-	set-signal-mask SIG_AIM_2;
+AimPrimary(heading, pitch) {
+	if (!isFlying) {
+		return (0);
+	}
+	if(!isOpen)	{
+		call-script open();
+	}
+
+	call-script updateAimHelper1(heading,pitch,<200>,<200>,HEADING_TOLERANCE,PITCH_TOLERANCE);	
+	signal SIG_AIM;
+	set-signal-mask SIG_AIM;
 	bAiming = TRUE;
-	turn turret to y-axis heading speed <400.000000>;
-	turn sleeve to x-axis <0.000000>-pitch speed <400.000000>;
+	turn turret to y-axis heading speed <200.000000>;
+	turn sleeve to x-axis <0.000000>-pitch speed <200.000000>;
 	if (!aimReady1 )
 	{
 		wait-for-turn sleeve around x-axis;
@@ -61,108 +135,93 @@ AimSecondary(heading, pitch)
 	return (1);
 }
 
-FireSecondary()
-{
-	if( gun_2 == 0 )
-	{
-		emit-sfx 1024+0 from flare;
+Shot1() {
+	if( gun_1 == 0 ) {
+		move barrel1 to z-axis [-8] now;
+		emit-sfx 1024+0 from flare1;
 		sleep 100;
-		turn barrel to z-axis <120.000000> speed <720.000000>;
-		gun_2 = 1;
-		return 0 ;
-	}
-	if( gun_2 == 1 )
-	{
-		emit-sfx 1024+0 from flare;
-		sleep 100;
-		turn barrel to z-axis <240.000000> speed <720.000000>;
-		gun_2 = 2;
-		return 0 ;
-	}
-	if( gun_2 == 2 )
-	{
-		emit-sfx 1024+0 from flare;
-		sleep 100;
-		turn barrel to z-axis <360.000000> speed <720.000000>;
-		gun_2 = 0;
-		return 0 ;
-	}
-
-}
-
-
-
-QueryPrimary(piecenum)
-{
-	if(gun_1 == 0)
-	{
-		piecenum = firept1;
-		return 0;
-	}
-	if(gun_1 == 1)
-	{
-		piecenum = firept2;
-		return 0;
-	}
-	if(gun_1 == 2)
-	{
-		piecenum = firept3;
-		return 0;
-	}
-	if(gun_1 == 3)
-	{
-		piecenum = firept4;
-		return 0;
-	}	
-}
-
-AimFromPrimary(piecenum)
-{
-	piecenum = base;
-}
-
-Shot1()
-{
-	if(gun_1 == 0)
-	{
-		emit-sfx 1024+1 from firept1;
+		move barrel1 to z-axis [0] speed [20];
 		gun_1 = 1;
-		return 0;
-	}
-	if(gun_1 == 1)
-	{
-		emit-sfx 1024+1 from firept2;
-		gun_1 = 2;
-		return 0;
-	}
-	if(gun_1 == 2)
-	{
-		emit-sfx 1024+1 from firept3;
-		gun_1 = 3;
-		return 0;
-	}
-	if(gun_1 == 3)
-	{
-		emit-sfx 1024+1 from firept4;
+	} else {
+		move barrel2 to z-axis [-8] now;
+		emit-sfx 1024+0 from flare2;
+		sleep 100;
+		move barrel2 to z-axis [0] speed [20];
 		gun_1 = 0;
-		return 0;
-	}	
+	}
+	return(0);	
 }
 
-AimPrimary()
-{
-	signal SIG_AIM;
-	set-signal-mask SIG_AIM;
-	
-	bAiming = TRUE;
-	start-script RestoreAfterDelay();
+
+
+
+
+AimFromSecondary(piecenum) {
+	piecenum = b2;
+}
+
+QuerySecondary(piecenum) {
+	if (gun_2 == 0) {
+		piecenum = lf1;
+	} else	if (gun_2 == 1) {
+ 		piecenum = rf3;
+	} else	if (gun_2 == 2) {
+ 		piecenum = lf2;
+	} else	if (gun_2 == 3) {
+ 		piecenum = rf2;
+	} else	if (gun_2 == 4) {
+ 		piecenum = lf3;
+	} else	if (gun_2 == 5) {
+ 		piecenum = rf1;
+	}
+}
+
+AimSecondary(heading, pitch) {
 	return (1);
+}
+
+Shot2() {
+	if( gun_2 == 0 ) {
+		emit-sfx 1024+1 from lf1;
+		sleep 30;
+		gun_2 = 1;
+	} else if( gun_2 == 1 ) {
+		emit-sfx 1024+1 from rf3;
+		sleep 30;
+		gun_2 = 2;
+	} else if( gun_2 == 2 ) {
+		emit-sfx 1024+1 from lf2;
+		sleep 30;
+		gun_2 = 3;
+	} else if( gun_2 == 3 ) {
+		emit-sfx 1024+1 from rf2;
+		sleep 30;
+		gun_2 = 4;
+	} else if( gun_2 == 4 ) {
+		emit-sfx 1024+1 from lf3;
+		sleep 30;
+		gun_2 = 5;
+	} else if( gun_2 == 5 ) {
+		emit-sfx 1024+1 from rf1;
+		sleep 30;
+		gun_2 = 0;
+	}
+	return(0);	
+}
+
+Activate() {
+	isFlying = TRUE;
+	return (0);
+}
+
+Deactivate() {
+	isFlying = FALSE;
+	return (0);
 }
 
 
 Killed(severity, corpsetype)
 {
-	explode center type SHATTER | BITMAP5;
 	explode lw2 type SHATTER | BITMAP5;
 	explode rw2 type SHATTER | BITMAP5;
 	explode lbody type SHATTER | BITMAP5;

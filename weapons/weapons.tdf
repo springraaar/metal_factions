@@ -1148,6 +1148,7 @@
 	craterMult=0;
 	paralyzer=1;
 	paralyzeTime=6;
+	flameGFXTime=1.05;
 	[CUSTOMPARAMS]
 	{
 		hitPower=1;
@@ -2115,7 +2116,7 @@
 	energyPerShot=0;
 	accuracy=300;
 	turret=1;
-	range=1330;
+	range=1350;
 	reloadTime=3.1;
 	weaponVelocity=400;
 	areaOfEffect=85;
@@ -3647,6 +3648,7 @@
 		hitPower=3;
 		targets=SURFACE,WATER;
 		drawImpactIndicator=1;
+		lrrtype=premium;
 	}
 	[DAMAGE]
 	{
@@ -3701,6 +3703,7 @@
 		hitPower=3;
 		targets=SURFACE,WATER;
 		drawImpactIndicator=1;
+		lrrtype=premium;
 	}
 	[DAMAGE]
 	{
@@ -3755,6 +3758,7 @@
 		hitPower=3;
 		targets=SURFACE,WATER;
 		drawImpactIndicator=1;
+		lrrtype=premium;
 	}
 	[DAMAGE]
 	{
@@ -3809,6 +3813,7 @@
 		hitPower=3;
 		targets=SURFACE,WATER;
 		drawImpactIndicator=1;
+		lrrtype=premium;
 	}
 	[DAMAGE]
 	{
@@ -4749,6 +4754,7 @@
 		hitPower=3;
 		targets=SURFACE;
 		drawImpactIndicator=1;
+		lrrtype=slow;
 	}
 	[DAMAGE]
 	{
@@ -11629,7 +11635,7 @@
 	energyPerShot=0;
 	accuracy=300;
 	turret=1;
-	range=1330;
+	range=1350;
 	reloadTime=3;
 	weaponVelocity=400;
 	areaOfEffect=85;
@@ -16339,13 +16345,101 @@
 		armor_light=4000.00;//#AUTO#
 	}
 }
-[gear_stratos_rocket]
+[gear_stratos_cannon]
+{
+	name=Plasma Cannon;
+	weaponType=Cannon;
+	turret=1;
+	range=700;
+	reloadTime=2.5;
+	cegTag=PLASMATRAIL1;
+	texture1=cannon;
+	explosionGenerator=custom:STDBLASTWRAPPER;
+	weaponVelocity=390;
+	areaOfEffect=90;
+	soundStart=cannon4;
+	soundHit=xplomed2;
+	tolerance=4000;
+	burst=2;
+	burstRate=0.3;
+	accuracy=0;
+	movingAccuracy=0;
+	sprayAngle=400;
+	size=3.2;
+	rgbColor=0.7 0.6 0.3;
+	stages=3;
+  	separation=0.5;
+  	alphaDecay=0.3;
+  	sizeDecay=-0.1;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	heightBoostFactor=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		reaimTime = 1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR2;
+	}
+	[DAMAGE]
+	{
+		default=300;
+		armor_heavy=300.00;//#AUTO#
+		armor_medium=300.00;//#AUTO#
+		armor_light=300.00;//#AUTO#
+	}
+}
+[gear_stratos_missile]
+{
+	name=Missiles;
+	weaponType=StarburstLauncher;
+	explosionGenerator=custom:ROCKETSMLBLASTWRAPPER;
+	model=weapon_smlmsl.3do;
+	cegTag=SMLROCKETTRAILSB;
+	range=700;
+	reloadTime=2.0;
+	weapontimer=0.3;
+	flightTime=6;
+	weaponVelocity=700;
+	startVelocity=280;
+	weaponAcceleration=210;
+	burst=2;
+	burstRate=0.2;
+	turnRate=33000;
+	areaOfEffect=48;
+	metalPerShot=0;
+	soundStart=misfire1;
+	soundHit=mishit1;
+	fireStarter=70;
+	tracks=1;
+	fixedLauncher=1;
+	smokeTrail=1;
+	texture1=null;
+	tolerance=9000;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=1;
+		aaRangeBoost=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR;
+	}
+	[DAMAGE]
+	{
+		default=130;
+		armor_heavy=32.50;//#AUTO#
+		armor_medium=65.00;//#AUTO#
+		armor_light=130.00;//#AUTO#
+	}
+}
+[gear_oppressor_rocket]
 {
 	name=Rockets;
 	weaponType=MissileLauncher;
 	model=weapon_rocket3.3do;
 	turret=0;
-	range=480;
+	range=470;
 	cylinderTargeting=2;
 	reloadTime=1.7;
 	burst=2;
@@ -16388,13 +16482,13 @@
 		armor_light=200.00;//#AUTO#
 	}
 }
-[gear_stratos_laser]
+[gear_oppressor_laser]
 {
 	name=Rapid-Fire Laser;
 	weaponType=BeamLaser;
 	explosionGenerator=custom:REDLASERBLASTWRAPPER;
 	turret=1;
-	range=480;
+	range=470;
 	minIntensity=1.0;
 	beamTime=0.05;
 	thickness=2.123;
@@ -17378,6 +17472,44 @@
 		armor_heavy=200.00;//#AUTO#
 		armor_medium=200.00;//#AUTO#
 		armor_light=200.00;//#AUTO#
+	}
+}
+[claw_ballista_rocket]
+{
+	name=Heavy Rockets;
+	weaponType=MissileLauncher;
+	trajectoryHeight=0.6;
+	turret=1;
+	model=weapon_clawbigrocket.3do;
+	range=1450;
+	accuracy=300;
+	reloadTime=5.5;
+	flightTime=3.75;
+	turnRate=1000;
+	wobble=1700;
+	weaponVelocity=450;
+	cegTag=ROCKETTRAIL2;
+	explosionGenerator=custom:ROCKETBLASTWRAPPER;
+	areaOfEffect=100;
+	soundStart=MISLHVY3;
+	soundHit=xplomed2;
+	tolerance=3000;
+	startVelocity=300;
+	weaponAcceleration=50;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		expDmgScaling=1;
+		targets=SURFACE;
+	}
+	[DAMAGE]
+	{
+		default=600;
+		armor_heavy=600.00;//#AUTO#
+		armor_medium=600.00;//#AUTO#
+		armor_light=600.00;//#AUTO#
 	}
 }
 [claw_havoc_bomb]
@@ -21908,6 +22040,48 @@
 		armor_heavy=650.00;//#AUTO#
 		armor_medium=650.00;//#AUTO#
 		armor_light=650.00;//#AUTO#
+	}
+}
+[claw_mallet_cannon]
+{
+	name=Plasma Mortar;
+	weaponType=Cannon;
+	turret=1;
+	range=700;
+	highTrajectory=1;
+	cegTag=PLASMATRAIL2;
+	texture1=cannon;
+	explosionGenerator=custom:STDBLASTWRAPPER;
+	reloadTime=3.4;
+	weaponVelocity=335;
+	areaOfEffect=90;
+	accuracy=100;
+	movingAccuracy=500;
+	soundStart=cannon4;
+	soundHit=xplomed2;
+	tolerance=3000;
+	size=3.2;
+	rgbColor=0.7 0.6 0.3;
+	stages=3;
+  	separation=0.5;
+  	alphaDecay=0.3;
+  	sizeDecay=-0.1;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=3;
+		reaimTime=1;
+		expDmgScaling=1;
+		targets=SURFACE;
+	}
+	[DAMAGE]
+	{
+		default=250;
+		group_invincible=1;
+		armor_heavy=250.00;//#AUTO#
+		armor_medium=250.00;//#AUTO#
+		armor_light=250.00;//#AUTO#
 	}
 }
 [claw_mega_cannon]
@@ -28646,37 +28820,28 @@
 }
 [sphere_radiant_wave]
 {
-	name=Radiant Wave Blaster;
-	weaponType=Cannon;
-	cegTag=RADIANTWAVE;
-	explosionGenerator=custom:RADIANTWAVEBLAST;
-	energyPerShot=500;
+	name=Radiant Wave;
+	weaponType=Flame;
+	energyPerShot=600;
 	turret=1;
-	range=530;
+	range=550;
 	noSelfDamage=1;
 	texture1=null;
 	texture2=null;
 	texture3=null;
 	texture4=null;
-	reloadTime=2;
-	weaponVelocity=700;
-	areaOfEffect=240;
+	reloadTime=2.5;
+	weaponVelocity=530;
+	areaOfEffect=185;
 	soundStart=radiantwavefire;
-	soundStart=lashit2;
-	soundTrigger=0;
-	tolerance=6000;
-	projectiles=12;
-	sprayAngle=6000;
+	tolerance=3000;
 	explosionScar=0;
-	collisionSize=70;
-	size=0.0;	
-	sizeGrowth=0.0;
+	collisionSize=90;
+	size=1.0;	
+	sizeGrowth=1.0;
 	colorMap=0 1 1 0.0  0.0 0.1 0.1 0.0;
-	noExplode=0;
-	burnBlow=1;
+	noexplode=1;
 	interceptedByShieldType=1;
-	groundBounce=2;
-	bounceRebound=0.1;
 	avoidFeature=0;
 	avoidGround=0;
 	collideFriendly=1;
@@ -28684,21 +28849,279 @@
 	impulseFactor=0.01;
 	craterMult=0;
 	paralyzer=0;
+	flameGFXTime=1.05;
 	[CUSTOMPARAMS]
 	{
 		hitPower=2;
 		reaimTime=1;
-		aaRangeBoost=1;
 		expDmgScaling=1;
 		targets=SURFACE,AIR;
-		scar=1w;
+		noScar=1;
 	}
 	[DAMAGE]
 	{
-		default=50;
-		armor_heavy=25.00;//#AUTO#
-		armor_medium=50.00;//#AUTO#
-		armor_light=50.00;//#AUTO#
+		default=4;
+		armor_heavy=2.00;//#AUTO#
+		armor_medium=4.00;//#AUTO#
+		armor_light=4.00;//#AUTO#
+	}
+}
+[sphere_radiant_wave_effect1]
+{
+	name=Radiant Wave Effect;
+	weaponType=Cannon;
+	turret=1;
+	range=10;
+	noSelfDamage=1;
+	reloadTime=0.55;
+	weaponVelocity=999;
+	areaOfEffect=160;
+	tolerance=3000;
+	burnBlow=1;
+	explosionGenerator=custom:RADIANTWAVEBLAST1;
+	size=0;
+	rgbColor=1 1 1;
+	stages=0;
+  	separation=0.0;
+  	alphaDecay=0.8;
+  	sizeDecay=-2;
+  	craterMult=0;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	avoidGround=0;
+	collideFriendly=1;
+	avoidFriendly=0;
+	impulseFactor=0.01;
+	paralyzer=0;
+	explosionScar=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		expDmgScaling=1;
+		noScar=1;
+		shockwave=2;
+	}
+	[DAMAGE]
+	{
+		default=110;
+		armor_heavy=55.00;//#AUTO#
+		armor_medium=110.00;//#AUTO#
+		armor_light=110.00;//#AUTO#
+	}
+}
+[sphere_radiant_wave_effect2]
+{
+	name=Radiant Wave Effect;
+	weaponType=Cannon;
+	turret=1;
+	range=10;
+	noSelfDamage=1;
+	reloadTime=0.55;
+	weaponVelocity=999;
+	areaOfEffect=170;
+	tolerance=3000;
+	burnBlow=1;
+	explosionGenerator=custom:RADIANTWAVEBLAST2;
+	size=0;
+	rgbColor=1 1 1;
+	stages=0;
+  	separation=0.0;
+  	alphaDecay=0.8;
+  	sizeDecay=-2;
+  	craterMult=0;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	avoidGround=0;
+	collideFriendly=1;
+	avoidFriendly=0;
+	impulseFactor=0.01;
+	paralyzer=0;
+	explosionScar=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		expDmgScaling=1;
+		noScar=1;
+		shockwave=2;
+	}
+	[DAMAGE]
+	{
+		default=100;
+		armor_heavy=50.00;//#AUTO#
+		armor_medium=100.00;//#AUTO#
+		armor_light=100.00;//#AUTO#
+	}
+}
+[sphere_radiant_wave_effect3]
+{
+	name=Radiant Wave Effect;
+	weaponType=Cannon;
+	turret=1;
+	range=10;
+	noSelfDamage=1;
+	reloadTime=0.55;
+	weaponVelocity=999;
+	areaOfEffect=180;
+	tolerance=3000;
+	burnBlow=1;
+	explosionGenerator=custom:RADIANTWAVEBLAST3;
+	size=0;
+	rgbColor=1 1 1;
+	stages=0;
+  	separation=0.0;
+  	alphaDecay=0.8;
+  	sizeDecay=-2;
+  	craterMult=0;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	avoidGround=0;
+	collideFriendly=1;
+	avoidFriendly=0;
+	impulseFactor=0.01;
+	paralyzer=0;
+	explosionScar=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		expDmgScaling=1;
+		noScar=1;
+		shockwave=2;
+	}
+	[DAMAGE]
+	{
+		default=85;
+		armor_heavy=42.50;//#AUTO#
+		armor_medium=85.00;//#AUTO#
+		armor_light=85.00;//#AUTO#
+	}
+}
+[sphere_radiant_wave_effect4]
+{
+	name=Radiant Wave Effect;
+	weaponType=Cannon;
+	turret=1;
+	range=10;
+	noSelfDamage=1;
+	reloadTime=0.55;
+	weaponVelocity=999;
+	areaOfEffect=190;
+	tolerance=3000;
+	burnBlow=1;
+	explosionGenerator=custom:RADIANTWAVEBLAST4;
+	size=0;
+	rgbColor=1 1 1;
+	stages=0;
+  	separation=0.0;
+  	alphaDecay=0.8;
+  	sizeDecay=-2;
+  	craterMult=0;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	avoidGround=0;
+	collideFriendly=1;
+	avoidFriendly=0;
+	impulseFactor=0.01;
+	paralyzer=0;
+	explosionScar=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		expDmgScaling=1;
+		noScar=1;
+		shockwave=2;
+	}
+	[DAMAGE]
+	{
+		default=75;
+		armor_heavy=37.50;//#AUTO#
+		armor_medium=75.00;//#AUTO#
+		armor_light=75.00;//#AUTO#
+	}
+}
+[sphere_radiant_wave_effect5]
+{
+	name=Radiant Wave Effect;
+	weaponType=Cannon;
+	turret=1;
+	range=10;
+	noSelfDamage=1;
+	reloadTime=0.55;
+	weaponVelocity=999;
+	areaOfEffect=200;
+	tolerance=3000;
+	burnBlow=1;
+	explosionGenerator=custom:RADIANTWAVEBLAST5;
+	size=0;
+	rgbColor=1 1 1;
+	stages=0;
+  	separation=0.0;
+  	alphaDecay=0.8;
+  	sizeDecay=-2;
+  	craterMult=0;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	avoidGround=0;
+	collideFriendly=1;
+	avoidFriendly=0;
+	impulseFactor=0.01;
+	paralyzer=0;
+	explosionScar=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		expDmgScaling=1;
+		noScar=1;
+		shockwave=2;
+	}
+	[DAMAGE]
+	{
+		default=60;
+		armor_heavy=30.00;//#AUTO#
+		armor_medium=60.00;//#AUTO#
+		armor_light=60.00;//#AUTO#
+	}
+}
+[sphere_radiant_wave_effect6]
+{
+	name=Radiant Wave Effect;
+	weaponType=Cannon;
+	turret=1;
+	range=10;
+	noSelfDamage=1;
+	reloadTime=0.55;
+	weaponVelocity=999;
+	areaOfEffect=210;
+	tolerance=3000;
+	burnBlow=1;
+	explosionGenerator=custom:RADIANTWAVEBLAST6;
+	size=0;
+	rgbColor=1 1 1;
+	stages=0;
+  	separation=0.0;
+  	alphaDecay=0.8;
+  	sizeDecay=-2;
+  	craterMult=0;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	avoidGround=0;
+	collideFriendly=1;
+	avoidFriendly=0;
+	impulseFactor=0.01;
+	paralyzer=0;
+	explosionScar=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		expDmgScaling=1;
+		noScar=1;
+		shockwave=2;
+	}
+	[DAMAGE]
+	{
+		default=45;
+		armor_heavy=22.50;//#AUTO#
+		armor_medium=45.00;//#AUTO#
+		armor_light=45.00;//#AUTO#
 	}
 }
 [sphere_magnetar_blast]
@@ -28840,6 +29263,45 @@
 		armor_heavy=20.00;//#AUTO#
 		armor_medium=40.00;//#AUTO#
 		armor_light=80.00;//#AUTO#
+	}
+}
+[sphere_outburst_bomb]
+{
+	name=EWB Bombs;
+	weaponType=Cannon;
+	cegTag=BOMBTRAILBIG;
+	model=weapon_ewbbomb;
+	explosionGenerator=custom:TSUNAMIBLASTWRAPPER;
+  	craterMult=0.125;
+	turret=1;
+	range=440;
+	reloadTime=7;
+	projectiles=1;
+	weaponVelocity=340;
+	energyPerShot=200;
+	areaOfEffect=190;
+	soundStart=bombcannon;
+	soundHit=ewbboom;
+	tolerance=5000;
+	accuracy=200;
+	movingAccuracy=400;
+	burnBlow=1;
+	interceptedByShieldType=1;
+	avoidFeature=0;
+	[CUSTOMPARAMS]
+	{
+		hitPower=2;
+		reaimTime=1;
+		expDmgScaling=1;
+		targets=SURFACE,AIR2;
+	}
+	[DAMAGE]
+	{
+		default=500;
+		group_invincible=1;
+		armor_heavy=250.00;//#AUTO#
+		armor_medium=500.00;//#AUTO#
+		armor_light=500.00;//#AUTO#
 	}
 }
 [ESTOR_BUILDING]

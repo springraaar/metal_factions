@@ -1917,7 +1917,7 @@ gearAir = {
 				{name="gear_adv_construction_aircraft",min=1,max=3,weight=0.2},
 				{name="gear_vector",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_vector",min=1,max=MANY,weight=0.2},
-				{name="gear_stratos",min=1,max=MANY,weight=0.3},
+				{name="gear_oppressor",min=1,max=MANY,weight=0.3},
 				{name="gear_firestorm",min=1,max=MANY,weight=0.3},
 				{name="gear_whirlpool",min=1,max=MANY,weight=0.1},
 				{name="gear_whirlpool",min=3,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}}
@@ -1968,7 +1968,7 @@ gearAir = {
 				{name="gear_adv_construction_aircraft",min=2,max=5,weight=0.2},
 				{name="gear_vector",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_vector",min=1,max=MANY,weight=0.2},
-				{name="gear_stratos",min=1,max=MANY,weight=0.6},
+				{name="gear_oppressor",min=1,max=MANY,weight=0.6},
 				{name="gear_firestorm",min=1,max=MANY,weight=0.3},
 				{name="gear_whirlpool",min=1,max=MANY,weight=0.1},
 				{name="gear_whirlpool",min=3,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}}
@@ -2021,7 +2021,7 @@ gearAir = {
 				{name="gear_adv_construction_aircraft",min=2,max=8,weight=0.3},
 				{name="gear_vector",min=0,max=MANY,weight=1,includeConditions={THREAT_AIR}},
 				{name="gear_vector",min=1,max=MANY,weight=0.2},
-				{name="gear_stratos",min=1,max=MANY,weight=0.6},
+				{name="gear_oppressor",min=1,max=MANY,weight=0.6},
 				{name="gear_firestorm",min=1,max=MANY,weight=0.3},
 				{name="gear_whirlpool",min=1,max=MANY,weight=0.1},
 				{name="gear_whirlpool",min=3,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}}
@@ -2256,7 +2256,7 @@ gearAmphibious = {
 				{name="gear_marooner",min=2,max=MANY,weight=1,includeConditions={THREAT_UNDERWATER}},
 				{name="gear_caliber",min=1,max=MANY,weight=0.3},
 				{name="gear_rexapod",min=1,max=MANY,weight=0.1},
-				{name="gear_stratos",min=1,max=MANY,weight=0.3}
+				{name="gear_oppressor",min=1,max=MANY,weight=0.3}
 			}
 		},	
 	}

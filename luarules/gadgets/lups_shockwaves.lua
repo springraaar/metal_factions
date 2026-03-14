@@ -32,6 +32,14 @@ if (gadgetHandler:IsSyncedCode()) then
       Script.SetWatchWeapon(wd.id,true)
       hasShockwave[wd.id] = {growth = growth, life = life, strength = strength}
       wantedList[#wantedList + 1] = wd.id
+    elseif ( customParams.shockwave == "2") then
+      local strength = 0.2
+      local growth = 45
+      local life = 2
+      
+      Script.SetWatchWeapon(wd.id,true)
+      hasShockwave[wd.id] = {growth = growth, life = life, strength = strength}
+      wantedList[#wantedList + 1] = wd.id
     end
   end
   
