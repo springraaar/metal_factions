@@ -316,10 +316,10 @@ effectUnitDefs = {
     {class='AirJet',options={color={0.3,0.1,0}, width=5, length=30, piece="rjp2", onActive=true}}
   },
   gear_stratos = {
-    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=28, piece="ljp", onActive=true}},
-    {class='AirJet',options={color={0.3,0.1,0}, width=9, length=28, piece="rjp", onActive=true}},
-    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=28, piece="ljp2", onActive=true}},
-    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=28, piece="rjp2", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=38, piece="ljp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=38, piece="rjp", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=32, piece="ljp2", onActive=true}},
+    {class='AirJet',options={color={0.3,0.1,0}, width=7, length=32, piece="rjp2", onActive=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=25, piece="jp1", onActive=true, down=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=25, piece="jp2", onActive=true, down=true}},
     {class='AirJet',options={color={0.3,0.1,0}, width=6, length=25, piece="jp3", onActive=true, down=true}},
