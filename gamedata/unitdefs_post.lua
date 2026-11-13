@@ -163,6 +163,32 @@ local noIconOverrideUnits = {
 	sphere_meteorite_rocket = true
 }
 
+
+-- immobile hover air units that need > 0 max velocity to avoid warnings getting spammed
+-- https://github.com/beyond-all-reason/RecoilEngine/blob/master/rts/Sim/MoveTypes/HoverAirMoveType.cpp#L895
+-- issue with 2026.07.XX and later engine builds
+local immobileHoverAirUnitsSpeedOverride = {
+	cs_beacon = true,
+	scoper_beacon = true,
+	aven_premium_nuclear_rocket = true,
+	aven_nuclear_rocket = true,
+	aven_dc_rocket = true,
+	aven_lightning_rocket = true,
+	gear_premium_nuclear_rocket = true,
+	gear_nuclear_rocket = true,
+	gear_dc_rocket = true,
+	gear_pyroclasm_rocket = true,
+	claw_premium_nuclear_rocket = true,
+	claw_nuclear_rocket = true,
+	claw_dc_rocket = true,
+	claw_impaler_rocket = true,
+	sphere_premium_nuclear_rocket = true,
+	sphere_nuclear_rocket = true,
+	sphere_dc_rocket = true,
+	sphere_meteorite_rocket = true
+}
+
+
 -- for units with extra energy income associated to a metal drain
 -- this is here to disable the unitdef's values as it's handled through a gadget 
 local metalDrainingEnergyGenerators = {
@@ -342,32 +368,36 @@ if (true) then
 		else
 			local factionBuilding = false
 			
-			if string.sub(name,1,5) == "aven_" then
-				unitDef.buildinggrounddecaltype = "building_aven.dds"
-				factionBuilding = true
-			elseif string.sub(name,1,5) == "gear_" then  
-				unitDef.buildinggrounddecaltype = "building_gear.dds"
-				factionBuilding = true
-			elseif string.sub(name,1,5) == "claw_" then
-				unitDef.buildinggrounddecaltype = "building_claw.dds"
-				factionBuilding = true
-			elseif string.sub(name,1,7) == "sphere_" then
-				unitDef.buildinggrounddecaltype = "building_sphere.dds"
-				factionBuilding = true
-			end
-			local fpMod = 1.5
-			if (factionBuilding == true and (not noDecalUnits[name]) and (not (unitDef.floater or unitDef.waterline) or (not unitDef.minwaterdepth or tonumber(unitDef.minwaterdepth) < 0) )) then
-				unitDef.usebuildinggrounddecal = true
-				if (reducedDecalSizeUnits[name] ) then
-					fpMod = 0.85
+			if immobileHoverAirUnitsSpeedOverride[name] then
+				unitDef.maxvelocity = 0.001
+			else
+				if string.sub(name,1,5) == "aven_" then
+					unitDef.buildinggrounddecaltype = "building_aven.dds"
+					factionBuilding = true
+				elseif string.sub(name,1,5) == "gear_" then  
+					unitDef.buildinggrounddecaltype = "building_gear.dds"
+					factionBuilding = true
+				elseif string.sub(name,1,5) == "claw_" then
+					unitDef.buildinggrounddecaltype = "building_claw.dds"
+					factionBuilding = true
+				elseif string.sub(name,1,7) == "sphere_" then
+					unitDef.buildinggrounddecaltype = "building_sphere.dds"
+					factionBuilding = true
 				end
-				unitDef.buildinggrounddecalsizex = unitDef.footprintx * fpMod
-				unitDef.buildinggrounddecalsizey = unitDef.footprintz * fpMod
-				
-				if (reducedDecalDurationUnits[name]) then
-					unitDef.buildinggrounddecaldecayspeed = 0.5
-				else
-					unitDef.buildinggrounddecaldecayspeed = 0.01
+				local fpMod = 1.5
+				if (factionBuilding == true and (not noDecalUnits[name]) and (not (unitDef.floater or unitDef.waterline) or (not unitDef.minwaterdepth or tonumber(unitDef.minwaterdepth) < 0) )) then
+					unitDef.usebuildinggrounddecal = true
+					if (reducedDecalSizeUnits[name] ) then
+						fpMod = 0.85
+					end
+					unitDef.buildinggrounddecalsizex = unitDef.footprintx * fpMod
+					unitDef.buildinggrounddecalsizey = unitDef.footprintz * fpMod
+					
+					if (reducedDecalDurationUnits[name]) then
+						unitDef.buildinggrounddecaldecayspeed = 0.5
+					else
+						unitDef.buildinggrounddecaldecayspeed = 0.01
+					end
 				end
 			end
 		end

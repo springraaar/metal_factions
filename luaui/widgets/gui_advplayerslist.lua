@@ -680,6 +680,8 @@ function GetAllPlayers()
 		ingameSide = spGetTeamRulesParam(i,"faction_selected")
 		if ingameSide then
 			tside = ingameSide
+		else
+			tside = "random"
 		end
 		sides[i] = tside
 	
@@ -955,7 +957,8 @@ function SortAllyTeams(vOffset)
 	
 	-- add the others
 	for allyTeamID = 0, allyTeamsCount-1 do
-		if allyTeamID ~= myAllyTeamID then
+		local tl = Spring_GetTeamList(allyTeamID) or {}
+		if (#tl > 0) and (allyTeamID ~= myAllyTeamID) then
 			--if firstEnemy == true then
 				vOffset = vOffset + labelOffset
 				table.insert(drawListOffset, vOffset)
@@ -1345,7 +1348,7 @@ function DrawPlayer(playerID, leader, vOffset, mouseX, mouseY)
 	
 	if spec == false then
 		-- darken/fade colors while not ready, if start pos set to "choose in game"
-		if Game.startPosType == 2 and (not isAI) and (not dead) then 
+		if Game.startPosType == 2 and (not isAI) and (not dead) and (spGetGameFrame() < 1) then 
 			local ready = spGetGameRulesParam("player_" .. playerID .. "_readyState")
 			if ready ~= 1 then
 				red = 0.25+red*0.2

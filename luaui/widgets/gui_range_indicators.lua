@@ -85,7 +85,7 @@ local shiftKeyHeld = false
 
 local irrelevantWeaponDefIds = {}
 for wDId,wd in pairs(WeaponDefs) do
-	if wd.isShield or wd.description == "No Weapon" then
+	if wd.isShield or wd.description == "No Weapon" or (wd.customParams and wd.customParams.norangecirc) then
 		irrelevantWeaponDefIds[wDId] = true
 	end
 end

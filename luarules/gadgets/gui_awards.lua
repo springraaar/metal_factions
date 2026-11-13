@@ -450,6 +450,8 @@ local Background	-- background
 local graphsBackground  -- inner background for the graphs
 local awardList = {}
 
+local launchedThroughChobby = string.find(tostring(Spring.GetMenuName()), "Chobby", 1, true) ~= nil
+
 local xpArr = {
 "",
 "\255\255\100\0I",
@@ -1224,7 +1226,7 @@ function gadget:MousePress(x,y,button)
 	if drawAwards then
 		x,y = correctMouseForScaling(x,y)
 		if (x > bx+w-quitX-5) and (x < bx+w-quitX+16*gl.GetTextWidth('Quit')+5) and (y>by+50-5) and (y<by+50+16+5) then --quit button
-			Spring.SendCommands("quitforce")
+			Spring.SendCommands(launchedThroughChobby and "ReloadForce" or "quitforce")			
 		end
 		if (x > bx+w-graphsX-5) and (x < bx+w-graphsX+16*gl.GetTextWidth('Show Graphs')+5) and (y>by+50-5) and (y<by+50+16+5) then
 			

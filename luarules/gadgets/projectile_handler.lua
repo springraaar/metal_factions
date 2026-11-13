@@ -101,7 +101,8 @@ local LONG_RANGE_ROCKET_DETONATE_SQDIST = 70*70
 local DC_ROCKET_DEPLOY_LIMIT_H = 300
 local DC_ROCKET_AUTO_BUILD_STEPS = 30
 local DC_ROCKET_AUTO_BUILD_FRACTION_PER_STEP = 1/DC_ROCKET_AUTO_BUILD_STEPS
-local DC_ROCKET_DEPLOY_DELAY_FRAMES = 30
+local DC_ROCKET_DEPLOY_DELAY_FRAMES = 30*5	-- 5 seconds
+local DC_ROCKET_PRE_SPAWN_CEG = "convergingnano"
 
 local MD_WATCH_UPDATE_FRAMES = 30
 local MD_WATCH_ALERT_SQDISTANCE = 3500*3500
@@ -429,7 +430,12 @@ function gadget:GameFrame(n)
 	
 	-- dc rocket construction tower spawn
 	for id,info in pairs(dcRocketSpawn) do
-		if (info and n > info.frame) then
+		if (info and n < info.frame) then
+			if (n%5 == 0) then
+				local intensity = 100*(1-(info.frame - n) / 150)
+				Spring.SpawnCEG(DC_ROCKET_PRE_SPAWN_CEG, info.px, info.py, info.pz,0,1,0,intensity,intensity)
+			end
+		elseif (info and n > info.frame) then
 			local test = false
 			local fBlockingId = 0
 			
@@ -454,8 +460,8 @@ function gadget:GameFrame(n)
 						break
 					end
 					for dzi in ipairs(searchOrder) do
-						xi = info.px + dxi * 60
-						zi = info.pz + dzi * 60
+						xi = floor((info.px + dxi * 60)/16)*16
+						zi = floor((info.pz + dzi * 60)/16)*16
 						if (xi >=0) and (zi >= 0) and not (dxi == 0 and dzi == 0) and (xi < mapSizeX) and (zi < mapSizeZ)  then
 							h = spGetGroundHeight(xi,zi)
 							test,fBlockingId = spTestBuildOrder(info.defId,xi,h,zi,0) 

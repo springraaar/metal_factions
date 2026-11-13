@@ -8,7 +8,9 @@ abs = math.abs
 fmod = math.fmod
 random = math.random
 floor = math.floor
+pow = math.pow
 Echo = Spring.Echo
+
 
 spGetGameFrame = Spring.GetGameFrame
 spTestBuildOrder = Spring.TestBuildOrder

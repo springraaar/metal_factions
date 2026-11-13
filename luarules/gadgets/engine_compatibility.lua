@@ -13,9 +13,9 @@ end
 
 local showWarningMessage = 0
 local currentEngineVersion = "???"
-local refMajorStr="2025"
-local refMinorStr="06"
-local refPatchSetStr="20"
+local refMajorStr="2026"
+local refMinorStr="07"
+local refPatchSetStr="04"
 local refMajor=tonumber(refMajorStr)
 local refMinor=tonumber(refMinorStr)
 local refPatchSet=tonumber(refPatchSetStr)

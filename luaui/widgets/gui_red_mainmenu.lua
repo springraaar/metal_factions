@@ -42,9 +42,13 @@ local menuPanel = {}
 local CHECK_GFXPROFILE = 0
 local CHECK_ICONDIST = 1
 
+
+local launchedThroughChobby = string.find(tostring(Spring.GetMenuName()), "Chobby", 1, true) ~= nil
+local chobbyOffsetX = launchedThroughChobby and 80 or 0
+
 local Config = {
 	menuButton = {
-		px = CanvasX-50-6,py = 6,
+		px = CanvasX-50-6-chobbyOffsetX,py = 6,
 		sx = 50,sy = 20, --background size
 		
 		fontsize = 10,
@@ -64,7 +68,7 @@ local Config = {
 		},
 	},
 	menu = {
-		px = CanvasX -162-6,py = 6,
+		px = CanvasX -162-6-chobbyOffsetX,py = 6,
 		sx = 162,sy = 214, --background size
 		
 		fontsize = 10,
@@ -311,7 +315,7 @@ local function createMenu(r)
 	bt.px = r.px + r.margin + r.padding + offsetX
 	bt.py = r.py + r.margin + r.padding + offsetY
 	local quitButton = createButton(bt,"Quit",function(mx,my,self)
-		Spring.SendCommands("quitforce")
+		Spring.SendCommands(launchedThroughChobby and "ReloadForce" or "quitforce")
 	end)
 	
 	

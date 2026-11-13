@@ -71,6 +71,7 @@ local MESSAGE_FILTERS = {
 	"ParseUniformsTable",
 	"SpecTeamAction",
 	"SDL_WINDOWEVENT",
+	"liblobby",
 	"CTextureRenderAtlas::"
 }
 

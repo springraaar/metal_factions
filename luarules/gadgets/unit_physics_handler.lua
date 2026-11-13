@@ -254,6 +254,7 @@ local function updateUnitPhysics(unitId)
 		end
 		
 		local proId = spGetUnitRulesParam(unitId,"destructible_projectile_id")
+		--Spring.Echo(spGetGameFrame().." missile uid="..unitId.." proid="..tostring(proId))
 		if (proId) then
 			x,y,z = spGetProjectilePosition(proId)
 			vx,vy,vz,v = spGetProjectileVelocity(proId)
